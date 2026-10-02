@@ -74,6 +74,29 @@ window.LAYOUT = {
     { x: 9322, y: 5222, nom: 'IR partie basse nord' },
   ],
 
+  // ---------- Radiants en pose MURALE (choix « Pose : au mur » dans le panneau) ----------
+  // face = sens du rayonnement vers la pièce (N, S, E, O). Hors murs de sel et hors porte.
+  irMur: {
+    // implantation par défaut (panneaux)
+    defaut: [
+      { x: 5050, y: 6141, face: 'S', nom: 'IR mur nord 1 (au-dessus des B17)' },
+      { x: 7100, y: 6141, face: 'S', nom: 'IR mur nord 2 (au-dessus des B17)' },
+      { x: 6500, y: 1901, face: 'N', nom: 'IR mur sud (après les fauteuils)' },
+      { x: 3103, y: 5600, face: 'E', nom: 'IR pignon ouest, à côté de la porte' },
+      { x: 10054, y: 5157, face: 'O', nom: 'IR partie basse, mur de la porte, nord' },
+      { x: 10054, y: 2757, face: 'O', nom: 'IR partie basse, mur de la porte, sud' },
+    ],
+    // implantation calculée pour le Trotec IR 2050 (50 cm sur les côtés, 1 m devant aux inflammables)
+    trotec2050: [
+      { x: 4500, y: 6141, face: 'S', nom: 'IR 2050 mur nord 1 (au-dessus des B17)' },
+      { x: 5800, y: 6141, face: 'S', nom: 'IR 2050 mur nord 2 (au-dessus des B17)' },
+      { x: 7180, y: 6141, face: 'S', nom: 'IR 2050 mur nord 3 (au-dessus des B17)' },
+      { x: 6000, y: 1901, face: 'N', nom: 'IR 2050 mur sud 1 (après les fauteuils)' },
+      { x: 7180, y: 1901, face: 'N', nom: 'IR 2050 mur sud 2' },
+      { x: 10054, y: 5157, face: 'O', nom: 'IR 2050 partie basse, mur de la porte, nord' },
+    ],
+  },
+
   // ---------- Rampes (mains courantes) d'escalier ----------
   rampes: [
     { x0: 8283, x1: 9636, y: 3582, nom: 'Main courante côté sud' },

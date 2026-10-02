@@ -36,7 +36,7 @@
   }
 
   const TYPES = {
-    chaiseLongue: { nom: 'Chaise longue B17', L: 0.60, P: 1.81, H: 0.37, build(g) {
+    chaiseLongue: { nom: 'Chaise longue B17', L: 0.60, P: 1.81, H: 0.37, Hdos: 0.80, build(g) {
       const W = 0.6, L = 1.81;
       for (const x of [-W / 2 + R, W / 2 - R]) { log(g, x, 0.27, -L / 2, x, 0.27, L / 2); log(g, x, 0, -L / 2 + 0.15, x, 0.27, -L / 2 + 0.15); log(g, x, 0, L / 2 - 0.15, x, 0.27, L / 2 - 0.15); }
       log(g, -W / 2, 0.12, -L / 2 + 0.15, W / 2, 0.12, -L / 2 + 0.15); log(g, -W / 2, 0.12, L / 2 - 0.15, W / 2, 0.12, L / 2 - 0.15);

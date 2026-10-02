@@ -96,8 +96,10 @@ input[type=range] { width: 140px; accent-color: var(--accent); }
   </div>
 
   <h2>Radiants infrarouges</h2>
-  <label for="irModel" class="hint">Modèle installé aux 6 repères ⊕ du plan</label>
+  <label for="irModel" class="hint">Modèle</label>
   <select id="irModel"></select>
+  <label for="irPose" class="hint">Pose</label>
+  <select id="irPose"><option value="plafond">Au plafond (repères ⊕ du plan)</option><option value="mur">Au mur (6 emplacements muraux)</option></select>
   <p class="hint">Les contrôles « Radiants IR » se recalculent avec les distances de la notice du modèle choisi.</p>
 
   <h2>Simulation</h2>

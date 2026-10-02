@@ -252,30 +252,55 @@
   });
 
 
-  // ------------------------------------------------------------------ radiants IR (modèle au choix) + volumes de sécurité
+  // ------------------------------------------------------------------ radiants IR (modèle + pose au choix) + volumes de sécurité
   const irGroup = new THREE.Group(); scene.add(irGroup); let irs = [];
-  let irKey = (function () { try { const k = localStorage.getItem('grotte.ir'); if (k && IR_MODELES[k]) return k; } catch (e) { /* stockage indisponible */ } return L.irModele && IR_MODELES[L.irModele] ? L.irModele : Object.keys(IR_MODELES)[0]; })();
+  const store = { get: (k) => { try { return localStorage.getItem(k); } catch (e) { return null; } }, set: (k, v) => { try { localStorage.setItem(k, v); } catch (e) { /* stockage indisponible */ } } };
+  let irKey = store.get('grotte.ir'); if (!IR_MODELES[irKey]) irKey = L.irModele && IR_MODELES[L.irModele] ? L.irModele : Object.keys(IR_MODELES)[0];
+  let irPose = store.get('grotte.pose') === 'mur' ? 'mur' : 'plafond';
   const irM = () => IR_MODELES[irKey];
+  const NORM = { N: [0, 1], S: [0, -1], E: [1, 0], O: [-1, 0] }; // direction du rayonnement (vers la pièce)
   function buildIR() {
     irGroup.clear(); irs = []; const md = irM();
-    L.ir.forEach((c) => {
-      const ceil = ceilingAt(c.x, c.y); const fl = floorAt(c.x, c.y);
-      const gapTop = md.ecartPlafond; // chaîne au plus court autorisé par la notice
-      const top = (isNaN(ceil) ? 5070 : ceil) - gapTop; const bottom = top - md.h;
-      let g;
-      if (md.forme === 'rond') g = FURNITURE.ir(MAT);
-      else {
-        g = new THREE.Group(); const b = new THREE.Mesh(new THREE.BoxGeometry(md.L / 1000, md.h / 1000, md.l / 1000), md.couleur === 'noir' ? MAT.irBody : MAT.irPanel); b.position.y = md.h / 2000; g.add(b);
-        const face = new THREE.Mesh(new THREE.PlaneGeometry(md.L / 1000 * 0.94, md.l / 1000 * 0.94), MAT.irFace); face.rotation.x = Math.PI / 2; face.position.y = -0.001; g.add(face);
+    const list = irPose === 'mur' ? (L.irMur[irKey] || L.irMur.defaut) : L.ir;
+    list.forEach((c) => {
+      const nn0 = irPose === 'mur' ? NORM[c.face] : [0, 0];
+      // sol et plafond lus 30 cm devant le mur (au pied du mur, la grille tombe sur l'épaisseur du mur)
+      const fl = floorAt(c.x + nn0[0] * 300, c.y + nn0[1] * 300); const ceil = ceilingAt(c.x + nn0[0] * 300, c.y + nn0[1] * 300);
+      let box, g, gapTop = 0, top, bottom, n = null;
+      if (irPose === 'mur') {
+        // appareil plaqué au mur, largeur le long du mur, calé le plus haut permis par la notice (plus loin du mobilier)
+        n = NORM[c.face]; const W = md.murL || md.L, H = md.murH || md.l, D = md.murP || md.h;
+        bottom = fl + Math.max(md.murSol || 0, (ceil - fl) - (md.murHaut || 0) - H); top = bottom + H;
+        const cx = c.x + n[0] * D / 2, cy = c.y + n[1] * D / 2;
+        const along = n[0] === 0; // mur est-ouest : largeur selon X
+        box = { x0: cx - (along ? W : D) / 2, x1: cx + (along ? W : D) / 2, y0: cy - (along ? D : W) / 2, y1: cy + (along ? D : W) / 2, z0: bottom, z1: top };
+        g = new THREE.Group(); const b = new THREE.Mesh(new THREE.BoxGeometry(W / 1000, H / 1000, D / 1000), md.couleur === 'noir' ? MAT.irBody : MAT.irPanel); g.add(b);
+        const face = new THREE.Mesh(new THREE.PlaneGeometry(W / 1000 * 0.92, H / 1000 * 0.8), MAT.irFace); face.position.z = D / 2000 + 0.002; g.add(face);
+        g.position.copy(P(cx, cy, bottom + H / 2)); g.rotation.y = Math.atan2(n[0], -n[1]);
+      } else {
+        gapTop = md.ecartPlafond || 0; top = (isNaN(ceil) ? 5070 : ceil) - gapTop; bottom = top - md.h;
+        box = { x0: c.x - md.L / 2, x1: c.x + md.L / 2, y0: c.y - md.l / 2, y1: c.y + md.l / 2, z0: bottom, z1: top };
+        if (md.forme === 'rond') g = FURNITURE.ir(MAT);
+        else {
+          g = new THREE.Group(); const b = new THREE.Mesh(new THREE.BoxGeometry(md.L / 1000, md.h / 1000, md.l / 1000), md.couleur === 'noir' ? MAT.irBody : MAT.irPanel); b.position.y = md.h / 2000; g.add(b);
+          const face = new THREE.Mesh(new THREE.PlaneGeometry(md.L / 1000 * 0.94, md.l / 1000 * 0.94), MAT.irFace); face.rotation.x = Math.PI / 2; face.position.y = -0.001; g.add(face);
+        }
+        g.position.copy(P(c.x, c.y, bottom));
+        if (gapTop > 20) { const ch = new THREE.Mesh(new THREE.CylinderGeometry(0.006, 0.006, gapTop / 1000, 4), MAT.rail); ch.position.copy(P(c.x, c.y, top + gapTop / 2)); irGroup.add(ch); }
       }
-      g.position.copy(P(c.x, c.y, bottom)); g.rotation.y = (c.rot || 0) * Math.PI / 180; irGroup.add(g);
-      if (gapTop > 20) { const ch = new THREE.Mesh(new THREE.CylinderGeometry(0.006, 0.006, gapTop / 1000, 4), MAT.rail); ch.position.copy(P(c.x, c.y, top + gapTop / 2)); irGroup.add(ch); }
-      const rr = Math.max(md.L, md.l) / 2000 + (md.minInflammable || 0) / 1000, hh = Math.max(0.05, (md.minInflammable || 0) / 1000);
-      const vol = new THREE.Mesh(new THREE.CylinderGeometry(rr, rr, hh, 32, 1, true), new THREE.MeshBasicMaterial({ color: 0x33cc66, transparent: true, opacity: 0.12, side: THREE.DoubleSide, depthWrite: false }));
-      vol.position.copy(P(c.x, c.y, bottom - hh * 500)); vol.visible = $('tSafe').checked; irGroup.add(vol);
-      const light = new THREE.PointLight(0xff5a1e, 0, 3.5, 2); light.position.copy(P(c.x, c.y, bottom - 100)); irGroup.add(light);
-      g.userData = { info: c.nom + ' — ' + md.nom + ' ' + md.L / 10 + ' × ' + md.l / 10 + ' × ' + md.h / 10 + ' cm, ' + md.P + ' W, ' + md.IP, kind: 'ir' };
-      irs.push({ cfg: c, g, vol, light, ceil, fl, top, bottom, gapTop });
+      irGroup.add(g);
+      // volume de sécurité : distance aux matériaux inflammables devant la face rayonnante
+      const dI = Math.max(50, (irPose === 'mur' ? md.murInflammable : md.minInflammable) || 0);
+      let vol;
+      const vm = new THREE.MeshBasicMaterial({ color: 0x33cc66, transparent: true, opacity: 0.12, side: THREE.DoubleSide, depthWrite: false });
+      if (irPose === 'mur') { const vb = { x0: box.x0 - (n[0] ? 0 : 0), x1: box.x1, y0: box.y0, y1: box.y1 }; const ext = (a0, a1, d) => [Math.min(a0, a0 + d), Math.max(a1, a1 + d)];
+        const [vx0, vx1] = n[0] ? (n[0] > 0 ? [box.x1, box.x1 + dI] : [box.x0 - dI, box.x0]) : [vb.x0, vb.x1]; const [vy0, vy1] = n[1] ? (n[1] > 0 ? [box.y1, box.y1 + dI] : [box.y0 - dI, box.y0]) : [vb.y0, vb.y1]; void ext;
+        vol = new THREE.Mesh(new THREE.BoxGeometry((vx1 - vx0) / 1000, (box.z1 - box.z0 + dI) / 1000, (vy1 - vy0) / 1000), vm); vol.position.copy(P((vx0 + vx1) / 2, (vy0 + vy1) / 2, (box.z0 - dI / 2 + box.z1) / 2));
+      } else { const rr = Math.max(md.L, md.l) / 2000 + dI / 1000; vol = new THREE.Mesh(new THREE.CylinderGeometry(rr, rr, dI / 1000, 32, 1, true), vm); vol.position.copy(P(c.x, c.y, bottom - dI / 2)); }
+      vol.visible = $('tSafe').checked; irGroup.add(vol);
+      const light = new THREE.PointLight(0xff5a1e, 0, 3.5, 2); light.position.copy(P(c.x + (n ? n[0] * 300 : 0), c.y + (n ? n[1] * 300 : 0), bottom - 100)); irGroup.add(light);
+      g.userData = { info: c.nom + ' — ' + md.nom + ', ' + md.P + ' W, ' + md.IP + (irPose === 'mur' ? ', pose murale' : ', pose plafond'), kind: 'ir' };
+      irs.push({ cfg: c, g, vol, light, ceil, fl, top, bottom, gapTop, box, n });
     });
   }
   buildIR();
@@ -418,32 +443,48 @@
     add('Accessibilité', 'Espace de manœuvre Ø 1,50 m dans la grotte', okCircle ? 'OK' : 'NOK', best !== null ? 'Ø libre max ≈ ' + fmt(2 * dist[best] - CELL) : '—', 'Ø 1,50 m');
     if (best !== null) { turning.position.copy(P(cellX(best % NX), cellY(Math.floor(best / NX)), floorH[best] + 20)); turning.visible = okCircle; }
     // IR
-    const md = irM(); const lim = (v) => (v === null || v === undefined ? null : v);
-    const half = Math.max(md.L, md.l) / 2;
-    // entraxe mini entre appareils (Fenix : 0,6 m entre panneaux)
-    if (md.hPose) { let dmin = 1e9; irs.forEach((p, i) => irs.forEach((q, j) => { if (j > i) dmin = Math.min(dmin, Math.hypot(p.cfg.x - q.cfg.x, p.cfg.y - q.cfg.y) - Math.max(md.L, md.l)); })); add('Radiants IR', 'Distance entre panneaux', dmin >= 600 ? 'OK' : 'NOK', fmt(dmin), '≥ 0,60 m (notice Fenix)'); }
+    const md = irM(); const mur = irPose === 'mur';
+    const poseOK = mur ? md.murOK : md.plafondOK !== false;
+    const boxDist = (a, b) => Math.hypot(Math.max(0, a.x0 - b.x1, b.x0 - a.x1), Math.max(0, a.y0 - b.y1, b.y0 - a.y1), Math.max(0, a.z0 - b.z1, b.z0 - a.z1));
+    const ref = (v) => (v === null || v === undefined ? 'non indiqué par la notice' : '≥ ' + fmt(v));
+    const st = (v, m) => (m === null || m === undefined ? 'A VOIR' : v >= m ? 'OK' : 'NOK');
+    if (!mur && md.hPose) { let dmin = 1e9; irs.forEach((p, i) => irs.forEach((q, j) => { if (j > i) dmin = Math.min(dmin, Math.hypot(p.cfg.x - q.cfg.x, p.cfg.y - q.cfg.y) - Math.max(md.L, md.l)); })); add('Radiants IR', 'Distance entre panneaux', dmin >= 600 ? 'OK' : 'NOK', fmt(dmin), '≥ 0,60 m (notice Fenix)'); }
     irs.forEach((r) => {
-      const name = r.cfg.nom; const below = r.bottom - r.fl;
-      let wd = 1e9;
-      for (let j = 0; j < NY; j++) for (let i = 0; i < NX; i++) { const k = idx(i, j); if (wall[k] || isNaN(floorH[k])) { const d = Math.hypot(cellX(i) - r.cfg.x, cellY(j) - r.cfg.y); if (d < wd) wd = d; } }
-      const side = wd - half - CELL / 2;
+      const name = r.cfg.nom; const hLibre = r.ceil - r.fl;
+      // distance aux murs (hors mur porteur en pose murale) depuis l'emprise de l'appareil
+      let side = 1e9;
+      for (let j = 0; j < NY; j++) for (let i = 0; i < NX; i++) {
+        const k = idx(i, j); if (!(wall[k] || isNaN(floorH[k]))) continue; const x = cellX(i), y = cellY(j);
+        if (mur) { const nn = (x - r.cfg.x) * r.n[0] + (y - r.cfg.y) * r.n[1]; if (nn < 150) continue; }
+        const d = Math.hypot(Math.max(0, r.box.x0 - x, x - r.box.x1), Math.max(0, r.box.y0 - y, y - r.box.y1)) - CELL / 2; if (d < side) side = d;
+      }
       let fd = 1e9, fname = '';
-      items.forEach((it) => { const xs = it.poly.map((p) => p[0]), ys = it.poly.map((p) => p[1]); const dx = Math.max(Math.min(...xs) - r.cfg.x, 0, r.cfg.x - Math.max(...xs)), dy = Math.max(Math.min(...ys) - r.cfg.y, 0, r.cfg.y - Math.max(...ys)); const dz = Math.max(0, r.bottom - (it.h + it.T.H * 1000)); const d = Math.hypot(Math.max(0, Math.hypot(dx, dy) - half), dz); if (d < fd) { fd = d; fname = it.cfg.nom; } });
-      const st = (v, m) => (m === null ? 'A VOIR' : v >= m ? 'OK' : 'NOK');
-      const hLibre = r.ceil - r.fl;
-      let sH;
-      if (md.hPose) sH = hLibre >= md.hPose - 5 ? 'OK' : 'NOK'; // hauteur de pose fabricant (± 5 mm d'arrondi)
-      else if (md.minSousAppareil !== null) sH = below >= md.minSousAppareil && r.gapTop >= (md.ecartPlafond || 0) ? 'OK' : 'NOK';
-      else sH = 'A VOIR';
-      const sL = st(side, lim(md.minLateral)), sF = st(fd, lim(md.minInflammable));
-      r.ok = sH === 'OK' && sL !== 'NOK' && sF !== 'NOK'; r.vol.material.color.set(r.ok ? 0x33cc66 : 0xe03131);
-      const ref = (v) => (v === null ? 'non indiqué par la notice' : '≥ ' + fmt(v));
-      add('Radiants IR', name + ' : hauteur de pose', sH, fmt(below) + ' sous l\'appareil, ' + fmt(r.gapTop) + ' au plafond (hauteur libre ' + (isNaN(r.ceil) ? '?' : fmt(r.ceil - r.fl)) + ')', md.nom + ' : ' + (md.hPose ? 'hauteur de pose ' + fmt(md.hPose) : 'sous l\'appareil ' + ref(md.minSousAppareil)) + ', au plafond ' + (md.ecartPlafond ? '≥ ' + fmt(md.ecartPlafond) : 'fixation sur cadre'));
-      add('Radiants IR', name + ' : distance aux murs', sL, fmt(side), ref(md.minLateral));
-      add('Radiants IR', name + ' : distance au mobilier en cèdre', sF, fmt(fd) + ' (' + fname + ')', ref(md.minInflammable) + ' de la face rayonnante');
+      items.forEach((it) => { const xs = it.poly.map((p) => p[0]), ys = it.poly.map((p) => p[1]); const fb = { x0: Math.min(...xs), x1: Math.max(...xs), y0: Math.min(...ys), y1: Math.max(...ys), z0: it.h, z1: it.h + (it.T.Hdos || it.T.H) * 1000 }; const d = boxDist(r.box, fb); if (d < fd) { fd = d; fname = it.cfg.nom; } });
+      let sH, refH, sL, sF, refF, refL;
+      if (mur) {
+        const sous = r.bottom - r.fl, dessus = r.ceil - r.top;
+        sH = sous >= (md.murSol || 0) && dessus >= (md.murHaut || 0) ? 'OK' : 'NOK';
+        add('Radiants IR', name + ' : hauteur de pose murale', sH, fmt(sous) + ' sous l\'appareil, ' + fmt(dessus) + ' jusqu\'au plafond (hauteur libre ' + fmt(hLibre) + ')', md.nom + ' au mur : sol ' + ref(md.murSol) + ', plafond ' + ref(md.murHaut) + ' ; calé au plus haut permis');
+        sL = st(side, md.murCotes); refL = ref(md.murCotes) + ' sur les côtés';
+        const fmin = Math.max(md.murInflammable || 0, md.murAvant || 0); sF = st(fd, md.murInflammable === undefined ? null : fmin); refF = ref(fmin) + ' devant (objets et matériaux inflammables)';
+      } else {
+        const below = r.bottom - r.fl;
+        if (md.hPose) sH = hLibre >= md.hPose - 5 ? 'OK' : 'NOK';
+        else if (md.minSousAppareil !== null && md.minSousAppareil !== undefined) sH = below >= md.minSousAppareil && r.gapTop >= (md.ecartPlafond || 0) ? 'OK' : 'NOK';
+        else sH = 'A VOIR';
+        add('Radiants IR', name + ' : hauteur de pose', sH, fmt(below) + ' sous l\'appareil, ' + fmt(r.gapTop) + ' au plafond (hauteur libre ' + fmt(hLibre) + ')', md.nom + ' : ' + (md.hPose ? 'hauteur de pose ' + fmt(md.hPose) : 'sous l\'appareil ' + ref(md.minSousAppareil)) + ', au plafond ' + (md.ecartPlafond ? '≥ ' + fmt(md.ecartPlafond) : 'fixation sur cadre'));
+        sL = st(side, md.minLateral); refL = ref(md.minLateral);
+        sF = st(fd, md.minInflammable); refF = ref(md.minInflammable) + ' de la face rayonnante';
+      }
+      add('Radiants IR', name + ' : distance aux murs', sL, fmt(side), refL);
+      add('Radiants IR', name + ' : distance au mobilier en cèdre', sF, fmt(fd) + ' (' + fname + ')', refF);
+      r.ok = poseOK && sH === 'OK' && sL !== 'NOK' && sF !== 'NOK'; r.vol.material.color.set(r.ok ? 0x33cc66 : 0xe03131);
     });
     const ipEau = +(md.IP.match(/IP\d(\d)/) || [0, 0])[1];
-    add('Radiants IR', 'Modèle : ' + md.nom, md.interieur && md.plafondBois !== false && ipEau >= 4 ? (md.plafondBois ? 'OK' : 'A VOIR') : 'NOK', md.P + ' W, ' + md.IP + ', ' + (md.interieur ? 'usage intérieur prévu' : 'usage intérieur non prévu') + ', plafond bois : ' + (md.plafondBois === true ? 'autorisé' : md.plafondBois === false ? 'non autorisé' : 'non précisé'), 'Usage intérieur, plafond bois admis, IP x4 mini (humidité / projections) — notice : ' + md.source, md.note || '');
+    const supportOK = mur ? true : md.plafondBois !== false;
+    add('Radiants IR', 'Modèle : ' + md.nom + (mur ? ' (pose murale)' : ' (pose plafond)'), poseOK && md.interieur && supportOK && ipEau >= 4 ? (mur || md.plafondBois ? 'OK' : 'A VOIR') : 'NOK',
+      md.P + ' W, ' + md.IP + ', ' + (md.interieur ? 'usage intérieur prévu' : 'usage intérieur non prévu (notice : extérieur couvert)') + ', ' + (poseOK ? 'pose ' + (mur ? 'murale' : 'plafond') + ' autorisée' : 'pose ' + (mur ? 'murale' : 'au plafond') + ' NON autorisée par la notice') + (mur ? '' : ', plafond bois : ' + (md.plafondBois === true ? 'autorisé' : md.plafondBois === false ? 'non autorisé' : 'non précisé')),
+      'Pose autorisée, usage intérieur, IP x4 mini — notice : ' + md.source, md.note || '');
     // Murs de sel / ambiances
     add('Murs de sel', 'Implantation des 2 murs de sel', 'OK', L.mursSel.map((w) => w.nom + ' ' + fmt(w.x1 - w.x0) + ' × ' + fmt(w.h)).join(' ; '), 'Croquis du 02/10/2026 : murs nord et sud de la partie basse');
     add('Murs de sel', 'Rétro-éclairage', 'A VOIR', '10 cm de vide technique derrière chaque mur', 'LED TBTS, IP65 conseillé', 'Prévoir une trappe ou un démontage pour la maintenance des LED.');
@@ -588,7 +629,10 @@
   const sel = $('irModel');
   Object.entries(IR_MODELES).forEach(([k, m]) => { const o = document.createElement('option'); o.value = k; o.textContent = m.nom; sel.appendChild(o); });
   sel.value = irKey;
-  sel.addEventListener('change', () => { irKey = sel.value; try { localStorage.setItem('grotte.ir', irKey); } catch (e) { /* stockage indisponible */ } buildIR(); runChecks(); setIR(running && agents.length > 0 && sessionEnd < 1e8 && simT < sessionEnd); });
+  const poseSel = $('irPose'); poseSel.value = irPose;
+  const refreshIR = () => { buildIR(); runChecks(); setIR(running && agents.length > 0 && sessionEnd < 1e8 && simT < sessionEnd); };
+  sel.addEventListener('change', () => { irKey = sel.value; store.set('grotte.ir', irKey); refreshIR(); });
+  poseSel.addEventListener('change', () => { irPose = poseSel.value; store.set('grotte.pose', irPose); refreshIR(); });
   $('btnSession').addEventListener('click', () => { if (!agents.length) startSession(); else { running = !running; $('btnSession').textContent = running ? '⏸ Pause' : '▶ Reprendre'; } });
   $('btnEvac').addEventListener('click', startEvac);
   $('btnReset').addEventListener('click', resetSim);

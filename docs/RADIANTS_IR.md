@@ -16,14 +16,28 @@ atmosphère saline, ERP. Le Trotec IR 1500 SC prévu au départ ne convient pas 
 | Heatscope Vision / Spot | 1600–3200 W, IP44 | support A2 (incombustible) exigé | 1,80 m | 1,50 m des inflammables | écarté |
 | Trotec IR 1500 SC | Ø 420 × 240 mm, 1500 W, IP34 | non précisé | 0,50 m + 1,80 m | 1 m murs et inflammables | écarté |
 | Trotec IR 2000 C | 690 × 385 × 110 mm, 2000 W halogène, IP55 | non précisé | 0,30 m au plafond + 1,80 m dessous | 1 m murs, **1,80 m des inflammables** | écarté : appareil à 2,09 m du sol, donc 1,15 m des fauteuils et 1,72 m des chaises longues ; usage extérieur couvert ; interdit en « atmosphères agressives » et à l'humidité |
-| Trotec IR 2050 | 630 × 165 × 105 mm, 2000 W, IP65 | **montage au plafond interdit** (notice) | 1,80 m du sol, mural | 50 cm murs et objets | écarté (fixation murale à 1,80 m : tête des curistes à 0,5–0,8 m) |
+| Trotec IR 2050 | 630 × 165 × 105 mm, 2000 W, IP65 | **montage au plafond interdit** (notice) | 1,80 m du sol, mural | 50 cm murs et objets | au plafond : non ; **au mur : voir ci-dessous** |
 | Trotec IR 2570 S | 900 × 90 × 200 mm, 2500 W quartz, IP34 | **montage au plafond interdit** (notice) | 0,70 m vers le haut, 1,80 m vers le bas | 1 m côtés et inflammables | écarté |
 
 Point commun aux Trotec : notices « extérieur couvert » et, pour les IR 2000 C et 2570 S, interdiction en « atmosphères agressives » ; une grotte de sel en est une.
 
+## Pose murale
+
+Hauteur libre 2,50 m. Chaque appareil est calé au plus haut permis par sa notice, ce qui l'éloigne du mobilier.
+Les murs de sel, les portes et le mur sud de la partie basse (1,43 m entre mur de sel et porte, trop court) sont exclus.
+
+| Modèle au mur | Notice | Résultat dans la maquette |
+|---|---|---|
+| **Trotec IR 2050** (630 × 105 × 165 mm, 2000 W, IP65) | mural uniquement, horizontal ; 1,80 m du sol, 50 cm vers le haut, les côtés et l'avant ; 1 m de la face rayonnante aux inflammables | **6 emplacements conformes en distances** : 3 au mur nord au-dessus des B17 (X 4500, 5800, 7180), 2 au mur sud après les fauteuils (X 6000, 7180), 1 en partie basse sur le mur de la porte côté nord. Appareil à 1,89 m du sol, 1,01 à 1,49 m du cèdre. **Mais** notice « extérieur » et « ne pas utiliser en atmosphères agressives » ; 6 × 2000 W = 12 kW pour ~28 m², à régler sur 750 W |
+| Trotec IR 2570 S (900 × 200 × 90 mm, 2500 W, IP34) | 70 cm vers le haut + 1,80 m vers le bas = 2,70 m mini | non conforme : il manque 20 cm de hauteur partout |
+| Fenix ECOSUN 600 U / 300 U | pose murale d'origine ; 10 cm des inflammables, 5 cm du sol | conforme partout (le 600 U ne tient pas sur le mur sud de la partie basse : prendre un 300 U) |
+| Redwell WE 600 | 20 cm haut/bas/côtés, 50 cm devant | conforme sauf 2 emplacements trop étroits (pignon ouest, partie basse sud) |
+
 ## Recommandation
 
-**Fenix ECOSUN 600 U**, posé sur son cadre au plafond bois, aux 6 repères du plan.
+**Fenix ECOSUN 600 U**, au plafond aux 6 repères du plan ou au mur : c'est le seul modèle prévu pour l'intérieur.
+Si tu tiens au Trotec, l'**IR 2050 au mur** respecte toutes les distances aux 6 emplacements muraux de la maquette,
+mais Trotec ne le garantit pas en intérieur ni en atmosphère saline : à faire valider par écrit par Trotec et par le bureau de contrôle.
 Avant commande, faire valider par écrit par Fenix (ou son distributeur France) :
 
 1. la tenue en **atmosphère saline** (corrosion du cadre et des connexions) ;
