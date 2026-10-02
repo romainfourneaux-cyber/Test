@@ -65,21 +65,20 @@
     }
     if (Math.hypot(c[0] - 10491, c[1] - 2196) < 470) return 'stone'; // pilier
     const e = ell(c[0], c[1]);
-    if (c[0] > 10250 && c[1] > 1900 && e > 0.96 && e < 1.07) return e < 1.016 ? 'salt:courbe' : 'plaster';
-    if (c[0] > 10700 && c[1] > 1680 && c[1] < 1850 && c[2] < 4400) return Math.abs(c[1] - 1842) < 3 ? 'salt:sud' : 'plaster';
-    if (c[0] > 10040 && c[0] < 10320 && c[1] > 1840 && c[2] < 4400) return Math.abs(c[0] - 10311) < 3 ? 'salt:facade' : 'plaster';
+    if (c[0] > 10250 && c[1] > 1900 && e > 0.96 && e < 1.07) return 'plaster'; // mur courbe du frigidarium
+    if (c[0] > 10700 && c[1] > 1680 && c[1] < 1850 && c[2] < 4400) return 'plaster'; // mur sud (arc du tunnel, vue rivière)
+    if (c[0] > 10040 && c[0] < 10320 && c[1] > 1840 && c[2] < 4400) return 'plaster'; // cloison grotte / frigidarium
     if (c[0] > 7980 && c[0] < 8500 && c[2] > 4000) return 'wood';
     if (c[0] > 8280 && c[0] < 9880 && c[1] > 3530 && c[1] < 4280 && c[2] < 2880) return 'step';
     return 'stone';
   }
 
-  const buckets = {}; const floorFaces = []; const wallTris = []; const wallTops = []; const saltFaces = { courbe: [], sud: [], facade: [] };
+  const buckets = {}; const floorFaces = []; const wallTris = []; const wallTops = []; 
   M.faces.forEach((f) => {
     const loop = f.loops[0]; const n = newell(loop);
     const pts = loop.map((i) => V[i]);
     const c = [0, 1, 2].map((k) => pts.reduce((s, p) => s + p[k], 0) / pts.length);
     let cls = classify(c, n);
-    if (cls.startsWith('salt:')) { const w = cls.slice(5); saltFaces[w].push(pts); cls = L.mursSel.includes(w) ? 'salt' : 'plaster'; }
     // repère 2D du plan de la face
     const nz = new THREE.Vector3(...n);
     const u = Math.abs(n[2]) > 0.9 ? new THREE.Vector3(1, 0, 0) : new THREE.Vector3(-n[1], n[0], 0).normalize();
@@ -128,20 +127,22 @@
     const m = new THREE.Mesh(g, mat); m.receiveShadow = true; ceilings.add(m);
   }
   vault(L.voutes.salleA, MAT.brick, TX.brick.userData.meters);
-  vault(L.voutes.grotte, MAT.saltCrust, TX.saltCrust.userData.meters);
-  { const c = L.voutes.liaison; const w = (c.x1 - c.x0) / 1000, d = (c.y1 - c.y0) / 1000;
+  vault(L.voutes.frigidarium, MAT.saltCrust, TX.saltCrust.userData.meters);
+  { const c = L.voutes.grotte; const w = (c.x1 - c.x0) / 1000, d = (c.y1 - c.y0) / 1000;
     const g = new THREE.PlaneGeometry(w, d); const m = new THREE.Mesh(g, MAT.wood); m.rotation.x = Math.PI / 2;
     m.position.copy(P((c.x0 + c.x1) / 2, (c.y0 + c.y1) / 2, c.z)); ceilings.add(m);
     for (let x = c.x0 + 300; x < c.x1; x += 600) { const j = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.16, d), MAT.wood); j.position.copy(P(x, (c.y0 + c.y1) / 2, c.z - 80)); ceilings.add(j); } }
   function ceilingAt(x, y) {
-    for (const k of ['salleA', 'grotte']) { const v = L.voutes[k]; if (x >= v.x0 && x <= v.x1 && y >= v.y0 && y <= v.y1) return vaultZ(v, y); }
-    const c = L.voutes.liaison; if (x >= c.x0 && x <= c.x1 && y >= c.y0 && y <= c.y1) return c.z;
+    for (const k of ['salleA', 'frigidarium']) { const v = L.voutes[k]; if (x >= v.x0 && x <= v.x1 && y >= v.y0 && y <= v.y1) return vaultZ(v, y); }
+    const c = L.voutes.grotte; if (x >= c.x0 && x <= c.x1 && y >= c.y0 && y <= c.y1) return c.z;
     return NaN;
   }
 
   // ------------------------------------------------------------------ grille d'analyse (10 cm)
   const CELL = 100, GX0 = 2850, GY0 = 0, NX = 126, NY = 66;
   const idx = (i, j) => j * NX + i;
+  const fmt0 = (mm) => (mm / 1000).toFixed(2).replace('.', ',') + ' m';
+  const floorAt0 = (x, y) => { const k = idx(Math.floor((x - GX0) / CELL), Math.floor((y - GY0) / CELL)); return isNaN(floorH[k]) ? 2570 : floorH[k]; };
   const cellX = (i) => GX0 + (i + 0.5) * CELL, cellY = (j) => GY0 + (j + 0.5) * CELL;
   const toCell = (x, y) => [Math.floor((x - GX0) / CELL), Math.floor((y - GY0) / CELL)];
   function pip(pt, poly) { let ins = false; for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) { const [xi, yi] = poly[i], [xj, yj] = poly[j]; if ((yi > pt[1]) !== (yj > pt[1]) && pt[0] < ((xj - xi) * (pt[1] - yi)) / (yj - yi) + xi) ins = !ins; } return ins; }
@@ -164,6 +165,20 @@
       }
     }
   }
+
+  // ------------------------------------------------------------------ murs de sel rétro-éclairés (LAYOUT.mursSel)
+  const saltGroup = new THREE.Group(); scene.add(saltGroup); const saltLights = new THREE.Group(); scene.add(saltLights);
+  L.mursSel.forEach((w) => {
+    const cx = (w.x0 + w.x1) / 2, cy = (w.y0 + w.y1) / 2, W = (w.x1 - w.x0) / 1000, D = (w.y1 - w.y0) / 1000, H = w.h / 1000;
+    const [ci, cj] = toCell(cx, cy); const fl = floorAt0(cx, cy);
+    const geo = new THREE.BoxGeometry(W, H, D); const uv = geo.attributes.uv; const s = TX.saltBricks.userData.meters;
+    const dims = [[D, H], [D, H], [W, D], [W, D], [W, H], [W, H]];
+    for (let f = 0; f < 6; f++) for (let v = 0; v < 4; v++) { const q = f * 4 + v; uv.setXY(q, uv.getX(q) * dims[f][0] / s, uv.getY(q) * dims[f][1] / s); }
+    const m = new THREE.Mesh(geo, MAT.salt); m.position.copy(P(cx, cy, fl + w.h / 2)); m.userData.info = w.nom + ' — briques de sel rétro-éclairées, ' + fmt0(w.x1 - w.x0) + ' × ' + fmt0(w.h); saltGroup.add(m);
+    const toward = Math.sign(4000 - cy);
+    const l = new THREE.PointLight(0xff9a50, 1.4, 4, 2); l.position.copy(P(cx, cy + toward * 700, fl + 1300)); saltLights.add(l);
+    for (let j = 0; j < NY; j++) for (let i = 0; i < NX; i++) { const x = cellX(i), y = cellY(j); if (x >= w.x0 && x <= w.x1 && y >= w.y0 - 50 && y <= w.y1 + 50) wall[idx(i, j)] = 1; }
+  });
 
   // ------------------------------------------------------------------ portes
   const doors = [];
@@ -215,7 +230,7 @@
     const corners = [[-T.L / 2, -T.P / 2], [T.L / 2, -T.P / 2], [T.L / 2, T.P / 2], [-T.L / 2, T.P / 2]].map(([x, z]) => loc2plan(x, z));
     const poly = corners.map((c) => [c.x, c.y]);
     for (let j = 0; j < NY; j++) for (let i = 0; i < NX; i++) if (pip([cellX(i), cellY(j)], poly)) furn[idx(i, j)] = 1;
-    const it = { cfg: f, T, g, poly, h, k, zone: f.x > 10311 ? 'grotte' : 'salle' }; items.push(it);
+    const it = { cfg: f, T, g, poly, h, k, zone: f.x > 10311 ? 'frigidarium' : f.y < 1751 ? 'alcove' : 'grotte' }; items.push(it);
     T.seats.forEach((s, si) => { const p = loc2plan(s.x, s.z), ap = loc2plan(T.approach[si].x, T.approach[si].z); seats.push({ item: it, x: p.x, y: p.y, pose: s.pose, rot: f.rot, approach: ap, zone: it.zone, taken: false }); });
   });
 
@@ -231,14 +246,6 @@
     for (let x = r.x0 + 100; x <= r.x1; x += 600) { const a = P(x, r.y, stairProfile(x)), b = P(x, r.y, nose(x) + 900); const m = new THREE.Mesh(new THREE.CylinderGeometry(0.018, 0.018, b.y - a.y, 8), MAT.rail); m.position.set(a.x, (a.y + b.y) / 2, a.z); railGroup.add(m); }
   });
 
-  // ------------------------------------------------------------------ murs de sel : éclairage
-  const saltLights = new THREE.Group(); scene.add(saltLights);
-  L.mursSel.forEach((w) => {
-    const fs = saltFaces[w]; if (!fs.length) return;
-    const all = fs.flat(); const cx = all.reduce((s, p) => s + p[0], 0) / all.length, cy = all.reduce((s, p) => s + p[1], 0) / all.length;
-    const toward = new THREE.Vector2(11800 - cx, 3500 - cy).normalize();
-    const l = new THREE.PointLight(0xff9a50, 1.6, 6, 2); l.position.copy(P(cx + toward.x * 600, cy + toward.y * 600, 3500)); saltLights.add(l);
-  });
 
   // ------------------------------------------------------------------ radiants IR + volumes de sécurité
   const irGroup = new THREE.Group(); scene.add(irGroup); const irs = [];
@@ -361,22 +368,33 @@
     add('Escalier', 'Avancée haute (palier étroit) avec chute latérale', 'A VOIR', 'Avancée de ' + fmt(9066 - 8283) + ' × ' + fmt(stW) + ', chute 30 cm de chaque côté', 'Pas de garde-corps exigé < 1 m de chute', 'Les mains courantes servent de protection : à prolonger sur toute l\'avancée (fait dans la 3D).');
     // Porte de grotte
     const dW = 4274 - 3470, gap = 10054 - 9336;
-    add('Grotte', 'Largeur de la porte de la grotte', dW >= 800 ? 'OK' : 'NOK', fmt(dW) + ' (passage utile ≈ ' + fmt(dW - 30) + ')', 'Local < 20 pers. : 0,80 m toléré (CO) ; PMR ERP existant : 0,77 m utile');
-    const gD = doors.find((d) => d.cfg.id === 'grotte');
-    add('Grotte', 'Recul entre dernière marche et porte de la grotte', gD && gD.cfg.ouvre > 0 ? 'OK' : 'NOK', fmt(gap), 'Le vantail (' + fmt(dW) + ') ne doit pas balayer l\'escalier', gD && gD.cfg.ouvre > 0 ? 'Porte ouvrant vers l\'intérieur de la grotte : ne gêne pas l\'escalier. Si elle ouvre vers l\'escalier, le vantail déborde de ' + fmt(dW - gap) + '.' : 'Inverser le sens d\'ouverture.');
+    add('Grotte', 'Largeur de la porte grotte → frigidarium', dW >= 800 ? 'OK' : 'NOK', fmt(dW) + ' (passage utile ≈ ' + fmt(dW - 30) + ')', 'Local < 20 pers. : 0,80 m toléré (CO) ; PMR ERP existant : 0,77 m utile');
+    const gD = doors.find((d) => d.cfg.id === 'frigidarium');
+    add('Grotte', 'Recul entre dernière marche et porte du frigidarium', gD && gD.cfg.ouvre > 0 ? 'OK' : 'NOK', fmt(gap), 'Le vantail (' + fmt(dW) + ') ne doit pas balayer l\'escalier', gD && gD.cfg.ouvre > 0 ? 'Porte ouvrant côté frigidarium : ne gêne pas l\'escalier. Si elle ouvre vers l\'escalier, le vantail déborde de ' + fmt(dW - gap) + '.' : 'Inverser le sens d\'ouverture.');
     add('Accessibilité', 'Accès PMR à la grotte', 'NOK', 'Dénivelé ' + fmt(2870 - 2570) + ' franchi uniquement par 2 marches', 'Rampe ≤ 5 % → ' + fmt(300 / 0.05) + ' de long + paliers', 'Pas la place pour une rampe : élévateur PMR ou demande de dérogation (motif : bâti existant / contraintes techniques).');
     const nSeatsCave = seats.filter((s) => s.zone === 'grotte').length;
-    add('Grotte', 'Effectif et nombre de sorties', nSeatsCave < 20 ? 'OK' : 'NOK', nSeatsCave + ' places assises/allongées', '< 20 pers. : 1 dégagement suffit');
+    add('Grotte', 'Effectif et nombre de sorties', nSeatsCave < 20 ? (nSeatsCave >= 18 ? 'A VOIR' : 'OK') : 'NOK', nSeatsCave + ' places assises/allongées + personnel, 1 seule porte de circulation (double, 1,94 m)', '< 20 pers. : 1 dégagement suffit ; à partir de 20 : 2 dégagements', nSeatsCave >= 18 ? 'À la limite des 20 personnes avec l\'accompagnant : plafonner l\'effectif affiché à 19 personnes, personnel compris.' : '');
     // Dégagements le long du parcours
-    const cs0 = seats.find((s) => s.zone === 'grotte'); const pA = cs0 && route(L.simulation.entree.x, L.simulation.entree.y, cs0.approach.x, cs0.approach.y);
-    if (pA) {
-      let minW = 1e9, minK = -1, minW2 = 1e9, minK2 = -1;
-      for (const k of pA.raw) { const x = cellX(k % NX); if (Math.hypot(x - L.simulation.entree.x, cellY(Math.floor(k / NX)) - L.simulation.entree.y) < 900) continue; /* seuil de porte exclu */ const w = widthAt(k); if (w < minW) { minW = w; minK = k; } const inStair = x > 8200 && x < 10450; /* escalier + porte : mesurés à part, sur cotes du modèle */ if (!inStair && w < minW2) { minW2 = w; minK2 = k; } }
+    let worst = null;
+    seats.filter((s) => s.zone === 'grotte').forEach((st) => {
+      const pA = route(L.simulation.entree.x, L.simulation.entree.y, st.approach.x, st.approach.y);
+      if (!pA) { worst = { w: -1, st }; return; }
+      let minW = 1e9, minK = -1;
+      for (const k of pA.raw) {
+        const x = cellX(k % NX), yy = cellY(Math.floor(k / NX));
+        if (Math.hypot(x - L.simulation.entree.x, yy - L.simulation.entree.y) < 900) continue; /* seuil de porte */
+        if (x > 8200 && x < 9700 && yy > 3450 && yy < 4350) continue; /* escalier : mesuré à part */
+        if (Math.hypot(x - st.approach.x, yy - st.approach.y) < 400) continue; /* accès final à l'assise */
+        const w = widthAt(k); if (w < minW) { minW = w; minK = k; }
+      }
+      if (!worst || (worst.w >= 0 && minW < worst.w)) worst = { w: minW, k: minK, st };
+    });
+    if (worst && worst.w >= 0) {
       const where = (k) => '(X ' + Math.round(cellX(k % NX)) + ', Y ' + Math.round(cellY(Math.floor(k / NX))) + ')';
-      add('Dégagements', 'Largeur mini du cheminement entrée → grotte (hors escalier et porte)', minW2 >= 900 ? 'OK' : 'NOK', '≈ ' + fmt(minW2) + ' ' + where(minK2), '≥ 0,90 m (1 UP)', 'Calcul sur grille de 10 cm entre murs, mobilier et bords de niveau (précision ± 10 cm). Afficher le calque « Carte des dégagements » pour localiser.');
-    } else add('Dégagements', 'Cheminement entrée → grotte', 'NOK', 'aucun chemin trouvé', '');
+      add('Dégagements', 'Largeur mini des cheminements porte → chaque place', worst.w >= 900 ? 'OK' : 'NOK', '≈ ' + fmt(worst.w) + ' ' + where(worst.k) + ', vers « ' + worst.st.item.cfg.nom + ' »', '≥ 0,90 m (1 UP)', 'Calcul sur grille de 10 cm entre murs, mobilier et bords de niveau (± 10 cm). Calque « Carte des dégagements » pour localiser.');
+    } else add('Dégagements', 'Cheminements porte → places', 'NOK', worst ? 'aucun chemin vers « ' + worst.st.item.cfg.nom + ' »' : '—', 'Toutes les places doivent être accessibles');
     // Cercle de giration Ø1,50 dans la grotte
-    let best = null; for (let k = 0; k < NX * NY; k++) { const x = cellX(k % NX); if (x < 10400 || !passable(k)) continue; if (!best || dist[k] > dist[best]) best = k; }
+    let best = null; for (let k = 0; k < NX * NY; k++) { const x = cellX(k % NX); if (x < 3103 || x > 10054 || cellY(Math.floor(k / NX)) < 1901 || !passable(k)) continue; if (!best || dist[k] > dist[best]) best = k; }
     const okCircle = best !== null && dist[best] - CELL / 2 >= 750;
     add('Accessibilité', 'Espace de manœuvre Ø 1,50 m dans la grotte', okCircle ? 'OK' : 'NOK', best !== null ? 'Ø libre max ≈ ' + fmt(2 * dist[best] - CELL) : '—', 'Ø 1,50 m');
     if (best !== null) { turning.position.copy(P(cellX(best % NX), cellY(Math.floor(best / NX)), floorH[best] + 20)); turning.visible = okCircle; }
@@ -395,10 +413,14 @@
       add('Radiants IR', name + ' : distance au mobilier en cèdre (inflammable)', fd >= 1000 ? 'OK' : 'NOK', fmt(fd) + ' (' + fname + ')', '≥ 1,00 m de la face rayonnante');
     });
     add('Radiants IR', 'Usage prévu par le fabricant', 'A VOIR', 'IP34, conçu pour « surfaces extérieures couvertes »', 'Notice Trotec IR 1500 SC', 'Atmosphère saline (corrosion) + ERP : valider avec le fabricant/bureau de contrôle ; alternative : panneaux rayonnants plafond/mur à faible distance de sécurité, raccordés en fixe sur circuit dédié 10 A.');
-    // Voûte et murs de sel (hypothèse photos)
-    const vg = L.voutes.grotte; const hSud = vaultZ(vg, 1842 + 1) - 2570, hMid = vaultZ(vg, (vg.y0 + vg.y1) / 2) - 2570;
-    add('Murs de sel', 'Mur de sel sud (2,00 m) sous la voûte', hSud >= 2000 ? 'OK' : 'A VOIR', 'voûte à ' + fmt(hSud) + ' au droit du mur (hypothèse : voûte naissant au sol, clé ' + fmt(hMid) + ')', 'Le SketchUp dessine des murs droits de 2,00 m', 'Relever le profil réel de la voûte (photos salle 2) : un mur de 2 m ne tient pas en rive d\'une voûte naissant au sol → mur cintré/ dégressif ou recul du mur.');
-    add('Murs de sel', 'Rétro-éclairage', 'A VOIR', L.mursSel.join(' + '), 'Recul technique derrière les briques pour LED', 'Le mur courbe laisse un vide technique à l\'angle nord-est (accès maintenance, alimentation TBTS IP65 conseillée en atmosphère saline).');
+    // Murs de sel / ambiances
+    add('Murs de sel', 'Implantation des 2 murs de sel', 'OK', L.mursSel.map((w) => w.nom + ' ' + fmt(w.x1 - w.x0) + ' × ' + fmt(w.h)).join(' ; '), 'Croquis du 02/10/2026 : murs nord et sud de la partie basse');
+    add('Murs de sel', 'Rétro-éclairage', 'A VOIR', '10 cm de vide technique derrière chaque mur', 'LED TBTS, IP65 conseillé', 'Prévoir une trappe ou un démontage pour la maintenance des LED.');
+    add('Ambiances', 'Grotte chaude et sèche contiguë au frigidarium froid et humide', 'A VOIR', 'Séparation : porte vitrée 0,80 m', 'Le sel est hygroscopique', 'L\'air humide du frigidarium fait suinter et ronger les briques de sel : porte à fermeture automatique avec joints, grotte en légère surpression ou déshumidification, extraction côté frigidarium.');
+    const lowDepth = 10054 - 8283, gapB6 = lowDepth - 2 * 710;
+    add('Partie basse', 'Espace entre canapés B6 KD face à face', gapB6 >= 600 ? 'OK' : 'NOK', fmt(gapB6) + ' entre les deux assises (profondeur SketchUp ' + fmt(lowDepth) + ')', 'Passage des jambes ≥ 0,60 m ; plan annoté : cotes 1,55 / 2,25', 'Le plan papier suppose une partie basse plus profonde que le SketchUp (1,77 m entre bord du niveau haut et porte). À mesurer sur place ; sinon un seul canapé par côté ou canapés contre les murs de sel.');
+    const alc = 1751 - 84;
+    add('Alcôve', 'Bancs B20B dans l\'alcôve', alc >= 1730 ? 'OK' : 'NOK', 'banc 1,73 m pour ' + fmt(alc) + ' disponibles', 'Cote 1,67 notée sur le plan', 'Il manque ' + fmt(1730 - alc) + ' : banc recoupé ou posé en biais. L\'alcôve est fermée côté grotte dans le SketchUp (mur plein).');
     renderChecks();
   }
 
@@ -433,19 +455,17 @@
   function planToWorld(x, y) { return P(x, y, floorAt(x, y)); }
   function startSession() {
     resetSim();
-    const n = Math.min(L.simulation.effectif, seats.filter((s) => s.zone === 'grotte').length);
-    const caveSeats = seats.filter((s) => s.zone === 'grotte').slice(0, n);
-    const waitSeats = seats.filter((s) => s.zone === 'salle');
     const e = L.simulation.entree;
+    // les premiers arrivés vont au plus loin, pour ne pas croiser les suivants
+    const caveSeats = seats.filter((s) => s.zone === 'grotte' && route(e.x, e.y, s.approach.x, s.approach.y)).sort((a, b) => Math.hypot(b.x - e.x, b.y - e.y) - Math.hypot(a.x - e.x, a.y - e.y));
+    const n = Math.min(L.simulation.effectif, caveSeats.length);
     for (let i = 0; i < n; i++) {
       const g = makeAgent(COLORS[i % COLORS.length]); g.visible = false;
-      const ws = waitSeats[i % waitSeats.length], cs = caveSeats[i];
+      const cs = caveSeats[i];
       const plan = [
-        { at: i * 5, do: 'spawn', x: e.x, y: e.y },
-        { do: 'go', x: ws.approach.x, y: ws.approach.y, label: 'vers l\'accueil' },
-        { do: 'sit', seat: ws, until: 45 + i * 4, label: 'attente / vestiaire' },
-        { do: 'go', x: cs.approach.x, y: cs.approach.y, label: 'vers la grotte' },
-        { do: 'sit', seat: cs, until: 'session', label: 'séance' },
+        { at: i * 3, do: 'spawn', x: e.x, y: e.y },
+        { do: 'go', x: cs.approach.x, y: cs.approach.y, label: 'vers sa place' },
+        { do: 'sit', seat: cs, until: 'session', label: 'séance (chaud/sec)' },
         { do: 'go', x: e.x, y: e.y, label: 'sortie' },
         { do: 'leave' },
       ];
@@ -465,7 +485,11 @@
   function standUp(a) { a.g.rotation.set(0, a.g.rotation.y, 0); a.g.scale.set(1, 1, 1); }
   function sitDown(a, s) {
     const h = floorAt(s.x, s.y); a.g.position.copy(P(s.x, s.y, h)); a.g.rotation.set(0, s.rot * Math.PI / 180 + Math.PI, 0);
-    if (s.pose === 'allonge') { a.g.position.y += 0.45; a.g.rotation.x = 0; a.g.rotateX(Math.PI / 2 - 0.35); a.g.position.add(new THREE.Vector3(0, 0, 0)); }
+    if (s.pose === 'allonge') {
+      // pieds au bout de la chaise longue, corps incliné vers le dossier (côté -z local)
+      const r = s.rot * Math.PI / 180, fx = s.x + 750 * Math.sin(r), fy = s.y - 750 * Math.cos(r);
+      a.g.position.copy(P(fx, fy, h + 380)); a.g.rotation.set(0, r, 0); a.g.rotateX(-(Math.PI / 2 - 0.3));
+    }
     else { a.g.scale.set(1, 0.72, 1); a.g.position.y += 0.02; }
   }
   function stepSim(dt) {
@@ -484,8 +508,9 @@
         return;
       }
       if (t.do === 'sit') {
-        if (!a.sitting) { sitDown(a, t.seat); a.sitting = t.seat; a.state = t.label; }
-        if (t.until === 'session') { seated++; if (simT >= sessionEnd + a.id * 2) { a.sitting = null; standUp(a); a.pos = { x: t.seat.approach.x, y: t.seat.approach.y }; a.step++; } }
+        if (!a.sitting) { sitDown(a, t.seat); a.sitting = t.seat; a.state = t.label; a.sitT = simT; }
+        if (t.dur) { if (simT >= a.sitT + t.dur) { a.sitting = null; standUp(a); a.pos = { x: t.seat.approach.x, y: t.seat.approach.y }; a.step++; } return; }
+        if (t.until === 'session') { if (a.sitting) seated++; if (simT >= sessionEnd + a.id * 2) { a.sitting = null; standUp(a); a.pos = { x: t.seat.approach.x, y: t.seat.approach.y }; a.step++; } }
         else if (simT >= t.until) { a.sitting = null; standUp(a); a.pos = { x: t.seat.approach.x, y: t.seat.approach.y }; a.step++; }
         return;
       }
@@ -511,7 +536,8 @@
   const views = {
     ensemble: () => { useCam(persp); persp.position.set(-2.5, 10.5, 9); controls.target.set(0.5, 0, 0); setCeil(false); },
     plan: () => { useCam(ortho); ortho.position.set(0.3, 30, 0); ortho.up.set(0, 0, -1); controls.target.set(0.3, 0, 0); ortho.lookAt(0.3, 0, 0); setCeil(false); },
-    grotte: () => { useCam(persp); persp.position.copy(P(10500, 3870, 2570 + 1600)); controls.target.copy(P(13200, 3600, 2570 + 900)); setCeil(true); },
+    grotte: () => { useCam(persp); persp.position.copy(P(9900, 3300, 2570 + 1650)); controls.target.copy(P(8600, 6000, 2570 + 900)); setCeil(true); },
+    frigidarium: () => { useCam(persp); persp.position.copy(P(10700, 4400, 2570 + 1600)); controls.target.copy(P(14000, 1900, 2570 + 700)); setCeil(true); },
     escalier: () => { useCam(persp); persp.position.copy(P(6500, 3900, 2870 + 1650)); controls.target.copy(P(10200, 3900, 2570 + 900)); setCeil(true); },
     salle: () => { useCam(persp); persp.position.copy(P(9300, 2300, 2570 + 1700)); controls.target.copy(P(4500, 4300, 2870 + 600)); setCeil(true); },
   };
@@ -539,7 +565,7 @@
   const ray = new THREE.Raycaster(), mouse = new THREE.Vector2();
   renderer.domElement.addEventListener('click', (ev) => {
     const r = renderer.domElement.getBoundingClientRect(); mouse.set(((ev.clientX - r.left) / r.width) * 2 - 1, -((ev.clientY - r.top) / r.height) * 2 + 1);
-    ray.setFromCamera(mouse, camera); const hit = ray.intersectObjects([furnGroup, irGroup, modelGroup], true)[0];
+    ray.setFromCamera(mouse, camera); const hit = ray.intersectObjects([furnGroup, irGroup, saltGroup, modelGroup], true)[0];
     const tip = $('tip'); if (!hit) { tip.style.display = 'none'; return; }
     let o = hit.object; while (o && !o.userData.info && o.parent) o = o.parent;
     const pl = toPlan(hit.point); const z = Math.round(hit.point.y * 1000 + OZ);
