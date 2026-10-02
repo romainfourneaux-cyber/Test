@@ -420,6 +420,8 @@
     // IR
     const md = irM(); const lim = (v) => (v === null || v === undefined ? null : v);
     const half = Math.max(md.L, md.l) / 2;
+    // entraxe mini entre appareils (Fenix : 0,6 m entre panneaux)
+    if (md.hPose) { let dmin = 1e9; irs.forEach((p, i) => irs.forEach((q, j) => { if (j > i) dmin = Math.min(dmin, Math.hypot(p.cfg.x - q.cfg.x, p.cfg.y - q.cfg.y) - Math.max(md.L, md.l)); })); add('Radiants IR', 'Distance entre panneaux', dmin >= 600 ? 'OK' : 'NOK', fmt(dmin), '≥ 0,60 m (notice Fenix)'); }
     irs.forEach((r) => {
       const name = r.cfg.nom; const below = r.bottom - r.fl;
       let wd = 1e9;
@@ -428,15 +430,20 @@
       let fd = 1e9, fname = '';
       items.forEach((it) => { const xs = it.poly.map((p) => p[0]), ys = it.poly.map((p) => p[1]); const dx = Math.max(Math.min(...xs) - r.cfg.x, 0, r.cfg.x - Math.max(...xs)), dy = Math.max(Math.min(...ys) - r.cfg.y, 0, r.cfg.y - Math.max(...ys)); const dz = Math.max(0, r.bottom - (it.h + it.T.H * 1000)); const d = Math.hypot(Math.max(0, Math.hypot(dx, dy) - half), dz); if (d < fd) { fd = d; fname = it.cfg.nom; } });
       const st = (v, m) => (m === null ? 'A VOIR' : v >= m ? 'OK' : 'NOK');
-      const sH = below >= (md.minSousAppareil || 0) && r.gapTop >= (md.ecartPlafond || 0) ? (md.minSousAppareil === null ? 'A VOIR' : 'OK') : 'NOK';
+      const hLibre = r.ceil - r.fl;
+      let sH;
+      if (md.hPose) sH = hLibre >= md.hPose - 5 ? 'OK' : 'NOK'; // hauteur de pose fabricant (± 5 mm d'arrondi)
+      else if (md.minSousAppareil !== null) sH = below >= md.minSousAppareil && r.gapTop >= (md.ecartPlafond || 0) ? 'OK' : 'NOK';
+      else sH = 'A VOIR';
       const sL = st(side, lim(md.minLateral)), sF = st(fd, lim(md.minInflammable));
       r.ok = sH === 'OK' && sL !== 'NOK' && sF !== 'NOK'; r.vol.material.color.set(r.ok ? 0x33cc66 : 0xe03131);
       const ref = (v) => (v === null ? 'non indiqué par la notice' : '≥ ' + fmt(v));
-      add('Radiants IR', name + ' : hauteur de pose', sH, fmt(below) + ' sous l\'appareil, ' + fmt(r.gapTop) + ' au plafond (hauteur libre ' + (isNaN(r.ceil) ? '?' : fmt(r.ceil - r.fl)) + ')', md.nom + ' : sous l\'appareil ' + ref(md.minSousAppareil) + ', au plafond ' + (md.ecartPlafond ? '≥ ' + fmt(md.ecartPlafond) : 'fixation directe'));
+      add('Radiants IR', name + ' : hauteur de pose', sH, fmt(below) + ' sous l\'appareil, ' + fmt(r.gapTop) + ' au plafond (hauteur libre ' + (isNaN(r.ceil) ? '?' : fmt(r.ceil - r.fl)) + ')', md.nom + ' : ' + (md.hPose ? 'hauteur de pose ' + fmt(md.hPose) : 'sous l\'appareil ' + ref(md.minSousAppareil)) + ', au plafond ' + (md.ecartPlafond ? '≥ ' + fmt(md.ecartPlafond) : 'fixation sur cadre'));
       add('Radiants IR', name + ' : distance aux murs', sL, fmt(side), ref(md.minLateral));
       add('Radiants IR', name + ' : distance au mobilier en cèdre', sF, fmt(fd) + ' (' + fname + ')', ref(md.minInflammable) + ' de la face rayonnante');
     });
-    add('Radiants IR', 'Modèle : ' + md.nom, md.interieur && md.plafondBois !== false ? (md.plafondBois ? 'OK' : 'A VOIR') : 'NOK', md.P + ' W, ' + md.IP + ', ' + (md.interieur ? 'usage intérieur prévu' : 'usage intérieur non prévu') + ', plafond bois : ' + (md.plafondBois === true ? 'autorisé' : md.plafondBois === false ? 'non autorisé' : 'non précisé'), 'Notice : ' + md.source, md.note || '');
+    const ipEau = +(md.IP.match(/IP\d(\d)/) || [0, 0])[1];
+    add('Radiants IR', 'Modèle : ' + md.nom, md.interieur && md.plafondBois !== false && ipEau >= 4 ? (md.plafondBois ? 'OK' : 'A VOIR') : 'NOK', md.P + ' W, ' + md.IP + ', ' + (md.interieur ? 'usage intérieur prévu' : 'usage intérieur non prévu') + ', plafond bois : ' + (md.plafondBois === true ? 'autorisé' : md.plafondBois === false ? 'non autorisé' : 'non précisé'), 'Usage intérieur, plafond bois admis, IP x4 mini (humidité / projections) — notice : ' + md.source, md.note || '');
     // Murs de sel / ambiances
     add('Murs de sel', 'Implantation des 2 murs de sel', 'OK', L.mursSel.map((w) => w.nom + ' ' + fmt(w.x1 - w.x0) + ' × ' + fmt(w.h)).join(' ; '), 'Croquis du 02/10/2026 : murs nord et sud de la partie basse');
     add('Murs de sel', 'Rétro-éclairage', 'A VOIR', '10 cm de vide technique derrière chaque mur', 'LED TBTS, IP65 conseillé', 'Prévoir une trappe ou un démontage pour la maintenance des LED.');

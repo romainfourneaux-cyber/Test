@@ -63,7 +63,8 @@ window.LAYOUT = {
     { type: 'banc', x: 7860, y: 917, rot: 270, nom: 'Banc long B20B — alcôve est' },
   ],
 
-  // ---------- Radiants IR : repères ⊕ du plan annoté (modèle : voir js/ir-models.js) ----------
+  // ---------- Radiants IR : repères ⊕ du plan annoté ; modèle par défaut (liste dans js/ir-models.js) ----------
+  irModele: 'ecosun600',
   ir: [
     { x: 3973, y: 2981, chaine: 500, nom: 'IR salle haute sud-ouest' },
     { x: 6658, y: 2856, chaine: 500, nom: 'IR salle haute sud-est' },

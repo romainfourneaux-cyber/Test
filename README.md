@@ -24,7 +24,7 @@ coordonnées X/Y/Z dans le repère SketchUp.
 ## Ce que fait la maquette
 
 - **Géométrie** : lue directement dans le `.skp` (447 sommets, 734 arêtes, 280 faces) par `tools/skp_extract.py`.
-- **Textures** : moellons gris-bleu à joints orangés et voûte brique (salle carrelée), dallage pierre, chape sombre,
+- **Textures** : moellons gris-bleu à joints orangés, plafond plat en lames de bois sur solives (grotte), dallage pierre, chape sombre,
   croûte de sel blanche (voûte de la salle 2, d'après les photos), briques de sel de l'Himalaya rétro-éclairées.
 - **Équipements** (`js/layout.js`, d'après le plan annoté `docs/plan_annote.jpg`) : salle haute avec 6 chaises longues
   B17 et 4 fauteuils B4A KD ; partie basse avec 4 canapés B6 KD et les 2 murs de sel (nord et sud) ; 2 bancs B20B dans
@@ -55,7 +55,6 @@ py tools\skp_extract.py model\grotte_de_sel1.skp js\model-data.js
 - **Profondeur de la partie basse** : 1,77 m dans le SketchUp, alors que le plan papier (cotes 1,55 / 2,25) semble en
   supposer davantage. Ça décide si les 4 canapés B6 KD tiennent.
 - **Voûte du frigidarium** : non dessinée dans le SketchUp, prise d'après les photos (berceau naissant au sol, clé 2,50 m).
-- **Plafond de la partie basse** : plat, bois, à 2,50 m.
 - **Positions exactes** : les meubles et les lampes IR sont reportés depuis une photo en perspective du plan ; à ajuster
   dans `js/layout.js` si besoin.
 
@@ -73,5 +72,7 @@ model/                  fichier SketchUp source
 docs/photos/            photos du chantier
 docs/references/        notice Trotec IR 1500 SC (FR)
 docs/CONTROLES.md       synthèse des contrôles
+docs/RADIANTS_IR.md     comparatif des radiants infrarouges
+js/ir-models.js         caractéristiques des radiants (notices)
 docs/plan_annote.jpg    plan annoté à la main (référence de l'aménagement)
 ```
