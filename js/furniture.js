@@ -42,7 +42,7 @@
       log(g, -W / 2, 0.12, -L / 2 + 0.15, W / 2, 0.12, -L / 2 + 0.15); log(g, -W / 2, 0.12, L / 2 - 0.15, W / 2, 0.12, L / 2 - 0.15);
       for (let z = -0.25; z < L / 2 - 0.05; z += 0.08) slat(g, W - 0.04, 0.02, 0.065, 0, 0.33, z);
       for (let i = 0; i < 8; i++) { const t = i * 0.08; slat(g, W - 0.08, 0.02, 0.085, 0, 0.36 + t * 0.75, -0.3 - t * 0.66, 0.85); }
-    }, seats: [{ x: 0, z: 0.1, pose: 'allonge' }], approach: [{ x: 0.75, z: 0.2 }, { x: -0.75, z: 0.2 }] },
+    }, seats: [{ x: 0, z: 0.1, pose: 'allonge' }], approach: [{ x: 0.75, z: 0.2 }, { x: -0.75, z: 0.2 }, { x: 0, z: 1.25 }] }, // côtés ou pied
 
     teteATete: { nom: 'Tête-à-tête B7 TT', L: 1.55, P: 0.71, H: 0.94, build(g) {
       seatBlock(g, -0.72, -0.18, 0.71, 0.36, 0.94, false); seatBlock(g, 0.18, 0.72, 0.71, 0.36, 0.94, false);

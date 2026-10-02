@@ -53,11 +53,10 @@ window.LAYOUT = {
     { type: 'chaiseLongue', x: 6470, y: 5216, rot: 0, nom: 'Chaise longue B17 n°4' },
     { type: 'chaiseLongue', x: 7180, y: 5216, rot: 0, nom: 'Chaise longue B17 n°5' },
     { type: 'chaiseLongue', x: 7890, y: 5216, rot: 0, nom: 'Chaise longue B17 n°6' },
-    // Partie basse : 4 × B6 KD, de chaque côté de l'escalier : un contre le bord du niveau haut, un contre le mur de la porte
-    { type: 'canape2', x: 8658, y: 2793, rot: 90, nom: 'Canapé B6 KD — bas sud, côté marches' },
-    { type: 'canape2', x: 9679, y: 2793, rot: 270, nom: 'Canapé B6 KD — bas sud, côté porte' },
-    { type: 'canape2', x: 8658, y: 5156, rot: 90, nom: 'Canapé B6 KD — bas nord, côté marches' },
-    { type: 'canape2', x: 9679, y: 5156, rot: 270, nom: 'Canapé B6 KD — bas nord, côté porte' },
+    // Partie basse : 1 chaise longue B17 de chaque côté de l'escalier, parallèle aux murs de sel, pieds vers la porte
+    // (remplace les 4 canapés B6 KD ; B17 = 1,81 m pour 1,77 m de profondeur dans le SketchUp)
+    { type: 'chaiseLongue', x: 9168, y: 5156, rot: 90, nom: 'Chaise longue B17 — bas nord (mur de sel nord)' },
+    { type: 'chaiseLongue', x: 9168, y: 2793, rot: 90, nom: 'Chaise longue B17 — bas sud (mur de sel sud)' },
     // Alcôve sud : 2 × B20B le long des petits côtés (cote 1,67 m notée sur le plan)
     { type: 'banc', x: 5600, y: 917, rot: 90, nom: 'Banc long B20B — alcôve ouest' },
     { type: 'banc', x: 7860, y: 917, rot: 270, nom: 'Banc long B20B — alcôve est' },

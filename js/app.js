@@ -236,7 +236,7 @@
     const poly = corners.map((c) => [c.x, c.y]);
     for (let j = 0; j < NY; j++) for (let i = 0; i < NX; i++) if (pip([cellX(i), cellY(j)], poly)) furn[idx(i, j)] = 1;
     const it = { cfg: f, T, g, poly, h, k, zone: f.x > 10311 ? 'frigidarium' : f.y < 1751 ? 'alcove' : 'grotte' }; items.push(it);
-    T.seats.forEach((s, si) => { const p = loc2plan(s.x, s.z), ap = loc2plan(T.approach[si].x, T.approach[si].z); seats.push({ item: it, x: p.x, y: p.y, pose: s.pose, rot: f.rot, approach: ap, zone: it.zone, taken: false }); });
+    T.seats.forEach((s, si) => { const p = loc2plan(s.x, s.z), ap = loc2plan(T.approach[si].x, T.approach[si].z); seats.push({ item: it, x: p.x, y: p.y, pose: s.pose, rot: f.rot, approach: ap, approaches: T.approach.map((q) => loc2plan(q.x, q.z)), zone: it.zone, taken: false }); });
   });
 
   // ------------------------------------------------------------------ rampes (mains courantes)
@@ -403,6 +403,8 @@
   const fmt = (mm) => (mm / 1000).toFixed(2).replace('.', ',') + ' m';
   function runChecks() {
     checks.length = 0;
+    // accès à chaque place : le côté le plus proche qui est relié à l'entrée
+    seats.forEach((st) => { const cands = st.approaches.slice().sort((a, b) => Math.hypot(a.x - st.x, a.y - st.y) - Math.hypot(b.x - st.x, b.y - st.y)); const ok = cands.find((c) => route(L.simulation.entree.x, L.simulation.entree.y, c.x, c.y) && Math.hypot(nearestPassable(c.x, c.y) ? 0 : 1e9, 0) === 0 && (() => { const np = nearestPassable(c.x, c.y); return np && Math.hypot(cellX(np[0]) - c.x, cellY(np[1]) - c.y) < 400 && Math.abs(floorH[idx(np[0], np[1])] - floorAt(st.x, st.y)) < 100; })()); if (ok) st.approach = ok; });
     // Escalier (valeurs lues sur le modèle SketchUp)
     const stW = 4272 - 3542, riser1 = 2870 - 2720, riser2 = 2720 - 2570, giron = 9336 - 9066;
     add('Escalier', 'Largeur de l\'escalier (entre parois)', stW >= 900 ? 'OK' : 'NOK', fmt(stW), '≥ 0,90 m (1 UP) ; ERP existant PMR : 1,00 m entre mains courantes', 'Avec 2 mains courantes, passage réel ≈ ' + fmt(stW - 2 * 60) + '. Élargir l\'emmarchement à ≥ 1,00 m ou réserver l\'accès à un flux alterné.');
@@ -489,8 +491,13 @@
     add('Murs de sel', 'Implantation des 2 murs de sel', 'OK', L.mursSel.map((w) => w.nom + ' ' + fmt(w.x1 - w.x0) + ' × ' + fmt(w.h)).join(' ; '), 'Croquis du 02/10/2026 : murs nord et sud de la partie basse');
     add('Murs de sel', 'Rétro-éclairage', 'A VOIR', '10 cm de vide technique derrière chaque mur', 'LED TBTS, IP65 conseillé', 'Prévoir une trappe ou un démontage pour la maintenance des LED.');
     add('Ambiances', 'Grotte chaude et sèche contiguë au frigidarium froid et humide', 'A VOIR', 'Séparation : porte vitrée 0,80 m', 'Le sel est hygroscopique', 'L\'air humide du frigidarium fait suinter et ronger les briques de sel : porte à fermeture automatique avec joints, grotte en légère surpression ou déshumidification, extraction côté frigidarium.');
-    const lowDepth = 10054 - 8283, gapB6 = lowDepth - 2 * 710;
-    add('Partie basse', 'Espace entre canapés B6 KD face à face', gapB6 >= 600 ? 'OK' : 'NOK', fmt(gapB6) + ' entre les deux assises (profondeur SketchUp ' + fmt(lowDepth) + ')', 'Passage des jambes ≥ 0,60 m ; plan annoté : cotes 1,55 / 2,25', 'Le plan papier suppose une partie basse plus profonde que le SketchUp (1,77 m entre bord du niveau haut et porte). À mesurer sur place ; sinon un seul canapé par côté ou canapés contre les murs de sel.');
+    const lowDepth = 10054 - 8283;
+    items.filter((it) => it.cfg.x > 8283 && it.cfg.x < 10054 && it.cfg.y > 1751).forEach((it) => {
+      const xs = it.poly.map((p) => p[0]), ys = it.poly.map((p) => p[1]);
+      const over = Math.max(0, 8283 - Math.min(...xs)) + Math.max(0, Math.max(...xs) - 10054);
+      const salt = L.mursSel.reduce((m, w) => Math.max(m, Math.min(Math.max(...ys), w.y1) - Math.max(Math.min(...ys), w.y0) > 0 ? 1 : 0), 0);
+      add('Partie basse', it.cfg.nom, over > 5 || salt ? 'NOK' : 'OK', over > 5 ? 'dépasse de ' + Math.round(over / 10) + ' cm (profondeur SketchUp ' + fmt(lowDepth) + ' entre le bord du niveau haut et le mur de la porte)' : 'tient dans la partie basse', it.T.nom + ' : ' + Math.round(it.T.P * 100) + ' × ' + Math.round(it.T.L * 100) + ' cm', over > 5 ? 'À mesurer sur place : le plan papier semble plus profond. Sinon, pose en diagonale (côté nord seulement, 3 cm de marge).' : '');
+    });
     const alc = 1751 - 84;
     add('Alcôve', 'Bancs B20B dans l\'alcôve', alc >= 1730 ? 'OK' : 'NOK', 'banc 1,73 m pour ' + fmt(alc) + ' disponibles', 'Cote 1,67 notée sur le plan', 'Il manque ' + fmt(1730 - alc) + ' : banc recoupé ou posé en biais. L\'alcôve est fermée côté grotte dans le SketchUp (mur plein).');
     renderChecks();

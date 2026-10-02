@@ -27,7 +27,7 @@ coordonnées X/Y/Z dans le repère SketchUp.
 - **Textures** : moellons gris-bleu à joints orangés, plafond plat en lames de bois sur solives (grotte), dallage pierre, chape sombre,
   croûte de sel blanche (voûte de la salle 2, d'après les photos), briques de sel de l'Himalaya rétro-éclairées.
 - **Équipements** (`js/layout.js`, d'après le plan annoté `docs/plan_annote.jpg`) : salle haute avec 6 chaises longues
-  B17 et 4 fauteuils B4A KD ; partie basse avec 4 canapés B6 KD et les 2 murs de sel (nord et sud) ; 2 bancs B20B dans
+  B17 et 4 fauteuils B4A KD ; partie basse avec 2 chaises longues B17 (une de chaque côté de l'escalier) et les 2 murs de sel (nord et sud) ; 2 bancs B20B dans
   l'alcôve ; 6 radiants au choix (menu « Radiants infrarouges » : Fenix ECOSUN 600 U par défaut, voir docs/RADIANTS_IR.md) avec leur volume de sécurité
   (vert = conforme, rouge = non conforme) ; 2 mains courantes inox à 0,90 m.
 - **Locaux** : grotte de sel chaude et sèche = salle haute + partie basse ; frigidarium froid et humide derrière la porte

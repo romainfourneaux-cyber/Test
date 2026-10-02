@@ -12,7 +12,7 @@ Frigidarium froid et humide derrière la porte vitrée de 0,80 m (vue rivière).
 | # | Point | Mesure | Exigence | Piste |
 |---|---|---|---|---|
 | 1 | Radiants : Trotec IR 1500 SC non conforme (2,54 m de hauteur libre, 1 m des murs et des inflammables, usage extérieur) | | | **remplacé par 6 × Fenix ECOSUN 600 U** : conforme aux 6 repères (voir docs/RADIANTS_IR.md) |
-| 2 | Canapés B6 KD face à face (partie basse) | 0,35 m entre assises ; les 2 canapés côté porte n'ont aucun accès | ≥ 0,60 m pour les jambes, accès à chaque place | le SketchUp donne 1,77 m de profondeur, le plan papier (cotes 1,55 / 2,25) suppose plus : mesurer sur place |
+| 2 | Chaises longues B17 de la partie basse (1 de chaque côté de l'escalier, à la place des 4 canapés B6 KD) | 1,81 m pour 1,77 m : dépassent de 4 cm | tenir entre le bord du niveau haut et le mur de la porte | mesurer la profondeur réelle ; à défaut, côté nord en diagonale (3 cm de marge), côté sud impossible (1,50 m de large) |
 | 3 | Bancs B20B dans l'alcôve | 1,73 m pour 1,67 m | | recouper ou poser en biais |
 | 4 | Largeur de l'escalier | 0,73 m (≈ 0,61 m entre rampes) | 0,90 m (1 UP) ; PMR existant 1,00 m | |
 | 5 | Giron | 27 cm | ≥ 28 cm | |
@@ -20,8 +20,8 @@ Frigidarium froid et humide derrière la porte vitrée de 0,80 m (vue rivière).
 
 ## À surveiller
 
-- **Effectif** : 18 places + accompagnant, avec une seule porte de circulation. À 20 personnes, il faut 2 dégagements :
-  afficher un maximum de 19 personnes, personnel compris.
+- **Effectif** : 12 places (4 fauteuils, 8 chaises longues) + accompagnant, avec une seule porte de circulation. À 20 personnes, il faut 2 dégagements :
+  conforme, avec de la marge sous les 20 personnes.
 - **Sel et humidité** : le frigidarium froid et humide touche la grotte. Le sel est hygroscopique :
   porte à fermeture automatique avec joints, grotte en légère surpression ou déshumidifiée, extraction côté frigidarium.
 - **Radiants ECOSUN** : faire confirmer par Fenix la tenue en atmosphère saline et la température ambiante maxi (30 °C dans la notice 2025).
