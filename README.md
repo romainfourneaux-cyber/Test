@@ -1,7 +1,7 @@
 # Grotte de sel — Aquensis (travaux intersaison 2026)
 
 Maquette 3D interactive de la future grotte de sel, construite à partir du SketchUp `model/grotte_de_sel1.skp`,
-avec le mobilier Cèdre & Rondins, les radiants infrarouges Trotec, les mains courantes, les deux murs de sel
+avec le mobilier Cèdre & Rondins, les panneaux infrarouges (Fenix ECOSUN, comparés à d'autres modèles), les mains courantes, les deux murs de sel
 rétro-éclairés, un contrôle automatique des dégagements et une simulation de circulation des curistes.
 
 ![Vue d'ensemble](docs/captures/ensemble.jpg)
@@ -28,7 +28,7 @@ coordonnées X/Y/Z dans le repère SketchUp.
   croûte de sel blanche (voûte de la salle 2, d'après les photos), briques de sel de l'Himalaya rétro-éclairées.
 - **Équipements** (`js/layout.js`, d'après le plan annoté `docs/plan_annote.jpg`) : salle haute avec 6 chaises longues
   B17 et 4 fauteuils B4A KD ; partie basse avec 4 canapés B6 KD et les 2 murs de sel (nord et sud) ; 2 bancs B20B dans
-  l'alcôve ; 6 radiants Trotec IR 1500 SC (Ø 42 × 24 cm, chaîne 50 cm) avec leur volume de sécurité
+  l'alcôve ; 6 radiants au choix (menu « Radiants infrarouges » : Fenix ECOSUN 600 U par défaut, voir docs/RADIANTS_IR.md) avec leur volume de sécurité
   (vert = conforme, rouge = non conforme) ; 2 mains courantes inox à 0,90 m.
 - **Locaux** : grotte de sel chaude et sèche = salle haute + partie basse ; frigidarium froid et humide derrière la porte
   vitrée de 0,80 m (vue rivière).
@@ -41,7 +41,7 @@ coordonnées X/Y/Z dans le repère SketchUp.
 ## Modifier l'aménagement
 
 Tout se règle dans **`js/layout.js`** (Bloc-notes suffit) : position `x`, `y` en mm dans le repère SketchUp,
-orientation `rot` en degrés, liste des murs de sel éclairés, hauteur de chaîne des radiants, hypothèses de voûte.
+orientation `rot` en degrés, liste des murs de sel éclairés, modèle de radiant (irModele), plafonds.
 Recharger la page (F5) : les contrôles se recalculent.
 
 Si le SketchUp change, régénérer la géométrie (Python 3 installé) :
