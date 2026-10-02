@@ -66,12 +66,12 @@ window.LAYOUT = {
   // ---------- Radiants IR : repères ⊕ du plan annoté ; modèle par défaut (liste dans js/ir-models.js) ----------
   irModele: 'ecosun600',
   ir: [
-    { x: 3973, y: 2981, chaine: 500, nom: 'IR salle haute sud-ouest' },
-    { x: 6658, y: 2856, chaine: 500, nom: 'IR salle haute sud-est' },
-    { x: 6382, y: 5041, chaine: 500, nom: 'IR salle haute nord-est' },
-    { x: 3948, y: 5179, chaine: 500, nom: 'IR salle haute nord-ouest' },
-    { x: 9126, y: 3069, chaine: 500, nom: 'IR partie basse sud' },
-    { x: 9322, y: 5222, chaine: 500, nom: 'IR partie basse nord' },
+    { x: 3973, y: 2981, nom: 'IR salle haute sud-ouest' },
+    { x: 6658, y: 2856, nom: 'IR salle haute sud-est' },
+    { x: 6382, y: 5041, nom: 'IR salle haute nord-est' },
+    { x: 3948, y: 5179, nom: 'IR salle haute nord-ouest' },
+    { x: 9126, y: 3069, nom: 'IR partie basse sud' },
+    { x: 9322, y: 5222, nom: 'IR partie basse nord' },
   ],
 
   // ---------- Rampes (mains courantes) d'escalier ----------

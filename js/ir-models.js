@@ -35,6 +35,13 @@ window.IR_MODELES = {
     note: 'Plafond bois admis (support 85 °C en continu). Mais IP30 et « ne pas exposer à l\'humidité » : déconseillé en atmosphère saline.',
     source: 'https://www.infrarotheizung-vitramo.de/files/downloads/datenblaetter/VH06262%20Datenblatt%20Vitramo%20Infrarotheizung.pdf',
   },
+  trotec2000c: {
+    nom: 'Trotec IR 2000 C (plafond, halogène)', forme: 'panneau', couleur: 'noir', L: 690, l: 385, h: 110, P: 2000, IP: 'IP55',
+    montage: 'chaine', ecartPlafond: 300, minSousAppareil: 1800, minLateral: 1000, minInflammable: 1800,
+    interieur: false, plafondBois: null,
+    note: 'Notice : 30 cm vers le haut, 1,80 m vers le bas, 1 m sur les côtés et vers l\'avant, 1,80 m de la face rayonnante aux matériaux inflammables. Usage « extérieur couvert », interdit en « atmosphères agressives » et à l\'humidité.',
+    source: 'https://fr.trotec.com/fileadmin/downloads/Beheizung/ir2000c_irs2010/TRT-BA-IR2000C-IRS2010-TC-004-FR.pdf',
+  },
   trotec: {
     nom: 'Trotec IR 1500 SC', forme: 'rond', L: 420, l: 420, h: 240, P: 1500, IP: 'IP34',
     montage: 'chaine', ecartPlafond: 500, minSousAppareil: 1800, minLateral: 1000, minInflammable: 1000,

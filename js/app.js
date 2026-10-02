@@ -260,7 +260,7 @@
     irGroup.clear(); irs = []; const md = irM();
     L.ir.forEach((c) => {
       const ceil = ceilingAt(c.x, c.y); const fl = floorAt(c.x, c.y);
-      const gapTop = md.montage === 'chaine' ? Math.max(md.ecartPlafond, c.chaine || 0) : md.ecartPlafond;
+      const gapTop = md.ecartPlafond; // chaîne au plus court autorisé par la notice
       const top = (isNaN(ceil) ? 5070 : ceil) - gapTop; const bottom = top - md.h;
       let g;
       if (md.forme === 'rond') g = FURNITURE.ir(MAT);
