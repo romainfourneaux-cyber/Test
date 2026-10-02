@@ -15,13 +15,14 @@
 window.LAYOUT = {
   // ---------- Volumes non dessinés dans le SketchUp (hypothèses à corriger après relevé) ----------
   voutes: {
-    // Salle carrelée (voûte brique) : arc relevé sur le pignon ouest du modèle
-    salleA: { x0: 3103, x1: 7996, y0: 1901, y1: 6141, naissance: 3513, cle: 5350 },
     // Frigidarium : voûte encroûtée de sel (photos de la salle du fond), naissance au sol
     frigidarium: { x0: 10054, x1: 15241, y0: 1842, y1: 6242, naissance: 2570, cle: 5070 },
-    // Grotte (partie basse) : plafond bois plat, hauteur des murs du modèle
-    grotte: { x0: 8283, x1: 10054, y0: 1842, y1: 6242, z: 5070 },
   },
+  // Grotte : plafond PLAT en bois (lames + solives) ; z = sous-face des solives (hauteur libre = z - sol)
+  plafonds: [
+    { nom: 'Salle haute (H 2,50 m, plan annoté)', x0: 2953, x1: 8283, y0: 1751, y1: 6291, z: 2870 + 2500 },
+    { nom: 'Partie basse (H 2,50 m)', x0: 8283, x1: 10054, y0: 1842, y1: 6242, z: 2570 + 2500 },
+  ],
 
   // ---------- Murs de sel rétro-éclairés de la grotte ----------
   // Implantation validée sur croquis (murs nord et sud de la partie basse, toute la longueur),
@@ -40,36 +41,36 @@ window.LAYOUT = {
 
   // ---------- Mobilier Cèdre & Rondins — d'après le plan annoté (docs/plan_annote.jpg) ----------
   mobilier: [
-    // Salle haute voûtée : 3 × B4A KD le long du mur sud, 1 × B4A KD au nord près de la porte
-    { type: 'fauteuilHaut', x: 4150, y: 2300, rot: 180, nom: 'Fauteuil B4A KD — salle haute sud 1' },
-    { type: 'fauteuilHaut', x: 5250, y: 2300, rot: 180, nom: 'Fauteuil B4A KD — salle haute sud 2' },
-    { type: 'fauteuilHaut', x: 6350, y: 2300, rot: 180, nom: 'Fauteuil B4A KD — salle haute sud 3' },
-    { type: 'fauteuilHaut', x: 3650, y: 5650, rot: 0, nom: 'Fauteuil B4A KD — salle haute nord' },
-    // Salle haute : 6 × B17 côte à côte, tête au mur nord, pieds vers l'allée centrale
-    { type: 'chaiseLongue', x: 4400, y: 5200, rot: 0, nom: 'Chaise longue B17 n°1' },
-    { type: 'chaiseLongue', x: 5050, y: 5200, rot: 0, nom: 'Chaise longue B17 n°2' },
-    { type: 'chaiseLongue', x: 5700, y: 5200, rot: 0, nom: 'Chaise longue B17 n°3' },
-    { type: 'chaiseLongue', x: 6350, y: 5200, rot: 0, nom: 'Chaise longue B17 n°4' },
-    { type: 'chaiseLongue', x: 7000, y: 5200, rot: 0, nom: 'Chaise longue B17 n°5' },
-    { type: 'chaiseLongue', x: 7650, y: 5200, rot: 0, nom: 'Chaise longue B17 n°6' },
-    // Partie basse : 4 × B6 KD (canapé 2 places), 2 de chaque côté de l'escalier, face à face
-    { type: 'canape2', x: 8640, y: 2760, rot: 90, nom: 'Canapé B6 KD — bas sud-ouest' },
-    { type: 'canape2', x: 9700, y: 2760, rot: 270, nom: 'Canapé B6 KD — bas sud-est' },
-    { type: 'canape2', x: 8640, y: 5150, rot: 90, nom: 'Canapé B6 KD — bas nord-ouest' },
-    { type: 'canape2', x: 9700, y: 5150, rot: 270, nom: 'Canapé B6 KD — bas nord-est' },
+    // Salle haute : 3 × B4A KD groupés côté porte le long du mur sud, 1 × B4A KD au nord à côté de la porte
+    { type: 'fauteuilHaut', x: 3450, y: 2300, rot: 180, nom: 'Fauteuil B4A KD — sud 1' },
+    { type: 'fauteuilHaut', x: 4120, y: 2300, rot: 180, nom: 'Fauteuil B4A KD — sud 2' },
+    { type: 'fauteuilHaut', x: 4790, y: 2300, rot: 180, nom: 'Fauteuil B4A KD — sud 3' },
+    { type: 'fauteuilHaut', x: 3550, y: 5700, rot: 0, nom: 'Fauteuil B4A KD — nord' },
+    // Salle haute : 6 × B17 côte à côte, tête au mur nord, de la porte jusqu'au bord du niveau haut (« au ras de la porte »)
+    { type: 'chaiseLongue', x: 4340, y: 5216, rot: 0, nom: 'Chaise longue B17 n°1' },
+    { type: 'chaiseLongue', x: 5050, y: 5216, rot: 0, nom: 'Chaise longue B17 n°2' },
+    { type: 'chaiseLongue', x: 5760, y: 5216, rot: 0, nom: 'Chaise longue B17 n°3' },
+    { type: 'chaiseLongue', x: 6470, y: 5216, rot: 0, nom: 'Chaise longue B17 n°4' },
+    { type: 'chaiseLongue', x: 7180, y: 5216, rot: 0, nom: 'Chaise longue B17 n°5' },
+    { type: 'chaiseLongue', x: 7890, y: 5216, rot: 0, nom: 'Chaise longue B17 n°6' },
+    // Partie basse : 4 × B6 KD, de chaque côté de l'escalier : un contre le bord du niveau haut, un contre le mur de la porte
+    { type: 'canape2', x: 8658, y: 2793, rot: 90, nom: 'Canapé B6 KD — bas sud, côté marches' },
+    { type: 'canape2', x: 9679, y: 2793, rot: 270, nom: 'Canapé B6 KD — bas sud, côté porte' },
+    { type: 'canape2', x: 8658, y: 5156, rot: 90, nom: 'Canapé B6 KD — bas nord, côté marches' },
+    { type: 'canape2', x: 9679, y: 5156, rot: 270, nom: 'Canapé B6 KD — bas nord, côté porte' },
     // Alcôve sud : 2 × B20B le long des petits côtés (cote 1,67 m notée sur le plan)
     { type: 'banc', x: 5600, y: 917, rot: 90, nom: 'Banc long B20B — alcôve ouest' },
     { type: 'banc', x: 7860, y: 917, rot: 270, nom: 'Banc long B20B — alcôve est' },
   ],
 
-  // ---------- Radiants infrarouges Trotec IR 1500 SC (Ø420 × h240, chaîne 50 cm) — repères ⊕ du plan ----------
+  // ---------- Radiants IR : repères ⊕ du plan annoté (modèle : voir js/ir-models.js) ----------
   ir: [
-    { x: 3970, y: 2970, chaine: 500, nom: 'IR salle haute sud-ouest' },
-    { x: 6660, y: 2840, chaine: 500, nom: 'IR salle haute sud-est' },
-    { x: 6390, y: 5040, chaine: 500, nom: 'IR salle haute nord-est' },
-    { x: 3950, y: 5170, chaine: 500, nom: 'IR salle haute nord-ouest' },
-    { x: 9170, y: 2800, chaine: 500, nom: 'IR partie basse sud' },
-    { x: 9170, y: 5150, chaine: 500, nom: 'IR partie basse nord' },
+    { x: 3973, y: 2981, chaine: 500, nom: 'IR salle haute sud-ouest' },
+    { x: 6658, y: 2856, chaine: 500, nom: 'IR salle haute sud-est' },
+    { x: 6382, y: 5041, chaine: 500, nom: 'IR salle haute nord-est' },
+    { x: 3948, y: 5179, chaine: 500, nom: 'IR salle haute nord-ouest' },
+    { x: 9126, y: 3069, chaine: 500, nom: 'IR partie basse sud' },
+    { x: 9322, y: 5222, chaine: 500, nom: 'IR partie basse nord' },
   ],
 
   // ---------- Rampes (mains courantes) d'escalier ----------

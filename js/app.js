@@ -31,10 +31,12 @@
   Object.values(TX).forEach((t) => { t.encoding = THREE.sRGBEncoding; });
   const MAT = {
     stone: std(TX.stone), brick: std(TX.brick), tile: std(TX.tiles, { roughness: 0.7 }), screed: std(TX.screed), step: std(TX.step),
-    plaster: std(TX.plaster), wood: std(TX.wood), saltCrust: std(TX.saltCrust),
+    plaster: std(TX.plaster), wood: std(TX.wood), planks: std(TX.planks), saltCrust: std(TX.saltCrust),
     salt: std(TX.saltBricks, { emissive: 0xffffff, emissiveMap: TX.saltBricks, emissiveIntensity: 0.85, roughness: 0.6 }),
     log: std(TX.cedar, { side: THREE.FrontSide }), slat: std(TX.cedar, { side: THREE.FrontSide }),
     irBody: new THREE.MeshStandardMaterial({ color: 0x1a1a1a, metalness: 0.6, roughness: 0.4, side: THREE.DoubleSide }),
+    irPanel: new THREE.MeshStandardMaterial({ color: 0xf2f2f0, roughness: 0.5 }),
+    irFace: new THREE.MeshStandardMaterial({ color: 0xe8e8e6, emissive: 0xff3a00, emissiveIntensity: 0.0, side: THREE.DoubleSide }),
     irGlow: new THREE.MeshStandardMaterial({ color: 0x331100, emissive: 0xff3a00, emissiveIntensity: 0.0, wireframe: true }),
     rail: new THREE.MeshStandardMaterial({ color: 0xd8dadc, metalness: 0.9, roughness: 0.25 }),
     glass: new THREE.MeshStandardMaterial({ color: 0xcfe3ea, transparent: true, opacity: 0.35, roughness: 0.1, side: THREE.DoubleSide }),
@@ -126,15 +128,18 @@
     g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3)); g.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2)); g.computeVertexNormals();
     const m = new THREE.Mesh(g, mat); m.receiveShadow = true; ceilings.add(m);
   }
-  vault(L.voutes.salleA, MAT.brick, TX.brick.userData.meters);
   vault(L.voutes.frigidarium, MAT.saltCrust, TX.saltCrust.userData.meters);
-  { const c = L.voutes.grotte; const w = (c.x1 - c.x0) / 1000, d = (c.y1 - c.y0) / 1000;
-    const g = new THREE.PlaneGeometry(w, d); const m = new THREE.Mesh(g, MAT.wood); m.rotation.x = Math.PI / 2;
-    m.position.copy(P((c.x0 + c.x1) / 2, (c.y0 + c.y1) / 2, c.z)); ceilings.add(m);
-    for (let x = c.x0 + 300; x < c.x1; x += 600) { const j = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.16, d), MAT.wood); j.position.copy(P(x, (c.y0 + c.y1) / 2, c.z - 80)); ceilings.add(j); } }
+  // plafonds plats en bois de la grotte : lames + solives apparentes (photos de la partie basse)
+  L.plafonds.forEach((c) => {
+    const w = (c.x1 - c.x0) / 1000, d = (c.y1 - c.y0) / 1000, s = TX.planks.userData.meters;
+    const g = new THREE.PlaneGeometry(w, d); const uv = g.attributes.uv; for (let q = 0; q < uv.count; q++) uv.setXY(q, uv.getX(q) * w / s, uv.getY(q) * d / s);
+    const m = new THREE.Mesh(g, MAT.planks); m.rotation.x = Math.PI / 2; m.position.copy(P((c.x0 + c.x1) / 2, (c.y0 + c.y1) / 2, c.z + 120)); ceilings.add(m);
+    for (let x = c.x0 + 250; x < c.x1; x += 500) { const j = new THREE.Mesh(new THREE.BoxGeometry(0.075, 0.12, d), MAT.wood); j.position.copy(P(x, (c.y0 + c.y1) / 2, c.z + 60)); j.castShadow = true; ceilings.add(j); }
+  });
+  // c.z = sous-face des solives = hauteur libre
   function ceilingAt(x, y) {
-    for (const k of ['salleA', 'frigidarium']) { const v = L.voutes[k]; if (x >= v.x0 && x <= v.x1 && y >= v.y0 && y <= v.y1) return vaultZ(v, y); }
-    const c = L.voutes.grotte; if (x >= c.x0 && x <= c.x1 && y >= c.y0 && y <= c.y1) return c.z;
+    for (const c of L.plafonds) if (x >= c.x0 && x <= c.x1 && y >= c.y0 && y <= c.y1) return c.z;
+    const v = L.voutes.frigidarium; if (x >= v.x0 && x <= v.x1 && y >= v.y0 && y <= v.y1) return vaultZ(v, y);
     return NaN;
   }
 
@@ -247,20 +252,34 @@
   });
 
 
-  // ------------------------------------------------------------------ radiants IR + volumes de sécurité
-  const irGroup = new THREE.Group(); scene.add(irGroup); const irs = [];
-  L.ir.forEach((c) => {
-    const ceil = ceilingAt(c.x, c.y); const fl = floorAt(c.x, c.y);
-    const top = (isNaN(ceil) ? 5070 : ceil) - c.chaine; const bottom = top - 240;
-    const g = FURNITURE.ir(MAT); g.position.copy(P(c.x, c.y, bottom)); irGroup.add(g);
-    const chainLen = c.chaine / 1000; const ch = new THREE.Mesh(new THREE.CylinderGeometry(0.006, 0.006, chainLen, 4), MAT.rail);
-    ch.position.copy(P(c.x, c.y, top + c.chaine / 2)); irGroup.add(ch);
-    const vol = new THREE.Mesh(new THREE.CylinderGeometry(1.0, 1.0, 1.8, 32, 1, true), new THREE.MeshBasicMaterial({ color: 0x33cc66, transparent: true, opacity: 0.12, side: THREE.DoubleSide, depthWrite: false }));
-    vol.position.copy(P(c.x, c.y, bottom - 900)); irGroup.add(vol);
-    const light = new THREE.PointLight(0xff5a1e, 0, 3.5, 2); light.position.copy(P(c.x, c.y, bottom - 100)); irGroup.add(light);
-    g.userData = { info: c.nom + ' — Trotec IR 1500 SC Ø42 × h24 cm, 1500 W', kind: 'ir' };
-    irs.push({ cfg: c, g, vol, light, ceil, fl, top, bottom });
-  });
+  // ------------------------------------------------------------------ radiants IR (modèle au choix) + volumes de sécurité
+  const irGroup = new THREE.Group(); scene.add(irGroup); let irs = [];
+  let irKey = (function () { try { const k = localStorage.getItem('grotte.ir'); if (k && IR_MODELES[k]) return k; } catch (e) { /* stockage indisponible */ } return L.irModele && IR_MODELES[L.irModele] ? L.irModele : Object.keys(IR_MODELES)[0]; })();
+  const irM = () => IR_MODELES[irKey];
+  function buildIR() {
+    irGroup.clear(); irs = []; const md = irM();
+    L.ir.forEach((c) => {
+      const ceil = ceilingAt(c.x, c.y); const fl = floorAt(c.x, c.y);
+      const gapTop = md.montage === 'chaine' ? Math.max(md.ecartPlafond, c.chaine || 0) : md.ecartPlafond;
+      const top = (isNaN(ceil) ? 5070 : ceil) - gapTop; const bottom = top - md.h;
+      let g;
+      if (md.forme === 'rond') g = FURNITURE.ir(MAT);
+      else {
+        g = new THREE.Group(); const b = new THREE.Mesh(new THREE.BoxGeometry(md.L / 1000, md.h / 1000, md.l / 1000), md.couleur === 'noir' ? MAT.irBody : MAT.irPanel); b.position.y = md.h / 2000; g.add(b);
+        const face = new THREE.Mesh(new THREE.PlaneGeometry(md.L / 1000 * 0.94, md.l / 1000 * 0.94), MAT.irFace); face.rotation.x = Math.PI / 2; face.position.y = -0.001; g.add(face);
+      }
+      g.position.copy(P(c.x, c.y, bottom)); g.rotation.y = (c.rot || 0) * Math.PI / 180; irGroup.add(g);
+      if (gapTop > 20) { const ch = new THREE.Mesh(new THREE.CylinderGeometry(0.006, 0.006, gapTop / 1000, 4), MAT.rail); ch.position.copy(P(c.x, c.y, top + gapTop / 2)); irGroup.add(ch); }
+      const rr = Math.max(md.L, md.l) / 2000 + (md.minInflammable || 0) / 1000, hh = Math.max(0.05, (md.minInflammable || 0) / 1000);
+      const vol = new THREE.Mesh(new THREE.CylinderGeometry(rr, rr, hh, 32, 1, true), new THREE.MeshBasicMaterial({ color: 0x33cc66, transparent: true, opacity: 0.12, side: THREE.DoubleSide, depthWrite: false }));
+      vol.position.copy(P(c.x, c.y, bottom - hh * 500)); vol.visible = $('tSafe').checked; irGroup.add(vol);
+      const light = new THREE.PointLight(0xff5a1e, 0, 3.5, 2); light.position.copy(P(c.x, c.y, bottom - 100)); irGroup.add(light);
+      g.userData = { info: c.nom + ' — ' + md.nom + ' ' + md.L / 10 + ' × ' + md.l / 10 + ' × ' + md.h / 10 + ' cm, ' + md.P + ' W, ' + md.IP, kind: 'ir' };
+      irs.push({ cfg: c, g, vol, light, ceil, fl, top, bottom, gapTop });
+    });
+  }
+  buildIR();
+
 
   // ------------------------------------------------------------------ champ de distance (dégagements)
   const blockedStatic = (k) => wall[k] || isNaN(floorH[k]);
@@ -399,20 +418,25 @@
     add('Accessibilité', 'Espace de manœuvre Ø 1,50 m dans la grotte', okCircle ? 'OK' : 'NOK', best !== null ? 'Ø libre max ≈ ' + fmt(2 * dist[best] - CELL) : '—', 'Ø 1,50 m');
     if (best !== null) { turning.position.copy(P(cellX(best % NX), cellY(Math.floor(best / NX)), floorH[best] + 20)); turning.visible = okCircle; }
     // IR
+    const md = irM(); const lim = (v) => (v === null || v === undefined ? null : v);
+    const half = Math.max(md.L, md.l) / 2;
     irs.forEach((r) => {
-      const name = r.cfg.nom; const below = r.bottom - r.fl, above = r.cfg.chaine;
-      const [ci, cj] = toCell(r.cfg.x, r.cfg.y); let wd = 1e9;
+      const name = r.cfg.nom; const below = r.bottom - r.fl;
+      let wd = 1e9;
       for (let j = 0; j < NY; j++) for (let i = 0; i < NX; i++) { const k = idx(i, j); if (wall[k] || isNaN(floorH[k])) { const d = Math.hypot(cellX(i) - r.cfg.x, cellY(j) - r.cfg.y); if (d < wd) wd = d; } }
-      const side = wd - 210 - CELL / 2;
+      const side = wd - half - CELL / 2;
       let fd = 1e9, fname = '';
-      items.forEach((it) => { const xs = it.poly.map((p) => p[0]), ys = it.poly.map((p) => p[1]); const dx = Math.max(Math.min(...xs) - r.cfg.x, 0, r.cfg.x - Math.max(...xs)), dy = Math.max(Math.min(...ys) - r.cfg.y, 0, r.cfg.y - Math.max(...ys)); const dz = Math.max(0, r.bottom - (it.h + it.T.H * 1000)); const d = Math.hypot(Math.max(0, Math.hypot(dx, dy) - 210), dz); if (d < fd) { fd = d; fname = it.cfg.nom; } });
-      const ok = below >= 1800 && above >= 500 && side >= 1000 && fd >= 1000;
-      r.vol.material.color.set(ok ? 0x33cc66 : 0xe03131); r.ok = ok;
-      add('Radiants IR', name + ' : hauteurs de pose', below >= 1800 && above >= 500 ? 'OK' : 'NOK', fmt(below) + ' sous l\'appareil, ' + fmt(above) + ' au-dessus (hauteur libre ' + (isNaN(r.ceil) ? '?' : fmt(r.ceil - r.fl)) + ')', 'Notice Trotec : ≥ 1,80 m vers le bas et ≥ 0,50 m vers le haut → hauteur libre mini 2,54 m');
-      add('Radiants IR', name + ' : distance latérale aux murs', side >= 1000 ? 'OK' : 'NOK', fmt(side), '≥ 1,00 m');
-      add('Radiants IR', name + ' : distance au mobilier en cèdre (inflammable)', fd >= 1000 ? 'OK' : 'NOK', fmt(fd) + ' (' + fname + ')', '≥ 1,00 m de la face rayonnante');
+      items.forEach((it) => { const xs = it.poly.map((p) => p[0]), ys = it.poly.map((p) => p[1]); const dx = Math.max(Math.min(...xs) - r.cfg.x, 0, r.cfg.x - Math.max(...xs)), dy = Math.max(Math.min(...ys) - r.cfg.y, 0, r.cfg.y - Math.max(...ys)); const dz = Math.max(0, r.bottom - (it.h + it.T.H * 1000)); const d = Math.hypot(Math.max(0, Math.hypot(dx, dy) - half), dz); if (d < fd) { fd = d; fname = it.cfg.nom; } });
+      const st = (v, m) => (m === null ? 'A VOIR' : v >= m ? 'OK' : 'NOK');
+      const sH = below >= (md.minSousAppareil || 0) && r.gapTop >= (md.ecartPlafond || 0) ? (md.minSousAppareil === null ? 'A VOIR' : 'OK') : 'NOK';
+      const sL = st(side, lim(md.minLateral)), sF = st(fd, lim(md.minInflammable));
+      r.ok = sH === 'OK' && sL !== 'NOK' && sF !== 'NOK'; r.vol.material.color.set(r.ok ? 0x33cc66 : 0xe03131);
+      const ref = (v) => (v === null ? 'non indiqué par la notice' : '≥ ' + fmt(v));
+      add('Radiants IR', name + ' : hauteur de pose', sH, fmt(below) + ' sous l\'appareil, ' + fmt(r.gapTop) + ' au plafond (hauteur libre ' + (isNaN(r.ceil) ? '?' : fmt(r.ceil - r.fl)) + ')', md.nom + ' : sous l\'appareil ' + ref(md.minSousAppareil) + ', au plafond ' + (md.ecartPlafond ? '≥ ' + fmt(md.ecartPlafond) : 'fixation directe'));
+      add('Radiants IR', name + ' : distance aux murs', sL, fmt(side), ref(md.minLateral));
+      add('Radiants IR', name + ' : distance au mobilier en cèdre', sF, fmt(fd) + ' (' + fname + ')', ref(md.minInflammable) + ' de la face rayonnante');
     });
-    add('Radiants IR', 'Usage prévu par le fabricant', 'A VOIR', 'IP34, conçu pour « surfaces extérieures couvertes »', 'Notice Trotec IR 1500 SC', 'Atmosphère saline (corrosion) + ERP : valider avec le fabricant/bureau de contrôle ; alternative : panneaux rayonnants plafond/mur à faible distance de sécurité, raccordés en fixe sur circuit dédié 10 A.');
+    add('Radiants IR', 'Modèle : ' + md.nom, md.interieur && md.plafondBois !== false ? (md.plafondBois ? 'OK' : 'A VOIR') : 'NOK', md.P + ' W, ' + md.IP + ', ' + (md.interieur ? 'usage intérieur prévu' : 'usage intérieur non prévu') + ', plafond bois : ' + (md.plafondBois === true ? 'autorisé' : md.plafondBois === false ? 'non autorisé' : 'non précisé'), 'Notice : ' + md.source, md.note || '');
     // Murs de sel / ambiances
     add('Murs de sel', 'Implantation des 2 murs de sel', 'OK', L.mursSel.map((w) => w.nom + ' ' + fmt(w.x1 - w.x0) + ' × ' + fmt(w.h)).join(' ; '), 'Croquis du 02/10/2026 : murs nord et sud de la partie basse');
     add('Murs de sel', 'Rétro-éclairage', 'A VOIR', '10 cm de vide technique derrière chaque mur', 'LED TBTS, IP65 conseillé', 'Prévoir une trappe ou un démontage pour la maintenance des LED.');
@@ -474,7 +498,7 @@
     sessionEnd = 1e9; running = true; simT = 0; $('btnSession').textContent = '⏸ Pause';
   }
   function resetSim() { agents.forEach((a) => agentsGroup.remove(a.g)); agents = []; simT = 0; evac = null; running = false; doors.forEach((d) => { d.target = 0; }); $('btnSession').textContent = '▶ Séance'; setIR(false); $('simInfo').textContent = ''; }
-  function setIR(on) { irs.forEach((r) => { MAT.irGlow.emissiveIntensity = on ? 1.2 : 0; r.light.intensity = on ? 1.2 : 0; }); }
+  function setIR(on) { MAT.irGlow.emissiveIntensity = on ? 1.2 : 0; MAT.irFace.emissiveIntensity = on ? 0.35 : 0; irs.forEach((r) => { r.light.intensity = on ? 1.2 : 0; }); }
   function startEvac() {
     if (!agents.length) startSession();
     evac = { t0: simT, done: false };
@@ -554,6 +578,10 @@
   bind('tClear', (v) => { clearGroup.visible = v; $('legendClear').style.display = v ? 'block' : 'none'; });
   bind('tTurn', (v) => (turning.visible = v));
   bind('tSalt', (v) => { MAT.salt.emissiveIntensity = v ? 0.85 : 0.05; saltLights.visible = v; });
+  const sel = $('irModel');
+  Object.entries(IR_MODELES).forEach(([k, m]) => { const o = document.createElement('option'); o.value = k; o.textContent = m.nom; sel.appendChild(o); });
+  sel.value = irKey;
+  sel.addEventListener('change', () => { irKey = sel.value; try { localStorage.setItem('grotte.ir', irKey); } catch (e) { /* stockage indisponible */ } buildIR(); runChecks(); setIR(running && agents.length > 0 && sessionEnd < 1e8 && simT < sessionEnd); });
   $('btnSession').addEventListener('click', () => { if (!agents.length) startSession(); else { running = !running; $('btnSession').textContent = running ? '⏸ Pause' : '▶ Reprendre'; } });
   $('btnEvac').addEventListener('click', startEvac);
   $('btnReset').addEventListener('click', resetSim);

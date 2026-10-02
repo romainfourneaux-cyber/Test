@@ -106,10 +106,22 @@
     return tex(c, 0.6);
   }
 
+  // Plafond en lames de bois brun (photos de la partie basse)
+  function planks() {
+    const n = 512, [c, g] = canvas(n), r = rng(29);
+    const lw = n / 4; // lames de 12,5 cm pour une texture de 0,5 m
+    for (let x = 0; x < n; x += lw) {
+      const v = 80 + r() * 30; g.fillStyle = `rgb(${v + 25},${v},${v - 25})`; g.fillRect(x, 0, lw, n);
+      for (let i = 0; i < 40; i++) { g.strokeStyle = `rgba(40,25,10,${0.08 + r() * 0.15})`; g.lineWidth = 1 + r() * 2; const xx = x + r() * lw; g.beginPath(); g.moveTo(xx, 0); g.bezierCurveTo(xx + r() * 6 - 3, n / 3, xx + r() * 6 - 3, 2 * n / 3, xx, n); g.stroke(); }
+      g.fillStyle = 'rgba(20,12,5,0.8)'; g.fillRect(x, 0, 3, n);
+    }
+    return tex(c, 0.5);
+  }
+
   window.TEXTURES = {
     build() {
       return {
-        stone: stone(), brick: brick(), tiles: tiles(), saltCrust: saltCrust(), saltBricks: saltBricks(), cedar: cedar(),
+        stone: stone(), brick: brick(), planks: planks(), tiles: tiles(), saltCrust: saltCrust(), saltBricks: saltBricks(), cedar: cedar(),
         screed: flat('#55534f', ['#3f3d3a', '#6b6862', '#4a4744'], 2.0, 13, 0.9),
         plaster: flat('#cfc8bc', ['#bdb5a8', '#ddd7cc'], 2.0, 17, 0.5),
         wood: flat('#6b4a2f', ['#563a24', '#7d5a3c', '#4a311e'], 1.0, 19, 0.9),
