@@ -94,6 +94,15 @@ window.LAYOUT = {
       { x: 7180, y: 1901, face: 'N', nom: 'IR 2050 mur sud 2' },
       { x: 10054, y: 5157, face: 'O', nom: 'IR 2050 partie basse, mur de la porte, nord' },
     ],
+    // mêmes emplacements pour le Dimplex IRX (300 mm sur les côtés)
+    dimplexIRX: [
+      { x: 4500, y: 6141, face: 'S', nom: 'IRX mur nord 1 (au-dessus des B17)' },
+      { x: 5800, y: 6141, face: 'S', nom: 'IRX mur nord 2 (au-dessus des B17)' },
+      { x: 7180, y: 6141, face: 'S', nom: 'IRX mur nord 3 (au-dessus des B17)' },
+      { x: 6000, y: 1901, face: 'N', nom: 'IRX mur sud 1 (après les fauteuils)' },
+      { x: 7180, y: 1901, face: 'N', nom: 'IRX mur sud 2' },
+      { x: 10054, y: 5157, face: 'O', nom: 'IRX partie basse, mur de la porte, nord' },
+    ],
   },
 
   // ---------- Rampes (mains courantes) d'escalier ----------

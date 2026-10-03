@@ -261,6 +261,7 @@
   const NORM = { N: [0, 1], S: [0, -1], E: [1, 0], O: [-1, 0] }; // direction du rayonnement (vers la pièce)
   function buildIR() {
     irGroup.clear(); irs = []; const md = irM();
+    MAT.irFace.color.setHex(md.lueur ? 0x1a0400 : 0xe8e8e6); // verre sombre pour les lampes, face blanche pour les panneaux
     const list = irPose === 'mur' ? (L.irMur[irKey] || L.irMur.defaut) : L.ir;
     list.forEach((c) => {
       const nn0 = irPose === 'mur' ? NORM[c.face] : [0, 0];
@@ -468,7 +469,7 @@
         sH = sous >= (md.murSol || 0) && dessus >= (md.murHaut || 0) ? 'OK' : 'NOK';
         add('Radiants IR', name + ' : hauteur de pose murale', sH, fmt(sous) + ' sous l\'appareil, ' + fmt(dessus) + ' jusqu\'au plafond (hauteur libre ' + fmt(hLibre) + ')', md.nom + ' au mur : sol ' + ref(md.murSol) + ', plafond ' + ref(md.murHaut) + ' ; calé au plus haut permis');
         sL = st(side, md.murCotes); refL = ref(md.murCotes) + ' sur les côtés';
-        const fmin = Math.max(md.murInflammable || 0, md.murAvant || 0); sF = st(fd, md.murInflammable === undefined ? null : fmin); refF = ref(fmin) + ' devant (objets et matériaux inflammables)';
+        const inco = md.murInflammable === null || md.murInflammable === undefined; const fmin = Math.max(md.murInflammable || 0, md.murAvant || 0); sF = st(fd, inco ? null : fmin); refF = inco ? 'distance aux combustibles non chiffrée par la notice' : ref(fmin) + ' devant (objets et matériaux inflammables)';
       } else {
         const below = r.bottom - r.fl;
         if (md.hPose) sH = hLibre >= md.hPose - 5 ? 'OK' : 'NOK';
@@ -484,7 +485,7 @@
     });
     const ipEau = +(md.IP.match(/IP\d(\d)/) || [0, 0])[1];
     const supportOK = mur ? true : md.plafondBois !== false;
-    add('Radiants IR', 'Modèle : ' + md.nom + (mur ? ' (pose murale)' : ' (pose plafond)'), poseOK && md.interieur && supportOK && ipEau >= 4 ? (mur || md.plafondBois ? 'OK' : 'A VOIR') : 'NOK',
+    add('Radiants IR', 'Modèle : ' + md.nom + (mur ? ' (pose murale)' : ' (pose plafond)'), poseOK && md.interieur && supportOK && ipEau >= 4 ? ((mur ? md.murInflammable !== null && md.murInflammable !== undefined : md.plafondBois) ? 'OK' : 'A VOIR') : 'NOK',
       md.P + ' W, ' + md.IP + ', ' + (md.interieur ? 'usage intérieur prévu' : 'usage intérieur non prévu (notice : extérieur couvert)') + ', ' + (poseOK ? 'pose ' + (mur ? 'murale' : 'plafond') + ' autorisée' : 'pose ' + (mur ? 'murale' : 'au plafond') + ' NON autorisée par la notice') + (mur ? '' : ', plafond bois : ' + (md.plafondBois === true ? 'autorisé' : md.plafondBois === false ? 'non autorisé' : 'non précisé')),
       'Pose autorisée, usage intérieur, IP x4 mini — notice : ' + md.source, md.note || '');
     // Murs de sel / ambiances
@@ -553,7 +554,12 @@
     sessionEnd = 1e9; running = true; simT = 0; $('btnSession').textContent = '⏸ Pause';
   }
   function resetSim() { agents.forEach((a) => agentsGroup.remove(a.g)); agents = []; simT = 0; evac = null; running = false; doors.forEach((d) => { d.target = 0; }); $('btnSession').textContent = '▶ Séance'; setIR(false); $('simInfo').textContent = ''; }
-  function setIR(on) { MAT.irGlow.emissiveIntensity = on ? 1.2 : 0; MAT.irFace.emissiveIntensity = on ? 0.35 : 0; irs.forEach((r) => { r.light.intensity = on ? 1.2 : 0; }); }
+  function setIR(on) {
+    // lueur visible seulement pour les émetteurs qui en ont une (lampes quartz/halogène/carbone) ; les panneaux restent sans lumière
+    const lu = irM().lueur;
+    MAT.irGlow.emissiveIntensity = on && lu ? 1.2 : 0; MAT.irFace.emissive.setHex(lu || 0x000000); MAT.irFace.emissiveIntensity = on && lu ? 0.9 : 0;
+    irs.forEach((r) => { r.light.color.setHex(lu || 0xff5a1e); r.light.intensity = on && lu ? 1.4 : 0; });
+  }
   function startEvac() {
     if (!agents.length) startSession();
     evac = { t0: simT, done: false };
@@ -597,7 +603,7 @@
     });
     const n = agents.length;
     if (n && seated === n && sessionEnd > 1e8) { sessionEnd = simT + 40; setIR(true); }
-    if (simT > sessionEnd) setIR(false);
+    if (simT > sessionEnd && !$('tIROn').checked) setIR(false);
     // portes : ouverture à l'approche
     doors.forEach((d) => { d.target = agents.some((a) => a.g.visible && !a.sitting && Math.hypot(a.pos.x - d.cfg.x, a.pos.y - d.cfg.y) < 1300) ? 1 : 0; });
     let info = `t = ${simT.toFixed(0)} s`;
@@ -632,12 +638,13 @@
   bind('tRails', (v) => (railGroup.visible = v));
   bind('tClear', (v) => { clearGroup.visible = v; $('legendClear').style.display = v ? 'block' : 'none'; });
   bind('tTurn', (v) => (turning.visible = v));
+  bind('tIROn', (v) => setIR(v));
   bind('tSalt', (v) => { MAT.salt.emissiveIntensity = v ? 0.85 : 0.05; saltLights.visible = v; });
   const sel = $('irModel');
   Object.entries(IR_MODELES).forEach(([k, m]) => { const o = document.createElement('option'); o.value = k; o.textContent = m.nom; sel.appendChild(o); });
   sel.value = irKey;
   const poseSel = $('irPose'); poseSel.value = irPose;
-  const refreshIR = () => { buildIR(); runChecks(); setIR(running && agents.length > 0 && sessionEnd < 1e8 && simT < sessionEnd); };
+  const refreshIR = () => { buildIR(); runChecks(); setIR($('tIROn').checked || (running && agents.length > 0 && sessionEnd < 1e8 && simT < sessionEnd)); };
   sel.addEventListener('change', () => { irKey = sel.value; store.set('grotte.ir', irKey); refreshIR(); });
   poseSel.addEventListener('change', () => { irPose = poseSel.value; store.set('grotte.pose', irPose); refreshIR(); });
   $('btnSession').addEventListener('click', () => { if (!agents.length) startSession(); else { running = !running; $('btnSession').textContent = running ? '⏸ Pause' : '▶ Reprendre'; } });

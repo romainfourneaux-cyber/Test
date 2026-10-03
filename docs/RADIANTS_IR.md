@@ -33,9 +33,33 @@ Les murs de sel, les portes et le mur sud de la partie basse (1,43 m entre mur d
 | Fenix ECOSUN 600 U / 300 U | pose murale d'origine ; 10 cm des inflammables, 5 cm du sol | conforme partout (le 600 U ne tient pas sur le mur sud de la partie basse : prendre un 300 U) |
 | Redwell WE 600 | 20 cm haut/bas/côtés, 50 cm devant | conforme sauf 2 emplacements trop étroits (pignon ouest, partie basse sud) |
 
+## Lampes murales à lueur rouge (ambiance)
+
+Recherche de radiants muraux à émetteur visible (quartz, halogène, verre « rubis »), autorisés en intérieur, qui tiennent sous 2,50 m.
+
+| Modèle | Lueur | Notice | Résultat |
+|---|---|---|---|
+| **Dimplex IRX60/120E** (768 × 100 × 92 mm, 600/1200 W, IP24) | quartz IR moyen, « warm glow » rouge-orangé | mural horizontal uniquement, 1,80 m du sol, 400 mm au plafond, 300 mm sur les côtés, intérieur ou extérieur, raccordement fixe ; distance aux combustibles **non chiffrée** (« keep away ») | **meilleur candidat** : 6 emplacements conformes (2,00 m du sol, 0,40 m sous le plafond, 1,09 à 1,58 m du cèdre). À faire confirmer par Dimplex : distance au cèdre, poussière de sel (IP24 : pas protégé contre la poussière), disponibilité (référence peut-être arrêtée) |
+| Dimplex QXD1500E | vrai verre **rubis** | intérieur seulement, mais 2,10 m au sol + 0,50 m au plafond, 3,50 m des inflammables | non : ne tient pas sous 2,50 m |
+| Solamagic S1 1400 / S2 ARC | halogène doré | 1,80 m sol, 0,30 m plafond, 0,90 m surface éclairée ; **« not intended to be used indoors »** | non : extérieur uniquement |
+| Veito Blade | carbone | intérieur OK, 1,80 m sol, 0,50 m plafond, **1,50 m des inflammables** | non : cèdre trop proche |
+| Tansun Sorrento IP | quartz | 2,00 m sol, 0,30 m plafond, 1,80 m des combustibles | non |
+| Heliosa Hi-Design 66 / Burda Term2000 | lampe filtrée / tube or | 1,5 à 2 m des inflammables | non |
+| Infraworld VITALlight, Inframagic ROTLICHT+ | vrai rouge | réservés aux cabines infrarouges / saunas | hors usage autorisé |
+
+Aucune notice ne traite de l'atmosphère saline : accord écrit du fabricant et avis du bureau de contrôle à obtenir.
+
+Sources : Dimplex IRX https://product-portal.gdhv.com/sites/default/files/IRX60120E%20Instructions%20-%20Issue%201.pdf (copie : docs/references/Dimplex_IRX60-120E_notice_EN.pdf) ;
+Dimplex QXD https://www.dimplex.co.uk/sites/g/files/emiian551/files/2024-03/08_54003_0_QXDE%20Instructions%20-%20Issue%201.pdf ;
+Solamagic https://www.erhardt-markisen.de/wp-content/uploads/2025/09/Bedienungsanleitung-Operating-manual-Bedieningshandleiding-Solamagic.pdf ;
+Veito Blade https://www.infrarotheizung-experten.de/wp-content/uploads/2022/05/Montageanleitung-Blade-Veito.pdf ;
+Tansun Sorrento https://www.heat-outdoors.co.uk/documents/Tansun%20Sorrento%20Single%20Manual.pdf ;
+VITALlight https://cdn.koempf24.de/product/0b613d/vitallight-ipx4-strahler-de-en-05-2020-ma.pdf?fm=pdf
+
 ## Recommandation
 
 **Fenix ECOSUN 600 U**, au plafond aux 6 repères du plan ou au mur : c'est le seul modèle prévu pour l'intérieur.
+Pour une **lueur rouge au mur**, le **Dimplex IRX60/120E** est le seul trouvé qui passe toutes les cotes en intérieur (distance au cèdre à faire chiffrer par Dimplex).
 Si tu tiens au Trotec, l'**IR 2050 au mur** respecte toutes les distances aux 6 emplacements muraux de la maquette,
 mais Trotec ne le garantit pas en intérieur ni en atmosphère saline : à faire valider par écrit par Trotec et par le bureau de contrôle.
 Avant commande, faire valider par écrit par Fenix (ou son distributeur France) :

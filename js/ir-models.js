@@ -40,8 +40,16 @@ window.IR_MODELES = {
     note: 'Plafond bois admis (support 85 °C en continu). Mais IP30 et « ne pas exposer à l\'humidité » : déconseillé en atmosphère saline.',
     source: 'https://www.infrarotheizung-vitramo.de/files/downloads/datenblaetter/VH06262%20Datenblatt%20Vitramo%20Infrarotheizung.pdf',
   },
+  dimplexIRX: {
+    nom: 'Dimplex IRX60/120E (mural, quartz, lueur rouge-orangé)', forme: 'panneau', couleur: 'noir', lueur: 0xff3000, L: 768, l: 92, h: 100, P: 1200, IP: 'IP24',
+    plafondOK: false, montage: 'mur', ecartPlafond: 0, minSousAppareil: null, minLateral: null, minInflammable: null,
+    murOK: true, murL: 768, murH: 100, murP: 92, murSol: 1800, murHaut: 400, murCotes: 300, murAvant: null, murInflammable: null,
+    interieur: true, plafondBois: false,
+    note: 'Notice : pose murale horizontale uniquement (plafond interdit), 1,80 m du sol, 400 mm au plafond, 300 mm sur les côtés, raccordement fixe, 600/1200 W, « warm glow of medium wave infra-red », usage intérieur ou extérieur. Distance aux combustibles NON chiffrée (« keep away ») : à faire préciser par écrit par Dimplex. IP24 : protégé des projections, pas de la poussière de sel.',
+    source: 'https://product-portal.gdhv.com/sites/default/files/IRX60120E%20Instructions%20-%20Issue%201.pdf',
+  },
   trotec2050: {
-    nom: 'Trotec IR 2050 (mural, halogène)', forme: 'panneau', couleur: 'noir', L: 630, l: 165, h: 105, P: 2000, IP: 'IP65',
+    nom: 'Trotec IR 2050 (mural, halogène)', lueur: 0xff7a1a, forme: 'panneau', couleur: 'noir', L: 630, l: 165, h: 105, P: 2000, IP: 'IP65',
     plafondOK: false, montage: 'mur', ecartPlafond: 0, minSousAppareil: null, minLateral: null, minInflammable: null,
     murOK: true, murL: 630, murH: 105, murP: 165, murSol: 1800, murHaut: 500, murCotes: 500, murAvant: 500, murInflammable: 1000,
     interieur: false, plafondBois: false,
@@ -49,7 +57,7 @@ window.IR_MODELES = {
     source: 'https://fr.trotec.com/fileadmin/downloads/Beheizung/ir2050_ir3050/TRT-BA-IR2050-IR3050-TC-007-FR.pdf',
   },
   trotec2570s: {
-    nom: 'Trotec IR 2570 S (réglette murale, quartz)', forme: 'panneau', couleur: 'noir', L: 900, l: 90, h: 200, P: 2500, IP: 'IP34',
+    nom: 'Trotec IR 2570 S (réglette murale, quartz)', lueur: 0xff7a1a, forme: 'panneau', couleur: 'noir', L: 900, l: 90, h: 200, P: 2500, IP: 'IP34',
     plafondOK: false, montage: 'mur', ecartPlafond: 0, minSousAppareil: null, minLateral: null, minInflammable: null,
     murOK: true, murL: 900, murH: 200, murP: 90, murSol: 1800, murHaut: 700, murCotes: 1000, murAvant: 1000, murInflammable: 1000,
     interieur: false, plafondBois: false,
@@ -57,14 +65,14 @@ window.IR_MODELES = {
     source: 'https://fr.trotec.com/fileadmin/downloads/Beheizung/ir2570s/TRT-BA-IR2570S-TC-004-FR.pdf',
   },
   trotec2000c: {
-    nom: 'Trotec IR 2000 C (plafond, halogène)', forme: 'panneau', couleur: 'noir', L: 690, l: 385, h: 110, P: 2000, IP: 'IP55',
+    nom: 'Trotec IR 2000 C (plafond, halogène)', lueur: 0xff9a2a, forme: 'panneau', couleur: 'noir', L: 690, l: 385, h: 110, P: 2000, IP: 'IP55',
     montage: 'chaine', ecartPlafond: 300, minSousAppareil: 1800, minLateral: 1000, minInflammable: 1800, murOK: false,
     interieur: false, plafondBois: null,
     note: 'Notice : 30 cm vers le haut, 1,80 m vers le bas, 1 m sur les côtés et vers l\'avant, 1,80 m de la face rayonnante aux matériaux inflammables. Usage « extérieur couvert », interdit en « atmosphères agressives » et à l\'humidité.',
     source: 'https://fr.trotec.com/fileadmin/downloads/Beheizung/ir2000c_irs2010/TRT-BA-IR2000C-IRS2010-TC-004-FR.pdf',
   },
   trotec: {
-    nom: 'Trotec IR 1500 SC', forme: 'rond', L: 420, l: 420, h: 240, P: 1500, IP: 'IP34',
+    nom: 'Trotec IR 1500 SC', lueur: 0xff5a1e, forme: 'rond', L: 420, l: 420, h: 240, P: 1500, IP: 'IP34',
     montage: 'chaine', ecartPlafond: 500, minSousAppareil: 1800, minLateral: 1000, minInflammable: 1000, murOK: false,
     interieur: false, plafondBois: null,
     note: 'Conçu pour « surfaces extérieures couvertes ».',
