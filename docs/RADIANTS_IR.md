@@ -56,6 +56,13 @@ Veito Blade https://www.infrarotheizung-experten.de/wp-content/uploads/2022/05/M
 Tansun Sorrento https://www.heat-outdoors.co.uk/documents/Tansun%20Sorrento%20Single%20Manual.pdf ;
 VITALlight https://cdn.koempf24.de/product/0b613d/vitallight-ipx4-strahler-de-en-05-2020-ma.pdf?fm=pdf
 
+## Modèle choisi : THSL (notice photographiée, docs/references/THSL_notice_donnees_techniques.jpg)
+
+90 × 870 × 190 mm, 850 / 1650 / 2500 W ; 70 cm au-dessus, 180 cm en dessous, 100 cm sur les côtés, 100 cm devant.
+**Ne passe pas sous 2,50 m** : il faut 1,80 + 0,19 + 0,70 = **2,69 m** de hauteur libre (il manque 19 cm).
+Dans la maquette, aux 6 emplacements muraux : hauteur non conforme partout ; 1 m sur les côtés tenu à 2 emplacements seulement ;
+1 m devant tenu de justesse au-dessus des chaises longues, pas au-dessus des fauteuils. Mêmes cotes que le Trotec IR 2570 S.
+
 ## Recommandation
 
 **Fenix ECOSUN 600 U**, au plafond aux 6 repères du plan ou au mur : c'est le seul modèle prévu pour l'intérieur.

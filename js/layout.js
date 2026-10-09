@@ -103,6 +103,14 @@ window.LAYOUT = {
       { x: 7180, y: 1901, face: 'N', nom: 'IRX mur sud 2' },
       { x: 10054, y: 5157, face: 'O', nom: 'IRX partie basse, mur de la porte, nord' },
     ],
+    thsl: [
+      { x: 4500, y: 6141, face: 'S', nom: 'THSL mur nord 1 (au-dessus des B17)' },
+      { x: 5800, y: 6141, face: 'S', nom: 'THSL mur nord 2 (au-dessus des B17)' },
+      { x: 7180, y: 6141, face: 'S', nom: 'THSL mur nord 3 (au-dessus des B17)' },
+      { x: 6000, y: 1901, face: 'N', nom: 'THSL mur sud 1 (après les fauteuils)' },
+      { x: 7180, y: 1901, face: 'N', nom: 'THSL mur sud 2' },
+      { x: 10054, y: 5157, face: 'O', nom: 'THSL partie basse, mur de la porte, nord' },
+    ],
   },
 
   // ---------- Rampes (mains courantes) d'escalier ----------

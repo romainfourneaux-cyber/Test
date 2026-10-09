@@ -40,6 +40,14 @@ window.IR_MODELES = {
     note: 'Plafond bois admis (support 85 °C en continu). Mais IP30 et « ne pas exposer à l\'humidité » : déconseillé en atmosphère saline.',
     source: 'https://www.infrarotheizung-vitramo.de/files/downloads/datenblaetter/VH06262%20Datenblatt%20Vitramo%20Infrarotheizung.pdf',
   },
+  thsl: {
+    nom: 'THSL-002/003/012 (014/015/016 Wi-Fi) — modèle choisi', forme: 'panneau', couleur: 'noir', lueur: 0xff6a1a, L: 870, l: 90, h: 190, P: 2500, IP: 'non indiqué',
+    plafondOK: false, montage: 'mur', ecartPlafond: 0, minSousAppareil: null, minLateral: null, minInflammable: null,
+    murOK: true, murL: 870, murH: 190, murP: 90, murSol: 1800, murHaut: 700, murCotes: 1000, murAvant: 1000, murInflammable: 1000,
+    interieur: null, plafondBois: false,
+    note: 'Notice (page « Données techniques ») : 90 × 870 × 190 mm, 850 / 1650 / 2500 W, 70 cm au-dessus (A), 180 cm en dessous (B), 100 cm sur les côtés (C), 100 cm devant. Hauteur libre nécessaire : 1,80 + 0,19 + 0,70 = 2,69 m. IP et usage intérieur : non visibles sur la page transmise.',
+    source: 'docs/references/THSL_notice_donnees_techniques.jpg',
+  },
   dimplexIRX: {
     nom: 'Dimplex IRX60/120E (mural, quartz, lueur rouge-orangé)', forme: 'panneau', couleur: 'noir', lueur: 0xff3000, L: 768, l: 92, h: 100, P: 1200, IP: 'IP24',
     plafondOK: false, montage: 'mur', ecartPlafond: 0, minSousAppareil: null, minLateral: null, minInflammable: null,

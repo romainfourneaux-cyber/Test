@@ -483,10 +483,10 @@
       add('Radiants IR', name + ' : distance au mobilier en cèdre', sF, fmt(fd) + ' (' + fname + ')', refF);
       r.ok = poseOK && sH === 'OK' && sL !== 'NOK' && sF !== 'NOK'; r.vol.material.color.set(r.ok ? 0x33cc66 : 0xe03131);
     });
-    const ipEau = +(md.IP.match(/IP\d(\d)/) || [0, 0])[1];
+    const ipEau = +(md.IP.match(/IP[\dX](\d)/) || [0, 0])[1];
     const supportOK = mur ? true : md.plafondBois !== false;
     add('Radiants IR', 'Modèle : ' + md.nom + (mur ? ' (pose murale)' : ' (pose plafond)'), poseOK && md.interieur && supportOK && ipEau >= 4 ? ((mur ? md.murInflammable !== null && md.murInflammable !== undefined : md.plafondBois) ? 'OK' : 'A VOIR') : 'NOK',
-      md.P + ' W, ' + md.IP + ', ' + (md.interieur ? 'usage intérieur prévu' : 'usage intérieur non prévu (notice : extérieur couvert)') + ', ' + (poseOK ? 'pose ' + (mur ? 'murale' : 'plafond') + ' autorisée' : 'pose ' + (mur ? 'murale' : 'au plafond') + ' NON autorisée par la notice') + (mur ? '' : ', plafond bois : ' + (md.plafondBois === true ? 'autorisé' : md.plafondBois === false ? 'non autorisé' : 'non précisé')),
+      md.P + ' W, ' + md.IP + ', ' + (md.interieur ? 'usage intérieur prévu' : md.interieur === null ? 'usage intérieur non indiqué' : 'usage intérieur non prévu (notice : extérieur couvert)') + ', ' + (poseOK ? 'pose ' + (mur ? 'murale' : 'plafond') + ' autorisée' : 'pose ' + (mur ? 'murale' : 'au plafond') + ' NON autorisée par la notice') + (mur ? '' : ', plafond bois : ' + (md.plafondBois === true ? 'autorisé' : md.plafondBois === false ? 'non autorisé' : 'non précisé')),
       'Pose autorisée, usage intérieur, IP x4 mini — notice : ' + md.source, md.note || '');
     // Murs de sel / ambiances
     add('Murs de sel', 'Implantation des 2 murs de sel', 'OK', L.mursSel.map((w) => w.nom + ' ' + fmt(w.x1 - w.x0) + ' × ' + fmt(w.h)).join(' ; '), 'Croquis du 02/10/2026 : murs nord et sud de la partie basse');
