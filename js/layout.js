@@ -33,9 +33,14 @@ window.LAYOUT = {
   ],
 
   // ---------- Sols ----------
-  // Salle haute et alcôve (1re partie de la grotte) : lames vinyle Florafloor, décor « People » (chêne brun), 1220 × 183 mm, posées dans la longueur.
-  // Versions de la gamme : Élégance Fix 55 (collée, 2,5 mm), Caractère Clic 30 (4 mm), Élégance Clic 55 (5 mm), Infinity Clic 55 (5,5 mm, clic 5G-i).
-  sols: { salleHaute: { nom: 'Florafloor People (lames vinyle 1220 × 183 mm)', version: 'à choisir' } },
+  // Salle haute et alcôve (1re partie de la grotte) : lames vinyle Florafloor (ESTIVAL SAS), décor « People », posées dans la longueur.
+  // Recherche vérifiée du 12/10/2026 : Élégance Fix 55 (réf. FFDP2555PPL, 2,5 mm, couche d'usure 0,55 mm, 1219,4 × 177,8 mm, classe 23-33, Bfl-s1,
+  // QB UPEC U3 P3 E2 C2) collée en plein à la colle PU bi-composants, seule version adaptée. Les notices imposent une pièce entre 15 et 27 °C
+  // (sinon colle PU obligatoire) : accord écrit d'ESTIVAL indispensable pour 35 °C. Écartées : Infinity Clic 55 (rigide flottante, rien au-delà
+  // de 27 °C), Caractère Clic 30 (usure 0,30 mm, classe 23-31), Élégance Clic 55 (seulement collée PU, sans UPEC).
+  sols: { salleHaute: { nom: 'Florafloor People Élégance Fix 55 (lames vinyle à coller 1219,4 × 177,8 mm)', version: 'Élégance Fix 55 collée PU bi-composants', lame: [1219.4, 177.8],
+    feu: 'Bfl-s1 (DoP DOP-025-2020-10)', usage: '23-33', upec: 'U3 P3 E2 C2 (certificat CSTB 796/360-002.1)', glissance: 'DS (EN 13893, à sec, chaussé) : aucune donnée pieds nus',
+    source: 'https://www.florafloor.com/wp-content/uploads/2023/09/Fiche-technique-Florafloor-Elegance-Fix-55_V2.pdf' } },
 
   // ---------- Arcs en claveaux de pierre (photos) : demi-ellipses, naissance et clé au-dessus du sol (mm) ----------
   // fond de la partie basse : arc sur toute la largeur, remplissage enduit rosé, porte du frigidarium au centre

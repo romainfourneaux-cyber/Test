@@ -194,8 +194,8 @@
   }
 
 
-  // Lames vinyle Florafloor « People » (échantillon) : chêne brun chaud, veinage serré sombre, lames de 1220 × 183 mm.
-  // Motif de 2,44 m (2 lames) × 1,098 m (6 rangs) : la texture est déclarée sur 2,44 m et répétée 2,222 fois en y.
+  // Lames vinyle Florafloor « People » Élégance Fix 55 (échantillon) : chêne brun chaud, veinage serré sombre, lames de 1219,4 × 177,8 mm.
+  // Motif de 2,439 m (2 lames) × 1,067 m (6 rangs) : la texture est déclarée sur 2,439 m et répétée 2,286 fois en y.
   function lvtPeople() {
     const W = 2048, H = 922, c = document.createElement('canvas'), cb = document.createElement('canvas'); c.width = cb.width = W; c.height = cb.height = H;
     const g = c.getContext('2d'), gb = cb.getContext('2d'), r = rng(61), rh = H / 6, pl = W / 2;
@@ -224,7 +224,7 @@
       g.fillStyle = 'rgba(35,22,12,0.5)'; g.fillRect(0, y0, W, 2); gb.fillStyle = '#6a6a6a'; gb.fillRect(0, y0, W, 2);
     }
     noise(g, 1024, r, 0.12, ['#3a2410', '#d8b080'], 2, 2);
-    const t = tex(c, 2.44, cb, 0.12); const ry = 2.44 / 1.098; t.repeat.set(1, ry); t.userData.bump.repeat.set(1, ry); return t;
+    const t = tex(c, 2.4388, cb, 0.12); const ry = 2.4388 / 1.0668; t.repeat.set(1, ry); t.userData.bump.repeat.set(1, ry); return t;
   }
 
   // Fumée au sol : nappes cotonneuses sur fond transparent, raccordables

@@ -29,6 +29,12 @@ rétro-éclairés) et l'alcôve sud, ouverte sur la salle haute. Volume ≈ 85 m
 - **Poêles** : modèle à choisir. Ils sont décalés vers la porte, centrés face aux canapés, et ne sont plus collés aux murs de sel :
   0,63 m (nord) et 0,49 m (sud) du mur de sel, 0,63 m et 0,43 m de l'ouverture de la porte du frigidarium. Les distances au plafond,
   au banc devant (0,54 m) et au mur arrière (0,10 m) sont à comparer à la notice. Il faut une plage de volume couvrant ≈ 42 m³ par poêle (ou l'accord du fabricant), un garde-corps et un vitrage trempé sur la porte du frigidarium.
+- **Sol de la salle haute et de l'alcôve (Florafloor People)** : la version à retenir est l'**Élégance Fix 55**, collée en plein à la colle PU bi-composants.
+  Elle fait 2,5 mm, avec une couche d'usure de 0,55 mm, la classe 23-33, Bfl-s1 et le certificat UPEC U3 P3 E2 C2.
+  - Écartées : l'Infinity Clic 55 (flottante, aucune solution au-delà de 27 °C) et la Caractère Clic 30 (couche d'usure de 0,30 mm).
+  - Les notices demandent une pièce entre 15 et 27 °C : obtenir l'accord écrit d'ESTIVAL (01 81 80 10 20) pour 35 °C, le sel et le lavage humide.
+  - Support contre la roche : mesures CM, barrière époxy anti-remontées sous Avis Technique, ragréage P3. Poser chauffage coupé.
+  - Glissance : seule la classe DS est déclarée. Faire un essai pieds nus sur sol mouillé (NF EN 16165 annexe A).
 - **Régulation maison** : sonde d'ambiance dans la salle haute. Garder un limiteur de surchauffe homologué par poêle, souvent placé
   dans le boîtier sonde du régulateur d'origine, plus une minuterie de coupure.
 - **Air neuf** : ne pas le prendre dans la pièce d'entrée (26 °C / 75 %), mais dehors en double flux ou au frigidarium. Grotte en légère dépression, jamais en surpression.
