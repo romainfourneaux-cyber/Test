@@ -17,6 +17,9 @@ window.LAYOUT = {
   voutes: {
     // Frigidarium : voûte encroûtée de sel (photos de la salle du fond), naissance au sol
     frigidarium: { x0: 10054, x1: 15241, y0: 1842, y1: 6242, naissance: 2570, cle: 5070 },
+    // Alcôve sud : seul le sol est dessiné dans le SketchUp. HYPOTHÈSE : murs contre roche + voûte en berceau qui suit l'arc d'entrée
+    // (naissance 1,81 m, clé 2,48 m au-dessus du sol, relevés sur l'arc du SketchUp). À relever sur place.
+    alcove: { x0: 5473, x1: 7991, y0: 84, y1: 1751, sol: 2870, naissance: 4680, cle: 5350 },
   },
   // Grotte : plafond PLAT en bois (lames + solives) ; z = sous-face des solives (hauteur libre = z - sol)
   plafonds: [
@@ -70,18 +73,32 @@ window.LAYOUT = {
   chauffage: 'poeles',
   poele: {
     // MODÈLE PROVISOIRE : cotes et distances à remplacer par celles de la notice du modèle retenu (null = à renseigner)
-    nom: 'Poêle de sauna électrique (modèle à choisir)', P: 9000, L: 500, Pr: 400, H: 800,
+    // Puissance : 2 × 6 kW = 12 kW (bilan paroi par paroi du 12/10/2026, docs/BILAN_THERMIQUE.md) ; 15 à 18 kW si l'air neuf est pris dehors sans récupération
+    nom: 'Poêle de sauna électrique (modèle à choisir)', P: 6000, L: 500, Pr: 400, H: 800,
     distPlafond: null, distArriere: null, distCotes: null, distAvant: null, gardeCorps: true,
-    volMin: null, volMax: null, thermostat: null, source: '',
+    volMin: null, volMax: null, thermostat: 'régulation maison : thermostat d\'ambiance qui pilote les contacteurs des 2 poêles', source: '',
   },
   poeles: [
     { x: 9754, y: 5690, face: 'O', murX: 10054, nom: 'Poêle nord (entre la porte et le mur de sel nord)' },
     { x: 9754, y: 2394, face: 'O', murX: 10054, nom: 'Poêle sud (entre le mur de sel sud et la porte)' },
   ],
 
-  // ---------- Déshumidificateur (à la place du banc B20B est de l'alcôve) — cotes PROVISOIRES, modèle à choisir ----------
-  deshumidificateur: { x: 7741, y: 917, face: 'O', murX: 7991, nom: 'Déshumidificateur (alcôve est, à la place du banc B20B)', L: 600, Pr: 400, H: 700,
-    debit_L_j: null, tMax: null, source: '' },
+  // ---------- Déshumidificateur mural (à la place du banc B20B est de l'alcôve) ----------
+  // Microwell DRY 500 Silver avec option détendeur thermostatique TEV (notice DRY 300/400/500, § 6.1 et § 7) : pose murale obligatoire
+  // (ni au sol, ni contre le plafond), ≥ 200 mm libres sur les côtés et au-dessus, ≥ 150 mm au-dessous. Paroi = mur est de l'alcôve
+  // (y 84 → 1751, cote 1,67 m du plan papier). hMur = naissance de l'arc / de la voûte de l'alcôve à 1,81 m (SketchUp), à relever.
+  // Besoin (bilan du 12/10/2026, docs/BILAN_THERMIQUE.md) : 1,0 à 1,6 kg/h en séance, 2,4 kg/h en pointe avec l'air neuf de la pièce d'entrée ;
+  // la grotte existante à 52 % HR et 40 °C (point de rosée 28 °C) confirme ce cas humide → taille DRY 500 (≈ 2,3 kg/h à 35 °C / 45 %).
+  // Si l'air neuf est pris dehors (double flux) ou au frigidarium : DRY 400 Silver suffit (L 780, 48 L/24 h à 30/60, 22–42 °C, 10 A).
+  // Si le mur est fini fait moins de 1 645 mm : poser le DRY 500 sur le mur du fond de l'alcôve (2,52 m).
+  deshumidificateur: { x: 7841, y: 917, face: 'O', murX: 7991, paroi: { y0: 84, y1: 1751 }, hMur: 1810, zBas: 900,
+    nom: 'Déshumidificateur Microwell DRY 500 Silver + option TEV (alcôve est, à la place du banc B20B)', L: 1245, Pr: 300, H: 642,
+    degLat: 200, degHaut: 200, degBas: 150,
+    debit_L_j: 66, debitCond: '30 °C / 60 % HR', debit35_L_j: 56, besoin_L_j: 36, besoinPointe_L_j: 58, tMin: 22, tMax: 42, bruit_dBA: 44, chaleur_W: 3500,
+    plageNote: 'Tableau de la notice : 22–42 °C avec l\'option TEV, 22–35 °C sans (à commander avec TEV) ; le texte général dit 22–35 °C pour la pièce.',
+    elec: '230 V mono, 4,5 A en marche, protection 16 A + différentiel 30 mA, câble 3G2,5, interrupteur bipolaire hors de la salle',
+    condensats: 'gravitaires, siphon vers les eaux usées, tube Ø intérieur ≥ 18 mm en pente',
+    source: 'https://microwell.eu/assets/downloads/en_manual_dry_plastik_web.pdf' },
 
   // ---------- Radiants IR : repères ⊕ du plan annoté ; modèle par défaut (liste dans js/ir-models.js) ----------
   irModele: 'ecosun600',

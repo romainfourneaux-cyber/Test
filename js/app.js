@@ -131,6 +131,27 @@
     const m = new THREE.Mesh(g, mat); m.receiveShadow = true; ceilings.add(m);
   }
   vault(L.voutes.frigidarium, MAT.saltCrust, TX.saltCrust.userData.meters);
+  // alcôve sud : murs et voûte en berceau suivant l'arc d'entrée (non dessinés dans le SketchUp, hypothèse LAYOUT.voutes.alcove)
+  if (L.voutes.alcove) {
+    const a = L.voutes.alcove, xc = (a.x0 + a.x1) / 2, ra = (a.x1 - a.x0) / 2, sm = TX.stone.userData.meters;
+    const arcZ = (x) => a.naissance + (a.cle - a.naissance) * Math.sqrt(Math.max(0, 1 - ((x - xc) / ra) ** 2));
+    const nx = 32, ny = 12, pos = [], uv = [], ix = [];
+    for (let i = 0; i <= nx; i++) for (let j = 0; j <= ny; j++) {
+      const x = a.x0 + (a.x1 - a.x0) * i / nx, y = a.y0 + (a.y1 - a.y0) * j / ny, q = P(x, y, arcZ(x)); pos.push(q.x, q.y, q.z); uv.push(x / 1000 / sm, y / 1000 / sm);
+    }
+    for (let i = 0; i < nx; i++) for (let j = 0; j < ny; j++) { const k = i * (ny + 1) + j, k2 = k + ny + 1; ix.push(k, k2, k + 1, k2, k2 + 1, k + 1); }
+    const vg = new THREE.BufferGeometry(); vg.setIndex(ix); vg.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3)); vg.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2)); vg.computeVertexNormals();
+    ceilings.add(new THREE.Mesh(vg, MAT.stone));
+    const wall = (x, ya, yb) => { // mur est ou ouest, du sol à la naissance
+      const w = (yb - ya) / 1000, h = (a.naissance - a.sol) / 1000; const g = new THREE.PlaneGeometry(w, h); const u = g.attributes.uv; for (let q = 0; q < u.count; q++) u.setXY(q, u.getX(q) * w / sm, u.getY(q) * h / sm);
+      const m = new THREE.Mesh(g, MAT.stone); m.rotation.y = Math.PI / 2; m.position.copy(P(x, (ya + yb) / 2, (a.sol + a.naissance) / 2)); m.receiveShadow = true; m.userData.info = 'Alcôve — mur contre roche (hypothèse, non dessiné dans le SketchUp)'; scene.add(m);
+    };
+    wall(a.x0, a.y0, a.y1); wall(a.x1, a.y0, a.y1);
+    const sh = new THREE.Shape(); sh.moveTo(0, 0); sh.lineTo(ra * 2 / 1000, 0);
+    for (let i = nx; i >= 0; i--) { const x = a.x0 + (a.x1 - a.x0) * i / nx; sh.lineTo((x - a.x0) / 1000, (arcZ(x) - a.sol) / 1000); }
+    const fg = new THREE.ShapeGeometry(sh); const fu = fg.attributes.uv; for (let q = 0; q < fu.count; q++) fu.setXY(q, fu.getX(q) / sm, fu.getY(q) / sm);
+    const fond = new THREE.Mesh(fg, MAT.stone); fond.position.copy(P(a.x0, a.y0, a.sol)); fond.receiveShadow = true; fond.userData.info = 'Alcôve — mur du fond contre roche (hypothèse)'; scene.add(fond);
+  }
   // plafonds plats en bois de la grotte : lames + solives apparentes (photos de la partie basse)
   L.plafonds.forEach((c) => {
     const w = (c.x1 - c.x0) / 1000, d = (c.y1 - c.y0) / 1000, s = TX.planks.userData.meters;
@@ -267,20 +288,27 @@
     for (let j = 0; j < NY; j++) for (let i = 0; i < NX; i++) { const x = cellX(i), y = cellY(j); if (x >= ob.x0 && x <= ob.x1 && y >= ob.y0 && y <= ob.y1) furn[idx(i, j)] = 1; }
     poeles.push({ cfg: c, g, box, n: nrm, fl, light });
   });
-  // déshumidificateur (LAYOUT.deshumidificateur)
+  // déshumidificateur (LAYOUT.deshumidificateur) : posé au sol, ou au mur si zBas est renseigné
   let deshum = null;
   if (L.deshumidificateur) {
     const c = L.deshumidificateur; const nrm = { N: [0, 1], S: [0, -1], E: [1, 0], O: [-1, 0] }[c.face || 'O']; const fl = floorAt(c.x, c.y);
-    const along = nrm[0] === 0; const W = c.L, D = c.Pr, H = c.H;
-    const box = { x0: c.x - (along ? W : D) / 2, x1: c.x + (along ? W : D) / 2, y0: c.y - (along ? D : W) / 2, y1: c.y + (along ? D : W) / 2, z0: fl, z1: fl + H };
+    const along = nrm[0] === 0; const W = c.L, D = c.Pr, H = c.H, zb = c.zBas || 0;
+    const box = { x0: c.x - (along ? W : D) / 2, x1: c.x + (along ? W : D) / 2, y0: c.y - (along ? D : W) / 2, y1: c.y + (along ? D : W) / 2, z0: fl + zb, z1: fl + zb + H };
     const g = new THREE.Group();
-    const b = new THREE.Mesh(new THREE.BoxGeometry(W / 1000, H / 1000, D / 1000), new THREE.MeshStandardMaterial({ color: 0xe9ecef, roughness: 0.5 })); b.position.y = H / 2000; b.castShadow = true; g.add(b);
-    const gr = new THREE.Mesh(new THREE.PlaneGeometry(W / 1000 * 0.8, H / 1000 * 0.35), new THREE.MeshStandardMaterial({ color: 0x495057 })); gr.position.set(0, H * 0.7 / 1000, D / 2000 + 0.002); g.add(gr);
-    const ec = new THREE.Mesh(new THREE.PlaneGeometry(0.12, 0.05), new THREE.MeshStandardMaterial({ color: 0x0b7285, emissive: 0x15aabf, emissiveIntensity: 0.8 })); ec.position.set(0, H * 0.35 / 1000, D / 2000 + 0.003); g.add(ec);
+    const b = new THREE.Mesh(new THREE.BoxGeometry(W / 1000, H / 1000, D / 1000), new THREE.MeshStandardMaterial({ color: 0xc9ced3, metalness: 0.6, roughness: 0.3 })); b.position.y = (zb + H / 2) / 1000; b.castShadow = true; g.add(b);
+    const gr = new THREE.Mesh(new THREE.PlaneGeometry(W / 1000 * 0.8, H / 1000 * 0.35), new THREE.MeshStandardMaterial({ color: 0x495057 })); gr.position.set(0, (zb + H * 0.7) / 1000, D / 2000 + 0.002); g.add(gr);
+    const ec = new THREE.Mesh(new THREE.PlaneGeometry(0.12, 0.05), new THREE.MeshStandardMaterial({ color: 0x0b7285, emissive: 0x15aabf, emissiveIntensity: 0.8 })); ec.position.set(0, (zb + H * 0.35) / 1000, D / 2000 + 0.003); g.add(ec);
+    if (c.degLat !== undefined) { // volume à laisser libre (notice) : côtés, dessus, dessous
+      const lat = c.degLat || 0, hau = c.degHaut || 0, bas = c.degBas || 0;
+      const zg = new THREE.BoxGeometry((W + 2 * lat) / 1000, (H + hau + bas) / 1000, D / 1000);
+      const z = new THREE.LineSegments(new THREE.EdgesGeometry(zg), new THREE.LineBasicMaterial({ color: 0x15aabf }));
+      z.position.y = (zb - bas + (H + hau + bas) / 2) / 1000; g.add(z);
+    }
     g.position.copy(P(c.x, c.y, fl)); g.rotation.y = Math.atan2(nrm[0], -nrm[1]); poeleGroup.add(g);
-    g.userData = { info: c.nom + ' — ' + W / 10 + ' × ' + D / 10 + ' × ' + H / 10 + ' cm (cotes provisoires)', kind: 'deshum' };
+    g.userData = { info: c.nom + ' — ' + W / 10 + ' × ' + D / 10 + ' × ' + H / 10 + ' cm' + (zb ? ', mural, bas à ' + (zb / 1000).toFixed(2).replace('.', ',') + ' m du sol' : ''), kind: 'deshum' };
+    // emprise : obstacle de circulation (un appareil mural sous 2 m reste un obstacle à hauteur de corps)
     for (let j = 0; j < NY; j++) for (let i = 0; i < NX; i++) { const x = cellX(i), y = cellY(j); if (x >= box.x0 && x <= box.x1 && y >= box.y0 && y <= box.y1) furn[idx(i, j)] = 1; }
-    deshum = { cfg: c, box };
+    deshum = { cfg: c, box, fl, along };
   }
   const setPoeles = (on) => { MAT_POELE.braise.emissiveIntensity = on ? 1.4 : 0; poeles.forEach((p) => { p.light.intensity = on ? 1.6 : 0; }); };
 
@@ -556,26 +584,43 @@
         add('Poêles de sauna', nm + ' : distance sur les côtés (mur de sel, tableau de porte)', stP(side, pm.distCotes), fmt(side), 'Notice : ' + refP(pm.distCotes) + ' sur les côtés', 'Côté mur de sel : vérifier aussi la tenue des LED de rétro-éclairage à la chaleur.');
         add('Poêles de sauna', nm + ' : distance au mur arrière', stP(back, pm.distArriere), fmt(back), 'Notice : ' + refP(pm.distArriere));
         // porte du frigidarium voisine
-        if (door) { const dy = Math.max(0, Math.max(p.box.y0, door.cfg.y - door.cfg.largeur / 2) - Math.min(p.box.y1, door.cfg.y + door.cfg.largeur / 2)); add('Poêles de sauna', nm + ' : écart avec la porte du frigidarium', dy >= 300 ? 'OK' : 'A VOIR', fmt(dy) + ' entre le poêle et l\'ouverture de la porte', 'Pas de poêle dans le passage ; garde-corps conseillé côté porte'); }
+        if (door) { const dy = Math.max(0, Math.max(p.box.y0, door.cfg.y - door.cfg.largeur / 2) - Math.min(p.box.y1, door.cfg.y + door.cfg.largeur / 2)); add('Poêles de sauna', nm + ' : écart avec la porte du frigidarium', dy >= 300 ? 'OK' : 'A VOIR', fmt(dy) + ' entre le poêle et l\'ouverture de la porte', 'Pas de poêle dans le passage ; garde-corps conseillé côté porte', 'Vitrage de la porte trempé obligatoire (choc thermique à côté des poêles), double vitrage conseillé.'); }
       });
       const Ptot = poeles.length * pm.P / 1000;
-      add('Poêles de sauna', 'Puissance installée', 'A VOIR', poeles.length + ' × ' + pm.P / 1000 + ' kW = ' + Ptot + ' kW pour ≈ 74 m³ à 35 °C', 'Besoin estimé par analogie avec la grotte existante (9 kW, 31 m³, 40 °C) : 13 à 18 kW selon la température autour de la grotte');
-      add('Poêles de sauna', 'Plage de volume du fabricant', pm.volMax ? (74.4 / poeles.length <= pm.volMax ? 'OK' : 'NOK') : 'A VOIR', '≈ 74 m³ pour ' + poeles.length + ' poêles, chauffés depuis la partie basse (19,5 m³) vers la salle haute (55 m³)', 'Notice : ' + (pm.volMax ? pm.volMin + ' à ' + pm.volMax + ' m³ par poêle' : 'plage de volume à reprendre'), 'Les deux poêles sont au fond de la partie basse : la salle haute (55 m³) sera chauffée par l\'air chaud qui remonte, prévoir un brassage ou vérifier l\'homogénéité.');
-      add('Poêles de sauna', 'Consigne 35 °C réglable', pm.thermostat ? 'OK' : 'A VOIR', pm.thermostat || 'plage du régulateur à vérifier', 'Beaucoup de régulateurs de sauna démarrent à 40 ou 50 °C');
+      add('Poêles de sauna', 'Puissance installée', Ptot >= 12 && Ptot <= 18 ? 'OK' : 'A VOIR', poeles.length + ' × ' + pm.P / 1000 + ' kW = ' + Ptot + ' kW pour ≈ 85 m³ (grotte + alcôve) à 35 °C', 'Bilan paroi par paroi : besoin en régime établi 3,0 / 4,9 / 7,5 kW (bas / central / haut) ; 12 kW conseillés avec l\'air neuf de la pièce d\'entrée ou une double flux, 15 à 18 kW si l\'air neuf est pris dehors sans récupération', 'La puissance sert à la mise en chauffe de la roche : garder la grotte chauffée en permanence (réduit de nuit ≥ 30 °C). Valider par un essai de co-chauffage avant de commander (docs/BILAN_THERMIQUE.md).');
+      add('Poêles de sauna', 'Plage de volume du fabricant', pm.volMax ? (84.9 / poeles.length <= pm.volMax ? 'OK' : 'NOK') : 'A VOIR', '≈ 85 m³ pour ' + poeles.length + ' poêles, chauffés depuis la partie basse (19,5 m³) vers la salle haute (55 m³) et l\'alcôve ouverte (10,5 m³)', 'Notice : ' + (pm.volMax ? pm.volMin + ' à ' + pm.volMax + ' m³ par poêle' : 'plage de volume à reprendre'), 'Les deux poêles sont au fond de la partie basse : la salle haute (55 m³) sera chauffée par l\'air chaud qui remonte, prévoir un brassage ou vérifier l\'homogénéité.');
+      add('Poêles de sauna', 'Régulation à 35 °C', pm.thermostat ? 'A VOIR' : 'A VOIR', pm.thermostat || 'plage du régulateur à vérifier', 'Consigne 35 °C, sonde d\'ambiance dans la salle haute (pas dans le panache au-dessus des poêles)', pm.thermostat ? 'Régulation maison possible, à condition de garder la sécurité : sur beaucoup de poêles, le limiteur de surchauffe à réarmement manuel est dans le boîtier sonde du régulateur d\'origine. Sans ce régulateur, ajouter un limiteur homologué par poêle, sonde au-dessus du poêle à l\'emplacement de la notice, en série sur les contacteurs, plus une minuterie de coupure. Schéma à faire valider par le bureau de contrôle.' : 'Beaucoup de régulateurs de sauna démarrent à 40 ou 50 °C');
     }
     // Déshumidificateur
     if (deshum) {
       const c = deshum.cfg;
       const ouvert = (L.ouvertures || []).some((o) => o.x0 <= 5473 && o.x1 >= 7991);
       add('Déshumidificateur', 'Emplacement : alcôve sud (à la place du banc B20B est)', ouvert ? 'OK' : 'NOK', ouvert ? 'alcôve ouverte sur la salle haute sur 2,52 m (constaté sur place ; le SketchUp dessine un mur plein)' : 'alcôve fermée par un mur plein dans le SketchUp', 'Le déshumidificateur doit traiter l\'air de la grotte', ouvert ? 'Volume traité : grotte ≈ 74 m³ + alcôve ≈ 10,5 m³ ≈ 85 m³. Mettre à jour le SketchUp.' : 'Ouvrir ou gainer.');
-      add('Déshumidificateur', 'Température de fonctionnement', c.tMax ? (c.tMax >= 35 ? 'OK' : 'NOK') : 'A VOIR', c.tMax ? 'jusqu\'à ' + c.tMax + ' °C' : 'plage à vérifier sur la notice', 'De ~12–15 °C (chauffage coupé, cas le plus critique pour les murs de sel) à 35 °C (séance)', 'Beaucoup de déshumidificateurs à condensation sont limités à 32–35 °C ; en ambiance saline, préférer un appareil à carrosserie et batterie traitées anticorrosion.');
-      add('Déshumidificateur', 'Évacuation des condensats et alimentation', 'A VOIR', 'raccordement à un écoulement gravitaire ou pompe de relevage, prise dédiée', 'Fonctionnement continu sans bac à vider');
-      add('Déshumidificateur', 'Capacité', c.debit_L_j ? 'A VOIR' : 'A VOIR', c.debit_L_j ? c.debit_L_j + ' L/jour' : 'à dimensionner', 'Volume de la grotte ≈ 74 m³ à 35 °C, 12 personnes, porte vers le frigidarium humide');
+      const W = c.L, top = (c.zBas || 0) + c.H;
+      if (c.paroi && !deshum.along) {
+        const m1 = (c.y - W / 2) - c.paroi.y0, m2 = c.paroi.y1 - (c.y + W / 2), lp = c.paroi.y1 - c.paroi.y0;
+        add('Déshumidificateur', 'Cotes en largeur sur le mur est de l\'alcôve', Math.min(m1, m2) >= (c.degLat || 0) ? 'OK' : 'NOK', fmt(W) + ' + 2 × ' + fmt(c.degLat || 0) + ' = ' + fmt(W + 2 * (c.degLat || 0)) + ' sur ' + fmt(lp) + ' ; marges ' + fmt(m1) + ' et ' + fmt(m2), 'Notice : ' + fmt(c.degLat || 0) + ' libres de chaque côté', 'Profondeur ' + fmt(c.Pr) + ' contre le mur.');
+      }
+      if (c.zBas) {
+        const sousPl = c.hMur - top;
+        add('Déshumidificateur', 'Hauteur de pose (mural)', c.zBas >= (c.degBas || 0) && sousPl >= (c.degHaut || 0) ? 'OK' : 'NOK', 'bas à ' + fmt(c.zBas) + ', haut à ' + fmt(top) + ', ' + fmt(sousPl) + ' sous ' + fmt(c.hMur), 'Notice : pose murale obligatoire (ni au sol, ni contre le plafond) ; ≥ ' + fmt(c.degBas || 0) + ' sous l\'appareil, ≥ ' + fmt(c.degHaut || 0) + ' au-dessus', 'Hauteur prise à la naissance de l\'arc d\'entrée de l\'alcôve (1,81 m dans le SketchUp). Relever la hauteur réelle contre le mur est : si elle atteint 2,50 m, remonter l\'appareil (bas vers 1,45 m) pour dégager le passage.');
+      }
+      let fd = 1e9, fname = '';
+      items.filter((it) => it.zone === 'alcove').forEach((it) => { const xs = it.poly.map((q) => q[0]), ys = it.poly.map((q) => q[1]); const d = Math.hypot(Math.max(0, deshum.box.x0 - Math.max(...xs), Math.min(...xs) - deshum.box.x1), Math.max(0, deshum.box.y0 - Math.max(...ys), Math.min(...ys) - deshum.box.y1)); if (d < fd) { fd = d; fname = it.cfg.nom; } });
+      if (fd < 1e9) add('Déshumidificateur', 'Passage devant l\'appareil', fd >= 900 ? 'OK' : 'A VOIR', fmt(fd) + ' libres jusqu\'au ' + fname, 'Accès pour l\'entretien des filtres et circulation dans l\'alcôve', 'Distance aux poêles : plus de 2 m, soufflage orienté vers la grotte.');
+      add('Déshumidificateur', 'Température de fonctionnement', c.tMax ? (c.tMax >= 35 ? 'A VOIR' : 'NOK') : 'A VOIR', c.tMax ? (c.tMin ? c.tMin + ' à ' : 'jusqu\'à ') + c.tMax + ' °C (tableau de la notice)' : 'plage à vérifier sur la notice', '35 °C en séance ; hors séance, la grotte doit rester au-dessus de ' + (c.tMin || 15) + ' °C pour que l\'appareil continue de déshumidifier', c.tMax ? (c.plageNote ? c.plageNote + ' ' : '') + 'Faire confirmer par écrit le fonctionnement continu à 35 °C. Grotte maintenue à ≥ 30 °C la nuit : l\'appareil reste dans sa plage.' : '');
+      const pointe = c.besoinPointe_L_j || c.besoin_L_j, couv = c.debit35_L_j && pointe ? c.debit35_L_j / pointe : 0;
+      const capSt = !c.debit35_L_j || !c.besoin_L_j ? 'A VOIR' : couv >= 0.95 ? 'OK' : c.debit35_L_j >= c.besoin_L_j ? 'A VOIR' : 'NOK';
+      add('Déshumidificateur', 'Capacité', capSt, c.debit_L_j ? c.debit_L_j + ' L/24 h à ' + c.debitCond + (c.debit35_L_j ? ', soit ≈ ' + c.debit35_L_j + ' L/24 h à 35 °C / 45 % (' + (c.debit35_L_j / 24).toFixed(1).replace('.', ',') + ' kg/h)' : '') + (c.bruit_dBA ? ' ; ' + c.bruit_dBA + ' dB(A) à 1 m' : '') : 'à dimensionner', 'Besoin en séance ≈ ' + (c.besoin_L_j || '?') + ' L/24 h (1,0 à 1,6 kg/h, 12 à 14 curistes, consigne 45 % HR)' + (c.besoinPointe_L_j ? ' ; pointe ≈ ' + c.besoinPointe_L_j + ' L/24 h (2,4 kg/h) avec l\'air neuf de la pièce d\'entrée à 26 °C / 75 %' : ''), (couv ? 'Couvre ' + Math.round(couv * 100) + ' % de la pointe. ' : '') + (capSt === 'OK' ? '' : 'Pour la pointe : air neuf pris dehors (double flux) ou au frigidarium, ou appareil plus gros. ') + (c.chaleur_W ? 'Chaleur rejetée dans la grotte ≈ ' + (c.chaleur_W / 1000).toFixed(1).replace('.', ',') + ' kW (autant de moins pour les poêles).' : ''));
+      add('Déshumidificateur', 'Évacuation des condensats et alimentation', 'A VOIR', 'Condensats ' + (c.condensats || 'à raccorder') + ' ; ' + (c.elec || 'prise dédiée'), 'Fonctionnement continu sans bac à vider ; amener une évacuation en pente dans l\'alcôve');
     }
     // Murs de sel / ambiances
     add('Murs de sel', 'Implantation des 2 murs de sel', 'OK', L.mursSel.map((w) => w.nom + ' ' + fmt(w.x1 - w.x0) + ' × ' + fmt(w.h)).join(' ; '), 'Croquis du 02/10/2026 : murs nord et sud de la partie basse');
     add('Murs de sel', 'Rétro-éclairage', 'A VOIR', '10 cm de vide technique derrière chaque mur', 'LED TBTS, IP65 conseillé', 'Prévoir une trappe ou un démontage pour la maintenance des LED.');
-    add('Ambiances', 'Grotte chaude et sèche contiguë au frigidarium froid et humide', 'A VOIR', 'Séparation : porte vitrée 0,80 m', 'Le sel est hygroscopique', 'L\'air humide du frigidarium fait suinter et ronger les briques de sel : porte à fermeture automatique avec joints, grotte en légère surpression ou déshumidification, extraction côté frigidarium.');
+    add('Ambiances', 'Grotte chaude et sèche contiguë au frigidarium froid et humide', 'A VOIR', 'Séparation : porte vitrée 0,80 m', 'Le sel est hygroscopique', 'L\'air humide du frigidarium fait suinter et ronger les briques de sel : porte à fermeture automatique avec joints, grotte en légère dépression (extraction 5 à 10 % au-dessus du soufflage), jamais en surpression : la vapeur partirait dans le vide du plafond et vers le frigidarium.');
+    add('Thermique et humidité', 'Plafond bois sans isolant sous la route', 'NOK', 'premier poste de pertes (0,9 à 2,4 kW) ; la voûte au-dessus des lames est à 18–23 °C en hiver', 'Point de rosée de la grotte : 21,3 °C à 35 °C / 45 % HR', 'Condensation cachée dans le vide (bois, solives, éventuelles poutrelles acier sous la chaussée). Sonder la voûte, traiter les infiltrations, puis isolant non sensible à l\'eau + pare-vapeur continu (Sd ≥ 100 m) + lames bois, vide fermé.');
+    add('Thermique et humidité', 'Origine de l\'air neuf', 'A VOIR', 'pièce d\'entrée à 26 °C / 75 % : déjà 45 % HR une fois chauffé à 35 °C ; grotte existante à 52 % HR et 40 °C (point de rosée 28 °C), ce qui confirme ce cas', 'Consigne 40–45 % HR en séance, < 75 % en permanence (déliquescence du sel)', 'Prendre l\'air dehors par une double flux (récupération 75 %), à défaut au frigidarium ; débit hygiénique à faire fixer par le bureau de contrôle.');
+    add('Thermique et humidité', 'Régime de chauffe', 'A VOIR', 'roche et sel très inertes : 8 à 10 kW pendant 1 à 3 jours après un arrêt', 'Chauffage permanent, réduit de nuit ≥ 30 °C', 'Laisser refroidir un air à 21 °C de point de rosée fait condenser les parois à chaque arrêt. À 35 °C d\'air, la température ressentie est ≈ 31–32 °C (parois à 27–29 °C).');
     const lowDepth = 10054 - 8283;
     items.filter((it) => it.cfg.x > 8283 && it.cfg.x < 10054 && it.cfg.y > 1751).forEach((it) => {
       const xs = it.poly.map((p) => p[0]), ys = it.poly.map((p) => p[1]);
@@ -709,6 +754,7 @@
     grotte: () => { useCam(persp); persp.position.copy(P(9900, 3300, 2570 + 1650)); controls.target.copy(P(8600, 6000, 2570 + 900)); setCeil(true); },
     frigidarium: () => { useCam(persp); persp.position.copy(P(10700, 4400, 2570 + 1600)); controls.target.copy(P(14000, 1900, 2570 + 700)); setCeil(true); },
     escalier: () => { useCam(persp); persp.position.copy(P(6500, 3900, 2870 + 1650)); controls.target.copy(P(10200, 3900, 2570 + 900)); setCeil(true); },
+    alcove: () => { useCam(persp); persp.position.copy(P(5500, 3600, 2870 + 1550)); controls.target.copy(P(7800, 900, 2870 + 1000)); setCeil(true); },
     salle: () => { useCam(persp); persp.position.copy(P(9300, 2300, 2570 + 1700)); controls.target.copy(P(4500, 4300, 2870 + 600)); setCeil(true); },
   };
   function useCam(c) { camera = c; controls.object = c; c.up.set(0, 1, 0); if (c === ortho) c.up.set(0, 0, -1); controls.enableRotate = c !== ortho; resize(); }
