@@ -26,8 +26,9 @@ rétro-éclairés) et l'alcôve sud, ouverte sur la salle haute. Volume ≈ 85 m
 
 ## À voir
 
-- **Poêles** : modèle à choisir. Les distances au plafond, au banc devant (0,54 m), aux murs de sel (0,10 m) et au mur arrière (0,10 m)
-  sont à comparer à la notice. Il faut une plage de volume couvrant ≈ 42 m³ par poêle (ou l'accord du fabricant), un garde-corps et un vitrage trempé sur la porte du frigidarium.
+- **Poêles** : modèle à choisir. Ils sont décalés vers la porte, centrés face aux canapés, et ne sont plus collés aux murs de sel :
+  0,63 m (nord) et 0,49 m (sud) du mur de sel, 0,63 m et 0,43 m de l'ouverture de la porte du frigidarium. Les distances au plafond,
+  au banc devant (0,54 m) et au mur arrière (0,10 m) sont à comparer à la notice. Il faut une plage de volume couvrant ≈ 42 m³ par poêle (ou l'accord du fabricant), un garde-corps et un vitrage trempé sur la porte du frigidarium.
 - **Régulation maison** : sonde d'ambiance dans la salle haute. Garder un limiteur de surchauffe homologué par poêle, souvent placé
   dans le boîtier sonde du régulateur d'origine, plus une minuterie de coupure.
 - **Air neuf** : ne pas le prendre dans la pièce d'entrée (26 °C / 75 %), mais dehors en double flux ou au frigidarium. Grotte en légère dépression, jamais en surpression.

@@ -464,11 +464,41 @@
       const z = new THREE.LineSegments(new THREE.EdgesGeometry(zg), new THREE.LineBasicMaterial({ color: 0x15aabf }));
       z.position.y = (zb - bas + (H + hau + bas) / 2) / 1000; z.userData.tech = true; g.add(z);
     }
+    // habillage bois à claire-voie (LAYOUT.deshumidificateur.habillage) : repère local x le long du mur, y vertical, z vers la pièce (dos au mur en z = -D/2)
+    let caisson = null;
+    if (c.habillage) {
+      const hb = c.habillage, ep = hb.ep, Wc = W + 2 * (hb.jeuLat + ep), Hc = H + hb.jeuHaut + hb.jeuBas + 2 * ep, Dc = D + hb.jeuAvant + ep;
+      const yb = zb - hb.jeuBas - ep, zBack = -D / 2, pas = hb.lame / (1 - hb.vide), mb = std(TX.cedar, { color: hb.couleur || 0xb07a4c, side: THREE.FrontSide });
+      const cg = new THREE.Group(); const bx = (w, h, d, x, y, z) => { const m = new THREE.Mesh(new THREE.BoxGeometry(w / 1000, h / 1000, d / 1000), mb); m.position.set(x / 1000, y / 1000, z / 1000); m.castShadow = true; m.receiveShadow = true; cg.add(m); };
+      // côtés (pleins ou à claire-voie)
+      for (const sx of [-1, 1]) {
+        if (hb.faces.cotes) { for (let zz = zBack + pas / 2; zz < zBack + Dc - ep; zz += pas) bx(ep, Hc, hb.lame, sx * (Wc / 2 - ep / 2), yb + Hc / 2, zz); bx(ep, Hc, ep, sx * (Wc / 2 - ep / 2), yb + Hc / 2, zBack + Dc - ep / 2); }
+        else bx(ep, Hc, Dc, sx * (Wc / 2 - ep / 2), yb + Hc / 2, zBack + Dc / 2);
+      }
+      // dessus et dessous : lames parallèles au mur
+      for (const [on, yy] of [[hb.faces.dessus, yb + Hc - ep / 2], [hb.faces.dessous, yb + ep / 2]]) {
+        if (!on) { bx(Wc - 2 * ep, ep, Dc, 0, yy, zBack + Dc / 2); continue; }
+        for (let zz = zBack + hb.lame / 2; zz <= zBack + Dc - hb.lame / 2 + 1; zz += pas) bx(Wc - 2 * ep, ep, hb.lame, 0, yy, Math.min(zz, zBack + Dc - hb.lame / 2));
+      }
+      // façade démontable : cadre + lames horizontales
+      const zf = zBack + Dc - ep / 2;
+      bx(Wc - 2 * ep, hb.lame, ep, 0, yb + ep + hb.lame / 2, zf); bx(Wc - 2 * ep, hb.lame, ep, 0, yb + Hc - ep - hb.lame / 2, zf);
+      if (hb.faces.avant) for (let yy = yb + ep + hb.lame + pas - hb.lame / 2; yy < yb + Hc - ep - hb.lame - hb.lame / 2; yy += pas) bx(Wc - 2 * ep, hb.lame, ep, 0, yy, zf);
+      else bx(Wc - 2 * ep, Hc - 2 * ep - 2 * hb.lame, ep, 0, yb + Hc / 2, zf);
+      cg.userData.info = 'Habillage bois du déshumidificateur — ' + hb.essence + ', ' + Math.round(Wc) / 10 + ' × ' + Math.round(Hc) / 10 + ' × ' + Math.round(Dc) / 10 + ' cm, claire-voie ' + Math.round(hb.vide * 100) + ' %';
+      g.add(cg);
+      // emprise en plan du caisson (repère SketchUp) et hauteurs
+      const ux = along ? [1, 0] : [0, 1]; // direction le long du mur
+      const back = { x: c.x - nrm[0] * D / 2, y: c.y - nrm[1] * D / 2 }, front = { x: back.x + nrm[0] * Dc, y: back.y + nrm[1] * Dc };
+      const xs = [back.x - ux[0] * Wc / 2, back.x + ux[0] * Wc / 2, front.x - ux[0] * Wc / 2, front.x + ux[0] * Wc / 2], ys = [back.y - ux[1] * Wc / 2, back.y + ux[1] * Wc / 2, front.y - ux[1] * Wc / 2, front.y + ux[1] * Wc / 2];
+      caisson = { x0: Math.min(...xs), x1: Math.max(...xs), y0: Math.min(...ys), y1: Math.max(...ys), z0: fl + yb, z1: fl + yb + Hc, Wc, Hc, Dc, hb };
+    }
     g.position.copy(P(c.x, c.y, fl)); g.rotation.y = Math.atan2(nrm[0], -nrm[1]); poeleGroup.add(g);
-    g.userData = { info: c.nom + ' — ' + W / 10 + ' × ' + D / 10 + ' × ' + H / 10 + ' cm' + (zb ? ', mural, bas à ' + (zb / 1000).toFixed(2).replace('.', ',') + ' m du sol' : ''), kind: 'deshum' };
+    g.userData = { info: c.nom + ' — ' + W / 10 + ' × ' + D / 10 + ' × ' + H / 10 + ' cm' + (zb ? ', mural, bas à ' + (zb / 1000).toFixed(2).replace('.', ',') + ' m du sol' : '') + (caisson ? ', sous habillage bois' : ''), kind: 'deshum' };
     // emprise : obstacle de circulation (un appareil mural sous 2 m reste un obstacle à hauteur de corps)
-    for (let j = 0; j < NY; j++) for (let i = 0; i < NX; i++) { const x = cellX(i), y = cellY(j); if (x >= box.x0 && x <= box.x1 && y >= box.y0 && y <= box.y1) furn[idx(i, j)] = 1; }
-    deshum = { cfg: c, box, fl, along };
+    const emp = caisson || box;
+    for (let j = 0; j < NY; j++) for (let i = 0; i < NX; i++) { const x = cellX(i), y = cellY(j); if (x >= emp.x0 && x <= emp.x1 && y >= emp.y0 && y <= emp.y1) furn[idx(i, j)] = 1; }
+    deshum = { cfg: c, box, fl, along, caisson, emp };
   }
   const setPoeles = (on) => { MAT_POELE.braise.emissiveIntensity = on ? (pres ? 0.9 : 1.4) : 0; poeles.forEach((p) => { p.light.intensity = on ? 1.6 : 0; }); };
 
@@ -851,8 +881,21 @@
         const sousPl = c.hMur - top;
         add('Déshumidificateur', 'Hauteur de pose (mural)', c.zBas >= (c.degBas || 0) && sousPl >= (c.degHaut || 0) ? 'OK' : 'NOK', 'bas à ' + fmt(c.zBas) + ', haut à ' + fmt(top) + ', ' + fmt(sousPl) + ' sous ' + fmt(c.hMur), 'Notice : pose murale obligatoire (ni au sol, ni contre le plafond) ; ≥ ' + fmt(c.degBas || 0) + ' sous l\'appareil, ≥ ' + fmt(c.degHaut || 0) + ' au-dessus', 'Hauteur prise à la naissance de l\'arc d\'entrée de l\'alcôve (1,81 m dans le SketchUp). Relever la hauteur réelle contre le mur est : si elle atteint 2,50 m, remonter l\'appareil (bas vers 1,45 m) pour dégager le passage.');
       }
+      const cs = deshum.caisson;
+      if (cs && c.paroi && !deshum.along) {
+        const hb = cs.hb, lp = c.paroi.y1 - c.paroi.y0, m1 = (c.y - cs.Wc / 2) - c.paroi.y0, m2 = c.paroi.y1 - (c.y + cs.Wc / 2), topC = cs.z1 - deshum.fl, basC = cs.z0 - deshum.fl;
+        add('Déshumidificateur', 'Habillage bois : encombrement', m1 >= 0 && m2 >= 0 && topC <= c.hMur ? 'OK' : 'NOK', 'caisson ' + fmt(cs.Wc) + ' de large × ' + fmt(cs.Hc) + ' de haut × ' + fmt(cs.Dc) + ' de saillie, de ' + fmt(basC) + ' à ' + fmt(topC) + ' du sol ; il reste ' + fmt(m1) + ' et ' + fmt(m2) + ' de part et d\'autre sur le mur de ' + fmt(lp), 'Tenir sur le mur est et sous la naissance de la voûte (' + fmt(c.hMur) + ')', 'Jeux intérieurs : ' + fmt(hb.jeuLat) + ' sur les côtés, ' + fmt(hb.jeuHaut) + ' dessus, ' + fmt(hb.jeuBas) + ' dessous, ' + fmt(hb.jeuAvant) + ' devant ; planches de ' + hb.ep + ' mm.');
+        const debit = c.debitAir_m3h || 1165, req = debit / 3600 / 2; // section libre (m²) pour 2 m/s
+        const aF = hb.faces.avant ? (cs.Wc - 2 * hb.ep) * (cs.Hc - 2 * hb.ep - 2 * hb.lame) * hb.vide / 1e6 : 0, aT = (cs.Wc - 2 * hb.ep) * cs.Dc * hb.vide / 1e6;
+        const surf = { avant: aF, dessus: hb.faces.dessus ? aT : 0, dessous: hb.faces.dessous ? aT : 0, cotes: hb.faces.cotes ? 2 * cs.Hc * cs.Dc * hb.vide / 1e6 : 0 };
+        const asp = hb.aspiration || 'avant', souf = hb.soufflage || 'dessus', meme = asp === souf;
+        const aA = surf[asp] / (meme ? 2 : 1), aS = surf[souf] / (meme ? 2 : 1), m2f = (v) => v.toFixed(2).replace('.', ',') + ' m²';
+        const okFlux = aA >= req && aS >= req;
+        add('Déshumidificateur', 'Habillage bois : passage de l\'air et entretien', okFlux && !meme && hb.fluxVerifie ? 'OK' : okFlux ? 'A VOIR' : 'NOK', 'aspiration par ' + asp + ' : ' + m2f(aA) + ' libres ; soufflage par ' + souf + ' : ' + m2f(aS) + ' libres (claire-voie ' + Math.round(hb.vide * 100) + ' %)', '≥ ' + m2f(req) + ' libres pour chaque flux (' + debit + ' m³/h à 2 m/s), aspiration et soufflage séparés pour éviter le court-circuit, façade démontable pour le filtre et l\'hygrostat', (hb.fluxNote || 'Faces d\'aspiration et de soufflage à confirmer sur la notice du DH 60.') + (hb.jeuLat < (c.degLat || 0) ? ' Les jeux intérieurs sont plus petits que les dégagements de la notice (' + fmt(c.degLat) + ' sur les côtés) : à valider avec Trotec, la façade démontable servant d\'accès.' : ''));
+        add('Déshumidificateur', 'Habillage bois : réaction au feu (ERP)', 'A VOIR', hb.essence + ', planches de ' + hb.ep + ' mm', hb.feuExigence || 'Règlement de sécurité ERP (AM) : classement de réaction au feu des habillages', hb.feuNote || '');
+      }
       let fd = 1e9, fname = '';
-      items.filter((it) => it.zone === 'alcove').forEach((it) => { const xs = it.poly.map((q) => q[0]), ys = it.poly.map((q) => q[1]); const d = Math.hypot(Math.max(0, deshum.box.x0 - Math.max(...xs), Math.min(...xs) - deshum.box.x1), Math.max(0, deshum.box.y0 - Math.max(...ys), Math.min(...ys) - deshum.box.y1)); if (d < fd) { fd = d; fname = it.cfg.nom; } });
+      items.filter((it) => it.zone === 'alcove').forEach((it) => { const xs = it.poly.map((q) => q[0]), ys = it.poly.map((q) => q[1]); const d = Math.hypot(Math.max(0, deshum.emp.x0 - Math.max(...xs), Math.min(...xs) - deshum.emp.x1), Math.max(0, deshum.emp.y0 - Math.max(...ys), Math.min(...ys) - deshum.emp.y1)); if (d < fd) { fd = d; fname = it.cfg.nom; } });
       if (fd < 1e9) add('Déshumidificateur', 'Passage devant l\'appareil', fd >= 900 ? 'OK' : 'A VOIR', fmt(fd) + ' libres jusqu\'au ' + fname, 'Accès pour l\'entretien des filtres et circulation dans l\'alcôve', 'Distance aux poêles : plus de 2 m, soufflage orienté vers la grotte.');
       add('Déshumidificateur', 'Température de fonctionnement', c.tMax ? (c.tMax >= 35 ? (c.plageNote ? 'A VOIR' : 'OK') : 'NOK') : 'A VOIR', c.tMax ? (c.tMin ? c.tMin + ' à ' : 'jusqu\'à ') + c.tMax + ' °C (tableau de la notice)' : 'plage à vérifier sur la notice', '35 °C en séance ; hors séance, la grotte doit rester au-dessus de ' + (c.tMin || 15) + ' °C pour que l\'appareil continue de déshumidifier', c.tMax ? c.plageNote ? c.plageNote + ' Faire confirmer par écrit le fonctionnement continu à 35 °C.' : 'Plage couverte en séance (35 °C) comme chauffage coupé.' : '');
       const pointe = c.besoinPointe_L_j || c.besoin_L_j, couv = c.debit35_L_j && pointe ? c.debit35_L_j / pointe : 0;

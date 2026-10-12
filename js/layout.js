@@ -94,9 +94,11 @@ window.LAYOUT = {
     distPlafond: null, distArriere: null, distCotes: null, distAvant: null, gardeCorps: true,
     volMin: null, volMax: null, thermostat: 'régulation maison : thermostat d\'ambiance qui pilote les contacteurs des 2 poêles', source: '',
   },
+  // Décalés vers la porte (demande du 12/10/2026) pour ne plus être collés aux murs de sel : chaque poêle est centré face à son canapé,
+  // à ≈ 0,63 m (nord) et ≈ 0,50 m (sud) du mur de sel, et à ≈ 0,63 m (nord) et ≈ 0,43 m (sud) de l'ouverture de la porte du frigidarium.
   poeles: [
-    { x: 9754, y: 5690, face: 'O', murX: 10054, nom: 'Poêle nord (entre la porte et le mur de sel nord)' },
-    { x: 9754, y: 2394, face: 'O', murX: 10054, nom: 'Poêle sud (entre le mur de sel sud et la porte)' },
+    { x: 9754, y: 5156, face: 'O', murX: 10054, nom: 'Poêle nord (face au canapé nord, côté porte)' },
+    { x: 9754, y: 2793, face: 'O', murX: 10054, nom: 'Poêle sud (face au canapé sud, côté porte)' },
   ],
 
   // ---------- Déshumidificateur mural (à la place du banc B20B est de l'alcôve) ----------
@@ -113,7 +115,11 @@ window.LAYOUT = {
     bruit: '54 dB(A) à 3 m', chaleur_W: 3000,
     elec: '230 V mono, 7,5 A (démarrage 30 A), 1,52 kW : circuit dédié 16 A + différentiel 30 mA, interrupteur hors de la salle',
     condensats: 'raccord Ø 10 mm vers un siphon des eaux usées, ou pompe de relevage (option)',
-    source: 'https://www.danthermgroup.com/products/trotec-dh-60' },
+    source: 'https://www.danthermgroup.com/products/trotec-dh-60',
+    // Habillage bois (demande du 12/10/2026) : caisson à claire-voie autour de l'appareil, façade démontable pour le filtre et les commandes.
+    // ep = épaisseur des planches, jeux = vides intérieurs autour de l'appareil (mm), vide = part de vide des faces à claire-voie, lame = largeur des lames.
+    habillage: { essence: 'thermo-pin (pin traité thermiquement)', couleur: 0xb07a4c, ep: 20, jeuLat: 100, jeuHaut: 150, jeuBas: 150, jeuAvant: 60, lame: 45, vide: 0.5,
+      faces: { avant: true, dessus: true, dessous: true, cotes: false } } },
 
   // ---------- Suspensions : 6 lustres industriels « loft » finition rouille (ManoMano 14035860) ----------
   // Abat-jour cylindrique en métal Ø 33 × H 35 cm, chaîne réglable 50 cm, douille E27 100 W max (fiche ManoMano). Forme modélisée : cage cylindrique.
