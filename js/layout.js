@@ -24,6 +24,11 @@ window.LAYOUT = {
     { nom: 'Partie basse (H 2,50 m)', x0: 8283, x1: 10054, y0: 1842, y1: 6242, z: 2570 + 2500 },
   ],
 
+  // ---------- Ouvertures constatées sur place mais dessinées pleines dans le SketchUp ----------
+  ouvertures: [
+    { nom: 'Passage alcôve sud ↔ salle haute (ouvert sur place)', x0: 5473, x1: 7991, y0: 1740, y1: 1910 },
+  ],
+
   // ---------- Murs de sel rétro-éclairés de la grotte ----------
   // Implantation validée sur croquis (murs nord et sud de la partie basse, toute la longueur),
   // avec 10 cm de vide technique derrière chaque mur pour les LED.

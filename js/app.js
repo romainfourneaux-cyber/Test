@@ -80,6 +80,8 @@
     const loop = f.loops[0]; const n = newell(loop);
     const pts = loop.map((i) => V[i]);
     const c = [0, 1, 2].map((k) => pts.reduce((s, p) => s + p[k], 0) / pts.length);
+    // ouvertures signalées sur place mais pleines dans le SketchUp (LAYOUT.ouvertures) : on retire les faces du mur
+    if ((L.ouvertures || []).some((o) => c[0] > o.x0 && c[0] < o.x1 && c[1] > o.y0 && c[1] < o.y1 && (Math.abs(n[2]) < 0.9 || c[2] > 2900))) return;
     let cls = classify(c, n);
     // repère 2D du plan de la face
     const nz = new THREE.Vector3(...n);
@@ -564,8 +566,9 @@
     // Déshumidificateur
     if (deshum) {
       const c = deshum.cfg;
-      add('Déshumidificateur', 'Emplacement : alcôve sud (à la place du banc B20B est)', 'NOK', 'L\'alcôve est séparée de la grotte par un mur plein dans le SketchUp (mur sud de la salle haute, Y 1751 → 1901)', 'Le déshumidificateur doit traiter l\'air de la grotte', 'Tel quel, il n\'asséchera que l\'alcôve. Il faut soit une ouverture/grille entre l\'alcôve et la grotte, soit une reprise et un soufflage gainés dans la grotte (traversée du mur), soit le placer dans la grotte.');
-      add('Déshumidificateur', 'Température de fonctionnement', c.tMax ? (c.tMax >= 35 ? 'OK' : 'NOK') : 'A VOIR', c.tMax ? 'jusqu\'à ' + c.tMax + ' °C' : 'plage à vérifier sur la notice', 'Air à traiter à 35 °C si gainé depuis la grotte', 'Beaucoup de déshumidificateurs à condensation sont limités à 32–35 °C ; en ambiance saline, préférer un appareil à carrosserie et batterie traitées anticorrosion.');
+      const ouvert = (L.ouvertures || []).some((o) => o.x0 <= 5473 && o.x1 >= 7991);
+      add('Déshumidificateur', 'Emplacement : alcôve sud (à la place du banc B20B est)', ouvert ? 'OK' : 'NOK', ouvert ? 'alcôve ouverte sur la salle haute sur 2,52 m (constaté sur place ; le SketchUp dessine un mur plein)' : 'alcôve fermée par un mur plein dans le SketchUp', 'Le déshumidificateur doit traiter l\'air de la grotte', ouvert ? 'Volume traité : grotte ≈ 74 m³ + alcôve ≈ 10,5 m³ ≈ 85 m³. Mettre à jour le SketchUp.' : 'Ouvrir ou gainer.');
+      add('Déshumidificateur', 'Température de fonctionnement', c.tMax ? (c.tMax >= 35 ? 'OK' : 'NOK') : 'A VOIR', c.tMax ? 'jusqu\'à ' + c.tMax + ' °C' : 'plage à vérifier sur la notice', 'De ~12–15 °C (chauffage coupé, cas le plus critique pour les murs de sel) à 35 °C (séance)', 'Beaucoup de déshumidificateurs à condensation sont limités à 32–35 °C ; en ambiance saline, préférer un appareil à carrosserie et batterie traitées anticorrosion.');
       add('Déshumidificateur', 'Évacuation des condensats et alimentation', 'A VOIR', 'raccordement à un écoulement gravitaire ou pompe de relevage, prise dédiée', 'Fonctionnement continu sans bac à vider');
       add('Déshumidificateur', 'Capacité', c.debit_L_j ? 'A VOIR' : 'A VOIR', c.debit_L_j ? c.debit_L_j + ' L/jour' : 'à dimensionner', 'Volume de la grotte ≈ 74 m³ à 35 °C, 12 personnes, porte vers le frigidarium humide');
     }
