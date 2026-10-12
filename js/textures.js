@@ -194,6 +194,39 @@
   }
 
 
+  // Lames vinyle Florafloor « People » (échantillon) : chêne brun chaud, veinage serré sombre, lames de 1220 × 183 mm.
+  // Motif de 2,44 m (2 lames) × 1,098 m (6 rangs) : la texture est déclarée sur 2,44 m et répétée 2,222 fois en y.
+  function lvtPeople() {
+    const W = 2048, H = 922, c = document.createElement('canvas'), cb = document.createElement('canvas'); c.width = cb.width = W; c.height = cb.height = H;
+    const g = c.getContext('2d'), gb = cb.getContext('2d'), r = rng(61), rh = H / 6, pl = W / 2;
+    gb.fillStyle = '#c8c8c8'; gb.fillRect(0, 0, W, H);
+    for (let row = 0; row < 6; row++) {
+      const y0 = row * rh, off = ((row * 0.37 + r() * 0.2) % 1) * pl; // joints décalés d'au moins 30 cm d'un rang à l'autre
+      for (let k = -1; k < 2; k++) {
+        const x0 = off + k * pl, seed = Math.floor(r() * 1e9), rr = rng(seed), v = 0.86 + rr() * 0.24;
+        const base = [Math.round(122 * v), Math.round(90 * v), Math.round(60 * v)];
+        g.save(); g.beginPath(); g.rect(x0, y0, pl, rh); g.clip();
+        g.fillStyle = `rgb(${base[0]},${base[1]},${base[2]})`; g.fillRect(x0, y0, pl, rh);
+        // zones plus claires ou plus foncées le long de la lame
+        for (let i = 0; i < 6; i++) { const gx = x0 + rr() * pl, gw = 120 + rr() * 300; const gr = g.createLinearGradient(gx - gw, 0, gx + gw, 0); const a = rr() < 0.5 ? `rgba(70,40,15,${0.12 + rr() * 0.12})` : `rgba(215,170,110,${0.1 + rr() * 0.12})`; gr.addColorStop(0, 'rgba(0,0,0,0)'); gr.addColorStop(0.5, a); gr.addColorStop(1, 'rgba(0,0,0,0)'); g.fillStyle = gr; g.fillRect(gx - gw, y0, 2 * gw, rh); }
+        // veinage : traits serrés presque parallèles, quelques arcs « cathédrale »
+        for (let i = 0; i < 150; i++) {
+          const yy = y0 + rr() * rh, len = 80 + rr() * 520, xs = x0 + rr() * pl; g.strokeStyle = `rgba(${rr() < 0.75 ? '45,28,14' : '200,160,110'},${0.12 + rr() * 0.3})`; g.lineWidth = 0.6 + rr() * 1.6;
+          g.beginPath(); g.moveTo(xs, yy); g.bezierCurveTo(xs + len / 3, yy + (rr() - 0.5) * 6, xs + 2 * len / 3, yy + (rr() - 0.5) * 6, xs + len, yy + (rr() - 0.5) * 4); g.stroke();
+        }
+        for (let i = 0; i < 2; i++) { const cx = x0 + 150 + rr() * (pl - 300), cy = y0 + rh * (0.3 + rr() * 0.4); g.strokeStyle = `rgba(50,30,15,${0.25 + rr() * 0.2})`; g.lineWidth = 1.2; for (let q = 0; q < 6; q++) { g.beginPath(); g.ellipse(cx, cy, 60 + q * 26 + rr() * 10, 10 + q * 7, 0, Math.PI * 0.05, Math.PI * 0.95); g.stroke(); } }
+        if (rr() < 0.35) { const kx = x0 + rr() * pl, ky = y0 + rh * (0.2 + rr() * 0.6); g.fillStyle = 'rgba(55,32,15,0.55)'; g.beginPath(); g.ellipse(kx, ky, 7 + rr() * 6, 4 + rr() * 3, 0, 0, 7); g.fill(); }
+        g.restore();
+        // joint d'about et joints longitudinaux (léger chanfrein)
+        g.fillStyle = 'rgba(35,22,12,0.55)'; g.fillRect(((x0 % W) + W) % W - 1, y0, 2, rh);
+        gb.fillStyle = '#6a6a6a'; gb.fillRect(((x0 % W) + W) % W - 1, y0, 2, rh);
+      }
+      g.fillStyle = 'rgba(35,22,12,0.5)'; g.fillRect(0, y0, W, 2); gb.fillStyle = '#6a6a6a'; gb.fillRect(0, y0, W, 2);
+    }
+    noise(g, 1024, r, 0.12, ['#3a2410', '#d8b080'], 2, 2);
+    const t = tex(c, 2.44, cb, 0.12); const ry = 2.44 / 1.098; t.repeat.set(1, ry); t.userData.bump.repeat.set(1, ry); return t;
+  }
+
   // Fumée au sol : nappes cotonneuses sur fond transparent, raccordables
   function fog() {
     const n = 512, [c, g] = canvas(n), r = rng(41);
@@ -226,7 +259,7 @@
   window.TEXTURES = {
     build() {
       return {
-        stone: stone(), brick: brick(), planks: planks(), tiles: tiles(), saltCrust: saltCrust(), saltBricks: saltBricks(), cedar: cedar(),
+        stone: stone(), brick: brick(), planks: planks(), tiles: tiles(), lvt: lvtPeople(), saltCrust: saltCrust(), saltBricks: saltBricks(), cedar: cedar(),
         screed: flat('#55534f', ['#3f3d3a', '#6b6862', '#4a4744'], 2.0, 13, 0.9),
         plaster: flat('#cfc8bc', ['#bdb5a8', '#ddd7cc'], 2.0, 17, 0.5),
         wood: flat('#b08452', ['#9a6f42', '#c4985f', '#8d6239'], 1.0, 19, 0.8),

@@ -31,7 +31,7 @@
   Object.values(TX).forEach((t) => { t.encoding = THREE.sRGBEncoding; t.anisotropy = renderer.capabilities.getMaxAnisotropy(); });
   const MAT = {
     stone: std(TX.stone), brick: std(TX.brick), tile: std(TX.tiles, { roughness: 0.7 }), screed: std(TX.screed), step: std(TX.step),
-    plaster: std(TX.plaster), render: std(TX.plaster, { color: 0x9d9992 }), wood: std(TX.wood), planks: std(TX.planks), saltCrust: std(TX.saltCrust),
+    lvt: std(TX.lvt, { roughness: 0.55 }), plaster: std(TX.plaster), render: std(TX.plaster, { color: 0x9d9992 }), wood: std(TX.wood), planks: std(TX.planks), saltCrust: std(TX.saltCrust),
     salt: std(TX.saltBricks, { emissive: 0xffb27a, emissiveMap: TX.saltBricks, emissiveIntensity: 0.85, roughness: 0.6 }),
     log: std(TX.cedar, { side: THREE.FrontSide }), slat: std(TX.cedar, { side: THREE.FrontSide }),
     irBody: new THREE.MeshStandardMaterial({ color: 0x1a1a1a, metalness: 0.6, roughness: 0.4, side: THREE.DoubleSide }),
@@ -63,7 +63,7 @@
       const z = c[2];
       if (z >= 4300) return 'plaster';
       if (c[0] > 8280 && c[0] < 9900 && c[1] > 3530 && c[1] < 4280 && z > 2560) return 'step';
-      if (z >= 2860) return 'tile';
+      if (z >= 2860) return L.sols && L.sols.salleHaute ? 'lvt' : 'tile'; // salle haute + alcôve
       if (z >= 2700) return 'step';
       return 'screed';
     }

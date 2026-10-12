@@ -32,6 +32,11 @@ window.LAYOUT = {
     { nom: 'Passage alcôve sud ↔ salle haute (ouvert sur place)', x0: 5473, x1: 7991, y0: 1740, y1: 1910 },
   ],
 
+  // ---------- Sols ----------
+  // Salle haute et alcôve (1re partie de la grotte) : lames vinyle Florafloor, décor « People » (chêne brun), 1220 × 183 mm, posées dans la longueur.
+  // Versions de la gamme : Élégance Fix 55 (collée, 2,5 mm), Caractère Clic 30 (4 mm), Élégance Clic 55 (5 mm), Infinity Clic 55 (5,5 mm, clic 5G-i).
+  sols: { salleHaute: { nom: 'Florafloor People (lames vinyle 1220 × 183 mm)', version: 'à choisir' } },
+
   // ---------- Arcs en claveaux de pierre (photos) : demi-ellipses, naissance et clé au-dessus du sol (mm) ----------
   // fond de la partie basse : arc sur toute la largeur, remplissage enduit rosé, porte du frigidarium au centre
   arcs: [
