@@ -104,11 +104,13 @@ window.LAYOUT = {
     distPlafond: null, distArriere: null, distCotes: null, distAvant: null, gardeCorps: true,
     volMin: null, volMax: null, thermostat: 'régulation maison : thermostat d\'ambiance qui pilote les contacteurs des 2 poêles', source: '',
   },
-  // Décalés vers la porte (demande du 12/10/2026) pour ne plus être collés aux murs de sel : chaque poêle est centré face à son canapé,
-  // à ≈ 0,63 m (nord) et ≈ 0,50 m (sud) du mur de sel, et à ≈ 0,63 m (nord) et ≈ 0,43 m (sud) de l'ouverture de la porte du frigidarium.
+  // Décalés vers la porte (demande du 12/10/2026) pour ne plus être collés aux murs de sel. Les notices (Harvia, Helo, Tylö, EOS, Narvi, Sentiotec)
+  // ne demandent que 40 à 120 mm aux murs, mais les murs de sel contiennent des LED : zone 1 de la NF C 15-100-7-703 = 0,50 m autour du poêle,
+  // réservée au matériel du poêle. D'où ≥ 0,50 m entre chaque poêle et son mur de sel : 0,63 m (nord) et 0,53 m (sud) ;
+  // 0,63 m et 0,40 m de l'ouverture de la porte du frigidarium.
   poeles: [
     { x: 9754, y: 5156, face: 'O', murX: 10054, nom: 'Poêle nord (face au canapé nord, côté porte)' },
-    { x: 9754, y: 2793, face: 'O', murX: 10054, nom: 'Poêle sud (face au canapé sud, côté porte)' },
+    { x: 9754, y: 2820, face: 'O', murX: 10054, nom: 'Poêle sud (face au canapé sud, côté porte)' },
   ],
 
   // ---------- Déshumidificateur mural (à la place du banc B20B est de l'alcôve) ----------
@@ -119,7 +121,9 @@ window.LAYOUT = {
   // Capacité lue sur le diagramme de la notice (p. 15) : 48,8 L/24 h (2,0 kg/h) à 35 °C / 45 %, 56,5 L/24 h à 35 °C / 50 %, 38 L/24 h à 20 °C / 60 %.
   // Retenu une fois habillé : ≈ 1,9 kg/h (46 L/24 h). Besoin : 1,0–1,6 kg/h en moyenne, 2,4 kg/h en pointe (air neuf de la pièce à 26 °C / 75 %).
   // Paroi = mur est de l'alcôve (y 84 → 1751, cote 1,67 m du plan papier). hMur = naissance de la voûte de l'alcôve à 1,81 m (SketchUp).
-  deshumidificateur: { x: 7863, y: 917, face: 'O', murX: 7991, paroi: { y0: 84, y1: 1751 }, hMur: 1810, zBas: 850,
+  // NF C 15-100-7-703 (local contenant un poêle de sauna) : au-dessus de 1,0 m (zone 3), matériel tenant 125 °C → le DH 60 (40 °C maxi)
+  // doit rester en zone 2 : dessus à 1,0 m au plus (zone2Max), à plus de 0,5 m des poêles ; fiche branchée hors de la grotte, câble sous 1,0 m.
+  deshumidificateur: { x: 7863, y: 917, face: 'O', murX: 7991, paroi: { y0: 84, y1: 1751 }, hMur: 1810, zBas: 250, zone2Max: 1000,
     nom: 'Déshumidificateur Trotec DH 60 (alcôve est, à la place du banc B20B)', L: 1253, Pr: 255, H: 651,
     degLat: 125, degHaut: 125, degBas: 125, degAvant: 125, debitAir_m3h: 1165,
     debit_L_j: 48.8, debitCond: '35 °C / 45 % HR (diagramme de la notice, p. 15)', debit35_L_j: 46, besoin_L_j: 36, besoinPointe_L_j: 58, tMin: 5, tMax: 40,
@@ -127,11 +131,13 @@ window.LAYOUT = {
     elec: '230 V mono, 7,5 A (démarrage 30 A), 1,52 kW : circuit dédié 16 A + différentiel 30 mA, interrupteur hors de la salle',
     condensats: '≈ 2 kg/h en continu : raccord vers un siphon des eaux usées, ou pompe de relevage Trotec (option 6.100.000.019)',
     source: 'https://uk.trotec.com/fileadmin/downloads/Entfeuchtung/DH-15-30-60/TRT-BA-DH15-DH30-DH60-TC-007-FR.pdf',
-    // Habillage bois (demande du 12/10/2026) : caisson qui respecte les 12,5 cm de la notice à l'intérieur, dessous ouvert (reprise d'air),
-    // haut de façade à claire-voie devant la grille de soufflage, bas de façade plein et cloison horizontale entre soufflage et reprise
-    // (l'air soufflé, plus chaud, ne doit pas être réaspiré), façade démontable pour l'hygrostat, le MODE et les condensats.
-    habillage: { essence: 'thermo-pin (pin traité thermiquement)', couleur: 0xb07a4c, ep: 20, jeuLat: 130, jeuHaut: 150, jeuBas: 150, jeuAvant: 130, lame: 45, vide: 0.5,
-      aspiration: 'dessous', soufflage: 'avant', dessousOuvert: true, dessusPlein: true, facadeBasPleine: true, cloison: true } },
+    // Habillage bois (demande du 12/10/2026), posé au sol, ne prenant pas appui sur l'appareil : 12,5 cm libres à l'intérieur ;
+    // reprise d'air par une bande basse de façade à claire-voie (l'appareil aspire par-dessous), façade médiane pleine doublée,
+    // soufflage par une bande haute à claire-voie devant la grille, cloison horizontale 175 mm sous le dessus de l'appareil (pas de recyclage
+    // de l'air soufflé, plus chaud), façade démontable à l'outil pour le contrôle mensuel des bouches et la dépose annuelle du carter.
+    // Réaction au feu (ERP, AM 15) : M3 minimum = résineux massif ≥ 18 mm sans finition, ou panneau D-s2,d0 ; M2 si traité en habillage mural (AM 4).
+    habillage: { pose: 'sol', essence: 'pin massif 20 mm (M3 conventionnel, sans finition) ou bois ignifugé M2', couleur: 0xb07a4c, ep: 20, jeuLat: 125, jeuHaut: 125, jeuAvant: 125,
+      lame: 45, vide: 0.5, bandeAsp: 230, cloisonSousHaut: 175 } },
 
   // ---------- Suspensions : 6 lustres industriels « loft » finition rouille (ManoMano 14035860) ----------
   // Abat-jour cylindrique en métal Ø 33 × H 35 cm, chaîne réglable 50 cm, douille E27 100 W max (fiche ManoMano). Forme modélisée : cage cylindrique.

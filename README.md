@@ -40,8 +40,9 @@ On y trouve enfin une **visite guidée** animée et une **photo HD** (3840 × 21
   croûte de sel blanche (voûte de la salle 2, d'après les photos), briques de sel de l'Himalaya rétro-éclairées.
 - **Équipements** (`js/layout.js`, d'après le plan annoté `docs/plan_annote.jpg`) :
   - salle haute : 6 chaises longues B17 et 4 fauteuils B4A KD ;
-  - partie basse : 2 canapés B6 KD face à 2 poêles de sauna de 6 kW, avec garde-corps, au fond de part et d'autre de la porte du frigidarium, et les 2 murs de sel (nord et sud) ;
-  - alcôve sud, ouverte sur la salle haute : 1 banc B20B, le déshumidificateur Trotec DH 60 au mur est (avec son volume à laisser libre) et l'issue de secours cintrée au fond ;
+  - partie basse : 2 canapés B6 KD face à 2 poêles de sauna de 6 kW, avec garde-corps, au fond de part et d'autre de la porte du frigidarium, à au moins 0,50 m des 2 murs de sel (nord et sud) ;
+  - alcôve sud, ouverte sur la salle haute : 1 banc B20B, le déshumidificateur Trotec DH 60 dans un caisson bois posé au sol contre le mur est (dessus à 0,90 m, zone 2 de la NF C 15-100-7-703) et l'issue de secours cintrée au fond ;
+  - sol de la salle haute et de l'alcôve en lames vinyle Florafloor « People » (Élégance Fix 55 collée) ;
   - 6 suspensions industrielles rouille ; entrée par une arche vitrée en plein cintre (vitrage clair) ;
   - frigidarium : fumée au sol, lumière bleue, vue sur la rivière en contrebas par l'arc sud ;
   - 2 mains courantes inox à 0,90 m.

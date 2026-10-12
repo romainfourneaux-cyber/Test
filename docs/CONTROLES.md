@@ -18,6 +18,8 @@ rétro-éclairés) et l'alcôve sud, ouverte sur la salle haute. Volume ≈ 85 m
 | # | Point | Mesure | Exigence | Piste |
 |---|---|---|---|---|
 | 1 | Plafond bois sans isolant sous la route | 1/3 des pertes ; voûte à 18–23 °C au-dessus des lames | rester au-dessus du point de rosée (21 °C) | sonder la voûte, traiter les infiltrations, isolant + pare-vapeur continu |
+| 1 bis | Plafond bois : réaction au feu | lames de bois brut, ≈ 34 m² | AM 5 : B-s3,d0 / M1 sur au moins 75 % de la surface | lames ignifugées avec DoP ou rapport EN 13501-1 pour le montage réel, en priorité au-dessus des poêles |
+| 1 ter | Poêles de sauna dans un ERP de soins thermaux | corps et pierres > 100 °C | type U probable (U 1 § 2) : U 27 § 2 n'admet que des appareils électriques ≤ 100 °C en surface ; CH 44 | vérifier type et catégorie sur l'arrêté de classement, puis demande d'adaptation motivée et compensée à la commission (GN 4) |
 | 2 | Banc B20B restant dans l'alcôve (ouest) | 1,73 m pour 1,67 m | | recouper ou poser en biais |
 | 2 bis | Hauteur sous les suspensions | 1,77 m avec la chaîne entière (50 cm) | ≥ 2,10 m | chaîne raccourcie à 13 cm (modélisé : 2,11 m) |
 | 3 | Largeur de l'escalier | 0,73 m (≈ 0,61 m entre rampes) | 0,90 m (1 UP) ; PMR existant 1,00 m | |
@@ -26,9 +28,16 @@ rétro-éclairés) et l'alcôve sud, ouverte sur la salle haute. Volume ≈ 85 m
 
 ## À voir
 
-- **Poêles** : modèle à choisir. Ils sont décalés vers la porte, centrés face aux canapés, et ne sont plus collés aux murs de sel :
-  0,63 m (nord) et 0,49 m (sud) du mur de sel, 0,63 m et 0,43 m de l'ouverture de la porte du frigidarium. Les distances au plafond,
-  au banc devant (0,54 m) et au mur arrière (0,10 m) sont à comparer à la notice. Il faut une plage de volume couvrant ≈ 42 m³ par poêle (ou l'accord du fabricant), un garde-corps et un vitrage trempé sur la porte du frigidarium.
+- **Poêles** : modèle à choisir. Ils sont décalés vers la porte et ne sont plus collés aux murs de sel.
+  - Distances : 0,63 m (nord) et 0,53 m (sud) du mur de sel, 0,63 m et 0,40 m de l'ouverture de la porte du frigidarium.
+  - Les notices de 8 poêles de 6 à 7,5 kW (Harvia, Helo, Tylö, EOS, Narvi, Sentiotec) ne demandent que 40 à 120 mm aux murs,
+    et 840 à 1 150 mm au plafond, ce qui passe sous 2,50 m.
+  - Le critère retenu est électrique : la zone 1 de la NF C 15-100-7-703 réserve 0,50 m autour du poêle au seul matériel du poêle.
+    Les LED du mur de sel doivent rester en dehors (texte payant non consulté, à confirmer par l'électricien).
+  - Restent à faire valider par le fabricant :
+    - deux poêles dans une même pièce : seul EOS l'admet, mais il exclut les ambiances corrosives ;
+    - un volume équivalent bien au-delà des plages de 5 à 10 m³ ;
+    - les régulateurs d'origine, qui ne descendent pas sous 40 °C : la régulation maison résout ce point. Il faut une plage de volume couvrant ≈ 42 m³ par poêle (ou l'accord du fabricant), un garde-corps et un vitrage trempé sur la porte du frigidarium.
 - **Sol de la salle haute et de l'alcôve (Florafloor People)** : la version à retenir est l'**Élégance Fix 55**, collée en plein à la colle PU bi-composants.
   Elle fait 2,5 mm, avec une couche d'usure de 0,55 mm, la classe 23-33, Bfl-s1 et le certificat UPEC U3 P3 E2 C2.
   - Écartées : l'Infinity Clic 55 (flottante, aucune solution au-delà de 27 °C) et la Caractère Clic 30 (couche d'usure de 0,30 mm).
@@ -39,9 +48,24 @@ rétro-éclairés) et l'alcôve sud, ouverte sur la salle haute. Volume ≈ 85 m
   dans le boîtier sonde du régulateur d'origine, plus une minuterie de coupure.
 - **Air neuf** : ne pas le prendre dans la pièce d'entrée (26 °C / 75 %), mais dehors en double flux ou au frigidarium. Grotte en légère dépression, jamais en surpression.
 - **Régime de chauffe** : chauffage permanent, réduit de nuit ≥ 30 °C. Valider les 12 kW par un essai de co-chauffage.
-- **Déshumidificateur Trotec DH 60** : 1 253 × 651 × 255 mm, 5–40 °C. Le débit à 35 °C / 45 % est estimé à environ 58 L/24 h : le faire confirmer par Trotec.
-  Il fait 54 dB(A) à 3 m, ce qui est bruyant pour une salle de détente (hygrostat, caisson ou vitesse réduite). Il faut un circuit dédié 16 A,
-  une évacuation des condensats en Ø 10 mm, et 20 cm libres de chaque côté : il passe à 7 mm près sur le mur de 1,667 m.
+- **Déshumidificateur Trotec DH 60** : la notice Trotec TC-007 (p. 15) donne 48,8 L/24 h à 35 °C / 45 %, soit 2,0 kg/h. Une fois habillé, je retiens environ 1,9 kg/h.
+  - Le besoin moyen (1,0 à 1,6 kg/h) est couvert.
+  - En pointe, avec l'air neuf de la pièce voisine (2,4 kg/h), l'humidité se stabiliserait vers 47 à 50 % HR. Pour tenir 45 % HR :
+    air neuf au point de rosée ≤ 19 °C (pris dehors ou au frigidarium), ou un Trotec DH 30 en appoint (environ 1 kg/h).
+  - Zone 2 de la NF C 15-100-7-703 : le dessus de l'appareil doit rester à 1,0 m au plus du sol (au-dessus, il faudrait du matériel tenant 125 °C).
+    Il est posé de 0,25 à 0,90 m, la fiche est branchée hors de la grotte et le câble passe sous 1,0 m.
+  - Caisson bois posé au sol (1,54 × 1,05 × 0,40 m), ne prenant pas appui sur l'appareil :
+    - 12,5 cm libres à l'intérieur (notice) ;
+    - reprise d'air par une bande basse à claire-voie de 0,17 m², car l'appareil aspire par-dessous ;
+    - façade médiane pleine doublée ;
+    - soufflage par une bande haute de 0,23 m² ;
+    - cloison anti-recyclage ;
+    - façade démontable à l'outil.
+  - Faire valider le caisson par Trotec : la notice interdit de couvrir l'appareil.
+  - Réglages : MODE sur CONT, hygrostat calé vers 42 à 45 % sur un hygromètre de référence.
+  - Atmosphère saline : la notice interdit les « atmosphères agressives », alors que la page produit revendique une tenue au sel. Faire confirmer par écrit.
+  - Bruit : 54 dB(A) à 3 m. Chaleur rejetée : environ 2,7 kW. Condensats : environ 2 kg/h en continu.
+  - Caisson en pin massif d'au moins 18 mm sans finition : classement M3 sans essai (AM 15). Si le contrôleur le traite en habillage mural, il faut M2 / C-s3,d0.
 - **Issue de secours de l'alcôve** : cotes estimées sur photo (vantail actif ≈ 0,75 m). Si le passage libre fait moins de 0,80 m, mettre aussi une barre antipanique sur le 2e vantail.
 - **Arche d'entrée** : la barre antipanique est côté salle carrelée. La salle carrelée évacue donc à travers la grotte vers l'alcôve,
   sur 5,1 m de chemin d'au moins 1,58 m de large. Faire valider l'effectif de la salle carrelée et le principe par le bureau de contrôle.
@@ -60,6 +84,7 @@ rétro-éclairés) et l'alcôve sud, ouverte sur la salle haute. Volume ≈ 85 m
 - Porte grotte → frigidarium : 0,80 m, recul de 0,72 m après la dernière marche.
 - Cheminements porte → places ≥ 0,90 m ; cercle Ø 1,50 m dans la salle haute.
 - Canapés B6 KD de la partie basse : tiennent, face aux poêles.
-- Déshumidificateur : 1,25 m + 2 × 0,20 m sur 1,67 m, posé de 0,85 à 1,50 m sous la voûte, avec plus de 0,50 m libres devant.
+- Déshumidificateur : caisson de 1,54 m sur un mur de 1,67 m, appareil en zone 2 (de 0,25 à 0,90 m), passage de 1,87 m devant.
+- Poêles à au moins 0,50 m des murs de sel (zone 1).
 - Deux dégagements dans des directions opposées : l'arche d'entrée et l'issue de secours de l'alcôve.
 - Puissance : 2 × 6 kW = 12 kW, pour un besoin en régime établi de 3,0 à 7,5 kW.
