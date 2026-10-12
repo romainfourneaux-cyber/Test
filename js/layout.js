@@ -32,6 +32,13 @@ window.LAYOUT = {
     { nom: 'Passage alcôve sud ↔ salle haute (ouvert sur place)', x0: 5473, x1: 7991, y0: 1740, y1: 1910 },
   ],
 
+  // ---------- Arcs en claveaux de pierre (photos) : demi-ellipses, naissance et clé au-dessus du sol (mm) ----------
+  // fond de la partie basse : arc sur toute la largeur, remplissage enduit rosé, porte du frigidarium au centre
+  arcs: [
+    { nom: 'Arc du mur du fond (partie basse)', plan: 'x', pos: 10054, face: -1, y0: 1842, y1: 6242, sol: 2570, naissance: 900, cle: 2500, ep: 330, remplissage: 0xe7b393 },
+    { nom: 'Arc de l\'arche d\'entrée (côté grotte)', plan: 'x', pos: 3103, face: 1, y0: 1751, y1: 6291, sol: 2870, naissance: 0, cle: 2472, ep: 300, sansDebord: true },
+  ],
+
   // ---------- Murs de sel rétro-éclairés de la grotte ----------
   // Implantation validée sur croquis (murs nord et sud de la partie basse, toute la longueur),
   // avec 10 cm de vide technique derrière chaque mur pour les LED.
@@ -43,8 +50,17 @@ window.LAYOUT = {
   // ---------- Portes (animées pendant la simulation) ----------
   // L'accès se fait par la double porte vitrée cintrée du pignon ouest (le mur côté alcôve sud est plein dans le SketchUp).
   portes: [
-    { id: 'entree', nom: 'Porte vitrée cintrée pignon ouest (accès)', x: 3028, y: 4071, largeur: 1940, vantaux: 2, axe: 'y', ouvre: 1, couleur: 0xb9a77a },
-    { id: 'frigidarium', nom: 'Porte vitrée blanche grotte → frigidarium', x: 10182, y: 3872, largeur: 800, vantaux: 1, axe: 'y', ouvre: 1, couleur: 0xf2f2f2 },
+    // Entrée : arche vitrée en plein cintre sur toute la largeur du pignon (SketchUp : y 1751 → 6291, clé à 2,47 m), cadre alu champagne,
+    // double porte centrale de 1,94 m à haut cintré + 2 parties fixes. Vitrage clair (le film décoratif teinté est retiré).
+    // La barre antipanique est côté salle carrelée (photo) : la salle carrelée évacue par la grotte vers l'issue de secours de l'alcôve.
+    { id: 'entree', nom: 'Arche vitrée cintrée du pignon ouest (accès)', x: 3028, y: 4071, largeur: 1940, vantaux: 2, axe: 'y', ouvre: 1, couleur: 0xb9a77a, sortie: true,
+      arche: { y0: 1751, y1: 6291, sol: 2870, cle: 5342 }, antipanique: 'ouest' },
+    // Issue de secours au fond de l'alcôve (photo) : arc maçonné qui suit la voûte, ensemble alu gris clair à panneaux pleins :
+    // 2 vantaux (le vantail ouest, actif, porte la barre antipanique et ouvre vers la ruelle) + 2 parties fixes. Cotes ESTIMÉES d'après la photo :
+    // ensemble 1,80 m, vantaux 0,75 m, fixes 0,15 m, haut à 0,28 m sous la voûte. À relever.
+    { id: 'secours', nom: 'Issue de secours cintrée (fond de l\'alcôve)', x: 6732, y: 84, largeur: 1500, vantaux: 2, axe: 'x', ouvre: 1, couleur: 0xd3d6d8, sortie: true, cintree: true,
+      fixes: 150, sousVoute: 280, actif: 0, estime: true },
+    { id: 'frigidarium', nom: 'Porte vitrée alu gris grotte → frigidarium', x: 10182, y: 3872, largeur: 800, vantaux: 1, axe: 'y', ouvre: 1, couleur: 0x9da3a8 },
   ],
 
   // ---------- Mobilier Cèdre & Rondins — d'après le plan annoté (docs/plan_annote.jpg) ----------
@@ -84,21 +100,43 @@ window.LAYOUT = {
   ],
 
   // ---------- Déshumidificateur mural (à la place du banc B20B est de l'alcôve) ----------
-  // Microwell DRY 500 Silver avec option détendeur thermostatique TEV (notice DRY 300/400/500, § 6.1 et § 7) : pose murale obligatoire
-  // (ni au sol, ni contre le plafond), ≥ 200 mm libres sur les côtés et au-dessus, ≥ 150 mm au-dessous. Paroi = mur est de l'alcôve
-  // (y 84 → 1751, cote 1,67 m du plan papier). hMur = naissance de l'arc / de la voûte de l'alcôve à 1,81 m (SketchUp), à relever.
-  // Besoin (bilan du 12/10/2026, docs/BILAN_THERMIQUE.md) : 1,0 à 1,6 kg/h en séance, 2,4 kg/h en pointe avec l'air neuf de la pièce d'entrée ;
-  // la grotte existante à 52 % HR et 40 °C (point de rosée 28 °C) confirme ce cas humide → taille DRY 500 (≈ 2,3 kg/h à 35 °C / 45 %).
-  // Si l'air neuf est pris dehors (double flux) ou au frigidarium : DRY 400 Silver suffit (L 780, 48 L/24 h à 30/60, 22–42 °C, 10 A).
-  // Si le mur est fini fait moins de 1 645 mm : poser le DRY 500 sur le mur du fond de l'alcôve (2,52 m).
-  deshumidificateur: { x: 7841, y: 917, face: 'O', murX: 7991, paroi: { y0: 84, y1: 1751 }, hMur: 1810, zBas: 900,
-    nom: 'Déshumidificateur Microwell DRY 500 Silver + option TEV (alcôve est, à la place du banc B20B)', L: 1245, Pr: 300, H: 642,
-    degLat: 200, degHaut: 200, degBas: 150,
-    debit_L_j: 66, debitCond: '30 °C / 60 % HR', debit35_L_j: 56, besoin_L_j: 36, besoinPointe_L_j: 58, tMin: 22, tMax: 42, bruit_dBA: 44, chaleur_W: 3500,
-    plageNote: 'Tableau de la notice : 22–42 °C avec l\'option TEV, 22–35 °C sans (à commander avec TEV) ; le texte général dit 22–35 °C pour la pièce.',
-    elec: '230 V mono, 4,5 A en marche, protection 16 A + différentiel 30 mA, câble 3G2,5, interrupteur bipolaire hors de la salle',
-    condensats: 'gravitaires, siphon vers les eaux usées, tube Ø intérieur ≥ 18 mm en pente',
-    source: 'https://microwell.eu/assets/downloads/en_manual_dry_plastik_web.pdf' },
+  // Trotec DH 60 (appareil déjà utilisé et connu de l'exploitation) : mural, 1253 × 651 × 255 mm, 70 kg, 38 L/24 h à 20 °C / 60 %,
+  // 90 à 104 L/24 h maxi (conditions non précisées), 5–40 °C, 1,52 kW, 7,5 A (démarrage 30 A), 54 dB(A) à 3 m, condensats Ø 10 mm.
+  // Dégagements pris sur la notice du DH 35 de la même gamme (30 cm dessus et dessous, 20 cm sur les côtés, 50 cm devant) : à vérifier sur la notice DH 60.
+  // Capacité à 35 °C / 45 % ESTIMÉE ≈ 58 L/24 h (rapport 30/60 ÷ 20/60 ≈ 1,8 relevé sur les appareils de piscine, puis × 0,85).
+  // Paroi = mur est de l'alcôve (y 84 → 1751, cote 1,67 m du plan papier). hMur = naissance de la voûte de l'alcôve à 1,81 m (SketchUp).
+  // Alternatives étudiées : Microwell DRY 500 Silver (1245 × 642 × 300, 66 L/24 h à 30/60, 44 dB(A) à 1 m), Dantherm CDP 50.
+  deshumidificateur: { x: 7863, y: 917, face: 'O', murX: 7991, paroi: { y0: 84, y1: 1751 }, hMur: 1810, zBas: 850,
+    nom: 'Déshumidificateur Trotec DH 60 (alcôve est, à la place du banc B20B)', L: 1253, Pr: 255, H: 651,
+    degLat: 200, degHaut: 300, degBas: 300, degAvant: 500,
+    debit_L_j: 38, debitCond: '20 °C / 60 % HR', debit35_L_j: 58, debit35Estime: true, besoin_L_j: 36, besoinPointe_L_j: 58, tMin: 5, tMax: 40,
+    bruit: '54 dB(A) à 3 m', chaleur_W: 3000,
+    elec: '230 V mono, 7,5 A (démarrage 30 A), 1,52 kW : circuit dédié 16 A + différentiel 30 mA, interrupteur hors de la salle',
+    condensats: 'raccord Ø 10 mm vers un siphon des eaux usées, ou pompe de relevage (option)',
+    source: 'https://www.danthermgroup.com/products/trotec-dh-60' },
+
+  // ---------- Suspensions : 6 lustres industriels « loft » finition rouille (ManoMano 14035860) ----------
+  // Abat-jour cylindrique en métal Ø 33 × H 35 cm, chaîne réglable 50 cm, douille E27 100 W max (fiche ManoMano). Forme modélisée : cage cylindrique.
+  // Positions : les 6 repères ⊕ du plan annoté, recalés entre les solives (solives est-ouest, axes y0 + 250 + 500 k) ; en partie basse, au-dessus des canapés,
+  // à plus de 0,5 m des poêles. chaine = longueur gardée (mm) : 130 mm pour garder 2,10 m sous l'abat-jour (lames à 2,62 m).
+  suspension: { nom: 'Suspension industrielle loft rouille (ManoMano 14035860)', D: 330, H: 350, chaine: 130, chaineMax: 500, IP: 'IP20', douille: 'E27, 100 W max',
+    ampoule: 'LED filament E27 2200 K conseillée', source: 'https://www.manomano.fr/p/suspension-lustre-abat-jour-en-metal-loft-style-lampe-chandelier-industriel-vintage-pendentif-lumiere-e27-rouille-14035860' },
+  suspensions: [
+    { x: 3960, y: 2751, nom: 'Suspension salle haute sud-ouest' },
+    { x: 6520, y: 2751, nom: 'Suspension salle haute sud-est' },
+    { x: 3960, y: 5251, nom: 'Suspension salle haute nord-ouest' },
+    { x: 6520, y: 5251, nom: 'Suspension salle haute nord-est' },
+    { x: 8783, y: 2842, nom: 'Suspension partie basse sud (au-dessus du canapé)' },
+    { x: 8783, y: 5342, nom: 'Suspension partie basse nord (au-dessus du canapé)' },
+  ],
+
+  // ---------- Frigidarium : ambiance froide et humide (projet) ----------
+  // Fumée au sol, lumière plutôt bleue, et vue en contrebas sur la rivière par l'arc sud (ouvert dans le SketchUp : x 12913 → 15091,
+  // allège à 2340, clé à 3544). Niveau de la rivière SUPPOSÉ à 3,5 m sous le sol du frigidarium (z = -930), à relever.
+  frigidarium: { x0: 10330, couleur: 0x3f86ff,
+    lumieres: [[12300, 4300, 2820, 0.7], [13400, 3500, 2820, 0.7], [14400, 2700, 2820, 0.65], [13000, 4200, 3900, 0.4]],
+    arc: [[12913, 2340], [12927, 2652], [13019, 2932], [13190, 3184], [13423, 3379], [13701, 3502], [14002, 3544], [14303, 3502], [14580, 3379], [14813, 3184], [14984, 2932], [15079, 2644], [15091, 2340]],
+    riviere: { z: -930, x0: 8500, x1: 20000, yBerge: 600, yLoin: -7500 } },
 
   // ---------- Radiants IR : repères ⊕ du plan annoté ; modèle par défaut (liste dans js/ir-models.js) ----------
   irModele: 'ecosun600',
@@ -152,13 +190,15 @@ window.LAYOUT = {
   },
 
   // ---------- Rampes (mains courantes) d'escalier ----------
+  // Mains courantes arrêtées au droit de la dernière marche (nez à x 9336) : prolongées de 0,30 m, elles barraient le passage
+  // vers les canapés et les poêles (le prolongement d'une marche ne doit pas créer d'obstacle aux circulations horizontales).
   rampes: [
-    { x0: 8283, x1: 9636, y: 3582, nom: 'Main courante côté sud' },
-    { x0: 8283, x1: 9636, y: 4232, nom: 'Main courante côté nord' },
+    { x0: 8283, x1: 9366, y: 3582, nom: 'Main courante côté sud' },
+    { x0: 8283, x1: 9366, y: 4232, nom: 'Main courante côté nord' },
   ],
 
   // ---------- Simulation ----------
-  simulation: {
+  simulation: { secours: { x: 6732, y: 450 },
     entree: { x: 3250, y: 4071 },           // arrivée des curistes : derrière la porte ouest
     effectif: 18,                            // nb de curistes par séance (≤ nb d'assises de la grotte)
   },

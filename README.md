@@ -22,6 +22,17 @@ coordonnées X/Y/Z dans le repère SketchUp.
 | ![Escalier](docs/captures/escalier.jpg) | **Escalier** : 2 marches, avancée de 0,73 m, mains courantes, porte du frigidarium |
 | ![Grotte](docs/captures/grotte.jpg) | **Partie basse** : murs de sel rétro-éclairés, canapés B6 KD face aux 2 poêles de sauna |
 
+## Présentation pour la communication
+
+Bouton **Mode présentation** (ou ouvrir `presentation.html`). Ce mode masque les repères techniques, allume les suspensions, les poêles et les murs de sel, et ajoute
+le halo lumineux. Il propose aussi des vues cadrées : entrée, détente, murs de sel, poêles, alcôve, frigidarium, rivière et maquette.
+On y trouve enfin une **visite guidée** animée et une **photo HD** (3840 × 2160). Les images prêtes à l'emploi sont dans `docs/com/`.
+
+| | |
+|---|---|
+| ![Détente](docs/com/grotte-de-sel-detente.jpg) | ![Entrée](docs/com/grotte-de-sel-entree.jpg) |
+| ![Alcôve](docs/com/grotte-de-sel-alcove.jpg) | ![Frigidarium](docs/com/grotte-de-sel-frigidarium.jpg) |
+
 ## Ce que fait la maquette
 
 - **Géométrie** : lue directement dans le `.skp` (447 sommets, 734 arêtes, 280 faces) par `tools/skp_extract.py`.
@@ -30,7 +41,9 @@ coordonnées X/Y/Z dans le repère SketchUp.
 - **Équipements** (`js/layout.js`, d'après le plan annoté `docs/plan_annote.jpg`) :
   - salle haute : 6 chaises longues B17 et 4 fauteuils B4A KD ;
   - partie basse : 2 canapés B6 KD face à 2 poêles de sauna de 6 kW, avec garde-corps, au fond de part et d'autre de la porte du frigidarium, et les 2 murs de sel (nord et sud) ;
-  - alcôve sud, ouverte sur la salle haute : 1 banc B20B et le déshumidificateur Microwell DRY 500 Silver au mur est, avec son volume à laisser libre ;
+  - alcôve sud, ouverte sur la salle haute : 1 banc B20B, le déshumidificateur Trotec DH 60 au mur est (avec son volume à laisser libre) et l'issue de secours cintrée au fond ;
+  - 6 suspensions industrielles rouille ; entrée par une arche vitrée en plein cintre (vitrage clair) ;
+  - frigidarium : fumée au sol, lumière bleue, vue sur la rivière en contrebas par l'arc sud ;
   - 2 mains courantes inox à 0,90 m.
 - **Chauffage et humidité** : bilan paroi par paroi dans [docs/BILAN_THERMIQUE.md](docs/BILAN_THERMIQUE.md). Il conclut à 12 kW installés, à une régulation maison
   avec limiteurs de sécurité, à de l'air neuf à ne pas prendre dans la pièce d'entrée, et au plafond sous la route à isoler avec un pare-vapeur.

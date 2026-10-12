@@ -53,6 +53,13 @@ button.primary { background: var(--accent); color: #fff; border-color: var(--acc
 #legendClear i { display: inline-block; width: 10px; height: 10px; margin: 0 4px 0 8px; vertical-align: -1px; }
 #tip { display: none; position: fixed; z-index: 5; background: rgba(20,22,26,.92); color: #f2f2f2; padding: 6px 9px; border-radius: 4px; font: 12px var(--f-data); pointer-events: none; max-width: 300px; }
 #btnPanel { position: absolute; top: 10px; right: 10px; background: rgba(20,22,26,.8); color: #eee; border-color: #444; }
+#presBar { position: absolute; left: 50%; bottom: 14px; transform: translateX(-50%); display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 6px; max-width: calc(100% - 32px); box-sizing: border-box; background: rgba(12,10,8,.72); backdrop-filter: blur(6px); border: 1px solid rgba(255,255,255,.12); border-radius: 6px; padding: 8px 10px; }
+#presBar[hidden] { display: none; }
+#presBar button { background: transparent; color: #f1e6d8; border-color: rgba(255,255,255,.22); font-size: 13px; padding: 5px 9px; }
+#presBar button:hover { border-color: #f08a4b; }
+#presViews { display: contents; }
+.pbTitle { font: 600 15px var(--f-display); letter-spacing: .1em; text-transform: uppercase; color: #f6c99f; margin-right: 6px; }
+body.pres #legendClear, body.pres #tip { display: none !important; }
 .hint { color: var(--muted); font-size: 13px; }
 select { font: 15px var(--f-body); background: var(--bg); color: var(--fg); border: 1px solid var(--line); border-radius: 4px; padding: 6px 8px; width: 100%; margin-top: 4px; }
 input[type=range] { width: 140px; accent-color: var(--accent); }
@@ -69,6 +76,7 @@ input[type=range] { width: 140px; accent-color: var(--accent); }
 <body>
 <div id="view">
   <button id="btnPanel" title="Afficher / masquer le panneau">Panneau</button>
+  <div id="presBar" hidden><span class="pbTitle">Grotte de sel · Aquensis</span><span id="presViews"></span><button id="pbVisite">▶ Visite guidée</button><button id="pbPhoto">Photo HD</button><button id="pbExit">Quitter</button></div>
   <div id="legendClear">Largeur libre : <i style="background:#e03131"></i>&lt; 0,90 m <i style="background:#f59f00"></i>0,90–1,40 m <i style="background:#2f9e44"></i>≥ 1,40 m</div>
 </div>
 <aside id="panel">
@@ -94,7 +102,14 @@ input[type=range] { width: 140px; accent-color: var(--accent); }
     <label><input type="checkbox" id="tSalt" checked> Murs de sel éclairés</label>
     <label><input type="checkbox" id="tClear"> Carte des dégagements</label>
     <label><input type="checkbox" id="tTurn" checked> Cercle Ø 1,50 m</label>
+    <label><input type="checkbox" id="tSusp" checked> Suspensions</label>
+    <label><input type="checkbox" id="tFrigo" checked> Ambiance frigidarium</label>
   </div>
+
+  <h2>Présentation (com)</h2>
+  <div class="row"><button id="btnPres" class="primary">Mode présentation</button><button id="btnPhoto">Photo HD 4K</button><button id="btnVisite">▶ Visite guidée</button></div>
+  <div class="row" id="comViews" style="margin-top:8px"></div>
+  <p class="hint">Masque les repères techniques, allume les suspensions, les poêles et les murs de sel, ajoute le halo lumineux. « Photo HD » enregistre la vue courante en 3840 × 2160 (JPEG).</p>
 
   <h2>Radiants infrarouges</h2>
   <label for="irModel" class="hint">Modèle</label>
@@ -110,7 +125,7 @@ input[type=range] { width: 140px; accent-color: var(--accent); }
   <div class="row" style="margin-top:8px;align-items:center"><label for="speed" class="hint">Vitesse</label><input type="range" id="speed" min="1" max="10" step="1" value="4"><span id="speedVal" class="hint">×4</span></div>
   <div id="simInfo"></div>
   <ul id="agentsList"></ul>
-  <p class="hint">Scénario : arrivée par la double porte du pignon ouest (seule porte de circulation), chacun rejoint sa place (les premiers vont au plus loin), séance radiants allumés, sortie par la même porte. « Évacuation » envoie tout le monde vers la sortie depuis la position courante.</p>
+  <p class="hint">Scénario : arrivée par la double porte du pignon ouest, chacun rejoint sa place (les premiers vont au plus loin), séance poêles allumés, sortie par la même porte. « Évacuation » envoie chacun vers la sortie la plus proche : porte d'entrée ou issue de secours de l'alcôve.</p>
   </div>
 
   <h2>Contrôles</h2>
@@ -122,6 +137,7 @@ input[type=range] { width: 140px; accent-color: var(--accent); }
 <div id="tip"></div>
 <script src="js/vendor/three.min.js"></script>
 <script src="js/vendor/OrbitControls.js"></script>
+<script src="js/vendor/postprocessing.js"></script>
 <script src="js/model-data.js"></script>
 <script src="js/layout.js"></script>
 <script src="js/ir-models.js"></script>
