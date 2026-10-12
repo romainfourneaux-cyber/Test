@@ -112,24 +112,26 @@ window.LAYOUT = {
   ],
 
   // ---------- Déshumidificateur mural (à la place du banc B20B est de l'alcôve) ----------
-  // Trotec DH 60 (appareil déjà utilisé et connu de l'exploitation) : mural, 1253 × 651 × 255 mm, 70 kg, 38 L/24 h à 20 °C / 60 %,
-  // 90 à 104 L/24 h maxi (conditions non précisées), 5–40 °C, 1,52 kW, 7,5 A (démarrage 30 A), 54 dB(A) à 3 m, condensats Ø 10 mm.
-  // Dégagements pris sur la notice du DH 35 de la même gamme (30 cm dessus et dessous, 20 cm sur les côtés, 50 cm devant) : à vérifier sur la notice DH 60.
-  // Capacité à 35 °C / 45 % ESTIMÉE ≈ 58 L/24 h (rapport 30/60 ÷ 20/60 ≈ 1,8 relevé sur les appareils de piscine, puis × 0,85).
+  // Trotec DH 60 (appareil déjà utilisé et connu de l'exploitation), notice Trotec TRT-BA-DH15-DH30-DH60-TC-007-FR (2022) :
+  //   mural, 1253 × 651 × 255 mm, 1165 m³/h, 5–40 °C, 1,52 kW, 7,5 A ; 12,5 cm libres sur toutes les faces (p. 14) ;
+  //   entrée d'air par le DESSOUS, sortie par la grille HAUTE de la façade (p. 5), air soufflé ≈ 5 °C plus chaud (p. 4) ;
+  //   hygrostat 30–60 % (bouton sous le carter), interrupteur MODE à mettre sur CONT ; « ne pas couvrir l'appareil » (p. 3).
+  // Capacité lue sur le diagramme de la notice (p. 15) : 48,8 L/24 h (2,0 kg/h) à 35 °C / 45 %, 56,5 L/24 h à 35 °C / 50 %, 38 L/24 h à 20 °C / 60 %.
+  // Retenu une fois habillé : ≈ 1,9 kg/h (46 L/24 h). Besoin : 1,0–1,6 kg/h en moyenne, 2,4 kg/h en pointe (air neuf de la pièce à 26 °C / 75 %).
   // Paroi = mur est de l'alcôve (y 84 → 1751, cote 1,67 m du plan papier). hMur = naissance de la voûte de l'alcôve à 1,81 m (SketchUp).
-  // Alternatives étudiées : Microwell DRY 500 Silver (1245 × 642 × 300, 66 L/24 h à 30/60, 44 dB(A) à 1 m), Dantherm CDP 50.
   deshumidificateur: { x: 7863, y: 917, face: 'O', murX: 7991, paroi: { y0: 84, y1: 1751 }, hMur: 1810, zBas: 850,
     nom: 'Déshumidificateur Trotec DH 60 (alcôve est, à la place du banc B20B)', L: 1253, Pr: 255, H: 651,
-    degLat: 200, degHaut: 300, degBas: 300, degAvant: 500,
-    debit_L_j: 38, debitCond: '20 °C / 60 % HR', debit35_L_j: 58, debit35Estime: true, besoin_L_j: 36, besoinPointe_L_j: 58, tMin: 5, tMax: 40,
-    bruit: '54 dB(A) à 3 m', chaleur_W: 3000,
+    degLat: 125, degHaut: 125, degBas: 125, degAvant: 125, debitAir_m3h: 1165,
+    debit_L_j: 48.8, debitCond: '35 °C / 45 % HR (diagramme de la notice, p. 15)', debit35_L_j: 46, besoin_L_j: 36, besoinPointe_L_j: 58, tMin: 5, tMax: 40,
+    bruit: '54 dB(A) à 3 m', chaleur_W: 2700,
     elec: '230 V mono, 7,5 A (démarrage 30 A), 1,52 kW : circuit dédié 16 A + différentiel 30 mA, interrupteur hors de la salle',
-    condensats: 'raccord Ø 10 mm vers un siphon des eaux usées, ou pompe de relevage (option)',
-    source: 'https://www.danthermgroup.com/products/trotec-dh-60',
-    // Habillage bois (demande du 12/10/2026) : caisson à claire-voie autour de l'appareil, façade démontable pour le filtre et les commandes.
-    // ep = épaisseur des planches, jeux = vides intérieurs autour de l'appareil (mm), vide = part de vide des faces à claire-voie, lame = largeur des lames.
-    habillage: { essence: 'thermo-pin (pin traité thermiquement)', couleur: 0xb07a4c, ep: 20, jeuLat: 100, jeuHaut: 150, jeuBas: 150, jeuAvant: 60, lame: 45, vide: 0.5,
-      faces: { avant: true, dessus: true, dessous: true, cotes: false } } },
+    condensats: '≈ 2 kg/h en continu : raccord vers un siphon des eaux usées, ou pompe de relevage Trotec (option 6.100.000.019)',
+    source: 'https://uk.trotec.com/fileadmin/downloads/Entfeuchtung/DH-15-30-60/TRT-BA-DH15-DH30-DH60-TC-007-FR.pdf',
+    // Habillage bois (demande du 12/10/2026) : caisson qui respecte les 12,5 cm de la notice à l'intérieur, dessous ouvert (reprise d'air),
+    // haut de façade à claire-voie devant la grille de soufflage, bas de façade plein et cloison horizontale entre soufflage et reprise
+    // (l'air soufflé, plus chaud, ne doit pas être réaspiré), façade démontable pour l'hygrostat, le MODE et les condensats.
+    habillage: { essence: 'thermo-pin (pin traité thermiquement)', couleur: 0xb07a4c, ep: 20, jeuLat: 130, jeuHaut: 150, jeuBas: 150, jeuAvant: 130, lame: 45, vide: 0.5,
+      aspiration: 'dessous', soufflage: 'avant', dessousOuvert: true, dessusPlein: true, facadeBasPleine: true, cloison: true } },
 
   // ---------- Suspensions : 6 lustres industriels « loft » finition rouille (ManoMano 14035860) ----------
   // Abat-jour cylindrique en métal Ø 33 × H 35 cm, chaîne réglable 50 cm, douille E27 100 W max (fiche ManoMano). Forme modélisée : cage cylindrique.
