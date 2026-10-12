@@ -239,6 +239,49 @@
     T.seats.forEach((s, si) => { const p = loc2plan(s.x, s.z), ap = loc2plan(T.approach[si].x, T.approach[si].z); seats.push({ item: it, x: p.x, y: p.y, pose: s.pose, rot: f.rot, approach: ap, approaches: T.approach.map((q) => loc2plan(q.x, q.z)), zone: it.zone, taken: false }); });
   });
 
+  // ------------------------------------------------------------------ poêles de sauna (LAYOUT.poeles)
+  const poeleGroup = new THREE.Group(); scene.add(poeleGroup); const poeles = [];
+  const MAT_POELE = { acier: new THREE.MeshStandardMaterial({ color: 0x2b2b2d, metalness: 0.7, roughness: 0.35 }),
+    pierre: new THREE.MeshStandardMaterial({ color: 0x6d6a66, roughness: 0.95 }),
+    braise: new THREE.MeshStandardMaterial({ color: 0x220800, emissive: 0xff4a10, emissiveIntensity: 0 }) };
+  if (L.chauffage === 'poeles') (L.poeles || []).forEach((c) => {
+    const md = L.poele; const nrm = { N: [0, 1], S: [0, -1], E: [1, 0], O: [-1, 0] }[c.face || 'O'];
+    const W = md.L, D = md.Pr, H = md.H; const fl = floorAt(c.x, c.y);
+    const along = nrm[0] === 0; // face nord/sud : largeur selon X
+    const box = { x0: c.x - (along ? W : D) / 2, x1: c.x + (along ? W : D) / 2, y0: c.y - (along ? D : W) / 2, y1: c.y + (along ? D : W) / 2, z0: fl, z1: fl + H };
+    const g = new THREE.Group();
+    const corps = new THREE.Mesh(new THREE.BoxGeometry(W / 1000, H * 0.82 / 1000, D / 1000), MAT_POELE.acier); corps.position.y = H * 0.41 / 1000; corps.castShadow = true; g.add(corps);
+    const grille = new THREE.Mesh(new THREE.BoxGeometry(W / 1000 * 0.9, H * 0.6 / 1000, 0.01), MAT_POELE.braise); grille.position.set(0, H * 0.4 / 1000, D / 2000 + 0.006); g.add(grille);
+    for (let i = 0; i < 18; i++) { const st = new THREE.Mesh(new THREE.DodecahedronGeometry(0.045 + (i % 3) * 0.01), MAT_POELE.pierre); st.position.set(((i % 6) / 5 - 0.5) * W / 1000 * 0.8, H * 0.84 / 1000 + Math.floor(i / 6) * 0.04, ((Math.floor(i / 6) % 3) / 2 - 0.5) * D / 1000 * 0.7); g.add(st); }
+    if (md.gardeCorps) { // garde-corps en bois autour du poêle (exigé en sauna collectif)
+      const gc = 0.1, hh = 0.9, w2 = W / 1000 + 2 * gc, d2 = D / 1000 + gc;
+      for (const [x, z, sx, sz] of [[0, D / 2000 + gc, w2, 0.04], [-w2 / 2, gc / 2, 0.04, d2], [w2 / 2, gc / 2, 0.04, d2]]) { const r = new THREE.Mesh(new THREE.BoxGeometry(sx, 0.05, sz), MAT.slat); r.position.set(x, hh, z); g.add(r); const r2 = r.clone(); r2.position.y = hh / 2; g.add(r2); }
+    }
+    g.position.copy(P(c.x, c.y, fl)); g.rotation.y = Math.atan2(nrm[0], -nrm[1]); poeleGroup.add(g);
+    const light = new THREE.PointLight(0xff5a20, 0, 3, 2); light.position.copy(P(c.x + nrm[0] * 500, c.y + nrm[1] * 500, fl + 500)); poeleGroup.add(light);
+    g.userData = { info: c.nom + ' — ' + md.nom + ', ' + md.P / 1000 + ' kW, ' + W / 10 + ' × ' + D / 10 + ' × ' + H / 10 + ' cm', kind: 'poele' };
+    // emprise au sol (avec garde-corps) = obstacle de circulation
+    const m = md.gardeCorps ? 100 : 0; const ob = { x0: box.x0 - (along ? m : (nrm[0] < 0 ? m : 0)), x1: box.x1 + (along ? m : (nrm[0] > 0 ? m : 0)), y0: box.y0 - (along ? (nrm[1] < 0 ? m : 0) : m), y1: box.y1 + (along ? (nrm[1] > 0 ? m : 0) : m) };
+    for (let j = 0; j < NY; j++) for (let i = 0; i < NX; i++) { const x = cellX(i), y = cellY(j); if (x >= ob.x0 && x <= ob.x1 && y >= ob.y0 && y <= ob.y1) furn[idx(i, j)] = 1; }
+    poeles.push({ cfg: c, g, box, n: nrm, fl, light });
+  });
+  // déshumidificateur (LAYOUT.deshumidificateur)
+  let deshum = null;
+  if (L.deshumidificateur) {
+    const c = L.deshumidificateur; const nrm = { N: [0, 1], S: [0, -1], E: [1, 0], O: [-1, 0] }[c.face || 'O']; const fl = floorAt(c.x, c.y);
+    const along = nrm[0] === 0; const W = c.L, D = c.Pr, H = c.H;
+    const box = { x0: c.x - (along ? W : D) / 2, x1: c.x + (along ? W : D) / 2, y0: c.y - (along ? D : W) / 2, y1: c.y + (along ? D : W) / 2, z0: fl, z1: fl + H };
+    const g = new THREE.Group();
+    const b = new THREE.Mesh(new THREE.BoxGeometry(W / 1000, H / 1000, D / 1000), new THREE.MeshStandardMaterial({ color: 0xe9ecef, roughness: 0.5 })); b.position.y = H / 2000; b.castShadow = true; g.add(b);
+    const gr = new THREE.Mesh(new THREE.PlaneGeometry(W / 1000 * 0.8, H / 1000 * 0.35), new THREE.MeshStandardMaterial({ color: 0x495057 })); gr.position.set(0, H * 0.7 / 1000, D / 2000 + 0.002); g.add(gr);
+    const ec = new THREE.Mesh(new THREE.PlaneGeometry(0.12, 0.05), new THREE.MeshStandardMaterial({ color: 0x0b7285, emissive: 0x15aabf, emissiveIntensity: 0.8 })); ec.position.set(0, H * 0.35 / 1000, D / 2000 + 0.003); g.add(ec);
+    g.position.copy(P(c.x, c.y, fl)); g.rotation.y = Math.atan2(nrm[0], -nrm[1]); poeleGroup.add(g);
+    g.userData = { info: c.nom + ' — ' + W / 10 + ' × ' + D / 10 + ' × ' + H / 10 + ' cm (cotes provisoires)', kind: 'deshum' };
+    for (let j = 0; j < NY; j++) for (let i = 0; i < NX; i++) { const x = cellX(i), y = cellY(j); if (x >= box.x0 && x <= box.x1 && y >= box.y0 && y <= box.y1) furn[idx(i, j)] = 1; }
+    deshum = { cfg: c, box };
+  }
+  const setPoeles = (on) => { MAT_POELE.braise.emissiveIntensity = on ? 1.4 : 0; poeles.forEach((p) => { p.light.intensity = on ? 1.6 : 0; }); };
+
   // ------------------------------------------------------------------ rampes (mains courantes)
   const railGroup = new THREE.Group(); scene.add(railGroup);
   const stairProfile = (x) => (x < 9066 ? 2870 : x < 9336 ? 2720 : 2570); // nez de marches relevés sur le modèle
@@ -256,11 +299,11 @@
   const irGroup = new THREE.Group(); scene.add(irGroup); let irs = [];
   const store = { get: (k) => { try { return localStorage.getItem(k); } catch (e) { return null; } }, set: (k, v) => { try { localStorage.setItem(k, v); } catch (e) { /* stockage indisponible */ } } };
   let irKey = store.get('grotte.ir'); if (!IR_MODELES[irKey]) irKey = L.irModele && IR_MODELES[L.irModele] ? L.irModele : Object.keys(IR_MODELES)[0];
-  let irPose = store.get('grotte.pose') === 'mur' ? 'mur' : 'plafond';
+  let irPose = ['mur', 'plafond', 'aucun'].includes(store.get('grotte.pose')) ? store.get('grotte.pose') : (L.chauffage === 'poeles' ? 'aucun' : 'plafond');
   const irM = () => IR_MODELES[irKey];
   const NORM = { N: [0, 1], S: [0, -1], E: [1, 0], O: [-1, 0] }; // direction du rayonnement (vers la pièce)
   function buildIR() {
-    irGroup.clear(); irs = []; const md = irM();
+    irGroup.clear(); irs = []; const md = irM(); if (irPose === 'aucun') return;
     MAT.irFace.color.setHex(md.lueur ? 0x1a0400 : 0xe8e8e6); // verre sombre pour les lampes, face blanche pour les panneaux
     const list = irPose === 'mur' ? (L.irMur[irKey] || L.irMur.defaut) : L.ir;
     list.forEach((c) => {
@@ -445,10 +488,11 @@
     const okCircle = best !== null && dist[best] - CELL / 2 >= 750;
     add('Accessibilité', 'Espace de manœuvre Ø 1,50 m dans la grotte', okCircle ? 'OK' : 'NOK', best !== null ? 'Ø libre max ≈ ' + fmt(2 * dist[best] - CELL) : '—', 'Ø 1,50 m');
     if (best !== null) { turning.position.copy(P(cellX(best % NX), cellY(Math.floor(best / NX)), floorH[best] + 20)); turning.visible = okCircle; }
+    const boxDist = (a, b) => Math.hypot(Math.max(0, a.x0 - b.x1, b.x0 - a.x1), Math.max(0, a.y0 - b.y1, b.y0 - a.y1), Math.max(0, a.z0 - b.z1, b.z0 - a.z1));
+    if (irPose !== 'aucun') {
     // IR
     const md = irM(); const mur = irPose === 'mur';
     const poseOK = mur ? md.murOK : md.plafondOK !== false;
-    const boxDist = (a, b) => Math.hypot(Math.max(0, a.x0 - b.x1, b.x0 - a.x1), Math.max(0, a.y0 - b.y1, b.y0 - a.y1), Math.max(0, a.z0 - b.z1, b.z0 - a.z1));
     const ref = (v) => (v === null || v === undefined ? 'non indiqué par la notice' : '≥ ' + fmt(v));
     const st = (v, m) => (m === null || m === undefined ? 'A VOIR' : v >= m ? 'OK' : 'NOK');
     if (!mur && md.hPose) { let dmin = 1e9; irs.forEach((p, i) => irs.forEach((q, j) => { if (j > i) dmin = Math.min(dmin, Math.hypot(p.cfg.x - q.cfg.x, p.cfg.y - q.cfg.y) - Math.max(md.L, md.l)); })); add('Radiants IR', 'Distance entre panneaux', dmin >= 600 ? 'OK' : 'NOK', fmt(dmin), '≥ 0,60 m (notice Fenix)'); }
@@ -488,6 +532,43 @@
     add('Radiants IR', 'Modèle : ' + md.nom + (mur ? ' (pose murale)' : ' (pose plafond)'), poseOK && md.interieur && supportOK && ipEau >= 4 ? ((mur ? md.murInflammable !== null && md.murInflammable !== undefined : md.plafondBois) ? 'OK' : 'A VOIR') : 'NOK',
       md.P + ' W, ' + md.IP + ', ' + (md.interieur ? 'usage intérieur prévu' : md.interieur === null ? 'usage intérieur non indiqué' : 'usage intérieur non prévu (notice : extérieur couvert)') + ', ' + (poseOK ? 'pose ' + (mur ? 'murale' : 'plafond') + ' autorisée' : 'pose ' + (mur ? 'murale' : 'au plafond') + ' NON autorisée par la notice') + (mur ? '' : ', plafond bois : ' + (md.plafondBois === true ? 'autorisé' : md.plafondBois === false ? 'non autorisé' : 'non précisé')),
       'Pose autorisée, usage intérieur, IP x4 mini — notice : ' + md.source, md.note || '');
+    }
+    // Poêles de sauna
+    if (poeles.length) {
+      const pm = L.poele; const refP = (v) => (v === null || v === undefined ? 'à reprendre dans la notice du modèle retenu' : '≥ ' + fmt(v));
+      const stP = (v, m) => (m === null || m === undefined ? 'A VOIR' : v >= m ? 'OK' : 'NOK');
+      poeles.forEach((p) => {
+        const nm = p.cfg.nom; const ceil = ceilingAt(p.cfg.x + p.n[0] * 300, p.cfg.y + p.n[1] * 300);
+        const dPl = ceil - p.box.z1;
+        add('Poêles de sauna', nm + ' : distance au plafond bois', stP(dPl, pm.distPlafond), fmt(dPl) + ' du dessus du poêle au plafond (hauteur libre ' + fmt(ceil - p.fl) + ')', 'Notice : ' + refP(pm.distPlafond));
+        // devant : mobilier en cèdre
+        let fd = 1e9, fname = '';
+        items.forEach((it) => { const xs = it.poly.map((q) => q[0]), ys = it.poly.map((q) => q[1]); const fb = { x0: Math.min(...xs), x1: Math.max(...xs), y0: Math.min(...ys), y1: Math.max(...ys), z0: it.h, z1: it.h + (it.T.Hdos || it.T.H) * 1000 }; const d = boxDist(p.box, fb); if (d < fd) { fd = d; fname = it.cfg.nom; } });
+        add('Poêles de sauna', nm + ' : distance au banc en cèdre devant', stP(fd, pm.distAvant), fmt(fd) + ' (' + fname + ')', 'Notice : ' + refP(pm.distAvant) + ' devant', 'Espace pour les jambes entre le banc et le garde-corps du poêle : ' + fmt(fd - (pm.gardeCorps ? 100 : 0)) + '.');
+        // côtés : murs de sel et tableau de porte (calcul exact) ; arrière : mur porteur (plan du mur donné dans layout : murX / murY)
+        const rect = (r) => Math.hypot(Math.max(0, p.box.x0 - r.x1, r.x0 - p.box.x1), Math.max(0, p.box.y0 - r.y1, r.y0 - p.box.y1));
+        let side = Math.min(...L.mursSel.map((w) => rect(w)));
+        const door = doors.find((d) => d.cfg.id === 'frigidarium');
+        if (door) { const half = door.cfg.largeur / 2; side = Math.min(side, rect({ x0: door.cfg.x, x1: door.cfg.x, y0: door.cfg.y - half, y1: door.cfg.y + half })); }
+        const back = p.cfg.murX !== undefined ? Math.abs(p.cfg.murX - (p.n[0] < 0 ? p.box.x1 : p.box.x0)) : Math.abs(p.cfg.murY - (p.n[1] < 0 ? p.box.y1 : p.box.y0));
+        add('Poêles de sauna', nm + ' : distance sur les côtés (mur de sel, tableau de porte)', stP(side, pm.distCotes), fmt(side), 'Notice : ' + refP(pm.distCotes) + ' sur les côtés', 'Côté mur de sel : vérifier aussi la tenue des LED de rétro-éclairage à la chaleur.');
+        add('Poêles de sauna', nm + ' : distance au mur arrière', stP(back, pm.distArriere), fmt(back), 'Notice : ' + refP(pm.distArriere));
+        // porte du frigidarium voisine
+        if (door) { const dy = Math.max(0, Math.max(p.box.y0, door.cfg.y - door.cfg.largeur / 2) - Math.min(p.box.y1, door.cfg.y + door.cfg.largeur / 2)); add('Poêles de sauna', nm + ' : écart avec la porte du frigidarium', dy >= 300 ? 'OK' : 'A VOIR', fmt(dy) + ' entre le poêle et l\'ouverture de la porte', 'Pas de poêle dans le passage ; garde-corps conseillé côté porte'); }
+      });
+      const Ptot = poeles.length * pm.P / 1000;
+      add('Poêles de sauna', 'Puissance installée', 'A VOIR', poeles.length + ' × ' + pm.P / 1000 + ' kW = ' + Ptot + ' kW pour ≈ 74 m³ à 35 °C', 'Besoin estimé par analogie avec la grotte existante (9 kW, 31 m³, 40 °C) : 13 à 18 kW selon la température autour de la grotte');
+      add('Poêles de sauna', 'Plage de volume du fabricant', pm.volMax ? (74.4 / poeles.length <= pm.volMax ? 'OK' : 'NOK') : 'A VOIR', '≈ 74 m³ pour ' + poeles.length + ' poêles, chauffés depuis la partie basse (19,5 m³) vers la salle haute (55 m³)', 'Notice : ' + (pm.volMax ? pm.volMin + ' à ' + pm.volMax + ' m³ par poêle' : 'plage de volume à reprendre'), 'Les deux poêles sont au fond de la partie basse : la salle haute (55 m³) sera chauffée par l\'air chaud qui remonte, prévoir un brassage ou vérifier l\'homogénéité.');
+      add('Poêles de sauna', 'Consigne 35 °C réglable', pm.thermostat ? 'OK' : 'A VOIR', pm.thermostat || 'plage du régulateur à vérifier', 'Beaucoup de régulateurs de sauna démarrent à 40 ou 50 °C');
+    }
+    // Déshumidificateur
+    if (deshum) {
+      const c = deshum.cfg;
+      add('Déshumidificateur', 'Emplacement : alcôve sud (à la place du banc B20B est)', 'NOK', 'L\'alcôve est séparée de la grotte par un mur plein dans le SketchUp (mur sud de la salle haute, Y 1751 → 1901)', 'Le déshumidificateur doit traiter l\'air de la grotte', 'Tel quel, il n\'asséchera que l\'alcôve. Il faut soit une ouverture/grille entre l\'alcôve et la grotte, soit une reprise et un soufflage gainés dans la grotte (traversée du mur), soit le placer dans la grotte.');
+      add('Déshumidificateur', 'Température de fonctionnement', c.tMax ? (c.tMax >= 35 ? 'OK' : 'NOK') : 'A VOIR', c.tMax ? 'jusqu\'à ' + c.tMax + ' °C' : 'plage à vérifier sur la notice', 'Air à traiter à 35 °C si gainé depuis la grotte', 'Beaucoup de déshumidificateurs à condensation sont limités à 32–35 °C ; en ambiance saline, préférer un appareil à carrosserie et batterie traitées anticorrosion.');
+      add('Déshumidificateur', 'Évacuation des condensats et alimentation', 'A VOIR', 'raccordement à un écoulement gravitaire ou pompe de relevage, prise dédiée', 'Fonctionnement continu sans bac à vider');
+      add('Déshumidificateur', 'Capacité', c.debit_L_j ? 'A VOIR' : 'A VOIR', c.debit_L_j ? c.debit_L_j + ' L/jour' : 'à dimensionner', 'Volume de la grotte ≈ 74 m³ à 35 °C, 12 personnes, porte vers le frigidarium humide');
+    }
     // Murs de sel / ambiances
     add('Murs de sel', 'Implantation des 2 murs de sel', 'OK', L.mursSel.map((w) => w.nom + ' ' + fmt(w.x1 - w.x0) + ' × ' + fmt(w.h)).join(' ; '), 'Croquis du 02/10/2026 : murs nord et sud de la partie basse');
     add('Murs de sel', 'Rétro-éclairage', 'A VOIR', '10 cm de vide technique derrière chaque mur', 'LED TBTS, IP65 conseillé', 'Prévoir une trappe ou un démontage pour la maintenance des LED.');
@@ -555,6 +636,7 @@
   }
   function resetSim() { agents.forEach((a) => agentsGroup.remove(a.g)); agents = []; simT = 0; evac = null; running = false; doors.forEach((d) => { d.target = 0; }); $('btnSession').textContent = '▶ Séance'; setIR(false); $('simInfo').textContent = ''; }
   function setIR(on) {
+    setPoeles(on);
     // lueur visible seulement pour les émetteurs qui en ont une (lampes quartz/halogène/carbone) ; les panneaux restent sans lumière
     const lu = irM().lueur;
     MAT.irGlow.emissiveIntensity = on && lu ? 1.2 : 0; MAT.irFace.emissive.setHex(lu || 0x000000); MAT.irFace.emissiveIntensity = on && lu ? 0.9 : 0;

@@ -53,14 +53,30 @@ window.LAYOUT = {
     { type: 'chaiseLongue', x: 6470, y: 5216, rot: 0, nom: 'Chaise longue B17 n°4' },
     { type: 'chaiseLongue', x: 7180, y: 5216, rot: 0, nom: 'Chaise longue B17 n°5' },
     { type: 'chaiseLongue', x: 7890, y: 5216, rot: 0, nom: 'Chaise longue B17 n°6' },
-    // Partie basse : 1 chaise longue B17 de chaque côté de l'escalier, parallèle aux murs de sel, pieds vers la porte
-    // (remplace les 4 canapés B6 KD ; B17 = 1,81 m pour 1,77 m de profondeur dans le SketchUp)
-    { type: 'chaiseLongue', x: 9168, y: 5156, rot: 90, nom: 'Chaise longue B17 — bas nord (mur de sel nord)' },
-    { type: 'chaiseLongue', x: 9168, y: 2793, rot: 90, nom: 'Chaise longue B17 — bas sud (mur de sel sud)' },
+    // Partie basse : 1 canapé B6 KD de chaque côté de l'escalier, contre le bord du niveau haut, face aux poêles de sauna
+    { type: 'canape2', x: 8658, y: 5156, rot: 90, nom: 'Canapé B6 KD — bas nord, face au poêle' },
+    { type: 'canape2', x: 8658, y: 2793, rot: 90, nom: 'Canapé B6 KD — bas sud, face au poêle' },
     // Alcôve sud : 2 × B20B le long des petits côtés (cote 1,67 m notée sur le plan)
     { type: 'banc', x: 5600, y: 917, rot: 90, nom: 'Banc long B20B — alcôve ouest' },
-    { type: 'banc', x: 7860, y: 917, rot: 270, nom: 'Banc long B20B — alcôve est' },
   ],
+
+  // ---------- CHAUFFAGE : 2 poêles de sauna au fond de la partie basse, contre le mur de la porte du frigidarium,
+  // de part et d'autre de la porte, au plus près des murs de sel. Les radiants IR ne sont plus installés (pose « aucun »).
+  chauffage: 'poeles',
+  poele: {
+    // MODÈLE PROVISOIRE : cotes et distances à remplacer par celles de la notice du modèle retenu (null = à renseigner)
+    nom: 'Poêle de sauna électrique (modèle à choisir)', P: 9000, L: 500, Pr: 400, H: 800,
+    distPlafond: null, distArriere: null, distCotes: null, distAvant: null, gardeCorps: true,
+    volMin: null, volMax: null, thermostat: null, source: '',
+  },
+  poeles: [
+    { x: 9754, y: 5690, face: 'O', murX: 10054, nom: 'Poêle nord (entre la porte et le mur de sel nord)' },
+    { x: 9754, y: 2394, face: 'O', murX: 10054, nom: 'Poêle sud (entre le mur de sel sud et la porte)' },
+  ],
+
+  // ---------- Déshumidificateur (à la place du banc B20B est de l'alcôve) — cotes PROVISOIRES, modèle à choisir ----------
+  deshumidificateur: { x: 7741, y: 917, face: 'O', murX: 7991, nom: 'Déshumidificateur (alcôve est, à la place du banc B20B)', L: 600, Pr: 400, H: 700,
+    debit_L_j: null, tMax: null, source: '' },
 
   // ---------- Radiants IR : repères ⊕ du plan annoté ; modèle par défaut (liste dans js/ir-models.js) ----------
   irModele: 'ecosun600',

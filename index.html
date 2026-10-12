@@ -88,7 +88,7 @@ input[type=range] { width: 140px; accent-color: var(--accent); }
     <label><input type="checkbox" id="tEdges" checked> Arêtes SketchUp</label>
     <label><input type="checkbox" id="tFurn" checked> Mobilier cèdre</label>
     <label><input type="checkbox" id="tIR" checked> Radiants IR</label>
-    <label><input type="checkbox" id="tIROn"> Radiants allumés</label>
+    <label><input type="checkbox" id="tIROn"> Chauffage allumé</label>
     <label><input type="checkbox" id="tSafe" checked> Zones sécurité IR</label>
     <label><input type="checkbox" id="tRails" checked> Rampes</label>
     <label><input type="checkbox" id="tSalt" checked> Murs de sel éclairés</label>
@@ -100,7 +100,7 @@ input[type=range] { width: 140px; accent-color: var(--accent); }
   <label for="irModel" class="hint">Modèle</label>
   <select id="irModel"></select>
   <label for="irPose" class="hint">Pose</label>
-  <select id="irPose"><option value="plafond">Au plafond (repères ⊕ du plan)</option><option value="mur">Au mur (6 emplacements muraux)</option></select>
+  <select id="irPose"><option value="aucun">Aucun (chauffage par poêles de sauna)</option><option value="plafond">Au plafond (repères ⊕ du plan)</option><option value="mur">Au mur (6 emplacements muraux)</option></select>
   <p class="hint">Les contrôles « Radiants IR » se recalculent avec les distances de la notice du modèle choisi.</p>
 
   <h2>Simulation</h2>
