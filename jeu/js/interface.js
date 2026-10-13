@@ -399,7 +399,7 @@
     var valides = Object.keys(etat.cours).filter(function (k) { return etat.cours[k].etat === "valide"; }).length;
     var vues = Object.keys(etat.notions).length;
     s.appendChild(el("div", { class: "accueil-scene" }, [
-      el("div", { class: "scene-fond", html: JEU.decor.paysage(idx, etat.reglages.nomDomaine) }),
+      el("div", { class: "scene-fond tapisserie", title: "Tapisserie « Le cerf aux abois », vers 1495-1515 (The Met, domaine public)" }),
       el("div", { class: "titre-domaine" }, [
         el("div", { class: "blason-grand", html: JEU.icones.blason(etat.reglages.nomDomaine, 84) }),
         el("div", {}, [
@@ -449,7 +449,7 @@
     options.forEach(function (o, i) {
       grille.appendChild(el("button", { class: "carte-jeu", onclick: o.action }, [
         el("span", { class: "touche", texte: String(i + 1) }),
-        el("span", { class: "icone-jeu", html: JEU.icones.icone(o.icone, 96) }),
+        el("span", { class: "illustration ill-" + o.icone }, [el("span", { class: "icone-jeu", html: JEU.icones.icone(o.icone, 44) })]),
         el("h2", { texte: o.titre }), el("p", { texte: o.texte })
       ]));
     });

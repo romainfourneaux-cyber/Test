@@ -144,6 +144,11 @@ main { max-width: 1060px; margin: 0 auto; padding: 1.4rem 1rem 7rem; }
 /* ---------- accueil ---------- */
 .accueil-scene { position: relative; margin: -1.6rem -2rem 1.2rem; border-bottom: 3px solid var(--encre); overflow: hidden; border-radius: 4px 4px 0 0; }
 .scene-fond svg { display: block; width: 100%; height: clamp(220px, 34vw, 360px); }
+.scene-fond.tapisserie {
+  height: clamp(240px, 36vw, 380px);
+  background: linear-gradient(rgba(20,12,6,0) 55%, rgba(20,12,6,.65)), url("../assets/images/oeuvres/tapisserie-cerf.jpg") center 35%/cover no-repeat;
+  box-shadow: inset 0 0 60px rgba(0,0,0,.55);
+}
 .titre-domaine {
   position: absolute; left: 1.4rem; bottom: 1.2rem;
   display: flex; align-items: center; gap: 1rem; padding: .5rem 1.6rem .5rem 1rem;
@@ -175,10 +180,19 @@ main { max-width: 1060px; margin: 0 auto; padding: 1.4rem 1rem 7rem; }
 }
 .carte-jeu:hover { transform: translateY(-4px); box-shadow: 0 0 0 3px var(--or-clair), 0 0 0 5px var(--encre), 0 16px 26px rgba(0,0,0,.45); }
 .carte-jeu .touche { position: absolute; top: .7rem; right: .4rem; }
-.carte-jeu .icone-jeu {
-  width: 128px; height: 128px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #f6e7bf;
-  background: radial-gradient(circle at 35% 30%, #7b4b3a, #3d2116); box-shadow: 0 0 0 4px var(--or), 0 0 0 6px var(--encre), inset 0 0 20px rgba(0,0,0,.6);
+.carte-jeu .illustration {
+  position: relative; display: block; width: 100%; height: 190px; border: 2px solid var(--encre);
+  background: center/cover no-repeat; box-shadow: inset 0 0 40px rgba(0,0,0,.55);
 }
+.carte-jeu .ill-assaut { background-image: url("../assets/images/oeuvres/bataille-cavalerie.jpg"); background-position: 20% 40%; }
+.carte-jeu .ill-sceau { background-image: url("../assets/images/oeuvres/chevalier-or.jpg"); background-color: #3a2a1a; }
+.carte-jeu .ill-valider { background-image: url("../assets/images/oeuvres/chasseur-chateau.jpg"); background-position: center 30%; }
+.carte-jeu .icone-jeu {
+  position: absolute; left: 50%; bottom: -30px; transform: translateX(-50%);
+  width: 64px; height: 64px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #f6e7bf;
+  background: radial-gradient(circle at 35% 30%, #7b4b3a, #3d2116); box-shadow: 0 0 0 3px var(--or), 0 0 0 5px var(--encre), 0 4px 8px rgba(0,0,0,.6);
+}
+.carte-jeu h2 { margin-top: 2.2rem !important; }
 .carte-jeu h2 { margin: .8rem 0 .2rem; }
 .carte-jeu p { margin: .2rem 0 0; }
 
@@ -252,7 +266,7 @@ main { max-width: 1060px; margin: 0 auto; padding: 1.4rem 1rem 7rem; }
 
 /* assaut : champ de bataille */
 .champ-bataille { position: relative; margin-bottom: 1rem; border: 3px solid var(--encre); border-radius: 4px; overflow: hidden; box-shadow: 0 0 0 2px var(--or), 0 10px 20px rgba(0,0,0,.4); }
-.scene-bataille svg { display: block; width: 100%; height: auto; }
+.scene-bataille svg { display: block; width: 100%; height: auto; background: #2a1d12; }
 .hud-bataille { position: absolute; inset: 0; display: flex; justify-content: space-between; align-items: flex-start; padding: .6rem .8rem; pointer-events: none; }
 .hud-joueur, .hud-ennemi { background: rgba(30,20,12,.72); color: #f6e7bf; padding: .4rem .8rem; border-radius: 3px; box-shadow: 0 0 0 1px var(--or); }
 .hud-joueur { display: flex; gap: .6rem; align-items: center; }
@@ -280,9 +294,10 @@ main { max-width: 1060px; margin: 0 auto; padding: 1.4rem 1rem 7rem; }
 .carte-notion .touche { position: absolute; top: -.6rem; left: -.6rem; margin: 0; width: 2rem; height: 2rem; font-size: .95rem; }
 .carte-matiere { font-family: var(--titre); font-size: .7rem; color: #fff8e4; background: var(--teinte); padding: .1rem .7rem; border-radius: 2px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
 .carte-art {
-  width: 100%; height: 110px; display: flex; align-items: center; justify-content: center; color: #f6e7bf; border: 2px solid var(--encre);
-  background: radial-gradient(circle at 50% 40%, color-mix(in srgb, var(--teinte) 70%, #fff), var(--teinte) 55%, color-mix(in srgb, var(--teinte) 55%, #000));
-  box-shadow: inset 0 0 18px rgba(0,0,0,.45);
+  width: 100%; height: 120px; display: flex; align-items: center; justify-content: center; color: #fff3d0; border: 2px solid var(--encre);
+  background: radial-gradient(circle at 50% 45%, color-mix(in srgb, var(--teinte) 55%, transparent) 0, color-mix(in srgb, var(--teinte) 35%, transparent) 45%, rgba(0,0,0,.45) 100%),
+    url("../assets/images/oeuvres/millefleurs.jpg") center/cover;
+  box-shadow: inset 0 0 22px rgba(0,0,0,.6);
 }
 .carte-art .gi { filter: drop-shadow(0 2px 2px rgba(0,0,0,.6)); }
 .carte-titre { font-size: 1.12rem; line-height: 1.2; margin: .2rem 0; }
@@ -349,6 +364,10 @@ main { max-width: 1060px; margin: 0 auto; padding: 1.4rem 1rem 7rem; }
 .ligne-batiment.fait b { color: var(--vert-ok); }
 
 /* ---------- codex et fiches ---------- */
+.bandeau-oeuvre {
+  height: 150px; margin: -1.6rem -2rem 1rem; border-bottom: 3px solid var(--encre); border-radius: 4px 4px 0 0;
+  background: linear-gradient(rgba(20,12,6,0) 40%, rgba(20,12,6,.55)), url("../assets/images/oeuvres/chasse-faucon.jpg") center 30%/cover no-repeat;
+}
 .codex-matiere { border-left: 6px solid var(--teinte); margin: .8rem 0; background: rgba(255,250,236,.45); box-shadow: 0 2px 6px rgba(80,50,20,.2); }
 .codex-entete { display: flex; justify-content: space-between; align-items: center; width: 100%; background: none; border: none; padding: .6rem .9rem; font-family: var(--titre); font-weight: 700; font-size: 1.05rem; text-align: left; }
 .codex-entete .gi { color: var(--teinte); margin-right: .5rem; }
