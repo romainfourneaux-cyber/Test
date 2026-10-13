@@ -82,70 +82,156 @@
     return { batiment: b, nouveauStade: apres !== avant ? apres : null };
   }
 
-  // ---------- dessin ----------
+  // ---------- dessin : plan de ville ancien ----------
   var ENCRE = "#2e2419";
-
-  function pseudoHasard(graine) {
-    var s = graine;
-    return function () { s = (s * 9301 + 49297) % 233280; return s / 233280; };
-  }
-
-  function maison(x, y, r) {
-    var w = 14 + r * 8, h = 10 + r * 5;
-    return "<g transform='translate(" + x + "," + y + ")'><rect x='" + (-w / 2) + "' y='0' width='" + w + "' height='" + h + "' fill='#d9c9a3' stroke='" + ENCRE + "' stroke-width='1.2'/>" +
-      "<path d='M" + (-w / 2 - 2) + " 0L0 " + (-h * 0.8) + "L" + (w / 2 + 2) + " 0z' fill='#8a5a3a' stroke='" + ENCRE + "' stroke-width='1.2'/></g>";
-  }
-
-  var FORMES = {
-    tour: "<rect x='-12' y='-34' width='24' height='44' fill='#cfc0a0' stroke='#2e2419' stroke-width='2'/><path d='M-14 -34h28v-8h-6v4h-5v-4h-6v4h-5v-4h-6z' fill='#cfc0a0' stroke='#2e2419' stroke-width='2'/><rect x='-3' y='-24' width='6' height='9' fill='#2e2419'/>",
-    salle: "<rect x='-28' y='-14' width='56' height='24' fill='#d9c9a3' stroke='#2e2419' stroke-width='2'/><path d='M-32 -14L0 -36L32 -14z' fill='#6b2d5c' stroke='#2e2419' stroke-width='2'/><path d='M-4 10v-12h8v12' fill='#2e2419'/>",
-    jardin: "<rect x='-30' y='-16' width='60' height='30' fill='#c7cf9a' stroke='#2e2419' stroke-width='2'/><path d='M-24 -8h48M-24 0h48M-24 8h48' stroke='#4f6b32' stroke-width='3' stroke-dasharray='4 3'/>",
-    maison: "<rect x='-18' y='-10' width='36' height='20' fill='#d9c9a3' stroke='#2e2419' stroke-width='2'/><path d='M-22 -10L0 -28L22 -10z' fill='#8a5a3a' stroke='#2e2419' stroke-width='2'/>",
-    forge: "<rect x='-20' y='-12' width='40' height='22' fill='#bfb39a' stroke='#2e2419' stroke-width='2'/><path d='M-24 -12L0 -28L24 -12z' fill='#5b4a3a' stroke='#2e2419' stroke-width='2'/><rect x='10' y='-34' width='7' height='14' fill='#5b4a3a' stroke='#2e2419' stroke-width='1.5'/>",
-    moulin: "<rect x='-10' y='-16' width='20' height='26' fill='#d9c9a3' stroke='#2e2419' stroke-width='2'/><path d='M0 -22l-22 -14M0 -22l22 -14M0 -22l-14 22M0 -22l14 22' stroke='#2e2419' stroke-width='3'/><circle cx='0' cy='-22' r='3' fill='#2e2419'/>",
-    etal: "<rect x='-22' y='-6' width='44' height='14' fill='#d9c9a3' stroke='#2e2419' stroke-width='2'/><path d='M-26 -6l6 -12h40l6 12z' fill='#b5772b' stroke='#2e2419' stroke-width='2'/>"
+  var L = 1000, H = 660, CX = 500, CY = 350;
+  var POS = {
+    chateau: [500, 135], marche: [810, 335], herboristerie: [190, 335],
+    forge: [770, 530], scriptorium: [230, 530], ambassade: [500, 545]
   };
+
+  function arbre(x, y, t, c) {
+    return "<circle cx='" + x + "' cy='" + y + "' r='" + t + "' fill='" + c + "' stroke='" + ENCRE + "' stroke-width='1'/>" +
+      "<path d='M" + (x - t * 0.4) + " " + (y - t * 0.2) + " a" + (t * 0.5) + " " + (t * 0.5) + " 0 0 1 " + (t * 0.6) + " " + (-t * 0.4) + "' fill='none' stroke='#efe6d2' stroke-width='1' opacity='.5'/>";
+  }
+
+  function toit(x, y, l, h, ang, c) {
+    return "<g transform='translate(" + x + "," + y + ") rotate(" + ang + ")'>" +
+      "<rect x='" + (-l / 2) + "' y='" + (-h / 2) + "' width='" + l + "' height='" + h + "' fill='" + c + "' stroke='" + ENCRE + "' stroke-width='1.1'/>" +
+      "<path d='M" + (-l / 2) + " 0H" + (l / 2) + "' stroke='" + ENCRE + "' stroke-width='.9'/>" +
+      "<rect x='" + (-l / 2) + "' y='0' width='" + l + "' height='" + (h / 2) + "' fill='#000' opacity='.18'/></g>";
+  }
+
+  function enceinte(stadeIdx) {
+    var rx = [300, 330, 360, 380][stadeIdx], ry = [205, 225, 245, 255][stadeIdx];
+    var s = "";
+    if (stadeIdx === 0) {
+      s += "<ellipse cx='" + CX + "' cy='" + CY + "' rx='" + rx + "' ry='" + ry + "' fill='none' stroke='#7a5230' stroke-width='6' stroke-dasharray='3 4'/>";
+      return s;
+    }
+    s += "<ellipse cx='" + CX + "' cy='" + CY + "' rx='" + rx + "' ry='" + ry + "' fill='none' stroke='" + ENCRE + "' stroke-width='11'/>" +
+      "<ellipse cx='" + CX + "' cy='" + CY + "' rx='" + rx + "' ry='" + ry + "' fill='none' stroke='#b9ab8c' stroke-width='7'/>" +
+      "<ellipse cx='" + CX + "' cy='" + CY + "' rx='" + rx + "' ry='" + ry + "' fill='none' stroke='" + ENCRE + "' stroke-width='1' stroke-dasharray='4 5'/>";
+    var n = [0, 6, 10, 14][stadeIdx];
+    for (var i = 0; i < n; i++) {
+      var a = i / n * Math.PI * 2 + 0.3;
+      var x = CX + Math.cos(a) * rx, y = CY + Math.sin(a) * ry;
+      s += "<circle cx='" + x.toFixed(1) + "' cy='" + y.toFixed(1) + "' r='12' fill='#c8b996' stroke='" + ENCRE + "' stroke-width='2'/><circle cx='" + x.toFixed(1) + "' cy='" + y.toFixed(1) + "' r='5' fill='#8a7f70'/>";
+    }
+    return s;
+  }
+
+  function rubanTexte(x, y, texte, l) {
+    l = l || Math.max(110, texte.length * 10 + 30);
+    return "<g transform='translate(" + x + "," + y + ")'>" +
+      "<path d='M" + (-l / 2 - 14) + " 4l10 -10l-10 -10h18v20z' fill='#c9b07a' stroke='" + ENCRE + "' stroke-width='1.2' transform='translate(0,8)'/>" +
+      "<path d='M" + (l / 2 + 14) + " 4l-10 -10l10 -10h-18v20z' fill='#c9b07a' stroke='" + ENCRE + "' stroke-width='1.2' transform='translate(0,8)'/>" +
+      "<rect x='" + (-l / 2) + "' y='-13' width='" + l + "' height='24' fill='#efe2bf' stroke='" + ENCRE + "' stroke-width='1.4'/>" +
+      "<text y='5' text-anchor='middle' class='plan-texte'>" + U.echapper(texte) + "</text></g>";
+  }
 
   function dessiner(etat) {
     var nb = etat.batiments.length;
     var st = stade(nb);
-    var alea = pseudoHasard(7);
-    var svg = "<svg viewBox='0 0 900 600' class='plan' role='img' aria-label='Plan du domaine'>" +
-      "<defs><pattern id='hachure' width='8' height='8' patternUnits='userSpaceOnUse' patternTransform='rotate(45)'><path d='M0 0v8' stroke='#8a7f70' stroke-width='1' opacity='.35'/></pattern></defs>" +
-      "<rect x='0' y='0' width='900' height='600' fill='#efe6d2'/>" +
-      // rivière
-      "<path d='M-10 180C150 210 220 120 360 160S560 300 700 250 860 160 910 200' fill='none' stroke='#7f9bb0' stroke-width='22' opacity='.55'/>" +
-      // routes
-      "<path d='" + Object.keys(QUARTIERS).map(function (k) { return "M450 300L" + QUARTIERS[k].x + " " + QUARTIERS[k].y; }).join("") + "' stroke='#b9a57e' stroke-width='10' stroke-linecap='round'/>" +
-      "<circle cx='450' cy='300' r='34' fill='#e3d6b8' stroke='" + ENCRE + "' stroke-width='2'/>" +
-      "<text x='450' y='305' text-anchor='middle' class='plan-texte petit'>Place</text>";
-    // maisons selon le stade (positions stables)
-    for (var i = 0; i < st.maisons; i++) {
-      var ang = alea() * Math.PI * 2, dist = 70 + alea() * 120;
-      svg += maison(Math.round(450 + Math.cos(ang) * dist * 1.5), Math.round(300 + Math.sin(ang) * dist * 0.9), alea());
+    var idx = STADES.indexOf(st);
+    var r = pseudoHasard(7);
+    var s = "<svg viewBox='0 0 " + L + " " + H + "' class='plan' role='img' aria-label='Plan du domaine'>" +
+      "<defs>" +
+      "<pattern id='sillons' width='7' height='7' patternUnits='userSpaceOnUse' patternTransform='rotate(30)'><path d='M0 0v7' stroke='" + ENCRE + "' stroke-width='.8' opacity='.35'/></pattern>" +
+      "<pattern id='sillons2' width='7' height='7' patternUnits='userSpaceOnUse' patternTransform='rotate(-40)'><path d='M0 0v7' stroke='" + ENCRE + "' stroke-width='.8' opacity='.35'/></pattern>" +
+      "<filter id='flou' x='-30%' y='-30%' width='160%' height='160%'><feGaussianBlur stdDeviation='9'/></filter>" +
+      "<radialGradient id='vigP' cx='.5' cy='.5' r='.72'><stop offset='.62' stop-color='#5b4428' stop-opacity='0'/><stop offset='1' stop-color='#5b4428' stop-opacity='.35'/></radialGradient>" +
+      "</defs>";
+    // champs en lanières à l'extérieur
+    for (var i = 0; i < 16; i++) {
+      var a = i / 16 * Math.PI * 2, d = 410 + r() * 60;
+      var fx = CX + Math.cos(a) * d * 1.05, fy = CY + Math.sin(a) * d * 0.72;
+      var champ = "M" + fx.toFixed(0) + " " + fy.toFixed(0) + " l" + (60 + r() * 40).toFixed(0) + " " + (r() * 20 - 10).toFixed(0) + " l" + (r() * 16).toFixed(0) + " " + (40 + r() * 20).toFixed(0) + " l" + (-70 - r() * 30).toFixed(0) + " " + (r() * 10).toFixed(0) + "z";
+      s += "<path d='" + champ + "' fill='" + ["#cdbb7a", "#a9a865", "#c2a66a"][i % 3] + "' stroke='" + ENCRE + "' stroke-width='1'/>" +
+        "<path d='" + champ + "' fill='url(#" + (i % 2 ? "sillons" : "sillons2") + ")'/>";
     }
+    // forêts dans les coins
+    [[70, 90], [930, 80], [60, 620], [950, 610], [880, 190]].forEach(function (c, k) {
+      for (var t = 0; t < 16; t++) s += arbre(c[0] + (r() - 0.5) * 120, c[1] + (r() - 0.5) * 80, 9 + r() * 6, k % 2 ? "#5a6a3a" : "#4f5f34");
+    });
+    // collines en hachures
+    [[150, 160], [330, 70], [690, 60]].forEach(function (c) {
+      s += "<path d='M" + (c[0] - 60) + " " + c[1] + " q60 -46 120 0' fill='#d4c08a' stroke='" + ENCRE + "' stroke-width='1.4'/>";
+      for (var h = 0; h < 7; h++) s += "<path d='M" + (c[0] - 42 + h * 14) + " " + (c[1] - 18 + Math.abs(h - 3) * 5) + " l-4 10' stroke='" + ENCRE + "' stroke-width='1'/>";
+    });
+    // rivière
+    var riv = "M-20 250 C150 280 260 200 380 230 S600 300 720 255 S900 190 1020 230";
+    s += "<path d='" + riv + "' fill='none' stroke='" + ENCRE + "' stroke-width='30'/><path d='" + riv + "' fill='none' stroke='#9fb5bf' stroke-width='26'/>" +
+      "<path d='" + riv + "' fill='none' stroke='#c9dbe0' stroke-width='2' stroke-dasharray='14 22' opacity='.9'/>";
+    // enceinte
+    s += enceinte(idx);
+    // routes vers chaque quartier
+    var routes = Object.keys(POS).map(function (k) { return "M" + CX + " " + CY + " L" + POS[k][0] + " " + POS[k][1]; }).join(" ");
+    s += "<path d='" + routes + "' stroke='" + ENCRE + "' stroke-width='16' stroke-linecap='round'/><path d='" + routes + "' stroke='#e2d2a4' stroke-width='12' stroke-linecap='round'/>";
+    // pont sur la rivière (route du château)
+    s += "<rect x='486' y='222' width='28' height='46' fill='#bfa77a' stroke='" + ENCRE + "' stroke-width='1.6'/><path d='M486 230h28M486 260h28' stroke='" + ENCRE + "' stroke-width='1'/>";
+    // maisons le long des routes, plus nombreuses à chaque stade
+    var nbMaisons = [8, 20, 34, 50][idx];
+    var r2 = pseudoHasard(21);
+    var cles = Object.keys(POS);
+    for (var m = 0; m < nbMaisons; m++) {
+      var q = POS[cles[m % cles.length]];
+      var t = 0.25 + r2() * 0.45;
+      var px = CX + (q[0] - CX) * t, py = CY + (q[1] - CY) * t;
+      var ang = Math.atan2(q[1] - CY, q[0] - CX) * 180 / Math.PI;
+      var cote = (m % 2 ? 1 : -1) * (16 + r2() * 6);
+      var ox = -Math.sin(ang * Math.PI / 180) * cote, oy = Math.cos(ang * Math.PI / 180) * cote;
+      s += toit(px + ox, py + oy, 16 + r2() * 8, 11 + r2() * 4, ang, r2() > 0.5 ? "#9a5634" : "#7a4a32");
+    }
+    // place centrale et puits
+    s += "<circle cx='" + CX + "' cy='" + CY + "' r='40' fill='#e2d2a4' stroke='" + ENCRE + "' stroke-width='2'/>" +
+      "<circle cx='" + CX + "' cy='" + CY + "' r='9' fill='#9fb5bf' stroke='" + ENCRE + "' stroke-width='2'/>";
     // quartiers
     Object.keys(QUARTIERS).forEach(function (k) {
-      var q = QUARTIERS[k];
+      var q = QUARTIERS[k], p = POS[k];
       var m = maitrise(k, etat);
-      var ouvert = m.vues > 0;
+      var eveille = m.vues > 0;
       var couleur = JEU.MATIERES[q.matieres[0]].couleur;
-      svg += "<g class='quartier" + (ouvert ? "" : " endormi") + "' data-quartier='" + k + "' tabindex='0' role='button' aria-label='" + q.nom + "'>" +
-        "<ellipse cx='" + q.x + "' cy='" + q.y + "' rx='110' ry='56' fill='" + (ouvert ? couleur : "url(#hachure)") + "' fill-opacity='" + (ouvert ? ".14" : "1") + "' stroke='" + couleur + "' stroke-width='2' stroke-dasharray='6 4'/>";
+      s += "<g class='quartier" + (eveille ? "" : " endormi") + "' data-quartier='" + k + "' tabindex='0' role='button' aria-label='" + q.nom + "'>" +
+        "<rect x='" + (p[0] - 115) + "' y='" + (p[1] - 58) + "' width='230' height='116' rx='18' fill='" + couleur + "' fill-opacity='.16' stroke='" + couleur + "' stroke-width='3' stroke-dasharray='9 5'/>";
       var places = BATIMENTS.filter(function (b) { return b.quartier === k; });
       places.forEach(function (b, j) {
-        if (etat.batiments.indexOf(b.id) < 0) return;
-        svg += "<g transform='translate(" + (q.x - 40 + j * 80) + "," + (q.y + 6) + ")'>" + FORMES[b.forme] + "</g>";
+        var bx = p[0] - 82 + j * 104, by = p[1] - 40;
+        if (etat.batiments.indexOf(b.id) >= 0) {
+          s += "<ellipse cx='" + (bx + 32) + "' cy='" + (by + 66) + "' rx='34' ry='9' fill='#000' opacity='.2'/>" +
+            JEU.icones.dans(b.id, bx, by, 66, ENCRE) +
+            "<g transform='translate(" + (bx + 52) + "," + (by - 4) + ")'><path d='M0 0v18' stroke='" + ENCRE + "' stroke-width='1.6'/><path d='M1 0h13l-4 4 4 4H1z' fill='" + couleur + "'/></g>";
+        } else {
+          s += "<rect x='" + (bx + 8) + "' y='" + (by + 12) + "' width='48' height='48' fill='none' stroke='" + ENCRE + "' stroke-width='1.4' stroke-dasharray='4 4' opacity='.55'/>" +
+            "<path d='M" + (bx + 8) + " " + (by + 60) + " l48 -48 M" + (bx + 8) + " " + (by + 12) + " l48 48' stroke='" + ENCRE + "' stroke-width='1' opacity='.25'/>";
+        }
       });
-      svg += "<text x='" + q.x + "' y='" + (q.y - 40) + "' text-anchor='middle' class='plan-texte'>" + q.nom + "</text></g>";
+      // fanion à l'icône de la matière
+      s += "<g transform='translate(" + (p[0] - 128) + "," + (p[1] - 78) + ")'><path d='M4 0v70' stroke='" + ENCRE + "' stroke-width='3'/>" +
+        "<path d='M6 2h40v34l-20 10-20-10z' fill='" + couleur + "' stroke='" + ENCRE + "' stroke-width='1.6'/>" +
+        JEU.icones.dans(JEU.icones.matiere(q.matieres[0]), 12, 6, 28, "#efe6d2") + "</g>";
+      // brume sur les quartiers endormis
+      if (!eveille) {
+        s += "<g filter='url(#flou)' opacity='.85'><ellipse cx='" + (p[0] - 40) + "' cy='" + p[1] + "' rx='90' ry='45' fill='#f4ede0'/><ellipse cx='" + (p[0] + 50) + "' cy='" + (p[1] + 8) + "' rx='80' ry='40' fill='#f4ede0'/></g>";
+      }
+      s += rubanTexte(p[0], p[1] + 74, q.nom) + "</g>";
     });
-    // cartouche du titre
-    svg += "<g><rect x='20' y='18' width='250' height='54' fill='#efe6d2' stroke='" + ENCRE + "' stroke-width='2'/>" +
-      "<text x='145' y='42' text-anchor='middle' class='plan-texte'>" + U.echapper(etat.reglages.nomDomaine || "Le domaine") + "</text>" +
-      "<text x='145' y='62' text-anchor='middle' class='plan-texte petit'>" + st.nom + "</text></g>" +
-      // rose des vents
-      "<g transform='translate(840,540)'><path d='M0 -30L6 0L0 30L-6 0z' fill='" + ENCRE + "'/><path d='M-30 0L0 -6L30 0L0 6z' fill='#b08d3a'/><text y='-34' text-anchor='middle' class='plan-texte petit'>N</text></g>";
-    return svg + "</svg>";
+    // cartouche du titre et rose des vents
+    s += "<g transform='translate(30,24)'><rect width='270' height='70' rx='4' fill='#efe2bf' stroke='" + ENCRE + "' stroke-width='2'/><rect x='5' y='5' width='260' height='60' fill='none' stroke='" + ENCRE + "' stroke-width='1'/>" +
+      "<text x='135' y='34' text-anchor='middle' class='plan-texte grand'>" + U.echapper(etat.reglages.nomDomaine || "Le domaine") + "</text>" +
+      "<text x='135' y='55' text-anchor='middle' class='plan-texte petit'>— " + st.nom + " —</text></g>";
+    s += "<g transform='translate(920,560)'><circle r='34' fill='none' stroke='" + ENCRE + "' stroke-width='1.2'/>" +
+      "<path d='M0 -44L8 0L0 44L-8 0z' fill='" + ENCRE + "'/><path d='M-44 0L0 -8L44 0L0 8z' fill='#b08d3a' stroke='" + ENCRE + "' stroke-width='.8'/>" +
+      "<path d='M-24 -24L4 -4L24 24L-4 4z' fill='#8a7f70' opacity='.7'/><path d='M24 -24L4 4L-24 24L-4 -4z' fill='#8a7f70' opacity='.7'/>" +
+      "<text y='-50' text-anchor='middle' class='plan-texte petit'>N</text></g>";
+    s += "<rect width='" + L + "' height='" + H + "' fill='url(#vigP)' pointer-events='none'/>" +
+      "<rect x='6' y='6' width='" + (L - 12) + "' height='" + (H - 12) + "' fill='none' stroke='" + ENCRE + "' stroke-width='3'/><rect x='12' y='12' width='" + (L - 24) + "' height='" + (H - 24) + "' fill='none' stroke='" + ENCRE + "' stroke-width='1'/>";
+    return s + "</svg>";
+  }
+
+  function pseudoHasard(graine) {
+    var x = graine;
+    return function () { x = (x * 9301 + 49297) % 233280; return x / 233280; };
   }
 
   // ---------- écran ----------
@@ -156,7 +242,7 @@
     var etat = JEU.sauvegarde.etat();
     var st = stade(etat.batiments.length);
     s.innerHTML = "";
-    s.appendChild(el("h1", { texte: "Ton domaine · " + st.nom }));
+    s.appendChild(el("h1", { class: "titre-ecran", texte: "Ton domaine · " + st.nom }));
     var plan = el("div", { class: "plan-cadre", html: dessiner(etat) });
     s.appendChild(plan);
     var panneau = el("div", { class: "panneau-quartier" });
@@ -200,7 +286,7 @@
           JEU.ui.ecrans.domaine(document.getElementById("ecran-domaine"));
         }, texte: "Construire" });
         bloc.appendChild(el("div", { class: "ligne-batiment" + (fait ? " fait" : "") }, [
-          el("span", {}, [el("b", { texte: b.nom }), el("span", { class: "note", texte: " · " + cout })]), action
+          el("span", {}, [el("span", { html: JEU.icones.icone(b.id, 28) }), el("b", { texte: b.nom }), el("span", { class: "note", texte: " · " + cout })]), action
         ]));
       });
       panneau.appendChild(bloc);

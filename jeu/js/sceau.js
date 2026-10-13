@@ -33,6 +33,7 @@
       var carte = el("div", { class: "carte-sceau", style: "--teinte:" + m.couleur, tabindex: "0" }, [
         el("span", { class: "pastille", texte: m.nom }),
         el("p", { class: "affirmation", texte: q.enonce }),
+        el("span", { class: "cachet", html: JEU.icones.icone("sceau", 54) }),
         el("div", { class: "indic gauche", texte: "FAUX" }),
         el("div", { class: "indic droite", texte: "VRAI" })
       ]);
@@ -84,7 +85,7 @@
         bonnes++;
         if (res) gains[res] = (gains[res] || 0) + GAIN;
         JEU.sons.jouer("sceau");
-        JEU.ui.toast("Scellé ! +" + GAIN, "bon");
+        JEU.ui.tampon(rj.vrai ? "Vrai" : "Faux", "+" + GAIN);
         JEU.ui.majRessources();
         JEU.mesure.reponseDonnee();
         suivante();

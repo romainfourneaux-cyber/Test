@@ -70,6 +70,15 @@
     minuterieToast = setTimeout(function () { t.className = "toast"; }, 1600);
   };
 
+  // Sceau qui s'imprime au centre de l'écran (350 ms), sans retarder la question suivante.
+  ui.tampon = function (texte, sous) {
+    var t = document.createElement("div");
+    t.className = "tampon";
+    t.innerHTML = JEU.icones.icone("sceau", 120) + "<b>" + U.echapper(texte) + "</b>" + (sous ? "<span>" + U.echapper(sous) + "</span>" : "");
+    document.body.appendChild(t);
+    setTimeout(function () { t.remove(); }, 700);
+  };
+
   // ---------- fenêtre modale ----------
   var retourModale = null;
   ui.ouvrirModale = function (titre, contenu, fermeture) {
@@ -99,14 +108,16 @@
     Object.keys(JEU.RESSOURCES).forEach(function (k) {
       var r = JEU.RESSOURCES[k];
       zone.appendChild(el("span", { class: "ressource", title: r.nom + " (" + JEU.MATIERES[r.matiere].nom + ")", style: "--teinte:" + JEU.MATIERES[r.matiere].couleur }, [
-        el("span", { class: "icone", html: JEU.icones.ressource(k) }),
+        el("span", { class: "medaillon", html: JEU.icones.ressource(k, 20) }),
         el("b", { texte: String(etat.ressources[k] || 0) })
       ]));
     });
+    var bl = document.getElementById("blason-bandeau");
+    if (bl && bl.getAttribute("data-nom") !== etat.reglages.nomDomaine) { bl.innerHTML = JEU.icones.blason(etat.reglages.nomDomaine, 30); bl.setAttribute("data-nom", etat.reglages.nomDomaine); }
     var nom = document.getElementById("nom-domaine");
     if (nom) nom.textContent = etat.reglages.nomDomaine || "Le domaine";
     var son = document.getElementById("bouton-son");
-    if (son) { son.textContent = etat.reglages.son ? "Son : oui" : "Son : non"; son.setAttribute("aria-pressed", etat.reglages.son ? "true" : "false"); }
+    if (son) { son.innerHTML = JEU.icones.icone(etat.reglages.son ? "son" : "sans-son", 22); son.title = etat.reglages.son ? "Couper le son" : "Remettre le son"; son.setAttribute("aria-pressed", etat.reglages.son ? "true" : "false"); }
   };
 
   // ---------- questions ----------
@@ -381,19 +392,29 @@
     var prochain = devoirs.length ? devoirs.filter(function (d) { return d.semaine === devoirs[0].semaine; }) : [];
     s.innerHTML = "";
     var nbBat = etat.batiments.length;
-    s.appendChild(el("div", { class: "banniere" }, [
-      el("div", { class: "blason-grand", html: JEU.icones.blason(etat.reglages.nomDomaine) }),
-      el("div", {}, [
-        el("h1", { texte: etat.reglages.nomDomaine || "Le domaine" }),
-        el("p", { class: "sous-titre", texte: JEU.domaine.stade(nbBat).nom + " · " + nbBat + " bâtiment" + (nbBat > 1 ? "s" : "") })
+    var st = JEU.domaine.stade(nbBat);
+    var idx = JEU.domaine.STADES.indexOf(st);
+    var valides = Object.keys(etat.cours).filter(function (k) { return etat.cours[k].etat === "valide"; }).length;
+    var vues = Object.keys(etat.notions).length;
+    s.appendChild(el("div", { class: "accueil-scene" }, [
+      el("div", { class: "scene-fond", html: JEU.decor.paysage(idx, etat.reglages.nomDomaine) }),
+      el("div", { class: "titre-domaine" }, [
+        el("div", { class: "blason-grand", html: JEU.icones.blason(etat.reglages.nomDomaine, 84) }),
+        el("div", {}, [
+          el("h1", { texte: etat.reglages.nomDomaine || "Le domaine" }),
+          el("p", { class: "sous-titre", texte: st.nom + " · " + nbBat + " bâtiment" + (nbBat > 1 ? "s" : "") })
+        ])
       ])
     ]));
     s.appendChild(el("div", { class: "cartouches" }, [
-      el("div", { class: "cartouche" }, [el("h3", { texte: "Calendrier" }), el("p", { class: "grand", texte: JEU.calendrier.libelle(sem) })]),
-      el("div", { class: "cartouche" }, [el("h3", { texte: "Prochain devoir" }),
+      el("div", { class: "cartouche" }, [el("h3", { html: JEU.icones.icone("sablier", 20) + " Calendrier" }), el("p", { class: "grand", texte: JEU.calendrier.libelle(sem) })]),
+      el("div", { class: "cartouche" }, [el("h3", { html: JEU.icones.icone("parchemin-plume", 20) + " Prochain devoir" }),
         prochain.length ? el("ul", { class: "liste-simple" }, prochain.map(function (d) {
           return el("li", { texte: d.intitule + " · semaine " + d.semaine });
-        })) : el("p", { texte: "Aucun devoir à venir." })])
+        })) : el("p", { texte: "Aucun devoir à venir." })]),
+      el("div", { class: "cartouche" }, [el("h3", { html: JEU.icones.icone("trophee", 20) + " Chronique" }),
+        el("p", { class: "stats" }, [el("b", { texte: String(valides) }), document.createTextNode(" cours validé" + (valides > 1 ? "s" : "") + " · "),
+          el("b", { texte: String(vues) }), document.createTextNode(" notion" + (vues > 1 ? "s" : "") + " vue" + (vues > 1 ? "s" : ""))])])
     ]));
     if (JEU.sauvegarde.exportEnRetard()) {
       s.appendChild(el("div", { class: "rappel" }, [
@@ -404,7 +425,7 @@
     if (JEU.donnees.erreurs.length || (JEU.donnees.coursAbsents || []).length) {
       s.appendChild(el("p", { class: "note", texte: "Certains fichiers de cours n'ont pas pu être chargés : ils restent en « contenu à venir »." }));
     }
-    var jouer = el("button", { class: "bouton principal enorme", onclick: function () { ui.afficher("jouer"); }, texte: "Jouer" });
+    var jouer = el("button", { class: "bouton principal enorme", onclick: function () { ui.afficher("jouer"); }, html: JEU.icones.icone("jouer", 34) + "<span>Jouer</span>" });
     s.appendChild(el("div", { class: "centre" }, [jouer]));
     setTimeout(function () { jouer.focus(); }, 0);
     ui.clavier = function (k) { if (k === "Enter") { ui.afficher("jouer"); return true; } return false; };
@@ -416,17 +437,17 @@
     var etat = JEU.sauvegarde.etat();
     var aValider = [];
     JEU.progression.coursAccessibles(etat).forEach(function (id) { if (JEU.progression.etatCours(id, etat) === "ouvert") aValider.push(id); });
-    s.appendChild(el("h1", { texte: "Aux armes, seigneur" }));
+    s.appendChild(el("h1", { class: "titre-ecran", texte: "Aux armes, seigneur" }));
     var options = [
-      { titre: "Assaut", texte: "8 questions. Joue tes cartes de notions contre la garnison d'un seigneur rival.", action: function () { JEU.assaut.choisirMatiere(); }, icone: "epee" },
+      { titre: "Assaut", texte: "8 questions. Joue tes cartes de notions contre la garnison d'un seigneur rival.", action: function () { JEU.assaut.choisirMatiere(); }, icone: "assaut" },
       { titre: "Sceau de vérité", texte: "10 affirmations à sceller : vraies à droite, fausses à gauche. Corrige les fausses.", action: function () { JEU.sceau.lancer(); }, icone: "sceau" },
-      { titre: "Valider un cours", texte: aValider.length ? aValider.length + " cours ouvert" + (aValider.length > 1 ? "s" : "") + " à valider." : "Coche « cours fait » dans la liste des cours.", action: function () { ui.afficher("cours"); }, icone: "livre" }
+      { titre: "Valider un cours", texte: aValider.length ? aValider.length + " cours ouvert" + (aValider.length > 1 ? "s" : "") + " à valider." : "Coche « cours fait » dans la liste des cours.", action: function () { ui.afficher("cours"); }, icone: "valider" }
     ];
     var grille = el("div", { class: "grille-jeux" });
     options.forEach(function (o, i) {
       grille.appendChild(el("button", { class: "carte-jeu", onclick: o.action }, [
         el("span", { class: "touche", texte: String(i + 1) }),
-        el("span", { class: "icone-jeu", html: JEU.icones.objet(o.icone) }),
+        el("span", { class: "icone-jeu", html: JEU.icones.icone(o.icone, 96) }),
         el("h2", { texte: o.titre }), el("p", { texte: o.texte })
       ]));
     });
