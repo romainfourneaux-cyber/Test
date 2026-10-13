@@ -1,4 +1,4 @@
-// Tests de logique (Node) : calendrier, déblocage, seuil de validation, Leitner, brouillage, migration.
+// Tests de logique (Node) : calendrier, états des cours, Leitner, brouillage, migration.
 // Usage : node atelier/outils/tests.js
 "use strict";
 const fs = require("fs");
@@ -12,10 +12,10 @@ function contexte() {
     localStorage: { getItem: k => (k in stock ? stock[k] : null), setItem: (k, v) => { stock[k] = String(v); }, removeItem: k => { delete stock[k]; } } };
   ctx.window = ctx; ctx.globalThis = ctx;
   vm.createContext(ctx);
-  ["noyau", "brouillage", "calendrier", "sauvegarde", "leitner", "progression", "questions", "validation"].forEach(m => {
+  ["noyau", "brouillage", "calendrier", "sauvegarde", "leitner", "progression", "questions"].forEach(m => {
     vm.runInContext(fs.readFileSync(path.join(RACINE, "jeu", "js", m + ".js"), "utf8"), ctx, { filename: m + ".js" });
   });
-  ["config", "planning", "devoirs"].forEach(f => vm.runInContext(fs.readFileSync(path.join(RACINE, "jeu", "data", f + ".js"), "utf8"), ctx));
+  ["config", "planning", "devoirs", "suivi"].forEach(f => vm.runInContext(fs.readFileSync(path.join(RACINE, "jeu", "data", f + ".js"), "utf8"), ctx));
   return ctx;
 }
 
@@ -39,24 +39,25 @@ verifier("Libellé S7", J.calendrier.libelle(J.calendrier.semaine(D("2026-10-13"
 const cfgPause = Object.assign({}, J.donnees.config, { pauses: ["2026-10-19"] });
 verifier("Une pause garde le numéro puis décale", J.calendrier.semaine(D("2026-10-20"), cfgPause).numero === 7 && J.calendrier.semaine(D("2026-10-27"), cfgPause).numero === 8);
 
-// déblocage dans l'ordre
+// états des cours : estimés par le chroniqueur (data/suivi.js), plus d'épreuve de validation
 J.sauvegarde.charger();
 const etat = J.sauvegarde.etat();
-J.donnees.cours["histoire-s07-2"] = { id: "histoire-s07-2", fiches: [], questions: [] };
+J.donnees.cours["histoire-s07-2"] = { id: "histoire-s07-2", fiches: [{ id: "histoire-s07-2-f1" }], questions: [] };
 J.donnees.cours["histoire-s08-1"] = { id: "histoire-s08-1", fiches: [], questions: [] };
 J.progression.oublier();
 verifier("Cours de S1 à S6 présumé acquis", J.progression.etatCours("histoire-s01-1", etat) === "presume");
-verifier("Premier cours après S6 ouvert (fichier présent)", J.progression.etatCours("histoire-s07-2", etat) === "ouvert");
-verifier("Cours suivant dans la brume tant que le précédent n'est pas validé", J.progression.etatCours("histoire-s08-1", etat) === "brume");
-verifier("Cours sans fichier mais ouvrable : contenu à venir", J.progression.etatCours("geographie-s07-1", etat) === "avenir");
-J.progression.valider("histoire-s07-2", 0.875, etat);
-verifier("Validé → le suivant s'ouvre", J.progression.etatCours("histoire-s07-2", etat) === "valide" && J.progression.etatCours("histoire-s08-1", etat) === "ouvert");
-verifier("Une révision ou un devoir ne bloque pas la suite", J.progression.etatCours("histoire-s08-2", etat) === "brume" && J.donnees.planning.find(p => p.id === "histoire-s07-1").type === "revision");
-
-// seuil de validation
-verifier("6/8 = 75 % : validé", J.validation.seuilAtteint(6, 8) === true);
-verifier("5/8 : pas validé", J.validation.seuilAtteint(5, 8) === false);
-verifier("8/8 : validé", J.validation.seuilAtteint(8, 8) === true);
+verifier("Cours avec fichier : en cours", J.progression.etatCours("histoire-s07-2", etat) === "ouvert" && J.progression.etatCours("histoire-s08-1", etat) === "ouvert");
+verifier("Cours sans fichier : dans la brume", J.progression.etatCours("geographie-s07-1", etat) === "brume");
+J.donnees.suivi = { cours: { "histoire-s07-2": { etat: "a-revoir", note: "test" }, "histoire-s08-1": { etat: "acquis" } } };
+J.progression.oublier();
+verifier("Le suivi du chroniqueur fixe acquis et à revoir", J.progression.etatCours("histoire-s07-2", etat) === "a-revoir" && J.progression.etatCours("histoire-s08-1", etat) === "acquis");
+verifier("Les fiches d'un cours à revoir sortent en priorité", J.progression.fichesARevoir().indexOf("histoire-s07-2-f1") >= 0);
+etat.cours["histoire-s08-2"] = { etat: "valide", le: "2026-10-01T10:00:00", score: 1 };
+J.progression.oublier();
+verifier("Un cours validé par une ancienne épreuve reste acquis", J.progression.etatCours("histoire-s08-2", etat) === "acquis");
+delete etat.cours["histoire-s08-2"];
+J.donnees.suivi = { cours: {} };
+J.progression.oublier();
 
 // Leitner
 const e2 = J.sauvegarde.nouvelle();

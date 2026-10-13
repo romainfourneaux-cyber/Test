@@ -34,16 +34,17 @@ Ce dossier sert à construire et à nourrir un jeu web de révision pour un él�
 - Vocabulaire d'un élève de 13 ans. Une explication d'erreur tient en deux phrases.
 - Devoirs : énoncés et corrigés servent seulement à délimiter un siège, à vérifier qu'aucune question ne recoupe le devoir et à repérer les notions à retravailler. Aucun énoncé, document, exemple, chiffre ou réponse attendue de devoir n'entre dans jeu/. Le nom de l'élève, de sa famille ou d'un correcteur et les numéros de sécurité sociale ne sont recopiés nulle part.
 - Les productions personnelles (avis, carte mentale, création, rédaction libre) restent hors jeu.
-- Bonus autorisé, toujours à part : fiche marquée bonus, rattachée à une notion du cours, avec une source fiable notée (encyclopédie, musée, institution). Jamais dans une épreuve de validation, un siège ou un boss. Environ une fiche bonus pour quatre fiches de cours.
+- Bonus autorisé, toujours à part : fiche marquée bonus, rattachée à une notion du cours, avec une source fiable notée (encyclopédie, musée, institution). Jamais dans une bataille, un siège ou un boss. Environ une fiche bonus pour quatre fiches de cours.
 - Croisades, guerres de religion et autres conflits : les camps sont des puissances politiques (royaumes, empires, sultanats), avec le ton neutre du cours. Aucune figure religieuse en unité de combat, aucun lieu de culte détruit, aucune caricature. Les armées et les adversaires sont ceux que le cours cite ; à défaut, « un seigneur rival », sans nom inventé.
 
 ## Jeu : règles fermes
 
 - Jamais de chrono. Difficulté réglée pour environ 8 réussites sur 10.
 - Une erreur ne fait jamais perdre un bâtiment, une province ou une ressource déjà gagnée. Elle amène une explication et une nouvelle tentative.
-- Un cours s'ouvre quand son fichier de données existe et que le cours précédent de la même matière est validé ou présumé acquis. Le calendrier ne bloque rien : l'élève avance aussi loin que les données le permettent.
-- Quand l'élève coche « cours fait », le jeu lance une épreuve sur ce cours (8 questions, niveaux 1 et 2). À 75 % ou plus, le cours est validé ; sinon, le mentor ouvre les fiches ratées et l'élève retente avec d'autres variantes, sans pénalité. Les réglages sont dans jeu/data/config.js.
-- Les cours des semaines 1 à 6 sont présumés acquis : ils servent de prérequis et entrent dans la répétition espacée ; les valider rapporte quand même des récompenses.
+- Un cours s'ouvre dès que son fichier de données existe. Le calendrier ne bloque rien.
+- Pas d'épreuve de validation dans le jeu. C'est toi qui estimes si un cours est acquis ou à revoir, d'après les devoirs corrigés que Romain dépose : tu le notes dans jeu/data/suivi.js (état, note courte, devoir source) et tu mets les fiches fautives dans jeu/data/a-retravailler.js. Elles reviennent alors plus souvent dans les batailles et au conseil.
+- Les cours des semaines 1 à 6 sont présumés acquis : ils entrent dans la répétition espacée.
+- Chaque question est posée dans le récit du jeu (un personnage du domaine la pose pendant la bataille, au conseil ou lors d'un événement), sans changer l'énoncé.
 - Un cours pas encore ouvert reste dans la brume : son titre se voit, sans question, sans indice, sans aperçu.
 - Style : carte de campagne à la Total War, enluminure, héraldique, silhouettes. Ni pixel art, ni manga ou anime, ni dessin enfantin.
 

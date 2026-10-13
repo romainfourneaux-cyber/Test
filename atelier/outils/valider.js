@@ -13,7 +13,7 @@ const DATA = path.join(RACINE, "jeu", "data");
 const EXTRACTIONS = path.join(RACINE, "atelier", "extractions");
 
 function chargerDonnees() {
-  const d = { config: null, planning: null, devoirs: null, indexCours: null, aRetravailler: [], cours: {}, anglais: {}, erreursChargement: [] };
+  const d = { config: null, planning: null, devoirs: null, indexCours: null, aRetravailler: [], suivi: null, cours: {}, anglais: {}, erreursChargement: [] };
   function executer(fichier) {
     const ctx = {
       JEU: {
@@ -24,6 +24,7 @@ function chargerDonnees() {
             case "devoirs": d.devoirs = obj; break;
             case "index-cours": d.indexCours = obj; break;
             case "a-retravailler": d.aRetravailler = obj; break;
+            case "suivi": d.suivi = obj; break;
             case "cours": d.cours[obj.id] = obj; break;
             case "anglais": d.anglais[obj.id] = obj; break;
             default: d.erreursChargement.push(path.relative(RACINE, fichier) + " : type inconnu " + type);
@@ -37,7 +38,7 @@ function chargerDonnees() {
       d.erreursChargement.push(path.relative(RACINE, fichier) + " : " + e.message);
     }
   }
-  ["config", "planning", "devoirs", "index-cours", "a-retravailler"].forEach(n => {
+  ["config", "planning", "devoirs", "index-cours", "a-retravailler", "suivi"].forEach(n => {
     const f = path.join(DATA, n + ".js");
     if (fs.existsSync(f)) executer(f); else d.erreursChargement.push("jeu/data/" + n + ".js manquant");
   });

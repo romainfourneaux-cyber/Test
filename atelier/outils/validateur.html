@@ -20,7 +20,7 @@
   var JEU = window.JEU = { donnees: { cours: {}, anglais: {} }, enregistrer: function (type, obj) {
     var d = JEU.donnees;
     if (type === "config") d.config = obj; else if (type === "planning") d.planning = obj; else if (type === "devoirs") d.devoirs = obj;
-    else if (type === "index-cours") d.indexCours = obj; else if (type === "a-retravailler") d.aRetravailler = obj;
+    else if (type === "index-cours") d.indexCours = obj; else if (type === "a-retravailler") d.aRetravailler = obj; else if (type === "suivi") d.suivi = obj;
     else if (type === "cours") d.cours[obj.id] = obj; else if (type === "anglais") d.anglais[obj.id] = obj;
     else erreursChargement.push("type inconnu : " + type);
   } };
@@ -33,6 +33,7 @@
 <script src="../../jeu/data/devoirs.js" onerror="erreursChargement.push('jeu/data/devoirs.js introuvable')"></script>
 <script src="../../jeu/data/index-cours.js" onerror="erreursChargement.push('jeu/data/index-cours.js introuvable')"></script>
 <script src="../../jeu/data/a-retravailler.js" onerror="erreursChargement.push('jeu/data/a-retravailler.js introuvable')"></script>
+<script src="../../jeu/data/suivi.js" onerror="erreursChargement.push('jeu/data/suivi.js introuvable')"></script>
 <script>
   (function () {
     var ids = JEU.donnees.indexCours || [];

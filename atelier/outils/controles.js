@@ -219,6 +219,17 @@
       }
     });
     (donnees.aRetravailler || []).forEach(function (id) { if (!fiches[id]) A("[7] a-retravailler : fiche inconnue " + id); });
+    // suivi du chroniqueur : cours connus, états permis, note courte
+    if (donnees.suivi) {
+      if (typeof donnees.suivi.cours !== "object") E("[1] suivi : champ cours absent");
+      Object.keys(donnees.suivi.cours || {}).forEach(function (id) {
+        var x = donnees.suivi.cours[id];
+        var connu = planning.some(function (p) { return p.id === id; }) || donnees.cours[id] || donnees.anglais[id] || /^methode-/.test(id);
+        if (!connu) E("[7] suivi : cours inconnu " + id);
+        if (["acquis", "a-revoir"].indexOf(x.etat) < 0) E("[7] suivi : état inconnu pour " + id + " (acquis ou a-revoir)");
+        if (x.note && mots(x.note) > 20) A("[7] suivi : note trop longue pour " + id + " (20 mots au plus)");
+      });
+    }
 
     return { erreurs: erreurs, alertes: alertes };
   }
