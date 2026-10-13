@@ -376,7 +376,7 @@
     JEU.sons.jouer("erreur");
   };
 
-  // ---------- partie en cours (assaut, sceau, épreuve) ----------
+  // ---------- partie en cours (bataille, conseil, événement) ----------
   ui.commencerPartie = function (titre, quitter) {
     JEU.partie = { enCours: true, titre: titre, quitter: quitter, derniere: null };
     JEU.mesure.debut = null;

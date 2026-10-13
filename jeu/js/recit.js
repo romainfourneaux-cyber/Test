@@ -26,8 +26,8 @@
       "Un messager tend un pli scellé. {N} le lit et te regarde : « Réponds, et nos soldats seront payés. »"
     ],
     defense: [
-      "Les tambours du seigneur rival approchent. {N} monte sur le rempart : « Vite, seigneur, une question avant l'assaut ! »",
-      "On voit déjà les bannières rivales sur la colline. {N} t'arrête au pied de la tour : « Réponds, et j'arme les murailles. »",
+      "Les tambours anglais approchent. {N} monte sur le rempart : « Vite, seigneur, une question avant l'assaut ! »",
+      "On voit déjà les bannières anglaises sur la colline. {N} t'arrête au pied de la tour : « Réponds, et j'arme les murailles. »",
       "Les paysans se réfugient derrière les murs. {N} te presse : « Pour payer les défenseurs, il faut savoir ceci. »"
     ],
     evenement: [

@@ -80,5 +80,7 @@
  "roi": "king",
  "torche": "torch",
  "marchand": "old-wagon",
- "chateau": "castle"
+ "chateau": "castle",
+ "lys": "fleur-de-lys",
+ "lion": "lion"
 }

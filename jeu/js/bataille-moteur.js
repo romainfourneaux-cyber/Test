@@ -26,7 +26,7 @@
     pietaille: { nom: "Piétaille", icone: "lances", pv: 5, vitesse: 46, degats: 1 },
     cavaliers: { nom: "Cavaliers", icone: "cavalier", pv: 8, vitesse: 80, degats: 2 },
     hommes:    { nom: "Hommes d'armes", icone: "heaume", pv: 16, vitesse: 34, degats: 2 },
-    champion:  { nom: "Champion du rival", icone: "epeiste", pv: 34, vitesse: 30, degats: 5 }
+    champion:  { nom: "Champion anglais", icone: "epeiste", pv: 34, vitesse: 30, degats: 5 }
   };
   var TOURS_RIVALES = { archers: { portee: 120, cadence: 0.6, degats: 1, projectile: "fleche", vitesse: 560 }, baliste: { portee: 180, cadence: 0.3, degats: 3.5, projectile: "carreau", vitesse: 720 } };
   var AMELIORATION = { facteur: 0.6, coutRatio: 0.8, max: 3 };

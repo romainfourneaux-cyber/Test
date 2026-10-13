@@ -1,5 +1,5 @@
-// Essai de bout en bout dans Chromium (Playwright) : épreuve, Assaut, Sceau de vérité, signalement,
-// export puis import, et mesure du temps entre une réponse et la question suivante (objectif < 100 ms).
+// Essai de bout en bout dans Chromium (Playwright) : bataille (tower defense), conseil du royaume,
+// événement du jour, quitter avec Échap, signalement, export puis import, et mesure du temps entre une réponse et la question suivante (objectif < 100 ms).
 // Usage : node atelier/outils/perf.js   (demande le module playwright ; sinon, faire les vérifications à la main)
 "use strict";
 const path = require("path");
@@ -43,44 +43,38 @@ async function repondreJuste(page) {
   const bilan = { accueil_ms: Date.now() - t0 };
   bilan.semaine = await page.textContent("#ecran-accueil .cartouche .grand");
 
-  // 1. épreuve de validation d'un savoir-faire, toutes réponses justes
-  await page.click("#menu button[data-ecran=cours]");
-  await page.click(".onglet >> text=Savoir-faire");
-  await page.locator(".ligne-cours", { hasText: "frise" }).locator("input[type=checkbox]").check();
-  for (let i = 0; i < 8; i++) { await page.waitForFunction(() => document.querySelector("#ecran-partie .question")); await repondreJuste(page); }
-  await page.waitForSelector(".bilan.reussi");
-  bilan.validation = await page.evaluate(() => JEU.sauvegarde.etat().cours["methode-frise"]);
-  await page.keyboard.press("Enter");
-  await page.waitForFunction(() => !JEU.partie && JEU.ui.ecranCourant() === "cours");
-
-  // 2. Deux assauts : 8 tours chacun, toutes réponses justes
-  for (let a = 0; a < 2; a++) {
-    await page.click("#menu button[data-ecran=jouer]");
-    await page.waitForSelector("#ecran-jouer .carte-jeu");
-    await page.keyboard.press("1");
-    await page.waitForSelector("#modale:not([hidden]) .choix-matiere");
-    await page.keyboard.press("1"); // toutes les matières
-    for (let i = 0; i < 8; i++) {
-      await page.waitForSelector(".carte-notion");
-      await page.keyboard.press("1");
-      await page.waitForFunction(() => document.querySelector("#ecran-partie .question"));
-      await repondreJuste(page);
-    }
-    await page.waitForSelector(".bilan");
-    bilan.assaut = await page.textContent(".bilan h2");
-    await page.click(".bilan >> text=Voir le domaine");
-  }
-
-  // 3. Sceau de vérité : 10 cartes justes
+  // 1. bataille au Gué : 3 questions justes par vague, tours posées, troupes envoyées, une vague jouée
   await page.click("#menu button[data-ecran=jouer]");
-  await page.waitForSelector("#ecran-jouer .carte-jeu");
-  await page.keyboard.press("2");
-  for (let i = 0; i < 10; i++) {
-    await page.waitForSelector(".carte-sceau, .bilan");
-    if (await page.$(".bilan")) break;
+  await page.waitForSelector("#ecran-jouer .carte-campagne");
+  await page.keyboard.press("1");
+  await page.waitForSelector(".td-canvas");
+  for (let i = 0; i < 3; i++) { await page.waitForFunction(() => document.querySelector(".td-question .question")); await repondreJuste(page); }
+  await page.waitForSelector(".td-pret");
+  const slots = await page.evaluate(() => JEU.cartesBataille.carte("gue").emplacements.slice(0, 3));
+  const cadre = await page.locator(".td-canvas").boundingBox();
+  for (const e of slots) await page.mouse.click(cadre.x + e[0] / 1000 * cadre.width, cadre.y + e[1] / 660 * cadre.height);
+  await page.locator(".td-bouton", { hasText: "Fantassins" }).click();
+  bilan.bataille = await page.evaluate(() => ({ tours: JEU.bataille.enCours.tours.length, envois: JEU.bataille.enCours.envois.length }));
+  await page.keyboard.press("Enter");
+  await page.waitForFunction(() => JEU.bataille.enCours.phase === "vague");
+  // la vague se joue en temps réel : on avance l'horloge du navigateur
+  for (let k = 0; k < 200 && await page.evaluate(() => JEU.bataille.enCours.phase === "vague"); k++) await page.clock.runFor(500);
+  bilan.apresVague = await page.evaluate(() => ({ phase: JEU.bataille.enCours.phase, vague: JEU.bataille.enCours.vague, chateau: JEU.bataille.enCours.chateau.pv }));
+  // quitter avec Échap : confirmation dans la page, les coups portés restent
+  await page.keyboard.press("Escape");
+  await page.waitForSelector(".confirmation");
+  await page.click(".confirmation .bouton.principal");
+  await page.waitForFunction(() => !JEU.partie && JEU.ui.ecranCourant() === "jouer");
+  bilan.quitter = "ok";
+
+  // 2. conseil du royaume : toutes les affirmations jugées justes, décisions à droite
+  await page.evaluate(() => JEU.conseil.lancer());
+  for (let i = 0; i < 12; i++) {
+    await page.waitForSelector(".carte-conseil, .scene-conseil .bilan");
+    if (await page.$(".scene-conseil .bilan")) break;
+    if (await page.$(".carte-conseil.decision")) { await page.keyboard.press("ArrowRight"); await page.waitForSelector(".carte-conseil.decision", { state: "detached" }); continue; }
     const q = await page.evaluate(() => {
-      // la carte affichée est la dernière question tirée par le Sceau : on la retrouve par son énoncé
-      const t = document.querySelector(".carte-sceau .affirmation").textContent;
+      const t = document.querySelector(".carte-conseil .affirmation").textContent.replace(/^« | »$/g, "");
       const tout = [];
       Object.keys(JEU.donnees.cours).forEach(c => JEU.questions.questionsDuCours(c).forEach(x => { if (x.enonce === t) tout.push(x); }));
       return { reponse: tout[0].reponse, corrections: tout[0].corrections };
@@ -88,14 +82,15 @@ async function repondreJuste(page) {
     await page.keyboard.press(q.reponse.vrai ? "ArrowRight" : "ArrowLeft");
     if (!q.reponse.vrai) await page.keyboard.press(String(q.corrections.indexOf(q.reponse.correction) + 1));
   }
-  await page.waitForSelector(".bilan");
-  bilan.sceau = await page.textContent(".bilan .grand");
+  await page.waitForSelector(".scene-conseil .bilan");
+  bilan.conseil = await page.textContent(".scene-conseil .bilan .grand");
+  bilan.royaume = await page.evaluate(() => JEU.campagne.etat().royaume);
 
   // 4. signalement sur la dernière question, puis export et réimport
   await page.click("#signaler-derniere");
   await page.fill(".signalement textarea", "Essai automatique");
   await page.click("text=Envoyer le signalement");
-  await page.click(".bilan >> text=Voir le domaine");
+  await page.click(".bilan >> text=Retour à la campagne");
   const avant = await page.evaluate(() => JEU.sauvegarde.texteExport());
   bilan.signalements = JSON.parse(avant).signalements.length;
   await page.evaluate(t => { localStorage.clear(); JEU.sauvegarde.importer(t); }, avant);
