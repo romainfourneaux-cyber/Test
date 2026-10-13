@@ -2,3 +2,4 @@
 atelier/drive/
 # sources 3D CC0 téléchargées (Poly Haven), lourdes : listées dans atelier/sources-3d/SOURCES.md
 atelier/sources-3d/
+__pycache__/
