@@ -1,0 +1,95 @@
+[
+ {
+  "chemin": "planning/Emploi du temps 5e complet - Semaines 01 a 34.pdf",
+  "taille": 979814,
+  "modifieLe": "2026-10-13T11:58:50",
+  "traiteLe": "2026-10-13T12:26:50",
+  "type": "planning",
+  "cours": [],
+  "extraction": "Emploi du temps 5e complet - Semaines 01 a 34.txt"
+ },
+ {
+  "chemin": "planning/Plan des devoirs 5e scolarite complete.pdf",
+  "taille": 198216,
+  "modifieLe": "2026-10-13T11:58:50",
+  "traiteLe": "2026-10-13T12:26:50",
+  "type": "planning",
+  "cours": [],
+  "extraction": "Plan des devoirs 5e scolarite complete.txt"
+ },
+ {
+  "chemin": "methodes/Fiche methode - Frise chronologique.pdf",
+  "taille": 325363,
+  "modifieLe": "2026-10-13T11:58:50",
+  "traiteLe": "2026-10-13T12:26:50",
+  "type": "methode",
+  "cours": [
+   "methode-frise"
+  ],
+  "extraction": "Fiche methode - Frise chronologique.txt"
+ },
+ {
+  "chemin": "methodes/Fiche methode - Tableau a double entree.pdf",
+  "taille": 307644,
+  "modifieLe": "2026-10-13T11:58:50",
+  "traiteLe": "2026-10-13T12:26:50",
+  "type": "methode",
+  "cours": [
+   "methode-tableau"
+  ],
+  "extraction": "Fiche methode - Tableau a double entree.txt"
+ },
+ {
+  "chemin": "methodes/Fiche methode - Diagramme ombrothermique.pdf",
+  "taille": 3206820,
+  "modifieLe": "2026-10-13T11:58:50",
+  "traiteLe": "2026-10-13T12:26:50",
+  "type": "methode",
+  "cours": [
+   "methode-ombrothermique"
+  ],
+  "extraction": "Fiche methode - Diagramme ombrothermique.txt"
+ },
+ {
+  "chemin": "methodes/Fiche methode - Realisation graphique.pdf",
+  "taille": 2602131,
+  "modifieLe": "2026-10-13T11:58:50",
+  "traiteLe": "2026-10-13T12:26:50",
+  "type": "methode",
+  "cours": [
+   "methode-graphique"
+  ],
+  "extraction": "Fiche methode - Realisation graphique.txt"
+ },
+ {
+  "chemin": "methodes/Fiche methode - Instruments de mesure en physique-chimie.pdf",
+  "taille": 681719,
+  "modifieLe": "2026-10-13T11:58:50",
+  "traiteLe": "2026-10-13T12:26:50",
+  "type": "methode",
+  "cours": [
+   "methode-instruments"
+  ],
+  "extraction": "Fiche methode - Instruments de mesure en physique-chimie.txt"
+ },
+ {
+  "chemin": "methodes/Physique-chimie - Materiel des TP.pdf",
+  "taille": 188019,
+  "modifieLe": "2026-10-13T11:58:50",
+  "traiteLe": "2026-10-13T12:26:50",
+  "type": "methode",
+  "cours": [
+   "methode-instruments"
+  ],
+  "extraction": "Physique-chimie - Materiel des TP.txt"
+ },
+ {
+  "chemin": "methodes/Fiche methode - Fiche de memorisation.pdf",
+  "taille": 272578,
+  "modifieLe": "2026-10-13T11:58:50",
+  "traiteLe": "2026-10-13T12:26:50",
+  "type": "methode",
+  "cours": [],
+  "extraction": "Fiche methode - Fiche de memorisation.txt"
+ }
+]
