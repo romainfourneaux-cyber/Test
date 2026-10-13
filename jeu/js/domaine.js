@@ -216,6 +216,12 @@
       }
       s += rubanTexte(p[0], p[1] + 74, q.nom) + "</g>";
     });
+    // le seigneur à cheval, que le joueur dirige au clavier
+    var cs = JEU.icones.couleurs(etat.reglages.nomDomaine);
+    s += "<g id='seigneur' transform='translate(" + balade.x.toFixed(1) + "," + balade.y.toFixed(1) + ")'>" +
+      "<ellipse cx='0' cy='3' rx='34' ry='9' fill='#000' opacity='.3'/>" +
+      "<g class='monture' transform='scale(" + balade.sens + ",1)'>" + JEU.icones.dans("cavalier", -40, -78, 80, ENCRE) + JEU.icones.dans("cavalier", -38, -76, 76, cs[0]) +
+      "<path d='M-18 -64v-34' stroke='" + ENCRE + "' stroke-width='2.5'/><path d='M-18 -98h24l-7 8 7 8h-24z' fill='" + cs[1] + "' stroke='" + ENCRE + "' stroke-width='1.2'/></g></g>";
     // cartouche du titre et rose des vents
     s += "<g transform='translate(30,24)'><rect width='270' height='70' rx='4' fill='#efe2bf' stroke='" + ENCRE + "' stroke-width='2'/><rect x='5' y='5' width='260' height='60' fill='none' stroke='" + ENCRE + "' stroke-width='1'/>" +
       "<text x='135' y='34' text-anchor='middle' class='plan-texte grand'>" + U.echapper(etat.reglages.nomDomaine || "Le domaine") + "</text>" +
@@ -237,6 +243,85 @@
   // ---------- écran ----------
   var quartierChoisi = null;
 
+  // ---------- balade du seigneur : flèches ou Z Q S D, Entrée pour visiter le quartier ----------
+  var balade = { x: CX, y: CY + 62, sens: 1, touches: {}, cible: null, boucle: null, t: 0, proche: null };
+  var VITESSE = 300; // unités du plan par seconde
+  var DIRECTIONS = {
+    arrowup: [0, -1], z: [0, -1], w: [0, -1], arrowdown: [0, 1], s: [0, 1],
+    arrowleft: [-1, 0], q: [-1, 0], a: [-1, 0], arrowright: [1, 0], d: [1, 0]
+  };
+
+  function surDomaine() {
+    return JEU.ui.ecranCourant && JEU.ui.ecranCourant() === "domaine" && !JEU.partie && !JEU.ui.modaleOuverte();
+  }
+
+  function quartierSous(x, y) {
+    var k = Object.keys(POS).filter(function (q) { return Math.abs(x - POS[q][0]) <= 115 && Math.abs(y - POS[q][1]) <= 70; });
+    return k[0] || null;
+  }
+
+  function placer() {
+    var g = document.querySelector("#ecran-domaine #seigneur");
+    if (!g) return;
+    g.setAttribute("transform", "translate(" + balade.x.toFixed(1) + "," + balade.y.toFixed(1) + ")");
+    g.querySelector(".monture").setAttribute("transform", "scale(" + balade.sens + ",1)");
+    var q = quartierSous(balade.x, balade.y);
+    if (q !== balade.proche) {
+      balade.proche = q;
+      Array.prototype.forEach.call(document.querySelectorAll("#ecran-domaine .quartier"), function (e) {
+        e.classList.toggle("proche", e.getAttribute("data-quartier") === q);
+      });
+      var aide = document.querySelector("#ecran-domaine .aide-balade");
+      if (aide) aide.innerHTML = q
+        ? "Tu es au quartier <b>" + U.echapper(QUARTIERS[q].nom) + "</b> · <span class='touche'>↵</span> Entrée pour le visiter"
+        : "Chevauche avec les <b>flèches</b> ou <b>Z Q S D</b> · clique sur le plan pour t'y rendre";
+    }
+  }
+
+  function pas(t) {
+    if (!surDomaine()) { balade.boucle = null; balade.touches = {}; balade.cible = null; return; }
+    var dt = Math.min(0.05, (t - (balade.t || t)) / 1000);
+    balade.t = t;
+    var vx = 0, vy = 0;
+    Object.keys(balade.touches).forEach(function (k) { vx += DIRECTIONS[k][0]; vy += DIRECTIONS[k][1]; });
+    if (vx || vy) balade.cible = null;
+    else if (balade.cible) {
+      var dx = balade.cible[0] - balade.x, dy = balade.cible[1] - balade.y, dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < 4) balade.cible = null; else { vx = dx / dist; vy = dy / dist; }
+    }
+    if (!vx && !vy) { balade.boucle = null; balade.t = 0; placer(); return; }
+    var n = Math.sqrt(vx * vx + vy * vy);
+    balade.x = Math.max(40, Math.min(L - 40, balade.x + vx / n * VITESSE * dt));
+    balade.y = Math.max(80, Math.min(H - 20, balade.y + vy / n * VITESSE * dt));
+    if (vx) balade.sens = vx < 0 ? -1 : 1;
+    placer();
+    balade.boucle = requestAnimationFrame(pas);
+  }
+
+  function relancer() { if (!balade.boucle) { balade.t = 0; balade.boucle = requestAnimationFrame(pas); } }
+
+  function visiter() {
+    if (!balade.proche) return false;
+    quartierChoisi = balade.proche;
+    var panneau = document.querySelector("#ecran-domaine .panneau-quartier");
+    if (panneau) { rendrePanneau(panneau, JEU.sauvegarde.etat()); panneau.scrollIntoView({ behavior: "smooth", block: "start" }); }
+    return true;
+  }
+
+  if (typeof document !== "undefined") {
+    document.addEventListener("keydown", function (e) {
+      if (!surDomaine() || e.altKey || e.ctrlKey || e.metaKey) return;
+      // Entrée sur un bouton du domaine (Construire…) garde son rôle ; sur le menu, elle sert à visiter.
+      if (e.target && e.target.tagName === "BUTTON" && e.key === "Enter" && !(e.target.closest && e.target.closest("#menu"))) return;
+      if (e.target && /INPUT|TEXTAREA|SELECT/.test(e.target.tagName)) return;
+      var k = e.key.toLowerCase();
+      if (DIRECTIONS[k]) { balade.touches[k] = true; e.preventDefault(); relancer(); }
+      else if (k === "enter" && visiter()) e.preventDefault();
+    });
+    document.addEventListener("keyup", function (e) { delete balade.touches[e.key.toLowerCase()]; });
+    window.addEventListener("blur", function () { balade.touches = {}; });
+  }
+
   JEU.ui.ecrans.domaine = function (s) {
     var el = JEU.ui.el;
     var etat = JEU.sauvegarde.etat();
@@ -245,8 +330,18 @@
     s.appendChild(el("h1", { class: "titre-ecran", texte: "Ton domaine · " + st.nom }));
     var plan = el("div", { class: "plan-cadre", html: dessiner(etat) });
     s.appendChild(plan);
+    s.appendChild(el("p", { class: "aide-balade" }));
     var panneau = el("div", { class: "panneau-quartier" });
     s.appendChild(panneau);
+    var svg = plan.querySelector("svg");
+    svg.addEventListener("click", function (e) {
+      var m = svg.getScreenCTM();
+      if (!m) return;
+      var pt = svg.createSVGPoint(); pt.x = e.clientX; pt.y = e.clientY;
+      var p = pt.matrixTransform(m.inverse());
+      balade.cible = [p.x, p.y]; relancer();
+    });
+    balade.proche = undefined;
     Array.prototype.forEach.call(plan.querySelectorAll(".quartier"), function (g) {
       function choisir() { quartierChoisi = g.getAttribute("data-quartier"); rendrePanneau(panneau, etat); }
       g.addEventListener("click", choisir);
@@ -255,6 +350,7 @@
     var prochain = STADES.filter(function (x) { return x.min > etat.batiments.length; })[0];
     if (prochain) s.appendChild(el("p", { class: "note centre", texte: "Encore " + (prochain.min - etat.batiments.length) + " bâtiment" + (prochain.min - etat.batiments.length > 1 ? "s" : "") + " pour devenir " + prochain.nom.toLowerCase() + "." }));
     rendrePanneau(panneau, etat);
+    placer();
   };
 
   function rendrePanneau(panneau, etat) {
@@ -294,5 +390,5 @@
     if (quartierChoisi) panneau.appendChild(el("button", { class: "lien", onclick: function () { quartierChoisi = null; rendrePanneau(panneau, etat); }, texte: "Voir tous les quartiers" }));
   }
 
-  JEU.domaine = { QUARTIERS: QUARTIERS, BATIMENTS: BATIMENTS, STADES: STADES, stade: stade, maitrise: maitrise, debloque: debloque, abordable: abordable, construire: construire, dessiner: dessiner };
+  JEU.domaine = { balade: balade, quartierSous: quartierSous, QUARTIERS: QUARTIERS, BATIMENTS: BATIMENTS, STADES: STADES, stade: stade, maitrise: maitrise, debloque: debloque, abordable: abordable, construire: construire, dessiner: dessiner };
 })(typeof window !== "undefined" ? window : globalThis);
