@@ -546,3 +546,11 @@ main { max-width: 1060px; margin: 0 auto; padding: 1.4rem 1rem 7rem; }
 
 /* animations coupées (Réglages ou préférence du système) */
 .sans-anim *, .sans-anim *::before, .sans-anim *::after { animation: none !important; transition: none !important; }
+
+/* ---------- confirmation dans la page ---------- */
+.confirmation p { font-size: 1.1rem; margin: .4rem 0 1rem; }
+.confirmation .actions { display: flex; gap: .6rem; flex-wrap: wrap; justify-content: center; }
+.bouton-rond { position: relative; }
+#bouton-musique { margin-right: .4rem; }
+.bouton-rond.coupe { opacity: .45; }
+.bouton-rond.coupe::after { content: ""; position: absolute; left: 20%; right: 20%; top: 50%; height: 3px; background: currentColor; transform: rotate(-40deg); border-radius: 2px; }

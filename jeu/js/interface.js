@@ -60,7 +60,8 @@
       if (ev.key === "Escape") { ui.fermerModale(); ev.preventDefault(); }
       return;
     }
-    if (ui.clavier && ui.clavier(ev.key, ev)) ev.preventDefault();
+    if (ui.clavier && ui.clavier(ev.key, ev)) { ev.preventDefault(); return; }
+    if (ev.key === "Escape" && JEU.partie && JEU.partie.enCours) { ev.preventDefault(); ui.proposerQuitter(); }
   });
 
   // ---------- notifications ----------
@@ -103,6 +104,21 @@
   };
   ui.modaleOuverte = function () { return !document.getElementById("modale").hidden; };
 
+  // Confirmation dans la page (les boîtes confirm() et alert() sont bloquées sur la version web).
+  ui.confirmer = function (question, texteOui, siOui, texteNon) {
+    var oui = el("button", { class: "bouton principal", texte: texteOui || "Oui" });
+    var non = el("button", { class: "bouton", texte: texteNon || "Non, je reste" });
+    var boite = el("div", { class: "confirmation" }, [el("p", { texte: question }), el("div", { class: "actions" }, [oui, non])]);
+    oui.addEventListener("click", function () { ui.fermerModale(); siOui(); });
+    non.addEventListener("click", ui.fermerModale);
+    ui.ouvrirModale(null, boite);
+    oui.focus();
+  };
+  ui.message = function (titre, texte) {
+    var ok = el("button", { class: "bouton principal", onclick: ui.fermerModale, texte: "Compris" });
+    ui.ouvrirModale(titre, el("div", { class: "confirmation" }, [el("p", { texte: texte }), el("div", { class: "actions" }, [ok])]));
+  };
+
   // ---------- bandeau : ressources ----------
   ui.majRessources = function () {
     var etat = JEU.sauvegarde.etat();
@@ -120,7 +136,9 @@
     var nom = document.getElementById("nom-domaine");
     if (nom) nom.textContent = etat.reglages.nomDomaine || "Le domaine";
     var son = document.getElementById("bouton-son");
-    if (son) { son.innerHTML = JEU.icones.icone(etat.reglages.son ? "son" : "sans-son", 22); son.title = etat.reglages.son ? "Couper le son" : "Remettre le son"; son.setAttribute("aria-pressed", etat.reglages.son ? "true" : "false"); }
+    var mus = document.getElementById("bouton-musique");
+    if (mus) { var mOn = etat.reglages.musique !== false; mus.innerHTML = JEU.icones.icone("musique", 22); mus.classList.toggle("coupe", !mOn); mus.title = mOn ? "Couper la musique" : "Remettre la musique"; mus.setAttribute("aria-pressed", mOn ? "true" : "false"); }
+    if (son) { son.innerHTML = JEU.icones.icone(etat.reglages.son ? "son" : "sans-son", 22); son.title = etat.reglages.son ? "Couper les bruitages" : "Remettre les bruitages"; son.setAttribute("aria-pressed", etat.reglages.son ? "true" : "false"); }
   };
 
   // ---------- questions ----------
@@ -360,14 +378,21 @@
     var barre = el("div", { class: "barre-partie" }, [
       el("h2", { texte: titre }),
       el("button", { class: "lien signaler", id: "signaler-derniere", hidden: true, onclick: function () { if (JEU.partie.derniere) JEU.signalement.ouvrir(JEU.partie.derniere); }, texte: "Signaler la question précédente" }),
-      el("button", { class: "bouton discret", onclick: function () {
-        if (confirm("Quitter la partie ? Tu gardes tout ce que tu as déjà gagné.")) { ui.finirPartie(); if (quitter) quitter(); }
-      }, texte: "Quitter" })
+      el("button", { class: "bouton discret", id: "bouton-quitter", onclick: ui.proposerQuitter, texte: "Quitter (Échap)" })
     ]);
     s.appendChild(barre);
     var zone = el("div", { class: "zone-partie" });
     s.appendChild(zone);
     return zone;
+  };
+  // Quitter une partie : confirmation dans la page, puis retour à l'écran d'origine.
+  ui.proposerQuitter = function () {
+    if (!JEU.partie) return;
+    var quitter = JEU.partie.quitter;
+    ui.confirmer("Quitter la partie ? Tu gardes tout ce que tu as déjà gagné.", "Quitter", function () {
+      if (JEU.partie && JEU.partie.surQuitter) JEU.partie.surQuitter();
+      ui.finirPartie(); if (quitter) quitter();
+    });
   };
   ui.noterDerniere = function (q) {
     if (!JEU.partie) return;
@@ -581,14 +606,15 @@
       if (!f) return;
       var lecteur = new FileReader();
       lecteur.onload = function () {
-        if (!confirm("Importer cette sauvegarde ? Elle remplace la partie en cours.")) return;
+        ui.confirmer("Importer cette sauvegarde ? Elle remplace la partie en cours.", "Importer", function () {
         try {
           JEU.sauvegarde.importer(lecteur.result);
           JEU.progression.oublier();
           ui.majRessources();
           ui.toast("Sauvegarde importée.");
           ui.afficher("accueil");
-        } catch (e) { alert("Import impossible : " + e.message); }
+        } catch (e) { ui.message("Import impossible", e.message); }
+        });
       };
       lecteur.readAsText(f);
     } });
