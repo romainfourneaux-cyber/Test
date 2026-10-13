@@ -337,6 +337,11 @@ main { max-width: 1060px; margin: 0 auto; padding: 1.4rem 1rem 7rem; }
 .quartier rect:first-child { transition: fill-opacity .15s ease; }
 .quartier:hover rect:first-child, .quartier:focus rect:first-child { fill-opacity: .32; }
 .panneau-quartier { margin-top: 1rem; }
+.quartier.proche rect:first-child { fill-opacity: .35; stroke-dasharray: none; stroke-width: 5; }
+#seigneur { pointer-events: none; }
+#seigneur .monture { transition: transform .15s ease; }
+.aide-balade { text-align: center; margin: .6rem 0 0; font-size: 1.02rem; }
+.aide-balade .touche { margin: 0 .2rem; }
 .quartier-bloc { border-left: 6px solid var(--teinte); padding: .4rem 1rem; margin: .8rem 0; background: rgba(255,250,236,.5); box-shadow: 0 2px 6px rgba(80,50,20,.2); }
 .quartier-bloc h3 { margin: .2rem 0; }
 .ligne-batiment { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: .4rem 0; border-bottom: 1px dotted var(--pierre); }

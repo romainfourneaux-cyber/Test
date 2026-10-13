@@ -41,6 +41,8 @@
       b.classList.toggle("actif", b.getAttribute("data-ecran") === nom);
     });
     ui.clavier = null;
+    // le bouton du menu ne garde pas le focus : les touches vont au jeu
+    if (document.activeElement && document.activeElement.closest && document.activeElement.closest("#menu")) document.activeElement.blur();
     var rendu = ui.ecrans[nom];
     if (rendu) rendu(s, arg);
     window.scrollTo(0, 0);
