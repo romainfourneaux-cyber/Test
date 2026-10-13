@@ -422,7 +422,7 @@
     var nbBat = etat.batiments.length;
     var st = JEU.domaine.stade(nbBat);
     var idx = JEU.domaine.STADES.indexOf(st);
-    var valides = Object.keys(etat.cours).filter(function (k) { return etat.cours[k].etat === "valide"; }).length;
+    var valides = JEU.progression.coursAccessibles(etat).filter(function (k) { return JEU.progression.etatCours(k, etat) === "acquis"; }).length;
     var vues = Object.keys(etat.notions).length;
     s.appendChild(el("div", { class: "accueil-scene" }, [
       el("div", { class: "scene-fond tapisserie", title: "Tapisserie « Le cerf aux abois », vers 1495-1515 (The Met, domaine public)" }),
@@ -441,7 +441,7 @@
           return el("li", { texte: d.intitule + " · semaine " + d.semaine });
         })) : el("p", { texte: "Aucun devoir à venir." })]),
       el("div", { class: "cartouche" }, [el("h3", { html: JEU.icones.icone("trophee", 20) + " Chronique" }),
-        el("p", { class: "stats" }, [el("b", { texte: String(valides) }), document.createTextNode(" cours validé" + (valides > 1 ? "s" : "") + " · "),
+        el("p", { class: "stats" }, [el("b", { texte: String(valides) }), document.createTextNode(" cours acquis · "),
           el("b", { texte: String(vues) }), document.createTextNode(" notion" + (vues > 1 ? "s" : "") + " vue" + (vues > 1 ? "s" : ""))])])
     ]));
     if (JEU.sauvegarde.exportEnRetard()) {
@@ -463,13 +463,10 @@
   ui.ecrans.jouer = function (s) {
     s.innerHTML = "";
     var etat = JEU.sauvegarde.etat();
-    var aValider = [];
-    JEU.progression.coursAccessibles(etat).forEach(function (id) { if (JEU.progression.etatCours(id, etat) === "ouvert") aValider.push(id); });
     s.appendChild(el("h1", { class: "titre-ecran", texte: "Aux armes, seigneur" }));
     var options = [
       { titre: "Assaut", texte: "8 questions. Joue tes cartes de notions contre la garnison d'un seigneur rival.", action: function () { JEU.assaut.choisirMatiere(); }, icone: "assaut" },
-      { titre: "Sceau de vérité", texte: "10 affirmations à sceller : vraies à droite, fausses à gauche. Corrige les fausses.", action: function () { JEU.sceau.lancer(); }, icone: "sceau" },
-      { titre: "Valider un cours", texte: aValider.length ? aValider.length + " cours ouvert" + (aValider.length > 1 ? "s" : "") + " à valider." : "Coche « cours fait » dans la liste des cours.", action: function () { ui.afficher("cours"); }, icone: "valider" }
+      { titre: "Sceau de vérité", texte: "10 affirmations à sceller : vraies à droite, fausses à gauche. Corrige les fausses.", action: function () { JEU.sceau.lancer(); }, icone: "sceau" }
     ];
     var grille = el("div", { class: "grille-jeux" });
     options.forEach(function (o, i) {
@@ -489,13 +486,14 @@
 
   // ---------- liste des cours ----------
   var ongletCours = "histoire";
-  var LIBELLES = { presume: "Présumé acquis", valide: "Validé", ouvert: "Ouvert", avenir: "Contenu à venir", brume: "Dans la brume" };
+  var LIBELLES = { presume: "Présumé acquis", acquis: "Acquis", "a-revoir": "À revoir", ouvert: "En cours", avenir: "Contenu à venir", brume: "Dans la brume" };
 
   ui.ecrans.cours = function (s) {
     var etat = JEU.sauvegarde.etat();
     var sem = JEU.calendrier.semaine(new Date());
     s.innerHTML = "";
     s.appendChild(el("h1", { texte: "Les cours" }));
+    s.appendChild(el("p", { class: "note", texte: "Le chroniqueur estime d'après tes devoirs corrigés si un cours est acquis ou à revoir. Les notions à revoir reviennent plus souvent dans tes batailles et au conseil." }));
     var onglets = el("div", { class: "onglets", role: "tablist" });
     var liste = ["methode"].concat(JEU.ORDRE_MATIERES);
     liste.forEach(function (m) {
@@ -511,7 +509,7 @@
     if (ongletCours === "anglais") return rendreAnglais(zone, etat);
     var pos = JEU.progression.position(ongletCours, sem.numero, etat);
     var ecart = pos.ecart === 0 ? "pile à l'heure" : pos.ecart > 0 ? "en avance de " + pos.ecart + " cours" : "en retard de " + (-pos.ecart) + " cours";
-    zone.appendChild(el("p", { class: "position", texte: pos.faits + " cours validés ou acquis sur " + pos.total + " · " + ecart + " par rapport au calendrier." }));
+    zone.appendChild(el("p", { class: "position", texte: pos.faits + " cours acquis sur " + pos.total + " · " + ecart + " par rapport au calendrier." }));
     var parSemaine = {};
     JEU.donnees.planning.filter(function (p) { return p.matiere === ongletCours; }).forEach(function (p) {
       (parSemaine[p.semaine] = parSemaine[p.semaine] || []).push(p);
@@ -527,51 +525,34 @@
 
   function ligneEntree(p, etat) {
     if (p.type === "revision") {
-      var fait = etat.cours[p.id] && etat.cours[p.id].etat === "fait";
-      var cb = el("input", { type: "checkbox", checked: fait, onchange: function () { JEU.progression.cocherRevision(p.id, cb.checked); JEU.sauvegarde.enregistrer(); } });
-      return el("div", { class: "ligne-cours revision" }, [el("label", {}, [cb, el("span", { texte: " " + p.titre })]), el("span", { class: "etat", texte: "Révision" })]);
+      return el("div", { class: "ligne-cours revision" }, [el("span", { texte: p.titre }), el("span", { class: "etat", texte: "Révision" })]);
     }
     if (p.type === "devoir") {
-      return el("div", { class: "ligne-cours devoir" }, [el("span", { texte: p.titre }), el("span", { class: "etat", texte: "Devoir · siège au jalon 2" })]);
+      return el("div", { class: "ligne-cours devoir" }, [el("span", { texte: p.titre }), el("span", { class: "etat", texte: "Devoir" })]);
     }
     var st = JEU.progression.etatCours(p.id, etat);
     var ligne = el("div", { class: "ligne-cours etat-" + st });
-    if (st === "brume") {
-      ligne.appendChild(el("span", { class: "titre-brume", texte: p.titre }));
-      ligne.appendChild(el("span", { class: "etat", texte: LIBELLES.brume }));
-      return ligne;
-    }
-    ligne.appendChild(el("span", { texte: p.titre }));
-    ligne.appendChild(actionCours(p.id, st, etat));
+    ligne.appendChild(el("span", { class: st === "brume" ? "titre-brume" : "", texte: p.titre }));
+    ligne.appendChild(etiquetteCours(p.id, st));
     return ligne;
   }
 
-  function actionCours(id, st, etat) {
-    var present = JEU.progression.fichierPresent(id);
-    if (st === "ouvert") {
-      var cb = el("input", { type: "checkbox", onchange: function () { if (cb.checked) JEU.validation.lancer(id); } });
-      return el("label", { class: "action-cours" }, [cb, el("span", { texte: " Cours fait" })]);
-    }
-    if (st === "valide") {
-      var sc = etat.cours[id] && etat.cours[id].score != null ? " · " + Math.round(etat.cours[id].score * 100) + " %" : "";
-      return el("span", { class: "etat valide", texte: "Validé" + sc });
-    }
-    if (st === "presume") {
-      if (present) return el("button", { class: "bouton petit", onclick: function () { JEU.validation.lancer(id); }, texte: "Présumé acquis · valider quand même" });
-      return el("span", { class: "etat", texte: LIBELLES.presume });
-    }
-    return el("span", { class: "etat", texte: LIBELLES[st] || st });
+  // État du cours, en lecture seule, avec la remarque du chroniqueur s'il y en a une.
+  function etiquetteCours(id, st) {
+    var est = JEU.progression.estimation(id);
+    var t = LIBELLES[st] || st;
+    return el("span", { class: "etat " + st, title: est && est.note ? est.note : "", texte: t + (est && est.note && st === "a-revoir" ? " · " + est.note : "") });
   }
 
   function rendreMethodes(zone, etat) {
     var ms = JEU.progression.methodes();
-    zone.appendChild(el("p", { class: "position", texte: "Les savoir-faire sont ouverts d'emblée. Valide-les quand tu veux." }));
+    zone.appendChild(el("p", { class: "position", texte: "Les savoir-faire sont ouverts d'emblée et reviennent dans toutes tes batailles." }));
     if (!ms.length) zone.appendChild(el("p", { texte: "Contenu à venir." }));
     ms.forEach(function (c) {
       var st = JEU.progression.etatCours(c.id, etat);
       zone.appendChild(el("div", { class: "ligne-cours etat-" + st }, [
         el("span", {}, [el("span", { class: "pastille", style: "--teinte:" + JEU.MATIERES[c.matiere].couleur, texte: JEU.MATIERES[c.matiere].nom }), document.createTextNode(" " + c.titre)]),
-        actionCours(c.id, st, etat)
+        etiquetteCours(c.id, st)
       ]));
     });
   }
@@ -584,7 +565,7 @@
       var st = JEU.progression.etatCours(c.id, etat);
       zone.appendChild(el("div", { class: "ligne-cours etat-" + st }, [
         el("span", { class: st === "brume" ? "titre-brume" : "", texte: c.titre }),
-        st === "brume" ? el("span", { class: "etat", texte: LIBELLES.brume }) : actionCours(c.id, st, etat)
+        etiquetteCours(c.id, st)
       ]));
     });
   }

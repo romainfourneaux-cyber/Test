@@ -1,5 +1,6 @@
-// Progression : état de chaque cours (déblocage) et position de l'élève en cours validés.
-// États : presume | valide | ouvert | avenir (ouvrable, fichier absent) | brume (pas encore ouvert).
+// Progression : état de chaque cours. Le jeu ne fait plus passer d'épreuve de validation :
+// c'est le chroniqueur (Romain et Claude) qui estime, d'après les devoirs corrigés, si un cours est acquis
+// (fichier data/suivi.js). États : acquis | a-revoir | presume | ouvert | avenir (méthode sans fichier) | brume.
 (function (racine) {
   "use strict";
   var JEU = racine.JEU;
@@ -47,27 +48,31 @@
     return r;
   }
 
+  function estimation(id) {
+    var su = JEU.donnees.suivi && JEU.donnees.suivi.cours;
+    return su && su[id] ? su[id] : null;
+  }
+
   function calculer(id, etat) {
+    var est = estimation(id);
+    if (est && (est.etat === "acquis" || est.etat === "a-revoir")) return est.etat;
     var sauve = etat.cours[id];
-    if (sauve && sauve.etat === "valide") return "valide";
+    if (sauve && sauve.etat === "valide") return "acquis"; // anciennes épreuves (schéma 2) : on garde l'acquis
     if (/^methode-/.test(id)) return fichierPresent(id) ? "ouvert" : "avenir";
-    if (/^anglais-/.test(id)) {
-      var seq = sequencesAnglais();
-      for (var i = 0; i < seq.length; i++) {
-        if (seq[i].id === id) {
-          if (i === 0) return "ouvert";
-          return etatCours(seq[i - 1].id, etat) === "valide" ? "ouvert" : "brume";
-        }
-      }
-      return "avenir";
-    }
+    if (/^anglais-/.test(id)) return fichierPresent(id) ? "ouvert" : "brume";
     var e = entree(id);
-    if (!e) return "avenir";
-    if (e.semaine < (config().semaineDepart || 1)) return "presume";
-    var p = precedent(e);
-    var ouvrable = !p || ["valide", "presume"].indexOf(etatCours(p.id, etat)) >= 0;
-    if (!ouvrable) return "brume";
-    return fichierPresent(id) ? "ouvert" : "avenir";
+    if (e && e.semaine < (config().semaineDepart || 1)) return "presume";
+    return fichierPresent(id) ? "ouvert" : "brume";
+  }
+
+  // Fiches des cours que le chroniqueur a marqués « à revoir » : elles sortent plus souvent.
+  function fichesARevoir() {
+    var r = (JEU.donnees.aRetravailler || []).slice();
+    Object.keys(JEU.donnees.cours).forEach(function (id) {
+      if (etatCours(id) !== "a-revoir") return;
+      (JEU.donnees.cours[id].fiches || []).forEach(function (f) { if (r.indexOf(f.id) < 0) r.push(f.id); });
+    });
+    return r;
   }
 
   // Cours dont les questions peuvent sortir en partie libre (ouverts, validés, présumés avec fichier, méthodes).
@@ -76,7 +81,7 @@
     var ids = Object.keys(JEU.donnees.cours).concat(Object.keys(JEU.donnees.anglais));
     return ids.filter(function (id) {
       var s = etatCours(id, etat);
-      return s === "ouvert" || s === "valide" || s === "presume";
+      return s === "ouvert" || s === "acquis" || s === "a-revoir" || s === "presume";
     });
   }
 
@@ -95,35 +100,22 @@
     return r;
   }
 
-  // Position par matière : cours validés ou présumés, comparés au calendrier.
+  // Position par matière : cours acquis ou présumés, comparés au calendrier.
   function position(matiere, semaine, etat) {
     etat = etat || JEU.sauvegarde.etat();
     var liste = entreesCours(matiere);
     var faits = 0, attendus = 0;
     liste.forEach(function (e) {
       var s = etatCours(e.id, etat);
-      if (s === "valide" || s === "presume") faits++;
+      if (s === "acquis" || s === "presume") faits++;
       if (e.semaine <= semaine) attendus++;
     });
     return { faits: faits, total: liste.length, attendus: attendus, ecart: faits - attendus };
   }
 
-  function valider(id, score, etat) {
-    etat = etat || JEU.sauvegarde.etat();
-    etat.cours[id] = { etat: "valide", le: JEU.util.horodatage(), score: Math.round(score * 1000) / 1000 };
-    oublier();
-  }
-
-  function cocherRevision(id, fait, etat) {
-    etat = etat || JEU.sauvegarde.etat();
-    if (fait) etat.cours[id] = { etat: "fait", le: JEU.util.horodatage() };
-    else delete etat.cours[id];
-    oublier();
-  }
-
   JEU.progression = {
     etatCours: etatCours, coursAccessibles: coursAccessibles, recence: recence, position: position,
-    valider: valider, cocherRevision: cocherRevision, oublier: oublier, entree: entree,
+    estimation: estimation, fichesARevoir: fichesARevoir, oublier: oublier, entree: entree,
     entreesCours: entreesCours, sequencesAnglais: sequencesAnglais, methodes: methodes, fichierPresent: fichierPresent
   };
 })(typeof window !== "undefined" ? window : globalThis);

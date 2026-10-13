@@ -26,7 +26,7 @@
 
   function tirer(matiere, nombre, filtreQuestion) {
     var etat = JEU.sauvegarde.etat();
-    return JEU.leitner.tirer(candidats(matiere, filtreQuestion), etat, nombre, { aRetravailler: JEU.donnees.aRetravailler || [] });
+    return JEU.leitner.tirer(candidats(matiere, filtreQuestion), etat, nombre, { aRetravailler: JEU.progression.fichesARevoir() });
   }
 
   function choisirMatiere() {

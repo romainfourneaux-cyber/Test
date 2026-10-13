@@ -5,7 +5,7 @@
   var JEU = racine.JEU = racine.JEU || {};
 
   JEU.donnees = {
-    config: null, planning: [], devoirs: [], indexCours: [], aRetravailler: [],
+    config: null, planning: [], devoirs: [], indexCours: [], aRetravailler: [], suivi: { cours: {} },
     cours: {}, anglais: {}, erreurs: []
   };
 
@@ -39,6 +39,9 @@
         case "devoirs": d.devoirs = obj; break;
         case "index-cours": d.indexCours = obj; break;
         case "a-retravailler": d.aRetravailler = obj; break;
+        case "suivi":
+          if (!obj || typeof obj.cours !== "object") throw new Error("suivi mal formé");
+          d.suivi = obj; break;
         case "cours":
           if (!obj || !obj.id || !Array.isArray(obj.fiches)) throw new Error("cours mal formé");
           d.cours[obj.id] = obj; break;
