@@ -62,27 +62,39 @@
     var pv = FORCE_ENNEMI, tour = 0, serie = 0, bonnes = 0, degats = 0, gains = {};
     var dejaPosees = [];
 
+    var nomDomaine = JEU.sauvegarde.etat().reglages.nomDomaine;
     var champ = el("div", { class: "champ-bataille" }, [
-      el("div", { class: "camp ennemi" }, [
-        el("div", { class: "banniere-ennemie", html: JEU.icones.banniere(graine) }),
-        el("div", {}, [el("h3", { texte: "La garnison d'un seigneur rival" }), el("div", { class: "jauge" }, [el("div", { class: "jauge-remplie" })]), el("p", { class: "note pv" })])
-      ]),
-      el("div", { class: "camp joueur" }, [
-        el("div", { class: "blason-petit", html: JEU.icones.blason(JEU.sauvegarde.etat().reglages.nomDomaine, 56) }),
-        el("div", {}, [el("p", { class: "tour-info" }), el("p", { class: "serie-info" })])
+      el("div", { class: "scene-bataille", html: JEU.decor.champBataille(graine, FORCE_ENNEMI, nomDomaine) }),
+      el("div", { class: "hud-bataille" }, [
+        el("div", { class: "hud-joueur" }, [
+          el("span", { class: "blason-petit", html: JEU.icones.blason(nomDomaine, 40) }),
+          el("div", {}, [el("b", { texte: "Ton ost" }), el("p", { class: "tour-info" }), el("p", { class: "serie-info" })])
+        ]),
+        el("div", { class: "hud-ennemi" }, [
+          el("b", { texte: "La garnison d'un seigneur rival" }),
+          el("div", { class: "jauge" }, [el("div", { class: "jauge-remplie" })]),
+          el("p", { class: "pv" })
+        ])
       ])
     ]);
     var scene = el("div", { class: "scene" });
     zone.appendChild(champ); zone.appendChild(scene);
 
-    function majChamp(coup) {
+    function majChamp(coup, puissant) {
       champ.querySelector(".jauge-remplie").style.width = Math.max(0, pv / FORCE_ENNEMI * 100) + "%";
-      champ.querySelector(".pv").textContent = "Force : " + Math.max(0, Math.round(pv * 10) / 10) + " / " + FORCE_ENNEMI;
+      champ.querySelector(".pv").textContent = pv <= 0 ? "En déroute !" : "Force : " + Math.round(pv * 10) / 10 + " / " + FORCE_ENNEMI;
       champ.querySelector(".tour-info").textContent = "Tour " + Math.min(tour + 1, TOURS) + " / " + TOURS;
-      champ.querySelector(".serie-info").textContent = serie > 0 ? "Série : " + serie + (serie === 2 ? " · le prochain coup sera puissant !" : "") : "";
+      var pips = "";
+      for (var k = 0; k < 3; k++) pips += k < serie ? "◆" : "◇";
+      champ.querySelector(".serie-info").textContent = "Série " + pips + (serie === 2 ? " · coup puissant au prochain !" : "");
+      var restants = Math.max(0, Math.ceil(pv - 1e-9));
+      Array.prototype.forEach.call(champ.querySelectorAll(".ennemie .unite"), function (u) {
+        u.classList.toggle("tombee", Number(u.getAttribute("data-rang")) >= restants);
+      });
       if (coup) {
-        var b = champ.querySelector(".banniere-ennemie");
-        b.classList.remove("touche-anim"); void b.offsetWidth; b.classList.add("touche-anim");
+        var svg = champ.querySelector("svg");
+        svg.classList.remove("tir", "puissant"); void svg.getBoundingClientRect();
+        svg.classList.add("tir"); if (puissant) svg.classList.add("puissant");
       }
     }
 
@@ -108,11 +120,14 @@
         var f = JEU.questions.fiche(c.fiche);
         var m = U.matiereDe(c.cours);
         var n = JEU.sauvegarde.etat().notions[c.fiche];
+        var pipsM = "";
+        for (var k = 1; k <= 5; k++) pipsM += "<i class='" + (n && n.boite >= k ? "plein" : "") + "'></i>";
         mainEl.appendChild(el("button", { class: "carte-notion", style: "--teinte:" + JEU.MATIERES[m].couleur, onclick: function () { jouer(c, cartes); } }, [
           el("span", { class: "touche", texte: String(i + 1) }),
           el("span", { class: "carte-matiere", texte: JEU.MATIERES[m].nom }),
-          el("b", { texte: f.fiche.titre || f.fiche.notion }),
-          el("span", { class: "carte-boite", texte: n ? "Maîtrise " + n.boite + "/5" : "Nouvelle" })
+          el("span", { class: "carte-art", html: JEU.icones.icone(JEU.icones.matiere(m), 64) }),
+          el("b", { class: "carte-titre", texte: f.fiche.titre || f.fiche.notion }),
+          el("span", { class: "carte-boite", html: (n ? "Maîtrise" : "Nouvelle notion") + " <span class='pips'>" + pipsM + "</span>" })
         ]));
       });
       scene.appendChild(mainEl);
@@ -143,9 +158,9 @@
           pv -= d; degats += d;
           if (res) gains[res] = (gains[res] || 0) + 1;
           JEU.sons.jouer(puissant ? "coup-puissant" : "coup");
-          JEU.ui.toast(puissant ? "Coup puissant ! −" + d : "Touché ! −" + d, "bon");
+          JEU.ui.tampon(puissant ? "Coup puissant" : "Touché", "−" + d);
           JEU.ui.majRessources();
-          majChamp(true);
+          majChamp(true, puissant);
           JEU.mesure.reponseDonnee();
           tourSuivant();
         } else {

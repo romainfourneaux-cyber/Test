@@ -1,83 +1,81 @@
-// Icônes et blasons en SVG, dessinés pour ce jeu (aplats, traits d'encre, silhouettes).
+// Icônes et blasons. Les icônes viennent de Game-icons.net (CC BY 3.0, assets/icones/game-icons.js) ;
+// blasons, bannières et médaillons sont dessinés pour ce jeu (CC0).
 (function (racine) {
   "use strict";
   var JEU = racine.JEU;
   var ENCRE = "#2e2419", OR = "#b08d3a";
 
-  var RESSOURCES = {
-    // sceau de cire
-    sceaux: "<circle cx='12' cy='12' r='8' fill='currentColor'/><circle cx='12' cy='12' r='5' fill='none' stroke='#efe6d2' stroke-width='1.2'/><path d='M12 8.5l1.1 2.3 2.4.3-1.8 1.6.5 2.4-2.2-1.2-2.2 1.2.5-2.4-1.8-1.6 2.4-.3z' fill='#efe6d2'/>",
-    // borne et chemin
-    routes: "<path d='M3 21c4-5 4-9 9-11s6-5 9-7' fill='none' stroke='currentColor' stroke-width='2.4' stroke-linecap='round' stroke-dasharray='1 3.2'/><rect x='14' y='12' width='5' height='8' rx='2.5' fill='currentColor'/>",
-    // mortier et pilon
-    remedes: "<path d='M4 11h16c0 5-3.5 8-8 8s-8-3-8-8z' fill='currentColor'/><rect x='8' y='19' width='8' height='2' fill='currentColor'/><path d='M13 10l6-7' stroke='currentColor' stroke-width='2.4' stroke-linecap='round'/>",
-    // alambic
-    alambics: "<circle cx='9' cy='15' r='6' fill='currentColor'/><path d='M9 9V5h3l8 6' fill='none' stroke='currentColor' stroke-width='2' stroke-linejoin='round'/><path d='M20 11v6' stroke='currentColor' stroke-width='2'/>",
-    // rouleau de parchemin
-    parchemins: "<rect x='5' y='5' width='13' height='14' rx='1' fill='currentColor'/><circle cx='5' cy='6.5' r='2.5' fill='currentColor'/><circle cx='18' cy='17.5' r='2.5' fill='currentColor'/><path d='M8 9h7M8 12h7M8 15h5' stroke='#efe6d2' stroke-width='1.2'/>",
-    // poignée de main stylisée : deux anneaux enlacés
-    alliances: "<circle cx='9' cy='12' r='5.5' fill='none' stroke='currentColor' stroke-width='2.6'/><circle cx='15' cy='12' r='5.5' fill='none' stroke='currentColor' stroke-width='2.6'/>"
-  };
+  function corps(nom) { return (JEU.GAME_ICONS && JEU.GAME_ICONS[nom]) || ""; }
 
-  function ressource(k) {
-    return "<svg viewBox='0 0 24 24' width='22' height='22' aria-hidden='true'>" + (RESSOURCES[k] || "") + "</svg>";
+  // Icône autonome (balise <svg>), couleur = currentColor.
+  function icone(nom, taille, classe) {
+    taille = taille || 24;
+    return "<svg viewBox='0 0 512 512' width='" + taille + "' height='" + taille + "' class='gi " + (classe || "") + "' aria-hidden='true'>" + corps(nom) + "</svg>";
   }
 
-  // Blason du domaine : écu parti, avec une tour. La couleur dépend du nom (stable).
-  function blason(nom, taille) {
-    var teintes = ["#6b2d5c", "#2f5a8a", "#4f6b32", "#7a4a2a", "#2a7470", "#8a3a2a"];
+  // Icône à insérer dans un autre SVG : coin haut gauche (x, y), côté t, couleur c.
+  function dans(nom, x, y, t, c, extra) {
+    return "<g transform='translate(" + x + "," + y + ") scale(" + (t / 512) + ")' color='" + (c || ENCRE) + "'" + (extra || "") + ">" + corps(nom) + "</g>";
+  }
+
+  var RESSOURCE_ICONE = { sceaux: "sceaux", routes: "routes", remedes: "remedes", alambics: "alambics", parchemins: "parchemins", alliances: "alliances" };
+  function ressource(k, taille) { return icone(RESSOURCE_ICONE[k] || k, taille || 22); }
+
+  // Couleurs du blason du joueur, stables d'après le nom du domaine.
+  var EMAUX = [["#6b2d5c", OR], ["#2f5a8a", OR], ["#4f6b32", "#efe6d2"], ["#8a3a2a", OR], ["#2a7470", "#efe6d2"], ["#2e2419", OR]];
+  function couleurs(nom) {
     var h = 0, s = String(nom || "");
     for (var i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0;
-    var c = teintes[h % teintes.length];
+    return EMAUX[h % EMAUX.length];
+  }
+
+  // Écu parti avec une tour, ombré comme une enluminure.
+  function blason(nom, taille) {
+    var c = couleurs(nom);
     taille = taille || 96;
-    return "<svg viewBox='0 0 100 120' width='" + taille + "' height='" + Math.round(taille * 1.2) + "' aria-hidden='true'>" +
-      "<path d='M8 8h84v46c0 32-22 50-42 58C30 104 8 86 8 54z' fill='" + c + "' stroke='" + ENCRE + "' stroke-width='3'/>" +
-      "<path d='M50 8v104C30 104 8 86 8 54V8z' fill='" + OR + "' opacity='.9'/>" +
-      "<path d='M8 8h84v46c0 32-22 50-42 58C30 104 8 86 8 54z' fill='none' stroke='" + ENCRE + "' stroke-width='3'/>" +
-      // tour
-      "<g fill='#efe6d2' stroke='" + ENCRE + "' stroke-width='2'><path d='M36 86V48h-4V38h8v5h6v-5h8v5h6v-5h8v10h-4v38z'/><path d='M46 86V72a4 4 0 0 1 8 0v14z' fill='" + ENCRE + "'/></g>" +
+    var id = "bl" + Math.floor(Math.random() * 1e6);
+    return "<svg viewBox='0 0 100 120' width='" + taille + "' height='" + Math.round(taille * 1.2) + "' aria-hidden='true' class='blason'>" +
+      "<defs><linearGradient id='" + id + "' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='#fff' stop-opacity='.35'/><stop offset='.5' stop-color='#fff' stop-opacity='0'/><stop offset='1' stop-color='#000' stop-opacity='.3'/></linearGradient></defs>" +
+      "<path d='M6 6h88v48c0 34-23 52-44 60C29 106 6 88 6 54z' fill='" + OR + "' stroke='" + ENCRE + "' stroke-width='2'/>" +
+      "<path d='M11 11h78v43c0 29-20 45-39 52C31 99 11 83 11 54z' fill='" + c[0] + "'/>" +
+      "<path d='M50 11v95C31 99 11 83 11 54V11z' fill='" + c[1] + "'/>" +
+      dans("tour", 26, 30, 48, c[1] === OR ? "#efe6d2" : ENCRE) +
+      "<path d='M11 11h78v43c0 29-20 45-39 52C31 99 11 83 11 54z' fill='url(#" + id + ")'/>" +
+      "<path d='M6 6h88v48c0 34-23 52-44 60C29 106 6 88 6 54z' fill='none' stroke='" + ENCRE + "' stroke-width='2.5'/>" +
       "</svg>";
   }
 
-  // Bannière d'un seigneur rival : couleurs tirées au hasard parmi des émaux héraldiques.
-  function banniere(graine) {
+  // Bannière d'un seigneur rival (émaux tirés au sort).
+  function banniereSVG(graine, x, y, h) {
     var emaux = [["#8a3a2a", "#efe6d2"], ["#2f5a8a", OR], ["#2e2419", OR], ["#4f6b32", "#efe6d2"], ["#6b2d5c", OR]];
     var e = emaux[graine % emaux.length];
-    var motif = graine % 3 === 0
-      ? "<path d='M20 30h60M20 50h60M20 70h60' stroke='" + e[1] + "' stroke-width='8'/>"
-      : graine % 3 === 1 ? "<path d='M20 20l60 70M80 20L20 90' stroke='" + e[1] + "' stroke-width='9'/>"
-        : "<circle cx='50' cy='52' r='16' fill='" + e[1] + "'/>";
-    return "<svg viewBox='0 0 100 140' width='110' height='154' aria-hidden='true'>" +
-      "<path d='M14 4v136' stroke='" + ENCRE + "' stroke-width='4'/>" +
+    var s = h / 140;
+    var motif = graine % 3 === 0 ? "<path d='M16 34h70M16 56h70M16 78h70' stroke='" + e[1] + "' stroke-width='9'/>"
+      : graine % 3 === 1 ? "<path d='M18 16l66 80M84 16L18 96' stroke='" + e[1] + "' stroke-width='10'/>"
+        : "<circle cx='51' cy='56' r='17' fill='" + e[1] + "'/>";
+    return "<g transform='translate(" + x + "," + y + ") scale(" + s + ")'>" +
+      "<path d='M14 0v140' stroke='" + ENCRE + "' stroke-width='5'/><circle cx='14' cy='0' r='5' fill='" + OR + "'/>" +
       "<path d='M16 12h70v84l-35 18-35-18z' fill='" + e[0] + "' stroke='" + ENCRE + "' stroke-width='3'/>" +
       "<g clip-path='url(#cb" + graine + ")'>" + motif + "</g>" +
-      "<clipPath id='cb" + graine + "'><path d='M16 12h70v84l-35 18-35-18z'/></clipPath>" +
-      "</svg>";
+      "<clipPath id='cb" + graine + "'><path d='M16 12h70v84l-35 18-35-18z'/></clipPath></g>";
+  }
+  function banniere(graine) {
+    return "<svg viewBox='0 0 100 150' width='100' height='150' aria-hidden='true'>" + banniereSVG(graine, 0, 5, 140) + "</svg>";
   }
 
-  var OBJETS = {
-    epee: "<path d='M32 4l6 6-22 22-4 1 1-4z' fill='currentColor'/><path d='M8 26l6 6M6 34l4-4' stroke='currentColor' stroke-width='3' stroke-linecap='round'/>",
-    sceau: "<circle cx='20' cy='22' r='13' fill='currentColor'/><circle cx='20' cy='22' r='8' fill='none' stroke='#efe6d2' stroke-width='1.5'/><path d='M20 15v14M13 22h14' stroke='#efe6d2' stroke-width='1.5'/>",
-    livre: "<path d='M4 8c6-2 11-1 16 2v24c-5-3-10-4-16-2z' fill='currentColor'/><path d='M36 8c-6-2-11-1-16 2v24c5-3 10-4 16-2z' fill='currentColor' opacity='.75'/>",
-    plume: "<path d='M34 4C20 8 10 20 8 34l4-2C14 22 22 12 34 4z' fill='currentColor'/><path d='M8 34l-2 4' stroke='currentColor' stroke-width='2'/>",
-    tour: "<path d='M10 36V14H7V6h6v4h4V6h6v4h4V6h6v8h-3v22z' fill='currentColor'/>"
-  };
+  var MATIERE_ICONE = { histoire: "couronne", geographie: "routes", svt: "remedes", physique: "alambics", litterature: "parchemin-plume", lecture: "plume", anglais: "alliances" };
+  function matiere(m) { return MATIERE_ICONE[m] || "ecu"; }
 
-  function objet(k, taille) {
-    taille = taille || 40;
-    return "<svg viewBox='0 0 40 40' width='" + taille + "' height='" + taille + "' aria-hidden='true'>" + (OBJETS[k] || "") + "</svg>";
-  }
+  function objet(k, taille) { return icone(k, taille || 40); }
 
-  // Le chroniqueur : silhouette avec plume.
+  // Le chroniqueur : silhouette encapuchonnée dans un médaillon doré.
   function chroniqueur() {
-    return "<svg viewBox='0 0 80 80' width='64' height='64' aria-hidden='true'>" +
-      "<circle cx='40' cy='40' r='38' fill='#e3d6b8' stroke='" + ENCRE + "' stroke-width='2'/>" +
-      "<path d='M18 74c2-16 10-24 22-24s20 8 22 24z' fill='#5b4a3a'/>" +
-      "<circle cx='40' cy='34' r='12' fill='#5b4a3a'/>" +
-      "<path d='M26 30c2-12 26-14 28 0-6-5-22-5-28 0z' fill='" + ENCRE + "'/>" +
-      "<path d='M60 20c-8 4-14 14-15 26l3-1c2-10 6-18 12-25z' fill='" + OR + "'/>" +
-      "</svg>";
+    return "<svg viewBox='0 0 80 80' width='72' height='72' aria-hidden='true'>" +
+      "<defs><radialGradient id='medc' cx='.4' cy='.35' r='.7'><stop offset='0' stop-color='#f3e3bf'/><stop offset='1' stop-color='#c9ae78'/></radialGradient></defs>" +
+      "<circle cx='40' cy='40' r='38' fill='" + OR + "' stroke='" + ENCRE + "' stroke-width='2'/>" +
+      "<circle cx='40' cy='40' r='32' fill='url(#medc)' stroke='" + ENCRE + "' stroke-width='1.5'/>" +
+      dans("chroniqueur", 14, 12, 52, "#3a2a1c") + "</svg>";
   }
 
-  JEU.icones = { ressource: ressource, blason: blason, banniere: banniere, objet: objet, chroniqueur: chroniqueur };
+  JEU.icones = { matiere: matiere, icone: icone, dans: dans, ressource: ressource, blason: blason, couleurs: couleurs, banniere: banniere, banniereSVG: banniereSVG, objet: objet, chroniqueur: chroniqueur };
 })(typeof window !== "undefined" ? window : globalThis);

@@ -112,7 +112,7 @@
       ids.forEach(function (id) { nb += (U.coursCharge(id).fiches || []).length; });
       var section = el("section", { class: "codex-matiere", style: "--teinte:" + JEU.MATIERES[m].couleur });
       var entete = el("button", { class: "codex-entete", onclick: function () { ouvert[m] = !ouvert[m]; JEU.ui.ecrans.codex(s); } }, [
-        el("span", { texte: JEU.MATIERES[m].nom }), el("span", { class: "note", texte: nb ? nb + " fiche" + (nb > 1 ? "s" : "") : "contenu à venir" })
+        el("span", { html: JEU.icones.icone(JEU.icones.matiere(m), 26) + U.echapper(JEU.MATIERES[m].nom) }), el("span", { class: "note", texte: nb ? nb + " fiche" + (nb > 1 ? "s" : "") : "contenu à venir" })
       ]);
       section.appendChild(entete);
       if (ouvert[m] && ids.length) {

@@ -8,9 +8,9 @@
 </head>
 <body class="chargement">
 <header id="bandeau">
-  <div class="bandeau-titre"><span id="nom-domaine">Le domaine</span></div>
+  <div class="bandeau-titre"><span id="blason-bandeau"></span><span id="nom-domaine">Le domaine</span></div>
   <div id="ressources" aria-label="Ressources"></div>
-  <button id="bouton-son" class="bouton discret" aria-pressed="true">Son : oui</button>
+  <button id="bouton-son" class="bouton-rond" aria-pressed="true" title="Couper le son"></button>
 </header>
 <nav id="menu" aria-label="Navigation">
   <button data-ecran="accueil">Accueil</button>
@@ -39,6 +39,7 @@
 
 <!-- moteur -->
 <script src="js/noyau.js"></script>
+<script src="assets/icones/game-icons.js"></script>
 <script src="js/brouillage.js"></script>
 <script src="js/calendrier.js"></script>
 <script src="js/sauvegarde.js"></script>
@@ -47,6 +48,7 @@
 <script src="js/progression.js"></script>
 <script src="js/questions.js"></script>
 <script src="js/icones.js"></script>
+<script src="js/decor.js"></script>
 <script src="js/sons.js"></script>
 <script src="js/interface.js"></script>
 <script src="js/mentor.js"></script>
@@ -64,6 +66,6 @@
 <script src="data/a-retravailler.js"></script>
 <!-- les cours de index-cours.js sont ajoutés par le chargeur -->
 <script src="js/demarrage.js"></script>
-<script>document.querySelector(".mentor-portrait").innerHTML = JEU.icones.chroniqueur(); JEU.version = "0.1.0";</script>
+<script>document.querySelector(".mentor-portrait").innerHTML = JEU.icones.chroniqueur(); JEU.version = "0.2.0";</script>
 </body>
 </html>

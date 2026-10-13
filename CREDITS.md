@@ -10,10 +10,15 @@
 
 - `assets/sons/*.wav` (coup, coup puissant, sceau, construction, validation, erreur) : sons synthétisés pour ce jeu par `atelier/outils/generer-sons.js`, versés au domaine public (CC0 1.0).
 
-## Images, icônes, blasons, cartes
+## Icônes (CC BY 3.0)
 
-- Blasons, bannières, icônes de ressources, plan du domaine, portrait du chroniqueur et schémas des fiches : dessinés en SVG pour ce jeu (CC0 1.0). Aucune image n'est reprise des livrets des Cours Griffon : les schémas sont redessinés, avec des valeurs inventées.
-- Pas encore d'icônes Game-icons ni de carte Natural Earth (prévues au jalon 2) : elles seront créditées ici.
+- **Game-icons.net**, icônes de Lorc, Delapouite et des contributeurs du projet, licence Creative Commons Attribution 3.0 (https://creativecommons.org/licenses/by/3.0/). Site : https://game-icons.net. Fichier `assets/icones/game-icons.js` (46 icônes : ressources, menu, unités, bâtiments), tirées du paquet @iconify-json/game-icons 1.2.4, sans modification de dessin (seules la couleur et la taille changent à l'affichage).
+
+## Images, textures, blasons, décors
+
+- Textures `assets/images/parchemin.png`, `cuir.png`, `bois.png` : bruit procédural généré pour ce jeu par `atelier/outils/generer-textures.py` (CC0 1.0).
+- Blasons, bannières, paysage d'accueil, champ de bataille, plan du domaine, médaillon du chroniqueur et schémas des fiches : dessinés en SVG pour ce jeu (CC0 1.0). Aucune image n'est reprise des livrets des Cours Griffon : les schémas sont redessinés, avec des valeurs inventées.
+- Pas encore de carte Natural Earth (prévue au jalon 2) : elle sera créditée ici.
 
 ## Contenu
 
