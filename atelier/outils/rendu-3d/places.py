@@ -36,8 +36,8 @@ def matieres(camp, etat):
     if camp == "omeyyades":
         m["pierre"] = C.mat_ph("pierre", c["pierre"], echelle_m=4.0, teinte=c["teinte_pierre"], force_teinte=0.5,
                                valeur=1.05 * suie, saturation=0.8, bosse=0.35, salissure=0.25)
-        m["mur"] = C.mat_ph("pise", c["mur"], echelle_m=3.0, teinte="#cfae84", force_teinte=0.55, valeur=1.18 * suie,
-                            saturation=0.75, bosse=0.2, salissure=0.25)
+        m["mur"] = C.mat_ph("pise", c["mur"], echelle_m=3.0, teinte="#cfae84", force_teinte=0.55, valeur=1.4 * suie,
+                            saturation=0.7, bosse=0.2, salissure=0.25, lits=0.3)
         m["toit"] = m["mur"]
     else:
         clair = camp == "france"
@@ -47,8 +47,9 @@ def matieres(camp, etat):
         m["mur"] = m["pierre"]
         m["toit"] = C.mat_ph("toit", c["toit"], echelle_m=3.2, teinte=c["teinte_toit"], force_teinte=0.7,
                              valeur=(0.95 if clair else 0.8) * suie, projection="UV", bosse=0.6, rugosite=0.55 if clair else 0.8)
-    m["terrasse"] = (C.mat_simple("terrasse", "#d4c09a", rugosite=0.9, bosse=0.15, echelle_bosse=6) if camp == "omeyyades"
-                     else C.mat_simple("plomb", "#6a6c70", rugosite=0.55, bosse=0.1, echelle_bosse=4))
+    m["terrasse"] = (C.mat_ph("terrasse", "clay_plaster", echelle_m=3.0, teinte="#a88a66", force_teinte=0.8, valeur=0.75,
+                              saturation=0.6, bosse=0.2) if camp == "omeyyades"
+                     else C.mat_simple("plomb", "#3c3e42", rugosite=0.7, bosse=0.1, echelle_bosse=4))
     m["bois"] = C.mat_ph("bois", "medieval_wood", echelle_m=1.6, valeur=0.8, bosse=0.4)
     m["noir"] = C.mat_simple("ouverture", "#140e0a", rugosite=1.0)
     m["sol"] = C.mat_ph("cour", "dirt_aerial_02", echelle_m=6.0, valeur=0.9, bosse=0.2)
@@ -174,6 +175,30 @@ def tour_carree(nom, x, y, cote, h, m, merlons="carre", etat="intact", graine=0,
     return objs
 
 
+def trous_boulins(nom, a, b, h, ep, m, pas_x=1.3, pas_z=0.85):
+    """Rangées de trous de boulin (traces des banches du pisé) sur la face extérieure d'un mur a -> b."""
+    a, b = V((a[0], a[1], 0)), V((b[0], b[1], 0))
+    d = b - a
+    L = d.length
+    ang = math.atan2(d.y, d.x)
+    n = V((-d.y, d.x, 0)).normalized()
+    bm = bmesh.new()
+    nz = int((h - 1.2) / pas_z)
+    nx = int(L / pas_x)
+    for j in range(nz):
+        for i in range(nx):
+            t = (i + 0.5 + (0.5 if j % 2 else 0.0)) / max(1, nx)
+            if t >= 1:
+                continue
+            c = a + d * t - n * (ep / 2 + 0.01)
+            geo = bmesh.ops.create_cube(bm, size=1.0)
+            vs = geo["verts"]
+            bmesh.ops.scale(bm, vec=(0.16, 0.05, 0.13), verts=vs)
+            bmesh.ops.rotate(bm, cent=(0, 0, 0), matrix=Matrix.Rotation(ang, 3, "Z"), verts=vs)
+            bmesh.ops.translate(bm, vec=(c.x, c.y, 1.0 + j * pas_z), verts=vs)
+    return [C.objet_maillage(nom + "_boulins", bm, m["noir"])]
+
+
 def courtine(nom, a, b, h, ep, m, etat="intact", merlons="carre", breche=None, mat="mur"):
     """Mur d'enceinte de a à b (points x, y) : talus, mur, chemin de ronde crénelé côté extérieur (-normale)."""
     a, b = V((a[0], a[1], 0)), V((b[0], b[1], 0))
@@ -195,6 +220,8 @@ def courtine(nom, a, b, h, ep, m, etat="intact", merlons="carre", breche=None, m
         mur = C.boite(nom + "_mur%d" % i, l, ep, hh, (c.x, c.y, 0), m[mat], rot_z=ang)
         C.biseau(mur, 0.03)
         objs.append(mur)
+        if merlons == "pointe" and etat != "ruine":
+            objs += trous_boulins(nom + "%d" % i, a + d * t0, a + d * t1, hh, ep, m)
         if etat != "ruine":
             bm = bmesh.new()
             n = V((-d.y, d.x, 0)).normalized()       # normale vers l'intérieur (gauche de a -> b)
