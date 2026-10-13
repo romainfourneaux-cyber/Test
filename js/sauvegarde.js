@@ -3,7 +3,7 @@
   "use strict";
   var JEU = racine.JEU;
   var CLE = "jeu5e";
-  var SCHEMA = 2;
+  var SCHEMA = 3;
 
   function ressourcesVides() {
     return { sceaux: 0, routes: 0, remedes: 0, alambics: 0, parchemins: 0, alliances: 0 };
@@ -17,9 +17,11 @@
       cours: {}, notions: {}, ressources: ressourcesVides(), batiments: [], devoirs: {},
       signalements: [], dernierExport: null,
       // ajouts du schéma 2
-      reglages: { son: son, nomDomaine: "Le domaine" },
+      reglages: { son: son, musique: true, nomDomaine: "Le domaine" },
       stats: { bonnes: 0, total: 0, parties: 0 },
-      questionsVues: {}
+      questionsVues: {},
+      // ajout du schéma 3 : la campagne contre le seigneur rival
+      campagne: JEU.campagne ? JEU.campagne.etatVide() : null
     };
   }
 
@@ -35,6 +37,13 @@
       s.stats = s.stats || { bonnes: ok, total: total, parties: 0 };
       s.questionsVues = s.questionsVues || {};
       s.schema = 2;
+      return s;
+    },
+    // 2 → 3 : la campagne (tower defense, rival, conseil) arrive ; tout l'acquis est gardé tel quel.
+    2: function (s) {
+      s.campagne = JEU.campagne ? JEU.campagne.completer(s.campagne) : (s.campagne || null);
+      if (s.reglages && typeof s.reglages.musique !== "boolean") s.reglages.musique = true;
+      s.schema = 3;
       return s;
     }
   };

@@ -14,7 +14,7 @@
       JEU.questions.vider();
       JEU.progression.oublier();
       document.body.classList.remove("chargement");
-      var ICONES_MENU = { accueil: "accueil", domaine: "domaine", jouer: "jouer", cours: "cours", codex: "codex", reglages: "reglages" };
+      var ICONES_MENU = { accueil: "accueil", domaine: "domaine", jouer: "campagne", cours: "cours", codex: "codex", reglages: "reglages" };
       Array.prototype.forEach.call(document.querySelectorAll("#menu button"), function (b) {
         b.insertAdjacentHTML("afterbegin", JEU.icones.icone(ICONES_MENU[b.getAttribute("data-ecran")], 22));
         b.addEventListener("click", function () { JEU.ui.afficher(b.getAttribute("data-ecran")); });

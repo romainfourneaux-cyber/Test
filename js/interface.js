@@ -156,6 +156,7 @@
       fini(JEU.questions.corriger(q, rj), rj);
     }
     var m = JEU.MATIERES[q.matiere] || { nom: "", couleur: "#8a7f70" };
+    if (options.recit) zone.appendChild(ui.recit(options.recit));
     var carte = el("div", { class: "question", style: "--teinte:" + m.couleur }, [
       el("div", { class: "question-entete" }, [
         el("span", { class: "pastille", texte: m.nom }),
@@ -175,6 +176,14 @@
     }
     carte.appendChild(pied);
     JEU.mesure.questionAffichee();
+  };
+
+  // Bandeau de récit : le personnage qui pose la question, et la situation.
+  ui.recit = function (r) {
+    return el("div", { class: "recit" }, [
+      el("span", { class: "recit-portrait", html: JEU.icones.icone(r.icone, 34) }),
+      el("div", {}, [el("b", { class: "recit-nom", texte: r.nom }), el("p", { class: "recit-texte", texte: r.texte })])
+    ]);
   };
 
   function boutonChoix(n, texte, action) {
@@ -402,6 +411,7 @@
   };
   ui.finirPartie = function () {
     JEU.partie = null;
+    if (JEU.musique) JEU.musique.humeur("paix");
     document.body.classList.remove("en-partie");
     ui.clavier = null;
     ui.majRessources();
@@ -459,30 +469,7 @@
     ui.clavier = function (k) { if (k === "Enter") { ui.afficher("jouer"); return true; } return false; };
   };
 
-  // ---------- jouer : choix du mini-jeu ----------
-  ui.ecrans.jouer = function (s) {
-    s.innerHTML = "";
-    var etat = JEU.sauvegarde.etat();
-    s.appendChild(el("h1", { class: "titre-ecran", texte: "Aux armes, seigneur" }));
-    var options = [
-      { titre: "Assaut", texte: "8 questions. Joue tes cartes de notions contre la garnison d'un seigneur rival.", action: function () { JEU.assaut.choisirMatiere(); }, icone: "assaut" },
-      { titre: "Sceau de vérité", texte: "10 affirmations à sceller : vraies à droite, fausses à gauche. Corrige les fausses.", action: function () { JEU.sceau.lancer(); }, icone: "sceau" }
-    ];
-    var grille = el("div", { class: "grille-jeux" });
-    options.forEach(function (o, i) {
-      grille.appendChild(el("button", { class: "carte-jeu", onclick: o.action }, [
-        el("span", { class: "touche", texte: String(i + 1) }),
-        el("span", { class: "illustration ill-" + o.icone }, [el("span", { class: "icone-jeu", html: JEU.icones.icone(o.icone, 44) })]),
-        el("h2", { texte: o.titre }), el("p", { texte: o.texte })
-      ]));
-    });
-    s.appendChild(grille);
-    ui.clavier = function (k) {
-      var n = parseInt(k, 10);
-      if (n >= 1 && n <= options.length) { options[n - 1].action(); return true; }
-      return false;
-    };
-  };
+  // L'écran « jouer » (la campagne) est dans ecran-campagne.js.
 
   // ---------- liste des cours ----------
   var ongletCours = "histoire";
