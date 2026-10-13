@@ -24,6 +24,7 @@
       var bl = document.getElementById("blason-bandeau");
       if (bl) bl.innerHTML = JEU.icones.blason(JEU.sauvegarde.etat().reglages.nomDomaine, 30);
       JEU.ui.majRessources();
+      JEU.ui.appliquerAnimations();
       JEU.ui.afficher("accueil");
       JEU.pret = true;
     });

@@ -46,6 +46,7 @@
     var rendu = ui.ecrans[nom];
     if (rendu) rendu(s, arg);
     window.scrollTo(0, 0);
+    s.classList.remove("entree"); void s.offsetWidth; s.classList.add("entree");
   };
   ui.ecrans = {};
   ui.ecranCourant = function () { return ecranCourant; };
@@ -109,7 +110,7 @@
     zone.innerHTML = "";
     Object.keys(JEU.RESSOURCES).forEach(function (k) {
       var r = JEU.RESSOURCES[k];
-      zone.appendChild(el("span", { class: "ressource", title: r.nom + " (" + JEU.MATIERES[r.matiere].nom + ")", style: "--teinte:" + JEU.MATIERES[r.matiere].couleur }, [
+      zone.appendChild(el("span", { class: "ressource", "data-res": k, title: r.nom + " (" + JEU.MATIERES[r.matiere].nom + ")", style: "--teinte:" + JEU.MATIERES[r.matiere].couleur }, [
         el("span", { class: "medaillon", html: JEU.icones.ressource(k, 20) }),
         el("b", { texte: String(etat.ressources[k] || 0) })
       ]));
@@ -606,6 +607,14 @@
       el("p", { class: "note", texte: "Coche un devoir quand tu l'as envoyé, avec la date, comme sur le plan des devoirs papier." }),
       listeDevoirs(etat)
     ]));
+    var animCase = el("input", { type: "checkbox", checked: etat.reglages.animations !== false, onchange: function () {
+      etat.reglages.animations = animCase.checked; JEU.sauvegarde.enregistrer(); ui.appliquerAnimations();
+    } });
+    s.appendChild(el("div", { class: "cartouche" }, [
+      el("h3", { texte: "Animations" }),
+      el("label", {}, [animCase, el("span", { texte: " Ambiance animée (fumées, nuages, villageois, drapeaux, particules)" })]),
+      el("p", { class: "note", texte: "À décocher si l'ordinateur rame ou si le mouvement gêne. Le jeu reste aussi rapide dans les deux cas." })
+    ]));
     s.appendChild(el("div", { class: "cartouche" }, [
       el("h3", { texte: "Crédits" }),
       el("p", { texte: "Polices Cinzel et Crimson Text (SIL Open Font License). Sons, dessins et blasons créés pour ce jeu (CC0). Détail dans CREDITS.md." }),
@@ -629,6 +638,10 @@
     });
     return liste;
   }
+
+  ui.appliquerAnimations = function () {
+    document.body.classList.toggle("sans-anim", !(JEU.anim && JEU.anim.actif()));
+  };
 
   // ---------- mesure du temps entre une réponse et la question suivante ----------
   JEU.mesure = {

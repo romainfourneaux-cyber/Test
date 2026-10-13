@@ -99,6 +99,7 @@
         JEU.sauvegarde.enregistrer();
         JEU.sons.jouer("validation");
         JEU.mentor.dire("Cours validé ! La chronique le retiendra.", "joie", 4000);
+        setTimeout(function () { var b = scene.querySelector(".bilan"); if (b) { var c = JEU.anim.centre(b); JEU.anim.eclat(c.x, c.y - 60, "feuilles", 90); } }, 30);
         scene.appendChild(el("div", { class: "bilan reussi" }, [
           el("h2", { texte: "Cours validé" }),
           el("p", { class: "grand", texte: bonnes + " / " + qs.length }),
