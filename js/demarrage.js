@@ -20,6 +20,8 @@
         b.addEventListener("click", function () { JEU.ui.afficher(b.getAttribute("data-ecran")); });
       });
       document.getElementById("bouton-son").addEventListener("click", JEU.sons.basculer);
+      document.getElementById("bouton-musique").addEventListener("click", JEU.musique.basculer);
+      JEU.musique.brancher();
       document.getElementById("modale").addEventListener("click", function (e) { if (e.target.id === "modale") JEU.ui.fermerModale(); });
       var bl = document.getElementById("blason-bandeau");
       if (bl) bl.innerHTML = JEU.icones.blason(JEU.sauvegarde.etat().reglages.nomDomaine, 30);
