@@ -140,29 +140,12 @@
       "<pattern id='sillons' width='7' height='7' patternUnits='userSpaceOnUse' patternTransform='rotate(30)'><path d='M0 0v7' stroke='" + ENCRE + "' stroke-width='.8' opacity='.35'/></pattern>" +
       "<pattern id='sillons2' width='7' height='7' patternUnits='userSpaceOnUse' patternTransform='rotate(-40)'><path d='M0 0v7' stroke='" + ENCRE + "' stroke-width='.8' opacity='.35'/></pattern>" +
       "<filter id='flou' x='-30%' y='-30%' width='160%' height='160%'><feGaussianBlur stdDeviation='9'/></filter>" +
+      "<filter id='portee' x='-30%' y='-30%' width='160%' height='170%'><feDropShadow dx='2' dy='4' stdDeviation='3' flood-color='#000' flood-opacity='.55'/></filter>" +
+      "<radialGradient id='jeton' cx='.4' cy='.35' r='.75'><stop offset='0' stop-color='#fbf1d6'/><stop offset='1' stop-color='#cdb586'/></radialGradient>" +
       "<radialGradient id='vigP' cx='.5' cy='.5' r='.72'><stop offset='.62' stop-color='#5b4428' stop-opacity='0'/><stop offset='1' stop-color='#5b4428' stop-opacity='.35'/></radialGradient>" +
       "</defs>";
-    // champs en lanières à l'extérieur
-    for (var i = 0; i < 16; i++) {
-      var a = i / 16 * Math.PI * 2, d = 410 + r() * 60;
-      var fx = CX + Math.cos(a) * d * 1.05, fy = CY + Math.sin(a) * d * 0.72;
-      var champ = "M" + fx.toFixed(0) + " " + fy.toFixed(0) + " l" + (60 + r() * 40).toFixed(0) + " " + (r() * 20 - 10).toFixed(0) + " l" + (r() * 16).toFixed(0) + " " + (40 + r() * 20).toFixed(0) + " l" + (-70 - r() * 30).toFixed(0) + " " + (r() * 10).toFixed(0) + "z";
-      s += "<path d='" + champ + "' fill='" + ["#cdbb7a", "#a9a865", "#c2a66a"][i % 3] + "' stroke='" + ENCRE + "' stroke-width='1'/>" +
-        "<path d='" + champ + "' fill='url(#" + (i % 2 ? "sillons" : "sillons2") + ")'/>";
-    }
-    // forêts dans les coins
-    [[70, 90], [930, 80], [60, 620], [950, 610], [880, 190]].forEach(function (c, k) {
-      for (var t = 0; t < 16; t++) s += arbre(c[0] + (r() - 0.5) * 120, c[1] + (r() - 0.5) * 80, 9 + r() * 6, k % 2 ? "#5a6a3a" : "#4f5f34");
-    });
-    // collines en hachures
-    [[150, 160], [330, 70], [690, 60]].forEach(function (c) {
-      s += "<path d='M" + (c[0] - 60) + " " + c[1] + " q60 -46 120 0' fill='#d4c08a' stroke='" + ENCRE + "' stroke-width='1.4'/>";
-      for (var h = 0; h < 7; h++) s += "<path d='M" + (c[0] - 42 + h * 14) + " " + (c[1] - 18 + Math.abs(h - 3) * 5) + " l-4 10' stroke='" + ENCRE + "' stroke-width='1'/>";
-    });
-    // rivière
-    var riv = "M-20 250 C150 280 260 200 380 230 S600 300 720 255 S900 190 1020 230";
-    s += "<path d='" + riv + "' fill='none' stroke='" + ENCRE + "' stroke-width='30'/><path d='" + riv + "' fill='none' stroke='#9fb5bf' stroke-width='26'/>" +
-      "<path d='" + riv + "' fill='none' stroke='#c9dbe0' stroke-width='2' stroke-dasharray='14 22' opacity='.9'/>";
+    // fond peint : relief, prés, champs, forêts, rivière (atelier/outils/generer-terrain.py)
+    s += "<image href='assets/images/terrain-domaine.jpg' x='0' y='0' width='" + L + "' height='" + H + "' preserveAspectRatio='none'/>";
     // enceinte
     s += enceinte(idx);
     // routes vers chaque quartier
@@ -193,17 +176,19 @@
       var eveille = m.vues > 0;
       var couleur = JEU.MATIERES[q.matieres[0]].couleur;
       s += "<g class='quartier" + (eveille ? "" : " endormi") + "' data-quartier='" + k + "' tabindex='0' role='button' aria-label='" + q.nom + "'>" +
-        "<rect x='" + (p[0] - 115) + "' y='" + (p[1] - 58) + "' width='230' height='116' rx='18' fill='" + couleur + "' fill-opacity='.16' stroke='" + couleur + "' stroke-width='3' stroke-dasharray='9 5'/>";
+        "<rect x='" + (p[0] - 115) + "' y='" + (p[1] - 58) + "' width='230' height='116' rx='26' fill='" + couleur + "' fill-opacity='.18' stroke='#f4ead0' stroke-opacity='.7' stroke-width='6'/>" +
+        "<rect x='" + (p[0] - 115) + "' y='" + (p[1] - 58) + "' width='230' height='116' rx='26' fill='none' stroke='" + couleur + "' stroke-width='2.5'/>";
       var places = BATIMENTS.filter(function (b) { return b.quartier === k; });
       places.forEach(function (b, j) {
         var bx = p[0] - 82 + j * 104, by = p[1] - 40;
+        var jx = bx + 32, jy = by + 34;
         if (etat.batiments.indexOf(b.id) >= 0) {
-          s += "<ellipse cx='" + (bx + 32) + "' cy='" + (by + 66) + "' rx='34' ry='9' fill='#000' opacity='.2'/>" +
-            JEU.icones.dans(b.id, bx, by, 66, ENCRE) +
-            "<g transform='translate(" + (bx + 52) + "," + (by - 4) + ")'><path d='M0 0v18' stroke='" + ENCRE + "' stroke-width='1.6'/><path d='M1 0h13l-4 4 4 4H1z' fill='" + couleur + "'/></g>";
+          s += "<g filter='url(#portee)'><circle cx='" + jx + "' cy='" + jy + "' r='36' fill='" + couleur + "' stroke='" + ENCRE + "' stroke-width='2'/>" +
+            "<circle cx='" + jx + "' cy='" + jy + "' r='30' fill='url(#jeton)' stroke='#b08d3a' stroke-width='3'/>" +
+            JEU.icones.dans(b.id, jx - 22, jy - 22, 44, ENCRE) + "</g>";
         } else {
-          s += "<rect x='" + (bx + 8) + "' y='" + (by + 12) + "' width='48' height='48' fill='none' stroke='" + ENCRE + "' stroke-width='1.4' stroke-dasharray='4 4' opacity='.55'/>" +
-            "<path d='M" + (bx + 8) + " " + (by + 60) + " l48 -48 M" + (bx + 8) + " " + (by + 12) + " l48 48' stroke='" + ENCRE + "' stroke-width='1' opacity='.25'/>";
+          s += "<circle cx='" + jx + "' cy='" + jy + "' r='28' fill='#efe6d2' fill-opacity='.35' stroke='" + ENCRE + "' stroke-width='1.6' stroke-dasharray='5 4' opacity='.75'/>" +
+            "<path d='M" + jx + " " + (jy - 9) + "v18M" + (jx - 9) + " " + jy + "h18' stroke='" + ENCRE + "' stroke-width='2' opacity='.5'/>";
         }
       });
       // fanion à l'icône de la matière

@@ -98,7 +98,8 @@
     var el = JEU.ui.el;
     var etat = JEU.sauvegarde.etat();
     s.innerHTML = "";
-    s.appendChild(el("h1", { texte: "Le Codex" }));
+    s.appendChild(el("div", { class: "bandeau-oeuvre", title: "Tapisserie « La chasse au faucon », vers 1500-1530 (The Met, domaine public)" }));
+    s.appendChild(el("h1", { class: "titre-ecran", texte: "Le Codex" }));
     s.appendChild(el("p", { class: "note", texte: "Les fiches de tes cours ouverts et acquis. Les fiches bonus sont marquées d'un sceau doré : elles ne comptent jamais dans une épreuve." }));
     var acces = JEU.progression.coursAccessibles(etat);
     var groupes = {};
