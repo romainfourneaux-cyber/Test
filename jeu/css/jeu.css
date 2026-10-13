@@ -439,3 +439,110 @@ main { max-width: 1060px; margin: 0 auto; padding: 1.4rem 1rem 7rem; }
   .carte-art { height: 70px; }
 }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+
+
+/* =====================================================================
+   Animations. Les effets qui suivent une réponse ne retardent jamais la question suivante ;
+   l'ambiance continue (lente, sans clignotement) se coupe dans les Réglages (classe .sans-anim).
+   ===================================================================== */
+#particules { position: fixed; inset: 0; pointer-events: none; z-index: 50; }
+.ecran.entree { animation: entreeEcran .26s ease-out; }
+@keyframes entreeEcran { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+/* accueil : la tapisserie s'anime lentement, des poussières dorées flottent dans la lumière */
+.scene-fond.tapisserie { position: relative; overflow: hidden; background: none; }
+.scene-fond.tapisserie::before {
+  content: ""; position: absolute; inset: -8%;
+  background: url("../assets/images/oeuvres/tapisserie-cerf.jpg") center 35%/cover no-repeat;
+  animation: kenBurns 38s ease-in-out infinite alternate;
+}
+.scene-fond.tapisserie::after {
+  content: ""; position: absolute; inset: 0;
+  background:
+    radial-gradient(circle at 12% 70%, rgba(255,236,170,.75) 0 1.5px, transparent 2.5px),
+    radial-gradient(circle at 32% 40%, rgba(255,236,170,.6) 0 1px, transparent 2px),
+    radial-gradient(circle at 55% 75%, rgba(255,236,170,.7) 0 1.5px, transparent 2.5px),
+    radial-gradient(circle at 74% 30%, rgba(255,236,170,.6) 0 1px, transparent 2px),
+    radial-gradient(circle at 88% 60%, rgba(255,236,170,.75) 0 2px, transparent 3px),
+    linear-gradient(rgba(20,12,6,0) 55%, rgba(20,12,6,.65));
+  background-size: 300px 220px, 260px 300px, 340px 260px, 280px 240px, 360px 300px, 100% 100%;
+  animation: poussieres 26s linear infinite;
+}
+@keyframes kenBurns { from { transform: scale(1) translate(0, 0); } to { transform: scale(1.12) translate(-3%, -2%); } }
+@keyframes poussieres {
+  from { background-position: 0 0, 0 0, 0 0, 0 0, 0 0, 0 0; }
+  to { background-position: 60px -220px, -40px -300px, 80px -260px, -60px -240px, 40px -300px, 0 0; }
+}
+.blason-grand svg { animation: respiration 4s ease-in-out infinite alternate; }
+@keyframes respiration { from { transform: translateY(0); } to { transform: translateY(-3px); } }
+
+/* bouton doré : un reflet passe de temps en temps */
+.bouton.principal { position: relative; overflow: hidden; }
+.bouton.principal::after {
+  content: ""; position: absolute; top: 0; bottom: 0; width: 40%; left: -60%;
+  background: linear-gradient(100deg, transparent, rgba(255,250,225,.55), transparent);
+  animation: reflet 5s ease-in-out infinite;
+}
+@keyframes reflet { 0%, 70% { left: -60%; } 100% { left: 130%; } }
+
+/* médaillons de ressources */
+.ressource.rebond .medaillon { animation: rebond .32s ease-out; }
+@keyframes rebond { 0% { transform: scale(1); } 45% { transform: scale(1.45); box-shadow: 0 0 0 2px var(--or-clair), 0 0 18px var(--or-clair); } 100% { transform: scale(1); } }
+.gain-volant {
+  position: fixed; z-index: 45; pointer-events: none; display: flex; align-items: center; gap: .3rem; margin: -18px 0 0 -30px;
+  font-family: var(--titre); font-weight: 700; font-size: 1.3rem; color: #fff3d0; text-shadow: 0 2px 0 #000, 0 0 6px #000;
+  transition: transform .38s cubic-bezier(.5,-.3,.7,1), opacity .38s ease-in;
+}
+
+/* assaut */
+.champ-bataille.secousse { animation: secousse .3s ease-out; }
+@keyframes secousse { 0%,100% { transform: none; } 20% { transform: translate(-7px, 3px); } 45% { transform: translate(6px, -3px); } 70% { transform: translate(-3px, 2px); } }
+.bataille .toile-fond { animation: zoomLent 30s ease-in-out infinite alternate; transform-origin: 30% 60%; }
+@keyframes zoomLent { from { transform: scale(1); } to { transform: scale(1.09); } }
+.bataille .fumees ellipse { animation: derive 16s ease-in-out infinite alternate; }
+.bataille .fumees .f2 { animation-duration: 22s; animation-delay: -6s; }
+.bataille .fumees .f3 { animation-duration: 19s; animation-delay: -11s; }
+@keyframes derive { from { transform: translateX(-80px); } to { transform: translateX(140px); } }
+.flotte { transform-box: fill-box; transform-origin: left center; animation: flotter 2.2s ease-in-out infinite alternate; }
+@keyframes flotter { from { transform: skewY(-4deg) scaleX(1); } to { transform: skewY(4deg) scaleX(.94); } }
+.degats {
+  position: absolute; z-index: 5; transform: translate(-50%, 0); pointer-events: none;
+  font-family: var(--titre); font-weight: 700; font-size: 2.2rem; color: #ffe08a; -webkit-text-stroke: 1.5px #3a1a0a; text-shadow: 0 3px 6px rgba(0,0,0,.7);
+  animation: degats .9s ease-out forwards;
+}
+.degats.puissant { font-size: 3rem; color: #ffb347; }
+@keyframes degats { 0% { opacity: 0; transform: translate(-50%, 10px) scale(.6); } 20% { opacity: 1; transform: translate(-50%, -10px) scale(1.15); } 100% { opacity: 0; transform: translate(-50%, -70px) scale(1); } }
+.carte-notion { animation: distribuer .32s cubic-bezier(.2,.8,.3,1.2) backwards; }
+@keyframes distribuer { from { opacity: 0; transform: translateY(140px) rotate(-10deg) scale(.7); } to { opacity: 1; transform: none; } }
+
+/* sceau de vérité : la lettre se retourne en arrivant */
+.carte-sceau { animation: retourner .3s ease-out; }
+@keyframes retourner { from { opacity: 0; transform: perspective(900px) rotateY(75deg); } to { opacity: 1; transform: none; } }
+.carte-sceau .cachet { animation: respiration 2.4s ease-in-out infinite alternate; }
+
+/* domaine : la vie sur la carte */
+.plan .courant { animation: courant 9s linear infinite; }
+.plan .courant.lent { animation-duration: 15s; }
+@keyframes courant { to { stroke-dashoffset: -640; } }
+.plan .nuages { animation: nuages 80s linear infinite; }
+@keyframes nuages { from { transform: translateX(-300px); } to { transform: translateX(1500px); } }
+.plan .oiseaux { animation: oiseaux 26s linear infinite; animation-delay: -4s; }
+@keyframes oiseaux { 0% { transform: translate(-120px, 120px); } 100% { transform: translate(1100px, 30px); } }
+.plan .oiseaux .aile { transform-box: fill-box; transform-origin: center; animation: battre .45s ease-in-out infinite alternate; }
+@keyframes battre { from { transform: scaleY(1); } to { transform: scaleY(-.4); } }
+.plan .fumee circle { fill: #d9d2c2; opacity: 0; animation: fumee 3.6s ease-out infinite; }
+.plan .fumee circle:nth-child(2) { animation-delay: 1.2s; }
+.plan .fumee circle:nth-child(3) { animation-delay: 2.4s; }
+@keyframes fumee { 0% { opacity: 0; transform: translate(0, 0) scale(.5); } 20% { opacity: .7; } 100% { opacity: 0; transform: translate(14px, -46px) scale(2.2); } }
+.plan .ailes { animation: tourner 7s linear infinite; }
+@keyframes tourner { to { transform: rotate(360deg); } }
+#seigneur.galop .trot { animation: trot .26s ease-in-out infinite alternate; }
+@keyframes trot { from { transform: translateY(0) rotate(-2deg); } to { transform: translateY(-5px) rotate(2deg); } }
+.quartier.proche rect:nth-child(2) { animation: halo 1.6s ease-in-out infinite alternate; }
+@keyframes halo { from { stroke-width: 2.5; } to { stroke-width: 6; } }
+
+/* le chroniqueur respire */
+.mentor.visible .mentor-portrait svg { animation: respiration 2.8s ease-in-out infinite alternate; }
+
+/* animations coupées (Réglages ou préférence du système) */
+.sans-anim *, .sans-anim *::before, .sans-anim *::after { animation: none !important; transition: none !important; }

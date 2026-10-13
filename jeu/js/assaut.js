@@ -122,7 +122,7 @@
         var n = JEU.sauvegarde.etat().notions[c.fiche];
         var pipsM = "";
         for (var k = 1; k <= 5; k++) pipsM += "<i class='" + (n && n.boite >= k ? "plein" : "") + "'></i>";
-        mainEl.appendChild(el("button", { class: "carte-notion", style: "--teinte:" + JEU.MATIERES[m].couleur, onclick: function () { jouer(c, cartes); } }, [
+        mainEl.appendChild(el("button", { class: "carte-notion", style: "--teinte:" + JEU.MATIERES[m].couleur + ";animation-delay:" + (i * 70) + "ms", onclick: function () { jouer(c, cartes); } }, [
           el("span", { class: "touche", texte: String(i + 1) }),
           el("span", { class: "carte-matiere", texte: JEU.MATIERES[m].nom }),
           el("span", { class: "carte-art", html: JEU.icones.icone(JEU.icones.matiere(m), 64) }),
@@ -161,6 +161,15 @@
           JEU.ui.tampon(puissant ? "Coup puissant" : "Touché", "−" + d);
           JEU.ui.majRessources();
           majChamp(true, puissant);
+          // effets : secousse, étincelles sur la bannière qui tombe, chiffre de dégâts
+          JEU.anim.secouer(champ);
+          var restants = Math.max(0, Math.ceil(pv - 1e-9));
+          var tombee = champ.querySelector(".ennemie .unite[data-rang='" + Math.min(FORCE_ENNEMI - 1, restants) + "']");
+          if (tombee) {
+            var cc = JEU.anim.centre(tombee), rc = champ.getBoundingClientRect();
+            JEU.anim.eclat(cc.x, cc.y, "or", puissant ? 40 : 18);
+            JEU.anim.degats(champ, "−" + d, (cc.x - rc.left) / rc.width * 100, (cc.y - rc.top) / rc.height * 100 - 10, puissant);
+          }
           JEU.mesure.reponseDonnee();
           tourSuivant();
         } else {
@@ -185,7 +194,10 @@
       JEU.sauvegarde.enregistrer();
       JEU.ui.majRessources();
       JEU.sons.jouer(victoire ? "validation" : "sceau");
-      if (victoire) JEU.mentor.feliciter();
+      if (victoire) {
+        JEU.mentor.feliciter();
+        setTimeout(function () { var b = scene.querySelector(".bilan"); if (b) { var c = JEU.anim.centre(b); JEU.anim.eclat(c.x, c.y - 60, "feuilles", 70); } }, 30);
+      }
       scene.innerHTML = "";
       var liste = Object.keys(gains).map(function (r) { return "+" + gains[r] + " " + JEU.RESSOURCES[r].nom.toLowerCase(); }).join(", ");
       scene.appendChild(el("div", { class: "bilan" + (victoire ? " reussi" : "") }, [

@@ -99,7 +99,10 @@
       etat.stats.parties++;
       JEU.sauvegarde.enregistrer();
       var taux = bonnes / qs.length;
-      if (taux >= 0.8) JEU.mentor.feliciter();
+      if (taux >= 0.8) {
+        JEU.mentor.feliciter();
+        setTimeout(function () { var b = scene.querySelector(".bilan"); if (b) { var c = JEU.anim.centre(b); JEU.anim.eclat(c.x, c.y - 60, "feuilles", 60); } }, 30);
+      }
       scene.innerHTML = "";
       compteur.textContent = "";
       var liste = Object.keys(gains).map(function (r) { return "+" + gains[r] + " " + JEU.RESSOURCES[r].nom.toLowerCase(); }).join(", ");

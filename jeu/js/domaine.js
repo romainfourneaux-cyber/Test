@@ -146,6 +146,10 @@
       "</defs>";
     // fond peint : relief, prés, champs, forêts, rivière (atelier/outils/generer-terrain.py)
     s += "<image href='assets/images/terrain-domaine.jpg' x='0' y='0' width='" + L + "' height='" + H + "' preserveAspectRatio='none'/>";
+    // le courant de la rivière (reflets qui glissent)
+    var riv = "M-20 250 C150 280 260 200 380 230 S600 300 720 255 S900 190 1020 230";
+    s += "<path class='courant' d='" + riv + "' fill='none' stroke='#e8f2f2' stroke-width='3' stroke-dasharray='18 46' opacity='.55'/>" +
+      "<path class='courant lent' d='" + riv + "' fill='none' stroke='#d6e6e8' stroke-width='2' stroke-dasharray='8 70' opacity='.45' transform='translate(0,6)'/>";
     // enceinte
     s += enceinte(idx);
     // routes vers chaque quartier
@@ -185,7 +189,9 @@
         if (etat.batiments.indexOf(b.id) >= 0) {
           s += "<g filter='url(#portee)'><circle cx='" + jx + "' cy='" + jy + "' r='36' fill='" + couleur + "' stroke='" + ENCRE + "' stroke-width='2'/>" +
             "<circle cx='" + jx + "' cy='" + jy + "' r='30' fill='url(#jeton)' stroke='#b08d3a' stroke-width='3'/>" +
-            JEU.icones.dans(b.id, jx - 22, jy - 22, 44, ENCRE) + "</g>";
+            JEU.icones.dans(b.id, jx - 22, jy - 22, 44, ENCRE) + "</g>" +
+            "<g class='fumee'><circle cx='" + (jx + 14) + "' cy='" + (jy - 30) + "' r='6'/><circle cx='" + (jx + 14) + "' cy='" + (jy - 30) + "' r='6'/><circle cx='" + (jx + 14) + "' cy='" + (jy - 30) + "' r='6'/></g>" +
+            (b.id === "moulin" ? "<g class='ailes' style='transform-origin:" + jx + "px " + (jy - 6) + "px'><path d='M" + jx + " " + (jy - 40) + "V" + (jy + 28) + "M" + (jx - 34) + " " + (jy - 6) + "H" + (jx + 34) + "' stroke='" + ENCRE + "' stroke-width='3' opacity='.8'/></g>" : "");
         } else {
           s += "<circle cx='" + jx + "' cy='" + jy + "' r='28' fill='#efe6d2' fill-opacity='.35' stroke='" + ENCRE + "' stroke-width='1.6' stroke-dasharray='5 4' opacity='.75'/>" +
             "<path d='M" + jx + " " + (jy - 9) + "v18M" + (jx - 9) + " " + jy + "h18' stroke='" + ENCRE + "' stroke-width='2' opacity='.5'/>";
@@ -193,20 +199,27 @@
       });
       // fanion à l'icône de la matière
       s += "<g transform='translate(" + (p[0] - 128) + "," + (p[1] - 78) + ")'><path d='M4 0v70' stroke='" + ENCRE + "' stroke-width='3'/>" +
-        "<path d='M6 2h40v34l-20 10-20-10z' fill='" + couleur + "' stroke='" + ENCRE + "' stroke-width='1.6'/>" +
-        JEU.icones.dans(JEU.icones.matiere(q.matieres[0]), 12, 6, 28, "#efe6d2") + "</g>";
+        "<g class='flotte' style='animation-delay:-" + (p[0] % 7 / 3).toFixed(2) + "s'><path d='M6 2h40v34l-20 10-20-10z' fill='" + couleur + "' stroke='" + ENCRE + "' stroke-width='1.6'/>" +
+        JEU.icones.dans(JEU.icones.matiere(q.matieres[0]), 12, 6, 28, "#efe6d2") + "</g></g>";
       // brume sur les quartiers endormis
       if (!eveille) {
         s += "<g filter='url(#flou)' opacity='.85'><ellipse cx='" + (p[0] - 40) + "' cy='" + p[1] + "' rx='90' ry='45' fill='#f4ede0'/><ellipse cx='" + (p[0] + 50) + "' cy='" + (p[1] + 8) + "' rx='80' ry='40' fill='#f4ede0'/></g>";
       }
       s += rubanTexte(p[0], p[1] + 74, q.nom) + "</g>";
     });
+    // villageois (animés par la boucle d'ambiance), ombres de nuages, vol d'oiseaux
+    s += "<g class='villageois'></g>";
+    s += "<g class='nuages' filter='url(#flou)'><ellipse cx='200' cy='180' rx='170' ry='70' fill='#1c140c' opacity='.13'/><ellipse cx='-260' cy='460' rx='200' ry='80' fill='#1c140c' opacity='.11'/><ellipse cx='-700' cy='300' rx='150' ry='60' fill='#1c140c' opacity='.12'/></g>";
+    s += "<g class='oiseaux'>" + [0, 1, 2, 3, 4].map(function (i) {
+      var ox = i * 18 - (i % 2) * 6, oy = Math.abs(i - 2) * 10;
+      return "<path class='aile' style='animation-delay:-" + (i * 0.13).toFixed(2) + "s' d='M" + ox + " " + oy + " q6 -7 12 0 q6 -7 12 0' fill='none' stroke='" + ENCRE + "' stroke-width='1.8'/>";
+    }).join("") + "</g>";
     // le seigneur à cheval, que le joueur dirige au clavier
     var cs = JEU.icones.couleurs(etat.reglages.nomDomaine);
     s += "<g id='seigneur' transform='translate(" + balade.x.toFixed(1) + "," + balade.y.toFixed(1) + ")'>" +
       "<ellipse cx='0' cy='3' rx='34' ry='9' fill='#000' opacity='.3'/>" +
-      "<g class='monture' transform='scale(" + balade.sens + ",1)'>" + JEU.icones.dans("cavalier", -40, -78, 80, ENCRE) + JEU.icones.dans("cavalier", -38, -76, 76, cs[0]) +
-      "<path d='M-18 -64v-34' stroke='" + ENCRE + "' stroke-width='2.5'/><path d='M-18 -98h24l-7 8 7 8h-24z' fill='" + cs[1] + "' stroke='" + ENCRE + "' stroke-width='1.2'/></g></g>";
+      "<g class='monture' transform='scale(" + balade.sens + ",1)'><g class='trot'>" + JEU.icones.dans("cavalier", -40, -78, 80, ENCRE) + JEU.icones.dans("cavalier", -38, -76, 76, cs[0]) +
+      "<path d='M-18 -64v-34' stroke='" + ENCRE + "' stroke-width='2.5'/><path d='M-18 -98h24l-7 8 7 8h-24z' fill='" + cs[1] + "' stroke='" + ENCRE + "' stroke-width='1.2'/></g></g></g>";
     // cartouche du titre et rose des vents
     s += "<g transform='translate(30,24)'><rect width='270' height='70' rx='4' fill='#efe2bf' stroke='" + ENCRE + "' stroke-width='2'/><rect x='5' y='5' width='260' height='60' fill='none' stroke='" + ENCRE + "' stroke-width='1'/>" +
       "<text x='135' y='34' text-anchor='middle' class='plan-texte grand'>" + U.echapper(etat.reglages.nomDomaine || "Le domaine") + "</text>" +
@@ -265,7 +278,7 @@
 
   function pas(t) {
     if (!surDomaine()) { balade.boucle = null; balade.touches = {}; balade.cible = null; return; }
-    var dt = Math.min(0.05, (t - (balade.t || t)) / 1000);
+    var dt = Math.min(0.12, (t - (balade.t || t)) / 1000);
     balade.t = t;
     var vx = 0, vy = 0;
     Object.keys(balade.touches).forEach(function (k) { vx += DIRECTIONS[k][0]; vy += DIRECTIONS[k][1]; });
@@ -274,12 +287,27 @@
       var dx = balade.cible[0] - balade.x, dy = balade.cible[1] - balade.y, dist = Math.sqrt(dx * dx + dy * dy);
       if (dist < 4) balade.cible = null; else { vx = dx / dist; vy = dy / dist; }
     }
-    if (!vx && !vy) { balade.boucle = null; balade.t = 0; placer(); return; }
+    if (!vx && !vy) {
+      balade.boucle = null; balade.t = 0; placer();
+      var g0 = document.querySelector("#ecran-domaine #seigneur");
+      if (g0) g0.classList.remove("galop");
+      return;
+    }
     var n = Math.sqrt(vx * vx + vy * vy);
     balade.x = Math.max(40, Math.min(L - 40, balade.x + vx / n * VITESSE * dt));
     balade.y = Math.max(80, Math.min(H - 20, balade.y + vy / n * VITESSE * dt));
     if (vx) balade.sens = vx < 0 ? -1 : 1;
     placer();
+    var g = document.querySelector("#ecran-domaine #seigneur");
+    if (g) {
+      g.classList.add("galop");
+      balade.poussiere = (balade.poussiere || 0) + dt;
+      if (balade.poussiere > 0.12) {
+        balade.poussiere = 0;
+        var r = g.getBoundingClientRect();
+        JEU.anim.eclat(r.left + r.width / 2 - balade.sens * 18, r.bottom - 6, "poussiere", 2);
+      }
+    }
     balade.boucle = requestAnimationFrame(pas);
   }
 
@@ -336,7 +364,46 @@
     if (prochain) s.appendChild(el("p", { class: "note centre", texte: "Encore " + (prochain.min - etat.batiments.length) + " bâtiment" + (prochain.min - etat.batiments.length > 1 ? "s" : "") + " pour devenir " + prochain.nom.toLowerCase() + "." }));
     rendrePanneau(panneau, etat);
     placer();
+    ambiance(etat);
   };
+
+  // ---------- ambiance : des villageois vont et viennent entre la place et les quartiers éveillés ----------
+  var jetonAmbiance = 0;
+  function ambiance(etat) {
+    var mon = ++jetonAmbiance;
+    var groupe = document.querySelector("#ecran-domaine .villageois");
+    if (!groupe || !JEU.anim.actif()) return;
+    var routes = Object.keys(POS).filter(function (k) { return maitrise(k, etat).vues > 0; });
+    if (!routes.length) routes = ["chateau"];
+    var nb = [4, 8, 12, 16][STADES.indexOf(stade(etat.batiments.length))] || 4;
+    var habits = ["#8a3a2a", "#2f5a8a", "#4f6b32", "#b5772b", "#6b2d5c", "#d9c49a"];
+    var gens = [];
+    for (var i = 0; i < nb; i++) {
+      var k = routes[i % routes.length];
+      var g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+      g.innerHTML = "<ellipse cx='0' cy='1' rx='4' ry='1.6' fill='#000' opacity='.3'/><path d='M-3.2 0 L0 -9 L3.2 0z' fill='" + habits[i % habits.length] + "' stroke='" + ENCRE + "' stroke-width='.7'/><circle cx='0' cy='-10.5' r='2.6' fill='#e8cfa8' stroke='" + ENCRE + "' stroke-width='.6'/>" +
+        (i % 4 === 0 ? "<rect x='4' y='-8' width='6' height='5' fill='#8a5a34' stroke='" + ENCRE + "' stroke-width='.6'/>" : "");
+      groupe.appendChild(g);
+      gens.push({ el: g, k: k, t: (i * 0.37) % 1, sens: i % 2 ? 1 : -1, v: 0.035 + (i % 5) * 0.008, cote: ((i % 3) - 1) * 7 });
+    }
+    var avant = 0;
+    function tic(t) {
+      if (mon !== jetonAmbiance || JEU.ui.ecranCourant() !== "domaine" || !document.body.contains(groupe)) return;
+      var dt = avant ? Math.min(0.05, (t - avant) / 1000) : 0.016;
+      avant = t;
+      gens.forEach(function (p) {
+        p.t += p.sens * p.v * dt;
+        if (p.t > 0.92) { p.t = 0.92; p.sens = -1; }
+        if (p.t < 0.12) { p.t = 0.12; p.sens = 1; p.k = routes[Math.floor(Math.random() * routes.length)]; }
+        var q = POS[p.k], dx = q[0] - CX, dy = q[1] - CY, n = Math.sqrt(dx * dx + dy * dy);
+        var x = CX + dx * p.t - dy / n * p.cote, y = CY + dy * p.t + dx / n * p.cote;
+        var saut = Math.abs(Math.sin(t / 110 + p.cote)) * 1.4;
+        p.el.setAttribute("transform", "translate(" + x.toFixed(1) + "," + (y - saut).toFixed(1) + ") scale(" + (dx * p.sens < 0 ? -1.7 : 1.7) + ",1.7)");
+      });
+      requestAnimationFrame(tic);
+    }
+    requestAnimationFrame(tic);
+  }
 
   function rendrePanneau(panneau, etat) {
     var el = JEU.ui.el;

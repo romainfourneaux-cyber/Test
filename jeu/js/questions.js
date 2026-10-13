@@ -222,6 +222,10 @@
     if (juste) {
       res = JEU.MATIERES[q.matiere] ? JEU.MATIERES[q.matiere].ressource : null;
       if (res) etat.ressources[res] += (gain == null ? 1 : gain);
+      // la récompense s'envole vers son médaillon (sans retarder la question suivante)
+      if (res && JEU.anim && typeof document !== "undefined") {
+        JEU.anim.gain(res, gain == null ? 1 : gain, document.querySelector("#ecran-partie .question, #ecran-partie .carte-sceau, #ecran-partie .champ-bataille"));
+      }
     }
     JEU.sauvegarde.enregistrer();
     return res;

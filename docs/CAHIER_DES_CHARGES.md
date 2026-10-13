@@ -58,7 +58,7 @@ Chaque ère change le décor, les bâtiments à débloquer et la monnaie, et se 
 - Palette : fond #efe6d2, pierre #8a7f70, encre #2e2419, or #b08d3a. Une teinte par matière : pourpre pour l'Histoire, ocre pour la Géographie, vert pour les SVT, bleu pour la Physique-chimie, brun pour la Littérature, sarcelle pour l'Anglais (à valider). Les erreurs s'affichent en brique, jamais en rouge vif.
 - Typographie : Cinzel pour les titres, Crimson Text pour les questions (fichiers locaux, licence OFL), repli sur Georgia. Questions en 18 px au moins.
 - Son : effets courts (coup, sceau, construction, validation) sous licence CC0 (Kenney), qu'on coupe d'un clic. Ils comptent plus que le dessin pour le plaisir de jeu.
-- Animations de moins de 400 ms.
+- Animations de moins de 400 ms pour tout ce qui suit une réponse, sans jamais retarder la question suivante. Une ambiance animée continue (fumées, nuages, villageois, drapeaux), lente et sans clignotement, se coupe dans les Réglages (décision du 13/10/2026).
 
 ## 5. Structure de jeu
 
