@@ -7,7 +7,7 @@
   var U = JEU.util;
   var M = JEU.batailleMoteur;
   var QUESTIONS_PAR_VAGUE = 3, BONUS_SERIE = 10;
-  var ROUGE = ["#8a3a2a", "#efe6d2"];
+  function camp(c) { return JEU.campagne.CAMPS[c]; }
 
   // ---------- icônes Game-icons en Path2D (dessin sur canvas) ----------
   var chemins = {};
@@ -106,11 +106,11 @@
       });
     }
     chateau(ctx, carte.route[0], v.couleurs, p.chateau, false, v);
-    chateau(ctx, carte.route[carte.route.length - 1], ROUGE, p.rival, true, v);
+    chateau(ctx, carte.route[carte.route.length - 1], v.adverse.couleurs, p.rival, true, v);
     // tours (les plus hautes à l'écran d'abord)
-    p.toursRivales.concat(p.tours).sort(function (a, b) { return a.y - b.y; }).forEach(function (tr) { tour(ctx, tr, tr.rivale ? ROUGE : v.couleurs, v, p); });
+    p.toursRivales.concat(p.tours).sort(function (a, b) { return a.y - b.y; }).forEach(function (tr) { tour(ctx, tr, tr.rivale ? v.adverse.couleurs : v.couleurs, v, p); });
     // unités
-    p.unites.slice().sort(function (a, b) { return a.y - b.y; }).forEach(function (u) { unite(ctx, u, u.camp === "rival" ? ROUGE : v.couleurs); });
+    p.unites.slice().sort(function (a, b) { return a.y - b.y; }).forEach(function (u) { unite(ctx, u, u.camp === "rival" ? v.adverse.couleurs : v.couleurs); });
     // projectiles
     p.projectiles.forEach(function (pr) {
       var k = Math.min(1, pr.t / pr.duree);
@@ -144,7 +144,7 @@
         ctx.fillStyle = "rgba(120,100,70," + (0.5 * a) + ")";
         ctx.beginPath(); ctx.ellipse(e.x, e.y, e.rayon * (0.4 + e.age), e.rayon * 0.5 * (0.4 + e.age), 0, 0, Math.PI * 2); ctx.fill();
       } else if (e.genre === "chute") {
-        ctx.globalAlpha = Math.max(0, a); dessinerIcone(ctx, "ecu-brise", e.x, e.y - 12 - e.age * 14, 22, e.camp === "rival" ? ROUGE[0] : v.couleurs[0]); ctx.globalAlpha = 1;
+        ctx.globalAlpha = Math.max(0, a); dessinerIcone(ctx, "ecu-brise", e.x, e.y - 12 - e.age * 14, 22, e.camp === "rival" ? v.adverse.couleurs[0] : v.couleurs[0]); ctx.globalAlpha = 1;
       } else if (e.genre === "breche") {
         ctx.font = "bold 26px Cinzel, Georgia, serif"; ctx.textAlign = "center";
         ctx.lineWidth = 4; ctx.strokeStyle = "rgba(20,12,6," + a + ")"; ctx.fillStyle = (e.camp === "rival" ? "rgba(251,233,189," : "rgba(240,140,110,") + a + ")";
@@ -174,7 +174,7 @@
     var sens = rival ? -1 : 1;
     ctx.fillStyle = coul[0]; ctx.strokeStyle = "#2e2419"; ctx.lineWidth = 1.5;
     ctx.beginPath(); ctx.moveTo(bx, by - 4); ctx.quadraticCurveTo(bx + sens * 22, by - 4 + ond, bx + sens * 42, by + ond * 0.5); ctx.lineTo(bx + sens * 30, by + 10 + ond * 0.5); ctx.lineTo(bx + sens * 42, by + 20 + ond * 0.5); ctx.quadraticCurveTo(bx + sens * 22, by + 20 + ond, bx, by + 20); ctx.closePath(); ctx.fill(); ctx.stroke();
-    ctx.fillStyle = coul[1]; ctx.fillRect(rival ? bx - 14 : bx, by - 3, 14, 22);
+    dessinerIcone(ctx, (rival ? v.adverse : camp("joueur")).embleme, bx + sens * 18, by + 8 + ond * 0.7, 18, coul[1]);
     // jauge de solidité
     var w = 96, jx = x - w / 2, jy = y + 50;
     ctx.fillStyle = "rgba(20,12,6,.75)"; ctx.fillRect(jx - 2, jy - 2, w + 4, 12);
@@ -224,28 +224,29 @@
   }
 
   // ---------- la partie ----------
-  // lieu : "domaine" (le rival attaque) ou l'identifiant d'une province.
+  // lieu : "domaine" (un camp adverse attaque) ou l'identifiant d'une province.
   function lancer(lieu) {
     var el = JEU.ui.el;
     var C = JEU.campagne;
     var defense = lieu === "domaine";
-    var prov = defense ? null : C.PROVINCES.filter(function (x) { return x.id === lieu; })[0];
-    var niveau = defense ? Math.min(4, C.etat().conquises.length) : C.PROVINCES.indexOf(prov);
+    var prov = defense ? null : C.province(lieu);
+    var frontId = defense ? (C.etat().rival.attaque || "angleterre") : prov.front;
+    var adv = C.campDe(frontId), Adv = function (t) { return C.maj1(t); };
+    var niveau = defense ? Math.min(4, Math.floor(C.etat().conquises.length / 2)) : prov.niveau;
     var vagues = defense ? 3 : 4;
     var questions = JEU.recit.suite(vagues * QUESTIONS_PAR_VAGUE + 2);
     if (questions.length < QUESTIONS_PAR_VAGUE) { JEU.ui.toast("Pas encore assez de questions pour une bataille."); return; }
     terrain(function () { demarrer(); });
 
     function demarrer() {
-      var carte = JEU.cartesBataille.carte(lieu);
+      var carte = JEU.cartesBataille.carte(defense ? "domaine" : prov.carte);
       var o = C.options(niveau);
       o.vagues = vagues;
       if (defense) { o.pvRival = 12; o.pvRivalMax = 12; }
       else { o.pvRival = C.etat().provinces[lieu].pv; o.pvRivalMax = prov.pv; }
       var p = M.creer(carte, o);
-      var nomDomaine = JEU.sauvegarde.etat().reglages.nomDomaine;
-      var v = { partie: p, carte: carte, fond: fond(carte), couleurs: JEU.icones.couleurs(nomDomaine), horloge: 0, survol: -1, choix: "archers", choixTour: -1, vitesse: 1 };
-      var titre = defense ? "Défense du domaine" : "Bataille : " + prov.nom;
+      var v = { partie: p, carte: carte, fond: fond(carte), couleurs: camp("joueur").couleurs, adverse: adv, horloge: 0, survol: -1, choix: "archers", choixTour: -1, vitesse: 1 };
+      var titre = defense ? "Défense du domaine contre " + adv.armee : "Bataille : " + prov.nom;
       var zone = JEU.ui.commencerPartie(titre, function () { JEU.ui.afficher("jouer"); });
       JEU.musique.humeur("guerre");
       var actif = true, iQ = 0, poseesVague = 0, serie = 0, bonnes = 0, total = 0, finie = false;
@@ -293,7 +294,7 @@
             ]));
           });
           ordres.appendChild(lTours);
-          ordres.appendChild(el("p", { class: "consigne", texte: "Envoie des troupes contre le château rival : chaque envoi augmente aussi ton revenu." }));
+          ordres.appendChild(el("p", { class: "consigne", texte: "Envoie des troupes contre " + adv.chateau + " : chaque envoi augmente aussi ton revenu." }));
           var lTr = el("div", { class: "td-boutons" });
           Object.keys(M.TROUPES).forEach(function (k) {
             var d = M.TROUPES[k], dispo = M.niveauArsenal(p, "troupes", k) > 0;
@@ -309,7 +310,7 @@
           var vit = el("div", { class: "td-vitesse" }, [1, 2, 3].map(function (n) {
             return el("button", { class: "bouton petit" + (v.vitesse === n ? " principal" : ""), onclick: function () { v.vitesse = n; majOrdres(); }, texte: "×" + n });
           }));
-          ordres.appendChild(el("p", { texte: "Regarde tes tours tenir la route. Tes troupes marchent sur le château rival." }));
+          ordres.appendChild(el("p", { texte: "Regarde tes tours tenir la route. Tes troupes marchent sur " + adv.chateau + "." }));
           ordres.appendChild(vit);
         }
       }
@@ -320,7 +321,7 @@
       function nouvellesDuFront() {
         if (p.vague === 0 || Math.random() > 0.45) return null;
         var n = U.hasard([
-          { k: "brouillard", t: "Un brouillard épais couvre la plaine : les tours du rival voient moins loin pendant cette vague." },
+          { k: "brouillard", t: "Un brouillard épais couvre la plaine : " + adv.tours + " voient moins loin pendant cette vague." },
           { k: "pluie", t: "Une pluie battante détrempe la route : toutes les troupes marchent plus lentement pendant cette vague." },
           { k: "flechesNeuves", t: "Le forgeron a fini des flèches neuves : tes archers frappent plus fort pendant cette vague." },
           { k: "renfort", t: "Des paysans viennent consolider les murs : ton château gagne 3 points de solidité." }
@@ -332,6 +333,7 @@
 
       function preparation() {
         poseesVague = iQ;
+        JEU.mesure.debut = null; // la première question suit une vague, pas une réponse
         conseil.innerHTML = "";
         var nouv = nouvellesDuFront();
         if (nouv) conseil.appendChild(JEU.ui.recit({ nom: "Un éclaireur", icone: "trompe", texte: nouv }));
@@ -388,7 +390,7 @@
         M.lancerVague(p);
         JEU.sons.jouer("construction");
         conseil.innerHTML = "";
-        conseil.appendChild(JEU.ui.recit({ nom: "Le capitaine", icone: "rallier", texte: defense ? "Les troupes du rival chargent ! Tes tours tiennent la route." : "Tes troupes s'élancent. Les hommes du rival marchent sur ton château." }));
+        conseil.appendChild(JEU.ui.recit({ nom: "Le capitaine", icone: "rallier", texte: defense ? Adv(adv.troupes) + " chargent ! Tes tours tiennent la route." : "Tes troupes s'élancent. " + Adv(adv.soldats) + " marchent sur ton château." }));
         majTout();
       }
 
@@ -442,14 +444,14 @@
       function arreter() { actif = false; JEU.musique.humeur("paix"); }
       JEU.partie.surQuitter = function () {
         arreter();
-        if (!finie) { finie = true; C.apresBataille({ lieu: lieu, issue: "retraite", degatsRival: p.stats.degatsRival }); }
+        if (!finie) { finie = true; C.apresBataille({ lieu: lieu, front: frontId, issue: "retraite", degatsRival: p.stats.degatsRival }); }
       };
 
       function bilan() {
         if (finie) return;
         finie = true;
         var issue = p.fin;
-        var b = { lieu: lieu, issue: issue, degatsRival: p.stats.degatsRival, bonnes: bonnes, total: total };
+        var b = { lieu: lieu, front: frontId, issue: issue, degatsRival: p.stats.degatsRival, bonnes: bonnes, total: total };
         var gains = C.apresBataille(b);
         var etat = JEU.sauvegarde.etat();
         etat.stats.parties++;
@@ -459,12 +461,12 @@
         var titreB, texte;
         if (defense) {
           titreB = issue === "retraite" ? "Les murs ont cédé" : "Le domaine tient !";
-          texte = issue === "retraite" ? "Tes gens se sont réfugiés dans le donjon. Le rival campe encore devant tes murs, mais il n'a rien pris." : "Le seigneur rival bat en retraite.";
+          texte = issue === "retraite" ? "Tes gens se sont réfugiés dans le donjon. " + Adv(adv.armee) + " campe encore devant tes murs, mais n'a rien pris." : Adv(adv.armee) + " bat en retraite.";
         } else if (b.conquise) {
           titreB = "Victoire !"; texte = prov.nom + " est à toi. Elle te versera un tribut chaque jour.";
         } else {
-          titreB = issue === "retraite" ? "Retraite en bon ordre" : "Le rival tient encore";
-          texte = "Ton armée a porté " + p.stats.degatsRival + " coups au château rival. Il lui reste " + C.etat().provinces[lieu].pv + " points de solidité : la prochaine bataille reprendra là.";
+          titreB = issue === "retraite" ? "Retraite en bon ordre" : Adv(adv.peuple) + " tiennent encore";
+          texte = "Ton armée a porté " + p.stats.degatsRival + " coups à la place forte de " + prov.nom + ". Il lui reste " + C.etat().provinces[lieu].pv + " points de solidité : la prochaine bataille reprendra là.";
         }
         var liste = Object.keys(gains).map(function (r) { return "+" + gains[r] + " " + JEU.RESSOURCES[r].nom.toLowerCase(); }).join(", ");
         conseil.innerHTML = "";

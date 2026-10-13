@@ -338,7 +338,7 @@ main { max-width: 1060px; margin: 0 auto; padding: 1.4rem 1rem 7rem; }
 .scene-conseil .choix { max-width: 640px; }
 
 /* tampon de cire au centre de l'écran */
-.tampon {
+.tampon { pointer-events: none;
   position: fixed; left: 50%; top: 42%; z-index: 40; pointer-events: none; display: flex; flex-direction: column; align-items: center;
   transform: translate(-50%, -50%); color: #9a2f22; animation: tampon .7s ease-out forwards;
 }
@@ -661,3 +661,9 @@ main { max-width: 1060px; margin: 0 auto; padding: 1.4rem 1rem 7rem; }
 .td-selection p { margin: 0; font-family: var(--titre); font-size: .85rem; }
 .td-pret { text-align: center; padding: 1rem; background: linear-gradient(rgba(255,250,236,.55), rgba(226,206,160,.55)), var(--parchemin); border: 2px solid var(--encre); box-shadow: 0 0 0 2px var(--or); }
 @media (max-width: 820px) { .td-bas { grid-template-columns: 1fr; } }
+.sous-titre-campagne { text-align: center; font-family: var(--titre); font-size: 1rem; margin: -.4rem 0 .6rem; display: flex; justify-content: center; align-items: center; gap: .5rem; flex-wrap: wrap; }
+.sous-titre-campagne span { font-family: var(--texte); font-style: italic; color: #6a5536; }
+.sous-titre-campagne .gi:first-child { color: #24407a; }
+.sous-titre-campagne .gi:last-child { color: #9b1f1f; }
+.alerte-rival .ar-banniere { color: var(--or-clair); }
+.carte-svg .titre-front { font-family: var(--titre); font-weight: 700; font-size: 16px; fill: #fbe9bd; stroke: #1c120a; stroke-width: 4px; paint-order: stroke; letter-spacing: .04em; }
