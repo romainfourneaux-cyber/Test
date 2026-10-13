@@ -1,5 +1,5 @@
 // Chargeur : une balise script par cours listé dans index-cours.js.
-// Un fichier absent ou en erreur ne bloque rien : le cours passe en « contenu à venir ».
+// Un fichier absent ou en erreur ne bloque rien : le cours reste dans la brume (une fiche méthode affiche « contenu à venir »).
 (function (racine) {
   "use strict";
   var JEU = racine.JEU;

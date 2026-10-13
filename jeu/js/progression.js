@@ -12,12 +12,6 @@
       .sort(function (a, b) { return a.ordre - b.ordre; });
   }
 
-  function precedent(entree) {
-    var liste = entreesCours(entree.matiere);
-    var i = liste.indexOf(entree);
-    return i > 0 ? liste[i - 1] : null;
-  }
-
   function entree(id) {
     var p = JEU.donnees.planning;
     for (var i = 0; i < p.length; i++) if (p[i].id === id) return p[i];
@@ -66,11 +60,20 @@
   }
 
   // Fiches des cours que le chroniqueur a marqués « à revoir » : elles sortent plus souvent.
+  // Pour une séquence d'anglais, ce sont ses éléments (vocabulaire, structures, phrases), comme dans questions.indexer.
   function fichesARevoir() {
     var r = (JEU.donnees.aRetravailler || []).slice();
+    function ajouter(id) { if (id && r.indexOf(id) < 0) r.push(id); }
     Object.keys(JEU.donnees.cours).forEach(function (id) {
       if (etatCours(id) !== "a-revoir") return;
-      (JEU.donnees.cours[id].fiches || []).forEach(function (f) { if (r.indexOf(f.id) < 0) r.push(f.id); });
+      (JEU.donnees.cours[id].fiches || []).forEach(function (f) { ajouter(f.id); });
+    });
+    var ang = JEU.donnees.anglais || {};
+    Object.keys(ang).forEach(function (id) {
+      if (etatCours(id) !== "a-revoir") return;
+      ["vocabulaire", "structures", "phrases"].forEach(function (k) {
+        (ang[id][k] || []).forEach(function (el) { ajouter(el && el.id); });
+      });
     });
     return r;
   }
@@ -100,21 +103,37 @@
     return r;
   }
 
-  // Position par matière : cours acquis ou présumés, comparés au calendrier.
-  function position(matiere, semaine, etat) {
+  // Cours d'un onglet de l'écran Cours : une matière du planning, « methode » ou « anglais ».
+  function idsOnglet(onglet) {
+    if (onglet === "methode") return methodes().map(function (c) { return c.id; });
+    var ids = entreesCours(onglet).map(function (e) { return e.id; });
+    if (onglet === "anglais") sequencesAnglais().forEach(function (c) { if (ids.indexOf(c.id) < 0) ids.push(c.id); });
+    return ids;
+  }
+
+  // Position d'un onglet : combien de cours sont acquis, présumés acquis, à revoir, en cours.
+  // Pas de comparaison au calendrier : seul un devoir corrigé (data/suivi.js) fait passer un cours « acquis ».
+  function position(onglet, etat) {
     etat = etat || JEU.sauvegarde.etat();
-    var liste = entreesCours(matiere);
-    var faits = 0, attendus = 0;
-    liste.forEach(function (e) {
-      var s = etatCours(e.id, etat);
-      if (s === "acquis" || s === "presume") faits++;
-      if (e.semaine <= semaine) attendus++;
+    var ids = idsOnglet(onglet);
+    var r = { acquis: 0, presumes: 0, aRevoir: 0, enCours: 0, total: ids.length };
+    ids.forEach(function (id) {
+      var s = etatCours(id, etat);
+      if (s === "acquis") r.acquis++;
+      else if (s === "presume") r.presumes++;
+      else if (s === "a-revoir") r.aRevoir++;
+      else if (s === "ouvert") r.enCours++;
     });
-    return { faits: faits, total: liste.length, attendus: attendus, ecart: faits - attendus };
+    return r;
+  }
+
+  // Nombre de cours acquis, tous onglets confondus (le même compte que l'écran Cours, onglet par onglet).
+  function totalAcquis(etat) {
+    return ["methode"].concat(JEU.ORDRE_MATIERES).reduce(function (n, o) { return n + position(o, etat).acquis; }, 0);
   }
 
   JEU.progression = {
-    etatCours: etatCours, coursAccessibles: coursAccessibles, recence: recence, position: position,
+    etatCours: etatCours, coursAccessibles: coursAccessibles, recence: recence, position: position, totalAcquis: totalAcquis,
     estimation: estimation, fichesARevoir: fichesARevoir, oublier: oublier, entree: entree,
     entreesCours: entreesCours, sequencesAnglais: sequencesAnglais, methodes: methodes, fichierPresent: fichierPresent
   };

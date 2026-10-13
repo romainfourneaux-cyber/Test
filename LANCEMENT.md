@@ -1,5 +1,7 @@
 # Prompt de lancement : jalon 1
 
+> Document historique : c'est le prompt du jalon 1, déjà joué (version 0.1.0). Ne le recolle pas. Depuis la version 0.5.0, l'épreuve de validation, la case « cours fait », le seuil de validation, l'Assaut et le Sceau de vérité n'existent plus : le suivi des cours vient des devoirs corrigés (jeu/data/suivi.js), et la bataille et le conseil du royaume ont remplacé les deux mini-jeux. La spécification à jour est docs/CAHIER_DES_CHARGES.md (v4).
+
 Copie tout le texte situé sous la ligne et colle-le dans Claude Code, ouvert sur ce dossier.
 
 ---

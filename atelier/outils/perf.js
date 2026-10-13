@@ -1,6 +1,9 @@
-// Essai de bout en bout dans Chromium (Playwright) : bataille (tower defense), conseil du royaume,
-// événement du jour, quitter avec Échap, signalement, export puis import, et mesure du temps entre une réponse et la question suivante (objectif < 100 ms).
+// Essai de bout en bout dans Chromium (Playwright) : bataille (tower defense) lancée deux fois de suite,
+// quitter avec Échap, événement du jour, conseil du royaume, signalement, export puis import,
+// et mesure du temps entre une réponse et la question suivante sur 50 enchaînements au moins (objectif < 100 ms).
+// Seuls les enchaînements question → question comptent : une vague, une carte de décision ou un bilan n'en sont pas.
 // Usage : node atelier/outils/perf.js   (demande le module playwright ; sinon, faire les vérifications à la main)
+// Variables facultatives : CHROMIUM (chemin du navigateur), DETAIL=1 (affiche toutes les mesures).
 "use strict";
 const path = require("path");
 let chromium;
@@ -9,6 +12,7 @@ try { ({ chromium } = require("playwright")); } catch (e) {
   process.exit(0);
 }
 const URL = "file://" + path.join(__dirname, "..", "..", "jeu", "index.html").replace(/\\/g, "/");
+const MESURES_VOULUES = 50;
 
 // Répond juste à la question affichée, au clavier (et à la souris pour la colonne de droite des associations).
 async function repondreJuste(page) {
@@ -18,7 +22,13 @@ async function repondreJuste(page) {
     case "qcm": await k(q.choix.indexOf(q.reponse) + 1); break;
     case "qcm_multiple": for (const c of q.reponse) await k(q.choix.indexOf(c) + 1); await page.keyboard.press("Enter"); break;
     case "vrai_faux":
-      if (q.reponse.vrai) await k(1); else { await k(2); await k(q.corrections.indexOf(q.reponse.correction) + 1); }
+      if (q.reponse.vrai) await k(1);
+      else {
+        await k(2);
+        // les corrections sont mélangées à l'affichage : on cherche la bonne par son texte
+        const n = await page.evaluate(t => { const b = [...document.querySelectorAll(".reponses button.choix[data-n]")].find(x => x.lastElementChild.textContent === t); return b ? Number(b.dataset.n) : 0; }, q.reponse.correction);
+        await k(n);
+      }
       break;
     case "ordre": for (const i of q.reponse) await k(i + 1); await page.keyboard.press("Enter"); break;
     case "association":
@@ -28,6 +38,28 @@ async function repondreJuste(page) {
       await page.evaluate(r => { document.querySelectorAll(".trou").forEach((c, i) => { c.value = Array.isArray(r[i]) ? r[i][0] : r[i]; }); }, q.reponse);
       await page.keyboard.press("Enter"); break;
   }
+}
+
+// Une carte du conseil : affirmation jugée juste (avec la bonne correction si elle est fausse), décision tranchée à droite.
+async function jouerCarteConseil(page) {
+  if (await page.$(".carte-conseil.decision")) {
+    await page.keyboard.press("ArrowRight");
+    await page.waitForSelector(".carte-conseil.decision", { state: "detached" });
+    return;
+  }
+  const r = await page.evaluate(() => {
+    const t = document.querySelector(".carte-conseil .affirmation").textContent.replace(/^« | »$/g, "");
+    const tout = [];
+    Object.keys(JEU.donnees.cours).forEach(c => JEU.questions.questionsDuCours(c).forEach(x => { if (x.enonce === t) tout.push(x); }));
+    return tout[0].reponse;
+  });
+  await page.keyboard.press(r.vrai ? "ArrowRight" : "ArrowLeft");
+  if (r.vrai) return;
+  // les corrections sont mélangées à l'affichage : on cherche la bonne par son texte
+  await page.waitForSelector(".scene-conseil .choix");
+  const n = await page.evaluate(c => Array.from(document.querySelectorAll(".scene-conseil .choix"))
+    .findIndex(b => b.lastElementChild && b.lastElementChild.textContent === c), r.correction);
+  await page.keyboard.press(String(n + 1));
 }
 
 (async () => {
@@ -43,11 +75,24 @@ async function repondreJuste(page) {
   const bilan = { accueil_ms: Date.now() - t0 };
   bilan.semaine = await page.textContent("#ecran-accueil .cartouche .grand");
 
-  // 1. bataille au Gué : 3 questions justes par vague, tours posées, troupes envoyées, une vague jouée
+  // compteurs : parties commencées, et images de la boucle d'animation des batailles (fonction « boucle »)
+  await page.evaluate(() => {
+    window.__essai = { parties: 0, boucles: 0 };
+    const commencer = JEU.ui.commencerPartie;
+    JEU.ui.commencerPartie = function () { window.__essai.parties++; return commencer.apply(this, arguments); };
+    const raf = window.requestAnimationFrame;
+    window.requestAnimationFrame = function (f) { if (f && f.name === "boucle") window.__essai.boucles++; return raf.call(window, f); };
+  });
+
+  // 1. bataille au Gué, lancée deux fois de suite (double appui pendant le chargement du terrain) : une seule bataille
   await page.click("#menu button[data-ecran=jouer]");
   await page.waitForSelector("#ecran-jouer .carte-campagne");
   await page.keyboard.press("1");
+  await page.evaluate(() => JEU.bataille.lancer("gue"));
   await page.waitForSelector(".td-canvas");
+  await page.clock.runFor(300);
+  bilan.lancementsBataille = await page.evaluate(() => window.__essai.parties);
+  // 3 questions justes, tours posées, troupes envoyées, une vague jouée
   for (let i = 0; i < 3; i++) { await page.waitForFunction(() => document.querySelector(".td-question .question")); await repondreJuste(page); }
   await page.waitForSelector(".td-pret");
   const slots = await page.evaluate(() => JEU.cartesBataille.carte("gue").emplacements.slice(0, 3));
@@ -55,34 +100,58 @@ async function repondreJuste(page) {
   for (const e of slots) await page.mouse.click(cadre.x + e[0] / 1000 * cadre.width, cadre.y + e[1] / 660 * cadre.height);
   await page.locator(".td-bouton", { hasText: "Fantassins" }).click();
   bilan.bataille = await page.evaluate(() => ({ tours: JEU.bataille.enCours.tours.length, envois: JEU.bataille.enCours.envois.length }));
-  await page.keyboard.press("Enter");
-  await page.waitForFunction(() => JEU.bataille.enCours.phase === "vague");
+  // Entrée lance la vague ; s'il reste de l'or, le jeu prévient d'abord, et une seconde Entrée confirme
+  for (let k = 0; k < 3 && await page.evaluate(() => JEU.bataille.enCours.phase === "preparation"); k++) {
+    await page.clock.runFor(800);
+    await page.keyboard.press("Enter");
+  }
+  await page.waitForFunction(() => JEU.bataille.enCours.phase !== "preparation");
   // la vague se joue en temps réel : on avance l'horloge du navigateur
   for (let k = 0; k < 200 && await page.evaluate(() => JEU.bataille.enCours.phase === "vague"); k++) await page.clock.runFor(500);
   bilan.apresVague = await page.evaluate(() => ({ phase: JEU.bataille.enCours.phase, vague: JEU.bataille.enCours.vague, chateau: JEU.bataille.enCours.chateau.pv }));
-  // quitter avec Échap : confirmation dans la page, les coups portés restent
+  // quitter avec Échap : confirmation dans la page, les coups portés restent ; la boucle d'animation s'arrête
   await page.keyboard.press("Escape");
   await page.waitForSelector(".confirmation");
   await page.click(".confirmation .bouton.principal");
   await page.waitForFunction(() => !JEU.partie && JEU.ui.ecranCourant() === "jouer");
+  await page.clock.runFor(100);
+  await page.evaluate(() => { window.__essai.boucles = 0; });
+  await page.clock.runFor(1000);
+  bilan.bouclesApresQuitter = await page.evaluate(() => window.__essai.boucles);
   bilan.quitter = "ok";
 
-  // 2. conseil du royaume : toutes les affirmations jugées justes, décisions à droite
-  await page.evaluate(() => JEU.conseil.lancer());
-  for (let i = 0; i < 12; i++) {
-    await page.waitForSelector(".carte-conseil, .scene-conseil .bilan");
-    if (await page.$(".scene-conseil .bilan")) break;
-    if (await page.$(".carte-conseil.decision")) { await page.keyboard.press("ArrowRight"); await page.waitForSelector(".carte-conseil.decision", { state: "detached" }); continue; }
-    const q = await page.evaluate(() => {
-      const t = document.querySelector(".carte-conseil .affirmation").textContent.replace(/^« | »$/g, "");
-      const tout = [];
-      Object.keys(JEU.donnees.cours).forEach(c => JEU.questions.questionsDuCours(c).forEach(x => { if (x.enonce === t) tout.push(x); }));
-      return { reponse: tout[0].reponse, corrections: tout[0].corrections };
-    });
-    await page.keyboard.press(q.reponse.vrai ? "ArrowRight" : "ArrowLeft");
-    if (!q.reponse.vrai) await page.keyboard.press(String(q.corrections.indexOf(q.reponse.correction) + 1));
+  // 2. événement du jour (les marchands) : 3 questions justes, 2 ressources chacune
+  const avantEv = await page.evaluate(() => Object.values(JEU.sauvegarde.etat().ressources).reduce((a, b) => a + b, 0));
+  await page.evaluate(() => {
+    JEU.campagne.etat().evenement = { id: "marchands", jour: JEU.util.jour(), fait: false };
+    JEU.campagne.jouerEvenement();
+  });
+  for (let i = 0; i < 6; i++) {
+    await page.waitForSelector(".scene-evenement .question, .scene-evenement .bilan");
+    if (await page.$(".scene-evenement .bilan")) break;
+    await repondreJuste(page);
   }
-  await page.waitForSelector(".scene-conseil .bilan");
+  await page.waitForSelector(".scene-evenement .bilan");
+  bilan.evenement = await page.textContent(".scene-evenement .bilan .grand");
+  bilan.gainEvenement = await page.evaluate(a => Object.values(JEU.sauvegarde.etat().ressources).reduce((x, y) => x + y, 0) - a, avantEv);
+  await page.keyboard.press("Enter");
+  await page.waitForFunction(() => !JEU.partie && JEU.ui.ecranCourant() === "jouer");
+
+  // 3. conseil du royaume, repris jusqu'à avoir assez de mesures : affirmations jugées justes, décisions à droite
+  await page.evaluate(() => JEU.conseil.lancer());
+  bilan.conseils = 0;
+  for (let n = 0; n < 10; n++) {
+    for (let i = 0; i < 12; i++) {
+      await page.waitForSelector(".carte-conseil, .scene-conseil .bilan");
+      if (await page.$(".scene-conseil .bilan")) break;
+      await jouerCarteConseil(page);
+    }
+    await page.waitForSelector(".scene-conseil .bilan");
+    bilan.conseils++;
+    if (await page.evaluate(m => JEU.mesure.valeurs.length >= m, MESURES_VOULUES)) break;
+    await page.keyboard.press("Enter"); // « Nouveau conseil »
+    await page.waitForSelector(".scene-conseil .bilan", { state: "detached" });
+  }
   bilan.conseil = await page.textContent(".scene-conseil .bilan .grand");
   bilan.royaume = await page.evaluate(() => JEU.campagne.etat().royaume);
 
@@ -98,14 +167,25 @@ async function repondreJuste(page) {
   bilan.importIdentique = JSON.stringify(JSON.parse(avant)) === JSON.stringify(JSON.parse(apres));
 
   // 5. mesure : temps entre une réponse et la question suivante
-  const v = await page.evaluate(() => JEU.mesure.valeurs.slice(0, 50));
+  const v = await page.evaluate(() => JEU.mesure.valeurs.slice());
   if (process.env.DETAIL) console.log(v.map(x => Math.round(x)).join(" "));
   bilan.mesures = v.length;
-  bilan.moyenne_ms = Math.round(v.reduce((a, b) => a + b, 0) / v.length * 10) / 10;
-  bilan.max_ms = Math.round(Math.max(...v) * 10) / 10;
+  bilan.moyenne_ms = v.length ? Math.round(v.reduce((a, b) => a + b, 0) / v.length * 10) / 10 : null;
+  bilan.max_ms = v.length ? Math.round(Math.max(...v) * 10) / 10 : null;
   bilan.ressources = await page.evaluate(() => JEU.sauvegarde.etat().ressources);
   bilan.erreursJS = erreurs;
   console.log(JSON.stringify(bilan, null, 1));
   await navigateur.close();
-  process.exit(erreurs.length || bilan.max_ms >= 100 || !bilan.importIdentique ? 1 : 0);
-})();
+
+  const echecs = [];
+  if (erreurs.length) echecs.push("erreurs JavaScript dans la page");
+  if (bilan.lancementsBataille !== 1) echecs.push("la bataille a commencé " + bilan.lancementsBataille + " fois au lieu d'une");
+  if (bilan.bouclesApresQuitter > 0) echecs.push("la boucle de la bataille tourne encore après avoir quitté");
+  if (bilan.gainEvenement < 6) echecs.push("l'événement n'a pas rapporté ses ressources");
+  if (!bilan.royaume || bilan.royaume.tresor + bilan.royaume.peuple + bilan.royaume.garde + bilan.royaume.savoir <= 0) echecs.push("les jauges du royaume n'ont pas monté");
+  if (bilan.mesures < MESURES_VOULUES) echecs.push("seulement " + bilan.mesures + " mesures (il en faut " + MESURES_VOULUES + ")");
+  if (!(bilan.max_ms < 100)) echecs.push("plus de 100 ms entre une réponse et la question suivante");
+  if (!bilan.importIdentique) echecs.push("l'import ne redonne pas la même partie");
+  echecs.forEach(m => console.log("ÉCHEC  " + m));
+  process.exit(echecs.length ? 1 : 0);
+})().catch(e => { console.log("ÉCHEC  " + e.message); process.exit(1); });

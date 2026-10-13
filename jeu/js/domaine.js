@@ -358,7 +358,7 @@
     Array.prototype.forEach.call(plan.querySelectorAll(".quartier"), function (g) {
       function choisir() { quartierChoisi = g.getAttribute("data-quartier"); rendrePanneau(panneau, etat); }
       g.addEventListener("click", choisir);
-      g.addEventListener("keydown", function (e) { if (e.key === "Enter") choisir(); });
+      g.addEventListener("keydown", function (e) { if (e.key === "Enter") { e.stopPropagation(); choisir(); } });
     });
     var prochain = STADES.filter(function (x) { return x.min > etat.batiments.length; })[0];
     if (prochain) s.appendChild(el("p", { class: "note centre", texte: "Encore " + (prochain.min - etat.batiments.length) + " bâtiment" + (prochain.min - etat.batiments.length > 1 ? "s" : "") + " pour devenir " + prochain.nom.toLowerCase() + "." }));

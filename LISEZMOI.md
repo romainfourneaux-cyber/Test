@@ -4,9 +4,9 @@ Ce dossier contient tout ce qu'il faut pour que Claude Code construise le jeu su
 
 ## Ce qu'il y a dedans
 
-- LANCEMENT.md : le prompt du jalon 1, à coller dans Claude Code.
+- LANCEMENT.md : le prompt du jalon 1, déjà joué (document historique, à ne pas recoller).
 - CLAUDE.md : les règles du projet. Claude Code le relit tout seul à chaque session.
-- docs/ : le cahier des charges (v3), le format des données, le programme de l'année relevé dans tes PDF et le journal des modifications.
+- docs/ : le cahier des charges (v4), le format des données, le programme de l'année relevé dans tes PDF et le journal des modifications.
 - DEPOT/ : ta zone de dépôt. Le planning et les fiches méthode y sont déjà.
 - .claude/ : les deux commandes du projet (/traiter et /relecture) et un garde-fou qui empêche Claude Code de modifier DEPOT/ avec ses outils d'édition.
 - jeu/ et atelier/ apparaîtront au premier lancement.
@@ -32,10 +32,10 @@ Claude Code commence par un inventaire : il vérifie les deux outils et peut te 
 
 ## La routine de la semaine
 
-1. Tu déposes les nouveaux cours dans DEPOT\cours\<matière>\ et, quand tu les as, les énoncés et corrigés dans DEPOT\devoirs\.
+1. Tu déposes les nouveaux cours dans DEPOT\cours\<matière>\ et, quand tu les as, les énoncés dans DEPOT\devoirs\, puis, après correction, la copie corrigée ou les remarques du correcteur. Avec un devoir corrigé, /traiter marque chaque cours du devoir « acquis » ou « à revoir » dans le jeu, et le jeu ramène plus souvent ce qui est à revoir.
 2. Dans Claude Code, tu tapes /traiter.
 3. Une fois par semaine, ton fils exporte sa sauvegarde (bouton Exporter du jeu) et tu la poses dans DEPOT\sauvegardes\.
-4. Dans Claude Code, tu tapes /relecture. Tu obtiens une fiche A4 d'une trentaine de lignes à vérifier en 20 minutes. Tu donnes les numéros à corriger, Claude corrige.
+4. Dans Claude Code, tu tapes /relecture. Tu obtiens une fiche A4 d'une trentaine de lignes à vérifier en 20 minutes, avec les fiches nouvelles et les cours que Claude a marqués « acquis » ou « à revoir ». Tu donnes les numéros à corriger, Claude corrige.
 
 À déposer en priorité, vu les prochains devoirs : Histoire cours 1 à 11 (devoir en S10), Physique-chimie livret 1 thème A (S12), SVT livret 1 (S12 pour le chapitre 3), Géographie thème 1 (S10 et S11), Littérature livret I (S10), Un hivernage dans les glaces et son vocabulaire (S11), et les premières séquences d'anglais. Pour chaque devoir d'anglais, Claude Code te demandera quelles séquences il couvre.
 
@@ -43,7 +43,7 @@ Claude Code commence par un inventaire : il vérifie les deux outils et peut te 
 
 Quand le jalon 1 te convient, colle ceci dans Claude Code :
 
-« Lance le jalon 2 du cahier des charges (carte de campagne, ères, sièges, boss, Plan de bataille, Observatoire). Même méthode que pour le jalon 1 : relis le cahier, inventaire et questions, construction, contrôles, cinq vérifications pour moi, livraison. »
+« Continue le jalon 2 du cahier des charges : ères, lieux du cours et brume sur la carte, sièges, boss, Plan de bataille, Observatoire. La carte de campagne à deux fronts, la bataille, le conseil du royaume et les événements existent déjà (version 0.5.0) : garde-les. Même méthode que pour le jalon 1 : relis le cahier, inventaire et questions, construction, contrôles, cinq vérifications pour moi, livraison. »
 
 Même phrase ensuite pour le jalon 3 puis le jalon 4, en reprenant leur contenu dans docs/CAHIER_DES_CHARGES.md, section 13.
 

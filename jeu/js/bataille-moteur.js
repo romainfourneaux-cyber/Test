@@ -9,17 +9,22 @@
   var LARGEUR = 1000, HAUTEUR = 660;
 
   // Tours. portee en px, cadence en tirs/s, degats par tir ; zone > 0 : dégâts de zone ; ralentit : aura.
+  // Palissade : les emplacements sont à 58 px du milieu de la route et la file ennemie à 9 px de ce milieu ;
+  // avec 85 px de portée, la palissade touche la file ennemie depuis chaque emplacement, des deux côtés de la route.
   var TOURS = {
     archers:   { nom: "Tour d'archers", icone: "archer", cout: 30, portee: 135, cadence: 1.1, degats: 1.3, projectile: "fleche", vitesse: 560 },
-    piquiers:  { nom: "Palissade de piquiers", icone: "piquier", cout: 25, portee: 62, cadence: 1.4, degats: 0.6, projectile: "aucun", ralentit: 0.5 },
+    piquiers:  { nom: "Palissade de piquiers", icone: "piquier", cout: 25, portee: 85, cadence: 1.4, degats: 0.6, projectile: "aucun", ralentit: 0.5 },
     baliste:   { nom: "Baliste", icone: "fleches", cout: 50, portee: 210, cadence: 0.45, degats: 5.5, projectile: "carreau", vitesse: 720 },
     catapulte: { nom: "Trébuchet", icone: "catapulte", cout: 60, portee: 190, cadence: 0.33, degats: 4, zone: 48, projectile: "pierre", vitesse: 300 }
   };
   // Troupes que tu envoies contre le rival. revenu : or gagné en plus à chaque vague suivante (comme dans Legion TD).
+  // Chaque troupe a son usage : fantassins pas chers et nombreux ; cavaliers rapides qui rapportent le plus de revenu ;
+  // tour de siège lente et très solide, qui frappe le plus fort et passe là où les autres tombent.
+  // Pour le même or, les troupes à débloquer frappent au moins aussi fort que les fantassins et rapportent au moins autant.
   var TROUPES = {
     fantassins: { nom: "Fantassins", icone: "epeiste", cout: 15, pv: 6, vitesse: 44, degats: 1, revenu: 1, nombre: 3 },
-    cavaliers:  { nom: "Cavaliers", icone: "cavalier", cout: 30, pv: 9, vitesse: 78, degats: 2, revenu: 2, nombre: 2 },
-    belier:     { nom: "Tour de siège", icone: "engin", cout: 55, pv: 40, vitesse: 26, degats: 6, revenu: 3, nombre: 1 }
+    cavaliers:  { nom: "Cavaliers", icone: "cavalier", cout: 30, pv: 9, vitesse: 78, degats: 3, revenu: 3, nombre: 2 },
+    belier:     { nom: "Tour de siège", icone: "engin", cout: 45, pv: 70, vitesse: 26, degats: 10, revenu: 3, nombre: 1 }
   };
   // Troupes du seigneur rival.
   var ENNEMIS = {

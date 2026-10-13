@@ -1,4 +1,5 @@
-// Tests de logique (Node) : calendrier, états des cours, Leitner, brouillage, migration, campagne et moteur de bataille.
+// Tests de logique (Node) : calendrier, états des cours, Leitner, brouillage, migration et import, campagne, moteur de bataille,
+// règles du validateur pour suivi.js.
 // Usage : node atelier/outils/tests.js
 "use strict";
 const fs = require("fs");
@@ -102,6 +103,10 @@ J.sauvegarde.remplacer(m);
 const txt = J.sauvegarde.texteExport();
 J.sauvegarde.importer(txt);
 verifier("Export puis import : même partie", JSON.stringify(J.sauvegarde.etat()) === JSON.stringify(JSON.parse(txt)));
+// un fichier qui n'est pas une sauvegarde est refusé, et la partie en cours ne bouge pas
+const refuse = t => { try { J.sauvegarde.importer(t); return false; } catch (e) { return true; } };
+const avantImport = JSON.stringify(J.sauvegarde.etat());
+verifier("Import d'un fichier étranger refusé, partie intacte", refuse('{"name":"mon-projet","version":"1.0.0"}') && refuse("[]") && refuse("pas du JSON") && JSON.stringify(J.sauvegarde.etat()) === avantImport);
 
 // migration 2 → 3 : la campagne s'ajoute, le reste ne bouge pas
 const v2 = JSON.parse(JSON.stringify(m)); delete v2.campagne; v2.schema = 2; delete v2.reglages.musique;
@@ -144,6 +149,79 @@ let garde = 0;
 while (pb.phase !== "fin" && garde++ < 10) { MB.poserTour(pb, "archers", garde + 1); MB.jouerVague(pb, 0.05); }
 verifier("Une bataille se termine toujours", pb.phase === "fin" && ["victoire", "tenu", "retraite"].indexOf(pb.fin) >= 0, pb.fin);
 verifier("Pendant une vague, aucune pose possible", (() => { const q = MB.creer(carte, {}); MB.lancerVague(q); return !MB.poserTour(q, "archers", 0) && !MB.envoyer(q, "fantassins"); })());
+
+// validateur : règles de suivi.js (seulement des cours, devoir source connu, note sans chiffre ni personne)
+const { controler } = require("./controles.js");
+const { chargerDonnees } = require("./valider.js");
+const donneesVal = chargerDonnees();
+function controleSuivi(cours) {
+  const d = Object.assign({}, donneesVal, { suivi: { majLe: "2026-10-13", cours: cours } });
+  return controler(d, atelier.debrouiller);
+}
+const suiviBon = controleSuivi({ "histoire-s08-1": { etat: "a-revoir", note: "Revois la différence entre domaine royal et grands fiefs.", source: "histoire-d1", le: "2026-10-13" } });
+verifier("Validateur : une estimation correcte de suivi.js passe", suiviBon.erreurs.length === 0 && suiviBon.alertes.length === 0, suiviBon);
+const suiviFaux = controleSuivi({
+  "histoire-s02-2": { etat: "acquis", source: "histoire-d1" },
+  "histoire-s07-2": { etat: "a-revoir", note: "Corrigé par M. Dupont : 1214.", source: "histoire-d99" },
+  "histoire-s08-2": { etat: "acquis" }
+});
+const aErreur = (motif) => suiviFaux.erreurs.some(m => m.indexOf(motif) >= 0);
+verifier("Validateur : suivi.js refuse une entrée qui n'est pas un cours", aErreur("histoire-s02-2 n'est pas un cours"));
+verifier("Validateur : suivi.js refuse un devoir source inconnu ou absent", aErreur("inconnu pour histoire-s07-2") && aErreur("inconnu pour histoire-s08-2"));
+verifier("Validateur : alerte sur une note avec un chiffre ou une personne", suiviFaux.alertes.some(m => m.indexOf("chiffre") >= 0) && suiviFaux.alertes.some(m => m.indexOf("personne") >= 0));
+verifier("Validateur : un devoir sans périmètre, cité dans suivi.js, donne une erreur et pas un plantage", (() => {
+  const devoirs = donneesVal.devoirs.map(dv => dv.id === "histoire-d1" ? Object.assign({}, dv, { perimetre: null }) : dv);
+  const d = Object.assign({}, donneesVal, { devoirs: devoirs, suivi: { majLe: "2026-10-13", cours: { "histoire-s08-1": { etat: "acquis", source: "histoire-d1", le: "2026-10-13" } } } });
+  try { return controler(d, atelier.debrouiller).erreurs.some(m => m.indexOf("périmètre invalide : histoire-d1") >= 0); }
+  catch (e) { return false; }
+})());
+
+// équilibre : la palissade touche toujours la route, chaque troupe débloquée a son intérêt
+const touteArmee = { tours: { archers: 1, piquiers: 1, baliste: 1, catapulte: 1 }, troupes: { fantassins: 1, cavaliers: 1, belier: 1 } };
+verifier("Palissade : chaque emplacement touche la file ennemie", ["domaine", "gue", "foret", "moulin", "col", "chateau"].every(id => {
+  const c = J.cartesBataille.carte(id), r = MB.preparerRoute(c.route);
+  return c.emplacements.every(e => { for (let s = 0; s <= r.longueur; s += 5) { const q = MB.surRoute(r, s, -9); if (Math.hypot(q.x - e[0], q.y - e[1]) <= MB.TOURS.piquiers.portee) return true; } return false; });
+}));
+const coups = {};
+Object.keys(MB.TROUPES).forEach(t => {
+  const pt = MB.creer(J.cartesBataille.carte("moulin"), { niveau: 2, vagues: 4, pvChateau: 999, pvRival: 999, arsenal: touteArmee });
+  pt.vague = 2; pt.or = 90;               // vague 3 : le rival a déjà 3 tours
+  for (let k = 0; k < 2; k++) { pt.vague = k; MB.lancerVague(pt); pt.phase = "preparation"; pt.fileRivale = []; }
+  pt.vague = 2; pt.or = 90;
+  while (MB.envoyer(pt, t)) { /* tout l'or dans ce type */ }
+  MB.jouerVague(pt, 0.05);
+  coups[t] = pt.stats.degatsRival;
+});
+verifier("Troupes débloquées : pour 90 or, au moins autant de coups que les fantassins", coups.cavaliers >= coups.fantassins && coups.belier >= coups.fantassins, coups);
+verifier("Troupes débloquées : au moins le revenu des fantassins pour le même or", ["cavaliers", "belier"].every(t => MB.TROUPES[t].revenu / MB.TROUPES[t].cout >= MB.TROUPES.fantassins.revenu / MB.TROUPES.fantassins.cout));
+
+// campagne : articles, réparation de sauvegarde, bonus gardés si l'on quitte avant la première vague, récit de défense
+const A = J.campagne.avecArticle;
+verifier("Articles : du Gué, aux Oliveraies, à l'Empire omeyyade, au royaume d'Angleterre",
+  A("Le Gué", "de") === "du Gué" && A("Les Oliveraies", "à") === "aux Oliveraies" && A("l'Empire omeyyade", "à") === "à l'Empire omeyyade" && A("le royaume d'Angleterre", "à") === "au royaume d'Angleterre",
+  [A("Le Gué", "de"), A("Les Oliveraies", "à"), A("l'Empire omeyyade", "à"), A("le royaume d'Angleterre", "à")]);
+let reparee = true;
+try { [{ rival: null }, { provinces: null }, { arsenal: { tours: 3 } }].forEach(x => { const r = J.campagne.completer(x); if (!r.rival || r.rival.menace !== 0 || r.rival.defaites !== 0 || !r.provinces.gue || typeof r.arsenal.tours.archers !== "number") reparee = false; }); } catch (e) { reparee = false; }
+verifier("Sauvegarde de campagne abîmée : réparée sans planter", reparee);
+J.sauvegarde.remplacer(J.sauvegarde.nouvelle());
+J.campagne.etat().bonus = { or: 40, espion: true };
+J.campagne.apresBataille({ lieu: "foret", issue: "retraite", degatsRival: 0, entamee: false });
+verifier("Quitter avant la première vague : bonus des mercenaires et de l'espion gardés", J.campagne.options(0).orDepart === 100 && J.campagne.options(0).espion === true && J.campagne.etat().provinces.foret.pv === 20);
+J.campagne.apresBataille({ lieu: "foret", issue: "retraite", degatsRival: 0, entamee: true });
+verifier("Bataille entamée : les bonus sont consommés", J.campagne.options(0).orDepart === 60 && !J.campagne.options(0).espion);
+J.campagne.etat().rival.attaque = "omeyyades";
+let cadresOk = true;
+for (let i = 0; i < 50; i++) { const t = J.recit.cadre({ matiere: "histoire" }, "defense").texte; if (/anglais|\{/i.test(t)) cadresOk = false; }
+verifier("Défense contre l'Empire omeyyade : le récit ne parle jamais des Anglais", cadresOk);
+J.campagne.etat().rival.attaque = false;
+
+// une séquence d'anglais « à revoir » met ses éléments en priorité
+J.donnees.anglais["anglais-essai"] = { id: "anglais-essai", ordre: 99, matiere: "anglais", vocabulaire: [{ id: "ang-v1" }], structures: [{ id: "ang-s1" }], phrases: [{ id: "ang-p1" }] };
+J.donnees.suivi = { cours: { "anglais-essai": { etat: "a-revoir" } } };
+J.progression.oublier();
+const far = J.progression.fichesARevoir();
+verifier("Une séquence d'anglais à revoir met ses éléments en priorité", ["ang-v1", "ang-s1", "ang-p1"].every(x => far.indexOf(x) >= 0), far);
+delete J.donnees.anglais["anglais-essai"]; J.donnees.suivi = { cours: {} }; J.progression.oublier();
 
 console.log("\n" + ok + " réussis, " + ko + " en échec.");
 process.exit(ko ? 1 : 0);

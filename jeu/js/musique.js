@@ -4,7 +4,7 @@
 (function (racine) {
   "use strict";
   var JEU = racine.JEU;
-  var ctx = null, maitre = null, bourdon = null, minuterie = null;
+  var ctx = null, maitre = null, bourdon = null, minuterie = null, minuterieArret = null;
   var humeur = "paix", prochaine = 0, pas = 0, iPhrase = 0, iNote = 0, resteNote = 0;
   var VOLUME = 0.16;
 
@@ -139,6 +139,7 @@
   function demarrer() {
     if (!actif()) return;
     if (!ctx && !creer()) return;
+    clearTimeout(minuterieArret);
     if (ctx.state === "suspended") { try { ctx.resume(); } catch (e) { /* rien */ } }
     if (minuterie) return;
     prochaine = ctx.currentTime + 0.1;
@@ -148,12 +149,18 @@
     minuterie = setInterval(ordonnancer, 90);
   }
 
+  // Le volume descend en 0,4 s, puis le contexte audio est suspendu : le bourdon et l'écho cessent
+  // de calculer (moins de travail pour l'ordinateur). demarrer() le reprend.
   function arreter() {
     if (!ctx) return;
     clearInterval(minuterie); minuterie = null;
     maitre.gain.cancelScheduledValues(ctx.currentTime);
     maitre.gain.setValueAtTime(maitre.gain.value, ctx.currentTime);
     maitre.gain.linearRampToValueAtTime(0, ctx.currentTime + 0.4);
+    clearTimeout(minuterieArret);
+    minuterieArret = setTimeout(function () {
+      if (!minuterie && ctx && ctx.state === "running") { try { ctx.suspend(); } catch (e) { /* rien */ } }
+    }, 500);
   }
 
   // « paix » sur la carte et au conseil, « guerre » pendant un assaut ou une défense.

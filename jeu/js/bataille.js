@@ -7,7 +7,38 @@
   var U = JEU.util;
   var M = JEU.batailleMoteur;
   var QUESTIONS_PAR_VAGUE = 3, BONUS_SERIE = 10;
+  var GARDE_ENTREE = 700; // ms : l'Entrée qui finit la dernière question (ou un double appui) ne lance pas la vague
   function camp(c) { return JEU.campagne.CAMPS[c]; }
+
+  // ---------- petites aides de texte et de mise en page ----------
+  // « de » + « Le Gué » → « du Gué » ; « à » + « Les Oliveraies » → « aux Oliveraies » ; « la » et « l' » restent.
+  // Celle de la campagne sert si elle existe ; sinon, la même règle ici.
+  function avecArticle(nom, prep) {
+    if (JEU.campagne && JEU.campagne.avecArticle) return JEU.campagne.avecArticle(nom, prep);
+    var m = /^(le|les|la) (.+)$/i.exec(nom);
+    if (m) {
+      var art = m[1].toLowerCase();
+      if (art === "la") return prep + " la " + m[2];
+      return (prep === "à" ? (art === "les" ? "aux " : "au ") : (art === "les" ? "des " : "du ")) + m[2];
+    }
+    if (/^l['’]/i.test(nom)) return prep + " l" + nom.slice(1);
+    return prep + " " + nom;
+  }
+  function pluriel(n, mot) { return n + " " + mot + (n >= 2 ? "s" : ""); }
+
+  // Fait défiler la page pour montrer « elem » sous le bandeau collant. mode « proche » : seulement s'il dépasse.
+  // Défilement immédiat : un clic juste après tombe là où l'élève le voit.
+  function montrer(elem, mode) {
+    if (!elem || !elem.isConnected || !racine.scrollBy) return;
+    var bandeau = document.getElementById("bandeau");
+    var haut = bandeau ? bandeau.getBoundingClientRect().height : 0, vue = racine.innerHeight;
+    var r = elem.getBoundingClientRect(), dy;
+    if (mode === "proche") {
+      if (r.top >= haut && r.bottom <= vue) return;
+      dy = r.top < haut || r.height > vue - haut ? r.top - haut - 8 : r.bottom - vue + 8;
+    } else dy = r.top - haut - 8;
+    if (Math.abs(dy) >= 2) racine.scrollBy(0, dy);
+  }
 
   // ---------- icônes Game-icons en Path2D (dessin sur canvas) ----------
   var chemins = {};
@@ -32,13 +63,13 @@
   }
 
   // ---------- décor : terrain peint, route, ponts (dessinés une fois) ----------
+  // Une seule image, chargée une fois (une image en échec est aussi « complete »).
   var imageTerrain = null;
   function terrain(fini) {
     if (imageTerrain && imageTerrain.complete) return fini();
-    imageTerrain = new Image();
-    imageTerrain.onload = fini;
-    imageTerrain.onerror = fini;
-    imageTerrain.src = "assets/images/terrain-domaine.jpg";
+    if (!imageTerrain) { imageTerrain = new Image(); imageTerrain.src = "assets/images/terrain-domaine.jpg"; }
+    imageTerrain.addEventListener("load", fini, { once: true });
+    imageTerrain.addEventListener("error", fini, { once: true });
   }
 
   function fond(carte) {
@@ -95,7 +126,7 @@
     if (p.phase === "preparation") {
       carte.emplacements.forEach(function (e, i) {
         if (!M.emplacementLibre(p, i)) return;
-        var survol = v.survol === i;
+        var survol = v.survol === i || v.curseur === i;
         ctx.beginPath(); ctx.arc(e[0], e[1], 20, 0, Math.PI * 2);
         ctx.fillStyle = survol ? "rgba(226,194,114,.55)" : "rgba(239,230,210,.28)"; ctx.fill();
         ctx.setLineDash([5, 4]); ctx.lineWidth = 2; ctx.strokeStyle = survol ? "#fbe9bd" : "rgba(46,36,25,.7)"; ctx.stroke(); ctx.setLineDash([]);
@@ -109,6 +140,13 @@
     chateau(ctx, carte.route[carte.route.length - 1], v.adverse.couleurs, p.rival, true, v);
     // tours (les plus hautes à l'écran d'abord)
     p.toursRivales.concat(p.tours).sort(function (a, b) { return a.y - b.y; }).forEach(function (tr) { tour(ctx, tr, tr.rivale ? v.adverse.couleurs : v.couleurs, v, p); });
+    // curseur du clavier : un anneau doré autour de l'emplacement choisi avec les flèches
+    if (p.phase === "preparation" && v.curseur >= 0) {
+      var ec = carte.emplacements[v.curseur], puls = JEU.anim.actif() ? 2 * Math.sin(v.horloge * 5) : 0;
+      ctx.beginPath(); ctx.arc(ec[0], ec[1] - 8, 32 + puls, 0, Math.PI * 2);
+      ctx.lineWidth = 5; ctx.strokeStyle = "#2e2419"; ctx.stroke();
+      ctx.lineWidth = 3; ctx.strokeStyle = "#fbe9bd"; ctx.stroke();
+    }
     // unités
     p.unites.slice().sort(function (a, b) { return a.y - b.y; }).forEach(function (u) { unite(ctx, u, u.camp === "rival" ? v.adverse.couleurs : v.couleurs); });
     // projectiles
@@ -224,8 +262,20 @@
   }
 
   // ---------- la partie ----------
+  var enChargement = false; // une seule bataille à la fois, même pendant le chargement du terrain
+
+  // Questions d'une vague, tirées au début de son conseil (le niveau suit les dernières réponses) :
+  // une par fiche, sans reprendre une question ni une fiche déjà posées dans cette bataille.
+  function tirerQuestions(n, posees) {
+    var ids = posees.map(function (q) { return q.id; }), fiches = posees.map(function (q) { return q.fiche; });
+    var qs = JEU.recit.suite(n, { exclure: ids, filtre: function (q) { return fiches.indexOf(q.fiche) < 0; } });
+    if (qs.length < n) qs = qs.concat(JEU.recit.suite(n - qs.length, { exclure: ids.concat(qs.map(function (q) { return q.id; })) }));
+    return qs;
+  }
+
   // lieu : "domaine" (un camp adverse attaque) ou l'identifiant d'une province.
   function lancer(lieu) {
+    if (enChargement || JEU.partie) return; // double clic ou touche pressée deux fois : une seule bataille
     var el = JEU.ui.el;
     var C = JEU.campagne;
     var defense = lieu === "domaine";
@@ -234,9 +284,14 @@
     var adv = C.campDe(frontId), Adv = function (t) { return C.maj1(t); };
     var niveau = defense ? Math.min(4, Math.floor(C.etat().conquises.length / 2)) : prov.niveau;
     var vagues = defense ? 3 : 4;
-    var questions = JEU.recit.suite(vagues * QUESTIONS_PAR_VAGUE + 2);
+    var questions = tirerQuestions(QUESTIONS_PAR_VAGUE, []);
     if (questions.length < QUESTIONS_PAR_VAGUE) { JEU.ui.toast("Pas encore assez de questions pour une bataille."); return; }
-    terrain(function () { demarrer(); });
+    enChargement = true;
+    terrain(function () {
+      enChargement = false;
+      if (JEU.partie) return; // une autre partie a commencé pendant le chargement
+      demarrer();
+    });
 
     function demarrer() {
       var carte = JEU.cartesBataille.carte(defense ? "domaine" : prov.carte);
@@ -245,14 +300,16 @@
       if (defense) { o.pvRival = 12; o.pvRivalMax = 12; }
       else { o.pvRival = C.etat().provinces[lieu].pv; o.pvRivalMax = prov.pv; }
       var p = M.creer(carte, o);
-      var v = { partie: p, carte: carte, fond: fond(carte), couleurs: camp("joueur").couleurs, adverse: adv, horloge: 0, survol: -1, choix: "archers", choixTour: -1, vitesse: 1 };
+      // survol : emplacement sous la souris ; curseur : emplacement choisi au clavier ; choixTour : tour sélectionnée.
+      var v = { partie: p, carte: carte, fond: fond(carte), couleurs: camp("joueur").couleurs, adverse: adv, horloge: 0, survol: -1, curseur: -1, choix: "archers", choixTour: -1, vitesse: 1, envoyesVague: 0, gardeEntree: 0 };
       var titre = defense ? "Défense du domaine contre " + adv.armee : "Bataille : " + prov.nom;
       var zone = JEU.ui.commencerPartie(titre, function () { JEU.ui.afficher("jouer"); });
       JEU.musique.humeur("guerre");
       var actif = true, iQ = 0, poseesVague = 0, serie = 0, bonnes = 0, total = 0, finie = false;
 
       // --- mise en page ---
-      var canvas = el("canvas", { class: "td-canvas", width: String(M.LARGEUR), height: String(M.HAUTEUR), "aria-label": "Champ de bataille" });
+      var canvas = el("canvas", { class: "td-canvas", width: String(M.LARGEUR), height: String(M.HAUTEUR), tabindex: "0",
+        "aria-label": "Champ de bataille : choisis un emplacement avec les flèches, puis bâtis avec Espace" });
       var ratio = Math.min(2, racine.devicePixelRatio || 1);
       canvas.width = M.LARGEUR * ratio; canvas.height = M.HAUTEUR * ratio;
       var ctx = canvas.getContext("2d");
@@ -260,6 +317,7 @@
       var cadre = el("div", { class: "td-cadre" }, [canvas, hud]);
       var conseil = el("div", { class: "td-conseil" });
       var ordres = el("div", { class: "td-ordres" });
+      zone.classList.add("td-zone"); // sur grand écran, la feuille de style met le champ et les panneaux côte à côte
       zone.appendChild(cadre);
       zone.appendChild(el("div", { class: "td-bas" }, [conseil, ordres]));
 
@@ -271,9 +329,16 @@
       }
 
       // --- ordres : tours, troupes, lancement ---
+      // Pastille de touche, comme sur les boutons de réponse ; les mots (Espace, Entrée) en cartouche.
+      function touche(t) { return el("span", { class: "touche", style: "margin:0 .25rem;" + (t.length > 1 ? "border-radius:.9em;padding:0 .5em;" : ""), texte: t }); }
+
       function majOrdres() {
+        // le panneau est redessiné : le bouton atteint avec Tab retrouve ensuite le focus (pas après un clic de souris,
+        // pour qu'Entrée lance toujours la vague)
+        var focus = document.activeElement, cle = null;
+        try { if (focus && ordres.contains(focus) && JEU.ui.focusAuClavier()) cle = focus.getAttribute("data-cle"); } catch (e) { /* navigateur ancien */ }
         ordres.innerHTML = "";
-        var prep = p.phase === "preparation";
+        var prep = p.phase === "preparation", auClavier = prep && !conseilEnCours();
         ordres.appendChild(el("h3", { texte: prep ? "Tes ordres" : p.phase === "vague" ? "Le combat fait rage" : "Fin de la bataille" }));
         if (prep) {
           var sel = p.tours.filter(function (t) { return t.emplacement === v.choixTour; })[0];
@@ -281,16 +346,18 @@
             var cAm = M.coutAmelioration(sel);
             ordres.appendChild(el("div", { class: "td-selection" }, [
               el("p", { texte: M.TOURS[sel.type].nom + " · niveau " + sel.niveau }),
-              sel.niveau < M.AMELIORATION.max ? el("button", { class: "bouton petit", disabled: p.or < cAm, onclick: function () { if (M.ameliorerTour(p, sel.emplacement)) { JEU.sons.jouer("construction"); majTout(); } }, texte: "Améliorer · " + cAm + " or" }) : el("span", { class: "note", texte: "Niveau maximal" }),
-              el("button", { class: "lien", onclick: function () { v.choixTour = -1; majOrdres(); }, texte: "Fermer" })
+              sel.niveau < M.AMELIORATION.max ? el("button", { class: "bouton petit", "data-cle": "ameliorer", disabled: p.or < cAm, onclick: function () { ameliorer(sel.emplacement); }, texte: "Améliorer" + (auClavier ? " (A)" : "") + " · " + cAm + " or" }) : el("span", { class: "note", texte: "Niveau maximal" }),
+              el("button", { class: "lien", "data-cle": "fermer", onclick: function () { v.choixTour = -1; majOrdres(); }, texte: "Fermer" })
             ]));
           }
           ordres.appendChild(el("p", { class: "consigne", texte: "Choisis une tour, puis clique un emplacement près de la route." }));
           var lTours = el("div", { class: "td-boutons" });
           Object.keys(M.TOURS).forEach(function (k, i) {
             var d = M.TOURS[k], dispo = M.niveauArsenal(p, "tours", k) > 0;
-            lTours.appendChild(el("button", { class: "td-bouton" + (v.choix === k ? " choisi" : ""), disabled: !dispo, title: dispo ? d.nom : d.nom + " : à débloquer dans l'arsenal", onclick: function () { v.choix = k; v.choixTour = -1; majOrdres(); } }, [
-              el("span", { class: "td-ic", html: JEU.icones.icone(d.icone, 28) }), el("span", { class: "td-nom", texte: d.nom }), el("span", { class: "td-cout", texte: dispo ? d.cout + " or" : "verrouillée" })
+            lTours.appendChild(el("button", { class: "td-bouton" + (v.choix === k ? " choisi" : ""), "data-cle": "tour-" + k, disabled: !dispo, title: dispo ? d.nom : d.nom + " : à débloquer dans l'arsenal", onclick: function () { v.choix = k; v.choixTour = -1; majOrdres(); } }, [
+              el("span", { class: "td-ic", html: JEU.icones.icone(d.icone, 28) }),
+              el("span", { class: "td-nom" }, [auClavier && dispo ? touche(String(i + 1)) : null, d.nom]),
+              el("span", { class: "td-cout", texte: dispo ? d.cout + " or" : "verrouillée" })
             ]));
           });
           ordres.appendChild(lTours);
@@ -298,20 +365,35 @@
           var lTr = el("div", { class: "td-boutons" });
           Object.keys(M.TROUPES).forEach(function (k) {
             var d = M.TROUPES[k], dispo = M.niveauArsenal(p, "troupes", k) > 0;
-            lTr.appendChild(el("button", { class: "td-bouton", disabled: !dispo || p.or < d.cout, title: dispo ? d.nom : "À débloquer dans l'arsenal", onclick: function () { if (M.envoyer(p, k)) { JEU.sons.jouer("coup"); majTout(); } } }, [
+            lTr.appendChild(el("button", { class: "td-bouton", "data-cle": "troupe-" + k, disabled: !dispo || p.or < d.cout, title: dispo ? d.nom : "À débloquer dans l'arsenal", onclick: function () { if (M.envoyer(p, k)) { v.gardeEntree = 0; JEU.sons.jouer("coup"); majTout(); } } }, [
               el("span", { class: "td-ic", html: JEU.icones.icone(d.icone, 28) }), el("span", { class: "td-nom", texte: d.nom + (d.nombre > 1 ? " ×" + d.nombre : "") }), el("span", { class: "td-cout", texte: dispo ? d.cout + " or · +" + d.revenu + " revenu" : "verrouillé" })
             ]));
           });
           ordres.appendChild(lTr);
-          if (p.envois.length) ordres.appendChild(el("p", { class: "td-file", texte: "Prêts à partir : " + p.envois.length + " soldat" + (p.envois.length > 1 ? "s" : "") }));
-          var pret = iQ >= poseesVague + QUESTIONS_PAR_VAGUE || iQ >= questions.length;
-          ordres.appendChild(el("button", { class: "bouton principal td-lancer", disabled: !pret, onclick: lancerVague, texte: pret ? "Lancer la vague (Entrée)" : "Réponds d'abord au conseil de guerre" }));
+          if (p.envois.length) ordres.appendChild(el("p", { class: "td-file", texte: "Prêts à partir : " + pluriel(p.envois.length, "soldat") }));
+          ordres.appendChild(el("button", { class: "bouton principal td-lancer", "data-cle": "lancer", disabled: !auClavier, onclick: lancerVague, texte: auClavier ? "Lancer la vague (Entrée)" : "Réponds d'abord au conseil de guerre" }));
+          if (auClavier) ordres.appendChild(el("p", { class: "note td-touches" }, [
+            "Au clavier :", touche("1"), "à", touche(String(Object.keys(M.TOURS).length)), "une tour,", touche("← ↑ ↓ →"), "un emplacement,",
+            touche("Espace"), "bâtir,", touche("A"), "améliorer,", touche("Entrée"), "lancer la vague."
+          ]));
         } else if (p.phase === "vague") {
           var vit = el("div", { class: "td-vitesse" }, [1, 2, 3].map(function (n) {
-            return el("button", { class: "bouton petit" + (v.vitesse === n ? " principal" : ""), onclick: function () { v.vitesse = n; majOrdres(); }, texte: "×" + n });
+            return el("button", { class: "bouton petit" + (v.vitesse === n ? " principal" : ""), "data-cle": "vitesse-" + n, onclick: function () { v.vitesse = n; majOrdres(); }, texte: "×" + n });
           }));
-          ordres.appendChild(el("p", { texte: "Regarde tes tours tenir la route. Tes troupes marchent sur " + adv.chateau + "." }));
+          ordres.appendChild(el("p", { texte: "Regarde tes tours tenir la route." + (v.envoyesVague ? " Tes troupes marchent sur " + adv.chateau + "." : "") }));
           ordres.appendChild(vit);
+        } else {
+          // fin : un court résumé du combat plutôt qu'un cadre vide
+          ordres.appendChild(el("ul", { class: "td-resume" }, [
+            el("li", { texte: "Soldats envoyés : " + p.stats.envoyes }),
+            el("li", { texte: "Ennemis arrêtés : " + p.stats.tues }),
+            el("li", { texte: "Ennemis passés : " + p.stats.fuites }),
+            el("li", { texte: "Coups portés au château adverse : " + p.stats.degatsRival })
+          ]));
+        }
+        if (cle) {
+          var b = ordres.querySelector('[data-cle="' + cle + '"]');
+          if (b && !b.disabled) b.focus({ preventScroll: true });
         }
       }
 
@@ -331,9 +413,15 @@
         return n.t;
       }
 
+      // Le conseil de la vague en cours a-t-il encore des questions à poser ?
+      function conseilEnCours() { return iQ < Math.min(questions.length, poseesVague + QUESTIONS_PAR_VAGUE); }
+
       function preparation() {
         poseesVague = iQ;
+        // les questions de cette vague sont tirées maintenant : leur niveau suit les réponses déjà données
+        if (p.vague > 0) questions = questions.concat(tirerQuestions(QUESTIONS_PAR_VAGUE, questions));
         JEU.mesure.debut = null; // la première question suit une vague, pas une réponse
+        v.curseur = -1;
         conseil.innerHTML = "";
         var nouv = nouvellesDuFront();
         if (nouv) conseil.appendChild(JEU.ui.recit({ nom: "Un éclaireur", icone: "trompe", texte: nouv }));
@@ -341,10 +429,11 @@
         conseil.appendChild(scene);
         questionSuivante(scene);
         majTout();
+        if (conseilEnCours()) montrer(conseil, "proche"); // la question est la prochaine chose à faire
       }
 
       function questionSuivante(scene) {
-        if (iQ >= poseesVague + QUESTIONS_PAR_VAGUE || iQ >= questions.length) return conseilTermine(scene);
+        if (!conseilEnCours()) return conseilTermine(scene);
         var q = questions[iQ];
         JEU.ui.poserQuestion(q, scene, function (juste) {
           JEU.questions.enregistrerReponse(q, juste);
@@ -365,36 +454,130 @@
             serie = 0;
             JEU.ui.panneauErreur(q, scene, function () { JEU.mesure.reponseDonnee(); questionSuivante(scene); majTout(); });
           }
-        }, { recit: JEU.recit.cadre(q, defense ? "defense" : "preparation") });
+        }, { recit: JEU.recit.cadre(q, defense ? "defense" : "preparation", adv) });
+      }
+
+      // Reste-t-il de quoi dépenser (une tour sur un emplacement libre, ou des troupes) ?
+      function orADepenser() {
+        var libre = carte.emplacements.some(function (e, i) { return M.emplacementLibre(p, i); });
+        var tour = libre && Object.keys(M.TOURS).some(function (t) { return M.niveauArsenal(p, "tours", t) > 0 && p.or >= M.TOURS[t].cout; });
+        return tour || Object.keys(M.TROUPES).some(function (t) { return M.niveauArsenal(p, "troupes", t) > 0 && p.or >= M.TROUPES[t].cout; });
       }
 
       function conseilTermine(scene) {
         scene.innerHTML = "";
+        var avis = el("p", { class: "note", "aria-live": "polite" });
         scene.appendChild(el("div", { class: "td-pret" }, [
           el("p", { class: "grand", texte: "Le conseil de guerre est terminé." }),
-          el("p", { texte: "Dépense ton or : pose des tours, améliore-les, envoie des troupes. Puis lance la vague." })
+          el("p", { texte: "Dépense ton or : pose des tours, améliore-les, envoie des troupes. Puis lance la vague." }),
+          avis
         ]));
-        JEU.ui.clavier = function (k) {
+        // L'Entrée qui a fini la dernière question, ou un double appui, ne lance pas la vague tout de suite.
+        // Une action (tour posée, améliorée, troupes envoyées) lève cette garde.
+        v.gardeEntree = Date.now() + GARDE_ENTREE;
+        var averti = false;
+        JEU.ui.clavier = function (k, ev) {
+          if (p.phase !== "preparation") return false;
           var n = parseInt(k, 10), types = Object.keys(M.TOURS);
-          if (n >= 1 && n <= types.length && M.niveauArsenal(p, "tours", types[n - 1])) { v.choix = types[n - 1]; majOrdres(); return true; }
-          if (k === "Enter") { lancerVague(); return true; }
+          if (n >= 1 && n <= types.length) {
+            if (M.niveauArsenal(p, "tours", types[n - 1])) { v.choix = types[n - 1]; majOrdres(); }
+            else JEU.ui.toast(M.TOURS[types[n - 1]].nom + " : à débloquer dans l'arsenal.");
+            return true;
+          }
+          if (DIRECTIONS[k]) { deplacerCurseur(DIRECTIONS[k]); return true; }
+          if ((k === " " || k === "Spacebar") && v.curseur >= 0) { agirSur(v.curseur); majCurseur(); return true; }
+          if ((k === "a" || k === "A") && v.choixTour >= 0) { ameliorer(v.choixTour); return true; }
+          if (k === "Enter") {
+            if ((ev && ev.repeat) || Date.now() < v.gardeEntree) return true;
+            if (!averti && orADepenser()) {
+              averti = true;
+              avis.textContent = "Il te reste " + Math.floor(p.or) + " or à dépenser. Appuie encore sur Entrée pour lancer la vague quand même.";
+              JEU.ui.toast("Il te reste " + Math.floor(p.or) + " or à dépenser.");
+              return true;
+            }
+            lancerVague(); return true;
+          }
           return false;
         };
         majOrdres();
+        montrer(cadre); // tout le champ de bataille, pour poser les tours
       }
 
       function lancerVague() {
-        if (p.phase !== "preparation" || iQ < Math.min(questions.length, poseesVague + QUESTIONS_PAR_VAGUE)) return;
+        if (p.phase !== "preparation" || conseilEnCours()) return;
         JEU.ui.clavier = null;
-        v.choixTour = -1;
+        v.choixTour = -1; v.curseur = -1;
         M.lancerVague(p);
+        v.envoyesVague = p.fileAmie.length;
         JEU.sons.jouer("construction");
         conseil.innerHTML = "";
-        conseil.appendChild(JEU.ui.recit({ nom: "Le capitaine", icone: "rallier", texte: defense ? Adv(adv.troupes) + " chargent ! Tes tours tiennent la route." : "Tes troupes s'élancent. " + Adv(adv.soldats) + " marchent sur ton château." }));
+        var texte = defense
+          ? Adv(adv.troupes) + " chargent ! Tes tours tiennent la route." + (v.envoyesVague ? " Tes soldats partent vers " + adv.chateau + "." : "")
+          : (v.envoyesVague ? "Tes troupes s'élancent. " : "Tes tours attendent l'ennemi. ") + Adv(adv.soldats) + " marchent sur ton château.";
+        conseil.appendChild(JEU.ui.recit({ nom: "Le capitaine", icone: "rallier", texte: texte }));
         majTout();
+        montrer(cadre); // l'élève regarde la vague
       }
 
-      // --- clics sur le champ de bataille ---
+      // --- actions sur un emplacement (souris ou clavier) ---
+      function agirSur(i) {
+        if (p.phase !== "preparation" || i < 0) return;
+        if (!M.emplacementLibre(p, i)) { v.choixTour = i; majOrdres(); return; }
+        if (M.poserTour(p, v.choix, i)) {
+          v.gardeEntree = 0;
+          JEU.sons.jouer("construction");
+          var r = canvas.getBoundingClientRect();
+          JEU.anim.eclat(r.left + carte.emplacements[i][0] / M.LARGEUR * r.width, r.top + carte.emplacements[i][1] / M.HAUTEUR * r.height, "or", 14);
+          majTout();
+        } else if (p.or < M.TOURS[v.choix].cout) {
+          JEU.ui.toast(conseilEnCours() ? "Pas assez d'or : réponds au conseil de guerre." : "Pas assez d'or : lance la vague, ton revenu arrivera ensuite.");
+        } else JEU.ui.toast("Impossible de bâtir ici.");
+      }
+      function ameliorer(i) {
+        if (M.ameliorerTour(p, i)) { v.gardeEntree = 0; JEU.sons.jouer("construction"); majTout(); return; }
+        var t = p.tours.filter(function (x) { return x.emplacement === i; })[0];
+        if (t && t.niveau < M.AMELIORATION.max) JEU.ui.toast("Pas assez d'or pour améliorer cette tour.");
+      }
+
+      // --- clavier : les flèches promènent un curseur sur les emplacements ---
+      var DIRECTIONS = { ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, -1], ArrowDown: [0, 1], Left: [-1, 0], Right: [1, 0], Up: [0, -1], Down: [0, 1] };
+      var ordreClavier = carte.emplacements.map(function (e, i) { return i; }).sort(function (a, b) {
+        var ea = carte.emplacements[a], eb = carte.emplacements[b];
+        return ea[0] - eb[0] || ea[1] - eb[1];
+      });
+      // Sur une tour déjà bâtie, le curseur la sélectionne (portée visible, bouton Améliorer).
+      function majCurseur() {
+        if (v.curseur >= 0 && !M.emplacementLibre(p, v.curseur)) v.choixTour = v.curseur;
+        else if (v.choixTour >= 0) v.choixTour = -1;
+        majOrdres();
+      }
+      function deplacerCurseur(dir) {
+        var es = carte.emplacements, i = v.curseur;
+        if (!es.length) return;
+        if (i < 0) {
+          v.curseur = ordreClavier[0];
+          if (document.activeElement !== canvas) canvas.focus({ preventScroll: true });
+          return majCurseur();
+        }
+        var meilleur = -1, score = Infinity;
+        es.forEach(function (f, j) {
+          if (j === i) return;
+          var dx = f[0] - es[i][0], dy = f[1] - es[i][1];
+          var avance = dx * dir[0] + dy * dir[1], ecart = Math.abs(dx * dir[1] - dy * dir[0]);
+          if (avance <= 0) return;
+          if (avance + 2 * ecart < score) { score = avance + 2 * ecart; meilleur = j; }
+        });
+        if (meilleur < 0) { // bord du champ : on repart de l'autre côté
+          var k = ordreClavier.indexOf(i), pas = dir[0] + dir[1] > 0 ? 1 : ordreClavier.length - 1;
+          meilleur = ordreClavier[(k + pas) % ordreClavier.length];
+        }
+        v.curseur = meilleur;
+        // le champ prend le focus : Espace bâtit ici, même si un bouton l'avait avant
+        if (document.activeElement !== canvas) canvas.focus({ preventScroll: true });
+        majCurseur();
+      }
+
+      // --- souris sur le champ de bataille ---
       function point(ev) {
         var r = canvas.getBoundingClientRect();
         return { x: (ev.clientX - r.left) / r.width * M.LARGEUR, y: (ev.clientY - r.top) / r.height * M.HAUTEUR };
@@ -404,25 +587,24 @@
         carte.emplacements.forEach(function (e, i) { var d = Math.hypot(e[0] - pt.x, e[1] - pt.y); if (d < dm) { dm = d; meilleur = i; } });
         return meilleur;
       }
-      canvas.addEventListener("pointermove", function (ev) { v.survol = emplacementSous(point(ev)); canvas.style.cursor = v.survol >= 0 && p.phase === "preparation" ? "pointer" : ""; });
+      canvas.addEventListener("pointermove", function (ev) {
+        v.survol = emplacementSous(point(ev));
+        if (v.survol >= 0) v.curseur = -1; // la souris reprend la main
+        canvas.style.cursor = v.survol >= 0 && p.phase === "preparation" ? "pointer" : "";
+      });
       canvas.addEventListener("pointerleave", function () { v.survol = -1; });
-      canvas.addEventListener("click", function (ev) {
-        if (p.phase !== "preparation") return;
-        var i = emplacementSous(point(ev));
-        if (i < 0) return;
-        if (!M.emplacementLibre(p, i)) { v.choixTour = i; majOrdres(); return; }
-        if (M.poserTour(p, v.choix, i)) {
-          JEU.sons.jouer("construction");
-          var r = canvas.getBoundingClientRect();
-          JEU.anim.eclat(r.left + carte.emplacements[i][0] / M.LARGEUR * r.width, r.top + carte.emplacements[i][1] / M.HAUTEUR * r.height, "or", 14);
-          majTout();
-        } else JEU.ui.toast(p.or < M.TOURS[v.choix].cout ? "Pas assez d'or : réponds au conseil de guerre." : "Impossible de bâtir ici.");
+      canvas.addEventListener("click", function (ev) { agirSur(emplacementSous(point(ev))); });
+      // Arrivée au clavier (Tab) sur le champ : le curseur se pose sur le premier emplacement.
+      canvas.addEventListener("focus", function () {
+        var auClavier = false;
+        try { auClavier = canvas.matches(":focus-visible"); } catch (e) { /* navigateur ancien */ }
+        if (auClavier && v.curseur < 0 && p.phase === "preparation" && !conseilEnCours() && carte.emplacements.length) { v.curseur = ordreClavier[0]; majCurseur(); }
       });
 
       // --- boucle d'animation ---
       var avant = null, phaseAvant = p.phase;
       function boucle(t) {
-        if (!actif) return;
+        if (!actif || !canvas.isConnected) { actif = false; return; } // partie quittée : la boucle s'arrête d'elle-même
         var dt = avant == null ? 0 : Math.min(0.05, (t - avant) / 1000);
         avant = t;
         v.horloge += dt;
@@ -444,7 +626,7 @@
       function arreter() { actif = false; JEU.musique.humeur("paix"); }
       JEU.partie.surQuitter = function () {
         arreter();
-        if (!finie) { finie = true; C.apresBataille({ lieu: lieu, front: frontId, issue: "retraite", degatsRival: p.stats.degatsRival }); }
+        if (!finie) { finie = true; C.apresBataille({ lieu: lieu, front: frontId, issue: "retraite", degatsRival: p.stats.degatsRival, entamee: p.vague > 0 || p.phase !== "preparation" }); }
       };
 
       function bilan() {
@@ -463,10 +645,13 @@
           titreB = issue === "retraite" ? "Les murs ont cédé" : "Le domaine tient !";
           texte = issue === "retraite" ? "Tes gens se sont réfugiés dans le donjon. " + Adv(adv.armee) + " campe encore devant tes murs, mais n'a rien pris." : Adv(adv.armee) + " bat en retraite.";
         } else if (b.conquise) {
-          titreB = "Victoire !"; texte = prov.nom + " est à toi. Elle te versera un tribut chaque jour.";
+          // « La province des Oliveraies », « du Gué », « de la Forêt de l'Ouest » : l'accord tient pour les dix noms.
+          titreB = "Victoire !"; texte = "La province " + avecArticle(prov.nom, "de") + " est à toi : elle te versera un tribut chaque jour.";
         } else {
           titreB = issue === "retraite" ? "Retraite en bon ordre" : Adv(adv.peuple) + " tiennent encore";
-          texte = "Ton armée a porté " + p.stats.degatsRival + " coups à la place forte de " + prov.nom + ". Il lui reste " + C.etat().provinces[lieu].pv + " points de solidité : la prochaine bataille reprendra là.";
+          var place = "la place forte " + avecArticle(prov.nom, "de");
+          texte = (p.stats.degatsRival > 0 ? "Ton armée a porté " + pluriel(p.stats.degatsRival, "coup") + " à " + place + "." : "Aucun de tes soldats n'a atteint " + place + ".") +
+            " Il lui reste " + pluriel(C.etat().provinces[lieu].pv, "point") + " de solidité : la prochaine bataille reprendra là.";
         }
         var liste = Object.keys(gains).map(function (r) { return "+" + gains[r] + " " + JEU.RESSOURCES[r].nom.toLowerCase(); }).join(", ");
         conseil.innerHTML = "";
@@ -481,6 +666,7 @@
           setTimeout(function () { var bl = conseil.querySelector(".bilan"); if (bl) { var c = JEU.anim.centre(bl); JEU.anim.eclat(c.x, c.y - 40, "feuilles", 80); } }, 30);
         }
         JEU.ui.clavier = function (k) { if (k === "Enter") { retour(); return true; } return false; };
+        montrer(conseil, "proche");
       }
       function retour() { arreter(); JEU.ui.finirPartie(); JEU.ui.afficher("jouer"); }
 

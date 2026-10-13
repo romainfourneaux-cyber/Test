@@ -309,7 +309,7 @@ Les quiz du livre (arrêts sur lecture) ne sont pas recopiés : le jeu pose ses 
 
 - L'emploi du temps donne trois créneaux d'anglais par semaine (45 minutes au plus) sans attribuer de séquence à une semaine : « démarrer la séquence 1 et avancer au rythme de l'élève ». Visios en direct à partir de fin septembre.
 - Devoirs écrits en S5, S13, S18, S22, S28 et S32. Leur périmètre se fixe d'après les séquences réellement faites, à confirmer avec Romain.
-- Dans le jeu, les séquences s'ouvrent dans l'ordre, dès que leur fichier existe et que la précédente est validée.
+- Dans le jeu, une séquence s'ouvre dès que son fichier existe, sans attendre la précédente (plus d'épreuve de validation dans le jeu depuis la version 0.5.0) ; les séquences se rangent par leur champ ordre. Un devoir d'anglais corrigé les fait passer « acquis » ou « à revoir » (jeu/data/suivi.js), une fois son périmètre confirmé par Romain.
 
 ## Fiches méthode déposées
 

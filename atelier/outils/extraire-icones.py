@@ -7,7 +7,7 @@ racine = os.path.join(ici, "..", "..")
 d = json.load(open(sys.argv[1], encoding="utf-8"))["icons"]
 noms = json.load(open(os.path.join(ici, "icones-choisies.json"), encoding="utf-8"))
 out = {k: d[v]["body"] for k, v in noms.items()}
-txt = ("// Icônes Game-icons.net (Lorc, Delapouite et contributeurs), licence CC BY 3.0 : https://game-icons.net\n"
+txt = ("// Icônes Game-icons.net (Lorc, Delapouite, Sbed, Cathelineau, Skoll, HeavenlyDog et DarkZaitzev), licence CC BY 3.0 : https://game-icons.net\n"
        "// Sélection générée par atelier/outils/extraire-icones.py depuis le paquet @iconify-json/game-icons 1.2.4. Cadre 512 × 512.\n"
        "(function (racine) {\n  racine.JEU = racine.JEU || {};\n  racine.JEU.GAME_ICONS = " + json.dumps(out, ensure_ascii=False, indent=0) +
        ";\n})(typeof window !== \"undefined\" ? window : globalThis);\n")

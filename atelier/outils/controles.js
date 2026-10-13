@@ -19,6 +19,15 @@
   }
   function mots(s) { return String(s || "").split(/\s+/).filter(Boolean).length; }
 
+  // Source d'une estimation de suivi.js : "devoir" (identifiant de devoirs.js), "fichier" (chemin d'un fichier
+  // déposé, relatif à DEPOT/ ; valider.js vérifie qu'il existe) ou null (manquante ou inconnue).
+  function sourceSuivi(source, devoirs) {
+    if (typeof source !== "string" || !source.trim()) return null;
+    if ((devoirs || []).some(function (d) { return d.id === source; })) return "devoir";
+    if (/\.(pdf|jpe?g|png|heic|docx?|odt|txt)$/i.test(source) && !/^(\/|[a-z]:)|\.\./i.test(source)) return "fichier";
+    return null;
+  }
+
   // donnees : { config, planning, devoirs, indexCours, aRetravailler, cours: {id: obj}, anglais: {id: obj}, erreursChargement: [] }
   // debrouiller : fonction(texte) -> texte
   function controler(donnees, debrouiller) {
@@ -219,22 +228,36 @@
       }
     });
     (donnees.aRetravailler || []).forEach(function (id) { if (!fiches[id]) A("[7] a-retravailler : fiche inconnue " + id); });
-    // suivi du chroniqueur : cours connus, états permis, note courte
+    // suivi du chroniqueur (jeu/data/suivi.js) : seulement des cours, états permis, devoir source connu, note courte.
+    // La note s'affiche à l'élève : l'anti-recopie et l'anti-spoil de la note sont dans valider.js (contrôles 8 et 9).
     if (donnees.suivi) {
-      if (typeof donnees.suivi.cours !== "object") E("[1] suivi : champ cours absent");
-      Object.keys(donnees.suivi.cours || {}).forEach(function (id) {
-        var x = donnees.suivi.cours[id];
-        var connu = planning.some(function (p) { return p.id === id; }) || donnees.cours[id] || donnees.anglais[id] || /^methode-/.test(id);
-        if (!connu) E("[7] suivi : cours inconnu " + id);
+      var su = donnees.suivi.cours;
+      if (!su || typeof su !== "object" || Array.isArray(su)) E("[1] suivi : champ cours absent");
+      Object.keys(su || {}).forEach(function (id) {
+        var x = su[id];
+        if (!x || typeof x !== "object") { E("[7] suivi : estimation illisible pour " + id); return; }
+        var p = parId[id];
+        if (p && p.type !== "cours") E("[7] suivi : " + id + " n'est pas un cours (entrée de type " + p.type + ")");
+        else if (!p && !RX.anglais.test(id) && !RX.methode.test(id)) E("[7] suivi : cours inconnu " + id);
         if (["acquis", "a-revoir"].indexOf(x.etat) < 0) E("[7] suivi : état inconnu pour " + id + " (acquis ou a-revoir)");
-        if (x.note && mots(x.note) > 20) A("[7] suivi : note trop longue pour " + id + " (20 mots au plus)");
+        var genre = sourceSuivi(x.source, devoirs);
+        if (!genre) E("[7] suivi : devoir source manquant ou inconnu pour " + id + (x.source ? " (" + x.source + ")" : "") + " : identifiant de devoirs.js ou fichier déposé");
+        else if (genre === "devoir" && p && p.type === "cours") {
+          var dv = devoirs.filter(function (d) { return d.id === x.source; })[0];
+          if (Array.isArray(dv.perimetre) && dv.perimetre.indexOf(id) < 0) A("[7] suivi : " + id + " n'est pas dans le périmètre de " + x.source);
+        }
+        if (typeof x.le !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(x.le)) A("[7] suivi : date de l'estimation (le, AAAA-MM-JJ) absente ou mal écrite pour " + id + " : /relecture s'en sert");
+        if (x.note !== undefined && typeof x.note !== "string") E("[7] suivi : note illisible pour " + id);
+        else if (x.note && mots(x.note) > 20) A("[7] suivi : note trop longue pour " + id + " (20 mots au plus)");
+        if (typeof x.note === "string" && /\d/.test(x.note)) A("[7] suivi : la note de " + id + " contient un chiffre (donnée ou note du devoir ?)");
+        if (typeof x.note === "string" && /(^|[^\wÀ-ÿ])(M\.|Mme|Mlle|monsieur|madame|correct(eur|rice)|professeure?|prof)([^\wÀ-ÿ]|$)/i.test(x.note)) A("[7] suivi : la note de " + id + " parle d'une personne (aucun nom d'élève, de famille ou de correcteur)");
       });
     }
 
     return { erreurs: erreurs, alertes: alertes };
   }
 
-  var api = { controler: controler, phrases: phrases, mots: mots };
+  var api = { controler: controler, phrases: phrases, mots: mots, sourceSuivi: sourceSuivi };
   if (typeof module !== "undefined" && module.exports) module.exports = api;
   racine.CONTROLES = api;
 })(typeof window !== "undefined" ? window : globalThis);

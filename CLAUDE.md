@@ -12,6 +12,7 @@ Ce dossier sert à construire et à nourrir un jeu web de révision pour un él�
 
 - DEPOT/ : les fichiers de Romain. Lecture seule : ne modifie, ne renomme, ne déplace et ne supprime jamais rien dedans, même pour ranger.
 - atelier/ : ton espace de travail (registre des fichiers traités, index des notions, extractions, notes sur les devoirs, fiches de relecture, outils, copies de versions). Rien de ce dossier n'est copié dans jeu/.
+- atelier/drive/ : PDF téléchargés du Drive pour l'inventaire, ignorés par git. Ils ne remplacent pas un dépôt dans DEPOT/ : une fiche ou une question ne cite un de ces fichiers qu'une fois que Romain l'a déposé.
 - jeu/ : le seul dossier que l'élève utilise. N'y mets que ce qui sert au jeu.
 - docs/ : spécifications et journal.
 
@@ -32,7 +33,7 @@ Ce dossier sert à construire et à nourrir un jeu web de révision pour un él�
 - Chaque fiche et chaque question indique sa source : fichier et page.
 - Tu reformules. Aucune phrase recopiée des livrets, aucune image reprise ; les schémas sont redessinés en SVG.
 - Vocabulaire d'un élève de 13 ans. Une explication d'erreur tient en deux phrases.
-- Devoirs : énoncés et corrigés servent seulement à délimiter un siège, à vérifier qu'aucune question ne recoupe le devoir et à repérer les notions à retravailler. Aucun énoncé, document, exemple, chiffre ou réponse attendue de devoir n'entre dans jeu/. Le nom de l'élève, de sa famille ou d'un correcteur et les numéros de sécurité sociale ne sont recopiés nulle part.
+- Devoirs : énoncés et corrigés servent seulement à délimiter un siège, à vérifier qu'aucune question ne recoupe le devoir, à repérer les notions à retravailler et à estimer si un cours est acquis ou à revoir (jeu/data/suivi.js). Aucun énoncé, document, exemple, chiffre, note ou réponse attendue de devoir n'entre dans jeu/, pas même dans la note courte de suivi.js. Le nom de l'élève, de sa famille ou d'un correcteur et les numéros de sécurité sociale ne sont recopiés nulle part.
 - Les productions personnelles (avis, carte mentale, création, rédaction libre) restent hors jeu.
 - Bonus autorisé, toujours à part : fiche marquée bonus, rattachée à une notion du cours, avec une source fiable notée (encyclopédie, musée, institution). Jamais dans une bataille, un siège ou un boss. Environ une fiche bonus pour quatre fiches de cours.
 - Croisades, guerres de religion et autres conflits : les camps sont des puissances politiques (royaumes, empires, sultanats), avec le ton neutre du cours. Aucune figure religieuse en unité de combat, aucun lieu de culte détruit, aucune caricature. Les armées et les adversaires sont ceux que le cours cite ; à défaut, « un seigneur rival », sans nom inventé.
@@ -51,7 +52,7 @@ Ce dossier sert à construire et à nourrir un jeu web de révision pour un él�
 ## Méthode
 
 - Si le cahier des charges ne tranche pas, prends la solution la plus simple et note-la dans docs/JOURNAL.md, rubrique Décisions.
-- Après chaque changement : lance le validateur (node atelier/outils/valider.js), ajoute une ligne au journal (date, fichiers, changement) et incrémente jeu/VERSION.txt quand tu livres. Sans Node, fais ses contrôles toi-même en lisant les fichiers et préviens Romain que l'anti-recopie et l'anti-spoil ont été vérifiés à la main.
+- Après chaque changement : lance le validateur (node atelier/outils/valider.js) et les tests (node atelier/outils/tests.js), ajoute une ligne au journal (date, fichiers, changement) et, quand tu livres, incrémente le même numéro dans jeu/VERSION.txt et dans JEU.version (jeu/index.html, c'est celui que le jeu affiche). Sans Node, fais ses contrôles toi-même en lisant les fichiers et préviens Romain que l'anti-recopie et l'anti-spoil ont été vérifiés à la main.
 - Si git est installé, un commit par jalon. Sinon, une copie datée de jeu/ dans atelier/versions/ avant chaque gros changement.
 - Quand Romain doit vérifier quelque chose dans le navigateur, donne-lui cinq actions au plus, chacune avec ce qu'il doit voir.
 - Commandes du projet : /traiter (intégrer les nouveaux fichiers de DEPOT/) et /relecture (fiche de relecture de la semaine et signalements de l'élève).
