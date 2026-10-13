@@ -49,7 +49,7 @@
   };
 
   function migrer(s) {
-    if (!s || typeof s !== "object") throw new Error("sauvegarde illisible");
+    if (!s || typeof s !== "object" || Array.isArray(s)) throw new Error("sauvegarde illisible");
     if (!s.schema) s.schema = 1;
     if (s.schema > SCHEMA) throw new Error("sauvegarde d'une version plus récente du jeu (schéma " + s.schema + ")");
     var base = nouvelle();
@@ -112,12 +112,27 @@
     setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 500);
   }
 
+  function objetSimple(x) { return !!x && typeof x === "object" && !Array.isArray(x); }
+
+  // Une vraie sauvegarde du jeu a toujours une date de création, des notions et des ressources.
+  function ressembleASauvegarde(s) {
+    return objetSimple(s) && typeof s.creeLe === "string" && objetSimple(s.notions) && objetSimple(s.ressources);
+  }
+
   // Remplace la partie en cours. La confirmation est demandée par l'interface.
+  // Le fichier est vérifié AVANT la migration (qui compléterait n'importe quel objet),
+  // et l'ancienne partie est gardée de côté dans le navigateur (clé jeu5e-avant-import).
   function importer(texte) {
-    var s = migrer(JSON.parse(texte));
-    if (typeof s.cours !== "object" || typeof s.notions !== "object") throw new Error("ce fichier n'est pas une sauvegarde du jeu");
-    etat = s;
+    var PAS_UNE_SAUVEGARDE = "Ce fichier n'est pas une sauvegarde du jeu, ou il est abîmé.";
+    var brut;
+    try { brut = JSON.parse(texte); } catch (e) { throw new Error(PAS_UNE_SAUVEGARDE); }
+    if (!ressembleASauvegarde(brut)) throw new Error(PAS_UNE_SAUVEGARDE);
+    if (brut.schema > SCHEMA) throw new Error("Cette sauvegarde vient d'une version plus récente du jeu. Demande à ton père de mettre le jeu à jour.");
+    var s;
+    try { s = migrer(brut); } catch (e) { throw new Error(PAS_UNE_SAUVEGARDE); }
     var ls = stockage();
+    try { var ancien = ls && ls.getItem(CLE); if (ancien) ls.setItem(CLE + "-avant-import", ancien); } catch (e) { /* stockage plein ou interdit */ }
+    etat = s;
     try { if (ls) ls.setItem(CLE, JSON.stringify(etat)); } catch (e) { /* rien */ }
     return etat;
   }

@@ -1,4 +1,4 @@
-// Icônes Game-icons.net (Lorc, Delapouite et contributeurs), licence CC BY 3.0 : https://game-icons.net
+// Icônes Game-icons.net (Lorc, Delapouite, Sbed, Cathelineau, Skoll, HeavenlyDog et DarkZaitzev), licence CC BY 3.0 : https://game-icons.net
 // Sélection générée par atelier/outils/extraire-icones.py depuis le paquet @iconify-json/game-icons 1.2.4. Cadre 512 × 512.
 (function (racine) {
   racine.JEU = racine.JEU || {};

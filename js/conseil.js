@@ -101,7 +101,7 @@
       scene.innerHTML = "";
       scene.appendChild(el("p", { class: "affirmation petite", texte: "« " + q.enonce + " »" }));
       scene.appendChild(el("p", { class: "consigne", texte: "Tu as raison d'en douter. Que faut-il dire à la place ?" }));
-      var corr = q.corrections.slice();
+      var corr = U.melanger(q.corrections); // la bonne correction n'est pas toujours la première
       corr.forEach(function (x, k) {
         scene.appendChild(el("button", { class: "choix", onclick: function () { conclure(q, c, { vrai: false, correction: x }); } }, [el("span", { class: "touche", texte: String(k + 1) }), el("span", { texte: x })]));
       });
@@ -133,7 +133,9 @@
     }
 
     // Carte de décision : pas de bonne ou de mauvaise réponse, chaque choix fait monter une jauge.
+    // Ce n'est pas une question : le temps passé à trancher n'entre pas dans la mesure réponse → question suivante.
     function decision(d) {
+      JEU.mesure.debut = null;
       var carte = el("div", { class: "carte-conseil decision", tabindex: "0" }, [
         el("div", { class: "cc-tete" }, [el("span", { class: "cc-portrait", html: JEU.icones.icone("roi", 46) }), el("div", {}, [el("b", { texte: "À toi de trancher" }), el("span", { texte: "aucune mauvaise réponse ici" })])]),
         el("p", { class: "cc-affaire", texte: d.texte }),
@@ -149,13 +151,12 @@
       var fait = false;
       function choisir(droite) {
         if (fait) return; fait = true;
-        carte.classList.add(droite ? "part-droite" : "part-gauche");
         var o = droite ? d.droite : d.gauche;
         monter(o.j, 1);
         JEU.sons.jouer("construction");
         JEU.ui.clavier = null;
         i++;
-        setTimeout(suivante, 260);
+        suivante(); // la carte suivante arrive tout de suite ; la jauge qui monte et le son font l'effet
       }
       JEU.ui.clavier = function (k) {
         if (k === "ArrowLeft") { choisir(false); return true; }

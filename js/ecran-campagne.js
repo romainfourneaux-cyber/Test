@@ -40,7 +40,7 @@
         "<text x='548' y='" + y + "' class='titre-front' text-anchor='end'>" + U.echapper(f.nom) + " · " + U.echapper(C.maj1(adv.nom)) + "</text></g>";
     });
     var attaque = c.rival.attaque;
-    s += noeud(POSITIONS.domaine, "lys", france.couleurs, "lys", "Ton domaine", attaque ? "attaqué par " + camp(C.front(attaque).camp).nom.replace(/^l'|^le /, "") : "", "domaine", attaque ? "attaque" : "tien");
+    s += noeud(POSITIONS.domaine, "lys", france.couleurs, "lys", "Ton domaine", attaque ? "attaqué par " + camp(C.front(attaque).camp).armee : "", "domaine", attaque ? "attaque" : "tien");
     C.FRONTS.forEach(function (f) {
       var cible = C.prochaineProvince(f.id), adv = camp(f.camp);
       f.provinces.forEach(function (p) {
@@ -152,7 +152,7 @@
   // ---------- arsenal : gestion de l'armée ----------
   var EFFETS = {
     archers: "Tir rapide, portée moyenne.", piquiers: "Ralentit et blesse tout ce qui passe.", baliste: "Gros dégâts, très longue portée.",
-    catapulte: "Dégâts de zone sur les groupes.", fantassins: "Trois soldats par envoi, pas chers.", cavaliers: "Deux cavaliers rapides.", belier: "Lente, très solide, frappe fort le château."
+    catapulte: "Dégâts de zone sur les groupes.", fantassins: "Trois soldats par envoi, pas chers.", cavaliers: "Deux cavaliers rapides : ils rapportent le plus de revenu.", belier: "Lente et très solide : passe là où les autres tombent et frappe le château le plus fort."
   };
 
   function ouvrirArsenal() {
@@ -160,6 +160,9 @@
     var boite = el("div", { class: "arsenal" });
     function rendu() {
       var c = C.etat();
+      // au clavier, après un achat, le focus reste sur la même ligne (ou passe à la suivante qu'on peut acheter)
+      var rang = -1;
+      Array.prototype.forEach.call(boite.querySelectorAll(".ligne-arsenal"), function (l, k) { if (l.contains(document.activeElement)) rang = k; });
       boite.innerHTML = "";
       boite.appendChild(el("p", { class: "note", texte: "Tes réserves : " + C.totalRessources() + " ressources. Le prix est pris dans tes réserves les plus fournies. Chaque niveau au-delà du premier ajoute 15 % de force." }));
       [["tours", "Tours", M.TOURS], ["troupes", "Troupes", M.TROUPES]].forEach(function (g) {
@@ -186,6 +189,16 @@
         pr == null ? el("span", { class: "etat", texte: "Au maximum" }) :
           el("button", { class: "bouton petit", disabled: C.totalRessources() < pr, onclick: function () { if (C.renforcerRemparts()) { JEU.sons.jouer("construction"); JEU.ui.majRessources(); rendu(); } }, texte: "Renforcer · " + pr })
       ]));
+      if (rang >= 0) remettreFocus(rang);
+    }
+    function remettreFocus(rang) {
+      var lignes = boite.querySelectorAll(".ligne-arsenal");
+      for (var k = 0; k < lignes.length; k++) {
+        var b = lignes[(rang + k) % lignes.length].querySelector("button:not([disabled])");
+        if (b) { b.focus(); return; }
+      }
+      var fermer = document.querySelector("#modale .modale-fermer"); // plus rien à acheter : le bouton Fermer
+      if (fermer) fermer.focus();
     }
     rendu();
     JEU.ui.ouvrirModale("L'arsenal", boite, function () { if (JEU.ui.ecranCourant() === "jouer") JEU.ui.afficher("jouer"); });

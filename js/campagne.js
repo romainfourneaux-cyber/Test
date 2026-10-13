@@ -17,22 +17,44 @@
   };
   function maj1(t) { return t.charAt(0).toUpperCase() + t.slice(1); }
 
+  // Un nom précédé de « de » ou de « à », avec l'article contracté ou élidé comme en français :
+  // « Le Gué » → du Gué, au Gué ; « La Tour du Col » → de la Tour du Col, à la Tour du Col ;
+  // « Les Oliveraies » → des Oliveraies, aux Oliveraies ; « l'Empire omeyyade » → de l'Empire omeyyade, à l'Empire omeyyade.
+  // Une autre préposition (« par », « contre »…) garde l'article, mis en minuscule : « par le royaume d'Angleterre ».
+  function avecArticle(nom, preposition) {
+    var prep = preposition === "a" ? "à" : (preposition || "de");
+    var m = /^(les|le|la) (.+)$/i.exec(nom);
+    if (m) {
+      var art = m[1].toLowerCase(), reste = m[2];
+      if (art === "le" && prep === "de") return "du " + reste;
+      if (art === "le" && prep === "à") return "au " + reste;
+      if (art === "les" && prep === "de") return "des " + reste;
+      if (art === "les" && prep === "à") return "aux " + reste;
+      return prep + " " + art + " " + reste;
+    }
+    m = /^l(['’])(.+)$/i.exec(nom);
+    if (m) return prep + " l" + m[1] + m[2];
+    if (prep === "de" && /^[aeiouyàâäéèêëîïôöùûüœæ]/i.test(nom)) return "d'" + nom;
+    return prep + " " + nom;
+  }
+
   // Deux fronts, chacun avec ses provinces dans l'ordre de la route. pv : solidité de la place forte adverse
   // (gardée d'une bataille à l'autre). carte : le tracé de la bataille (cartes-bataille.js).
+  // il, est : pour accorder une phrase dont la province est le sujet (« Les Oliveraies sont à toi. Elles… »).
   var FRONTS = [
     { id: "angleterre", nom: "Front de l'ouest", camp: "angleterre", provinces: [
-      { id: "gue", nom: "Le Gué", pv: 16, icone: "riviere", tribut: "routes", carte: "gue" },
-      { id: "foret", nom: "La Forêt de l'Ouest", pv: 20, icone: "foret", tribut: "remedes", carte: "foret" },
-      { id: "moulin", nom: "Le Moulin du Val", pv: 24, icone: "moulin", tribut: "alambics", carte: "moulin" },
-      { id: "col", nom: "La Tour du Col", pv: 30, icone: "tour-de-guet", tribut: "sceaux", carte: "col" },
-      { id: "chateau", nom: "La Forteresse anglaise", pv: 32, icone: "chateau", tribut: "parchemins", carte: "chateau" }
+      { id: "gue", nom: "Le Gué", pv: 16, icone: "riviere", tribut: "routes", carte: "gue", il: "Il", est: "est" },
+      { id: "foret", nom: "La Forêt de l'Ouest", pv: 20, icone: "foret", tribut: "remedes", carte: "foret", il: "Elle", est: "est" },
+      { id: "moulin", nom: "Le Moulin du Val", pv: 24, icone: "moulin", tribut: "alambics", carte: "moulin", il: "Il", est: "est" },
+      { id: "col", nom: "La Tour du Col", pv: 30, icone: "tour-de-guet", tribut: "sceaux", carte: "col", il: "Elle", est: "est" },
+      { id: "chateau", nom: "La Forteresse anglaise", pv: 32, icone: "chateau", tribut: "parchemins", carte: "chateau", il: "Elle", est: "est" }
     ] },
     { id: "omeyyades", nom: "Front du sud", camp: "omeyyades", provinces: [
-      { id: "piemont", nom: "Le Piémont", pv: 16, icone: "montagne", tribut: "sceaux", carte: "col" },
-      { id: "oliveraie", nom: "Les Oliveraies", pv: 20, icone: "recolte", tribut: "remedes", carte: "moulin" },
-      { id: "fleuve", nom: "Le Grand Fleuve", pv: 24, icone: "riviere", tribut: "routes", carte: "gue" },
-      { id: "citadelle", nom: "La Citadelle du Sud", pv: 30, icone: "tour", tribut: "alambics", carte: "foret" },
-      { id: "forteresse", nom: "La Forteresse omeyyade", pv: 32, icone: "chateau", tribut: "parchemins", carte: "chateau" }
+      { id: "piemont", nom: "Le Piémont", pv: 16, icone: "montagne", tribut: "sceaux", carte: "col", il: "Il", est: "est" },
+      { id: "oliveraie", nom: "Les Oliveraies", pv: 20, icone: "recolte", tribut: "remedes", carte: "moulin", il: "Elles", est: "sont" },
+      { id: "fleuve", nom: "Le Grand Fleuve", pv: 24, icone: "riviere", tribut: "routes", carte: "gue", il: "Il", est: "est" },
+      { id: "citadelle", nom: "La Citadelle du Sud", pv: 30, icone: "tour", tribut: "alambics", carte: "foret", il: "Elle", est: "est" },
+      { id: "forteresse", nom: "La Forteresse omeyyade", pv: 32, icone: "chateau", tribut: "parchemins", carte: "chateau", il: "Elle", est: "est" }
     ] }
   ];
   var PROVINCES = [];
@@ -76,17 +98,34 @@
     };
   }
 
-  // Complète une campagne incomplète (sauvegarde plus ancienne ou abîmée), sans rien écraser.
+  // Complète ou répare une campagne (sauvegarde plus ancienne ou abîmée) sans toucher à ce qui est valable :
+  // une valeur absente, nulle ou du mauvais genre (objet, tableau, nombre) reprend sa valeur neuve.
   function completer(c) {
     var v = etatVide();
-    if (!c || typeof c !== "object") return v;
-    Object.keys(v).forEach(function (k) { if (c[k] === undefined || (v[k] !== null && typeof c[k] !== typeof v[k])) c[k] = v[k]; });
-    PROVINCES.forEach(function (p) { if (!c.provinces[p.id]) c.provinces[p.id] = { pv: p.pv }; });
-    ["tours", "troupes"].forEach(function (g) { Object.keys(v.arsenal[g]).forEach(function (t) { if (typeof (c.arsenal[g] || (c.arsenal[g] = {}))[t] !== "number") c.arsenal[g][t] = v.arsenal[g][t]; }); });
-    if (typeof c.arsenal.remparts !== "number") c.arsenal.remparts = 0;
-    Object.keys(v.royaume).forEach(function (k) { if (typeof c.royaume[k] !== "number") c.royaume[k] = 0; });
+    if (!c || typeof c !== "object" || Array.isArray(c)) return v;
+    function nombre(x) { return typeof x === "number" && isFinite(x); }
+    function objet(x) { return !!x && typeof x === "object" && !Array.isArray(x); }
+    Object.keys(v).forEach(function (k) {
+      if (c[k] === undefined) c[k] = v[k];
+      else if (v[k] !== null && (c[k] === null || typeof c[k] !== typeof v[k] || Array.isArray(c[k]) !== Array.isArray(v[k]))) c[k] = v[k];
+    });
+    if (c.dernierJour !== null && typeof c.dernierJour !== "string") c.dernierJour = null;
+    if (c.evenement !== null && !objet(c.evenement)) c.evenement = null;
+    PROVINCES.forEach(function (p) {
+      if (!objet(c.provinces[p.id])) c.provinces[p.id] = { pv: p.pv };
+      else if (!nombre(c.provinces[p.id].pv)) c.provinces[p.id].pv = p.pv;
+    });
+    ["tours", "troupes"].forEach(function (g) {
+      if (!objet(c.arsenal[g])) c.arsenal[g] = {};
+      Object.keys(v.arsenal[g]).forEach(function (t) { if (!nombre(c.arsenal[g][t])) c.arsenal[g][t] = v.arsenal[g][t]; });
+    });
+    if (!nombre(c.arsenal.remparts)) c.arsenal.remparts = 0;
+    Object.keys(v.royaume).forEach(function (k) { if (!nombre(c.royaume[k])) c.royaume[k] = 0; });
+    ["menace", "defaites"].forEach(function (k) { if (!nombre(c.rival[k])) c.rival[k] = 0; });
     if (c.rival.attaque === true) c.rival.attaque = "angleterre";
-    if (c.rival.attaque && !front(c.rival.attaque)) c.rival.attaque = false;
+    if (typeof c.rival.attaque !== "string" || !front(c.rival.attaque)) c.rival.attaque = false;
+    if (c.bonus.or !== undefined && !nombre(c.bonus.or)) delete c.bonus.or;
+    if (c.chronique.some(function (x) { return !x || typeof x.texte !== "string"; })) c.chronique = c.chronique.filter(function (x) { return x && typeof x.texte === "string"; });
     return c;
   }
 
@@ -216,18 +255,21 @@
   }
 
   // ---------- issue d'une bataille ----------
-  // bilan : { lieu, issue, degatsRival, bonnes, total }
+  // bilan : { lieu, front, issue, degatsRival, bonnes, total, entamee }
+  // entamee : false quand l'élève quitte avant la première vague. Rien ne change alors, et les bonus gagnés
+  // aux événements (mercenaires, espion) restent pour la prochaine bataille.
   function apresBataille(bilan) {
+    if (bilan.entamee === false) return {};
     var c = etat(), r = JEU.sauvegarde.etat().ressources;
     var gains = {};
     function gagner(res, n) { r[res] += n; gains[res] = (gains[res] || 0) + n; }
-    c.bonus = {};
+    c.bonus = {}; // les bonus des événements ont servi pendant cette bataille
     if (bilan.lieu === "domaine") {
       var adv = campDe(bilan.front || c.rival.attaque);
       if (bilan.issue !== "retraite") {
         c.rival.attaque = false; c.rival.defaites++;
         gagner("sceaux", 4); gagner("routes", 2);
-        noter("Tu as repoussé l'attaque de " + adv.armee + ".");
+        noter("Tu as repoussé l'attaque " + avecArticle(adv.armee, "de") + ".");
       } else noter(maj1(adv.armee) + " campe toujours devant tes murs.");
     } else {
       var prov = c.provinces[bilan.lieu];
@@ -238,10 +280,10 @@
         if (c.conquises.indexOf(bilan.lieu) < 0) c.conquises.push(bilan.lieu);
         gagner(def.tribut, 8);
         c.rival.menace++;
-        noter("Tu as pris " + def.nom + " à " + campDe(def.front).nom + ".");
+        noter("Tu as pris " + def.nom + " " + avecArticle(campDe(def.front).nom, "à") + ".");
         bilan.conquise = true;
       } else if (bilan.degatsRival > 0) {
-        noter("Ton armée a ébranlé " + def.nom + " (" + bilan.degatsRival + " coups à la place forte).");
+        noter("Ton armée a porté " + bilan.degatsRival + (bilan.degatsRival > 1 ? " coups" : " coup") + " à la place forte " + avecArticle(def.nom, "de") + ".");
       }
       if (bilan.issue !== "retraite") gagner(def.tribut, 2);
     }
@@ -257,7 +299,7 @@
     var qs = JEU.recit.suite(ev.questions);
     if (!qs.length) { JEU.ui.toast("Pas encore de questions disponibles."); return; }
     var zone = JEU.ui.commencerPartie(ev.titre, function () { JEU.ui.afficher("jouer"); });
-    var i = 0, bonnes = 0;
+    var i = 0, bonnes = 0, texteFin = null;
     var scene = el("div", { class: "scene-evenement" });
     zone.appendChild(el("div", { class: "evenement-tete" }, [el("span", { class: "evenement-icone", html: JEU.icones.icone(ev.icone, 64) }), el("p", { texte: ev.texte })]));
     zone.appendChild(scene);
@@ -276,19 +318,35 @@
         } else JEU.ui.panneauErreur(q, scene, function () { JEU.mesure.reponseDonnee(); suivante(); });
       }, { recit: JEU.recit.cadre(q, "evenement") });
     }
-    function fin() {
+    // Quitter en route clôt l'événement avec les réponses déjà données : ce qui est gagné reste, mais on ne peut
+    // pas le rejouer pour gagner encore. Quitté avant la première réponse, il reste à jouer.
+    JEU.partie.surQuitter = function () { if (i > 0) cloturer(); };
+    // Applique l'issue de l'événement (une seule fois) et renvoie la phrase du bilan.
+    function cloturer() {
+      if (texteFin !== null) return texteFin;
       var c = etat(), texte;
-      c.evenement.fait = true;
+      if (c.evenement) c.evenement.fait = true;
       if (ev.id === "marchands") texte = bonnes ? "Le marché a été bon : " + 2 * bonnes + " ressources de plus." : "Les marchands repartent sans rien vendre. Rien n'est perdu.";
       else if (ev.id === "defi") {
         var cible = prochaineProvince(U.hasard(FRONTS).id) || prochaineProvince();
-        if (bonnes >= 2 && cible) { c.provinces[cible.province.id].pv = Math.max(1, c.provinces[cible.province.id].pv - 3); texte = "Ton champion l'emporte ! Le château de " + cible.province.nom + " perd 3 points de solidité."; noter("Ton champion a vaincu celui du camp adverse."); }
-        else texte = bonnes >= 2 ? "Ton champion l'emporte !" : "Le duel reste indécis. Le camp adverse ne gagne rien.";
+        if (bonnes >= 2 && cible) {
+          var pr = c.provinces[cible.province.id], avant = pr.pv;
+          var place = "La place forte " + avecArticle(cible.province.nom, "de");
+          pr.pv = Math.max(1, avant - 3); // le duel affaiblit la place forte, seule une bataille la prend
+          var perte = avant - pr.pv;
+          texte = "Ton champion l'emporte ! " + place + (perte ? " perd " + perte + (perte > 1 ? " points" : " point") + " de solidité." : " est déjà à bout : ton armée n'a plus qu'à la prendre.");
+          noter("Ton champion a vaincu celui du camp adverse.");
+        } else texte = bonnes >= 2 ? "Ton champion l'emporte !" : "Le duel reste indécis. Le camp adverse ne gagne rien.";
       } else if (ev.id === "mercenaires") { if (bonnes) { c.bonus.or = 40; texte = "Les mercenaires rejoignent ton armée : +40 or au début de la prochaine bataille."; } else texte = "Les mercenaires passent leur chemin."; }
       else if (ev.id === "incendie") texte = bonnes ? "Le feu est éteint, et le peuple te remercie (+" + bonnes + " Peuple)." : "Les villageois éteignent le feu eux-mêmes. Rien n'est perdu.";
       else if (ev.id === "espion") { if (bonnes) { c.bonus.espion = true; texte = "L'espion avoue tout : la première vague adverse sera plus faible."; } else texte = "L'espion se tait. Tant pis, rien n'est perdu."; }
       JEU.sauvegarde.enregistrer();
       JEU.ui.majRessources();
+      texteFin = texte || "";
+      return texteFin;
+    }
+    function fin() {
+      var texte = cloturer();
       scene.innerHTML = "";
       scene.appendChild(el("div", { class: "bilan" + (bonnes ? " reussi" : "") }, [
         el("h2", { texte: ev.titre }), el("p", { class: "grand", texte: bonnes + " / " + qs.length }), el("p", { texte: texte }),
@@ -301,7 +359,7 @@
 
   JEU.campagne = {
     CAMPS: CAMPS, FRONTS: FRONTS, PROVINCES: PROVINCES, province: province, front: front, campDe: campDe, maj1: maj1, ARSENAL: ARSENAL, JAUGES: JAUGES, EVENEMENTS: EVENEMENTS, NIVEAU_MAX: NIVEAU_MAX,
-    etatVide: etatVide, completer: completer, etat: etat, noter: noter, prochaineProvince: prochaineProvince,
+    avecArticle: avecArticle, etatVide: etatVide, completer: completer, etat: etat, noter: noter, prochaineProvince: prochaineProvince,
     totalRessources: totalRessources, payer: payer, prixArsenal: prixArsenal, ameliorerArsenal: ameliorerArsenal,
     prixRemparts: prixRemparts, renforcerRemparts: renforcerRemparts, options: options,
     nouveauJour: nouveauJour, evenementDuJour: evenementDuJour, apresBataille: apresBataille, jouerEvenement: jouerEvenement

@@ -1,4 +1,4 @@
-// Le mentor : un chroniqueur du royaume. Il donne des indices, félicite et ouvre la bonne fiche.
+// Le mentor : un chroniqueur du royaume. Il donne des indices, félicite et encourage.
 (function (racine) {
   "use strict";
   var JEU = racine.JEU;
@@ -33,12 +33,5 @@
   function feliciter() { dire(JEU.util.hasard(FELICITATIONS), "joie", 2500); }
   function encourager() { dire(JEU.util.hasard(ENCOURAGEMENTS), "", 4000); }
 
-  // Après une épreuve ratée : le chroniqueur ouvre les fiches ratées, une par une.
-  function ouvrirFichesRatees(ficheIds, suite) {
-    var ids = ficheIds.filter(function (v, i, t) { return t.indexOf(v) === i; });
-    dire("Relisons ensemble " + (ids.length > 1 ? "ces " + ids.length + " fiches" : "cette fiche") + " avant ta nouvelle tentative.", "", 6000);
-    JEU.codex.ouvrirSuite(ids, suite);
-  }
-
-  JEU.mentor = { dire: dire, taire: taire, feliciter: feliciter, encourager: encourager, ouvrirFichesRatees: ouvrirFichesRatees };
+  JEU.mentor = { dire: dire, taire: taire, feliciter: feliciter, encourager: encourager };
 })(typeof window !== "undefined" ? window : globalThis);

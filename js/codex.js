@@ -7,8 +7,6 @@
   var U = JEU.util;
   var ouvert = {};  // matière dépliée
 
-  function ferme() { return JEU.partie && JEU.partie.codexFerme; }
-
   function rendreFiche(f, coursId, bonus) {
     var el = JEU.ui.el;
     var m = U.matiereDe(coursId);
@@ -58,7 +56,6 @@
   }
 
   function ouvrirFiche(ficheId) {
-    if (ferme()) { JEU.ui.toast("Le Codex est fermé pendant l'épreuve."); return; }
     var t = trouver(ficheId);
     if (!t) return;
     var boite = JEU.ui.el("div", {}, [rendreFiche(t.fiche, t.cours, t.bonus)]);
@@ -72,26 +69,6 @@
     if (!t) return [];
     var c = U.coursCharge(t.cours);
     return ((c && c.bonus) || []).filter(function (b) { return b.fiche === ficheId; });
-  }
-
-  // Ouvre plusieurs fiches à la suite (bilan d'épreuve), puis appelle suite().
-  function ouvrirSuite(ids, suite) {
-    var i = 0;
-    function une() {
-      if (i >= ids.length) { if (suite) suite(); return; }
-      var t = trouver(ids[i]);
-      i++;
-      if (!t) { une(); return; }
-      var el = JEU.ui.el;
-      var dernier = i >= ids.length;
-      var boite = el("div", {}, [
-        el("p", { class: "note", texte: "Fiche " + i + " sur " + ids.length }),
-        rendreFiche(t.fiche, t.cours, t.bonus),
-        el("div", { class: "actions" }, [el("button", { class: "bouton principal", onclick: function () { JEU.ui.fermerModale(); }, texte: dernier ? "J'ai relu, je retente" : "Fiche suivante" })])
-      ]);
-      JEU.ui.ouvrirModale(null, boite, une);
-    }
-    une();
   }
 
   JEU.ui.ecrans.codex = function (s) {
@@ -135,5 +112,5 @@
     });
   };
 
-  JEU.codex = { ouvrirFiche: ouvrirFiche, ouvrirSuite: ouvrirSuite, rendreFiche: rendreFiche, bonusDeFiche: bonusDeFiche };
+  JEU.codex = { ouvrirFiche: ouvrirFiche, rendreFiche: rendreFiche, bonusDeFiche: bonusDeFiche };
 })(typeof window !== "undefined" ? window : globalThis);

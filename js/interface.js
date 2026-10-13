@@ -53,13 +53,32 @@
 
   // ---------- clavier ----------
   // ui.clavier : fonction(touche) de l'écran actif ; renvoie true si la touche est utilisée.
+  // Un bouton atteint avec Tab garde son action propre à Entrée et Espace : le raccourci de l'écran ne la lui vole pas.
+  // Après un clic de souris, Entrée reste le raccourci de l'écran (Valider, Continuer, Lancer la vague…).
+  // On note d'où vient le focus au moment où il arrive : à cet instant, :focus-visible est faux après un clic
+  // et vrai après Tab. Au moment d'une touche, c'est trop tard : Chromium le rend vrai même pour un bouton cliqué.
+  // Un focus posé par le jeu juste après un clic (un panneau redessiné) compte aussi comme venu de la souris.
+  var focusClavier = false, sourisRecente = false;
+  document.addEventListener("pointerdown", function () { focusClavier = false; sourisRecente = true; }, true);
+  document.addEventListener("keydown", function () { sourisRecente = false; }, true);
+  document.addEventListener("focusin", function (ev) {
+    try { focusClavier = !sourisRecente && !!(ev.target && ev.target.matches && ev.target.matches(":focus-visible")); } catch (e) { focusClavier = false; }
+  });
+  // Vrai si le focus actuel a été donné au clavier (Tab, ou focus posé par le jeu juste après une touche).
+  ui.focusAuClavier = function () { return focusClavier; };
+  function boutonAuClavier(t) {
+    if (!focusClavier || !t || t === document.body || !t.matches) return false;
+    return t.matches("button, a[href]");
+  }
   document.addEventListener("keydown", function (ev) {
-    if (ev.target && /INPUT|TEXTAREA|SELECT/.test(ev.target.tagName) && ev.key !== "Enter") return;
+    // dans un champ, seules Entrée (valider) et Échap (fermer, quitter) vont au jeu
+    if (ev.target && /INPUT|TEXTAREA|SELECT/.test(ev.target.tagName) && ev.key !== "Enter" && ev.key !== "Escape") return;
     if (ev.altKey || ev.ctrlKey || ev.metaKey) return;
     if (ui.modaleOuverte()) {
       if (ev.key === "Escape") { ui.fermerModale(); ev.preventDefault(); }
       return;
     }
+    if ((ev.key === "Enter" || ev.key === " ") && boutonAuClavier(ev.target)) return;
     if (ui.clavier && ui.clavier(ev.key, ev)) { ev.preventDefault(); return; }
     if (ev.key === "Escape" && JEU.partie && JEU.partie.enCours) { ev.preventDefault(); ui.proposerQuitter(); }
   });
@@ -97,6 +116,17 @@
     var f = boite.querySelector("input, textarea, button:not(.modale-fermer)");
     if (f) f.focus();
   };
+  // Tab reste dans la fenêtre ouverte (le jeu derrière n'est plus atteignable au clavier).
+  document.addEventListener("keydown", function (ev) {
+    if (ev.key !== "Tab" || !ui.modaleOuverte()) return;
+    var boite = document.querySelector("#modale .modale-boite");
+    var f = Array.prototype.filter.call(boite.querySelectorAll("button, input, textarea, select, a[href], [tabindex]:not([tabindex='-1'])"), function (x) { return !x.disabled && x.offsetParent !== null; });
+    if (!f.length) return;
+    var premier = f[0], dernier = f[f.length - 1];
+    if (!boite.contains(document.activeElement)) { ev.preventDefault(); premier.focus(); }
+    else if (ev.shiftKey && document.activeElement === premier) { ev.preventDefault(); dernier.focus(); }
+    else if (!ev.shiftKey && document.activeElement === dernier) { ev.preventDefault(); premier.focus(); }
+  }, true);
   ui.fermerModale = function () {
     document.getElementById("modale").hidden = true;
     var r = retourModale; retourModale = null;
@@ -231,7 +261,7 @@
         corps.innerHTML = "";
         if (!q.corrections || !q.corrections.length) { repondre({ vrai: false, correction: null }); return; }
         corps.appendChild(el("p", { class: "consigne", texte: "Faux, oui. Quelle est la bonne correction ?" }));
-        var corr = q.corrections.slice();
+        var corr = U.melanger(q.corrections);
         corr.forEach(function (c, i) { corps.appendChild(boutonChoix(i + 1, c, function () { repondre({ vrai: false, correction: c }); })); });
         ui.clavier = function (k) {
           var n = parseInt(k, 10);
@@ -350,10 +380,8 @@
     }
   };
 
-  // Panneau d'erreur : la bonne réponse, deux phrases d'explication, Continuer, fiche (si permis), signaler.
-  // options : { ficheBloquee: bool }
-  ui.panneauErreur = function (q, zone, suite, options) {
-    options = options || {};
+  // Panneau d'erreur : la bonne réponse, deux phrases d'explication, Continuer, la fiche, signaler.
+  ui.panneauErreur = function (q, zone, suite) {
     zone.innerHTML = "";
     var f = JEU.questions.fiche(q.fiche);
     var panneau = el("div", { class: "panneau-erreur" }, [
@@ -362,9 +390,7 @@
       el("p", { class: "explication", texte: q.explication || "" }),
       el("div", { class: "actions" }, [
         el("button", { class: "bouton principal", onclick: continuer, texte: "Continuer (Entrée)" }),
-        f ? (options.ficheBloquee
-          ? el("span", { class: "note", texte: "La fiche t'attend au bilan." })
-          : el("button", { class: "bouton", onclick: function () { JEU.codex.ouvrirFiche(q.fiche); }, texte: "Voir la fiche" })) : null,
+        f ? el("button", { class: "bouton", onclick: function () { JEU.codex.ouvrirFiche(q.fiche); }, texte: "Voir la fiche" }) : null,
         el("button", { class: "lien signaler", onclick: function () { JEU.signalement.ouvrir(q); }, texte: "Signaler une erreur" })
       ])
     ]);
@@ -432,7 +458,7 @@
     var nbBat = etat.batiments.length;
     var st = JEU.domaine.stade(nbBat);
     var idx = JEU.domaine.STADES.indexOf(st);
-    var valides = JEU.progression.coursAccessibles(etat).filter(function (k) { return JEU.progression.etatCours(k, etat) === "acquis"; }).length;
+    var valides = JEU.progression.totalAcquis(etat); // même compte que l'écran Cours
     var vues = Object.keys(etat.notions).length;
     s.appendChild(el("div", { class: "accueil-scene" }, [
       el("div", { class: "scene-fond tapisserie", title: "Tapisserie « Le cerf aux abois », vers 1495-1515 (The Met, domaine public)" }),
@@ -461,7 +487,7 @@
       ]));
     }
     if (JEU.donnees.erreurs.length || (JEU.donnees.coursAbsents || []).length) {
-      s.appendChild(el("p", { class: "note", texte: "Certains fichiers de cours n'ont pas pu être chargés : ils restent en « contenu à venir »." }));
+      s.appendChild(el("p", { class: "note", texte: "Certains fichiers de cours n'ont pas pu être chargés : ces cours restent dans la brume." }));
     }
     var jouer = el("button", { class: "bouton principal enorme", onclick: function () { ui.afficher("jouer"); }, html: JEU.icones.icone("jouer", 34) + "<span>Jouer</span>" });
     s.appendChild(el("div", { class: "centre" }, [jouer]));
@@ -480,7 +506,7 @@
     var sem = JEU.calendrier.semaine(new Date());
     s.innerHTML = "";
     s.appendChild(el("h1", { texte: "Les cours" }));
-    s.appendChild(el("p", { class: "note", texte: "Le chroniqueur estime d'après tes devoirs corrigés si un cours est acquis ou à revoir. Les notions à revoir reviennent plus souvent dans tes batailles et au conseil." }));
+    s.appendChild(el("p", { class: "note", texte: "Le chroniqueur estime d'après tes devoirs corrigés si un cours est acquis ou à revoir. Les notions à revoir reviennent plus souvent dans tes batailles et au conseil. Le calendrier n'est qu'un repère : tu avances à ton rythme." }));
     var onglets = el("div", { class: "onglets", role: "tablist" });
     var liste = ["methode"].concat(JEU.ORDRE_MATIERES);
     liste.forEach(function (m) {
@@ -494,9 +520,7 @@
     s.appendChild(zone);
     if (ongletCours === "methode") return rendreMethodes(zone, etat);
     if (ongletCours === "anglais") return rendreAnglais(zone, etat);
-    var pos = JEU.progression.position(ongletCours, sem.numero, etat);
-    var ecart = pos.ecart === 0 ? "pile à l'heure" : pos.ecart > 0 ? "en avance de " + pos.ecart + " cours" : "en retard de " + (-pos.ecart) + " cours";
-    zone.appendChild(el("p", { class: "position", texte: pos.faits + " cours acquis sur " + pos.total + " · " + ecart + " par rapport au calendrier." }));
+    zone.appendChild(lignePosition(ongletCours, etat));
     var parSemaine = {};
     JEU.donnees.planning.filter(function (p) { return p.matiere === ongletCours; }).forEach(function (p) {
       (parSemaine[p.semaine] = parSemaine[p.semaine] || []).push(p);
@@ -524,6 +548,18 @@
     return ligne;
   }
 
+  // Compte neutre de l'onglet (le même que l'accueil) : aucune avance ni aucun retard sur le calendrier.
+  function lignePosition(onglet, etat, phrase) {
+    var pos = JEU.progression.position(onglet, etat);
+    var morceaux = [pos.acquis + " acquis"];
+    if (pos.presumes) morceaux.push(pos.presumes + (pos.presumes > 1 ? " présumés acquis" : " présumé acquis"));
+    if (pos.aRevoir) morceaux.push(pos.aRevoir + " à revoir");
+    if (pos.enCours) morceaux.push(pos.enCours + " en cours");
+    var texte = pos.total ? "Sur " + pos.total + " cours : " + morceaux.join(", ") + "." : "";
+    if (phrase) texte = phrase + (texte ? " " + texte : "");
+    return el("p", { class: "position", texte: texte });
+  }
+
   // État du cours, en lecture seule, avec la remarque du chroniqueur s'il y en a une.
   function etiquetteCours(id, st) {
     var est = JEU.progression.estimation(id);
@@ -533,7 +569,7 @@
 
   function rendreMethodes(zone, etat) {
     var ms = JEU.progression.methodes();
-    zone.appendChild(el("p", { class: "position", texte: "Les savoir-faire sont ouverts d'emblée et reviennent dans toutes tes batailles." }));
+    zone.appendChild(lignePosition("methode", etat, "Les savoir-faire sont ouverts d'emblée et reviennent dans toutes tes batailles."));
     if (!ms.length) zone.appendChild(el("p", { texte: "Contenu à venir." }));
     ms.forEach(function (c) {
       var st = JEU.progression.etatCours(c.id, etat);
@@ -546,7 +582,7 @@
 
   function rendreAnglais(zone, etat) {
     var seq = JEU.progression.sequencesAnglais();
-    zone.appendChild(el("p", { class: "position", texte: "Les séquences s'ouvrent dans l'ordre, à ton rythme." }));
+    zone.appendChild(lignePosition("anglais", etat, "Chaque séquence s'ouvre dès que son contenu est prêt."));
     if (!seq.length) zone.appendChild(el("p", { texte: "Contenu à venir : les séquences d'anglais n'ont pas encore été déposées." }));
     seq.forEach(function (c) {
       var st = JEU.progression.etatCours(c.id, etat);
@@ -575,16 +611,17 @@
       var lecteur = new FileReader();
       lecteur.onload = function () {
         ui.confirmer("Importer cette sauvegarde ? Elle remplace la partie en cours.", "Importer", function () {
-        try {
-          JEU.sauvegarde.importer(lecteur.result);
+          // importer() ne lance que des messages en français, écrits pour l'élève ; la partie en cours reste alors intacte.
+          try { JEU.sauvegarde.importer(lecteur.result); } catch (e) { ui.message("Import impossible", e.message); return; }
           JEU.progression.oublier();
+          ui.appliquerReglages();
           ui.majRessources();
           ui.toast("Sauvegarde importée.");
           ui.afficher("accueil");
-        } catch (e) { ui.message("Import impossible", e.message); }
         });
       };
       lecteur.readAsText(f);
+      fichier.value = ""; // le même fichier pourra être choisi de nouveau
     } });
     s.appendChild(el("div", { class: "cartouche" }, [
       el("h3", { texte: "Sauvegarde" }),
@@ -611,7 +648,7 @@
     ]));
     s.appendChild(el("div", { class: "cartouche" }, [
       el("h3", { texte: "Crédits" }),
-      el("p", { texte: "Polices Cinzel et Crimson Text (SIL Open Font License). Sons, dessins et blasons créés pour ce jeu (CC0). Détail dans CREDITS.md." }),
+      el("p", { texte: "Icônes de Game-icons.net (Lorc, Delapouite et d'autres auteurs, licence CC BY 3.0). Tapisseries et œuvres du Metropolitan Museum of Art (domaine public, CC0). Polices Cinzel et Crimson Text (SIL Open Font License). Sons, musique, textures, cartes et blasons créés pour ce jeu (CC0). Détail dans CREDITS.md." }),
       el("p", { class: "note", texte: "Version " + (JEU.version || "") })
     ]));
   };
@@ -635,6 +672,13 @@
 
   ui.appliquerAnimations = function () {
     document.body.classList.toggle("sans-anim", !(JEU.anim && JEU.anim.actif()));
+  };
+
+  // Après un import : la musique et les animations suivent tout de suite les réglages de la sauvegarde.
+  // (L'import est confirmé par un clic : le navigateur autorise alors le son.)
+  ui.appliquerReglages = function () {
+    if (JEU.musique) { if (JEU.musique.actif()) JEU.musique.demarrer(); else JEU.musique.arreter(); }
+    ui.appliquerAnimations();
   };
 
   // ---------- mesure du temps entre une réponse et la question suivante ----------
