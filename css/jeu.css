@@ -524,7 +524,7 @@ main { max-width: 1060px; margin: 0 auto; padding: 1.4rem 1rem 7rem; }
 .carte-svg .halo { transform-box: fill-box; transform-origin: center; animation: halo-carte 1.6s ease-in-out infinite; }
 .carte-svg .noeud:focus-visible .halo { stroke: #fff3d0; stroke-width: 8px; opacity: 1; animation: none; transform: none; }
 .carte-svg .noeud:focus-visible .lieu { filter: brightness(1.2); }
-.carte-svg .noeud.brume { opacity: .8; }
+/* lieu dans la brume : la nappe de brume (lieu-brume.png) suffit, sans voile en plus */
 @keyframes halo-carte { 0%, 100% { opacity: .35; transform: scale(.94); } 50% { opacity: 1; transform: scale(1.06); } }
 .alerte-rival { display: flex; align-items: center; gap: 1.2rem; flex-wrap: wrap; margin: .4rem 0 1rem; padding: .8rem 1.2rem;
   background: linear-gradient(90deg, rgba(110,40,28,.92), rgba(70,26,18,.9)); color: #fbe9bd; border-radius: 4px;
@@ -627,6 +627,21 @@ main { max-width: 1060px; margin: 0 auto; padding: 1.4rem 1rem 7rem; }
   .zone-partie:has(> .td-cadre) .td-ordres { padding: .6rem .9rem; }
   .zone-partie:has(> .td-cadre) .td-ordres .consigne { margin: .4rem 0 .25rem; }
   .zone-partie:has(> .td-cadre) .td-lancer { margin-top: .6rem; }
+  /* la colonne de droite reste en vue elle aussi et défile à part : sur un portable dont la fenêtre ne fait que
+     650 px de haut, la 4e réponse et « Lancer la vague » s'atteignent sans perdre le champ de bataille */
+  .zone-partie:has(> .td-cadre) > .td-bas { position: sticky; top: 68px; max-height: calc(100vh - 80px); overflow-y: auto;
+    overscroll-behavior: contain; scrollbar-width: thin; padding: 4px 6px 4px 4px; }
+}
+/* Fenêtre basse (portable avec onglets et barre des tâches) : question et réponses plus serrées */
+@media (min-width: 1100px) and (max-height: 700px) {
+  .zone-partie:has(> .td-cadre) .enonce { font-size: 1.1rem; margin: .4rem 0 .6rem; }
+  .zone-partie:has(> .td-cadre) .question { padding: .7rem 1rem .7rem; }
+  .zone-partie:has(> .td-cadre) .choix { padding: .45rem .8rem; min-height: 2.5rem; font-size: 1.02rem; }
+  .zone-partie:has(> .td-cadre) .reponses { gap: .4rem; }
+}
+/* Grand écran (1920 × 1080) : la page s'élargit pour que le champ de bataille atteigne la hauteur de la fenêtre */
+@media (min-width: 1600px) {
+  body.en-partie main:has(.td-cadre) { max-width: min(1860px, 96vw); }
 }
 .sous-titre-campagne { text-align: center; font-family: var(--titre); font-size: 1rem; margin: -.4rem 0 .6rem; display: flex; justify-content: center; align-items: center; gap: .5rem; flex-wrap: wrap; }
 .sous-titre-campagne span { font-family: var(--texte); font-style: italic; color: #6a5536; }

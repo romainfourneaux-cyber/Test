@@ -4,6 +4,8 @@
 // en px logiques depuis le coin haut-gauche ; frames : nombre d'images côte à côte (bande horizontale).
 // Les entrées « ombre-... » sont les ombres portées des tours et des places fortes : même point d'ancrage que
 // le sprite, à dessiner dans une passe « sol », sous tous les sprites (après le terrain).
+// face : sens d'une bande de troupe ("gauche" pour les camps rivaux, rendus tournés vers la gauche ; absent : vers la
+// droite). Le jeu ne retourne une bande que si la troupe marche dans l'autre sens.
 window.JEU = window.JEU || {};
 JEU.SPRITES = {
   "effet-carreau": {"src": "assets/images/td/effet-carreau.png", "w": 32, "h": 8, "ax": 16, "ay": 4, "frames": 1},
@@ -15,6 +17,8 @@ JEU.SPRITES = {
   "lieu-angleterre": {"src": "assets/images/campagne/lieu-angleterre.png", "w": 80, "h": 80, "ax": 40, "ay": 64, "frames": 1},
   "lieu-brume": {"src": "assets/images/campagne/lieu-brume.png", "w": 80, "h": 80, "ax": 40, "ay": 64, "frames": 1},
   "lieu-france": {"src": "assets/images/campagne/lieu-france.png", "w": 80, "h": 80, "ax": 40, "ay": 64, "frames": 1},
+  "lieu-france-2": {"src": "assets/images/campagne/lieu-france-2.png", "w": 80, "h": 80, "ax": 40, "ay": 64, "frames": 1},
+  "lieu-france-3": {"src": "assets/images/campagne/lieu-france-3.png", "w": 80, "h": 80, "ax": 40, "ay": 64, "frames": 1},
   "lieu-omeyyades": {"src": "assets/images/campagne/lieu-omeyyades.png", "w": 80, "h": 80, "ax": 40, "ay": 64, "frames": 1},
   "ombre-place-angleterre-abime": {"src": "assets/images/td/ombre-place-angleterre-abime.png", "w": 240, "h": 210, "ax": 75, "ay": 88, "frames": 1},
   "ombre-place-angleterre-intact": {"src": "assets/images/td/ombre-place-angleterre-intact.png", "w": 240, "h": 210, "ax": 75, "ay": 88, "frames": 1},
@@ -73,14 +77,14 @@ JEU.SPRITES = {
   "tour-piquiers-france-2": {"src": "assets/images/td/tour-piquiers-france-2.png", "w": 70, "h": 84, "ax": 35, "ay": 72, "frames": 1},
   "tour-piquiers-france-3": {"src": "assets/images/td/tour-piquiers-france-3.png", "w": 70, "h": 84, "ax": 35, "ay": 72, "frames": 1},
   "unite-belier-france": {"src": "assets/images/td/unite-belier-france.png", "w": 56, "h": 64, "ax": 28, "ay": 60, "frames": 4},
-  "unite-cavaliers-angleterre": {"src": "assets/images/td/unite-cavaliers-angleterre.png", "w": 40, "h": 40, "ax": 20, "ay": 36, "frames": 4},
+  "unite-cavaliers-angleterre": {"src": "assets/images/td/unite-cavaliers-angleterre.png", "w": 40, "h": 40, "ax": 20, "ay": 36, "frames": 4, "face": "gauche"},
   "unite-cavaliers-france": {"src": "assets/images/td/unite-cavaliers-france.png", "w": 40, "h": 40, "ax": 20, "ay": 36, "frames": 4},
-  "unite-cavaliers-omeyyades": {"src": "assets/images/td/unite-cavaliers-omeyyades.png", "w": 40, "h": 40, "ax": 20, "ay": 36, "frames": 4},
-  "unite-champion-angleterre": {"src": "assets/images/td/unite-champion-angleterre.png", "w": 48, "h": 48, "ax": 24, "ay": 44, "frames": 4},
-  "unite-champion-omeyyades": {"src": "assets/images/td/unite-champion-omeyyades.png", "w": 48, "h": 48, "ax": 24, "ay": 44, "frames": 4},
+  "unite-cavaliers-omeyyades": {"src": "assets/images/td/unite-cavaliers-omeyyades.png", "w": 40, "h": 40, "ax": 20, "ay": 36, "frames": 4, "face": "gauche"},
+  "unite-champion-angleterre": {"src": "assets/images/td/unite-champion-angleterre.png", "w": 48, "h": 48, "ax": 24, "ay": 44, "frames": 4, "face": "gauche"},
+  "unite-champion-omeyyades": {"src": "assets/images/td/unite-champion-omeyyades.png", "w": 48, "h": 48, "ax": 24, "ay": 44, "frames": 4, "face": "gauche"},
   "unite-fantassins-france": {"src": "assets/images/td/unite-fantassins-france.png", "w": 40, "h": 40, "ax": 20, "ay": 36, "frames": 4},
-  "unite-hommes-angleterre": {"src": "assets/images/td/unite-hommes-angleterre.png", "w": 40, "h": 40, "ax": 20, "ay": 36, "frames": 4},
-  "unite-hommes-omeyyades": {"src": "assets/images/td/unite-hommes-omeyyades.png", "w": 40, "h": 40, "ax": 20, "ay": 36, "frames": 4},
-  "unite-pietaille-angleterre": {"src": "assets/images/td/unite-pietaille-angleterre.png", "w": 40, "h": 40, "ax": 20, "ay": 36, "frames": 4},
-  "unite-pietaille-omeyyades": {"src": "assets/images/td/unite-pietaille-omeyyades.png", "w": 40, "h": 40, "ax": 20, "ay": 36, "frames": 4}
+  "unite-hommes-angleterre": {"src": "assets/images/td/unite-hommes-angleterre.png", "w": 40, "h": 40, "ax": 20, "ay": 36, "frames": 4, "face": "gauche"},
+  "unite-hommes-omeyyades": {"src": "assets/images/td/unite-hommes-omeyyades.png", "w": 40, "h": 40, "ax": 20, "ay": 36, "frames": 4, "face": "gauche"},
+  "unite-pietaille-angleterre": {"src": "assets/images/td/unite-pietaille-angleterre.png", "w": 40, "h": 40, "ax": 20, "ay": 36, "frames": 4, "face": "gauche"},
+  "unite-pietaille-omeyyades": {"src": "assets/images/td/unite-pietaille-omeyyades.png", "w": 40, "h": 40, "ax": 20, "ay": 36, "frames": 4, "face": "gauche"}
 };

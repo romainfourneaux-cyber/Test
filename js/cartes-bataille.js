@@ -66,9 +66,19 @@
     cands.forEach(function (c) {
       if (garde.every(function (g) { return Math.hypot(g[0] - c[0], g[1] - c[1]) > 64; })) garde.push(c);
     });
+    // Puis on retire, sans en ajouter d'autres (les terrains rendus en 3D gardent l'herbe libre à chaque emplacement
+    // calculé avant ce tri) : les emplacements trop hauts, dont la tour passerait sous le bandeau (une tour dépasse de
+    // 69 px au-dessus de son pied, le bandeau descend jusqu'à 56 px : 69 + 56 = 125), et ceux collés à une place
+    // forte (son image couvre environ 115 × 105 px autour de son pied).
+    function libre(c) {
+      if (c[1] < 125) return false;
+      if (Math.abs(c[0] - 915) < 105 && Math.abs(c[1] - 335) < 95) return false;   // château rival
+      if (Math.abs(c[0] - 85) < 105 && Math.abs(c[1] - 345) < 95) return false;    // ton château
+      return true;
+    }
     return {
-      tiens: garde.filter(function (c) { return c[0] < 500; }),
-      rivaux: garde.filter(function (c) { return c[0] > 560; }).sort(function (a, b) { return b[0] - a[0]; }).slice(0, 6)
+      tiens: garde.filter(function (c) { return c[0] < 500 && libre(c); }),
+      rivaux: garde.filter(function (c) { return c[0] > 560; }).sort(function (a, b) { return b[0] - a[0]; }).slice(0, 6).filter(libre)
     };
   }
 
