@@ -1,5 +1,10 @@
 # -*- coding: utf-8 -*-
-"""Troupes du champ de bataille : bandes de 4 images de marche, tournées vers la droite.
+"""Troupes du champ de bataille : bandes de 4 images de marche. France tournée vers la droite (elle marche vers l'est),
+camps rivaux tournés vers la GAUCHE (ils marchent vers l'ouest), sous la même lumière que tout le reste : la figurine
+de droite est rendue sous un éclairage en miroir (soleil, appoint et contour symétriques par rapport à l'axe nord-sud),
+puis l'image est retournée ; le soleil revient ainsi au nord-ouest, comme sur le terrain, les tours et les places
+fortes, et l'ombre tombe au sud-est. Le manifeste porte « face »: "gauche" pour ces bandes : le jeu ne retourne une
+bande que si la troupe marche dans l'autre sens que sa face.
 
 Usage : python3 atelier/outils/rendu-3d/unites.py [nom ...] [--images N] [--dossier D]
         python3 atelier/outils/rendu-3d/unites.py --planche <fichier.png> [--avant <dossier>] [--carte gue]
@@ -15,7 +20,8 @@ Ancrage : bas-centre moins 4 px logiques (le point de la route est sous les pied
 
 Échelles : piétons 18 px/m, cavaliers 15 px/m (un cavalier reste plus haut qu'un piéton), champions 20 px/m × 1,15
 (hauteur opaque d'au moins 74 px dans l'image de 96 px), tour de siège 6,5 px/m. Hommes d'armes anglais × 1,08 (plus
-massifs que la piétaille).
+massifs que la piétaille) ; leur heaume est d'acier gris clair (et non bruni) : à l'échelle du jeu, il se lit comme
+un casque et non comme une tête noire.
 Éclairage : le soleil commun, l'appoint côté caméra et une lumière de contour chaude qui allume le haut des figures.
 Lisibilité : liseré sombre léger (opacité 0,45, 1 px rendu) : c'est la lumière de contour (CONTOUR_FORCE) qui détache
 les figures du fond, comme dans un pré-rendu à la Age of Empires II, et non un trait d'autocollant.
@@ -157,7 +163,7 @@ def mesures(nom, objs, surech, k):
     return None
 
 
-def adoucir_reflets(img, seuil=226, pente=0.35):
+def adoucir_reflets(img, seuil=226, pente=0.3):
     """Épaule douce sur les reflets : au-dessus de seuil (sur les trois canaux à la fois), l'excès est ramené à
     pente × l'excès. Les éclats du soleil sur les casques et les lames restent visibles mais ne brûlent plus au blanc
     pur (contrôle des blancs : trois canaux > 235 sur au plus 0,3 % des pixels opaques)."""
@@ -173,17 +179,41 @@ def adoucir_reflets(img, seuil=226, pente=0.35):
 
 
 # ---------------------------------------------------------------- rendu d'une bande
+def face(camp):
+    """Sens de la bande : les troupes de France marchent vers la droite, celles des camps rivaux vers la gauche."""
+    return "droite" if camp == "france" else "gauche"
+
+
+def lumieres(miroir):
+    """Soleil, ciel, appoint et contour communs ; miroir : les mêmes, symétriques par rapport à l'axe nord-sud (soleil
+    du nord-est), pour une image qui sera retournée (le soleil revient alors au nord-ouest)."""
+    if not miroir:
+        C.installer_lumiere()
+        C.lumiere_appoint()
+        C.lumiere_contour()
+        return
+    azimut = C.SOLEIL_AZIMUT
+    C.SOLEIL_AZIMUT = (360 - azimut) % 360
+    try:
+        C.installer_lumiere()
+    finally:
+        C.SOLEIL_AZIMUT = azimut
+    t = math.radians(C.INCLINAISON + 8)
+    C._soleil_sans_ombre("appoint", C.APPOINT_FORCE, C.APPOINT_TEINTE, (-0.25, -math.cos(t), math.sin(t)))
+    C._soleil_sans_ombre("contour", C.CONTOUR_FORCE, C.CONTOUR_TEINTE, (0.45, 0.85, 0.42), angle=12)
+
+
 def rendre_unite(nom, nb_images=IMAGES, surech=2, dossier=None):
+    from PIL import Image
     fabrique, (lw, lh), ancre, ppm = UNITES[nom]
     pw, ph = lw * C.ECHELLE, lh * C.ECHELLE           # taille finale d'une image (2 × logique)
     camp = nom.rsplit("-", 1)[1]
+    sens = face(camp)
     images = []
     for k in range(nb_images):
         phase = 2 * math.pi * k / IMAGES
         C.reinitialiser()
-        C.installer_lumiere()
-        C.lumiere_appoint()
-        C.lumiere_contour()
+        lumieres(sens == "gauche")
         C.camera_trois_quarts(pw * surech, ph * surech, ppm * C.ECHELLE * surech, ancre * C.ECHELLE * surech)
         C.sol_capteur(14)
         objs, pivot = fabrique(phase)
@@ -209,6 +239,8 @@ def rendre_unite(nom, nb_images=IMAGES, surech=2, dossier=None):
             C.journal("%s-%d : couleur du camp %.1f %% (taille logique)" % (nom, k, 100 * C.part_couleur_troupe(img, camp)))
         if camp == "angleterre":
             C.controle_sans_bleu(img, "%s-%d" % (nom, k))
+        if sens == "gauche":
+            img = img.transpose(Image.FLIP_LEFT_RIGHT)     # ancrage au milieu de la largeur : il ne bouge pas
         images.append(img)
     img = C.bande(images)
     if dossier:
@@ -218,6 +250,10 @@ def rendre_unite(nom, nb_images=IMAGES, surech=2, dossier=None):
         C.journal("essai écrit dans %s (manifeste inchangé)" % chemin)
         return chemin
     C.sauver_sprite(nom, img, None, lw, lh, lw // 2, lh - ancre, nb_images)
+    if sens == "gauche":
+        e = C.lire_manifeste()[nom]
+        e["face"] = "gauche"
+        C.maj_manifeste({nom: e})
     return C.chemin_td(nom + ".png")[0]
 
 
@@ -250,7 +286,8 @@ def planche(sortie, avant=None, id_carte="gue"):
     _, _, longueur = P.sur_route(route, 0)
     terrain = Image.open(os.path.join(C.TD, "terrain-%s.jpg" % id_carte)).convert("RGBA")   # 2000 × 1320 (2 ×)
     k = terrain.size[0] / T.LARG
-    # troupes posées le long de la route : France vers la droite, ennemis vers la gauche (miroir), images variées
+    # troupes posées le long de la route : France vers la droite, ennemis vers la gauche (bandes déjà tournées vers la
+    # gauche : miroir seulement pour une bande qui regarde à droite), images variées
     poses = [("unite-belier-france", 70, 0, False, 0), ("unite-cavaliers-france", 110, -5, False, 1),
              ("unite-fantassins-france", 140, 6, False, 0), ("unite-fantassins-france", 160, -6, False, 2),
              ("unite-fantassins-france", 180, 5, False, 3),
@@ -264,6 +301,8 @@ def planche(sortie, avant=None, id_carte="gue"):
     boites = []
     for nom, s, cote, miroir, image in sorted(poses, key=lambda p: P.sur_route(route, p[1], p[2])[1]):
         x, y, _ = P.sur_route(route, s, cote)
+        if miroir and man.get(nom, {}).get("face") == "gauche":
+            miroir = False
         b = P.poser(vue, nom, x, y, image, miroir)
         if b:
             boites.append(b)

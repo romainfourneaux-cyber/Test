@@ -1,5 +1,6 @@
 // Essai de bout en bout dans Chromium (Playwright) : bataille (tower defense) lancée deux fois de suite,
-// quitter avec Échap, événement du jour, conseil du royaume, signalement, export puis import,
+// quitter avec Échap, événement du jour, conseil du royaume, signalement, export puis import, noms de la carte de
+// campagne qui ne se touchent pas (de la première province prise à la dernière),
 // et mesure du temps entre une réponse et la question suivante sur 50 enchaînements au moins (objectif < 100 ms).
 // Seuls les enchaînements question → question comptent : une vague, une carte de décision ou un bilan n'en sont pas.
 // Usage : node atelier/outils/perf.js   (demande le module playwright ; sinon, faire les vérifications à la main)
@@ -166,7 +167,32 @@ async function jouerCarteConseil(page) {
   const apres = await page.evaluate(() => JSON.stringify(JEU.sauvegarde.etat(), null, 1));
   bilan.importIdentique = JSON.stringify(JSON.parse(avant)) === JSON.stringify(JSON.parse(apres));
 
-  // 5. mesure : temps entre une réponse et la question suivante
+  // 5. carte de campagne : aucune étiquette (nom ou ligne sous le nom) ne touche celle d'un autre lieu, de la première
+  //    province à la dernière (en particulier toutes prises sauf la dernière de chaque front : les deux places fortes
+  //    visées portent « place forte n / n »). Boîtes getBBox() en unités de la carte ; 2 px de marge pour l'interligne.
+  bilan.etiquettes = await page.evaluate(() => {
+    const C = JEU.campagne, c = C.etat(), avant = c.conquises.slice();
+    const ordre = C.FRONTS.map(f => f.provinces.map(p => p.id));
+    const etats = [];
+    for (let n = 0; n <= ordre[0].length; n++) etats.push([].concat(...ordre.map(l => l.slice(0, n))));
+    const chocs = [];
+    etats.forEach(conq => {
+      c.conquises = conq.slice();
+      JEU.ui.afficher("jouer");
+      const t = [...document.querySelectorAll(".carte-svg text.nom-lieu, .carte-svg text.sous-lieu")].map(e => {
+        const b = e.getBBox(); return { t: e.textContent, n: e.closest(".noeud").dataset.lieu, x0: b.x, y0: b.y + 2, x1: b.x + b.width, y1: b.y + b.height - 2 };
+      });
+      for (let i = 0; i < t.length; i++) for (let j = i + 1; j < t.length; j++) {
+        const a = t[i], b = t[j];
+        if (a.n !== b.n && Math.min(a.x1, b.x1) > Math.max(a.x0, b.x0) && Math.min(a.y1, b.y1) > Math.max(a.y0, b.y0)) chocs.push(conq.length + " prises : « " + a.t + " » touche « " + b.t + " »");
+      }
+    });
+    c.conquises = avant;
+    JEU.ui.afficher("jouer");
+    return { etats: etats.length, chocs };
+  });
+
+  // 6. mesure : temps entre une réponse et la question suivante
   const v = await page.evaluate(() => JEU.mesure.valeurs.slice());
   if (process.env.DETAIL) console.log(v.map(x => Math.round(x)).join(" "));
   bilan.mesures = v.length;
@@ -186,6 +212,7 @@ async function jouerCarteConseil(page) {
   if (bilan.mesures < MESURES_VOULUES) echecs.push("seulement " + bilan.mesures + " mesures (il en faut " + MESURES_VOULUES + ")");
   if (!(bilan.max_ms < 100)) echecs.push("plus de 100 ms entre une réponse et la question suivante");
   if (!bilan.importIdentique) echecs.push("l'import ne redonne pas la même partie");
+  if (bilan.etiquettes.chocs.length) echecs.push("carte de campagne : des noms se touchent (" + bilan.etiquettes.chocs.join(" ; ") + ")");
   echecs.forEach(m => console.log("ÉCHEC  " + m));
   process.exit(echecs.length ? 1 : 0);
 })().catch(e => { console.log("ÉCHEC  " + e.message); process.exit(1); });

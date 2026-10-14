@@ -6,7 +6,7 @@ balancement du corps sont calculés ici, puis le corps est « habillé » (maill
 Repère local : la figurine regarde vers +X (droite de l'écran), sa gauche est +Y, le haut +Z ; unité le mètre.
 
 Règles tenues ici : aucune croix sur les surcots, écus et caparaçons (un seul grand emblème par pan) ; pas de
-bleu chez les Anglais (maille gris chaud peu métallique, heaume d'acier gris chaud à fente de visée) ; Omeyyades :
+bleu chez les Anglais (maille gris chaud peu métallique, heaume d'acier gris chaud à fente de visée, gris clair pour les hommes d'armes) ; Omeyyades :
 l'ivoire domine (surcot ivoire jusqu'au genou, manches ivoire, galon et ceinture verts, bouclier rond vert à bordure
 ivoire et tour ivoire), casque conique d'acier sans rien dessus, sans turban ni aucun signe religieux.
 Silhouettes distinctes : piétaille (lance à fanion), hommes d'armes (lourds, arme levée), champion (plus grand,
@@ -54,12 +54,14 @@ def matieres(camp):
         "rouge": C.mat_tissu("rouge_" + camp, "#b3262a"),
         # heaume : acier gris chaud, plus clair que la maille (pas de reflet bleu)
         "heaume": C.mat_metal("heaume_" + camp, "#958d82", rugosite=0.48, metal=0.8),
+        # heaume des hommes d'armes anglais : acier gris clair (la maille reste sombre)
+        "heaume_clair": C.mat_metal("heaume_clair_" + camp, "#ada594", rugosite=0.5, metal=0.6),
         "noir": C.mat_simple("noir_" + camp, "#14110e", rugosite=0.9),
         # Omeyyades : maille plus sombre des hommes d'armes, écailles d'acier sombre du champion
         "maille_sombre": C.mat_metal("maille_sombre_" + camp, "#5f5850", rugosite=0.6, maille=True, metal=0.55),
         "ecailles": mat_ecailles("ecailles_" + camp),
         # troupes : hampe de frêne clair (se lit sur l'herbe et sur la route), gambison de lin piqué ivoire (piétaille
-        # anglaise), acier bruni sombre des hommes d'armes anglais (L* d'environ 35 au rendu)
+        # anglaise), acier bruni sombre de la maille des hommes d'armes anglais (L* d'environ 35 au rendu)
         "frene": C.mat_simple("frene_" + camp, "#e2cfa8", rugosite=0.65, bosse=0.1, echelle_bosse=60),
         # lance couchée des cavaliers : frêne patiné, plus sobre (elle traverse tout le sprite)
         "frene_patine": C.mat_simple("frene_patine_" + camp, "#a88d64", rugosite=0.7, bosse=0.1, echelle_bosse=60),
@@ -751,8 +753,12 @@ def soldat(nom, camp, role, phase=0.0, lacet=-22.0, echelle=1.0, recul_y=0.1, fi
     lourd_anglais = fine and anglais and role == "homme_armes"
     mt = dict(mats)
     if lourd_anglais:
+        # maille d'acier bruni sombre, mais heaume d'acier gris clair : à l'échelle du jeu, un heaume sombre se lit comme
+        # une tête noire sans visage
         mt["maille"] = mats["maille_sombre"]
-        mt["heaume"] = mats["acier_sombre"]
+        mt["heaume"] = mats["heaume_clair"]
+    elif fine and anglais and role == "champion":
+        mt["heaume"] = mats["heaume_clair"]      # même heaume gris clair que les hommes d'armes
     ep_corps = (1.2 if lourd_anglais else 1.12) if lourd else 1.0
     if sud:
         if role == "champion":

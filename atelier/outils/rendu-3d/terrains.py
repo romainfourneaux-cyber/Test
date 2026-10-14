@@ -754,12 +754,23 @@ def planifier_vegetation(carte, mq, graine):
 def ecrire_controle(id_carte, mq, sous_bois):
     """Masques de contrôle pour verifier.py (atelier/sources-3d/_cache/controle-terrain-<carte>.png, 2000 × 1320) :
     R = sol visible dans l'anneau de 40 px autour des clairières (hors cimes, route et eau) ; G = plaine de référence
-    (herbe loin de la forêt, de la route, de l'eau et des clairières)."""
+    (herbe loin de la forêt, de la route, de l'eau et des clairières) ; B = emprise des ponts (tablier et culées, 14 px
+    de plus à chaque bout) : la valeur de l'axe de la route n'y est pas mesurée (planches et culées à l'ombre des
+    garde-corps et de leurs poteaux)."""
     libre = (sous_bois < 0.3) & (mq["route"] < 0.1) & (mq["eau"] < 0.1)
     r = mq["anneau_clairiere"] & libre
     g = (mq["foret0"] < 0.01) & libre & (mq["clairiere"] < 0.05) & (mq["berge"] < 0.05) & (mq["dist_route"] > 30) \
         & (mq["dist_riviere"] > 30) & (mq["verge"] < 0.05)
-    arr = np.stack([r, g, np.zeros_like(r)], axis=-1).astype(np.uint8) * 255
+    W, H = TAILLE_MASQUE
+    k = W / LARG
+    yy, xx = np.mgrid[0:H, 0:W].astype(np.float32) / k
+    b = np.zeros((H, W), dtype=bool)
+    for p in mq.get("ponts", []):
+        ca, sa = math.cos(p["angle"]), math.sin(p["angle"])
+        u = (xx - p["x"]) * ca + (yy - p["y"]) * sa
+        v = -(xx - p["x"]) * sa + (yy - p["y"]) * ca
+        b |= (np.abs(u) <= p["L"] / 2 + 14) & (np.abs(v) <= p["largeur"] / 2 + 6)
+    arr = np.stack([r, g, b], axis=-1).astype(np.uint8) * 255
     chemin = os.path.join(C.CACHE, "controle-terrain-%s.png" % id_carte)
     Image.fromarray(arr, "RGB").save(chemin)
     return chemin
@@ -1474,6 +1485,16 @@ def planche_terrains(chemin):
 def main(args):
     essai = "--essai" in args
     args = [a for a in args if a != "--essai"]
+    if "--controle" in args:
+        # masques de contrôle seulement (verifier.py), sans rendu : quelques secondes par carte
+        args = [a for a in args if a != "--controle"]
+        cartes = lire_cartes()
+        for id_carte in (args or list(cartes)):
+            graine = C.graine("terrain-" + id_carte)
+            mq = masques(cartes[id_carte], graine)
+            plan = planifier_vegetation(cartes[id_carte], mq, graine)
+            C.journal("contrôle écrit : %s" % ecrire_controle(id_carte, mq, couverture_cimes(plan)))
+        return
     sortie = None
     zone = None
     if "--planche" in args:

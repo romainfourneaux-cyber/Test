@@ -1773,6 +1773,8 @@ ENTETE_MANIFESTE = (
     "// en px logiques depuis le coin haut-gauche ; frames : nombre d'images côte à côte (bande horizontale).\n"
     "// Les entrées « ombre-... » sont les ombres portées des tours et des places fortes : même point d'ancrage que\n"
     "// le sprite, à dessiner dans une passe « sol », sous tous les sprites (après le terrain).\n"
+    "// face : sens d'une bande de troupe (\"gauche\" pour les camps rivaux, rendus tournés vers la gauche ; absent : vers la\n"
+    "// droite). Le jeu ne retourne une bande que si la troupe marche dans l'autre sens.\n"
 )
 
 

@@ -1,13 +1,15 @@
 # -*- coding: utf-8 -*-
 """Carte de campagne (vue de dessus, relief) et petits sprites de lieux.
 
-Usage : python3 atelier/outils/rendu-3d/campagne.py [fond] [lieux] [--essai] [--apercu dossier]
+Usage : python3 atelier/outils/rendu-3d/campagne.py [fond] [lieux] [lieu-<camp>[-<variante>] ...] [--essai] [--apercu dossier]
 Sorties (jeu/assets/images/campagne/) :
   fond-campagne.jpg 2000 × 1060 (carte du jeu : viewBox 1000 × 530), JPEG ≤ 490 000 octets : carte en relief à la Total
   War, aucun texte, bords teintés de parchemin.
-  lieu-france.png, lieu-angleterre.png, lieu-omeyyades.png (80 × 80 px logiques, rendu 160 × 160) : bourgs fortifiés vus
-  de trois quarts, posés sur une plate-forme de terre claire cernée de sombre, bannière deux fois plus grande au-dessus
-  des toits ; lieu-brume.png : le même bourg fondu dans une brume gris parchemin (lieu pas encore ouvert).
+  lieu-france.png (et ses variantes lieu-france-2.png, lieu-france-3.png pour les provinces prises), lieu-angleterre.png,
+  lieu-omeyyades.png (80 × 80 px logiques, rendu 160 × 160) : bourgs fortifiés vus de trois quarts, sur une aire de
+  terre claire à peine posée (alpha 0,5, bord fondu, sans trait ni ombre ajoutée), bannière deux fois plus grande
+  au-dessus des toits ; lieu-brume.png : une nappe de brume claire et nuageuse, sans silhouette ni disque (lieu pas
+  encore ouvert ; dessinée sans Blender).
   Ancrage des lieux : bas-centre moins 16 px.
 
 Relief (même soleil que les champs de bataille : nord-ouest, 45°, versants nord-ouest éclairés, sud-est à l'ombre) :
@@ -618,9 +620,28 @@ def parchemin(img):
 
 
 # ---------------------------------------------------------------- lieux
-def bourg(camp, couleurs=True):
-    """Petit bourg fortifié du camp (tourné de 32°) : tour ou donjon, quelques maisons, enceinte basse ; bannière deux
-    fois plus grande qu'avant, au-dessus des toits, sur la tour."""
+# Variantes du bourg de France (provinces prises) : (lacet en degrés, miroir en x, quart de tour du plan). Le jeu choisit
+# la variante d'après l'identifiant de la province : les lieux pris ne sont pas tous le même bourg.
+VARIANTES_FRANCE = {1: (P.LACET, False, False), 2: (P.LACET - 54, True, False), 3: (P.LACET + 22, False, True)}
+
+
+def bourg(camp, couleurs=True, variante=1):
+    """Petit bourg fortifié du camp : tour ou donjon, quelques maisons, enceinte basse ; bannière deux fois plus grande
+    qu'avant, au-dessus des toits, sur la tour. Variantes (France) : plan retourné ou tourné d'un quart de tour et lacet
+    différent ; la bannière flotte toujours dans le même vent, la tenture du mur et celle de la tour restent tournées
+    vers la caméra (côté sud-ouest). Renvoie (objets, lacet en degrés)."""
+    lacet, miroir, quart = VARIANTES_FRANCE.get(variante, VARIANTES_FRANCE[1]) if camp == "france" else (P.LACET, False, False)
+
+    def tr(x, y):
+        """Point du plan de base vers le plan de la variante."""
+        if quart:
+            x, y = -y, x
+        return (-x if miroir else x), y
+
+    def mur(a, b):
+        a, b = tr(*a), tr(*b)
+        return (b, a) if miroir else (a, b)       # chemin de ronde toujours à l'extérieur (droite de a -> b)
+
     # pierre un peu plus sombre que sur le champ de bataille : le bourg se détache des prés et des chaumes clairs
     m = P.matieres(camp if camp != "neutre" else "france", "intact", echelle_tex=1.4,
                    valeur=0.85 if camp in ("france", "angleterre") else 1.0)
@@ -629,11 +650,16 @@ def bourg(camp, couleurs=True):
     sud = camp == "omeyyades"
     if camp == "neutre":
         m["toit"] = C.mat_toit("toit_n", "clay_roof_tiles", "#7a6a5a", rang_m=0.34)
-    o += P.cour("cour", -7, 7, -5, 5, m)
+    hx, hy = (5, 7) if quart else (7, 5)
+    o += P.cour("cour", -hx, hx, -hy, hy, m)
     for nom, a, b in (("s", (-7, -5), (7, -5)), ("e", (7, -5), (7, 5)), ("n", (7, 5), (-7, 5)), ("o", (-7, 5), (-7, -5))):
+        a, b = mur(a, b)
         o += P.courtine("enc_" + nom, a, b, 3.2, 0.8, m, merlons="pointe" if sud else "carre", mat="mur" if sud else "pierre")
     for k, (x, y, sx, sy, h) in enumerate(((-3.5, -2.0, 3.6, 2.8, 3.0), (2.0, -2.5, 3.0, 2.6, 2.8), (3.5, 2.0, 3.4, 2.6, 3.2),
                                           (-4.0, 2.4, 3.0, 2.4, 2.6))):
+        x, y = tr(x, y)
+        if quart:
+            sx, sy = sy, sx
         o.append(C.boite("maison%d" % k, sx, sy, h, (x, y, 0), m["mur"]))
         if sud:
             o.append(C.boite("maison%d_t" % k, sx + 0.1, sy + 0.1, 0.25, (x, y, h), m["pierre"]))
@@ -642,96 +668,119 @@ def bourg(camp, couleurs=True):
                 o += P.auvent("auvent%d" % k, x, y + sy * 0.35, h + 1.4, sx * 0.9, sy * 0.75, rayee)
         else:
             o.append(P.toit_deux_pans("maison%d_toit" % k, x - sx / 2, x + sx / 2, y - sy / 2, y + sy / 2, h, 1.8, m["toit"], debord=0.25))
+    tx, ty = tr(0.5, 0.8)
     if camp == "france":
-        o += P.tour_ronde("tour", 0.5, 0.8, 2.2, 8.5, m, graine=1, archeres=((240, 0.5),))
+        o += P.tour_ronde("tour", tx, ty, 2.2, 8.5, m, graine=1, archeres=((240, 0.5),))
         haut = 8.5 + 0.7 + 2.3 * 2.5
     elif camp == "angleterre":
-        o += P.tour_carree("tour", 0.5, 0.8, 4.2, 9.0, m, archeres=None, toit=True)
+        o += P.tour_carree("tour", tx, ty, 4.2, 9.0, m, archeres=None, toit=True)
         haut = 9.0 + 4.0
     elif camp == "omeyyades":
-        o += P.tour_carree("tour", 0.5, 0.8, 4.0, 9.0, m, merlons="pointe", mat="mur", soubassement=("pierre", 2.5), archeres=None)
+        o += P.tour_carree("tour", tx, ty, 4.0, 9.0, m, merlons="pointe", mat="mur", soubassement=("pierre", 2.5), archeres=None)
         haut = 9.0 + 0.9
     else:
-        o += P.tour_carree("tour", 0.5, 0.8, 3.8, 7.5, m, archeres=None)
+        o += P.tour_carree("tour", tx, ty, 3.8, 7.5, m, archeres=None)
         haut = 7.5
     if couleurs and camp != "neutre":
-        # grande bannière au-dessus des toits (aire doublée), plantée au sommet de la tour
-        o += C.drapeau("ban", camp, 4.2, 6.2, 4.1, loc=(0.5 - 1.2, 0.8 - 1.2, haut - 0.6), vent=1.0, cap=-28 - P.LACET,
+        # grande bannière au-dessus des toits (aire doublée), plantée au sommet de la tour, dans le vent commun
+        o += C.drapeau("ban", camp, 4.2, 6.2, 4.1, loc=(tx - 1.2, ty - 1.2, haut - 0.6), vent=1.0, cap=-28 - lacet,
                        echelle_embleme=0.66, inverse=sud, epi=True)
-        o += C.tenture("tenture", camp, 2.6, 2.5, loc=(-7.0 - 0.5, 0.6, 3.1), rot_z=-math.pi / 2, graine=2, mat_tringle=m["bois"],
-                       pointe=0.12)
-        o += C.tenture("tenture_tour", camp, 3.0, 5.0, loc=(0.5 - 2.12, 0.8, 8.4), rot_z=-math.pi / 2, graine=3,
-                       mat_tringle=m["bois"], pointe=0.12)
-    return o
+        # tentures tournées vers la caméra : direction du monde à 212° (sud-ouest), ramenée dans le plan du bourg
+        a = math.radians(212 - lacet)
+        normales = ((-1, 0, hx), (1, 0, hx), (0, -1, hy), (0, 1, hy))
+        nx_, ny_, demi = max(normales, key=lambda n: n[0] * math.cos(a) + n[1] * math.sin(a))
+        an = math.atan2(ny_, nx_)
+        o += C.tenture("tenture", camp, 2.6, 2.5, loc=(nx_ * (demi + 0.5) - ny_ * 0.6, ny_ * (demi + 0.5) + nx_ * 0.6, 3.1),
+                       rot_z=an + math.pi / 2, graine=2, mat_tringle=m["bois"], pointe=0.12)
+        o += C.tenture("tenture_tour", camp, 3.0, 5.0, loc=(tx + 2.12 * math.cos(a), ty + 2.12 * math.sin(a), 8.4),
+                       rot_z=a + math.pi / 2, graine=3, mat_tringle=m["bois"], pointe=0.12)
+    return o, lacet
 
 
 def plateforme(taille_px, centre, rx, ry, graine=3):
-    """Plate-forme de terre battue sombre sous le bourg (ellipse d'environ 72 % de la largeur du sprite, vue à 40°),
-    cernée d'un trait plus sombre de 2 px, ombre douce : le bourg et son socle se détachent de la carte (écart de L*
-    d'au moins 15 avec la carte autour, contrôlé par verifier.py), qu'elle soit claire (plaine du sud) ou sombre."""
+    """Sol du bourg : une aire de terre battue claire, à peine posée sur la carte (alpha 0,5 au plus), bord fondu sur
+    18 % du rayon et un peu irrégulier, sans trait ni ombre (l'ombre de contact du rendu suffit) : le bourg semble bâti
+    sur le relief, pas posé sur un pion."""
     W = H = taille_px
-    rng = np.random.default_rng(graine)
     cx, cy = centre
     yy, xx = np.mgrid[0:H, 0:W].astype(np.float32)
-    d = np.sqrt(((xx - cx) / rx) ** 2 + ((yy - cy) / ry) ** 2)
-    grain = np.array(Image.fromarray(rng.uniform(-1, 1, (H // 4 + 1, W // 4 + 1)).astype(np.float32), "F").resize((W, H), Image.BICUBIC))
-    terre = np.array(C.rgb8("#30281f"), dtype=np.float32)
-    rgb = terre[None, None, :] * (1 + 0.06 * grain[..., None]) * (1 - 0.18 * np.clip(d, 0, 1)[..., None] ** 2)
-    r_local = np.hypot(xx - cx, yy - cy) / np.maximum(d, 1e-6)
-    dist_px = (d - 1) * r_local                       # distance (px rendus) au bord de l'ellipse, négative dedans
-    a_terre = np.clip(-dist_px + 0.5, 0, 1)
-    bord = np.clip(1 - np.abs(dist_px + 1.5) / 2.0, 0, 1)      # trait sombre de 4 px rendus (2 px logiques)
-    sombre = np.array(C.rgb8("#1f170f"), dtype=np.float32)
-    rgb = rgb * (1 - bord[..., None]) + sombre * bord[..., None]
-    alpha = np.maximum(a_terre, bord)
-    plat = Image.fromarray(np.dstack([np.clip(rgb, 0, 255), alpha * 255]).astype(np.uint8), "RGBA")
-    om = np.clip(1.15 - d, 0, 1) ** 0.7 * 0.5
-    ombre = np.zeros((H, W, 4), dtype=np.uint8)
-    ombre[..., :3] = C.OMBRE_COULEUR
-    ombre[..., 3] = (om * 255).astype(np.uint8)
-    ombre = Image.fromarray(ombre, "RGBA").filter(ImageFilter.GaussianBlur(2.5)).transform(
-        (W, H), Image.AFFINE, (1, 0, -2, 0, 1, -2))
-    can = Image.new("RGBA", (W, H), (0, 0, 0, 0))
-    can.alpha_composite(ombre)
-    can.alpha_composite(plat)
-    return can
+    ang = np.arctan2((yy - cy) / ry, (xx - cx) / rx)
+    d = np.sqrt(((xx - cx) / rx) ** 2 + ((yy - cy) / ry) ** 2) * (1 + 0.06 * T.bruit_angle(ang, graine))
+    grain = T.bruit(W, H, 10, graine + 1, octaves=3)
+    terre = np.array(C.rgb8("#c8b088"), dtype=np.float32)
+    rgb = terre[None, None, :] * (1 + 0.08 * grain[..., None])
+    alpha = PLATEFORME_ALPHA * T.lisse01(1.0, 1.0 - PLATEFORME_FONDU, d) * (0.85 + 0.15 * grain)
+    return Image.fromarray(np.dstack([np.clip(rgb, 0, 255), np.clip(alpha, 0, 1) * 255]).astype(np.uint8), "RGBA")
 
 
-def rendre_lieu(camp, surech=2, echantillons=64):
+PLATEFORME_ALPHA, PLATEFORME_FONDU = 0.5, 0.18
+
+
+def nappe_brume(taille_px, ancre_px, graine=41):
+    """Lieu pas encore ouvert : une nappe de brume claire et nuageuse (blanc cassé, alpha 0,7 à 0,76 au centre, bords
+    fondus), sans silhouette ni disque : un voile de nuée posé sur la carte, comme sur une carte de campagne à la Total
+    War. Volume suggéré par la même lumière que le reste : bords hauts et gauches plus clairs, dessous un peu gris."""
+    W = H = taille_px
+    cx, cy = W / 2, ancre_px - 0.2 * H              # centre de la nappe, sur le corps du bourg qu'elle cache
+    yy, xx = np.mgrid[0:H, 0:W].astype(np.float32)
+    rng = np.random.default_rng(graine)
+    dens = np.zeros((H, W), dtype=np.float32)
+    # quelques bouffées étirées en largeur, en grappe : la nappe couvre environ 80 % de la largeur de l'image
+    for k in range(8):
+        bx = cx + rng.uniform(-0.2, 0.2) * W
+        by = cy + rng.uniform(-0.07, 0.07) * H
+        rx = rng.uniform(0.2, 0.27) * W
+        ry = rx * rng.uniform(0.5, 0.62)
+        dens = np.maximum(dens, np.exp(-(((xx - bx) / rx) ** 2 + ((yy - by) / ry) ** 2)))
+    n = T.bruit(W, H, 26, graine + 2, octaves=4)
+    dens = np.clip(dens * (0.85 + 0.3 * n), 0, 1)
+    dens = np.array(Image.fromarray((dens * 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(3)), dtype=np.float32) / 255
+    # bords fondus, jamais d'arête : la densité passe par une rampe douce, et tout s'efface avant le bord de l'image
+    a = T.lisse01(0.06, 0.62, dens) * 0.76
+    marge = np.minimum(np.minimum(xx, W - 1 - xx), np.minimum(yy, H - 1 - yy))
+    a *= T.lisse01(3, 16, marge)
+    # lumière du nord-ouest : dérivée de la densité vers le haut-gauche -> bords éclairés plus clairs
+    dy_, dx_ = np.gradient(np.array(Image.fromarray((dens * 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(5)),
+                                    dtype=np.float32) / 255)
+    lum = np.clip(0.55 - 9.0 * (dx_ + dy_), 0, 1)
+    clair, ombre = np.array(C.rgb8("#f2efe6"), dtype=np.float32), np.array(C.rgb8("#c4c1b7"), dtype=np.float32)
+    t = np.clip(0.3 + 0.6 * lum + 0.12 * n, 0, 1)[..., None]
+    rgb = ombre * (1 - t) + clair * t
+    return Image.fromarray(np.dstack([np.clip(rgb, 0, 235), a * 255]).astype(np.uint8), "RGBA")
+
+
+def rendre_lieu(camp, surech=2, echantillons=64, variante=1):
     taille, ancre, ppm = 80, 16, 3.6
     px = taille * C.ECHELLE
-    C.reinitialiser()
-    C.lumiere_batiment(camp if camp in C.CAMPS else "france")
-    C.camera_trois_quarts(px * surech, px * surech, ppm * C.ECHELLE * surech, ancre * C.ECHELLE * surech)
-    C.sol_capteur(60)
-    objs = bourg(camp if camp != "brume" else "neutre", couleurs=camp != "brume")
-    C.pivot("bourg", objs, P.LACET, (0, 3.2, 0))
-    nom = "lieu-" + camp
-    img, _ = C.rendre_sprite(nom, px, px, objs, surech=surech, echantillons=echantillons, contour=0.5, epaisseur_contour=1,
-                             force_ombre=0.6, pres=0.06)
-    # plate-forme : centre au milieu du bourg (3,2 m au nord de l'ancre, soit 7,4 px logiques plus haut)
-    k = C.ECHELLE
-    cy = (taille - ancre - 3.2 * math.sin(math.radians(C.INCLINAISON)) * ppm) * k - 12
-    rx = 0.42 * px
-    plat = plateforme(px, (px / 2, cy), rx, rx * math.sin(math.radians(C.INCLINAISON)) + 2)
-    plat.alpha_composite(img)
-    img = plat
+    nom = "lieu-" + camp + ("-%d" % variante if variante > 1 else "")
     if camp == "brume":
-        # lieu pas encore ouvert : fondu à 55 % vers un gris parchemin, contraste réduit, voile de brume au pied ;
-        # la silhouette reste plus sombre que la carte (on ne croit pas voir de la neige)
-        a = img.split()[3]
-        g = ImageEnhance.Color(img.convert("RGB")).enhance(0.15)
-        g = ImageEnhance.Contrast(g).enhance(0.6)
-        brume = Image.new("RGB", img.size, C.rgb8("#9c9580"))
-        g = Image.blend(g, brume, 0.55)
-        arr = np.array(g, dtype=np.float32)
-        H = arr.shape[0]
-        voile = np.clip((np.arange(H) / H - 0.55) / 0.4, 0, 1)[:, None] * (0.75 + 0.25 * T.bruit(arr.shape[1], H, 24, 5, octaves=2))
-        arr = arr * (1 - 0.35 * voile[..., None]) + np.array(C.rgb8("#a8a18c"), dtype=np.float32) * 0.35 * voile[..., None]
-        arr *= 0.62                                    # plus sombre que la carte : une ombre dans la brume
-        img = Image.merge("RGBA", (*Image.fromarray(np.clip(arr, 0, 255).astype(np.uint8)).split(), a.point(lambda v: int(v * 0.9))))
-    elif camp in C.CAMPS:
+        img = nappe_brume(px, (taille - ancre) * C.ECHELLE)
+    else:
+        C.reinitialiser()
+        C.lumiere_batiment(camp if camp in C.CAMPS else "france")
+        C.camera_trois_quarts(px * surech, px * surech, ppm * C.ECHELLE * surech, ancre * C.ECHELLE * surech)
+        C.sol_capteur(60)
+        objs, lacet = bourg(camp, variante=variante)
+        C.pivot("bourg", objs, lacet, (0, 3.2, 0))
+        img, _ = C.rendre_sprite(nom, px, px, objs, surech=surech, echantillons=echantillons, contour=0.5,
+                                 epaisseur_contour=1, force_ombre=0.6, pres=0.06)
+        # aire de terre claire sous le bourg : centre au milieu du bourg (3,2 m au nord de l'ancre)
+        k = C.ECHELLE
+        cy = (taille - ancre - 3.2 * math.sin(math.radians(C.INCLINAISON)) * ppm) * k - 12
+        rx = 0.42 * px
+        plat = plateforme(px, (px / 2, cy), rx, rx * math.sin(math.radians(C.INCLINAISON)) + 2)
+        a_bourg = np.array(img)[..., 3] / 255.0              # bourg, son liseré et son ombre de contact
+        a_plat = np.array(plat)[..., 3] / 255.0
+        plat.alpha_composite(img)
+        img = plat
         C.controle_camp(img, nom, camp, 0.08)
+        # masques de contrôle pour verifier.py : R = corps du bourg (opaque), G = aire de terre nue tout autour (sans le
+        # bourg ni son ombre, à moins de 14 px rendus du bourg) : le bourg doit se détacher de ce qui l'entoure à l'écran
+        corps = a_bourg > 0.8
+        pres = np.array(Image.fromarray((a_bourg > 0.05).astype(np.uint8) * 255).filter(ImageFilter.MaxFilter(29))) > 127
+        aire = pres & (a_bourg < 0.05) & (a_plat > 0.25)
+        Image.fromarray(np.dstack([corps * 255, aire * 255, np.zeros_like(a_bourg)]).astype(np.uint8), "RGB").save(
+            os.path.join(C.CACHE, "controle-lieu-%s.png" % nom))
     C.controle_bords(img, nom)
     chemin, src = C.chemin_campagne(nom + ".png")
     C.sauver_png(img, chemin)
@@ -752,6 +801,13 @@ def main(args):
     if "lieux" in quoi:
         for camp in ("france", "angleterre", "omeyyades", "brume"):
             rendre_lieu(camp)
+        for v in sorted(VARIANTES_FRANCE):
+            if v > 1:
+                rendre_lieu("france", variante=v)
+    for q in quoi:                              # un seul lieu : lieu-france-2, lieu-brume...
+        if q.startswith("lieu-"):
+            morceaux = q[5:].split("-")
+            rendre_lieu(morceaux[0], variante=int(morceaux[1]) if len(morceaux) > 1 else 1)
 
 
 if __name__ == "__main__":

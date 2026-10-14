@@ -13,9 +13,14 @@ cour ; tour-* → (35, 72) ; unite-* → (w / 2, h − 4). Ombres portées ombre
 Lecture : aucun sprite avec plus de 0,3 % de pixels opaques blancs brûlés (trois canaux > 235) ; couleur du camp à la
 taille logique ≥ 20 % sur chaque image de cavalerie et ≥ 18 % sur chaque image des fantassins omeyyades ;
 terrains : écart de L* route − herbe (profils en travers, herbe à 26-30 px de l'axe) ≥ 15 en médiane, valeur HSV de
-l'axe de la route ≥ 0,33 (aucun tronçon de plus de 20 px sous 0,28), sol de l'anneau de 40 px autour des clairières
+l'axe de la route ≥ 0,33 (aucun tronçon de plus de 20 px sous 0,28 ; ni les ponts, tablier de planches et culées
+(emprise écrite par terrains.py dans le canal B du masque de contrôle), ni les bouts de route sous les places fortes
+ne sont mesurés), sol de l'anneau de 40 px autour des clairières
 ≥ 0,6 × la luminance médiane de la plaine (masques écrits par terrains.py dans le cache) ; carte de campagne : écart de
-L* entre le corps de chaque lieu-* et un anneau de 10 px de carte autour ≥ 15, en 5 positions de lieux.
+L* entre le corps de chaque bourg lieu-* et l'aire de terre nue autour de lui (sprite posé sur la carte : ce que voit
+l'élève ; masques écrits par campagne.py dans le cache) ≥ 15, en 7 positions de lieux (la
+nappe de brume lieu-brume n'a pas de corps : elle n'est pas mesurée) ; unités tournées vers la gauche (« face »:
+"gauche") : seulement pour les camps rivaux.
 Places fortes : l'état « abîmé » se lit à l'échelle du jeu : images réduites à 96 px et posées sur l'herbe, au moins
 12 % des pixels changent de plus de 0,1 (sur 1) entre « intact » et « abîmé ». Toits de France : saturation HSV
 médiane des pixels de toit ≤ 0,32 (ardoise, pas bleu roi), mesurée avec les masques controle-toits-<nom>.png que les
@@ -71,7 +76,7 @@ def contrat():
     a["effet-poussiere.png"] = (TD, (48, 48), 5)
     a["effet-eclats.png"] = (TD, (32, 32), 4)
     a["fond-campagne.jpg"] = (CAMP, (1000, 530), 1)
-    for camp in ("france", "angleterre", "omeyyades", "brume"):
+    for camp in ("france", "france-2", "france-3", "angleterre", "omeyyades", "brume"):
         a["lieu-%s.png" % camp] = (CAMP, (80, 80), 1)
     return a
 
@@ -158,10 +163,16 @@ def controle_terrain(nom, chemin, carte, fautes, notes):
     _, _, V = hsv(im)
     route = carte["route"]
     bouts = (route[0], route[-1])
+    ch = os.path.join(CACHE, "controle-terrain-%s.png" % nom.replace("terrain-", ""))
+    m = np.array(Image.open(ch).convert("RGB").resize((W, H), Image.NEAREST)) if os.path.exists(ch) else None
+    ponts = m[..., 2] > 127 if m is not None else None      # emprise des ponts (canal B, écrit par terrains.py)
     ecarts, valeurs = [], []
     for (x, y, tx, ty) in le_long(route):
         if min(math.hypot(x - bx, y - by) for bx, by in bouts) < ENTREE_PLACE:
             valeurs.append(None)
+            continue
+        if ponts is not None and ponts[min(H - 1, int(y * k)), min(W - 1, int(x * k))]:
+            valeurs.append(None)        # tablier de planches et culées, à l'ombre des garde-corps : ce n'est pas la terre
             continue
         nx, ny = -ty, tx
         cx, cy = int(x * k), int(y * k)
@@ -191,9 +202,7 @@ def controle_terrain(nom, chemin, carte, fautes, notes):
                  % (nom, vmin, nb_sous, pire))
     if nb_sous or pire > 20:
         fautes.append("%s : route assombrie (%d px sous V 0,33, tronçon de %d px sous 0,28)" % (nom, nb_sous, pire))
-    ch = os.path.join(CACHE, "controle-terrain-%s.png" % nom.replace("terrain-", ""))
-    if os.path.exists(ch):
-        m = np.array(Image.open(ch).convert("RGB").resize((W, H), Image.NEAREST))
+    if m is not None:
         anneau, plaine = m[..., 0] > 127, m[..., 1] > 127
         Y = luminance(im)
         r = float(np.median(Y[anneau]) / np.median(Y[plaine]))
@@ -212,33 +221,43 @@ def positions_campagne():
 
 
 def controle_lieux(man, fautes, notes):
-    """Le corps de chaque bourg se détache de la carte : écart de L* ≥ 15 avec un anneau de 10 px de carte autour."""
+    """Le corps de chaque bourg se détache de ce qui l'entoure à l'écran : sprite posé sur la carte à sa position (son
+    aire de terre claire comprise), écart de L* ≥ 15 entre le corps du bourg et l'aire de terre nue autour de lui
+    (masques controle-lieu-<nom>.png écrits par campagne.py ; à défaut : alpha > 200 contre un anneau de 10 px de carte
+    hors du sprite)."""
     fond = os.path.join(CAMP, "fond-campagne.jpg")
     if not os.path.exists(fond):
         return
     carte = np.array(Image.open(fond).convert("RGB"), dtype=np.float64) / 255.0
     k = carte.shape[1] / 1000.0
     pos = positions_campagne()
-    for lieu, camp in (("domaine", "france"), ("col", "angleterre"), ("chateau", "angleterre"), ("citadelle", "omeyyades"),
-                       ("forteresse", "omeyyades")):
+    for lieu, camp in (("domaine", "france"), ("gue", "france-2"), ("piemont", "france-3"), ("col", "angleterre"),
+                       ("chateau", "angleterre"), ("citadelle", "omeyyades"), ("forteresse", "omeyyades")):
         e = man.get("lieu-" + camp)
         if not e or lieu not in pos:
             continue
-        sp = Image.open(os.path.join(JEU, e["src"])).convert("RGBA")
-        a = np.array(sp)[..., 3]
-        corps = a > 200
-        ext = np.array(Image.fromarray((a > 60).astype(np.uint8) * 255).filter(ImageFilter.MaxFilter(21))) > 127
-        anneau = ext & ~(a > 60)
+        sp = np.array(Image.open(os.path.join(JEU, e["src"])).convert("RGBA"), dtype=np.float64) / 255.0
+        a = sp[..., 3]
+        masque = os.path.join(CACHE, "controle-lieu-lieu-%s.png" % camp)
+        if os.path.exists(masque):
+            # masques écrits par campagne.py : corps du bourg (R) et aire de terre nue autour de lui (G)
+            m = np.array(Image.open(masque).convert("RGB"))
+            corps, anneau = m[..., 0] > 127, m[..., 1] > 127
+        else:
+            corps = a > 200 / 255.0
+            ext = np.array(Image.fromarray(corps.astype(np.uint8) * 255).filter(ImageFilter.MaxFilter(21))) > 127
+            anneau = ext & ~(a > 60 / 255.0)
         x0 = int(round((pos[lieu][0] - e["ax"]) * k))
         y0 = int(round((pos[lieu][1] - e["ay"]) * k))
         h, w = a.shape
         zone = carte[max(0, y0):y0 + h, max(0, x0):x0 + w]
         if zone.shape[:2] != (h, w):
             continue
-        l_corps = float(np.median(lstar(np.array(sp, dtype=np.float64)[..., :3] / 255.0)[corps]))
-        l_anneau = float(np.median(lstar(zone)[anneau]))
+        vu = sp[..., :3] * a[..., None] + zone * (1 - a[..., None])       # ce que voit l'élève
+        l_corps = float(np.median(lstar(vu)[corps]))
+        l_anneau = float(np.median(lstar(vu)[anneau]))
         ec = abs(l_corps - l_anneau)
-        notes.append("lieu-%s sur « %s » : L* du bourg %.0f, de la carte autour %.0f (écart %.0f)" % (camp, lieu, l_corps, l_anneau, ec))
+        notes.append("lieu-%s sur « %s » : L* du bourg %.0f, autour %.0f (écart %.0f)" % (camp, lieu, l_corps, l_anneau, ec))
         if ec < 15:
             fautes.append("lieu-%s sur « %s » : trop peu de contraste avec la carte (écart de L* %.0f < 15)" % (camp, lieu, ec))
 
@@ -320,6 +339,11 @@ def main():
                 ancre = (w / 2, h - 4)
             if ancre and (e["ax"], e["ay"]) != ancre:
                 fautes.append("%s : ancre (%s, %s), attendu %s" % (src, e["ax"], e["ay"], ancre))
+            if nom.startswith("unite-"):
+                attendue = "droite" if nom.endswith("-france") else "gauche"
+                if e.get("face", "droite") != attendue:
+                    fautes.append("%s : face %s, attendu %s (France vers la droite, camps rivaux vers la gauche)"
+                                  % (src, e.get("face", "droite"), attendue))
         if fichier.endswith(".png"):
             rgba = np.array(im.convert("RGBA"))
             a = rgba[..., 3]

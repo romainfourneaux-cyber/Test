@@ -5,8 +5,10 @@ Usage : python3 atelier/outils/rendu-3d/effets.py [nom ...]
 Sorties (jeu/assets/images/td/) :
   effet-fleche.png 24 × 6 px logiques, effet-carreau.png 32 × 8, effet-pierre.png 14 × 14 : projectiles pointés vers
   +X (le jeu les tourne selon leur trajectoire), ancrage au centre ;
-  effet-poussiere.png : bande de 5 images de 48 × 48 (le nuage gonfle et se dissipe), ancrage bas-centre moins 8 px ;
-  effet-eclats.png : bande de 4 images de 32 × 32 (éclats de bois et de pierre qui s'écartent), ancrage au centre.
+  effet-poussiere.png : bande de 5 images de 48 × 48 (le nuage de terre gonfle et se dissipe), ancrage bas-centre moins
+  8 px ; le jeu s'en sert aussi, réduit, pour la bouffée d'un coup porté à un soldat (sans sang) ;
+  effet-eclats.png : bande de 4 images de 32 × 32 (éclats de bois et de pierre qui s'écartent), ancrage au centre :
+  pierres de trébuchet et brèches seulement.
 Même lumière que tout le reste ; projectiles sans ombre (ils sont en l'air).
 """
 import math
@@ -54,14 +56,15 @@ def plumes(nom, base, longueur, hauteur, mat, n=3):
 def fleche(carreau=False):
     """Flèche (ou carreau de baliste, plus court et plus gros), pointée vers +X, centrée sur l'origine, à 1 m du sol.
 
-    Lisible sur la route comme sur l'herbe : hampe de frêne pâle (#d9c9a3) épaisse de 2 px rendus (1 px logique),
-    empennage blanc cassé, liseré sombre d'1 px rendu tout autour (épaisseur totale 4 px rendus, 2 px logiques).
+    Un trait fin, pas un crayon : hampe de bois sombre (#5b4026) de 1,25 px logique (flèche) ou 1,5 px (carreau), sans
+    liseré, pointe d'acier, empennage clair (#cfc3a6) bien visible au talon : la hampe se lit sur la route claire,
+    l'empennage sur l'herbe sombre.
     Carreau : pointe de 1,5 × le diamètre de la hampe au plus, longue de 15 % du total (plus de « flèche de panneau »)."""
-    bois = C.mat_simple("hampe", "#d9c9a3", rugosite=0.7)
+    bois = C.mat_simple("hampe", "#5b4026", rugosite=0.7)
     fer = C.mat_metal("fer_p", "#8d8579", rugosite=0.4, metal=0.8)
-    plume = C.mat_simple("plume", "#a8a090", rugosite=0.95)
+    plume = C.mat_simple("plume", "#cfc3a6", rugosite=0.95)
     L = 0.9 if not carreau else 1.05
-    r = 0.0235 if not carreau else 0.032
+    r = 0.0284 if not carreau else 0.031       # diamètre : 1,25 px logique à 22 px/m ; 1,5 px à 24 px/m
     z = 1.0
     hp = 0.11 if not carreau else 0.15 * L
     rp = r * (1.45 if not carreau else 1.5)
@@ -71,7 +74,7 @@ def fleche(carreau=False):
     pointe.rotation_euler = (0, math.pi / 2, 0)
     pointe.location = b
     objs.append(pointe)
-    objs += plumes("emp", a + V((0.02, 0, 0)), 0.2 if not carreau else 0.2, 0.05 if not carreau else 0.06, plume)
+    objs += plumes("emp", a + V((0.02, 0, 0)), 0.22 if not carreau else 0.2, 0.075 if not carreau else 0.08, plume)
     return objs
 
 
@@ -92,8 +95,8 @@ def pierre():
 
 
 def mat_poussiere(opacite, effiloche=0.5):
-    """Poussière : gris-beige clair et froid (#d8d0c0) en haut, dessous plus sombre (#6e6556) : le nuage se lit sur la
-    route claire (L* ≈ 56-60) comme sur l'herbe. Bords effilochés par un bruit, opacité réglable (le nuage se dissipe).
+    """Poussière de terre : ocre (#b8996a) en haut, dessous brun (#6b5236) : une poussière de chemin, pas un coton gris.
+    Bords effilochés par un bruit, opacité réglable (le nuage se dissipe).
     Le dégradé suit la hauteur dans le monde (0,15 m → 1,1 m) : le bas des bouffées, à l'ombre d'elles-mêmes, fonce."""
     m, nt, p = C.nouveau_materiau("poussiere%.2f-%.2f" % (opacite, effiloche))
     p.inputs["Roughness"].default_value = 1.0
@@ -105,12 +108,16 @@ def mat_poussiere(opacite, effiloche=0.5):
     haut.inputs["From Min"].default_value = 0.15
     haut.inputs["From Max"].default_value = 1.1
     nt.links.new(sep.outputs["Z"], haut.inputs["Value"])
-    teinte = T_mix(nt, haut.outputs["Result"], C.couleur("#6e6556"), C.couleur("#d8d0c0"))
+    teinte = T_mix(nt, haut.outputs["Result"], C.couleur("#6b5236"), C.couleur("#b8996a"))
     nt.links.new(teinte, p.inputs["Base Color"])
     tc = nt.nodes.new("ShaderNodeTexCoord")
     nz = nt.nodes.new("ShaderNodeTexNoise")
-    nz.inputs["Scale"].default_value = 3.5
-    nz.inputs["Detail"].default_value = 5.0
+    nz.inputs["Scale"].default_value = 5.0
+    nz.inputs["Detail"].default_value = 6.0
+    try:
+        nz.inputs["Roughness"].default_value = 0.65      # grain plus fin : des bords effilochés, pas des boules lisses
+    except Exception:
+        pass
     nt.links.new(tc.outputs["Object"], nz.inputs["Vector"])
     fr = nt.nodes.new("ShaderNodeLayerWeight")
     fr.inputs["Blend"].default_value = 0.45
@@ -124,8 +131,8 @@ def mat_poussiere(opacite, effiloche=0.5):
     nt.links.new(nz.outputs["Factor"], mr.inputs["Value"])
     inv = nt.nodes.new("ShaderNodeMath"); inv.operation = "SUBTRACT"; inv.inputs[0].default_value = 1.0
     nt.links.new(fr.outputs["Facing"], inv.inputs[1])
-    # cœur des bouffées plus dense : (1 − facing) ** 0,6 au lieu d'un fondu linéaire jusqu'au centre
-    pw = nt.nodes.new("ShaderNodeMath"); pw.operation = "POWER"; pw.inputs[1].default_value = 0.6
+    # cœur des bouffées un peu plus dense que les bords : (1 − facing) ** 0,9 ; les bords s'effacent en douceur
+    pw = nt.nodes.new("ShaderNodeMath"); pw.operation = "POWER"; pw.inputs[1].default_value = 0.9
     nt.links.new(inv.outputs[0], pw.inputs[0])
     mul = nt.nodes.new("ShaderNodeMath"); mul.operation = "MULTIPLY"
     nt.links.new(mr.outputs["Result"], mul.inputs[0])
@@ -152,12 +159,13 @@ def poussiere(k, n=5):
     """Nuage de poussière (image k sur n) : bouffées sphériques qui gonflent, montent un peu et pâlissent.
 
     Écart au centre d = (0,6 + 1,4 t) et rayon r = (0,8 + 1,2 t) (fois un tirage par bouffée) : le nuage couvre environ
-    55 % de la largeur de l'image à l'image 2 et 80 % à l'image 4 ; opacité maximale 0,9 à l'image 1, puis il se dissipe."""
+    55 % de la largeur de l'image à l'image 2 et 80 % à l'image 4 ; opacité maximale 0,6 à l'image 1, puis il se
+    dissipe ; bords effilochés dès le début (le bruit creuse la densité de 75 % puis jusqu'à 100 %)."""
     rnd = random.Random(11)
     t = (k + 0.6) / n
     t0 = 0.6 / n
-    opa = 0.9 * ((1 - t) / (1 - t0)) ** 1.1
-    m = mat_poussiere(opa, 0.45 + 0.55 * t)
+    opa = OPACITE_POUSSIERE * ((1 - t) / (1 - t0)) ** 1.1
+    m = mat_poussiere(opa, 0.75 + 0.25 * t)
     objs = []
     pos = []
     for i in range(12):
@@ -174,6 +182,7 @@ def poussiere(k, n=5):
 
 
 ECART_POUSSIERE = 0.88    # réglages fins de la taille du nuage (mesurée par mesurer_poussiere())
+OPACITE_POUSSIERE = 0.6   # opacité maximale du nuage (0,45 à 0,6 : la route et les troupes se voient à travers)
 RAYON_POUSSIERE = 0.88
 
 
@@ -211,6 +220,18 @@ EFFETS = {
 }
 
 
+def adoucir_reflets(img, seuil=226, pente=0.3):
+    """Épaule douce sur les reflets (comme pour les troupes) : au-dessus de seuil sur les trois canaux, l'excès est
+    ramené à pente × l'excès."""
+    import numpy as np
+    from PIL import Image
+    a = np.array(img.convert("RGBA"), dtype=np.float32)
+    rgb = a[..., :3]
+    exces = np.clip(rgb.min(axis=-1, keepdims=True) - seuil, 0, None)
+    a[..., :3] = rgb - exces * (1 - pente)
+    return Image.fromarray(np.clip(a, 0, 255).astype(np.uint8), "RGBA")
+
+
 def rendre_effet(nom):
     fab, (lw, lh), n, (ax, ay), ppm, ombre = EFFETS[nom]
     images = []
@@ -226,12 +247,16 @@ def rendre_effet(nom):
         objs = fab(k)
         projectile = nom in ("effet-fleche", "effet-carreau")
         img, _ = C.rendre_sprite("%s-%d" % (nom, k), lw * C.ECHELLE, lh * C.ECHELLE, objs, ombre=ombre, surech=surech,
-                                 echantillons=48, contour=0.0 if nom == "effet-poussiere" else (0.95 if projectile else 0.9),
+                                 echantillons=48, contour=0.0 if nom == "effet-poussiere" or projectile else 0.9,
                                  epaisseur_contour=1, net=0.3 if nom == "effet-poussiere" else 0.6, pres=0.2,
-                                 force_ombre=0.35)
+                                 force_ombre=0.35, controle=False)
+        if projectile:
+            img = adoucir_reflets(img)          # un reflet sur la plume ne brûle pas au blanc
+        C.controle_bords(img, "%s-%d" % (nom, k))
+        C.controle_blancs(img, "%s-%d" % (nom, k))
         if nom == "effet-poussiere":
-            # jamais tout à fait opaque (0,9 au plus) : la route et les troupes se devinent à travers le nuage
-            img.putalpha(img.split()[3].point(lambda v: min(v, 230)))
+            # jamais opaque (0,6 au plus) : la route et les troupes se voient à travers le nuage
+            img.putalpha(img.split()[3].point(lambda v: min(v, int(OPACITE_POUSSIERE * 255))))
         images.append(img)
     C.sauver_sprite(nom, C.bande(images), None, lw, lh, ax, ay, n)
 
