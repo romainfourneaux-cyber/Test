@@ -43,7 +43,7 @@ Claude Code commence par un inventaire : il vérifie les deux outils et peut te 
 
 Quand le jalon 1 te convient, colle ceci dans Claude Code :
 
-« Continue le jalon 2 du cahier des charges : ères, lieux du cours et brume sur la carte, sièges, boss, Plan de bataille, Observatoire. La carte de campagne à deux fronts, la bataille, le conseil du royaume et les événements existent déjà (version 0.5.0) : garde-les. Même méthode que pour le jalon 1 : relis le cahier, inventaire et questions, construction, contrôles, cinq vérifications pour moi, livraison. »
+« Continue le jalon 2 du cahier des charges : ères, lieux du cours et brume sur la carte, sièges, boss, Plan de bataille, Observatoire. La carte de campagne à deux fronts, la bataille, le conseil du royaume et les événements existent déjà, avec leurs images 3D (version 0.6.0) : garde-les. Même méthode que pour le jalon 1 : relis le cahier, inventaire et questions, construction, contrôles, cinq vérifications pour moi, livraison. »
 
 Même phrase ensuite pour le jalon 3 puis le jalon 4, en reprenant leur contenu dans docs/CAHIER_DES_CHARGES.md, section 13.
 

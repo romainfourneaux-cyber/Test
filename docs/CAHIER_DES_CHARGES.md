@@ -54,6 +54,7 @@ Chaque ère change le décor, les bâtiments à débloquer et la monnaie, et se 
 ### Direction artistique
 - Références : la carte de campagne de Medieval Total War, les plans de ville anciens, l'enluminure, l'héraldique. Ni pixel art, ni manga ou anime, ni cartoon enfantin.
 - Rendu vectoriel (SVG et CSS) : aplats, traits d'encre, texture de parchemin, blasons, silhouettes d'unités. Icônes Game-icons (CC BY, crédit obligatoire). Enluminures et cartes anciennes du domaine public (Wikimedia Commons) possibles, source notée.
+- Champ de bataille et carte de campagne en images 3D pré-calculées (rendues avec Blender à partir de sources CC0 de Poly Haven, terrains vus de dessus, bâtiments et troupes de trois quarts), chargées depuis jeu/assets/ ; le dessin vectoriel reste en repli si une image manque (décision du 14/10/2026).
 - Deux cartes : la carte de campagne (histoire), stylisée comme une carte d'époque, et l'Observatoire (géographie), monde actuel tiré de Natural Earth au 1:110m (domaine public).
 - Palette : fond #efe6d2, pierre #8a7f70, encre #2e2419, or #b08d3a. Une teinte par matière : pourpre pour l'Histoire, ocre pour la Géographie, vert pour les SVT, bleu pour la Physique-chimie, brun pour la Littérature, sarcelle pour l'Anglais (à valider). Les erreurs s'affichent en brique, jamais en rouge vif.
 - Typographie : Cinzel pour les titres, Crimson Text pour les questions (fichiers locaux, licence OFL), repli sur Georgia. Questions en 18 px au moins.
