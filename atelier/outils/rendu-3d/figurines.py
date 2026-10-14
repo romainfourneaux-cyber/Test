@@ -6,8 +6,11 @@ balancement du corps sont calculés ici, puis le corps est « habillé » (maill
 Repère local : la figurine regarde vers +X (droite de l'écran), sa gauche est +Y, le haut +Z ; unité le mètre.
 
 Règles tenues ici : aucune croix sur les surcots, écus et caparaçons (un seul grand emblème par pan) ; pas de
-bleu chez les Anglais (maille gris chaud peu métallique, acier un peu doré) ; Omeyyades en haubert, casque
-conique à nasal, bouclier rond, sans turban ni aucun signe religieux.
+bleu chez les Anglais (maille gris chaud peu métallique, heaume d'acier gris chaud à fente de visée) ; Omeyyades :
+l'ivoire domine (surcot ivoire jusqu'au genou, manches ivoire, galon et ceinture verts, bouclier rond vert à bordure
+ivoire et tour ivoire), casque conique d'acier sans rien dessus, sans turban ni aucun signe religieux.
+Silhouettes distinctes : piétaille (lance à fanion), hommes d'armes (lourds, arme levée), champion (plus grand,
+armure propre à chaque camp, arme tenue haut).
 """
 import math
 
@@ -46,7 +49,22 @@ def matieres(camp):
         "chausses": C.mat_tissu("chausses_" + camp, "#6a4e34" if sud else "#6f6352"),
         "champ": C.mat_tissu("champ_" + camp, c["tissu"]),
         "meuble": C.mat_tissu("meuble_" + camp, c["meuble"]),
-        "vert": C.mat_tissu("vert_" + camp, "#2f6b52"),
+        "vert": C.mat_tissu("vert_" + camp, "#357659"),
+        "ivoire": C.mat_tissu("ivoire_" + camp, "#ece4cf"),
+        "rouge": C.mat_tissu("rouge_" + camp, "#b3262a"),
+        # heaume : acier gris chaud, plus clair que la maille (pas de reflet bleu)
+        "heaume": C.mat_metal("heaume_" + camp, "#958d82", rugosite=0.48, metal=0.8),
+        "noir": C.mat_simple("noir_" + camp, "#14110e", rugosite=0.9),
+        # Omeyyades : maille plus sombre des hommes d'armes, écailles d'acier sombre du champion
+        "maille_sombre": C.mat_metal("maille_sombre_" + camp, "#5f5850", rugosite=0.6, maille=True, metal=0.55),
+        "ecailles": mat_ecailles("ecailles_" + camp),
+        # troupes : hampe de frêne clair (se lit sur l'herbe et sur la route), gambison de lin piqué ivoire (piétaille
+        # anglaise), acier bruni sombre des hommes d'armes anglais (L* d'environ 35 au rendu)
+        "frene": C.mat_simple("frene_" + camp, "#e2cfa8", rugosite=0.65, bosse=0.1, echelle_bosse=60),
+        # lance couchée des cavaliers : frêne patiné, plus sobre (elle traverse tout le sprite)
+        "frene_patine": C.mat_simple("frene_patine_" + camp, "#a88d64", rugosite=0.7, bosse=0.1, echelle_bosse=60),
+        "gambison": mat_gambison("gambison_" + camp),
+        "acier_sombre": C.mat_metal("acier_sombre_" + camp, "#67625b", rugosite=0.5, metal=0.5),
     }
     _cache_mats[cle] = m
     return m
@@ -54,6 +72,64 @@ def matieres(camp):
 
 _cache_mats = {}
 C.CACHES.append(_cache_mats)
+
+
+def mat_gambison(nom, teinte="#cdbf9f", couture="#94856a"):
+    """Gambison de lin piqué : ivoire chaud, piqûres verticales un peu plus sombres (ondes le long de Z, coordonnées
+    d'objet) et léger relief des boudins de rembourrage."""
+    m, nt, p = C.nouveau_materiau(nom)
+    tc = nt.nodes.new("ShaderNodeTexCoord")
+    onde = nt.nodes.new("ShaderNodeTexWave")
+    onde.wave_type = "BANDS"
+    onde.bands_direction = "X"
+    onde.inputs["Scale"].default_value = 9.0
+    onde.inputs["Distortion"].default_value = 0.0
+    nt.links.new(tc.outputs["Object"], onde.inputs["Vector"])
+    mr = C._plage(nt, onde.outputs["Fac"], 0.0, 0.25, 1.0, 0.0)
+    mx = nt.nodes.new("ShaderNodeMix")
+    mx.data_type = "RGBA"
+    fac = nt.nodes.new("ShaderNodeMath")
+    fac.operation = "MULTIPLY"
+    fac.inputs[1].default_value = 0.55
+    nt.links.new(mr, fac.inputs[0])
+    nt.links.new(fac.outputs[0], C._entree(mx, "Factor", "VALUE"))
+    C._entree(mx, "A", "RGBA").default_value = C.couleur(teinte)
+    C._entree(mx, "B", "RGBA").default_value = C.couleur(couture)
+    nt.links.new(C._sortie(mx, "RGBA"), p.inputs["Base Color"])
+    p.inputs["Roughness"].default_value = 0.92
+    b = nt.nodes.new("ShaderNodeBump")
+    b.inputs["Strength"].default_value = 0.35
+    b.inputs["Distance"].default_value = 0.01
+    nt.links.new(onde.outputs["Fac"], b.inputs["Height"])
+    nt.links.new(b.outputs["Normal"], p.inputs["Normal"])
+    return m
+
+
+def mat_ecailles(nom):
+    """Broigne d'écailles d'acier sombre (champion omeyyade) : rangées d'écailles décalées (texture de briques fine),
+    joints presque noirs, métal peu brillant."""
+    m, nt, p = C.nouveau_materiau(nom)
+    tc = nt.nodes.new("ShaderNodeTexCoord")
+    br = nt.nodes.new("ShaderNodeTexBrick")
+    br.offset = 0.5
+    br.offset_frequency = 2
+    nt.links.new(tc.outputs["Object"], br.inputs["Vector"])
+    br.inputs["Scale"].default_value = 1.0
+    br.inputs["Brick Width"].default_value = 0.05
+    br.inputs["Row Height"].default_value = 0.035
+    br.inputs["Mortar Size"].default_value = 0.006
+    br.inputs["Color1"].default_value = C.couleur("#4a4d50")
+    br.inputs["Color2"].default_value = C.couleur("#3b3e42")
+    br.inputs["Mortar"].default_value = C.couleur("#121314")
+    nt.links.new(br.outputs["Color"], p.inputs["Base Color"])
+    p.inputs["Metallic"].default_value = 0.75
+    p.inputs["Roughness"].default_value = 0.45
+    b = nt.nodes.new("ShaderNodeBump")
+    b.inputs["Strength"].default_value = 0.6
+    b.inputs["Distance"].default_value = 0.004
+    nt.links.new(br.outputs["Fac"], b.inputs["Height"])
+    nt.links.new(b.outputs["Normal"], p.inputs["Normal"])
+    return m
 
 
 # ---------------------------------------------------------------- outils de maillage
@@ -118,13 +194,18 @@ def _orienter(ob, origine, direction, haut=V((0, 0, 1))):
 
 
 # ---------------------------------------------------------------- squelette humain et marche
-def pose_homme(phase, assis=False, bras_droit=(15, 55), bras_gauche=(35, 75), amplitude=17, penche=6.5, balancement=4):
+def pose_homme(phase, assis=False, bras_droit=(15, 55), bras_gauche=(35, 75), amplitude=17, penche=6.5, balancement=4,
+               genou=None):
     """Positions des articulations d'un homme de 1,80 m à la phase de marche donnée.
 
     Foulée souple : amplitude de 17° à la hanche, genou d'appui fléchi de 12°, genou en balancier jusqu'à 57°,
     buste penché de « penche » degrés vers l'avant (il avance, il ne recule pas).
-    bras_* : (angle de l'épaule vers l'avant, flexion du coude) en degrés, avant le balancement de marche."""
+    bras_* : (angle de l'épaule vers l'avant, flexion du coude) en degrés, avant le balancement de marche.
+    genou : (flexion minimale, flexion ajoutée en balancier) en degrés, pour une marche plus naturelle (troupes) : le
+    genou n'est jamais tendu (15 à 25° en appui), la jambe arrière plie déjà au décollement du pied (cycle avancé de
+    0,6 rad), la jambe qui passe vers l'avant plie jusqu'à environ 55°. None : ancienne foulée (tours, engins)."""
     cuisse, tibia = 0.45, 0.44
+    marche_fine = genou is not None
     j = {}
     if assis:
         jambes = {+1: (70, 75), -1: (70, 75)}
@@ -136,11 +217,15 @@ def pose_homme(phase, assis=False, bras_droit=(15, 55), bras_gauche=(35, 75), am
         for cote, dec in ((+1, 0.0), (-1, math.pi)):
             th = a * math.cos(phase + dec)
             # genou plié pendant que la jambe passe vers l'avant ; légèrement fléchi en appui
-            plie = math.radians(12 + 45 * max(0.0, math.sin(phase + dec + math.pi)))
+            if genou is None:
+                plie = math.radians(12 + 45 * max(0.0, math.sin(phase + dec + math.pi)))
+            else:
+                plie = math.radians(genou[0] + genou[1] * max(0.0, math.sin(phase + dec + math.pi + 0.6)))
             jambes[cote] = (math.degrees(th), math.degrees(plie))
         balance = math.sin(phase)
     pts = {}
     bas = 0.0
+    pieds = {}
     for cote, (th, kb) in jambes.items():
         th, kb = math.radians(th), math.radians(kb)
         d1 = V((math.sin(th), 0, -math.cos(th)))
@@ -149,6 +234,12 @@ def pose_homme(phase, assis=False, bras_droit=(15, 55), bras_gauche=(35, 75), am
         cheville = genou + d2 * tibia
         pts[cote] = (genou, cheville)
         bas = min(bas, cheville.z)
+        # troupes : le pied de la jambe arrière suit en partie le tibia (appui sur la pointe, talon levé) au lieu de
+        # rester à plat en l'air comme un pied « botté » posé sur une marche
+        phi = th - kb
+        if marche_fine and not assis and th < 0 and phi < 0:
+            r = 0.8 * phi
+            pieds[cote] = V((0.17 * math.cos(r) + 0.05 * math.sin(r), 0, 0.17 * math.sin(r) - 0.05 * math.cos(r)))
     # le pied d'appui touche le sol (cheville à 8 cm) : c'est ce qui fait monter et descendre le corps
     hz = 0.08 - bas if not assis else 0.0
     for cote, (genou, cheville) in pts.items():
@@ -156,7 +247,7 @@ def pose_homme(phase, assis=False, bras_droit=(15, 55), bras_gauche=(35, 75), am
         j["hanche", cote] = h
         j["genou", cote] = h + genou
         j["cheville", cote] = h + cheville
-        pied = j["cheville", cote] + V((0.17, 0.0, -0.05))
+        pied = j["cheville", cote] + pieds.get(cote, V((0.17, 0.0, -0.05)))
         pied.z = max(0.025, pied.z) if not assis else pied.z
         j["pied", cote] = pied
     roulis = 0.012 * balance
@@ -183,8 +274,11 @@ def pose_homme(phase, assis=False, bras_droit=(15, 55), bras_gauche=(35, 75), am
     return j
 
 
-def corps_homme(nom, j, mat_haut, mat_jambes, epaisseur=1.0, jambes=True):
-    """Corps (torse + bras) et jambes, épaissis par Skin (cuisses et mollets pleins : pas de jambes en bâtons)."""
+def corps_homme(nom, j, mat_haut, mat_jambes, epaisseur=1.0, jambes=True, galbe=False):
+    """Corps (torse + bras) et jambes, épaissis par Skin (cuisses et mollets pleins : pas de jambes en bâtons).
+
+    galbe (troupes) : jambes 25 % plus fines, avec un vrai dessin de jambe : cuisse qui s'affine vers le genou, genou
+    marqué (rétréci), mollet renflé à l'arrière du tibia, cheville fine. Sans galbe : ancien tube (tours, engins)."""
     e = epaisseur
     pts = [j["bassin"], j["taille"], j["poitrine"], j["cou"],
            j["epaule", -1], j["coude", -1], j["main", -1],
@@ -192,7 +286,22 @@ def corps_homme(nom, j, mat_haut, mat_jambes, epaisseur=1.0, jambes=True):
     aretes = [(0, 1), (1, 2), (2, 3), (2, 4), (4, 5), (5, 6), (2, 7), (7, 8), (8, 9)]
     rayons = [0.145 * e, 0.135 * e, 0.175 * e, 0.075, 0.09 * e, 0.07 * e, 0.052, 0.09 * e, 0.07 * e, 0.052]
     objs = [_membre_skin(nom + "_torse", pts, aretes, rayons, mat_haut)]
-    if jambes:
+    if jambes and galbe:
+        pts, aretes, rayons = [j["bassin"]], [], [0.13 * e]
+        for cote in (-1, 1):
+            h, g, c, p = j["hanche", cote], j["genou", cote], j["cheville", cote], j["pied", cote]
+            tibia = c - g
+            arriere = V((-tibia.z, 0, tibia.x)).normalized() * -1   # perpendiculaire au tibia, vers l'arrière
+            if arriere.x > 0:
+                arriere = -arriere
+            mi_cuisse = h.lerp(g, 0.5)
+            mollet = g.lerp(c, 0.3) + arriere * 0.018
+            i0 = len(pts)
+            pts += [h, mi_cuisse, g, mollet, c, p]
+            rayons += [0.084 * e, 0.074 * e, 0.054 * e, 0.058, 0.04, 0.036]
+            aretes += [(0, i0), (i0, i0 + 1), (i0 + 1, i0 + 2), (i0 + 2, i0 + 3), (i0 + 3, i0 + 4), (i0 + 4, i0 + 5)]
+        objs.append(_membre_skin(nom + "_jambes", pts, aretes, rayons, mat_jambes))
+    elif jambes:
         pts = [j["bassin"],
                j["hanche", -1], j["genou", -1], j["cheville", -1], j["pied", -1],
                j["hanche", +1], j["genou", +1], j["cheville", +1], j["pied", +1]]
@@ -202,13 +311,13 @@ def corps_homme(nom, j, mat_haut, mat_jambes, epaisseur=1.0, jambes=True):
     return objs
 
 
-def surcot(nom, j, mat, longueur=0.68, largeur=1.0, evasement=0.07, haut=0.07):
-    """Surcot (tabard, haubert) : tube de tissu évasé du haut du torse vers le genou.
+def surcot(nom, j, mat, longueur=0.68, largeur=1.0, evasement=0.07, haut=0.07, z_haut=None):
+    """Surcot (tabard, haubert) : tube de tissu évasé du haut du torse vers le genou ; z_haut : départ imposé (jupe).
 
     UV : u = 0,5 sur le devant (couture dans le dos), u = 0,25 sur le flanc droit (côté caméra) ; v = 1 en haut."""
     bm = bmesh.new()
     uv = bm.loops.layers.uv.new("UVMap")
-    z_haut = j["poitrine"].z + haut
+    z_haut = j["poitrine"].z + haut if z_haut is None else z_haut
     seg, etages = 24, 6
     anneaux = []
     for k in range(etages + 1):
@@ -252,41 +361,140 @@ def texture_surcot(camp, nom=None, embleme=0.95, galon=True):
                             usure=0.3, champ=c["tissu"])
     im = np.array(Image.open(base).convert("RGB"), dtype=np.float32)
     if galon:
-        bande = np.array(C.rgb8(c["meuble"]), dtype=np.float32)
+        # galon du bas : 9 % de la hauteur, soit 6 cm sur un surcot de 0,68 m (vert pour les Omeyyades)
+        bande = np.array(C.rgb8(c["meuble"] if camp != "omeyyades" else c["vert_tissu"]), dtype=np.float32)
         im[-int(H * 0.09):, :] = bande
-        if camp == "omeyyades":
-            im[:int(H * 0.06), :] = bande
     Image.fromarray(im.astype(np.uint8)).save(chemin)
     return chemin
 
 
-def tete(nom, j, mats, casque="nasal", visage=True, bandeau=None):
+def texture_rayures(nom, c1, c2, n=8, vertical=True):
+    """Toile à bandes (panneaux de la jupe du champion omeyyade, fanions) : bandes alternées c1 / c2."""
+    import numpy as np
+    from PIL import Image
+    chemin = C.os.path.join(C.CACHE, nom + ".png")
+    W, H = 256, 128
+    im = np.zeros((H, W, 3), dtype=np.uint8)
+    for k in range(n):
+        if vertical:
+            im[:, k * W // n:(k + 1) * W // n] = C.rgb8(c1 if k % 2 == 0 else c2)
+        else:
+            im[k * H // n:(k + 1) * H // n, :] = C.rgb8(c1 if k % 2 == 0 else c2)
+    Image.fromarray(im).save(chemin)
+    return chemin
+
+
+def cape(nom, j, mat, longueur=0.6, largeur=1.0):
+    """Court manteau sur les épaules et le dos (demi-tube derrière le buste, du cou jusqu'aux reins)."""
+    bm = bmesh.new()
+    z0 = j["cou"].z - 0.02
+    seg, etages = 14, 5
+    anneaux = []
+    for k in range(etages + 1):
+        t = k / etages
+        z = z0 - longueur * t
+        cx = j["poitrine"].x - 0.02 - 0.05 * t
+        rx = (0.17 + 0.05 * t) * largeur
+        ry = (0.24 + 0.04 * t) * largeur
+        anneau = []
+        for s in range(seg + 1):
+            a = math.pi * 0.45 + math.pi * 1.1 * s / seg       # de l'épaule gauche à l'épaule droite, par le dos
+            anneau.append(bm.verts.new((cx + rx * math.cos(a), j["poitrine"].y + ry * math.sin(a), z)))
+        anneaux.append(anneau)
+    for k in range(etages):
+        for s in range(seg):
+            f = bm.faces.new((anneaux[k][s], anneaux[k][s + 1], anneaux[k + 1][s + 1], anneaux[k + 1][s]))
+            f.smooth = True
+    ob = C.objet_maillage(nom + "_cape", bm, mat)
+    ob.modifiers.new("ep", "SOLIDIFY").thickness = 0.02
+    return ob
+
+
+def tete(nom, j, mats, casque="nasal", visage=True, bandeau=None, visage_net=False):
     """Tête et casque : 'nasal' (casque conique à nasal et coiffe de mailles), 'conique' (casque pointu d'acier
-    sombre, bandeau, nasal, camail ouvert sur le visage), 'heaume' (fermé). Le visage reste visible sous le nasal."""
+    sombre, bandeau, nasal, camail ouvert sur le visage), 'heaume' (fermé), 'chapel' (chapel de fer : calotte et
+    large bord, coiffe de mailles ; piétaille anglaise). Le visage reste visible sous le nasal.
+
+    visage_net (troupes) : visage avancé et un peu plus large, coiffe et camail reculés vers la nuque : de profil et de
+    trois quarts, une tache couleur peau se lit sous le casque (sans elle, la tête se résume au casque)."""
     objs = []
     t = j["tete"]
-    f = V((0.02, 0, 0))           # visage avancé : il dépasse de la coiffe
+    f = V((0.045, 0, -0.02)) if visage_net else V((0.02, 0, 0))     # visage avancé : il dépasse de la coiffe
+    recul = 0.025 if visage_net else 0.0                              # coiffe et camail repoussés vers la nuque
+    nez = 0.14 if visage_net else 0.118
     if visage:
-        objs.append(C.sphere(nom + "_visage", 0.1, t + f, mats["peau"], subdiv=3, echelle=(1.0, 0.9, 1.08)))
+        objs.append(C.sphere(nom + "_visage", 0.1, t + f, mats["peau"], subdiv=3,
+                             echelle=(0.95, 1.0, 1.12) if visage_net else (1.0, 0.9, 1.08)))
     if casque == "nasal":
         objs.append(C.cylindre(nom + "_casque_b", 0.113, 0.07, (t.x - 0.01, t.y, t.z + 0.0), mats["acier"], segments=20))
         objs.append(C.cone(nom + "_casque", 0.114, 0.17, (t.x - 0.01, t.y, t.z + 0.07), mats["acier"], segments=20))
-        objs.append(C.boite(nom + "_nasal", 0.015, 0.025, 0.11, (t.x + 0.118, t.y, t.z - 0.07), mats["acier"]))
-        objs.append(C.sphere(nom + "_coiffe", 0.105, (t.x - 0.075, t.y, t.z - 0.06), mats["maille"], subdiv=2, echelle=(0.85, 1.05, 1.0)))
-        objs.append(C.cylindre(nom + "_gorgerin", 0.1, 0.11, (t.x - 0.045, t.y, t.z - 0.21), mats["maille"], segments=14, rayon_haut=0.085))
-    elif casque == "conique":
+        objs.append(C.boite(nom + "_nasal", 0.015, 0.025, 0.11, (t.x + nez, t.y, t.z - 0.07), mats["acier"]))
+        objs.append(C.sphere(nom + "_coiffe", 0.105, (t.x - 0.075 - recul, t.y, t.z - 0.06), mats["maille"], subdiv=2,
+                             echelle=(0.8 if visage_net else 0.85, 1.05, 1.0)))
+        objs.append(C.cylindre(nom + "_gorgerin", 0.1, 0.11, (t.x - 0.045 - recul, t.y, t.z - 0.21), mats["maille"], segments=14,
+                               rayon_haut=0.085))
+    elif casque == "chapel":
+        # chapel de fer : calotte basse et bord large un peu tombant (silhouette de fantassin léger, tête plus large et
+        # plus basse que le casque conique) ; coiffe de mailles derrière le visage
+        # acier gris (celui des heaumes) : plus sombre que le gambison ivoire, il se lit comme un casque et non comme
+        # un bonnet de toile
+        objs.append(C.sphere(nom + "_calotte", 0.122, (t.x - 0.01, t.y, t.z + 0.03), mats["heaume"], subdiv=2,
+                             echelle=(1.0, 1.0, 0.78)))
+        objs.append(C.cylindre(nom + "_bord", 0.2, 0.045, (t.x - 0.01, t.y, t.z + 0.0), mats["heaume"], segments=28,
+                               rayon_haut=0.13))
+        objs.append(C.sphere(nom + "_coiffe", 0.105, (t.x - 0.075 - recul, t.y, t.z - 0.06), mats["maille"], subdiv=2,
+                             echelle=(0.8, 1.05, 1.0)))
+        objs.append(C.cylindre(nom + "_gorgerin", 0.1, 0.11, (t.x - 0.045 - recul, t.y, t.z - 0.21), mats["maille"], segments=14,
+                               rayon_haut=0.085))
+    elif casque in ("conique", "conique_ferme"):
         objs.append(C.cylindre(nom + "_casque_b", 0.113, 0.05, (t.x - 0.01, t.y, t.z + 0.02), mats["acier"], segments=20))
         objs.append(C.cone(nom + "_casque", 0.114, 0.22, (t.x - 0.01, t.y, t.z + 0.07), mats["acier"], segments=20))
+        # bande du casque : fer (ou dorée pour le champion) ; jamais d'étoffe sur le casque (pas de lecture « turban »)
         objs.append(C.cylindre(nom + "_bandeau", 0.118, 0.035, (t.x - 0.01, t.y, t.z + 0.035),
                                bandeau or mats["fer"], segments=20))
-        objs.append(C.boite(nom + "_nasal", 0.015, 0.025, 0.1, (t.x + 0.118, t.y, t.z - 0.06), mats["acier"]))
-        # camail ouvert sur le devant : la maille tombe derrière et sur les côtés
-        objs.append(C.cylindre(nom + "_camail", 0.115, 0.16, (t.x - 0.075, t.y, t.z - 0.17), mats["maille"], segments=16,
+        objs.append(C.boite(nom + "_nasal", 0.015, 0.025, 0.1, (t.x + nez, t.y, t.z - 0.06), mats["acier"]))
+        maille = mats["maille_sombre"] if casque == "conique_ferme" else mats["maille"]
+        # camail : ouvert sur le devant (la maille tombe derrière et sur les côtés), ou fermé jusqu'au nez
+        objs.append(C.cylindre(nom + "_camail", 0.115, 0.16, (t.x - 0.075 - recul, t.y, t.z - 0.17), maille, segments=16,
                                rayon_haut=0.1))
+        if casque == "conique_ferme":
+            objs.append(C.cylindre(nom + "_ventaille", 0.112, 0.13, (t.x + 0.0, t.y, t.z - 0.17), maille, segments=16,
+                                   rayon_haut=0.105))
     elif casque == "heaume":
-        objs.append(C.cylindre(nom + "_heaume", 0.125, 0.26, (t.x, t.y, t.z - 0.12), mats["acier"], segments=20))
-        objs.append(C.sphere(nom + "_heaume_h", 0.125, (t.x, t.y, t.z + 0.13), mats["acier"], subdiv=2, echelle=(1, 1, 0.45)))
-        objs.append(C.boite(nom + "_fente", 0.02, 0.2, 0.018, (t.x + 0.12, t.y, t.z + 0.02), mats["fer"]))
+        # heaume d'acier (gris chaud, plus clair que la maille), fente de visée horizontale sombre, sans renfort vertical
+        h = mats["heaume"]
+        objs.append(C.cylindre(nom + "_heaume", 0.125, 0.26, (t.x, t.y, t.z - 0.12), h, segments=20))
+        objs.append(C.sphere(nom + "_heaume_h", 0.125, (t.x, t.y, t.z + 0.13), h, subdiv=2, echelle=(1, 1, 0.45)))
+        objs.append(C.boite(nom + "_fente", 0.03, 0.2, 0.03, (t.x + 0.118, t.y, t.z + 0.01), mats["noir"]))
+    return objs
+
+
+def plumet(nom, j, mats, couleur="rouge"):
+    """Plumet étroit sur le heaume (champion anglais) : torsade rouge et or à la base, plume rouge recourbée vers l'arrière."""
+    t = j["tete"]
+    base = V((t.x - 0.01, t.y, t.z + 0.19))
+    objs = []
+    for k in range(6):
+        a = 2 * math.pi * k / 6
+        objs.append(C.sphere(nom + "_torse%d" % k, 0.035, base + V((0.1 * math.cos(a), 0.1 * math.sin(a), 0.0)),
+                             mats[couleur] if k % 2 else mats["or"], subdiv=1))
+    chemin = [base, base + V((-0.02, 0, 0.08)), base + V((-0.08, 0, 0.15)), base + V((-0.16, 0, 0.17)), base + V((-0.22, 0, 0.13))]
+    objs.append(_tube(nom + "_plume", chemin, [0.03, 0.032, 0.028, 0.02, 0.006], mats[couleur], segments=8))
+    return objs
+
+
+def masse(nom, mats, main, direction, longueur=0.62):
+    """Masse d'armes à ailettes tenue à la main (manche de bois, tête de fer)."""
+    d = V(direction).normalized()
+    a = V(main) - d * 0.12
+    b = a + d * longueur
+    objs = [_tube(nom + "_manche", [a, b], [0.022, 0.02], mats["bois"], segments=8)]
+    objs.append(C.sphere(nom + "_tete_masse", 0.07, b, mats["fer"], subdiv=2, echelle=(1, 1, 1.25)))
+    for k in range(4):
+        ail = C.boite(nom + "_ailette%d" % k, 0.02, 0.1, 0.12, (0, 0, 0), mats["fer"], base=False)
+        _orienter(ail, b, d)
+        ail.rotation_euler.rotate_axis("X", k * math.pi / 4)
+        objs.append(ail)
     return objs
 
 
@@ -375,6 +583,10 @@ def texture_ecu(camp, forme):
     # champ à l'albédo « tissu » (plus clair que la couleur héraldique) : le rendu retombe sur la couleur du camp
     if forme == "amande":
         base = C.texture_blason(camp, 256, 480, taille_embleme=0.86, nom=nom + "-base", decalage=(0.0, -0.12), champ=c["tissu"])
+    elif camp == "omeyyades":
+        # bouclier vert (#357659) à la tour ivoire : le vert et l'ivoire du camp, lisibles sur la route
+        base = C.texture_blason(camp, 384, 384, taille_embleme=0.58, nom=nom + "-base", inverse=True, champ=c["vert_tissu"],
+                                meuble="#ece4cf")
     else:
         base = C.texture_blason(camp, 384, 384, taille_embleme=0.62, nom=nom + "-base", champ=c["tissu"])
     im = np.array(Image.open(base).convert("RGB"), dtype=np.float32)
@@ -386,35 +598,39 @@ def texture_ecu(camp, forme):
     else:
         yy, xx = np.mgrid[0:h, 0:w]
         r = np.sqrt((xx - w / 2) ** 2 + (yy - h / 2) ** 2)
-        im[r > w / 2 - b] = fer
         if camp == "omeyyades":
-            # anneau vert sous la bordure de fer
-            im[(r > w / 2 - b * 2.4) & (r <= w / 2 - b)] = np.array(C.rgb8(c["meuble"]), dtype=np.float32)
+            # bordure ivoire de 4 cm (12,5 % du rayon d'un bouclier de 0,32 m), liseré de fer très fin
+            im[r > w / 2 * (1 - 0.125)] = np.array(C.rgb8("#ece4cf"), dtype=np.float32)
+            im[r > w / 2 - 3] = fer
+        else:
+            im[r > w / 2 - b] = fer
     Image.fromarray(np.clip(im, 0, 255).astype(np.uint8)).save(chemin)
     return chemin
 
 
-def epee(nom, mats, main, direction, longueur=0.78):
+def epee(nom, mats, main, direction, longueur=0.78, largeur=0.06, garde_l=0.22):
     """Épée tenue à la main, lame suivant direction (pointe en avant et vers le bas : garde basse)."""
     d = V(direction).normalized()
     objs = []
-    lame = C.boite(nom + "_lame", longueur, 0.06, 0.02, (0, 0, 0), mats["lame"], base=False)
+    lame = C.boite(nom + "_lame", longueur, largeur, 0.02, (0, 0, 0), mats["lame"], base=False)
     _orienter(lame, V(main) + d * (0.06 + longueur / 2), d)
-    garde = C.boite(nom + "_garde", 0.035, 0.22, 0.035, (0, 0, 0), mats["fer"], base=False)
+    garde = C.boite(nom + "_garde", 0.035, garde_l, 0.035, (0, 0, 0), mats["fer"], base=False)
     _orienter(garde, V(main) + d * 0.055, d)
     pom = C.sphere(nom + "_pommeau", 0.025, V(main) - d * 0.08, mats["fer"], subdiv=1)
     objs += [lame, garde, pom]
     return objs
 
 
-def lance(nom, mats, main, direction, longueur=2.6, recul=0.9, fanion=None, fer=0.26):
+def lance(nom, mats, main, direction, longueur=2.6, recul=0.9, fanion=None, fer=0.26, taille_fanion=1.0, hampe=None,
+          rayon=0.03, largeur_fer=0.045, sous_fer=0.1):
     """Lance (hampe de bois, fer en feuille) tenue à la main ; longueur totale, fer compris.
-    fanion = camp pour un petit fanion (champ uni à bordure, sans meuble : rien qui ressemble à une croix)."""
+    fanion = camp pour un petit fanion (champ uni à bordure, sans meuble : rien qui ressemble à une croix).
+    hampe : matière de la hampe (par défaut le bois sombre ; les troupes prennent le frêne clair de mat_frene())."""
     d = V(direction).normalized()
     a = V(main) - d * recul
     b = a + d * (longueur - fer)
-    objs = [_tube(nom + "_hampe", [a, b], [0.03, 0.026], mats["bois"], segments=8)]
-    fe = C.cone(nom + "_fer", 0.045, fer, (0, 0, 0), mats["lame"], segments=8)
+    objs = [_tube(nom + "_hampe", [a, b], [rayon, rayon * 0.87], hampe or mats["bois"], segments=8)]
+    fe = C.cone(nom + "_fer", largeur_fer, fer, (0, 0, 0), mats["lame"], segments=8)
     fe.rotation_mode = "QUATERNION"
     fe.rotation_quaternion = d.to_track_quat("Z", "Y")
     fe.location = b
@@ -422,20 +638,27 @@ def lance(nom, mats, main, direction, longueur=2.6, recul=0.9, fanion=None, fer=
     objs.append(fe)
     if fanion:
         c = C.CAMPS[fanion]
-        m = C.mat_tissu("fanion_" + fanion, c["tissu"])
+        if fanion == "omeyyades":
+            m = C.mat_tissu("fanion_" + fanion, "#ece4cf", image_png=texture_rayures("fanion-omeyyades", "#ece4cf", "#357659",
+                                                                                      n=2, vertical=False))
+        else:
+            m = C.mat_tissu("fanion_" + fanion, c["tissu"])
         bm = bmesh.new()
-        base = b - d * 0.1
+        uvl = bm.loops.layers.uv.new("UVMap")
+        base = b - d * sous_fer
         nx = 8
         haut_v, bas_v = [], []
         for i in range(nx + 1):
             u = i / nx
-            p = base + V((-0.4 * u, 0.04 * math.sin(u * 6), -0.03 * u))
+            p = base + V((-0.45 * u * taille_fanion, 0.04 * math.sin(u * 6), -0.03 * u))
             haut_v.append(bm.verts.new(p))
-            larg = 0.2 * (1 - 0.55 * u)
+            larg = 0.22 * taille_fanion * (1 - 0.55 * u)
             bas_v.append(bm.verts.new(p - d * larg))
         for i in range(nx):
             f = bm.faces.new((bas_v[i], bas_v[i + 1], haut_v[i + 1], haut_v[i]))
             f.smooth = True
+            for lp, uvv in zip(f.loops, ((i / nx, 0.0), ((i + 1) / nx, 0.0), ((i + 1) / nx, 1.0), (i / nx, 1.0))):
+                lp[uvl].uv = uvv
         ob = C.objet_maillage(nom + "_fanion", bm, m)
         ob.modifiers.new("ep", "SOLIDIFY").thickness = 0.01
         objs.append(ob)
@@ -453,70 +676,186 @@ def arc(nom, mats, main, echelle=1.0):
     return objs
 
 
+def texture_ecartele(camp, nom=None, lin="#d6c9ac"):
+    """Surcot écartelé (piétaille anglaise) : quartiers 1 et 4 au rouge du camp, 2 et 3 en lin ivoire ; ni croix ni
+    meuble. UV du surcot : u = 0,5 au milieu du devant, u = 0,25 sur le flanc droit (côté caméra), v = 1 en haut ;
+    le flanc vu porte donc un quartier rouge en haut (poitrine) et ivoire en bas (jupe)."""
+    import numpy as np
+    from PIL import Image
+    c = C.CAMPS[camp]
+    nom = nom or "ecartele-" + camp
+    chemin = C.os.path.join(C.CACHE, nom + ".png")
+    W, H = 256, 128
+    im = np.zeros((H, W, 3), dtype=np.uint8)
+    rouge, clair = C.rgb8(c["tissu"]), C.rgb8(lin)
+    im[:H // 2, :W // 2] = rouge
+    im[H // 2:, :W // 2] = clair
+    im[:H // 2, W // 2:] = clair
+    im[H // 2:, W // 2:] = rouge
+    Image.fromarray(im).save(chemin)
+    return chemin
+
+
 # ---------------------------------------------------------------- soldats complets
-def soldat(nom, camp, role, phase=0.0, lacet=-22.0, echelle=1.0, recul_y=0.1):
+def soldat(nom, camp, role, phase=0.0, lacet=-22.0, echelle=1.0, recul_y=0.1, fine=None, plafond=None):
     """Construit un soldat et renvoie ses objets (déjà orientés et posés à l'origine).
 
-    role : 'fantassin' (épée + écu en amande), 'pietaille' (lance + écu rond ou en amande),
-    'homme_armes' (lourd), 'champion' (lourd, plus grand), 'archer' (arc, buste dressé).
-    recul_y : la figurine est un peu reculée (vers le nord) pour que ses pieds ne descendent pas sous l'ancrage."""
+    role : 'fantassin' (épée + écu en amande), 'pietaille' (lance à fanion + écu), 'homme_armes' (lourd),
+    'champion' (lourd, plus grand, armure propre, arme tenue haut), 'archer' (arc, buste dressé).
+    Omeyyades : piétaille en surcot ivoire jusqu'au genou et manches ivoire ; hommes d'armes en maille sombre à camail
+    fermé, surcot ivoire, grand bouclier rond, épée levée ; champion en broigne d'écailles d'acier sombre, jupe à
+    panneaux vert et ivoire, court manteau vert, bande de casque dorée, masse tenue haut.
+    Angleterre et France : hommes d'armes et champion en heaume d'acier à fente de visée ; le champion anglais lève
+    l'épée et porte un plumet rouge étroit sur une torsade rouge et or.
+    recul_y : la figurine est un peu reculée (vers le nord) pour que ses pieds ne descendent pas sous l'ancrage.
+
+    fine (par défaut : toutes les troupes, mais pas les archers des tours) : anatomie des troupes, contre l'effet
+    « jouet en plastique » : jambes galbées 25 % plus fines avec genou et mollet, genou jamais tendu (16° en appui,
+    jusqu'à 46° en balancier ; pied arrière sur la pointe), bottes 30 % plus petites, visage dégagé sous le casque des piétons, épées plus courtes
+    et plus fines (environ 0,55 × la hauteur de la figure à l'écran), hampes de frêne clair.
+    Angleterre (fine) : la piétaille porte un chapel de fer, un gambison de lin ivoire, un surcot écartelé ivoire et
+    gueules, un petit écu (0,7 m) et une lance de frêne dressée presque verticale dont le fer et le grand fanion
+    dépassent nettement du casque ; les hommes d'armes sont en acier bruni sombre, plus épais (1,2), épée levée :
+    deux silhouettes différentes, et non deux nuances de rouge.
+    plafond (piétaille anglaise) : hauteur à l'écran, en mètres au-dessus de l'ancrage, où placer la pointe de la lance
+    (bord haut de l'image moins une marge) : la lance de 2,6 m monte aussi haut que l'image le permet ; si son talon
+    devait entrer dans le sol, elle est raccourcie d'autant."""
+    if fine is None:
+        fine = role != "archer"
     mats = matieres(camp)
     sud = camp == "omeyyades"
-    if role == "fantassin":
-        j = pose_homme(phase, bras_droit=(25, 30), bras_gauche=(18, 78))
-    elif role == "pietaille":
-        j = pose_homme(phase, bras_droit=(35, 45), bras_gauche=(18, 78))
-    elif role == "archer":
-        j = pose_homme(phase, bras_droit=(80, 95), bras_gauche=(88, 5), amplitude=4, penche=2)
-    else:
-        j = pose_homme(phase, bras_droit=(25, 35), bras_gauche=(18, 78), amplitude=15)
-    objs = []
+    anglais = camp == "angleterre"
     lourd = role in ("homme_armes", "champion")
-    jambes = mats["maille"] if lourd else mats["chausses"]
-    objs += corps_homme(nom, j, mats["maille"], jambes, epaisseur=1.12 if lourd else 1.0)
+    genou = (16, 30) if fine else None
+    if role == "fantassin":
+        j = pose_homme(phase, bras_droit=(25, 30), bras_gauche=(18, 78), genou=genou)
+    elif role == "pietaille" and anglais and fine:
+        # main droite avancée à hauteur de hanche : la lance est tenue droite devant le corps
+        j = pose_homme(phase, bras_droit=(26, 60), bras_gauche=(18, 78), genou=genou)
+    elif role == "pietaille":
+        j = pose_homme(phase, bras_droit=(35, 45), bras_gauche=(18, 78), genou=genou)
+    elif role == "archer":
+        j = pose_homme(phase, bras_droit=(80, 95), bras_gauche=(88, 5), amplitude=4, penche=2, genou=genou)
+    elif role == "champion" and sud:
+        j = pose_homme(phase, bras_droit=(128, 32), bras_gauche=(20, 80), amplitude=15, genou=genou)
+    elif role == "champion":
+        j = pose_homme(phase, bras_droit=(120, 25), bras_gauche=(20, 80), amplitude=15, genou=genou)
+    elif role == "homme_armes" and (sud or (anglais and fine)):
+        j = pose_homme(phase, bras_droit=(118, 40), bras_gauche=(20, 80), amplitude=15, genou=genou)
+    else:
+        j = pose_homme(phase, bras_droit=(25, 35), bras_gauche=(18, 78), amplitude=15, genou=genou)
+    objs = []
     tex = texture_surcot(camp)
     m_sur = C.mat_tissu("surcot_" + camp, C.CAMPS[camp]["tissu"], image_png=tex)
+    # hommes d'armes anglais : maille et heaume d'acier bruni sombre ; corps plus épais
+    lourd_anglais = fine and anglais and role == "homme_armes"
+    mt = dict(mats)
+    if lourd_anglais:
+        mt["maille"] = mats["maille_sombre"]
+        mt["heaume"] = mats["acier_sombre"]
+    ep_corps = (1.2 if lourd_anglais else 1.12) if lourd else 1.0
     if sud:
-        # haubert gris visible jusqu'au genou, surcot ivoire plus court, ceinture et galon verts
-        objs.append(surcot(nom + "_haubert", j, mats["maille"], longueur=0.66, largeur=1.02, evasement=0.04, haut=0.05))
-        objs.append(surcot(nom + "_surcot", j, m_sur, longueur=0.45, largeur=1.07, evasement=0.03))
+        if role == "champion":
+            haut, jambes = mats["ecailles"], mats["maille_sombre"]
+        elif role == "homme_armes":
+            haut, jambes = mats["maille_sombre"], mats["maille_sombre"]
+        else:
+            haut, jambes = mats["ivoire"], mats["chausses"]          # manches ivoire
+        objs += corps_homme(nom, j, haut, jambes, epaisseur=ep_corps, galbe=fine)
+        if role == "champion":
+            jupe = C.mat_tissu("jupe_" + camp, "#ece4cf", image_png=texture_rayures("panneaux-omeyyades", "#ece4cf", "#357659", n=10))
+            objs.append(surcot(nom + "_broigne", j, mats["ecailles"], longueur=0.4, largeur=1.12, evasement=0.03))
+            objs.append(surcot(nom + "_jupe", j, jupe, longueur=0.4, largeur=1.18, evasement=0.07, z_haut=j["bassin"].z + 0.1))
+            objs.append(cape(nom, j, mats["vert"], longueur=0.62, largeur=1.1))
+        else:
+            # surcot ivoire jusqu'au genou (galon vert de 6 cm) par-dessus la maille ou la tunique
+            objs.append(surcot(nom + "_surcot", j, m_sur, longueur=0.68, largeur=1.08 if lourd else 1.0))
         ceint = mats["vert"]
     else:
-        if role != "archer":
+        pietaille_anglaise = fine and anglais and role == "pietaille"
+        jambes = mt["maille"] if lourd else mats["chausses"]
+        haut = mats["gambison"] if pietaille_anglaise else mt["maille"]
+        objs += corps_homme(nom, j, haut, jambes, epaisseur=ep_corps, galbe=fine)
+        if pietaille_anglaise:
+            m_ec = C.mat_tissu("ecartele_" + camp, C.CAMPS[camp]["tissu"], image_png=texture_ecartele(camp))
+            objs.append(surcot(nom + "_surcot", j, m_ec, longueur=0.64, largeur=1.0))
+        elif role != "archer":
             objs.append(surcot(nom + "_surcot", j, m_sur, longueur=0.68 if not lourd else 0.7,
-                               largeur=1.08 if lourd else 1.0))
+                               largeur=(1.12 if lourd_anglais else 1.08) if lourd else 1.0))
         else:
             objs.append(surcot(nom + "_surcot", j, m_sur, longueur=0.5, largeur=1.02, evasement=0.04))
         ceint = mats["cuir"]
     zc = j["taille"].z - 0.05 if sud else j["bassin"].z + 0.0
     xc = j["taille"].x + 0.01 if sud else j["bassin"].x + 0.01
-    ceinture = C.cylindre(nom + "_ceinture", 0.168 * (1.1 if lourd else 1.0), 0.05, (xc, j["taille"].y, zc), ceint, segments=16)
+    ceinture = C.cylindre(nom + "_ceinture", 0.168 * ep_corps, 0.06 if sud else 0.05, (xc, j["taille"].y, zc),
+                          ceint, segments=16)
     ceinture.scale = (0.95, 1.22, 1)
     objs.append(ceinture)
-    casque = {"fantassin": "nasal", "pietaille": "conique" if sud else "nasal", "archer": "conique" if sud else "nasal",
-              "homme_armes": "conique" if sud else "heaume", "champion": "conique" if sud else "heaume"}[role]
-    objs += tete(nom, j, mats, casque, visage=casque != "heaume", bandeau=mats["vert"] if sud else None)
-    # bottes
+    if sud:
+        casque = "conique_ferme" if role == "homme_armes" else "conique"
+    elif fine and anglais and role == "pietaille":
+        casque = "chapel"
+    else:
+        casque = "heaume" if lourd else "nasal"
+    objs += tete(nom, j, mt, casque, visage=casque != "heaume", bandeau=mats["or"] if (sud and role == "champion") else None,
+                 visage_net=fine and casque in ("nasal", "conique", "chapel"))
+    if role == "champion" and not sud:
+        objs += plumet(nom, j, mats, "rouge")
+    # bottes (troupes : 30 % plus petites, la tige monte un peu plus haut sur le mollet)
+    rb = [0.045, 0.042, 0.035] if fine else [0.064, 0.06, 0.05]
     for cote in (-1, 1):
-        objs.append(_tube(nom + "_botte%d" % cote, [j["cheville", cote] + V((0, 0, 0.1)), j["cheville", cote], j["pied", cote]],
-                          [0.064, 0.06, 0.05], mats["cuir"], segments=8))
-    # armes et écu
+        objs.append(_tube(nom + "_botte%d" % cote, [j["cheville", cote] + V((0, 0, 0.12 if fine else 0.1)), j["cheville", cote],
+                                                    j["pied", cote]], rb, mats["cuir"], segments=8))
+    # armes (troupes : lames plus courtes et plus fines, garde plus étroite)
     md, mg = j["main", -1], j["main", +1]
-    if role in ("fantassin", "champion", "homme_armes"):
-        objs += epee(nom, mats, md, V((0.75, -0.1, -0.4)), longueur=0.82 if role == "champion" else 0.74)
-    if role == "pietaille":
-        # lance tenue devant soi, pointe haute, talon devant les jambes (elle ne les croise plus)
-        objs += lance(nom, mats, md, V((0.36, -0.05, 1.0)), longueur=1.95, recul=0.5)
+    lame = {"largeur": 0.05, "garde_l": 0.17} if fine else {}
+    if role == "fantassin" or (role == "homme_armes" and not sud and not lourd_anglais):
+        objs += epee(nom, mats, md, V((0.62, -0.1, -0.55)) if fine else V((0.75, -0.1, -0.4)),
+                     longueur=0.56 if fine else 0.74, **lame)
+    elif role == "homme_armes":
+        objs += epee(nom, mats, md, V((0.3, -0.08, 1.0)), longueur=0.62 if fine else 0.76, **lame)      # épée levée
+    elif role == "champion" and sud:
+        objs += masse(nom, mats, md, V((0.35, -0.06, 0.9)), longueur=0.66)          # masse tenue haut
+    elif role == "champion":
+        objs += epee(nom, mats, md, V((0.75, -0.06, 0.8)), longueur=0.72 if fine else 0.88, **lame)  # grande épée levée
+    hampe = mats["frene"] if fine else None
+    if role == "pietaille" and anglais and fine:
+        # lance de frêne dressée (12° vers l'avant), talon juste au-dessus du sol ; grand fanion de gueules
+        d = V((0.12, 0.0, 1.0)).normalized()
+        longueur = 2.6
+        t, lac = math.radians(C.INCLINAISON), math.radians(lacet)
+
+        def v_ecran(p):
+            """Hauteur à l'écran (m au-dessus de l'ancrage) d'un point du repère de la figurine (caméra inclinée)."""
+            y_monde = (p.x * math.sin(lac) + p.y * math.cos(lac)) * echelle + recul_y
+            return p.z * echelle * math.cos(t) + y_monde * math.sin(t)
+        recul_max = (md.z - 0.04) / d.z                      # talon à 4 cm du sol au plus bas
+        if plafond is None:
+            recul = min(recul_max, longueur - 1.5)
+        else:
+            vers_pointe = (plafond - v_ecran(md)) / (v_ecran(md + d) - v_ecran(md))
+            recul = min(recul_max, longueur - vers_pointe)
+            longueur = vers_pointe + recul
+        objs += lance(nom, mats, md, d, longueur=longueur, recul=recul, fanion=camp, taille_fanion=1.35, hampe=hampe,
+                      rayon=0.034, fer=0.22, largeur_fer=0.05, sous_fer=0.02)
+    elif role == "pietaille":
+        # lance tenue devant soi, pointe haute, talon devant les jambes ; petit fanion aux couleurs du camp
+        objs += lance(nom, mats, md, V((0.36, -0.05, 1.0)), longueur=1.95, recul=0.5, fanion=camp, taille_fanion=0.9,
+                      hampe=hampe)
     if role == "archer":
         objs += arc(nom, mats, mg, echelle=1.0)
     if role != "archer":
         if sud:
-            ecu = ecu_rond(nom + "_ecu", camp, rayon=0.32 if role != "champion" else 0.36, mats=mats)
-            ecu[0].location = mg + V((0.05, -0.02, 0.02))
-            ecu[0].rotation_euler = (0, 0, math.radians(-20))
+            r = {"pietaille": 0.33, "homme_armes": 0.42, "champion": 0.44}.get(role, 0.33)
+            ecu = ecu_rond(nom + "_ecu", camp, rayon=r, mats=mats)
+            ecu[0].location = mg + V((0.06, -0.03, 0.04))
+            ecu[0].rotation_euler = (0, 0, math.radians(-22))
             objs += ecu
         else:
-            ecu = ecu_amande(nom + "_ecu", camp, longueur=0.9 if lourd else 0.84)
+            if fine and anglais and role == "pietaille":
+                ecu = ecu_amande(nom + "_ecu", camp, longueur=0.7, largeur=0.4)        # petit écu de piéton
+            else:
+                ecu = ecu_amande(nom + "_ecu", camp, longueur=0.9 if lourd else 0.84)
             ecu.location = mg + V((0.03, -0.02, 0.0))
             ecu.rotation_euler = (0, 0, math.radians(-20))
             objs.append(ecu)
@@ -578,9 +917,11 @@ def _loft(nom, centres, ry, rz, mat, segments=16, bouts=True, niveaux=1):
 CORPS_CHEVAL = [(-0.98, 1.22, 0.10, 0.12), (-0.9, 1.24, 0.22, 0.26), (-0.7, 1.23, 0.28, 0.33), (-0.45, 1.18, 0.27, 0.31),
                 (-0.15, 1.15, 0.28, 0.33), (0.15, 1.15, 0.29, 0.36), (0.42, 1.2, 0.26, 0.36), (0.64, 1.2, 0.2, 0.3),
                 (0.76, 1.15, 0.1, 0.16)]
-ENCOLURE = [(0.45, 1.38, 0.17, 0.3), (0.62, 1.6, 0.14, 0.23), (0.76, 1.82, 0.11, 0.16), (0.86, 1.98, 0.09, 0.12)]
-TETE_CHEVAL = [(0.82, 2.03, 0.075, 0.09), (0.92, 2.02, 0.095, 0.13), (1.04, 1.88, 0.085, 0.11), (1.16, 1.72, 0.07, 0.08),
-               (1.22, 1.63, 0.062, 0.068)]
+# encolure allongée de 20 % (depuis la base du garrot) et affinée sous la nuque : la tête se détache de l'encolure
+ENCOLURE = [(0.45, 1.38, 0.17, 0.3), (0.654, 1.644, 0.14, 0.23), (0.822, 1.908, 0.11, 0.16), (0.942, 2.1, 0.085, 0.112)]
+# tête : nuque étroite, ganaches larges, chanfrein, bout du nez un peu renflé
+TETE_CHEVAL = [(0.902, 2.15, 0.07, 0.085), (1.002, 2.14, 0.098, 0.135), (1.122, 2.0, 0.085, 0.11), (1.242, 1.84, 0.068, 0.08),
+               (1.302, 1.75, 0.064, 0.072)]
 
 
 def _lisse01(t):
@@ -588,15 +929,26 @@ def _lisse01(t):
     return t * t * (3 - 2 * t)
 
 
+def _dir(a):
+    """Direction dans le plan X-Z, a = angle depuis la verticale descendante (positif vers l'avant, +X)."""
+    return V((math.sin(a), 0, -math.cos(a)))
+
+
 def pose_cheval(phase, amplitude=24):
     """Articulations des jambes d'un cheval au pas (allure à quatre temps : postérieur gauche, antérieur gauche,
     postérieur droit, antérieur droit). Chaque jambe est à l'appui 62 % du temps (le sabot recule au sol), puis se lève
-    nettement et revient vers l'avant : sur 4 images, une jambe différente est levée à chaque fois."""
+    nettement et revient vers l'avant : sur 4 images, une jambe différente est levée à chaque fois.
+
+    Anatomie (et non des piliers droits) : antérieur = avant-bras, genou (carpe), canon presque vertical, boulet, paturon
+    incliné de 32° vers l'avant ; au lever, le genou avance et le canon se replie vers l'arrière (environ 100°).
+    Postérieur = jambe qui descend vers l'arrière jusqu'au jarret (29°), canon presque vertical, paturon incliné ; au
+    lever, le jarret se ferme et le sabot se retourne vers l'arrière."""
     u_cycle = (phase / (2 * math.pi)) % 1.0
     j = {"bob": 0.03 * math.cos(4 * math.pi * u_cycle), "tete": 0.04 * math.sin(4 * math.pi * u_cycle + 0.6)}
     decal = {("post", +1): 0.0, ("ant", +1): 0.25, ("post", -1): 0.5, ("ant", -1): 0.75}
     A = math.radians(amplitude)
     appui = 0.62
+    paturon = math.radians(32)
     for (av, cote), d in decal.items():
         u = (u_cycle - d) % 1.0
         if u < appui:
@@ -607,24 +959,21 @@ def pose_cheval(phase, amplitude=24):
             swing = -A + 2 * A * _lisse01(w)
             leve = math.sin(math.pi * w)
         if av == "ant":
-            haut = V((0.56, 0.15 * cote, 1.02))
-            k1 = math.radians(3 + 95 * leve)
-            d1 = V((math.sin(swing + 0.15 * leve), 0, -math.cos(swing + 0.15 * leve)))
-            genou = haut + d1 * 0.42
-            d2 = V((math.sin(swing - k1), 0, -math.cos(swing - k1)))
-            boulet = genou + d2 * 0.32
-            d3 = V((math.sin(swing - k1 * 0.7 + 0.3), 0, -math.cos(swing - k1 * 0.7 + 0.3)))
-            sabot = boulet + d3 * 0.17
+            haut = V((0.56, 0.15 * cote, 1.02))                    # coude
+            a1 = swing + 0.35 * leve                               # avant-bras : le genou monte vers l'avant
+            genou = haut + _dir(a1) * 0.42
+            a2 = a1 - math.radians(4 + 100 * leve)                 # canon replié vers l'arrière au lever
+            boulet = genou + _dir(a2) * 0.3
+            a3 = a2 + paturon * (1 - leve) - math.radians(25) * leve
+            sabot = boulet + _dir(a3) * 0.16
         else:
-            haut = V((-0.6, 0.16 * cote, 1.1))
-            k1 = math.radians(48 + 45 * leve)   # jarret
-            d1 = V((math.sin(swing - 0.25 + 0.2 * leve), 0, -math.cos(swing - 0.25 + 0.2 * leve)))
-            jarret = haut + d1 * 0.5
-            d2 = V((math.sin(swing - 0.25 + k1), 0, -math.cos(swing - 0.25 + k1)))
-            boulet = jarret + d2 * 0.4
-            d3 = V((math.sin(swing + 0.3 + 0.9 * leve), 0, -math.cos(swing + 0.3 + 0.9 * leve)))
-            sabot = boulet + d3 * 0.17
-            genou = jarret
+            haut = V((-0.6, 0.16 * cote, 1.08))                    # grasset
+            a1 = swing - 0.5 + 0.35 * leve                         # jambe : vers l'arrière jusqu'au jarret
+            genou = haut + _dir(a1) * 0.48                         # (le « genou » du postérieur est le jarret)
+            a2 = swing + 0.08 - 0.45 * leve                        # canon presque vertical
+            boulet = genou + _dir(a2) * 0.36
+            a3 = a2 + paturon * (1 - leve) - math.radians(30) * leve
+            sabot = boulet + _dir(a3) * 0.16
         j[av, cote] = (haut, genou, boulet, sabot)
     # posé au sol : le sabot le plus bas touche z = 0,04 ; le corps suit
     bas = min(j[k][3].z for k in decal)
@@ -639,14 +988,83 @@ def _profil(liste, dz=0.0, gonfle=0.0):
     return c, [ry + gonfle for (x, z, ry, rz) in liste], [rz + gonfle for (x, z, ry, rz) in liste]
 
 
-def cheval(nom, j, robe="#6b4428", criniere="#2a1b12", balzanes=(("ant", -1), ("post", 1)), chanfrein=None):
-    """Cheval bai (volumes lissés) + jambes, crinière et queue ; balzanes claires sur deux pieds ;
-    chanfrein : matière d'une plaque de tête (chevaux caparaçonnés). Renvoie les objets."""
-    m_robe = C.mat_simple("robe_" + nom, robe, rugosite=0.5, bosse=0.04)
-    m_jambe = C.mat_simple("jambe_" + nom, C.melanger(C.couleur(robe), (0.02, 0.015, 0.01, 1), 0.5), rugosite=0.55)
+def mat_robe_pommelee(nom, robe, tache):
+    """Robe gris pommelé : fond clair semé de pommelures plus sombres (cellules de Voronoï adoucies)."""
+    m, nt, p = C.nouveau_materiau(nom)
+    tc = nt.nodes.new("ShaderNodeTexCoord")
+    vo = nt.nodes.new("ShaderNodeTexVoronoi")
+    vo.inputs["Scale"].default_value = 9.0
+    nt.links.new(tc.outputs["Object"], vo.inputs["Vector"])
+    mr = C._plage(nt, vo.outputs["Distance"], 0.18, 0.42, 0.0, 1.0)
+    mx = nt.nodes.new("ShaderNodeMix")
+    mx.data_type = "RGBA"
+    nt.links.new(mr, C._entree(mx, "Factor", "VALUE"))
+    C._entree(mx, "A", "RGBA").default_value = C.couleur(robe)
+    C._entree(mx, "B", "RGBA").default_value = C.couleur(tache)
+    nt.links.new(C._sortie(mx, "RGBA"), p.inputs["Base Color"])
+    p.inputs["Roughness"].default_value = 0.55
+    return m
+
+
+def mat_tete_cheval(nom, robe, liste=None, museau=None, x_museau=1.19):
+    """Tête du cheval : robe, liste claire le long du chanfrein (faces tournées vers l'avant et le haut, normale
+    d'objet) et bout du nez d'une autre teinte (au-delà de x_museau, coordonnées d'objet du cheval) : de trois quarts,
+    la tête se lit comme une tête et non comme le prolongement sombre de l'encolure."""
+    m, nt, p = C.nouveau_materiau(nom)
+    tc = nt.nodes.new("ShaderNodeTexCoord")
+    sortie = None
+    base = C.couleur(robe)
+    if liste:
+        dp = nt.nodes.new("ShaderNodeVectorMath")
+        dp.operation = "DOT_PRODUCT"
+        dp.inputs[1].default_value = (0.66, 0.0, 0.75)
+        nt.links.new(tc.outputs["Normal"], dp.inputs[0])
+        f1 = C._plage(nt, dp.outputs["Value"], 0.84, 0.93, 0.0, 1.0)
+        mx1 = nt.nodes.new("ShaderNodeMix")
+        mx1.data_type = "RGBA"
+        nt.links.new(f1, C._entree(mx1, "Factor", "VALUE"))
+        C._entree(mx1, "A", "RGBA").default_value = base
+        C._entree(mx1, "B", "RGBA").default_value = C.couleur(liste)
+        sortie = C._sortie(mx1, "RGBA")
+    if museau:
+        sep = nt.nodes.new("ShaderNodeSeparateXYZ")
+        nt.links.new(tc.outputs["Object"], sep.inputs[0])
+        f2 = C._plage(nt, sep.outputs["X"], x_museau, x_museau + 0.07, 0.0, 1.0)
+        mx2 = nt.nodes.new("ShaderNodeMix")
+        mx2.data_type = "RGBA"
+        nt.links.new(f2, C._entree(mx2, "Factor", "VALUE"))
+        if sortie is not None:
+            nt.links.new(sortie, C._entree(mx2, "A", "RGBA"))
+        else:
+            C._entree(mx2, "A", "RGBA").default_value = base
+        C._entree(mx2, "B", "RGBA").default_value = C.couleur(museau)
+        sortie = C._sortie(mx2, "RGBA")
+    if sortie is not None:
+        nt.links.new(sortie, p.inputs["Base Color"])
+    else:
+        p.inputs["Base Color"].default_value = base
+    p.inputs["Roughness"].default_value = 0.5
+    return m
+
+
+def cheval(nom, j, robe="#6b4428", criniere="#2a1b12", balzanes=(("ant", -1), ("post", 1)), chanfrein=None, pommele=None,
+           jambes=None, liste=None, museau=None):
+    """Cheval (volumes lissés) + jambes, crinière et queue ; balzanes claires ; chanfrein : matière d'une plaque de tête
+    (chevaux caparaçonnés) ; pommele : couleur des pommelures (robe gris pommelé) ; jambes : couleur du bas des jambes
+    (bai : jambes noires sous le genou et le jarret) ; liste, museau : teintes de la liste et du bout du nez.
+    Jambes articulées : genou (carpe) plat et plus large que le canon, jarret avec sa pointe vers l'arrière, boulet,
+    paturon incliné ; avant-bras et jambe musclés qui s'affinent. Un œil sombre de chaque côté de la tête."""
+    m_robe = mat_robe_pommelee("robe_" + nom, robe, pommele) if pommele else C.mat_simple("robe_" + nom, robe, rugosite=0.5,
+                                                                                          bosse=0.04)
+    m_tete = mat_tete_cheval("tete_" + nom, robe, liste, museau)
+    if jambes:
+        m_jambe = C.mat_simple("jambe_" + nom, jambes, rugosite=0.55)
+    else:
+        m_jambe = C.mat_simple("jambe_" + nom, C.melanger(C.couleur(robe), (0.02, 0.015, 0.01, 1), 0.5), rugosite=0.55)
     m_balz = C.mat_simple("balzane_" + nom, "#d9cfbd", rugosite=0.7)
     m_crin = C.mat_simple("crin_" + nom, criniere, rugosite=0.8, bosse=0.3, echelle_bosse=120)
     m_sabot = C.mat_simple("sabot_" + nom, "#2b2420", rugosite=0.6)
+    m_oeil = C.mat_simple("oeil_" + nom, "#0d0a08", rugosite=0.25)
     dz = j["dz"] - 0.04
     objs = []
     c, ry, rz = _profil(CORPS_CHEVAL, dz)
@@ -654,27 +1072,38 @@ def cheval(nom, j, robe="#6b4428", criniere="#2a1b12", balzanes=(("ant", -1), ("
     c, ry, rz = _profil(ENCOLURE, dz + j["tete"] * 0.5)
     objs.append(_loft(nom + "_encolure", c, ry, rz, m_robe, segments=14))
     c, ry, rz = _profil(TETE_CHEVAL, dz + j["tete"])
-    objs.append(_loft(nom + "_tete", c, ry, rz, m_robe, segments=12))
+    objs.append(_loft(nom + "_tete", c, ry, rz, m_tete, segments=14))
     if chanfrein is not None:
         c, ry, rz = _profil(TETE_CHEVAL[1:4], dz + j["tete"], gonfle=0.018)
         objs.append(_loft(nom + "_chanfrein", c, ry, rz, chanfrein, segments=12))
+    else:
+        for cote in (-1, 1):
+            objs.append(C.sphere(nom + "_oeil%d" % cote, 0.024, (1.035, 0.088 * cote, 2.125 + dz + j["tete"]), m_oeil, subdiv=2))
     for (av, cote) in (("ant", 1), ("ant", -1), ("post", 1), ("post", -1)):
         h, g, b, s = j[av, cote]
-        h = h + V((0, 0, 0))
-        haut_muscle = h + V((0.04 if av == "ant" else 0.0, 0, 0.28))
-        if av == "ant":
-            objs.append(_tube(nom + "_bras%d" % cote, [haut_muscle, h, g], [0.13, 0.1, 0.065], m_robe, segments=10))
-        else:
-            objs.append(_tube(nom + "_cuisse%d" % cote, [haut_muscle + V((0.05, 0, 0)), h, g], [0.17, 0.12, 0.065], m_robe, segments=10))
         mj = m_balz if (av, cote) in balzanes else m_jambe
-        objs.append(_tube(nom + "_canon%d%s" % (cote, av), [g, b, s], [0.06, 0.05, 0.048], mj, segments=8))
-        objs.append(C.sphere(nom + "_boulet%d%s" % (cote, av), 0.058, b, mj, subdiv=2))
-        objs.append(C.cylindre(nom + "_sabot%d%s" % (cote, av), 0.062, 0.09, (s.x + 0.01, s.y, s.z - 0.045), m_sabot, segments=10,
-                               rayon_haut=0.05))
+        if av == "ant":
+            haut_muscle = h + V((0.04, 0, 0.28))
+            objs.append(_tube(nom + "_bras%d" % cote, [haut_muscle, h, h.lerp(g, 0.45), g], [0.13, 0.095, 0.07, 0.048],
+                              m_robe, segments=10))
+            # genou (carpe) : plat devant, plus large que le canon
+            objs.append(C.sphere(nom + "_genou%d" % cote, 0.05, g, mj, subdiv=2, echelle=(1.2, 0.95, 1.15)))
+        else:
+            haut_muscle = h + V((0.05, 0, 0.28))
+            objs.append(_tube(nom + "_cuisse%d" % cote, [haut_muscle, h, h.lerp(g, 0.5), g], [0.17, 0.12, 0.085, 0.05],
+                              m_robe, segments=10))
+            # jarret et sa pointe, en saillie vers l'arrière
+            objs.append(C.sphere(nom + "_jarret%d" % cote, 0.05, g, mj, subdiv=2, echelle=(1.1, 0.9, 1.15)))
+            objs.append(C.sphere(nom + "_pointe%d" % cote, 0.034, g + V((-0.055, 0, 0.045)), mj, subdiv=2))
+        objs.append(_tube(nom + "_canon%d%s" % (cote, av), [g, b], [0.043, 0.04], mj, segments=8))
+        objs.append(C.sphere(nom + "_boulet%d%s" % (cote, av), 0.05, b, mj, subdiv=2))
+        objs.append(_tube(nom + "_paturon%d%s" % (cote, av), [b, s], [0.04, 0.037], mj, segments=8))
+        objs.append(C.cylindre(nom + "_sabot%d%s" % (cote, av), 0.056, 0.085, (s.x + 0.01, s.y, s.z - 0.045), m_sabot, segments=10,
+                               rayon_haut=0.046))
     e = [V((x, 0, z + dz + j["tete"] * 0.5)) for (x, z, ry, rz) in ENCOLURE]
-    cr = [e[0] + V((-0.12, 0, 0.24)), e[1] + V((-0.1, 0, 0.18)), e[2] + V((-0.08, 0, 0.13)), e[3] + V((-0.05, 0, 0.11))]
+    cr = [e[0] + V((-0.12, 0, 0.24)), e[1] + V((-0.1, 0, 0.18)), e[2] + V((-0.08, 0, 0.13)), e[3] + V((-0.05, 0, 0.1))]
     objs.append(_tube(nom + "_criniere", cr, [0.05, 0.065, 0.06, 0.04], m_crin, segments=8))
-    nuque = V((0.9, 0, 2.1 + dz + j["tete"]))
+    nuque = V((0.98, 0, 2.22 + dz + j["tete"]))
     for cote in (-1, 1):
         o = C.cone(nom + "_oreille%d" % cote, 0.03, 0.11, nuque + V((-0.02, 0.05 * cote, -0.02)), m_robe, segments=6)
         o.rotation_euler = (0.25 * cote, -0.3, 0)
@@ -783,58 +1212,85 @@ def texture_caparacon(camp):
     return chemin
 
 
-def tapis_selle(nom, camp, j):
-    """Tapis de selle (cavalerie légère) : drap du camp bordé de la couleur du meuble, sous la selle."""
-    c = C.CAMPS[camp]
-    m = C.mat_tissu("tapis_" + camp, c["tissu"])
+def texture_housse(camp):
+    """Housse de selle longue : champ du camp (ivoire chez les Omeyyades) bordé de la couleur secondaire (vert) sur
+    l'ourlet et les deux bords ; Angleterre : gueules au lion d'or (texture du caparaçon)."""
+    if camp != "omeyyades":
+        return texture_caparacon(camp)
+    import numpy as np
+    from PIL import Image
+    chemin = C.os.path.join(C.CACHE, "housse-%s.png" % camp)
+    W, H = 512, 512
+    img = np.zeros((H, W, 3), dtype=np.float32)
+    img[:] = C.rgb8("#ece4cf")
+    vert = np.array(C.rgb8(C.CAMPS[camp]["vert_tissu"]), dtype=np.float32)
+    b = int(H * 0.08)
+    img[:b, :] = vert
+    img[-b:, :] = vert
+    img[:, :int(W * 0.06)] = vert
+    img[:, -int(W * 0.06):] = vert
+    # tour verte sur chaque flanc (petite, au-dessus de l'ourlet)
+    t = int(H * 0.2)
+    em = np.array(C.masque_embleme("tour", t), dtype=np.float32) / 255.0
+    for v_centre, e in ((0.3, em), (0.7, em[::-1, :])):
+        cy = int((1 - v_centre) * H) - t // 2
+        cx = int(0.5 * W) - t // 2
+        zone = img[cy:cy + t, cx:cx + t]
+        zone[:] = zone * (1 - e[..., None]) + vert * e[..., None]
+    Image.fromarray(img.astype(np.uint8)).save(chemin)
+    return chemin
+
+
+def housse(nom, camp, j, hauteur_bas=0.92, debut=-0.78, fin=0.2, poitrail=False, ondulation=0.025):
+    """Housse de selle longue (cavalerie anglaise et omeyyade) : un pan qui épouse le dos autour de la selle et tombe
+    jusqu'à hauteur_bas du sol (les jambes du cheval restent visibles) ; poitrail : un second pan sur la poitrine.
+    Elle couvre au moins un quart de la silhouette du cheval : la couleur du camp se lit sur la route."""
+    tex = texture_housse(camp)
+    m = C.mat_tissu("housse_" + camp, C.CAMPS[camp]["tissu"], image_png=tex)
     dz = j["dz"] - 0.04
     bm = bmesh.new()
-    profil = [p for p in CORPS_CHEVAL if -0.45 <= p[0] <= 0.15]
-    na = 14
-    anneaux = []
-    for (x, z, ry, rz) in profil:
-        z += dz
-        an = []
-        for k in range(na + 1):
-            a = math.pi * k / na
-            ca, sa = math.cos(a), math.sin(a)
-            yy = (ry + 0.03) * ca
-            zz = z + (rz + 0.03) * sa
-            if sa < 0.8:
-                chute = (0.8 - sa) / 0.8
-                zz = (z + (rz + 0.03) * 0.8) * (1 - chute) + (z - 0.04) * chute
-                yy = math.copysign(ry + 0.035, ca)
-            an.append(bm.verts.new((x, yy, zz)))
-        anneaux.append(an)
-    for ix in range(len(profil) - 1):
-        for k in range(na):
-            f = bm.faces.new((anneaux[ix][k], anneaux[ix + 1][k], anneaux[ix + 1][k + 1], anneaux[ix][k + 1]))
-            f.smooth = True
-    ob = C.objet_maillage(nom + "_tapis", bm, m)
+    uv = bm.loops.layers.uv.new("UVMap")
+    profil = [p for p in CORPS_CHEVAL if debut <= p[0] <= fin]
+    _jupe(bm, uv, profil, dz, hauteur_bas + dz * 0.5, ondulation, 0.0, 1.0)
+    ob = C.objet_maillage(nom + "_housse", bm, m)
     ob.modifiers.new("ep", "SOLIDIFY").thickness = 0.02
-    # galon : liseré de la couleur du meuble au bas du tapis, sur le flanc vu de la caméra
-    x0, x1 = profil[0][0], profil[-1][0]
-    ga = C.boite(nom + "_galon_d", x1 - x0 + 0.04, 0.012, 0.05,
-                 ((x0 + x1) / 2, -(max(p[2] for p in profil) + 0.05), min(p[1] for p in profil) + dz - 0.06),
-                 C.mat_tissu("galon_" + camp, c["meuble"] if camp != "omeyyades" else "#2f6b52"))
-    return [ob, ga]
+    sub = ob.modifiers.new("lisse", "SUBSURF")
+    sub.levels = sub.render_levels = 1
+    objs = [ob]
+    if poitrail:
+        bm = bmesh.new()
+        uv = bm.loops.layers.uv.new("UVMap")
+        avant = [(0.3, 1.17, 0.29, 0.35), (0.46, 1.2, 0.26, 0.36), (0.64, 1.2, 0.2, 0.3), (0.76, 1.15, 0.12, 0.18)]
+        _jupe(bm, uv, avant, dz, hauteur_bas + 0.06 + dz * 0.5, ondulation, 0.0, 1.0)
+        ob2 = C.objet_maillage(nom + "_poitrail", bm, C.mat_tissu("poitrail_" + camp, C.CAMPS[camp]["tissu"]))
+        ob2.modifiers.new("ep", "SOLIDIFY").thickness = 0.02
+        objs.append(ob2)
+    return objs
 
 
 def cavalier(nom, camp, phase=0.0, lacet=-35.0, echelle=1.0, lourd=False, recul_y=0.62):
     """Cheval + cavalier assis, lance couchée et écu.
 
-    lourd : caparaçon complet en deux pans et chanfrein (cavalerie de France) ; sinon tapis de selle : l'anatomie du
-    cheval se lit (robe baie, balzanes). Cheval tourné de 35° vers la caméra : il paraît moins long."""
+    lourd : caparaçon complet en deux pans et chanfrein (cavalerie de France seulement). Angleterre : cheval bai
+    (#4a2c1c) aux crins et aux jambes noirs, liste claire et bout du nez plus clair, grande housse de gueules (ourlet à
+    0,9 m, pan de poitrail), fanion rouge à la lance. Omeyyades : cheval gris pommelé au bout du nez sombre, longue
+    housse ivoire bordée de vert (ourlet à 0,95 m). Cheval tourné de 35° vers la caméra. Lance de frêne patiné ;
+    visage du cavalier dégagé sous le casque (sauf le heaume de la cavalerie lourde)."""
     mats = matieres(camp)
     sud = camp == "omeyyades"
     jc = pose_cheval(phase)
     objs = []
-    objs += cheval(nom + "_ch", jc, robe="#6b4428" if not sud else "#7a5232", criniere="#1e140e",
-                   chanfrein=mats["acier"] if lourd else None)
     if lourd:
+        objs += cheval(nom + "_ch", jc, robe="#6b4428", criniere="#1e140e", chanfrein=mats["acier"], jambes="#2a1c14")
         objs += caparacon(nom, camp, jc)
+    elif sud:
+        objs += cheval(nom + "_ch", jc, robe="#b9b3a8", criniere="#5a544c", pommele="#8e877c", balzanes=(),
+                       museau="#4e4842")
+        objs += housse(nom, camp, jc, hauteur_bas=0.95, debut=-0.72, fin=0.2)
     else:
-        objs += tapis_selle(nom, camp, jc)
+        objs += cheval(nom + "_ch", jc, robe="#4a2c1c", criniere="#120c09", balzanes=(("post", 1),), jambes="#16110d",
+                       liste="#d8cdb8", museau="#7a5e48")
+        objs += housse(nom, camp, jc, hauteur_bas=0.9, debut=-0.8, fin=0.2, poitrail=True)
     selle_z = 1.13 + jc["dz"] - 0.04 + 0.36
     objs.append(C.boite(nom + "_selle", 0.42, 0.36, 0.1, (-0.02, 0, selle_z - 0.04), mats["cuir"]))
     objs.append(C.boite(nom + "_troussequin", 0.06, 0.3, 0.16, (-0.22, 0, selle_z), mats["cuir"]))
@@ -849,22 +1305,20 @@ def cavalier(nom, camp, phase=0.0, lacet=-35.0, echelle=1.0, lourd=False, recul_
         j["genou", cote] = j["hanche", cote] + V((0.36, 0.17 * cote, -0.16))
         j["cheville", cote] = j["genou", cote] + V((-0.05, 0.03 * cote, -0.42))
         j["pied", cote] = j["cheville", cote] + V((0.15, 0, -0.03))
-    objs += corps_homme(nom + "_h", j, mats["maille"], mats["maille"] if lourd else mats["chausses"], epaisseur=1.05)
+    objs += corps_homme(nom + "_h", j, mats["ivoire"] if sud else mats["maille"], mats["maille"] if lourd else mats["chausses"],
+                        epaisseur=1.05, galbe=True)
     tex = texture_surcot(camp)
     m_sur = C.mat_tissu("surcot_" + camp, C.CAMPS[camp]["tissu"], image_png=tex)
-    if sud:
-        objs.append(surcot(nom + "_haubert", j, mats["maille"], longueur=0.5, largeur=1.15, evasement=0.04, haut=0.05))
-        objs.append(surcot(nom + "_surcot", j, m_sur, longueur=0.36, largeur=1.18, evasement=0.03))
-    else:
-        objs.append(surcot(nom + "_surcot", j, m_sur, longueur=0.42, largeur=1.15))
+    objs.append(surcot(nom + "_surcot", j, m_sur, longueur=0.42, largeur=1.15))
     objs += tete(nom + "_h", j, mats, "conique" if sud else ("heaume" if lourd else "nasal"), visage=not lourd,
-                 bandeau=mats["vert"] if sud else None)
+                 visage_net=not lourd)
     for cote in (-1, 1):
         objs.append(_tube(nom + "_botte%d" % cote, [j["cheville", cote] + V((0, 0, 0.12)), j["cheville", cote], j["pied", cote]],
-                          [0.062, 0.058, 0.048], mats["cuir"], segments=8))
+                          [0.044, 0.041, 0.034], mats["cuir"], segments=8))
     md, mg = j["main", -1], j["main", +1]
     # lance couchée sous le bras, à droite de la tête du cheval (côté caméra), relevée de 14°
-    objs += lance(nom, mats, md + V((0, -0.08, 0)), V((1.0, -0.1, 0.25)), longueur=2.7, recul=1.15, fanion=camp)
+    objs += lance(nom, mats, md + V((0, -0.08, 0)), V((1.0, -0.1, 0.25)), longueur=2.7, recul=1.15, fanion=camp,
+                  taille_fanion=1.4, hampe=mats["frene_patine"])
     # écu au bras gauche, porté bas contre le flanc gauche du cavalier : il ne masque plus la tête du cheval
     if sud:
         e = ecu_rond(nom + "_ecu", camp, rayon=0.28, mats=mats)

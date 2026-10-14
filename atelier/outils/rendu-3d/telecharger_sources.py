@@ -27,7 +27,7 @@ TEXTURES = {
     "brown_mud": ("1k", ["Diffuse", "nor_gl"], "boue des ornières et des berges"),
     "river_small_rocks": ("1k", ["Diffuse", "nor_gl"], "lit et berges de la rivière"),
     "forest_ground_04": ("1k", ["Diffuse", "nor_gl"], "sol de la forêt"),
-    "castle_wall_slates": ("1k", ["Diffuse", "nor_gl", "Rough"], "pierre claire des châteaux (France)"),
+    "castle_wall_slates": ("1k", ["Diffuse", "nor_gl", "Rough"], "dalles des plates-formes de pierre (balistes, trébuchets)"),
     "castle_wall_varriation": ("1k", ["Diffuse", "nor_gl", "Rough"], "pierre plus sombre (Angleterre)"),
     "rustic_stone_wall": ("1k", ["Diffuse", "nor_gl"], "soubassements, tours d'archers"),
     "yellow_stone_wall": ("1k", ["Diffuse", "nor_gl", "Rough"], "pierre ocre (forteresse omeyyade)"),
@@ -37,15 +37,16 @@ TEXTURES = {
     "weathered_planks": ("1k", ["Diffuse", "nor_gl"], "planches du pont"),
     "medieval_wood": ("1k", ["Diffuse", "nor_gl"], "bois des engins et des hourds"),
     "rough_wood": ("1k", ["Diffuse", "nor_gl"], "pieux, poutres"),
+    "cobblestone_01": ("1k", ["Diffuse", "nor_gl"], "pavés devant la porte des places fortes (terrains)"),
 }
 
 # Modèles (glTF) : id -> (résolution, usage)
 MODELES = {
     "tree_small_02": ("1k", "feuillus de la forêt"),
     "island_tree_02": ("1k", "arbres larges et buissons hauts"),
-    "shrub_04": ("1k", "buissons"),
+    "shrub_04": ("1k", "buissons de la plaine et de la lisière (échelle 2 à 3)"),
     "rock_moss_set_01": ("1k", "rochers moussus"),
-    "kite_shield": ("1k", "forme de l'écu en amande (peint aux couleurs des camps)"),
+    "kite_shield": ("1k", "référence de forme seulement (l'écu en amande est modélisé par figurines.py) ; n'entre dans aucune image"),
 }
 
 
@@ -118,7 +119,8 @@ def main():
         "# Sources 3D du rendu pré-calculé",
         "",
         "Toutes les sources ci-dessous viennent de **Poly Haven** (https://polyhaven.com), licence **CC0 1.0** "
-        "(domaine public, https://polyhaven.com/license) : aucune obligation de crédit, crédit donné quand même dans jeu/CREDITS.md.",
+        "(domaine public, https://polyhaven.com/license) : aucune obligation de crédit. Le crédit n'est PAS encore dans "
+        "jeu/CREDITS.md : il est à ajouter par l'orchestrateur (bloc prêt à coller : atelier/sources-3d/CREDITS-a-ajouter.md).",
         "Elles servent seulement de matière première aux scripts de atelier/outils/rendu-3d/ ; seules les images rendues "
         "(jeu/assets/images/td/, jeu/assets/images/campagne/) entrent dans le jeu. Les fichiers sources ne sont pas suivis par git "
         "(voir .gitignore de ce dossier) : `python3 atelier/outils/rendu-3d/telecharger_sources.py` les retélécharge.",
@@ -131,8 +133,12 @@ def main():
             ident, typ, nom, auteurs, usage, ident, " ; ".join(urls)))
     md += [
         "",
-        "Emblèmes des bannières (lys, lion, tour) : tracés de Game-icons.net (Lorc, Delapouite et contributeurs), CC BY 3.0, "
-        "déjà crédités dans jeu/CREDITS.md ; rastérisés par commun.py depuis jeu/assets/icones/game-icons.js.",
+        "Emblèmes : la fleur de lys (« fleur-de-lys », Delapouite) et la tour (« stone-tower », Lorc) sont des tracés de "
+        "Game-icons.net, CC BY 3.0 (https://creativecommons.org/licenses/by/3.0/), lus dans jeu/assets/icones/game-icons.js, "
+        "rastérisés par commun.py puis adaptés (recolorés, cernés, plaqués sur des bannières, tentures, écus, surcots et "
+        "caparaçons rendus en 3D) : c'est une adaptation, à créditer comme telle dans jeu/CREDITS.md (bloc prêt dans "
+        "CREDITS-a-ajouter.md). Le lion passant gardant d'Angleterre n'est plus l'icône « lion » de Game-icons (une tête de "
+        "lion) : il est dessiné en formes simples dans commun.py (masque_lion), CC0 1.0.",
         "",
         "Tout le reste (personnages, chevaux, châteaux, tours, engins, ponts, eau, relief) est modélisé par programme "
         "dans les scripts de atelier/outils/rendu-3d/ (CC0 1.0).",

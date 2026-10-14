@@ -63,6 +63,10 @@ CIEL_FORCE = 0.85
 # Appoint des sprites (débouchage côté caméra) : rapport soleil / débouchage d'environ 3 pour 1.
 APPOINT_FORCE = 0.62
 APPOINT_TEINTE = (0.85, 0.92, 1.05)
+# Bâtiments de pisé (Omeyyades) : leurs faces vues ne reçoivent le soleil que de biais ; sans débouchage froid et avec
+# un ciel atténué, la face à l'ombre est au moins 2,5 fois plus sombre que la face au soleil (mesuré sur un cube de
+# contrôle : 0,19 contre 0,077 de luminance), au lieu de 1,5 fois (effet « carton »). Même soleil, même direction.
+CIEL_PISE, APPOINT_PISE = 0.5, 0.0
 # Lumière de contour des troupes : chaude, venue du haut et de l'arrière-gauche, sans ombre portée.
 CONTOUR_FORCE = 1.9
 CONTOUR_TEINTE = (1.0, 0.86, 0.66)
@@ -74,15 +78,17 @@ OMBRE_FORCE = 0.7
 #   champ / meuble : couleurs héraldiques (bannières) ; tissu : albédo des tabards et écus (plus clair que le champ,
 #   pour que le rendu retombe sur la couleur du camp) ; inverse : tentures à couleurs inversées (Omeyyades :
 #   tour ivoire sur champ vert, car l'ivoire disparaît sur l'ocre).
+#   teinte_toit de France : ardoise gris-bleu (et non bleu roi) ; mesuré sur les places fortes : saturation médiane rendue
+#   des toits 0,26 (#55657f donnait 0,49, #5b6470 donnait 0,33 ; plafond 0,32). L'azur saturé reste aux bannières.
 CAMPS = {
     "france": {"champ": "#24407a", "meuble": "#e2c272", "embleme": "lys", "tissu": "#3358a8", "contour": "#14234a",
-               "pierre": "yellow_stone_wall", "teinte_pierre": "#d9cfb8", "toit": "roof_slates_02", "teinte_toit": "#44608f"},
+               "pierre": "yellow_stone_wall", "teinte_pierre": "#a39a86", "toit": "roof_slates_02", "teinte_toit": "#5d636b"},
     "angleterre": {"champ": "#9b1f1f", "meuble": "#e2c272", "embleme": "lion", "tissu": "#b3262a", "contour": "#5a1010",
-                   "pierre": "castle_wall_varriation", "teinte_pierre": "#a39d92", "toit": "clay_roof_tiles",
-                   "teinte_toit": "#8a5a45", "plomb": "#7d7b78"},
+                   "pierre": "castle_wall_varriation", "teinte_pierre": "#aa9f8b", "toit": "clay_roof_tiles",
+                   "teinte_toit": "#8a5a45", "plomb": "#857b70"},
     "omeyyades": {"champ": "#e9e1cc", "meuble": "#2f6b52", "embleme": "tour", "tissu": "#ece4cf", "contour": "#1d3f31",
-                  "inverse": True, "vert_tissu": "#357659", "pierre": "yellow_stone_wall", "teinte_pierre": "#c9a46c", "mur": "clay_plaster",
-                  "teinte_mur": "#c4a270", "teinte_toit": "#b08850"},
+                  "inverse": True, "vert_tissu": "#357659", "pierre": "yellow_stone_wall", "teinte_pierre": "#8c7b65", "mur": "clay_plaster",
+                  "teinte_mur": "#c6b297", "teinte_toit": "#9a8462"},
 }
 
 # Contrôle « couleur du camp » : fenêtre de teinte (degrés), saturation et valeur minimales (HSV des pixels rendus).
@@ -246,6 +252,18 @@ def _soleil_sans_ombre(nom, force, teinte, vers, angle=30):
     ob = lier(bpy.data.objects.new(nom, lum))
     ob.rotation_euler = Vector(vers).normalized().to_track_quat("Z", "Y").to_euler()
     return ob
+
+
+def lumiere_batiment(camp):
+    """Lumière d'un sprite de bâtiment : soleil et ciel communs, débouchage côté caméra ; pisé omeyyade : ciel atténué
+    et pas de débouchage (voir CIEL_PISE)."""
+    if camp == "omeyyades":
+        installer_lumiere(force_ciel=CIEL_PISE)
+        if APPOINT_PISE:
+            lumiere_appoint(APPOINT_PISE)
+    else:
+        installer_lumiere()
+        lumiere_appoint()
 
 
 def lumiere_appoint(force=APPOINT_FORCE, teinte=APPOINT_TEINTE):
@@ -538,7 +556,8 @@ def _plage(nt, entree, de0, de1, a0, a1):
 
 def mat_ph(nom, ident, echelle_m=None, teinte=None, force_teinte=0.0, saturation=1.0, valeur=1.0,
            rugosite=0.85, bosse=0.35, projection="BOITE", mosaique=1.0, salissure=0.0, lits=0.0,
-           cible=None, contraste=1.0, garde=0.25, h_salissure=1.0, occlusion=0.0, banches=None, speculaire=0.5):
+           cible=None, contraste=1.0, garde=0.25, h_salissure=1.0, occlusion=0.0, banches=None, speculaire=0.5,
+           coulures=0.0, var_rugosite=0.0):
     """Matière tirée d'une texture Poly Haven.
 
     projection "BOITE" : projection triplanaire en coordonnées objet (bâtiments sans UV), relief tiré de la
@@ -548,7 +567,9 @@ def mat_ph(nom, ident, echelle_m=None, teinte=None, force_teinte=0.0, saturation
     salissure : pied des murs plus sombre sur h_salissure mètres (hauteur dans le monde : les corniches restent propres).
     occlusion : creux et angles rentrants assombris (nœud d'occlusion ambiante de Cycles, sur 1 m).
     banches : {"h": 0.85, "l": 2.2, "var": 0.07, "joint": 0.6} : murs de pisé coulés par banches (joints horizontaux
-    tous les h mètres, verticaux tous les l mètres, valeur variant de ±var d'une banche à l'autre)."""
+    tous les h mètres, verticaux tous les l mètres, valeur variant de ±var d'une banche à l'autre).
+    coulures : traînées sombres verticales (pluie, sous les merlons), plus fortes vers le haut de chaque objet.
+    var_rugosite : la rugosité varie de ± cette valeur selon un bruit (le mur n'a plus l'aspect d'un plastique uni)."""
     m, nt, p = nouveau_materiau(nom)
     N = nt.nodes.new
     L = nt.links.new
@@ -623,6 +644,22 @@ def mat_ph(nom, ident, echelle_m=None, teinte=None, force_teinte=0.0, saturation
     if salissure > 0:
         # pied des murs plus sombre (terre, mousse, rejaillissement de la pluie), hauteur mesurée dans le monde
         sortie_couleur = _multiplier(nt, sortie_couleur, _plage(nt, sepw.outputs["Z"], 0.0, h_salissure, 1.0 - salissure, 1.0))
+    if coulures > 0:
+        # bruit étiré à la verticale (traînées fines, longues de 2 à 3 m), pondéré par la hauteur relative dans l'objet
+        mpc = N("ShaderNodeMapping")
+        mpc.inputs["Scale"].default_value = (7.0, 7.0, 0.45)
+        L(tc.outputs["Object"], mpc.inputs["Vector"])
+        nzc = N("ShaderNodeTexNoise")
+        nzc.inputs["Scale"].default_value = 1.0
+        nzc.inputs["Detail"].default_value = 3.0
+        L(mpc.outputs["Vector"], nzc.inputs["Vector"])
+        trainee = _plage(nt, nzc.outputs["Factor"], 0.5, 0.72, 0.0, 1.0)
+        sepg = N("ShaderNodeSeparateXYZ")
+        L(tc.outputs["Generated"], sepg.inputs[0])
+        haut = _plage(nt, sepg.outputs["Z"], 0.35, 1.0, 0.0, 1.0)
+        mc = N("ShaderNodeMath"); mc.operation = "MULTIPLY"
+        L(trainee, mc.inputs[0]); L(haut, mc.inputs[1])
+        sortie_couleur = _multiplier(nt, sortie_couleur, _plage(nt, mc.outputs[0], 0.0, 1.0, 1.0, 1.0 - coulures))
     if occlusion > 0:
         ao = N("ShaderNodeAmbientOcclusion")
         ao.inputs["Distance"].default_value = 1.0
@@ -630,6 +667,13 @@ def mat_ph(nom, ident, echelle_m=None, teinte=None, force_teinte=0.0, saturation
         sortie_couleur = _multiplier(nt, sortie_couleur, _plage(nt, ao.outputs["AO"], 0.0, 1.0, 1.0 - occlusion, 1.0))
     L(sortie_couleur, p.inputs["Base Color"])
     p.inputs["Roughness"].default_value = rugosite
+    if var_rugosite > 0:
+        nzr = N("ShaderNodeTexNoise")
+        nzr.inputs["Scale"].default_value = 1.5
+        nzr.inputs["Detail"].default_value = 4.0
+        L(tc.outputs["Object"], nzr.inputs["Vector"])
+        L(_plage(nt, nzr.outputs["Factor"], 0.3, 0.7, rugosite - var_rugosite, min(1.0, rugosite + var_rugosite)),
+          p.inputs["Roughness"])
     p.inputs["Specular IOR Level"].default_value = speculaire
     if bosse > 0:
         if projection == "BOITE":
@@ -659,6 +703,17 @@ def mat_ph(nom, ident, echelle_m=None, teinte=None, force_teinte=0.0, saturation
             except FileNotFoundError:
                 pass
     return m
+
+
+def mat_pise(nom, valeur=1.0, echelle_tex=1.0):
+    """Pisé ocre d'al-Andalus : terre damée désaturée (saturation rendue d'environ 0,32), coulée par banches (joints
+    sombres et fins tous les 0,85 m, peu d'écart de teinte d'une banche à l'autre), coulures sombres sous les merlons,
+    rugosité variable, occlusion forte (0,6) pour que la face à l'ombre soit franchement plus sombre que la face au soleil."""
+    c = CAMPS["omeyyades"]
+    return mat_ph(nom, c["mur"], echelle_m=3.0 * echelle_tex, cible=c["teinte_mur"], contraste=1.35, garde=0.08,
+                  valeur=valeur, bosse=0.35, salissure=0.4, h_salissure=1.3, occlusion=0.6, rugosite=0.88,
+                  var_rugosite=0.1, coulures=0.38,
+                  banches={"h": 0.85, "l": 2.2, "var": 0.03, "joint": 0.55, "ep": 0.03})
 
 
 def mat_toit(nom, ident, cible, rang_m=0.28, largeur_m=0.32, echelle_m=2.4, contraste=1.25, rugosite=(0.55, 0.85),
@@ -982,9 +1037,12 @@ def _chaikin(pts, n=2, ferme=True):
 
 
 def masque_lion(largeur):
-    """Lion passant gardant (armes d'Angleterre : de gueules aux lions passants gardants d'or), dessiné ici même
-    en formes simples et massives (CC0) pour rester lisible à 12 px : corps horizontal, tête de face à crinière,
-    patte antérieure dextre levée, queue dressée et recourbée. Tourné vers la gauche (dextre), comme en héraldique.
+    """Lion passant gardant (armes d'Angleterre : de gueules aux lions passants gardants d'or), dessiné ici même (CC0),
+    à la manière des armoriaux : corps long et mince (taille à 60 % de la hauteur du poitrail), tête de face assez
+    petite avec deux oreilles, crinière en six mèches de flamme recourbées le long de l'encolure, patte antérieure dextre
+    levée, pattes à trois griffes crochues, queue en S dressée au-dessus du dos, terminée par une touffe à trois lobes
+    ramenée vers le dos. Tourné vers la gauche (dextre), comme en héraldique. Pas de traits de visage (ni yeux ni bouche :
+    ils tireraient le dessin vers le dessin animé).
     Renvoie un masque PIL 'L' de largeur × (0,65 × largeur)."""
     sur = 4
     W = largeur * sur
@@ -996,52 +1054,87 @@ def masque_lion(largeur):
     def P(pts):
         return [(x * k, y * k) for x, y in pts]
 
-    def membre(pts, larg):
-        pts = _chaikin(pts, 3, ferme=False)
+    def bezier(pts, n=16):
+        """Courbe de Bézier (quadratique ou cubique) échantillonnée."""
+        r = []
+        for i in range(n + 1):
+            t = i / n
+            u = 1 - t
+            if len(pts) == 3:
+                a, b, c = pts
+                r.append((u * u * a[0] + 2 * u * t * b[0] + t * t * c[0], u * u * a[1] + 2 * u * t * b[1] + t * t * c[1]))
+            else:
+                a, b, c, e = pts
+                r.append((u ** 3 * a[0] + 3 * u * u * t * b[0] + 3 * u * t * t * c[0] + t ** 3 * e[0],
+                          u ** 3 * a[1] + 3 * u * u * t * b[1] + 3 * u * t * t * c[1] + t ** 3 * e[1]))
+        return r
+
+    def trait(pts, w0, w1, pointe=False):
+        """Bande effilée le long d'une courbe (largeur w0 au départ, w1 à la fin) : membres, mèches, queue."""
         n = len(pts)
-        for i in range(n - 1):
-            w = larg[0] + (larg[1] - larg[0]) * i / (n - 1)
-            (x0, y0), (x1, y1) = pts[i], pts[i + 1]
-            d.line(P([(x0, y0), (x1, y1)]), fill=255, width=max(1, int(w * k)))
-            r = w / 2 * k
-            d.ellipse((x1 * k - r, y1 * k - r, x1 * k + r, y1 * k + r), fill=255)
-        r = larg[0] / 2 * k
-        d.ellipse((pts[0][0] * k - r, pts[0][1] * k - r, pts[0][0] * k + r, pts[0][1] * k + r), fill=255)
+        g, dr = [], []
+        for i in range(n):
+            a, b = pts[max(0, i - 1)], pts[min(n - 1, i + 1)]
+            tx, ty = b[0] - a[0], b[1] - a[1]
+            l = math.hypot(tx, ty) or 1.0
+            nx, ny = -ty / l, tx / l
+            t = i / (n - 1)
+            w = (w0 + (w1 - w0) * t) / 2
+            if pointe:
+                w = w0 / 2 * (1 - t) ** 0.75
+            g.append((pts[i][0] + nx * w, pts[i][1] + ny * w))
+            dr.append((pts[i][0] - nx * w, pts[i][1] - ny * w))
+        d.polygon(P(g + dr[::-1]), fill=255)
+        for (x, y), w in ((pts[0], w0), (pts[-1], 0 if pointe else w1)):
+            if w > 0:
+                d.ellipse(P([(x - w / 2, y - w / 2), (x + w / 2, y + w / 2)]), fill=255)
 
-    def patte(cx, cy, rx=9, ry=5.5):
-        d.ellipse(P([(cx - rx, cy - ry), (cx + rx, cy + ry)]), fill=255)
-        for j in range(3):  # griffes
-            x = cx - rx + 2 + j * 4.5
-            d.polygon(P([(x - 1.6, cy + ry - 1), (x + 1.6, cy + ry - 1), (x - 1.2, cy + ry + 3.2)]), fill=255)
+    def patte(cx, cy):
+        """Pied et trois griffes crochues tournées vers l'avant (la gauche)."""
+        d.ellipse(P([(cx - 6.5, cy - 4.2), (cx + 6.0, cy + 4.2)]), fill=255)
+        for j in range(3):
+            x = cx - 5.5 + j * 4.4
+            y = cy + 2.0 + j * 0.5
+            trait(bezier([(x + 1.0, y), (x - 2.6, y + 0.6), (x - 3.4, y + 4.4)], 6), 2.8, 0.0, pointe=True)
 
-    corps = [(52, 44), (70, 48), (92, 56), (112, 58), (132, 52), (150, 44), (166, 44), (176, 54), (174, 70), (164, 80),
-             (146, 80), (128, 74), (112, 70), (94, 74), (76, 86), (58, 88), (46, 76), (44, 58)]
+    # corps : poitrail haut, taille fine (environ 60 % du poitrail), croupe ronde
+    corps = [(50, 52), (62, 44), (80, 44), (96, 49), (110, 54), (124, 53), (140, 46), (156, 44), (168, 48), (175, 58),
+             (173, 70), (164, 78), (148, 79), (132, 76), (118, 73), (104, 74), (90, 77), (76, 82), (62, 82), (52, 76),
+             (46, 64)]
     d.polygon(P(_chaikin(corps, 3)), fill=255)
-    # crinière en mèches qui filent vers l'arrière
-    cx, cy = 46, 50
-    pts = []
-    n = 13
-    for i in range(n + 1):
-        a = math.radians(-120 + i * 220 / n)
-        pts.append((cx + 21 * math.cos(a), cy + 21 * math.sin(a)))
-        if i < n:
-            b = math.radians(-120 + (i + 0.5) * 220 / n + 22)
-            pts.append((cx + 36 * math.cos(b), cy + 36 * math.sin(b)))
-    pts.append((cx, cy))
-    d.polygon(P(pts), fill=255)
-    # tête de face (gardant) : masque arrondi, oreilles
-    d.ellipse(P([(20, 26), (56, 64)]), fill=255)
-    d.ellipse(P([(24, 48), (52, 70)]), fill=255)
-    for ox in (24, 50):
-        d.polygon(P([(ox - 6, 32), (ox - 1, 19), (ox + 6, 30)]), fill=255)
-    membre([(58, 76), (44, 90), (30, 90), (20, 84)], (15, 9)); patte(17, 82, 7.5, 5)      # antérieure levée
-    membre([(72, 80), (70, 98), (68, 112)], (16, 9)); patte(64, 115)                       # antérieure posée
-    membre([(140, 66), (130, 90), (126, 112)], (18, 9)); patte(122, 115)                  # postérieure avancée
-    membre([(160, 64), (172, 90), (166, 112)], (20, 9)); patte(164, 115)                  # postérieure
-    d.ellipse(P([(132, 42), (178, 82)]), fill=255)                                          # cuisse
-    membre([(172, 50), (186, 44), (192, 28), (186, 14), (174, 12)], (7, 5))                 # queue
-    touffe = [(176, 16), (160, 18), (167, 11), (156, 5), (169, 4), (165, -3), (178, 2), (182, 10)]
-    d.polygon(P([(x, y + 3) for x, y in touffe]), fill=255)
+    d.ellipse(P([(48, 44), (84, 84)]), fill=255)                                            # épaule
+    d.ellipse(P([(140, 45), (177, 80)]), fill=255)                                          # cuisse
+    # pattes : antérieure dextre levée vers l'avant, les autres en marche
+    trait(bezier([(58, 72), (46, 86), (32, 85)]), 12, 8)
+    patte(27, 85)
+    trait(bezier([(74, 78), (72, 94), (70, 105)]), 12, 8)
+    patte(66, 108)
+    trait(bezier([(140, 68), (130, 90), (126, 105)]), 15, 8)
+    patte(122, 108)
+    trait(bezier([(162, 66), (175, 88), (166, 105)]), 16, 8)
+    patte(162, 108)
+    # queue en S dressée au-dessus du dos, touffe à trois lobes ramenée vers le dos (vers la gauche)
+    trait(bezier([(172, 54), (198, 44), (166, 26), (182, 10)], 26), 6.0, 3.6)
+    for base, ctrl, bout, w in (((182, 10), (176, 2), (166, 4), 7.0), ((182, 10), (170, 10), (164, 16), 6.5),
+                                ((182, 10), (180, 18), (172, 22), 6.0)):
+        trait(bezier([base, ctrl, bout], 10), w, 0.0, pointe=True)
+    # encolure, puis six mèches de flamme recourbées le long de l'encolure (trois dessus, trois dessous)
+    d.polygon(P(_chaikin([(30, 36), (48, 34), (64, 42), (66, 64), (50, 70), (32, 62)], 2)), fill=255)
+    for base, c1, c2, bout, w in (((34, 32), (36, 18), (48, 12), (58, 18), 11), ((44, 34), (48, 22), (62, 20), (70, 28), 11),
+                                  ((54, 38), (60, 30), (74, 30), (80, 38), 10), ((36, 60), (34, 70), (40, 78), (48, 80), 10),
+                                  ((46, 64), (46, 74), (54, 80), (62, 80), 10), ((56, 66), (58, 74), (66, 78), (72, 76), 9)):
+        trait(bezier([base, c1, c2, bout], 16), w, 0.0, pointe=True)
+    # tête de face (gardant), assez petite, deux oreilles ; un fin trait en creux la détache de la crinière, et un
+    # autre sépare chaque mèche (comme la gravure d'un armorial : visible dès 48 px, fondu aux petites tailles)
+    for base, c1, c2, bout in (((40, 30), (44, 20), (54, 18), (60, 22)), ((50, 34), (55, 27), (64, 26), (72, 31)),
+                               ((42, 64), (42, 72), (48, 77), (54, 78)), ((52, 66), (53, 73), (59, 77), (66, 77))):
+        pts = bezier([base, c1, c2, bout], 12)
+        d.line(P(pts), fill=0, width=max(1, int(1.4 * k)))
+    d.arc(P([(17.0, 29.0), (47.0, 66.0)]), -75, 75, fill=0, width=max(1, int(1.5 * k)))
+    d.ellipse(P([(19, 31), (45, 59)]), fill=255)
+    d.ellipse(P([(22, 45), (42, 64)]), fill=255)                                            # museau
+    for ox in (22, 42):
+        d.polygon(P([(ox - 4.5, 35), (ox - 1, 24), (ox + 4.5, 34)]), fill=255)
     return im.resize((largeur, int(round(H / sur))), Image.LANCZOS)
 
 
@@ -1205,11 +1298,14 @@ def biseau(ob, largeur=0.03, segments=1):
     return m
 
 
-def creneaux_cercle(nom, rayon, z, mat, nombre=10, h=0.55, ep=0.35, plein=0.55):
-    """Merlons répartis sur un cercle (haut d'une tour ronde)."""
+def creneaux_cercle(nom, rayon, z, mat, nombre=10, h=0.55, ep=0.35, plein=0.55, manque=0.0, graine=0):
+    """Merlons répartis sur un cercle (haut d'une tour ronde) ; manque : part de merlons tombés (état abîmé)."""
+    rnd = random.Random(graine)
     bm = bmesh.new()
     larg = 2 * math.pi * rayon / nombre * plein
     for k in range(nombre):
+        if manque and rnd.random() < manque:
+            continue
         a = 2 * math.pi * k / nombre
         geo = bmesh.ops.create_cube(bm, size=1.0)
         vs = geo["verts"]
@@ -1219,32 +1315,40 @@ def creneaux_cercle(nom, rayon, z, mat, nombre=10, h=0.55, ep=0.35, plein=0.55):
     return objet_maillage(nom, bm, mat)
 
 
-def creneaux_ligne(bm, a, b, z, h=0.55, ep=0.35, pas=0.9, plein=0.55, forme="carre"):
+def _merlon_pointe(bm, lx, ly, hp, hpy):
+    """Merlon d'al-Andalus à arêtes vives : prisme lx × ly × hp coiffé d'une pyramide de hpy de haut (la base de la
+    pyramide est exactement le haut du prisme : pas de biseau, pas de subdivision, l'ombre de chaque pan est franche)."""
+    x, y = lx / 2, ly / 2
+    bas = [bm.verts.new(v) for v in ((-x, -y, 0), (x, -y, 0), (x, y, 0), (-x, y, 0))]
+    haut = [bm.verts.new(v) for v in ((-x, -y, hp), (x, -y, hp), (x, y, hp), (-x, y, hp))]
+    sommet = bm.verts.new((0, 0, hp + hpy))
+    bm.faces.new(bas[::-1])
+    for k in range(4):
+        bm.faces.new((bas[k], bas[(k + 1) % 4], haut[(k + 1) % 4], haut[k]))
+        bm.faces.new((haut[k], haut[(k + 1) % 4], sommet))
+    return bas + haut + [sommet]
+
+
+def creneaux_ligne(bm, a, b, z, h=0.55, ep=0.35, pas=0.9, plein=0.55, forme="carre", manque=0.0, rnd=None):
     """Ajoute à bm des merlons le long du segment a -> b (x, y) à la hauteur z.
 
-    forme "carre" : merlons droits ; "pointe" : merlons d'al-Andalus, prisme de 0,55 × 0,45 × 0,7 m coiffé d'une
-    petite pyramide de 0,3 m (et non une lame triangulaire)."""
+    forme "carre" : merlons droits ; "pointe" : merlons d'al-Andalus, prisme de 0,62 × 0,5 × 0,5 m coiffé d'une pyramide
+    de 0,42 m (hauteur ≥ 0,6 × la largeur), arêtes vives ; créneaux plus larges que les merlons (pas de 1,3 m).
+    manque : part des merlons tombés (état abîmé), tirée avec rnd."""
     a, b = Vector((a[0], a[1], 0)), Vector((b[0], b[1], 0))
     L = (b - a).length
     nb = max(1, int(L / pas))
     d = (b - a).normalized()
     ang = math.atan2(d.y, d.x)
     larg = L / nb * plein
+    rnd = rnd or random.Random(int(L * 100))
     for k in range(nb):
+        if manque and rnd.random() < manque:
+            continue
         c = a + d * (L * (k + 0.5) / nb)
         if forme == "pointe":
-            lx, ly, lz = min(0.55, larg * 1.1), 0.45, 0.7
-            geo = bmesh.ops.create_cube(bm, size=1.0)
-            vs = list(geo["verts"])
-            bmesh.ops.scale(bm, vec=(lx, ly, lz), verts=vs)
-            bmesh.ops.translate(bm, vec=(0, 0, lz / 2), verts=vs)
-            cap = bmesh.ops.create_cone(bm, cap_ends=True, cap_tris=True, segments=4, radius1=max(lx, ly) * 0.72,
-                                        radius2=0.0, depth=0.3)
-            cv = list(cap["verts"])
-            bmesh.ops.rotate(bm, cent=(0, 0, 0), matrix=Matrix.Rotation(math.pi / 4, 3, "Z"), verts=cv)
-            bmesh.ops.scale(bm, vec=(lx / max(lx, ly), ly / max(lx, ly), 1.0), verts=cv)
-            bmesh.ops.translate(bm, vec=(0, 0, lz + 0.15), verts=cv)
-            vs += cv
+            lx = min(0.62, larg * 1.1)
+            vs = _merlon_pointe(bm, lx, 0.5, 0.5, max(0.42, 0.68 * lx))
         else:
             geo = bmesh.ops.create_cube(bm, size=1.0)
             vs = geo["verts"]
@@ -1255,11 +1359,12 @@ def creneaux_ligne(bm, a, b, z, h=0.55, ep=0.35, pas=0.9, plein=0.55, forme="car
 
 
 def drapeau(nom, camp, hauteur_mat, longueur=1.6, hauteur=1.0, loc=(0, 0, 0), vent=1.0, phase=0.0, mat_mat=None,
-            echelle_embleme=0.62, epaisseur_mat=0.05, cap=-28.0, epi=False):
+            echelle_embleme=0.62, epaisseur_mat=0.05, cap=-28.0, epi=False, inverse=False, dechire=0.0):
     """Mât + drapeau aux couleurs du camp, qui flotte vers l'est-sud-est (vers la droite de l'écran).
 
     Le drapeau est presque dans le plan vertical X-Z, légèrement tourné vers la caméra (cap en degrés) ; étoffe un peu
-    translucide : vu à contre-jour, il s'allume comme un vrai. Omeyyades : bordure verte. epi : boule dorée en tête de mât."""
+    translucide : vu à contre-jour, il s'allume comme un vrai. Omeyyades : bordure verte. epi : boule dorée en tête de mât.
+    dechire : part de la longueur arrachée au bout du drapeau, en dents irrégulières (bannière d'une place en ruine)."""
     objets = []
     mat_mat = mat_mat or mat_simple("bois_mat", "#4a3524", rugosite=0.8)
     objets.append(cylindre(nom + "_mat", epaisseur_mat, hauteur_mat + 0.25, loc=loc, mat=mat_mat, segments=8))
@@ -1267,12 +1372,16 @@ def drapeau(nom, camp, hauteur_mat, longueur=1.6, hauteur=1.0, loc=(0, 0, 0), ve
         objets.append(sphere(nom + "_epi", epaisseur_mat * 2.6, (loc[0], loc[1], loc[2] + hauteur_mat + 0.3),
                              mat_metal("or_epi", "#c9a24a", rugosite=0.35), subdiv=2))
     omey = camp == "omeyyades"
-    tex = texture_blason(camp, 384, 256, taille_embleme=echelle_embleme, bordure=omey, champ=CAMPS[camp]["tissu"],
-                         nom="drapeau-%s-%d%s" % (camp, int(echelle_embleme * 100), "-b" if omey else ""))
-    if omey:
+    if inverse:
+        tex = texture_blason(camp, 384, 256, taille_embleme=echelle_embleme, inverse=True,
+                             champ=CAMPS[camp].get("vert_tissu"), nom="drapeau-%s-%d-i" % (camp, int(echelle_embleme * 100)))
+    else:
+        tex = texture_blason(camp, 384, 256, taille_embleme=echelle_embleme, bordure=omey, champ=CAMPS[camp]["tissu"],
+                             nom="drapeau-%s-%d%s" % (camp, int(echelle_embleme * 100), "-b" if omey else ""))
+    if omey and not inverse:
         # bordure verte : on recolore la bordure (couleur du champ par défaut) en vert
         im = np.array(Image.open(tex).convert("RGB"), dtype=np.float32)
-        b = max(3, int(256 * 0.07))
+        b = max(3, int(256 * 0.11))
         vert = np.array(rgb8(CAMPS[camp]["meuble"]), dtype=np.float32)
         im[:b, :] = vert; im[-b:, :] = vert; im[:, :b] = vert; im[:, -b:] = vert
         Image.fromarray(im.astype(np.uint8)).save(tex)
@@ -1280,11 +1389,13 @@ def drapeau(nom, camp, hauteur_mat, longueur=1.6, hauteur=1.0, loc=(0, 0, 0), ve
     nx, nz = 16, 8
     uv = bm.loops.layers.uv.new("UVMap")
     grille = []
+    rnd_d = random.Random(int(longueur * 1000 + hauteur * 100))
+    coupes = [dechire * rnd_d.uniform(0.15, 1.0) if dechire else 0.0 for _ in range(nz + 1)]
     for j in range(nz + 1):
         ligne = []
         for i in range(nx + 1):
             u, v = i / nx, j / nz
-            x = u * longueur
+            x = min(u, 1.0 - coupes[j]) * longueur
             ond = math.sin(u * 5.0 + phase) * 0.12 * vent * u + math.sin(u * 9.0 + phase * 1.7) * 0.04 * vent * u
             z = hauteur_mat - hauteur + v * hauteur - u * u * 0.12 * vent
             ligne.append(bm.verts.new((x, ond, z)))
@@ -1306,13 +1417,15 @@ def drapeau(nom, camp, hauteur_mat, longueur=1.6, hauteur=1.0, loc=(0, 0, 0), ve
 
 
 def tenture(nom, camp, largeur, hauteur, loc=(0, 0, 0), rot_z=0.0, pointe=0.18, plis=0.05, mat_tringle=None,
-            echelle_embleme=0.72, graine=0):
+            echelle_embleme=None, graine=0):
     """Tenture verticale aux armes du camp, accrochée par une tringle à un parapet, face à -Y (vers la caméra avant
     rotation). loc = milieu de la tringle ; la toile pend de largeur × hauteur (m), le bas taillé en pointe.
 
     Omeyyades : champ vert à la tour ivoire (couleurs inversées), car l'ivoire disparaît sur l'ocre des murs."""
     c = CAMPS[camp]
     inv = bool(c.get("inverse"))
+    if echelle_embleme is None:
+        echelle_embleme = 0.56 if inv else 0.72
     tex = texture_blason(camp, 256, 448, taille_embleme=echelle_embleme, bordure=True, inverse=inv,
                          decalage=(0.0, -0.08), larg_bordure=0.06, champ=c.get("vert_tissu") if inv else c["tissu"],
                          nom="tenture-%s-%d%s" % (camp, int(echelle_embleme * 100), "-i" if inv else ""))
@@ -1394,9 +1507,13 @@ class RefusRendu(RuntimeError):
 
 
 def _refuser(img, nom, message):
+    """Refuse l'image (exception). Avec RENDU_ESSAI=1 dans l'environnement, se contente d'un avertissement (mise au point)."""
     os.makedirs(REFUS, exist_ok=True)
     chemin = os.path.join(REFUS, nom + ".png")
     img.save(chemin)
+    if os.environ.get("RENDU_ESSAI"):
+        journal("REFUS (essai, image gardée) %s : %s" % (nom, message))
+        return
     raise RefusRendu("%s refusé : %s (image gardée dans %s)" % (nom, message, os.path.relpath(chemin, RACINE)))
 
 
@@ -1445,10 +1562,49 @@ def controle_camp(img, nom, camp, seuil):
     return p
 
 
-def controle_sans_bleu(img, nom, tolerance=0.0005):
+def part_blancs(img, seuil=235, alpha_min=128):
+    """Part des pixels opaques dont les trois canaux dépassent seuil (blanc brûlé : plâtre, plastique, neige)."""
+    a = np.array(img.convert("RGBA"))
+    opaque = a[..., 3] >= alpha_min
+    blanc = opaque & (a[..., :3].min(axis=-1) > seuil)
+    return float(blanc.sum()) / max(1, int(opaque.sum()))
+
+
+def controle_blancs(img, nom, tolerance=0.003):
+    """Refuse un sprite dont plus de 0,3 % des pixels opaques ont leurs trois canaux au-dessus de 235."""
+    p = part_blancs(img)
+    if p > tolerance:
+        _refuser(img, nom, "blancs brûlés sur %.2f %% des pixels opaques (> %.1f %%)" % (p * 100, tolerance * 100))
+    return p
+
+
+def part_couleur_troupe(img, camp):
+    """Couleur du camp pour une troupe : bleu ou rouge du camp ; Omeyyades : ivoire (saturation < 0,3, valeur > 0,6,
+    teinte 20-70°) ou vert (teinte 118-185°). Mesurée sur l'image réduite à la taille logique (ce que voit l'élève)."""
+    w, h = img.size
+    petit = img.convert("RGBa").resize((max(1, w // ECHELLE), max(1, h // ECHELLE)), Image.LANCZOS).convert("RGBA")
+    if camp != "omeyyades":
+        return part_couleur_camp(petit, camp)
+    hh, s, v, al = _hsv(petit)
+    opaque = al >= 0.5
+    ivoire = (s < 0.3) & (v > 0.6) & (hh >= 20) & (hh <= 70)
+    vert = (hh >= 118) & (hh <= 185) & (s >= 0.18) & (v >= 0.10)
+    return float((opaque & (ivoire | vert)).sum()) / max(1, int(opaque.sum()))
+
+
+def controle_troupe(img, nom, camp, seuil):
+    """Refuse une image de troupe dont la couleur du camp couvre moins que seuil (à la taille logique)."""
+    p = part_couleur_troupe(img, camp)
+    journal("%s : couleur du camp %s sur %.1f %% (taille logique, seuil %.0f %%)" % (nom, camp, p * 100, seuil * 100))
+    if p < seuil:
+        _refuser(img, nom, "couleur du camp %.1f %% < %.0f %%" % (p * 100, seuil * 100))
+    return p
+
+
+def controle_sans_bleu(img, nom, tolerance=0.002):
     """Camp anglais : aucun bleu (teinte 200-240°, saturation > 0,15) pour ne pas évoquer la France.
     Les pixels presque noirs (valeur < 0,15, liseré et accentuation) n'ont pas de couleur perçue : ils ne comptent pas.
-    Tolérance : 0,05 % des pixels opaques (un ou deux pixels d'anticrénelage)."""
+    Tolérance : 0,2 % des pixels opaques (deux ou trois pixels sombres d'anticrénelage par image de troupe)."""
     p = part_teinte(img, (200, 240), 0.15, 0.15, alpha_min=0.8)
     journal("%s : bleu %.3f %% des pixels opaques" % (nom, p * 100))
     if p > tolerance:
@@ -1495,7 +1651,10 @@ def rendre_sprite(nom, largeur_px, hauteur_px, objets, ombre=True, contour=0.55,
                 caches.append(o)
         s.cycles.samples = echantillons_ombre
         if ombre_separee:
-            W2, H2 = int(round(W * (1 + marge_ombre[0]))), int(round(H * (1 + marge_ombre[1])))
+            # taille logique entière (round(1,6 w), round(1,4 h)) : le fichier fait exactement 2 × cette taille
+            wl, hl = largeur_px // ECHELLE, hauteur_px // ECHELLE
+            W2 = int(round(wl * (1 + marge_ombre[0]))) * ECHELLE * surech
+            H2 = int(round(hl * (1 + marge_ombre[1]))) * ECHELLE * surech
             cadrer(cam, W2, H2, cadre[2], cadre[3], cadre[4])
         om = rendre(os.path.join(tmp, nom + "-ombre.png"))
         if ombre_separee:
@@ -1542,6 +1701,7 @@ def rendre_sprite(nom, largeur_px, hauteur_px, objets, ombre=True, contour=0.55,
     final.alpha_composite(sujet_r)
     if controle:
         controle_bords(final, nom)
+        controle_blancs(final, nom)
     return final, ombre_portee
 
 
@@ -1561,30 +1721,47 @@ def sauver_png(img, chemin):
     return chemin
 
 
-def sauver_jpg(img, chemin, qualite=80, max_ko=450, plancher=72, masque_debruit=None):
-    """JPEG le plus fidèle possible sous max_ko : la qualité baisse par pas de 2 jusqu'à plancher (72, pas de blocs
-    visibles sur la canopée) ; au-delà, un léger débruitage limité au masque_debruit (la forêt, tableau 0..1 à la
-    taille de l'image) allège le fichier sans toucher la plaine, puis on recommence."""
+def sauver_jpg(img, chemin, qualite=80, max_ko=440, plancher=72, masque_debruit=None):
+    """JPEG le plus fidèle possible sous max_ko kilo-octets DÉCIMAUX (440 Ko = 440 000 octets, sous la limite du contrat
+    de 450 000 octets ; mêmes unités que le budget de 9 Mo) : recherche par dichotomie de la plus haute qualité entre
+    plancher (72, pas de blocs visibles sur la canopée) et qualite ; si même le plancher dépasse, un léger débruitage
+    limité au masque_debruit (la forêt, tableau 0..1) allège le fichier sans toucher la plaine, puis on recommence."""
     os.makedirs(os.path.dirname(chemin), exist_ok=True)
+    limite = max_ko * 1000
     rgb = img.convert("RGB")
     essais = [rgb]
     if masque_debruit is not None:
         doux = rgb.filter(ImageFilter.MedianFilter(3)).filter(ImageFilter.GaussianBlur(0.6))
         m = Image.fromarray((np.clip(masque_debruit, 0, 1) * 255).astype(np.uint8), "L").resize(rgb.size)
         essais.append(Image.composite(doux, rgb, m))
+
+    def taille(im, q):
+        im.save(chemin, quality=q, optimize=True, progressive=True, subsampling="4:2:0")
+        return os.path.getsize(chemin)
+
+    choix = None
     for k, im in enumerate(essais):
-        q = qualite
-        while True:
-            im.save(chemin, quality=q, optimize=True, progressive=True, subsampling="4:2:0")
-            ko = os.path.getsize(chemin) / 1024
-            if ko <= max_ko or q <= plancher:
-                break
-            q -= 2
-        if ko <= max_ko:
+        if taille(im, qualite) <= limite:
+            choix = (k, im, qualite)
             break
-    if ko > max_ko:
-        journal("ATTENTION : %s fait %d Ko (> %d) à la qualité plancher %d" % (os.path.basename(chemin), ko, max_ko, q))
-    journal("écrit %s (%d Ko, qualité %d%s)" % (os.path.relpath(chemin, RACINE), ko, q, ", forêt débruitée" if k else ""))
+        if taille(im, plancher) > limite:
+            continue
+        bas, haut = plancher, qualite          # bas : tient sous la limite ; haut : dépasse
+        while haut - bas > 1:
+            q = (bas + haut) // 2
+            if taille(im, q) <= limite:
+                bas = q
+            else:
+                haut = q
+        choix = (k, im, bas)
+        break
+    if choix is None:
+        choix = (len(essais) - 1, essais[-1], plancher)
+    k, im, q = choix
+    octets = taille(im, q)
+    if octets > limite:
+        journal("ATTENTION : %s fait %d octets (> %d) à la qualité plancher %d" % (os.path.basename(chemin), octets, limite, q))
+    journal("écrit %s (%d octets, qualité %d%s)" % (os.path.relpath(chemin, RACINE), octets, q, ", forêt débruitée" if k else ""))
     return chemin
 
 
