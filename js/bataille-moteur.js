@@ -75,7 +75,7 @@
       arsenal: o.arsenal || { tours: { archers: 1, piquiers: 1 }, troupes: { fantassins: 1 } },
       tours: [], toursRivales: [], unites: [], projectiles: [], effets: [],
       envois: [], fileRivale: [], fileAmie: [], minuterieRivale: 0, minuterieAmie: 0,
-      modificateurs: o.espion ? { espion: true } : {}, orParReponse: o.orParReponse || 12, temps: 0, stats: { tues: 0, fuites: 0, degatsRival: 0, envoyes: 0 }
+      modificateurs: o.espion ? { espion: true } : {}, orParReponse: o.orParReponse || 12, temps: 0, stats: { tues: 0, fuites: 0, degatsRival: 0, envoyes: 0, pertes: 0, arrivees: 0 }
     };
     return p;
   }
@@ -215,7 +215,7 @@
     if (u.pv <= 0) {
       u.vivant = false;
       effet(p, "chute", u.x, u.y, { camp: u.camp });
-      if (u.camp === "rival") { p.stats.tues++; p.or += 1; }
+      if (u.camp === "rival") { p.stats.tues++; p.or += 1; } else p.stats.pertes++;
     }
   }
 
@@ -274,6 +274,7 @@
         u.vivant = false;
         p.rival.pv = Math.max(0, p.rival.pv - u.degats);
         p.stats.degatsRival += u.degats;
+        p.stats.arrivees++;
         effet(p, "breche", u.x, u.y, { camp: "rival", degats: u.degats });
       }
     });

@@ -93,13 +93,17 @@
     minuterieToast = setTimeout(function () { t.className = "toast"; }, 1600);
   };
 
-  // Sceau qui s'imprime au centre de l'écran (350 ms), sans retarder la question suivante.
+  // Sceau qui s'imprime au centre de l'écran (350 ms), sans retarder la question suivante : il est posé une image
+  // après elle (JEU.anim.apresImage).
   ui.tampon = function (texte, sous) {
-    var t = document.createElement("div");
-    t.className = "tampon";
-    t.innerHTML = JEU.icones.icone("sceau", 120) + "<b>" + U.echapper(texte) + "</b>" + (sous ? "<span>" + U.echapper(sous) + "</span>" : "");
-    document.body.appendChild(t);
-    setTimeout(function () { t.remove(); }, 700);
+    var poser = function () {
+      var t = document.createElement("div");
+      t.className = "tampon";
+      t.innerHTML = JEU.icones.icone("sceau", 120) + "<b>" + U.echapper(texte) + "</b>" + (sous ? "<span>" + U.echapper(sous) + "</span>" : "");
+      document.body.appendChild(t);
+      setTimeout(function () { t.remove(); }, 700);
+    };
+    if (JEU.anim && JEU.anim.apresImage) JEU.anim.apresImage(poser); else poser();
   };
 
   // ---------- fenêtre modale ----------
@@ -331,7 +335,10 @@
           b.className = "choix" + (p ? " paire paire" + paires.indexOf(p) : "");
           b.querySelector(".touche").textContent = p ? String(p[0] + 1) : "·";
         });
-        valider.disabled = paires.length !== q.gauche.length;
+        var complet = paires.length === q.gauche.length;
+        // dernier appariement : on prévient l'écran (la bataille amène alors « Valider » en vue)
+        if (complet && valider.disabled && typeof CustomEvent === "function") corps.dispatchEvent(new CustomEvent("paires-completes", { bubbles: true }));
+        valider.disabled = !complet;
       }
       function choisirG(i) {
         paires = paires.filter(function (x) { return x[0] !== i; });
