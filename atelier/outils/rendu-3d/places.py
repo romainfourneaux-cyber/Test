@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 """Places fortes des deux bouts de la route : château de France, château anglais, forteresse omeyyade.
 
-Usage : python3 atelier/outils/rendu-3d/places.py [camp ...] [--etats intact,abime,ruine]
+Usage : python3 atelier/outils/rendu-3d/places.py [camp ...] [--etats intact,abime,ruine] [--fumees]
+  --fumees : sans rendu, seulement les points de fumée (champ « fumees » du manifeste)
 Sorties : jeu/assets/images/td/place-<camp>-<etat>.png, 150 × 150 px logiques (rendu 300 × 300), et leur ombre
 portée ombre-place-<camp>-<etat>.png (passe « sol », même point d'ancrage).
 
@@ -22,7 +23,8 @@ coulures sous les merlons), tours carrées à merlons pyramidés à arêtes vive
 
 États : « abîmé » = ce que l'élève doit voir d'un coup d'œil, même réduit à 96 px : la tour d'angle LA PLUS PROCHE de
 la caméra (la plus basse à l'écran) a perdu son toit et son fût est coupé à 60 % (arête déchiquetée, chevrons brûlés),
-une colonne de fumée grise en monte et dérive dans le vent ; la courtine face caméra est ouverte sur plus d'un tiers de
+la fumée qui en monte n'est plus cuite dans l'image : le jeu l'anime à partir des points « fumees » que ce
+script écrit dans le manifeste (foyers sur les toits brûlés et les ruines, 1 à 3 par image) ; la courtine face caméra est ouverte sur plus d'un tiers de
 sa longueur, avec un cône d'éboulis qui déborde vers le spectateur ; la pierre est noircie (environ 50 % plus sombre)
 sur le tiers haut de la façade autour de la brèche et en haut de la tour cassée ; la grande bannière est remplacée par
 une bannière déchirée, penchée ; 40 % des merlons sont tombés. France : la tour de porte de gauche a aussi perdu son
@@ -57,8 +59,6 @@ SEUIL_TOITS = 0.32    # saturation médiane maximale des toits de France (ardois
 FRAC_CASSEE = (0.5, 0.7)   # état abîmé : le fût de la tour cassée garde 50 à 70 % de sa hauteur (60 % en moyenne)
 SUIE_FORCE = 0.9      # pierre noircie : mélange vers la suie (environ 50 % plus sombre au cœur de la zone, rendu)
 SUIE = "#120e0b"      # couleur de la suie
-FUMEE = "#3a3632"     # albédo du pied de la colonne de fumée (les bouffées hautes sont plus claires)
-VENT_FUMEE = 12       # la fumée part vers l'est (droite de l'écran), 12° vers le nord : elle monte à l'écran
 LACET = C.LACET_BATIMENTS
 CAP = -28 - LACET     # les drapeaux des bâtiments tournés flottent dans le même vent que partout ailleurs
 # demi-côtés de l'enceinte (m, repère local avant la rotation de 32°) et seuil de la porte principale :
@@ -202,7 +202,7 @@ def mat_noirci(base, zones, force=SUIE_FORCE):
     return m
 
 
-def noircir(m, zones, cles=("pierre", "mur", "clair", "brique", "terrasse")):
+def noircir(m, zones, cles=("pierre", "mur", "clair", "brique", "terrasse"), force=SUIE_FORCE):
     """Remplace dans le jeu de matières m les maçonneries par leur version noircie (mêmes zones pour toutes) ; les
     alias (France : pierre = mur = clair) restent des alias."""
     faites = {}
@@ -210,74 +210,32 @@ def noircir(m, zones, cles=("pierre", "mur", "clair", "brique", "terrasse")):
         if k in m:
             src = m[k]
             if src.name not in faites:
-                faites[src.name] = mat_noirci(src, zones)
+                faites[src.name] = mat_noirci(src, zones, force)
             m[k] = faites[src.name]
     return m
 
 
-def mat_fumee(nom="fumee", teinte=FUMEE, opacite=0.8):
-    """Fumée mate (albédo teinte). Opacité au cœur de chaque bouffée (opacite), qui tombe à zéro sur son bord apparent
-    (poids de couche « Facing ») et varie avec un bruit : des volutes, pas des boules. Les faces arrière sont
-    transparentes : l'opacité ne double pas au centre."""
-    m, nt, p = C.nouveau_materiau(nom)
-    N, L = nt.nodes.new, nt.links.new
-    p.inputs["Base Color"].default_value = C.couleur(teinte)
-    p.inputs["Roughness"].default_value = 1.0
-    p.inputs["Specular IOR Level"].default_value = 0.0
-    lw = N("ShaderNodeLayerWeight")
-    lw.inputs["Blend"].default_value = 0.5
-    coeur = C._plage(nt, lw.outputs["Facing"], 0.3, 0.97, 1.0, 0.0)
-    tc = N("ShaderNodeTexCoord")
-    nz = N("ShaderNodeTexNoise")
-    nz.inputs["Scale"].default_value = 0.9
-    nz.inputs["Detail"].default_value = 5.0
-    L(tc.outputs["Object"], nz.inputs["Vector"])
-    grain = C._plage(nt, nz.outputs["Factor"], 0.3, 0.7, 0.55, 1.0)
-    geo = N("ShaderNodeNewGeometry")
-    avant = C._plage(nt, geo.outputs["Backfacing"], 0.0, 1.0, 1.0, 0.0)
-    a = N("ShaderNodeMath"); a.operation = "MULTIPLY"
-    L(coeur, a.inputs[0]); L(grain, a.inputs[1])
-    b = N("ShaderNodeMath"); b.operation = "MULTIPLY"
-    L(a.outputs[0], b.inputs[0]); L(avant, b.inputs[1])
-    c = N("ShaderNodeMath"); c.operation = "MULTIPLY"; c.inputs[1].default_value = opacite
-    L(b.outputs[0], c.inputs[0])
-    L(c.outputs[0], p.inputs["Alpha"])
-    return m
+def foyer(nom, x, y, z):
+    """Foyer de fumée (repère local de la place, m) : un objet vide, jamais rendu. La fumée n'est plus cuite dans
+    l'image (une colonne figée faisait décor en carton pendant que tout bouge) : le jeu la dessine et l'anime à partir des
+    points « fumees » du manifeste (points_fumee, rendre_place)."""
+    e = C.lier(bpy.data.objects.new("foyer_" + nom, None))
+    e.location = (x, y, z)
+    return [e]
 
 
-# bouffées de la colonne de fumée : (rayon m, hauteur au-dessus du fût m, dérive dans le vent m, albédo, opacité) ;
-# sombre et dense au pied (le feu couve), plus claire et plus diffuse en montant : elle se lit sur la façade à
-# l'ombre du donjon (gris moyen) comme sur l'herbe
-BOUFFEES = ((1.4, 1.2, 0.3, FUMEE, 0.95), (1.9, 3.6, 1.7, "#4e4842", 0.92), (2.4, 6.4, 3.8, "#6e6860", 0.85),
-            (2.9, 9.4, 6.4, "#8c867e", 0.75))
-
-
-def fumee(nom, x, y, z, graine=0, echelle=1.0):
-    """Colonne de fumée de l'état abîmé au-dessus d'une tour cassée (x, y, z : haut du fût, repère local) : quatre
-    bouffées bosselées de plus en plus grosses et claires (BOUFFEES), qui montent et dérivent vers la droite de l'écran
-    (VENT_FUMEE : vers l'est, un peu vers le nord, pour que la colonne monte à l'écran au lieu de s'écraser vers la
-    caméra). Aucune ombre portée."""
-    from mathutils import noise
-    rnd = random.Random(graine)
-    vent = (math.cos(math.radians(VENT_FUMEE)), math.sin(math.radians(VENT_FUMEE)))
-    vx, vy = vers_local(*vent)
-    objs = []
-    for k, (r, dz, d, teinte, op) in enumerate(BOUFFEES):
-        r *= echelle
-        bm = bmesh.new()
-        bmesh.ops.create_icosphere(bm, subdivisions=3, radius=r)
-        dec = Vector((rnd.uniform(0, 50), rnd.uniform(0, 50), rnd.uniform(0, 50)))
-        for v in bm.verts:
-            v.co *= 1.0 + 0.2 * noise.noise(v.co * (1.1 / r) + dec)
-        for f in bm.faces:
-            f.smooth = True
-        ob = C.objet_maillage(nom + "_%d" % k, bm, mat_fumee("%s_mat%d" % (nom, k), teinte, op))
-        ob.location = (x + vx * d * echelle, y + vy * d * echelle, z + dz * echelle)
-        ob.scale = (1.15, 1.0, 0.85)
-        ob.rotation_euler.z = rnd.uniform(0, 3)
-        ob.visible_shadow = False
-        objs.append(ob)
-    return objs
+def points_fumee():
+    """Foyers de la scène vus par la caméra du sprite : [[x, y], ...] en px logiques depuis le coin haut-gauche de
+    l'image (comme ax, ay), triés par nom. La place doit déjà être tournée (C.pivot) et la caméra posée."""
+    from bpy_extras.object_utils import world_to_camera_view
+    s = bpy.context.scene
+    bpy.context.view_layer.update()
+    res = []
+    for ob in sorted(s.objects, key=lambda o: o.name):
+        if ob.name.startswith("foyer_"):
+            u, v, _ = world_to_camera_view(s, s.camera, ob.matrix_world.translation)
+            res.append([round(u * TAILLE, 1), round((1 - v) * TAILLE, 1)])
+    return res
 
 
 def mat_braises(nom="braises"):
@@ -300,11 +258,12 @@ def mat_braises(nom="braises"):
     large.inputs["Scale"].default_value = 0.45
     large.inputs["Detail"].default_value = 2.0
     L(geo.outputs["Position"], large.inputs["Vector"])
-    f1 = C._plage(nt, fin.outputs["Factor"], 0.6, 0.7, 0.0, 1.0)
-    f2 = C._plage(nt, large.outputs["Factor"], 0.42, 0.58, 0.15, 1.0)
+    # (sans colonne de fumée cuite, les braises disent seules « ça brûle » : filets plus nombreux et plus vifs)
+    f1 = C._plage(nt, fin.outputs["Factor"], 0.55, 0.67, 0.0, 1.0)
+    f2 = C._plage(nt, large.outputs["Factor"], 0.4, 0.56, 0.25, 1.0)
     mm = N("ShaderNodeMath"); mm.operation = "MULTIPLY"
     L(f1, mm.inputs[0]); L(f2, mm.inputs[1])
-    force = N("ShaderNodeMath"); force.operation = "MULTIPLY"; force.inputs[1].default_value = 2.8
+    force = N("ShaderNodeMath"); force.operation = "MULTIPLY"; force.inputs[1].default_value = 4.0
     L(mm.outputs[0], force.inputs[0])
     p.inputs["Emission Color"].default_value = C.couleur("#d8400e")
     L(force.outputs[0], p.inputs["Emission Strength"])
@@ -784,6 +743,11 @@ def tour_ronde(nom, x, y, r, h, m, toit=True, etat="intact", graine=0, archeres=
         objs.append(C.cylindre(nom + "_sol", r + 0.05, 0.1, (x, y, h - 0.05), sol, segments=28))
         haut = h + 0.7
     if brulee:
+        if not machicoulis:          # tour sans mâchicoulis (Angleterre) : comble de braises au ras du fût
+            if "braises" not in m:
+                m["braises"] = mat_braises()
+            objs.append(C.cylindre(nom + "_sol", r - 0.05, 0.1, (x, y, h - 0.05), m["braises"], segments=28))
+            haut = h
         objs += chevrons_brules(nom, x, y, h - 0.2, r, m, graine=graine + 3, nombre=6)
     else:
         objs.append(C.cylindre(nom + "_cordon", r + 0.15, 0.3, (x, y, h - 0.5), m["pierre"], segments=28))
@@ -1214,7 +1178,11 @@ def chateau_france(etat="intact"):
                     (-2.9, -Y - 0.6, 2.4, 5.6, 7.6),   # haut de la tour de porte dont le toit a brûlé
                     (1.2, Y - 2.3, 5.0, 2.6, 4.6),     # haut des murs du logis, dont le toit a brûlé
                     (-4.2, 1.6, 6.4, 8.6, 12.4),       # tiers haut du donjon, dont le grand toit a brûlé
-                    (6.2, -Y, 3.8, 2.8, 4.6)])         # courtine à droite de la porte, côté d'où vient l'ennemi
+                    (6.2, -Y, 3.8, 2.8, 4.6),          # courtine à droite de la porte, côté d'où vient l'ennemi
+                    # sans la colonne de fumée cuite (le jeu l'anime), l'incendie se lit à la suie : haut de la tour
+                    # avant droite et de la tour de porte de droite, léchés par les flammes
+                    (X, -Y, 3.0, 5.4, 8.6),
+                    (2.9, -Y - 0.6, 2.3, 5.8, 8.8)])
     o += cour("cour", -X, X, -Y, Y, m)
     # courtines à mâchicoulis ; porte sur la face sud (vers l'est-sud-est une fois tournée : la route part à droite)
     o += courtine("c_sud_g", (-X, -Y), (-2.6, -Y), 6.4, 1.0, m, etat, machicoulis=True,
@@ -1234,7 +1202,8 @@ def chateau_france(etat="intact"):
         o += tour_ronde("t%d" % i, x, y, r, h, m, etat=etat, graine=i, archeres=arch, toit=True,
                         h_toit=2.0 * (r + 0.3), cassee=abime and i == 0)
     if abime:
-        o += fumee("fumee", -X, -Y, 9.0 * FRAC_CASSEE[1], graine=1, echelle=1.2)
+        o += foyer("tour", -X, -Y, 9.0 * 0.62)           # fût cassé de la tour avant
+        o += foyer("donjon", -4.2, 1.6, 14.5 + 1.2)        # comble du donjon, dont le grand toit a brûlé
     # châtelet : deux tours de porte et la grande porte (vantaux, herse levée) ; abîmé : le cône d'ardoises de la tour de
     # gauche a brûlé
     for i, x in enumerate((-2.9, 2.9)):
@@ -1265,7 +1234,7 @@ def chateau_france(etat="intact"):
             # le toit du logis a brûlé : charpente calcinée, un bout d'ardoises à l'est ; une seconde colonne de fumée
             # monte au-dessus de l'arrière du château, où elle se détache du terrain
             o += charpente_brulee("logis_toit", -2.15, 7.35, Y - 4.0, Y - 0.6, 5.0, 3.0, m, reste=0.28, graine=13)
-            o += fumee("fumee_logis", 1.2, Y - 2.3, 5.6, graine=4)
+            o += foyer("logis", 1.2, Y - 2.3, 5.6)
         else:
             o.append(toit_deux_pans("logis_toit", -2.15, 7.35, Y - 4.0, Y - 0.6, 5.0, 3.0, m["toit"]))
         o.append(C.boite("logis_chem", 0.7, 0.7, 2.6, (5.5, Y - 1.6, 6.2), m["pierre"]))
@@ -1332,6 +1301,7 @@ def chateau_france(etat="intact"):
                                   m["suie_mur"]))
     if ruine:
         o += poutres_brulees("poutre", [(2.0, -2.0), (-1.0, 0.8), (4.8, 2.4)], m, graine=7)
+        o += foyer("donjon", -4.2, 1.6, 6.5) + foyer("logis", 3.4, Y - 2.3, 2.4) + foyer("cour", 2.0, -2.0, 0.6)
     else:
         o += accessoires_cour("cour", [(4.0, -2.5, "tonneaux"), (-1.0, -3.0, "foin"), (6.0, 0.5, "caisses")], m)
     return o
@@ -1345,14 +1315,18 @@ def chateau_angleterre(etat="intact"):
     abime = etat == "abime"
     X, Y = ENCEINTES["angleterre"]           # enceinte plus profonde que large : la face ouest (porte) est longue
     # abîmé : tour avant t0 cassée (la plus basse à l'écran), brèche dans la courtine sud (face caméra), près d'elle
-    breche_sud = (0.2, 0.54) if abime else (0.3, 0.6)
+    breche_sud = (0.15, 0.6) if abime else (0.3, 0.6)
     if abime:
         xb = -X + 2 * X * sum(breche_sud) / 2
         noircir(m, [(xb, -Y, 4.2, 2.6, 4.4),            # tiers haut de la courtine autour de la brèche
                     (-X, -Y, 3.0, 2.8, 4.7),           # haut du fût cassé de la tour avant
                     (-X - 0.3, 0.0, 3.8, 5.4, 8.0),    # haut du châtelet, dont le toit a brûlé
                     (1.2, -Y + 2.6, 4.2, 2.2, 4.0),    # murs de la grande salle, dont le toit a brûlé
-                    (1.6, 3.4, 6.0, 9.0, 12.6)])       # tiers haut du donjon
+                    (1.6, 3.4, 6.0, 9.0, 12.6),        # tiers haut du donjon
+                    # sans la colonne de fumée cuite (le jeu l'anime), l'incendie se lit à la suie : tour avant droite,
+                    # courtine ouest au sud du châtelet
+                    (X, -Y, 3.0, 4.6, 7.4),
+                    (-X, -5.0, 3.2, 3.0, 5.0)])
     o += cour("cour", -X, X, -Y, Y, m)
     o += courtine("c_ouest_s", (-X, -2.7), (-X, -Y), 6.2, 1.1, m, etat, graine=1)
     o += courtine("c_ouest_n", (-X, Y), (-X, 2.7), 6.2, 1.1, m, etat, breche=(0.3, 0.65) if ruine else None, graine=2)
@@ -1361,9 +1335,12 @@ def chateau_angleterre(etat="intact"):
     o += courtine("c_nord", (X, Y), (-X, Y), 6.4, 1.1, m, etat, graine=5)
     for i, (x, y, r, h) in enumerate(((-X, -Y, 2.0, 9.4), (X, -Y, 2.1, 8.4), (-X, Y, 2.0, 10.2), (X, Y, 2.2, 9.6))):
         o += tour_ronde("t%d" % i, x, y, r, h, m, etat=etat, graine=20 + i, machicoulis=False,
-                        archeres=((200 + 40 * i, 0.5),), epi=False, cassee=abime and i == 0)
+                        archeres=((200 + 40 * i, 0.5),), epi=False, cassee=abime and i == 0,
+                        brulee=abime and i == 1)      # abîmé : la tour avant droite a perdu son toit de tuiles
     if abime:
-        o += fumee("fumee", -X, -Y, 9.4 * FRAC_CASSEE[1], graine=2)
+        o += foyer("tour", -X, -Y, 9.4 * 0.62)           # fût cassé de la tour avant
+        o += foyer("chatelet", -X - 0.3, 0, 9.0 + 0.6)   # toit brûlé du châtelet
+        o += foyer("tour_d", X, -Y, 8.4 + 0.4)             # tour avant droite, toit brûlé
     # châtelet carré massif à créneaux sur la face ouest ; porte vers l'ouest (vers l'arrivée de la route)
     o += tour_carree("chatelet", -X - 0.3, 0, 5.4, 9.0, m, etat=etat, graine=7, archeres=None, toit=etat == "intact")
     m_porte = m
@@ -1414,7 +1391,6 @@ def chateau_angleterre(etat="intact"):
         o.append(C.boite("salle", 6.0, 3.6, 4.4, (1.2, -Y + 2.6, 0), m["pierre"]))
         if abime:          # toit de tuiles brûlé, un bout encore couvert à l'est ; seconde colonne de fumée
             o += charpente_brulee("salle_toit", -1.8, 4.2, -Y + 0.8, -Y + 4.4, 4.4, 2.6, m, reste=0.3, graine=25)
-            o += fumee("fumee_salle", 0.6, -Y + 2.6, 5.0, graine=5, echelle=0.9)
         else:
             o.append(toit_deux_pans("salle_toit", -1.8, 4.2, -Y + 0.8, -Y + 4.4, 4.4, 2.6, m["toit"]))
     # couleurs : tentures de gueules au lion sur le châtelet (face ouest) et le donjon, bannière au donjon, flamme de tour
@@ -1444,6 +1420,7 @@ def chateau_angleterre(etat="intact"):
                                   m["suie_mur"]))
     if ruine:
         o += poutres_brulees("poutre", [(-2.5, -4.0), (2.0, 0.5), (-1.0, 5.5)], m, graine=8)
+        o += foyer("donjon", 1.6, 3.4, 6.2) + foyer("salle", 1.2, -Y + 2.6, 2.0) + foyer("cour", -2.5, -4.0, 0.6)
     else:
         o += accessoires_cour("cour", [(-3.0, -5.5, "tonneaux"), (3.5, -4.0, "foin"), (-3.0, 5.0, "puits")], m)
     return o
@@ -1457,20 +1434,29 @@ def forteresse_omeyyade(etat="intact"):
     X, Y = ENCEINTES["omeyyades"]
     # abîmé : tour avant t0 cassée (la plus basse à l'écran), brèche dans la courtine sud (face caméra) entre t0 et la
     # tour médiane, qui laisse voir la maison et son auvent
-    breche_sud = (0.08, 0.45) if abime else (0.3, 0.62)
+    breche_sud = (0.04, 0.6) if abime else (0.3, 0.62)
     if abime:
         xb = -X + 2 * X * sum(breche_sud) / 2
         noircir(m, [(xb, -Y, 4.4, 2.6, 4.6),            # tiers haut de la courtine autour de la brèche
                     (-X, -Y, 3.1, 2.6, 4.4),           # haut du fût cassé de la tour avant
                     (-2.4, -5.2, 3.6, 1.4, 3.2),       # murs de la maison incendiée derrière la brèche
-                    (2.0, 3.8, 6.2, 7.6, 11.0),        # tiers haut de la tour maîtresse
+                    (2.0, 3.8, 6.2, 6.0, 10.0),        # moitié haute de la tour maîtresse
                     (-X - 0.3, 0.0, 4.2, 5.4, 8.2),    # tiers haut de la tour-porte (l'assaillant vient de l'ouest)
                     (-X, -6.0, 3.6, 2.8, 4.6),         # courtine ouest, contre la tour cassée
                     (3.6, -Y, 3.6, 2.8, 4.8),          # courtine sud, à droite de la tour médiane (flèches enflammées)
-                    (X, -Y, 3.0, 4.6, 6.8)])           # tiers haut de la tour d'angle avant droite
+                    (X, -Y, 3.0, 4.6, 6.8),            # tiers haut de la tour d'angle avant droite
+                    # sans fumée cuite : suie sur les faces à l'ombre (est et sud ; le pisé éclairé, ivoire, compte
+                    # comme couleur du camp), courtine est, tour d'angle arrière droite, face sud de la tour médiane
+                    (X + 0.6, 0.0, 4.6, 2.6, 5.4),
+                    (X, Y, 3.0, 4.4, 7.0),
+                    (0.0, -Y - 1.2, 2.0, 3.6, 6.4),
+                    (-X - 0.3, -2.7, 2.4, 3.4, 7.2),   # face sud de la tour-porte
+                    (X - 0.8, Y - 0.8, 3.4, 2.8, 5.6)],  # angle intérieur nord-est (vu par-dessus la brèche)
+                force=1.0)          # pisé clair : la suie doit le couvrir tout à fait pour se lire à 96 px
     o += cour("cour", -X, X, -Y, Y, m)
     # enceinte de pisé à merlons pyramidés, tours carrées à soubassement de moellons
-    o += courtine("c_ouest_s", (-X, -2.9), (-X, -Y), 6.4, 1.2, m, etat, merlons="pointe", graine=1)
+    o += courtine("c_ouest_s", (-X, -2.9), (-X, -Y), 6.4, 1.2, m, etat, merlons="pointe", graine=1,
+                  breche=(0.3, 0.75) if abime else None)   # abîmé : l'assaut venu de l'ouest a aussi ouvert ce mur
     o += courtine("c_ouest_n", (-X, Y), (-X, 2.9), 6.4, 1.2, m, etat, merlons="pointe", breche=(0.3, 0.65) if ruine else None,
                   graine=2)
     o += courtine("c_sud", (-X, -Y), (X, -Y), 6.6, 1.2, m, etat, merlons="pointe", breche=breche_sud if etat != "intact" else None,
@@ -1479,9 +1465,10 @@ def forteresse_omeyyade(etat="intact"):
     o += courtine("c_nord", (X, Y), (-X, Y), 6.8, 1.2, m, etat, merlons="pointe", graine=5)
     for i, (x, y, h, arch) in enumerate(((-X, -Y, 8.8, "centre"), (X, -Y, 8.2, None), (-X, Y, 9.6, "cote"), (X, Y, 9.0, None))):
         o += tour_carree("t%d" % i, x, y, 3.3, h, m, merlons="pointe", etat=etat, graine=40 + i, mat="mur",
-                         soubassement=("pierre", 2.5), archeres=arch, cassee=abime and i == 0)
+                         soubassement=("pierre", 2.5), archeres=arch, cassee=abime and i in (0, 1))
     if abime:
-        o += fumee("fumee", -X, -Y, 8.8 * FRAC_CASSEE[1], graine=3, echelle=1.1)
+        o += foyer("tour", -X, -Y, 8.8 * 0.62)           # fût cassé de la tour avant
+        o += foyer("tour_d", X, -Y, 8.2 * 0.62)          # fût cassé de la tour avant droite
     o += tour_carree("tm0", 0, -Y, 2.6, 7.8, m, merlons="pointe", etat=etat, graine=50, mat="mur",
                      soubassement=("pierre", 2.5), archeres="centre")
     # tour-porte carrée sur la face ouest : arc outrepassé profond, claveaux alternés brique et ocre, alfiz
@@ -1521,7 +1508,7 @@ def forteresse_omeyyade(etat="intact"):
                 o.append(poutre("maison%d_solive%d" % (i, k), (xx, y - sy / 2 + 0.2, h + 0.05),
                                 (xx + rnd_m.uniform(-0.3, 0.3), y + sy / 2 - 0.2 - (rnd_m.uniform(0.5, 1.4) if k % 2 else 0),
                                  h + 0.05 - (rnd_m.uniform(0.3, 0.9) if k % 2 else 0)), 0.16, m["suie"]))
-            o += fumee("fumee_maison", x + 0.4, y, h, graine=6, echelle=0.7)
+            o += foyer("maison", x + 0.4, y, h)
         else:
             o.append(C.boite("maison%d_terrasse" % i, sx - 0.1, sy - 0.1, 0.06, (x, y, h), m["terrasse"]))
         for j, (px, py, lx, ly) in enumerate(((x, y - sy / 2 + 0.1, sx, 0.2), (x, y + sy / 2 - 0.1, sx, 0.2),
@@ -1546,7 +1533,7 @@ def forteresse_omeyyade(etat="intact"):
         # drapeaux verts à la tour ivoire (couleurs inversées : le vert se lit sur l'ocre)
         if abime:
             o += banniere_dechiree("ban_maitresse", "omeyyades", (dx - 1.6, dy - 1.6, h_t + 0.3), m,
-                                   inclinaison=(0.12, -0.22), hauteur_mat=4.2, longueur=5.6, hauteur=3.8, dechire=0.22,
+                                   inclinaison=(0.12, -0.22), hauteur_mat=4.2, longueur=5.6, hauteur=3.8, dechire=0.15,
                                    vent=0.8)
         else:
             o += C.drapeau("ban_maitresse", "omeyyades", 4.2, 5.6, 3.8, loc=(dx - 1.6, dy - 1.6, h_t + 0.4), vent=1.0,
@@ -1555,7 +1542,7 @@ def forteresse_omeyyade(etat="intact"):
                        inverse=True)
         if abime:              # abîmé : la tour t0 est cassée, son drapeau flotte encore, déchiré, sur le moignon
             o += banniere_dechiree("ban_t0", "omeyyades", (-X - 0.75, -Y - 0.75, 8.8 * FRAC_CASSEE[0] - 0.2), m,
-                                   inclinaison=(0.16, -0.1), hauteur_mat=4.8, longueur=4.2, hauteur=2.9, dechire=0.28,
+                                   inclinaison=(0.16, -0.1), hauteur_mat=4.8, longueur=5.0, hauteur=3.4, dechire=0.18,
                                    vent=0.8)
         else:
             o += C.drapeau("ban_t0", "omeyyades", 2.8, 3.0, 2.0, loc=(-X, -Y, 8.8 + 0.4), vent=1.0, phase=0.6, cap=CAP,
@@ -1576,6 +1563,7 @@ def forteresse_omeyyade(etat="intact"):
             o.append(decalque("suie_baie", (dx + 1.7, dy - cote / 2 - 0.07, h_t * 0.66 + 0.5), 1.6, 2.8, m["suie_mur"]))
     if ruine:
         o += poutres_brulees("poutre", [(-2.0, -3.0), (2.5, 1.0), (0.5, 6.0)], m, graine=10)
+        o += foyer("maitresse", 2.0, 3.8, 5.8) + foyer("maison", -2.4, -5.2, 1.8) + foyer("cour", 2.5, 1.0, 0.6)
     else:
         o += accessoires_cour("cour", [(3.0, -1.5, "tonneaux"), (-3.5, 3.0, "puits")], m)
     return o
@@ -1693,7 +1681,7 @@ def saturation_toits(img, masque):
     return float(np.median(s[sel])), int(sel.sum())
 
 
-def rendre_place(camp, etat="intact", surech=2, echantillons=96):
+def rendre_place(camp, etat="intact", surech=2, echantillons=96, sans_rendu=False):
     px = TAILLE * C.ECHELLE
     C.reinitialiser()
     # Omeyyades : ciel atténué, sans débouchage : la face à l'ombre est au moins 2,5 fois plus sombre que l'autre
@@ -1704,6 +1692,10 @@ def rendre_place(camp, etat="intact", surech=2, echantillons=96):
     objs = FABRIQUES[camp](etat)
     C.pivot("place", objs, LACET)
     nom = "place-%s-%s" % (camp, etat)
+    fumees = points_fumee()
+    if sans_rendu:
+        ecrire_fumees(nom, fumees)
+        return None
     img, ombre = C.rendre_sprite(nom, px, px, objs, surech=surech, echantillons=echantillons, echantillons_ombre=32,
                                  contour=0.5, epaisseur_contour=1, ombre_separee=True)
     if camp == "angleterre":
@@ -1722,18 +1714,33 @@ def rendre_place(camp, etat="intact", surech=2, echantillons=96):
             if sat > SEUIL_TOITS:
                 C._refuser(img, nom, "toits trop saturés (%.2f > %.2f)" % (sat, SEUIL_TOITS))
     C.sauver_sprite(nom, img, ombre, TAILLE, TAILLE, ANCRE_X, ANCRE_Y)
+    ecrire_fumees(nom, fumees)
     return C.chemin_td(nom + ".png")[0]
+
+
+def ecrire_fumees(nom, fumees):
+    """Ajoute à l'entrée du manifeste le champ « fumees » ([[x, y], ...], px logiques depuis le coin haut-gauche) : là
+    où le jeu fait monter la fumée animée d'une place abîmée ou en ruine (vide pour une place intacte)."""
+    e = C.lire_manifeste().get(nom)
+    if e is None:
+        C.journal("%s absent du manifeste : points de fumée non écrits" % nom)
+        return
+    e["fumees"] = fumees
+    C.maj_manifeste({nom: e})
+    C.journal("%s : %d point(s) de fumée %s" % (nom, len(fumees), fumees))
 
 
 def main(args):
     etats = ["intact", "abime", "ruine"]
+    sans_rendu = "--fumees" in args
+    args = [a for a in args if a != "--fumees"]
     if "--etats" in args:
         i = args.index("--etats")
         etats = args[i + 1].split(",")
         args = args[:i] + args[i + 2:]
     for camp in (args or list(FABRIQUES)):
         for etat in etats:
-            rendre_place(camp, etat)
+            rendre_place(camp, etat, sans_rendu=sans_rendu)
 
 
 if __name__ == "__main__":

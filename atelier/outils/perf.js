@@ -8,6 +8,12 @@
 //  - Event Timing (temps réel, sans horloge truquée) : de la touche à l'image peinte qui montre la question suivante,
 //    pendant le conseil de guerre de batailles en 1366 × 768 et en 1920 × 1080.
 // Seuls les enchaînements question → question comptent : une vague, une carte de décision ou un bilan n'en sont pas.
+// Contrôles de la toile de bataille : jamais réallouée pendant une bataille sans changement de taille de la fenêtre
+// (le conseil de guerre élargit la colonne de droite, la toile ne bouge pas) ; réallouée (fenêtre redimensionnée), elle
+// est redessinée dans la même tâche ; rendue (largeur 0) quand on quitte. Repli : sans terrain 3D, la route est dessinée.
+// Contrôles d'interface : accords de « verrouillé », un seul sceau à la fois, bonne réponse d'une association montrée
+// une fois, or du bandeau jamais estompé, titre et « Quitter » visibles en 1366 × 768, tribut hors de la carte,
+// lignes sous les noms de la carte d'au moins 14 px à l'écran, noms séparés de 8 px et plus près de leur lieu.
 // Usage : node atelier/outils/perf.js   (demande le module playwright ; sinon, faire les vérifications à la main)
 // Variables facultatives : CHROMIUM (chemin du navigateur), DETAIL=1 (affiche toutes les mesures).
 "use strict";
@@ -68,8 +74,33 @@ async function jouerCarteConseil(page) {
   await page.keyboard.press(String(n + 1));
 }
 
+// Espion de la toile de bataille : chaque largeur donnée à une toile .td-canvas déjà dessinée (réallocation : la toile
+// est effacée) est notée, avec « redessinee » si un dessin a suivi dans la même tâche (avant la fin de la tâche, vue
+// par une micro-tâche). La largeur 0 (toile rendue en quittant) est notée à part.
+function espionToile() {
+  window.__toile = { realloc: [], rendues: 0 };
+  const d = Object.getOwnPropertyDescriptor(HTMLCanvasElement.prototype, "width");
+  Object.defineProperty(HTMLCanvasElement.prototype, "width", { configurable: true, get: d.get, set(v) {
+    d.set.call(this, v);
+    if (!this.classList || !this.classList.contains("td-canvas")) return;
+    if (v === 0) { window.__toile.rendues++; return; }
+    if (!this.__dessinee) return; // première taille, avant le premier dessin
+    const e = { largeur: v, redessinee: false, conseil: !!document.querySelector(".td-question .question") };
+    this.__attente = e;
+    window.__toile.realloc.push(e);
+    queueMicrotask(() => { this.__attente = null; });
+  } });
+  const di = CanvasRenderingContext2D.prototype.drawImage;
+  CanvasRenderingContext2D.prototype.drawImage = function () {
+    const c = this.canvas;
+    if (c && c.classList && c.classList.contains("td-canvas")) { c.__dessinee = true; if (c.__attente) c.__attente.redessinee = true; }
+    return di.apply(this, arguments);
+  };
+}
+
 async function nouvellePage(navigateur, w, h, erreurs) {
   const page = await navigateur.newPage({ viewport: { width: w, height: h } });
+  await page.addInitScript(espionToile);
   page.on("pageerror", e => erreurs.push(e.message));
   page.on("console", m => { if (m.type() === "error") erreurs.push(m.text()); });
   await page.goto(URL);
@@ -106,16 +137,29 @@ async function visibilite(page, selecteur) {
 
 async function essaiPortable(navigateur, erreurs) {
   const page = await nouvellePage(navigateur, 1366, 768, erreurs);
-  const res = { carte: [], questions: [] };
-  // carte de campagne : bas du dessin dans la fenêtre, sans alerte puis avec l'alerte d'une attaque
+  const res = { carte: [], questions: [], interface: {} };
+  // carte de campagne : bas du dessin dans la fenêtre, sans alerte puis avec l'alerte d'une attaque ; taille à l'écran
+  // de la plus petite ligne sous un nom (place forte n / n, prise, attaqué par…)
   await page.click("#menu button[data-ecran=jouer]");
   await page.waitForSelector("#ecran-jouer .carte-campagne");
   for (const cas of ["sans alerte", "avec alerte"]) {
-    await page.evaluate(a => { const c = JEU.campagne.etat(); c.rival.attaque = a ? "angleterre" : null; JEU.ui.afficher("jouer"); window.scrollTo(0, 0); }, cas === "avec alerte");
+    await page.evaluate(a => { const c = JEU.campagne.etat(); c.conquises = ["gue", "piemont"]; c.rival.attaque = a ? "angleterre" : null; JEU.ui.afficher("jouer"); window.scrollTo(0, 0); }, cas === "avec alerte");
     await attendre(150);
-    res.carte.push(Object.assign({ cas }, await page.evaluate(() => ({ bas: Math.round(document.querySelector(".carte-svg").getBoundingClientRect().bottom), vue: innerHeight }))));
+    res.carte.push(Object.assign({ cas }, await page.evaluate(() => {
+      const svg = document.querySelector(".carte-svg"), k = svg.getBoundingClientRect().width / 1000;
+      const sous = [...svg.querySelectorAll(".sous-lieu")].map(t => parseFloat(getComputedStyle(t).fontSize) * k);
+      return { bas: Math.round(svg.getBoundingClientRect().bottom), vue: innerHeight, sousEcran: Math.round(Math.min(...sous) * 10) / 10 };
+    })));
   }
-  await page.evaluate(() => { JEU.campagne.etat().rival.attaque = null; JEU.ui.afficher("jouer"); });
+  // tribut du jour : le message s'affiche hors de la carte
+  res.interface.tribut = await page.evaluate(async () => {
+    const c = JEU.campagne.etat(); c.dernierJour = "2000-01-01"; c.rival.attaque = null;
+    JEU.ui.afficher("jouer"); window.scrollTo(0, 0);
+    await new Promise(r => setTimeout(r, 400));
+    const t = document.getElementById("toast"), a = t.getBoundingClientRect(), b = document.querySelector(".carte-svg").getBoundingClientRect();
+    return { visible: t.classList.contains("visible") && /tribut/.test(t.textContent), surCarte: Math.min(a.right, b.right) > Math.max(a.left, b.left) && Math.min(a.bottom, b.bottom) > Math.max(a.top, b.top) };
+  });
+  await page.evaluate(() => { const c = JEU.campagne.etat(); c.conquises = []; c.rival.attaque = null; JEU.ui.afficher("jouer"); });
   // bataille : association longue répondue fausse (la colonne défile pour l'atteindre), panneau d'erreur, puis deux
   // questions répondues justes : chaque fois, le haut doit se voir
   await questionsLongues(page);
@@ -123,6 +167,20 @@ async function essaiPortable(navigateur, erreurs) {
   await page.waitForSelector(".td-question .question");
   await attendre(250);
   res.questions.push(Object.assign({ quoi: "énoncé de l'association" }, await visibilite(page, ".td-question .enonce")));
+  // titre de la bataille et « Quitter (Échap) » visibles (pas cachés sous le bandeau), page défilée
+  res.interface.barre = await page.evaluate(() => {
+    const b = document.getElementById("bouton-quitter"), t = document.querySelector("#ecran-partie .barre-partie h2");
+    const vu = e => { const r = e.getBoundingClientRect(), x = Math.min(r.right - 4, Math.max(r.left + 4, r.left + r.width / 2)), y = r.top + r.height / 2; const h = document.elementFromPoint(x, y); return !!h && (h === e || e.contains(h)); };
+    return { defilement: Math.round(scrollY), quitter: vu(b), titre: vu(t) };
+  });
+  // l'or du bandeau du champ reste lisible quand un cercle de portée passe dessous (vague et revenu s'estompent)
+  res.interface.or = await page.evaluate(async () => {
+    const h = document.querySelector(".td-hud"); h.classList.add("discret");
+    await new Promise(r => setTimeout(r, 300));
+    const o = +getComputedStyle(h.querySelector(".td-or")).opacity * +getComputedStyle(h).opacity, v = +getComputedStyle(h.querySelector(".td-vague")).opacity;
+    h.classList.remove("discret");
+    return { or: o, vague: v };
+  });
   const q = await page.evaluate(() => { const q = JEU.ui.questionCourante; return { type: q.type, reponse: q.reponse }; });
   if (q.type === "association") {
     // réponse fausse : chaque mot avec la définition du suivant
@@ -136,6 +194,11 @@ async function essaiPortable(navigateur, erreurs) {
     await page.waitForSelector(".panneau-erreur");
     await attendre(250);
     res.questions.push(Object.assign({ quoi: "titre du panneau d'erreur" }, await visibilite(page, ".panneau-erreur .verdict")));
+    // la bonne réponse n'y est écrite qu'une fois (pas de nouveau dans l'explication)
+    res.interface.erreurAssociation = await page.evaluate(() => {
+      const q = JEU.ui.questionCourante, t = document.querySelector(".panneau-erreur").textContent;
+      return { fois: Math.max(...q.reponse.map(p => t.split(q.droite[p[1]]).length - 1)), paires: document.querySelectorAll(".panneau-erreur .paires li").length };
+    });
     await page.keyboard.press("Enter");
   } else await repondreJuste(page);
   for (let i = 0; i < 2; i++) {
@@ -144,6 +207,21 @@ async function essaiPortable(navigateur, erreurs) {
     res.questions.push(Object.assign({ quoi: "énoncé de la question " + (i + 2) }, await visibilite(page, ".td-question .enonce")));
     await repondreJuste(page);
   }
+  // deux sceaux coup sur coup : le second remplace le premier
+  res.interface.sceaux = await page.evaluate(async () => {
+    JEU.ui.tampon("Juste", "+12 or"); await new Promise(r => setTimeout(r, 120));
+    JEU.ui.tampon("Coup d'éclat", "+22 or"); await new Promise(r => setTimeout(r, 120));
+    return document.querySelectorAll(".tampon").length;
+  });
+  // fin du conseil : « verrouillé » accordé (Trébuchet, Cavaliers ×2, Tour de siège), puis on quitte : la toile est rendue
+  await page.waitForSelector(".td-pret");
+  res.interface.verrous = await page.evaluate(() => Object.fromEntries([...document.querySelectorAll(".td-bouton:disabled")]
+    .map(b => [b.querySelector(".td-nom").textContent.replace(/^\d/, "").trim(), b.querySelector(".td-cout").textContent])));
+  await page.keyboard.press("Escape");
+  await page.waitForSelector(".confirmation");
+  await page.click(".confirmation .bouton.principal");
+  await page.waitForFunction(() => !JEU.partie);
+  res.interface.toileRendue = await page.evaluate(() => { const c = document.querySelector(".td-canvas"); return !c || c.width === 0; });
   await page.close();
   return res;
 }
@@ -185,9 +263,51 @@ async function tempsReel(navigateur, w, h, erreurs) {
     await page.click(".confirmation .bouton.principal");
     await page.waitForFunction(() => !JEU.partie && JEU.ui.ecranCourant() === "jouer");
   }
+  const toile = await page.evaluate(() => window.__toile);
   await page.close();
   const tri = durees.slice().sort((a, b) => a - b);
-  return { taille: w + " × " + h, mesures: durees.length, mediane: tri[Math.floor(tri.length / 2)], max: tri[tri.length - 1], detail: durees };
+  return { taille: w + " × " + h, mesures: durees.length, mediane: tri[Math.floor(tri.length / 2)], max: tri[tri.length - 1], detail: durees,
+    reallocations: toile.realloc.length, toilesRendues: toile.rendues };
+}
+
+// Toile de bataille en 1920 × 1080 : le conseil de guerre ne la réalloue pas ; une fenêtre redimensionnée la réalloue
+// et elle est redessinée dans la même tâche. Repli : sans terrain 3D (images retirées de sprites.js), la route, les
+// ponts et le gué sont dessinés ; avec lui, ils ne le sont pas (déjà dans l'image).
+async function essaiToile(navigateur, erreurs) {
+  const page = await nouvellePage(navigateur, 1920, 1080, erreurs);
+  const res = {};
+  await page.evaluate(() => JEU.bataille.lancer("gue"));
+  await page.waitForSelector(".td-question .question");
+  res.decor3D = await page.evaluate(() => JEU.bataille.decor);
+  for (let i = 0; i < 3; i++) {
+    await page.waitForFunction(() => document.querySelector(".td-question .question"));
+    await attendre(300);
+    await repondreJuste(page);
+  }
+  await page.waitForSelector(".td-pret");
+  await attendre(400);
+  res.conseil = await page.evaluate(() => window.__toile.realloc.length);
+  // fenêtre réduite puis agrandie : la toile est réallouée (au moins en grandissant) et redessinée aussitôt
+  await page.setViewportSize({ width: 1366, height: 768 });
+  await attendre(600);
+  await page.setViewportSize({ width: 1920, height: 1080 });
+  await attendre(600);
+  res.redimension = await page.evaluate(() => window.__toile.realloc.map(e => e.redessinee));
+  await page.keyboard.press("Escape");
+  await page.waitForSelector(".confirmation");
+  await page.click(".confirmation .bouton.principal");
+  await page.waitForFunction(() => !JEU.partie);
+  res.repli = await page.evaluate(async () => {
+    const sauve = {};
+    ["terrain-gue", "terrain-gue-sud"].forEach(k => { sauve[k] = JEU.SPRITES[k]; delete JEU.SPRITES[k]; });
+    JEU.bataille.lancer("gue");
+    while (!document.querySelector(".td-question .question")) await new Promise(r => setTimeout(r, 50));
+    const d = JEU.bataille.decor;
+    Object.assign(JEU.SPRITES, sauve);
+    return d;
+  });
+  await page.close();
+  return res;
 }
 
 (async () => {
@@ -312,7 +432,18 @@ async function tempsReel(navigateur, w, h, erreurs) {
       for (let i = 0; i < t.length; i++) for (let j = i + 1; j < t.length; j++) {
         const a = t[i], b = t[j];
         if (a.n !== b.n && Math.min(a.x1, b.x1) > Math.max(a.x0, b.x0) && Math.min(a.y1, b.y1) > Math.max(a.y0, b.y0)) chocs.push(conq.length + " prises : « " + a.t + " » touche « " + b.t + " »");
+        // deux étiquettes de lieux différents l'une au-dessus de l'autre : 8 px d'écart au moins (boîtes entières)
+        if (a.n !== b.n && Math.min(a.x1, b.x1) > Math.max(a.x0, b.x0) && Math.max(a.y0, b.y0) - 2 - Math.min(a.y1, b.y1) - 2 < 8) chocs.push(conq.length + " prises : « " + a.t + " » à moins de 8 px de « " + b.t + " »");
+        // côte à côte sur la même ligne : 16 px d'écart au moins (sinon les deux noms se lisent comme un seul)
+        if (a.n !== b.n && Math.min(a.y1, b.y1) > Math.max(a.y0, b.y0) && Math.max(a.x0, b.x0) - Math.min(a.x1, b.x1) < 16) chocs.push(conq.length + " prises : « " + a.t + " » dans le prolongement de « " + b.t + " »");
       }
+      // chaque nom est plus près de son lieu (milieu du bourg, 24 px au-dessus du pied) que de tout autre
+      const lieux = [...document.querySelectorAll(".carte-svg .noeud")].map(g => ({ n: g.dataset.lieu, x: +g.dataset.x, y: +g.dataset.y - 24 }));
+      [...document.querySelectorAll(".carte-svg text.nom-lieu")].forEach(e => {
+        const bb = e.getBBox(), cx = bb.x + bb.width / 2, cy = bb.y + bb.height / 2, n = e.closest(".noeud").dataset.lieu;
+        const d = l => Math.hypot(cx - l.x, cy - l.y), propre = d(lieux.find(l => l.n === n));
+        lieux.forEach(l => { if (l.n !== n && d(l) <= propre) chocs.push(conq.length + " prises : « " + e.textContent + " » est plus près de « " + l.n + " » que de son lieu"); });
+      });
     });
     c.conquises = avant;
     JEU.ui.afficher("jouer");
@@ -361,6 +492,8 @@ async function tempsReel(navigateur, w, h, erreurs) {
   // 8. temps réel (Event Timing) : de la touche qui répond à l'image peinte de la question suivante
   bilan.tempsReel = [];
   for (const [w, h] of [[1366, 768], [1920, 1080]]) bilan.tempsReel.push(await tempsReel(navigateur, w, h, erreurs));
+  // 9. toile de bataille : pas de réallocation pendant le conseil, redessin immédiat, repli du terrain
+  bilan.toile = await essaiToile(navigateur, erreurs);
   bilan.erreursJS = erreurs;
   console.log(JSON.stringify(bilan, null, 1));
   await navigateur.close();
@@ -382,7 +515,24 @@ async function tempsReel(navigateur, w, h, erreurs) {
   bilan.tempsReel.forEach(m => {
     if (m.mesures < 6) echecs.push("temps réel " + m.taille + " : seulement " + m.mesures + " mesures");
     if (m.max > 100) echecs.push("temps réel " + m.taille + " : " + m.max + " ms entre une réponse et la question suivante peinte (plus de 100 ms)");
+    if (m.reallocations) echecs.push("temps réel " + m.taille + " : toile de bataille réallouée " + m.reallocations + " fois sans changement de taille de la fenêtre");
+    if (!m.toilesRendues) echecs.push("temps réel " + m.taille + " : la toile de bataille n'est pas rendue quand on quitte");
   });
+  const P = bilan.portable, I = P.interface;
+  P.carte.forEach(m => { if (!(m.sousEcran >= 14)) echecs.push("carte de campagne (" + m.cas + ") : ligne sous un nom à " + m.sousEcran + " px à l'écran (14 au moins)"); });
+  if (!I.tribut.visible || I.tribut.surCarte) echecs.push("carte de campagne : le tribut du jour " + (I.tribut.visible ? "cache la carte" : "ne s'affiche pas"));
+  if (!I.barre.quitter || !I.barre.titre) echecs.push("bataille à 1366 × 768 : titre ou « Quitter » caché (" + JSON.stringify(I.barre) + ")");
+  if (!(I.or.or > 0.99 && I.or.vague < 0.5)) echecs.push("bandeau du champ : l'or s'estompe sous un cercle de portée (" + JSON.stringify(I.or) + ")");
+  if (I.erreurAssociation && (I.erreurAssociation.fois !== 1 || !I.erreurAssociation.paires)) echecs.push("panneau d'erreur d'une association : bonne réponse écrite " + I.erreurAssociation.fois + " fois");
+  if (I.sceaux > 1) echecs.push("deux sceaux affichés l'un sur l'autre");
+  const verrous = { "Baliste": "verrouillée", "Trébuchet": "verrouillé", "Cavaliers ×2": "verrouillés", "Tour de siège": "verrouillée" };
+  Object.keys(verrous).forEach(k => { if (I.verrous[k] !== verrous[k]) echecs.push("« " + k + " » : « " + I.verrous[k] + " » au lieu de « " + verrous[k] + " »"); });
+  if (!I.toileRendue) echecs.push("la toile de la dernière bataille n'est pas rendue après l'avoir quittée");
+  const T = bilan.toile;
+  if (T.conseil) echecs.push("toile de bataille réallouée " + T.conseil + " fois pendant le conseil de guerre (1920 × 1080)");
+  if (!T.redimension.length || T.redimension.some(x => !x)) echecs.push("toile réallouée sans être redessinée dans la même tâche (" + JSON.stringify(T.redimension) + ")");
+  if (!T.decor3D || T.decor3D.route) echecs.push("terrain 3D : la route est dessinée par-dessus l'image (" + JSON.stringify(T.decor3D) + ")");
+  if (!T.repli || !T.repli.route || T.repli.terrain !== "terrain-peint") echecs.push("repli sans terrain 3D : route, ponts et gué non dessinés (" + JSON.stringify(T.repli) + ")");
   echecs.forEach(m => console.log("ÉCHEC  " + m));
   process.exit(echecs.length ? 1 : 0);
 })().catch(e => { console.log("ÉCHEC  " + e.message); process.exit(1); });

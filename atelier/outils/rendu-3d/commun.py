@@ -1776,6 +1776,8 @@ ENTETE_MANIFESTE = (
     "// le sprite, à dessiner dans une passe « sol », sous tous les sprites (après le terrain).\n"
     "// face : sens d'une bande de troupe (\"gauche\" pour les camps rivaux, rendus tournés vers la gauche ; absent : vers la\n"
     "// droite). Le jeu ne retourne une bande que si la troupe marche dans l'autre sens.\n"
+    "// fumees (places fortes) : [[x, y], ...] en px logiques depuis le coin haut-gauche de l'image, foyers d'où le jeu\n"
+    "// fait monter la fumée animée d'une place abîmée ou en ruine (aucune fumée n'est cuite dans les images ; vide si intacte).\n"
 )
 
 

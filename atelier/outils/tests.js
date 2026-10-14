@@ -242,6 +242,25 @@ for (let i = 0; i < 50; i++) { const t = J.recit.cadre({ matiere: "histoire" }, 
 verifier("Défense contre l'Empire omeyyade : le récit ne parle jamais des Anglais", cadresOk);
 J.campagne.etat().rival.attaque = false;
 
+// bataille : portée des tours adverses bien distincte de la tienne (crème #fbe9bd), écart de couleur CIE76 > 25
+function lab(hex) {
+  const c = [1, 3, 5].map(i => parseInt(hex.slice(i, i + 2), 16) / 255).map(u => u <= 0.04045 ? u / 12.92 : Math.pow((u + 0.055) / 1.055, 2.4));
+  const X = (0.4124 * c[0] + 0.3576 * c[1] + 0.1805 * c[2]) / 0.95047, Y = 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2], Z = (0.0193 * c[0] + 0.1192 * c[1] + 0.9505 * c[2]) / 1.08883;
+  const f = t => t > 216 / 24389 ? Math.cbrt(t) : (24389 / 27 * t + 16) / 116;
+  return [116 * f(Y) - 16, 500 * (f(X) - f(Y)), 200 * (f(Y) - f(Z))];
+}
+const deltaE = (a, b) => { const p = lab(a), q = lab(b); return Math.hypot(p[0] - q[0], p[1] - q[1], p[2] - q[2]); };
+const ecartsPortee = J.campagne.FRONTS.map(f => { const cp = J.campagne.CAMPS[f.camp]; return { camp: f.camp, portee: cp.portee, dE: cp.portee ? Math.round(deltaE(cp.portee, "#fbe9bd")) : 0 }; });
+verifier("Portée des tours adverses : couleur propre à chaque camp, loin du crème de tes tours (ΔE > 25)", ecartsPortee.every(e => /^#[0-9a-f]{6}$/i.test(e.portee || "") && e.dE > 25), ecartsPortee);
+verifier("Portée des tours adverses : loin aussi de l'herbe (vert #5f7a3a) et du sable (#c8b27a) des terrains (ΔE > 25)", ecartsPortee.every(e => deltaE(e.portee, "#5f7a3a") > 25 && deltaE(e.portee, "#c8b27a") > 25), ecartsPortee);
+
+// bataille : « verrouillé » accordé à chaque tour et chaque troupe
+const JB = (() => { const ctx = contexte(); vm.runInContext(fs.readFileSync(path.join(RACINE, "jeu", "js", "bataille.js"), "utf8"), ctx, { filename: "bataille.js" }); return ctx.JEU; })();
+const accords = { archers: "verrouillée", piquiers: "verrouillée", baliste: "verrouillée", catapulte: "verrouillé", fantassins: "verrouillés", cavaliers: "verrouillés", belier: "verrouillée" };
+verifier("Verrous accordés : le Trébuchet verrouillé, les Cavaliers verrouillés, la Tour de siège verrouillée",
+  Object.keys(accords).every(k => JB.bataille.verrouille(k) === accords[k]) && Object.keys(JB.batailleMoteur.TOURS).concat(Object.keys(JB.batailleMoteur.TROUPES)).every(k => k in accords),
+  Object.keys(accords).map(k => k + " : " + JB.bataille.verrouille(k)));
+
 // une séquence d'anglais « à revoir » met ses éléments en priorité
 J.donnees.anglais["anglais-essai"] = { id: "anglais-essai", ordre: 99, matiere: "anglais", vocabulaire: [{ id: "ang-v1" }], structures: [{ id: "ang-s1" }], phrases: [{ id: "ang-p1" }] };
 J.donnees.suivi = { cours: { "anglais-essai": { etat: "a-revoir" } } };

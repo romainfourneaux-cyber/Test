@@ -9,7 +9,8 @@ Sorties (jeu/assets/images/campagne/) :
   lieu-omeyyades.png (80 × 80 px logiques, rendu 160 × 160) : bourgs fortifiés vus de trois quarts, sur une aire de
   terre claire à peine posée (alpha 0,5, bord fondu, sans trait ni ombre ajoutée), bannière deux fois plus grande
   au-dessus des toits ; lieu-brume.png (180 × 100 px logiques) : une large nappe de brume aux bords effilochés, sans
-  silhouette ni disque (lieu pas encore ouvert ; dessinée sans Blender ; le jeu désature aussi le terrain dessous).
+  silhouette ni disque (lieu pas encore ouvert ; dessinée sans Blender, bruit en bouillonnements à pleine résolution,
+  cœur opaque à 90 % ; le jeu désature aussi le terrain dessous).
   Ancrage des lieux : bas-centre moins 16 px.
 
 Relief (même soleil que les champs de bataille : nord-ouest, 45°, versants nord-ouest éclairés, sud-est à l'ombre) :
@@ -25,7 +26,9 @@ Champs : lanières rectangulaires (blé, labour, pré) groupées en blocs d'orie
 Oliveraie : quatre parcelles aux rangées d'orientations différentes, limites irrégulières sans chemin tracé (pas de 2,5
 diamètres de couronne, décalage de ± 20 % et couronnes de taille ± 30 %), couronnes gris-vert, terre ocre entre les rangs.
 Plaine du sud gris-olive. Escarpement : relief exagéré × 1,4 (au-delà, la photo de roche s'étirait en traînées), photos
-de roche, d'éboulis et de versant en projection triplanaire, maillage plus fin, extrémité ouest en pente douce.
+de roche, d'éboulis et de versant en projection triplanaire, maillage plus fin, extrémité ouest en pente douce ;
+épaisseur de 40 à 100 % le long de la crête, pied propre à chaque versant, éperons perpendiculaires et vallons, un col
+franc vers x = 470, extrémité est défaite en collines (plus de bande d'épaisseur constante aux bords parallèles).
 Positions des lieux relevées dans jeu/js/ecran-campagne.js (lecture seule).
 """
 import math
@@ -159,25 +162,72 @@ def masques(graine=17):
     # ---- chaîne principale : crête continue, contreforts perpendiculaires, vallées
     # la crête est lissée (Chaikin, 5 passes) : sur une ligne brisée, l'abscisse curviligne saute de quelques px à
     # chaque sommet et dessinait des coutures verticales dans le relief
-    dc, latc, absc, _ = T.champ_distance(chaikin(CRETE, 5), W, H, 140)
+    dc, latc, absc, _ = T.champ_distance(chaikin(CRETE, 5), W, H, 170)
     h_crete = 3.0 + 0.8 * T.bruit1d(absc, 90.0, graine + 5)
     # contreforts : bruit « en crêtes » étiré en travers de la chaîne (lent en travers, plus rapide le long)
     # (moins étirés qu'avant : étirés de 80 px en travers, ils dessinaient sur la face sud des traînées verticales)
     contreforts = 1 - np.abs(2 * bruit_valeur(absc / 40.0, latc / 46.0 + 50, graine + 6, octaves=2) - 1)
     vallees = bruit_valeur(absc / 70.0, latc / 120.0 + 20, graine + 7, octaves=2)
-    # l'escarpement s'amincit et s'abaisse en pente douce vers l'ouest (il ne s'arrête plus net vers x = 200)
+    # Une chaîne qui se lit comme du relief, et non comme un mur d'épaisseur constante aux bords parallèles :
+    # - épaisseur qui varie de 40 à 100 % le long de la crête (bruit lent recalé), pied propre à chaque versant ;
+    # - éperons : avancées perpendiculaires de 25 à 70 px, plus basses que la crête, qui mordent sur la plaine ;
+    # - vallons entre les éperons, et un col franc (ensellement de 80 %) vers x = 470 ;
+    # - extrémité ouest en pente douce, extrémité est qui s'abaisse et se défait en collines.
     debut = T.lisse01(110, 330, x)
-    largeur = (44 + 20 * n1 + 12 * n4 + 10 * (contreforts - 0.5)) * (0.45 + 0.55 * debut)  # pied irrégulier (avancées, anses)
+    fin = T.lisse01(1010, 790, x)
+    s_c = np.linspace(0.0, float(absc.max()) + 1.0, 900)
+
+    def lent(periode, g):
+        b = T.bruit1d(s_c, periode, g)
+        b = (b - b.min()) / (b.max() - b.min() + 1e-6)
+        return np.interp(absc, s_c, b).astype(np.float32)
+    epais = 0.4 + 0.6 * lent(210.0, graine + 40) ** 0.8
+    # la crête elle-même serpente (± 14 px) : plus d'arête rectiligne sur 700 px
+    loin = dc >= 169.5                                     # hors du voisinage calculé : latc y vaut 0
+    latc = latc - 28.0 * (lent(95.0, graine + 45) - 0.5)
+    dc = np.where(loin, dc, np.abs(latc)).astype(np.float32)
+    sud_c = T.lisse01(-8.0, 8.0, latc)                     # versant sud (y vers le bas), fondu sur la crête
+    pied = (0.7 + 0.6 * lent(60.0, graine + 42)) * sud_c + (0.7 + 0.6 * lent(60.0, graine + 41)) * (1 - sud_c)
+    largeur = (50 + 8 * n1 + 6 * n4 + 6 * (contreforts - 0.5)) * epais * pied * (0.45 + 0.55 * debut) * (0.5 + 0.5 * fin)
     # profil en toit : arête de crête nette, deux versants francs (l'un au soleil, l'autre à l'ombre)
     profil = np.clip(1 - dc / (largeur * 1.5), 0, 1) ** 1.25
+    # éperons de part et d'autre (alternés, positions et longueurs tirées au hasard)
+    rng_e = np.random.default_rng(graine + 43)
+    eperons = np.zeros_like(profil)
+    a_max = float(absc.max())
+    for k in range(16):
+        a_k = 30 + (a_max - 60) * (k + rng_e.uniform(0.1, 0.9)) / 16
+        cote = 1.0 if (k + int(rng_e.integers(0, 2))) % 2 else -1.0
+        L_k, w_k = rng_e.uniform(35, 80), rng_e.uniform(18, 28)
+        biais = rng_e.uniform(-0.35, 0.35)                   # éperon un peu oblique
+        dehors = cote * latc - 0.5 * largeur * 1.5           # distance au-delà du milieu du versant, de ce côté
+        bout = np.clip(1 - dehors / L_k, 0, 1) * T.lisse01(0.0, 6.0, cote * latc)
+        # coin arrondi : large à sa racine, effilé vers sa pointe
+        le_long = np.exp(-((absc - a_k - biais * np.maximum(dehors, 0)) / (w_k * (0.3 + 0.8 * bout) + 1e-3)) ** 2)
+        eperons = np.maximum(eperons, le_long * bout ** 1.3 * rng_e.uniform(0.5, 0.72))
+    profil = np.maximum(profil, eperons)
     profil = profil * T.lisse01(0.0, 0.25, profil) ** 0.5                 # pied adouci (pas d'arête au bas des versants)
-    montagne = profil * debut
-    relief = h_crete * profil * (0.7 + 0.35 * contreforts ** 1.5) * (0.7 + 0.3 * vallees) * debut
+    # vallons entre les éperons (ils entaillent les versants, pas la crête) et un col franc
+    entaille = np.ones_like(profil)
+    for k in range(9):
+        v_k = 40 + (a_max - 80) * (k + rng_e.uniform(0.2, 0.8)) / 9
+        flanc = T.lisse01(0.12, 0.55, dc / (largeur * 1.5 + 1e-3))
+        entaille *= 1 - 0.42 * np.exp(-((absc - v_k) / 15.0) ** 2) * flanc
+    x_col = 470.0
+    i_col = int(np.argmin(np.abs(np.array(chaikin(CRETE, 5))[:, 0] - x_col)))
+    a_col = float(np.concatenate([[0], np.cumsum(np.hypot(*np.diff(np.array(chaikin(CRETE, 5)), axis=0).T))])[i_col])
+    col_franc = 1 - 0.8 * np.exp(-((absc - a_col) / 20.0) ** 2)
+    # extrémité est : des collines détachées (bruit en taches) plutôt qu'une chaîne qui s'arrête
+    collines = T.lisse01(0.35, 0.62, bruit_valeur(x / 30.0 + 17, y / 30.0 + 4, graine + 44, octaves=2))
+    defait = fin + (1 - fin) * collines
+    montagne = profil * debut * entaille * (0.4 + 0.6 * col_franc) * defait
+    relief = h_crete * profil * (0.7 + 0.35 * contreforts ** 1.5) * (0.7 + 0.3 * vallees) * debut * entaille * col_franc \
+        * (0.45 + 0.55 * fin) * defait
     # détail « multifractal à crêtes » : arêtes secondaires et ravines d'orientations variées (le relief se lit en
     # facettes claires et sombres, comme sur une carte de campagne, et non comme une bande lisse)
     r1 = 1 - np.abs(2 * bruit_valeur(x / 28.0 + 11, y / 28.0 + 5, graine + 9, octaves=2) - 1)
     r2 = 1 - np.abs(2 * bruit_valeur(x / 11.0 + 3, y / 11.0 + 9, graine + 10, octaves=2) - 1)
-    relief += (1.3 * r1 ** 2 + 0.45 * r2 ** 2 * r1) * profil ** 0.7 * debut
+    relief += (1.3 * r1 ** 2 + 0.45 * r2 ** 2 * r1) * profil ** 0.7 * debut * entaille * col_franc * defait
     # ---- massif secondaire sous le col (front ouest), contreforts du piémont (front sud, côté montagnes)
     for nom, amp, rx, ry, dy in (("col", 1.9, 70, 55, 8), ("piemont", 1.1, 75, 45, -30)):
         px, py = pos[nom]
@@ -242,6 +292,13 @@ def masques(graine=17):
     oliviers *= T.lisse01(4, 12, proche_eau) * (1 - T.lisse01(0.25, 0.5, montagne))
     champs *= (1 - T.lisse01(0.05, 0.3, oliviers))
     foret *= (1 - T.lisse01(0.05, 0.3, oliviers))
+    # abords des lieux : ni forêt ni sous-bois sombre sous le bourg et son aire de terre (environ 70 × 40 px) : le bourg
+    # se détache toujours de ce qui l'entoure (contrôle de verifier.py, écart de L* ≥ 15)
+    abords = np.ones((H, W), dtype=np.float32)
+    for nom, (px, py) in pos.items():
+        d_ = np.hypot((x - px) / 38.0, (y - py + 8) / 24.0) + 0.22 * n4 + 0.1 * n2     # lisière irrégulière
+        abords = np.minimum(abords, T.lisse01(1.0, 1.4, d_))
+    foret *= abords
     # alpage du col : pâturage d'herbe claire dans l'ensellure, entre les hauteurs rocheuses (le passage se lit)
     cx_, cy_ = pos["col"]
     alpage = T.lisse01(46, 28, np.hypot((x - cx_) / 1.2, y - (cy_ - 18)) + 6 * n2)
@@ -252,7 +309,7 @@ def masques(graine=17):
     return {"h": h, "eau": eau, "prof": prof, "berge": berge, "sud": sud, "foret": foret, "champs": champs,
             "oliviers": oliviers, "roche": roche, "eboulis": eboulis, "variation": np.clip(0.5 + 0.7 * n4, 0, 1),
             "versant": T.lisse01(0.1, 0.4, montagne + 0.08 * n2),
-            "montagne": montagne, "proche_eau": proche_eau, "cours": cours, "alpage": alpage}
+            "montagne": montagne, "proche_eau": proche_eau, "cours": cours, "alpage": alpage, "abords": abords}
 
 
 def parcelles(mq, graine=23):
@@ -498,6 +555,8 @@ def arbres(mq, h, nx, ny, oliviers_pts, pas=4.3, graine=5):
                 if not (0 <= qx < LARG and 0 <= qy < HAUT):
                     continue
                 sd = float(sudm[min(H - 1, int(qy * s)), min(W - 1, int(qx * s))])
+                if float(mq["abords"][min(H - 1, int(qy * s)), min(W - 1, int(qx * s))]) < 0.5:
+                    continue                    # pas d'arbre sous un bourg
                 poser(feuillus, "rive%d" % n, qx, qy, rnd.uniform(0.15, 0.26), sd)
                 n += 1
     C.journal("carte : %d arbres et oliviers" % n)
@@ -731,35 +790,48 @@ BRUME = (180, 100, 90, 48, 16, 46, -32)
 
 
 def nappe_brume(W, H, cx, cy, graine=41):
-    """Lieu pas encore ouvert : une large nappe de brume (environ 170 × 90 px logiques), irrégulière, aux bords
-    effilochés en filaments étirés par le vent, sans silhouette ni disque : un voile de brouillard de guerre posé sur
-    la carte (le jeu désature en plus le terrain dessous). Volume suggéré par la même lumière que le reste : haut et
-    gauche plus clairs, dessous un peu gris. (cx, cy) : centre de la nappe, en px de l'image."""
+    """Lieu pas encore ouvert : une large nappe de brume (environ 170 × 90 px logiques), irrégulière, sans silhouette ni
+    disque : un voile de brouillard de guerre posé sur la carte (le jeu désature en plus le terrain dessous, masqué par
+    cette même nappe). Bruit fractal « en bouillonnements » calculé à la pleine résolution de l'image, isotrope (à peine
+    étiré par le vent, 1,3 fois) : plus de filaments de bruit basse résolution étirés quatre fois en largeur ni de gros
+    flou gaussien, qui donnaient des traînées en bandes. Opacité de 0,55 à 0,9, bords effilochés. Volume suggéré par
+    la même lumière que le reste : bouillons hauts et gauches plus clairs, creux et dessous gris. (cx, cy) : centre de la
+    nappe, en px de l'image."""
     yy, xx = np.mgrid[0:H, 0:W].astype(np.float32)
     rng = np.random.default_rng(graine)
     dens = np.zeros((H, W), dtype=np.float32)
-    # une vingtaine de bouffées étirées en largeur, en grappe irrégulière
-    for k in range(22):
+    # une vingtaine de bouffées un peu plus larges que hautes, en grappe irrégulière
+    for k in range(30):
         bx = cx + rng.normal(0, 0.2) * W
         by = cy + rng.normal(0, 0.09) * H
-        rx = rng.uniform(0.09, 0.2) * W
-        ry = rx * rng.uniform(0.35, 0.55)
-        dens = np.maximum(dens, rng.uniform(0.7, 1.0) * np.exp(-(((xx - bx) / rx) ** 2 + ((yy - by) / ry) ** 2)))
-    # filaments : bruit étiré en largeur (le vent), qui ronge les bords
-    n_gros = T.bruit(W, H, 40, graine + 2, octaves=4)
-    fil = np.array(Image.fromarray(T.bruit(W // 4, H, 6, graine + 3, octaves=3).astype(np.float32), "F").resize((W, H), Image.BICUBIC))
-    dens = dens * (0.8 + 0.35 * n_gros) + 0.28 * fil * T.lisse01(0.08, 0.5, dens)
-    dens = np.array(Image.fromarray(np.clip(dens * 255, 0, 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(1.6)),
-                    dtype=np.float32) / 255
-    a = T.lisse01(0.12, 0.7, dens) * 0.82
+        rx = rng.uniform(0.06, 0.16) * W
+        ry = rx * rng.uniform(0.4, 0.6)
+        dens = np.maximum(dens, rng.uniform(0.6, 1.0) * np.exp(-(((xx - bx) / rx) ** 2 + ((yy - by) / ry) ** 2)))
+
+    def bouillons(echelle, g, octaves):
+        """Bruit « en bouillonnements » (1 - |bruit|, sommé sur les octaves), 0..1, étiré de 1,3 en largeur seulement."""
+        b = T.bruit(int(W / 1.3) + 2, H, echelle, g, octaves=octaves)
+        b = np.array(Image.fromarray(b.astype(np.float32), "F").resize((W, H), Image.BICUBIC), dtype=np.float32)
+        return np.clip(1 - np.abs(b) * 1.6, 0, 1)
+    gros = bouillons(30, graine + 2, 3)
+    fin = bouillons(13, graine + 3, 2)
+    tres_fin = T.bruit(W, H, 3, graine + 4, octaves=2)
+    # bord rongé par le bruit : l'intérieur reste plein, le pourtour s'effiloche en bouillons nets
+    d = dens * (0.5 + 0.6 * gros) + 0.16 * (fin - 0.5) + 0.05 * tres_fin
+    # opacité inégale (0,55 à 0,9) : des voiles plus minces laissent deviner le terrain, sans trous francs
+    a = T.lisse01(0.18, 0.62, d) * np.clip(0.52 + 0.42 * gros + 0.06 * fin, 0, 0.9)
+    a = np.array(Image.fromarray((a * 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(1.0)), dtype=np.float32) / 255
     marge = np.minimum(np.minimum(xx, W - 1 - xx), np.minimum(yy, H - 1 - yy))
-    a *= T.lisse01(2, 14, marge)
-    # lumière du nord-ouest : bords hauts et gauches plus clairs, dessous gris
-    flou = np.array(Image.fromarray((dens * 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(6)), dtype=np.float32) / 255
-    dy_, dx_ = np.gradient(flou)
-    lum = np.clip(0.55 - 10.0 * (dx_ + dy_), 0, 1)
-    clair, ombre = np.array(C.rgb8("#f1eee4"), dtype=np.float32), np.array(C.rgb8("#bdbab0"), dtype=np.float32)
-    t = np.clip(0.3 + 0.55 * lum + 0.15 * n_gros, 0, 1)[..., None]
+    a *= T.lisse01(2, 16, marge)
+    # lumière du nord-ouest : chaque bouillon est éclairé en haut à gauche (gradient du bruit fin et de la masse)
+    masse = np.array(Image.fromarray((np.clip(d, 0, 1) * 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(5)),
+                     dtype=np.float32) / 255
+    relief = np.array(Image.fromarray((np.clip(0.6 * masse + 0.3 * gros + 0.1 * fin, 0, 1) * 255).astype(np.uint8))
+                      .filter(ImageFilter.GaussianBlur(1.5)), dtype=np.float32) / 255
+    gy_, gx_ = np.gradient(relief)
+    lum = np.clip(0.5 - 16.0 * (gx_ + gy_), 0, 1)
+    clair, ombre = np.array(C.rgb8("#efece3"), dtype=np.float32), np.array(C.rgb8("#a29f96"), dtype=np.float32)
+    t = np.clip(0.1 + 0.7 * lum + 0.2 * gros, 0, 1)[..., None]
     rgb = ombre * (1 - t) + clair * t
     return Image.fromarray(np.dstack([np.clip(rgb, 0, 235), a * 255]).astype(np.uint8), "RGBA")
 

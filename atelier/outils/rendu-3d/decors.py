@@ -14,7 +14,8 @@ Variantes « -sud » (front de l'Empire omeyyade) : herbe jaunie, sol ocre, pist
 chênes verts, pins et cyprès au lieu des chênes et des hêtres ; oliviers en rangs (Oliveraies), rochers et maquis
 (Piémont), fleuve large de 40 px (Grand Fleuve).
 
-Les modèles faits ici (moulin, pins) sont modélisés par programme (CC0) ; les autres viennent de Poly Haven (CC0).
+Les modèles faits ici (moulin, pins et sapins, cyprès) sont modélisés par programme (CC0) ; les autres viennent de Poly
+Haven (CC0).
 """
 import math
 import random
@@ -23,6 +24,7 @@ import numpy as np
 from PIL import Image, ImageDraw, ImageFilter
 
 import commun as C
+from mathutils import Vector
 
 LARG, HAUT = 1000, 660
 
@@ -276,7 +278,9 @@ def construire_moulin(m, climat, z_sol):
 
 
 def mat_aiguilles(nom, teinte, valeur=1.0):
-    """Feuillage de conifère : vert sombre bleuté, grain d'aiguilles (bruit fin en relief), touffes plus claires."""
+    """Feuillage de conifère : vert sombre bleuté, grain d'aiguilles (bruit fin en relief), touffes plus claires. La
+    couleur est multipliée par l'attribut « clarte » des sommets (cœur sombre, bouts des branches et haut plus clairs)
+    quand le maillage en porte un."""
     m, nt, p = C.nouveau_materiau(nom)
     N, Lk = nt.nodes.new, nt.links.new
     tc = N("ShaderNodeTexCoord")
@@ -286,11 +290,20 @@ def mat_aiguilles(nom, teinte, valeur=1.0):
     Lk(tc.outputs["Object"], nz.inputs["Vector"])
     ramp = N("ShaderNodeValToRGB")
     c0 = C.couleur(teinte)
-    ramp.color_ramp.elements[0].color = tuple(min(1, v * 0.55 * valeur) for v in c0[:3]) + (1,)
-    ramp.color_ramp.elements[1].color = tuple(min(1, v * 1.5 * valeur) for v in c0[:3]) + (1,)
+    ramp.color_ramp.elements[0].color = tuple(min(1, v * 0.85 * valeur) for v in c0[:3]) + (1,)
+    ramp.color_ramp.elements[1].color = tuple(min(1, v * 1.9 * valeur) for v in c0[:3]) + (1,)
     Lk(nz.outputs["Factor"], ramp.inputs["Factor"])
-    Lk(ramp.outputs["Color"], p.inputs["Base Color"])
-    p.inputs["Roughness"].default_value = 0.8
+    attr = N("ShaderNodeAttribute")
+    attr.attribute_name = "clarte"
+    mx = N("ShaderNodeMix")
+    mx.data_type = "RGBA"
+    mx.blend_type = "MULTIPLY"
+    C._entree(mx, "Factor", "VALUE").default_value = 1.0
+    Lk(ramp.outputs["Color"], C._entree(mx, "A", "RGBA"))
+    Lk(attr.outputs["Color"], C._entree(mx, "B", "RGBA"))
+    Lk(C._sortie(mx, "RGBA"), p.inputs["Base Color"])
+    p.inputs["Roughness"].default_value = 0.85
+    p.inputs["Specular IOR Level"].default_value = 0.25
     fin = N("ShaderNodeTexNoise")
     fin.inputs["Scale"].default_value = 60.0
     fin.inputs["Detail"].default_value = 4.0
@@ -303,11 +316,15 @@ def mat_aiguilles(nom, teinte, valeur=1.0):
     return m
 
 
-def collection_pin(nom, teinte="#2b3a26", graine=3, hauteur=8.5, rayon=2.0, etages=9):
-    """Pin (ou sapin) de montagne modélisé ici : tronc et étages de branches en étoile, pointes retombantes, cime
-    pointue. Vu de dessus : rosette sombre ; son ombre portée dessine le cône."""
+def collection_pin(nom, teinte="#2b3a26", graine=3, hauteur=8.5, rayon=2.0, etages=16):
+    """Conifère de montagne (sapin, pin) modélisé ici (CC0) : tronc, cœur conique plein et bosselé, 16 étages de
+    branches courtes et denses, chacune faite de trois touffes d'aiguilles bosselées qui retombent un peu au bout, étages
+    décalés de l'angle d'or (aucun couloir vide d'un étage à l'autre), flèche fine au sommet. Vu de dessus : une rosette
+    sombre et ronde, à bord festonné, plus claire au bout des branches (attribut « clarte » lu par la matière), et non
+    plus une étoile de lames ; son ombre portée dessine le cône."""
     import bpy
     import bmesh
+    from mathutils import Matrix, noise
     col = bpy.data.collections.new(nom)
     rnd = random.Random(graine)
     ecorce = C.mat_simple(nom + "_ecorce", "#4b3a2a", rugosite=0.9)
@@ -317,28 +334,127 @@ def collection_pin(nom, teinte="#2b3a26", graine=3, hauteur=8.5, rayon=2.0, etag
         c.objects.unlink(tronc)
     col.objects.link(tronc)
     bm = bmesh.new()
-    h0 = hauteur * 0.2
+    clarte = bm.loops.layers.color.new("clarte")
+    h0 = hauteur * 0.16
+
+    def touffe(cx, cy, cz, r, ax, etire, plat, lum):
+        """Une touffe : icosphère bosselée, étirée le long de la branche (angle ax), aplatie."""
+        res = bmesh.ops.create_icosphere(bm, subdivisions=2 if r > 0.32 else 1, radius=r)
+        vs = res["verts"]
+        dec = Vector((rnd.uniform(0, 80), rnd.uniform(0, 80), rnd.uniform(0, 80)))
+        ca, sa = math.cos(ax), math.sin(ax)
+        for v in vs:
+            x, y, z = v.co
+            x, y, z = x * etire, y, z * plat
+            v.co = Vector((cx + x * ca - y * sa, cy + x * sa + y * ca, cz + z))
+            v.co += (v.co - Vector((cx, cy, cz))) * 0.2 * noise.noise(v.co * (2.4 / max(r, 0.1)) + dec)
+        faces = {f for v in vs for f in v.link_faces}
+        for f in faces:
+            f.smooth = True
+            for lp in f.loops:
+                k = lum * rnd.uniform(0.92, 1.08)
+                lp[clarte] = (k, k, k, 1.0)
+
+    # cœur conique plein (pas de trou au milieu de la rosette)
+    res = bmesh.ops.create_cone(bm, cap_ends=True, cap_tris=True, segments=14, radius1=rayon * 0.5, radius2=0.05,
+                                depth=hauteur - h0 - 0.3)
+    dec = Vector((rnd.uniform(0, 50), rnd.uniform(0, 50), 0))
+    for v in res["verts"]:
+        v.co.z += h0 + (hauteur - h0 - 0.3) / 2
+        v.co.x *= 1 + 0.25 * noise.noise(v.co * 1.3 + dec)
+        v.co.y *= 1 + 0.25 * noise.noise(v.co * 1.3 + dec + Vector((7, 3, 1)))
+    for f in {f for v in res["verts"] for f in v.link_faces}:
+        f.smooth = True
+        for lp in f.loops:
+            lp[clarte] = (0.6, 0.6, 0.6, 1.0)
+    angle0 = rnd.uniform(0, math.pi)
     for k in range(etages):
         t = k / (etages - 1)
-        z0 = h0 + (hauteur - h0 - 0.6) * t
-        r = rayon * (1 - t) ** 0.9 + 0.35
-        h = 1.2 + 0.6 * (1 - t)
-        n = 9 + int(4 * (1 - t))
-        apex = bm.verts.new((rnd.uniform(-0.06, 0.06), rnd.uniform(-0.06, 0.06), z0 + h))
-        anneau = []
-        decal = rnd.uniform(0, math.pi)
-        for i in range(2 * n):
-            a = decal + i * math.pi / n + rnd.uniform(-0.1, 0.1)
-            rr = r * (rnd.uniform(0.85, 1.12) if i % 2 == 0 else rnd.uniform(0.45, 0.6))
-            zz = z0 - (0.3 * rr if i % 2 == 0 else 0.05)
-            anneau.append(bm.verts.new((rr * math.cos(a), rr * math.sin(a), zz)))
-        for i in range(len(anneau)):
-            bm.faces.new((anneau[i], anneau[(i + 1) % len(anneau)], apex))
-        bm.faces.new(list(reversed(anneau)))
+        z0 = h0 + (hauteur - h0 - 0.9) * t + rnd.uniform(-0.06, 0.06)
+        L = rayon * (1 - t) ** 0.92 * rnd.uniform(0.92, 1.05) + 0.3
+        n = 6 + int(round(8 * (1 - t)))
+        for j in range(n):
+            a = angle0 + k * 2.39996 + j * 2 * math.pi / n + rnd.uniform(-0.18, 0.18)
+            Lb = L * rnd.uniform(0.85, 1.1)
+            for f_, taille, lum in ((0.3, 1.0, 0.72), (0.53, 0.95, 0.85), (0.77, 0.88, 1.0), (1.0, 0.75, 1.2)):
+                rr = Lb * f_
+                r_t = (0.2 + 0.15 * (1 - t)) * (rayon / 2.0) * taille * rnd.uniform(0.85, 1.15)
+                tombe = 0.16 * Lb * f_ * f_
+                touffe(rr * math.cos(a), rr * math.sin(a), z0 - tombe, r_t, a, 1.75, 0.55,
+                       lum * (0.9 + 0.2 * t))
+    # flèche au sommet
+    for k in range(3):
+        touffe(rnd.uniform(-0.04, 0.04), rnd.uniform(-0.04, 0.04), hauteur - 0.75 + k * 0.32, 0.2 - k * 0.05,
+               rnd.uniform(0, 3), 1.0, 1.4, 1.15)
     me = bpy.data.meshes.new(nom + "_branches")
     bm.to_mesh(me)
     bm.free()
     me.materials.append(aig)
     ob = bpy.data.objects.new(nom + "_branches", me)
     col.objects.link(ob)
+    return col
+
+
+def collection_cypres(nom, teinte="#2e3d24", graine=5, hauteur=10.0, rayon=1.4):
+    """Cyprès de Provence modélisé ici (CC0) : fuseau dense et sombre (le plus large au tiers de la hauteur, pointe
+    effilée), fait d'un cœur plein et de touffes d'aiguilles bosselées serrées sur sa surface. Vu de dessus : une rosette
+    ronde et sombre de 25 à 35 px, plus claire du côté du soleil ; son ombre portée est un long fuseau large, et non un
+    bâton. (Le feuillu tree_small_02 étiré, utilisé avant, restait un tronc maigre aux branches clairsemées.)"""
+    import bpy
+    import bmesh
+    from mathutils import noise
+    col = bpy.data.collections.new(nom)
+    rnd = random.Random(graine)
+    aig = mat_aiguilles(nom + "_aig", teinte)
+    bm = bmesh.new()
+    clarte = bm.loops.layers.color.new("clarte")
+    z0 = 0.4
+
+    def profil(t):
+        """Rayon du fuseau à la hauteur relative t (0 en bas du feuillage, 1 à la pointe)."""
+        return rayon * (math.sin(math.pi * min(1.0, t * 1.45)) if t < 0.345 else (1 - (t - 0.345) / 0.655) ** 0.85)
+    # cœur plein
+    anneaux = []
+    for k in range(13):
+        t = k / 12
+        r = max(0.04, 0.82 * profil(t))
+        z = z0 + (hauteur - z0) * t
+        anneaux.append([bm.verts.new((r * math.cos(a), r * math.sin(a), z)) for a in
+                        [i * 2 * math.pi / 12 for i in range(12)]])
+    for k in range(12):
+        for i in range(12):
+            f = bm.faces.new((anneaux[k][i], anneaux[k][(i + 1) % 12], anneaux[k + 1][(i + 1) % 12], anneaux[k + 1][i]))
+            f.smooth = True
+            for lp in f.loops:
+                lp[clarte] = (0.62, 0.62, 0.62, 1.0)
+    # touffes sur la surface
+    for k in range(170):
+        t = rnd.random() ** 0.9
+        a = rnd.uniform(0, 2 * math.pi)
+        r = profil(t) * rnd.uniform(0.78, 1.02)
+        z = z0 + (hauteur - z0) * t
+        r_t = (0.26 + 0.16 * (1 - t)) * (rayon / 1.4) * rnd.uniform(0.85, 1.15)
+        res = bmesh.ops.create_icosphere(bm, subdivisions=1, radius=r_t)
+        dec = Vector((rnd.uniform(0, 80), rnd.uniform(0, 80), rnd.uniform(0, 80)))
+        cx, cy = r * math.cos(a), r * math.sin(a)
+        for v in res["verts"]:
+            x, y, zz = v.co
+            v.co = Vector((cx + x, cy + y, z + zz * 1.5))
+            v.co += (v.co - Vector((cx, cy, z))) * 0.2 * noise.noise(v.co * (2.4 / r_t) + dec)
+        lum = (0.82 + 0.3 * t) * rnd.uniform(0.92, 1.08)
+        for f in {f for v in res["verts"] for f in v.link_faces}:
+            f.smooth = True
+            for lp in f.loops:
+                lp[clarte] = (lum, lum, lum, 1.0)
+    me = bpy.data.meshes.new(nom + "_feuillage")
+    bm.to_mesh(me)
+    bm.free()
+    me.materials.append(aig)
+    ob = bpy.data.objects.new(nom + "_feuillage", me)
+    col.objects.link(ob)
+    ecorce = C.mat_simple(nom + "_ecorce", "#4b3a2a", rugosite=0.9)
+    tronc = C.cylindre(nom + "_tronc", 0.14, 1.2, (0, 0, 0), ecorce, segments=8)
+    for c in list(tronc.users_collection):
+        c.objects.unlink(tronc)
+    col.objects.link(tronc)
     return col

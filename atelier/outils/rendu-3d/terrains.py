@@ -23,12 +23,16 @@ plus haute discontinu (absent sur environ 40 % du tracé) ; ornières dont l'éc
 sombre et de poussière plus claire (± 8 % de L*, taches de 20 à 60 px), plaques humides à moins de 40 px de la rivière,
 flaques qui reflètent le ciel ; elle se resserre sur le tablier des ponts. Aucun arbre ni aucune ombre d'arbre sur la
 route (tronc à plus de 48 px de l'axe, ombre portée vérifiée).
-Rivière : largeur variable, la ligne d'eau tombe à rive − 1 (largeur d'eau visible ≈ 2 × rive) ; eau qui absorbe fort
+Rivière : largeur variable (deux bruits lents le long du cours, de 0,62 à 1,5 fois la demi-largeur de la carte), berges
+irrégulières (bruit de 22 px propre à chaque rive), bande d'herbe grasse de 5 à 14 px coupée sur un tiers des rives,
+grappes de galets au bord de l'eau ; la ligne d'eau tombe à rive − 1 (largeur d'eau visible ≈ 2 × rive) ; eau qui absorbe fort
 (le fond ne se voit que sur les 2-3 px du bord), vert-bleu sombre au milieu, reflet de ciel factice uniforme de 0,18 à
 0,22, rides étirées dans le sens du courant ; banc de galets à l'intérieur des méandres, berge raide à l'extérieur,
 liseré de vase discontinu (l'herbe descend jusqu'à l'eau par endroits), franges de joncs. Ponts : tablier de 28 px
 (plus étroit que la route), long de 2 × la demi-largeur de l'eau + 40 px, garde-corps fins et clairs, deux chevalets de
 pieux dans l'eau entourés d'un remous clair, rampes de terre et de pierre dans l'axe de la route.
+Arbres isolés du sud : cyprès de 24 à 30 px de large en bosquets de 2 à 4, maquis du Piémont en bouquets de 2 ou 3
+arbustes de 30 à 45 px, loin de la route. Pins (forêt du Col, bois du sud) : conifères denses modélisés dans decors.py.
 Places fortes : clairière irrégulière (disque d'environ 76 px modulé de ± 25 % selon l'angle, fondu sur 26 px) autour
 de chaque bout de route, à peine piétinée (60 % du masque) ; le même masque règle la densité des arbres ; le sol de
 forêt n'apparaît que sous les cimes réellement posées ; jeunes arbres et buissons dans le fondu. Sentier de 14 px, de la
@@ -366,16 +370,26 @@ def masques(carte, graine, t=None):
     def val(arr, px, py):
         return float(arr[min(H - 1, max(0, int(py * s))), min(W - 1, max(0, int(px * s)))])
 
-    # ---- rivière : demi-largeur variable le long du cours (± 55 % autour de celle de la carte), plus large à
-    # l'extérieur des méandres
+    # ---- rivière : demi-largeur variable le long du cours, plus large à l'extérieur des méandres. Deux bruits lents le
+    # long du cours (période d'environ 140 px, ± 32 % ; environ 45 px, ± 10 %), recalés sur toute leur étendue : un seul
+    # bruit de 180 px restait souvent d'un seul côté et, rogné à 0,77 × la largeur, donnait un canal de largeur constante.
+    # Plancher 0,62 × (et 4 px), plafond 1,5 × la demi-largeur de la carte (tests.js : les emplacements de tours restent à
+    # plus de 1,6 × + 8 px de l'axe).
     R0 = float(t.get("rive") or carte.get("rive") or 11.0)
     sv, kv = courbure(riviere)
     kpix = np.interp(abscv, sv, kv)
-    rive = R0 + 0.545 * R0 * bruit1d(abscv, 180.0, graine + 8)
+    s_riv = np.linspace(0.0, float(sv[-1]), 600)
+
+    def recale(b):
+        b = b - b.mean()
+        return b / (np.abs(b).max() + 1e-6)
+    profil = 1.0 + 0.32 * recale(bruit1d(s_riv, 140.0, graine + 8)) + 0.1 * recale(bruit1d(s_riv, 45.0, graine + 34))
+    rive = (R0 * np.interp(abscv, s_riv, profil)).astype(np.float32)
     exterieur = np.clip(-np.sign(kpix) * np.sign(latv), 0, 1)        # côté extérieur du virage
     interieur = np.clip(np.sign(kpix) * np.sign(latv), 0, 1)         # côté intérieur (eau lente, dépôts)
     virage = lisse01(0.0012, 0.006, np.abs(kpix))
     rive = rive + np.clip(np.abs(kpix) * 900.0, 0, 4.0) * (exterieur - 0.4)
+    rive = np.clip(rive, max(4.0, 0.62 * R0), 1.5 * R0)
     croisements = intersections(route, riviere)
     # gué : la traversée marquée dans le jeu (cartes-bataille.js) se fait sur des galets, sans pont ; le lit s'y élargit
     # et l'eau y est basse
@@ -392,8 +406,11 @@ def masques(carte, graine, t=None):
             continue
         pres = lisse01(30, 12, np.hypot(x - px, y - py))
         rive = rive * (1 - pres) + np.clip(rive, 0.9 * R0, 1.18 * R0) * pres
-    rive = np.maximum(rive, 0.77 * R0)
-    dvb = dv + 3.5 * n1 + 1.5 * n2
+    rive = np.maximum(rive, max(4.0, 0.62 * R0))
+    # berges irrégulières : un bruit de 22 px propre à chaque rive (l'eau mord ou recule de quelques px), en plus du bruit
+    # lent ; plus marqué sur les grands cours d'eau
+    n_berge = bruit(W, H, 22 * s, graine + 35, octaves=3)
+    dvb = dv + 3.5 * n1 + 1.5 * n2 + (2.5 + 0.25 * R0) * n_berge
     # ligne d'eau à dvb = rive − 1 (hauteurs() y fait passer le niveau de l'eau) : largeur visible ≈ 2 × rive.
     # Eau qui absorbe fort : le fond (eau_bord) ne se voit que sur les 2-3 px du bord, puis vert-bleu sombre.
     m_eau = lisse01(rive, rive - 2.0, dvb)
@@ -409,7 +426,14 @@ def masques(carte, graine, t=None):
     # liseré de vase discontinu : l'herbe descend jusqu'à l'eau sur environ un tiers des rives (pas de cerne continu)
     m_vase *= 0.3 + 0.7 * lisse01(-0.3, 0.1, bruit(W, H, 30 * s, graine + 33, octaves=3))
     m_galets = 0.85 * m_berge * lisse01(0.2, 0.7, 0.5 * n40 + 0.3 * n2 + 0.8 * interieur * virage) * mange * (1 - m_vase)
-    m_hgrasse = lisse01(rive + 15, rive + 6, dvb) * (1 - m_galets) * (1 - m_vase)
+    # grappes de galets au bord de l'eau, çà et là (pas seulement dans les méandres)
+    grappes = lisse01(0.42, 0.62, bruit(W, H, 16 * s, graine + 37, octaves=2)) * lisse01(rive + 7.5, rive + 1.0, dvb)
+    m_galets = np.maximum(m_galets, 0.8 * grappes * (1 - m_vase))
+    # herbe grasse des rives : bande de largeur variable (5 à 14 px) et coupée sur environ un tiers des rives (l'herbe
+    # de la plaine descend alors jusqu'à l'eau) : plus de liseré vert uniforme des deux côtés
+    larg_hg = 5.0 + 9.0 * (0.5 + 0.5 * np.clip(n40 * 1.6, -1, 1))
+    coupe_hg = lisse01(-0.22, 0.12, bruit(W, H, 55 * s, graine + 36, octaves=2))
+    m_hgrasse = lisse01(rive + larg_hg + 4, rive + larg_hg - 3, dvb) * coupe_hg * (1 - m_galets) * (1 - m_vase)
     m_nord = lisse01(rive - 5.5, rive - 1.5, dvb) * (latv < 0) * lisse01(0, 1, m_eau)
     dir_c = 0.5 + 0.5 * np.cos(angv)
     dir_s = 0.5 + 0.5 * np.sin(-angv)                               # repère Blender : y vers le haut
@@ -642,6 +666,17 @@ def masques(carte, graine, t=None):
         rel = amp * monte * (0.75 + 0.25 * n40) * garde
         petit = Image.fromarray(rel.astype(np.float32), "F").resize((W // 8, H // 8), Image.BOX)
         m_relief = np.array(petit.resize((W, H), Image.BICUBIC), dtype=np.float32) * (rel.max() > 0)
+        # aucune ombre du relief sur la route : le soleil (nord-ouest, 45°) allonge l'ombre d'un versant de h m sur
+        # 10 × h px vers le sud-est ; la hauteur est plafonnée à 0,08 × la distance (px) qui sépare chaque point de la
+        # route en descendant vers le sud-est (une pente qui montait à 34 px de la route faisait une tache sombre dessus)
+        sur_route = dr < DEMI_ROUTE + 5
+        jusqua = np.full((H, W), 1e9, dtype=np.float32)
+        for t_px in range(0, 160, 2):
+            d_ = int(round(t_px * 0.7071 * s))
+            dec = np.zeros_like(sur_route)
+            dec[:H - d_, :W - d_] = sur_route[d_:, d_:]
+            jusqua = np.where(dec & (jusqua > 1e8), float(t_px), jusqua)
+        m_relief = np.minimum(m_relief, np.maximum(0.0, 0.08 * (jusqua - 8.0)))
         gy_, gx_ = np.gradient(m_relief)
         pente = np.hypot(gx_, gy_) / (M / s)                                  # m de dénivelé par m
         m_roche = lisse01(0.45, 0.95, pente + 0.25 * n6) * lisse01(-0.3, 0.2, n40 + 0.2)
@@ -712,12 +747,14 @@ def ecrire_masque(nom, canaux):
 # pins d'Alep, island_tree_02 sert d'olivier et tree_small_02 étiré de cyprès.
 MODELES = {"arbre_a": ("tree_small_02", 4.5, 2.3), "arbre_b": ("island_tree_02", 3.4, 2.6),
            "arbre_clair": ("tree_small_02", 4.5, 2.3), "arbuste": ("shrub_04", 0.25, 0.4),
-           "rochers": ("rock_moss_set_01", 1.1, 4.0), "pin": (None, 8.5, 2.0), "cypres": ("tree_small_02", 4.5, 2.3),
+           "rochers": ("rock_moss_set_01", 1.1, 4.0), "pin": (None, 8.5, 2.0), "cypres": (None, 10.0, 1.5),
            "olivier": ("island_tree_02", 3.4, 2.6), "maquis": ("searsia_lucida", 2.3, 0.9),
            "rocher": ("boulder_01", 0.95, 0.9), "rocher_sec": ("namaqualand_boulder_04", 1.9, 1.3),
            "falaise": ("rock_face_01", 3.5, 2.5)}
 # un seul des sept arbustes de searsia_lucida (ils sont côte à côte dans le fichier)
 GARDER = {"searsia_lucida": "searsia_lucida_a"}
+# cyprès : fuseau modélisé dans decors.py (collection_cypres) : 10 m de haut, houppier de 2,8 m (28 px) à l'échelle 1
+CYPRES_SXY, CYPRES_SZ = 1.0, 1.0
 
 
 def poisson(zone_ok, espacement, graine, bornes, essais=30, maxi=4000):
@@ -814,6 +851,10 @@ def planifier_vegetation(carte, mq, graine, t=None):
                 and libre(x, y, 52, 60, clairiere=True, decor=False)
         for (x, y) in poisson(versant, 64, graine + 21, (0, 0, LARG, HAUT), maxi=int(t["affleurements"])):
             e = rnd.uniform(0.9, 1.45)
+            # un affleurement de 5 m sur 7 couche son ombre loin vers le sud-est : ni elle ni lui ne touchent la route
+            portee_r = MODELES["falaise"][2] * e * 10
+            if ombre_sur_route(x, y, MODELES["falaise"][1] * e * 10, marge=DEMI_ROUTE + 6 + 0.9 * portee_r):
+                continue
             ajouter("falaise", x, y, e, "affleurement", dz=-0.6, incl=(rnd.uniform(-0.1, 0.1), rnd.uniform(-0.1, 0.1)))
             rochers.append((x, y, 26 * e))
             # éboulis au pied de l'affleurement (vers le bas de la pente : vers la plaine)
@@ -870,7 +911,7 @@ def planifier_vegetation(carte, mq, graine, t=None):
             e = rnd.uniform(1.0, 1.25)
         else:
             e = rnd.uniform(1.05, 1.4) if col == "arbre_b" else rnd.uniform(1.25, 1.75)
-        sxy, sz = (0.36, 1.9) if col == "cypres" else (1.0, 1.0)
+        sxy, sz = (CYPRES_SXY, CYPRES_SZ) if col == "cypres" else (1.0, 1.0)
         haut_px = MODELES[col][1] * e * sz * 10
         portee = MODELES[col][2] * e * sxy * 10
         if not hors_cadre(x, y) and (mval(dr, x, y) < DEMI_ROUTE + 2 + 0.85 * portee or ombre_sur_route(x, y, haut_px)):
@@ -1006,7 +1047,9 @@ def planifier_vegetation(carte, mq, graine, t=None):
                     continue
                 ajouter("olivier", x, y, e, "olivier", sxy=(1.15, 1.15), sz=0.8)
 
-    # ---- cyprès : en rangs le long des champs (Forteresse omeyyade) ou par paires sur les berges (Grand Fleuve)
+    # ---- cyprès : petits bosquets de 2 à 4 le long des champs (Forteresse omeyyade) ou sur les berges (Grand Fleuve),
+    # loin de la route ; un cyprès fait 24 à 30 px de large (houppier) pour 11 à 14 m de haut : il tient la comparaison
+    # avec un soldat (environ 34 px) et avec les cimes de la forêt (40 à 60 px), et son ombre n'est plus un bâton
     if t.get("cypres"):
         cands = []
         if t.get("champs"):
@@ -1020,26 +1063,39 @@ def planifier_vegetation(carte, mq, graine, t=None):
                 nx, ny = -(by - ay) / l_, (bx - ax) / l_
                 r = mval(rive, ax, ay)
                 for c in (-1, 1):
-                    cands.append((ax + nx * c * (r + 14), ay + ny * c * (r + 14)))
+                    cands.append((ax + nx * c * (r + 22), ay + ny * c * (r + 22)))
         rnd.shuffle(cands)
-        n = 0
+        n, groupes = 0, []
         for (x, y) in cands:
-            if n >= int(t["cypres"]) * 3:
+            if n >= int(int(t["cypres"]) * 1.5):
                 break
-            if not libre(x, y, 34, 44, decor=False):
+            if not libre(x, y, 60, 50, decor=False) or any(math.hypot(x - gx, y - gy) < 90 for gx, gy in groupes):
                 continue
-            for k in range(rnd.randint(1, 3)):
-                px, py = x + rnd.uniform(-6, 6), y + rnd.uniform(-6, 6)
+            pose = 0
+            for k in range(rnd.randint(2, 4)):
+                px, py = x + rnd.uniform(-13, 13), y + rnd.uniform(-13, 13)
                 e = rnd.uniform(0.95, 1.2)
-                if libre(px, py, 32, 42, decor=False) and not ombre_sur_route(px, py, MODELES["cypres"][1] * e * 19):
-                    ajouter("cypres", px, py, e, "cypres", sxy=0.34, sz=1.85)
+                if any(math.hypot(px - q["x"], py - q["y"]) < 18 for q in plan if q["role"] == "cypres"):
+                    continue
+                if libre(px, py, 56, 46, decor=False) and cime_hors_route(px, py, "cypres", e, CYPRES_SXY, CYPRES_SZ):
+                    ajouter("cypres", px, py, e, "cypres", sxy=CYPRES_SXY, sz=CYPRES_SZ)
                     n += 1
+                    pose += 1
+            if pose:
+                groupes.append((x, y))
 
-    # ---- maquis (Piémont) : arbustes secs épars dans la plaine et au pied des pentes
+    # ---- maquis (Piémont) : bouquets de 2 ou 3 arbustes secs (chênes kermès, lentisques) de 30 à 45 px de large, deux
+    # fois moins nombreux qu'avant et loin de la route : plus de semis régulier de petits arbres-bâtons
     if t.get("maquis"):
-        for (x, y) in poisson(lambda x, y: (not hors_cadre(x, y)) and mval(foret, x, y) < 0.6 and libre(x, y, 34, 44)
-                              and not pres_rocher(x, y, 3), 40, graine + 24, (0, 0, LARG, HAUT), maxi=int(t["maquis"])):
-            ajouter("maquis", x, y, rnd.uniform(0.8, 1.25), "maquis", dz=-0.02)
+        centres = poisson(lambda x, y: (not hors_cadre(x, y)) and mval(foret, x, y) < 0.6 and libre(x, y, 62, 50)
+                          and not pres_rocher(x, y, 6), 105, graine + 24, (0, 0, LARG, HAUT), maxi=max(3, int(t["maquis"]) // 4))
+        for (x, y) in centres:
+            for k in range(rnd.randint(2, 3)):
+                px, py = x + rnd.uniform(-16, 16), y + rnd.uniform(-14, 14)
+                e = rnd.uniform(1.75, 2.4)
+                if not libre(px, py, 52, 44) or pres_rocher(px, py, 4) or not cime_hors_route(px, py, "maquis", e):
+                    continue
+                ajouter("maquis", px, py, e, "maquis", dz=-0.02)
 
     C.journal("végétation prévue : %d arbres de forêt (%d écartés pour la route), %d arbres de bosquets, %d touffes de joncs, "
               "%d rochers, %d arbres de haies, %d oliviers, %d cyprès"
@@ -1650,6 +1706,8 @@ def instancier_vegetation(plan, h_sol, t=None):
             cols[cle] = collection_joncs()
         elif cle == "pin":
             cols[cle] = D.collection_pin("pin", "#3a4a2c" if t.get("climat") == "sud" else "#2b3a26")
+        elif cle == "cypres":
+            cols[cle] = D.collection_cypres("cypres", "#2f3e25")
         elif ident:
             cols[cle] = charger_modele(ident, cle)
             if cle in teintes:

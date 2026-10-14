@@ -6,6 +6,8 @@
 // le sprite, à dessiner dans une passe « sol », sous tous les sprites (après le terrain).
 // face : sens d'une bande de troupe ("gauche" pour les camps rivaux, rendus tournés vers la gauche ; absent : vers la
 // droite). Le jeu ne retourne une bande que si la troupe marche dans l'autre sens.
+// fumees (places fortes) : [[x, y], ...] en px logiques depuis le coin haut-gauche de l'image, foyers d'où le jeu
+// fait monter la fumée animée d'une place abîmée ou en ruine (aucune fumée n'est cuite dans les images ; vide si intacte).
 window.JEU = window.JEU || {};
 JEU.SPRITES = {
   "effet-carreau": {"src": "assets/images/td/effet-carreau.png", "w": 32, "h": 8, "ax": 16, "ay": 4, "frames": 1},
@@ -45,15 +47,15 @@ JEU.SPRITES = {
   "ombre-tour-piquiers-france-1": {"src": "assets/images/td/ombre-tour-piquiers-france-1.png", "w": 112, "h": 118, "ax": 35, "ay": 72, "frames": 1},
   "ombre-tour-piquiers-france-2": {"src": "assets/images/td/ombre-tour-piquiers-france-2.png", "w": 112, "h": 118, "ax": 35, "ay": 72, "frames": 1},
   "ombre-tour-piquiers-france-3": {"src": "assets/images/td/ombre-tour-piquiers-france-3.png", "w": 112, "h": 118, "ax": 35, "ay": 72, "frames": 1},
-  "place-angleterre-abime": {"src": "assets/images/td/place-angleterre-abime.png", "w": 150, "h": 150, "ax": 75, "ay": 88, "frames": 1},
-  "place-angleterre-intact": {"src": "assets/images/td/place-angleterre-intact.png", "w": 150, "h": 150, "ax": 75, "ay": 88, "frames": 1},
-  "place-angleterre-ruine": {"src": "assets/images/td/place-angleterre-ruine.png", "w": 150, "h": 150, "ax": 75, "ay": 88, "frames": 1},
-  "place-france-abime": {"src": "assets/images/td/place-france-abime.png", "w": 150, "h": 150, "ax": 75, "ay": 88, "frames": 1},
-  "place-france-intact": {"src": "assets/images/td/place-france-intact.png", "w": 150, "h": 150, "ax": 75, "ay": 88, "frames": 1},
-  "place-france-ruine": {"src": "assets/images/td/place-france-ruine.png", "w": 150, "h": 150, "ax": 75, "ay": 88, "frames": 1},
-  "place-omeyyades-abime": {"src": "assets/images/td/place-omeyyades-abime.png", "w": 150, "h": 150, "ax": 75, "ay": 88, "frames": 1},
-  "place-omeyyades-intact": {"src": "assets/images/td/place-omeyyades-intact.png", "w": 150, "h": 150, "ax": 75, "ay": 88, "frames": 1},
-  "place-omeyyades-ruine": {"src": "assets/images/td/place-omeyyades-ruine.png", "w": 150, "h": 150, "ax": 75, "ay": 88, "frames": 1},
+  "place-angleterre-abime": {"src": "assets/images/td/place-angleterre-abime.png", "w": 150, "h": 150, "ax": 75, "ay": 88, "frames": 1, "fumees": [[52.8, 68.2], [72.8, 98.6], [115.2, 72.8]]},
+  "place-angleterre-intact": {"src": "assets/images/td/place-angleterre-intact.png", "w": 150, "h": 150, "ax": 75, "ay": 88, "frames": 1, "fumees": []},
+  "place-angleterre-ruine": {"src": "assets/images/td/place-angleterre-ruine.png", "w": 150, "h": 150, "ax": 75, "ay": 88, "frames": 1, "fumees": [[75.0, 98.0], [73.3, 60.1], [92.6, 94.5]]},
+  "place-france-abime": {"src": "assets/images/td/place-france-abime.png", "w": 150, "h": 150, "ax": 75, "ay": 88, "frames": 1, "fumees": [[57.8, 43.3], [70.9, 61.4], [56.7, 97.0]]},
+  "place-france-intact": {"src": "assets/images/td/place-france-intact.png", "w": 150, "h": 150, "ax": 75, "ay": 88, "frames": 1, "fumees": []},
+  "place-france-ruine": {"src": "assets/images/td/place-france-ruine.png", "w": 150, "h": 150, "ax": 75, "ay": 88, "frames": 1, "fumees": [[85.7, 87.8], [57.8, 70.8], [78.2, 68.0]]},
+  "place-omeyyades-abime": {"src": "assets/images/td/place-omeyyades-abime.png", "w": 150, "h": 150, "ax": 75, "ay": 88, "frames": 1, "fumees": [[79.1, 90.4], [72.6, 100.5], [116.3, 84.0]]},
+  "place-omeyyades-intact": {"src": "assets/images/td/place-omeyyades-intact.png", "w": 150, "h": 150, "ax": 75, "ay": 88, "frames": 1, "fumees": []},
+  "place-omeyyades-ruine": {"src": "assets/images/td/place-omeyyades-ruine.png", "w": 150, "h": 150, "ax": 75, "ay": 88, "frames": 1, "fumees": [[81.2, 80.8], [77.8, 96.9], [73.8, 59.9]]},
   "terrain-chateau": {"src": "assets/images/td/terrain-chateau.jpg", "w": 1000, "h": 660, "ax": 0, "ay": 0, "frames": 1},
   "terrain-chateau-sud": {"src": "assets/images/td/terrain-chateau-sud.jpg", "w": 1000, "h": 660, "ax": 0, "ay": 0, "frames": 1},
   "terrain-col": {"src": "assets/images/td/terrain-col.jpg", "w": 1000, "h": 660, "ax": 0, "ay": 0, "frames": 1},

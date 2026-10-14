@@ -84,19 +84,23 @@
   });
 
   // ---------- notifications ----------
+  // genre : classe en plus (« tribut » : en haut à droite) ; duree : ms d'affichage (1,6 s par défaut). Le toast
+  // garde son genre en s'effaçant (il ne saute pas d'un coin à l'autre de l'écran).
   var minuterieToast = null;
-  ui.toast = function (texte, genre) {
+  ui.toast = function (texte, genre, duree) {
     var t = document.getElementById("toast");
     t.textContent = texte;
     t.className = "toast visible " + (genre || "");
     clearTimeout(minuterieToast);
-    minuterieToast = setTimeout(function () { t.className = "toast"; }, 1600);
+    minuterieToast = setTimeout(function () { t.className = "toast " + (genre || ""); }, duree || 1600);
   };
 
   // Sceau qui s'imprime au centre de l'écran (350 ms), sans retarder la question suivante : il est posé une image
-  // après elle (JEU.anim.apresImage).
+  // après elle (JEU.anim.apresImage). Un nouveau sceau remplace celui qui est encore affiché : deux bonnes réponses
+  // rapprochées ne les impriment jamais l'un sur l'autre.
   ui.tampon = function (texte, sous) {
     var poser = function () {
+      Array.prototype.forEach.call(document.querySelectorAll(".tampon"), function (x) { x.remove(); });
       var t = document.createElement("div");
       t.className = "tampon";
       t.innerHTML = JEU.icones.icone("sceau", 120) + "<b>" + U.echapper(texte) + "</b>" + (sous ? "<span>" + U.echapper(sous) + "</span>" : "");
@@ -154,16 +158,25 @@
   };
 
   // ---------- bandeau : ressources ----------
+  // Les médaillons sont bâtis une fois ; ensuite seuls les nombres qui changent sont remplacés (une bonne réponse ne
+  // fait pas redessiner tout le bandeau). Les boutons du son et de la musique ne changent que si leur état change.
   ui.majRessources = function () {
     var etat = JEU.sauvegarde.etat();
     var zone = document.getElementById("ressources");
-    zone.innerHTML = "";
-    Object.keys(JEU.RESSOURCES).forEach(function (k) {
-      var r = JEU.RESSOURCES[k];
-      zone.appendChild(el("span", { class: "ressource", "data-res": k, title: r.nom + " (" + JEU.MATIERES[r.matiere].nom + ")", style: "--teinte:" + JEU.MATIERES[r.matiere].couleur }, [
-        el("span", { class: "medaillon", html: JEU.icones.ressource(k, 20) }),
-        el("b", { texte: String(etat.ressources[k] || 0) })
-      ]));
+    var cles = Object.keys(JEU.RESSOURCES);
+    if (zone.getAttribute("data-cles") !== cles.join() || zone.children.length !== cles.length) {
+      zone.innerHTML = "";
+      cles.forEach(function (k) {
+        var r = JEU.RESSOURCES[k];
+        zone.appendChild(el("span", { class: "ressource", "data-res": k, title: r.nom + " (" + JEU.MATIERES[r.matiere].nom + ")", style: "--teinte:" + JEU.MATIERES[r.matiere].couleur }, [
+          el("span", { class: "medaillon", html: JEU.icones.ressource(k, 20) }),
+          el("b", { texte: String(etat.ressources[k] || 0) })
+        ]));
+      });
+      zone.setAttribute("data-cles", cles.join());
+    } else cles.forEach(function (k, i) {
+      var b = zone.children[i].querySelector("b"), t = String(etat.ressources[k] || 0);
+      if (b && b.textContent !== t) b.textContent = t;
     });
     var bl = document.getElementById("blason-bandeau");
     if (bl && bl.getAttribute("data-nom") !== etat.reglages.nomDomaine) { bl.innerHTML = JEU.icones.blason(etat.reglages.nomDomaine, 30); bl.setAttribute("data-nom", etat.reglages.nomDomaine); }
@@ -171,8 +184,9 @@
     if (nom) nom.textContent = etat.reglages.nomDomaine || "Le domaine";
     var son = document.getElementById("bouton-son");
     var mus = document.getElementById("bouton-musique");
-    if (mus) { var mOn = etat.reglages.musique !== false; mus.innerHTML = JEU.icones.icone("musique", 22); mus.classList.toggle("coupe", !mOn); mus.title = mOn ? "Couper la musique" : "Remettre la musique"; mus.setAttribute("aria-pressed", mOn ? "true" : "false"); }
-    if (son) { son.innerHTML = JEU.icones.icone(etat.reglages.son ? "son" : "sans-son", 22); son.title = etat.reglages.son ? "Couper les bruitages" : "Remettre les bruitages"; son.setAttribute("aria-pressed", etat.reglages.son ? "true" : "false"); }
+    var mOn = etat.reglages.musique !== false, sOn = !!etat.reglages.son;
+    if (mus && mus.getAttribute("data-etat") !== String(mOn)) { mus.setAttribute("data-etat", String(mOn)); mus.innerHTML = JEU.icones.icone("musique", 22); mus.classList.toggle("coupe", !mOn); mus.title = mOn ? "Couper la musique" : "Remettre la musique"; mus.setAttribute("aria-pressed", mOn ? "true" : "false"); }
+    if (son && son.getAttribute("data-etat") !== String(sOn)) { son.setAttribute("data-etat", String(sOn)); son.innerHTML = JEU.icones.icone(sOn ? "son" : "sans-son", 22); son.title = sOn ? "Couper les bruitages" : "Remettre les bruitages"; son.setAttribute("aria-pressed", sOn ? "true" : "false"); }
   };
 
   // ---------- questions ----------
@@ -388,13 +402,36 @@
   };
 
   // Panneau d'erreur : la bonne réponse, deux phrases d'explication, Continuer, la fiche, signaler.
+  // Association : la bonne réponse en liste, une paire par ligne. L'explication n'est pas montrée si elle ne fait que
+  // redire la bonne réponse (mêmes paires, « : » au lieu de « → »).
+  function sansPonctuation(t) { return String(t || "").toLowerCase().replace(/[→:;,.!?«»"'’()\s-]+/g, " ").trim(); }
+  function repeteReponse(q) {
+    if (!q.explication) return false;
+    var e = sansPonctuation(q.explication);
+    if (e === sansPonctuation(JEU.questions.texteReponse(q))) return true;
+    if (q.type !== "association" || !q.reponse) return false;
+    // toutes les paires de la bonne réponse se retrouvent dans l'explication, et elle ne dit rien de plus
+    var paires = q.reponse.map(function (p) { return sansPonctuation(q.gauche[p[0]] + " " + q.droite[p[1]]); });
+    var reste = e;
+    for (var i = 0; i < paires.length; i++) {
+      if (reste.indexOf(paires[i]) < 0) return false;
+      reste = reste.replace(paires[i], " ");
+    }
+    return reste.replace(/\s+/g, "").length < 4;
+  }
+  ui.repeteReponse = repeteReponse; // pour l'essai de bout en bout
   ui.panneauErreur = function (q, zone, suite) {
     zone.innerHTML = "";
     var f = JEU.questions.fiche(q.fiche);
+    var bonne = q.type === "association" && q.reponse && q.reponse.length
+      ? el("div", { class: "bonne" }, [el("b", { texte: "La bonne réponse :" }), el("ul", { class: "paires" }, q.reponse.map(function (p) {
+        return el("li", {}, [el("b", { texte: q.gauche[p[0]] }), document.createTextNode(" → " + q.droite[p[1]])]);
+      }))])
+      : el("p", { class: "bonne" }, [el("b", { texte: "La bonne réponse : " }), document.createTextNode(JEU.questions.texteReponse(q))]);
     var panneau = el("div", { class: "panneau-erreur" }, [
       el("p", { class: "verdict", texte: "Pas tout à fait." }),
-      el("p", { class: "bonne" }, [el("b", { texte: "La bonne réponse : " }), document.createTextNode(JEU.questions.texteReponse(q))]),
-      el("p", { class: "explication", texte: q.explication || "" }),
+      bonne,
+      repeteReponse(q) ? null : el("p", { class: "explication", texte: q.explication || "" }),
       el("div", { class: "actions" }, [
         el("button", { class: "bouton principal", onclick: continuer, texte: "Continuer (Entrée)" }),
         f ? el("button", { class: "bouton", onclick: function () { JEU.codex.ouvrirFiche(q.fiche); }, texte: "Voir la fiche" }) : null,
@@ -687,6 +724,10 @@
     if (JEU.musique) { if (JEU.musique.actif()) JEU.musique.demarrer(); else JEU.musique.arreter(); }
     ui.appliquerAnimations();
   };
+
+  // Les polices sont toutes chargées dès l'ouverture, et non à leur premier emploi (en pleine bataille, ou sur la
+  // carte) : aucun texte ne change de police, et la page n'est pas remise en forme, pendant une partie.
+  try { if (document.fonts && document.fonts.forEach) document.fonts.forEach(function (f) { f.load().catch(function () { /* police absente : repli */ }); }); } catch (e) { /* navigateur ancien */ }
 
   // ---------- mesure du temps entre une réponse et la question suivante ----------
   JEU.mesure = {

@@ -8,6 +8,8 @@
   var M = JEU.batailleMoteur;
   var QUESTIONS_PAR_VAGUE = 3, BONUS_SERIE = 10;
   var GARDE_ENTREE = 700; // ms : l'Entrée qui finit la dernière question (ou un double appui) ne lance pas la vague
+  var REPOS_APRES_REPONSE = 0.25; // s : pendant le conseil, le champ n'est pas redessiné juste après une réponse
+  var IMAGES_CONSEIL = 8; // images par seconde du champ pendant le conseil de guerre (il ne fait que respirer)
   function camp(c) { return JEU.campagne.CAMPS[c]; }
 
   // ---------- petites aides de texte et de mise en page ----------
@@ -25,19 +27,33 @@
     return prep + " " + nom;
   }
   function pluriel(n, mot) { return n + " " + mot + (n >= 2 ? "s" : ""); }
+  // « verrouillé » accordé au nom du bouton : la Tour d'archers, la Palissade, la Baliste, la Tour de siège (féminin) ;
+  // le Trébuchet (masculin) ; les Fantassins, les Cavaliers (masculin pluriel).
+  var GENRES = { archers: "f", piquiers: "f", baliste: "f", catapulte: "m", fantassins: "mp", cavaliers: "mp", belier: "f" };
+  function verrouille(type) {
+    var g = GENRES[type] || "m";
+    return "verrouill" + (g.charAt(0) === "f" ? "ée" : "é") + (g.charAt(1) === "p" ? "s" : "");
+  }
 
   // Fait défiler la page pour montrer « elem » sous le bandeau collant. mode « proche » : seulement s'il dépasse.
   // Défilement immédiat : un clic juste après tombe là où l'élève le voit.
   // Dans la colonne de droite qui défile à part (grand écran) : la page amène d'abord la colonne à sa place collante
   // (toute la colonne dans la fenêtre), puis c'est la colonne qui défile.
+  // Le haut de la fenêtre est caché par le bandeau, et sur grand écran par la barre de la partie (titre et
+  // « Quitter »), collante elle aussi sous le bandeau.
   function montrer(elem, mode) {
     if (!elem || !elem.isConnected || !racine.scrollBy) return;
-    var bandeau = document.getElementById("bandeau");
+    var bandeau = document.getElementById("bandeau"), barre = document.querySelector("#ecran-partie > .barre-partie");
     var haut = bandeau ? bandeau.getBoundingClientRect().height : 0, vue = racine.innerHeight;
+    if (barre && racine.getComputedStyle(barre).position === "sticky") haut += barre.getBoundingClientRect().height;
+    // l'écran qui vient de s'ouvrir glisse encore de quelques pixels (animation d'entrée) : sa position finale compte
+    var ecran = elem.closest ? elem.closest(".ecran") : null, glisse = 0;
+    if (ecran) { var m = /matrix\(([^)]+)\)/.exec(racine.getComputedStyle(ecran).transform || ""); if (m) glisse = parseFloat(m[1].split(",")[5]) || 0; }
+    haut += glisse; vue += glisse;
     var col = elem.closest ? elem.closest(".td-bas") : null;
     if (col && col !== elem && col.scrollHeight > col.clientHeight + 1 && /auto|scroll/.test(racine.getComputedStyle(col).overflowY)) {
       var rc = col.getBoundingClientRect(), dc;
-      if (rc.top > haut + 10 || rc.bottom > vue) { racine.scrollBy(0, rc.top - haut - 6); rc = col.getBoundingClientRect(); }
+      if (rc.top > haut + 10 || rc.bottom > vue + 1) { racine.scrollBy(0, rc.top - haut - 6); rc = col.getBoundingClientRect(); }
       var h0 = Math.max(rc.top, haut), b0 = Math.min(rc.bottom, vue), re = elem.getBoundingClientRect();
       if (mode === "proche") {
         if (re.top >= h0 && re.bottom <= b0) return;
@@ -153,18 +169,34 @@
   function nomUnite(u, v) { return "unite-" + u.type + "-" + (u.camp === "rival" ? v.campAdverse : "france"); }
 
   // ---------- décor : le terrain de la carte, calculé une fois par bataille (et à chaque changement de netteté) ----------
-  // Route, rivière, ponts et gué sont déjà dans l'image du terrain. Sans elle : ancien fond peint, route et ponts dessinés.
-  // terrain : nom de l'image (« terrain-col-sud » sur le front du sud, sinon « terrain-col »).
+  // Route, rivière, ponts et gué sont déjà dans l'image du terrain rendu en 3D (terrain-<carte>, ou sa variante -sud) :
+  // c'est la seule image qui compte comme « route dessinée ». Sans elle (repli) : l'ancien fond peint (sa rivière est
+  // le ruisseau de référence) ou, s'il manque aussi, le ruisseau de la carte dessiné ici ; puis la route, les ponts et
+  // le gué dessinés par-dessus. La toile rendue porte routeTracee (vrai en repli) : l'essai de bout en bout le vérifie.
+  // terrain : nom de l'image (« terrain-col-sud » sur le front du sud, « terrain-col », ou « terrain-peint »).
   function fond(carte, ratio, terrain) {
     var c = document.createElement("canvas");
     c.width = Math.round(M.LARGEUR * ratio); c.height = Math.round(M.HAUTEUR * ratio);
     var g = c.getContext("2d");
     g.scale(ratio, ratio);
-    var t = prete(terrain) || prete("terrain-" + carte.id);
+    var t = terrain && terrain !== "terrain-peint" ? prete(terrain) : null;
+    c.routeTracee = !t;
     if (t) { g.drawImage(t.img, 0, 0, M.LARGEUR, M.HAUTEUR); vignette(g, 0.42); return c; }
     g.fillStyle = "#6f7442"; g.fillRect(0, 0, M.LARGEUR, M.HAUTEUR);
-    var ancien = prete("terrain-peint");
-    if (ancien) g.drawImage(ancien.img, 0, 0, M.LARGEUR, M.HAUTEUR);
+    var CB = JEU.cartesBataille, ancien = prete("terrain-peint"), eau, traversees;
+    if (ancien) {
+      // le fond peint a sa rivière, toujours au même endroit : les traversées sont là où la route la croise
+      g.drawImage(ancien.img, 0, 0, M.LARGEUR, M.HAUTEUR);
+      eau = CB.RIVIERE;
+      traversees = croisements(carte.route, eau);
+    } else {
+      eau = carte.riviere || CB.RIVIERE;
+      riviere(g, eau, carte.rive || 11);
+      traversees = carte.ponts.map(function (p) { return { x: p.x, y: p.y, angle: p.angle }; });
+    }
+    // la traversée passée à gué (le Gué) garde son numéro, dans l'ordre de la route
+    var iGue = ((CB.LIEUX && CB.LIEUX[carte.id]) || {}).gue;
+    if (iGue !== undefined && traversees[iGue]) traversees[iGue].gue = true;
     // route : bordure sombre, terre battue, ornières
     function trace(largeur, couleur, tirets) {
       g.beginPath();
@@ -176,22 +208,67 @@
     trace(38, "#a08458");
     trace(30, "#b89a68");
     trace(2, "rgba(70,50,25,.45)", [14, 10]);
-    // grain de la terre
+    // grain de la terre (toujours le même tirage : le fond recalculé à une autre netteté ne change pas)
     for (var i = 0; i < 900; i++) {
-      var k = Math.floor(Math.random() * carte.route.length), p = carte.route[k];
-      g.fillStyle = Math.random() < 0.5 ? "rgba(70,50,25,.18)" : "rgba(255,240,200,.14)";
-      g.fillRect(p[0] + (Math.random() - 0.5) * 30, p[1] + (Math.random() - 0.5) * 30, 2, 2);
+      var k = Math.floor(hasard(i) * carte.route.length), p = carte.route[k];
+      g.fillStyle = hasard(i + 1000) < 0.5 ? "rgba(70,50,25,.18)" : "rgba(255,240,200,.14)";
+      g.fillRect(p[0] + (hasard(i + 2000) - 0.5) * 30, p[1] + (hasard(i + 3000) - 0.5) * 30, 2, 2);
     }
-    // ponts de bois
-    carte.ponts.forEach(function (pt) {
-      g.save(); g.translate(pt.x, pt.y); g.rotate(pt.angle);
-      g.fillStyle = "rgba(0,0,0,.35)"; g.fillRect(-34, -26, 70, 54);
-      for (var j = -30; j <= 30; j += 7) { g.fillStyle = j % 14 ? "#7a5230" : "#8b6038"; g.fillRect(j, -24, 6, 48); }
-      g.fillStyle = "#4a3018"; g.fillRect(-32, -26, 64, 4); g.fillRect(-32, 22, 64, 4);
-      g.restore();
-    });
+    // ponts de bois, ou gué de galets
+    traversees.forEach(function (pt) { if (pt.gue) gue(g, pt, carte.rive || 11); else pont(g, pt); });
     vignette(g, 0.55);
     return c;
+  }
+  function hasard(n) { var h = Math.sin(n * 12.9898 + 4.1) * 43758.5453; return h - Math.floor(h); } // toujours le même tirage
+  // Points où la route croise une rivière (dans l'ordre de la route), avec l'angle de la route à cet endroit.
+  function croisements(route, eau) {
+    var r = [];
+    for (var i = 1; i < route.length; i++) {
+      var a = route[i - 1], b = route[i];
+      for (var j = 1; j < eau.length; j++) {
+        var c = eau[j - 1], d = eau[j];
+        var den = (b[0] - a[0]) * (d[1] - c[1]) - (b[1] - a[1]) * (d[0] - c[0]);
+        if (!den) continue;
+        var u = ((c[0] - a[0]) * (d[1] - c[1]) - (c[1] - a[1]) * (d[0] - c[0])) / den;
+        var w = ((c[0] - a[0]) * (b[1] - a[1]) - (c[1] - a[1]) * (b[0] - a[0])) / den;
+        if (u >= 0 && u <= 1 && w >= 0 && w <= 1) r.push({ x: a[0] + u * (b[0] - a[0]), y: a[1] + u * (b[1] - a[1]), angle: Math.atan2(b[1] - a[1], b[0] - a[0]) });
+      }
+    }
+    return r;
+  }
+  // Ruisseau de la carte (repli sans aucune image de fond) : berge sombre, eau, reflet.
+  function riviere(g, eau, rive) {
+    function trace(largeur, couleur) {
+      g.beginPath();
+      eau.forEach(function (p, i) { if (i) g.lineTo(p[0], p[1]); else g.moveTo(p[0], p[1]); });
+      g.lineWidth = largeur; g.strokeStyle = couleur; g.lineCap = "round"; g.lineJoin = "round"; g.stroke();
+    }
+    trace(2 * rive + 8, "#4d5530");
+    trace(2 * rive, "#4e6d74");
+    trace(Math.max(2, rive * 0.6), "rgba(190,214,220,.28)");
+  }
+  function pont(g, pt) {
+    g.save(); g.translate(pt.x, pt.y); g.rotate(pt.angle);
+    g.fillStyle = "rgba(0,0,0,.35)"; g.fillRect(-34, -26, 70, 54);
+    for (var j = -30; j <= 30; j += 7) { g.fillStyle = j % 14 ? "#7a5230" : "#8b6038"; g.fillRect(j, -24, 6, 48); }
+    g.fillStyle = "#4a3018"; g.fillRect(-32, -26, 64, 4); g.fillRect(-32, 22, 64, 4);
+    g.restore();
+  }
+  // Gué : l'eau peu profonde passe sur la route, des galets clairs la traversent.
+  function gue(g, pt, rive) {
+    var l = rive + 6;
+    g.save(); g.translate(pt.x, pt.y); g.rotate(pt.angle);
+    g.beginPath(); g.ellipse(0, 0, l, 27, 0, 0, Math.PI * 2);
+    g.fillStyle = "rgba(78,109,116,.78)"; g.fill();
+    g.lineWidth = 2; g.strokeStyle = "rgba(200,220,225,.35)"; g.stroke();
+    for (var i = 0; i < 26; i++) {
+      var x = (hasard(i + 500) - 0.5) * 1.6 * l, y = (hasard(i + 600) - 0.5) * 46, r = 2.2 + 2.6 * hasard(i + 700);
+      if ((x * x) / (l * l) + (y * y) / (27 * 27) > 0.8) continue;
+      g.beginPath(); g.ellipse(x, y, r * 1.2, r, hasard(i + 800) * 3, 0, Math.PI * 2);
+      g.fillStyle = hasard(i + 900) < 0.5 ? "#c9c0ad" : "#a99f8c"; g.fill();
+      g.lineWidth = 0.8; g.strokeStyle = "rgba(40,34,26,.6)"; g.stroke();
+    }
+    g.restore();
   }
   // voile de lumière au centre, bords assombris comme une enluminure
   function vignette(g, force) {
@@ -201,10 +278,12 @@
   }
 
   // Marque d'un emplacement libre : un anneau de dalles usées posé à plat sur l'herbe (vue de trois quarts),
-  // bien lisible sur le terrain réaliste. Dorée au survol. Calculée une fois par taille d'écran.
+  // bien lisible sur le terrain réaliste. Dorée au survol. Calculée une fois par netteté de la toile (seules celles
+  // de la netteté en cours sont gardées).
   var marques = {}, MARQUE = 64;
   function marque(survol, ratio) {
-    var cle = (survol ? "s" : "n") + ratio;
+    if (marques.ratio !== ratio) marques = { ratio: ratio };
+    var cle = survol ? "s" : "n";
     if (marques[cle]) return marques[cle];
     var c = document.createElement("canvas");
     c.width = c.height = Math.ceil(MARQUE * ratio);
@@ -212,7 +291,6 @@
     g.scale(ratio, ratio); g.translate(MARQUE / 2, MARQUE / 2);
     var RX = 22, RY = 15.5, rx = 13.5, ry = 9.5, N = 11, i, k;
     function ellipse(a, b) { g.beginPath(); g.ellipse(0, 0, a, b, 0, 0, Math.PI * 2); }
-    function hasard(n) { var h = Math.sin(n * 12.9898 + 4.1) * 43758.5453; return h - Math.floor(h); } // toujours le même tirage
     // ombre douce sous l'anneau (ou lueur dorée au survol)
     g.save();
     g.shadowColor = survol ? "rgba(255,226,150,.95)" : "rgba(0,0,0,.55)"; g.shadowBlur = survol ? 9 : 5; g.shadowOffsetY = survol ? 0 : 1.5;
@@ -285,7 +363,7 @@
     if (p.phase === "preparation") {
       for (i = 0; i < p.toursRivales.length; i++) {
         tr = p.toursRivales[i];
-        if (v.porteesRivales || v.survolRivale === i) hautPortee = Math.min(hautPortee, cercle(ctx, tr.x, tr.y, M.porteeTour(p, tr), v.adverse.couleurs[0]));
+        if (v.porteesRivales || v.survolRivale === i) hautPortee = Math.min(hautPortee, cercle(ctx, tr.x, tr.y, M.porteeTour(p, tr), v.porteeAdverse));
       }
     }
     // emplacements libres (pendant la préparation), portée de la tour choisie au survol
@@ -424,14 +502,25 @@
     return eclat;
   }
 
-  // Cercle de portée (distance réelle du jeu : un cercle, pas une ellipse). Même recette que anneau() : un trait
-  // sombre dessous, puis le trait clair en longs tirets (on ne le confond pas avec un chemin), sur un voile léger.
-  // couleur : celle du camp adverse pour la portée de ses tours (crème par défaut).
-  function cercle(ctx, x, y, r, couleur) {
+  // Cercle de portée (distance réelle du jeu : un cercle, pas une ellipse).
+  // Tes tours : même recette que anneau(), un trait sombre dessous, puis le trait crème en longs tirets (on ne le
+  // confond pas avec un chemin), sur un voile léger.
+  // Tours adverses (adverse : couleur de portée du camp adverse, CAMPS.x.portee, rouge sombre) : un motif à elles,
+  // des points courts posés sur un trait clair (lisible sur l'herbe sombre comme sur l'herbe sèche), et un voile un
+  // peu plus dense de la même couleur. Jamais crème : on ne la confond pas avec la portée de tes tours.
+  function cercle(ctx, x, y, r, adverse) {
     ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2);
-    ctx.globalAlpha = 0.16; ctx.fillStyle = couleur || "#fbe9bd"; ctx.fill(); ctx.globalAlpha = 1;
+    if (adverse) {
+      ctx.globalAlpha = 0.2; ctx.fillStyle = adverse; ctx.fill(); ctx.globalAlpha = 1;
+      ctx.lineWidth = 5; ctx.strokeStyle = "rgba(20,12,6,.45)"; ctx.stroke();
+      ctx.lineWidth = 3; ctx.strokeStyle = "rgba(246,226,196,.7)"; ctx.stroke();
+      ctx.setLineDash([4, 6]); ctx.lineCap = "round"; ctx.lineWidth = 3.4; ctx.strokeStyle = adverse; ctx.stroke();
+      ctx.setLineDash([]); ctx.lineCap = "butt";
+      return y - r;
+    }
+    ctx.globalAlpha = 0.16; ctx.fillStyle = "#fbe9bd"; ctx.fill(); ctx.globalAlpha = 1;
     ctx.lineWidth = 3.5; ctx.strokeStyle = "rgba(20,12,6,.5)"; ctx.stroke();
-    ctx.setLineDash([14, 5]); ctx.lineWidth = 2; ctx.globalAlpha = 0.85; ctx.strokeStyle = couleur || "#fbe9bd"; ctx.stroke();
+    ctx.setLineDash([14, 5]); ctx.lineWidth = 2; ctx.globalAlpha = 0.85; ctx.strokeStyle = "#fbe9bd"; ctx.stroke();
     ctx.setLineDash([]); ctx.globalAlpha = 1;
     return y - r;
   }
@@ -467,11 +556,56 @@
     ctx.restore();
   }
 
-  // Place forte : la tienne au départ de la route, celle du camp adverse à l'arrivée.
+  // Place forte : la tienne au départ de la route, celle du camp adverse à l'arrivée. Abîmée ou en ruine, elle fume.
   function place(ctx, v, rival) {
     var pt = rival ? v.arrivee : v.depart, etat = rival ? v.partie.rival : v.partie.chateau;
-    if (sprite(ctx, nomPlace(rival ? v.campAdverse : "france", etat), pt.x, pt.y, 0)) return;
-    chateau(ctx, pt, rival ? v.adverse.couleurs : v.couleurs, etat, rival, v);
+    var nom = nomPlace(rival ? v.campAdverse : "france", etat);
+    if (!sprite(ctx, nom, pt.x, pt.y, 0)) chateau(ctx, pt, rival ? v.adverse.couleurs : v.couleurs, etat, rival, v);
+    if (etat.pv <= etat.max / 2) fumees(ctx, v, nom, pt, etat.pv <= 0, rival ? 1 : 0);
+  }
+
+  // Fumée d'une place forte abîmée (ou en ruine, plus épaisse et plus sombre) : des bouffées dessinées qui montent,
+  // grossissent, dérivent vers l'est (le vent) et s'effacent, chacune à son heure (v.horloge). Points d'émission :
+  // « fumees » de l'image dans sprites.js ([[x, y], …] en px logiques depuis le coin haut-gauche de l'image, comme
+  // ax et ay ; une valeur négative est lue depuis le point d'ancrage) ; sans eux, le haut de l'image, au milieu.
+  // Animations coupées (Réglages) : une seule bouffée, immobile.
+  var BOUFFEES = 7, VIE_BOUFFEE = 3.6; // bouffées par point d'émission ; durée de vie d'une bouffée (s)
+  var bouffees = {};
+  function bouffee(sombre) {
+    var k = sombre ? "s" : "c";
+    if (bouffees[k]) return bouffees[k];
+    var c = document.createElement("canvas"); c.width = c.height = 64;
+    var g = c.getContext("2d"), r = g.createRadialGradient(28, 28, 2, 32, 32, 31);
+    var t = sombre ? "66,58,52" : "150,144,136";
+    r.addColorStop(0, "rgba(" + t + ",.9)"); r.addColorStop(0.55, "rgba(" + t + ",.55)"); r.addColorStop(1, "rgba(" + t + ",0)");
+    g.fillStyle = r; g.beginPath(); g.arc(32, 32, 31, 0, Math.PI * 2); g.fill();
+    bouffees[k] = c;
+    return c;
+  }
+  function pointsFumee(nom, pt) {
+    var s = descr(nom);
+    if (!s) return [[pt.x, pt.y - 80]];
+    var liste = s.fumees && s.fumees.length ? s.fumees : [[s.w / 2, Math.max(6, s.h * 0.12)]];
+    return liste.map(function (f) {
+      return f[0] < 0 || f[1] < 0 ? [pt.x + f[0], pt.y + f[1]] : [pt.x - s.ax + f[0], pt.y - s.ay + f[1]];
+    });
+  }
+  function fumees(ctx, v, nom, pt, ruine, decalage) {
+    var pts = pointsFumee(nom, pt), anim = JEU.anim.actif(), sombre = bouffee(true), claire = bouffee(false);
+    var force = ruine ? 0.9 : 0.78;
+    for (var k = 0; k < pts.length; k++) {
+      var ex = pts[k][0], ey = pts[k][1];
+      if (!anim) { ctx.globalAlpha = force * 0.8; ctx.drawImage(ruine ? sombre : claire, ex - 8, ey - 40, 34, 34); continue; }
+      for (var i = 0; i < BOUFFEES; i++) {
+        var age = (v.horloge / VIE_BOUFFEE + i / BOUFFEES + k * 0.37 + decalage * 0.19) % 1;
+        var r = (ruine ? 8 : 6) + age * (ruine ? 30 : 22);
+        var x = ex + age * age * 42 + Math.sin(v.horloge * 1.3 + i * 2.1 + k) * 4 * age;
+        var y = ey - age * (ruine ? 96 : 76);
+        ctx.globalAlpha = force * (age < 0.1 ? age / 0.1 : Math.pow(1 - (age - 0.1) / 0.9, 1.3));
+        ctx.drawImage(age < (ruine ? 0.5 : 0.25) ? sombre : claire, x - r, y - r, 2 * r, 2 * r);
+      }
+    }
+    ctx.globalAlpha = 1;
   }
 
   // Jauge de solidité : un cartouche sombre avec l'écu du camp, la barre et les chiffres, au-dessus ou au-dessous de la
@@ -551,14 +685,33 @@
     }
   }
 
-  // Troupe : vues de marche menées par u.pas, dessinée à 1,2 × (lisible sur un portable), sur une marque au sol aux
-  // couleurs de son camp (comme les anneaux d'unité d'un jeu de stratégie). Les bandes des camps rivaux regardent
-  // déjà à gauche (« face » dans JEU.SPRITES) : une bande n'est retournée que si la troupe marche dans l'autre sens.
+  // Troupe : vues de marche menées par u.pas, dessinée à 1,2 × (lisible sur un portable), sur son ombre et un anneau
+  // au sol aux couleurs de son camp (comme les anneaux d'unité d'un jeu de stratégie). Les bandes des camps rivaux
+  // regardent déjà à gauche (« face » dans JEU.SPRITES) : une bande n'est retournée que si la troupe marche dans
+  // l'autre sens.
   // La route part de la porte d'une place forte et finit à la porte de l'autre : la troupe apparaît (ou disparaît) en
   // fondu sur le seuil, sur ses 26 premiers (ou derniers) pixels de marche. En fin de bataille, les troupes restées
   // sur la route s'effacent en 0,6 s dans une bouffée de poussière (v.retrait).
+  // Sous chaque troupe : son ombre douce, portée vers le sud-est comme celles des tours, des places fortes et des arbres
+  // (soleil au nord-ouest), puis un anneau fin aux couleurs de son camp, à peine teinté dedans (on voit la route et
+  // l'ombre au travers) : bleu pour la France, rouge pour l'Angleterre, vert pour l'Empire omeyyade.
   var ECHELLE_TROUPE = 1.2;
-  var MARQUE_CAMP = { france: "rgba(42,79,154,.7)", angleterre: "rgba(165,42,42,.7)", omeyyades: "rgba(47,107,82,.7)" };
+  var ANNEAU_CAMP = {
+    france: { trait: "#5b8ce0", fond: "rgba(60,110,210,.18)" },
+    angleterre: { trait: "#d8473a", fond: "rgba(200,60,50,.18)" },
+    omeyyades: { trait: "#58c08e", fond: "rgba(70,170,120,.18)" }
+  };
+  var ombreT = null;
+  function ombreTroupe() {
+    if (ombreT) return ombreT;
+    ombreT = document.createElement("canvas"); ombreT.width = 64; ombreT.height = 26;
+    var g = ombreT.getContext("2d");
+    g.translate(32, 13); g.scale(1, 13 / 32);
+    var r = g.createRadialGradient(0, 0, 0, 0, 0, 32);
+    r.addColorStop(0, "rgba(0,0,0,.42)"); r.addColorStop(0.6, "rgba(0,0,0,.3)"); r.addColorStop(1, "rgba(0,0,0,0)");
+    g.fillStyle = r; g.beginPath(); g.arc(0, 0, 32, 0, Math.PI * 2); g.fill();
+    return ombreT;
+  }
   function unite(ctx, u, v) {
     // sens d'après la marche sur la route, avec une marge pour les tronçons presque verticaux
     var dir = Math.cos(u.angle) * (u.camp === "rival" ? -1 : 1);
@@ -571,10 +724,13 @@
     if (fondu < 1) ctx.globalAlpha = fondu;
     var nom = nomUnite(u, v), s = descr(nom), sc = ECHELLE_TROUPE;
     if (prete(nom)) {
-      var campU = u.camp === "rival" ? v.campAdverse : "france";
+      var an = ANNEAU_CAMP[u.camp === "rival" ? v.campAdverse : "france"] || ANNEAU_CAMP.france;
+      // ombre douce (ellipse de 11 × 4,5 px à l'échelle, décalée de 5 px vers l'est et 2 px vers le sud)
+      ctx.drawImage(ombreTroupe(), u.x + (5 - 11) * sc, u.y + (2 - 4.5) * sc, 22 * sc, 9 * sc);
       ctx.beginPath(); ctx.ellipse(u.x, u.y, 10 * sc, 4.5 * sc, 0, 0, Math.PI * 2);
-      ctx.fillStyle = MARQUE_CAMP[campU] || MARQUE_CAMP.france; ctx.fill();
-      ctx.lineWidth = 1; ctx.strokeStyle = "rgba(20,12,6,.85)"; ctx.stroke();
+      ctx.fillStyle = an.fond; ctx.fill();
+      ctx.lineWidth = 3; ctx.strokeStyle = "rgba(20,12,6,.5)"; ctx.stroke();
+      ctx.lineWidth = 1.6; ctx.strokeStyle = an.trait; ctx.stroke();
       sprite(ctx, nom, u.x, u.y, u.pas * 1.2, u.gauche !== (s.face === "gauche"), sc);
       if (u.pv < u.max) barreVie(ctx, u, u.y - s.ay * sc - 2);
     } else uniteDessinee(ctx, u, u.camp === "rival" ? v.adverse.couleurs : v.couleurs);
@@ -707,12 +863,13 @@
       var places = carte.places || { depart: route[0], arrivee: fin };
       var depart = { x: places.depart[0], y: places.depart[1] }, arrivee = { x: places.arrivee[0], y: places.arrivee[1] };
       var v = { partie: p, carte: carte, ratio: ratio, terrain: terrain, fond: null, couleurs: camp("joueur").couleurs, adverse: adv, campAdverse: campAdv,
+        porteeAdverse: adv.portee || "#a8322a",
         depart: depart, arrivee: arrivee, porteDepart: { x: route[0][0], y: route[0][1] }, porteArrivee: { x: fin[0], y: fin[1] },
         piedDepart: { x: depart.x, y: depart.y + FACADE }, piedArrivee: { x: arrivee.x, y: arrivee.y + FACADE },
         placeDepart: placerJauge(depart, carte, p.route, false, !!prete(nomPlace("france", p.chateau))),
         placeArrivee: placerJauge(arrivee, carte, p.route, true, !!prete(nomPlace(campAdv, p.rival))),
         horloge: 0, survol: -1, curseur: -1, choix: "archers", choixTour: -1, vitesse: 1, envoyesVague: 0, gardeEntree: 0,
-        survolRivale: -1, porteesRivales: false, retrait: null, hud: null, hudDiscret: false };
+        survolRivale: -1, porteesRivales: false, retrait: null, hud: null, hudDiscret: false, repos: 0 };
       var titre = defense ? "Défense du domaine contre " + adv.armee : "Bataille : " + prov.nom;
       var zone = JEU.ui.commencerPartie(titre, function () { JEU.ui.afficher("jouer"); });
       JEU.musique.humeur("guerre");
@@ -721,7 +878,8 @@
       // --- mise en page ---
       var canvas = el("canvas", { class: "td-canvas", width: String(M.LARGEUR), height: String(M.HAUTEUR), tabindex: "0",
         "aria-label": "Champ de bataille : choisis un emplacement avec les flèches, puis bâtis avec Espace" });
-      var ctx = canvas.getContext("2d");
+      // toile opaque (le terrain la couvre toujours en entier) : la page n'a pas à composer ce qui est dessous
+      var ctx = canvas.getContext("2d", { alpha: false });
       // brouillard : un voile qui s'épaissit vers le château adverse (dégradé créé une fois)
       v.brume = ctx.createLinearGradient(520, 0, 660, 0);
       v.brume.addColorStop(0, "rgba(230,230,220,0)"); v.brume.addColorStop(1, "rgba(230,230,220,.26)");
@@ -734,19 +892,27 @@
       zone.appendChild(cadre);
       zone.appendChild(el("div", { class: "td-bas" }, [conseil, ordres]));
 
-      // Netteté : sur un grand écran, le champ s'affiche à plus de 1000 px ; la toile suit exactement cette taille (× la
-      // densité de l'écran), entre 1 et 2,5 fois la taille logique : un pixel de la toile pour un pixel de l'écran, rien
-      // n'est agrandi (flou) ni recopié à une autre échelle (lent). Le fond est recalculé à cette échelle.
+      // Netteté : sur un grand écran, le champ s'affiche à plus de 1000 px ; la toile suit cette taille (× la densité de
+      // l'écran), entre 1 et 2 fois la taille logique (les images sont rendues à 2 fois : au-delà, rien n'est plus net,
+      // seulement plus lent). Le fond est recalculé à cette échelle.
+      // Une toile réallouée est effacée : elle n'est donc réallouée que pour un vrai changement de taille, plus grande
+      // de 4 % ou plus petite de 20 %. La colonne de droite qui s'élargit pendant le conseil de guerre (td-large : le
+      // champ perd environ 8 % de largeur) ne la touche pas : la feuille de style la réduit un peu, puis la rend à sa
+      // taille. La toile est mesurée avant le premier conseil (champ à sa taille de combat). Et une toile réallouée est
+      // redessinée aussitôt, dans la même tâche : jamais d'image noire.
       function ajusterNettete() {
         var w = canvas.getBoundingClientRect().width * (racine.devicePixelRatio || 1);
-        var px = w > 0 ? Math.round(Math.max(1, Math.min(2.5, w / M.LARGEUR)) * M.LARGEUR) : Math.round(M.LARGEUR * ratio);
-        if (v.fond && canvas.width === px) return;
+        var px = w > 0 ? Math.round(Math.max(1, Math.min(2, w / M.LARGEUR)) * M.LARGEUR) : Math.round(M.LARGEUR * ratio);
+        if (v.fond && px <= canvas.width * 1.04 && px >= canvas.width * 0.8) return;
         v.ratio = px / M.LARGEUR;
         canvas.width = px; canvas.height = Math.round(M.HAUTEUR * v.ratio);
         v.fond = fond(carte, v.ratio, v.terrain);
+        JEU.bataille.decor = { terrain: v.terrain, route: !!v.fond.routeTracee, largeur: px };
+        if (lance) { ctx.setTransform(v.ratio, 0, 0, v.ratio, 0, 0); dessiner(ctx, v); v.dernierDessin = v.horloge; }
       }
+      var lance = false; // la boucle d'animation tourne (le premier dessin est le sien)
       ajusterNettete();
-      // la fenêtre change de taille, ou la colonne de droite s'élargit (association) : la toile suit, 200 ms après
+      // la fenêtre change de taille : la toile suit, 200 ms après
       var delaiTaille = null, observateur = null;
       function surTaille() {
         if (!canvas.isConnected) { arreterTaille(); return; }
@@ -761,27 +927,42 @@
       if (racine.ResizeObserver) { observateur = new racine.ResizeObserver(surTaille); observateur.observe(canvas); }
       else racine.addEventListener("resize", surTaille);
 
+      // bandeau du champ : bâti une fois, puis seuls les textes qui changent sont remplacés
+      var hudOr = null, hudVague = null, hudRevenu = null;
       function majHud() {
-        hud.innerHTML = "";
-        hud.appendChild(el("span", { class: "td-or", html: JEU.icones.icone("tresor", 22) + "<b>" + Math.floor(p.or) + "</b> or" }));
-        hud.appendChild(el("span", { class: "td-vague", texte: p.phase === "fin" ? "Bataille terminée" : "Vague " + Math.min(p.vague + 1, p.vagues) + " / " + p.vagues + (p.phase === "vague" ? " · en cours" : " · préparation") }));
-        hud.appendChild(el("span", { class: "td-revenu", texte: "Revenu : +" + p.revenu + " par vague" }));
+        if (!hudOr) {
+          hudOr = el("b");
+          hud.appendChild(el("span", { class: "td-or", html: JEU.icones.icone("tresor", 22) }, [hudOr, " or"]));
+          hud.appendChild(hudVague = el("span", { class: "td-vague" }));
+          hud.appendChild(hudRevenu = el("span", { class: "td-revenu" }));
+        }
+        var t = [String(Math.floor(p.or)), p.phase === "fin" ? "Bataille terminée" : "Vague " + Math.min(p.vague + 1, p.vagues) + " / " + p.vagues + (p.phase === "vague" ? " · en cours" : " · préparation"),
+          "Revenu : +" + p.revenu + " par vague"];
+        [hudOr, hudVague, hudRevenu].forEach(function (e, i) { if (e.textContent !== t[i]) e.textContent = t[i]; });
       }
 
       // --- ordres : tours, troupes, lancement ---
       // Pastille de touche, comme sur les boutons de réponse ; les mots (Espace, Entrée) en cartouche.
       function touche(t) { return el("span", { class: "touche", style: "margin:0 .25rem;" + (t.length > 1 ? "border-radius:.9em;padding:0 .5em;" : ""), texte: t }); }
 
+      // Le panneau n'est rebâti que si ce qu'il montre a changé (signature) : pendant le conseil de guerre, une bonne
+      // réponse ne change souvent que l'or, et la page n'a alors rien à redessiner de plus que la question suivante.
+      var signatureOrdres = null;
       function majOrdres() {
+        var prep = p.phase === "preparation", auClavier = prep && !conseilEnCours();
+        var sel = prep ? p.tours.filter(function (t) { return t.emplacement === v.choixTour; })[0] : null;
+        var sig = [p.phase, auClavier, v.choix, v.choixTour, sel ? sel.niveau + "/" + (p.or >= M.coutAmelioration(sel)) : "",
+          Object.keys(M.TROUPES).map(function (k) { return p.or >= M.TROUPES[k].cout ? 1 : 0; }).join(""), p.envois.length,
+          v.vitesse, v.envoyesVague, p.phase === "fin" ? JSON.stringify(p.stats) : ""].join("|");
+        if (sig === signatureOrdres && ordres.firstChild) return;
+        signatureOrdres = sig;
         // le panneau est redessiné : le bouton atteint avec Tab retrouve ensuite le focus (pas après un clic de souris,
         // pour qu'Entrée lance toujours la vague)
         var focus = document.activeElement, cle = null;
         try { if (focus && ordres.contains(focus) && JEU.ui.focusAuClavier()) cle = focus.getAttribute("data-cle"); } catch (e) { /* navigateur ancien */ }
         ordres.innerHTML = "";
-        var prep = p.phase === "preparation", auClavier = prep && !conseilEnCours();
         ordres.appendChild(el("h3", { texte: prep ? "Tes ordres" : p.phase === "vague" ? "Le combat fait rage" : "Fin de la bataille" }));
         if (prep) {
-          var sel = p.tours.filter(function (t) { return t.emplacement === v.choixTour; })[0];
           if (sel) {
             var cAm = M.coutAmelioration(sel);
             ordres.appendChild(el("div", { class: "td-selection" }, [
@@ -797,7 +978,7 @@
             lTours.appendChild(el("button", { class: "td-bouton" + (v.choix === k ? " choisi" : ""), "data-cle": "tour-" + k, disabled: !dispo, title: dispo ? d.nom : d.nom + " : à débloquer dans l'arsenal", onclick: function () { v.choix = k; v.choixTour = -1; majOrdres(); } }, [
               el("span", { class: "td-ic", html: JEU.icones.icone(d.icone, 28) }),
               el("span", { class: "td-nom" }, [auClavier && dispo ? touche(String(i + 1)) : null, d.nom]),
-              el("span", { class: "td-cout", texte: dispo ? d.cout + " or" : "verrouillée" })
+              el("span", { class: "td-cout", texte: dispo ? d.cout + " or" : verrouille(k) })
             ]));
           });
           ordres.appendChild(lTours);
@@ -806,7 +987,7 @@
           Object.keys(M.TROUPES).forEach(function (k) {
             var d = M.TROUPES[k], dispo = M.niveauArsenal(p, "troupes", k) > 0;
             lTr.appendChild(el("button", { class: "td-bouton", "data-cle": "troupe-" + k, disabled: !dispo || p.or < d.cout, title: dispo ? d.nom : "À débloquer dans l'arsenal", onclick: function () { if (M.envoyer(p, k)) { v.gardeEntree = 0; JEU.sons.jouer("coup"); majTout(); } } }, [
-              el("span", { class: "td-ic", html: JEU.icones.icone(d.icone, 28) }), el("span", { class: "td-nom", texte: d.nom + (d.nombre > 1 ? " ×" + d.nombre : "") }), el("span", { class: "td-cout", texte: dispo ? d.cout + " or · +" + d.revenu + " revenu" : "verrouillé" })
+              el("span", { class: "td-ic", html: JEU.icones.icone(d.icone, 28) }), el("span", { class: "td-nom", texte: d.nom + (d.nombre > 1 ? " ×" + d.nombre : "") }), el("span", { class: "td-cout", texte: dispo ? d.cout + " or · +" + d.revenu + " revenu" : verrouille(k) })
             ]));
           });
           ordres.appendChild(lTr);
@@ -921,6 +1102,7 @@
         // grille redessinait toute la page entre deux questions) : seulement au début et à la fin du conseil.
         zone.classList.add("td-large");
         JEU.ui.poserQuestion(q, scene, function (juste) {
+          v.repos = v.horloge + REPOS_APRES_REPONSE; // le champ attend : l'image suivante ne montre que la question
           JEU.questions.enregistrerReponse(q, juste);
           JEU.ui.noterDerniere(q);
           iQ++; total++;
@@ -937,7 +1119,7 @@
             questionSuivante(scene);
           } else {
             serie = 0;
-            JEU.ui.panneauErreur(q, scene, function () { JEU.mesure.reponseDonnee(); questionSuivante(scene); majTout(); });
+            JEU.ui.panneauErreur(q, scene, function () { v.repos = v.horloge + REPOS_APRES_REPONSE; JEU.mesure.reponseDonnee(); questionSuivante(scene); majTout(); });
             montrer(scene, "proche"); // le panneau d'erreur, vu depuis son titre
           }
         }, { recit: JEU.recit.cadre(q, defense ? "defense" : "preparation", adv) });
@@ -1111,7 +1293,7 @@
       // --- boucle d'animation ---
       var avant = null, phaseAvant = p.phase;
       function boucle(t) {
-        if (!actif || !canvas.isConnected) { actif = false; return; } // partie quittée : la boucle s'arrête d'elle-même
+        if (!actif || !canvas.isConnected || !v.fond) { actif = false; return; } // partie quittée : la boucle s'arrête d'elle-même
         var dt = avant == null ? 0 : Math.min(0.05, (t - avant) / 1000);
         avant = t;
         v.horloge += dt;
@@ -1136,10 +1318,12 @@
         if (p.phase === "vague" && (Math.floor(v.horloge * 4) !== v.dernierHud || solidites !== v.dernieresSolidites)) {
           v.dernierHud = Math.floor(v.horloge * 4); v.dernieresSolidites = solidites; majHud(); majMelee();
         }
-        // Pendant le conseil de guerre, le champ ne fait que respirer (ombres des nuages) : 12 images par seconde
-        // suffisent et laissent la page dessiner aussitôt la question suivante. Partout ailleurs, chaque image.
+        // Pendant le conseil de guerre, le champ ne fait que respirer (ombres des nuages, fumées) : 8 images par seconde
+        // suffisent et laissent la page dessiner aussitôt la question suivante ; et juste après une réponse, il attend
+        // un quart de seconde (la page n'a alors à peindre et composer que la question suivante, sans la toile).
+        // Partout ailleurs, chaque image.
         var calme = p.phase === "preparation" && conseilEnCours();
-        if (!calme || v.horloge - (v.dernierDessin || -1) >= 1 / 12) {
+        if (!calme || (v.horloge >= v.repos && v.horloge - (v.dernierDessin || -1) >= 1 / IMAGES_CONSEIL)) {
           v.dernierDessin = v.horloge;
           ctx.setTransform(v.ratio, 0, 0, v.ratio, 0, 0);
           dessiner(ctx, v);
@@ -1147,7 +1331,12 @@
         racine.requestAnimationFrame(boucle);
       }
 
-      function arreter() { actif = false; arreterTaille(); JEU.musique.humeur("paix"); }
+      // Fin de la partie : la boucle s'arrête, et la toile et son fond (7 Mo en 1920 × 1080) sont rendus tout de suite,
+      // sans attendre la bataille suivante.
+      function arreter() {
+        actif = false; arreterTaille(); JEU.musique.humeur("paix");
+        v.fond = null; canvas.width = 0; canvas.height = 0;
+      }
       JEU.partie.surQuitter = function () {
         arreter();
         if (!finie) { finie = true; C.apresBataille({ lieu: lieu, front: frontId, issue: "retraite", degatsRival: p.stats.degatsRival, entamee: p.vague > 0 || p.phase !== "preparation" }); }
@@ -1196,10 +1385,11 @@
 
       majTout();
       preparation();
+      lance = true;
       racine.requestAnimationFrame(boucle);
       JEU.bataille.enCours = p; // pour les tests de bout en bout
     }
   }
 
-  JEU.bataille = { lancer: lancer, QUESTIONS_PAR_VAGUE: QUESTIONS_PAR_VAGUE };
+  JEU.bataille = { lancer: lancer, QUESTIONS_PAR_VAGUE: QUESTIONS_PAR_VAGUE, verrouille: verrouille };
 })(typeof window !== "undefined" ? window : globalThis);
