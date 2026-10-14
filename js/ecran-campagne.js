@@ -9,15 +9,21 @@
   // de l'ouest ; le front de l'ouest (royaume d'Angleterre) sur les terres vertes du nord, au-dessus de l'escarpement ;
   // le front du sud (Empire omeyyade) sur les terres sèches du sud, entre l'escarpement et le fleuve.
   // Les noms sont sous les lieux : deux lieux voisins trop proches en largeur pour leurs noms sont décalés en hauteur
-  // (col et château, citadelle et forteresse), pour que deux étiquettes ne se touchent jamais (contrôle dans perf.js).
-  // Aucun bourg ni aucun nom n'est posé sur l'eau : le Gué est sur la rive ouest de la rivière, le Moulin du Val sur la
-  // berge sud de son ruisseau ; le nom de la Citadelle du Sud est au-dessus du bourg (dessous, il suivait le fleuve).
+  // (col et château), pour que deux étiquettes restent séparées de 8 px au moins (contrôle dans perf.js), et chaque
+  // nom est plus près de son lieu que de tout autre. Aucun bourg ni aucun nom n'est posé sur l'eau : le Gué est sur la
+  // rive ouest de la rivière, le Moulin du Val sur la berge sud de son ruisseau. La Citadelle du Sud est remontée au
+  // pied de l'escarpement, loin du fleuve, son nom dessous (au-dessus du bourg, il tombait entre elle et le Grand
+  // Fleuve) ; les noms du Grand Fleuve et de la Forteresse omeyyade sont au-dessus de leur lieu : aucun ne se lit dans
+  // le prolongement de celui de la Citadelle.
   var POSITIONS = {
     domaine: [122, 258],
-    gue: [244, 116], foret: [404, 100], moulin: [585, 178], col: [712, 87], chateau: [870, 134],
-    piemont: [262, 380], oliveraie: [418, 404], fleuve: [566, 366], citadelle: [706, 410], forteresse: [868, 356]
+    gue: [244, 116], foret: [404, 100], moulin: [585, 178], col: [712, 87], chateau: [870, 141],
+    piemont: [262, 380], oliveraie: [418, 404], fleuve: [566, 366], citadelle: [740, 380], forteresse: [868, 356]
   };
-  var NOM_DESSUS = { citadelle: true };
+  // En repli (médaillons, plus grands que les bourgs), les noms gardent leur ancienne place : celui de la Citadelle
+  // au-dessus (dessous, il tomberait dans le fleuve), les autres dessous.
+  var NOM_DESSUS = { fleuve: true, forteresse: true }, NOM_DESSUS_REPLI = { forteresse: true };
+  function nomDessus(id, repli) { return !!(repli ? NOM_DESSUS_REPLI : NOM_DESSUS)[id]; }
   var L = 1000, H = 530;
   function camp(c) { return JEU.campagne.CAMPS[c]; }
   // Image décrite dans sprites.js, sauf si elle a déjà manqué (fichier absent ou illisible) : on dessine alors
@@ -110,7 +116,7 @@
         "<text x='548' y='" + y + "' class='titre-front' text-anchor='end'>" + U.echapper(f.nom) + " · " + U.echapper(C.maj1(adv.nom)) + "</text></g>";
     });
     var attaque = c.rival.attaque;
-    s += noeud(POSITIONS.domaine, "lys", france.couleurs, "lys", "Ton domaine", attaque ? "attaqué par " + camp(C.front(attaque).camp).armee : "", "domaine", attaque ? "attaque" : "tien", "france");
+    s += noeud(POSITIONS.domaine, "lys", france.couleurs, "lys", "Ton domaine", attaque ? "attaqué par " + camp(C.front(attaque).camp).peuple : "", "domaine", attaque ? "attaque" : "tien", "france");
     C.FRONTS.forEach(function (f) {
       var cible = C.prochaineProvince(f.id), adv = camp(f.camp);
       f.provinces.forEach(function (p) {
@@ -131,17 +137,26 @@
   // le bourg et montré si l'image du bourg manque. L'ombre portée ne touche que le texte et le médaillon : le bourg
   // a déjà la sienne, rendue au sol.
   // Place du nom et de la ligne dessous : sous le bas du lieu (bourg, nappe de brume ou médaillon de repli), ou
-  // au-dessus du bourg pour les lieux de NOM_DESSUS. Recalculée si l'image du bourg manque (repli).
+  // au-dessus pour les lieux de NOM_DESSUS (NOM_DESSUS_REPLI avec le médaillon). Recalculée si l'image du bourg
+  // manque (repli).
+  // NOMS : lignes de base du nom (17 px) et de la ligne dessous (18 px), depuis le bas du lieu (ou depuis son haut, en
+  // remontant). MEDAILLON : haut et bas du médaillon de repli (rayon 50 avec le halo, bannière comprise), depuis le
+  // pied du lieu.
+  var NOMS = { nom: 21, sous: 41, dessusNom: 26, dessusSeul: 6, dessusSous: 6 };
+  var MEDAILLON = { haut: -56, bas: 50 };
+  function lignesNoms(haut, bas, dessus, avecSous) {
+    if (dessus) return { nom: haut - (avecSous ? NOMS.dessusNom : NOMS.dessusSeul), sous: haut - NOMS.dessusSous };
+    return { nom: bas + NOMS.nom, sous: bas + NOMS.sous };
+  }
   function placeNoms(g, x, y, haut, bas, dessus) {
-    var n = g.querySelector(".nom-lieu"), so = g.querySelector(".sous-lieu");
-    if (dessus) { if (n) n.setAttribute("y", haut - (so ? 24 : 6)); if (so) so.setAttribute("y", haut - 6); return; }
-    if (n) n.setAttribute("y", bas + 21);
-    if (so) so.setAttribute("y", bas + 39);
+    var n = g.querySelector(".nom-lieu"), so = g.querySelector(".sous-lieu"), l = lignesNoms(haut, bas, dessus, !!so);
+    if (n) n.setAttribute("y", l.nom);
+    if (so) so.setAttribute("y", l.sous);
   }
 
   function noeud(pos, icone, coul, embleme, nom, sous, id, etat, lieu) {
     var x = pos[0], y = pos[1], sp = image("lieu-" + lieu);
-    var s = "<g class='noeud " + etat + "' data-lieu='" + id + "' data-x='" + x + "' data-y='" + y + "' tabindex='" + (etat === "cible" || etat === "attaque" ? "0" : "-1") + "'>";
+    var s = "<g class='noeud " + etat + (sp ? "" : " repli") + "' data-lieu='" + id + "' data-x='" + x + "' data-y='" + y + "' tabindex='" + (etat === "cible" || etat === "attaque" ? "0" : "-1") + "'>";
     var halo = etat === "cible" || etat === "attaque" ? " fill='none' stroke='" + (etat === "attaque" ? "#d0644a" : "#e2c272") + "' stroke-width='4'" : null;
     // halo : un trait d'or (ou rouge) posé sur un trait sombre, lisible sur l'herbe claire comme sur le sable du sud
     function anneauHalo(forme, attributs) {
@@ -165,12 +180,11 @@
     } else {
       if (halo) s += anneauHalo("circle", " cx='" + x + "' cy='" + y + "' r='50'");
       s += medaillon;
-      bas = y + 50; haut = y - 56;
+      bas = y + MEDAILLON.bas; haut = y + MEDAILLON.haut;
     }
-    var dessus = !!NOM_DESSUS[id];
-    var yn = dessus ? haut - (sous ? 24 : 6) : bas + 21, ys = dessus ? haut - 6 : bas + 39;
-    s += "<g filter='url(#ombreC)'><text x='" + x + "' y='" + yn + "' class='nom-lieu'>" + U.echapper(nom) + "</text>";
-    if (sous) s += "<text x='" + x + "' y='" + ys + "' class='sous-lieu'>" + U.echapper(sous) + "</text>";
+    var l = lignesNoms(haut, bas, nomDessus(id, !sp), !!sous);
+    s += "<g filter='url(#ombreC)'><text x='" + x + "' y='" + l.nom + "' class='nom-lieu'>" + U.echapper(nom) + "</text>";
+    if (sous) s += "<text x='" + x + "' y='" + l.sous + "' class='sous-lieu'>" + U.echapper(sous) + "</text>";
     return s + "</g></g>";
   }
 
@@ -192,8 +206,9 @@
         if (repli) {
           // repli : le médaillon (rayon 50 avec le halo) remplace le bourg ; le nom passe sous le médaillon
           repli.style.display = "";
+          g.classList.add("repli");
           var x = +g.getAttribute("data-x"), y = +g.getAttribute("data-y");
-          placeNoms(g, x, y, y - 56, y + 50, !!NOM_DESSUS[g.getAttribute("data-lieu")]);
+          placeNoms(g, x, y, y + MEDAILLON.haut, y + MEDAILLON.bas, nomDessus(g.getAttribute("data-lieu"), true));
           var h = g.querySelector(".halo");
           if (h) h.outerHTML = "<g class='halo'><circle cx='" + x + "' cy='" + y + "' r='50' fill='none' stroke='#1c120a' stroke-width='7' opacity='.5'/>" +
             "<circle class='halo-or' cx='" + x + "' cy='" + y + "' r='50' fill='none' stroke='" + h.querySelector(".halo-or").getAttribute("stroke") + "' stroke-width='4'/></g>";
@@ -218,7 +233,8 @@
 
     if (jour) {
       var t = Object.keys(jour.tributs).map(function (r) { return "+" + jour.tributs[r] + " " + JEU.RESSOURCES[r].nom.toLowerCase(); });
-      if (t.length) JEU.mentor.dire("Tes provinces t'ont versé leur tribut : " + t.join(", ") + ".", "joie", 5000);
+      // en haut à droite, sous le bandeau : le message ne cache aucun nom de la carte
+      if (t.length) JEU.ui.toast("Tes provinces t'ont versé leur tribut : " + t.join(", ") + ".", "tribut", 5000);
       JEU.ui.majRessources();
     }
 

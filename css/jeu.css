@@ -264,6 +264,8 @@ main { max-width: 1060px; margin: 0 auto; padding: 1.4rem 1rem 7rem; }
 }
 .panneau-erreur .verdict { font-family: var(--titre); color: var(--brique); font-weight: 700; font-size: 1.2rem; margin: 0 0 .4rem; }
 .panneau-erreur .explication { font-size: 1.12rem; }
+.panneau-erreur .paires { margin: .25rem 0 .4rem; padding-left: 1.2rem; }
+.panneau-erreur .paires li { margin: .12rem 0; }
 .bilan {
   text-align: center; padding: 1.4rem; border: 2px solid var(--encre); border-radius: 4px; background: rgba(255,251,240,.7);
   box-shadow: 0 0 0 3px var(--pierre), 0 10px 20px rgba(80,50,20,.25); animation: apparition .25s ease-out;
@@ -382,6 +384,11 @@ main { max-width: 1060px; margin: 0 auto; padding: 1.4rem 1rem 7rem; }
   box-shadow: 0 0 0 2px var(--or), 0 0 0 3px #000, 0 6px 14px rgba(0,0,0,.6); transition: transform .2s ease, opacity .2s ease;
 }
 .toast.visible { transform: translateX(-50%) translateY(0); opacity: 1; visibility: visible; }
+/* tribut du jour, sur la carte de campagne : en haut à droite, sous le bandeau (à côté du menu et du titre), jamais
+   sur les noms de la carte */
+.toast.tribut { left: auto; right: 1rem; bottom: auto; top: 4.2rem; max-width: min(360px, 26vw); transform: translateY(-40%);
+  font-family: var(--texte); font-size: 1.05rem; line-height: 1.3; padding: .6rem 1.1rem; }
+.toast.tribut.visible { transform: none; }
 .mentor { visibility: hidden; position: fixed; left: 1rem; bottom: 1rem; display: flex; align-items: flex-end; gap: .6rem; max-width: 440px; z-index: 25; transform: translateY(140%); transition: transform .25s ease; pointer-events: none; }
 .mentor.visible { transform: translateY(0); visibility: visible; }
 .mentor-portrait svg { display: block; filter: drop-shadow(0 4px 6px rgba(0,0,0,.6)); }
@@ -410,7 +417,7 @@ main { max-width: 1060px; margin: 0 auto; padding: 1.4rem 1rem 7rem; }
    Animations. Les effets qui suivent une réponse ne retardent jamais la question suivante ;
    l'ambiance continue (lente, sans clignotement) se coupe dans les Réglages (classe .sans-anim).
    ===================================================================== */
-#particules { position: fixed; inset: 0; pointer-events: none; z-index: 50; }
+.particules { position: fixed; pointer-events: none; z-index: 50; }
 .ecran.entree { animation: entreeEcran .26s ease-out; }
 @keyframes entreeEcran { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
 
@@ -443,12 +450,14 @@ main { max-width: 1060px; margin: 0 auto; padding: 1.4rem 1rem 7rem; }
 
 /* bouton doré : un reflet passe de temps en temps */
 .bouton.principal { position: relative; overflow: hidden; }
+/* le reflet glisse par une transformation (sans repeindre le bouton à chaque image) ; un bouton désactivé n'en a pas */
 .bouton.principal::after {
-  content: ""; position: absolute; top: 0; bottom: 0; width: 40%; left: -60%;
+  content: ""; position: absolute; top: 0; bottom: 0; width: 40%; left: 0;
   background: linear-gradient(100deg, transparent, rgba(255,250,225,.55), transparent);
-  animation: reflet 5s ease-in-out infinite;
+  transform: translateX(-150%); animation: reflet 5s ease-in-out infinite;
 }
-@keyframes reflet { 0%, 70% { left: -60%; } 100% { left: 130%; } }
+.bouton.principal:disabled::after { animation: none; display: none; }
+@keyframes reflet { 0%, 70% { transform: translateX(-150%); } 100% { transform: translateX(325%); } }
 
 /* médaillons de ressources */
 .ressource.rebond .medaillon { animation: rebond .32s ease-out; }
@@ -540,7 +549,11 @@ main { max-width: 1060px; margin: 0 auto; padding: 1.4rem 1rem 7rem; }
 .carte-campagne { margin: .4rem auto 1.4rem; border: 3px solid var(--encre); border-radius: 4px; overflow: hidden; box-shadow: 0 0 0 2px var(--or), 0 10px 20px rgba(0,0,0,.4); background: #3a2a1a; }
 .carte-svg { display: block; width: 100%; height: auto; }
 .carte-svg .nom-lieu { font-family: var(--titre); font-weight: 700; font-size: 17px; text-anchor: middle; fill: #fbe9bd; stroke: #1c120a; stroke-width: 4px; paint-order: stroke; }
-.carte-svg .sous-lieu { font-family: var(--texte); font-style: italic; font-size: 15px; text-anchor: middle; fill: #f6e7bf; stroke: #1c120a; stroke-width: 3px; paint-order: stroke; }
+/* ligne sous le nom (place forte n / n, prise, attaqué par…) : l'information de jeu la plus utile de la carte, droite et
+   grasse, 18 px de carte (au moins 14 px à l'écran en 1366 × 768, alerte comprise) */
+.carte-svg .sous-lieu { font-family: var(--texte); font-weight: 700; font-size: 18px; text-anchor: middle; fill: #f6e7bf; stroke: #1c120a; stroke-width: 3.5px; paint-order: stroke; }
+/* repli (médaillons, plus larges que les bourgs) : la ligne un peu plus petite, pour ne pas toucher le médaillon voisin */
+.carte-svg .noeud.repli .sous-lieu { font-size: 16px; }
 .carte-svg .noeud.cible, .carte-svg .noeud.attaque { cursor: pointer; }
 .carte-svg .noeud.cible:hover .lieu, .carte-svg .noeud.cible:focus .lieu, .carte-svg .noeud.attaque:hover .lieu { filter: brightness(1.15); }
 .carte-svg .noeud:focus { outline: none; }
@@ -610,8 +623,10 @@ main { max-width: 1060px; margin: 0 auto; padding: 1.4rem 1rem 7rem; }
   border: 3px solid var(--encre); border-radius: 4px; overflow: hidden; box-shadow: 0 0 0 2px var(--or), 0 10px 20px rgba(0,0,0,.4); background: #2a1d12; }
 .td-canvas { display: block; width: 100%; height: auto; aspect-ratio: 1000 / 660; touch-action: manipulation; }
 .td-hud { position: absolute; left: 0; right: 0; top: 0; display: flex; justify-content: center; gap: .6rem; flex-wrap: wrap; padding: .45rem; pointer-events: none; }
-.td-hud { transition: opacity .2s ease; }
-.td-hud.discret { opacity: .3; } /* un cercle de portée passe dessous : le bandeau s'efface */
+/* un cercle de portée passe dessous : la vague et le revenu s'effacent ; l'or reste lisible (l'élève décide de sa
+   dépense à ce moment-là) */
+.td-hud > span { transition: opacity .2s ease; }
+.td-hud.discret > span:not(.td-or) { opacity: .3; }
 .td-hud > span { background: rgba(30,20,12,.78); color: #f6e7bf; padding: .2rem .7rem; border-radius: 3px; box-shadow: 0 0 0 1px var(--or); font-family: var(--titre); font-size: .85rem; display: inline-flex; align-items: center; gap: .35rem; }
 .td-or b { font-size: 1.15rem; color: var(--or-clair); }
 .td-bas { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: 1rem; margin-top: 1rem; align-items: start; }
@@ -656,7 +671,18 @@ main { max-width: 1060px; margin: 0 auto; padding: 1.4rem 1rem 7rem; }
 @media (min-width: 1100px) {
   body.en-partie main:has(.td-cadre) { max-width: 1500px; }
   .zone-partie:has(> .td-cadre) { display: grid; grid-template-columns: minmax(0, 1fr) clamp(320px, 30vw, 440px); gap: 1.2rem; align-items: start; }
-  .zone-partie:has(> .td-cadre) > .td-cadre { position: sticky; top: 68px; justify-self: center; } /* 68 px : hauteur du bandeau et un peu d'air */
+  /* La barre de la partie (titre, « Signaler », « Quitter (Échap) ») est compacte, juste sous le bandeau, et y reste
+     collée : l'élève voit toujours où il se bat et comment sortir. Le champ et la colonne commencent juste dessous, là
+     où ils se collent (--haut-collant : bandeau, barre et un peu d'air) : la page n'a pas à défiler pour les y amener. */
+  body.en-partie { --haut-bandeau: 64px; --haut-barre: 42px; --haut-collant: calc(var(--haut-bandeau) + var(--haut-barre) + 6px); }
+  body.en-partie main:has(.td-cadre) { padding-top: 0; }
+  /* sans l'ombre intérieure du parchemin (cachée par le champ et la colonne, et longue à peindre sans carte graphique) */
+  #ecran-partie:has(.td-cadre) { padding-top: 0; box-shadow: var(--filet), 0 18px 40px rgba(0,0,0,.65); }
+  #ecran-partie:has(.td-cadre) > .barre-partie { position: sticky; top: var(--haut-bandeau); z-index: 6; box-sizing: border-box; height: var(--haut-barre);
+    margin: 0 -2rem 6px; padding: 0 2rem; gap: .8rem; border-bottom: 3px double var(--encre); border-radius: 4px 4px 0 0;
+    background: linear-gradient(rgba(255,250,235,.35), rgba(226,206,160,.35)), var(--parchemin); box-shadow: 0 4px 8px rgba(60,35,10,.25); }
+  #ecran-partie:has(.td-cadre) > .barre-partie h2 { font-size: 1.1rem; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .zone-partie:has(> .td-cadre) > .td-cadre { position: sticky; top: var(--haut-collant); justify-self: center; }
   .zone-partie:has(> .td-cadre) > .td-bas { grid-template-columns: 1fr; margin-top: 0; }
   /* colonne de droite plus serrée : sur un portable (1366 × 768), « Lancer la vague » reste visible */
   .zone-partie:has(> .td-cadre) .td-pret { padding: .5rem .8rem; }
@@ -669,7 +695,7 @@ main { max-width: 1060px; margin: 0 auto; padding: 1.4rem 1rem 7rem; }
      650 px de haut, la 4e réponse et « Lancer la vague » s'atteignent sans perdre le champ de bataille */
   /* hauteur fixe (et non maximale) et contenu confiné : une nouvelle question ne change plus la mise en page du reste,
      seul le contenu de la colonne est redessiné (avant, tout le parchemin de la page l'était, 100 ms en 1920 × 1080) */
-  .zone-partie:has(> .td-cadre) > .td-bas { position: sticky; top: 68px; height: calc(100vh - 80px); overflow-y: auto;
+  .zone-partie:has(> .td-cadre) > .td-bas { position: sticky; top: var(--haut-collant); height: calc(100vh - var(--haut-collant) - 10px); overflow-y: auto;
     overscroll-behavior: contain; scrollbar-width: thin; padding: 4px 6px 4px 4px; contain: strict;
     align-content: start; } /* hauteur fixe : les blocs restent serrés en haut, sans s'étirer */
   /* association dans la bataille : mots courts à gauche, définitions longues à droite ; pendant le conseil de guerre,

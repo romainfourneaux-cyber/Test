@@ -8,11 +8,13 @@
   var JEU = racine.JEU;
   var U = JEU.util;
 
+  // portee : couleur du cercle de portée des tours de ce camp sur le champ de bataille. Un rouge sombre, nettement
+  // différent du crème de la portée de tes tours (écart de couleur contrôlé par tests.js), quel que soit le camp.
   var CAMPS = {
     joueur: { nom: "le royaume de France", court: "France", couleurs: ["#24407a", "#e2c272"], embleme: "lys" },
-    angleterre: { nom: "le royaume d'Angleterre", court: "Angleterre", couleurs: ["#9b1f1f", "#e2c272"], embleme: "lion",
+    angleterre: { nom: "le royaume d'Angleterre", court: "Angleterre", couleurs: ["#9b1f1f", "#e2c272"], embleme: "lion", portee: "#b0302a",
       armee: "l'armée anglaise", troupes: "les troupes anglaises", soldats: "les soldats anglais", chateau: "le château anglais", tours: "les tours anglaises", peuple: "les Anglais" },
-    omeyyades: { nom: "l'Empire omeyyade", court: "Empire omeyyade", couleurs: ["#e9e1cc", "#2f6b52"], embleme: "tour",
+    omeyyades: { nom: "l'Empire omeyyade", court: "Empire omeyyade", couleurs: ["#e9e1cc", "#2f6b52"], embleme: "tour", portee: "#a63a26",
       armee: "l'armée omeyyade", troupes: "les troupes omeyyades", soldats: "les soldats omeyyades", chateau: "la forteresse omeyyade", tours: "les tours omeyyades", peuple: "les Omeyyades" }
   };
   function maj1(t) { return t.charAt(0).toUpperCase() + t.slice(1); }
