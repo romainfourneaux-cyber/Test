@@ -91,5 +91,267 @@
   "type": "methode",
   "cours": [],
   "extraction": "Fiche methode - Fiche de memorisation.txt"
+ },
+ {
+  "chemin": "cours/geographie/Geo 5e - Tableau de progression.pdf",
+  "taille": 278479,
+  "modifieLe": "2026-10-14T18:30:00",
+  "traiteLe": "2026-10-14T18:30:00",
+  "type": "cours",
+  "cours": [
+   "geographie-s01-1"
+  ],
+  "extraction": "Geo 5e - Tableau de progression.txt"
+ },
+ {
+  "chemin": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
+  "taille": null,
+  "modifieLe": "2026-10-14T18:30:00",
+  "traiteLe": "2026-10-14T18:30:00",
+  "type": "cours",
+  "cours": [
+   "geographie-s01-2",
+   "geographie-s02-2",
+   "geographie-s03-1"
+  ],
+  "extraction": "Geo 5e - Theme 1 - Cours 1.txt"
+ },
+ {
+  "chemin": "cours/geographie/Geo 5e - Theme 1 - Cours 1 - Etude de cas 1 Burkina Faso.pdf",
+  "taille": 2492643,
+  "modifieLe": "2026-10-14T18:30:00",
+  "traiteLe": "2026-10-14T18:30:00",
+  "type": "cours",
+  "cours": [
+   "geographie-s02-1"
+  ],
+  "extraction": "Geo 5e - Theme 1 - Cours 1 - Etude de cas 1 Burkina Faso.txt"
+ },
+ {
+  "chemin": "cours/histoire/Histoire 5e - Seance 1 - Support.pdf",
+  "taille": 544449,
+  "modifieLe": "2026-10-14T18:30:00",
+  "traiteLe": "2026-10-14T18:30:00",
+  "type": "cours",
+  "cours": [
+   "histoire-s01-1"
+  ],
+  "extraction": "Histoire 5e - Seance 1 - Support.txt"
+ },
+ {
+  "chemin": "cours/histoire/Histoire 5e - Seance 2 - Support.pdf",
+  "taille": 495463,
+  "modifieLe": "2026-10-14T18:30:00",
+  "traiteLe": "2026-10-14T18:30:00",
+  "type": "cours",
+  "cours": [
+   "histoire-s01-2"
+  ],
+  "extraction": "Histoire 5e - Seance 2 - Support.txt"
+ },
+ {
+  "chemin": "cours/histoire/Histoire 5e - Seance 3 - Support et Devoir entrainement.pdf",
+  "taille": 573496,
+  "modifieLe": "2026-10-14T18:30:00",
+  "traiteLe": "2026-10-14T18:30:00",
+  "type": "cours",
+  "cours": [
+   "histoire-s02-1",
+   "histoire-s02-2"
+  ],
+  "extraction": "Histoire 5e - Seance 3 - Support et Devoir entrainement.txt"
+ },
+ {
+  "chemin": "cours/histoire/Histoire 5e - Seance 4 - Support.pdf",
+  "taille": 231694,
+  "modifieLe": "2026-10-14T18:30:00",
+  "traiteLe": "2026-10-14T18:30:00",
+  "type": "cours",
+  "cours": [
+   "histoire-s03-1"
+  ],
+  "extraction": "Histoire 5e - Seance 4 - Support.txt"
+ },
+ {
+  "chemin": "cours/histoire/Histoire 5e - Theme 1 - Cours 13 - Bilan.pdf",
+  "taille": 3770854,
+  "modifieLe": "2026-10-14T18:30:00",
+  "traiteLe": "2026-10-14T18:30:00",
+  "type": "cours",
+  "cours": [],
+  "extraction": "Histoire 5e - Theme 1 - Cours 13 - Bilan.txt"
+ },
+ {
+  "chemin": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
+  "taille": 2610976,
+  "modifieLe": "2026-10-14T18:30:00",
+  "traiteLe": "2026-10-14T18:30:00",
+  "type": "cours",
+  "cours": [
+   "svt-s01-1",
+   "svt-s01-2",
+   "svt-s02-1",
+   "svt-s02-2",
+   "svt-s03-1"
+  ],
+  "extraction": "Cours Griffon 5eme SVT Livret 1 - Corriges.txt"
+ },
+ {
+  "chemin": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.pdf",
+  "taille": 1045397,
+  "modifieLe": "2026-10-14T18:30:00",
+  "traiteLe": "2026-10-14T18:30:00",
+  "type": "cours",
+  "cours": [
+   "svt-s01-1",
+   "svt-s01-2",
+   "svt-s02-1",
+   "svt-s02-2",
+   "svt-s03-1"
+  ],
+  "extraction": "Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.txt"
+ },
+ {
+  "chemin": "cours/svt/SVT- LIVRET 1- 5eme - CARTE MUETTE CLIMAT.pdf",
+  "taille": 296365,
+  "modifieLe": "2026-10-14T18:30:00",
+  "traiteLe": "2026-10-14T18:30:00",
+  "type": "cours",
+  "cours": [],
+  "extraction": "SVT- LIVRET 1- 5eme - CARTE MUETTE CLIMAT.txt"
+ },
+ {
+  "chemin": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
+  "taille": 1959384,
+  "modifieLe": "2026-10-14T18:30:00",
+  "traiteLe": "2026-10-14T18:30:00",
+  "type": "cours",
+  "cours": [
+   "physique-s01-1",
+   "physique-s02-1",
+   "physique-s03-1"
+  ],
+  "extraction": "Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.txt"
+ },
+ {
+  "chemin": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
+  "taille": 647731,
+  "modifieLe": "2026-10-14T18:30:00",
+  "traiteLe": "2026-10-14T18:30:00",
+  "type": "cours",
+  "cours": [
+   "litterature-s01-2",
+   "litterature-s02-2",
+   "litterature-s03-2"
+  ],
+  "extraction": "Litterature 5e - Livret 1 - Corriges.txt"
+ },
+ {
+  "chemin": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
+  "taille": 2135193,
+  "modifieLe": "2026-10-14T18:30:00",
+  "traiteLe": "2026-10-14T18:30:00",
+  "type": "cours",
+  "cours": [
+   "lecture-s01-1",
+   "lecture-s02-1",
+   "lecture-s03-1"
+  ],
+  "extraction": "Vocabulaire 5e - Un hivernage dans les glaces.txt"
+ },
+ {
+  "chemin": "cours/lecture/Preparation des fiches de lecture - Methode de lecture suivie 5e.pdf",
+  "taille": 306197,
+  "modifieLe": "2026-10-14T18:30:00",
+  "traiteLe": "2026-10-14T18:30:00",
+  "type": "cours",
+  "cours": [],
+  "extraction": "Preparation des fiches de lecture - Methode de lecture suivie 5e.txt"
+ },
+ {
+  "chemin": "devoirs/Geo-5e Devoir n°1 Correction.pdf",
+  "taille": 168423,
+  "modifieLe": "2026-10-14T18:30:00",
+  "traiteLe": "2026-10-14T18:30:00",
+  "type": "enonce",
+  "cours": [
+   "geographie-d1"
+  ],
+  "extraction": "Geo-5e Devoir n°1 Correction.txt"
+ },
+ {
+  "chemin": "devoirs/SVT-5eme - Devoir 1.pdf",
+  "taille": 792120,
+  "modifieLe": "2026-10-14T18:30:00",
+  "traiteLe": "2026-10-14T18:30:00",
+  "type": "enonce",
+  "cours": [
+   "svt-d1"
+  ],
+  "extraction": "SVT-5eme - Devoir 1.txt"
+ },
+ {
+  "chemin": "devoirs/Physique Chimie-5eme - Devoir 1.pdf",
+  "taille": 745019,
+  "modifieLe": "2026-10-14T18:30:00",
+  "traiteLe": "2026-10-14T18:30:00",
+  "type": "enonce",
+  "cours": [
+   "physique-d1"
+  ],
+  "extraction": "Physique Chimie-5eme - Devoir 1.txt"
+ },
+ {
+  "chemin": "devoirs/Litterature 5e - Devoir 1 - Corrige.pdf",
+  "taille": 199153,
+  "modifieLe": "2026-10-14T18:30:00",
+  "traiteLe": "2026-10-14T18:30:00",
+  "type": "enonce",
+  "cours": [
+   "litterature-d1"
+  ],
+  "extraction": "Litterature 5e - Devoir 1 - Corrige.txt"
+ },
+ {
+  "chemin": "devoirs/Fiche de lecture 5e - Fiche 1 - Un hivernage dans les glaces.pdf",
+  "taille": 854196,
+  "modifieLe": "2026-10-14T18:30:00",
+  "traiteLe": "2026-10-14T18:30:00",
+  "type": "enonce",
+  "cours": [
+   "lecture-d1"
+  ],
+  "extraction": "Fiche de lecture 5e - Fiche 1 - Un hivernage dans les glaces.txt"
+ },
+ {
+  "chemin": "devoirs/Hist-5e Devoir n°1.pdf (non déposé : texte lu sur le Drive)",
+  "taille": null,
+  "modifieLe": "2026-10-14T18:30:00",
+  "traiteLe": "2026-10-14T18:30:00",
+  "type": "enonce",
+  "cours": [
+   "histoire-d1"
+  ],
+  "extraction": "Hist-5e Devoir n1 (texte du Drive).txt"
+ },
+ {
+  "chemin": "devoirs/Geo 5e - Theme 1 - Devoir 1 - Copie corrigee.pdf",
+  "taille": 3100787,
+  "modifieLe": "2026-10-14T18:30:00",
+  "traiteLe": "2026-10-14T18:30:00",
+  "type": "copie",
+  "cours": [
+   "geographie-d1"
+  ]
+ },
+ {
+  "chemin": "devoirs/Francais 5e - Litterature - Devoir 1 - Copie corrigee.pdf",
+  "taille": 2263611,
+  "modifieLe": "2026-10-14T18:30:00",
+  "traiteLe": "2026-10-14T18:30:00",
+  "type": "copie",
+  "cours": [
+   "litterature-d1"
+  ]
  }
 ]
