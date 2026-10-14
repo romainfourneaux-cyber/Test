@@ -114,8 +114,8 @@
 
   // Les images d'une bataille : terrain de la carte, places fortes et tours des deux camps (avec leurs ombres),
   // troupes, projectiles et effets.
-  function imagesDeBataille(carteId, campAdv) {
-    var n = ["terrain-" + carteId, "effet-fleche", "effet-carreau", "effet-pierre", "effet-poussiere", "effet-eclats"];
+  function imagesDeBataille(terrain, campAdv) {
+    var n = [terrain, "effet-fleche", "effet-carreau", "effet-pierre", "effet-poussiere", "effet-eclats"];
     ["intact", "abime", "ruine"].forEach(function (e) {
       ["france", campAdv].forEach(function (c) { n.push("place-" + c + "-" + e, "ombre-place-" + c + "-" + e); });
     });
@@ -152,14 +152,15 @@
   function nomTour(tr, v) { return tr.rivale ? "tour-" + tr.type + "-" + v.campAdverse + "-1" : "tour-" + tr.type + "-france-" + tr.niveau; }
   function nomUnite(u, v) { return "unite-" + u.type + "-" + (u.camp === "rival" ? v.campAdverse : "france"); }
 
-  // ---------- décor : le terrain de la carte, calculé une fois par bataille ----------
-  // Route, rivière et ponts sont déjà dans l'image du terrain. Sans elle : ancien fond peint, route et ponts dessinés.
-  function fond(carte, ratio) {
+  // ---------- décor : le terrain de la carte, calculé une fois par bataille (et à chaque changement de netteté) ----------
+  // Route, rivière, ponts et gué sont déjà dans l'image du terrain. Sans elle : ancien fond peint, route et ponts dessinés.
+  // terrain : nom de l'image (« terrain-col-sud » sur le front du sud, sinon « terrain-col »).
+  function fond(carte, ratio, terrain) {
     var c = document.createElement("canvas");
     c.width = Math.round(M.LARGEUR * ratio); c.height = Math.round(M.HAUTEUR * ratio);
     var g = c.getContext("2d");
     g.scale(ratio, ratio);
-    var t = prete("terrain-" + carte.id);
+    var t = prete(terrain) || prete("terrain-" + carte.id);
     if (t) { g.drawImage(t.img, 0, 0, M.LARGEUR, M.HAUTEUR); vignette(g, 0.42); return c; }
     g.fillStyle = "#6f7442"; g.fillRect(0, 0, M.LARGEUR, M.HAUTEUR);
     var ancien = prete("terrain-peint");
@@ -263,9 +264,11 @@
   // (places fortes, tours, troupes), puis projectiles, effets, météo et jauges.
   var volumes = []; // réutilisé d'une image à l'autre
   // Profondeur : le pied de l'objet. Une place forte est triée sur le pied de sa façade (36 px sous son ancrage) :
-  // son mur de face cache les troupes qui entrent ou sortent par l'arrière.
-  function parProfondeur(a, b) { return a.y - b.y; }
-  var FACADE = 36;
+  // son mur de face cache les troupes qui passent derrière elle. Une troupe sur le seuil de sa porte (moins de
+  // PRES_PORTE px) est devant la façade : elle est dessinée après la place forte.
+  function prof(o) { return o.prof !== undefined ? o.prof : o.y; }
+  function parProfondeur(a, b) { return prof(a) - prof(b); }
+  var FACADE = 36, PRES_PORTE = 46;
   var HAUT_TIR = 24, HAUT_CORPS = 12; // px : départ des traits au-dessus du pied de la tour, impact à mi-corps
 
   function dessiner(ctx, v) {
@@ -277,6 +280,14 @@
     sprite(ctx, "ombre-" + nomPlace(v.campAdverse, p.rival), v.arrivee.x, v.arrivee.y, 0);
     for (i = 0; i < p.toursRivales.length; i++) { tr = p.toursRivales[i]; sprite(ctx, "ombre-" + nomTour(tr, v), tr.x, tr.y, 0); }
     for (i = 0; i < p.tours.length; i++) { tr = p.tours[i]; sprite(ctx, "ombre-" + nomTour(tr, v), tr.x, tr.y, 0); }
+    // portée des tours adverses (préparation) : celle qu'on survole, ou toutes quand on choisit des troupes à envoyer
+    var hautPortee = M.HAUTEUR; // haut du plus haut cercle de portée : le bandeau d'or pâlit s'il le cache
+    if (p.phase === "preparation") {
+      for (i = 0; i < p.toursRivales.length; i++) {
+        tr = p.toursRivales[i];
+        if (v.porteesRivales || v.survolRivale === i) hautPortee = Math.min(hautPortee, cercle(ctx, tr.x, tr.y, M.porteeTour(p, tr), v.adverse.couleurs[0]));
+      }
+    }
     // emplacements libres (pendant la préparation), portée de la tour choisie au survol
     if (p.phase === "preparation") {
       for (i = 0; i < carte.emplacements.length; i++) {
@@ -284,16 +295,18 @@
         e = carte.emplacements[i];
         var survol = v.survol === i || v.curseur === i;
         ctx.drawImage(marque(survol, v.ratio), e[0] - MARQUE / 2, e[1] - MARQUE / 2, MARQUE, MARQUE);
-        if (survol && v.choix) cercle(ctx, e[0], e[1], M.TOURS[v.choix].portee, 0.6);
+        if (survol && v.choix) hautPortee = Math.min(hautPortee, cercle(ctx, e[0], e[1], M.TOURS[v.choix].portee));
       }
     }
     // tour sélectionnée : sa portée, un anneau doré à son pied
     for (i = 0; i < p.tours.length; i++) {
       tr = p.tours[i];
       if (v.choixTour !== tr.emplacement) continue;
-      cercle(ctx, tr.x, tr.y, M.porteeTour(p, tr), 0.7);
+      hautPortee = Math.min(hautPortee, cercle(ctx, tr.x, tr.y, M.porteeTour(p, tr)));
       anneau(ctx, tr.x, tr.y, 26, 2.5);
     }
+    var discret = hautPortee < 52;
+    if (discret !== v.hudDiscret) { v.hudDiscret = discret; if (v.hud) v.hud.classList.toggle("discret", discret); }
     // curseur du clavier : un anneau doré autour de l'emplacement choisi avec les flèches
     if (p.phase === "preparation" && v.curseur >= 0) {
       var ec = carte.emplacements[v.curseur];
@@ -318,7 +331,13 @@
     volumes.push(v.piedDepart, v.piedArrivee);
     for (i = 0; i < p.toursRivales.length; i++) volumes.push(p.toursRivales[i]);
     for (i = 0; i < p.tours.length; i++) volumes.push(p.tours[i]);
-    for (i = 0; i < p.unites.length; i++) volumes.push(p.unites[i]);
+    for (i = 0; i < p.unites.length; i++) {
+      var un = p.unites[i];
+      un.prof = un.y;
+      if (Math.hypot(un.x - v.porteDepart.x, un.y - v.porteDepart.y) < PRES_PORTE) un.prof = Math.max(un.y, v.piedDepart.y + 0.5);
+      else if (Math.hypot(un.x - v.porteArrivee.x, un.y - v.porteArrivee.y) < PRES_PORTE) un.prof = Math.max(un.y, v.piedArrivee.y + 0.5);
+      volumes.push(un);
+    }
     volumes.sort(parProfondeur);
     for (i = 0; i < volumes.length; i++) {
       var o = volumes[i];
@@ -355,6 +374,9 @@
           ctx.beginPath(); ctx.ellipse(e.x, e.y, e.rayon * (0.4 + e.age), e.rayon * 0.5 * (0.4 + e.age), 0, 0, Math.PI * 2); ctx.fill();
         }
         if (e.age < 0.32) sprite(ctx, "effet-eclats", e.x, e.y - 4, vue(e.age, 0.32, 4), false, 1.3);
+      } else if (e.genre === "retrait") {
+        // fin de bataille : la troupe restée sur la route s'efface dans une petite bouffée de poussière
+        if (e.age < 0.6) sprite(ctx, "effet-poussiere", e.x, e.y + 2, vue(e.age, 0.6, 5), false, 0.6);
       } else if (e.genre === "chute") {
         if (prete("effet-poussiere")) { if (e.age < 0.6) sprite(ctx, "effet-poussiere", e.x, e.y + 2, vue(e.age, 0.6, 5), false, 0.75); }
         else { ctx.globalAlpha = Math.max(0, a); dessinerIcone(ctx, "ecu-brise", e.x, e.y - 12 - e.age * 14, 22, e.camp === "rival" ? v.adverse.couleurs[0] : v.couleurs[0]); ctx.globalAlpha = 1; }
@@ -402,11 +424,16 @@
     return eclat;
   }
 
-  // Cercle de portée (distance réelle du jeu : un cercle, pas une ellipse).
-  function cercle(ctx, x, y, r, force) {
+  // Cercle de portée (distance réelle du jeu : un cercle, pas une ellipse). Même recette que anneau() : un trait
+  // sombre dessous, puis le trait clair en longs tirets (on ne le confond pas avec un chemin), sur un voile léger.
+  // couleur : celle du camp adverse pour la portée de ses tours (crème par défaut).
+  function cercle(ctx, x, y, r, couleur) {
     ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2);
-    ctx.fillStyle = "rgba(251,233,189,.12)"; ctx.fill();
-    ctx.lineWidth = 1.5; ctx.strokeStyle = "rgba(251,233,189," + force + ")"; ctx.stroke();
+    ctx.globalAlpha = 0.16; ctx.fillStyle = couleur || "#fbe9bd"; ctx.fill(); ctx.globalAlpha = 1;
+    ctx.lineWidth = 3.5; ctx.strokeStyle = "rgba(20,12,6,.5)"; ctx.stroke();
+    ctx.setLineDash([14, 5]); ctx.lineWidth = 2; ctx.globalAlpha = 0.85; ctx.strokeStyle = couleur || "#fbe9bd"; ctx.stroke();
+    ctx.setLineDash([]); ctx.globalAlpha = 1;
+    return y - r;
   }
   // Anneau doré à plat sur le sol, cerné d'encre pour rester lisible sur l'herbe.
   function anneau(ctx, x, y, r, largeur) {
@@ -527,7 +554,9 @@
   // Troupe : vues de marche menées par u.pas, dessinée à 1,2 × (lisible sur un portable), sur une marque au sol aux
   // couleurs de son camp (comme les anneaux d'unité d'un jeu de stratégie). Les bandes des camps rivaux regardent
   // déjà à gauche (« face » dans JEU.SPRITES) : une bande n'est retournée que si la troupe marche dans l'autre sens.
-  // Près d'une place forte, la troupe apparaît (ou disparaît) en fondu à la porte au lieu de sortir des murs.
+  // La route part de la porte d'une place forte et finit à la porte de l'autre : la troupe apparaît (ou disparaît) en
+  // fondu sur le seuil, sur ses 26 premiers (ou derniers) pixels de marche. En fin de bataille, les troupes restées
+  // sur la route s'effacent en 0,6 s dans une bouffée de poussière (v.retrait).
   var ECHELLE_TROUPE = 1.2;
   var MARQUE_CAMP = { france: "rgba(42,79,154,.7)", angleterre: "rgba(165,42,42,.7)", omeyyades: "rgba(47,107,82,.7)" };
   function unite(ctx, u, v) {
@@ -535,8 +564,9 @@
     var dir = Math.cos(u.angle) * (u.camp === "rival" ? -1 : 1);
     if (u.gauche === undefined) u.gauche = u.camp === "rival";
     if (dir < -0.2) u.gauche = true; else if (dir > 0.2) u.gauche = false;
-    var d = Math.min(Math.hypot(u.x - v.depart.x, u.y - v.depart.y), Math.hypot(u.x - v.arrivee.x, u.y - v.arrivee.y));
-    var fondu = d < 50 ? Math.max(0, Math.min(1, (d - 18) / 32)) : 1;
+    var d = Math.min(Math.hypot(u.x - v.porteDepart.x, u.y - v.porteDepart.y), Math.hypot(u.x - v.porteArrivee.x, u.y - v.porteArrivee.y));
+    var fondu = d < 26 ? Math.max(0, Math.min(1, (d - 2) / 24)) : 1;
+    if (v.retrait !== null) fondu *= Math.max(0, 1 - (v.horloge - v.retrait) / 0.6);
     if (fondu <= 0) return;
     if (fondu < 1) ctx.globalAlpha = fondu;
     var nom = nomUnite(u, v), s = descr(nom), sc = ECHELLE_TROUPE;
@@ -635,6 +665,11 @@
     if (questions.length < QUESTIONS_PAR_VAGUE) { JEU.ui.toast("Pas encore assez de questions pour une bataille."); return; }
     var carteId = defense ? "domaine" : prov.carte;
     var campAdv = (C.front(frontId) || {}).camp || "angleterre"; // nom du camp dans les images (angleterre, omeyyades)
+    // Terrain : sur le front du sud, la variante sèche du même tracé (herbe jaunie, oliviers, cyprès), si elle existe ;
+    // sinon le terrain vert ; sinon l'ancien fond peint. La défense du domaine garde le terrain du domaine.
+    var terrains = (campAdv === "omeyyades" && !defense ? ["terrain-" + carteId + "-sud"] : []).concat(["terrain-" + carteId, "terrain-peint"])
+      .filter(function (n) { return descr(n); });
+    var terrain = terrains[0];
     enChargement = true;
     var parti = false;
     function partir() {
@@ -644,10 +679,13 @@
       if (JEU.partie) return; // une autre partie a commencé pendant le chargement
       demarrer();
     }
-    charger(imagesDeBataille(carteId, campAdv), function () {
-      if (prete("terrain-" + carteId)) partir();
-      else charger(["terrain-peint"], partir); // terrain absent : l'ancien fond peint sert de repli
-    });
+    // terrain absent : le suivant de la liste (terrain vert, puis l'ancien fond peint) sert de repli
+    function suivant(k) {
+      terrain = terrains[k];
+      if (!terrain || prete(terrain)) return partir();
+      charger([terrain], function () { if (prete(terrain)) partir(); else suivant(k + 1); });
+    }
+    charger(imagesDeBataille(terrain, campAdv), function () { suivant(0); });
     setTimeout(partir, ATTENTE_MAX);
 
     function demarrer() {
@@ -657,18 +695,24 @@
       if (defense) { o.pvRival = 12; o.pvRivalMax = 12; }
       else { o.pvRival = C.etat().provinces[lieu].pv; o.pvRivalMax = prov.pv; }
       var p = M.creer(carte, o);
+      // netteté : la toile est dessinée à la taille où elle s'affiche (× la densité de l'écran), recalculée plus bas
+      // dès que le champ est dans la page, puis à chaque changement de taille de la fenêtre
       var ratio = Math.min(2, racine.devicePixelRatio || 1);
       var route = carte.route, fin = route[route.length - 1];
-      // survol : emplacement sous la souris ; curseur : emplacement choisi au clavier ; choixTour : tour sélectionnée.
-      // depart, arrivee : pied de ta place forte et de celle du camp adverse ; piedDepart, piedArrivee : leur façade,
-      // triée avec les tours et les troupes ; placeDepart, placeArrivee : place de la jauge et du chiffre des brèches.
-      var depart = { x: route[0][0], y: route[0][1] }, arrivee = { x: fin[0], y: fin[1] };
-      var v = { partie: p, carte: carte, ratio: ratio, fond: fond(carte, ratio), couleurs: camp("joueur").couleurs, adverse: adv, campAdverse: campAdv,
-        depart: depart, arrivee: arrivee,
+      // survol : emplacement sous la souris ; curseur : emplacement choisi au clavier ; choixTour : tour sélectionnée ;
+      // survolRivale : tour adverse sous la souris ; porteesRivales : montrer la portée de toutes les tours adverses.
+      // depart, arrivee : pied de ta place forte et de celle du camp adverse ; porteDepart, porteArrivee : leurs portes
+      // (début et fin de la route) ; piedDepart, piedArrivee : leur façade, triée avec les tours et les troupes ;
+      // placeDepart, placeArrivee : place de la jauge et du chiffre des brèches ; retrait : heure de la fin de bataille.
+      var places = carte.places || { depart: route[0], arrivee: fin };
+      var depart = { x: places.depart[0], y: places.depart[1] }, arrivee = { x: places.arrivee[0], y: places.arrivee[1] };
+      var v = { partie: p, carte: carte, ratio: ratio, terrain: terrain, fond: null, couleurs: camp("joueur").couleurs, adverse: adv, campAdverse: campAdv,
+        depart: depart, arrivee: arrivee, porteDepart: { x: route[0][0], y: route[0][1] }, porteArrivee: { x: fin[0], y: fin[1] },
         piedDepart: { x: depart.x, y: depart.y + FACADE }, piedArrivee: { x: arrivee.x, y: arrivee.y + FACADE },
         placeDepart: placerJauge(depart, carte, p.route, false, !!prete(nomPlace("france", p.chateau))),
         placeArrivee: placerJauge(arrivee, carte, p.route, true, !!prete(nomPlace(campAdv, p.rival))),
-        horloge: 0, survol: -1, curseur: -1, choix: "archers", choixTour: -1, vitesse: 1, envoyesVague: 0, gardeEntree: 0 };
+        horloge: 0, survol: -1, curseur: -1, choix: "archers", choixTour: -1, vitesse: 1, envoyesVague: 0, gardeEntree: 0,
+        survolRivale: -1, porteesRivales: false, retrait: null, hud: null, hudDiscret: false };
       var titre = defense ? "Défense du domaine contre " + adv.armee : "Bataille : " + prov.nom;
       var zone = JEU.ui.commencerPartie(titre, function () { JEU.ui.afficher("jouer"); });
       JEU.musique.humeur("guerre");
@@ -677,18 +721,45 @@
       // --- mise en page ---
       var canvas = el("canvas", { class: "td-canvas", width: String(M.LARGEUR), height: String(M.HAUTEUR), tabindex: "0",
         "aria-label": "Champ de bataille : choisis un emplacement avec les flèches, puis bâtis avec Espace" });
-      canvas.width = M.LARGEUR * ratio; canvas.height = M.HAUTEUR * ratio;
       var ctx = canvas.getContext("2d");
       // brouillard : un voile qui s'épaissit vers le château adverse (dégradé créé une fois)
       v.brume = ctx.createLinearGradient(520, 0, 660, 0);
       v.brume.addColorStop(0, "rgba(230,230,220,0)"); v.brume.addColorStop(1, "rgba(230,230,220,.26)");
       var hud = el("div", { class: "td-hud" });
+      v.hud = hud;
       var cadre = el("div", { class: "td-cadre" }, [canvas, hud]);
       var conseil = el("div", { class: "td-conseil" });
       var ordres = el("div", { class: "td-ordres" });
       zone.classList.add("td-zone"); // sur grand écran, la feuille de style met le champ et les panneaux côte à côte
       zone.appendChild(cadre);
       zone.appendChild(el("div", { class: "td-bas" }, [conseil, ordres]));
+
+      // Netteté : sur un grand écran, le champ s'affiche à plus de 1000 px ; la toile suit exactement cette taille (× la
+      // densité de l'écran), entre 1 et 2,5 fois la taille logique : un pixel de la toile pour un pixel de l'écran, rien
+      // n'est agrandi (flou) ni recopié à une autre échelle (lent). Le fond est recalculé à cette échelle.
+      function ajusterNettete() {
+        var w = canvas.getBoundingClientRect().width * (racine.devicePixelRatio || 1);
+        var px = w > 0 ? Math.round(Math.max(1, Math.min(2.5, w / M.LARGEUR)) * M.LARGEUR) : Math.round(M.LARGEUR * ratio);
+        if (v.fond && canvas.width === px) return;
+        v.ratio = px / M.LARGEUR;
+        canvas.width = px; canvas.height = Math.round(M.HAUTEUR * v.ratio);
+        v.fond = fond(carte, v.ratio, v.terrain);
+      }
+      ajusterNettete();
+      // la fenêtre change de taille, ou la colonne de droite s'élargit (association) : la toile suit, 200 ms après
+      var delaiTaille = null, observateur = null;
+      function surTaille() {
+        if (!canvas.isConnected) { arreterTaille(); return; }
+        clearTimeout(delaiTaille);
+        delaiTaille = setTimeout(ajusterNettete, 200);
+      }
+      function arreterTaille() {
+        racine.removeEventListener("resize", surTaille);
+        if (observateur) observateur.disconnect();
+        clearTimeout(delaiTaille);
+      }
+      if (racine.ResizeObserver) { observateur = new racine.ResizeObserver(surTaille); observateur.observe(canvas); }
+      else racine.addEventListener("resize", surTaille);
 
       function majHud() {
         hud.innerHTML = "";
@@ -751,6 +822,7 @@
           }));
           ordres.appendChild(el("p", { texte: "Regarde tes tours tenir la route." + (v.envoyesVague ? " Tes troupes marchent sur " + adv.chateau + "." : "") }));
           ordres.appendChild(vit);
+          ordres.appendChild(tableauMelee());
         } else {
           // fin : un court résumé du combat plutôt qu'un cadre vide
           ordres.appendChild(el("ul", { class: "td-resume" }, [
@@ -767,6 +839,44 @@
       }
 
       function majTout() { majHud(); majOrdres(); }
+
+      // --- tableau de la mêlée (pendant une vague) : les deux camps sous leur écu, mis à jour quatre fois par seconde ---
+      var melee = null;
+      function ecu(c, embleme) {
+        return el("span", { class: "tm-ecu", style: "background:" + c[0] + ";color:" + c[1], html: JEU.icones.icone(embleme, 22) });
+      }
+      function tableauMelee() {
+        var lignes = [["marche", "En marche"], ["arretes", "Arrêtés en route"], ["murs", "Ont atteint les murs"], ["tours", "Tours"], ["solidite", "Solidité"]];
+        melee = {};
+        var corps = el("tbody", {}, lignes.map(function (l) {
+          var a = el("td"), b = el("td");
+          melee[l[0]] = [a, b];
+          return el("tr", {}, [el("th", { scope: "row", texte: l[1] }), a, b]);
+        }));
+        var tete = el("thead", {}, [el("tr", {}, [el("th"),
+          el("th", { scope: "col" }, [ecu(v.couleurs, camp("joueur").embleme), el("span", { texte: "Toi" })]),
+          el("th", { scope: "col" }, [ecu(adv.couleurs, adv.embleme), el("span", { texte: C.maj1(adv.peuple) })])])]);
+        var t = el("table", { class: "td-melee", "aria-label": "La mêlée" }, [tete, corps]);
+        majMelee();
+        return t;
+      }
+      function barre(pv, max) {
+        return "<span class='tm-barre'><span style='width:" + Math.round(100 * Math.max(0, Math.min(1, pv / max))) + "%'></span></span>" + Math.ceil(pv) + " / " + max;
+      }
+      function majMelee() {
+        if (!melee || !melee.marche[0].isConnected) return;
+        var amis = 0, rivaux = 0;
+        p.unites.forEach(function (u) { if (u.camp === "rival") rivaux++; else amis++; });
+        var val = {
+          marche: [amis + p.fileAmie.length, rivaux + p.fileRivale.length], arretes: [p.stats.pertes, p.stats.tues],
+          murs: [p.stats.arrivees, p.stats.fuites], tours: [p.tours.length, p.toursRivales.length]
+        };
+        Object.keys(val).forEach(function (k) {
+          for (var i = 0; i < 2; i++) { var t = String(val[k][i]); if (melee[k][i].textContent !== t) melee[k][i].textContent = t; }
+        });
+        var sol = [barre(p.chateau.pv, p.chateau.max), barre(p.rival.pv, p.rival.max)];
+        for (var i = 0; i < 2; i++) if (melee.solidite[i].innerHTML !== sol[i]) melee.solidite[i].innerHTML = sol[i];
+      }
 
       // --- conseil de guerre : les questions de la préparation ---
       function nouvellesDuFront() {
@@ -796,14 +906,20 @@
         if (nouv) conseil.appendChild(JEU.ui.recit({ nom: "Un éclaireur", icone: "trompe", texte: nouv }));
         var scene = el("div", { class: "td-question" });
         conseil.appendChild(scene);
+        // association : après le dernier appariement, le bouton Valider est amené en vue
+        scene.addEventListener("paires-completes", function () { setTimeout(function () { montrer(scene.querySelector(".valider"), "proche"); }, 0); });
         questionSuivante(scene);
         majTout();
         if (conseilEnCours()) montrer(conseil, "proche"); // la question est la prochaine chose à faire
       }
 
       function questionSuivante(scene) {
-        if (!conseilEnCours()) return conseilTermine(scene);
+        if (!conseilEnCours()) { zone.classList.remove("td-large"); return conseilTermine(scene); }
         var q = questions[iQ];
+        // pendant tout le conseil de guerre, la colonne de droite est plus large (associations aux définitions longues) :
+        // le champ n'est pas jouable pendant les questions. Elle ne change pas d'une question à l'autre (changer la
+        // grille redessinait toute la page entre deux questions) : seulement au début et à la fin du conseil.
+        zone.classList.add("td-large");
         JEU.ui.poserQuestion(q, scene, function (juste) {
           JEU.questions.enregistrerReponse(q, juste);
           JEU.ui.noterDerniere(q);
@@ -822,8 +938,11 @@
           } else {
             serie = 0;
             JEU.ui.panneauErreur(q, scene, function () { JEU.mesure.reponseDonnee(); questionSuivante(scene); majTout(); });
+            montrer(scene, "proche"); // le panneau d'erreur, vu depuis son titre
           }
         }, { recit: JEU.recit.cadre(q, defense ? "defense" : "preparation", adv) });
+        // la colonne de droite défile à part : la question suivante est montrée depuis son énoncé, jamais coupée par le haut
+        if (conseilEnCours()) montrer(scene, "proche");
       }
 
       // Reste-t-il de quoi dépenser (une tour sur un emplacement libre, ou des troupes) ?
@@ -957,12 +1076,30 @@
         carte.emplacements.forEach(function (e, i) { var d = Math.hypot(e[0] - pt.x, e[1] - pt.y); if (d < dm) { dm = d; meilleur = i; } });
         return meilleur;
       }
+      // tour adverse sous la souris (son pied ou son corps, qui monte de 24 px) : sa portée se dessine pendant la préparation
+      function tourRivaleSous(pt) {
+        var meilleure = -1, dm = 30;
+        p.toursRivales.forEach(function (tr, i) {
+          var d = Math.min(Math.hypot(tr.x - pt.x, tr.y - pt.y), Math.hypot(tr.x - pt.x, tr.y - 24 - pt.y));
+          if (d < dm) { dm = d; meilleure = i; }
+        });
+        return meilleure;
+      }
       canvas.addEventListener("pointermove", function (ev) {
-        v.survol = emplacementSous(point(ev));
+        var pt = point(ev);
+        v.survol = emplacementSous(pt);
+        v.survolRivale = v.survol < 0 ? tourRivaleSous(pt) : -1;
         if (v.survol >= 0) v.curseur = -1; // la souris reprend la main
         canvas.style.cursor = v.survol >= 0 && p.phase === "preparation" ? "pointer" : "";
       });
-      canvas.addEventListener("pointerleave", function () { v.survol = -1; });
+      canvas.addEventListener("pointerleave", function () { v.survol = -1; v.survolRivale = -1; });
+      // pointeur (ou focus du clavier) sur un bouton de troupe : la portée de toutes les tours adverses se montre, pour
+      // voir sur quel tronçon de la route tes soldats seront pris sous le tir
+      function voirPortees(ev) {
+        var b = ev.target && ev.target.closest ? ev.target.closest('[data-cle^="troupe-"]') : null;
+        v.porteesRivales = !!b && (ev.type === "pointerover" || ev.type === "focusin");
+      }
+      ["pointerover", "pointerout", "focusin", "focusout"].forEach(function (t) { ordres.addEventListener(t, voirPortees); });
       canvas.addEventListener("click", function (ev) { agirSur(emplacementSous(point(ev))); });
       // Arrivée au clavier (Tab) sur le champ : le curseur se pose sur le premier emplacement.
       canvas.addEventListener("focus", function () {
@@ -985,15 +1122,32 @@
         if (p.phase !== phaseAvant) {
           var de = phaseAvant; phaseAvant = p.phase;
           if (de === "vague" && p.phase === "preparation") { JEU.sons.jouer("sceau"); JEU.ui.tampon("Vague repoussée", "+" + p.revenu + " or"); preparation(); }
-          if (p.phase === "fin") bilan();
+          if (p.phase === "fin") {
+            // les troupes restées sur la route s'effacent (0,6 s) dans une bouffée de poussière : pas d'arrêt sur image
+            v.retrait = v.horloge;
+            p.unites.forEach(function (u) { p.effets.push({ genre: "retrait", x: u.x, y: u.y, age: 0 }); });
+            bilan();
+          }
         }
-        if (p.phase === "vague" && Math.floor(v.horloge * 4) !== v.dernierHud) { v.dernierHud = Math.floor(v.horloge * 4); majHud(); }
-        ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
-        dessiner(ctx, v);
+        if (v.retrait !== null && p.unites.length && v.horloge - v.retrait > 0.6) p.unites.length = 0;
+        // bandeau et tableau de la mêlée : 4 fois par seconde, et tout de suite quand une place forte est frappée (la
+        // solidité du tableau suit la jauge du champ)
+        var solidites = p.chateau.pv + "/" + p.rival.pv;
+        if (p.phase === "vague" && (Math.floor(v.horloge * 4) !== v.dernierHud || solidites !== v.dernieresSolidites)) {
+          v.dernierHud = Math.floor(v.horloge * 4); v.dernieresSolidites = solidites; majHud(); majMelee();
+        }
+        // Pendant le conseil de guerre, le champ ne fait que respirer (ombres des nuages) : 12 images par seconde
+        // suffisent et laissent la page dessiner aussitôt la question suivante. Partout ailleurs, chaque image.
+        var calme = p.phase === "preparation" && conseilEnCours();
+        if (!calme || v.horloge - (v.dernierDessin || -1) >= 1 / 12) {
+          v.dernierDessin = v.horloge;
+          ctx.setTransform(v.ratio, 0, 0, v.ratio, 0, 0);
+          dessiner(ctx, v);
+        }
         racine.requestAnimationFrame(boucle);
       }
 
-      function arreter() { actif = false; JEU.musique.humeur("paix"); }
+      function arreter() { actif = false; arreterTaille(); JEU.musique.humeur("paix"); }
       JEU.partie.surQuitter = function () {
         arreter();
         if (!finie) { finie = true; C.apresBataille({ lieu: lieu, front: frontId, issue: "retraite", degatsRival: p.stats.degatsRival, entamee: p.vague > 0 || p.phase !== "preparation" }); }

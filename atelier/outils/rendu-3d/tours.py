@@ -766,7 +766,8 @@ def planche(sortie=None, carte_id="moulin"):
     france = [n for n in ORDRE_PLANCHE if "france" in n]
     rivales = [n for n in ORDRE_PLANCHE if "france" not in n]
     poses = list(zip(france, emp)) + list(zip(rivales, riv))
-    poses += [("place-france-intact", route[0]), ("place-angleterre-intact", route[-1])]
+    pl = carte.get("places") or {"depart": route[0], "arrivee": route[-1]}      # pied des places (la route part des portes)
+    poses += [("place-france-intact", pl["depart"]), ("place-angleterre-intact", pl["arrivee"])]
     terrain = os.path.join(C.TD, "terrain-%s.jpg" % carte_id)
 
     def vue(largeur):

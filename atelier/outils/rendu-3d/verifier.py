@@ -5,7 +5,7 @@ Usage : python3 atelier/outils/rendu-3d/verifier.py
 Compare jeu/assets/images/td/ et jeu/assets/images/campagne/ au contrat (liste des fichiers attendus) et au manifeste
 sprites.js, puis contrôle la lecture des images. Code de sortie 1 s'il manque quelque chose ou si un contrôle échoue.
 
-Contrat : fichiers manquants ou en trop, entrées du manifeste sans fichier, tailles (2 × la taille logique, × nombre
+Contrat : 11 terrains (les 6 cartes et les variantes « -sud » de 5 d'entre elles, front omeyyade), fichiers manquants ou en trop, entrées du manifeste sans fichier, tailles (2 × la taille logique, × nombre
 d'images), bords transparents (2 px, alpha ≤ 8), poids des JPEG (terrains ≤ 450 000 octets, carte de campagne
 ≤ 500 000 octets) et budget total (9 Mo = 9 000 000 octets : mêmes unités décimales partout).
 Ancrages (décision consignée : le jeu lit ax / ay dans JEU.SPRITES, jamais en dur) : place-* → (75, 88), centre de la
@@ -44,6 +44,8 @@ CAMP = os.path.join(JEU, "assets", "images", "campagne")
 CACHE = os.path.join(RACINE, "atelier", "sources-3d", "_cache")
 
 CARTES = ["domaine", "gue", "foret", "moulin", "col", "chateau"]
+# variantes du front du sud (même tracé que la carte, décor sec) : terrain-<carte>-sud
+TERRAINS = CARTES + [c + "-sud" for c in ("gue", "foret", "moulin", "col", "chateau")]
 RIVAUX = ["angleterre", "omeyyades"]
 LIMITE_TERRAIN, LIMITE_FOND, BUDGET = 450_000, 500_000, 9_000_000
 ENTREE_PLACE = 55          # px : les troupes plus près d'un bout de route sont sous la place forte
@@ -52,7 +54,7 @@ ENTREE_PLACE = 55          # px : les troupes plus près d'un bout de route sont
 def contrat():
     """Fichiers attendus -> (dossier, taille logique (w, h), images). Les ombres portées sont vérifiées à part."""
     a = {}
-    for c in CARTES:
+    for c in TERRAINS:
         a["terrain-%s.jpg" % c] = (TD, (1000, 660), 1)
     for camp in ["france"] + RIVAUX:
         for etat in ("intact", "abime", "ruine"):
@@ -76,8 +78,9 @@ def contrat():
     a["effet-poussiere.png"] = (TD, (48, 48), 5)
     a["effet-eclats.png"] = (TD, (32, 32), 4)
     a["fond-campagne.jpg"] = (CAMP, (1000, 530), 1)
-    for camp in ("france", "france-2", "france-3", "angleterre", "omeyyades", "brume"):
+    for camp in ("france", "france-2", "france-3", "angleterre", "omeyyades"):
         a["lieu-%s.png" % camp] = (CAMP, (80, 80), 1)
+    a["lieu-brume.png"] = (CAMP, (180, 100), 1)          # nappe de brume, plus large qu'un bourg
     return a
 
 
@@ -398,10 +401,11 @@ def main():
     except Exception as ex:          # Node absent : contrôles de lecture des terrains impossibles
         geo = {}
         fautes.append("géométrie des cartes illisible (Node) : %s" % ex)
-    for c in CARTES:
+    for c in TERRAINS:
         chemin = os.path.join(TD, "terrain-%s.jpg" % c)
-        if os.path.exists(chemin) and c in geo:
-            controle_terrain("terrain-" + c, chemin, geo[c], fautes, notes)
+        base = c[:-4] if c.endswith("-sud") else c
+        if os.path.exists(chemin) and base in geo:
+            controle_terrain("terrain-" + c, chemin, geo[base], fautes, notes)
     controle_lieux(man, fautes, notes)
     controle_abime(fautes, notes)
     controle_toits(attendu, fautes, notes)

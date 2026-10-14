@@ -89,7 +89,8 @@ def vue_en_jeu(terrain, carte, rival="angleterre"):
     man = C.lire_manifeste()
     route = carte["route"]
     _, _, longueur = sur_route(route, 0)
-    places = [("place-france-intact", route[0]), ("place-%s-intact" % rival, route[-1])]
+    pl = carte.get("places") or {"depart": route[0], "arrivee": route[-1]}      # pied des places (la route part des portes)
+    places = [("place-france-intact", pl["depart"]), ("place-%s-intact" % rival, pl["arrivee"])]
     emp, riv = carte["emplacements"], carte["emplacementsRivaux"]
     tours = [("tour-archers-france-1", emp[0]), ("tour-piquiers-france-2", emp[2]), ("tour-archers-france-2", emp[3]),
              ("tour-baliste-france-3", emp[5]), ("tour-archers-france-3", emp[7]), ("tour-catapulte-france-3", emp[8])]

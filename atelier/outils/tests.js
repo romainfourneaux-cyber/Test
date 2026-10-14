@@ -148,6 +148,33 @@ MB.gagnerOr(pb, 40); MB.poserTour(pb, "archers", 1);
 let garde = 0;
 while (pb.phase !== "fin" && garde++ < 10) { MB.poserTour(pb, "archers", garde + 1); MB.jouerVague(pb, 0.05); }
 verifier("Une bataille se termine toujours", pb.phase === "fin" && ["victoire", "tenu", "retraite"].indexOf(pb.fin) >= 0, pb.fin);
+// cartes : la route va de porte à porte, le pied des places fortes ne bouge pas, aucun ruisseau ne touche un emplacement
+const IDS_CARTES = ["domaine", "gue", "foret", "moulin", "col", "chateau"];
+verifier("Cartes : la route part de la porte de ta place forte et finit à la porte de la place adverse", IDS_CARTES.every(id => {
+  const c = J.cartesBataille.carte(id), P = J.cartesBataille.PORTES, d = c.places.depart, f = c.places.arrivee;
+  const r0 = c.route[0], r1 = c.route[c.route.length - 1];
+  return d[0] === 85 && f[0] === 915 && Math.hypot(r0[0] - d[0] - P.depart.dx, r0[1] - d[1] - P.depart.dy) < 0.5
+    && Math.hypot(r1[0] - f[0] - P.arrivee.dx, r1[1] - f[1] - P.arrivee.dy) < 0.5;
+}));
+verifier("Cartes : la route se tient à 44 px au moins de chaque emplacement de tour", IDS_CARTES.every(id => {
+  const c = J.cartesBataille.carte(id), r = MB.preparerRoute(c.route);
+  return c.emplacements.concat(c.emplacementsRivaux).every(e => { for (let s = 0; s <= r.longueur; s += 2) { const q = MB.surRoute(r, s, 0); if (Math.hypot(q.x - e[0], q.y - e[1]) < 44) return false; } return true; });
+}));
+verifier("Cartes : le ruisseau de chaque carte (même élargi de 60 %, et le Grand Fleuve de 40 px) passe loin des tours", IDS_CARTES.every(id => {
+  const c = J.cartesBataille.carte(id), rive = Math.max(c.rive, id === "gue" ? 20 : 0);
+  const dSeg = (x, y, a, b) => { const dx = b[0] - a[0], dy = b[1] - a[1], l2 = dx * dx + dy * dy || 1, t = Math.max(0, Math.min(1, ((x - a[0]) * dx + (y - a[1]) * dy) / l2)); return Math.hypot(a[0] + t * dx - x, a[1] + t * dy - y); };
+  return c.emplacements.concat(c.emplacementsRivaux).every(e => {
+    let m = Infinity; for (let i = 1; i < c.riviere.length; i++) m = Math.min(m, dSeg(e[0], e[1], c.riviere[i - 1], c.riviere[i]));
+    return m - 1.6 * rive >= 8;
+  });
+}));
+verifier("Le Gué : une traversée à gué, sans pont", J.cartesBataille.carte("gue").ponts.filter(p => p.gue).length === 1);
+verifier("Moteur : pertes et arrivées comptées pour le tableau de la mêlée", (() => {
+  const q = MB.creer(carte, { pvRival: 999, arsenal: { tours: { archers: 1 }, troupes: { fantassins: 1 } } });
+  q.or = 200; MB.envoyer(q, "fantassins"); MB.envoyer(q, "fantassins");
+  let g = 0; while (q.phase !== "fin" && g++ < 3) MB.jouerVague(q, 0.05);
+  return q.stats.arrivees + q.stats.pertes > 0 && q.stats.arrivees <= q.stats.envoyes;
+})());
 verifier("Pendant une vague, aucune pose possible", (() => { const q = MB.creer(carte, {}); MB.lancerVague(q); return !MB.poserTour(q, "archers", 0) && !MB.envoyer(q, "fantassins"); })());
 
 // validateur : règles de suivi.js (seulement des cours, devoir source connu, note sans chiffre ni personne)

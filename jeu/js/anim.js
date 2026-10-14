@@ -6,6 +6,13 @@
   var JEU = racine.JEU;
   var toile = null, ctx = null, particules = [], boucle = null, dernier = 0;
 
+  // Après la prochaine image : la question suivante est peinte d'abord, la décoration (sceau, gain qui s'envole)
+  // une image plus tard (16 à 30 ms, invisible à l'œil), sans alourdir l'image qui montre la question.
+  function apresImage(f) {
+    if (racine.requestAnimationFrame && racine.setTimeout) racine.requestAnimationFrame(function () { racine.setTimeout(f, 0); });
+    else f();
+  }
+
   function actif() {
     var etat = JEU.sauvegarde && JEU.sauvegarde.etat();
     if (etat && etat.reglages && etat.reglages.animations === false) return false;
@@ -86,21 +93,24 @@
     var cible = document.querySelector("#ressources .ressource[data-res='" + ressource + "']");
     if (!cible) return;
     if (!actif()) return;
+    // points de départ et d'arrivée relevés tout de suite (la question qui part est encore là)
     var a = depuis ? centre(depuis) : { x: racine.innerWidth / 2, y: racine.innerHeight / 2 };
     var b = centre(cible);
-    var e = document.createElement("div");
-    e.className = "gain-volant";
-    e.innerHTML = "<span class='medaillon' style='--teinte:" + JEU.MATIERES[JEU.RESSOURCES[ressource].matiere].couleur + "'>" + JEU.icones.ressource(ressource, 18) + "</span>+" + n;
-    e.style.left = a.x + "px"; e.style.top = a.y + "px";
-    document.body.appendChild(e);
-    e.getBoundingClientRect();
-    e.style.transform = "translate(" + (b.x - a.x) + "px," + (b.y - a.y) + "px) scale(.6)";
-    e.style.opacity = "0.2";
-    setTimeout(function () {
-      e.remove();
-      cible.classList.remove("rebond"); void cible.offsetWidth; cible.classList.add("rebond");
-      eclat(b.x, b.y, "or", 8);
-    }, 380);
+    apresImage(function () {
+      var e = document.createElement("div");
+      e.className = "gain-volant";
+      e.innerHTML = "<span class='medaillon' style='--teinte:" + JEU.MATIERES[JEU.RESSOURCES[ressource].matiere].couleur + "'>" + JEU.icones.ressource(ressource, 18) + "</span>+" + n;
+      e.style.left = a.x + "px"; e.style.top = a.y + "px";
+      document.body.appendChild(e);
+      e.getBoundingClientRect();
+      e.style.transform = "translate(" + (b.x - a.x) + "px," + (b.y - a.y) + "px) scale(.6)";
+      e.style.opacity = "0.2";
+      setTimeout(function () {
+        e.remove();
+        cible.classList.remove("rebond"); void cible.offsetWidth; cible.classList.add("rebond");
+        eclat(b.x, b.y, "or", 8);
+      }, 380);
+    });
   }
 
   function secouer(el) {
@@ -119,5 +129,5 @@
     setTimeout(function () { d.remove(); }, 900);
   }
 
-  JEU.anim = { actif: actif, eclat: eclat, gain: gain, secouer: secouer, degats: degats, centre: centre };
+  JEU.anim = { actif: actif, eclat: eclat, gain: gain, secouer: secouer, degats: degats, centre: centre, apresImage: apresImage };
 })(typeof window !== "undefined" ? window : globalThis);

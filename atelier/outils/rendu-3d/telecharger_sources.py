@@ -38,6 +38,11 @@ TEXTURES = {
     "medieval_wood": ("1k", ["Diffuse", "nor_gl"], "bois des engins et des hourds"),
     "rough_wood": ("1k", ["Diffuse", "nor_gl"], "pieux, poutres"),
     "cobblestone_01": ("1k", ["Diffuse", "nor_gl"], "pavés devant la porte des places fortes (terrains)"),
+    "withered_grass": ("1k", ["Diffuse", "nor_gl"], "herbe jaunie (front du sud), blé et chaume des champs"),
+    "dry_ground_01": ("1k", ["Diffuse", "nor_gl"], "sol ocre et sec (front du sud)"),
+    "aerial_rocks_02": ("2k", ["Diffuse", "nor_gl"], "éboulis et affleurements vus d'en haut (Tour du Col, Piémont)"),
+    "dry_river_pebbles": ("1k", ["Diffuse", "nor_gl"], "cailloux semés sur la piste du sud"),
+    "forest_leaves_02": ("1k", ["Diffuse", "nor_gl"], "sous-bois feuillu (Forêt de l'Ouest)"),
 }
 
 # Modèles (glTF) : id -> (résolution, usage)
@@ -46,6 +51,10 @@ MODELES = {
     "island_tree_02": ("1k", "arbres larges et buissons hauts"),
     "shrub_04": ("1k", "buissons de la plaine et de la lisière (échelle 2 à 3)"),
     "rock_moss_set_01": ("1k", "rochers moussus"),
+    "boulder_01": ("1k", "gros rochers des éboulis (Tour du Col, Piémont)"),
+    "rock_face_01": ("1k", "affleurements rocheux (Tour du Col, Piémont)"),
+    "namaqualand_boulder_04": ("1k", "rochers secs (front du sud)"),
+    "searsia_lucida": ("1k", "maquis et garrigue (front du sud)"),
     "kite_shield": ("1k", "référence de forme seulement (l'écu en amande est modélisé par figurines.py) ; n'entre dans aucune image"),
 }
 
@@ -140,7 +149,8 @@ def main():
         "CREDITS-a-ajouter.md). Le lion passant gardant d'Angleterre n'est plus l'icône « lion » de Game-icons (une tête de "
         "lion) : il est dessiné en formes simples dans commun.py (masque_lion), CC0 1.0.",
         "",
-        "Tout le reste (personnages, chevaux, châteaux, tours, engins, ponts, eau, relief) est modélisé par programme "
+        "Tout le reste (personnages, chevaux, châteaux, tours, engins, ponts, moulin à eau, pins, cyprès, oliviers, eau, "
+        "relief) est modélisé par programme "
         "dans les scripts de atelier/outils/rendu-3d/ (CC0 1.0).",
         "",
     ]

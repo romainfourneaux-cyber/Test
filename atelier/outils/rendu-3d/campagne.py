@@ -8,8 +8,8 @@ Sorties (jeu/assets/images/campagne/) :
   lieu-france.png (et ses variantes lieu-france-2.png, lieu-france-3.png pour les provinces prises), lieu-angleterre.png,
   lieu-omeyyades.png (80 × 80 px logiques, rendu 160 × 160) : bourgs fortifiés vus de trois quarts, sur une aire de
   terre claire à peine posée (alpha 0,5, bord fondu, sans trait ni ombre ajoutée), bannière deux fois plus grande
-  au-dessus des toits ; lieu-brume.png : une nappe de brume claire et nuageuse, sans silhouette ni disque (lieu pas
-  encore ouvert ; dessinée sans Blender).
+  au-dessus des toits ; lieu-brume.png (180 × 100 px logiques) : une large nappe de brume aux bords effilochés, sans
+  silhouette ni disque (lieu pas encore ouvert ; dessinée sans Blender ; le jeu désature aussi le terrain dessous).
   Ancrage des lieux : bas-centre moins 16 px.
 
 Relief (même soleil que les champs de bataille : nord-ouest, 45°, versants nord-ouest éclairés, sud-est à l'ombre) :
@@ -22,8 +22,10 @@ Relief (même soleil que les champs de bataille : nord-ouest, 45°, versants nor
     (6 à 14 px), berges claires et arbres le long de l'eau : la rivière du nord passe au gué, reçoit le ruisseau du
     moulin et se jette dans le fleuve ; le fleuve passe au « Grand Fleuve », le piémont restant du côté des montagnes.
 Champs : lanières rectangulaires (blé, labour, pré) groupées en blocs d'orientations variées, haies sombres et fines.
-Oliveraie : quatre parcelles séparées par des chemins, rangées alignées (pas de 2,5 diamètres de couronne, décalage de
-± 20 % et couronnes de taille ± 30 %), couronnes gris-vert, terre ocre entre les rangs. Plaine du sud gris-olive.
+Oliveraie : quatre parcelles aux rangées d'orientations différentes, limites irrégulières sans chemin tracé (pas de 2,5
+diamètres de couronne, décalage de ± 20 % et couronnes de taille ± 30 %), couronnes gris-vert, terre ocre entre les rangs.
+Plaine du sud gris-olive. Escarpement : relief exagéré × 1,4 (au-delà, la photo de roche s'étirait en traînées), photos
+de roche, d'éboulis et de versant en projection triplanaire, maillage plus fin, extrémité ouest en pente douce.
 Positions des lieux relevées dans jeu/js/ecran-campagne.js (lecture seule).
 """
 import math
@@ -47,22 +49,24 @@ V = Vector
 LARG, HAUT = 1000, 530
 UNITE = 0.1                     # unités Blender par px logique (carte de 100 × 53)
 TAILLE_MASQUE = (2000, 1060)
-EXAGERATION = 1.7               # relief exagéré : les versants se lisent nettement
+EXAGERATION = 1.4               # relief exagéré : les versants se lisent (plus fort, la roche s'étirait en traînées)
 
 # Tracés de départ (px logiques) : lissés, ondulés et élargis vers l'aval par riviere()
-RIVIERE_NORD = [(352, 22), (318, 62), (282, 98), (258, 128), (240, 168), (214, 214), (186, 262), (168, 318), (160, 380),
-                (152, 430), (150, 456)]
-RUISSEAU_MOULIN = [(702, 52), (668, 82), (630, 112), (588, 140), (540, 158), (480, 168), (420, 170), (360, 165), (300, 160),
-                   (248, 158)]
+# La rivière du nord passe à l'est du Gué (le bourg est sur la rive ouest, son nom ne touche pas l'eau) ; le ruisseau
+# du moulin longe le bourg du Moulin du Val par le nord (le bourg est sur la berge sud).
+RIVIERE_NORD = [(356, 22), (340, 62), (326, 98), (314, 130), (300, 166), (262, 214), (214, 262), (182, 318), (164, 380),
+                (154, 430), (150, 456)]
+RUISSEAU_MOULIN = [(702, 50), (668, 72), (630, 92), (588, 110), (540, 127), (480, 146), (420, 158), (360, 163), (300, 166)]
 FLEUVE_SUD = [(-12, 476), (70, 468), (150, 458), (230, 452), (300, 448), (370, 452), (440, 450), (505, 428), (560, 405),
               (600, 402), (650, 425), (720, 455), (790, 462), (860, 448), (930, 458), (1012, 470)]
-CRETE = [(200, 262), (300, 255), (400, 262), (500, 254), (600, 260), (700, 252), (800, 258), (900, 250), (1012, 256)]
+CRETE = [(110, 270), (200, 262), (300, 255), (400, 262), (500, 254), (600, 260), (700, 252), (800, 258), (900, 250),
+         (1012, 256)]
 
 PALETTE = {
     "herbe_n": "#5d6a34", "herbe_n2": "#55652f", "herbe_s": "#7d7656", "herbe_s2": "#877c5d",
     "roche": "#6e665c", "eboulis": "#8e8672", "versant": "#6b6644", "berge": "#a69c7c", "eau": "#34463c", "eau_bord": "#56604a",
     "ble": "#c8b46a", "labour": "#7a5a3a", "pre": "#7d9440", "chaume": "#a89a62", "jachere": "#8b8a52",
-    "haie": "#3a4722", "olivier": "#6f7a4e", "terre_olive": "#a88d5c", "chemin": "#b3a27f", "alpage": "#7a8548",
+    "haie": "#3a4722", "olivier": "#6f7a4e", "terre_olive": "#a88d5c", "chemin": "#b3a27f", "alpage": "#707d42",
 }
 
 
@@ -158,15 +162,17 @@ def masques(graine=17):
     dc, latc, absc, _ = T.champ_distance(chaikin(CRETE, 5), W, H, 140)
     h_crete = 3.0 + 0.8 * T.bruit1d(absc, 90.0, graine + 5)
     # contreforts : bruit « en crêtes » étiré en travers de la chaîne (lent en travers, plus rapide le long)
-    contreforts = 1 - np.abs(2 * bruit_valeur(absc / 48.0, latc / 80.0 + 50, graine + 6, octaves=2) - 1)
+    # (moins étirés qu'avant : étirés de 80 px en travers, ils dessinaient sur la face sud des traînées verticales)
+    contreforts = 1 - np.abs(2 * bruit_valeur(absc / 40.0, latc / 46.0 + 50, graine + 6, octaves=2) - 1)
     vallees = bruit_valeur(absc / 70.0, latc / 120.0 + 20, graine + 7, octaves=2)
-    largeur = 44 + 20 * n1 + 12 * n4 + 10 * (contreforts - 0.5)       # pied de chaîne irrégulier (avancées, anses)
+    # l'escarpement s'amincit et s'abaisse en pente douce vers l'ouest (il ne s'arrête plus net vers x = 200)
+    debut = T.lisse01(110, 330, x)
+    largeur = (44 + 20 * n1 + 12 * n4 + 10 * (contreforts - 0.5)) * (0.45 + 0.55 * debut)  # pied irrégulier (avancées, anses)
     # profil en toit : arête de crête nette, deux versants francs (l'un au soleil, l'autre à l'ombre)
     profil = np.clip(1 - dc / (largeur * 1.5), 0, 1) ** 1.25
     profil = profil * T.lisse01(0.0, 0.25, profil) ** 0.5                 # pied adouci (pas d'arête au bas des versants)
-    debut = T.lisse01(150, 235, x)
     montagne = profil * debut
-    relief = h_crete * profil * (0.55 + 0.6 * contreforts ** 1.5) * (0.7 + 0.3 * vallees) * debut
+    relief = h_crete * profil * (0.7 + 0.35 * contreforts ** 1.5) * (0.7 + 0.3 * vallees) * debut
     # détail « multifractal à crêtes » : arêtes secondaires et ravines d'orientations variées (le relief se lit en
     # facettes claires et sombres, comme sur une carte de campagne, et non comme une bande lisse)
     r1 = 1 - np.abs(2 * bruit_valeur(x / 28.0 + 11, y / 28.0 + 5, graine + 9, octaves=2) - 1)
@@ -195,7 +201,7 @@ def masques(graine=17):
     vallee = np.zeros((H, W), dtype=np.float32)
     proche_eau = np.full((H, W), 99.0, dtype=np.float32)
     cours = []
-    for k, (pts, a, l0, l1) in enumerate(((RIVIERE_NORD, 15, 6, 10), (RUISSEAU_MOULIN, 12, 4, 7), (FLEUVE_SUD, 15, 10, 14))):
+    for k, (pts, a, l0, l1) in enumerate(((RIVIERE_NORD, 12, 6, 10), (RUISSEAU_MOULIN, 7, 4, 7), (FLEUVE_SUD, 15, 10, 14))):
         trace, demi = riviere(pts, graine + 30 + k, a, l0, l1)
         cours.append((trace, demi))
         d, _, ab, _ = T.champ_distance(trace, W, H, 50)
@@ -327,17 +333,14 @@ def plan_oliviers(mq, graine=31):
                 ii, jj = int(round(px - xs[0])), int(round(py - ys[0]))
                 if not (0 <= ii < X.shape[1] and 0 <= jj < X.shape[0]):
                     continue
-                if idx[jj, ii] != k or d2[jj, ii] - d1[jj, ii] < 3.2:       # dans sa parcelle, hors des chemins
+                if idx[jj, ii] != k or d2[jj, ii] - d1[jj, ii] < 1.2 + 1.6 * rnd.random():   # limites irrégulières
                     continue
                 if oliv[min(H - 1, int(py * s)), min(W - 1, int(px * s))] < 0.45:
                     continue
                 pts.append((px, py, diam / 2 * rnd.uniform(0.7, 1.3)))
-    # chemins entre parcelles
-    yy, xx = np.mgrid[0:H, 0:W].astype(np.float32)
-    x, y = (xx + 0.5) / s, (yy + 0.5) / s
-    e1, e2, _ = distance_points([g[0] for g in graines], [g[1] for g in graines], x, y)
-    chemin = T.lisse01(2.2, 1.0, e2 - e1) * T.lisse01(0.2, 0.5, oliv)
-    return pts, chemin
+    # plus de chemins tirés au cordeau entre les parcelles (ils dessinaient un grand « Λ ») : les rangées changent
+    # seulement d'orientation d'une parcelle à l'autre, à une limite irrégulière
+    return pts, np.zeros((H, W), dtype=np.float32)
 
 
 # ---------------------------------------------------------------- matière
@@ -351,17 +354,20 @@ def mat_carte(noms, img_champs):
     eboulis, berge, prof, chemin = mk[2]["R"], mk[2]["G"], mk[2]["B"], mk[2]["A"]
     versant, alpage = mk[3]["R"], mk[3]["G"]
 
-    def photo(ident, taille, cible, contraste=1.3, garde=0.15):
+    def photo(ident, taille, cible, contraste=1.3, garde=0.15, triplanaire=False):
         t = T._tex(nt, ident, "diff", obj, taille)
+        if triplanaire:                 # versants raides : la photo n'est plus étirée le long de la pente
+            t.projection = "BOX"
+            t.projection_blend = 0.35
         return C.teinter_luminance(nt, t.outputs["Color"], ident, cible, contraste, garde)
     herbe_n = T._mix(nt, var, photo("aerial_grass_rock", 16.0, PALETTE["herbe_n"], 1.3), photo("rocky_terrain_02", 20.0, PALETTE["herbe_n2"], 1.2))
     # plaine du sud : gris-olive (valeur −12 %, saturation −20 % par rapport à l'ancien ocre)
     herbe_s = T._mix(nt, var, photo("aerial_grass_rock", 16.0, PALETTE["herbe_s"], 1.2), photo("rocky_terrain_02", 20.0, PALETTE["herbe_s2"], 1.2))
     sol = T._mix(nt, sud, herbe_n, herbe_s)
     # versants : pelouse rase brun-olive, éboulis au pied, roche sur les pentes de plus de 30°
-    sol = T._mix(nt, versant, sol, photo("rocky_terrain_02", 12.0, PALETTE["versant"], 1.4, 0.1))
-    sol = T._mix(nt, eboulis, sol, photo("rocky_terrain_02", 9.0, PALETTE["eboulis"], 1.3, 0.1))
-    sol = T._mix(nt, roche, sol, photo("rocky_terrain_02", 7.0, PALETTE["roche"], 1.8, 0.15))
+    sol = T._mix(nt, versant, sol, photo("rocky_terrain_02", 12.0, PALETTE["versant"], 1.4, 0.1, True))
+    sol = T._mix(nt, eboulis, sol, photo("rocky_terrain_02", 9.0, PALETTE["eboulis"], 1.3, 0.1, True))
+    sol = T._mix(nt, roche, sol, photo("aerial_rocks_02", 9.0, PALETTE["roche"], 1.5, 0.15, True))
     sol = T._mix(nt, alpage, sol, photo("aerial_grass_rock", 12.0, PALETTE["alpage"], 1.2, 0.1))
     # champs en lanières (image calculée par parcelles()), grain de la terre par-dessus, haies sombres
     im = N("ShaderNodeTexImage")
@@ -389,7 +395,9 @@ def mat_carte(noms, img_champs):
     p.inputs["Specular IOR Level"].default_value = 0.2
     nr = T._tex(nt, "rocky_terrain_02", "nor_gl", obj, 7.0, non_couleur=True)
     nm = N("ShaderNodeNormalMap")
-    L(roche, nm.inputs["Strength"])
+    fr = N("ShaderNodeMath"); fr.operation = "MULTIPLY"; fr.inputs[1].default_value = 0.5
+    L(roche, fr.inputs[0])
+    L(fr.outputs[0], nm.inputs["Strength"])
     L(nr.outputs["Color"], nm.inputs["Color"])
     L(nm.outputs["Normal"], p.inputs["Normal"])
     return m
@@ -507,7 +515,7 @@ def fond(essai=False, echantillons=48):
     m4 = T.ecrire_masque("campagne-4", [mq["versant"], mq["alpage"], np.zeros_like(mq["eau"]), np.ones_like(mq["eau"])])
     C.reinitialiser()
     C.installer_lumiere()
-    nx, ny = 700, 371
+    nx, ny = 1000, 530                  # maillage plus fin : facettes de l'escarpement sans étirement
     h = np.array(Image.fromarray(mq["h"].astype(np.float32), "F").resize((nx + 1, ny + 1), Image.BILINEAR), dtype=np.float32)
     bm = bmesh.new()
     uv = bm.loops.layers.uv.new("UVMap")
@@ -716,35 +724,42 @@ def plateforme(taille_px, centre, rx, ry, graine=3):
 PLATEFORME_ALPHA, PLATEFORME_FONDU = 0.5, 0.18
 
 
-def nappe_brume(taille_px, ancre_px, graine=41):
-    """Lieu pas encore ouvert : une nappe de brume claire et nuageuse (blanc cassé, alpha 0,7 à 0,76 au centre, bords
-    fondus), sans silhouette ni disque : un voile de nuée posé sur la carte, comme sur une carte de campagne à la Total
-    War. Volume suggéré par la même lumière que le reste : bords hauts et gauches plus clairs, dessous un peu gris."""
-    W = H = taille_px
-    cx, cy = W / 2, ancre_px - 0.2 * H              # centre de la nappe, sur le corps du bourg qu'elle cache
+# nappe de brume : taille logique, ancrage, bas visible de la nuée depuis l'ancrage (16 px sous le pied du lieu, comme le
+# bas des bourgs : le nom d'un lieu dans la brume est à la même place que s'il était découvert), centre de la nappe,
+# haut visible de la nuée depuis l'ancrage (pour un nom posé au-dessus du lieu)
+BRUME = (180, 100, 90, 48, 16, 46, -32)
+
+
+def nappe_brume(W, H, cx, cy, graine=41):
+    """Lieu pas encore ouvert : une large nappe de brume (environ 170 × 90 px logiques), irrégulière, aux bords
+    effilochés en filaments étirés par le vent, sans silhouette ni disque : un voile de brouillard de guerre posé sur
+    la carte (le jeu désature en plus le terrain dessous). Volume suggéré par la même lumière que le reste : haut et
+    gauche plus clairs, dessous un peu gris. (cx, cy) : centre de la nappe, en px de l'image."""
     yy, xx = np.mgrid[0:H, 0:W].astype(np.float32)
     rng = np.random.default_rng(graine)
     dens = np.zeros((H, W), dtype=np.float32)
-    # quelques bouffées étirées en largeur, en grappe : la nappe couvre environ 80 % de la largeur de l'image
-    for k in range(8):
-        bx = cx + rng.uniform(-0.2, 0.2) * W
-        by = cy + rng.uniform(-0.07, 0.07) * H
-        rx = rng.uniform(0.2, 0.27) * W
-        ry = rx * rng.uniform(0.5, 0.62)
-        dens = np.maximum(dens, np.exp(-(((xx - bx) / rx) ** 2 + ((yy - by) / ry) ** 2)))
-    n = T.bruit(W, H, 26, graine + 2, octaves=4)
-    dens = np.clip(dens * (0.85 + 0.3 * n), 0, 1)
-    dens = np.array(Image.fromarray((dens * 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(3)), dtype=np.float32) / 255
-    # bords fondus, jamais d'arête : la densité passe par une rampe douce, et tout s'efface avant le bord de l'image
-    a = T.lisse01(0.06, 0.62, dens) * 0.76
+    # une vingtaine de bouffées étirées en largeur, en grappe irrégulière
+    for k in range(22):
+        bx = cx + rng.normal(0, 0.2) * W
+        by = cy + rng.normal(0, 0.09) * H
+        rx = rng.uniform(0.09, 0.2) * W
+        ry = rx * rng.uniform(0.35, 0.55)
+        dens = np.maximum(dens, rng.uniform(0.7, 1.0) * np.exp(-(((xx - bx) / rx) ** 2 + ((yy - by) / ry) ** 2)))
+    # filaments : bruit étiré en largeur (le vent), qui ronge les bords
+    n_gros = T.bruit(W, H, 40, graine + 2, octaves=4)
+    fil = np.array(Image.fromarray(T.bruit(W // 4, H, 6, graine + 3, octaves=3).astype(np.float32), "F").resize((W, H), Image.BICUBIC))
+    dens = dens * (0.8 + 0.35 * n_gros) + 0.28 * fil * T.lisse01(0.08, 0.5, dens)
+    dens = np.array(Image.fromarray(np.clip(dens * 255, 0, 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(1.6)),
+                    dtype=np.float32) / 255
+    a = T.lisse01(0.12, 0.7, dens) * 0.82
     marge = np.minimum(np.minimum(xx, W - 1 - xx), np.minimum(yy, H - 1 - yy))
-    a *= T.lisse01(3, 16, marge)
-    # lumière du nord-ouest : dérivée de la densité vers le haut-gauche -> bords éclairés plus clairs
-    dy_, dx_ = np.gradient(np.array(Image.fromarray((dens * 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(5)),
-                                    dtype=np.float32) / 255)
-    lum = np.clip(0.55 - 9.0 * (dx_ + dy_), 0, 1)
-    clair, ombre = np.array(C.rgb8("#f2efe6"), dtype=np.float32), np.array(C.rgb8("#c4c1b7"), dtype=np.float32)
-    t = np.clip(0.3 + 0.6 * lum + 0.12 * n, 0, 1)[..., None]
+    a *= T.lisse01(2, 14, marge)
+    # lumière du nord-ouest : bords hauts et gauches plus clairs, dessous gris
+    flou = np.array(Image.fromarray((dens * 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(6)), dtype=np.float32) / 255
+    dy_, dx_ = np.gradient(flou)
+    lum = np.clip(0.55 - 10.0 * (dx_ + dy_), 0, 1)
+    clair, ombre = np.array(C.rgb8("#f1eee4"), dtype=np.float32), np.array(C.rgb8("#bdbab0"), dtype=np.float32)
+    t = np.clip(0.3 + 0.55 * lum + 0.15 * n_gros, 0, 1)[..., None]
     rgb = ombre * (1 - t) + clair * t
     return Image.fromarray(np.dstack([np.clip(rgb, 0, 235), a * 255]).astype(np.uint8), "RGBA")
 
@@ -754,7 +769,18 @@ def rendre_lieu(camp, surech=2, echantillons=64, variante=1):
     px = taille * C.ECHELLE
     nom = "lieu-" + camp + ("-%d" % variante if variante > 1 else "")
     if camp == "brume":
-        img = nappe_brume(px, (taille - ancre) * C.ECHELLE)
+        # nappe plus large que les bourgs : 180 × 100 px logiques, ancrée sous le corps du bourg qu'elle cache ; « bas » :
+        # bas visible de la nuée depuis l'ancrage (le jeu y cale le nom du lieu)
+        w, h, ax, ay, bas, cy, haut = BRUME
+        k = C.ECHELLE
+        img = nappe_brume(w * k, h * k, w * k / 2, cy * k)
+        C.controle_bords(img, nom)
+        chemin, src = C.chemin_campagne(nom + ".png")
+        C.sauver_png(img, chemin)
+        e = C.entree(src, w, h, ax, ay)
+        e["bas"], e["haut"] = bas, haut
+        C.maj_manifeste({nom: e})
+        return chemin
     else:
         C.reinitialiser()
         C.lumiere_batiment(camp if camp in C.CAMPS else "france")

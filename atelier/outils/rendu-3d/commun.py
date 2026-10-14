@@ -503,8 +503,9 @@ def teinter_luminance(nt, sortie_couleur, ident, cible, contraste=1.0, garde_tei
 def tex_ph(ident, carte):
     """Chemin d'une carte (diff, nor_gl, rough, disp) d'une texture Poly Haven téléchargée."""
     dossier = os.path.join(SOURCES, ident)
+    motif = "(diff|diffuse)" if carte == "diff" else re.escape(carte)      # certaines textures disent « diffuse »
     for f in sorted(os.listdir(dossier)):
-        if re.search(r"_%s_\dk\.(jpg|png)$" % re.escape(carte), f):
+        if re.search(r"_%s_\dk\.(jpg|png)$" % motif, f):
             return os.path.join(dossier, f)
     raise FileNotFoundError(ident + " " + carte + " (lancer telecharger_sources.py)")
 

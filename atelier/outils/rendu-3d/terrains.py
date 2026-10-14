@@ -3,12 +3,14 @@
 
 Usage : python3 atelier/outils/rendu-3d/terrains.py [carte ...] [--essai | --zone x0,y0,x1,y1] [--sortie chemin.jpg]
                                                     [--apercu dossier] [--planche chemin.png]
-  carte : domaine, gue, foret, moulin, col, chateau (par défaut : toutes, l'une après l'autre)
+  carte : domaine, gue, foret, moulin, col, chateau, et les variantes du front omeyyade gue-sud, foret-sud,
+          moulin-sud, col-sud, chateau-sud (par défaut : les 11, l'un après l'autre)
   --essai : rendu rapide à la taille logique (1000 × 660), écrit dans --sortie (brouillon)
   --zone : seulement ce rectangle (px logiques), à la résolution finale, écrit dans --sortie (contrôle du détail)
   --apercu : sans Blender, écrit dans le dossier un aperçu des masques et de la végétation prévue (contrôle rapide)
-  --planche : sans Blender, planche de contrôle des 6 terrains déjà rendus (vues de jeu et détails à 2 ×)
-Sorties : jeu/assets/images/td/terrain-<carte>.jpg, 2000 × 1320, JPEG (≤ 440 000 octets, qualité plancher 72).
+  --planche : sans Blender, planche de contrôle des 11 terrains déjà rendus (vues de jeu et détails à 2 ×)
+Sorties : jeu/assets/images/td/terrain-<carte>.jpg, 2000 × 1320, JPEG (≤ 440 000 octets, 400 000 pour « -sud »,
+qualité plancher 72).
 
 La géométrie (route lissée, emplacements, rivière) est lue dans les fichiers du jeu (jeu/js/cartes-bataille.js)
 par Node : le terrain colle exactement au tracé. Repère : 1 px logique = 10 cm ; x vers la droite, y vers le bas
@@ -51,6 +53,7 @@ from mathutils import Vector  # noqa: E402
 from PIL import Image, ImageDraw, ImageFilter  # noqa: E402
 
 import places as P  # noqa: E402
+import decors as D  # noqa: E402
 
 V = Vector
 LARG, HAUT = 1000, 660                   # canevas logique
@@ -149,7 +152,7 @@ def boite_place(camps):
 
 def emprises(carte):
     """Pour chaque bout de route : (x, y, boîte opaque, camps) ; à gauche la France, à droite les deux rivaux possibles."""
-    d, f = carte["route"][0], carte["route"][-1]
+    d, f = carte["places"]["depart"], carte["places"]["arrivee"]
     rivaux = ["angleterre", "omeyyades"]
     return [(d[0], d[1], boite_place(["france"]), ["france"]), (f[0], f[1], boite_place(rivaux), rivaux)]
 
@@ -201,6 +204,8 @@ def sentiers(carte):
     route = carte["route"]
     res = []
     for (gx, gy, ux, uy, ex, ey, camp) in portes(carte):
+        if min(math.hypot(gx - route[0][0], gy - route[0][1]), math.hypot(gx - route[-1][0], gy - route[-1][1])) < 8:
+            continue                       # la route part de la porte (cartes-bataille.js) : pas de sentier à part
         if math.hypot(gx - ex, gy - ey) <= PORTE_MIN:
             C.journal("pas de sentier pour la porte de la place %s (à %.0f px du bout de la route)"
                       % (camp, math.hypot(gx - ex, gy - ey)))
@@ -335,10 +340,12 @@ def courbure(ligne):
 
 
 # ---------------------------------------------------------------- masques du terrain
-def masques(carte, graine):
-    """Calcule les masques (2000 × 1320) : route, ornières, flaques, sentiers, eau, berges, forêt, clairières...
+def masques(carte, graine, t=None):
+    """Calcule les masques (2000 × 1320) : route, ornières, flaques, sentiers, eau, berges, forêt, clairières, et ceux
+    du décor de la carte (t, voir decors.py) : gué, champs, oliveraies, fossé, relief, moulin.
 
-    Renvoie un dict de tableaux 0..1 et la géométrie utilisée (ponts, emprises des places)."""
+    Renvoie un dict de tableaux 0..1 et la géométrie utilisée (ponts, gués, emprises des places, moulin)."""
+    t = t or {}
     W, H = TAILLE_MASQUE
     s = W / LARG
     route = carte["route"]
@@ -359,19 +366,33 @@ def masques(carte, graine):
     def val(arr, px, py):
         return float(arr[min(H - 1, max(0, int(py * s))), min(W - 1, max(0, int(px * s)))])
 
-    # ---- rivière : demi-largeur variable le long du cours, plus large à l'extérieur des méandres
+    # ---- rivière : demi-largeur variable le long du cours (± 55 % autour de celle de la carte), plus large à
+    # l'extérieur des méandres
+    R0 = float(t.get("rive") or carte.get("rive") or 11.0)
     sv, kv = courbure(riviere)
     kpix = np.interp(abscv, sv, kv)
-    rive = 11.0 + 6.0 * bruit1d(abscv, 180.0, graine + 8)
+    rive = R0 + 0.545 * R0 * bruit1d(abscv, 180.0, graine + 8)
     exterieur = np.clip(-np.sign(kpix) * np.sign(latv), 0, 1)        # côté extérieur du virage
     interieur = np.clip(np.sign(kpix) * np.sign(latv), 0, 1)         # côté intérieur (eau lente, dépôts)
     virage = lisse01(0.0012, 0.006, np.abs(kpix))
     rive = rive + np.clip(np.abs(kpix) * 900.0, 0, 4.0) * (exterieur - 0.4)
     croisements = intersections(route, riviere)
-    for (px, py, _, _) in croisements:
+    # gué : la traversée marquée dans le jeu (cartes-bataille.js) se fait sur des galets, sans pont ; le lit s'y élargit
+    # et l'eau y est basse
+    i_gue = -1
+    if t.get("gue"):
+        marques = [p_ for p_ in carte.get("ponts", []) if p_.get("gue")]
+        if marques and croisements:
+            g0 = marques[0]
+            i_gue = min(range(len(croisements)), key=lambda i: math.hypot(croisements[i][0] - g0["x"], croisements[i][1] - g0["y"]))
+    for i, (px, py, _, _) in enumerate(croisements):
+        if i == i_gue:
+            pres = lisse01(70, 18, np.hypot(x - px, y - py))
+            rive = rive * (1 - pres) + 1.5 * R0 * pres
+            continue
         pres = lisse01(30, 12, np.hypot(x - px, y - py))
-        rive = rive * (1 - pres) + np.clip(rive, 10.0, 13.0) * pres
-    rive = np.maximum(rive, 8.5)
+        rive = rive * (1 - pres) + np.clip(rive, 0.9 * R0, 1.18 * R0) * pres
+    rive = np.maximum(rive, 0.77 * R0)
     dvb = dv + 3.5 * n1 + 1.5 * n2
     # ligne d'eau à dvb = rive − 1 (hauteurs() y fait passer le niveau de l'eau) : largeur visible ≈ 2 × rive.
     # Eau qui absorbe fort : le fond (eau_bord) ne se voit que sur les 2-3 px du bord, puis vert-bleu sombre.
@@ -397,8 +418,23 @@ def masques(carte, graine):
     ponts = []
     d_pont = np.full((H, W), 1e9, dtype=np.float32)
     m_remous = np.zeros((H, W), dtype=np.float32)
-    for (px, py, a, a_riv) in croisements:
-        r = max(10.0, val(rive, px, py))
+    gues = []
+    m_gue = np.zeros((H, W), dtype=np.float32)          # eau basse du gué (l'eau y laisse voir les galets)
+    m_gue_large = np.zeros((H, W), dtype=np.float32)    # gué et ses abords : lit et berges de galets
+    for i, (px, py, a, a_riv) in enumerate(croisements):
+        if i == i_gue:
+            r = val(rive, px, py)
+            gues.append({"x": px, "y": py, "angle": a, "rive": r})
+            # radier : une bande de galets en travers de tout le lit, longue de ± 2,4 fois la demi-largeur le long du
+            # courant (comptée sur l'abscisse de la rivière), bords irréguliers ; plus large sur les berges
+            s_c = val(abscv, px, py)
+            du = np.abs(abscv - s_c) + 3.0 * n2 + 2.0 * n6 + 0.45 * R0 * n40
+            # transitions longues et bords irréguliers : le radier se fond dans l'eau profonde (pas de dalle carrée)
+            m_gue = lisse01(2.7 * R0 + 6, 0.7 * R0, du) * lisse01(rive + 2.0, rive - 1.5, dvb)
+            m_gue_large = lisse01(3.1 * R0 + 10, 1.1 * R0, du) * lisse01(rive + 11 + 4 * n40, rive + 1, dvb) \
+                * (np.hypot(x - px, y - py) < 6 * R0 + 30)
+            continue
+        r = max(0.9 * R0, val(rive, px, py))
         L = 2 * r + 40
         ca, sa = math.cos(a), math.sin(a)
         chevalets = [-0.45 * r, 0.45 * r]
@@ -415,6 +451,14 @@ def masques(carte, graine):
             vy_ = -(x - qx) * sr + (y - qy) * cr
             m_remous = np.maximum(m_remous, np.exp(-((ux_ / 5.5) ** 2 + (vy_ / 2.2) ** 2)))
     m_remous *= m_eau
+    # gué : rides claires en travers du courant sur les galets, galets sur le lit et les berges, plus de vase
+    if gues:
+        # rides claires en travers du courant : l'eau court sur les galets
+        rides = lisse01(0.2, 0.5, 0.75 * n6 + 0.45 * n2) * (0.5 + 0.5 * np.sin(abscv / 2.6 + 3.0 * n2) ** 2)
+        m_remous = np.maximum(m_remous, 0.6 * m_gue * rides)
+        m_galets = np.maximum(m_galets, 0.95 * m_gue_large)
+        m_vase *= 1 - m_gue_large
+        m_hgrasse *= 1 - m_gue_large
 
     # ---- route : bord irrégulier (qui se resserre sur le tablier des ponts), ornières qui dérivent et s'effacent,
     # flaques, touffes d'herbe qui entament le bord, plaques de terre tassée ou poussiéreuse, plaques humides près de l'eau
@@ -470,7 +514,19 @@ def masques(carte, graine):
     # à 6 px sous l'emprise du sprite ; quelques pavés juste devant la porte
     d_sent = np.full((H, W), 60.0, dtype=np.float32)
     lat_sent = np.zeros((H, W), dtype=np.float32)
-    for pts in sentiers(carte):
+    # moulin : maison sur la rive nord du ruisseau, roue dans l'eau ; un sentier mène de sa porte à la route
+    moulin = None
+    autres_sentiers = []
+    if t.get("moulin"):
+        moulin = D.place_moulin(float(t["moulin"]), riviere, R0)
+        gx, gy = moulin["porte"]
+        nx_, ny_ = moulin["nx"], moulin["ny"]
+        fx, fy = gx + nx_ * 14, gy + ny_ * 14
+        j = min(range(len(route)), key=lambda i: math.hypot(route[i][0] - fx, route[i][1] - fy) + (1e9 if min(i, len(route) - 1 - i) < 6 else 0))
+        autres_sentiers.append(catmull([(gx - nx_ * 12, gy - ny_ * 12), (gx, gy), (fx, fy), tuple(route[j])], 12))
+        C.journal("moulin en (%.0f, %.0f), roue en (%.0f, %.0f), sentier vers la route en (%.0f, %.0f)"
+                  % (moulin["x"], moulin["y"], moulin["roue"][0], moulin["roue"][1], route[j][0], route[j][1]))
+    for pts in sentiers(carte) + autres_sentiers:
         ds, ls, _, _ = champ_distance(pts, W, H, 40)
         mieux = ds < d_sent
         d_sent[mieux] = ds[mieux]
@@ -513,14 +569,89 @@ def masques(carte, graine):
 
     # ---- plaine (ellipse du jeu, lisière à anses et avancées) ; forêt (densité des arbres) tenue loin de la route,
     # des emplacements de tours, de l'eau et des clairières (le même masque que celui des clairières)
-    a, b = (x - 500) / 445, (y - 330) / 285
-    e = a * a + b * b + 0.2 * n3 + 0.03 * n1
-    m_foret0 = lisse01(0.88, 0.97, e)
+    # (plaine plus étroite et lisière plus découpée selon le décor : col, forêt)
+    rx_p, ry_p = t.get("plaine", (445, 285))
+    a, b = (x - 500) / rx_p, (y - 330) / ry_p
+    e_pur = a * a + b * b
+    e = e_pur + float(t.get("lisiere", 0.2)) * n3 + 0.03 * n1
+    m_foret0 = lisse01(*t.get("seuil_foret", (0.88, 0.97)), e)
     d_emp = np.full((H, W), 1e9, dtype=np.float32)
     for (ex, ey) in carte["emplacements"] + carte["emplacementsRivaux"]:
         d_emp = np.minimum(d_emp, np.hypot(x - ex, y - ey))
+
+    # ---- décor : champs en lanières, oliveraies, emprise du moulin, fossé sec ; la forêt n'y pousse pas
+    dans_boites = np.zeros((H, W), dtype=bool)
+    for bx in boites:
+        dans_boites |= (x >= bx[0]) & (x <= bx[2]) & (y >= bx[1]) & (y <= bx[3])
+    libre_champ = lisse01(DEMI_ROUTE + 9, DEMI_ROUTE + 15, dr) * lisse01(30, 38, d_emp) * lisse01(rive + 7, rive + 12, dv) \
+        * (1 - lisse01(0.2, 0.45, clair)) * (~dans_boites) * lisse01(LARG_SENTIER / 2 + 4, LARG_SENTIER / 2 + 9, d_sent)
+    if moulin is not None:
+        libre_champ = libre_champ * (1 - D.masque_moulin(moulin, x, y, 14.0))
+    m_labour = np.zeros((H, W), dtype=np.float32)
+    m_ble = np.zeros((H, W), dtype=np.float32)
+    m_pre = np.zeros((H, W), dtype=np.float32)
+    m_talus = np.zeros((H, W), dtype=np.float32)
+    m_olsol = np.zeros((H, W), dtype=np.float32)
+    occupe = np.zeros((H, W), dtype=np.float32)
+    zones_champs = (t.get("champs") or {}).get("zones", [])
+    if zones_champs:
+        zc = D.masque_polygones(zones_champs, W, H, 2.0)
+        occupe = np.maximum(occupe, D.masque_polygones(zones_champs, W, H, 6.0))
+        champ = zc * libre_champ
+        _, d_bord, cult = D.lanieres(x, y, t["champs"]["angle"], graine + 40)
+        m_labour = champ * (cult == 0)
+        m_ble = champ * (cult == 1)
+        m_pre = champ * (cult == 2)
+        m_talus = champ * lisse01(2.4, 0.8, d_bord + 0.6 * n2)
+    zones_ol = (t.get("oliveraies") or {}).get("zones", [])
+    if zones_ol:
+        zo = D.masque_polygones(zones_ol, W, H, 3.0)
+        occupe = np.maximum(occupe, D.masque_polygones(zones_ol, W, H, 6.0))
+        m_olsol = zo * libre_champ * lisse01(-0.5, 0.2, n40 + 0.3)
+    if moulin is not None:
+        occupe = np.maximum(occupe, D.masque_moulin(moulin, x, y, 16.0))
+    # fossé sec et levée de terre autour de la place forte adverse (ellipse autour de ses murs, interrompue là où passe
+    # la route : une chaussée de terre)
+    m_fosse = np.zeros((H, W), dtype=np.float32)
+    m_levee = np.zeros((H, W), dtype=np.float32)
+    if t.get("fosse"):
+        ex, ey, bt, _ = emprises(carte)[1]
+        cx, cy = ex + (bt[0] + bt[2]) / 2, ey + (bt[1] + bt[3]) / 2 + 2
+        rxf, ryf = (bt[2] - bt[0]) / 2 + 30, (bt[3] - bt[1]) / 2 + 26
+        rn = np.hypot((x - cx) / rxf, (y - cy) / ryf)
+        d_anneau = (rn - 1.0) * (rxf + ryf) / 2 + 1.5 * n2                       # px, signée (dehors > 0)
+        chaussee = lisse01(DEMI_ROUTE + 3, DEMI_ROUTE + 10, dr)
+        m_fosse = lisse01(8.5, 5.0, np.abs(d_anneau)) * chaussee
+        m_levee = lisse01(6.0, 2.5, np.abs(d_anneau - 14.0)) * chaussee
+        occupe = np.maximum(occupe, lisse01(26, 18, np.abs(d_anneau - 4)))
+        C.journal("fossé sec autour de la place forte adverse : centre (%.0f, %.0f), demi-axes %.0f × %.0f" % (cx, cy, rxf, ryf))
+    m_foret0 = m_foret0 * (1 - occupe)
     m_foret = m_foret0 * lisse01(50, 66, d_emp) * (1 - clair) * lisse01(36, 56, np.minimum(dr, d_sent + 20)) \
         * lisse01(rive + 1, rive + 5, dv)
+
+    # ---- relief (col) : la montagne monte hors de la plaine, plus haut au nord (versant à l'ombre du soleil du
+    # nord-ouest) ; la plaine, la route, les clairières, l'eau et les emplacements restent à plat. Les pentes raides
+    # montrent la roche (éboulis et affleurements, vus d'en haut).
+    m_relief = np.zeros((H, W), dtype=np.float32)
+    m_roche = np.zeros((H, W), dtype=np.float32)
+    if t.get("relief"):
+        a_nord, a_sud = t["relief"]
+        amp = a_sud + (a_nord - a_sud) * np.clip(1 - y / HAUT, 0, 1)
+        monte = lisse01(0.9, 1.75, e_pur + 0.25 * n3 + 0.06 * n1)
+        garde = lisse01(34, 90, dr) * lisse01(40, 90, d_emp) * (1 - lisse01(0.05, 0.4, clair)) * lisse01(rive + 6, rive + 40, dv)
+        rel = amp * monte * (0.75 + 0.25 * n40) * garde
+        petit = Image.fromarray(rel.astype(np.float32), "F").resize((W // 8, H // 8), Image.BOX)
+        m_relief = np.array(petit.resize((W, H), Image.BICUBIC), dtype=np.float32) * (rel.max() > 0)
+        gy_, gx_ = np.gradient(m_relief)
+        pente = np.hypot(gx_, gy_) / (M / s)                                  # m de dénivelé par m
+        m_roche = lisse01(0.45, 0.95, pente + 0.25 * n6) * lisse01(-0.3, 0.2, n40 + 0.2)
+        # versant nord (le côté à l'ombre) : roche nue et éboulis entre de rares pins, dès la lisière de la clairière ;
+        # la montagne se lit avant la forêt (la route, les tours et les clairières restent à l'herbe)
+        versant = lisse01(0.9, 1.15, e_pur + 0.15 * n3) * lisse01(330, 200, y)
+        m_roche = np.maximum(m_roche, versant * lisse01(-0.35, 0.05, n40 + 0.2 * n6) * lisse01(DEMI_ROUTE + 6, DEMI_ROUTE + 16, dr)
+                             * lisse01(30, 44, d_emp) * (1 - lisse01(0.1, 0.4, clair)))
+        m_foret = m_foret * (1 - 0.7 * versant)
+        C.journal("relief : jusqu'à %.1f m, pente maximale %.2f" % (float(m_relief.max()), float(pente.max())))
     # herbe : grandes taches plus sèches / plus grasses, herbe usée par plaques le long de la route (atténuée de 40 %)
     m_var = np.clip(0.5 + 0.6 * n3 + 0.25 * n1, 0, 1)
     m_use = lisse01(DEMI_ROUTE + 8, DEMI_ROUTE, dr) * np.clip(0.12 + 0.6 * n2, 0, 0.6)
@@ -556,6 +687,9 @@ def masques(carte, graine):
         "flaques": m_flaque, "bord_flaques": m_bord_flaque, "cailloux": m_cailloux, "douve": m_douve, "remous": m_remous,
         "verge": m_verge, "sentier": m_sentier, "tassee": m_tassee, "poussiere": m_poussiere, "humide": m_humide,
         "paves": m_paves, "touffes": touffe, "fusion": fusion,
+        "gue": m_gue, "gue_large": m_gue_large, "gues": gues, "labour": m_labour, "ble": m_ble, "pre": m_pre,
+        "talus": m_talus, "olsol": m_olsol, "fosse": m_fosse, "levee": m_levee, "relief": m_relief, "roche": m_roche,
+        "occupe": occupe, "moulin": moulin, "dist_emp": d_emp, "e_plaine": e,
         "foret": m_foret, "foret0": m_foret0, "clairiere": clair, "variation": m_var, "usure": np.clip(m_use, 0, 1),
         "dist_route": dr, "dist_riviere": dv, "dist_riviere_b": dvb, "rive": rive, "riviere": riviere, "n1": n1, "n2": n2,
         "interieur": interieur * virage, "angle_riviere": angv, "anneau_clairiere": anneau,
@@ -573,9 +707,17 @@ def ecrire_masque(nom, canaux):
 
 # ---------------------------------------------------------------- végétation : plan (sans Blender), puis instances
 # Modèles (Poly Haven, CC0) : hauteur (m) et portée de la cime depuis le tronc (m), à l'échelle 1.
+# Modèles : hauteur (m) et portée de la cime depuis le tronc (m), à l'échelle 1. Poly Haven (CC0), sauf ceux dont
+# l'identifiant est None (modélisés ici, voir decors.py). Au sud, les mêmes feuillus sont teintés en chênes verts et en
+# pins d'Alep, island_tree_02 sert d'olivier et tree_small_02 étiré de cyprès.
 MODELES = {"arbre_a": ("tree_small_02", 4.5, 2.3), "arbre_b": ("island_tree_02", 3.4, 2.6),
            "arbre_clair": ("tree_small_02", 4.5, 2.3), "arbuste": ("shrub_04", 0.25, 0.4),
-           "rochers": ("rock_moss_set_01", 1.1, 4.0)}
+           "rochers": ("rock_moss_set_01", 1.1, 4.0), "pin": (None, 8.5, 2.0), "cypres": ("tree_small_02", 4.5, 2.3),
+           "olivier": ("island_tree_02", 3.4, 2.6), "maquis": ("searsia_lucida", 2.3, 0.9),
+           "rocher": ("boulder_01", 0.95, 0.9), "rocher_sec": ("namaqualand_boulder_04", 1.9, 1.3),
+           "falaise": ("rock_face_01", 3.5, 2.5)}
+# un seul des sept arbustes de searsia_lucida (ils sont côte à côte dans le fichier)
+GARDER = {"searsia_lucida": "searsia_lucida_a"}
 
 
 def poisson(zone_ok, espacement, graine, bornes, essais=30, maxi=4000):
@@ -607,15 +749,18 @@ def poisson(zone_ok, espacement, graine, bornes, essais=30, maxi=4000):
     return pts
 
 
-def planifier_vegetation(carte, mq, graine):
-    """Positions de toute la végétation (px logiques), sans Blender : forêt (troncs à plus de 48 px de l'axe de la route,
-    sous-bois à plus de 40 px, et aucune ombre portée sur la route), lisière et fondu des clairières (jeunes arbres et
-    buissons), franges de joncs, bosquets de la plaine, buissons, rochers.
+def planifier_vegetation(carte, mq, graine, t=None):
+    """Positions de toute la végétation et des rochers (px logiques), sans Blender : forêt (troncs à plus de 48 px de
+    l'axe de la route, sous-bois à plus de 40 px, et aucune ombre portée sur la route), lisière et fondu des clairières
+    (jeunes arbres et buissons), franges de joncs, bosquets de la plaine, buissons, rochers ; puis le décor de la carte
+    (t, voir decors.py) : haies, oliviers en rangs, cyprès, arbres isolés, éboulis et affleurements, maquis.
     Renvoie une liste de dicts {col, x, y, rot, echelle (sx, sy, sz), dz, incl, role, portee_px}."""
+    t = t or {}
+    sud = t.get("climat") == "sud"
     W, H = TAILLE_MASQUE
     s = W / LARG
     foret, foret0, clair = mq["foret"], mq["foret0"], mq["clairiere"]
-    dr, dv, rive = mq["dist_route"], mq["dist_riviere"], mq["rive"]
+    dr, dv, rive, occupe = mq["dist_route"], mq["dist_riviere"], mq["rive"], mq["occupe"]
     rnd = random.Random(graine)
     plan = []
 
@@ -630,85 +775,153 @@ def planifier_vegetation(carte, mq, graine):
 
     def ombre_sur_route(x, y, hauteur_px, marge=DEMI_ROUTE + 6):
         """Soleil au nord-ouest à 45° : l'ombre de la cime tombe vers le sud-est, à une distance égale à sa hauteur."""
-        for t in (0.4, 0.55, 0.7, 0.85, 1.0):
-            px, py = x + 0.707 * hauteur_px * t, y + 0.707 * hauteur_px * t
+        for k in (0.4, 0.55, 0.7, 0.85, 1.0):
+            px, py = x + 0.707 * hauteur_px * k, y + 0.707 * hauteur_px * k
             if not hors_cadre(px, py) and mval(dr, px, py) < marge:
                 return True
         return False
 
-    def ajouter(col, x, y, e, role, sxy=1.0, dz=-0.05, incl=(0.0, 0.0), rot=None):
+    def ajouter(col, x, y, e, role, sxy=1.0, dz=-0.05, incl=(0.0, 0.0), rot=None, sz=1.0):
+        ex = (e * sxy, e * sxy, e * sz) if not isinstance(sxy, tuple) else (e * sxy[0], e * sxy[1], e * sz)
         plan.append({"col": col, "x": x, "y": y, "rot": rnd.uniform(0, 6.283) if rot is None else rot,
-                     "echelle": (e * sxy, e * sxy, e) if not isinstance(sxy, tuple) else (e * sxy[0], e * sxy[1], e),
-                     "dz": dz, "incl": incl, "role": role, "portee_px": MODELES.get(col, ("", 0, 0.5))[2] * e * 10 *
+                     "echelle": ex, "dz": dz, "incl": incl, "role": role, "portee_px": MODELES.get(col, ("", 0, 0.5))[2] * e * 10 *
                      (sxy if not isinstance(sxy, tuple) else max(sxy))})
 
-    # ---- forêt
+    exclus = [tuple(p) for p in carte["emplacements"] + carte["emplacementsRivaux"]]
+
+    def libre(x, y, marge_route=30, marge_emp=46, marge_eau=None, clairiere=True, decor=True):
+        if hors_cadre(x, y) or dans_boite(x, y, 6):
+            return False
+        if mval(dr, x, y) < marge_route or mval(dv, x, y) < (mval(rive, x, y) + 7 if marge_eau is None else marge_eau) \
+                or (clairiere and mval(clair, x, y) > 0.2) or (decor and mval(occupe, x, y) > 0.3):
+            return False
+        return all(math.hypot(x - ex, y - ey) > marge_emp for ex, ey in exclus)
+
+    def cime_hors_route(x, y, col, e, sxy=1.0, sz=1.0):
+        """Arbre de la plaine (bosquet, haie, lisière, isolé, olivier) : ni sa cime ni son ombre ne touchent la route
+        (l'ombre d'une cime large est aussi large qu'elle : la marge croît avec la portée)."""
+        portee = MODELES[col][2] * e * sxy * 10
+        if mval(dr, x, y) < DEMI_ROUTE + 4 + portee:
+            return False
+        return not ombre_sur_route(x, y, MODELES[col][1] * e * sz * 10, marge=DEMI_ROUTE + 6 + 0.9 * portee)
+
+    # ---- rochers d'abord (col, Piémont) : éboulis au pied des pentes et dans la lisière, affleurements dans le versant ;
+    # la forêt ne pousse pas dessus
+    rochers = []
+    if t.get("affleurements"):
+        def versant(x, y):
+            return (not hors_cadre(x, y)) and (mval(mq["relief"], x, y) > 1.2 or mval(mq["roche"], x, y) > 0.4) \
+                and libre(x, y, 52, 60, clairiere=True, decor=False)
+        for (x, y) in poisson(versant, 64, graine + 21, (0, 0, LARG, HAUT), maxi=int(t["affleurements"])):
+            e = rnd.uniform(0.9, 1.45)
+            ajouter("falaise", x, y, e, "affleurement", dz=-0.6, incl=(rnd.uniform(-0.1, 0.1), rnd.uniform(-0.1, 0.1)))
+            rochers.append((x, y, 26 * e))
+            # éboulis au pied de l'affleurement (vers le bas de la pente : vers la plaine)
+            for k in range(rnd.randint(3, 6)):
+                bx, by = x + rnd.uniform(-26, 26), y + rnd.uniform(-6, 28)
+                if libre(bx, by, 36, 44, clairiere=False, decor=False):
+                    eb = rnd.uniform(0.35, 0.8)
+                    ajouter("rocher_sec" if sud else "rocher", bx, by, eb, "eboulis", dz=-0.1)
+                    rochers.append((bx, by, 9 * eb))
+    if t.get("rochers"):
+        def pied(x, y):
+            if hors_cadre(x, y):
+                return False
+            f0 = mval(foret0, x, y)
+            return (0.05 < f0 < 0.95 or mval(mq["roche"], x, y) > 0.3) and libre(x, y, 38, 48, clairiere=False, decor=False)
+        for (x, y) in poisson(pied, 34, graine + 22, (0, 0, LARG, HAUT), maxi=int(t["rochers"])):
+            e = rnd.uniform(0.7, 2.1)
+            col = "rocher_sec" if (sud and rnd.random() < 0.6) else "rocher"
+            ajouter(col, x, y, e * (0.7 if col == "rocher_sec" else 1.0), "rocher", dz=-0.12 * e)
+            rochers.append((x, y, 10 * e))
+
+    def pres_rocher(x, y, marge=6):
+        return any(math.hypot(x - rx, y - ry) < rr + marge for rx, ry, rr in rochers)
+
+    # ---- forêt : essences selon la carte et le climat
+    essence = t.get("essence")
+
+    def essence_foret():
+        r = rnd.random()
+        if essence == "pins":                    # montagne : pins surtout, quelques feuillus
+            return "pin" if r < 0.62 else ("arbre_a" if r < 0.85 else "arbre_b")
+        if essence == "pins_sud":                # bois méditerranéen : chênes verts, pins, quelques cyprès
+            return "arbre_a" if r < 0.5 else ("pin" if r < 0.8 else ("arbre_b" if r < 0.92 else "cypres"))
+        return "arbre_b" if r < 0.38 else "arbre_a"
+
     def zone_foret(x, y):
         if hors_cadre(x, y):
             xx, yy = min(LARG - 1, max(0, x)), min(HAUT - 1, max(0, y))
-            return mval(clair, xx, yy) < 0.25 and mval(dr, xx, yy) > MARGE_TRONC_ROUTE
-        if mval(dr, x, y) < MARGE_TRONC_ROUTE:
+            return mval(clair, xx, yy) < 0.25 and mval(dr, xx, yy) > MARGE_TRONC_ROUTE and mval(occupe, xx, yy) < 0.3
+        if mval(dr, x, y) < MARGE_TRONC_ROUTE or mval(occupe, x, y) > 0.3 or pres_rocher(x, y):
             return False
         if mval(dv, x, y) < mval(rive, x, y) + 3:          # pas de tronc dans l'eau (la cime, elle, peut déborder)
+            return False
+        if mval(mq["roche"], x, y) > 0.35 and rnd.random() < 0.75:     # les pentes rocheuses restent à nu
             return False
         return mval(foret, x, y) > 0.5 + 0.2 * rnd.random()
 
     rejets = 0
     for (x, y) in poisson(zone_foret, 27, graine + 11, (-40, -40, LARG + 40, HAUT + 40)):
-        col = "arbre_b" if rnd.random() < 0.38 else "arbre_a"
-        e = rnd.uniform(1.05, 1.4) if col == "arbre_b" else rnd.uniform(1.25, 1.75)
-        haut_px = MODELES[col][1] * e * 10
-        portee = MODELES[col][2] * e * 10
+        col = essence_foret()
+        if col == "pin":
+            e = rnd.uniform(0.75, 1.05)
+        elif col == "cypres":
+            e = rnd.uniform(1.0, 1.25)
+        else:
+            e = rnd.uniform(1.05, 1.4) if col == "arbre_b" else rnd.uniform(1.25, 1.75)
+        sxy, sz = (0.36, 1.9) if col == "cypres" else (1.0, 1.0)
+        haut_px = MODELES[col][1] * e * sz * 10
+        portee = MODELES[col][2] * e * sxy * 10
         if not hors_cadre(x, y) and (mval(dr, x, y) < DEMI_ROUTE + 2 + 0.85 * portee or ombre_sur_route(x, y, haut_px)):
             rejets += 1
             continue
-        ajouter(col, x, y, e, "foret", incl=(rnd.uniform(-0.06, 0.06), rnd.uniform(-0.06, 0.06)))
+        ajouter(col, x, y, e, "foret", sxy=sxy, sz=sz, incl=(rnd.uniform(-0.06, 0.06), rnd.uniform(-0.06, 0.06)))
+
+    dense = bool(t.get("sous_bois_dense"))
 
     def zone_sous_bois(x, y):
         if hors_cadre(x, y):
             xx, yy = min(LARG - 1, max(0, x)), min(HAUT - 1, max(0, y))
-            return mval(clair, xx, yy) < 0.25 and mval(dr, xx, yy) > MARGE_SOUS_BOIS_ROUTE
-        if mval(dr, x, y) < MARGE_SOUS_BOIS_ROUTE or mval(dv, x, y) < mval(rive, x, y) + 3:
+            return mval(clair, xx, yy) < 0.25 and mval(dr, xx, yy) > MARGE_SOUS_BOIS_ROUTE and mval(occupe, xx, yy) < 0.3
+        if mval(dr, x, y) < MARGE_SOUS_BOIS_ROUTE or mval(dv, x, y) < mval(rive, x, y) + 3 or mval(occupe, x, y) > 0.3 \
+                or pres_rocher(x, y, 2) or mval(mq["roche"], x, y) > 0.3:
             return False
-        return mval(foret, x, y) > 0.5 + 0.2 * rnd.random()
+        return mval(foret, x, y) > (0.35 if dense else 0.5) + 0.2 * rnd.random()
 
-    for (x, y) in poisson(zone_sous_bois, 19, graine + 16, (-20, -20, LARG + 20, HAUT + 20), maxi=1600):
+    for (x, y) in poisson(zone_sous_bois, 15 if dense else 19, graine + 16, (-20, -20, LARG + 20, HAUT + 20),
+                          maxi=2600 if dense else 1600):
         e = rnd.uniform(0.4, 0.62)
         if not hors_cadre(x, y) and ombre_sur_route(x, y, MODELES["arbre_b"][1] * e * 10):
             continue
         ajouter("arbre_b", x, y, e, "sous_bois")
 
-    exclus = [tuple(p) for p in carte["emplacements"] + carte["emplacementsRivaux"]]
-
-    def libre(x, y, marge_route=30, marge_emp=46, marge_eau=RIVE + 7, clairiere=True):
-        if hors_cadre(x, y) or dans_boite(x, y, 6):
-            return False
-        if mval(dr, x, y) < marge_route or mval(dv, x, y) < marge_eau or (clairiere and mval(clair, x, y) > 0.2):
-            return False
-        return all(math.hypot(x - ex, y - ey) > marge_emp for ex, ey in exclus)
-
-    # ---- lisière et fondu des clairières : jeunes arbres et buissons (shrub_04)
+    # ---- lisière et fondu des clairières : jeunes arbres et buissons (shrub_04) ; plus épaisse dans la forêt de l'Ouest
+    # (le sous-bois avance sur la prairie)
     def lisiere(x, y):
         if hors_cadre(x, y):
             return False
         f, c = mval(foret, x, y), mval(clair, x, y)
-        bord_foret = 0.06 < f < 0.5
+        bord_foret = (0.03 < f < 0.65) if dense else (0.06 < f < 0.5)
         bord_clair = 0.12 < c < 0.85 and mval(foret0, x, y) > 0.35
-        if not (bord_foret or bord_clair) or dans_boite(x, y, 2):
+        if not (bord_foret or bord_clair) or dans_boite(x, y, 2) or pres_rocher(x, y, 2) or mval(mq["roche"], x, y) > 0.4:
             return False
         return libre(x, y, 40, 50, clairiere=False)
 
-    for (x, y) in poisson(lisiere, 14, graine + 12, (0, 0, LARG, HAUT), maxi=420):
+    for (x, y) in poisson(lisiere, 10 if dense else 14, graine + 12, (0, 0, LARG, HAUT), maxi=900 if dense else 420):
         if rnd.random() < 0.55:
             e = rnd.uniform(0.6, 0.95)
-            if ombre_sur_route(x, y, MODELES["arbre_a"][1] * e * 10):
+            if not cime_hors_route(x, y, "arbre_a", e):
                 continue
             ajouter("arbre_a", x, y, e, "lisiere")
         else:
-            ajouter("arbuste", x, y, rnd.uniform(2.0, 2.8), "lisiere", dz=-0.02)
+            if sud and rnd.random() < 0.5:
+                ajouter("maquis", x, y, rnd.uniform(0.7, 1.0), "lisiere", dz=-0.02)
+            else:
+                ajouter("arbuste", x, y, rnd.uniform(2.0, 2.8), "lisiere", dz=-0.02)
 
     # ---- joncs : franges continues, étirées le long de la rive, sur environ 15 % des rives (plutôt à l'intérieur des
-    # méandres, où l'eau est lente), loin des ponts, de la route et des emplacements
+    # méandres, où l'eau est lente), loin des ponts, du gué, de la route et des emplacements
     bruit_berge = mq["n1"]
     inter = mq["interieur"]
     angv = mq["angle_riviere"]
@@ -717,7 +930,7 @@ def planifier_vegetation(carte, mq, graine):
         if hors_cadre(x, y):
             return False
         r = mval(rive, x, y)
-        if not (r - 1 < mval(dv, x, y) < r + 4.5):
+        if not (r - 1 < mval(dv, x, y) < r + 4.5) or mval(mq["gue_large"], x, y) > 0.05:
             return False
         if mval(bruit_berge, x, y) + 0.35 * mval(inter, x, y) < 0.3:
             return False
@@ -727,27 +940,113 @@ def planifier_vegetation(carte, mq, graine):
         a = mval(angv, x, y)
         ajouter("joncs", x, y, rnd.uniform(0.75, 1.05), "joncs", sxy=(2.5, 1.0), dz=-0.02, rot=-a + rnd.uniform(-0.15, 0.15))
 
-    # ---- plaine : bosquets de 2 à 4 arbres à cime pleine et claire (aucune ombre sur la route), buissons, rochers
+    # ---- plaine : bosquets de 2 à 4 arbres à cime pleine et claire (aucune ombre sur la route), buissons, rochers ;
+    # au sud, des oliviers isolés au lieu des bosquets
     def plaine(x, y, marge_route=36):
-        return (not hors_cadre(x, y)) and mval(foret, x, y) < 0.05 and libre(x, y, marge_route, 52)
+        return (not hors_cadre(x, y)) and mval(foret, x, y) < 0.05 and libre(x, y, marge_route, 52) and not pres_rocher(x, y)
 
     nb_bosquets = 0
     for k, (x, y) in enumerate(poisson(plaine, 170, graine + 13, (0, 0, LARG, HAUT), maxi=4)):
         for i in range(rnd.randint(2, 4)):
             px, py = x + rnd.uniform(-18, 18), y + rnd.uniform(-18, 18)
             e = rnd.uniform(1.15, 1.45)
-            if plaine(px, py) and not ombre_sur_route(px, py, MODELES["arbre_clair"][1] * e * 10):
-                ajouter("arbre_clair", px, py, e, "bosquet", sxy=(1.35, 1.35))
-                plan[-1]["echelle"] = (e * 1.35, e * 1.35, e * 0.85)       # cime large et pleine, ombre moins longue
+            if plaine(px, py) and (cime_hors_route(px, py, "olivier", e * 0.72, 1.1, 0.8) if sud
+                                   else cime_hors_route(px, py, "arbre_clair", e, 1.35, 0.85)):
+                if sud:
+                    ajouter("olivier", px, py, e * 0.72, "bosquet", sxy=(1.1, 1.1), sz=0.8)
+                else:
+                    ajouter("arbre_clair", px, py, e, "bosquet", sxy=(1.35, 1.35))
+                    plan[-1]["echelle"] = (e * 1.35, e * 1.35, e * 0.85)       # cime large et pleine, ombre moins longue
                 nb_bosquets += 1
     for (x, y) in poisson(lambda x, y: plaine(x, y, 60), 95, graine + 14, (0, 0, LARG, HAUT), maxi=6):
         ajouter("arbuste", x, y, rnd.uniform(2.2, 3.0), "buisson", dz=-0.02)
-    for (x, y) in poisson(lambda x, y: plaine(x, y) or (not hors_cadre(x, y) and 0.2 < mval(foret, x, y) < 0.7
-                                                       and not dans_boite(x, y)),
-                          90, graine + 15, (0, 0, LARG, HAUT), maxi=6):
-        ajouter("rochers", x, y, rnd.uniform(0.12, 0.2), "rocher", dz=-0.25)
-    C.journal("végétation prévue : %d arbres de forêt (%d écartés pour la route), %d arbres de bosquets, %d touffes de joncs"
-              % (sum(1 for p in plan if p["role"] == "foret"), rejets, nb_bosquets, sum(1 for p in plan if p["role"] == "joncs")))
+    if not t.get("rochers"):
+        for (x, y) in poisson(lambda x, y: plaine(x, y) or (not hors_cadre(x, y) and 0.2 < mval(foret, x, y) < 0.7
+                                                           and not dans_boite(x, y)),
+                              90, graine + 15, (0, 0, LARG, HAUT), maxi=6):
+            ajouter("rochers", x, y, rnd.uniform(0.12, 0.2), "rocher", dz=-0.25)
+
+    # ---- grands arbres isolés dans la prairie (forêt de l'Ouest, Citadelle du Sud)
+    if t.get("isoles"):
+        for (x, y) in poisson(lambda x, y: plaine(x, y, 52) and mval(mq["dist_emp"], x, y) > 58, 110, graine + 23,
+                              (0, 0, LARG, HAUT), maxi=int(t["isoles"])):
+            col = "arbre_a" if rnd.random() < 0.6 else "arbre_b"
+            e = rnd.uniform(1.6, 1.95) if col == "arbre_a" else rnd.uniform(1.35, 1.6)
+            # grande cime : son ombre est large, elle ne doit toucher la route d'aucun côté
+            if not cime_hors_route(x, y, col, e, 1.15) or \
+                    ombre_sur_route(x, y, MODELES[col][1] * e * 10, marge=DEMI_ROUTE + 6 + MODELES[col][2] * e * 1.15 * 10):
+                continue
+            ajouter(col, x, y, e, "isole", sxy=1.15)
+
+    # ---- haies autour des champs (buissons et jeunes arbres serrés, interrompus près de la route et des tours)
+    if t.get("haies") and t.get("champs"):
+        for poly in t["champs"]["zones"]:
+            for (x, y) in D.contour_points(poly, 7.5):
+                x += rnd.uniform(-1.5, 1.5)
+                y += rnd.uniform(-1.5, 1.5)
+                if not libre(x, y, 30, 42, decor=False) or mval(foret0, x, y) > 0.9:
+                    continue
+                if rnd.random() < 0.18:
+                    e = rnd.uniform(0.65, 0.9)
+                    if cime_hors_route(x, y, "arbre_a", e):
+                        ajouter("arbre_a", x, y, e, "haie")
+                        continue
+                ajouter("arbuste", x, y, rnd.uniform(2.4, 3.3), "haie", dz=-0.02)
+
+    # ---- oliviers en rangs (Oliveraies, Forteresse omeyyade)
+    if t.get("oliveraies"):
+        for k, poly in enumerate(t["oliveraies"]["zones"]):
+            for (x, y) in D.grille_rangs(poly, t["oliveraies"]["angle"], 36.0, graine + 30 + k):
+                if not libre(x, y, 32, 40, decor=False):
+                    continue
+                if mq["moulin"] is not None and D.masque_moulin(mq["moulin"], np.array([x]), np.array([y]), 14.0)[0] > 0:
+                    continue
+                e = rnd.uniform(0.82, 1.02)
+                if not cime_hors_route(x, y, "olivier", e, 1.15, 0.8):
+                    continue
+                ajouter("olivier", x, y, e, "olivier", sxy=(1.15, 1.15), sz=0.8)
+
+    # ---- cyprès : en rangs le long des champs (Forteresse omeyyade) ou par paires sur les berges (Grand Fleuve)
+    if t.get("cypres"):
+        cands = []
+        if t.get("champs"):
+            for poly in t["champs"]["zones"]:
+                cands += D.contour_points(poly, 20.0)
+        else:
+            riv = mq["riviere"]
+            for i in range(0, len(riv) - 1, 3):
+                (ax, ay), (bx, by) = riv[i], riv[i + 1]
+                l_ = math.hypot(bx - ax, by - ay) or 1
+                nx, ny = -(by - ay) / l_, (bx - ax) / l_
+                r = mval(rive, ax, ay)
+                for c in (-1, 1):
+                    cands.append((ax + nx * c * (r + 14), ay + ny * c * (r + 14)))
+        rnd.shuffle(cands)
+        n = 0
+        for (x, y) in cands:
+            if n >= int(t["cypres"]) * 3:
+                break
+            if not libre(x, y, 34, 44, decor=False):
+                continue
+            for k in range(rnd.randint(1, 3)):
+                px, py = x + rnd.uniform(-6, 6), y + rnd.uniform(-6, 6)
+                e = rnd.uniform(0.95, 1.2)
+                if libre(px, py, 32, 42, decor=False) and not ombre_sur_route(px, py, MODELES["cypres"][1] * e * 19):
+                    ajouter("cypres", px, py, e, "cypres", sxy=0.34, sz=1.85)
+                    n += 1
+
+    # ---- maquis (Piémont) : arbustes secs épars dans la plaine et au pied des pentes
+    if t.get("maquis"):
+        for (x, y) in poisson(lambda x, y: (not hors_cadre(x, y)) and mval(foret, x, y) < 0.6 and libre(x, y, 34, 44)
+                              and not pres_rocher(x, y, 3), 40, graine + 24, (0, 0, LARG, HAUT), maxi=int(t["maquis"])):
+            ajouter("maquis", x, y, rnd.uniform(0.8, 1.25), "maquis", dz=-0.02)
+
+    C.journal("végétation prévue : %d arbres de forêt (%d écartés pour la route), %d arbres de bosquets, %d touffes de joncs, "
+              "%d rochers, %d arbres de haies, %d oliviers, %d cyprès"
+              % (sum(1 for p in plan if p["role"] == "foret"), rejets, nb_bosquets, sum(1 for p in plan if p["role"] == "joncs"),
+                 sum(1 for p in plan if p["role"] in ("rocher", "eboulis", "affleurement")),
+                 sum(1 for p in plan if p["role"] == "haie"), sum(1 for p in plan if p["role"] == "olivier"),
+                 sum(1 for p in plan if p["role"] == "cypres")))
     return plan
 
 
@@ -755,12 +1054,13 @@ def ecrire_controle(id_carte, mq, sous_bois):
     """Masques de contrôle pour verifier.py (atelier/sources-3d/_cache/controle-terrain-<carte>.png, 2000 × 1320) :
     R = sol visible dans l'anneau de 40 px autour des clairières (hors cimes, route et eau) ; G = plaine de référence
     (herbe loin de la forêt, de la route, de l'eau et des clairières) ; B = emprise des ponts (tablier et culées, 14 px
-    de plus à chaque bout) : la valeur de l'axe de la route n'y est pas mesurée (planches et culées à l'ombre des
-    garde-corps et de leurs poteaux)."""
+    de plus à chaque bout) et du gué : la valeur de l'axe de la route n'y est pas mesurée (planches et culées à l'ombre
+    des garde-corps et de leurs poteaux ; galets sous l'eau basse du gué). La plaine de référence exclut aussi champs,
+    oliveraies, fossé et roche."""
     libre = (sous_bois < 0.3) & (mq["route"] < 0.1) & (mq["eau"] < 0.1)
     r = mq["anneau_clairiere"] & libre
     g = (mq["foret0"] < 0.01) & libre & (mq["clairiere"] < 0.05) & (mq["berge"] < 0.05) & (mq["dist_route"] > 30) \
-        & (mq["dist_riviere"] > 30) & (mq["verge"] < 0.05)
+        & (mq["dist_riviere"] > 30) & (mq["verge"] < 0.05) & (mq["occupe"] < 0.05) & (mq["roche"] < 0.05)
     W, H = TAILLE_MASQUE
     k = W / LARG
     yy, xx = np.mgrid[0:H, 0:W].astype(np.float32) / k
@@ -770,6 +1070,7 @@ def ecrire_controle(id_carte, mq, sous_bois):
         u = (xx - p["x"]) * ca + (yy - p["y"]) * sa
         v = -(xx - p["x"]) * sa + (yy - p["y"]) * ca
         b |= (np.abs(u) <= p["L"] / 2 + 14) & (np.abs(v) <= p["largeur"] / 2 + 6)
+    b |= mq["gue_large"] > 0.05
     arr = np.stack([r, g, b], axis=-1).astype(np.uint8) * 255
     chemin = os.path.join(C.CACHE, "controle-terrain-%s.png" % id_carte)
     Image.fromarray(arr, "RGB").save(chemin)
@@ -805,12 +1106,19 @@ def hauteurs(mq, nx, ny):
     h = h * lisse01(rive, rive + 25, dv)
     # la surface de l'eau (NIVEAU_EAU = −0,3 m) coupe le lit à dv = rive − 1 : largeur visible ≈ 2 × rive
     lit = 0.42 * (1 - lisse01(rive - 7, rive + 10, dv))
+    # gué : le lit remonte à 4 cm sous l'eau (les galets se voient à travers)
+    g = ech(mq["gue_large"])
+    lit = lit * (1 - g) + np.minimum(lit, 0.34) * g
     h = h - lit - 0.5 * douve
     h = h * (1 - 0.7 * route * (lit < 0.05)) * (1 - 0.6 * clair * (lit < 0.05))
+    # décor : fossé sec (creusé de 0,25 m sous le pré, toujours au-dessus de l'eau : il reste sec) et levée de terre
+    # (0,5 m) ; relief de la montagne (col)
+    fosse = ech(mq["fosse"])
+    h = np.where(fosse > 0.01, np.maximum(h - 0.25 * fosse, -0.2), h) + 0.5 * ech(mq["levee"]) + ech(mq["relief"])
     return h
 
 
-def sol(mq, nom_masques, graine, nx=400, ny=264):
+def sol(mq, nom_masques, graine, t=None, nx=400, ny=264):
     """Maillage du sol (100 m × 66 m) avec relief, UV = coordonnées de la carte (0..1)."""
     h = hauteurs(mq, nx + 1, ny + 1)
     bm = bmesh.new()
@@ -827,7 +1135,7 @@ def sol(mq, nom_masques, graine, nx=400, ny=264):
             f.smooth = True
             for lp, (di, dj) in zip(f.loops, ((0, 1), (1, 1), (1, 0), (0, 0))):
                 lp[uv].uv = ((i + di) / nx, 1 - (j + dj) / ny)
-    ob = C.objet_maillage("sol", bm, mat_sol(nom_masques))
+    ob = C.objet_maillage("sol", bm, mat_sol(nom_masques, t))
     return ob, h
 
 
@@ -871,13 +1179,20 @@ def _masques_noeuds(nt, noms):
     return tc, res
 
 
-def mat_sol(noms):
+def mat_sol(noms, t=None):
     """Matière du sol : herbes mêlées, sol de forêt sous les cimes, piste de terre sèche (ornières, flaques, cailloux,
     plaques tassées ou poussiéreuses, plaques humides près de l'eau), bas-côté discontinu, sentiers de la même terre,
-    pavés devant les portes, berges (vase, galets, herbe grasse), herbe à peine piétinée aux abords des places.
+    pavés devant les portes, berges (vase, galets, herbe grasse), herbe à peine piétinée aux abords des places ; décor
+    de la carte (t) : champs en lanières (labours sillonnés, blé, prés, talus d'herbe), sol des oliveraies, fossé et
+    levée de terre, roche des pentes raides. Au sud : herbe jaunie, plaques de terre sèche, piste plus claire et
+    caillouteuse, sous-bois de litière sèche.
 
     Chaque photo est recalée sur une teinte cible (teinte par la luminance) ; toutes sont projetées en coordonnées du
     monde (X, Y), jamais selon le tracé de la route."""
+    t = t or {}
+    sud = t.get("climat") == "sud"
+    P_ = D.palette(t, PALETTE)
+    cu = D.CULTURES[t.get("climat", "vert")]
     m, nt, p = C.nouveau_materiau("sol")
     N, L = nt.nodes.new, nt.links.new
     tc, mk = _masques_noeuds(nt, noms)
@@ -886,54 +1201,105 @@ def mat_sol(noms):
     foret, clair, var, usure = mk[1]["R"], mk[1]["G"], mk[1]["B"], mk[1]["A"]
     vase, galets, hgrasse, flaques = mk[2]["R"], mk[2]["G"], mk[2]["B"], mk[2]["A"]
     cailloux = mk[3]["R"]
-    verge, bord_flaques = mk[4]["R"], mk[4]["B"]
+    verge, bord_flaques, gue = mk[4]["R"], mk[4]["B"], mk[4]["A"]
     tassee, poussiere, humide, paves = mk[5]["R"], mk[5]["G"], mk[5]["B"], mk[5]["A"]
+    labour, ble, pre, talus = mk[6]["R"], mk[6]["G"], mk[6]["B"], mk[6]["A"]
+    fosse, levee, roche, olsol = mk[7]["R"], mk[7]["G"], mk[7]["B"], mk[7]["A"]
 
     def photo(ident, taille, cible, contraste=1.3, garde=0.2):
-        t = _tex(nt, ident, "diff", obj, taille)
-        return C.teinter_luminance(nt, t.outputs["Color"], ident, cible, contraste, garde)
+        t_ = _tex(nt, ident, "diff", obj, taille)
+        return C.teinter_luminance(nt, t_.outputs["Color"], ident, cible, contraste, garde)
 
     def fois(sortie, k):
         mm = N("ShaderNodeMath"); mm.operation = "MULTIPLY"; mm.inputs[1].default_value = k
         L(sortie, mm.inputs[0])
         return mm.outputs[0]
-    h1 = photo("aerial_grass_rock", 13.0, PALETTE["herbe"], 1.6, 0.12)
-    h2 = photo("leafy_grass", 2.6, PALETTE["herbe_grasse"], 1.5, 0.15)
-    h3 = photo("rocky_terrain_02", 24.0, PALETTE["herbe_sombre"], 1.4, 0.2)
-    herbe = _mix(nt, var, h1, h2)
-    herbe = _mix(nt, 0.25, herbe, h3)
-    seche = photo("aerial_grass_rock", 13.0, PALETTE["herbe_seche"], 1.5, 0.15)
+    h1 = photo("aerial_grass_rock", 13.0, P_["herbe"], 1.6, 0.12)
+    if sud:
+        # herbe jaunie : plaques d'herbe sèche et de terre craquelée
+        h2 = photo("withered_grass", 2.4, P_["herbe_seche"], 1.4, 0.12)
+        h3 = photo("dry_ground_01", 5.0, "#8b7b56", 1.2, 0.15)
+        herbe = _mix(nt, var, h1, h2)
+        herbe = _mix(nt, 0.3, herbe, h3)
+    else:
+        h2 = photo("leafy_grass", 2.6, P_["herbe_grasse"], 1.5, 0.15)
+        h3 = photo("rocky_terrain_02", 24.0, P_["herbe_sombre"], 1.4, 0.2)
+        herbe = _mix(nt, var, h1, h2)
+        herbe = _mix(nt, 0.25, herbe, h3)
+    seche = photo("aerial_grass_rock", 13.0, P_["herbe_seche"], 1.5, 0.15)
     herbe = _mix(nt, usure, herbe, seche)
     # bas-côté : herbe un peu plus sombre et plus haute qui borde la piste par endroits (absente sur 40 % du tracé)
-    herbe = _mix(nt, verge, herbe, photo("leafy_grass", 2.0, PALETTE["bas_cote"], 1.4, 0.1))
-    sf = photo("forest_ground_04", 3.2, PALETTE["sous_bois"])
+    herbe = _mix(nt, verge, herbe, photo("withered_grass" if sud else "leafy_grass", 2.0, P_["bas_cote"], 1.4, 0.1))
+    if sud:
+        sf = photo("dry_ground_01", 3.0, P_["sous_bois"], 1.2)
+    elif t.get("sous_bois_dense"):
+        sf = photo("forest_leaves_02", 3.0, "#3a3220", 1.25)
+    else:
+        sf = photo("forest_ground_04", 3.2, P_["sous_bois"])
     coul = _mix(nt, foret, herbe, sf)
     # piste de terre sèche : photo sans contraste ajouté, mêlée à moitié à une boue plus régulière ; plaques tassées
     # plus sombres et poussière plus claire (± 8 % de L*, taches de 20 à 60 px) ; le sentier des portes est de la même
-    # terre (plus de terre claire en goutte au pied des places)
-    terre = _mix(nt, 0.5, photo("dirt_aerial_02", 9.0, PALETTE["terre"], 0.45, 0.05), photo("brown_mud", 1.8, PALETTE["terre"], 0.8, 0.08))
-    terre = _mix(nt, fois(tassee, 0.75), terre, photo("brown_mud", 2.3, PALETTE["terre_tassee"], 1.0, 0.08))
-    terre = _mix(nt, fois(poussiere, 0.75), terre, photo("dirt_aerial_02", 7.0, PALETTE["poussiere"], 0.5, 0.05))
-    boue = photo("brown_mud", 1.8, PALETTE["orniere"], 1.0)
+    # terre (plus de terre claire en goutte au pied des places). Au sud, des cailloux clairs semés sur toute la piste.
+    terre = _mix(nt, 0.5, photo("dirt_aerial_02", 9.0, P_["terre"], 0.45, 0.05), photo("brown_mud", 1.8, P_["terre"], 0.8, 0.08))
+    terre = _mix(nt, fois(tassee, 0.75), terre, photo("brown_mud", 2.3, P_["terre_tassee"], 1.0, 0.08))
+    terre = _mix(nt, fois(poussiere, 0.75), terre, photo("dirt_aerial_02", 7.0, P_["poussiere"], 0.5, 0.05))
+    if sud:
+        caillou = N("ShaderNodeTexNoise")
+        caillou.inputs["Scale"].default_value = 1.6
+        caillou.inputs["Detail"].default_value = 3.0
+        L(obj, caillou.inputs["Vector"])
+        semis = C._plage(nt, caillou.outputs["Factor"], 0.45, 0.62, 0.0, 0.55)
+        terre = _mix(nt, semis, terre, photo("dry_river_pebbles", 1.1, "#c9bea6", 1.1, 0.1))
+    boue = photo("brown_mud", 1.8, P_["orniere"], 1.0)
     terre_orn = _mix(nt, orn, terre, boue)
     terre_orn = _mix(nt, crete, terre_orn, herbe)
-    terre_orn = _mix(nt, cailloux, terre_orn, photo("river_small_rocks", 1.6, PALETTE["galets"], 1.2, 0.1))
+    terre_orn = _mix(nt, cailloux, terre_orn, photo("river_small_rocks", 1.6, P_["galets"], 1.2, 0.1))
     # plaques humides plus sombres près de la rivière (terre assombrie, un peu plus brune)
     # (multiplication par une teinte chaude : luminance × 0,6 environ, saturation un peu plus forte)
     terre_orn = _mix(nt, fois(humide, 0.75), terre_orn, _mix(nt, 1.0, terre_orn, C.couleur("#d2c6b4"), "MULTIPLY"))
     # flaques : reflet du ciel (gris clair, très lisse) cerné d'un liseré humide sombre de 2-3 px
-    terre_orn = _mix(nt, bord_flaques, terre_orn, C.couleur(PALETTE["flaque_bord"]))
-    terre_orn = _mix(nt, flaques, terre_orn, C.couleur(PALETTE["flaque"]))
+    terre_orn = _mix(nt, bord_flaques, terre_orn, C.couleur(P_["flaque_bord"]))
+    terre_orn = _mix(nt, flaques, terre_orn, C.couleur(P_["flaque"]))
     # quelques pavés juste devant la porte des places (cobblestone_01, pierres d'environ 0,5 m, opacité 0,5)
-    terre_orn = _mix(nt, fois(paves, 0.5), terre_orn, photo("cobblestone_01", 2.6, PALETTE["paves"], 1.25, 0.1))
+    terre_orn = _mix(nt, fois(paves, 0.5), terre_orn, photo("cobblestone_01", 2.6, P_["paves"], 1.25, 0.1))
     # abords des places fortes : herbe à peine piétinée (60 % du masque, plus de disque clair)
-    pietinee = photo("aerial_grass_rock", 13.0, PALETTE["pietinee"], 1.3, 0.1)
+    pietinee = photo("aerial_grass_rock", 13.0, P_["pietinee"], 1.3, 0.1)
     coul = _mix(nt, fois(clair, 0.6), coul, pietinee)
+    # ---- décor : champs en lanières (labours aux sillons parallèles aux lanières, blé ou chaume, prés), talus d'herbe
+    # entre deux lanières ; sol des oliveraies ; fossé sec (herbe sombre et drue) et levée de terre ; roche des pentes
+    if t.get("champs"):
+        ang = -math.radians(t["champs"]["angle"])          # repère Blender : y vers le haut
+        mp = N("ShaderNodeMapping")
+        mp.inputs["Rotation"].default_value = (0, 0, ang)
+        L(obj, mp.inputs["Vector"])
+        onde = N("ShaderNodeTexWave")
+        onde.wave_type = "BANDS"
+        onde.bands_direction = "Y"
+        onde.inputs["Scale"].default_value = 1.6           # un sillon tous les 0,6 m environ
+        onde.inputs["Distortion"].default_value = 1.2
+        onde.inputs["Detail"].default_value = 2.0
+        L(mp.outputs["Vector"], onde.inputs["Vector"])
+        sillons = C._plage(nt, onde.outputs["Factor"], 0.0, 1.0, 0.7, 1.12)
+        terre_lab = photo("brown_mud", 2.0, cu["labour"], 1.1, 0.1)
+        terre_lab = C._multiplier(nt, terre_lab, sillons)
+        coul = _mix(nt, labour, coul, terre_lab)
+        coul = _mix(nt, ble, coul, photo("withered_grass", 1.6, cu["ble"], 1.5, 0.1))
+        coul = _mix(nt, pre, coul, photo("leafy_grass", 2.2, cu["pre"], 1.4, 0.12))
+        coul = _mix(nt, talus, coul, photo("leafy_grass", 1.8, cu["talus"], 1.4, 0.1))
+    if t.get("oliveraies"):
+        coul = _mix(nt, olsol, coul, photo("dry_ground_01", 4.0, cu["oliveraie"], 1.0, 0.12))
+    if t.get("fosse"):
+        coul = _mix(nt, fosse, coul, photo("leafy_grass", 2.0, cu["fosse"], 1.4, 0.1))
+        coul = _mix(nt, fois(levee, 0.85), coul, photo("dirt_aerial_02", 6.0, cu["levee"], 0.9, 0.1))
+    if t.get("relief"):
+        coul = _mix(nt, roche, coul, photo("aerial_rocks_02", 22.0, cu["roche"], 1.12, 0.12))   # sans blancs brûlés
     coul = _mix(nt, route, coul, terre_orn)
-    # berges : herbe grasse, banc de galets (intérieur des méandres), vase humide et talus raide près de l'eau
-    coul = _mix(nt, hgrasse, coul, photo("leafy_grass", 2.0, "#4a6229", 1.5, 0.1))
-    coul = _mix(nt, galets, coul, photo("river_small_rocks", 2.4, PALETTE["banc"], 1.15, 0.15))
-    coul = _mix(nt, vase, coul, photo("brown_mud", 1.8, PALETTE["vase"], 1.2, 0.2))
+    # berges : herbe grasse, banc de galets (intérieur des méandres, gué), vase humide et talus raide près de l'eau
+    coul = _mix(nt, hgrasse, coul, photo("leafy_grass", 2.0, "#5f6a35" if sud else "#4a6229", 1.5, 0.1))
+    coul = _mix(nt, galets, coul, photo("river_small_rocks", 2.4, P_["banc"], 1.15, 0.15))
+    coul = _mix(nt, vase, coul, photo("brown_mud", 1.8, P_["vase"], 1.2, 0.2))
+    # gué : galets clairs et ronds sur le radier et ses berges (l'eau basse les laisse voir)
+    coul = _mix(nt, fois(gue, 0.9), coul, photo("dry_river_pebbles", 1.3, "#a1977f", 1.2, 0.12))
     L(coul, p.inputs["Base Color"])
     # rugosité : les flaques sont lisses comme un miroir, la vase brille un peu
     rug = N("ShaderNodeMapRange")
@@ -951,6 +1317,9 @@ def mat_sol(noms):
     nh = _tex(nt, "aerial_grass_rock", "nor_gl", obj, 13.0, non_couleur=True)
     nterre = _tex(nt, "brown_mud", "nor_gl", obj, 1.8, non_couleur=True)
     nmix = _mix(nt, route, nh.outputs["Color"], nterre.outputs["Color"])
+    if t.get("relief"):
+        nroc = _tex(nt, "aerial_rocks_02", "nor_gl", obj, 22.0, non_couleur=True)
+        nmix = _mix(nt, roche, nmix, nroc.outputs["Color"])
     nm = N("ShaderNodeNormalMap")
     nm.inputs["Strength"].default_value = 1.1
     L(nmix, nm.inputs["Color"])
@@ -967,23 +1336,24 @@ def mat_sol(noms):
     return m
 
 
-def eau(noms):
+def eau(noms, t=None):
     """Plan d'eau qui absorbe fort : le fond (brun-vert) ne se voit que sur les 2-3 px du bord, puis vert-bleu sombre
     (#24332c) jusqu'au milieu ; reflet de ciel factice uniforme (0,18 à 0,25 d'un ciel #8fa2a8 sur toute la surface : en
     vue de dessus orthographique, le Fresnel ne donne presque rien) ; normale de rides (bruit de 40 cm étiré dans le sens
     du courant, force 0,15) qui fait naître quelques éclats de soleil et un dégradé ; bande sombre sous la rive nord
     (ombre de la berge) ; remous clair autour des pieux des ponts."""
+    P_ = D.palette(t or {}, PALETTE)
     m, nt, p = C.nouveau_materiau("eau")
     N, L = nt.nodes.new, nt.links.new
     tc, mk = _masques_noeuds(nt, noms)
     prof, dir_c, dir_s = mk[0]["B"], mk[0]["G"], mk[0]["A"]
-    nord, remous = mk[1]["G"], mk[1]["B"]
+    nord, remous, gue = mk[1]["G"], mk[1]["B"], mk[1]["A"]
     ramp = N("ShaderNodeValToRGB")
     els = ramp.color_ramp.elements
-    els[0].position, els[0].color = 0.0, C.couleur(PALETTE["eau_bord"])
-    els[1].position, els[1].color = 1.0, C.couleur(PALETTE["eau_fond"])
+    els[0].position, els[0].color = 0.0, C.couleur(P_["eau_bord"])
+    els[1].position, els[1].color = 1.0, C.couleur(P_["eau_fond"])
     e = els.new(0.55)
-    e.color = C.couleur(PALETTE["eau_milieu"])
+    e.color = C.couleur(P_["eau_milieu"])
     L(prof, ramp.inputs["Factor"])
     # coordonnées tournées selon la tangente locale : u le long du courant, v en travers
     sep = N("ShaderNodeSeparateXYZ")
@@ -1027,11 +1397,14 @@ def eau(noms):
     reflet.inputs["To Min"].default_value = 0.18
     reflet.inputs["To Max"].default_value = 0.22
     L(nappes.outputs["Factor"], reflet.inputs["Value"])
-    coul = _mix(nt, reflet.outputs["Result"], ramp.outputs["Color"], C.couleur(PALETTE["ciel_reflet"]))
+    coul = _mix(nt, reflet.outputs["Result"], ramp.outputs["Color"], C.couleur(P_["ciel_reflet"]))
     # remous clair autour des pieux
     rm = N("ShaderNodeMath"); rm.operation = "MULTIPLY"; rm.inputs[1].default_value = 0.6
     L(remous, rm.inputs[0])
-    coul = _mix(nt, rm.outputs[0], coul, C.couleur(PALETTE["remous"]))
+    coul = _mix(nt, rm.outputs[0], coul, C.couleur(P_["remous"]))
+    ecume = N("ShaderNodeMath"); ecume.operation = "MULTIPLY"
+    L(remous, ecume.inputs[0]); L(gue, ecume.inputs[1])
+    coul = _mix(nt, ecume.outputs[0], coul, C.couleur("#dcd9c9"))
     # bande sombre sous la rive nord
     ombre = N("ShaderNodeMapRange")
     ombre.inputs["To Min"].default_value = 1.0
@@ -1047,6 +1420,16 @@ def eau(noms):
     b.inputs["Distance"].default_value = 0.1
     L(rides.outputs["Factor"], b.inputs["Height"])
     L(b.outputs["Normal"], p.inputs["Normal"])
+    # gué : eau basse et claire, les galets se voient au travers (70 % transparente), écume claire des rides
+    sortie = next(n for n in nt.nodes if n.type == "OUTPUT_MATERIAL")
+    transp = N("ShaderNodeBsdfTransparent")
+    melange = N("ShaderNodeMixShader")
+    fac = N("ShaderNodeMath"); fac.operation = "MULTIPLY"; fac.inputs[1].default_value = 0.7
+    L(gue, fac.inputs[0])
+    L(fac.outputs[0], melange.inputs["Fac"])
+    L(p.outputs["BSDF"], melange.inputs[1])
+    L(transp.outputs["BSDF"], melange.inputs[2])
+    L(melange.outputs["Shader"], sortie.inputs["Surface"])
     bm = bmesh.new()
     uv = bm.loops.layers.uv.new("UVMap")
     co = [(0, 0), (LARG * M, 0), (LARG * M, HAUT * M), (0, HAUT * M)]
@@ -1149,6 +1532,12 @@ def charger_modele(ident, nom_collection):
     f = glob.glob(os.path.join(C.SOURCES, ident, "*.gltf"))[0]
     bpy.ops.import_scene.gltf(filepath=f)
     nouveaux = [o for o in bpy.data.objects if o not in avant]
+    garder = GARDER.get(ident)
+    if garder:                      # une seule variante d'un fichier qui en range plusieurs côte à côte
+        gardes = [o for o in nouveaux if garder in o.name]
+        for o in [o for o in nouveaux if o not in gardes]:
+            bpy.data.objects.remove(o, do_unlink=True)
+        nouveaux = gardes
     col = bpy.data.collections.new(nom_collection)
     for o in nouveaux:
         for c in list(o.users_collection):
@@ -1234,17 +1623,38 @@ def instance(col, nom, loc, rot_z, echelle, inclinaison=(0.0, 0.0)):
     return C.lier(e)
 
 
-def instancier_vegetation(plan, h_sol):
-    """Pose les instances du plan (forêt, lisière, joncs, bosquets, buissons, rochers) sur le relief."""
+# Teintes des feuillages : (teinte, force, valeur, tout le modèle) selon le climat. Au sud : chênes verts sombres,
+# pins d'Alep plus clairs, oliviers argentés, cyprès presque noirs, maquis sec.
+TEINTES = {
+    "vert": {"arbre_a": ("#4f6b2a", 0.3, 0.92, False), "arbre_b": ("#4f6b2a", 0.3, 0.92, False),
+             "arbre_clair": ("#5a7a2e", 0.35, 1.15, False), "arbuste": ("#5d7a32", 0.35, 1.3, True),
+             "cypres": ("#2c3a22", 0.5, 0.75, False), "olivier": ("#98a17c", 0.65, 1.35, False),
+             "maquis": ("#66703e", 0.4, 1.0, False)},
+    "sud": {"arbre_a": ("#3c4826", 0.5, 0.78, False), "arbre_b": ("#5a6231", 0.45, 0.95, False),
+            "arbre_clair": ("#6a7236", 0.45, 1.05, False), "arbuste": ("#7a7a46", 0.45, 1.1, True),
+            "cypres": ("#28361f", 0.55, 0.7, False), "olivier": ("#98a17c", 0.65, 1.35, False),
+            "maquis": ("#6d7040", 0.45, 1.0, False)},
+}
+
+
+def instancier_vegetation(plan, h_sol, t=None):
+    """Pose les instances du plan (forêt, lisière, joncs, bosquets, buissons, rochers et décor) sur le relief. Seuls
+    les modèles dont le plan a besoin sont chargés. Renvoie la fonction z_sol(x, y) (hauteur du sol en m)."""
+    t = t or {}
+    teintes = TEINTES[t.get("climat", "vert")]
+    besoin = sorted({p["col"] for p in plan})
     cols = {}
-    for cle, (ident, _, _) in MODELES.items():
-        cols[cle] = charger_modele(ident, cle)
-    for cle in ("arbre_a", "arbre_b"):
-        teinter_feuillage(cols[cle], "#4f6b2a", force=0.3, valeur=0.92)
-    # arbres des bosquets : même modèle, cime pleine et plus claire (ils ne se lisent plus comme des buissons morts)
-    teinter_feuillage(cols["arbre_clair"], "#5a7a2e", force=0.35, valeur=1.15)
-    teinter_feuillage(cols["arbuste"], "#5d7a32", force=0.35, valeur=1.3, tout=True)
-    cols["joncs"] = collection_joncs()
+    for cle in besoin:
+        ident = MODELES.get(cle, (None,))[0]
+        if cle == "joncs":
+            cols[cle] = collection_joncs()
+        elif cle == "pin":
+            cols[cle] = D.collection_pin("pin", "#3a4a2c" if t.get("climat") == "sud" else "#2b3a26")
+        elif ident:
+            cols[cle] = charger_modele(ident, cle)
+            if cle in teintes:
+                te, force, valeur, tout = teintes[cle]
+                teinter_feuillage(cols[cle], te, force=force, valeur=valeur, tout=tout)
     ny, nx = h_sol.shape
 
     def z_sol(x, y):
@@ -1254,42 +1664,63 @@ def instancier_vegetation(plan, h_sol):
     for k, p in enumerate(plan):
         instance(cols[p["col"]], "%s%d" % (p["role"], k), monde(p["x"], p["y"], z_sol(p["x"], p["y"]) + p["dz"]), p["rot"],
                  p["echelle"], p["incl"])
+    return z_sol
 
 
 # ---------------------------------------------------------------- aperçu sans Blender
 def apercu(id_carte, dossier):
     """Aperçu rapide (sans Blender) : couleurs plates tirées des masques, cimes prévues en disques. Sert à contrôler les
-    clairières, la lisière, les sentiers, les ponts et les franges de joncs avant un rendu de 15 minutes."""
-    carte = lire_cartes()[id_carte]
+    clairières, la lisière, les sentiers, les ponts, le gué, les champs, le fossé, les rochers et les franges de joncs
+    avant un rendu de 15 minutes. id_carte : identifiant du terrain (« col », « col-sud »...)."""
+    base, t = D.theme(id_carte)
+    carte = lire_cartes()[base]
     graine = C.graine("terrain-" + id_carte)
-    mq = masques(carte, graine)
-    plan = planifier_vegetation(carte, mq, graine)
+    mq = masques(carte, graine, t)
+    plan = planifier_vegetation(carte, mq, graine, t)
     sb = couverture_cimes(plan)
     W, H = TAILLE_MASQUE
+    PALETTE_ = D.palette(t, PALETTE)
+    cult = D.CULTURES[t["climat"]]
 
     def c(h):
-        return np.array(C.rgb8(h), dtype=np.float32)
-    img = np.zeros((H, W, 3), dtype=np.float32) + c(PALETTE["herbe"])
+        return np.array(C.rgb8(PALETTE_.get(h, cult.get(h, h)) if not h.startswith("#") else h), dtype=np.float32)
+    img = np.zeros((H, W, 3), dtype=np.float32) + c("herbe")
     for cle, coul, k in (("verge", "bas_cote", 1.0), ("clairiere", "pietinee", 0.6)):
-        img = img * (1 - k * mq[cle][..., None]) + c(PALETTE[coul]) * k * mq[cle][..., None]
-    img = img * (1 - sb[..., None]) + c(PALETTE["sous_bois"]) * sb[..., None]
-    terre = np.zeros_like(img) + c(PALETTE["terre"])
+        img = img * (1 - k * mq[cle][..., None]) + c(coul) * k * mq[cle][..., None]
+    img = img * (1 - sb[..., None]) + c("sous_bois") * sb[..., None]
+    terre = np.zeros_like(img) + c("terre")
     for cle, coul, k in (("tassee", "terre_tassee", 0.75), ("poussiere", "poussiere", 0.75), ("ornieres", "orniere", 1.0),
                          ("humide", "terre_humide", 0.75), ("flaques", "flaque", 1.0), ("paves", "paves", 0.5)):
-        terre = terre * (1 - k * mq[cle][..., None]) + c(PALETTE[coul]) * k * mq[cle][..., None]
+        terre = terre * (1 - k * mq[cle][..., None]) + c(coul) * k * mq[cle][..., None]
+    for cle in ("labour", "ble", "pre", "talus", "olsol", "fosse", "levee", "roche"):
+        img = img * (1 - mq[cle][..., None]) + c("oliveraie" if cle == "olsol" else cle) * mq[cle][..., None]
     img = img * (1 - mq["route"][..., None]) + terre * mq["route"][..., None]
     for cle, coul in (("galets", "banc"), ("vase", "vase")):
-        img = img * (1 - mq[cle][..., None]) + c(PALETTE[coul]) * mq[cle][..., None]
-    eau = c(PALETTE["eau_bord"]) * (1 - mq["prof"][..., None]) + c(PALETTE["eau_milieu"]) * mq["prof"][..., None]
-    eau = eau * (1 - mq["remous"][..., None]) + c(PALETTE["remous"]) * mq["remous"][..., None]
+        img = img * (1 - mq[cle][..., None]) + c(coul) * mq[cle][..., None]
+    eau = c("eau_bord") * (1 - mq["prof"][..., None]) + c("eau_milieu") * mq["prof"][..., None]
+    eau = eau * (1 - mq["remous"][..., None]) + c("remous") * mq["remous"][..., None]
     img = img * (1 - mq["eau"][..., None]) + eau * mq["eau"][..., None]
+    if mq["relief"].max() > 0:                  # ombrage du relief (soleil du nord-ouest)
+        gy_, gx_ = np.gradient(mq["relief"])
+        k_ = 1.0 / (M / (W / LARG))
+        ombre = np.clip(((gx_ - gy_) * k_ * 0.707) * 0.9, -0.6, 0.6)   # pente montant vers le sud-est : à l'ombre
+        img = img * (1 - ombre[..., None])
     im = Image.fromarray(np.clip(img, 0, 255).astype(np.uint8)).resize((LARG, HAUT), Image.LANCZOS)
     d = ImageDraw.Draw(im)
     teintes = {"foret": (40, 62, 30), "sous_bois": (55, 75, 35), "lisiere": (90, 120, 50), "joncs": (170, 160, 100),
-               "bosquet": (100, 140, 60), "buisson": (110, 140, 70), "rocher": (130, 130, 120)}
+               "bosquet": (100, 140, 60), "buisson": (110, 140, 70), "rocher": (130, 130, 120), "eboulis": (150, 150, 140),
+               "affleurement": (110, 105, 100), "isole": (70, 110, 40), "haie": (60, 90, 35), "olivier": (140, 150, 110),
+               "cypres": (25, 40, 20), "maquis": (110, 115, 70)}
     for p in sorted(plan, key=lambda q: q["role"] != "sous_bois"):
         r = max(1.5, p["portee_px"] * (0.8 if p["role"] != "joncs" else 0.5))
-        d.ellipse((p["x"] - r, p["y"] - r, p["x"] + r, p["y"] + r), fill=teintes[p["role"]], outline=(20, 30, 15))
+        fill = (30, 55, 45) if p["col"] == "pin" else teintes[p["role"]]
+        d.ellipse((p["x"] - r, p["y"] - r, p["x"] + r, p["y"] + r), fill=fill, outline=(20, 30, 15))
+    if mq["moulin"]:
+        m_ = mq["moulin"]
+        ca, sa = math.cos(m_["angle"]), math.sin(m_["angle"])
+        for (cx, cy, L_, P_) in ((m_["x"], m_["y"], m_["long"], m_["prof"]), (m_["roue"][0], m_["roue"][1], 40, 9)):
+            d.polygon([(cx + ca * u - sa * v, cy + sa * u + ca * v) for u, v in
+                       ((-L_ / 2, -P_ / 2), (L_ / 2, -P_ / 2), (L_ / 2, P_ / 2), (-L_ / 2, P_ / 2))], fill=(120, 80, 60), outline=(30, 20, 10))
     for g in mq["ponts"]:
         a = g["angle"]
         ca, sa = math.cos(a), math.sin(a)
@@ -1306,27 +1737,31 @@ def apercu(id_carte, dossier):
 
 # ---------------------------------------------------------------- rendu d'une carte
 def rendre_terrain(id_carte, essai=False, sortie=None, echantillons=48, zone=None):
-    """Rend une carte. essai : taille logique (1000 × 660) ; zone (x0, y0, x1, y1 en px logiques) : seulement ce
-    morceau, à la résolution finale (contrôle du détail et du poids JPEG sans tout rendre)."""
+    """Rend un terrain (« col », ou sa variante du sud « col-sud » : même tracé, décor sec). essai : taille logique
+    (1000 × 660) ; zone (x0, y0, x1, y1 en px logiques) : seulement ce morceau, à la résolution finale (contrôle du
+    détail et du poids JPEG sans tout rendre)."""
     cartes = lire_cartes()
-    carte = cartes[id_carte]
+    base, t = D.theme(id_carte)
+    carte = cartes[base]
     graine = C.graine("terrain-" + id_carte)
-    mq = masques(carte, graine)
-    plan = planifier_vegetation(carte, mq, graine)
+    mq = masques(carte, graine, t)
+    plan = planifier_vegetation(carte, mq, graine, t)
     sous_bois = couverture_cimes(plan)
     ecrire_controle(id_carte, mq, sous_bois)
     un = np.ones_like(mq["eau"])
     m1 = ecrire_masque("masque-%s-1" % id_carte, [mq["route"], mq["ornieres"], mq["crete"], mq["berge"]])
     m2 = ecrire_masque("masque-%s-2" % id_carte, [sous_bois, mq["clairiere"], mq["variation"], mq["usure"]])
     m4 = ecrire_masque("masque-%s-4" % id_carte, [mq["vase"], mq["galets"], mq["herbe_grasse"], mq["flaques"]])
-    m5 = ecrire_masque("masque-%s-5" % id_carte, [mq["cailloux"], mq["nord"], mq["remous"], un])
-    m6 = ecrire_masque("masque-%s-6" % id_carte, [mq["verge"], mq["sentier"], mq["bord_flaques"], un])
+    m5 = ecrire_masque("masque-%s-5" % id_carte, [mq["cailloux"], mq["nord"], mq["remous"], mq["gue"]])
+    m6 = ecrire_masque("masque-%s-6" % id_carte, [mq["verge"], mq["sentier"], mq["bord_flaques"], mq["gue_large"]])
     m7 = ecrire_masque("masque-%s-7" % id_carte, [mq["tassee"], mq["poussiere"], mq["humide"], mq["paves"]])
+    m8 = ecrire_masque("masque-%s-8" % id_carte, [mq["labour"], mq["ble"], mq["pre"], mq["talus"]])
+    m9 = ecrire_masque("masque-%s-9" % id_carte, [mq["fosse"], mq["levee"], mq["roche"], mq["olsol"]])
     m3 = ecrire_masque("masque-%s-3" % id_carte, [mq["eau"], mq["dir_c"], mq["prof"], mq["dir_s"]])
     C.reinitialiser()
     C.installer_lumiere()
-    ob_sol, h = sol(mq, [m1, m2, m4, m5, m6, m7], graine)
-    eau([m3, m5])
+    ob_sol, h = sol(mq, [m1, m2, m4, m5, m6, m7, m8, m9], graine, t)
+    eau([m3, m5], t)
     # le canal R de m5 sert aux cailloux du sol ; l'eau lit la bande nord (G) et le remous (B)
     mats = mats_pont()
     zones_places = mq["sols"]          # pied des murs (et non la clairière) : seul un pont caché sous la place est remplacé
@@ -1337,7 +1772,9 @@ def rendre_terrain(id_carte, essai=False, sortie=None, echantillons=48, zone=Non
             pont("passerelle%d" % k, g, mats)
             continue
         pont("pont%d" % k, g, mats)
-    instancier_vegetation(plan, h)
+    z_sol = instancier_vegetation(plan, h, t)
+    if mq["moulin"]:
+        D.construire_moulin(mq["moulin"], t["climat"], z_sol)
     W, H = (LARG, HAUT) if essai else (LARG * C.ECHELLE, HAUT * C.ECHELLE)
     C.camera_dessus(LARG * M / 2, HAUT * M / 2, LARG * M, HAUT * M)
     C.reglages_rendu(W, H, echantillons=echantillons, transparent=False, filtre=1.0, exposition=-0.25)
@@ -1360,20 +1797,29 @@ def rendre_terrain(id_carte, essai=False, sortie=None, echantillons=48, zone=Non
         C.sauver_jpg(img, chemin, qualite=90, max_ko=2000)
         return chemin
     chemin, src = C.chemin_td("terrain-%s.jpg" % id_carte)
-    C.sauver_jpg(img, chemin, qualite=80, max_ko=440, plancher=72, masque_debruit=mq["foret0"])
+    # variantes du sud un peu plus légères (budget total des images : 9 Mo)
+    C.sauver_jpg(img, chemin, qualite=80, max_ko=440 if t["climat"] == "vert" else 400, plancher=72,
+                 masque_debruit=mq["foret0"])
     C.maj_manifeste({"terrain-" + id_carte: C.entree(src, LARG, HAUT, 0, 0)})
     return chemin
 
 
 # ---------------------------------------------------------------- planche de contrôle des terrains
 def planche_terrains(chemin):
-    """Planche de contrôle (sans Blender) : les 6 terrains en vue de jeu (places fortes, tours et troupes posées à leur
-    taille logique, rival anglais ou omeyyade en alternance), puis pour chaque carte trois détails à la résolution du
-    fichier (2 × la taille logique) : premier pont, bout de route des rivaux, bout de route de la France."""
+    """Planche de contrôle (sans Blender) : les 11 terrains en vue de jeu (places fortes, tours et troupes posées à leur
+    taille logique ; rival anglais sur les terrains verts, omeyyade sur les variantes du sud), puis pour chaque terrain
+    trois détails à la résolution du fichier (2 × la taille logique) : première traversée, porte des rivaux, porte de
+    la France."""
     import planche as PL                      # import ici : planche.py importe déjà ce module
     from PIL import ImageFont
     cartes = lire_cartes()
-    ids = [c for c in ("domaine", "gue", "foret", "moulin", "col", "chateau") if c in cartes]
+    ids = [c for c in terrains_a_rendre() if os.path.exists(os.path.join(C.TD, "terrain-%s.jpg" % c))]
+
+    def base(c):
+        return c[:-4] if c.endswith("-sud") else c
+
+    def rival_de(c, k):
+        return "omeyyades" if c.endswith("-sud") else ("angleterre" if k % 2 == 0 else "omeyyades")
 
     def police(t, gras=False):
         try:
@@ -1386,11 +1832,12 @@ def planche_terrains(chemin):
         """Vue de jeu à l'échelle 1 (comme planche.vue_en_jeu, quel que soit le nombre d'emplacements de la carte)."""
         fond = Image.open(src).convert("RGBA").resize((LARG, HAUT), Image.LANCZOS)
         route = carte["route"]
+        pl = carte["places"]
         _, _, lg = PL.sur_route(route, 0)
         emp, riv = carte["emplacements"], carte["emplacementsRivaux"]
         choix = ["tour-archers-france-1", "tour-piquiers-france-2", "tour-baliste-france-3", "tour-archers-france-3",
                  "tour-catapulte-france-2", "tour-archers-france-2"]
-        batis = [("place-france-intact", route[0]), ("place-%s-intact" % rival, route[-1])]
+        batis = [("place-france-intact", pl["depart"]), ("place-%s-intact" % rival, pl["arrivee"])]
         batis += [(choix[i % len(choix)], emp[j]) for i, j in enumerate(range(0, len(emp), 2))]
         batis += [("tour-archers-%s-1" % rival, p) for p in riv[:1]] + [("tour-baliste-%s-1" % rival, p) for p in riv[2:3]]
         for nom, (x, y) in batis:
@@ -1409,22 +1856,23 @@ def planche_terrains(chemin):
     vues = []
     for k, c in enumerate(ids):
         src = os.path.join(C.TD, "terrain-%s.jpg" % c)
-        rival = "angleterre" if k % 2 == 0 else "omeyyades"
-        vues.append((c, rival, vue_jeu(src, cartes[c], rival)))
+        rival = rival_de(c, k)
+        vues.append((c, rival, vue_jeu(src, cartes[base(c)], rival)))
     lv = (L - 4 * marge) // 3
     hv = round(lv * HAUT / LARG)
     # détails à la résolution du fichier
     lz, hz = 300, 210                          # px logiques par détail
     details = []
     for k, c in enumerate(ids):
-        carte = cartes[c]
-        rival = "angleterre" if k % 2 == 0 else "omeyyades"
+        carte = cartes[base(c)]
+        rival = rival_de(c, k)
         fond = Image.open(os.path.join(C.TD, "terrain-%s.jpg" % c)).convert("RGBA")
         route = carte["route"]
-        for nom, (x, y) in (("place-france-intact", route[0]), ("place-%s-intact" % rival, route[-1])):
+        pl = carte["places"]
+        for nom, (x, y) in (("place-france-intact", pl["depart"]), ("place-%s-intact" % rival, pl["arrivee"])):
             PL.poser(fond, "ombre-" + nom, x, y)
-        objets = [(route[0][1], "place-france-intact", route[0], 0, False),
-                  (route[-1][1], "place-%s-intact" % rival, route[-1], 0, False)]
+        objets = [(pl["depart"][1], "place-france-intact", pl["depart"], 0, False),
+                  (pl["arrivee"][1], "place-%s-intact" % rival, pl["arrivee"], 0, False)]
         _, _, lg = PL.sur_route(route, 0)
         for s_, cote, m_, nom in ((60, -6, False, "unite-fantassins-france"), (78, 6, False, "unite-cavaliers-france"),
                                   (lg - 90, 5, True, "unite-pietaille-%s" % rival), (lg - 70, -5, True, "unite-hommes-%s" % rival)):
@@ -1445,8 +1893,8 @@ def planche_terrains(chemin):
         centres = []
         if carte["ponts"]:
             centres.append(("pont", carte["ponts"][0]["x"], carte["ponts"][0]["y"]))
-        centres.append(("place des rivaux", route[-1][0] - 60, route[-1][1] - 20))
-        centres.append(("place de France", route[0][0] + 60, route[0][1] - 20))
+        centres.append(("porte des rivaux", route[-1][0] - 40, route[-1][1] - 20))
+        centres.append(("porte de France", route[0][0] + 50, route[0][1] - 20))
         for nom, cx, cy in centres:
             x0 = int(min(max(cx - lz / 2, 0), LARG - lz))
             y0 = int(min(max(cy - hz / 2, 0), HAUT - hz))
@@ -1456,7 +1904,8 @@ def planche_terrains(chemin):
     ech = (L - (par_ligne + 1) * marge) / (par_ligne * lz2)
     lz3, hz3 = int(lz2 * ech), int(hz2 * ech)
     lignes_d = math.ceil(len(details) / par_ligne)
-    H = 70 + 2 * (hv + titre + marge) + 60 + lignes_d * (hz3 + titre + marge)
+    lignes_v = math.ceil(len(vues) / 3)
+    H = 70 + lignes_v * (hv + titre + marge) + 60 + lignes_d * (hz3 + titre + marge)
     pl = Image.new("RGB", (L, H), (38, 33, 27))
     d = ImageDraw.Draw(pl)
     d.text((marge, 18), "Terrains de bataille (rendu 3D, vue de dessus) : vues de jeu, sprites à leur taille logique",
@@ -1465,9 +1914,9 @@ def planche_terrains(chemin):
     for k, (c, rival, v) in enumerate(vues):
         x = marge + (k % 3) * (lv + marge)
         yy = y + (k // 3) * (hv + titre + marge)
-        d.text((x, yy + 6), "%s (%s ; rival : %s)" % (cartes[c]["nom"], c, rival), fill=(230, 215, 185), font=police(18))
+        d.text((x, yy + 6), "%s (%s ; rival : %s)" % (cartes[base(c)]["nom"], c, rival), fill=(230, 215, 185), font=police(18))
         pl.paste(v.convert("RGB").resize((lv, hv), Image.LANCZOS), (x, yy + titre))
-    y += 2 * (hv + titre + marge)
+    y += lignes_v * (hv + titre + marge)
     d.text((marge, y + 14), "Détails à la résolution du fichier (2 × la taille logique), affichés à %.0f %%" % (ech * 100),
            fill=(240, 228, 200), font=police(24, True))
     y += 60
@@ -1482,6 +1931,11 @@ def planche_terrains(chemin):
     return chemin
 
 
+def terrains_a_rendre():
+    """Les 11 terrains : les 6 cartes du jeu, puis les variantes du front du sud (même tracé, décor sec)."""
+    return list(lire_cartes()) + [c + "-sud" for c in ("gue", "foret", "moulin", "col", "chateau")]
+
+
 def main(args):
     essai = "--essai" in args
     args = [a for a in args if a != "--essai"]
@@ -1489,10 +1943,11 @@ def main(args):
         # masques de contrôle seulement (verifier.py), sans rendu : quelques secondes par carte
         args = [a for a in args if a != "--controle"]
         cartes = lire_cartes()
-        for id_carte in (args or list(cartes)):
+        for id_carte in (args or terrains_a_rendre()):
+            base, t = D.theme(id_carte)
             graine = C.graine("terrain-" + id_carte)
-            mq = masques(cartes[id_carte], graine)
-            plan = planifier_vegetation(cartes[id_carte], mq, graine)
+            mq = masques(cartes[base], graine, t)
+            plan = planifier_vegetation(cartes[base], mq, graine, t)
             C.journal("contrôle écrit : %s" % ecrire_controle(id_carte, mq, couverture_cimes(plan)))
         return
     sortie = None
@@ -1504,7 +1959,7 @@ def main(args):
         i = args.index("--apercu")
         dossier = args[i + 1]
         args = args[:i] + args[i + 2:]
-        for id_carte in (args or list(lire_cartes())):
+        for id_carte in (args or terrains_a_rendre()):
             apercu(id_carte, dossier)
         return
     if "--zone" in args:
@@ -1515,7 +1970,7 @@ def main(args):
         i = args.index("--sortie")
         sortie = args[i + 1]
         args = args[:i] + args[i + 2:]
-    for id_carte in (args or list(lire_cartes())):
+    for id_carte in (args or terrains_a_rendre()):
         rendre_terrain(id_carte, essai=essai, sortie=sortie, zone=zone)
 
 

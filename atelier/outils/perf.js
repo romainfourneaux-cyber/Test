@@ -1,7 +1,12 @@
 // Essai de bout en bout dans Chromium (Playwright) : bataille (tower defense) lancée deux fois de suite,
 // quitter avec Échap, événement du jour, conseil du royaume, signalement, export puis import, noms de la carte de
-// campagne qui ne se touchent pas (de la première province prise à la dernière),
-// et mesure du temps entre une réponse et la question suivante sur 50 enchaînements au moins (objectif < 100 ms).
+// campagne qui ne se touchent pas (de la première province prise à la dernière, avec les bourgs puis en repli avec les
+// médaillons), carte de campagne entière dans une fenêtre de 1366 × 768 (avec et sans alerte), énoncé de chaque question
+// de bataille visible en haut de la colonne de droite à 1366 × 768 (association longue, erreur, questions suivantes),
+// et deux mesures du temps entre une réponse et la question suivante (objectif < 100 ms) :
+//  - JEU.mesure (horloge truquée) : seulement la construction de la question suivante, sur 50 enchaînements au moins ;
+//  - Event Timing (temps réel, sans horloge truquée) : de la touche à l'image peinte qui montre la question suivante,
+//    pendant le conseil de guerre de batailles en 1366 × 768 et en 1920 × 1080.
 // Seuls les enchaînements question → question comptent : une vague, une carte de décision ou un bilan n'en sont pas.
 // Usage : node atelier/outils/perf.js   (demande le module playwright ; sinon, faire les vérifications à la main)
 // Variables facultatives : CHROMIUM (chemin du navigateur), DETAIL=1 (affiche toutes les mesures).
@@ -61,6 +66,128 @@ async function jouerCarteConseil(page) {
   const n = await page.evaluate(c => Array.from(document.querySelectorAll(".scene-conseil .choix"))
     .findIndex(b => b.lastElementChild && b.lastElementChild.textContent === c), r.correction);
   await page.keyboard.press(String(n + 1));
+}
+
+async function nouvellePage(navigateur, w, h, erreurs) {
+  const page = await navigateur.newPage({ viewport: { width: w, height: h } });
+  page.on("pageerror", e => erreurs.push(e.message));
+  page.on("console", m => { if (m.type() === "error") erreurs.push(m.text()); });
+  await page.goto(URL);
+  await page.waitForFunction(() => window.JEU && JEU.pret);
+  return page;
+}
+const attendre = ms => new Promise(r => setTimeout(r, ms));
+
+// Questions choisies pour le conseil de guerre : la plus longue association, puis un long QCM, puis un vrai ou faux
+// (les plus longs du jeu), à la place du tirage habituel.
+async function questionsLongues(page) {
+  await page.evaluate(() => {
+    const toutes = [].concat(...Object.keys(JEU.donnees.cours).map(c => JEU.questions.questionsDuCours(c)));
+    const taille = q => JSON.stringify([q.enonce, q.choix, q.gauche, q.droite]).length;
+    const plus = t => toutes.filter(q => q.type === t).sort((a, b) => taille(b) - taille(a))[0];
+    const choix = [plus("association"), plus("qcm"), plus("vrai_faux")].filter(Boolean);
+    window.__suite = JEU.recit.suite;
+    JEU.recit.suite = function (n) { const r = choix.splice(0, n); return r.length ? r : window.__suite.apply(this, arguments); };
+  });
+}
+
+// haut visible de la colonne de droite (sous le bandeau) et position d'un élément de la question
+async function visibilite(page, selecteur) {
+  return page.evaluate(sel => {
+    const col = document.querySelector(".td-bas"), e = document.querySelector(sel);
+    if (!col || !e) return null;
+    const bandeau = document.getElementById("bandeau");
+    const hb = bandeau ? bandeau.getBoundingClientRect().bottom : 0;
+    const rc = col.getBoundingClientRect(), re = e.getBoundingClientRect();
+    const hautVisible = Math.max(rc.top, hb, 0);
+    return { haut: Math.round(re.top), hautVisible: Math.round(hautVisible), visible: re.top >= hautVisible - 1 && re.top < Math.min(rc.bottom, innerHeight) - 10 };
+  }, selecteur);
+}
+
+async function essaiPortable(navigateur, erreurs) {
+  const page = await nouvellePage(navigateur, 1366, 768, erreurs);
+  const res = { carte: [], questions: [] };
+  // carte de campagne : bas du dessin dans la fenêtre, sans alerte puis avec l'alerte d'une attaque
+  await page.click("#menu button[data-ecran=jouer]");
+  await page.waitForSelector("#ecran-jouer .carte-campagne");
+  for (const cas of ["sans alerte", "avec alerte"]) {
+    await page.evaluate(a => { const c = JEU.campagne.etat(); c.rival.attaque = a ? "angleterre" : null; JEU.ui.afficher("jouer"); window.scrollTo(0, 0); }, cas === "avec alerte");
+    await attendre(150);
+    res.carte.push(Object.assign({ cas }, await page.evaluate(() => ({ bas: Math.round(document.querySelector(".carte-svg").getBoundingClientRect().bottom), vue: innerHeight }))));
+  }
+  await page.evaluate(() => { JEU.campagne.etat().rival.attaque = null; JEU.ui.afficher("jouer"); });
+  // bataille : association longue répondue fausse (la colonne défile pour l'atteindre), panneau d'erreur, puis deux
+  // questions répondues justes : chaque fois, le haut doit se voir
+  await questionsLongues(page);
+  await page.evaluate(() => JEU.bataille.lancer("gue"));
+  await page.waitForSelector(".td-question .question");
+  await attendre(250);
+  res.questions.push(Object.assign({ quoi: "énoncé de l'association" }, await visibilite(page, ".td-question .enonce")));
+  const q = await page.evaluate(() => { const q = JEU.ui.questionCourante; return { type: q.type, reponse: q.reponse }; });
+  if (q.type === "association") {
+    // réponse fausse : chaque mot avec la définition du suivant
+    for (const [g, d] of q.reponse) {
+      await page.keyboard.press(String(g + 1));
+      await page.locator(".association .colonne").nth(1).locator(".choix").nth((d + 1) % q.reponse.length).click();
+    }
+    await attendre(100);
+    res.questions.push(Object.assign({ quoi: "bouton Valider de l'association" }, await visibilite(page, ".td-question .valider")));
+    await page.keyboard.press("Enter");
+    await page.waitForSelector(".panneau-erreur");
+    await attendre(250);
+    res.questions.push(Object.assign({ quoi: "titre du panneau d'erreur" }, await visibilite(page, ".panneau-erreur .verdict")));
+    await page.keyboard.press("Enter");
+  } else await repondreJuste(page);
+  for (let i = 0; i < 2; i++) {
+    await page.waitForFunction(() => document.querySelector(".td-question .question .enonce"));
+    await attendre(250);
+    res.questions.push(Object.assign({ quoi: "énoncé de la question " + (i + 2) }, await visibilite(page, ".td-question .enonce")));
+    await repondreJuste(page);
+  }
+  await page.close();
+  return res;
+}
+
+// Event Timing : durée de chaque touche qui répond à une question de bataille et amène la suivante (de la touche à
+// l'image peinte), batailles réelles (le champ de bataille s'anime pendant ce temps), sans horloge truquée.
+async function tempsReel(navigateur, w, h, erreurs) {
+  const page = await nouvellePage(navigateur, w, h, erreurs);
+  await page.evaluate(() => {
+    window.__ev = [];
+    new PerformanceObserver(l => l.getEntries().forEach(e => { if (e.name === "keydown") window.__ev.push(e.duration); }))
+      .observe({ type: "event", durationThreshold: 16, buffered: true });
+  });
+  await page.click("#menu button[data-ecran=jouer]");
+  await page.waitForSelector("#ecran-jouer .carte-campagne");
+  const durees = [];
+  // batailles des deux fronts, jusqu'à 8 mesures (les associations et les textes à trous, répondus en plusieurs
+  // gestes, ne sont pas mesurés : le tirage des questions décide du nombre de batailles)
+  for (const lieu of ["gue", "piemont", "moulin", "forteresse", "col", "oliveraie", "chateau", "fleuve"]) {
+    if (durees.length >= 8) break;
+    await page.evaluate(l => JEU.bataille.lancer(l), lieu);
+    await page.waitForSelector(".td-canvas");
+    for (let i = 0; i < 3; i++) {
+      await page.waitForFunction(() => document.querySelector(".td-question .question"));
+      await attendre(350);
+      const avant = await page.evaluate(() => window.__ev.length);
+      const type = await page.evaluate(() => JEU.ui.questionCourante.type);
+      await repondreJuste(page);
+      await attendre(350);
+      // les réponses au clavier qui amènent une autre question (la 3e amène la fin du conseil)
+      if (i < 2 && type !== "association" && type !== "trou") {
+        const ev = await page.evaluate(a => window.__ev.slice(a), avant);
+        durees.push(ev.length ? Math.max(...ev) : 16);
+      }
+    }
+    await page.waitForSelector(".td-pret");
+    await page.keyboard.press("Escape");
+    await page.waitForSelector(".confirmation");
+    await page.click(".confirmation .bouton.principal");
+    await page.waitForFunction(() => !JEU.partie && JEU.ui.ecranCourant() === "jouer");
+  }
+  await page.close();
+  const tri = durees.slice().sort((a, b) => a - b);
+  return { taille: w + " × " + h, mesures: durees.length, mediane: tri[Math.floor(tri.length / 2)], max: tri[tri.length - 1], detail: durees };
 }
 
 (async () => {
@@ -191,6 +318,33 @@ async function jouerCarteConseil(page) {
     JEU.ui.afficher("jouer");
     return { etats: etats.length, chocs };
   });
+  // même contrôle en repli (images des bourgs absentes : médaillons), plus : la bannière d'un médaillon ne touche pas le
+  // titre d'un front
+  bilan.etiquettesRepli = await page.evaluate(() => {
+    const C = JEU.campagne, c = C.etat(), avant = c.conquises.slice(), sauve = {};
+    Object.keys(JEU.SPRITES || {}).filter(k => k.startsWith("lieu-")).forEach(k => { sauve[k] = JEU.SPRITES[k]; delete JEU.SPRITES[k]; });
+    const ordre = C.FRONTS.map(f => f.provinces.map(p => p.id));
+    const chocs = [];
+    const boite = (e, m) => { const b = e.getBBox(); return { x0: b.x, y0: b.y + m, x1: b.x + b.width, y1: b.y + b.height - m }; };
+    const touche = (a, b) => Math.min(a.x1, b.x1) > Math.max(a.x0, b.x0) && Math.min(a.y1, b.y1) > Math.max(a.y0, b.y0);
+    for (let n = 0; n <= ordre[0].length; n++) {
+      c.conquises = [].concat(...ordre.map(l => l.slice(0, n)));
+      JEU.ui.afficher("jouer");
+      const t = [...document.querySelectorAll(".carte-svg text.nom-lieu, .carte-svg text.sous-lieu")].map(e => Object.assign(boite(e, 2), { t: e.textContent, n: e.closest(".noeud").dataset.lieu }));
+      const medaillons = [...document.querySelectorAll(".carte-svg .repli-lieu")].map(e => Object.assign(boite(e, 0), { n: e.closest(".noeud").dataset.lieu }));
+      const titres = [...document.querySelectorAll(".carte-svg .titre-front")].map(e => Object.assign(boite(e, 0), { t: e.textContent }));
+      for (let i = 0; i < t.length; i++) {
+        for (let j = i + 1; j < t.length; j++) if (t[i].n !== t[j].n && touche(t[i], t[j])) chocs.push(n + " prises (repli) : « " + t[i].t + " » touche « " + t[j].t + " »");
+        medaillons.forEach(m => { if (m.n !== t[i].n && touche(m, t[i])) chocs.push(n + " prises (repli) : le médaillon de « " + m.n + " » touche « " + t[i].t + " »"); });
+        medaillons.forEach(m => { if (m.n === t[i].n && touche(m, t[i])) chocs.push(n + " prises (repli) : « " + t[i].t + " » est écrit sur son médaillon"); });
+      }
+      medaillons.forEach(m => titres.forEach(ti => { if (touche(m, ti)) chocs.push(n + " prises (repli) : le médaillon de « " + m.n + " » touche le titre « " + ti.t + " »"); }));
+    }
+    Object.assign(JEU.SPRITES, sauve);
+    c.conquises = avant;
+    JEU.ui.afficher("jouer");
+    return { chocs };
+  });
 
   // 6. mesure : temps entre une réponse et la question suivante
   const v = await page.evaluate(() => JEU.mesure.valeurs.slice());
@@ -199,6 +353,14 @@ async function jouerCarteConseil(page) {
   bilan.moyenne_ms = v.length ? Math.round(v.reduce((a, b) => a + b, 0) / v.length * 10) / 10 : null;
   bilan.max_ms = v.length ? Math.round(Math.max(...v) * 10) / 10 : null;
   bilan.ressources = await page.evaluate(() => JEU.sauvegarde.etat().ressources);
+  await page.close();
+
+  // 7. fenêtre de portable (1366 × 768), sans horloge truquée : carte de campagne entière à l'écran, puis énoncé de
+  //    chaque question de bataille visible (association longue répondue fausse, panneau d'erreur, questions suivantes)
+  bilan.portable = await essaiPortable(navigateur, erreurs);
+  // 8. temps réel (Event Timing) : de la touche qui répond à l'image peinte de la question suivante
+  bilan.tempsReel = [];
+  for (const [w, h] of [[1366, 768], [1920, 1080]]) bilan.tempsReel.push(await tempsReel(navigateur, w, h, erreurs));
   bilan.erreursJS = erreurs;
   console.log(JSON.stringify(bilan, null, 1));
   await navigateur.close();
@@ -213,6 +375,14 @@ async function jouerCarteConseil(page) {
   if (!(bilan.max_ms < 100)) echecs.push("plus de 100 ms entre une réponse et la question suivante");
   if (!bilan.importIdentique) echecs.push("l'import ne redonne pas la même partie");
   if (bilan.etiquettes.chocs.length) echecs.push("carte de campagne : des noms se touchent (" + bilan.etiquettes.chocs.join(" ; ") + ")");
+  if (bilan.etiquettesRepli.chocs.length) echecs.push("carte de campagne en repli : " + bilan.etiquettesRepli.chocs.join(" ; "));
+  bilan.portable.carte.forEach(m => { if (m.bas > m.vue + 0.5) echecs.push("carte de campagne coupée à 1366 × 768 (" + m.cas + " : bas à " + m.bas + " px pour " + m.vue + ")"); });
+  bilan.portable.questions.forEach(m => { if (!m.visible) echecs.push("bataille à 1366 × 768 : " + m.quoi + " coupé par le haut (" + m.haut + " px, haut visible de la colonne à " + m.hautVisible + ")"); });
+  if (bilan.portable.questions.length < 4) echecs.push("bataille à 1366 × 768 : seulement " + bilan.portable.questions.length + " contrôles d'énoncé");
+  bilan.tempsReel.forEach(m => {
+    if (m.mesures < 6) echecs.push("temps réel " + m.taille + " : seulement " + m.mesures + " mesures");
+    if (m.max > 100) echecs.push("temps réel " + m.taille + " : " + m.max + " ms entre une réponse et la question suivante peinte (plus de 100 ms)");
+  });
   echecs.forEach(m => console.log("ÉCHEC  " + m));
   process.exit(echecs.length ? 1 : 0);
 })().catch(e => { console.log("ÉCHEC  " + e.message); process.exit(1); });

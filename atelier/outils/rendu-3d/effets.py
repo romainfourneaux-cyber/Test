@@ -8,7 +8,7 @@ Sorties (jeu/assets/images/td/) :
   effet-poussiere.png : bande de 5 images de 48 × 48 (le nuage de terre gonfle et se dissipe), ancrage bas-centre moins
   8 px ; le jeu s'en sert aussi, réduit, pour la bouffée d'un coup porté à un soldat (sans sang) ;
   effet-eclats.png : bande de 4 images de 32 × 32 (éclats de bois et de pierre qui s'écartent), ancrage au centre :
-  pierres de trébuchet et brèches seulement.
+  pierres de trébuchet et brèches seulement ; sans trait de contour, bords sans frange sombre.
 Même lumière que tout le reste ; projectiles sans ombre (ils sont en l'air).
 """
 import math
@@ -95,9 +95,9 @@ def pierre():
 
 
 def mat_poussiere(opacite, effiloche=0.5):
-    """Poussière de terre : ocre (#b8996a) en haut, dessous brun (#6b5236) : une poussière de chemin, pas un coton gris.
-    Bords effilochés par un bruit, opacité réglable (le nuage se dissipe).
-    Le dégradé suit la hauteur dans le monde (0,15 m → 1,1 m) : le bas des bouffées, à l'ombre d'elles-mêmes, fonce."""
+    """Poussière de terre : ocre clair (#d2bf98) en haut, dessous brun (#8a7050) : une poussière de chemin, pas un coton
+    gris ni un buisson. Bords très effilochés par un bruit fin, opacité réglable (le nuage se dissipe).
+    Le dégradé suit la hauteur dans le monde (0,15 m → 1,1 m) : le bas des bouffées fonce un peu, le haut s'éclaircit."""
     m, nt, p = C.nouveau_materiau("poussiere%.2f-%.2f" % (opacite, effiloche))
     p.inputs["Roughness"].default_value = 1.0
     p.inputs["Specular IOR Level"].default_value = 0.0
@@ -108,12 +108,12 @@ def mat_poussiere(opacite, effiloche=0.5):
     haut.inputs["From Min"].default_value = 0.15
     haut.inputs["From Max"].default_value = 1.1
     nt.links.new(sep.outputs["Z"], haut.inputs["Value"])
-    teinte = T_mix(nt, haut.outputs["Result"], C.couleur("#6b5236"), C.couleur("#b8996a"))
+    teinte = T_mix(nt, haut.outputs["Result"], C.couleur("#8a7050"), C.couleur("#d2bf98"))
     nt.links.new(teinte, p.inputs["Base Color"])
     tc = nt.nodes.new("ShaderNodeTexCoord")
     nz = nt.nodes.new("ShaderNodeTexNoise")
-    nz.inputs["Scale"].default_value = 5.0
-    nz.inputs["Detail"].default_value = 6.0
+    nz.inputs["Scale"].default_value = 9.0
+    nz.inputs["Detail"].default_value = 10.0
     try:
         nz.inputs["Roughness"].default_value = 0.65      # grain plus fin : des bords effilochés, pas des boules lisses
     except Exception:
@@ -131,8 +131,9 @@ def mat_poussiere(opacite, effiloche=0.5):
     nt.links.new(nz.outputs["Factor"], mr.inputs["Value"])
     inv = nt.nodes.new("ShaderNodeMath"); inv.operation = "SUBTRACT"; inv.inputs[0].default_value = 1.0
     nt.links.new(fr.outputs["Facing"], inv.inputs[1])
-    # cœur des bouffées un peu plus dense que les bords : (1 − facing) ** 0,9 ; les bords s'effacent en douceur
-    pw = nt.nodes.new("ShaderNodeMath"); pw.operation = "POWER"; pw.inputs[1].default_value = 0.9
+    # cœur des bouffées plus dense que les bords : (1 − facing) ** 1,7 ; les bords s'effacent tout à fait (pas de
+    # silhouette nette de boule)
+    pw = nt.nodes.new("ShaderNodeMath"); pw.operation = "POWER"; pw.inputs[1].default_value = 1.7
     nt.links.new(inv.outputs[0], pw.inputs[0])
     mul = nt.nodes.new("ShaderNodeMath"); mul.operation = "MULTIPLY"
     nt.links.new(mr.outputs["Result"], mul.inputs[0])
@@ -156,19 +157,20 @@ def T_mix(nt, fac, a, b):
 
 
 def poussiere(k, n=5):
-    """Nuage de poussière (image k sur n) : bouffées sphériques qui gonflent, montent un peu et pâlissent.
+    """Nuage de poussière (image k sur n) : bouffées qui gonflent, montent un peu et pâlissent, sans ombre portée ni
+    ombre propre (un voile de terre, pas un volume plein).
 
     Écart au centre d = (0,6 + 1,4 t) et rayon r = (0,8 + 1,2 t) (fois un tirage par bouffée) : le nuage couvre environ
-    55 % de la largeur de l'image à l'image 2 et 80 % à l'image 4 ; opacité maximale 0,6 à l'image 1, puis il se
-    dissipe ; bords effilochés dès le début (le bruit creuse la densité de 75 % puis jusqu'à 100 %)."""
+    55 % de la largeur de l'image à l'image 2 et 80 % à l'image 4 ; opacité maximale 0,45 à l'image 1 et 0,36 à
+    l'image 2, puis il se dissipe ; bords effilochés dès le début (le bruit creuse la densité de 90 % puis 100 %)."""
     rnd = random.Random(11)
     t = (k + 0.6) / n
     t0 = 0.6 / n
     opa = OPACITE_POUSSIERE * ((1 - t) / (1 - t0)) ** 1.1
-    m = mat_poussiere(opa, 0.75 + 0.25 * t)
+    m = mat_poussiere(opa, 0.9 + 0.1 * t)
     objs = []
     pos = []
-    for i in range(12):
+    for i in range(16):
         a = 2 * math.pi * i / 12 + rnd.uniform(-0.3, 0.3)
         d = rnd.uniform(0.2, 0.75) * (0.6 + 1.4 * t) * ECART_POUSSIERE
         r = rnd.uniform(0.32, 0.55) * (0.8 + 1.2 * t) * RAYON_POUSSIERE
@@ -177,18 +179,21 @@ def poussiere(k, n=5):
     mx = sum(p[0] for p in pos) / len(pos)
     my = sum(p[1] for p in pos) / len(pos)
     for i, (x, y, z, r) in enumerate(pos):
-        objs.append(C.sphere("bouffee%d" % i, r, (x - mx, y - my, z), m, subdiv=3, echelle=(1.0, 1.0, 0.8)))
+        o = C.sphere("bouffee%d" % i, r, (x - mx, y - my, z), m, subdiv=3, echelle=(1.0, 1.0, 0.8))
+        o.visible_shadow = False                # ni ombre portée au sol, ni ombre d'une bouffée sur l'autre
+        objs.append(o)
     return objs
 
 
 ECART_POUSSIERE = 0.88    # réglages fins de la taille du nuage (mesurée par mesurer_poussiere())
-OPACITE_POUSSIERE = 0.6   # opacité maximale du nuage (0,45 à 0,6 : la route et les troupes se voient à travers)
+OPACITE_POUSSIERE = 0.45  # opacité maximale du nuage (0,45 puis 0,36 : la route et les troupes se voient à travers)
 RAYON_POUSSIERE = 0.88
 
 
 def eclats(k, n=4):
     """Éclats (image k sur n) : 7 copeaux de bois et éclats de pierre de 3 à 5 px logiques (0,29 à 0,48 m à 10,5 px/m),
-    projetés en gerbe puis retombant ; cernés d'un liseré sombre net (contour 0,9) pour se lire sur l'herbe et la route."""
+    projetés en gerbe puis retombant. Sans trait de contour ni frange sombre (alpha prémultiplié à la réduction, couleur
+    des bords tirée des pixels opaques voisins) : ils se lisent par leur seule lumière, comme le reste du rendu."""
     rnd = random.Random(5)
     t = (k + 0.5) / n
     bois = C.mat_simple("copeau", "#a27b4c", rugosite=0.8)
@@ -215,7 +220,7 @@ EFFETS = {
     "effet-fleche": (lambda k: fleche(False), (24, 6), 1, (12, 3), 22.0, False),
     "effet-carreau": (lambda k: fleche(True), (32, 8), 1, (16, 4), 24.0, False),
     "effet-pierre": (lambda k: pierre(), (14, 14), 1, (7, 7), 15.0, False),
-    "effet-poussiere": (poussiere, (48, 48), 5, (24, 40), 13.0, True),
+    "effet-poussiere": (poussiere, (48, 48), 5, (24, 40), 13.0, False),
     "effet-eclats": (eclats, (32, 32), 4, (16, 16), 10.5, False),
 }
 
@@ -230,6 +235,31 @@ def adoucir_reflets(img, seuil=226, pente=0.3):
     exces = np.clip(rgb.min(axis=-1, keepdims=True) - seuil, 0, None)
     a[..., :3] = rgb - exces * (1 - pente)
     return Image.fromarray(np.clip(a, 0, 255).astype(np.uint8), "RGBA")
+
+
+def sans_frange(img):
+    """Bords sans frange sombre : la couleur des pixels peu couvrants (alpha < 0,9) est remplacée par celle des pixels
+    opaques voisins (la couleur s'étend de 4 px vers l'extérieur), l'alpha ne change pas. Une image ainsi faite se fond
+    pareil en alpha droit ou prémultiplié."""
+    import numpy as np
+    from PIL import Image
+    a = np.array(img.convert("RGBA"), dtype=np.float32)
+    rgb, al = a[..., :3].copy(), a[..., 3]
+    connu = al >= 230
+
+    def voisins(t):                          # somme des 3 × 3 voisins (bords répétés)
+        p = np.pad(t, [(1, 1), (1, 1)] + [(0, 0)] * (t.ndim - 2), mode="edge")
+        return sum(p[1 + dy:p.shape[0] - 1 + dy, 1 + dx:p.shape[1] - 1 + dx] for dy in (-1, 0, 1) for dx in (-1, 0, 1))
+    coul = rgb * connu[..., None]
+    for _ in range(4):
+        n = voisins(connu.astype(np.float32))
+        somme = voisins(coul)
+        nouveaux = (~connu) & (n > 0)
+        coul[nouveaux] = somme[nouveaux] / n[nouveaux][:, None]
+        connu = connu | nouveaux
+    garde = (al < 230) & connu
+    rgb[garde] = coul[garde]
+    return Image.fromarray(np.dstack([np.clip(rgb, 0, 255), al]).astype(np.uint8), "RGBA")
 
 
 def rendre_effet(nom):
@@ -247,15 +277,17 @@ def rendre_effet(nom):
         objs = fab(k)
         projectile = nom in ("effet-fleche", "effet-carreau")
         img, _ = C.rendre_sprite("%s-%d" % (nom, k), lw * C.ECHELLE, lh * C.ECHELLE, objs, ombre=ombre, surech=surech,
-                                 echantillons=48, contour=0.0 if nom == "effet-poussiere" or projectile else 0.9,
-                                 epaisseur_contour=1, net=0.3 if nom == "effet-poussiere" else 0.6, pres=0.2,
+                                 echantillons=48, contour=0.0, epaisseur_contour=1,
+                                 net=0.0 if nom in ("effet-poussiere", "effet-eclats") else 0.6, pres=0.2,
                                  force_ombre=0.35, controle=False)
         if projectile:
             img = adoucir_reflets(img)          # un reflet sur la plume ne brûle pas au blanc
+        if nom == "effet-eclats":
+            img = sans_frange(img)
         C.controle_bords(img, "%s-%d" % (nom, k))
         C.controle_blancs(img, "%s-%d" % (nom, k))
         if nom == "effet-poussiere":
-            # jamais opaque (0,6 au plus) : la route et les troupes se voient à travers le nuage
+            # jamais opaque (0,45 au plus) : la route et les troupes se voient à travers le nuage
             img.putalpha(img.split()[3].point(lambda v: min(v, int(OPACITE_POUSSIERE * 255))))
         images.append(img)
     C.sauver_sprite(nom, C.bande(images), None, lw, lh, ax, ay, n)

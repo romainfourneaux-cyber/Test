@@ -30,10 +30,14 @@
 html { font-size: 18px; }
 body {
   margin: 0; color: var(--encre); font-family: var(--texte); line-height: 1.4;
-  background: radial-gradient(ellipse at 50% 30%, rgba(90,60,30,.25), rgba(0,0,0,.65) 85%), var(--cuir);
   background-color: #2a1d12;
-  background-attachment: fixed;
   min-height: 100vh;
+}
+/* le cuir reste immobile quand la page défile : posé sur une couche fixe à part (un fond « background-attachment:
+   fixed » faisait redessiner toute la page à chaque défilement, plus de 100 ms en 1920 × 1080 sans carte graphique) */
+body::before {
+  content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none; will-change: transform;
+  background: radial-gradient(ellipse at 50% 30%, rgba(90,60,30,.25), rgba(0,0,0,.65) 85%), var(--cuir);
 }
 h1, h2, h3, h4 { font-family: var(--titre); font-weight: 700; letter-spacing: .03em; margin: .4em 0 .5em; }
 h1 { font-size: 1.8rem; }
@@ -299,7 +303,10 @@ main { max-width: 1060px; margin: 0 auto; padding: 1.4rem 1rem 7rem; }
   position: fixed; left: 50%; top: 42%; z-index: 40; pointer-events: none; display: flex; flex-direction: column; align-items: center;
   transform: translate(-50%, -50%); color: #9a2f22; animation: tampon .7s ease-out forwards;
 }
-.tampon .gi { filter: drop-shadow(0 4px 6px rgba(0,0,0,.5)); }
+/* ombre du sceau en dégradé (un filtre de flou coûtait cher à chaque bonne réponse, sur un écran sans carte graphique) */
+.tampon { will-change: transform, opacity; }
+.tampon::before { content: ""; position: absolute; left: 50%; top: 4px; width: 124px; height: 124px; margin-left: -62px; border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(0,0,0,.42), rgba(0,0,0,.18) 70%, transparent); z-index: -1; }
 .tampon b { font-family: var(--titre); font-size: 1.6rem; color: #fff3d0; text-shadow: 0 2px 0 #000, 0 0 8px #000; margin-top: -78px; }
 .tampon span { font-family: var(--titre); font-size: 1.1rem; color: #fff3d0; text-shadow: 0 2px 0 #000; margin-top: 34px; }
 @keyframes tampon { 0% { opacity: 0; transform: translate(-50%, -50%) scale(1.8); } 25% { opacity: 1; transform: translate(-50%, -50%) scale(1); } 70% { opacity: 1; } 100% { opacity: 0; transform: translate(-50%, -50%) scale(.95); } }
@@ -514,7 +521,23 @@ main { max-width: 1060px; margin: 0 auto; padding: 1.4rem 1rem 7rem; }
 .recit-texte { margin: .1rem 0 0; font-style: italic; font-size: 1.02rem; line-height: 1.35; }
 
 /* ---------- campagne ---------- */
-.carte-campagne { margin: .4rem 0 1.4rem; border: 3px solid var(--encre); border-radius: 4px; overflow: hidden; box-shadow: 0 0 0 2px var(--or), 0 10px 20px rgba(0,0,0,.4); background: #3a2a1a; }
+/* la carte tient dans la hauteur de la fenêtre (1366 × 768 : titre, ligne des royaumes, alerte éventuelle, carte
+   entière) : sa largeur est bornée par la hauteur disponible */
+.carte-campagne { --haut-libre: 248px; max-width: max(560px, calc((100vh - var(--haut-libre)) * 1000 / 530)); }
+.ecran:has(> .alerte-rival) .carte-campagne { --haut-libre: 350px; }
+/* fenêtre basse (portable, 768 px) : titre, ligne des royaumes et alerte plus serrés, pour que la carte tienne */
+@media (max-height: 820px) {
+  main:has(> #ecran-jouer:not([hidden])) { padding-top: .6rem; }
+  #ecran-jouer.ecran { padding-top: .8rem; }
+  #ecran-jouer > .titre-ecran { font-size: 1.6rem; margin-bottom: .2rem; padding-bottom: 14px; background-size: 200px 12px; }
+  #ecran-jouer .sous-titre-campagne { margin: 0 0 .3rem; font-size: .92rem; }
+  #ecran-jouer .alerte-rival { margin: .2rem 0 .4rem; padding: .35rem .9rem; gap: .8rem; }
+  #ecran-jouer .alerte-rival h2 { font-size: 1.05rem; }
+  #ecran-jouer .alerte-rival p { font-size: .92rem; margin: 0; }
+  #ecran-jouer .alerte-rival .ar-banniere svg { width: 34px; }
+  #ecran-jouer .carte-campagne { margin-top: .2rem; }
+}
+.carte-campagne { margin: .4rem auto 1.4rem; border: 3px solid var(--encre); border-radius: 4px; overflow: hidden; box-shadow: 0 0 0 2px var(--or), 0 10px 20px rgba(0,0,0,.4); background: #3a2a1a; }
 .carte-svg { display: block; width: 100%; height: auto; }
 .carte-svg .nom-lieu { font-family: var(--titre); font-weight: 700; font-size: 17px; text-anchor: middle; fill: #fbe9bd; stroke: #1c120a; stroke-width: 4px; paint-order: stroke; }
 .carte-svg .sous-lieu { font-family: var(--texte); font-style: italic; font-size: 15px; text-anchor: middle; fill: #f6e7bf; stroke: #1c120a; stroke-width: 3px; paint-order: stroke; }
@@ -522,10 +545,11 @@ main { max-width: 1060px; margin: 0 auto; padding: 1.4rem 1rem 7rem; }
 .carte-svg .noeud.cible:hover .lieu, .carte-svg .noeud.cible:focus .lieu, .carte-svg .noeud.attaque:hover .lieu { filter: brightness(1.15); }
 .carte-svg .noeud:focus { outline: none; }
 .carte-svg .halo { transform-box: fill-box; transform-origin: center; animation: halo-carte 1.6s ease-in-out infinite; }
-.carte-svg .noeud:focus-visible .halo { stroke: #fff3d0; stroke-width: 8px; opacity: 1; animation: none; transform: none; }
+.carte-svg .noeud:focus-visible .halo { opacity: 1; animation: none; transform: none; }
+.carte-svg .noeud:focus-visible .halo .halo-or { stroke: #fff3d0; stroke-width: 8px; }
 .carte-svg .noeud:focus-visible .lieu { filter: brightness(1.2); }
 /* lieu dans la brume : la nappe de brume (lieu-brume.png) suffit, sans voile en plus */
-@keyframes halo-carte { 0%, 100% { opacity: .35; transform: scale(.94); } 50% { opacity: 1; transform: scale(1.06); } }
+@keyframes halo-carte { 0%, 100% { opacity: .7; transform: scale(.94); } 50% { opacity: 1; transform: scale(1.06); } }
 .alerte-rival { display: flex; align-items: center; gap: 1.2rem; flex-wrap: wrap; margin: .4rem 0 1rem; padding: .8rem 1.2rem;
   background: linear-gradient(90deg, rgba(110,40,28,.92), rgba(70,26,18,.9)); color: #fbe9bd; border-radius: 4px;
   box-shadow: 0 0 0 2px var(--or), 0 0 0 4px var(--encre), 0 8px 18px rgba(0,0,0,.45); animation: alerte 2.2s ease-in-out infinite; }
@@ -586,6 +610,8 @@ main { max-width: 1060px; margin: 0 auto; padding: 1.4rem 1rem 7rem; }
   border: 3px solid var(--encre); border-radius: 4px; overflow: hidden; box-shadow: 0 0 0 2px var(--or), 0 10px 20px rgba(0,0,0,.4); background: #2a1d12; }
 .td-canvas { display: block; width: 100%; height: auto; aspect-ratio: 1000 / 660; touch-action: manipulation; }
 .td-hud { position: absolute; left: 0; right: 0; top: 0; display: flex; justify-content: center; gap: .6rem; flex-wrap: wrap; padding: .45rem; pointer-events: none; }
+.td-hud { transition: opacity .2s ease; }
+.td-hud.discret { opacity: .3; } /* un cercle de portée passe dessous : le bandeau s'efface */
 .td-hud > span { background: rgba(30,20,12,.78); color: #f6e7bf; padding: .2rem .7rem; border-radius: 3px; box-shadow: 0 0 0 1px var(--or); font-family: var(--titre); font-size: .85rem; display: inline-flex; align-items: center; gap: .35rem; }
 .td-or b { font-size: 1.15rem; color: var(--or-clair); }
 .td-bas { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: 1rem; margin-top: 1rem; align-items: start; }
@@ -607,6 +633,18 @@ main { max-width: 1060px; margin: 0 auto; padding: 1.4rem 1rem 7rem; }
 .td-file { font-style: italic; margin: .5rem 0 0; }
 .td-lancer { width: 100%; margin-top: .9rem; }
 .td-vitesse { display: flex; gap: .4rem; }
+/* tableau de la mêlée, pendant une vague : les deux camps sous leur écu */
+.td-melee { width: 100%; margin-top: .8rem; border-collapse: collapse; font-size: .95rem; }
+.td-melee thead th { font-family: var(--titre); font-size: .82rem; padding: 0 .3rem .35rem; text-align: center; vertical-align: bottom; }
+.td-melee thead th > span:last-child { display: block; margin-top: .2rem; }
+.td-melee tbody th { text-align: left; font-weight: normal; font-style: italic; color: #5b4a36; padding: .32rem .3rem .32rem 0; }
+.td-melee td { text-align: center; font-family: var(--titre); font-weight: 700; padding: .32rem .3rem; min-width: 5.5rem; }
+.td-melee tbody tr + tr { border-top: 1px solid rgba(110,85,50,.3); }
+.tm-ecu { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 34px;
+  clip-path: polygon(0 0, 100% 0, 100% 58%, 50% 100%, 0 58%); box-shadow: inset 0 0 0 2px #e2c272; }
+.tm-barre { display: block; height: 7px; margin: 0 auto .2rem; width: 92%; background: rgba(20,12,6,.75); box-shadow: 0 0 0 1px #b08d3a; }
+.tm-barre > span { display: block; height: 100%; background: #c9a14a; }
+.td-melee td:nth-child(2) .tm-barre > span { background: #7d9a4a; }
 .td-selection { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; padding: .4rem .6rem; background: rgba(251,233,189,.7); border: 1px solid var(--or-sombre); }
 .td-selection p { margin: 0; font-family: var(--titre); font-size: .85rem; }
 .td-pret { text-align: center; padding: 1rem; background: linear-gradient(rgba(255,250,236,.55), rgba(226,206,160,.55)), var(--parchemin); border: 2px solid var(--encre); box-shadow: 0 0 0 2px var(--or); }
@@ -629,8 +667,17 @@ main { max-width: 1060px; margin: 0 auto; padding: 1.4rem 1rem 7rem; }
   .zone-partie:has(> .td-cadre) .td-lancer { margin-top: .6rem; }
   /* la colonne de droite reste en vue elle aussi et défile à part : sur un portable dont la fenêtre ne fait que
      650 px de haut, la 4e réponse et « Lancer la vague » s'atteignent sans perdre le champ de bataille */
-  .zone-partie:has(> .td-cadre) > .td-bas { position: sticky; top: 68px; max-height: calc(100vh - 80px); overflow-y: auto;
-    overscroll-behavior: contain; scrollbar-width: thin; padding: 4px 6px 4px 4px; }
+  /* hauteur fixe (et non maximale) et contenu confiné : une nouvelle question ne change plus la mise en page du reste,
+     seul le contenu de la colonne est redessiné (avant, tout le parchemin de la page l'était, 100 ms en 1920 × 1080) */
+  .zone-partie:has(> .td-cadre) > .td-bas { position: sticky; top: 68px; height: calc(100vh - 80px); overflow-y: auto;
+    overscroll-behavior: contain; scrollbar-width: thin; padding: 4px 6px 4px 4px; contain: strict;
+    align-content: start; } /* hauteur fixe : les blocs restent serrés en haut, sans s'étirer */
+  /* association dans la bataille : mots courts à gauche, définitions longues à droite ; pendant le conseil de guerre,
+     la colonne s'élargit (le champ de bataille n'est pas jouable pendant les questions) */
+  .zone-partie.td-large:has(> .td-cadre) { grid-template-columns: minmax(0, 1fr) min(540px, 40vw); }
+  .zone-partie:has(> .td-cadre) .association { grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); gap: .5rem; }
+  .zone-partie:has(> .td-cadre) .association .choix { padding: .4rem .6rem; font-size: .98rem; min-height: 2.4rem; }
+  .zone-partie:has(> .td-cadre) .association .colonne { gap: .35rem; }
 }
 /* Fenêtre basse (portable avec onglets et barre des tâches) : question et réponses plus serrées */
 @media (min-width: 1100px) and (max-height: 700px) {
@@ -642,6 +689,11 @@ main { max-width: 1060px; margin: 0 auto; padding: 1.4rem 1rem 7rem; }
 /* Grand écran (1920 × 1080) : la page s'élargit pour que le champ de bataille atteigne la hauteur de la fenêtre */
 @media (min-width: 1600px) {
   body.en-partie main:has(.td-cadre) { max-width: min(1860px, 96vw); }
+  /* pendant une vague, le tableau de la mêlée occupe la colonne (plus de parchemin vide sous le capitaine) */
+  .td-melee { font-size: 1.05rem; margin-top: 1.2rem; }
+  .td-melee tbody th, .td-melee td { padding-top: .6rem; padding-bottom: .6rem; }
+  .td-melee .tm-ecu { width: 38px; height: 44px; }
+  .td-melee .tm-ecu svg { width: 28px; height: 28px; }
 }
 .sous-titre-campagne { text-align: center; font-family: var(--titre); font-size: 1rem; margin: -.4rem 0 .6rem; display: flex; justify-content: center; align-items: center; gap: .5rem; flex-wrap: wrap; }
 .sous-titre-campagne span { font-family: var(--texte); font-style: italic; color: #6a5536; }

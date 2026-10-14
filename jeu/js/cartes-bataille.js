@@ -1,20 +1,40 @@
-// Cartes des batailles : une route par lieu, tracée sur le terrain peint (1000 × 660, rivière d'ouest en est).
-// Les emplacements de tours sont calculés le long de la route : les tiens à l'ouest, ceux du rival à l'est.
+// Cartes des batailles : une route par lieu (1000 × 660), de la porte de ta place forte (à l'ouest) à la porte de la
+// place adverse (à l'est). Les emplacements de tours sont calculés le long de la route : les tiens à l'ouest, ceux du
+// rival à l'est. Chaque carte a son ruisseau (hauteur et largeur propres), rendu dans le terrain 3D.
 (function (racine) {
   "use strict";
   var JEU = racine.JEU = racine.JEU || {};
 
-  // Rivière du terrain peint (relevée sur l'image), pour les ponts et pour ne rien bâtir dans l'eau.
+  // Ruisseau de référence (celui des premiers terrains) : il sert seulement à garder les emplacements de tours tels
+  // qu'ils ont toujours été calculés (aucun ne bouge d'une version à l'autre). Le ruisseau de chaque carte (riviere
+  // dans LIEUX) passe toujours à bonne distance de ces emplacements (contrôlé par tests.js).
   var RIVIERE = [[0, 253], [125, 241], [250, 228], [375, 243], [500, 256], [600, 268], [690, 275], [750, 254], [810, 231], [900, 220], [1000, 212]];
 
+  // route : tracé d'une place forte à l'autre (pied de chaque place forte aux deux bouts ; la route vraie part de leurs
+  // portes, voir raccorder). riviere : axe du ruisseau de la carte ; rive : sa demi-largeur moyenne (px) ;
+  // gue : numéro de la traversée (dans l'ordre de la route) passée à gué, sur des galets, sans pont ; sorties : points
+  // de passage entre une porte et le tracé, pour que la route contourne la place forte au lieu de longer ses murs.
   var LIEUX = {
-    domaine: { nom: "Ton domaine", route: [[85, 360], [220, 450], [380, 470], [470, 380], [520, 255], [600, 160], [760, 170], [850, 260], [915, 330]] },
-    gue: { nom: "Le Gué", route: [[85, 350], [250, 330], [420, 420], [560, 440], [640, 300], [700, 180], [850, 220], [915, 330]] },
-    foret: { nom: "La Forêt de l'Ouest", route: [[85, 330], [180, 200], [330, 170], [430, 300], [470, 420], [600, 470], [720, 400], [760, 270], [840, 180], [915, 320]] },
-    moulin: { nom: "Le Moulin du Val", route: [[85, 340], [200, 470], [330, 480], [360, 350], [300, 250], [380, 150], [520, 150], [600, 330], [700, 470], [840, 450], [915, 340]] },
-    col: { nom: "La Tour du Col", route: [[85, 320], [160, 450], [290, 500], [420, 430], [520, 300], [560, 180], [680, 140], [800, 170], [860, 300], [800, 430], [880, 470], [915, 350]] },
-    chateau: { nom: "La Forteresse anglaise", route: [[85, 330], [150, 190], [280, 150], [360, 260], [300, 380], [380, 490], [520, 500], [600, 380], [560, 250], [650, 160], [790, 160], [850, 280], [760, 400], [860, 480], [915, 340]] }
+    domaine: { nom: "Ton domaine", route: [[85, 360], [220, 450], [380, 470], [470, 380], [520, 255], [600, 160], [760, 170], [850, 260], [915, 330]],
+      riviere: RIVIERE, rive: 11, sorties: { arrivee: [[843, 332]] } },
+    gue: { nom: "Le Gué", route: [[85, 350], [250, 330], [420, 420], [560, 440], [640, 300], [700, 180], [850, 220], [915, 330]],
+      riviere: [[0, 206], [130, 208], [260, 214], [380, 234], [500, 250], [600, 262], [690, 266], [760, 246], [830, 224], [910, 212], [1000, 204]], rive: 15, gue: 0, sorties: { arrivee: [[836, 330]] } },
+    foret: { nom: "La Forêt de l'Ouest", route: [[85, 330], [180, 200], [330, 170], [430, 300], [470, 420], [600, 470], [720, 400], [760, 270], [840, 180], [915, 320]],
+      riviere: [[576, -20], [572, 50], [590, 130], [578, 210], [600, 290], [586, 370], [604, 450], [590, 540], [606, 690]], rive: 7.5,
+      sorties: { depart: [[158, 368], [188, 290]], raccordDepart: 200, arrivee: [[840, 322]] } },
+    moulin: { nom: "Le Moulin du Val", route: [[85, 340], [200, 470], [330, 480], [360, 350], [300, 250], [380, 150], [520, 150], [600, 330], [700, 470], [840, 450], [915, 340]],
+      riviere: [[0, 250], [125, 244], [250, 240], [375, 246], [500, 258], [600, 268], [690, 272], [750, 256], [810, 238], [900, 226], [1000, 220]], rive: 12 },
+    col: { nom: "La Tour du Col", route: [[85, 320], [160, 450], [290, 500], [420, 430], [520, 300], [560, 180], [680, 140], [800, 170], [860, 300], [800, 430], [880, 470], [915, 350]],
+      riviere: [[0, 186], [120, 198], [240, 212], [360, 230], [470, 250], [560, 262], [650, 254], [740, 244], [820, 246], [910, 240], [1000, 232]], rive: 7 },
+    chateau: { nom: "La Forteresse anglaise", route: [[85, 330], [150, 190], [280, 150], [360, 260], [300, 380], [380, 490], [520, 500], [600, 380], [560, 250], [650, 160], [790, 160], [850, 280], [760, 400], [860, 480], [915, 340]],
+      riviere: [[0, 250], [125, 240], [250, 230], [375, 242], [500, 254], [600, 266], [690, 272], [750, 252], [810, 230], [900, 220], [1000, 212]], rive: 10, sorties: { depart: [[158, 368], [188, 290]], raccordDepart: 200 } }
   };
+
+  // Seuil de la porte de chaque place forte, depuis son pied (px logiques), et direction vers l'extérieur : relevés sur
+  // les rendus (atelier/outils/rendu-3d/places.py, porte_ecran). France : porte au sud-est, face à l'écran. Camps
+  // rivaux (Angleterre et Omeyyades, à moins d'un pixel l'un de l'autre) : porte à l'ouest-sud-ouest.
+  var PORTES = { depart: { dx: 17, dy: 17.5, ux: 0.697, uy: 0.717 }, arrivee: { dx: -34.1, dy: 13.7, ux: -0.928, uy: 0.373 } };
+  var SORTIE = 16, RACCORD = 72; // px : la route sort droit de la porte, puis rejoint le tracé 72 px plus loin
 
   // Lissage Catmull-Rom : une route souple plutôt qu'une ligne brisée.
   function lisser(pts, pas) {
@@ -82,12 +102,12 @@
     };
   }
 
-  // Ponts : là où la route croise la rivière.
-  function ponts(route) {
+  // Traversées (ponts, ou gué) : là où la route croise le ruisseau de la carte.
+  function ponts(route, riviere) {
     var r = [];
     for (var i = 1; i < route.length; i++) {
-      for (var j = 1; j < RIVIERE.length; j++) {
-        var x = intersection(route[i - 1], route[i], RIVIERE[j - 1], RIVIERE[j]);
+      for (var j = 1; j < riviere.length; j++) {
+        var x = intersection(route[i - 1], route[i], riviere[j - 1], riviere[j]);
         if (x) r.push({ x: x[0], y: x[1], angle: Math.atan2(route[i][1] - route[i - 1][1], route[i][0] - route[i - 1][0]) });
       }
     }
@@ -101,15 +121,41 @@
     return t >= 0 && t <= 1 && u >= 0 && u <= 1 ? [a[0] + t * (b[0] - a[0]), a[1] + t * (b[1] - a[1])] : null;
   }
 
+  // Route vraie : de la porte de ta place forte jusqu'à la porte de la place adverse. Elle sort droit de la porte
+  // (SORTIE px), puis rejoint en douceur le tracé à RACCORD px du pied de la place ; les troupes entrent et sortent par
+  // la porte, jamais à travers un mur.
+  // sorties : points de passage facultatifs entre la porte et le tracé (la route contourne alors la place forte).
+  // Le tracé est rejoint au premier point à plus de RACCORD px du pied (ou raccordDepart, raccordArrivee) qui soit hors
+  // de l'emprise de la place.
+  function raccorder(base, sorties) {
+    function hors(p, pied) { return p[0] < pied[0] - 78 || p[0] > pied[0] + 78 || p[1] < pied[1] - 100 || p[1] > pied[1] + 58; }
+    function tete(pts, pied, porte, extra, raccord) {
+      var cumul = 0, j = 1;
+      while (j < pts.length - 2 && (cumul < (raccord || RACCORD) || !hors(pts[j], pied))) { cumul += Math.hypot(pts[j][0] - pts[j - 1][0], pts[j][1] - pts[j - 1][1]); j++; }
+      var d = [pied[0] + porte.dx, pied[1] + porte.dy], o = [d[0] + porte.ux * SORTIE, d[1] + porte.uy * SORTIE];
+      var ctrl = [d, o].concat(extra || [], [pts[j], pts[j + 1]]);
+      var lisse = lisser(ctrl, 8); // un tronçon de 8 points par paire de points : on garde tout sauf le dernier
+      return lisse.slice(0, 8 * (ctrl.length - 2)).map(function (p) { return [Math.round(p[0] * 10) / 10, Math.round(p[1] * 10) / 10]; }).concat(pts.slice(j));
+    }
+    var s = sorties || {};
+    var r = tete(base, base[0], PORTES.depart, s.depart, s.raccordDepart).reverse();
+    return tete(r, base[base.length - 1], PORTES.arrivee, s.arrivee, s.raccordArrivee).reverse();
+  }
+
   var cache = {};
   function carte(id) {
     if (cache[id]) return cache[id];
     var l = LIEUX[id];
-    var route = lisser(l.route, 10);
-    var e = emplacements(route);
-    cache[id] = { id: id, nom: l.nom, route: route, emplacements: e.tiens, emplacementsRivaux: e.rivaux, ponts: ponts(route), riviere: RIVIERE };
+    var base = lisser(l.route, 10);
+    var e = emplacements(base);
+    var route = raccorder(base, l.sorties), riviere = l.riviere || RIVIERE;
+    var ps = ponts(route, riviere);
+    if (l.gue !== undefined && ps[l.gue]) ps[l.gue].gue = true;
+    // places : pied de chaque place forte (point d'ancrage de son image) ; route : de porte à porte
+    cache[id] = { id: id, nom: l.nom, route: route, places: { depart: base[0].slice(), arrivee: base[base.length - 1].slice() },
+      emplacements: e.tiens, emplacementsRivaux: e.rivaux, ponts: ps, riviere: riviere, rive: l.rive || 11 };
     return cache[id];
   }
 
-  JEU.cartesBataille = { LIEUX: LIEUX, RIVIERE: RIVIERE, carte: carte };
+  JEU.cartesBataille = { LIEUX: LIEUX, RIVIERE: RIVIERE, PORTES: PORTES, carte: carte };
 })(typeof window !== "undefined" ? window : globalThis);
