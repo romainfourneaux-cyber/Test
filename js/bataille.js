@@ -62,22 +62,94 @@
     ctx.restore();
   }
 
-  // ---------- décor : terrain peint, route, ponts (dessinés une fois) ----------
-  // Une seule image, chargée une fois (une image en échec est aussi « complete »).
-  var imageTerrain = null;
-  function terrain(fini) {
-    if (imageTerrain && imageTerrain.complete) return fini();
-    if (!imageTerrain) { imageTerrain = new Image(); imageTerrain.src = "assets/images/terrain-domaine.jpg"; }
-    imageTerrain.addEventListener("load", fini, { once: true });
-    imageTerrain.addEventListener("error", fini, { once: true });
+  // ---------- images pré-calculées (rendu 3D, liste dans assets/images/td/sprites.js) ----------
+  // Chaque image est chargée une seule fois et gardée d'une bataille à l'autre. Une image en échec le reste :
+  // l'élément est alors dessiné à l'ancienne (dessin vectoriel), et la bataille se joue quand même.
+  // Le fond peint d'avant ne sert que de repli, si le terrain d'une carte manque.
+  var AUTRES = { "terrain-peint": { src: "assets/images/terrain-domaine.jpg", w: 1000, h: 660, ax: 0, ay: 0, frames: 1 } };
+  var images = {}; // nom → { img, s (taille et ancrage), etat : "charge", "ok" ou "echec", attente : fonctions à rappeler }
+  function descr(nom) { return (JEU.SPRITES && JEU.SPRITES[nom]) || AUTRES[nom] || null; }
+  function prete(nom) { var e = images[nom]; return e && e.etat === "ok" ? e : null; }
+
+  // Charge les images « noms » (celles déjà chargées ou en échec sont sautées), puis appelle fini une fois.
+  function charger(noms, fini) {
+    var reste = 1, fait = false;
+    function un() { if (--reste === 0 && !fait) { fait = true; fini(); } }
+    noms.forEach(function (nom) {
+      var s = descr(nom), e = images[nom];
+      if (!s || (e && e.etat !== "charge")) return;
+      reste++;
+      if (e) { e.attente.push(un); return; } // déjà demandée par une autre bataille : on attend la même
+      e = images[nom] = { img: new Image(), s: s, etat: "charge", attente: [un] };
+      function termine(ok) {
+        if (e.etat !== "charge") return;
+        e.etat = ok ? "ok" : "echec";
+        var a = e.attente; e.attente = [];
+        a.forEach(function (f) { f(); });
+      }
+      e.img.onload = function () {
+        // décodée d'avance : son premier dessin ne fait pas attendre la page
+        if (e.img.decode) e.img.decode().then(function () { termine(true); }, function () { termine(e.img.naturalWidth > 0); });
+        else termine(true);
+      };
+      e.img.onerror = function () { termine(false); };
+      e.img.src = s.src;
+    });
+    un();
   }
 
-  function fond(carte) {
+  // Les images d'une bataille : terrain de la carte, places fortes et tours des deux camps (avec leurs ombres),
+  // troupes, projectiles et effets.
+  function imagesDeBataille(carteId, campAdv) {
+    var n = ["terrain-" + carteId, "effet-fleche", "effet-carreau", "effet-pierre", "effet-poussiere", "effet-eclats"];
+    ["intact", "abime", "ruine"].forEach(function (e) {
+      ["france", campAdv].forEach(function (c) { n.push("place-" + c + "-" + e, "ombre-place-" + c + "-" + e); });
+    });
+    Object.keys(M.TOURS).forEach(function (t) {
+      for (var k = 1; k <= M.AMELIORATION.max; k++) n.push("tour-" + t + "-france-" + k, "ombre-tour-" + t + "-france-" + k);
+    });
+    Object.keys(M.TOURS_RIVALES).forEach(function (t) { n.push("tour-" + t + "-" + campAdv + "-1", "ombre-tour-" + t + "-" + campAdv + "-1"); });
+    Object.keys(M.TROUPES).forEach(function (t) { n.push("unite-" + t + "-france"); });
+    Object.keys(M.ENNEMIS).forEach(function (t) { n.push("unite-" + t + "-" + campAdv); });
+    return n;
+  }
+
+  // Dessine l'image « nom » avec son point d'ancrage en (x, y) : vue k d'une bande (k est ramené dans la bande),
+  // miroir pour une troupe qui marche vers la gauche, echelle facultative. Renvoie false si l'image manque :
+  // l'appelant dessine alors la version vectorielle.
+  function sprite(ctx, nom, x, y, k, miroir, echelle) {
+    var e = images[nom];
+    if (!e || e.etat !== "ok") return false;
+    var s = e.s, n = s.frames || 1, iw = e.img.naturalWidth / n, ih = e.img.naturalHeight;
+    var f = n > 1 ? ((Math.floor(k) % n) + n) % n : 0, sc = echelle || 1;
+    if (miroir) {
+      ctx.save(); ctx.translate(x, y); ctx.scale(-sc, sc);
+      ctx.drawImage(e.img, f * iw, 0, iw, ih, -s.ax, -s.ay, s.w, s.h);
+      ctx.restore();
+    } else ctx.drawImage(e.img, f * iw, 0, iw, ih, x - s.ax * sc, y - s.ay * sc, s.w * sc, s.h * sc);
+    return true;
+  }
+  // Vue d'un effet joué une seule fois : de 0 à n − 1 pendant « duree » secondes.
+  function vue(age, duree, n) { return Math.min(n - 1, Math.floor(age / duree * n)); }
+
+  // intact au-dessus de la moitié de la solidité, abîmée tant qu'il en reste, ruine à zéro
+  function nomPlace(c, etat) { return "place-" + c + "-" + (etat.pv > etat.max / 2 ? "intact" : etat.pv > 0 ? "abime" : "ruine"); }
+  // tours du joueur : type et niveau ; tours rivales : celles du camp adverse, au niveau 1
+  function nomTour(tr, v) { return tr.rivale ? "tour-" + tr.type + "-" + v.campAdverse + "-1" : "tour-" + tr.type + "-france-" + tr.niveau; }
+  function nomUnite(u, v) { return "unite-" + u.type + "-" + (u.camp === "rival" ? v.campAdverse : "france"); }
+
+  // ---------- décor : le terrain de la carte, calculé une fois par bataille ----------
+  // Route, rivière et ponts sont déjà dans l'image du terrain. Sans elle : ancien fond peint, route et ponts dessinés.
+  function fond(carte, ratio) {
     var c = document.createElement("canvas");
-    c.width = M.LARGEUR; c.height = M.HAUTEUR;
+    c.width = Math.round(M.LARGEUR * ratio); c.height = Math.round(M.HAUTEUR * ratio);
     var g = c.getContext("2d");
-    g.fillStyle = "#6f7442"; g.fillRect(0, 0, c.width, c.height);
-    if (imageTerrain && imageTerrain.naturalWidth) g.drawImage(imageTerrain, 0, 0, c.width, c.height);
+    g.scale(ratio, ratio);
+    var t = prete("terrain-" + carte.id);
+    if (t) { g.drawImage(t.img, 0, 0, M.LARGEUR, M.HAUTEUR); vignette(g, 0.42); return c; }
+    g.fillStyle = "#6f7442"; g.fillRect(0, 0, M.LARGEUR, M.HAUTEUR);
+    var ancien = prete("terrain-peint");
+    if (ancien) g.drawImage(ancien.img, 0, 0, M.LARGEUR, M.HAUTEUR);
     // route : bordure sombre, terre battue, ornières
     function trace(largeur, couleur, tirets) {
       g.beginPath();
@@ -103,102 +175,284 @@
       g.fillStyle = "#4a3018"; g.fillRect(-32, -26, 64, 4); g.fillRect(-32, 22, 64, 4);
       g.restore();
     });
-    // voile de lumière, vignette d'enluminure
+    vignette(g, 0.55);
+    return c;
+  }
+  // voile de lumière au centre, bords assombris comme une enluminure
+  function vignette(g, force) {
     var v = g.createRadialGradient(500, 330, 200, 500, 330, 620);
-    v.addColorStop(0, "rgba(255,240,200,0)"); v.addColorStop(1, "rgba(30,20,10,.55)");
-    g.fillStyle = v; g.fillRect(0, 0, c.width, c.height);
+    v.addColorStop(0, "rgba(255,240,200,0)"); v.addColorStop(1, "rgba(30,20,10," + force + ")");
+    g.fillStyle = v; g.fillRect(0, 0, M.LARGEUR, M.HAUTEUR);
+  }
+
+  // Marque d'un emplacement libre : un anneau de dalles usées posé à plat sur l'herbe (vue de trois quarts),
+  // bien lisible sur le terrain réaliste. Dorée au survol. Calculée une fois par taille d'écran.
+  var marques = {}, MARQUE = 64;
+  function marque(survol, ratio) {
+    var cle = (survol ? "s" : "n") + ratio;
+    if (marques[cle]) return marques[cle];
+    var c = document.createElement("canvas");
+    c.width = c.height = Math.ceil(MARQUE * ratio);
+    var g = c.getContext("2d");
+    g.scale(ratio, ratio); g.translate(MARQUE / 2, MARQUE / 2);
+    var RX = 22, RY = 15.5, rx = 13.5, ry = 9.5, N = 11, i, k;
+    function ellipse(a, b) { g.beginPath(); g.ellipse(0, 0, a, b, 0, 0, Math.PI * 2); }
+    function hasard(n) { var h = Math.sin(n * 12.9898 + 4.1) * 43758.5453; return h - Math.floor(h); } // toujours le même tirage
+    // ombre douce sous l'anneau (ou lueur dorée au survol)
+    g.save();
+    g.shadowColor = survol ? "rgba(255,226,150,.95)" : "rgba(0,0,0,.55)"; g.shadowBlur = survol ? 9 : 5; g.shadowOffsetY = survol ? 0 : 1.5;
+    ellipse(RX, RY); g.fillStyle = survol ? "rgba(240,208,120,.45)" : "rgba(38,28,16,.42)"; g.fill();
+    g.restore();
+    // terre battue au milieu, où l'herbe transparaît encore
+    var t = g.createRadialGradient(0, 0, 1, 0, 0, rx + 1);
+    t.addColorStop(0, survol ? "rgba(226,190,112,.75)" : "rgba(118,94,60,.6)"); t.addColorStop(1, survol ? "rgba(200,160,90,.6)" : "rgba(84,66,42,.45)");
+    g.save(); g.scale(1, ry / rx); g.beginPath(); g.arc(0, 0, rx + 1, 0, Math.PI * 2); g.fillStyle = t; g.fill(); g.restore();
+    // dalles usées de l'anneau : tailles, teintes et joints un peu irréguliers
+    var teintes = survol ? ["#efdcaa", "#e2cc93", "#f6e6bb", "#d9c18a", "#e8d39c"] : ["#b9ac90", "#a69a7e", "#c6baa0", "#ab9e83", "#9d917a"];
+    g.lineJoin = "round";
+    for (i = 0; i < N; i++) {
+      var a0 = (i + 0.06 + 0.08 * hasard(i)) * 2 * Math.PI / N, a1 = (i + 0.94 - 0.08 * hasard(i + 50)) * 2 * Math.PI / N;
+      var fo = 0.97 + 0.07 * hasard(i + 100), fi = 0.97 + 0.08 * hasard(i + 150);
+      g.beginPath();
+      for (k = 0; k <= 4; k++) { var ao = a0 + (a1 - a0) * k / 4; g.lineTo(Math.cos(ao) * RX * fo, Math.sin(ao) * RY * fo); }
+      for (k = 4; k >= 0; k--) { var ai = a0 + (a1 - a0) * k / 4; g.lineTo(Math.cos(ai) * (rx + 0.5) * fi, Math.sin(ai) * (ry + 0.4) * fi); }
+      g.closePath();
+      g.fillStyle = teintes[Math.floor(hasard(i + 200) * teintes.length)]; g.fill();
+      g.lineWidth = 0.9; g.strokeStyle = "rgba(46,34,20,.72)"; g.stroke();
+    }
+    // relief : lumière en haut, ombre en bas, sur les dalles seulement
+    g.globalCompositeOperation = "source-atop";
+    var l = g.createLinearGradient(0, -RY, 0, RY);
+    l.addColorStop(0, "rgba(255,248,225,.28)"); l.addColorStop(0.55, "rgba(255,248,225,0)"); l.addColorStop(1, "rgba(0,0,0,.28)");
+    g.fillStyle = l; g.fillRect(-RX - 2, -RY - 2, 2 * RX + 4, 2 * RY + 4);
+    g.globalCompositeOperation = "source-over";
+    if (survol) { ellipse(RX + 1.5, RY + 1.5); g.lineWidth = 2; g.strokeStyle = "#fbe9bd"; g.stroke(); }
+    marques[cle] = c;
     return c;
   }
 
+  // Ombre d'un nuage qui passe (ambiance), calculée une fois.
+  var nuage = null;
+  function ombreNuage() {
+    if (nuage) return nuage;
+    nuage = document.createElement("canvas"); nuage.width = 360; nuage.height = 140;
+    var g = nuage.getContext("2d");
+    g.translate(180, 70); g.scale(1, 140 / 360);
+    var r = g.createRadialGradient(0, 0, 0, 0, 0, 180);
+    r.addColorStop(0, "rgba(12,18,8,.17)"); r.addColorStop(0.6, "rgba(12,18,8,.10)"); r.addColorStop(1, "rgba(12,18,8,0)");
+    g.fillStyle = r; g.beginPath(); g.arc(0, 0, 180, 0, Math.PI * 2); g.fill();
+    return nuage;
+  }
+
   // ---------- dessin d'une image du combat ----------
+  // Passe « sol » (ombres portées, emplacements, portées), puis volumes triés de haut en bas de l'écran
+  // (places fortes, tours, troupes), puis projectiles, effets, météo et jauges.
+  var volumes = []; // réutilisé d'une image à l'autre
+  function parProfondeur(a, b) { return a.y - b.y; }
+  var HAUT_TIR = 24, HAUT_CORPS = 12; // px : départ des traits au-dessus du pied de la tour, impact à mi-corps
+
   function dessiner(ctx, v) {
-    var p = v.partie, carte = v.carte, t = p.temps;
-    ctx.drawImage(v.fond, 0, 0);
-    // ombres de nuages qui passent
-    if (JEU.anim.actif()) {
-      ctx.fillStyle = "rgba(20,25,10,.10)";
-      for (var n = 0; n < 3; n++) {
-        var nx = ((v.horloge * 12 + n * 420) % 1400) - 200;
-        ctx.beginPath(); ctx.ellipse(nx, 120 + n * 190, 170, 60, 0, 0, Math.PI * 2); ctx.fill();
+    var p = v.partie, carte = v.carte, anim = JEU.anim.actif(), i, tr, e;
+    ctx.drawImage(v.fond, 0, 0, M.LARGEUR, M.HAUTEUR);
+
+    // --- sol : ombres portées des places fortes et des tours ---
+    sprite(ctx, "ombre-" + nomPlace("france", p.chateau), v.depart.x, v.depart.y, 0);
+    sprite(ctx, "ombre-" + nomPlace(v.campAdverse, p.rival), v.arrivee.x, v.arrivee.y, 0);
+    for (i = 0; i < p.toursRivales.length; i++) { tr = p.toursRivales[i]; sprite(ctx, "ombre-" + nomTour(tr, v), tr.x, tr.y, 0); }
+    for (i = 0; i < p.tours.length; i++) { tr = p.tours[i]; sprite(ctx, "ombre-" + nomTour(tr, v), tr.x, tr.y, 0); }
+    // emplacements libres (pendant la préparation), portée de la tour choisie au survol
+    if (p.phase === "preparation") {
+      for (i = 0; i < carte.emplacements.length; i++) {
+        if (!M.emplacementLibre(p, i)) continue;
+        e = carte.emplacements[i];
+        var survol = v.survol === i || v.curseur === i;
+        ctx.drawImage(marque(survol, v.ratio), e[0] - MARQUE / 2, e[1] - MARQUE / 2, MARQUE, MARQUE);
+        if (survol && v.choix) cercle(ctx, e[0], e[1], M.TOURS[v.choix].portee, 0.6);
       }
     }
-    // emplacements libres (pendant la préparation)
-    if (p.phase === "preparation") {
-      carte.emplacements.forEach(function (e, i) {
-        if (!M.emplacementLibre(p, i)) return;
-        var survol = v.survol === i || v.curseur === i;
-        ctx.beginPath(); ctx.arc(e[0], e[1], 20, 0, Math.PI * 2);
-        ctx.fillStyle = survol ? "rgba(226,194,114,.55)" : "rgba(239,230,210,.28)"; ctx.fill();
-        ctx.setLineDash([5, 4]); ctx.lineWidth = 2; ctx.strokeStyle = survol ? "#fbe9bd" : "rgba(46,36,25,.7)"; ctx.stroke(); ctx.setLineDash([]);
-        if (survol && v.choix) {
-          ctx.beginPath(); ctx.arc(e[0], e[1], M.TOURS[v.choix].portee, 0, Math.PI * 2);
-          ctx.fillStyle = "rgba(251,233,189,.12)"; ctx.fill(); ctx.strokeStyle = "rgba(251,233,189,.6)"; ctx.stroke();
-        }
-      });
+    // tour sélectionnée : sa portée, un anneau doré à son pied
+    for (i = 0; i < p.tours.length; i++) {
+      tr = p.tours[i];
+      if (v.choixTour !== tr.emplacement) continue;
+      cercle(ctx, tr.x, tr.y, M.porteeTour(p, tr), 0.7);
+      anneau(ctx, tr.x, tr.y, 26, 2.5);
     }
-    chateau(ctx, carte.route[0], v.couleurs, p.chateau, false, v);
-    chateau(ctx, carte.route[carte.route.length - 1], v.adverse.couleurs, p.rival, true, v);
-    // tours (les plus hautes à l'écran d'abord)
-    p.toursRivales.concat(p.tours).sort(function (a, b) { return a.y - b.y; }).forEach(function (tr) { tour(ctx, tr, tr.rivale ? v.adverse.couleurs : v.couleurs, v, p); });
     // curseur du clavier : un anneau doré autour de l'emplacement choisi avec les flèches
     if (p.phase === "preparation" && v.curseur >= 0) {
-      var ec = carte.emplacements[v.curseur], puls = JEU.anim.actif() ? 2 * Math.sin(v.horloge * 5) : 0;
-      ctx.beginPath(); ctx.arc(ec[0], ec[1] - 8, 32 + puls, 0, Math.PI * 2);
-      ctx.lineWidth = 5; ctx.strokeStyle = "#2e2419"; ctx.stroke();
-      ctx.lineWidth = 3; ctx.strokeStyle = "#fbe9bd"; ctx.stroke();
+      var ec = carte.emplacements[v.curseur];
+      anneau(ctx, ec[0], ec[1], 30 + (anim ? 2 * Math.sin(v.horloge * 5) : 0), 3);
     }
-    // unités
-    p.unites.slice().sort(function (a, b) { return a.y - b.y; }).forEach(function (u) { unite(ctx, u, u.camp === "rival" ? v.adverse.couleurs : v.couleurs); });
-    // projectiles
-    p.projectiles.forEach(function (pr) {
-      var k = Math.min(1, pr.t / pr.duree);
-      var x = pr.x0 + (pr.cx - pr.x0) * k, y = pr.y0 + (pr.cy - pr.y0) * k;
-      var arc = pr.genre === "pierre" ? Math.sin(k * Math.PI) * 70 : pr.genre === "fleche" ? Math.sin(k * Math.PI) * 18 : 0;
-      y -= arc;
-      var ang = Math.atan2(pr.cy - pr.y0 - (pr.genre === "pierre" ? Math.cos(k * Math.PI) * 220 : 0), pr.cx - pr.x0);
-      ctx.save(); ctx.translate(x, y);
-      if (pr.genre === "pierre") {
-        ctx.fillStyle = "rgba(0,0,0,.25)"; ctx.beginPath(); ctx.ellipse(0, arc, 6, 3, 0, 0, Math.PI * 2); ctx.fill();
-        ctx.fillStyle = "#6d6457"; ctx.beginPath(); ctx.arc(0, 0, 6, 0, Math.PI * 2); ctx.fill();
-        ctx.strokeStyle = "#2e2419"; ctx.lineWidth = 1.5; ctx.stroke();
-      } else {
-        ctx.rotate(ang);
-        var l = pr.genre === "carreau" ? 22 : 16;
-        ctx.strokeStyle = "#2a1c0c"; ctx.lineWidth = pr.genre === "carreau" ? 3.5 : 2;
-        ctx.beginPath(); ctx.moveTo(-l, 0); ctx.lineTo(0, 0); ctx.stroke();
-        ctx.fillStyle = "#3a3a3a"; ctx.beginPath(); ctx.moveTo(3, 0); ctx.lineTo(-4, -3); ctx.lineTo(-4, 3); ctx.fill();
-        ctx.fillStyle = pr.camp === "rival" ? "#efe6d2" : v.couleurs[1]; ctx.fillRect(-l, -2, 4, 4);
-      }
-      ctx.restore();
-    });
-    // effets
-    p.effets.forEach(function (e) {
+    // ombres des pierres en vol
+    for (i = 0; i < p.projectiles.length; i++) {
+      var pr = p.projectiles[i];
+      if (pr.genre !== "pierre") continue;
+      var kk = Math.min(1, pr.t / pr.duree), haut = Math.sin(kk * Math.PI);
+      ctx.fillStyle = "rgba(0,0,0," + (0.34 - 0.18 * haut) + ")";
+      ctx.beginPath(); ctx.ellipse(pr.x0 + (pr.cx - pr.x0) * kk, pr.y0 + 18 + (pr.cy - pr.y0 - 18) * kk, 6 - 2 * haut, 3 - haut, 0, 0, Math.PI * 2); ctx.fill();
+    }
+    // ombres de nuages qui passent
+    if (anim) {
+      var nu = ombreNuage();
+      for (var n = 0; n < 3; n++) ctx.drawImage(nu, ((v.horloge * 12 + n * 420) % 1400) - 380, 50 + n * 190, 360, 140);
+    }
+
+    // --- volumes : places fortes, tours, troupes, du haut de l'écran vers le bas ---
+    volumes.length = 0;
+    volumes.push(v.depart, v.arrivee);
+    for (i = 0; i < p.toursRivales.length; i++) volumes.push(p.toursRivales[i]);
+    for (i = 0; i < p.tours.length; i++) volumes.push(p.tours[i]);
+    for (i = 0; i < p.unites.length; i++) volumes.push(p.unites[i]);
+    volumes.sort(parProfondeur);
+    for (i = 0; i < volumes.length; i++) {
+      var o = volumes[i];
+      if (o === v.depart) place(ctx, v, false);
+      else if (o === v.arrivee) place(ctx, v, true);
+      else if (o.emplacement !== undefined) tour(ctx, o, v);
+      else unite(ctx, o, v);
+    }
+
+    // --- projectiles : flèches et carreaux tournés le long de leur trajectoire, pierres en cloche ---
+    for (i = 0; i < p.projectiles.length; i++) projectile(ctx, p.projectiles[i], v);
+
+    // --- effets ---
+    for (i = 0; i < p.effets.length; i++) {
+      e = p.effets[i];
       var a = 1 - e.age / 1.2;
       if (e.genre === "touche" || e.genre === "pique") {
-        if (e.age > 0.3) return;
-        ctx.strokeStyle = "rgba(251,233,189," + (1 - e.age / 0.3) + ")"; ctx.lineWidth = 2;
-        for (var k = 0; k < 4; k++) { var an = k * Math.PI / 2 + 0.5; ctx.beginPath(); ctx.moveTo(e.x + Math.cos(an) * 4, e.y - 10 + Math.sin(an) * 4); ctx.lineTo(e.x + Math.cos(an) * (8 + e.age * 30), e.y - 10 + Math.sin(an) * (8 + e.age * 30)); ctx.stroke(); }
+        if (e.age < 0.32 && !sprite(ctx, "effet-eclats", e.x, e.y - HAUT_CORPS, vue(e.age, 0.32, 4))) {
+          ctx.strokeStyle = "rgba(251,233,189," + Math.max(0, 1 - e.age / 0.3) + ")"; ctx.lineWidth = 2;
+          for (var k = 0; k < 4; k++) { var an = k * Math.PI / 2 + 0.5; ctx.beginPath(); ctx.moveTo(e.x + Math.cos(an) * 4, e.y - 10 + Math.sin(an) * 4); ctx.lineTo(e.x + Math.cos(an) * (8 + e.age * 30), e.y - 10 + Math.sin(an) * (8 + e.age * 30)); ctx.stroke(); }
+        }
       } else if (e.genre === "impact") {
-        ctx.fillStyle = "rgba(120,100,70," + (0.5 * a) + ")";
-        ctx.beginPath(); ctx.ellipse(e.x, e.y, e.rayon * (0.4 + e.age), e.rayon * 0.5 * (0.4 + e.age), 0, 0, Math.PI * 2); ctx.fill();
+        if (prete("effet-poussiere")) { if (e.age < 0.75) sprite(ctx, "effet-poussiere", e.x, e.y + 4, vue(e.age, 0.75, 5), false, Math.max(1, e.rayon / 32)); }
+        else {
+          ctx.fillStyle = "rgba(120,100,70," + (0.5 * a) + ")";
+          ctx.beginPath(); ctx.ellipse(e.x, e.y, e.rayon * (0.4 + e.age), e.rayon * 0.5 * (0.4 + e.age), 0, 0, Math.PI * 2); ctx.fill();
+        }
+        if (e.age < 0.32) sprite(ctx, "effet-eclats", e.x, e.y - 4, vue(e.age, 0.32, 4), false, 1.3);
       } else if (e.genre === "chute") {
-        ctx.globalAlpha = Math.max(0, a); dessinerIcone(ctx, "ecu-brise", e.x, e.y - 12 - e.age * 14, 22, e.camp === "rival" ? v.adverse.couleurs[0] : v.couleurs[0]); ctx.globalAlpha = 1;
+        if (prete("effet-poussiere")) { if (e.age < 0.6) sprite(ctx, "effet-poussiere", e.x, e.y + 2, vue(e.age, 0.6, 5), false, 0.75); }
+        else { ctx.globalAlpha = Math.max(0, a); dessinerIcone(ctx, "ecu-brise", e.x, e.y - 12 - e.age * 14, 22, e.camp === "rival" ? v.adverse.couleurs[0] : v.couleurs[0]); ctx.globalAlpha = 1; }
       } else if (e.genre === "breche") {
+        if (e.age < 0.8) sprite(ctx, "effet-poussiere", e.x, e.y + 4, vue(e.age, 0.8, 5), false, 1.2);
+        var ty = e.y - 56 - e.age * 30;
         ctx.font = "bold 26px Cinzel, Georgia, serif"; ctx.textAlign = "center";
         ctx.lineWidth = 4; ctx.strokeStyle = "rgba(20,12,6," + a + ")"; ctx.fillStyle = (e.camp === "rival" ? "rgba(251,233,189," : "rgba(240,140,110,") + a + ")";
-        ctx.strokeText("−" + e.degats, e.x, e.y - 40 - e.age * 30); ctx.fillText("−" + e.degats, e.x, e.y - 40 - e.age * 30);
+        ctx.strokeText("−" + e.degats, e.x, ty); ctx.fillText("−" + e.degats, e.x, ty);
       }
-    });
-    // pluie ou brouillard
-    if (p.modificateurs.brouillard) { ctx.fillStyle = "rgba(230,230,220,.22)"; ctx.fillRect(560, 0, 440, M.HAUTEUR); }
-    if (p.modificateurs.pluie && JEU.anim.actif()) {
-      ctx.strokeStyle = "rgba(200,210,230,.35)"; ctx.lineWidth = 1;
-      for (var r = 0; r < 120; r++) { var rx = (r * 97 + v.horloge * 300) % 1000, ry = (r * 53 + v.horloge * 700) % 660; ctx.beginPath(); ctx.moveTo(rx, ry); ctx.lineTo(rx - 4, ry + 12); ctx.stroke(); }
+    }
+
+    // --- pluie ou brouillard ---
+    if (p.modificateurs.brouillard) { ctx.fillStyle = v.brume; ctx.fillRect(520, 0, 480, M.HAUTEUR); }
+    if (p.modificateurs.pluie && anim) {
+      ctx.strokeStyle = "rgba(200,210,230,.35)"; ctx.lineWidth = 1; ctx.beginPath();
+      for (var r = 0; r < 120; r++) { var rx = (r * 97 + v.horloge * 300) % 1000, ry = (r * 53 + v.horloge * 700) % 660; ctx.moveTo(rx, ry); ctx.lineTo(rx - 4, ry + 12); }
+      ctx.stroke();
+    }
+
+    // --- jauges de solidité, toujours au-dessus de la mêlée ---
+    jauge(ctx, v, false);
+    jauge(ctx, v, true);
+  }
+
+  // Cercle de portée (distance réelle du jeu : un cercle, pas une ellipse).
+  function cercle(ctx, x, y, r, force) {
+    ctx.beginPath(); ctx.arc(x, y, r, 0, Math.PI * 2);
+    ctx.fillStyle = "rgba(251,233,189,.12)"; ctx.fill();
+    ctx.lineWidth = 1.5; ctx.strokeStyle = "rgba(251,233,189," + force + ")"; ctx.stroke();
+  }
+  // Anneau doré à plat sur le sol, cerné d'encre pour rester lisible sur l'herbe.
+  function anneau(ctx, x, y, r, largeur) {
+    ctx.beginPath(); ctx.ellipse(x, y, r, r * 0.7, 0, 0, Math.PI * 2);
+    ctx.lineWidth = largeur + 2; ctx.strokeStyle = "#2e2419"; ctx.stroke();
+    ctx.lineWidth = largeur; ctx.strokeStyle = "#fbe9bd"; ctx.stroke();
+  }
+
+  function projectile(ctx, pr, v) {
+    var k = Math.min(1, pr.t / pr.duree), pierre = pr.genre === "pierre";
+    // départ en haut de la tour, arrivée à mi-corps (la pierre, elle, tombe au sol)
+    var x0 = pr.x0, y0 = pr.y0 - HAUT_TIR, dx = pr.cx - x0, dy = pr.cy - (pierre ? 0 : HAUT_CORPS) - y0;
+    var A = pierre ? 70 : pr.genre === "fleche" ? 18 : 5; // hauteur de la cloche
+    var x = x0 + dx * k, y = y0 + dy * k - Math.sin(k * Math.PI) * A;
+    if (pierre) {
+      if (!sprite(ctx, "effet-pierre", x, y, 0)) {
+        ctx.fillStyle = "#6d6457"; ctx.beginPath(); ctx.arc(x, y, 6, 0, Math.PI * 2); ctx.fill();
+        ctx.strokeStyle = "#2e2419"; ctx.lineWidth = 1.5; ctx.stroke();
+      }
+      return;
+    }
+    ctx.save(); ctx.translate(x, y);
+    ctx.rotate(Math.atan2(dy - A * Math.PI * Math.cos(k * Math.PI), dx)); // tangente à la trajectoire
+    if (!sprite(ctx, pr.genre === "carreau" ? "effet-carreau" : "effet-fleche", 0, 0, 0)) {
+      var l = pr.genre === "carreau" ? 22 : 16;
+      ctx.strokeStyle = "#2a1c0c"; ctx.lineWidth = pr.genre === "carreau" ? 3.5 : 2;
+      ctx.beginPath(); ctx.moveTo(-l, 0); ctx.lineTo(0, 0); ctx.stroke();
+      ctx.fillStyle = "#3a3a3a"; ctx.beginPath(); ctx.moveTo(3, 0); ctx.lineTo(-4, -3); ctx.lineTo(-4, 3); ctx.fill();
+      ctx.fillStyle = pr.camp === "rival" ? "#efe6d2" : v.couleurs[1]; ctx.fillRect(-l, -2, 4, 4);
+    }
+    ctx.restore();
+  }
+
+  // Place forte : la tienne au départ de la route, celle du camp adverse à l'arrivée.
+  function place(ctx, v, rival) {
+    var pt = rival ? v.arrivee : v.depart, etat = rival ? v.partie.rival : v.partie.chateau;
+    if (sprite(ctx, nomPlace(rival ? v.campAdverse : "france", etat), pt.x, pt.y, 0)) return;
+    chateau(ctx, pt, rival ? v.adverse.couleurs : v.couleurs, etat, rival, v);
+  }
+
+  // Jauge de solidité et chiffres sous la place forte, sur un cartouche sombre.
+  function jauge(ctx, v, rival) {
+    var pt = rival ? v.arrivee : v.depart, etat = rival ? v.partie.rival : v.partie.chateau;
+    var im = prete(nomPlace(rival ? v.campAdverse : "france", etat));
+    var x = pt.x, jy = pt.y + (im ? im.s.h - im.s.ay - 14 : 50), w = 96; // juste sous le pied de la place forte
+    ctx.fillStyle = "rgba(20,12,6,.62)";
+    ctx.beginPath(); ctx.moveTo(x - w / 2 - 6, jy - 5); ctx.lineTo(x + w / 2 + 6, jy - 5); ctx.lineTo(x + w / 2 + 6, jy + 30); ctx.lineTo(x - w / 2 - 6, jy + 30); ctx.closePath(); ctx.fill();
+    ctx.fillStyle = "rgba(20,12,6,.9)"; ctx.fillRect(x - w / 2 - 2, jy - 2, w + 4, 12);
+    ctx.fillStyle = rival ? "#c9a14a" : "#7d9a4a"; ctx.fillRect(x - w / 2, jy, w * Math.max(0, Math.min(1, etat.pv / etat.max)), 8);
+    ctx.font = "bold 13px Cinzel, Georgia, serif"; ctx.textAlign = "center"; ctx.fillStyle = "#fbe9bd"; ctx.strokeStyle = "#140c06"; ctx.lineWidth = 3;
+    var txt = Math.ceil(etat.pv) + " / " + etat.max;
+    ctx.strokeText(txt, x, jy + 24); ctx.fillText(txt, x, jy + 24);
+  }
+
+  function tour(ctx, tr, v) {
+    var nom = nomTour(tr, v);
+    if (sprite(ctx, nom, tr.x, tr.y, 0)) {
+      var s = descr(nom);
+      if (!tr.rivale) pastilles(ctx, tr.x, tr.y + s.h - s.ay, tr.niveau);
+      return;
+    }
+    tourDessinee(ctx, tr, tr.rivale ? v.adverse.couleurs : v.couleurs);
+  }
+  // Niveau de la tour : losanges d'or sur un cartouche sombre, au pied de la tour.
+  function pastilles(ctx, x, y, n) {
+    var w = n * 9 + 5;
+    ctx.fillStyle = "rgba(20,12,6,.75)"; ctx.fillRect(x - w / 2, y - 4, w, 9);
+    ctx.lineWidth = 1; ctx.strokeStyle = "#b08d3a"; ctx.strokeRect(x - w / 2 + 0.5, y - 3.5, w - 1, 8);
+    ctx.fillStyle = "#e2c272";
+    for (var k = 0; k < n; k++) {
+      var cx = x - (n - 1) * 4.5 + k * 9;
+      ctx.beginPath(); ctx.moveTo(cx, y - 2.5); ctx.lineTo(cx + 3, y + 0.5); ctx.lineTo(cx, y + 3.5); ctx.lineTo(cx - 3, y + 0.5); ctx.closePath(); ctx.fill();
     }
   }
 
+  // Troupe : vues de marche menées par u.pas, retournée quand elle marche vers la gauche.
+  function unite(ctx, u, v) {
+    // sens d'après la marche sur la route, avec une marge pour les tronçons presque verticaux
+    var dir = Math.cos(u.angle) * (u.camp === "rival" ? -1 : 1);
+    if (u.gauche === undefined) u.gauche = u.camp === "rival";
+    if (dir < -0.2) u.gauche = true; else if (dir > 0.2) u.gauche = false;
+    var nom = nomUnite(u, v), s = descr(nom);
+    if (!sprite(ctx, nom, u.x, u.y, u.pas * 1.2, u.gauche)) return uniteDessinee(ctx, u, u.camp === "rival" ? v.adverse.couleurs : v.couleurs);
+    if (u.pv < u.max) barreVie(ctx, u, u.y - s.ay - 2);
+  }
+  function barreVie(ctx, u, y) {
+    ctx.fillStyle = "rgba(20,12,6,.8)"; ctx.fillRect(u.x - 12, y, 24, 4);
+    ctx.fillStyle = u.camp === "rival" ? "#d07a5a" : "#9cc06a"; ctx.fillRect(u.x - 12, y, 24 * Math.max(0, u.pv / u.max), 4);
+  }
+
+  // ---------- repli : dessin vectoriel, si une image manque ----------
   function chateau(ctx, pt, coul, etat, rival, v) {
-    var x = pt[0], y = pt[1];
+    var x = pt.x, y = pt.y;
     var abime = 1 - etat.pv / etat.max;
     ctx.fillStyle = "rgba(0,0,0,.35)"; ctx.beginPath(); ctx.ellipse(x, y + 34, 66, 20, 0, 0, Math.PI * 2); ctx.fill();
     var pierre = ctx.createLinearGradient(x - 50, y - 60, x + 50, y + 40);
@@ -213,22 +467,12 @@
     ctx.fillStyle = coul[0]; ctx.strokeStyle = "#2e2419"; ctx.lineWidth = 1.5;
     ctx.beginPath(); ctx.moveTo(bx, by - 4); ctx.quadraticCurveTo(bx + sens * 22, by - 4 + ond, bx + sens * 42, by + ond * 0.5); ctx.lineTo(bx + sens * 30, by + 10 + ond * 0.5); ctx.lineTo(bx + sens * 42, by + 20 + ond * 0.5); ctx.quadraticCurveTo(bx + sens * 22, by + 20 + ond, bx, by + 20); ctx.closePath(); ctx.fill(); ctx.stroke();
     dessinerIcone(ctx, (rival ? v.adverse : camp("joueur")).embleme, bx + sens * 18, by + 8 + ond * 0.7, 18, coul[1]);
-    // jauge de solidité
-    var w = 96, jx = x - w / 2, jy = y + 50;
-    ctx.fillStyle = "rgba(20,12,6,.75)"; ctx.fillRect(jx - 2, jy - 2, w + 4, 12);
-    ctx.fillStyle = rival ? "#c9a14a" : "#7d9a4a"; ctx.fillRect(jx, jy, w * Math.max(0, etat.pv / etat.max), 8);
-    ctx.font = "bold 13px Cinzel, Georgia, serif"; ctx.textAlign = "center"; ctx.fillStyle = "#fbe9bd"; ctx.strokeStyle = "#140c06"; ctx.lineWidth = 3;
-    var txt = Math.ceil(etat.pv) + " / " + etat.max;
-    ctx.strokeText(txt, x, jy + 24); ctx.fillText(txt, x, jy + 24);
   }
 
-  function tour(ctx, tr, coul, v, p) {
+  function tourDessinee(ctx, tr, coul) {
     var d = tr.rivale ? null : M.TOURS[tr.type];
     var icone = tr.rivale ? (tr.type === "baliste" ? "fleches" : "archer") : d.icone;
     var x = tr.x, y = tr.y;
-    if (!tr.rivale && v.choixTour === tr.emplacement) {
-      ctx.beginPath(); ctx.arc(x, y, M.porteeTour(p, tr), 0, Math.PI * 2); ctx.fillStyle = "rgba(251,233,189,.12)"; ctx.fill(); ctx.strokeStyle = "rgba(251,233,189,.7)"; ctx.lineWidth = 1.5; ctx.stroke();
-    }
     ctx.fillStyle = "rgba(0,0,0,.35)"; ctx.beginPath(); ctx.ellipse(x, y + 14, 24, 9, 0, 0, Math.PI * 2); ctx.fill();
     // socle de pierre crénelé
     var g = ctx.createLinearGradient(x - 20, y - 30, x + 20, y + 14);
@@ -239,10 +483,10 @@
     ctx.fillStyle = coul[0]; ctx.beginPath(); ctx.moveTo(x - 13, y - 16); ctx.lineTo(x + 13, y - 16); ctx.lineTo(x + 13, y - 2); ctx.quadraticCurveTo(x + 13, y + 9, x, y + 13); ctx.quadraticCurveTo(x - 13, y + 9, x - 13, y - 2); ctx.closePath(); ctx.fill(); ctx.stroke();
     dessinerIcone(ctx, icone, x, y - 2, 22, coul[1]);
     // niveaux : pastilles d'or
-    for (var k = 0; k < tr.niveau; k++) { ctx.fillStyle = "#e2c272"; ctx.strokeStyle = "#2e2419"; ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(x - 8 + k * 8, y - 34, 3.2, 0, Math.PI * 2); ctx.fill(); ctx.stroke(); }
+    for (var k = 0; k < (tr.rivale ? 0 : tr.niveau); k++) { ctx.fillStyle = "#e2c272"; ctx.strokeStyle = "#2e2419"; ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(x - 8 + k * 8, y - 34, 3.2, 0, Math.PI * 2); ctx.fill(); ctx.stroke(); }
   }
 
-  function unite(ctx, u, coul) {
+  function uniteDessinee(ctx, u, coul) {
     var d = u.camp === "rival" ? M.ENNEMIS[u.type] : M.TROUPES[u.type];
     var gros = u.type === "champion" || u.type === "belier" ? 1.5 : u.type === "cavaliers" ? 1.15 : 1;
     var bob = JEU.anim.actif() ? Math.abs(Math.sin(u.pas)) * 3 : 0;
@@ -255,14 +499,12 @@
     if (u.camp === "rival") { ctx.translate(x * 2, 0); ctx.scale(-1, 1); }
     dessinerIcone(ctx, d.icone, x, y - 1, 18 * gros, coul[1]);
     ctx.restore();
-    if (u.pv < u.max) {
-      ctx.fillStyle = "rgba(20,12,6,.8)"; ctx.fillRect(x - 12, y - s - 8, 24, 4);
-      ctx.fillStyle = u.camp === "rival" ? "#d07a5a" : "#9cc06a"; ctx.fillRect(x - 12, y - s - 8, 24 * Math.max(0, u.pv / u.max), 4);
-    }
+    if (u.pv < u.max) barreVie(ctx, u, y - s - 8);
   }
 
   // ---------- la partie ----------
-  var enChargement = false; // une seule bataille à la fois, même pendant le chargement du terrain
+  var enChargement = false; // une seule bataille à la fois, même pendant le chargement des images
+  var ATTENTE_MAX = 5000; // ms : une image qui ne répond pas ne bloque jamais la bataille
 
   // Questions d'une vague, tirées au début de son conseil (le niveau suit les dernières réponses) :
   // une par fiche, sans reprendre une question ni une fiche déjà posées dans cette bataille.
@@ -286,22 +528,37 @@
     var vagues = defense ? 3 : 4;
     var questions = tirerQuestions(QUESTIONS_PAR_VAGUE, []);
     if (questions.length < QUESTIONS_PAR_VAGUE) { JEU.ui.toast("Pas encore assez de questions pour une bataille."); return; }
+    var carteId = defense ? "domaine" : prov.carte;
+    var campAdv = (C.front(frontId) || {}).camp || "angleterre"; // nom du camp dans les images (angleterre, omeyyades)
     enChargement = true;
-    terrain(function () {
+    var parti = false;
+    function partir() {
+      if (parti) return;
+      parti = true;
       enChargement = false;
       if (JEU.partie) return; // une autre partie a commencé pendant le chargement
       demarrer();
+    }
+    charger(imagesDeBataille(carteId, campAdv), function () {
+      if (prete("terrain-" + carteId)) partir();
+      else charger(["terrain-peint"], partir); // terrain absent : l'ancien fond peint sert de repli
     });
+    setTimeout(partir, ATTENTE_MAX);
 
     function demarrer() {
-      var carte = JEU.cartesBataille.carte(defense ? "domaine" : prov.carte);
+      var carte = JEU.cartesBataille.carte(carteId);
       var o = C.options(niveau);
       o.vagues = vagues;
       if (defense) { o.pvRival = 12; o.pvRivalMax = 12; }
       else { o.pvRival = C.etat().provinces[lieu].pv; o.pvRivalMax = prov.pv; }
       var p = M.creer(carte, o);
+      var ratio = Math.min(2, racine.devicePixelRatio || 1);
+      var route = carte.route, fin = route[route.length - 1];
       // survol : emplacement sous la souris ; curseur : emplacement choisi au clavier ; choixTour : tour sélectionnée.
-      var v = { partie: p, carte: carte, fond: fond(carte), couleurs: camp("joueur").couleurs, adverse: adv, horloge: 0, survol: -1, curseur: -1, choix: "archers", choixTour: -1, vitesse: 1, envoyesVague: 0, gardeEntree: 0 };
+      // depart, arrivee : pied de ta place forte et de celle du camp adverse (triées avec les tours et les troupes).
+      var v = { partie: p, carte: carte, ratio: ratio, fond: fond(carte, ratio), couleurs: camp("joueur").couleurs, adverse: adv, campAdverse: campAdv,
+        depart: { x: route[0][0], y: route[0][1] }, arrivee: { x: fin[0], y: fin[1] },
+        horloge: 0, survol: -1, curseur: -1, choix: "archers", choixTour: -1, vitesse: 1, envoyesVague: 0, gardeEntree: 0 };
       var titre = defense ? "Défense du domaine contre " + adv.armee : "Bataille : " + prov.nom;
       var zone = JEU.ui.commencerPartie(titre, function () { JEU.ui.afficher("jouer"); });
       JEU.musique.humeur("guerre");
@@ -310,9 +567,11 @@
       // --- mise en page ---
       var canvas = el("canvas", { class: "td-canvas", width: String(M.LARGEUR), height: String(M.HAUTEUR), tabindex: "0",
         "aria-label": "Champ de bataille : choisis un emplacement avec les flèches, puis bâtis avec Espace" });
-      var ratio = Math.min(2, racine.devicePixelRatio || 1);
       canvas.width = M.LARGEUR * ratio; canvas.height = M.HAUTEUR * ratio;
       var ctx = canvas.getContext("2d");
+      // brouillard : un voile qui s'épaissit vers le château adverse (dégradé créé une fois)
+      v.brume = ctx.createLinearGradient(520, 0, 660, 0);
+      v.brume.addColorStop(0, "rgba(230,230,220,0)"); v.brume.addColorStop(1, "rgba(230,230,220,.26)");
       var hud = el("div", { class: "td-hud" });
       var cadre = el("div", { class: "td-cadre" }, [canvas, hud]);
       var conseil = el("div", { class: "td-conseil" });

@@ -5,42 +5,52 @@
   var JEU = racine.JEU;
   var U = JEU.util;
 
+  // Position de chaque lieu (pied du bourg) sur le fond de carte rendu en 3D (1000 × 530) : le domaine dans les champs
+  // de l'ouest ; le front de l'ouest (royaume d'Angleterre) sur les terres vertes du nord, au-dessus de l'escarpement ;
+  // le front du sud (Empire omeyyade) sur les terres sèches du sud, entre l'escarpement et le fleuve.
   var POSITIONS = {
-    domaine: [95, 262],
-    gue: [255, 125], foret: [415, 98], moulin: [575, 132], col: [720, 98], chateau: [868, 125],
-    piemont: [255, 392], oliveraie: [415, 420], fleuve: [575, 386], citadelle: [720, 420], forteresse: [868, 392]
+    domaine: [122, 258],
+    gue: [262, 124], foret: [415, 106], moulin: [572, 130], col: [722, 102], chateau: [858, 124],
+    piemont: [262, 380], oliveraie: [418, 404], fleuve: [575, 368], citadelle: [722, 398], forteresse: [858, 380]
   };
   var L = 1000, H = 530;
   function camp(c) { return JEU.campagne.CAMPS[c]; }
+  function image(nom) { return (JEU.SPRITES && JEU.SPRITES[nom]) || null; }
 
-  function route(ids) {
+  // Chemins en pointillés d'un lieu au suivant. Les noms sont sous les lieux : le chemin ondule au-dessus d'eux.
+  // Le premier tronçon quitte le domaine sans couper son nom (point de contrôle propre à chaque front).
+  var DEPARTS = { angleterre: [132, 126], omeyyades: [292, 256] };
+  function route(frontId, ids) {
     var d = "M" + POSITIONS[ids[0]].join(" ");
     for (var i = 1; i < ids.length; i++) {
       var a = POSITIONS[ids[i - 1]], b = POSITIONS[ids[i]];
-      d += " Q" + ((a[0] + b[0]) / 2) + " " + ((a[1] + b[1]) / 2 + (i % 2 ? 34 : -34)) + " " + b[0] + " " + b[1];
+      var q = i === 1 && DEPARTS[frontId] ? DEPARTS[frontId] : [(a[0] + b[0]) / 2, Math.min(a[1], b[1]) - 22];
+      d += " Q" + q[0] + " " + q[1] + " " + b[0] + " " + b[1];
     }
     return "<path d='" + d + "' fill='none' stroke='#2e2419' stroke-width='9' stroke-linecap='round' opacity='.55'/>" +
-      "<path d='" + d + "' fill='none' stroke='#e9d9b0' stroke-width='4' stroke-dasharray='2 12' stroke-linecap='round'/>";
+      "<path d='" + d + "' fill='none' stroke='#efe2bc' stroke-width='4' stroke-dasharray='2 12' stroke-linecap='round'/>";
   }
 
   function carteSVG(c) {
-    var C = JEU.campagne, france = camp("joueur");
+    var C = JEU.campagne, france = camp("joueur"), fond = image("fond-campagne");
     var s = "<svg viewBox='0 0 " + L + " " + H + "' class='carte-svg' role='img' aria-label='Carte de la campagne : deux fronts'>" +
       "<defs><filter id='sepiaC'><feColorMatrix type='matrix' values='.45 .4 .15 0 .05  .38 .4 .14 0 .04  .25 .3 .12 0 .02  0 0 0 1 0'/></filter>" +
-      "<radialGradient id='vigC' cx='.5' cy='.5' r='.7'><stop offset='.6' stop-color='#000' stop-opacity='0'/><stop offset='1' stop-color='#1c140c' stop-opacity='.6'/></radialGradient>" +
+      "<radialGradient id='vigC' cx='.5' cy='.5' r='.7'><stop offset='.6' stop-color='#000' stop-opacity='0'/><stop offset='1' stop-color='#1c140c' stop-opacity='" + (fond ? ".3" : ".6") + "'/></radialGradient>" +
       "<filter id='ombreC'><feDropShadow dx='2' dy='4' stdDeviation='3' flood-color='#000' flood-opacity='.55'/></filter></defs>" +
-      "<image href='assets/images/terrain-domaine.jpg' x='0' y='-65' width='1000' height='660' preserveAspectRatio='xMidYMid slice' filter='url(#sepiaC)'/>" +
+      // fond rendu en 3D (relief, forêts, champs, escarpement, fleuve) ; à défaut, l'ancien fond peint passé au sépia
+      (fond ? "<image href='" + fond.src + "' x='0' y='0' width='" + L + "' height='" + H + "' preserveAspectRatio='none'/>"
+        : "<image href='assets/images/terrain-domaine.jpg' x='0' y='-65' width='1000' height='660' preserveAspectRatio='xMidYMid slice' filter='url(#sepiaC)'/>") +
       "<rect width='" + L + "' height='" + H + "' fill='url(#vigC)'/>";
-    C.FRONTS.forEach(function (f) { s += route(["domaine"].concat(f.provinces.map(function (p) { return p.id; }))); });
-    // titres des fronts
+    C.FRONTS.forEach(function (f) { s += route(f.id, ["domaine"].concat(f.provinces.map(function (p) { return p.id; }))); });
+    // titres des fronts, en haut et en bas, à l'intérieur du cadre de parchemin
     C.FRONTS.forEach(function (f, i) {
       var adv = camp(f.camp);
-      var y = i === 0 ? 28 : H - 14;
+      var y = i === 0 ? 40 : H - 30;
       s += "<g>" + JEU.icones.dans(adv.embleme, 556, y - 20, 24, adv.couleurs[0] === "#e9e1cc" ? "#2f6b52" : adv.couleurs[0]) +
         "<text x='548' y='" + y + "' class='titre-front' text-anchor='end'>" + U.echapper(f.nom) + " · " + U.echapper(C.maj1(adv.nom)) + "</text></g>";
     });
     var attaque = c.rival.attaque;
-    s += noeud(POSITIONS.domaine, "lys", france.couleurs, "lys", "Ton domaine", attaque ? "attaqué par " + camp(C.front(attaque).camp).armee : "", "domaine", attaque ? "attaque" : "tien");
+    s += noeud(POSITIONS.domaine, "lys", france.couleurs, "lys", "Ton domaine", attaque ? "attaqué par " + camp(C.front(attaque).camp).armee : "", "domaine", attaque ? "attaque" : "tien", "france");
     C.FRONTS.forEach(function (f) {
       var cible = C.prochaineProvince(f.id), adv = camp(f.camp);
       f.provinces.forEach(function (p) {
@@ -48,23 +58,37 @@
         var etat = conquise ? "tien" : cible && cible.province.id === p.id ? "cible" : "brume";
         var sous = conquise ? "prise" : etat === "cible" ? "place forte " + c.provinces[p.id].pv + " / " + p.pv : "";
         var coul = conquise ? france.couleurs : adv.couleurs;
-        s += noeud(POSITIONS[p.id], p.icone, coul, conquise ? "lys" : adv.embleme, p.nom, sous, p.id, etat);
+        // bourg du camp qui tient le lieu ; dans la brume, un bourg sans couleurs
+        var lieu = conquise ? "france" : etat === "brume" ? "brume" : f.camp;
+        s += noeud(POSITIONS[p.id], p.icone, coul, conquise ? "lys" : adv.embleme, p.nom, sous, p.id, etat, lieu);
       });
     });
     return s + "</svg>";
   }
 
-  function noeud(pos, icone, coul, embleme, nom, sous, id, etat) {
-    var x = pos[0], y = pos[1];
+  // Un lieu de la carte : le bourg rendu en 3D (avec la bannière de son camp), son nom et une ligne sous le nom.
+  // Sans image (sprites.js absent), l'ancien médaillon avec l'icône du lieu et une bannière plantée.
+  function noeud(pos, icone, coul, embleme, nom, sous, id, etat, lieu) {
+    var x = pos[0], y = pos[1], sp = image("lieu-" + lieu);
     var s = "<g class='noeud " + etat + "' data-lieu='" + id + "' filter='url(#ombreC)' tabindex='" + (etat === "cible" || etat === "attaque" ? "0" : "-1") + "'>";
-    if (etat === "cible" || etat === "attaque") s += "<circle class='halo' cx='" + x + "' cy='" + y + "' r='50' fill='none' stroke='" + (etat === "attaque" ? "#d0644a" : "#e2c272") + "' stroke-width='4'/>";
-    s += "<circle cx='" + x + "' cy='" + y + "' r='40' fill='#b08d3a' stroke='#2e2419' stroke-width='3'/>" +
-      "<circle cx='" + x + "' cy='" + y + "' r='33' fill='" + (etat === "brume" ? "#6f6658" : coul[0]) + "'/>" +
-      JEU.icones.dans(icone, x - 23, y - 23, 46, etat === "brume" ? "#bfb39a" : coul[1]);
-    // bannière plantée, avec l'emblème du camp qui tient le lieu
-    if (etat !== "brume") s += "<g transform='translate(" + (x + 20) + "," + (y - 70) + ")'><path d='M0 0v38' stroke='#2e2419' stroke-width='3'/><path d='M2 2h26l-7 9 7 9H2z' fill='" + coul[0] + "' stroke='#2e2419' stroke-width='1.5'/>" + JEU.icones.dans(embleme, 5, 3, 15, coul[1]) + "</g>";
-    s += "<text x='" + x + "' y='" + (y + 60) + "' class='nom-lieu'>" + U.echapper(nom) + "</text>";
-    if (sous) s += "<text x='" + x + "' y='" + (y + 79) + "' class='sous-lieu'>" + U.echapper(sous) + "</text>";
+    var halo = etat === "cible" || etat === "attaque" ? " fill='none' stroke='" + (etat === "attaque" ? "#d0644a" : "#e2c272") + "' stroke-width='4'" : null;
+    var bas; // haut du nom, sous le lieu
+    if (sp) {
+      // halo posé au sol autour du bourg (proportionnel à l'image)
+      if (halo) s += "<ellipse class='halo' cx='" + x + "' cy='" + (y - sp.h * 0.16) + "' rx='" + sp.w * 0.58 + "' ry='" + sp.w * 0.4 + "'" + halo + "/>";
+      s += "<image class='lieu' href='" + sp.src + "' x='" + (x - sp.ax) + "' y='" + (y - sp.ay) + "' width='" + sp.w + "' height='" + sp.h + "'/>";
+      bas = y + sp.h - sp.ay;
+    } else {
+      if (halo) s += "<circle class='halo' cx='" + x + "' cy='" + y + "' r='50'" + halo + "/>";
+      s += "<circle class='lieu' cx='" + x + "' cy='" + y + "' r='40' fill='#b08d3a' stroke='#2e2419' stroke-width='3'/>" +
+        "<circle cx='" + x + "' cy='" + y + "' r='33' fill='" + (etat === "brume" ? "#6f6658" : coul[0]) + "'/>" +
+        JEU.icones.dans(icone, x - 23, y - 23, 46, etat === "brume" ? "#bfb39a" : coul[1]);
+      // bannière plantée, avec l'emblème du camp qui tient le lieu
+      if (etat !== "brume") s += "<g transform='translate(" + (x + 20) + "," + (y - 70) + ")'><path d='M0 0v38' stroke='#2e2419' stroke-width='3'/><path d='M2 2h26l-7 9 7 9H2z' fill='" + coul[0] + "' stroke='#2e2419' stroke-width='1.5'/>" + JEU.icones.dans(embleme, 5, 3, 15, coul[1]) + "</g>";
+      bas = y + 42;
+    }
+    s += "<text x='" + x + "' y='" + (bas + 16) + "' class='nom-lieu'>" + U.echapper(nom) + "</text>";
+    if (sous) s += "<text x='" + x + "' y='" + (bas + 34) + "' class='sous-lieu'>" + U.echapper(sous) + "</text>";
     return s + "</g>";
   }
 
