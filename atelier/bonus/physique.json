@@ -1,0 +1,38 @@
+[
+  {
+    "id": "physique-s01-1-b1",
+    "fiche": "physique-s01-1-f5",
+    "titre": "L'invention du niveau à bulle",
+    "texte": "Le niveau à bulle aurait été inventé vers 1660 par le savant français Melchisédech Thévenot. Il a d'abord servi aux mesures de précision. Jusqu'à la fin du XVIIIe siècle au moins, maçons et charpentiers utilisaient encore un niveau en bois équipé d'un fil à plomb.",
+    "source": {
+      "titre": "Niveau à bulle",
+      "editeur": "Wikipédia, l'encyclopédie libre",
+      "url": "https://fr.wikipedia.org/wiki/Niveau_%C3%A0_bulle"
+    },
+    "preuve": "Section Histoire : « Le niveau à bulle serait l'invention du physicien et écrivain français Melchisédech Thévenot (1620-1692) vers 1660 » ; même section : une fois inventé, il est « dans un premier temps resté réservé aux usages de précision » ; les ouvriers du bâtiment (charpentiers, maçons, menuisiers) continuaient à utiliser un niveau de bois perpendiculaire au fil à plomb, au moins jusqu'à la fin du dix-huitième siècle."
+  },
+  {
+    "id": "physique-s02-1-b1",
+    "fiche": "physique-s02-1-f6",
+    "titre": "Un réservoir d'eau douce gelé",
+    "texte": "En Antarctique, une immense calotte de glace, l'inlandsis, couvre la plus grande partie du continent. Elle peut atteindre 4 000 m d'épaisseur et contient environ 61 % de l'eau douce de la Terre. Si elle fondait, le niveau des mers monterait d'environ 58 m.",
+    "source": {
+      "titre": "Inlandsis de l'Antarctique",
+      "editeur": "Wikipédia, l'encyclopédie libre",
+      "url": "https://fr.wikipedia.org/wiki/Inlandsis_de_l%27Antarctique"
+    },
+    "preuve": "Introduction : l'inlandsis (calotte polaire) « recouvre la majeure partie de l'Antarctique » ; « La couche de glace peut atteindre 4 000 m d'épaisseur » ; il « représente environ 61 % de toute l'eau douce terrestre » ; s'il devait fondre, élévation du niveau de la mer d'environ 58 m."
+  },
+  {
+    "id": "physique-s03-1-b1",
+    "fiche": "physique-s03-1-f3",
+    "titre": "L'objet qui définissait le kilogramme",
+    "texte": "Dès 1889, le kilogramme est la masse d'un objet unique en platine iridié, conservé au Bureau international des poids et mesures. Mais ses copies s'en sont écartées d'environ 25 microgrammes en moyenne. En 2018, on adopte donc une nouvelle définition, fondée sur une constante de la physique.",
+    "source": {
+      "titre": "Perspective historique : l'unité de masse, le kilogramme",
+      "editeur": "Bureau international des poids et mesures (BIPM)",
+      "url": "https://www.bipm.org/fr/history-si/kilogram"
+    },
+    "preuve": "Paragraphe unique de la page : selon la définition de 1889, l'unité de masse était égale à la masse du prototype international du kilogramme, « un artéfact fabriqué en platine iridié », conservé au BIPM ; quarante prototypes similaires (étalons nationaux) fabriqués et polis pour avoir la même masse ; vérifications de 1946 puis 1989-1991 : leur masse divergeait de celle du prototype international, différence moyenne d'environ 25 microgrammes ; « afin d'assurer la stabilité à long terme », nouvelle définition fondée sur une constante fondamentale, la constante de Planck, adoptée par la CGPM à sa 26e réunion (2018)."
+  }
+]
