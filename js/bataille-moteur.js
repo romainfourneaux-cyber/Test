@@ -53,11 +53,11 @@
   // cadence : leurs tirs par seconde (×) ; coup : ses coups au corps à corps (×) ; toursDepart : tours qu'il bâtit avant la première vague ; toursVague : tours
   // de plus à chaque vague suivante.
   var RIVAL = [
-    { renfort: 0, pv: 1, tirs: 1, cadence: 1, coup: 1, toursDepart: 0, toursVague: 1 },
-    { renfort: 0, pv: 1.1, tirs: 1.08, cadence: 1, coup: 1, toursDepart: 0, toursVague: 1 },
-    { renfort: 1, pv: 1.2, tirs: 1.16, cadence: 1, coup: 1, toursDepart: 1, toursVague: 1 },
-    { renfort: 1, pv: 1.3, tirs: 1.24, cadence: 1, coup: 1, toursDepart: 1, toursVague: 1 },
-    { renfort: 2, pv: 1.4, tirs: 1.32, cadence: 1, coup: 1, toursDepart: 2, toursVague: 2 }
+    { renfort: 0, pv: 0.8, tirs: 0.5, cadence: 1, coup: 0.5, toursDepart: 0, toursVague: 1 },
+    { renfort: 0, pv: 1.1, tirs: 1.08, cadence: 1, coup: 0.7, toursDepart: 0, toursVague: 1 },
+    { renfort: 2, pv: 1.2, tirs: 1.16, cadence: 1, coup: 0.55, toursDepart: 1, toursVague: 1 },
+    { renfort: 2, pv: 1.3, tirs: 1.24, cadence: 1, coup: 0.8, toursDepart: 1, toursVague: 1 },
+    { renfort: 2, pv: 1.4, tirs: 1.62, cadence: 1, coup: 1, toursDepart: 2, toursVague: 2 }
   ];
   // Défense du domaine (carte « domaine », ou options.defense) : le rival y vient en force, en plus de son niveau.
   // renfort : troupes de plus à chaque vague ; pv, coup : × sur les points de vie et les coups de ses troupes.
