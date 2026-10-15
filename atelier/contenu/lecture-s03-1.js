@@ -3,6 +3,8 @@
 // Seule source : la liste de vocabulaire du livre. Elle ne dit pas à quel chapitre appartient chaque mot :
 // ce cours prend le vocabulaire de la navigation (verbes et expressions des pages 8 et 9, gros temps de la
 // page 6, mesures de la page 3). Aucune question sur l'intrigue.
+// Anti-spoil (devoir lecture-d1) : rien sur les personnages, le complot, le cadre du récit ou les épreuves de l'équipage.
+// Relu le 2026-10-15 : définitions vérifiées une à une contre les pages 3, 6, 8 et 9 de la liste.
 const F = "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf";
 const S = p => ({ fichier: F, page: p });
 
@@ -14,7 +16,7 @@ module.exports = {
       titre: "Appareiller, accoster, hiverner",
       texte: "Quand un navire prend la mer, on dit qu'il appareille. Quand il vient se ranger le long d'un quai ou d'un ponton, il accoste. S'il fait une halte, il relâche. Tenir le large, c'est rester loin de la terre ; virer, c'est changer de direction. Enfin, hiverner, c'est passer l'hiver à l'abri.",
       pointsCles: ["Appareiller : prendre la mer", "Accoster : se placer le long d'un quai ou d'un ponton", "Relâcher : s'arrêter", "Tenir le large : rester loin de la terre", "Virer : changer de direction", "Hiverner : passer l'hiver à l'abri"],
-      astuce: "Hiverner vient du mot hiver : on passe l'hiver à l'abri.",
+      astuce: "Dans hiverner, on entend le mot hiver : on passe l'hiver à l'abri.",
       dates: [], lieux: [], personnages: [],
       vocabulaire: [
         { mot: "appareiller", def: "prendre la mer, partir" },
@@ -29,13 +31,13 @@ module.exports = {
     {
       id: "lecture-s03-1-f2", notion: "Parler du vent et régler les voiles",
       titre: "Le vent adonne, le vent refuse",
-      texte: "Les marins ont leurs verbes pour le vent. Il fraîchit quand il se lève. Il adonne quand il tourne dans un sens favorable, en venant davantage de l'arrière. Il refuse quand il vient davantage de l'avant. Pour tendre une voile au maximum, on l'étarque ; pour ralentir, on met à la cape en baissant les voiles.",
+      texte: "Les marins ont leurs verbes pour le vent. Il fraîchit quand il se lève. Il adonne quand il change de direction pour aider la marche du navire, en soufflant plus de l'arrière. Il refuse quand il souffle plus de l'avant. Pour tendre une voile au maximum, on l'étarque ; pour ralentir, on met à la cape en baissant les voiles.",
       pointsCles: ["Fraîchir : se lever, pour le vent", "Adonner : le vent vient plus de l'arrière, c'est favorable", "Refuser : le vent vient plus de l'avant", "Étarquer : tendre la voile le plus possible", "Mettre à la cape : baisser les voiles pour ralentir"],
       astuce: "Le vent qui adonne te donne un coup de main ; le vent qui refuse refuse de t'aider.",
       dates: [], lieux: [], personnages: [],
       vocabulaire: [
         { mot: "fraîchir", def: "pour le vent : se lever" },
-        { mot: "adonner", def: "pour le vent : tourner dans un sens favorable, en venant plus de l'arrière" },
+        { mot: "adonner", def: "pour le vent : tourner pour aider la marche du navire, en soufflant plus de l'arrière" },
         { mot: "refuser", def: "pour le vent : venir plus de l'avant, le contraire d'adonner" },
         { mot: "étarquer", def: "hisser une voile en la tendant le plus possible" },
         { mot: "mettre à la cape", def: "baisser les voiles pour ralentir le bateau" }
@@ -73,12 +75,13 @@ module.exports = {
     {
       id: "lecture-s03-1-f5", notion: "Les mesures de la marine",
       titre: "Encablure, mille marin et pied",
-      texte: "Les marins mesurent les distances avec leurs propres unités. Une encablure fait environ 200 mètres. Le mille marin vaut 1 852 mètres. Pour les longueurs plus courtes, on employait le pied, une mesure d'environ 32 centimètres.",
-      pointsCles: ["Encablure : environ 200 m", "Mille marin : 1 852 m", "Pied : environ 32 cm"],
+      texte: "Les marins mesurent les distances avec leurs propres unités. Une encablure fait environ 200 mètres, et une demi-encablure la moitié, soit environ 100 mètres. Le mille marin vaut 1 852 mètres. Pour les longueurs plus courtes, on employait le pied, une mesure d'environ 32 centimètres.",
+      pointsCles: ["Encablure : environ 200 m", "Demi-encablure : la moitié, environ 100 m", "Mille marin : 1 852 m", "Pied : environ 32 cm"],
       dates: [], lieux: [], personnages: [],
       vocabulaire: [
         { mot: "encablure", def: "une mesure de la marine valant environ 200 m" },
         { mot: "mille marin", def: "une distance de 1 852 m" },
+        { mot: "demi-encablure", def: "la moitié d'une encablure, environ 100 m" },
         { mot: "pied", def: "une ancienne mesure de longueur d'environ 32 cm" }
       ],
       schema: null, prerequis: [], source: S(3)
@@ -107,7 +110,7 @@ module.exports = {
       enonce: "Comment dit-on d'un navire qui passe l'hiver à l'abri ?",
       choix: ["Il hiverne", "Il vire", "Il appareille", "Il tient le large"],
       reponse: "Il hiverne",
-      explication: "Hiverner vient du mot hiver : c'est passer l'hiver à l'abri. Un navire qui tient le large reste au contraire loin de la terre.", source: S(8) },
+      explication: "Hiverner, c'est passer l'hiver à l'abri : on y entend le mot hiver. Un navire qui tient le large reste au contraire loin de la terre.", source: S(8) },
     // f2 : le vent et les voiles
     { id: "lecture-s03-1-q5", fiche: "lecture-s03-1-f2", type: "qcm", niveau: 1,
       enonce: "Un marin dit : « Le vent fraîchissait. » Que veut-il dire ?",
@@ -118,7 +121,7 @@ module.exports = {
       enonce: "Quand le vent adonne, il vient davantage de l'avant du navire.",
       corrections: ["Faux : quand il adonne, il vient plus de l'arrière ; quand il vient plus de l'avant, il refuse.", "Faux : quand il adonne, le vent s'arrête complètement.", "Faux : adonner veut dire que le vent devient violent."],
       reponse: { vrai: false, correction: "Faux : quand il adonne, il vient plus de l'arrière ; quand il vient plus de l'avant, il refuse." },
-      explication: "Le vent adonne quand il tourne dans un sens favorable, en venant plus de l'arrière. S'il vient plus de l'avant, on dit qu'il refuse.", source: S(8) },
+      explication: "Le vent adonne quand il tourne pour aider la marche du navire, en soufflant plus de l'arrière. S'il souffle plus de l'avant, on dit qu'il refuse.", source: S(8) },
     { id: "lecture-s03-1-q7", fiche: "lecture-s03-1-f2", type: "qcm", niveau: 2,
       enonce: "Pourquoi un capitaine fait-il mettre son navire à la cape ?",
       choix: ["Pour ralentir le bateau en baissant les voiles", "Pour aller plus vite en ajoutant des voiles", "Pour tendre les voiles au maximum", "Pour accoster le long d'un quai"],
@@ -166,7 +169,7 @@ module.exports = {
       enonce: "Comment les marins mesurent-ils la vitesse moyenne du vent ?",
       choix: ["Avec l'échelle de Beaufort", "Avec un sextant", "Avec une encablure", "Avec un pavillon"],
       reponse: "Avec l'échelle de Beaufort",
-      explication: "L'échelle de Beaufort n'est pas une échelle pour grimper. C'est une mesure de la vitesse moyenne du vent, utilisée en mer.", source: S(6) },
+      explication: "L'échelle de Beaufort n'est pas une échelle pour grimper. Elle sert aux marins à mesurer la vitesse moyenne du vent.", source: S(6) },
     { id: "lecture-s03-1-q16", fiche: "lecture-s03-1-f4", type: "trou", niveau: 1,
       enonce: "Complète la phrase.",
       texte: "Une ___ est un vent violent ; les ___ sont les vagues.",

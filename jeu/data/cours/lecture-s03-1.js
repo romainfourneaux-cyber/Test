@@ -16,7 +16,7 @@ JEU.enregistrer("cours", {
     "Virer : changer de direction",
     "Hiverner : passer l'hiver à l'abri"
    ],
-   "astuce": "Hiverner vient du mot hiver : on passe l'hiver à l'abri.",
+   "astuce": "Dans hiverner, on entend le mot hiver : on passe l'hiver à l'abri.",
    "dates": [],
    "lieux": [],
    "personnages": [],
@@ -57,7 +57,7 @@ JEU.enregistrer("cours", {
    "id": "lecture-s03-1-f2",
    "notion": "Parler du vent et régler les voiles",
    "titre": "Le vent adonne, le vent refuse",
-   "texte": "Les marins ont leurs verbes pour le vent. Il fraîchit quand il se lève. Il adonne quand il tourne dans un sens favorable, en venant davantage de l'arrière. Il refuse quand il vient davantage de l'avant. Pour tendre une voile au maximum, on l'étarque ; pour ralentir, on met à la cape en baissant les voiles.",
+   "texte": "Les marins ont leurs verbes pour le vent. Il fraîchit quand il se lève. Il adonne quand il change de direction pour aider la marche du navire, en soufflant plus de l'arrière. Il refuse quand il souffle plus de l'avant. Pour tendre une voile au maximum, on l'étarque ; pour ralentir, on met à la cape en baissant les voiles.",
    "pointsCles": [
     "Fraîchir : se lever, pour le vent",
     "Adonner : le vent vient plus de l'arrière, c'est favorable",
@@ -76,7 +76,7 @@ JEU.enregistrer("cours", {
     },
     {
      "mot": "adonner",
-     "def": "pour le vent : tourner dans un sens favorable, en venant plus de l'arrière"
+     "def": "pour le vent : tourner pour aider la marche du navire, en soufflant plus de l'arrière"
     },
     {
      "mot": "refuser",
@@ -184,9 +184,10 @@ JEU.enregistrer("cours", {
    "id": "lecture-s03-1-f5",
    "notion": "Les mesures de la marine",
    "titre": "Encablure, mille marin et pied",
-   "texte": "Les marins mesurent les distances avec leurs propres unités. Une encablure fait environ 200 mètres. Le mille marin vaut 1 852 mètres. Pour les longueurs plus courtes, on employait le pied, une mesure d'environ 32 centimètres.",
+   "texte": "Les marins mesurent les distances avec leurs propres unités. Une encablure fait environ 200 mètres, et une demi-encablure la moitié, soit environ 100 mètres. Le mille marin vaut 1 852 mètres. Pour les longueurs plus courtes, on employait le pied, une mesure d'environ 32 centimètres.",
    "pointsCles": [
     "Encablure : environ 200 m",
+    "Demi-encablure : la moitié, environ 100 m",
     "Mille marin : 1 852 m",
     "Pied : environ 32 cm"
    ],
@@ -201,6 +202,10 @@ JEU.enregistrer("cours", {
     {
      "mot": "mille marin",
      "def": "une distance de 1 852 m"
+    },
+    {
+     "mot": "demi-encablure",
+     "def": "la moitié d'une encablure, environ 100 m"
     },
     {
      "mot": "pied",
@@ -294,7 +299,7 @@ JEU.enregistrer("cours", {
     "Il appareille",
     "Il tient le large"
    ],
-   "explication": "Hiverner vient du mot hiver : c'est passer l'hiver à l'abri. Un navire qui tient le large reste au contraire loin de la terre.",
+   "explication": "Hiverner, c'est passer l'hiver à l'abri : on y entend le mot hiver. Un navire qui tient le large reste au contraire loin de la terre.",
    "source": {
     "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
     "page": 8
@@ -333,7 +338,7 @@ JEU.enregistrer("cours", {
     "Faux : quand il adonne, le vent s'arrête complètement.",
     "Faux : adonner veut dire que le vent devient violent."
    ],
-   "explication": "Le vent adonne quand il tourne dans un sens favorable, en venant plus de l'arrière. S'il vient plus de l'avant, on dit qu'il refuse.",
+   "explication": "Le vent adonne quand il tourne pour aider la marche du navire, en soufflant plus de l'arrière. S'il souffle plus de l'avant, on dit qu'il refuse.",
    "source": {
     "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
     "page": 8
@@ -507,7 +512,7 @@ JEU.enregistrer("cours", {
     "Avec une encablure",
     "Avec un pavillon"
    ],
-   "explication": "L'échelle de Beaufort n'est pas une échelle pour grimper. C'est une mesure de la vitesse moyenne du vent, utilisée en mer.",
+   "explication": "L'échelle de Beaufort n'est pas une échelle pour grimper. Elle sert aux marins à mesurer la vitesse moyenne du vent.",
    "source": {
     "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
     "page": 6

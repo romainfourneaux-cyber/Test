@@ -7,7 +7,7 @@ JEU.enregistrer("cours", {
    "id": "lecture-s02-1-f1",
    "notion": "Les sortes de navires",
    "titre": "Brick, goélette, caboteur et chaloupes",
-   "texte": "Le livre emploie des mots précis pour parler des bateaux. Le brick et la goélette sont deux sortes de voiliers. Un caboteur navigue le long des côtes. Les chaloupes sont de petites embarcations. Enfin, celui qui possède un ou plusieurs navires de commerce s'appelle un armateur.",
+   "texte": "Pour parler des bateaux, la liste du livre donne des mots précis. Le brick et la goélette sont deux sortes de voiliers. Un caboteur navigue le long des côtes. Les chaloupes sont de petites embarcations. Enfin, celui qui possède un ou plusieurs navires de commerce s'appelle un armateur.",
    "pointsCles": [
     "Brick, goélette : des sortes de voiliers",
     "Caboteur : il longe les côtes",
@@ -121,7 +121,7 @@ JEU.enregistrer("cours", {
    "pointsCles": [
     "Mât de misaine : le premier mât, à l'avant",
     "Rouf : un abri en bois sur le pont",
-    "Ligne de flottaison : la limite entre partie immergée et partie émergée de la coque",
+    "Ligne de flottaison : la limite entre la coque sous l'eau et la coque hors de l'eau",
     "Pavillon : il montre la nationalité, la compagnie, ou sert à faire des signaux",
     "Sextant : un instrument de navigation"
    ],
@@ -131,7 +131,7 @@ JEU.enregistrer("cours", {
    "vocabulaire": [
     {
      "mot": "mât de misaine",
-     "def": "le premier mât vertical, à l'avant du navire"
+     "def": "le premier mât, dressé à l'avant du navire"
     },
     {
      "mot": "rouf",
@@ -509,7 +509,7 @@ JEU.enregistrer("cours", {
     "un abri en bois sur le pont",
     "le premier mât, à l'avant",
     "un instrument de navigation",
-    "la limite entre la coque immergée et la coque émergée"
+    "la limite entre la partie de la coque sous l'eau et celle hors de l'eau"
    ],
    "explication": "Le sextant est un instrument, le rouf un abri sur le pont. La ligne de flottaison marque la limite de l'eau sur la coque, et le mât de misaine se dresse à l'avant.",
    "source": {
@@ -598,7 +598,7 @@ JEU.enregistrer("cours", {
  "nonCouvert": [
   "Le contenu des chapitres 1 et 2 (p. 31 à 44 du livre) : le livre n'est pas déposé, et la liste de vocabulaire ne dit pas à quel chapitre appartient chaque mot. Ce cours reprend le vocabulaire du navire et de l'équipage (pages 3, 6 et 7 de la liste).",
   "Le brick : la définition de la liste mélange deux sens (un voilier, un guetteur) ; seul « sorte de voilier » est repris.",
-  "Les voiles foc, petit foc et din-foc, les chandeliers et la corne de brigantine : nommés sur le schéma de la page 3 sans explication simple, ils ne sont pas repris.",
+  "Les voiles foc, petit foc et din-foc et les chandeliers : le schéma de la page 3 les nomme sans les expliquer. La corne de brigantine (page 6) a une définition trop technique pour une question sûre.",
   "Le galhauban, le faux pont, le plat-bord et la préceinte (pages 6 et 7) : trop proches des haubans, de l'entrepont ou de la coque pour faire des questions sans confusion."
  ]
 });

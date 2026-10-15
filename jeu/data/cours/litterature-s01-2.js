@@ -93,7 +93,7 @@ JEU.enregistrer("cours", {
    "id": "litterature-s01-2-f4",
    "notion": "Relever un procédé et dire ce qu'il apporte",
    "titre": "Relever, prouver, expliquer",
-   "texte": "Quand on te demande de relever une hyperbole ou une énumération, recopier la phrase ne suffit pas. Le corrigé montre la marche à suivre : dire ce qu'est le procédé, citer le passage, montrer pourquoi il en est un, puis expliquer ce qu'il apporte au récit, par exemple une peur plus forte ou un manque qu'on fait sentir.",
+   "texte": "Quand on te demande de relever une hyperbole ou une énumération, recopier la phrase ne suffit pas. Voici la marche à suivre : dire ce qu'est le procédé, citer le passage, montrer pourquoi il en est un, puis expliquer ce qu'il apporte au récit, par exemple une peur plus forte ou un manque qu'on fait sentir.",
    "pointsCles": [
     "1. Dire ce qu'est le procédé",
     "2. Citer le passage entre guillemets",
@@ -355,19 +355,19 @@ JEU.enregistrer("cours", {
    "fiche": "litterature-s01-2-f3",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Comment le corrigé explique-t-il l'étymologie du mot « cinéma » ?",
+   "enonce": "Comment explique-t-on l'étymologie du mot « cinéma » ?",
    "choix": [
-    "Il donne le mot grec dont il vient et ce que ce mot veut dire",
-    "Il compte les syllabes du mot",
-    "Il cherche un mot de sens contraire",
-    "Il exagère le sens du mot"
+    "On donne le mot grec dont il vient et ce que ce mot veut dire",
+    "On compte les syllabes du mot",
+    "On cherche un mot de sens contraire",
+    "On exagère le sens du mot"
    ],
-   "explication": "L'étymologie, c'est l'origine du mot. Le corrigé donne donc le mot grec kinêma et son sens, « mouvement ».",
+   "explication": "L'étymologie, c'est l'origine du mot. On donne donc le mot grec kinêma et son sens, « mouvement ».",
    "source": {
     "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
     "page": 1
    },
-   "r": "XRxGHsgUcYDSTURWBIgRDogUicABFBhEJphCSxRLIxwQNIgBGJxBdMiUWAwBWkkGA8BSmEURQNEAAIgRFsTZ",
+   "r": "XRxGHsgUcYDSTURWBIgRDogUicABFBhEJphCSxRLIxwQNIgBGJxBdMiUWAwBWkkGA8BSmEURQNEAAIgRH0TZ",
    "poids": 1
   },
   {
@@ -405,14 +405,14 @@ JEU.enregistrer("cours", {
    "fiche": "litterature-s01-2-f4",
    "type": "ordre",
    "niveau": 2,
-   "enonce": "Range dans l'ordre suivi par le corrigé les étapes d'une réponse à « Relève une hyperbole : qu'apporte-t-elle au récit ? ».",
+   "enonce": "Range dans l'ordre les étapes d'une bonne réponse à « Relève une hyperbole : qu'apporte-t-elle au récit ? ».",
    "elements": [
     "Citer le passage entre guillemets",
     "Dire ce qu'est une hyperbole",
     "Expliquer ce qu'elle apporte au récit",
     "Montrer pourquoi le passage exagère"
    ],
-   "explication": "Le corrigé définit d'abord l'hyperbole, cite le passage et prouve qu'il exagère. Il finit par l'effet sur le récit.",
+   "explication": "On définit d'abord l'hyperbole, on cite le passage et on prouve qu'il exagère. On finit par l'effet sur le récit.",
    "indice": "Définir, citer, prouver, expliquer.",
    "source": {
     "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
@@ -452,7 +452,7 @@ JEU.enregistrer("cours", {
     "Faux : il faut seulement donner l'étymologie de chaque mot.",
     "Faux : il ne faut jamais citer le texte."
    ],
-   "explication": "Citer ne suffit pas : il faut prouver et expliquer. C'est ce que fait le corrigé.",
+   "explication": "Citer ne suffit pas : il faut aussi prouver et expliquer.",
    "source": {
     "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
     "page": 1
@@ -485,7 +485,7 @@ JEU.enregistrer("cours", {
    "fiche": "litterature-s01-2-f4",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Pourquoi le corrigé cite-t-il le passage entre guillemets dans sa réponse ?",
+   "enonce": "Pourquoi faut-il citer le passage entre guillemets dans sa réponse ?",
    "choix": [
     "Pour appuyer sa réponse sur les mots exacts du texte",
     "Pour rendre la réponse plus longue",

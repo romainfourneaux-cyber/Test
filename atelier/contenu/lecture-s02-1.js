@@ -62,7 +62,7 @@ module.exports = {
       pointsCles: ["Mât de misaine : le premier mât, à l'avant", "Rouf : un abri en bois sur le pont", "Ligne de flottaison : la limite entre la coque sous l'eau et la coque hors de l'eau", "Pavillon : il montre la nationalité, la compagnie, ou sert à faire des signaux", "Sextant : un instrument de navigation"],
       dates: [], lieux: [], personnages: [],
       vocabulaire: [
-        { mot: "mât de misaine", def: "le premier mât vertical, à l'avant du navire" },
+        { mot: "mât de misaine", def: "le premier mât, dressé à l'avant du navire" },
         { mot: "rouf", def: "un abri en bois construit sur le pont" },
         { mot: "ligne de flottaison", def: "la limite entre la partie de la coque sous l'eau et celle hors de l'eau" },
         { mot: "pavillon", def: "le tissu hissé sur un navire pour montrer sa nationalité, sa compagnie, ou pour faire des signaux" },

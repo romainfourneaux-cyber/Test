@@ -15,7 +15,7 @@ module.exports = {
     {
       id: "lecture-s01-1-f1", notion: "L'origine des mots Arctique et Antarctique",
       titre: "Arctique et Antarctique : une histoire d'ours",
-      texte: "Arctique et Antarctique viennent du grec arktos, qui veut dire « ours ». C'est le nom de la Grande Ourse, des étoiles en forme d'ours, ou de casserole, faciles à voir dans le ciel de l'hémisphère Nord. L'Arctique désigne donc le pôle Nord. Avec anti, « opposé à », on obtient l'Antarctique : le continent du pôle Sud.",
+      texte: "Arctique et Antarctique viennent du grec arktos, qui veut dire « ours ». C'est le nom de la Grande Ourse, des étoiles qui dessinent un ours, ou une casserole, bien visibles dans le ciel de l'hémisphère Nord. L'Arctique désigne donc le pôle Nord. Avec anti, « opposé à », on obtient l'Antarctique : le continent du pôle Sud.",
       pointsCles: ["arktos, en grec, veut dire « ours »", "Arctique : la région du pôle Nord", "anti veut dire « opposé à »", "Antarctique : le continent du pôle Sud"],
       astuce: "Anti, c'est l'opposé : l'Antarctique est à l'autre bout de la Terre, tout au sud.",
       dates: [], lieux: [], personnages: [],
@@ -30,7 +30,7 @@ module.exports = {
     {
       id: "lecture-s01-1-f2", notion: "La formation et la dislocation de la banquise",
       titre: "Embâcle et débâcle",
-      texte: "L'embâcle, c'est la formation de la banquise. Il faut plusieurs jours d'air froid et une eau à −1,8 °C sur au moins un mètre de profondeur : l'eau de mer gèle à cette température parce qu'elle est salée. La débâcle, c'est l'inverse : la banquise se casse, poussée surtout par le vent, mais aussi par les courants et les marées.",
+      texte: "L'embâcle, c'est la formation de la banquise. Il faut plusieurs jours d'air froid et une eau à −1,8 °C sur au moins un mètre de profondeur : l'eau de mer gèle à ce degré parce qu'elle est salée. La débâcle, c'est l'inverse : la banquise se casse, poussée surtout par le vent, mais aussi par les courants et les marées.",
       pointsCles: ["Embâcle : la banquise se forme", "Il faut de l'air froid plusieurs jours et une eau à −1,8 °C sur au moins 1 m", "Débâcle : la banquise se disloque", "Causes de la débâcle : surtout le vent, puis les courants et les marées", "La débâcle a lieu en général à la fin de l'hiver austral, vers novembre ou décembre"],
       astuce: "EMbâcle : la glace se met en place. DÉbâcle : elle se défait.",
       dates: [], lieux: [], personnages: [],
@@ -84,8 +84,8 @@ module.exports = {
       explication: "Arctique renvoie au nord, comme la Grande Ourse du ciel du Nord. L'Antarctique, son opposé, se trouve au sud.", source: S(1) },
     { id: "lecture-s01-1-q3", fiche: "lecture-s01-1-f1", type: "qcm", niveau: 2,
       enonce: "Pourquoi le continent du pôle Sud s'appelle-t-il l'Antarctique ?",
-      choix: ["Parce que son nom réunit anti, « opposé à », et arktos, la Grande Ourse du ciel du Nord", "Parce qu'il est rempli d'ours", "Parce qu'on y voit très bien la Grande Ourse", "Parce que anti veut dire « très froid »"],
-      reponse: "Parce que son nom réunit anti, « opposé à », et arktos, la Grande Ourse du ciel du Nord",
+      choix: ["Parce que son nom vient de anti, « opposé à », et de arktos, la Grande Ourse du ciel du Nord", "Parce qu'il est rempli d'ours", "Parce qu'on y voit très bien la Grande Ourse", "Parce que anti veut dire « très froid »"],
+      reponse: "Parce que son nom vient de anti, « opposé à », et de arktos, la Grande Ourse du ciel du Nord",
       explication: "Antarctique réunit anti, « opposé à », et arktos, la Grande Ourse qu'on voit dans le ciel du Nord. Le nom désigne donc le côté opposé : le pôle Sud.", source: S(1) },
     { id: "lecture-s01-1-q4", fiche: "lecture-s01-1-f1", type: "association", niveau: 2,
       enonce: "Relie chaque mot ou morceau de mot à son sens.",
