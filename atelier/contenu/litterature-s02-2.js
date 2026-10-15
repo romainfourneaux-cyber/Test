@@ -60,7 +60,7 @@ module.exports = {
       titre: "Parler d'une chose avec l'image d'une autre",
       texte: "La métaphore évoque une chose à l'aide de l'image d'une autre. Un narrateur peut parler de celle qu'il aime avec l'image de la musique, ou donner à un personnage peu aimable un air d'insecte. Exemple de tous les jours : « Mon frère est un vrai moulin à paroles. »",
       pointsCles: [
-        "Métaphore : une image, on parle d'une chose en la désignant par une autre",
+        "Métaphore : une image, on évoque une chose à l'aide de l'image d'une autre",
         "Image de la musique pour dire l'amour ; image de l'insecte pour un personnage déplaisant",
         "C'est une figure de style"
       ],
@@ -226,7 +226,7 @@ module.exports = {
       enonce: "Comment sait-on que « Je déteste ceux qui lisent par-dessus mon épaule » est une description subjective ?",
       choix: ["« Je déteste » montre un avis personnel du narrateur", "La phrase ne contient que des faits visibles", "La phrase est une énumération", "La phrase donne l'origine d'un mot"],
       reponse: "« Je déteste » montre un avis personnel du narrateur",
-      explication: "Le narrateur dit ouvertement qu'il est agacé. Son jugement rend la description subjective.", source: S }
+      explication: "Le narrateur dit ouvertement qu'il est agacé. Son avis personnel rend la description subjective.", source: S }
   ],
   bonus: [],
   nonCouvert: [

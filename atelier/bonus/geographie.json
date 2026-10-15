@@ -1,0 +1,50 @@
+[
+  {
+    "id": "geographie-s01-2-b1",
+    "fiche": "geographie-s01-2-f2",
+    "titre": "La variole, une maladie disparue",
+    "texte": "Pendant au moins 3 000 ans, la variole a frappé l'humanité : au XXe siècle, elle a encore tué 300 millions de personnes. En 1980, après un programme mondial appuyé sur la vaccination, l'OMS a déclaré le monde libéré de cette maladie. Aucune autre maladie humaine n'a été éradiquée.",
+    "source": {
+      "titre": "L'OMS célèbre le quarantième anniversaire de l'éradication de la variole",
+      "editeur": "Organisation mondiale de la Santé (OMS)",
+      "url": "https://www.who.int/fr/news/item/13-12-2019-who-commemorates-the-40th-anniversary-of-smallpox-eradication"
+    },
+    "preuve": "Article OMS du 13 décembre 2019 : « un fléau pour l'humanité pendant au moins 3000 ans, emportant 300 millions de personnes au cours du seul XXe siècle » (4e paragraphe) ; « en mai 1980, la Trente-Troisième Assemblée mondiale de la Santé [instance de l'OMS] déclarait officiellement que tous les peuples du monde étaient désormais libérés de la variole » (1er paragraphe) ; le programme d'éradication « a démontré les avantages de la vaccination en anneau » et a préparé des programmes de vaccination nationaux (5e paragraphe) ; « la variole est la seule maladie humaine jamais éradiquée » (citation du directeur général, 3e paragraphe)."
+  },
+  {
+    "id": "geographie-s02-1-b1",
+    "fiche": "geographie-s02-1-f1",
+    "titre": "Un nom venu de trois langues",
+    "texte": "Adopté en 1984, le nom Burkina Faso mêle deux langues : « burkina » veut dire intégrité, honneur en mooré, et « faso », terre ou patrie en dioula. Pour nommer les Burkinabè, on ajoute « -bè », un suffixe peul qui signifie « les habitants de ».",
+    "source": {
+      "titre": "Burkina Faso",
+      "editeur": "Wikipédia, l'encyclopédie libre",
+      "url": "https://fr.wikipedia.org/wiki/Burkina_Faso"
+    },
+    "preuve": "Section « Étymologie » : « Le nom actuel du pays, Burkina Faso, date du 4 août 1984 » ; « Combinaison de deux mots dans deux langues principales du pays » ; « Burkina se traduisant par « intégrité, honneur » en mooré et Faso se traduisant par « territoire, terre ou patrie » en dioula » ; « Les habitants du Burkina sont des Burkinabè » ; « le suffixe « -Bè » provient du fulfuldé (ou peul) et signifie « les habitants de » ». Le sens « pays des hommes intègres » est déjà dans la fiche f1, rien de contradictoire."
+  },
+  {
+    "id": "geographie-s02-2-b1",
+    "fiche": "geographie-s02-2-f4",
+    "titre": "Une journée pour les migrants",
+    "texte": "Le 18 décembre est la Journée internationale des migrants, proclamée par l'ONU en 2000. Elle rappelle l'adoption d'une convention qui protège les droits des travailleurs migrants et de leur famille. Dans la définition reprise par l'ONU, un étudiant parti à l'étranger compte aussi comme migrant.",
+    "source": {
+      "titre": "Journée internationale des migrants : Historique",
+      "editeur": "Organisation des Nations Unies (ONU)",
+      "url": "https://www.un.org/fr/observances/migrants-day/background"
+    },
+    "preuve": "En-tête de la page : « Journée internationale des migrants 18 décembre » ; rubrique « Historique » : « La Journée des migrants a été proclamée par l'Assemblée générale le 4 décembre 2000 (résolution 55/93). Elle commémore l'adoption de la Convention internationale sur la protection des droits de tous les travailleurs migrants et des membres de leur famille » ; rubrique « Qui est un.e migrant.e ? » (définition de l'Organisation internationale pour les migrations citée par la page) : le terme englobe des personnes « comme les étudiants internationaux »."
+  },
+  {
+    "id": "geographie-s03-1-b1",
+    "fiche": "geographie-s03-1-f1",
+    "titre": "Plus d'aînés que de tout-petits",
+    "texte": "Depuis 1990, l'ONU consacre le 1er octobre aux personnes âgées. Dans le monde, les 65 ans ou plus étaient trois fois plus nombreux en 2021 qu'en 1980 : 761 millions. En 2018, on a compté pour la première fois plus de personnes âgées que d'enfants de moins de cinq ans.",
+    "source": {
+      "titre": "Journée internationale des personnes âgées",
+      "editeur": "Organisation des Nations Unies (ONU)",
+      "url": "https://www.un.org/fr/observances/older-persons-day"
+    },
+    "preuve": "Rubrique « Contexte » : « Le 14 décembre 1990, l'Assemblée générale des Nations Unies a proclamé le 1er octobre Journée internationale des personnes âgées » ; « Le nombre de personnes âgées (définies comme les personnes de 65 ans ou plus) a triplé, passant d'environ 260 millions en 1980 à 761 millions en 2021 » ; encadré « Le saviez-vous ? » : « En 2018, une étape historique a été franchie lorsque le nombre de personnes âgées a dépassé celui des enfants de moins de cinq ans pour la première fois dans le monde »."
+  }
+]

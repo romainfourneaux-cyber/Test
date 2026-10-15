@@ -134,7 +134,7 @@ module.exports = {
     { id: "physique-s02-1-q6", fiche: "physique-s02-1-f2", type: "vrai_faux", niveau: 1,
       enonce: "Le brouillard, fait de minuscules gouttelettes d'eau, vient d'une liquéfaction.",
       corrections: [], reponse: { vrai: true, correction: null },
-      explication: "Oui : la vapeur d'eau redevient liquide en fines gouttelettes. C'est une liquéfaction.", source: P(3) },
+      explication: "Oui : la vapeur d'eau devient liquide en fines gouttelettes. C'est une liquéfaction.", source: P(3) },
     { id: "physique-s02-1-q7", fiche: "physique-s02-1-f2", type: "qcm", niveau: 2,
       enonce: "En été, le niveau d'un lac baisse parce que son eau s'évapore. Comment s'appelle ce changement d'état ?",
       choix: ["Une fusion", "Une solidification", "Une liquéfaction", "Une vaporisation"],

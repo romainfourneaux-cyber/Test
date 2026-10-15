@@ -3,6 +3,11 @@
 // Seule source : la liste de vocabulaire du livre. Elle ne dit pas à quel chapitre appartient chaque mot :
 // ce cours prend le vocabulaire du navire et de l'équipage (pages 3, 6 et 7 de la liste). Aucune question
 // sur l'intrigue, et aucun exercice où l'on place des noms sur un navire.
+// Anti-spoil (devoir lecture-d1) : le devoir fait légender un navire avec quatre mots du schéma de la page 3
+// (bout-dehors, vergue, enfléchure, bastingage). Ces quatre mots n'entrent ni dans les fiches, ni dans les
+// questions, ni dans la liste « non couvert » (compilée dans jeu/). Le brick et la goélette sont repris comme
+// simples sortes de voiliers, sans rien de l'histoire de la page 2.
+// Relu le 2026-10-15 : définitions vérifiées une à une contre les pages 3, 6 et 7 de la liste.
 const F = "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf";
 const S = p => ({ fichier: F, page: p });
 
@@ -12,7 +17,7 @@ module.exports = {
     {
       id: "lecture-s02-1-f1", notion: "Les sortes de navires",
       titre: "Brick, goélette, caboteur et chaloupes",
-      texte: "Le livre emploie des mots précis pour parler des bateaux. Le brick et la goélette sont deux sortes de voiliers. Un caboteur navigue le long des côtes. Les chaloupes sont de petites embarcations. Enfin, celui qui possède un ou plusieurs navires de commerce s'appelle un armateur.",
+      texte: "Pour parler des bateaux, la liste du livre donne des mots précis. Le brick et la goélette sont deux sortes de voiliers. Un caboteur navigue le long des côtes. Les chaloupes sont de petites embarcations. Enfin, celui qui possède un ou plusieurs navires de commerce s'appelle un armateur.",
       pointsCles: ["Brick, goélette : des sortes de voiliers", "Caboteur : il longe les côtes", "Chaloupes : de petites embarcations", "Armateur : le propriétaire de navires de commerce"],
       dates: [], lieux: [], personnages: [],
       vocabulaire: [
@@ -54,7 +59,7 @@ module.exports = {
       id: "lecture-s02-1-f4", notion: "Les parties du navire et le sextant",
       titre: "Du mât de misaine à la ligne de flottaison",
       texte: "Le mât de misaine est le premier mât vertical, à l'avant. Sur le pont, le rouf est un abri en bois. La ligne de flottaison sépare la partie de la coque qui est sous l'eau de celle qui en sort. Le pavillon hissé sur le navire montre sa nationalité. Pour naviguer, on se sert d'un sextant.",
-      pointsCles: ["Mât de misaine : le premier mât, à l'avant", "Rouf : un abri en bois sur le pont", "Ligne de flottaison : la limite entre partie immergée et partie émergée de la coque", "Pavillon : il montre la nationalité, la compagnie, ou sert à faire des signaux", "Sextant : un instrument de navigation"],
+      pointsCles: ["Mât de misaine : le premier mât, à l'avant", "Rouf : un abri en bois sur le pont", "Ligne de flottaison : la limite entre la coque sous l'eau et la coque hors de l'eau", "Pavillon : il montre la nationalité, la compagnie, ou sert à faire des signaux", "Sextant : un instrument de navigation"],
       dates: [], lieux: [], personnages: [],
       vocabulaire: [
         { mot: "mât de misaine", def: "le premier mât vertical, à l'avant du navire" },
@@ -164,7 +169,7 @@ module.exports = {
     { id: "lecture-s02-1-q16", fiche: "lecture-s02-1-f4", type: "association", niveau: 2,
       enonce: "Relie chaque mot à ce qu'il désigne.",
       gauche: ["sextant", "rouf", "ligne de flottaison", "mât de misaine"],
-      droite: ["un abri en bois sur le pont", "le premier mât, à l'avant", "un instrument de navigation", "la limite entre la coque immergée et la coque émergée"],
+      droite: ["un abri en bois sur le pont", "le premier mât, à l'avant", "un instrument de navigation", "la limite entre la partie de la coque sous l'eau et celle hors de l'eau"],
       reponse: [[0, 2], [1, 0], [2, 3], [3, 1]],
       explication: "Le sextant est un instrument, le rouf un abri sur le pont. La ligne de flottaison marque la limite de l'eau sur la coque, et le mât de misaine se dresse à l'avant.", source: S(7) },
     // f5 : se repérer dans le navire
@@ -193,7 +198,7 @@ module.exports = {
   nonCouvert: [
     "Le contenu des chapitres 1 et 2 (p. 31 à 44 du livre) : le livre n'est pas déposé, et la liste de vocabulaire ne dit pas à quel chapitre appartient chaque mot. Ce cours reprend le vocabulaire du navire et de l'équipage (pages 3, 6 et 7 de la liste).",
     "Le brick : la définition de la liste mélange deux sens (un voilier, un guetteur) ; seul « sorte de voilier » est repris.",
-    "Les voiles foc, petit foc et din-foc, les chandeliers et la corne de brigantine : nommés sur le schéma de la page 3 sans explication simple, ils ne sont pas repris.",
+    "Les voiles foc, petit foc et din-foc et les chandeliers : le schéma de la page 3 les nomme sans les expliquer. La corne de brigantine (page 6) a une définition trop technique pour une question sûre.",
     "Le galhauban, le faux pont, le plat-bord et la préceinte (pages 6 et 7) : trop proches des haubans, de l'entrepont ou de la coque pour faire des questions sans confusion."
   ]
 };

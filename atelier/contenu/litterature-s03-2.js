@@ -51,7 +51,7 @@ module.exports = {
       pointsCles: [
         "Focalisation interne : on voit l'histoire à travers un personnage",
         "On a accès à ce qu'il ressent et à ce qu'il pense",
-        "Indices : ses désirs, ses regrets, ses sensations"
+        "Indices : ses désirs, ses regrets, ce qu'il ressent"
       ],
       dates: [], lieux: [], personnages: [],
       vocabulaire: [
@@ -134,8 +134,8 @@ module.exports = {
       explication: "On entre dans la peur et les questions du personnage. C'est le signe d'une focalisation interne.", source: S },
     { id: "litterature-s03-2-q14", fiche: "litterature-s03-2-f3", type: "qcm", niveau: 2,
       enonce: "Comment reconnaît-on une focalisation interne ?",
-      choix: ["Le texte fait connaître les désirs, les regrets et les sensations d'un personnage", "Le texte ne contient que des chiffres", "Le texte ne contient aucun personnage", "Chaque phrase est une exagération"],
-      reponse: "Le texte fait connaître les désirs, les regrets et les sensations d'un personnage",
+      choix: ["Le texte fait connaître ce qu'un personnage désire, regrette et pense", "Le texte ne contient que des chiffres", "Le texte ne contient aucun personnage", "Chaque phrase est une exagération"],
+      reponse: "Le texte fait connaître ce qu'un personnage désire, regrette et pense",
       explication: "La focalisation interne passe par le ressenti d'un personnage. Ses désirs et ses regrets en sont les indices.", source: S },
     { id: "litterature-s03-2-q15", fiche: "litterature-s03-2-f3", type: "vrai_faux", niveau: 2,
       enonce: "En focalisation interne, on ne sait rien de ce que pense le personnage.",
@@ -158,8 +158,8 @@ module.exports = {
   nonCouvert: [
     "La leçon littéraire elle-même (livret 1, pages 24 à 26) n'est pas déposée : seules les réponses du corrigé le sont, et les notions en sont tirées.",
     "La définition de l'antithèse donnée par la leçon : le corrigé en commente seulement un exemple.",
-    "Le corrigé ne parle que de la focalisation interne : ce que la leçon dit d'autre sur la façon de raconter n'est pas déposé.",
+    "Le corrigé ne parle que de la focalisation interne : ce que la leçon dit d'autre sur la façon de raconter (les autres points de vue du narrateur) n'est pas déposé.",
     "Le résumé de la leçon et les outils de la langue à apprendre.",
-    "Les extraits lus (livret, pages 23 et 24) et les réponses de compréhension qui portent sur eux (personnage principal, portrait du capitaine, pays regretté par le narrateur, arrivée d'un bateau) : ils relèvent de la lecture des textes (litterature-s03-1), non déposée."
+    "Les extraits lus (livret, pages 23 et 24) ne sont pas déposés. Les réponses de compréhension du corrigé qui portent sur eux (page 2 : personnage principal, portrait du capitaine, pays regretté par le narrateur, arrivée d'un bateau) relèvent de la lecture des textes (litterature-s03-1) et ne sont pas reprises ici."
   ]
 };

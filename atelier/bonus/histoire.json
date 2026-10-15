@@ -1,0 +1,50 @@
+[
+  {
+    "id": "histoire-s01-1-b1",
+    "fiche": "histoire-s01-1-f5",
+    "titre": "Théodora, face à Justinien",
+    "texte": "À Saint-Vital, deux grandes mosaïques se font face : Justinien avec sa cour, et son épouse, l'impératrice Théodora, avec sa suite. Leur fond d'or est typique de l'art byzantin. Avec d'autres monuments de Ravenne, la basilique est inscrite au patrimoine mondial de l'UNESCO depuis 1996.",
+    "source": {
+      "titre": "Basilique Saint-Vital de Ravenne",
+      "editeur": "Wikipédia, l'encyclopédie libre",
+      "url": "https://fr.wikipedia.org/wiki/Basilique_Saint-Vital_de_Ravenne"
+    },
+    "preuve": "Section sur les mosaïques : deux grands panneaux latéraux disposés face à face, cortèges du couple impérial, « l'empereur Justinien et son épouse Théodora », légende « L'impératrice Théodora et sa cour » ; phrase « Le fond d'or, caractéristique de l'art byzantin » ; introduction : inscrite avec d'autres monuments de Ravenne au patrimoine mondial de l'Unesco ; infobox : Monuments paléochrétiens de Ravenne, année d'inscription 1996."
+  },
+  {
+    "id": "histoire-s01-2-b1",
+    "fiche": "histoire-s01-2-f5",
+    "titre": "Une écriture au nom de Charlemagne",
+    "texte": "Vers 770-780 naît une nouvelle écriture, la minuscule caroline, qui doit son nom à Charlemagne. Ses lettres rondes et régulières se lisent facilement, et les mots y sont séparés par des espaces. La police de caractères Times New Roman en descend directement.",
+    "source": {
+      "titre": "Minuscule caroline",
+      "editeur": "Wikipédia, l'encyclopédie libre",
+      "url": "https://fr.wikipedia.org/wiki/Minuscule_caroline"
+    },
+    "preuve": "Introduction : écriture élaborée au VIIIe siècle, vers 770-780, aux formes rondes et régulières plus faciles à lire et à écrire ; section école palatine : nommée ainsi en l'honneur de l'empereur Charlemagne ; section Caractéristiques : règles nouvelles comme la séparation des mots au moyen d'une espace ; section Évolution : « Times New Roman » est l'héritière directe et contemporaine de la minuscule caroline."
+  },
+  {
+    "id": "histoire-s02-1-b1",
+    "fiche": "histoire-s02-1-f4",
+    "titre": "D'où vient le nom « Sorbonne » ?",
+    "texte": "En 1257, à Paris, un collège est fondé pour accueillir des étudiants pauvres qui apprennent la théologie. Il prend vite le nom de « collège de Sorbonne », d'après son fondateur, Robert de Sorbon. Plus tard, « la Sorbonne » désigne la faculté de théologie, puis toute l'université de Paris.",
+    "source": {
+      "titre": "Collège de Sorbonne",
+      "editeur": "Wikipédia, l'encyclopédie libre",
+      "url": "https://fr.wikipedia.org/wiki/Coll%C3%A8ge_de_Sorbonne"
+    },
+    "preuve": "Introduction : fondé en 1257 par Robert de Sorbon, institution de l'ancienne université de Paris, faculté de Théologie ; section Fondation (1257) : maison créée en février 1257 en pensant aux étudiants sans fortune, loyers destinés aux « pauvres écoliers » ; section Les étudiants : bacheliers en théologie ; il reçoit très vite le nom usuel de « collège de Sorbonne » ; « la Sorbonne » en vient à désigner la faculté de Théologie, puis l'université de Paris tout entière."
+  },
+  {
+    "id": "histoire-s03-1-b1",
+    "fiche": "histoire-s03-1-f3",
+    "titre": "Madinat Azahra, la ville brillante",
+    "texte": "Peu après la création du califat de Cordoue, on bâtit près de cette ville une immense ville-palais : Madinat Azahra, la « ville brillante ». Les travaux commencent en 936. Abandonnée après une guerre civile en 1031, elle figure depuis 2018 au patrimoine mondial de l'UNESCO.",
+    "source": {
+      "titre": "Madinat Azahra",
+      "editeur": "Wikipédia, l'encyclopédie libre",
+      "url": "https://fr.wikipedia.org/wiki/Madinat_Azahra"
+    },
+    "preuve": "Introduction : littéralement « ville brillante », vestige d'une vaste ville palatiale, construite à partir de 936, à huit kilomètres à l'ouest de Cordoue ; construite peu après la transformation de l'émirat de Cordoue en califat (929) ; « La cité est abandonnée après la guerre civile (1031) » ; section Protection : ville califale inscrite au patrimoine mondial de l'UNESCO en 2018."
+  }
+]

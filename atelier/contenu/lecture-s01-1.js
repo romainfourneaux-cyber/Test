@@ -3,6 +3,9 @@
 // Seule source : la liste de vocabulaire du livre (10 pages). Elle est rangée par thèmes et par natures de mots,
 // sans indication de chapitre : ce cours prend le vocabulaire des glaces polaires (page 1) et les adjectifs du
 // nord et du sud (page 9), qui servent dès la présentation du livre. Aucune question sur l'intrigue.
+// Anti-spoil (devoir lecture-d1, fiche de lecture 1) : pas de question sur le titre, l'auteur, l'éditeur ou le genre,
+// ni sur les personnages, le cadre du récit ou les épreuves de l'équipage ; le résumé de la page 2 n'est pas repris.
+// Relu le 2026-10-15 : définitions vérifiées une à une contre les pages 1 et 9 de la liste.
 const F = "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf";
 const S = p => ({ fichier: F, page: p });
 
@@ -18,7 +21,7 @@ module.exports = {
       dates: [], lieux: [], personnages: [],
       vocabulaire: [
         { mot: "arktos", def: "le mot grec qui veut dire « ours »" },
-        { mot: "Arctique", def: "la région qui entoure le pôle Nord" },
+        { mot: "Arctique", def: "le nom qui désigne le pôle Nord" },
         { mot: "Antarctique", def: "le continent situé au pôle Sud" },
         { mot: "anti", def: "un début de mot qui veut dire « opposé à »" }
       ],
@@ -70,20 +73,20 @@ module.exports = {
     // f1 : Arctique et Antarctique
     { id: "lecture-s01-1-q1", fiche: "lecture-s01-1-f1", type: "qcm", niveau: 1,
       enonce: "En grec, que veut dire le mot arktos, d'où vient le nom Arctique ?",
-      choix: ["Ours", "Glace", "Froid", "Étoile"],
+      choix: ["Ours", "Glace", "Froid", "Neige"],
       reponse: "Ours",
       explication: "Arktos veut dire « ours » en grec. C'est aussi le nom de la Grande Ourse, visible dans le ciel du Nord.",
       indice: "Pense au nom d'un groupe d'étoiles : la Grande…", source: S(1) },
     { id: "lecture-s01-1-q2", fiche: "lecture-s01-1-f1", type: "vrai_faux", niveau: 1,
       enonce: "L'Arctique, c'est la région du pôle Sud.",
-      corrections: ["Faux : l'Arctique, c'est le pôle Nord ; le pôle Sud, c'est l'Antarctique.", "Faux : l'Arctique est le nom d'une étoile.", "Faux : l'Arctique désigne un désert chaud."],
+      corrections: ["Faux : l'Arctique, c'est le pôle Nord ; le pôle Sud, c'est l'Antarctique.", "Faux : l'Arctique désigne l'équateur, au milieu de la Terre.", "Faux : l'Arctique désigne un désert chaud."],
       reponse: { vrai: false, correction: "Faux : l'Arctique, c'est le pôle Nord ; le pôle Sud, c'est l'Antarctique." },
       explication: "Arctique renvoie au nord, comme la Grande Ourse du ciel du Nord. L'Antarctique, son opposé, se trouve au sud.", source: S(1) },
     { id: "lecture-s01-1-q3", fiche: "lecture-s01-1-f1", type: "qcm", niveau: 2,
       enonce: "Pourquoi le continent du pôle Sud s'appelle-t-il l'Antarctique ?",
-      choix: ["Parce que anti veut dire « opposé à » : c'est le pôle opposé à l'Arctique", "Parce qu'il est rempli d'ours", "Parce qu'on y voit très bien la Grande Ourse", "Parce que anti veut dire « très froid »"],
-      reponse: "Parce que anti veut dire « opposé à » : c'est le pôle opposé à l'Arctique",
-      explication: "Antarctique, c'est anti et arktos réunis : l'opposé de l'Arctique. Le pôle Sud est à l'opposé du pôle Nord.", source: S(1) },
+      choix: ["Parce que son nom réunit anti, « opposé à », et arktos, la Grande Ourse du ciel du Nord", "Parce qu'il est rempli d'ours", "Parce qu'on y voit très bien la Grande Ourse", "Parce que anti veut dire « très froid »"],
+      reponse: "Parce que son nom réunit anti, « opposé à », et arktos, la Grande Ourse du ciel du Nord",
+      explication: "Antarctique réunit anti, « opposé à », et arktos, la Grande Ourse qu'on voit dans le ciel du Nord. Le nom désigne donc le côté opposé : le pôle Sud.", source: S(1) },
     { id: "lecture-s01-1-q4", fiche: "lecture-s01-1-f1", type: "association", niveau: 2,
       enonce: "Relie chaque mot ou morceau de mot à son sens.",
       gauche: ["arktos", "anti", "Arctique", "Antarctique"],
@@ -103,7 +106,7 @@ module.exports = {
       reponse: { vrai: false, correction: "Faux : pendant la débâcle, la banquise se casse ; elle se forme pendant l'embâcle." },
       explication: "La débâcle, c'est la dislocation de la banquise. Sa formation s'appelle l'embâcle.", source: S(1) },
     { id: "lecture-s01-1-q7", fiche: "lecture-s01-1-f2", type: "qcm", niveau: 2,
-      enonce: "D'après la liste de vocabulaire, pourquoi l'eau de mer gèle-t-elle vers −1,8 °C ?",
+      enonce: "Pourquoi l'eau de mer gèle-t-elle à −1,8 °C ?",
       choix: ["Parce qu'elle est salée", "Parce qu'elle contient des poissons", "Parce que le vent la réchauffe", "Parce qu'il fait nuit en hiver"],
       reponse: "Parce qu'elle est salée",
       explication: "C'est le sel de l'eau de mer qui explique cette température de gel. Il faut aussi plusieurs jours d'air froid pour que la banquise se forme.", source: S(1) },
@@ -157,8 +160,8 @@ module.exports = {
       reponse: "Les régions septentrionales",
       explication: "Septentrional veut dire « situé au nord ». Méridional, c'est l'inverse : situé au sud.", source: S(9) },
     { id: "lecture-s01-1-q17", fiche: "lecture-s01-1-f4", type: "qcm", niveau: 2,
-      enonce: "Quelle phrase emploie correctement le mot méridional ?",
-      choix: ["L'Antarctique se trouve dans la partie méridionale de la Terre.", "L'Arctique se trouve dans la partie méridionale de la Terre.", "La Grande Ourse brille dans le ciel méridional du pôle Nord.", "Le pôle Nord est le point le plus méridional de la Terre."],
+      enonce: "Laquelle de ces phrases est juste ?",
+      choix: ["L'Antarctique se trouve dans la partie méridionale de la Terre.", "L'Arctique se trouve dans la partie méridionale de la Terre.", "Méridional et septentrional veulent dire la même chose.", "Le pôle Nord est le point le plus méridional de la Terre."],
       reponse: "L'Antarctique se trouve dans la partie méridionale de la Terre.",
       explication: "Méridional veut dire « au sud » : il convient à l'Antarctique, au pôle Sud. L'Arctique, lui, est septentrional.", source: S(9) }
   ],
@@ -166,7 +169,8 @@ module.exports = {
   nonCouvert: [
     "La présentation du livre et la vie de l'auteur (p. 1 à 27 du livre) : ni le livre ni un document sur l'auteur ne sont déposés.",
     "La liste de vocabulaire ne dit pas à quel chapitre se rattache chaque mot : ce cours reprend les mots des glaces polaires (page 1 de la liste) et les adjectifs du nord et du sud (page 9).",
-    "Le résumé de l'histoire (page 2 de la liste) : pas de question sur l'intrigue.",
-    "La part immergée d'un iceberg (page 1) : le chiffre donné par la liste est à faire vérifier avant d'être repris."
+    "Le résumé de l'histoire et les cartes (page 2 de la liste) : pas de question sur l'intrigue, qui recoupe le devoir de lecture.",
+    "La part immergée d'un iceberg (page 1) : le chiffre donné par la liste est à faire vérifier avant d'être repris.",
+    "Les animaux de l'Arctique et de l'Antarctique (pages 4 et 5), les nœuds marins (page 10) et la plupart des mots des pages 6 à 9 (sentiments, vêtements, religion, verbes et adverbes courants) : pas encore repris, faute de savoir à quel chapitre ils appartiennent."
   ]
 };

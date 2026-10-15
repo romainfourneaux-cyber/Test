@@ -63,9 +63,9 @@ JEU.enregistrer("cours", {
    "id": "litterature-s01-2-f3",
    "notion": "L'étymologie d'un mot",
    "titre": "D'où vient le mot « cinéma » ?",
-   "texte": "Chercher l'étymologie d'un mot, c'est remonter au mot ancien dont il vient et retrouver ce qu'il voulait dire. Le mot « cinéma » vient ainsi du grec kinêma, qui signifie « mouvement ».",
+   "texte": "Chercher l'étymologie d'un mot, c'est remonter au mot dont il vient et retrouver ce qu'il voulait dire. Le mot « cinéma » vient ainsi du grec kinêma, qui signifie « mouvement ».",
    "pointsCles": [
-    "Étymologie : l'origine d'un mot, le mot ancien dont il vient et son sens",
+    "Étymologie : l'origine d'un mot, le mot dont il vient et son sens",
     "« Cinéma » vient du grec kinêma",
     "Kinêma veut dire « mouvement »"
    ],
@@ -75,7 +75,7 @@ JEU.enregistrer("cours", {
    "vocabulaire": [
     {
      "mot": "étymologie",
-     "def": "l'origine d'un mot : le mot ancien dont il vient et ce qu'il voulait dire"
+     "def": "l'origine d'un mot : le mot dont il vient et ce qu'il voulait dire"
     },
     {
      "mot": "kinêma",
@@ -185,15 +185,15 @@ JEU.enregistrer("cours", {
     "Je meurs de faim.",
     "Il pleut depuis ce matin.",
     "La porte est fermée.",
-    "J'ai une montagne de devoirs."
+    "Ce cartable pèse une tonne !"
    ],
-   "explication": "Mille fois, mourir de faim, une montagne de devoirs : ce sont des exagérations. Les deux autres phrases disent simplement ce qui se passe.",
+   "explication": "Mille fois, mourir de faim, peser une tonne : ce sont des exagérations. Les deux autres phrases disent simplement ce qui se passe.",
    "indice": "Cherche les phrases qui grossissent la réalité.",
    "source": {
     "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
     "page": 1
    },
-   "r": "=oBUbZxBYYAGKYBSmkURQNUCOIBCG8xZXsBEVhBCJVCUEF2AIwFTI80ACkUA1cAEIUFFjw0QQl0YexgWL5kCKoAAfc222GB3ymxxsCASqwkQZ1wCbY0AjAFH",
+   "r": "=oBUUVEEfcQAbIVDtgVRQ5lxsahRM4RJTEwFUIRSLwCUEF2AIwFTI80ACkUA1cAEIUFFjw0QQl0YexgWL5kCKoAAfc222GB3ymxxsCASqwkQZ1wCbY0AjAFH",
    "poids": 1
   },
   {
@@ -338,7 +338,7 @@ JEU.enregistrer("cours", {
    "niveau": 1,
    "enonce": "L'étymologie d'un mot, c'est la liste des mots qui veulent dire la même chose.",
    "corrections": [
-    "Faux : c'est son origine, le mot ancien dont il vient et son sens.",
+    "Faux : c'est son origine, le mot dont il vient et son sens.",
     "Faux : c'est une exagération.",
     "Faux : c'est le nombre de lettres du mot."
    ],
@@ -347,7 +347,7 @@ JEU.enregistrer("cours", {
     "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
     "page": 1
    },
-   "r": "QxUQVgADBcGHaYRVFwgTbwRDqsVRZRkTbgQCNIVKXwhBbARSaAwHIZSQFlBSAYQAPsRHnxhGWUVBasASRgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "r": "=oDUbZxGUohTB0xGjlFAVkFAK8AEJ5hLSFwCaURSaAwHIZSQFlBSAYQAPsRHnxhGWUVBasASRgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -355,19 +355,19 @@ JEU.enregistrer("cours", {
    "fiche": "litterature-s01-2-f3",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Comment trouve-t-on l'étymologie d'un mot ?",
+   "enonce": "Comment le corrigé explique-t-il l'étymologie du mot « cinéma » ?",
    "choix": [
-    "En remontant au mot ancien dont il vient et à son sens",
-    "En comptant ses syllabes",
-    "En cherchant un mot de sens contraire",
-    "En l'exagérant"
+    "Il donne le mot grec dont il vient et ce que ce mot veut dire",
+    "Il compte les syllabes du mot",
+    "Il cherche un mot de sens contraire",
+    "Il exagère le sens du mot"
    ],
-   "explication": "L'étymologie, c'est l'origine du mot. On cherche donc le mot ancien qui lui a donné naissance.",
+   "explication": "L'étymologie, c'est l'origine du mot. Le corrigé donne donc le mot grec kinêma et son sens, « mouvement ».",
    "source": {
     "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
     "page": 1
    },
-   "r": "KBzQAYUDAAQFGlcsnZAEFFwHMcQGSRgKNExWCpwTIMAARkyEVFhGck0GOIFHtwUEbJ0AKQhRHcTZ",
+   "r": "XRxGHsgUcYDSTURWBIgRDogUicABFBhEJphCSxRLIxwQNIgBGJxBdMiUWAwBWkkGA8BSmEURQNEAAIgRFsTZ",
    "poids": 1
   },
   {
@@ -465,19 +465,39 @@ JEU.enregistrer("cours", {
    "fiche": "litterature-s01-2-f4",
    "type": "qcm",
    "niveau": 3,
-   "enonce": "Un élève répond seulement : « Il y a une énumération, plusieurs objets sont cités à la suite. » Que manque-t-il à sa réponse ?",
+   "enonce": "Un élève recopie une énumération entre guillemets, puis il s'arrête là. Que manque-t-il à sa réponse ?",
    "choix": [
     "Ce que l'énumération apporte au récit",
     "Le nombre de pages du livre",
     "L'étymologie du mot « énumération »",
     "Une hyperbole en plus"
    ],
-   "explication": "Il a repéré le procédé, mais pas son effet. Il devrait dire, par exemple, que la liste fait sentir un manque.",
+   "explication": "Il a cité le passage, mais il n'a pas expliqué son effet. Il devrait dire, par exemple, que la liste fait sentir un manque.",
    "source": {
     "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
     "page": 1
    },
    "r": "HFAGKcMrAgkNMVEUZxBAWYBCSlSHcEBFDAcrCcgBq7uQZ1wCachRMETZ",
+   "poids": 1
+  },
+  {
+   "id": "litterature-s01-2-q20",
+   "fiche": "litterature-s01-2-f4",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Pourquoi le corrigé cite-t-il le passage entre guillemets dans sa réponse ?",
+   "choix": [
+    "Pour appuyer sa réponse sur les mots exacts du texte",
+    "Pour rendre la réponse plus longue",
+    "Pour donner l'origine des mots",
+    "Pour éviter d'expliquer"
+   ],
+   "explication": "La citation sert de preuve : on montre dans le texte ce qu'on affirme. Ensuite seulement, on explique l'effet.",
+   "source": {
+    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
+    "page": 1
+   },
+   "r": "==wDAEUVLshRT0gU0YgFE0AFJ1xGdUwYeBQWNwhGVYEDBkSHFwstDk0DcIlGmQFEF11DPRxEGISZ",
    "poids": 1
   }
  ],
@@ -486,6 +506,6 @@ JEU.enregistrer("cours", {
   "La leçon littéraire elle-même (livret 1, pages 9 à 11, et la page 12 citée par l'emploi du temps) n'est pas déposée : seules les réponses du corrigé le sont, et les notions en sont tirées.",
   "La définition de l'énumération donnée par la leçon : le corrigé en commente seulement un exemple.",
   "Le résumé de la leçon et les outils de la langue à apprendre.",
-  "Les extraits lus (livret, pages 7 et 8) et les réponses de compréhension qui portent sur eux : ils relèvent de la lecture des textes (litterature-s01-1), non déposée."
+  "Les extraits lus (livret, pages 7 et 8) ne sont pas déposés. Les réponses de compréhension du corrigé qui portent sur eux (page 1) relèvent de la lecture des textes (litterature-s01-1) et ne sont pas reprises ici."
  ]
 });
