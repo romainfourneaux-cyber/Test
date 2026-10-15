@@ -2,7 +2,11 @@
 // Compilé (réponses brouillées) par node atelier/outils/compiler-cours.js physique-s02-1.
 // Seule source déposée : le corrigé du livret 1 (thème A, chapitre 1, séance 2, page 3) : changements d'état
 // de l'eau, eau sous ses trois états, test au sulfate de cuivre anhydre, réserves d'eau de la Terre.
-// Le livret de cours lui-même n'est pas déposé.
+// Le livret de cours lui-même n'est pas déposé. Le corrigé définit la solidification et la fusion (page 6, séance 5) ;
+// pour la vaporisation et la liquéfaction, il ne donne que des exemples (lac qui baisse par évaporation, brouillard
+// en microgouttelettes) et le tableau des états de l'eau (vapeur = gaz, brouillard = liquide) : le sens des deux mots
+// (liquide → gaz, gaz → liquide) est tiré de ces exemples.
+// Anti-spoil (physique-d1) : rien sur les températures de changement d'état, le graphique de fusion ni l'eau de mer salée.
 const F = "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf";
 const P = p => ({ fichier: F, page: p });
 
@@ -40,7 +44,7 @@ module.exports = {
     {
       id: "physique-s02-1-f2", notion: "Vaporisation et liquéfaction",
       titre: "Entre liquide et gaz",
-      texte: "En été, le niveau des lacs baisse : leur eau s'évapore, elle passe de l'état liquide à l'état gazeux. C'est une vaporisation. À l'inverse, le brouillard est fait de minuscules gouttelettes d'eau : la vapeur d'eau y est redevenue liquide. C'est une liquéfaction.",
+      texte: "En été, le niveau des lacs baisse : leur eau s'évapore, elle passe de l'état liquide à l'état gazeux. C'est une vaporisation. À l'inverse, le brouillard est fait de minuscules gouttelettes d'eau : la vapeur d'eau y est devenue liquide. C'est une liquéfaction.",
       pointsCles: ["Vaporisation : liquide → gaz (l'eau des lacs s'évapore)", "Liquéfaction : gaz → liquide (le brouillard)"],
       dates: [], lieux: [], personnages: [],
       vocabulaire: [
@@ -155,8 +159,8 @@ module.exports = {
       explication: "Givre, grêle, neige (et glace) sont de l'eau solide. La rosée et la buée sont liquides, la vapeur est un gaz.", source: P(3) },
     { id: "physique-s02-1-q11", fiche: "physique-s02-1-f3", type: "vrai_faux", niveau: 1,
       enonce: "Un nuage est fait d'eau à l'état gazeux.",
-      corrections: ["Faux : le cours range le nuage dans l'eau liquide, comme le brouillard.", "Faux : un nuage est fait uniquement de neige.", "Faux : un nuage ne contient pas d'eau."],
-      reponse: { vrai: false, correction: "Faux : le cours range le nuage dans l'eau liquide, comme le brouillard." },
+      corrections: ["Faux : le nuage est rangé avec l'eau liquide, comme le brouillard.", "Faux : un nuage est fait uniquement de neige.", "Faux : un nuage ne contient pas d'eau."],
+      reponse: { vrai: false, correction: "Faux : le nuage est rangé avec l'eau liquide, comme le brouillard." },
       explication: "Le nuage et le brouillard sont rangés avec l'eau liquide. Seule la vapeur d'eau est un gaz.", source: P(3) },
     { id: "physique-s02-1-q12", fiche: "physique-s02-1-f3", type: "qcm", niveau: 1,
       enonce: "Laquelle de ces formes de l'eau est à l'état gazeux ?",
@@ -232,16 +236,17 @@ module.exports = {
       reponse: "Environ 0,01 %",
       explication: "L'eau douce utilisable directement est une toute petite part de l'eau. C'est environ 0,01 % du total.", source: P(3) },
     { id: "physique-s02-1-q26", fiche: "physique-s02-1-f6", type: "qcm", niveau: 2,
-      enonce: "Pourquoi l'eau douce des cours d'eau est-elle si précieuse ?",
-      choix: ["Elle sert à boire, à cultiver et à fabriquer, et elle est très rare", "Elle est plus salée que l'eau de mer", "Elle ne s'évapore jamais", "Elle est la seule eau à l'état solide"],
-      reponse: "Elle sert à boire, à cultiver et à fabriquer, et elle est très rare",
-      explication: "Consommation, agriculture et industrie utilisent cette eau. Or elle ne fait qu'environ 0,01 % de toute l'eau.", source: P(3) }
+      enonce: "Pourquoi les cours d'eau sont-ils une réserve si importante, alors qu'ils contiennent très peu d'eau ?",
+      choix: ["Leur eau douce peut servir directement à boire, à cultiver et à fabriquer", "Ils contiennent la plus grande partie de l'eau de la Terre", "Leur eau ne s'évapore jamais", "Leur eau est toujours à l'état solide"],
+      reponse: "Leur eau douce peut servir directement à boire, à cultiver et à fabriquer",
+      explication: "Les océans et les mers ont bien plus d'eau, mais elle n'est pas potable. L'eau douce des cours d'eau, environ 0,01 % du total, est celle qu'on utilise directement.", source: P(3) }
   ],
   bonus: [],
   nonCouvert: [
     "Le livret de cours de la séance n'est pas déposé : seules les réponses du corrigé servent de source.",
     "Le cycle de l'eau lui-même (le trajet de l'eau entre océans, nuages, pluie et cours d'eau, et son schéma) : le corrigé de la séance ne le décrit pas.",
-    "Les passages directs entre l'état solide et l'état gazeux : absents du corrigé.",
-    "Les autres réservoirs d'eau et leurs parts : le corrigé ne cite que les océans et les mers, et les cours d'eau."
+    "Les définitions écrites de la vaporisation et de la liquéfaction : le corrigé ne donne que des exemples ; le jeu en tire le sens (liquide → gaz, gaz → liquide) à vérifier sur le livret.",
+    "Les autres réservoirs d'eau et leurs parts : le corrigé ne cite que les océans et les mers, et les cours d'eau.",
+    "Les trois récipients de l'exercice 1 (dessin de l'état liquide, solide et gazeux) : le corrigé ne donne que les noms des états, sans explication."
   ]
 };

@@ -14,7 +14,7 @@ module.exports = {
     {
       id: "litterature-s03-2-f1", notion: "L'antithèse",
       titre: "L'antithèse : deux contraires côte à côte",
-      texte: "L'antithèse oppose deux idées contraires dans une même phrase, ce qui crée un contraste. Opposer le vacarme qui entoure des personnages au silence qu'ils n'arrivent pas à briser fait mieux sentir ce silence, et laisse deviner des sentiments forts qu'ils n'osent pas dire. Exemple simple : « Dehors tout le monde criait ; dedans, personne ne parlait. »",
+      texte: "L'antithèse rapproche deux idées contraires, comme le bruit et le silence, ce qui crée un contraste. Opposer le vacarme qui entoure des personnages au silence qu'ils n'arrivent pas à briser fait mieux sentir ce silence, et laisse deviner des sentiments forts qu'ils n'osent pas dire. Exemple simple : « La cour résonnait de rires ; la classe restait muette. »",
       pointsCles: [
         "Antithèse : deux idées opposées rapprochées, qui font contraste",
         "Le contraste fait ressortir chacun des deux côtés",
@@ -40,14 +40,14 @@ module.exports = {
       dates: [], lieux: [], personnages: [],
       vocabulaire: [
         { mot: "froissé", def: "vexé par une remarque, piqué au vif" },
-        { mot: "lapidaire", def: "très court et sec, à la manière d'une réponse de deux mots" }
+        { mot: "lapidaire", def: "très bref et sec, comme une réponse de deux mots" }
       ],
       schema: null, prerequis: [], source: S
     },
     {
       id: "litterature-s03-2-f3", notion: "La focalisation interne",
       titre: "Vivre l'histoire de l'intérieur",
-      texte: "En focalisation interne, on vit le récit de l'intérieur d'un personnage : on partage ce qu'il ressent et ce qu'il pense. Les verbes qui disent ses désirs, ses regrets ou ce qu'il guette dans la nuit en sont des indices. Exemple : « J'avais peur et je me demandais qui allait frapper à la porte. »",
+      texte: "En focalisation interne, on suit le récit à travers un personnage : on partage ce qu'il ressent et ce qu'il pense. Les mots qui disent ses désirs ou ses regrets en sont des indices, et on les cite pour le prouver. Exemple : « J'avais peur et je me demandais qui allait frapper à la porte. »",
       pointsCles: [
         "Focalisation interne : on voit l'histoire à travers un personnage",
         "On a accès à ce qu'il ressent et à ce qu'il pense",
@@ -69,11 +69,11 @@ module.exports = {
       reponse: "Elle oppose deux idées contraires",
       explication: "L'antithèse rapproche deux idées opposées. Cela crée un contraste.", source: S },
     { id: "litterature-s03-2-q2", fiche: "litterature-s03-2-f1", type: "vrai_faux", niveau: 1,
-      enonce: "« Dehors tout le monde criait ; dedans, personne ne parlait. » Cette phrase contient une antithèse.",
+      enonce: "« La cour résonnait de rires ; la classe restait muette. » Cette phrase contient une antithèse.",
       corrections: [], reponse: { vrai: true, correction: null },
-      explication: "Les cris du dehors s'opposent au silence du dedans. Cette opposition est une antithèse.", source: S },
+      explication: "Les rires bruyants de la cour s'opposent au silence de la classe. Cette opposition est une antithèse.", source: S },
     { id: "litterature-s03-2-q3", fiche: "litterature-s03-2-f1", type: "qcm", niveau: 2,
-      enonce: "Pourquoi un auteur oppose-t-il le vacarme d'une avenue au silence de deux personnages ?",
+      enonce: "Pourquoi un auteur oppose-t-il le vacarme de la rue au silence de ses personnages ?",
       choix: ["Pour faire mieux sentir ce silence et les sentiments qu'ils retiennent", "Pour expliquer d'où vient le mot « silence »", "Pour énumérer tous les bruits de la ville", "Pour montrer que les personnages bavardent sans arrêt"],
       reponse: "Pour faire mieux sentir ce silence et les sentiments qu'ils retiennent",
       explication: "Le contraste fait ressortir le silence. On devine des sentiments forts que les personnages n'arrivent pas à dire.",
@@ -117,10 +117,10 @@ module.exports = {
       explication: "Le corrigé montre un personnage vexé par la réponse sèche de son supérieur. Le ton d'une réplique agit sur les sentiments.", source: S },
     { id: "litterature-s03-2-q11", fiche: "litterature-s03-2-f2", type: "association", niveau: 2,
       enonce: "Relie chaque situation au sentiment qu'elle fait naître.",
-      gauche: ["On lui répond sèchement, avec ironie", "On ne dit rien du courage qu'il a montré", "On le félicite devant tout le monde"],
+      gauche: ["Son chef se moque de lui par une réplique ironique de deux mots", "Son chef ne dit pas un mot du courage qu'il espérait voir reconnu", "Son chef le félicite devant tout le monde"],
       droite: ["Un sentiment d'injustice", "La fierté", "La vexation"],
       reponse: [[0, 2], [1, 0], [2, 1]],
-      explication: "Une réplique ironique vexe, un silence sur son courage paraît injuste. Des félicitations rendent fier.", source: S },
+      explication: "Une réplique moqueuse vexe ; se taire sur un mérite qu'on attendait de voir reconnu paraît injuste. Des félicitations, elles, rendent fier.", source: S },
 
     // f3 : la focalisation interne
     { id: "litterature-s03-2-q12", fiche: "litterature-s03-2-f3", type: "qcm", niveau: 1,
@@ -144,10 +144,15 @@ module.exports = {
       explication: "C'est tout le contraire : on est dans la tête du personnage. On partage ce qu'il pense et ressent.", source: S },
     { id: "litterature-s03-2-q16", fiche: "litterature-s03-2-f3", type: "qcm_multiple", niveau: 3,
       enonce: "Quelles phrases montrent qu'on suit l'histoire à travers ce que ressent un personnage ?",
-      choix: ["Je regrettais déjà ma maison.", "Je n'avais qu'une envie : dormir.", "La maison a deux étages.", "Le train part à midi.", "Mon cœur battait si fort que j'avais du mal à respirer."],
-      reponse: ["Je regrettais déjà ma maison.", "Je n'avais qu'une envie : dormir.", "Mon cœur battait si fort que j'avais du mal à respirer."],
-      explication: "Un regret, une envie, un cœur qui bat : on est dans le ressenti du personnage. Les deux autres phrases donnent seulement des faits.",
-      indice: "Cherche les phrases où l'on sent ce que vit le personnage.", source: S }
+      choix: ["Je regrettais déjà ma maison.", "Je n'avais qu'une envie : dormir.", "La maison a deux étages.", "Le train part à midi.", "J'avais hâte de retrouver mes amis."],
+      reponse: ["Je regrettais déjà ma maison.", "Je n'avais qu'une envie : dormir.", "J'avais hâte de retrouver mes amis."],
+      explication: "Un regret, une envie, une impatience : on est dans le ressenti du personnage. Les deux autres phrases donnent seulement des faits.",
+      indice: "Cherche les phrases où l'on sent ce que vit le personnage.", source: S },
+    { id: "litterature-s03-2-q17", fiche: "litterature-s03-2-f3", type: "qcm", niveau: 3,
+      enonce: "Comment prouver qu'un passage est raconté en focalisation interne ?",
+      choix: ["En citant les mots qui montrent ce que le personnage ressent et pense", "En comptant les personnages du passage", "En donnant le titre du livre", "En recopiant tout le passage sans rien expliquer"],
+      reponse: "En citant les mots qui montrent ce que le personnage ressent et pense",
+      explication: "Le corrigé nomme la focalisation, puis cite des passages où l'on entend les désirs et les regrets du personnage. La citation sert de preuve.", source: S }
   ],
   bonus: [],
   nonCouvert: [

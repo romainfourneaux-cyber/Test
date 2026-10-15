@@ -81,7 +81,7 @@ JEU.enregistrer("cours", {
    "vocabulaire": [
     {
      "mot": "cristal",
-     "def": "un tout petit grain de matière solide qui a sa propre forme"
+     "def": "un grain de matière solide qui a sa propre forme, comme ceux du sucre en poudre"
     }
    ],
    "schema": null,
@@ -97,7 +97,7 @@ JEU.enregistrer("cours", {
    "id": "physique-s01-1-f4",
    "notion": "L'état liquide",
    "titre": "Le liquide prend la forme du récipient",
-   "texte": "Un liquide n'a pas de forme propre : il épouse la forme du récipient qui le contient. Il coule, mais on ne peut pas le comprimer. Au repos, sa surface libre, celle qui touche l'air, est plane et horizontale. Le jus de pomme et le sang sont des liquides.",
+   "texte": "Un liquide n'a pas de forme propre : il épouse la forme du récipient qui le contient. Il coule, mais on ne peut pas le comprimer. Sa surface libre, celle qui touche l'air, est plane et horizontale. Le jus de pomme et le sang sont des liquides.",
    "pointsCles": [
     "Pas de forme propre",
     "Coule",
@@ -155,7 +155,7 @@ JEU.enregistrer("cours", {
    "id": "physique-s01-1-f6",
    "notion": "L'état gazeux",
    "titre": "Le gaz se comprime et s'étend",
-   "texte": "Un gaz, comme l'air ou la fumée, n'a pas de forme propre. On peut le comprimer : il est compressible. Il peut aussi s'étendre : il est expansible. Si l'on enfonce bien droit dans l'eau un verre retourné, avec un mouchoir coincé au fond, l'air enfermé dans le verre résiste à la poussée de l'eau.",
+   "texte": "Un gaz, comme l'air ou la fumée, n'a pas de forme propre. On peut le comprimer : il est compressible. Il peut aussi s'étendre : il est expansible. Si l'on enfonce bien droit dans l'eau un verre retourné, avec un mouchoir coincé au fond, l'air enfermé dans le verre résiste à la pression de l'eau.",
    "pointsCles": [
     "Pas de forme propre",
     "Compressible",
@@ -246,7 +246,7 @@ JEU.enregistrer("cours", {
     "Faux : la fumée est un solide, comme le bois.",
     "Faux : la fumée n'est pas de la matière."
    ],
-   "explication": "Dans le tableau du cours, la fumée est rangée avec l'air. Ce sont deux gaz.",
+   "explication": "Dans le tableau de la séance, la fumée est rangée avec l'air. Ce sont deux gaz.",
    "source": {
     "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
     "page": 1
@@ -259,7 +259,7 @@ JEU.enregistrer("cours", {
    "fiche": "physique-s01-1-f1",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Comment ranger proprement des exemples de matière selon leur état ?",
+   "enonce": "Comment ranger des exemples de matière selon leur état ?",
    "choix": [
     "Du plus lourd au plus léger",
     "Selon leur couleur",
@@ -314,18 +314,18 @@ JEU.enregistrer("cours", {
    "fiche": "physique-s01-1-f2",
    "type": "vrai_faux",
    "niveau": 1,
-   "enonce": "En appuyant fort, on peut comprimer un morceau de bois pour qu'il prenne moins de place.",
+   "enonce": "En appuyant fort, on peut comprimer un morceau de fer pour qu'il prenne moins de place.",
    "corrections": [
-    "Faux : un solide comme le bois n'est pas compressible.",
-    "Faux : le bois est un gaz, il s'échapperait.",
-    "Faux : le bois est un liquide, il coulerait."
+    "Faux : un solide comme le fer n'est pas compressible.",
+    "Faux : le fer est un gaz, il s'échapperait.",
+    "Faux : le fer est un liquide, il coulerait."
    ],
    "explication": "Un solide est non compressible. Seuls les gaz se laissent comprimer.",
    "source": {
     "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
     "page": 1
    },
-   "r": "MsEQK4hCq4lFQ9lHCkQBJFgJCUVEGQhTA8UABwyTFBVQOpwCLYQEndREMkhHa4UAHgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "r": "=QBTBdBBhQkFGhEHfsQCKIFNTUQRBIADJFgUaYySFBVQOpwCLYQEndREMkhHa4UAHgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -489,14 +489,14 @@ JEU.enregistrer("cours", {
    "type": "trou",
    "niveau": 1,
    "enonce": "Complète la phrase sur les liquides.",
-   "texte": "Un liquide n'a pas de forme ___. Au repos, sa surface libre est plane et ___.",
+   "texte": "Un liquide n'a pas de forme ___. Sa surface libre est plane et ___.",
    "banque": [
     "propre",
     "horizontale",
     "verticale",
     "ronde"
    ],
-   "explication": "Un liquide prend la forme de son récipient. Sa surface libre, au repos, est plane et horizontale.",
+   "explication": "Un liquide prend la forme de son récipient. Sa surface libre est plane et horizontale.",
    "source": {
     "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
     "page": 1
@@ -529,11 +529,11 @@ JEU.enregistrer("cours", {
    "fiche": "physique-s01-1-f5",
    "type": "qcm",
    "niveau": 1,
-   "enonce": "Quel outil du bricoleur se sert de la surface libre d'un liquide pour vérifier qu'une étagère est horizontale ?",
+   "enonce": "Quel outil, fait d'un tube de liquide coloré avec une bulle d'air, vérifie qu'une étagère est horizontale ?",
    "choix": [
-    "Le niveau, avec son tube de liquide coloré et sa bulle d'air",
+    "Le niveau du bricoleur",
     "La balance électronique",
-    "Le thermomètre",
+    "Le fil à plomb",
     "Le réglet"
    ],
    "explication": "La bulle du niveau est bordée par la surface libre du liquide, toujours horizontale. Posé sur l'étagère, il montre si elle est bien à plat.",
@@ -541,7 +541,7 @@ JEU.enregistrer("cours", {
     "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
     "page": 2
    },
-   "r": "XNAAPgkFIZSQJA0TO5QFG1xFntttXoRHG0wTXwgKYRBXB5kCCYEDQIjBVtgGCkUDKQQCjFAEUhEGGggRM4TZ",
+   "r": "QVzBQkgGSAAHNIVHn0AEUhEGGggRM4TZ",
    "poids": 1
   },
   {
@@ -568,19 +568,19 @@ JEU.enregistrer("cours", {
    "fiche": "physique-s01-1-f5",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Pourquoi le niveau du bricoleur indique-t-il l'horizontale, même quand on le penche ?",
+   "enonce": "Pourquoi le niveau du bricoleur permet-il de tester si un objet est horizontal ?",
    "choix": [
-    "Parce que le tube se tord tout seul",
-    "Parce que la bulle d'air est un solide",
-    "Parce que la surface libre du liquide autour de la bulle reste toujours horizontale",
-    "Parce que le liquide coloré est compressible"
+    "Parce que son tube se plie à la forme de l'objet",
+    "Parce que sa bulle d'air est un solide",
+    "Parce que la surface libre du liquide qui borde la bulle reste horizontale, quelle que soit la position du tube",
+    "Parce que son liquide coloré est compressible"
    ],
-   "explication": "Quelle que soit la position du tube, la surface libre reste horizontale. La bulle sert donc de repère.",
+   "explication": "La surface libre du liquide reste horizontale, même si le tube penche. La bulle sert donc de repère pour savoir si l'objet est à plat.",
    "source": {
     "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
     "page": 2
    },
-   "r": "==wVUUwDbwxB5Q0FaVkTcQxEGghMdEQRQUgGL0hUN8SQQcVDPMgRD0gU1cgGRAAEJtwCb0hMElQFYpwTDQxCbsiUQYAFXsxGcIVCv0AAAxlTKUAFIISZ",
+   "r": "=s0FlcQAFBQFJBAAbwhKepQRN8wAGJBAdQjUQABBRxgADcRHy0QSQF0DbgQCTsRNd0RRQUgGL0hUN8SQQcVDPMgRD0AAoARVMAAAJtwCb0hMElQFYpwTDQxCbsiUQYAFXsxGcIVCv0AAAxlTKUAFIISZ",
    "poids": 1
   },
   {
@@ -590,10 +590,10 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Le fil à plomb montre la verticale. Comment en déduire l'horizontale ?",
    "choix": [
-    "L'horizontale est parallèle au fil",
+    "L'horizontale est parallèle au fil : elle va dans le même sens que lui",
     "L'horizontale est perpendiculaire à la verticale : elle forme avec elle un angle droit",
-    "On ne peut rien en déduire",
-    "On pèse le fil à plomb"
+    "On ne peut rien en déduire, il faut un autre outil",
+    "On pèse le fil à plomb : son poids donne l'horizontale"
    ],
    "explication": "La verticale et l'horizontale se coupent à angle droit. Connaître l'une permet donc de trouver l'autre.",
    "source": {
@@ -668,16 +668,16 @@ JEU.enregistrer("cours", {
    "enonce": "On enfonce bien droit dans un saladier d'eau un verre retourné, avec un mouchoir coincé au fond. Que fait l'air enfermé dans le verre ?",
    "choix": [
     "Il se transforme en eau",
-    "Il résiste à la poussée de l'eau",
+    "Il résiste à la pression de l'eau",
     "Il traverse le verre",
     "Il disparaît aussitôt"
    ],
-   "explication": "L'air enfermé est de la matière : il résiste à l'eau qui le pousse. L'expérience montre que les gaz sont expansibles.",
+   "explication": "L'eau pousse sur l'air enfermé, et l'air lui résiste en cherchant à s'étendre. L'expérience montre que les gaz sont expansibles.",
    "source": {
     "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
     "page": 2
    },
-   "r": "==QTHkgJKkQFIpwTD8sqBQzBaURVQUgTPHLSmklFc51xsShRFsTZ",
+   "r": "==QTHkgJKkQFIpwTIkAABQzFHURVQUgTPHLSmklFc51xsShRFsTZ",
    "poids": 1
   },
   {
@@ -692,7 +692,7 @@ JEU.enregistrer("cours", {
     "Parce que le verre devient brûlant",
     "Parce que l'eau se met à bouillir"
    ],
-   "explication": "L'air du verre résiste à l'eau, qui le pousse vers le haut. Sans le tenir, le verre pencherait et coulerait.",
+   "explication": "L'eau repousse l'air enfermé dans le verre, et l'air lui résiste. Sans le tenir, le verre risquerait de pencher et de couler au fond du saladier.",
    "source": {
     "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
     "page": 2

@@ -42,7 +42,7 @@ JEU.enregistrer("cours", {
    "id": "physique-s02-1-f2",
    "notion": "Vaporisation et liquéfaction",
    "titre": "Entre liquide et gaz",
-   "texte": "En été, le niveau des lacs baisse : leur eau s'évapore, elle passe de l'état liquide à l'état gazeux. C'est une vaporisation. À l'inverse, le brouillard est fait de minuscules gouttelettes d'eau : la vapeur d'eau y est redevenue liquide. C'est une liquéfaction.",
+   "texte": "En été, le niveau des lacs baisse : leur eau s'évapore, elle passe de l'état liquide à l'état gazeux. C'est une vaporisation. À l'inverse, le brouillard est fait de minuscules gouttelettes d'eau : la vapeur d'eau y est devenue liquide. C'est une liquéfaction.",
    "pointsCles": [
     "Vaporisation : liquide → gaz (l'eau des lacs s'évapore)",
     "Liquéfaction : gaz → liquide (le brouillard)"
@@ -401,7 +401,7 @@ JEU.enregistrer("cours", {
    "niveau": 1,
    "enonce": "Un nuage est fait d'eau à l'état gazeux.",
    "corrections": [
-    "Faux : le cours range le nuage dans l'eau liquide, comme le brouillard.",
+    "Faux : le nuage est rangé avec l'eau liquide, comme le brouillard.",
     "Faux : un nuage est fait uniquement de neige.",
     "Faux : un nuage ne contient pas d'eau."
    ],
@@ -410,7 +410,7 @@ JEU.enregistrer("cours", {
     "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
     "page": 3
    },
-   "r": "=URYDEwRMJwAPMhBAUiUQkQVUQwAAEBSvhUAch1HGogRcMhIVlRRG8BCK80FPICWLUBSC80ABcwE1IlBXAgHK4kCegUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "r": "==ASPA0CUcQBe4yBacxFRxgAPdRBuIkBVEwCL8wEYsxKSBABQYVBOxwFeISDMbvSA4AFG1RAiIFECQBBH4kCegUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -696,19 +696,19 @@ JEU.enregistrer("cours", {
    "fiche": "physique-s02-1-f6",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Pourquoi l'eau douce des cours d'eau est-elle si précieuse ?",
+   "enonce": "Pourquoi les cours d'eau sont-ils une réserve si importante, alors qu'ils contiennent très peu d'eau ?",
    "choix": [
-    "Elle sert à boire, à cultiver et à fabriquer, et elle est très rare",
-    "Elle est plus salée que l'eau de mer",
-    "Elle ne s'évapore jamais",
-    "Elle est la seule eau à l'état solide"
+    "Leur eau douce peut servir directement à boire, à cultiver et à fabriquer",
+    "Ils contiennent la plus grande partie de l'eau de la Terre",
+    "Leur eau ne s'évapore jamais",
+    "Leur eau est toujours à l'état solide"
    ],
-   "explication": "Consommation, agriculture et industrie utilisent cette eau. Or elle ne fait qu'environ 0,01 % de toute l'eau.",
+   "explication": "Les océans et les mers ont bien plus d'eau, mais elle n'est pas potable. L'eau douce des cours d'eau, environ 0,01 % du total, est celle qu'on utilise directement.",
    "source": {
     "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
     "page": 3
    },
-   "r": "==ATKQxBbIFNab7FBEVHdogUN8SQAURWL8kSUwwB2sxBHQxFJ5MrSxhJNcBUbdwGKMhCSdesVlEEDAQANIFyA2QEHhUHPNgCFcTZ",
+   "r": "h9FAAx1BdQwBPI15xWVEQE1GLkxGc8CWGURjt+kSDsxGoARVFbbUdAgCf0wNOBwREpwTU8wHAISAVFBAUkhTKERHskURAx0CPRxEM4TZ",
    "poids": 1
   }
  ],
@@ -716,7 +716,8 @@ JEU.enregistrer("cours", {
  "nonCouvert": [
   "Le livret de cours de la séance n'est pas déposé : seules les réponses du corrigé servent de source.",
   "Le cycle de l'eau lui-même (le trajet de l'eau entre océans, nuages, pluie et cours d'eau, et son schéma) : le corrigé de la séance ne le décrit pas.",
-  "Les passages directs entre l'état solide et l'état gazeux : absents du corrigé.",
-  "Les autres réservoirs d'eau et leurs parts : le corrigé ne cite que les océans et les mers, et les cours d'eau."
+  "Les définitions écrites de la vaporisation et de la liquéfaction : le corrigé ne donne que des exemples ; le jeu en tire le sens (liquide → gaz, gaz → liquide) à vérifier sur le livret.",
+  "Les autres réservoirs d'eau et leurs parts : le corrigé ne cite que les océans et les mers, et les cours d'eau.",
+  "Les trois récipients de l'exercice 1 (dessin de l'état liquide, solide et gazeux) : le corrigé ne donne que les noms des états, sans explication."
  ]
 });
