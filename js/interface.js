@@ -608,6 +608,7 @@
   function etiquetteCours(id, st) {
     var est = JEU.progression.estimation(id);
     var t = LIBELLES[st] || st;
+    if (st === "presume" && !JEU.donnees.cours[id]) t += " · contenu à venir";
     return el("span", { class: "etat " + st, title: est && est.note ? est.note : "", texte: t + (est && est.note && st === "a-revoir" ? " · " + est.note : "") });
   }
 
