@@ -353,5 +353,96 @@
   "cours": [
    "litterature-d1"
   ]
+ },
+ {
+  "chemin": "cours/langue/Francais 5e - Conjugaison - Cours 10 - Les modes du verbe.pdf",
+  "taille": 324947,
+  "modifieLe": "2026-10-15T06:39:00",
+  "traiteLe": "2026-10-15T06:39:00",
+  "type": "cours",
+  "cours": [
+   "langue-conj10"
+  ],
+  "extraction": "Francais 5e - Conjugaison - Cours 10 - Les modes du verbe.txt"
+ },
+ {
+  "chemin": "cours/langue/Francais 5e - Conjugaison - Memento 4 Modes.pdf",
+  "taille": 263446,
+  "modifieLe": "2026-10-15T06:39:00",
+  "traiteLe": "2026-10-15T06:39:00",
+  "type": "cours",
+  "cours": [
+   "langue-conj10"
+  ],
+  "extraction": "Francais 5e - Conjugaison - Memento 4 Modes.txt"
+ },
+ {
+  "chemin": "cours/langue/Francais 5e - Conjugaison - Cours 11 - Etre et avoir.pdf",
+  "taille": 221277,
+  "modifieLe": "2026-10-15T06:39:00",
+  "traiteLe": "2026-10-15T06:39:00",
+  "type": "cours",
+  "cours": [
+   "langue-conj11"
+  ],
+  "extraction": "Francais 5e - Conjugaison - Cours 11 - Etre et avoir.txt"
+ },
+ {
+  "chemin": "cours/langue/Francais 5e - Conjugaison - Cours 12 - Homophones grammaticaux.pdf",
+  "taille": 332920,
+  "modifieLe": "2026-10-15T06:39:00",
+  "traiteLe": "2026-10-15T06:39:00",
+  "type": "cours",
+  "cours": [
+   "langue-conj12"
+  ],
+  "extraction": "Francais 5e - Conjugaison - Cours 12 - Homophones grammaticaux.txt"
+ },
+ {
+  "chemin": "cours/langue/Francais 5e - Grammaire Nature des mots - Cours 6 - Exercices.pdf",
+  "taille": 179876,
+  "modifieLe": "2026-10-15T06:39:00",
+  "traiteLe": "2026-10-15T06:39:00",
+  "type": "cours",
+  "cours": [],
+  "extraction": "Francais 5e - Grammaire Nature des mots - Cours 6 - Exercices.txt"
+ },
+ {
+  "chemin": "cours/langue/Francais 5e - Grammaire Nature des mots - Cours 7 - Exercices.pdf",
+  "taille": 158937,
+  "modifieLe": "2026-10-15T06:39:00",
+  "traiteLe": "2026-10-15T06:39:00",
+  "type": "cours",
+  "cours": [],
+  "extraction": "Francais 5e - Grammaire Nature des mots - Cours 7 - Exercices.txt"
+ },
+ {
+  "chemin": "cours/langue/Orthographe et expression ecrite.pdf",
+  "taille": 144970,
+  "modifieLe": "2026-10-15T06:39:00",
+  "traiteLe": "2026-10-15T06:39:00",
+  "type": "cours",
+  "cours": [],
+  "extraction": "Orthographe et expression ecrite.txt"
+ },
+ {
+  "chemin": "planning/Tableau de synthese de la progression en francais (Cours Griffon).pdf",
+  "taille": 83174,
+  "modifieLe": "2026-10-15T06:39:00",
+  "traiteLe": "2026-10-15T06:39:00",
+  "type": "planning",
+  "cours": [],
+  "extraction": "Tableau de synthese de la progression en francais (Cours Griffon).txt"
+ },
+ {
+  "chemin": "devoirs/Devoir Cours-Griffon - Ref-FR-CUIVRE-2A - Sujet.pdf",
+  "taille": 544011,
+  "modifieLe": "2026-10-15T06:39:00",
+  "traiteLe": "2026-10-15T06:39:00",
+  "type": "enonce",
+  "cours": [
+   "langue-d1"
+  ],
+  "extraction": "Devoir Cours-Griffon - Ref-FR-CUIVRE-2A - Sujet.txt"
  }
 ]
