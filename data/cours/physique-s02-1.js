@@ -299,7 +299,7 @@ JEU.enregistrer("cours", {
    "niveau": 1,
    "enonce": "Le brouillard, fait de minuscules gouttelettes d'eau, vient d'une liquéfaction.",
    "corrections": [],
-   "explication": "Oui : la vapeur d'eau redevient liquide en fines gouttelettes. C'est une liquéfaction.",
+   "explication": "Oui : la vapeur d'eau devient liquide en fines gouttelettes. C'est une liquéfaction.",
    "source": {
     "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
     "page": 3

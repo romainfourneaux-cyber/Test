@@ -89,7 +89,7 @@ JEU.enregistrer("cours", {
    "titre": "Parler d'une chose avec l'image d'une autre",
    "texte": "La métaphore évoque une chose à l'aide de l'image d'une autre. Un narrateur peut parler de celle qu'il aime avec l'image de la musique, ou donner à un personnage peu aimable un air d'insecte. Exemple de tous les jours : « Mon frère est un vrai moulin à paroles. »",
    "pointsCles": [
-    "Métaphore : une image, on parle d'une chose en la désignant par une autre",
+    "Métaphore : une image, on évoque une chose à l'aide de l'image d'une autre",
     "Image de la musique pour dire l'amour ; image de l'insecte pour un personnage déplaisant",
     "C'est une figure de style"
    ],
@@ -182,7 +182,7 @@ JEU.enregistrer("cours", {
    "fiche": "litterature-s02-2-f1",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Pourquoi « Le garçon porte un pull rouge et un bonnet noir » est-elle une description objective ?",
+   "enonce": "Pourquoi la phrase « Le garçon porte un pull rouge et un bonnet noir » est-elle une description objective ?",
    "choix": [
     "Parce qu'elle ne dit que des choses visibles, sans interprétation",
     "Parce qu'elle montre que le narrateur admire ce garçon",
@@ -214,6 +214,27 @@ JEU.enregistrer("cours", {
     "page": 2
    },
    "r": "==gEQZEMZtAUAdwGIMgGSRzFGU0BUUAxs+BS60gFbxUHPpEFA0RMSFAEQEQSAAQVdITDAYVDOzqRScwFuYQVLAhVa40AbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "litterature-s02-2-q24",
+   "fiche": "litterature-s02-2-f1",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Laquelle de ces phrases est une description objective ?",
+   "choix": [
+    "Le cartable est noir et se ferme par une boucle.",
+    "Ce cartable affreux me fait honte.",
+    "J'adore ce cartable, il me porte chance.",
+    "Ce pauvre cartable me fait pitié."
+   ],
+   "explication": "Une couleur et une boucle, cela se voit : aucun avis n'est donné. Les trois autres phrases disent ce que ressent le narrateur.",
+   "indice": "Cherche la phrase où personne ne donne son avis.",
+   "source": {
+    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "=0ESDUQEy0xFFBxHc4UHTgxYIhwRIhwTDURSGIiUHwgGfkkGccBSmE0BUlFHOUgRM4TZ",
    "poids": 1
   },
   {
@@ -258,17 +279,17 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Comment reconnaît-on qu'une description est subjective ?",
    "choix": [
-    "Elle contient les sentiments ou les jugements du narrateur",
+    "Elle contient les sentiments ou les idées du narrateur",
     "Elle ne parle que de couleurs et de tailles",
     "Elle ne contient aucun verbe",
     "Elle est toujours très longue"
    ],
-   "explication": "Un avis, une émotion, un jugement : ce sont les indices d'une description subjective. Les couleurs et les tailles seules restent objectives.",
+   "explication": "Un avis, une émotion, une idée personnelle : ce sont les indices d'une description subjective. Les couleurs et les tailles seules restent objectives.",
    "source": {
     "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
     "page": 2
    },
-   "r": "M1xBNcDTXcETA80ECkUAzwBEIAhFcQwTB0wLNAhWN0xGIMABbMDHQYRVCwgAPZgBmQUEbJUDPNgCFcTZ",
+   "r": "KFDWAEETc0xBIk0BjIlBAwtsNcwTB0wLNAhWN0xGIMABbMDHQYRVCwgAPZgBmQUEbJUDPNgCFcTZ",
    "poids": 1
   },
   {
@@ -298,18 +319,59 @@ JEU.enregistrer("cours", {
    "fiche": "litterature-s02-2-f2",
    "type": "vrai_faux",
    "niveau": 2,
-   "enonce": "Un narrateur amoureux qui décrit la personne qu'il aime fait une description objective.",
+   "enonce": "Un narrateur décrit la jeune fille qu'il aime en mêlant son admiration à ce qu'il voit. C'est une description objective.",
    "corrections": [
-    "Faux : son amour colore ce qu'il voit, la description est subjective.",
+    "Faux : ses sentiments se mêlent à ce qu'il voit, la description est subjective.",
     "Faux : c'est forcément une hyperbole.",
-    "Faux : un narrateur amoureux ne décrit jamais personne."
+    "Faux : c'est une description rapide et simple."
    ],
    "explication": "Son amour colore tout ce qu'il observe. C'est le signe d'une description subjective.",
    "source": {
     "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
     "page": 2
    },
-   "r": "Qd0GIhhBSUADYUyBGUUACwgTB0RA30FDH5UHKIgRI4xZeFADacQSCYQVdITDAYVDL0RCKYQEnBAAKgBEJBAABgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "r": "6A1WAMAGd0gCYogNeVUQetwTIkAAGczGHYgBU0gTO4BSvlFDatlTD8QQcMwZXYRRVLbSaEwFEku7IUBSd8UFScwFqsRALAhAJ1hCBgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "litterature-s02-2-q25",
+   "fiche": "litterature-s02-2-f2",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Qu'est-ce qui sépare une description subjective d'une description objective ?",
+   "choix": [
+    "Les sentiments et les idées du narrateur s'y mêlent à ce qu'il observe",
+    "Elle contient plus de couleurs",
+    "Elle est toujours plus courte",
+    "Elle ne parle que de personnages"
+   ],
+   "explication": "L'objective s'en tient à ce qui se voit, sans interprétation. La subjective y ajoute ce que le narrateur ressent et pense.",
+   "source": {
+    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "XgEGdMQFL0xZewhQAAQSLwgUIDYDRsFSCUcpLk0CgFQVXAAFd8QHAkQLNARUN0hCPXaDbcWAQkQVFwgTcYgBmAEDBN0CcYUFM4TZ",
+   "poids": 1
+  },
+  {
+   "id": "litterature-s02-2-q26",
+   "fiche": "litterature-s02-2-f2",
+   "type": "trou",
+   "niveau": 1,
+   "enonce": "Complète la phrase.",
+   "texte": "Une description ___ s'en tient à ce qu'on voit ; une description ___ y mêle les sentiments du narrateur.",
+   "banque": [
+    "objective",
+    "subjective",
+    "rapide",
+    "précise"
+   ],
+   "explication": "Objective : seulement ce qu'on observe. Subjective : ce qu'on observe, avec les sentiments et les idées du narrateur.",
+   "source": {
+    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "wNTTDABAGQyFfcAACsUND9iSmsFDB50CFQQCLlCH",
    "poids": 1
   },
   {
@@ -322,7 +384,7 @@ JEU.enregistrer("cours", {
     "Une description précise, fouillée",
     "Une description rapide, simple",
     "Une étymologie",
-    "Une description sans image"
+    "Une hyperbole"
    ],
    "explication": "Beaucoup de détails, c'est une description précise. On dit aussi qu'elle est fouillée.",
    "source": {
@@ -572,7 +634,7 @@ JEU.enregistrer("cours", {
     "La phrase est une énumération",
     "La phrase donne l'origine d'un mot"
    ],
-   "explication": "Le narrateur dit ouvertement qu'il est agacé. Son jugement rend la description subjective.",
+   "explication": "Le narrateur dit ouvertement qu'il est agacé. Son avis personnel rend la description subjective.",
    "source": {
     "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
     "page": 2
@@ -586,7 +648,7 @@ JEU.enregistrer("cours", {
   "La leçon littéraire elle-même (livret 1, pages 19 à 22, et les pages 18 et 20 citées par l'emploi du temps) n'est pas déposée : seules les réponses du corrigé le sont, et les notions en sont tirées.",
   "Une définition complète de la métaphore : le corrigé en donne seulement deux exemples (l'image de la musique, l'air d'insecte).",
   "Le résumé de la leçon et les outils de la langue à apprendre.",
-  "Les extraits lus (livret, pages 13 à 17) et les réponses de compréhension qui portent sur eux (humeur d'un narrateur, accueil des voyageurs par Kubilaï dans le Livre des merveilles) : ils relèvent de la lecture des textes (litterature-s02-1), non déposée.",
+  "Les extraits lus (livret, pages 13 à 17) ne sont pas déposés. Les réponses de compréhension du corrigé qui portent sur eux (pages 1 et 2 : humeur d'un narrateur, accueil des voyageurs par Kubilaï dans le Livre des merveilles) relèvent de la lecture des textes (litterature-s02-1) et ne sont pas reprises ici.",
   "Le dessin du capitaine Flint demandé en compréhension : production personnelle, hors jeu."
  ]
 });

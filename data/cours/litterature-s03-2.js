@@ -7,7 +7,7 @@ JEU.enregistrer("cours", {
    "id": "litterature-s03-2-f1",
    "notion": "L'antithèse",
    "titre": "L'antithèse : deux contraires côte à côte",
-   "texte": "L'antithèse oppose deux idées contraires dans une même phrase, ce qui crée un contraste. Opposer le vacarme qui entoure des personnages au silence qu'ils n'arrivent pas à briser fait mieux sentir ce silence, et laisse deviner des sentiments forts qu'ils n'osent pas dire. Exemple simple : « Dehors tout le monde criait ; dedans, personne ne parlait. »",
+   "texte": "L'antithèse rapproche deux idées contraires, comme le bruit et le silence, ce qui crée un contraste. Opposer le vacarme qui entoure des personnages au silence qu'ils n'arrivent pas à briser fait mieux sentir ce silence, et laisse deviner des sentiments forts qu'ils n'osent pas dire. Exemple simple : « La cour résonnait de rires ; la classe restait muette. »",
    "pointsCles": [
     "Antithèse : deux idées opposées rapprochées, qui font contraste",
     "Le contraste fait ressortir chacun des deux côtés",
@@ -54,7 +54,7 @@ JEU.enregistrer("cours", {
     },
     {
      "mot": "lapidaire",
-     "def": "très court et sec, à la manière d'une réponse de deux mots"
+     "def": "très bref et sec, comme une réponse de deux mots"
     }
    ],
    "schema": null,
@@ -68,11 +68,11 @@ JEU.enregistrer("cours", {
    "id": "litterature-s03-2-f3",
    "notion": "La focalisation interne",
    "titre": "Vivre l'histoire de l'intérieur",
-   "texte": "En focalisation interne, on vit le récit de l'intérieur d'un personnage : on partage ce qu'il ressent et ce qu'il pense. Les verbes qui disent ses désirs, ses regrets ou ce qu'il guette dans la nuit en sont des indices. Exemple : « J'avais peur et je me demandais qui allait frapper à la porte. »",
+   "texte": "En focalisation interne, on suit le récit à travers un personnage : on partage ce qu'il ressent et ce qu'il pense. Les mots qui disent ses désirs ou ses regrets en sont des indices, et on les cite pour le prouver. Exemple : « J'avais peur et je me demandais qui allait frapper à la porte. »",
    "pointsCles": [
     "Focalisation interne : on voit l'histoire à travers un personnage",
     "On a accès à ce qu'il ressent et à ce qu'il pense",
-    "Indices : ses désirs, ses regrets, ses sensations"
+    "Indices : ses désirs, ses regrets, ce qu'il ressent"
    ],
    "dates": [],
    "lieux": [],
@@ -120,9 +120,9 @@ JEU.enregistrer("cours", {
    "fiche": "litterature-s03-2-f1",
    "type": "vrai_faux",
    "niveau": 1,
-   "enonce": "« Dehors tout le monde criait ; dedans, personne ne parlait. » Cette phrase contient une antithèse.",
+   "enonce": "« La cour résonnait de rires ; la classe restait muette. » Cette phrase contient une antithèse.",
    "corrections": [],
-   "explication": "Les cris du dehors s'opposent au silence du dedans. Cette opposition est une antithèse.",
+   "explication": "Les rires bruyants de la cour s'opposent au silence de la classe. Cette opposition est une antithèse.",
    "source": {
     "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
     "page": 2
@@ -135,7 +135,7 @@ JEU.enregistrer("cours", {
    "fiche": "litterature-s03-2-f1",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Pourquoi un auteur oppose-t-il le vacarme d'une avenue au silence de deux personnages ?",
+   "enonce": "Pourquoi un auteur oppose-t-il le vacarme de la rue au silence de ses personnages ?",
    "choix": [
     "Pour faire mieux sentir ce silence et les sentiments qu'ils retiennent",
     "Pour expliquer d'où vient le mot « silence »",
@@ -292,16 +292,16 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Relie chaque situation au sentiment qu'elle fait naître.",
    "gauche": [
-    "On lui répond sèchement, avec ironie",
-    "On ne dit rien du courage qu'il a montré",
-    "On le félicite devant tout le monde"
+    "Son chef se moque de lui par une réplique ironique de deux mots",
+    "Son chef ne dit pas un mot du courage qu'il espérait voir reconnu",
+    "Son chef le félicite devant tout le monde"
    ],
    "droite": [
     "Un sentiment d'injustice",
     "La fierté",
     "La vexation"
    ],
-   "explication": "Une réplique ironique vexe, un silence sur son courage paraît injuste. Des félicitations rendent fier.",
+   "explication": "Une réplique moqueuse vexe ; se taire sur un mérite qu'on attendait de voir reconnu paraît injuste. Des félicitations, elles, rendent fier.",
    "source": {
     "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
     "page": 2
@@ -351,7 +351,7 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Comment reconnaît-on une focalisation interne ?",
    "choix": [
-    "Le texte fait connaître les désirs, les regrets et les sensations d'un personnage",
+    "Le texte fait connaître ce qu'un personnage désire, regrette et pense",
     "Le texte ne contient que des chiffres",
     "Le texte ne contient aucun personnage",
     "Chaque phrase est une exagération"
@@ -361,7 +361,7 @@ JEU.enregistrer("cours", {
     "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
     "page": 2
    },
-   "r": "==wVU4wDBwxBw8FAF1AAaEkAJFQKdwREUIwBLwhUbYSQFFESOxhEDsRFiAQVWARHJJEHAEAMEaaUN0hCKYEDAMD32SwGfYQDPZQAisURQllFKIhRM4TZ",
+   "r": "==ATKUBCMIwZGARRQUQHL0RFNETDJB1XHwxzl2gUiUBFLshHawhCCgULYJEQc5kCFYEDAMD32SwGfYQDPZQAisURQllFKIhRM4TZ",
    "poids": 1
   },
   {
@@ -394,15 +394,35 @@ JEU.enregistrer("cours", {
     "Je n'avais qu'une envie : dormir.",
     "La maison a deux étages.",
     "Le train part à midi.",
-    "Mon cœur battait si fort que j'avais du mal à respirer."
+    "J'avais hâte de retrouver mes amis."
    ],
-   "explication": "Un regret, une envie, un cœur qui bat : on est dans le ressenti du personnage. Les deux autres phrases donnent seulement des faits.",
+   "explication": "Un regret, une envie, une impatience : on est dans le ressenti du personnage. Les deux autres phrases donnent seulement des faits.",
    "indice": "Cherche les phrases où l'on sent ce que vit le personnage.",
    "source": {
     "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
     "page": 2
    },
-   "r": "=gyRbNADcYgAbYyXFVp7ONwBLk0BjIlBMQxBIkUBS1gNcVUQfFQCG9gGSNzGUERAQsgTdcw+G6URbJ0INpERHBgLfcgCRE1UOpwGe0CSFB1Qbg0EXkUAuMxAEI1HJtQJQRUYDsgWedgDLYECfcm02+A3y2gTcsRC3kFAHp0CdY0AjAFH",
+   "r": "=8yVLZAGE8wTB0gLNcBUbtBAUIBDAc2FRUEEFscrHI1Gqw0EUpAJNpERHBgLfcgCRE1UOpwGe0CSFB1Qbg0EXkUAuMxAEI1HJtQJQRUYDsgWedgDLYECfcm02+A3y2gTcsRC3kFAHp0CdY0AjAFH",
+   "poids": 1
+  },
+  {
+   "id": "litterature-s03-2-q17",
+   "fiche": "litterature-s03-2-f3",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Comment prouver qu'un passage est raconté en focalisation interne ?",
+   "choix": [
+    "En citant les mots qui montrent ce que le personnage ressent et pense",
+    "En comptant les personnages du passage",
+    "En donnant le titre du livre",
+    "En recopiant tout le passage sans rien expliquer"
+   ],
+   "explication": "Le corrigé nomme la focalisation, puis cite des passages où l'on entend les désirs et les regrets du personnage. La citation sert de preuve.",
+   "source": {
+    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "=Q0AawhICUVEQEVHAoQAbYyXFBlSPEACJoBAiIQVAkRUMshHS1AINExWIxxGIkABS5yBEUkBFYwAPFQDv0QEbxkGGUgRHcTZ",
    "poids": 1
   }
  ],
@@ -410,8 +430,8 @@ JEU.enregistrer("cours", {
  "nonCouvert": [
   "La leçon littéraire elle-même (livret 1, pages 24 à 26) n'est pas déposée : seules les réponses du corrigé le sont, et les notions en sont tirées.",
   "La définition de l'antithèse donnée par la leçon : le corrigé en commente seulement un exemple.",
-  "Le corrigé ne parle que de la focalisation interne : ce que la leçon dit d'autre sur la façon de raconter n'est pas déposé.",
+  "Le corrigé ne parle que de la focalisation interne : ce que la leçon dit d'autre sur la façon de raconter (les autres points de vue du narrateur) n'est pas déposé.",
   "Le résumé de la leçon et les outils de la langue à apprendre.",
-  "Les extraits lus (livret, pages 23 et 24) et les réponses de compréhension qui portent sur eux (personnage principal, portrait du capitaine, pays regretté par le narrateur, arrivée d'un bateau) : ils relèvent de la lecture des textes (litterature-s03-1), non déposée."
+  "Les extraits lus (livret, pages 23 et 24) ne sont pas déposés. Les réponses de compréhension du corrigé qui portent sur eux (page 2 : personnage principal, portrait du capitaine, pays regretté par le narrateur, arrivée d'un bateau) relèvent de la lecture des textes (litterature-s03-1) et ne sont pas reprises ici."
  ]
 });
