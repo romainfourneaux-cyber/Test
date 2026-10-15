@@ -422,7 +422,9 @@
   "modifieLe": "2026-10-15T06:39:00",
   "traiteLe": "2026-10-15T06:39:00",
   "type": "cours",
-  "cours": [],
+  "cours": [
+   "langue-conj10"
+  ],
   "extraction": "Orthographe et expression ecrite.txt"
  },
  {

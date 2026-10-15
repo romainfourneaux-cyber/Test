@@ -250,7 +250,7 @@ JEU.enregistrer("cours", {
    "elements": [
     "Si la phrase a du sens, écrire a ; sinon, écrire à",
     "Remplacer ce mot par « avait »",
-    "Repérer le mot qui hésite entre a et à",
+    "Repérer le mot où l'on hésite entre a et à",
     "Relire la phrase obtenue"
    ],
    "explication": "On repère le mot, on essaie « avait », puis on relit. Si la phrase garde son sens, c'est a ; sinon, c'est à.",
@@ -506,14 +506,14 @@ JEU.enregistrer("cours", {
    "fiche": "langue-conj12-f5",
    "type": "qcm",
    "niveau": 1,
-   "enonce": "Quel mot complète la phrase ? « J'___ un nouveau sac de sport. »",
+   "enonce": "Quel mot complète la phrase ? « J'___ une nouvelle trousse. »",
    "choix": [
     "ai",
     "aie",
     "est",
     "es"
    ],
-   "explication": "Avec je, à l'indicatif, le verbe avoir s'écrit ai. Ce n'est pas le subjonctif : on ne dirait pas « nous ayons un nouveau sac ».",
+   "explication": "Avec je, à l'indicatif, le verbe avoir s'écrit ai. Ce n'est pas le subjonctif : avec nous, on dirait « nous avons une nouvelle trousse », pas « nous ayons ».",
    "source": {
     "fichier": "cours/langue/Francais 5e - Conjugaison - Cours 12 - Homophones grammaticaux.pdf",
     "page": 2
@@ -527,7 +527,7 @@ JEU.enregistrer("cours", {
    "type": "trou",
    "niveau": 1,
    "enonce": "Complète avec la bonne forme de avoir au subjonctif présent.",
-   "texte": "Le maître nageur demande que tu ___ ton bonnet et qu'ils ___ leurs lunettes.",
+   "texte": "La monitrice demande que tu ___ ton bonnet et qu'ils ___ leurs lunettes.",
    "banque": [
     "aie",
     "aies",
@@ -592,14 +592,14 @@ JEU.enregistrer("cours", {
    "fiche": "langue-conj12-f5",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Comment reconnaître que « aie » est au subjonctif ?",
+   "enonce": "« Le cuisinier exige que j'___ les mains propres. » Comment vérifier que le verbe avoir est ici au subjonctif ?",
    "choix": [
     "On change de personne : avec nous, on dirait « que nous ayons »",
     "On le remplace par « avait »",
     "On le remplace par « et puis »",
     "On regarde si la phrase est longue"
    ],
-   "explication": "Le cours conseille de changer de personne. Avec nous, le subjonctif se voit tout de suite : que nous ayons.",
+   "explication": "Le cours conseille de changer de personne. Avec nous, on dirait « que nous ayons les mains propres » et non « nous avons » : c'est bien le subjonctif, donc on écrit aie.",
    "source": {
     "fichier": "cours/langue/Francais 5e - Conjugaison - Cours 12 - Homophones grammaticaux.pdf",
     "page": 2

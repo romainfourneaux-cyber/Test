@@ -613,6 +613,139 @@
   ]
  },
  {
+  "id": "langue-conj10-f1",
+  "matiere": "langue",
+  "semaine": 0,
+  "cours": "langue-conj10",
+  "notion": "Les sept modes du verbe",
+  "prerequis": []
+ },
+ {
+  "id": "langue-conj10-f2",
+  "matiere": "langue",
+  "semaine": 0,
+  "cours": "langue-conj10",
+  "notion": "Les quatre modes personnels",
+  "prerequis": [
+   "langue-conj10-f1"
+  ]
+ },
+ {
+  "id": "langue-conj10-f3",
+  "matiere": "langue",
+  "semaine": 0,
+  "cours": "langue-conj10",
+  "notion": "Les trois modes impersonnels",
+  "prerequis": [
+   "langue-conj10-f1"
+  ]
+ },
+ {
+  "id": "langue-conj10-f4",
+  "matiere": "langue",
+  "semaine": 0,
+  "cours": "langue-conj10",
+  "notion": "Temps simples et temps composés",
+  "prerequis": [
+   "langue-conj10-f2",
+   "langue-conj10-f3"
+  ]
+ },
+ {
+  "id": "langue-conj10-f5",
+  "matiere": "langue",
+  "semaine": 0,
+  "cours": "langue-conj10",
+  "notion": "Grammaire, conjugaison et orthographe",
+  "prerequis": []
+ },
+ {
+  "id": "langue-conj11-f1",
+  "matiere": "langue",
+  "semaine": 0,
+  "cours": "langue-conj11",
+  "notion": "Être : l'identité et les qualités",
+  "prerequis": []
+ },
+ {
+  "id": "langue-conj11-f2",
+  "matiere": "langue",
+  "semaine": 0,
+  "cours": "langue-conj11",
+  "notion": "Être : un état ou une situation",
+  "prerequis": [
+   "langue-conj11-f1"
+  ]
+ },
+ {
+  "id": "langue-conj11-f3",
+  "matiere": "langue",
+  "semaine": 0,
+  "cours": "langue-conj11",
+  "notion": "Avoir : la possession",
+  "prerequis": [
+   "langue-conj11-f1"
+  ]
+ },
+ {
+  "id": "langue-conj11-f4",
+  "matiere": "langue",
+  "semaine": 0,
+  "cours": "langue-conj11",
+  "notion": "Avoir : une relation",
+  "prerequis": [
+   "langue-conj11-f3"
+  ]
+ },
+ {
+  "id": "langue-conj12-f1",
+  "matiere": "langue",
+  "semaine": 0,
+  "cours": "langue-conj12",
+  "notion": "a, as ou à",
+  "prerequis": []
+ },
+ {
+  "id": "langue-conj12-f2",
+  "matiere": "langue",
+  "semaine": 0,
+  "cours": "langue-conj12",
+  "notion": "Le truc de « avait »",
+  "prerequis": [
+   "langue-conj12-f1"
+  ]
+ },
+ {
+  "id": "langue-conj12-f3",
+  "matiere": "langue",
+  "semaine": 0,
+  "cours": "langue-conj12",
+  "notion": "Les emplois de la préposition à",
+  "prerequis": [
+   "langue-conj12-f1"
+  ]
+ },
+ {
+  "id": "langue-conj12-f4",
+  "matiere": "langue",
+  "semaine": 0,
+  "cours": "langue-conj12",
+  "notion": "est, es ou et",
+  "prerequis": [
+   "langue-conj12-f1"
+  ]
+ },
+ {
+  "id": "langue-conj12-f5",
+  "matiere": "langue",
+  "semaine": 0,
+  "cours": "langue-conj12",
+  "notion": "ai, aie, aies, ait, aient",
+  "prerequis": [
+   "langue-conj12-f1"
+  ]
+ },
+ {
   "id": "lecture-s01-1-f1",
   "matiere": "lecture",
   "semaine": 1,

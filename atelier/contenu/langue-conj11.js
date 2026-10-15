@@ -65,7 +65,7 @@ module.exports = {
     {
       id: "langue-conj11-f4", notion: "Avoir : une relation",
       titre: "Avoir : un lien avec un animal ou une personne",
-      texte: "Avoir peut aussi exprimer une relation. Avec un animal, c'est un lien où l'animal dépend de nous : « J'ai un lapin » veut dire que j'en suis responsable et que je m'en occupe. Avec une personne, c'est une relation familiale, sentimentale ou professionnelle : « J'ai une marraine », « J'ai un entraîneur de judo ».",
+      texte: "Le verbe avoir sert aussi à dire une relation. Avec un animal, c'est un lien où l'animal dépend de nous : « J'ai un lapin » veut dire que j'en suis responsable et que je m'en occupe. Avec une personne, c'est une relation familiale, sentimentale ou professionnelle : « J'ai une marraine », « J'ai un entraîneur de judo ».",
       pointsCles: [
         "Un animal : il dépend de moi ; j'en ai la responsabilité, je décide pour lui et je m'en occupe",
         "Une personne : relation familiale, sentimentale (amitié, amour) ou professionnelle",
@@ -108,10 +108,10 @@ module.exports = {
       explication: "Être un arbre ne change pas avec le temps. Le verbe être dit ici ce que le chêne est, pour toujours.", source: C11(1) },
     { id: "langue-conj11-q4", fiche: "langue-conj11-f1", type: "association", niveau: 2,
       enonce: "Relie chaque phrase à ce que dit le verbe être.",
-      gauche: ["Ce chat est noir.", "Mon cousin est courageux.", "Le chêne est un arbre."],
+      gauche: ["Ce chat est noir.", "Mon cousin est courageux.", "La rose est une fleur."],
       droite: ["Ce que l'on est de façon permanente", "Une qualité physique", "Une qualité morale"],
       reponse: [[0, 1], [1, 2], [2, 0]],
-      explication: "La couleur du pelage est une qualité physique, le courage une qualité morale. Un chêne, lui, est un arbre pour toujours.", source: C11(1) },
+      explication: "La couleur du pelage est une qualité physique, le courage une qualité morale. Une rose, elle, est une fleur pour toujours.", source: C11(1) },
     // f2 : être, un état ou une situation
     { id: "langue-conj11-q5", fiche: "langue-conj11-f2", type: "qcm", niveau: 1,
       enonce: "« Ce soir, je suis très fatigué. » Que dit ici le verbe être ?",
@@ -170,9 +170,9 @@ module.exports = {
       explication: "Être exprime l'identité, ce que l'on est. Avoir exprime la possession, ce que l'on a.", source: C11(2) },
     { id: "langue-conj11-q12", fiche: "langue-conj11-f3", type: "qcm_multiple", niveau: 1,
       enonce: "Dans quelles phrases le verbe avoir exprime-t-il une possession ? Coche toutes les bonnes réponses.",
-      choix: ["J'ai une casquette rouge.", "Tu as deux crayons.", "Il a un ballon neuf.", "Il est dans sa chambre.", "Elle est joyeuse."],
+      choix: ["J'ai une casquette rouge.", "Tu as deux crayons.", "Il a un ballon neuf.", "J'ai une grande sœur.", "Elle est joyeuse."],
       reponse: ["J'ai une casquette rouge.", "Tu as deux crayons.", "Il a un ballon neuf."],
-      explication: "Avoir une casquette, des crayons ou un ballon, c'est les posséder. Les phrases avec être disent où l'on est ou ce que l'on est.", source: C11(2) },
+      explication: "Avoir une casquette, des crayons ou un ballon, c'est les posséder. Avoir une grande sœur exprime une relation familiale, et « elle est joyeuse » dit ce qu'elle est.", source: C11(2) },
     // f4 : avoir, une relation
     { id: "langue-conj11-q13", fiche: "langue-conj11-f4", type: "qcm", niveau: 1,
       enonce: "Dans « J'ai une perruche », quelle relation le verbe avoir exprime-t-il ?",

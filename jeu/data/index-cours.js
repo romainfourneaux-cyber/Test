@@ -6,5 +6,6 @@ JEU.enregistrer("index-cours", [
   "svt-s01-1", "svt-s01-2", "svt-s02-1", "svt-s02-2", "svt-s03-1",
   "physique-s01-1", "physique-s02-1", "physique-s03-1",
   "litterature-s01-2", "litterature-s02-2", "litterature-s03-2",
-  "lecture-s01-1", "lecture-s02-1", "lecture-s03-1"
+  "lecture-s01-1", "lecture-s02-1", "lecture-s03-1",
+  "langue-conj10", "langue-conj11", "langue-conj12"
 ]);

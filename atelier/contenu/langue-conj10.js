@@ -30,14 +30,14 @@ module.exports = {
       vocabulaire: [
         { mot: "mode", def: "chacune des sept familles dans lesquelles on range les formes d'un verbe, comme l'indicatif ou l'infinitif" },
         { mot: "mode personnel", def: "un mode dont les formes changent selon la personne : je, tu, il, nous, vous, ils" },
-        { mot: "mode impersonnel", def: "un mode dont les formes restent les mêmes, quelle que soit la personne" }
+        { mot: "mode impersonnel", def: "un mode dont les formes ne changent pas, quelle que soit la personne" }
       ],
       schema: "langue-conj10-s1", prerequis: [], source: C10(1)
     },
     {
       id: "langue-conj10-f2", notion: "Les quatre modes personnels",
       titre: "Indicatif, conditionnel, subjonctif, impératif",
-      texte: "Les quatre modes personnels sont l'indicatif, le conditionnel, le subjonctif et l'impératif. Leurs formes changent avec la personne : trois personnes au singulier, trois au pluriel. Dans les tableaux du cours, le subjonctif est toujours précédé de « que » (que je chante) et l'impératif s'emploie sans pronom sujet (chante, chantons, chantez).",
+      texte: "Les quatre modes personnels sont l'indicatif, le conditionnel, le subjonctif et l'impératif. Leurs formes changent avec la personne : trois au singulier, trois au pluriel. Dans les tableaux du cours, le subjonctif vient toujours après « que » (que je chante). L'impératif, lui, n'a que trois formes, sans pronom sujet : chante, chantons, chantez.",
       pointsCles: [
         "Indicatif : je chante, je chantais, je chanterai…",
         "Conditionnel : je chanterais, il chanterait, nous chanterions",
@@ -78,7 +78,7 @@ module.exports = {
     {
       id: "langue-conj10-f4", notion: "Temps simples et temps composés",
       titre: "À chaque temps simple, son temps composé",
-      texte: "Dans chaque mode, à un temps simple correspond un temps composé. Au temps simple, le verbe tient en un seul mot (je dessinais). Au temps composé, il en faut deux : avoir ou être, puis le participe passé (j'avais dessiné, j'étais sorti). À l'indicatif, il y a quatre temps simples et quatre temps composés.",
+      texte: "Dans chaque mode, chaque temps simple a son partenaire : un temps composé. Au temps simple, le verbe tient en un seul mot (je dessinais). Au temps composé, il en faut deux : avoir ou être, puis le participe passé (j'avais dessiné, j'étais sorti). À l'indicatif, il y a quatre temps simples et quatre temps composés.",
       pointsCles: [
         "Présent → passé composé",
         "Imparfait → plus-que-parfait",
@@ -160,12 +160,12 @@ module.exports = {
         "Parce qu'il ne s'emploie jamais dans une phrase"
       ],
       reponse: "Parce que sa forme ne change pas selon la personne",
-      explication: "On dit « chanter » pour moi, pour toi comme pour eux. Il ne varie pas en personne, d'où le mot impersonnel.", source: MEM },
+      explication: "L'infinitif chanter garde la même forme, quelle que soit la personne. Comme il ne varie pas en personne, on le dit impersonnel.", source: MEM },
     { id: "langue-conj10-q4", fiche: "langue-conj10-f1", type: "qcm_multiple", niveau: 2,
       enonce: "Ces formes viennent toutes du verbe dessiner. Lesquelles sont à un mode personnel ? Coche toutes les bonnes réponses.",
-      choix: ["tu dessines", "que nous dessinions", "vous dessineriez", "dessiner", "dessinant", "en dessinant"],
-      reponse: ["tu dessines", "que nous dessinions", "vous dessineriez"],
-      explication: "Tu, nous et vous montrent une personne : ce sont des modes personnels. Dessiner, dessinant et en dessinant n'ont pas de personne.",
+      choix: ["il dessine", "que vous dessiniez", "nous dessinerions", "dessiner", "dessinant", "en dessinant"],
+      reponse: ["il dessine", "que vous dessiniez", "nous dessinerions"],
+      explication: "Il, vous et nous montrent une personne : ce sont des modes personnels. Dessiner, dessinant et en dessinant n'ont pas de personne.",
       indice: "Cherche les formes qui ont un pronom : je, tu, nous, vous…", source: C10(1) },
     // f2 : les quatre modes personnels
     { id: "langue-conj10-q5", fiche: "langue-conj10-f2", type: "qcm_multiple", niveau: 1,
@@ -194,19 +194,19 @@ module.exports = {
         "Elle est précédée de « que »",
         "Elle commence par « en »",
         "Elle n'a jamais de personne",
-        "Elle finit toujours par -ant"
+        "Elle se termine toujours par -ant"
       ],
       reponse: "Elle est précédée de « que »",
       explication: "Dans les tableaux, le subjonctif s'écrit toujours après « que » : que je parle, qu'il parle. « En » annonce le gérondif, et -ant le participe présent.", source: C10(2) },
     { id: "langue-conj10-q9", fiche: "langue-conj10-f2", type: "vrai_faux", niveau: 2,
-      enonce: "« Je dessinerai » et « je dessinerais » sont au même mode.",
+      enonce: "« Il dessinera » et « il dessinerait » sont au même mode.",
       corrections: [
-        "Faux : « je dessinerai » est au futur simple de l'indicatif, « je dessinerais » au présent du conditionnel.",
+        "Faux : « il dessinera » est au futur simple de l'indicatif, « il dessinerait » au présent du conditionnel.",
         "Faux : les deux formes sont à l'impératif.",
-        "Faux : « je dessinerais » est au subjonctif."
+        "Faux : « il dessinerait » est au subjonctif."
       ],
-      reponse: { vrai: false, correction: "Faux : « je dessinerai » est au futur simple de l'indicatif, « je dessinerais » au présent du conditionnel." },
-      explication: "Ces deux formes se ressemblent beaucoup, mais le s final change le mode. Sans s, c'est le futur de l'indicatif ; avec s, c'est le conditionnel présent.", source: C10(2) },
+      reponse: { vrai: false, correction: "Faux : « il dessinera » est au futur simple de l'indicatif, « il dessinerait » au présent du conditionnel." },
+      explication: "Ces deux formes se ressemblent beaucoup, mais elles ne sont pas au même mode. Il dessinera est au futur simple de l'indicatif, il dessinerait au présent du conditionnel.", source: C10(2) },
     // f3 : les trois modes impersonnels
     { id: "langue-conj10-q10", fiche: "langue-conj10-f3", type: "qcm", niveau: 1,
       enonce: "À quel mode est « en sautant » ?",
@@ -232,7 +232,7 @@ module.exports = {
       enonce: "Comment distinguer le gérondif du participe présent ?",
       choix: [
         "Le gérondif a « en » devant : en marchant",
-        "Le gérondif finit par -er : marcher",
+        "Le gérondif se termine par -er : marcher",
         "Le gérondif a toujours un pronom sujet : je marche",
         "Le gérondif s'écrit avec « que » : que je marche"
       ],
@@ -250,10 +250,10 @@ module.exports = {
       reponse: [[0, 1], [1, 3], [2, 2], [3, 0]],
       explication: "Présent et passé composé, imparfait et plus-que-parfait vont ensemble. Passé simple et passé antérieur aussi, comme futur simple et futur antérieur.", source: C10(3) },
     { id: "langue-conj10-q16", fiche: "langue-conj10-f4", type: "qcm", niveau: 2,
-      enonce: "« Nous avons sauté » est au passé composé. Quel temps simple lui correspond ?",
+      enonce: "« Vous avez sauté » est au passé composé. Quel temps simple lui correspond ?",
       choix: ["Le présent", "L'imparfait", "Le passé simple", "Le futur simple"],
       reponse: "Le présent",
-      explication: "Le passé composé est le temps composé qui va avec le présent. Nous sautons, nous avons sauté.", source: C10(3) },
+      explication: "Le passé composé est le temps composé qui va avec le présent. Vous sautez, vous avez sauté.", source: C10(3) },
     { id: "langue-conj10-q17", fiche: "langue-conj10-f4", type: "vrai_faux", niveau: 1,
       enonce: "Un temps composé s'écrit avec avoir ou être, suivi du participe passé.",
       corrections: [], reponse: { vrai: true, correction: null },
@@ -263,7 +263,7 @@ module.exports = {
       choix: [
         "Parce qu'il est formé de être et du participe passé sortie",
         "Parce que la phrase parle d'une fille",
-        "Parce que le verbe finit par -ie",
+        "Parce que le verbe se termine par -ie",
         "Parce qu'il a un pronom sujet"
       ],
       reponse: "Parce qu'il est formé de être et du participe passé sortie",
@@ -272,12 +272,12 @@ module.exports = {
     { id: "langue-conj10-q19", fiche: "langue-conj10-f5", type: "qcm", niveau: 1,
       enonce: "D'après le cours, d'où viennent la plupart des fautes d'orthographe ?",
       choix: [
-        "De lacunes en analyse grammaticale et en conjugaison",
+        "D'erreurs d'analyse grammaticale ou de conjugaison",
         "D'une écriture trop rapide",
         "D'un stylo qui écrit mal",
         "De livres trop difficiles"
       ],
-      reponse: "De lacunes en analyse grammaticale et en conjugaison",
+      reponse: "D'erreurs d'analyse grammaticale ou de conjugaison",
       explication: "La plupart des fautes viennent d'un mot mal analysé ou d'un verbe mal conjugué. Travailler la grammaire et la conjugaison en évite beaucoup.", source: ORTH },
     { id: "langue-conj10-q20", fiche: "langue-conj10-f5", type: "vrai_faux", niveau: 1,
       enonce: "L'orthographe d'usage, celle des mots du dictionnaire, s'apprend surtout en lisant.",

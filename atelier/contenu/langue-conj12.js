@@ -133,7 +133,7 @@ module.exports = {
       elements: [
         "Si la phrase a du sens, écrire a ; sinon, écrire à",
         "Remplacer ce mot par « avait »",
-        "Repérer le mot qui hésite entre a et à",
+        "Repérer le mot où l'on hésite entre a et à",
         "Relire la phrase obtenue"
       ],
       reponse: [2, 1, 3, 0],
@@ -231,13 +231,13 @@ module.exports = {
       explication: "Le gâteau, ma grand-mère et la porte vont avec il ou elle : c'est est. Entre Paul et Zoé, on peut dire « et puis », et avec tu on écrit es.", source: C12(1) },
     // f5 : ai, aie, aies, ait, aient
     { id: "langue-conj12-q18", fiche: "langue-conj12-f5", type: "qcm", niveau: 1,
-      enonce: "Quel mot complète la phrase ? « J'___ un nouveau sac de sport. »",
+      enonce: "Quel mot complète la phrase ? « J'___ une nouvelle trousse. »",
       choix: ["ai", "aie", "est", "es"],
       reponse: "ai",
-      explication: "Avec je, à l'indicatif, le verbe avoir s'écrit ai. Ce n'est pas le subjonctif : on ne dirait pas « nous ayons un nouveau sac ».", source: C12(2) },
+      explication: "Avec je, à l'indicatif, le verbe avoir s'écrit ai. Ce n'est pas le subjonctif : avec nous, on dirait « nous avons une nouvelle trousse », pas « nous ayons ».", source: C12(2) },
     { id: "langue-conj12-q19", fiche: "langue-conj12-f5", type: "trou", niveau: 1,
       enonce: "Complète avec la bonne forme de avoir au subjonctif présent.",
-      texte: "Le maître nageur demande que tu ___ ton bonnet et qu'ils ___ leurs lunettes.",
+      texte: "La monitrice demande que tu ___ ton bonnet et qu'ils ___ leurs lunettes.",
       banque: ["aie", "aies", "ait", "aient"],
       reponse: [["aies"], ["aient"]],
       explication: "Avec tu, on écrit aies ; avec ils, on écrit aient. La terminaison suit la personne.", source: C12(2) },
@@ -257,7 +257,7 @@ module.exports = {
       reponse: { vrai: false, correction: "Faux : « ait » vient du verbe avoir (subjonctif), « est » du verbe être (indicatif)." },
       explication: "Ces deux mots se prononcent pareil mais ne viennent pas du même verbe. Pour les distinguer, on cherche l'infinitif, le mode, le temps et la personne.", source: C12(2) },
     { id: "langue-conj12-q22", fiche: "langue-conj12-f5", type: "qcm", niveau: 2,
-      enonce: "Comment reconnaître que « aie » est au subjonctif ?",
+      enonce: "« Le cuisinier exige que j'___ les mains propres. » Comment vérifier que le verbe avoir est ici au subjonctif ?",
       choix: [
         "On change de personne : avec nous, on dirait « que nous ayons »",
         "On le remplace par « avait »",
@@ -265,7 +265,7 @@ module.exports = {
         "On regarde si la phrase est longue"
       ],
       reponse: "On change de personne : avec nous, on dirait « que nous ayons »",
-      explication: "Le cours conseille de changer de personne. Avec nous, le subjonctif se voit tout de suite : que nous ayons.", source: C12(2) },
+      explication: "Le cours conseille de changer de personne. Avec nous, on dirait « que nous ayons les mains propres » et non « nous avons » : c'est bien le subjonctif, donc on écrit aie.", source: C12(2) },
     { id: "langue-conj12-q23", fiche: "langue-conj12-f5", type: "ordre", niveau: 3,
       enonce: "Remets dans l'ordre la méthode pour écrire une forme de avoir au subjonctif présent.",
       elements: [

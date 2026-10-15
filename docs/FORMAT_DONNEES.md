@@ -1,6 +1,6 @@
 # Format des données
 
-Point de départ fixé le 13 octobre 2026, complété au jalon 1 (version 0.1.0 du jeu), mis à jour pour la version 0.5.0 (suivi.js, sauvegarde au schéma 3, épreuve de validation retirée). Toute évolution se reporte ici dans la même livraison, avec une ligne au journal.
+Point de départ fixé le 13 octobre 2026, complété au jalon 1 (version 0.1.0 du jeu), mis à jour pour la version 0.5.0 (suivi.js, sauvegarde au schéma 3, épreuve de validation retirée) puis le 15 octobre 2026 (matière langue rangée par badges Griffon, devoir langue-d1, rappelApres, sauvegarde au schéma 4 avec la file des questions ratées). Toute évolution se reporte ici dans la même livraison, avec une ligne au journal.
 
 Toutes les données du jeu sont des fichiers .js placés dans jeu/data/. Chacun fait un seul appel à une fonction globale définie dans jeu/js/noyau.js :
 
@@ -12,12 +12,13 @@ Types : config, planning, devoirs, index-cours, a-retravailler, suivi, cours, an
 
 ## Identifiants
 
-- Matières : histoire, geographie, svt, physique, litterature, lecture, anglais, methode.
+- Matières : histoire, geographie, svt, physique, litterature, lecture, langue, anglais, methode.
 - Cours : `<matiere>-s<semaine sur 2 chiffres>-<n>`, par exemple `histoire-s07-1`.
+- Cours de langue (grammaire et conjugaison, hors planning) : `langue-<thème><nn>`. Thèmes : `nat` (natures des mots), `fon` (fonctions des mots), `log` (analyse logique), `conj` (conjugaison), `txt` (analyse de texte) ; `<nn>` : numéro du cours Griffon sur deux chiffres. Par exemple `langue-conj10` (Cours 10 de conjugaison).
 - Séquence d'anglais : `anglais-seq01`. Fiche méthode : `methode-frise`, `methode-graphique`, etc.
 - Fiche : `<id cours>-f<n>`. Question : `<id cours>-q<n>`. Bonus : `<id cours>-b<n>`. Schéma : `<id cours>-s<n>`.
 - Éléments d'une séquence d'anglais : `<id séquence>-v<n>` (vocabulaire), `-g<n>` (structure), `-p<n>` (phrase). Ils jouent le rôle des fiches pour la répétition espacée, les signalements et le validateur.
-- Devoir : `<matiere>-d<n>`, par exemple `histoire-d1`.
+- Devoir : `<matiere>-d<n>`, par exemple `histoire-d1` ou `langue-d1`.
 - Un identifiant publié ne change plus jamais : la sauvegarde de l'élève en dépend.
 
 ## config.js
@@ -30,10 +31,13 @@ JEU.enregistrer("config", {
   semaineDepart: 7,             // les cours des semaines 1 à 6 sont présumés acquis
   seuilBatiment: 0.70,
   leitnerJours: [1, 2, 4, 8, 16],
+  rappelApres: 3,               // une question ratée revient après 3 autres questions
   usureBatiments: false,
   son: true
 });
 ```
+
+rappelApres (depuis le 15/10/2026) : nombre d'autres questions posées avant qu'une question ratée revienne (jeu/js/rappels.js). Entier, 1 ou plus ; absent ou invalide : 3.
 
 seuilValidation et tailleEpreuve ont disparu en 0.5.0 avec l'épreuve de validation : plus rien ne les lisait. avanceMax et usureBatiments ne sont pas encore lus par le jeu ; ils gardent leur valeur par défaut (pas de limite, pas d'usure).
 
@@ -57,7 +61,7 @@ JEU.enregistrer("planning", [
 - ordre : rang dans la matière, toutes entrées confondues.
 - ere : numéro d'ère, pour l'histoire seulement.
 - Généré par `node atelier/outils/generer-planning.js` à partir de `atelier/extractions/Emploi du temps - entrees par matiere.json` (lui-même tiré du PDF par les deux scripts Python de atelier/outils/). Les titres reprennent l'emploi du temps, raccourcis. Une entrée qui mêle contenu et devoir (« lire le dossier… puis commencer le devoir ») est de type cours ; une carte mentale suivie d'un début de devoir est de type devoir.
-- L'anglais et les fiches méthode ne sont pas dans le planning : les séquences s'ordonnent par leur champ ordre ; séquences et fiches méthode s'ouvrent dès que leur fichier existe.
+- L'anglais, la grammaire (matière langue) et les fiches méthode ne sont pas dans le planning : les séquences s'ordonnent par leur champ ordre, les cours de langue par badge Griffon puis par leur champ ordre ; séquences, cours de langue et fiches méthode s'ouvrent dès que leur fichier existe (listé dans index-cours.js), et restent dans la brume sinon.
 
 ## devoirs.js
 
@@ -73,6 +77,15 @@ Aucun autre champ, aucun texte tiré du devoir. La date d'envoi est saisie par l
 
 - semaine : celle du plan des devoirs, même quand l'emploi du temps étale le devoir sur deux semaines (11 pour Géo 2, 24 pour Géo 4, 26 pour Hist. 4).
 - Anglais : `perimetre: []` tant que Romain n'a pas confirmé quelles séquences le devoir couvre. Un périmètre vide garde le siège fermé.
+- Langue (grammaire et conjugaison) : un devoir par badge Griffon, fait au rythme de l'élève : `semaine: null` (le validateur refuse un nombre). Le périmètre liste des identifiants de cours de langue (`langue-<thème><nn>`), même si leur fichier n'est pas encore là. L'accueil l'annonce « à ton rythme », les Réglages le listent après les devoirs datés.
+
+```js
+  { id: "langue-d1", matiere: "langue", semaine: null,
+    intitule: "Griffon de cuivre, devoir FR-CUIVRE-2A",
+    perimetre: ["langue-conj10", "langue-conj11", "langue-conj12"] }
+```
+
+- devoirs.js est généré par `node atelier/outils/generer-planning.js` (avec planning.js). Les devoirs hors planning (ceux de langue) sont écrits dans la liste DEVOIRS_HORS_PLANNING de ce script et recopiés tels quels à chaque génération : on y ajoute le devoir du badge suivant.
 
 ## index-cours.js
 
@@ -110,10 +123,10 @@ L'estimation de chaque cours d'après les devoirs corrigés. Il n'y a plus d'ép
 
 - Tenu par Claude (commande /traiter), jamais écrit par le jeu. Romain relit chaque estimation nouvelle ou changée dans la fiche de /relecture.
 - Base : un devoir corrigé de l'élève (note, remarques du correcteur ou copie annotée). Un corrigé type seul ne dit rien de l'élève : pas d'estimation, on demande ses remarques à Romain.
-- Clé : identifiant d'une entrée de type cours du planning, d'une séquence d'anglais (`anglais-seqNN`) ou d'une fiche méthode (`methode-<nom>`). Jamais une révision ni un devoir (ERREUR).
+- Clé : identifiant d'une entrée de type cours du planning, d'une séquence d'anglais (`anglais-seqNN`), d'un cours de langue (`langue-<thème><nn>`) ou d'une fiche méthode (`methode-<nom>`). Jamais une révision ni un devoir (ERREUR).
 - etat : `"acquis"` (rien de raté dans ce cours) ou `"a-revoir"` (au moins une notion ratée ou fragile). Tout autre état : ERREUR.
 - note : facultative, 20 mots au plus (ALERTE au-delà), écrite pour l'élève avec les mots du cours : elle s'affiche dans la liste des cours, à côté de « À revoir ». Elle ne contient jamais d'énoncé, de document, d'exemple, de chiffre, de réponse attendue ou de note du devoir, ni le nom de l'élève, de sa famille ou d'un correcteur. Le validateur alerte sur un chiffre ou un mot comme « M. », « Mme », « correcteur », et passe la note à l'anti-recopie et à l'anti-spoil (contrôles 8 et 9).
-- source : l'identifiant du devoir corrigé dans devoirs.js (ERREUR s'il est absent ou inconnu ; ALERTE si le cours n'est pas dans le périmètre de ce devoir). Pour un document corrigé qui n'a pas d'identifiant (un devoir d'entraînement, par exemple) : le chemin du fichier relatif à DEPOT/, qui doit exister (ERREUR sinon). Si ce nom de fichier contient un nom de personne, on demande à Romain de le redéposer sous un autre nom.
+- source : l'identifiant du devoir corrigé dans devoirs.js (ERREUR s'il est absent ou inconnu ; ALERTE si le cours, du planning ou de langue, n'est pas dans le périmètre de ce devoir). Pour un document corrigé qui n'a pas d'identifiant (un devoir d'entraînement, par exemple) : le chemin du fichier relatif à DEPOT/, qui doit exister (ERREUR sinon). Si ce nom de fichier contient un nom de personne, on demande à Romain de le redéposer sous un autre nom.
 - le : date de l'estimation (AAAA-MM-JJ ; ALERTE si elle manque). /relecture s'en sert pour retrouver les estimations nouvelles.
 - Un corrigé plus récent remplace l'estimation du même cours : on réécrit l'entrée entière, et on met majLe à jour. Retirer une entrée rend au cours son état calculé (ouvert, présumé acquis…).
 - Dans le jeu (jeu/js/progression.js), suivi.js passe avant tout autre état, présumé acquis compris. Toutes les fiches d'un cours « a-revoir » (les éléments, pour une séquence d'anglais) comptent comme à revoir dans le tirage.
@@ -155,6 +168,19 @@ JEU.enregistrer("cours", {
 ```
 
 Les fichiers de fiches méthode (cours/methode-<nom>.js) ont le même format, avec en plus `matiere` et `titre`, puisqu'ils ne figurent pas dans le planning. Ils s'ouvrent dès que leur fichier existe, sans épreuve ; leur état vient de suivi.js, comme pour un cours. Rattachement par défaut : section 3 du cahier des charges.
+
+Les cours de langue (cours/langue-<thème><nn>.js, grammaire et conjugaison) ont le même format, avec en plus quatre champs, puisqu'ils ne figurent pas dans le planning :
+
+```js
+JEU.enregistrer("cours", {
+  id: "langue-conj10", matiere: "langue", titre: "Les modes du verbe",
+  badge: "cuivre",   // bois | fer | cuivre | acier | bronze | titane | argent | or (JEU.BADGES_GRIFFON, jeu/js/noyau.js)
+  ordre: 1,          // rang dans le badge (entier, 1 ou plus)
+  fiches: [ ... ], schemas: [], questions: [ ... ], bonus: [], nonCouvert: []
+});
+```
+
+Fiches `langue-conj10-f<n>`, questions `-q<n>`, bonus `-b<n>`, comme pour tout cours. Dans le jeu : matière Grammaire (couleur #8c2f39), ressource parchemins, quartier du scriptorium, conseiller « Le maître scribe ». L'écran Cours les range sous leur badge (seulement les badges qui ont au moins un cours), par ordre ; le Codex les montre comme les autres matières. Pour le tirage des questions, un cours de langue compte comme un cours de la semaine en cours.
 
 ### Champs propres à chaque type de question
 
@@ -201,11 +227,11 @@ Dans une séquence d'anglais, le champ `fiche` d'une question ou d'un bonus cont
 
 ## Sauvegarde (localStorage, clé jeu5e)
 
-Schéma actuel : 3 (depuis la version 0.5.0). Migrations, testées par atelier/outils/tests.js : 1 → 2 ajoute reglages, stats et questionsVues ; 2 → 3 ajoute campagne (complétée par JEU.campagne.completer) et reglages.musique. Aucune ne retire rien. Une sauvegarde sans numéro est lue comme un schéma 1 ; une sauvegarde d'un schéma plus récent que le jeu est refusée.
+Schéma actuel : 4 (depuis le 15/10/2026). Migrations, testées par atelier/outils/tests.js : 1 → 2 ajoute reglages, stats et questionsVues ; 2 → 3 ajoute campagne (complétée par JEU.campagne.completer) et reglages.musique ; 3 → 4 ajoute rappels, vide (complétée par JEU.rappels.completer). Aucune ne retire rien. Une sauvegarde sans numéro est lue comme un schéma 1 ; une sauvegarde d'un schéma plus récent que le jeu est refusée.
 
 ```js
 {
-  schema: 3,
+  schema: 4,
   creeLe: "2026-10-13T18:00:00", majLe: "...",
   cours: { "histoire-s01-1": { etat: "valide", le: "...", score: 0.875 } },  // hérité des épreuves (0.1.0 à 0.4.0), plus écrit
   notions: { "histoire-s01-1-f1": { boite: 1, vue: "...", ok: 3, ko: 1 } },
@@ -236,6 +262,13 @@ Schéma actuel : 3 (depuis la version 0.5.0). Migrations, testées par atelier/o
     evenement: null,                             // ou { id: "marchands", jour: "2026-10-13", fait: false }
     bonus: {},                                   // { or: 40 } (mercenaires), { espion: true } : pour la prochaine bataille
     chronique: [{ le: "2026-10-13", texte: "..." }]  // vingt faits au plus, le plus récent d'abord
+  },
+  // schéma 4 : les questions ratées à reposer un peu plus tard (jeu/js/rappels.js)
+  rappels: {
+    compteur: 57,                                // réponses données depuis le début, toutes parties confondues
+    file: [{ id: "histoire-s07-2-q3", cours: "histoire-s07-2", du: 60 }],
+                                                 // douze au plus ; du : la question est due quand compteur atteint du
+    derniere: "geographie-s02-1-q4"              // dernière question répondue (absente au début)
   }
 }
 ```
@@ -243,6 +276,7 @@ Schéma actuel : 3 (depuis la version 0.5.0). Migrations, testées par atelier/o
 - cours[id] : plus écrit depuis la 0.5.0. Un ancien « valide » est lu comme acquis. L'état d'un cours est calculé dans cet ordre : suivi.js (acquis, a-revoir), ancien « valide » (acquis), presume (semaine avant semaineDepart), ouvert (fichier présent), avenir (fiche méthode sans fichier), brume. Ces états calculés ne sont jamais enregistrés.
 - notions[idFiche].boite : boîte Leitner de 1 à 5 ; une bonne réponse fait monter d'une boîte, une erreur ramène en boîte 1.
 - campagne : réparée au chargement par JEU.campagne.completer (une valeur absente ou du mauvais genre reprend sa valeur neuve, le reste ne bouge pas).
+- rappels : une erreur met la question (son identifiant, et celui de son cours) dans la file avec du = compteur + rappelApres ; si elle y était déjà, elle est reprogrammée. Une bonne réponse l'en retire. Au-delà de douze, la plus ancienne tombe. Chaque tirage (JEU.recit.suite) place les questions dues à leur rang dans le lot (rang = du − compteur, 0 si elle est déjà due), jamais juste après elle-même (derniere : la question répondue en dernier, gardée d'une séance à l'autre), à la place d'une question ordinaire ; pendant une partie, une erreur replace les questions qui restent à poser (JEU.rappels.replacer). Une question en attente ne sort jamais au tirage ordinaire, même quand toutes les questions de sa fiche attendent. Le conseil du royaume ne reprend que les vrai_faux ; les autres attendent une bataille ou un événement. Une entrée dont la question n'existe plus est effacée au tirage suivant. À l'ouverture du jeu (nouvelle séance), les questions en attente deviennent dues tout de suite (celle répondue en dernier vient en second). Réparée au besoin par JEU.rappels.completer (une derniere qui n'est pas un texte est oubliée).
 
 Export : fichier `sauvegarde-jeu5e-AAAA-MM-JJ.json`. Import : le fichier doit ressembler à une sauvegarde du jeu (creeLe, notions, ressources), sinon il est refusé et la partie en cours ne bouge pas ; après confirmation, il remplace la partie en cours, dont une copie reste dans le navigateur (clé jeu5e-avant-import).
 
@@ -254,21 +288,21 @@ Export : fichier `sauvegarde-jeu5e-AAAA-MM-JJ.json`. Import : le fichier doit re
 - extractions/*.txt : texte intégral, mot pour mot, des fichiers lus (sans le nom de l'élève, de sa famille ou d'un correcteur, ni numéro de sécurité sociale), pour ne pas les relire et pour l'anti-recopie et l'anti-spoil.
 - devoirs/<id>.md : notions évaluées ; si le devoir est corrigé, notions réussies, notions à retravailler et estimation par cours, reportée dans jeu/data/suivi.js. Ni nom de l'élève ou du correcteur, ni numéro.
 - relectures/ : fiches HTML et derniere.txt (date de la dernière relecture).
-- outils/ : valider.js et controles.js (validateur), validateur.html, brouillage.js, tests.js (logique), perf.js (essai de bout en bout et mesure de vitesse, demande Playwright), compiler-cours.js, generer-planning.js, generer-sons.js, scripts Python d'extraction de l'emploi du temps, extraire-icones.py et icones-choisies.json (icônes Game-icons), generer-textures.py et generer-terrain.py (textures et fond de carte), rendu-3d/ (scripts Blender des images de bataille).
+- outils/ : valider.js et controles.js (validateur), validateur.html, brouillage.js, tests.js (logique), perf.js (essai de bout en bout et mesure de vitesse, demande Playwright), compiler-cours.js, generer-planning.js (planning.js et devoirs.js, devoirs hors planning compris), generer-sons.js, scripts Python d'extraction de l'emploi du temps, extraire-icones.py et icones-choisies.json (icônes Game-icons), generer-textures.py et generer-terrain.py (textures et fond de carte), rendu-3d/ (scripts Blender des images de bataille).
 - versions/ : copies datées de jeu/ si git n'est pas installé.
 - drive/ : PDF téléchargés du Drive pour l'inventaire, ignorés par git. Ce n'est pas une source : le contenu des cours vient de DEPOT/.
 
 ## Contrôles du validateur
 
 1. Chaque fichier de jeu/data se charge sans erreur.
-2. Identifiants uniques et au bon format.
-3. Chaque cours de index-cours.js existe dans planning.js (sauf anglais et méthodes) ; semaines comprises entre 1 et 34.
+2. Identifiants uniques et au bon format. Cours de langue : identifiant `langue-<nat|fon|log|conj|txt><nn>`, champs matiere (« langue »), titre, badge (un des huit badges Griffon) et ordre (entier, 1 ou plus) présents, sinon ERREUR.
+3. Chaque cours de index-cours.js existe dans planning.js (sauf anglais, méthodes et cours de langue) ; semaines comprises entre 1 et 34.
 4. Chaque question : type connu, fiche (ou élément d'anglais) existante, source présente, explication de deux phrases au plus, bonne réponse présente parmi les choix une fois débrouillée, pas de choix en double. Au moins une vrai_faux par notion.
-5. Chaque fiche : source (fichier et page), prérequis existants, pris dans un cours antérieur ou le même cours. Node seulement : chaque fichier cité comme source (fiche, question, schéma, élément d'anglais) existe dans DEPOT/ (ALERTE, une ligne par fichier et par cours).
+5. Chaque fiche : source (fichier et page), prérequis existants, pris dans un cours antérieur ou le même cours (pour un cours de langue : un badge antérieur, ou le même badge avec un ordre plus petit). Node seulement : chaque fichier cité comme source (fiche, question, schéma, élément d'anglais) existe dans DEPOT/ (ALERTE, une ligne par fichier et par cours).
 6. Bonus : source présente ; aucune question ne s'appuie sur un bonus (un bonus n'entre donc jamais dans une bataille, le conseil, un événement, un siège ou un boss).
-7. devoirs.js : seulement les champs autorisés ; périmètres valides. a-retravailler.js : fiches existantes (ALERTE). suivi.js : champ cours présent ; chaque clé est un cours du planning, une séquence d'anglais ou une fiche méthode, jamais une révision ou un devoir ; etat acquis ou a-revoir ; source = devoir connu de devoirs.js ou fichier présent dans DEPOT/ (ERREUR) ; cours hors du périmètre du devoir source, date le absente ou mal écrite, note de plus de 20 mots, note avec un chiffre ou qui parle d'une personne (ALERTE).
+7. devoirs.js : seulement les champs autorisés ; semaine de 1 à 34, sauf un devoir de langue (semaine null) ; périmètres valides (pour un devoir de langue : des identifiants de cours de langue, et un cours déjà présent doit être de la matière langue). a-retravailler.js : fiches existantes (ALERTE). suivi.js : champ cours présent ; chaque clé est un cours du planning, une séquence d'anglais, un cours de langue ou une fiche méthode, jamais une révision ou un devoir ; etat acquis ou a-revoir ; source = devoir connu de devoirs.js ou fichier présent dans DEPOT/ (ERREUR) ; cours hors du périmètre du devoir source, date le absente ou mal écrite, note de plus de 20 mots, note avec un chiffre ou qui parle d'une personne (ALERTE).
 8. Node seulement, anti-recopie : aucune suite de 12 mots identique entre les cours du jeu (jeu/data/cours et jeu/data/anglais), les notes de suivi.js et atelier/extractions. Le planning, qui reprend les titres de l'emploi du temps, n'est pas concerné.
-9. Node seulement, anti-spoil : aucune suite de 8 mots et aucun nombre propre au devoir communs à l'énoncé et aux questions de son périmètre. Les notes de suivi.js sont comparées de même à tous les énoncés et corrigés inscrits au registre.
+9. Node seulement, anti-spoil : aucune suite de 8 mots et aucun nombre propre au devoir communs à l'énoncé et aux questions de son périmètre (devoir de langue compris : langue-d1 et les cours langue-conj10 à 12). Les notes de suivi.js sont comparées de même à tous les énoncés et corrigés inscrits au registre.
 
 Contrôles ajoutés : brouillage identique côté jeu et atelier ; ALERTE si une fiche a moins de trois questions écrites, aucune question en « pourquoi » ou « comment », ou un texte de plus de 60 mots ; ERREUR si une question vise une fiche d'un autre cours ; ERREUR si jeu/VERSION.txt et JEU.version (jeu/index.html) ne portent pas le même numéro (Node seulement).
 

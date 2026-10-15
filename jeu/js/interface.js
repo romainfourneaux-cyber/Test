@@ -227,9 +227,10 @@
   };
 
   // Bandeau de récit : le personnage qui pose la question, et la situation. etiquette (facultative) : « Seconde chance »
-  // pour une question ratée qui revient un peu plus tard (rappels.js).
+  // pour une question ratée qui revient un peu plus tard (rappels.js). Pas de classe « rappel » sur le bandeau : elle
+  // est déjà prise par l'encadré de l'accueil (rappel d'export), dont la mise en page déformerait le bandeau.
   ui.recit = function (r) {
-    return el("div", { class: "recit" + (r.etiquette ? " rappel" : "") }, [
+    return el("div", { class: "recit" + (r.etiquette ? " seconde-chance" : "") }, [
       el("span", { class: "recit-portrait", html: JEU.icones.icone(r.icone, 34) }),
       el("div", {}, [
         el("b", { class: "recit-nom" }, [r.nom, r.etiquette ? el("span", { class: "etiquette-rappel", texte: r.etiquette }) : null]),

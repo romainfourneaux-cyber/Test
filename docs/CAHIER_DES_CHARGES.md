@@ -1,6 +1,6 @@
 # Jeu de révision 5e : cahier des charges
 
-Version 4 du 13 octobre 2026. Elle remplace la v3 du même jour. Les points marqués « à valider » sont des propositions : Romain tranche.
+Version 5 du 15 octobre 2026. Elle remplace la v4 du 13 octobre. Les points marqués « à valider » sont des propositions : Romain tranche.
 
 ## 1. Joueur et usage
 
@@ -20,15 +20,17 @@ Version 4 du 13 octobre 2026. Elle remplace la v3 du même jour. Les points marq
 - Le contenu de cours vient uniquement des fichiers déposés. Un jeu qui enseigne une erreur est pire qu'aucun jeu.
 - Tout est préchargé. Ni IA ni réseau pendant la partie. Au conseil et dans les événements, une question toutes les 10 à 20 secondes, un clic au plus entre deux questions. En bataille, toutes les questions se posent pendant la préparation, sans limite de temps ; la vague qui suit se regarde, sans question ni chrono.
 - Après une bonne réponse, on enchaîne. Après une erreur : deux phrases d'explication, un bouton Continuer et un lien vers la fiche du Codex. Pendant un siège ou un boss, ce lien attend le bilan de fin.
+- Une question ratée est reposée un peu plus tard (demande de Romain, 15/10/2026) : la même question revient après 3 autres questions (rappelApres dans config.js), où que l'on joue (préparation d'une bataille, conseil du royaume, événement), avec l'étiquette « Seconde chance » et une phrase bienveillante du conseiller ; l'énoncé ne change pas. Elle passe outre les exclusions du tirage (une question par fiche, jamais deux fois la même dans une bataille), mais ne vient jamais deux fois de suite. Juste, elle sort de la file ; encore fausse, elle repart pour un tour. Douze au plus en attente. La file est sauvegardée : si la séance s'arrête avant, ces questions passent en tête à la séance suivante. Ce n'est jamais une pénalité : rien n'est retiré, aucun chrono.
 - Difficulté adaptative, réglée pour environ 8 réussites sur 10.
 - Une erreur ne retire jamais rien de ce qui a été gagné.
 - Les récompenses viennent des notions réussies, jamais du hasard seul. Tout ce qui fait plaisir rapporte quelque chose de visible.
 
 ## 3. Matières
 
-- Dans le jeu : Histoire, Géographie, SVT, Physique-chimie, Littérature (livrets I à III) avec la lecture suivie (Un hivernage dans les glaces, Les Fourberies de Scapin, Lancelot), Anglais, et les savoir-faire des fiches méthode (frise, graphique, tableau à double entrée, diagramme ombrothermique, instruments de mesure).
+- Dans le jeu : Histoire, Géographie, SVT, Physique-chimie, Littérature (livrets I à III) avec la lecture suivie (Un hivernage dans les glaces, Les Fourberies de Scapin, Lancelot), Grammaire (grammaire et conjugaison, par badges Griffon), Anglais, et les savoir-faire des fiches méthode (frise, graphique, tableau à double entrée, diagramme ombrothermique, instruments de mesure).
+- Grammaire (matière « langue », demandée par Romain le 15/10/2026, son fils travaille le Griffon de cuivre) : les Cours Griffon la rangent par badges et non par semaines, dans cet ordre : Griffon de bois, de fer, de cuivre, d'acier, de bronze, de titane, d'argent, d'or. Thèmes : natures des mots, fonctions des mots, analyse logique, conjugaison, analyse de texte. Ces cours ne sont pas dans le planning : chacun s'ouvre dès que son fichier existe, rangé sous son badge.
 - Fiches méthode, rattachement par défaut (Romain peut le changer) : frise chronologique en Histoire ; diagramme ombrothermique et tableau à double entrée en SVT ; réalisation d'un graphique et instruments de mesure en Physique-chimie (la liste du matériel de TP complète les instruments). La fiche de mémorisation ne donne pas de questions : elle inspire la présentation des fiches du Codex.
-- Hors jeu : maths, français (grammaire, rédaction, dictée, poésie), espagnol, musique, arts plastiques, EMC, technologie, latin (option non prise), théâtre.
+- Hors jeu : maths, français (rédaction, dictée, poésie ; la grammaire et la conjugaison sont dans le jeu depuis le 15/10/2026, par les badges Griffon), espagnol, musique, arts plastiques, EMC, technologie, latin (option non prise), théâtre.
 - Visios, devoirs eux-mêmes, dictées et récitations : hors quiz.
 
 ## 4. Univers et direction artistique
@@ -56,7 +58,7 @@ Chaque ère change le décor, les bâtiments à débloquer et la monnaie, et se 
 - Rendu vectoriel (SVG et CSS) : aplats, traits d'encre, texture de parchemin, blasons, silhouettes d'unités. Icônes Game-icons (CC BY, crédit obligatoire). Enluminures et cartes anciennes du domaine public (Wikimedia Commons) possibles, source notée.
 - Champ de bataille et carte de campagne en images 3D pré-calculées (rendues avec Blender à partir de sources CC0 de Poly Haven, terrains vus de dessus, bâtiments et troupes de trois quarts), chargées depuis jeu/assets/ ; le dessin vectoriel reste en repli si une image manque (décision du 14/10/2026).
 - Deux cartes : la carte de campagne (histoire), stylisée comme une carte d'époque, et l'Observatoire (géographie), monde actuel tiré de Natural Earth au 1:110m (domaine public).
-- Palette : fond #efe6d2, pierre #8a7f70, encre #2e2419, or #b08d3a. Une teinte par matière : pourpre pour l'Histoire, ocre pour la Géographie, vert pour les SVT, bleu pour la Physique-chimie, brun pour la Littérature, sarcelle pour l'Anglais (à valider). Les erreurs s'affichent en brique, jamais en rouge vif.
+- Palette : fond #efe6d2, pierre #8a7f70, encre #2e2419, or #b08d3a. Une teinte par matière : pourpre pour l'Histoire, ocre pour la Géographie, vert pour les SVT, bleu pour la Physique-chimie, brun pour la Littérature, grenat (#8c2f39) pour la Grammaire, sarcelle pour l'Anglais (à valider). Les erreurs s'affichent en brique, jamais en rouge vif.
 - Typographie : Cinzel pour les titres, Crimson Text pour les questions (fichiers locaux, licence OFL), repli sur Georgia. Questions en 18 px au moins.
 - Son : effets courts synthétisés pour le jeu (coup, sceau, construction, validation, erreur, sous licence CC0) et musique d'ambiance composée pour le jeu, jouée par le navigateur (Web Audio, humeurs « paix » et « guerre »). Chacun se coupe d'un clic. Ils comptent plus que le dessin pour le plaisir de jeu.
 - Animations de moins de 400 ms pour tout ce qui suit une réponse, sans jamais retarder la question suivante. Une ambiance animée continue (fumées, nuages, villageois, drapeaux), lente et sans clignotement, se coupe dans les Réglages (décision du 13/10/2026).
@@ -67,8 +69,8 @@ Deux niveaux, comme dans Total War : le domaine, où l'on gère et construit, et
 
 ### Le domaine (à la Manor Lords)
 - Vue de dessus, façon plan de ville ancien. Le domaine passe de hameau à village, bourg puis ville selon le nombre de bâtiments construits.
-- Six quartiers : château (Histoire), marché et routes (Géographie), herboristerie (SVT), forge et moulin (Physique-chimie), scriptorium (Littérature et lecture), ambassade (Anglais).
-- Ressources : sceaux (Histoire), routes (Géographie), remèdes (SVT), alambics (Physique-chimie), parchemins (Littérature), alliances (Anglais). Valeurs de départ, à équilibrer : 1 par bonne réponse, des gains de campagne (provinces prises, tributs quotidiens, défenses réussies, événements), 30 par siège gagné.
+- Six quartiers : château (Histoire), marché et routes (Géographie), herboristerie (SVT), forge et moulin (Physique-chimie), scriptorium (Littérature, lecture et grammaire), ambassade (Anglais).
+- Ressources : sceaux (Histoire), routes (Géographie), remèdes (SVT), alambics (Physique-chimie), parchemins (Littérature, lecture et grammaire), alliances (Anglais). Valeurs de départ, à équilibrer : 1 par bonne réponse, des gains de campagne (provinces prises, tributs quotidiens, défenses réussies, événements), 30 par siège gagné.
 - Bâtiments : débloqués quand la matière atteint 70 % de maîtrise sur les notions vues, puis construits avec des ressources d'au moins deux matières (la bibliothèque coûte des parchemins et des sceaux, par exemple). On ne les obtient qu'avec des ressources gagnées en jouant.
 - À valider, désactivé par défaut : une notion pas révisée depuis longtemps use son bâtiment, une révision le répare.
 
@@ -88,7 +90,7 @@ Deux niveaux, comme dans Total War : le domaine, où l'on gère et construit, et
 - Le mentor, un chroniqueur du royaume, donne des indices, félicite et ouvre la bonne fiche après une erreur.
 - Arbre des notions avec prérequis ; un prérequis appartient toujours à un cours antérieur ou au même cours.
 - Le Codex, à la manière de la Civilopédie de Civilization : les fiches des cours ouverts ou présumés acquis, et les bonus à part, marqués comme tels. Fermé pendant un siège ou un boss.
-- Répétition espacée Leitner, 5 boîtes (1, 2, 4, 8 et 16 jours). Tirage des questions (bataille, conseil, événements) : 50 % de notions à revoir, 40 % de cours récents, 10 % de notions solides. Les fiches listées dans a-retravailler.js et celles des cours « à revoir » dans suivi.js comptent comme à revoir.
+- Répétition espacée Leitner, 5 boîtes (1, 2, 4, 8 et 16 jours). Tirage des questions (bataille, conseil, événements) : 50 % de notions à revoir, 40 % de cours récents, 10 % de notions solides. Les fiches listées dans a-retravailler.js et celles des cours « à revoir » dans suivi.js comptent comme à revoir. Un cours de grammaire compte comme un cours de la semaine en cours. Les questions ratées reviennent en plus, à leur place (section 2).
 - À valider : quêtes courtes à la Brawl Stars qui récompensent la variété des matières ; collection d'unités et de héros ; serment (avant de répondre, il jure d'être sûr de lui : gain doublé s'il a juste, seul le bonus est perdu s'il se trompe) ; événements qui relient deux matières (un marchand, un sage), en plus des événements du jour de la campagne.
 
 ## 6. Mini-jeux
@@ -112,7 +114,7 @@ Retirés en 0.5.0 : l'Assaut (à la Slay the Spire, 8 questions, jalon 1) et le 
 
 - Calendrier : la semaine 1 commence le lundi 31 août 2026, sans pause pendant les vacances. S7 est la semaine du 12 octobre 2026, S34 celle du 19 avril 2027. Après S34, le jeu passe en révision libre.
 - Le calendrier informe, il ne bloque rien : il affiche la semaine en cours et le prochain devoir.
-- Déblocage : un cours s'ouvre dès que son fichier existe, sans attendre le cours précédent. Aucune limite d'avance (avanceMax = null dans config.js). Même règle pour l'anglais, séquence par séquence (rangées par leur champ ordre), et pour les savoir-faire des fiches méthode.
+- Déblocage : un cours s'ouvre dès que son fichier existe, sans attendre le cours précédent. Aucune limite d'avance (avanceMax = null dans config.js). Même règle pour l'anglais, séquence par séquence (rangées par leur champ ordre), pour la grammaire, cours par cours (rangés par badge Griffon puis par leur champ ordre), et pour les savoir-faire des fiches méthode.
 - Suivi des cours : pas d'épreuve dans le jeu. Quand Romain dépose un devoir corrigé (note, remarques ou copie annotée), Claude estime chaque cours du périmètre « acquis » ou « à revoir » dans jeu/data/suivi.js (note courte pour l'élève, devoir source, date) et met les fiches ratées dans jeu/data/a-retravailler.js. Les fiches des cours à revoir reviennent plus souvent dans les batailles, au conseil et dans les événements. Romain vérifie ces estimations sur la fiche de relecture. La liste des cours se lit sans rien cocher.
 - Les entrées « Révisions » et « Devoir » du planning sont affichées pour information ; elles ne bloquent rien.
 - Cours des semaines 1 à 6 : présumés acquis. Ils servent de prérequis et entrent dans la répétition espacée ; un devoir corrigé peut les faire passer « à revoir ».
@@ -123,6 +125,7 @@ Retirés en 0.5.0 : l'Assaut (à la Slay the Spire, 8 questions, jalon 1) et le 
 
 - Chaque devoir d'une matière du jeu devient un siège sur la carte. Son périmètre couvre les cours de la matière depuis le devoir précédent. Liste complète et périmètres : docs/PROGRAMME_5E.md.
 - Anglais : le périmètre d'un devoir dépend des séquences réellement faites. Il reste vide, et le siège fermé, tant que Romain ne l'a pas confirmé.
+- Grammaire : un devoir par badge Griffon, fait au rythme de l'élève, donc sans semaine. Son périmètre liste les cours de langue du badge. Premier devoir : langue-d1, « Griffon de cuivre, devoir FR-CUIVRE-2A » (cours de conjugaison 10 à 12).
 - Le siège s'ouvre quand tous les cours du périmètre ont leur fichier (ouverts, acquis ou présumés acquis) : 12 à 15 questions, niveaux 2 et 3, sans Codex. Pas d'échec possible : chaque bonne réponse ouvre une brèche, et le siège reprend là où il s'était arrêté.
 - Quand il a envoyé le devoir, l'élève le coche avec la date, comme sur le plan des devoirs papier. La province est alors tenue jusqu'au devoir suivant, et la répétition espacée continue.
 - Thèmes sans devoir en fin d'année (Géographie thème 3, SVT livret 3 chapitres 2 et 3, Physique-chimie thème D, Littérature livret III chapitres II et III) : un boss de fin de thème.
@@ -160,12 +163,12 @@ Retirés en 0.5.0 : l'Assaut (à la Slay the Spire, 8 questions, jalon 1) et le 
 - Arborescence :
   - jeu/index.html (JEU.version, le numéro affiché), jeu/VERSION.txt (le même numéro), jeu/CREDITS.md
   - jeu/css/
-  - jeu/js/ : un fichier par module (noyau, brouillage, calendrier, sauvegarde, leitner, chargeur, progression, questions, icones, anim, sons, musique, interface, mentor, signalement, codex, recit, bataille-moteur, cartes-bataille, campagne, bataille, conseil, ecran-campagne, domaine, demarrage)
+  - jeu/js/ : un fichier par module (noyau, brouillage, calendrier, sauvegarde, leitner, chargeur, progression, questions, rappels, icones, anim, sons, musique, interface, mentor, signalement, codex, recit, bataille-moteur, cartes-bataille, campagne, bataille, conseil, ecran-campagne, domaine, demarrage)
   - jeu/data/ : config, planning, devoirs, index-cours, a-retravailler, suivi, cours/, anglais/
   - jeu/assets/ : polices, sons, icônes, images, cartes
   - atelier/ : registre.json, index-notions.json, contenu/, extractions/, devoirs/, relectures/, outils/, versions/ ; drive/ (PDF du Drive gardés pour l'inventaire, ignorés par git : ce n'est pas une source tant qu'ils ne sont pas déposés dans DEPOT/)
 - Chargement : config, planning, devoirs, index-cours, a-retravailler et suivi, puis une balise script par cours listé. Un fichier absent ou en erreur ne bloque pas le jeu : le cours reste dans la brume (présumé acquis s'il date des semaines 1 à 6, avec la mention « contenu à venir » dans la liste des cours ; une fiche méthode affiche « contenu à venir »).
-- Sauvegarde : localStorage (clé jeu5e), schéma versionné (3 depuis la 0.5.0, avec la campagne) et migration sans perte, export et import en JSON. Le jeu rappelle d'exporter si le dernier export a plus de 7 jours.
+- Sauvegarde : localStorage (clé jeu5e), schéma versionné (3 depuis la 0.5.0, avec la campagne ; 4 depuis le 15/10/2026, avec la file des questions ratées à reposer) et migration sans perte, export et import en JSON. Le jeu rappelle d'exporter si le dernier export a plus de 7 jours.
 - Brouillage des réponses : la même fonction dans jeu/js/brouillage.js et atelier/outils/brouillage.js.
 - Validateur : atelier/outils/valider.js (Node, tous les contrôles, notes de suivi.js comprises, et même numéro dans VERSION.txt et JEU.version) et atelier/outils/validateur.html (navigateur, contrôles qui ne demandent pas les extractions).
 - Tests : atelier/outils/tests.js (logique, Node) et atelier/outils/perf.js (essai de bout en bout dans Chromium, avec Playwright : bataille, événement, conseil, export et import, moins de 100 ms entre une réponse et la question suivante).
@@ -195,3 +198,4 @@ Chaque jalon se termine par une version jouable, le journal à jour et une liste
 - v2, 13/10/2026 : réponses sur l'élève et l'usage, anglais intégré, module connaissance, vitesse, modèles des mini-jeux.
 - v3, 13/10/2026 : pas de style manga ; cours validés par le jeu, sans limite d'avance ; calendrier fixé (S1 = 31/08/2026, sans pause) ; zone DEPOT et bonus ; programme réel relevé dans les PDF (six ères jusqu'à Louis XIV, croisades en S17, littérature livrets I à III, lecture suivie, anglais au rythme de l'élève) ; position comptée en cours validés ; jalons.
 - v4, 13/10/2026 : plus d'épreuve de validation, Claude estime les cours d'après les devoirs corrigés (jeu/data/suivi.js) ; un cours s'ouvre dès que son fichier existe ; Assaut et Sceau de vérité remplacés par la bataille en tower defense et le conseil du royaume ; campagne à deux fronts (royaume d'Angleterre, Empire omeyyade) avec arsenal, attaques adverses et événements du jour ; questions posées dans le récit ; musique d'ambiance ; position sans avance ni retard ; siège ouvert quand les cours du périmètre ont leur fichier ; sauvegarde au schéma 3.
+- v5, 15/10/2026 : la grammaire et la conjugaison entrent dans le jeu (matière Grammaire, rangée par badges Griffon, devoir langue-d1 du Griffon de cuivre) ; une question ratée est reposée un peu plus tard (« Seconde chance ») ; sauvegarde au schéma 4.

@@ -1112,10 +1112,12 @@
             JEU.sons.jouer(serie >= 3 ? "coup-puissant" : "coup");
             JEU.ui.tampon(serie >= 3 ? "Coup d'éclat" : "Juste", "+" + gain + " or");
             if (serie >= 3) serie = 0;
-            JEU.ui.majRessources();
-            majTout();
             JEU.mesure.reponseDonnee();
             questionSuivante(scene);
+            // or, ressources et boutons de l'arsenal : mis à jour une image plus tard, comme le sceau (la première
+            // image après la réponse ne peint que la question suivante)
+            var majApres = function () { JEU.ui.majRessources(); if (actif) majTout(); };
+            if (JEU.anim && JEU.anim.apresImage) JEU.anim.apresImage(majApres); else majApres();
           } else {
             serie = 0;
             // la question ratée reviendra un peu plus tard : si c'est dans cette vague, elle prend sa place dans le lot

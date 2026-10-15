@@ -402,13 +402,38 @@ verifier("Export puis import : la file des rappels est gardée", JSON.stringify(
 JR.sauvegarde.enregistrer();
 JR.sauvegarde.charger(); // le jeu est rouvert : nouvelle séance
 const eS = JR.sauvegarde.etat().rappels.file[0];
-verifier("Séance suivante : le rappel en attente est dû tout de suite et passe en tête", eS && eS.du <= JR.sauvegarde.etat().rappels.compteur && RP.placer([3, 5, 7].map(H))[0].id === H(1).id, eS);
+// ratée à la toute dernière réponse avant de fermer le jeu : due tout de suite, mais jamais la toute première question
+const pS = RP.placer([3, 5, 7].map(H));
+verifier("Séance suivante : ratée juste avant de fermer le jeu, elle revient en second, jamais tout de suite", eS && eS.du <= JR.sauvegarde.etat().rappels.compteur && pS[0].id === H(3).id && pS[1].id === H(1).id && pS[1].rappel, pS.map(q => q.id));
+neuve();
+repondre(H(1), false); repondre(H(9), true);
+JR.sauvegarde.enregistrer();
+JR.sauvegarde.charger();
+verifier("Séance suivante : le rappel en attente est dû tout de suite et passe en tête", RP.placer([3, 5, 7].map(H))[0].id === H(1).id);
+verifier("Rappels : une dernière question illisible dans la sauvegarde est oubliée sans planter", (() => {
+  const r = RP.completer({ compteur: 2, file: [], derniere: 7 });
+  return !("derniere" in r) && r.compteur === 2;
+})());
+// une question en attente ne sort jamais au tirage ordinaire, même quand toutes les questions de sa fiche attendent
+// (choisirPourFiche reprend alors une question exclue) ; et jamais deux fois la même question dans un lot
+let fuite = 0, doublon = 0;
+for (let n = 0; n < 150; n++) {
+  neuve();
+  repondre(H(1), false); repondre(H(2), false); // les deux questions de la fiche histoire-s07-2-f1
+  if (JR.recit.suite(3).some(q => !q.rappel && (q.id === H(1).id || q.id === H(2).id))) fuite++;
+  neuve();
+  const lotC = JR.recit.suite(3, { exclure: [H(2).id], filtre: q => q.fiche === "histoire-s07-2-f1", completer: true });
+  if (new Set(lotC.map(q => q.id)).size !== lotC.length) doublon++;
+}
+verifier("Tirage : une question ratée en attente ne sort jamais comme une question ordinaire", fuite === 0, fuite);
+verifier("Tirage : jamais deux fois la même question dans un lot (second tirage d'une vague compris)", doublon === 0, doublon);
 
 // ---------- grammaire : la matière « langue », rangée par badges Griffon ----------
 verifier("Grammaire : matière, ressource, quartier et couleur", JSON.stringify(JR.MATIERES.langue) === JSON.stringify({ nom: "Grammaire", ressource: "parchemins", quartier: "scriptorium", couleur: "#8c2f39" }));
 verifier("Grammaire : rangée juste après la lecture suivie", JR.ORDRE_MATIERES.indexOf("langue") === JR.ORDRE_MATIERES.indexOf("lecture") + 1);
 verifier("Grammaire : huit badges Griffon dans l'ordre", JR.BADGES_GRIFFON.map(b => b.id).join() === "bois,fer,cuivre,acier,bronze,titane,argent,or" &&
   JR.BADGES_GRIFFON.map(b => b.nom).join("|") === "Griffon de bois|Griffon de fer|Griffon de cuivre|Griffon d'acier|Griffon de bronze|Griffon de titane|Griffon d'argent|Griffon d'or");
+verifier("Grammaire : mêmes badges dans le jeu et dans le validateur", JR.BADGES_GRIFFON.map(b => b.id).join() === require("./controles.js").BADGES.join());
 verifier("Grammaire : le maître scribe conseille", JR.recit.conseiller("langue").nom === "Le maître scribe" && JR.recit.conseiller("langue").titre === "veille sur la langue du royaume");
 const etatR = JR.sauvegarde.etat();
 JR.progression.oublier();

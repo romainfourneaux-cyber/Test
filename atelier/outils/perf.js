@@ -399,7 +399,11 @@ async function essaiToile(navigateur, erreurs) {
   await page.waitForSelector(".panneau-erreur");
   rappel.enAttente = await page.evaluate(id => JEU.rappels.enAttente().indexOf(id) >= 0, rappel.ratee);
   await page.keyboard.press("Enter"); // Continuer
-  const noterQuestion = () => page.evaluate(() => { const q = JEU.ui.questionCourante, e = document.querySelector(".td-question .recit .etiquette-rappel"); return { id: q.id, rappel: !!q.rappel, etiquette: e ? e.textContent : null }; });
+  // mise : mise en page du bandeau du conseiller (celui d'une seconde chance doit être celui des autres questions)
+  const noterQuestion = () => page.evaluate(() => {
+    const q = JEU.ui.questionCourante, r = document.querySelector(".td-question .recit"), e = r && r.querySelector(".etiquette-rappel"), cs = r && getComputedStyle(r);
+    return { id: q.id, rappel: !!q.rappel, etiquette: e ? e.textContent : null, mise: cs ? [cs.justifyContent, cs.borderLeftWidth, cs.paddingLeft].join(" ") : null };
+  });
   for (let i = 0; i < 2; i++) {
     await page.waitForFunction(() => document.querySelector(".td-question .question") && !document.querySelector(".panneau-erreur"));
     rappel.suivantes.push(await noterQuestion());
@@ -583,6 +587,7 @@ async function essaiToile(navigateur, erreurs) {
   else {
     if (R.position !== 4) echecs.push("question ratée en bataille : revenue à la question " + R.position + " après l'erreur au lieu de la 4e (" + JSON.stringify(R.suivantes) + ")");
     else if (!R.suivantes[3].rappel || R.suivantes[3].etiquette !== "Seconde chance") echecs.push("question ratée revenue sans l'étiquette « Seconde chance »");
+    else if (R.suivantes[3].mise !== R.suivantes[0].mise) echecs.push("bandeau « Seconde chance » mis en page autrement que les autres (" + R.suivantes[3].mise + " au lieu de " + R.suivantes[0].mise + ")");
     if (!R.sortie) echecs.push("question ratée, réussie au rappel : elle reste dans la file");
   }
   const G = bilan.grammaire, cuivre = (G.blocs.find(b => b.badge === "Griffon de cuivre") || { cours: [] }).cours;
