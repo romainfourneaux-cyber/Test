@@ -44,10 +44,24 @@
   };
   var TOURS_RIVALES = { archers: { portee: 120, cadence: 0.6, degats: 1, projectile: "fleche", vitesse: 560 }, baliste: { portee: 180, cadence: 0.3, degats: 3.5, projectile: "carreau", vitesse: 720 } };
   var AMELIORATION = { facteur: 0.6, coutRatio: 0.8, max: 3 };
-  // Vagues du seigneur rival (réglées avec atelier/outils/simuler-bataille.js) : base + parVague × numéro de vague + un
-  // de plus tous les deux niveaux de province ; points de vie × (1 + pvNiveau × niveau + pvVague × vague) ; tirs de ses
-  // tours × (1 + toursNiveau × niveau) ; ecartSortie : secondes entre deux sorties (moins 0,05 par vague, 0,4 au plus).
-  var VAGUES = { base: 4, parVague: 2, pvNiveau: 0.1, pvVague: 0.07, toursNiveau: 0.08, ecartSortie: 1.05 };
+  // Vagues du seigneur rival (réglées avec atelier/outils/simuler-bataille.js) : base + parVague × numéro de vague + le
+  // renfort du niveau (RIVAL) ; points de vie × (pv du niveau + pvVague × vague) ; ecartSortie : secondes entre deux
+  // sorties (moins 0,05 par vague, 0,4 au plus).
+  var VAGUES = { base: 4, parVague: 2, pvVague: 0.07, ecartSortie: 1.05 };
+  // Le seigneur rival selon le niveau de la province (0 à 4 ; la défense du domaine prend le niveau de la campagne).
+  // renfort : troupes de plus à chaque vague ; pv : points de vie de ses troupes (×) ; tirs : dégâts de ses tours (×) ;
+  // cadence : leurs tirs par seconde (×) ; coup : ses coups au corps à corps (×) ; toursDepart : tours qu'il bâtit avant la première vague ; toursVague : tours
+  // de plus à chaque vague suivante.
+  var RIVAL = [
+    { renfort: 0, pv: 1, tirs: 1, cadence: 1, coup: 1, toursDepart: 0, toursVague: 1 },
+    { renfort: 0, pv: 1.1, tirs: 1.08, cadence: 1, coup: 1, toursDepart: 0, toursVague: 1 },
+    { renfort: 1, pv: 1.2, tirs: 1.16, cadence: 1, coup: 1, toursDepart: 1, toursVague: 1 },
+    { renfort: 1, pv: 1.3, tirs: 1.24, cadence: 1, coup: 1, toursDepart: 1, toursVague: 1 },
+    { renfort: 2, pv: 1.4, tirs: 1.32, cadence: 1, coup: 1, toursDepart: 2, toursVague: 2 }
+  ];
+  // Défense du domaine (carte « domaine », ou options.defense) : le rival y vient en force, en plus de son niveau.
+  // renfort : troupes de plus à chaque vague ; pv, coup : × sur les points de vie et les coups de ses troupes.
+  var DEFENSE = { renfort: 0, pv: 1, coup: 1 };
   // Mêlée. contact : écart le long de la route (px) où deux troupes adverses libres s'engagent ; ecart : distance où elles
   // se battent ; cadence : secondes entre deux coups ; premierCoup : délai du premier coup (chargeCoup pour une charge, qui
   // frappe « charge » fois plus fort) ; coteCombat : décalage sur le côté de la route pendant le combat (les files de
@@ -87,12 +101,12 @@
   // ---------- partie ----------
   // carte : { route: [[x,y]...], emplacements: [[x,y]...] (les tiens), emplacementsRivaux: [[x,y]...] }
   // options : { vagues, orDepart, pvChateau, pvRival, niveau (0..4), bonusDegats (0..0.3), arsenal: {tours, troupes},
-  //             orParReponse, orPerduErreur }
+  //             orParReponse, orPerduErreur, defense (par défaut : la carte est celle du domaine) }
   function creer(carte, options) {
     var o = options || {};
     var route = preparerRoute(carte.route);
     var p = {
-      route: route, carte: carte, niveau: o.niveau || 0,
+      route: route, carte: carte, niveau: o.niveau || 0, defense: o.defense != null ? !!o.defense : carte.id === "domaine",
       vague: 0, vagues: o.vagues || 4, phase: "preparation", fin: null,
       or: o.orDepart != null ? o.orDepart : 60, revenu: 25,
       chateau: { pv: o.pvChateau || 20, max: o.pvChateau || 20 },
@@ -169,11 +183,14 @@
     return { or: -perdreOr(p, p.orPerduErreur), eclat: false };
   }
 
+  // Réglage du seigneur rival pour cette bataille (RIVAL, selon le niveau de la province).
+  function rival(p) { return RIVAL[Math.max(0, Math.min(RIVAL.length - 1, p.niveau | 0))]; }
+
   // Composition d'une vague rivale : grossit avec le numéro de vague et le niveau de la province.
   function composerVague(p) {
     var w = p.vague, n = p.niveau;
     var file = [];
-    var nb = VAGUES.base + VAGUES.parVague * w + Math.floor(n / 2);
+    var nb = VAGUES.base + VAGUES.parVague * w + rival(p).renfort + (p.defense ? DEFENSE.renfort : 0);
     for (var i = 0; i < nb; i++) {
       var r = (i * 7 + w * 3) % 10;
       if (w >= 2 && r < 2 + n) file.push("hommes");
@@ -185,9 +202,9 @@
     return file;
   }
 
-  // Le rival bâtit une tour de plus à chaque vague à partir de la deuxième (deux par vague dans son château).
+  // Le rival bâtit ses tours avant chaque vague : toursDepart avant la première, toursVague avant chacune des suivantes.
   function rivalConstruit(p) {
-    var nb = (p.vague === 0 ? p.niveau >= 2 ? 1 : 0 : 1) + (p.niveau >= 4 ? 1 : 0);
+    var nb = p.vague === 0 ? rival(p).toursDepart : rival(p).toursVague;
     var libres = p.carte.emplacementsRivaux.map(function (e, i) { return i; }).filter(function (i) {
       return !p.toursRivales.some(function (t) { return t.emplacement === i; });
     });
@@ -215,11 +232,12 @@
   // adversaire : la troupe d'en face en mêlée (ou null) ; recharge : secondes avant son prochain coup ; premier : son
   // prochain coup est celui d'une charge ; frappe : heure (p.temps) de son dernier coup, pour le geste du rendu.
   function creerUnite(p, camp, type) {
-    var d = camp === "rival" ? ENNEMIS[type] : TROUPES[type];
-    var echelle = camp === "rival" ? 1 + VAGUES.pvNiveau * p.niveau + VAGUES.pvVague * p.vague : bonusArsenal(p, "troupes", type);
+    var d = camp === "rival" ? ENNEMIS[type] : TROUPES[type], r = rival(p), def = camp === "rival" && p.defense;
+    var echelle = camp === "rival" ? (r.pv + VAGUES.pvVague * p.vague) * (def ? DEFENSE.pv : 1) : bonusArsenal(p, "troupes", type);
     var pv = d.pv * echelle;
     var v = d.vitesse * (p.modificateurs.pluie ? 0.8 : 1);
-    var u = { camp: camp, type: type, pv: pv, max: pv, vitesse: v, degats: d.degats, coup: d.coup || 1, charge: !!d.charge,
+    var coup = (d.coup || 1) * (camp === "rival" ? r.coup * (def ? DEFENSE.coup : 1) : 1);
+    var u = { camp: camp, type: type, pv: pv, max: pv, vitesse: v, degats: d.degats, coup: coup, charge: !!d.charge,
       s: camp === "rival" ? p.route.longueur : 0, cote: camp === "rival" ? -9 : 9, ralenti: 0, vivant: true, pas: Math.random() * 6,
       adversaire: null, recharge: 0, premier: false, frappe: -1 };
     var pos = surRoute(p.route, u.s, u.cote); u.x = pos.x; u.y = pos.y; u.angle = pos.angle;
@@ -238,7 +256,7 @@
     var d = t.rivale ? TOURS_RIVALES[t.type] : TOURS[t.type];
     var base = d.degats * (1 + AMELIORATION.facteur * (t.niveau - 1));
     if (!t.rivale) base *= bonusArsenal(p, "tours", t.type) * (1 + p.bonusDegats) * (p.modificateurs.flechesNeuves && t.type === "archers" ? 1.5 : 1);
-    else base *= 1 + VAGUES.toursNiveau * p.niveau;
+    else base *= rival(p).tirs;
     return base;
   }
 
@@ -344,7 +362,7 @@
       if (t.recharge > 0) return;
       var u = cible(p, t);
       if (!u) return;
-      t.recharge = 1 / d.cadence;
+      t.recharge = 1 / (d.cadence * (t.rivale ? rival(p).cadence : 1));
       t.angle = Math.atan2(u.y - t.y, u.x - t.x);
       var duree = dist(t, u) / d.vitesse;
       p.projectiles.push({ genre: d.projectile, x0: t.x, y0: t.y - 18, cible: u, cx: u.x, cy: u.y, t: 0, duree: Math.max(0.12, duree), degats: degatsTour(p, t), zone: d.zone || 0, camp: t.rivale ? "rival" : "joueur" });
@@ -455,7 +473,7 @@
 
   JEU.batailleMoteur = {
     LARGEUR: LARGEUR, HAUTEUR: HAUTEUR, TOURS: TOURS, TROUPES: TROUPES, ENNEMIS: ENNEMIS, TOURS_RIVALES: TOURS_RIVALES, AMELIORATION: AMELIORATION,
-    VAGUES: VAGUES, MELEE: MELEE, DUREE_EFFET: DUREE_EFFET, DUREE_CHUTE: DUREE_CHUTE, TOMBES: TOMBES, BONUS_SERIE: BONUS_SERIE, OR_PERDU: OR_PERDU,
+    VAGUES: VAGUES, RIVAL: RIVAL, DEFENSE: DEFENSE, MELEE: MELEE, DUREE_EFFET: DUREE_EFFET, DUREE_CHUTE: DUREE_CHUTE, TOMBES: TOMBES, BONUS_SERIE: BONUS_SERIE, OR_PERDU: OR_PERDU,
     creer: creer, poserTour: poserTour, ameliorerTour: ameliorerTour, coutAmelioration: coutAmelioration, envoyer: envoyer, gagnerOr: gagnerOr,
     perdreOr: perdreOr, repondre: repondre,
     lancerVague: lancerVague, etape: etape, jouerVague: jouerVague, surRoute: surRoute, preparerRoute: preparerRoute,
