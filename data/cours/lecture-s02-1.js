@@ -338,9 +338,9 @@ JEU.enregistrer("cours", {
     "Un armateur",
     "Une goélette",
     "Une chaloupe",
-    "Un navire de commerce"
+    "Un brick"
    ],
-   "explication": "L'armateur est une personne : le propriétaire de navires de commerce. La goélette et la chaloupe sont des bateaux.",
+   "explication": "L'armateur est une personne : le propriétaire de navires de commerce. Le brick et la goélette sont des voiliers, la chaloupe une petite embarcation.",
    "source": {
     "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
     "page": 6
@@ -414,7 +414,7 @@ JEU.enregistrer("cours", {
     "timonier",
     "vigie",
     "cambuse",
-    "goélette"
+    "caboteur"
    ],
    "explication": "Le timonier dirige le navire grâce à la barre. La vigie, elle, guette la mer et les côtes.",
    "source": {
@@ -584,19 +584,19 @@ JEU.enregistrer("cours", {
    "fiche": "lecture-s02-1-f3",
    "type": "qcm",
    "niveau": 3,
-   "enonce": "Pourquoi appelle-t-on « courant » une partie du gréement ?",
+   "enonce": "Un marin règle une voile, puis vérifie un mât. À quelles parties du gréement a-t-il touché, dans l'ordre ?",
    "choix": [
-    "Elle est mobile : on la règle",
-    "Elle trempe dans le courant de la mer",
-    "On s'en sert tous les jours",
-    "Elle est fixée solidement au mât"
+    "Au gréement courant, puis au dormant",
+    "Au gréement dormant, puis au courant",
+    "Deux fois au gréement courant",
+    "Deux fois au gréement dormant"
    ],
-   "explication": "Le gréement courant, ce sont les parties mobiles, voiles et cordes, que l'on règle. Comme quelqu'un qui court, ça bouge.",
+   "explication": "La voile est mobile, on la règle : elle fait partie du gréement courant. Le mât est fixe : il appartient au gréement dormant.",
    "source": {
     "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
     "page": 3
    },
-   "r": "=cEUBlwxlSRSTsiUboQVLl0CDshCsAURB51CPNgCFcTZ",
+   "r": "LpRATUQMCFQFY9wTV8AHCcmXBsAFDwRAMIFHtgECQRYrdEgRcMTZ",
    "poids": 1
   },
   {
@@ -876,7 +876,7 @@ JEU.enregistrer("cours", {
    "id": "lecture-s02-1-q35",
    "fiche": "lecture-s02-1-f5",
    "type": "qcm_multiple",
-   "niveau": 2,
+   "niveau": 3,
    "enonce": "Lesquels de ces mots désignent un endroit à l'intérieur du navire ?",
    "choix": [
     "l'entrepont",

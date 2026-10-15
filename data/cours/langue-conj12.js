@@ -230,8 +230,8 @@ JEU.enregistrer("cours", {
    "choix": [
     "Parce que le sujet est tu",
     "Parce que « as » sert d'auxiliaire, « a » non",
-    "Parce que le sujet est je",
-    "Parce que « as » est une préposition"
+    "Parce que « a » sans accent est une préposition",
+    "Parce que le verbe est au passé composé"
    ],
    "explication": "Avec tu, le verbe avoir s'écrit as ; avec il ou elle, il s'écrit a. Les deux peuvent servir d'auxiliaire : tu as gagné, elle a gagné.",
    "source": {
@@ -267,13 +267,13 @@ JEU.enregistrer("cours", {
    "niveau": 3,
    "enonce": "Dans quelles phrases faut-il écrire « a » ? Coche toutes les bonnes réponses.",
    "choix": [
-    "Je pars ___ la montagne.",
+    "Je pars ___ la gare.",
     "Mon oncle ___ une moto.",
     "Tu ___ un chien ?",
     "Ma sœur ___ réussi son gâteau.",
     "Le bébé ___ sommeil."
    ],
-   "explication": "Avec mon oncle, ma sœur et le bébé, on peut dire « avait » : c'est avoir, écrit a. « Je pars avait la montagne » n'a pas de sens, et avec tu on écrit as.",
+   "explication": "Avec mon oncle, ma sœur et le bébé, on peut dire « avait » : c'est avoir, écrit a. « Je pars avait la gare » n'a pas de sens, et avec tu on écrit as.",
    "source": {
     "fichier": "cours/langue/Francais 5e - Conjugaison - Cours 12 - Homophones grammaticaux.pdf",
     "page": 1
@@ -381,7 +381,7 @@ JEU.enregistrer("cours", {
     "La phrase n'a plus de sens : il faut écrire a",
     "La phrase a du sens : il faut écrire a",
     "La phrase n'a plus de sens : il faut écrire à",
-    "Il faut garder avait dans la phrase"
+    "La phrase a du sens : il faut écrire à"
    ],
    "explication": "« Le train part avait midi » ne veut rien dire, ce n'est donc pas le verbe avoir. On écrit à, avec un accent.",
    "source": {
@@ -461,7 +461,7 @@ JEU.enregistrer("cours", {
     "Le facteur avait une sacoche.",
     "Je vais avait l'école.",
     "Il habite avait la campagne.",
-    "Un gâteau avait la crème."
+    "Ce livre est avait Lucie."
    ],
    "explication": "« Le facteur avait une sacoche » garde son sens : on écrira « le facteur a une sacoche ». Dans les trois autres phrases, « avait » ne veut rien dire : il faut à.",
    "source": {
@@ -563,7 +563,7 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Dans « Il ferme le coffre à clé », la préposition à exprime le lieu.",
    "corrections": [
-    "Faux : elle exprime le moyen ; la clé sert à fermer.",
+    "Faux : elle exprime le moyen ; on ferme le coffre grâce à la clé.",
     "Faux : elle exprime l'appartenance ; la clé est à lui.",
     "Faux : elle exprime le temps."
    ],
@@ -572,7 +572,7 @@ JEU.enregistrer("cours", {
     "fichier": "cours/langue/Francais 5e - Conjugaison - Cours 12 - Homophones grammaticaux.pdf",
     "page": 1
    },
-   "r": "MsEQdcRBxg0AV0YrPJBFMEwZbbbCWEFCC8USI1CScoFQOpgCGxwHuAQBdARUMIwAXgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "r": "=gxFDcMrKUQSTsiUVbaVUoAzsCwDjh0FTtUAMY0AFIlIfcAATE1BB8USI1CScoFQOpgCGxwHuAQBdARUMIwAXgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -620,7 +620,7 @@ JEU.enregistrer("cours", {
    "gauche": [
     "une planche à repasser",
     "rentrer à pied",
-    "arriver à l'aube",
+    "se coucher à dix heures",
     "un bonnet à pompon"
    ],
    "droite": [
@@ -629,7 +629,7 @@ JEU.enregistrer("cours", {
     "Le but",
     "Le moyen"
    ],
-   "explication": "La planche sert à repasser (le but) et l'on rentre grâce à ses pieds (le moyen). L'aube est un moment de la journée, et le pompon décrit le bonnet.",
+   "explication": "La planche sert à repasser (le but) et l'on rentre grâce à ses pieds (le moyen). Dix heures est un moment de la journée, et le pompon décrit le bonnet.",
    "source": {
     "fichier": "cours/langue/Francais 5e - Conjugaison - Cours 12 - Homophones grammaticaux.pdf",
     "page": 1
@@ -706,7 +706,7 @@ JEU.enregistrer("cours", {
     "Il change avec la personne",
     "On peut le remplacer par « avait »",
     "On peut le remplacer par « et puis »",
-    "Il est toujours au début de la phrase"
+    "On change de personne pour vérifier le mode"
    ],
    "explication": "« Et » a le sens de « + » ou de « et puis ». Si « et puis » convient, on écrit et.",
    "source": {

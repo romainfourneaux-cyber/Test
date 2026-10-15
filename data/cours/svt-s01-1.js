@@ -480,7 +480,7 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s01-1-f2",
    "type": "qcm",
    "niveau": 3,
-   "enonce": "Une des huit planètes se trouve au-delà de la ceinture principale d'astéroïdes. Que peut-on en déduire ?",
+   "enonce": "On sait seulement qu'une planète se trouve au-delà de la ceinture principale d'astéroïdes. Que peut-on en déduire ?",
    "choix": [
     "C'est une planète gazeuse",
     "C'est une planète tellurique",
@@ -556,19 +556,19 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s01-1-f3",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Pourquoi un être humain ne pourrait-il pas respirer sur Vénus ?",
+   "enonce": "Vénus a la taille de la Terre et une atmosphère. Pourquoi un être humain ne pourrait-il pourtant pas y vivre ?",
    "choix": [
-    "Son atmosphère est irrespirable",
-    "Elle n'a aucune atmosphère",
-    "Elle est faite uniquement de gaz",
-    "Elle est trop éloignée du Soleil"
+    "Son air est irrespirable et il y fait plus de 400 °C",
+    "Son atmosphère est trop mince et il y fait très froid",
+    "Elle est faite uniquement de gaz, sans sol où se poser",
+    "Elle est trop loin du Soleil pour recevoir sa lumière"
    ],
-   "explication": "Vénus est entourée d'une atmosphère très épaisse qu'on ne peut pas respirer. En plus, il y fait plus de 400 °C.",
+   "explication": "Vénus est entourée d'une atmosphère très épaisse qu'on ne peut pas respirer, et il y fait plus de 400 °C. Elle est pourtant tellurique, comme la Terre.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 1
    },
-   "r": "==QYIlwVMxhBWUBDAUzGVFhBUk0Cdo9qr0lFaBkGOYECGESZ",
+   "r": "==wDmU47O9lVSl0FjIlBQkRAJphBT4wYUVUWE50GDYEDeUyEHwQBCwAHdsBS34FAV81BOYECGESZ",
    "poids": 1
   },
   {

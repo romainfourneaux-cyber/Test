@@ -226,7 +226,7 @@ JEU.enregistrer("cours", {
    "choix": [
     "À peu près le même qu'aujourd'hui",
     "Proche du maximum possible",
-    "Nul : il n'y en avait pas",
+    "Nul : il n'y en avait plus du tout",
     "Bien plus élevé qu'aujourd'hui"
    ],
    "explication": "Depuis sa chute, vers 4 milliards d'années, le taux de vapeur d'eau reste à peu près stable. Il y a 3 milliards d'années, il était donc déjà proche du niveau actuel.",
@@ -625,14 +625,14 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s02-2-f4",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Comment trouver la distance d'une planète au Soleil sur ce graphique ?",
+   "enonce": "Sur le graphique des planètes, comment trouver la distance d'une planète au Soleil ?",
    "choix": [
     "On lit l'abscisse de son point",
     "On lit l'ordonnée de son point",
     "On compte les points avant lui",
     "On mesure la taille de son point"
    ],
-   "explication": "Sur ce graphique, l'abscisse donne la distance au Soleil. L'ordonnée donne la température.",
+   "explication": "Sur le graphique des planètes, l'abscisse donne la distance au Soleil. L'ordonnée donne la température.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 4

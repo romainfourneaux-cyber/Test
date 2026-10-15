@@ -369,7 +369,7 @@ JEU.enregistrer("cours", {
     "La stratosphère",
     "La troposphère",
     "La mésosphère",
-    "L'exosphère"
+    "La thermosphère"
    ],
    "explication": "L'ozone se concentre dans la stratosphère. Elle se trouve juste au-dessus de la troposphère.",
    "source": {
@@ -498,18 +498,18 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s03-1-f2",
    "type": "vrai_faux",
    "niveau": 3,
-   "enonce": "On connaît l'altitude des deux limites de l'exosphère, ce qui permet de calculer son épaisseur.",
+   "enonce": "Sur le graphique de l'atmosphère, on lit les deux limites de l'exosphère, ce qui permet de calculer son épaisseur.",
    "corrections": [
-    "Faux : on ne connaît que sa limite basse, au sommet de la thermosphère ; son épaisseur ne se calcule pas.",
-    "Faux : on ne connaît que sa limite haute, au bord de l'espace.",
-    "Faux : son épaisseur est la même que celle de la thermosphère."
+    "Faux : seule sa limite basse s'y lit, au sommet de la thermosphère ; son épaisseur ne s'y calcule pas.",
+    "Faux : seule sa limite haute s'y lit, au bord de l'espace.",
+    "Faux : son épaisseur y est la même que celle de la thermosphère."
    ],
-   "explication": "Pour calculer une épaisseur, il faut l'altitude du haut et celle du bas de la couche. Pour l'exosphère, seule la limite basse est connue.",
+   "explication": "Pour calculer une épaisseur, il faut l'altitude du haut et celle du bas de la couche. Sur le graphique de l'atmosphère, seule la limite basse de l'exosphère apparaît.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 4
    },
-   "r": "SQESaMxNSBRCAIRBPwgUNATDAsVDcoxAVoxGmIA3mW1HG0xTJhkJf1s9F5BHJswGX8iBVRQGRxgCPZQDuAkCG1wGOYkSMEANTcRRQUAADYgHIJiXFBFWf8kEIr6EpwhGGUFFH4UAdgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "r": "=8QZcZABFEFDCoREEIiTFxkCd80AIkEAychBWwBEZcMrSZALeVkDNsQHOXaACQTHYcBEZ0hTO4BSmkURBh0ACkQFJdgJSlVEc0RSXgUAIZiXWQ1TOpgEPQwGrIFFWUFFFshCBgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -557,7 +557,7 @@ JEU.enregistrer("cours", {
     "Une perturbation",
     "Une dépression",
     "Un anticyclone",
-    "Un nuage"
+    "Une précipitation"
    ],
    "explication": "La perturbation naît à la limite entre une dépression et un anticyclone. Elle apporte du vent et des précipitations.",
    "source": {
@@ -709,19 +709,19 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s03-1-f4",
    "type": "qcm",
    "niveau": 3,
-   "enonce": "Pourquoi une perturbation peut-elle apporter de la neige ?",
+   "enonce": "Pourquoi peut-on dire qu'une perturbation peut apporter de la neige ?",
    "choix": [
-    "La neige est une des précipitations qu'elle apporte",
-    "Elle se forme toujours au cœur d'un anticyclone",
-    "L'air froid y monte au lieu de redescendre vers le sol",
-    "Elle se forme tout en haut, dans l'exosphère"
+    "Elle apporte des précipitations, et la neige en est une",
+    "Elle apporte du vent, et la neige est une sorte de vent",
+    "Elle naît au cœur d'un anticyclone, où l'air est froid",
+    "Elle fait redescendre l'air chaud, qui se change en neige"
    ],
    "explication": "Une perturbation est une zone de vents et de précipitations. Les précipitations tombent sous forme de pluie, de neige ou de grêle.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 6
    },
-   "r": "HBVWcAgFWggUi4RGAIFBY4EHccgKZRQQE5hBF8sqAcjUGAQERxAAaIFHwgURQp0BKggRI4TZ",
+   "r": "==AUN0CWFFkXL8ECDk0FgsBELUFEF40GXg0betgWEphDS8QGbQy22eRBRpxCLIVD38lCF11DPNgCFcTZ",
    "poids": 1
   },
   {

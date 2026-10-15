@@ -250,8 +250,8 @@ JEU.enregistrer("cours", {
    "niveau": 1,
    "enonce": "Quel instrument vérifie qu'un mur est bien vertical ?",
    "choix": [
-    "Le fil à plomb",
     "L'équerre",
+    "Le fil à plomb",
     "Le réglet",
     "Le mètre ruban"
    ],
@@ -313,10 +313,10 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Comment un fil à plomb permet-il de vérifier une verticale ?",
    "choix": [
-    "Le poids tend le fil vers le bas ; on compare la surface au fil",
     "On pose le fil à plat sur la surface, puis on lit la graduation",
     "On mesure la longueur du fil le long de toute la surface",
-    "On fait tourner le fil autour de la surface à vérifier"
+    "On fait tourner le fil autour de la surface à vérifier",
+    "Le poids tend le fil vers le bas ; on compare la surface au fil"
    ],
    "explication": "Le fil lesté pend toujours à la verticale. Si la surface le suit, elle est verticale.",
    "source": {
@@ -387,9 +387,9 @@ JEU.enregistrer("cours", {
    "niveau": 1,
    "enonce": "Quelle balance fonctionne par double pesée, avec des poids ?",
    "choix": [
-    "La balance de Roberval",
     "La balance électronique",
     "La balance à pesée simple",
+    "La balance de Roberval",
     "La balance avec touche tare"
    ],
    "explication": "La balance de Roberval a deux plateaux. On équilibre l'objet avec des poids.",
@@ -422,9 +422,9 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Comment trouve-t-on la masse d'un objet avec une balance de Roberval ?",
    "choix": [
-    "On équilibre l'objet avec des poids sur l'autre plateau",
     "On lit directement la masse qui s'affiche sur son écran",
     "On appuie sur la touche tare, puis on lit le plateau",
+    "On équilibre l'objet avec des poids sur l'autre plateau",
     "On pose l'objet sur les deux plateaux à la fois"
    ],
    "explication": "À l'équilibre, l'objet a la même masse que les poids posés en face. On additionne alors leurs valeurs.",
@@ -446,7 +446,7 @@ JEU.enregistrer("cours", {
     "Faux : les deux balances font une double pesée.",
     "Faux : les deux balances font une pesée simple."
    ],
-   "explication": "La balance de Roberval compare l'objet à des poids : double pesée. La balance électronique affiche directement la masse : pesée simple.",
+   "explication": "La balance de Roberval, qui s'utilise avec des poids, est celle de la double pesée. La balance électronique, qui affiche directement la masse, fait une pesée simple.",
    "source": {
     "fichier": "methodes/Fiche methode - Instruments de mesure en physique-chimie.pdf",
     "page": 1
@@ -461,10 +461,10 @@ JEU.enregistrer("cours", {
    "niveau": 3,
    "enonce": "Sur une balance de Roberval, un objet est équilibré par trois poids : 50 g, 10 g et 5 g. Quelle est sa masse ?",
    "choix": [
-    "65 g",
+    "3 g",
     "55 g",
     "60 g",
-    "3 g"
+    "65 g"
    ],
    "explication": "À l'équilibre, la masse de l'objet est celle de tous les poids réunis. 50 + 10 + 5 donne 65 g.",
    "indice": "Additionne les poids.",
@@ -483,10 +483,10 @@ JEU.enregistrer("cours", {
    "enonce": "Quelles phrases décrivent la balance électronique ?",
    "choix": [
     "Elle fait une pesée simple",
-    "Elle affiche directement la masse",
-    "Elle possède une touche « tare »",
     "Elle a deux plateaux",
-    "On y pose des poids pour équilibrer"
+    "Elle affiche directement la masse",
+    "On y pose des poids pour équilibrer",
+    "Elle possède une touche « tare »"
    ],
    "explication": "La balance électronique affiche la masse et se remet à zéro avec la tare. Les deux plateaux et les poids, c'est la balance de Roberval.",
    "source": {
@@ -501,19 +501,19 @@ JEU.enregistrer("cours", {
    "fiche": "methode-instruments-f2",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Pourquoi dit-on que la balance électronique fait une pesée simple ?",
+   "enonce": "Quelle différence y a-t-il entre la balance électronique et la balance de Roberval ?",
    "choix": [
-    "Elle affiche la masse sans qu'on pose de poids",
-    "Elle ne sait peser que des objets très légers, comme un cheveu",
-    "Elle n'a pas de touche « tare »",
-    "Elle pèse deux objets en même temps"
+    "L'électronique affiche la masse ; la Roberval s'équilibre avec des poids",
+    "L'électronique a deux plateaux et des poids ; la Roberval n'a qu'un plateau",
+    "L'électronique fait une double pesée ; la Roberval fait une pesée simple",
+    "La Roberval affiche la masse ; l'électronique s'équilibre avec des poids"
    ],
-   "explication": "On pose l'objet et la masse s'affiche : une seule opération. Avec la balance de Roberval, il faut équilibrer avec des poids.",
+   "explication": "La balance électronique affiche directement la masse et possède une touche « tare ». La balance de Roberval a deux plateaux : on y équilibre l'objet avec des poids.",
    "source": {
     "fichier": "methodes/Fiche methode - Instruments de mesure en physique-chimie.pdf",
     "page": 1
    },
-   "r": "EphFu0RBFBRFJtAHdgxYDpgEY9xTVgACBc2FGYBFck0DDIVDr4EDTt0DPNgCFcTZ",
+   "r": "==wRGl0BAYhRacxISZBADARSL0BEB8CRQQEhtiUFGVwExAAEHoxIJ9wASN1YIZhRMNwTHoQSX8SEcMwEQk0CaMQAtI0FB50CD8cpO5TZ",
    "poids": 1
   },
   {
@@ -562,10 +562,10 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Pourquoi fait-on la tare avant de verser un liquide dans un récipient posé sur la balance ?",
    "choix": [
-    "Pour ne pas compter la masse du récipient",
     "Pour ajouter la masse du récipient à celle du liquide",
     "Pour que l'écran affiche la masse du récipient seul",
-    "Pour mesurer le volume du liquide versé"
+    "Pour mesurer le volume du liquide versé",
+    "Pour ne pas compter la masse du récipient"
    ],
    "explication": "La tare remet l'écran à 0 avec le récipient dessus. Ensuite, seule la masse du liquide compte.",
    "source": {
@@ -582,10 +582,10 @@ JEU.enregistrer("cours", {
    "niveau": 3,
    "enonce": "Un bol vide posé sur la balance affiche 150 g. On fait la tare, puis on verse de la farine : l'écran affiche 80 g. Quelle est la masse de la farine ?",
    "choix": [
-    "80 g",
-    "230 g",
     "70 g",
-    "150 g"
+    "80 g",
+    "150 g",
+    "230 g"
    ],
    "explication": "Après la tare, l'écran ne compte plus le bol. Les 80 g affichés sont donc la masse de la farine seule.",
    "source": {
@@ -636,10 +636,10 @@ JEU.enregistrer("cours", {
    "niveau": 3,
    "enonce": "Comment peser seulement le lait versé dans une casserole ?",
    "choix": [
-    "Poser la casserole vide, faire la tare, verser le lait, lire",
     "Verser le lait dans la casserole, faire la tare, puis lire",
+    "Poser la casserole vide, faire la tare, verser le lait, lire",
     "Poser la casserole pleine, puis faire la tare et lire",
-    "Peser la casserole vide, sans tare, puis lire après avoir versé"
+    "Poser la casserole vide, verser le lait, puis lire sans faire la tare"
    ],
    "explication": "La tare se fait avec la casserole vide. Après avoir versé, l'écran n'affiche que la masse du lait.",
    "source": {
@@ -656,8 +656,8 @@ JEU.enregistrer("cours", {
    "niveau": 1,
    "enonce": "Quel instrument souple permet de mesurer une grande longueur ?",
    "choix": [
-    "Le mètre ruban",
     "Le réglet",
+    "Le mètre ruban",
     "L'équerre",
     "L'éprouvette graduée"
    ],
@@ -691,10 +691,10 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Comment connaître les trois dimensions d'une boîte ?",
    "choix": [
-    "On mesure sa longueur, sa largeur et sa hauteur",
     "On la pèse, puis on lit sa masse sur la balance électronique",
     "On la plonge dans une éprouvette graduée",
-    "On vérifie ses angles avec une équerre"
+    "On vérifie ses angles avec une équerre",
+    "On mesure sa longueur, sa largeur et sa hauteur"
    ],
    "explication": "Les dimensions sont des longueurs : on les mesure avec une règle ou un mètre. La balance donne une masse, pas une longueur.",
    "source": {
@@ -730,11 +730,11 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Lesquels de ces instruments servent à mesurer des longueurs ?",
    "choix": [
-    "Le réglet",
     "Le mètre ruban",
     "L'éprouvette graduée",
-    "La balance électronique",
-    "Le fil à plomb"
+    "Le réglet",
+    "Le fil à plomb",
+    "La balance électronique"
    ],
    "explication": "Le réglet et le mètre ruban mesurent des longueurs. L'éprouvette mesure un volume, la balance une masse, et le fil à plomb vérifie une verticale.",
    "source": {
@@ -745,15 +745,56 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
+   "id": "methode-instruments-q52",
+   "fiche": "methode-instruments-f4",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Qu'ont en commun le réglet et le mètre ruban ?",
+   "choix": [
+    "Ils mesurent tous deux des dimensions",
+    "Ils sont tous deux souples et se déroulent",
+    "Ils vérifient tous deux qu'une surface est verticale",
+    "Ils mesurent tous deux le volume d'un liquide"
+   ],
+   "explication": "Le réglet, une règle rigide, et le mètre ruban, souple, mesurent tous deux des longueurs. Le volume d'un liquide se lit dans une éprouvette, et la verticale se vérifie au fil à plomb.",
+   "source": {
+    "fichier": "methodes/Fiche methode - Instruments de mesure en physique-chimie.pdf",
+    "page": 2
+   },
+   "r": "L1RAdEAMDBAWEpwTVMQDS9zBQEQVCwRAbIFHtg0FA51CCYUFFsTZ",
+   "poids": 1
+  },
+  {
+   "id": "methode-instruments-q53",
+   "fiche": "methode-instruments-f4",
+   "type": "trou",
+   "niveau": 1,
+   "enonce": "Complète avec le nom des instruments.",
+   "texte": "Le ___ est une règle métallique rigide ; le mètre ___, souple, se déroule pour mesurer les grandes longueurs.",
+   "banque": [
+    "réglet",
+    "ruban",
+    "doseur",
+    "plomb"
+   ],
+   "explication": "Le réglet est une règle en métal, rigide. Le mètre ruban, lui, est souple et se déroule.",
+   "source": {
+    "fichier": "methodes/Fiche methode - Instruments de mesure en physique-chimie.pdf",
+    "page": 2
+   },
+   "r": "=gDaPAgDEMxGQxhXocUAUUQCKAgSv9QEQFUCGXKFLlCH",
+   "poids": 1
+  },
+  {
    "id": "methode-instruments-q14",
    "fiche": "methode-instruments-f5",
    "type": "qcm",
    "niveau": 1,
    "enonce": "Où faut-il placer son œil pour lire le volume dans une éprouvette ?",
    "choix": [
-    "Au niveau du ménisque",
     "Au-dessus du ménisque",
     "Au-dessous du ménisque",
+    "Au niveau du ménisque",
     "Tout en haut de l'éprouvette"
    ],
    "explication": "L'œil doit être à la hauteur du liquide. Au-dessus ou au-dessous, la lecture est fausse.",
@@ -771,9 +812,9 @@ JEU.enregistrer("cours", {
    "niveau": 3,
    "enonce": "Trois élèves lisent la même éprouvette : 73 mL (œil au-dessus), 72 mL (œil au niveau du ménisque), 71,5 mL (œil au-dessous). Quelle est la bonne mesure ?",
    "choix": [
-    "72 mL",
     "73 mL",
     "71,5 mL",
+    "72 mL",
     "La moyenne des trois"
    ],
    "explication": "Seule la lecture faite l'œil au niveau du ménisque est juste. Ici, c'est 72 mL.",
@@ -849,10 +890,10 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Dans quel récipient le ménisque se voit-il nettement ?",
    "choix": [
-    "Un récipient étroit, comme une éprouvette",
     "Un récipient très large, comme un saladier",
     "Seulement un récipient fermé par un bouchon",
-    "Seulement un récipient rempli à ras bord"
+    "Seulement un récipient rempli à ras bord",
+    "Un récipient étroit, comme une éprouvette"
    ],
    "explication": "Le ménisque se forme dans un contenant de faible diamètre, comme une éprouvette. C'est pour cela qu'il faut savoir le lire.",
    "source": {
@@ -891,8 +932,8 @@ JEU.enregistrer("cours", {
    "enonce": "Une éprouvette contient 50 mL d'eau. On y plonge un caillou : le niveau monte à 64 mL. Quel est le volume du caillou ?",
    "choix": [
     "14 mL",
-    "64 mL",
     "50 mL",
+    "64 mL",
     "114 mL"
    ],
    "explication": "Volume de l'objet = niveau après − niveau avant. 64 − 50 donne 14 mL.",
@@ -926,8 +967,8 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Comment mesurer le volume d'une petite clé ?",
    "choix": [
-    "Plonger la clé dans une éprouvette et faire la différence des niveaux",
     "Peser la clé sur la balance électronique et lire sa masse en grammes",
+    "Plonger la clé dans une éprouvette et faire la différence des niveaux",
     "Mesurer la longueur de la clé avec un réglet, puis la multiplier par trois",
     "Poser la clé contre une équerre et lire l'angle qu'elle forme avec elle"
    ],
@@ -948,8 +989,8 @@ JEU.enregistrer("cours", {
    "choix": [
     "3 mL",
     "6 mL",
-    "41 mL",
-    "38 mL"
+    "38 mL",
+    "41 mL"
    ],
    "explication": "Les deux billes ensemble font 41 − 35 = 6 mL. Chacune mesure donc 3 mL.",
    "indice": "Trouve d'abord le volume des deux billes ensemble.",
@@ -986,8 +1027,8 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Pourquoi le niveau du liquide monte-t-il quand on plonge un objet ?",
    "choix": [
-    "L'objet prend de la place et déplace le liquide",
     "L'objet absorbe une partie du liquide",
+    "L'objet prend de la place et déplace le liquide",
     "La masse de l'objet comprime le liquide vers le haut",
     "L'objet réchauffe le liquide, qui gonfle"
    ],
@@ -1027,10 +1068,10 @@ JEU.enregistrer("cours", {
    "niveau": 1,
    "enonce": "Quel récipient mesure une contenance très précise grâce à un trait gravé sur son col étroit ?",
    "choix": [
-    "La fiole jaugée",
     "L'éprouvette graduée",
     "Le verre doseur",
-    "Le saladier"
+    "Le saladier",
+    "La fiole jaugée"
    ],
    "explication": "La fiole jaugée a un col très étroit marqué d'un trait. Sa précision va jusqu'à la goutte.",
    "source": {
@@ -1101,9 +1142,9 @@ JEU.enregistrer("cours", {
    "niveau": 3,
    "enonce": "Qu'est-ce qui distingue la fiole jaugée de l'éprouvette graduée ?",
    "choix": [
-    "La fiole a un seul trait gravé, pour une contenance très précise",
     "La fiole a beaucoup plus de graduations que l'éprouvette",
     "La fiole ne forme jamais de ménisque, contrairement à l'éprouvette",
+    "La fiole a un seul trait gravé, pour une contenance très précise",
     "La fiole sert à peser, l'éprouvette à mesurer des volumes"
    ],
    "explication": "L'éprouvette porte de nombreuses graduations pour lire des volumes variés. La fiole jaugée n'a qu'un trait gravé, pour une seule contenance mesurée très précisément.",
@@ -1121,9 +1162,9 @@ JEU.enregistrer("cours", {
    "niveau": 1,
    "enonce": "Avec qui réalise-t-on les expériences de physique-chimie à la maison ?",
    "choix": [
-    "Toujours sous la surveillance d'un adulte",
     "Avec un camarade de classe, sans aucun adulte",
     "Seul, si l'expérience paraît simple",
+    "Toujours sous la surveillance d'un adulte",
     "Seul, en suivant bien le livret"
    ],
    "explication": "Les expériences se font systématiquement avec un adulte. C'est la règle de sécurité des TP.",
@@ -1217,21 +1258,21 @@ JEU.enregistrer("cours", {
    "fiche": "methode-instruments-f8",
    "type": "qcm_multiple",
    "niveau": 3,
-   "enonce": "Dans ce matériel de TP, lesquels sont des instruments de mesure ?",
+   "enonce": "Parmi ce matériel prévu pour les expériences, lesquels sont des instruments de mesure ?",
    "choix": [
-    "Une balance électronique",
     "Un verre doseur",
-    "Un thermomètre",
-    "Un saladier",
+    "Un ballon de baudruche",
     "Un mouchoir en papier",
-    "Un ballon de baudruche"
+    "Une balance électronique",
+    "Une casserole",
+    "Un saladier"
    ],
-   "explication": "La balance mesure une masse, le verre doseur un volume et le thermomètre une température. Le saladier, le mouchoir et le ballon servent aux expériences, sans rien mesurer.",
+   "explication": "La balance électronique mesure une masse et le verre doseur un volume. Le saladier, le mouchoir, la casserole et le ballon servent aux expériences, sans rien mesurer.",
    "source": {
     "fichier": "methodes/Physique-chimie - Materiel des TP.pdf",
     "page": 1
    },
-   "r": "=gyRQMQHGz6HH4yXA0VWOFwMEVEU1cAEWoRFJtQHA0QNNsAYPIUTDMBGbkSHHEhFUUwxsKVDgMEBZxEDPNAC8AFH",
+   "r": "=QDU1cAEWoRFJtQHA0QNNsAYPIUTDMBGbkSHHEhFUUwxsKVDgMEBZxEDPNAC8AFH",
    "poids": 1
   }
  ],

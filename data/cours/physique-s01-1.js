@@ -220,12 +220,12 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Lesquels de ces exemples sont à l'état solide ?",
    "choix": [
-    "La peau",
-    "Le sang",
-    "Le verre",
+    "Le bois",
     "La fumée",
+    "La peau",
+    "Le verre",
     "Le jus de pomme",
-    "Le bois"
+    "Le sang"
    ],
    "explication": "La peau, le verre et le bois sont rangés parmi les solides. Le sang et le jus de pomme sont liquides, la fumée est un gaz.",
    "source": {
@@ -261,10 +261,10 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "On range des exemples de matière dans un tableau à simple entrée. À quoi correspond chaque colonne ?",
    "choix": [
-    "À un état de la matière",
     "À un seul exemple de matière",
     "À une propriété, comme « compressible »",
-    "À la masse de chaque exemple"
+    "À la masse de chaque exemple",
+    "À un état de la matière"
    ],
    "explication": "On fait une colonne « solide », une « liquide » et une « gazeux ». Chaque exemple va ensuite dans la colonne de son état.",
    "source": {
@@ -281,7 +281,7 @@ JEU.enregistrer("cours", {
    "niveau": 1,
    "enonce": "La matière peut se présenter sous trois états : solide, liquide ou gazeux.",
    "corrections": [],
-   "explication": "Oui : ce sont les trois états de la matière vus dans cette séance.",
+   "explication": "Oui : solide, liquide et gazeux sont les trois états de la matière. Chaque exemple se range dans l'un d'eux.",
    "source": {
     "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
     "page": 1
@@ -361,9 +361,9 @@ JEU.enregistrer("cours", {
    "niveau": 1,
    "enonce": "Quelle propriété appartient à l'état solide ?",
    "choix": [
-    "Il a une forme propre",
     "Il prend la forme du récipient",
     "Il est expansible",
+    "Il a une forme propre",
     "Il se laisse comprimer"
    ],
    "explication": "Un solide garde sa forme tout seul. C'est le liquide qui prend la forme du récipient, et le gaz qui se comprime et s'étend.",
@@ -400,12 +400,12 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Coche les trois propriétés d'un solide.",
    "choix": [
-    "Il coule",
     "Il est compressible",
+    "Il a une forme propre",
     "Il est non compressible",
     "On peut le prendre en main",
-    "Il a une forme propre",
-    "Il prend la forme du récipient"
+    "Il prend la forme du récipient",
+    "Il coule"
    ],
    "explication": "Forme propre, se saisit, non compressible : ce sont les trois marques du solide. Couler et prendre la forme du récipient, c'est le liquide.",
    "source": {
@@ -422,9 +422,9 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Pourquoi un stylo posé dans un verre ne prend-il pas la forme du verre ?",
    "choix": [
-    "Parce qu'un solide a une forme propre",
     "Parce qu'un solide est non compressible",
     "Parce qu'un stylo se saisit avec la main",
+    "Parce qu'un solide a une forme propre",
     "Parce que le stylo est plus long que le verre"
    ],
    "explication": "Le stylo est un solide : il garde sa forme où qu'on le pose. Être non compressible ne suffit pas, car un liquide l'est aussi et prend pourtant la forme du verre.",
@@ -476,8 +476,8 @@ JEU.enregistrer("cours", {
    "niveau": 3,
    "enonce": "Quelle propriété le solide a-t-il en commun avec le liquide ?",
    "choix": [
-    "Ils gardent tous deux leur forme propre",
     "Ils sont tous deux non compressibles",
+    "Ils gardent tous deux leur forme propre",
     "Ils coulent tous les deux",
     "Ils sont tous deux expansibles"
    ],
@@ -496,10 +496,10 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Un objet garde la même forme dans une boîte ou dans un bol, et on ne peut pas le comprimer. Dans quel état est-il ?",
    "choix": [
-    "Solide",
     "Liquide",
     "Gazeux",
-    "On ne peut pas le savoir"
+    "On ne peut pas le savoir",
+    "Solide"
    ],
    "explication": "Garder sa forme, c'est avoir une forme propre. Avec la non-compressibilité, c'est la marque du solide.",
    "source": {
@@ -516,8 +516,8 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Quand on verse le paquet, le sucre en poudre semble couler. Dans quel état est-il ?",
    "choix": [
-    "Solide",
     "Liquide",
+    "Solide",
     "Gazeux",
     "Il change d'état en coulant"
    ],
@@ -551,8 +551,8 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Pourquoi le sucre en poudre donne-t-il l'impression de couler ?",
    "choix": [
-    "Parce que ses grains roulent les uns sur les autres",
     "Parce que ses grains fondent un peu quand on le verse",
+    "Parce que ses grains roulent les uns sur les autres",
     "Parce que ses grains se compriment les uns contre les autres",
     "Parce qu'il contient un peu d'eau entre ses grains"
    ],
@@ -590,12 +590,12 @@ JEU.enregistrer("cours", {
    "niveau": 3,
    "enonce": "Quels arguments prouvent que le sucre en poudre est un solide ?",
    "choix": [
-    "Chaque grain a une forme propre",
-    "Chaque grain est non compressible",
     "Il est fait de minuscules cristaux solides",
-    "Il coule quand on verse le paquet",
+    "Il se verse comme du jus de pomme",
+    "Chaque grain a une forme propre",
     "Il prend la forme du paquet",
-    "Il se verse comme du jus de pomme"
+    "Il coule quand on verse le paquet",
+    "Chaque grain est non compressible"
    ],
    "explication": "Forme propre, non compressible, cristaux solides : ce sont des preuves de l'état solide. Couler n'est qu'une impression, due aux grains qui roulent.",
    "source": {
@@ -631,10 +631,10 @@ JEU.enregistrer("cours", {
    "niveau": 3,
    "enonce": "Comment savoir dans quel état est le sucre en poudre ?",
    "choix": [
-    "En observant un seul grain : il garde sa forme et ne se comprime pas",
     "En regardant le tas de sucre s'écouler comme un liquide quand on verse le paquet",
     "En comparant sa couleur à celle des autres solides",
-    "En pesant le paquet avant et après l'avoir versé"
+    "En pesant le paquet avant et après l'avoir versé",
+    "En observant un seul grain : il garde sa forme et ne se comprime pas"
    ],
    "explication": "Il faut regarder un grain, pas le tas qui s'écoule : un grain garde sa forme et ne se laisse pas comprimer. C'est la marque d'un solide.",
    "source": {
@@ -693,7 +693,7 @@ JEU.enregistrer("cours", {
    "enonce": "On peut comprimer un liquide pour qu'il prenne moins de place.",
    "corrections": [
     "Faux : un liquide est non compressible, comme un solide.",
-    "Faux : un liquide se comprime, mais beaucoup moins qu'un gaz.",
+    "Faux : un liquide se laisse comprimer, mais il n'est pas expansible.",
     "Faux : un liquide se comprime seulement dans un récipient fermé."
    ],
    "explication": "Un liquide coule, mais il ne se comprime pas. Seul le gaz est compressible.",
@@ -732,9 +732,9 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Comment reconnaître qu'une matière est à l'état liquide ?",
    "choix": [
-    "Elle coule et prend la forme de son récipient",
     "Elle garde sa forme et ne se comprime pas",
     "Elle n'a pas de forme et se laisse comprimer",
+    "Elle coule et prend la forme de son récipient",
     "Elle coule, mais elle se laisse aussi comprimer"
    ],
    "explication": "Couler et prendre la forme du récipient, c'est la marque du liquide. Un solide garde sa forme, un gaz se comprime.",
@@ -786,12 +786,12 @@ JEU.enregistrer("cours", {
    "niveau": 3,
    "enonce": "Coche toutes les propriétés d'un liquide.",
    "choix": [
-    "Il n'a pas de forme propre",
-    "Il coule",
-    "Il est non compressible",
     "Sa surface libre est plane et horizontale",
+    "Il n'a pas de forme propre",
     "Il est expansible",
-    "Il a une forme propre"
+    "Il est non compressible",
+    "Il a une forme propre",
+    "Il coule"
    ],
    "explication": "Le liquide a quatre marques : pas de forme propre, il coule, il est non compressible, sa surface libre est plane et horizontale. Être expansible, c'est le gaz.",
    "source": {
@@ -808,9 +808,9 @@ JEU.enregistrer("cours", {
    "niveau": 3,
    "enonce": "Qu'est-ce qui distingue un liquide d'un gaz ?",
    "choix": [
-    "Le liquide est non compressible, le gaz est compressible",
     "Le liquide a une forme propre, le gaz n'en a pas",
     "Le liquide est expansible, le gaz ne l'est pas",
+    "Le liquide est non compressible, le gaz est compressible",
     "Le gaz a une surface libre horizontale, le liquide non"
    ],
    "explication": "Ni le liquide ni le gaz n'ont de forme propre. Mais seul le gaz se laisse comprimer, et seul le liquide a une surface libre plane et horizontale.",
@@ -867,10 +867,10 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Pourquoi le niveau du bricoleur permet-il de tester si un objet est horizontal ?",
    "choix": [
-    "La surface libre qui borde la bulle reste toujours horizontale",
     "Le liquide coloré garde sa forme propre, même quand le tube penche",
     "Le liquide coloré se comprime du côté où le tube penche",
-    "La bulle d'air est un solide qui reste toujours horizontal"
+    "La bulle d'air est un solide qui reste toujours horizontal",
+    "La surface libre qui borde la bulle reste toujours horizontale"
    ],
    "explication": "La surface libre du liquide reste horizontale, quelle que soit la position du tube. La bulle sert donc de repère pour savoir si l'objet est à plat.",
    "source": {
@@ -887,8 +887,8 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Le fil à plomb montre la verticale. Comment en déduire l'horizontale ?",
    "choix": [
-    "Elle forme un angle droit avec le fil",
     "Elle est parallèle au fil, dans le même sens",
+    "Elle forme un angle droit avec le fil",
     "Elle suit la direction où le poids tire le fil",
     "Elle forme avec le fil un angle plus petit qu'un angle droit"
    ],
@@ -941,8 +941,8 @@ JEU.enregistrer("cours", {
    "niveau": 3,
    "enonce": "Un maçon n'a qu'un fil à plomb. Comment peut-il vérifier qu'une marche est horizontale ?",
    "choix": [
-    "En vérifiant qu'elle forme un angle droit avec le fil",
     "En vérifiant que la marche est bien parallèle au fil tendu",
+    "En vérifiant qu'elle forme un angle droit avec le fil",
     "En posant le fil à plat sur la marche, comme une règle",
     "Il ne peut pas : le fil à plomb ne donne que la verticale"
    ],
@@ -961,10 +961,10 @@ JEU.enregistrer("cours", {
    "niveau": 1,
    "enonce": "Lequel de ces exemples est un gaz ?",
    "choix": [
-    "La fumée",
     "Le sang",
     "Le fer",
-    "Le jus de pomme"
+    "Le jus de pomme",
+    "La fumée"
    ],
    "explication": "La fumée, comme l'air, est à l'état gazeux. Le sang et le jus de pomme sont liquides, le fer est solide.",
    "source": {
@@ -981,12 +981,12 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Coche les trois propriétés d'un gaz.",
    "choix": [
-    "Sa surface libre est horizontale",
+    "Il a une forme propre",
     "Il est compressible",
-    "Il n'a pas de forme propre",
-    "Il est non compressible",
+    "Sa surface libre est horizontale",
     "Il est expansible",
-    "Il a une forme propre"
+    "Il n'a pas de forme propre",
+    "Il est non compressible"
    ],
    "explication": "Un gaz n'a pas de forme propre, se comprime et peut s'étendre. La surface libre horizontale, c'est le liquide.",
    "source": {
@@ -1038,9 +1038,9 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Pourquoi faut-il tenir fermement le verre retourné pendant qu'on l'enfonce dans l'eau ?",
    "choix": [
-    "L'eau repousse l'air, et le verre risque de pencher",
     "L'air enfermé devient solide et alourdit beaucoup le verre",
     "L'air enfermé risque de se transformer en eau",
+    "L'eau repousse l'air, et le verre risque de pencher",
     "L'air enfermé se comprime jusqu'à disparaître"
    ],
    "explication": "L'eau repousse l'air enfermé dans le verre, et l'air lui résiste. Sans le tenir, le verre risquerait de pencher et de couler au fond du saladier.",
@@ -1116,9 +1116,9 @@ JEU.enregistrer("cours", {
    "niveau": 3,
    "enonce": "Quel point commun le gaz a-t-il avec le liquide ?",
    "choix": [
-    "Il n'a pas de forme propre",
     "Il est non compressible",
     "Il a une surface libre horizontale",
+    "Il n'a pas de forme propre",
     "Il est expansible"
    ],
    "explication": "Ni le gaz ni le liquide n'ont de forme propre. Mais le gaz se comprime et s'étend, alors que le liquide est non compressible.",

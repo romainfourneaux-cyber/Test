@@ -354,7 +354,7 @@ JEU.enregistrer("cours", {
    "choix": [
     "20",
     "9",
-    "45",
+    "30",
     "25"
    ],
    "explication": "Chaque rang croise chaque colonne : 4 × 5 = 20 cases. C'est le cas d'un tableau de recette pour 4 tailles de gâteau et 5 ingrédients.",
@@ -551,15 +551,15 @@ JEU.enregistrer("cours", {
    "fiche": "methode-tableau-f3",
    "type": "qcm_multiple",
    "niveau": 3,
-   "enonce": "Un tableau range les notes de chaque élève dans chaque matière : les élèves en rangs, les matières en colonnes. Coche les catégories de l'entrée « matières ».",
+   "enonce": "Un tableau range les notes d'un élève : les trimestres en rangs, les matières en colonnes. Coche les catégories de l'entrée « matières ».",
    "choix": [
     "Français",
     "Histoire",
     "SVT",
-    "Léa",
-    "Tom"
+    "Premier trimestre",
+    "Deuxième trimestre"
    ],
-   "explication": "Les matières sont l'entrée rangée en colonnes : le français, l'histoire et les SVT en sont les catégories. Léa et Tom sont des catégories de l'autre entrée, les élèves.",
+   "explication": "Les matières sont l'entrée rangée en colonnes : le français, l'histoire et les SVT en sont les catégories. Les trimestres sont les catégories de l'autre entrée, écrite en tête des rangs.",
    "source": {
     "fichier": "methodes/Fiche methode - Tableau a double entree.pdf",
     "page": 1

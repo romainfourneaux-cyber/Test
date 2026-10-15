@@ -210,8 +210,8 @@ JEU.enregistrer("cours", {
    "niveau": 1,
    "enonce": "Comment s'appelle l'axe horizontal d'un graphique ?",
    "choix": [
-    "L'abscisse",
-    "L'ordonnée",
+    "L'axe des ordonnées",
+    "L'axe des abscisses",
     "L'origine",
     "La graduation"
    ],
@@ -220,7 +220,7 @@ JEU.enregistrer("cours", {
     "fichier": "methodes/Fiche methode - Realisation graphique.pdf",
     "page": 1
    },
-   "r": "hhkFGRUDcQwBO5TZ",
+   "r": "XZBECoxBMEgCi0gFQlkTK4xBO5TZ",
    "poids": 1
   },
   {
@@ -249,10 +249,10 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Pourquoi faut-il nommer chaque axe ?",
    "choix": [
-    "Pour savoir quelle grandeur chaque axe représente",
     "Pour savoir où placer l'origine O du graphique",
     "Pour remplacer les graduations, qui deviennent inutiles",
-    "Pour savoir dans quel ordre relier les points"
+    "Pour savoir dans quel ordre relier les points",
+    "Pour savoir quelle grandeur chaque axe représente"
    ],
    "explication": "Sans nom ni unité, un axe ne veut rien dire. Le lecteur doit savoir ce qu'il lit.",
    "source": {
@@ -348,9 +348,9 @@ JEU.enregistrer("cours", {
    "niveau": 3,
    "enonce": "Sur un graphique, l'axe vertical s'appelle « hauteur de la plante » et l'axe horizontal « nombre de jours ». Quel titre convient ?",
    "choix": [
-    "Graphique représentant l'évolution de la hauteur de la plante en fonction du nombre de jours",
     "Graphique représentant l'évolution du nombre de jours en fonction de la hauteur de la plante",
     "Graphique représentant la hauteur de la plante et le nombre de jours",
+    "Graphique représentant l'évolution de la hauteur de la plante en fonction du nombre de jours",
     "Graphique représentant l'évolution de la plante en fonction des jours"
    ],
    "explication": "Après « évolution de » vient l'axe vertical, ici la hauteur. Après « en fonction de » vient l'axe horizontal, ici le nombre de jours.",
@@ -404,9 +404,9 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Comment écrit-on le titre d'un graphique réalisé à l'ordinateur ?",
    "choix": [
-    "En gras et souligné",
     "En petits caractères, sans soulignement",
     "Au crayon à papier",
+    "En gras et souligné",
     "En italique et souligné"
    ],
    "explication": "À l'ordinateur, le titre se met en gras et souligné. À la main, au crayon et souligné à la règle.",
@@ -443,11 +443,11 @@ JEU.enregistrer("cours", {
    "niveau": 3,
    "enonce": "Qu'est-ce qui est demandé pour le titre d'un graphique fait à la main ?",
    "choix": [
-    "L'écrire au crayon à papier",
-    "Le souligner à la règle",
     "Suivre le modèle « évolution de… en fonction de… »",
+    "Le souligner à la règle",
     "L'écrire en gras",
-    "L'écrire au stylo rouge"
+    "L'écrire au stylo rouge",
+    "L'écrire au crayon à papier"
    ],
    "explication": "À la main : crayon à papier, souligné à la règle, et toujours le même modèle de phrase. Le gras, c'est pour un graphique fait à l'ordinateur.",
    "source": {
@@ -499,10 +499,10 @@ JEU.enregistrer("cours", {
    "niveau": 1,
    "enonce": "Pour placer un point, quelle valeur cherche-t-on en premier ?",
    "choix": [
-    "Sa valeur sur l'axe horizontal (abscisse)",
     "Sa valeur sur l'axe vertical (ordonnée)",
     "La position de l'origine O",
-    "La plus grande graduation de l'axe vertical"
+    "La plus grande graduation de l'axe vertical",
+    "Sa valeur sur l'axe horizontal (abscisse)"
    ],
    "explication": "D'abord l'abscisse avec un pointillé vertical. Puis l'ordonnée avec un pointillé horizontal.",
    "source": {
@@ -534,8 +534,8 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Comment trouve-t-on l'emplacement exact d'un point ?",
    "choix": [
-    "Au croisement d'un pointillé vertical et d'un pointillé horizontal",
     "Au croisement de deux pointillés partant tous deux de l'origine",
+    "Au croisement d'un pointillé vertical et d'un pointillé horizontal",
     "En le plaçant à vue d'œil, juste au-dessus de l'axe des abscisses",
     "Au bout d'un pointillé tracé depuis l'axe vertical seulement"
    ],
@@ -573,8 +573,8 @@ JEU.enregistrer("cours", {
    "niveau": 3,
    "enonce": "Un point a pour abscisse 4 et pour ordonnée 7. D'où part le pointillé vertical ?",
    "choix": [
-    "De la graduation 4 de l'axe horizontal",
     "De la graduation 7 de l'axe horizontal",
+    "De la graduation 4 de l'axe horizontal",
     "De la graduation 4 de l'axe vertical",
     "De la graduation 7 de l'axe vertical"
    ],
@@ -633,10 +633,10 @@ JEU.enregistrer("cours", {
    "niveau": 1,
    "enonce": "Avec quoi trace-t-on les pointillés qui servent à placer un point ?",
    "choix": [
-    "Au crayon à papier",
     "Au stylo à bille",
     "Au feutre noir",
-    "Au crayon de couleur"
+    "Au crayon de couleur",
+    "Au crayon à papier"
    ],
    "explication": "Les pointillés se tracent au crayon à papier. La couleur ne sert qu'à repasser les points, si la consigne le demande.",
    "source": {
@@ -692,9 +692,9 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Pourquoi ne faut-il pas prolonger la courbe jusqu'à un axe ?",
    "choix": [
-    "Parce que la courbe va seulement du premier au dernier point",
     "Parce que les axes doivent rester tracés au crayon à papier",
     "Parce que le titre se place toujours au bout des axes",
+    "Parce que la courbe va seulement du premier au dernier point",
     "Parce qu'une courbe doit toujours rester bien droite"
    ],
    "explication": "On relie point par point, du premier au dernier : la courbe s'arrête là. Aller jusqu'à un axe ajouterait un trait sans aucune mesure.",
@@ -746,9 +746,9 @@ JEU.enregistrer("cours", {
    "niveau": 3,
    "enonce": "Les mesures d'un tableau vont du jour 3 au jour 12. Où la courbe doit-elle commencer et finir ?",
    "choix": [
-    "Au point du jour 3 et au point du jour 12",
     "À l'origine O et au point du jour 12",
     "Au point du jour 3 et au bout de l'axe horizontal",
+    "Au point du jour 3 et au point du jour 12",
     "Sur l'axe vertical et au point du jour 12"
    ],
    "explication": "La courbe relie les points mesurés, du premier au dernier. Elle ne part ni de l'origine ni d'un axe, et ne file pas jusqu'au bout de l'axe.",
@@ -767,9 +767,9 @@ JEU.enregistrer("cours", {
    "enonce": "Quels tracés sont interdits quand on relie les points ?",
    "choix": [
     "Relier le premier point à l'origine, si l'origine n'est pas un point mesuré",
-    "Prolonger la courbe jusqu'à un axe",
+    "Commencer par le premier point du tableau",
     "Relier chaque point au point suivant",
-    "Commencer par le premier point du tableau"
+    "Prolonger la courbe jusqu'à un axe"
    ],
    "explication": "La courbe ne touche ni l'origine (si ce n'est pas un point) ni un axe. On relie seulement les points, du premier au dernier.",
    "source": {
@@ -821,10 +821,10 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Avec quoi trace-t-on les axes d'un graphique ? (plusieurs réponses)",
    "choix": [
-    "Une règle",
-    "Un crayon à papier",
     "Un feutre épais à main levée",
-    "Un stylo à bille sans règle"
+    "Un crayon à papier",
+    "Un stylo à bille sans règle",
+    "Une règle"
    ],
    "explication": "Les axes se tracent à la règle et au crayon à papier. On peut ainsi corriger.",
    "source": {
@@ -841,10 +841,10 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Comment savoir s'il faut prolonger un axe de l'autre côté de l'origine ?",
    "choix": [
-    "On regarde si certaines valeurs sont négatives",
     "On regarde si certaines valeurs sont très grandes",
     "On le fait toujours, pour les deux axes",
-    "On regarde si le graphique doit avoir un titre"
+    "On regarde si le graphique doit avoir un titre",
+    "On regarde si certaines valeurs sont négatives"
    ],
    "explication": "Des valeurs négatives se placent de l'autre côté de O. Il faut y penser avant de tracer.",
    "source": {
@@ -895,8 +895,8 @@ JEU.enregistrer("cours", {
    "niveau": 3,
    "enonce": "Les valeurs à placer sur l'axe vertical sont −3, 2, 5 et 8. Comment tracer cet axe ?",
    "choix": [
-    "Le prolonger sous l'origine, avec une flèche à chaque bout",
     "Avec une seule flèche vers le haut, sans rien sous l'origine",
+    "Le prolonger sous l'origine, avec une flèche à chaque bout",
     "En laissant de côté la valeur −3, qui ne se place pas",
     "En plaçant −3 au-dessus de l'origine, entre 2 et 5"
    ],
@@ -915,8 +915,8 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Combien de flèches porte un axe dont toutes les valeurs sont positives ?",
    "choix": [
-    "Une flèche, à une extrémité",
     "Deux flèches, une à chaque bout",
+    "Une flèche, à une extrémité",
     "Aucune flèche",
     "Une flèche au milieu de l'axe"
    ],
@@ -935,10 +935,10 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Consigne : « Trace le graphique représentant l'évolution de la masse en fonction du volume. » Que mets-tu sur l'axe vertical ?",
    "choix": [
-    "La masse",
     "Le volume",
     "L'évolution",
-    "Le titre"
+    "Le titre",
+    "La masse"
    ],
    "explication": "Ce qui suit « évolution de » va sur l'axe vertical. Ici, c'est la masse.",
    "indice": "Évolution de Y en fonction de X.",
@@ -1010,9 +1010,9 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Consigne : « Trace le graphique représentant l'évolution du prix du pain en fonction des années. » Que mets-tu sur l'axe horizontal ?",
    "choix": [
-    "Les années",
     "Le prix du pain",
     "L'évolution",
+    "Les années",
     "Le titre du graphique"
    ],
    "explication": "Ce qui suit « en fonction de » va sur l'axe horizontal : ici, les années. Le prix du pain va sur l'axe vertical.",

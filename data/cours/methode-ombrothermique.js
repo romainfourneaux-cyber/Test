@@ -168,7 +168,7 @@ JEU.enregistrer("cours", {
    "enonce": "Que représente un diagramme ombrothermique ?",
    "choix": [
     "Les précipitations et les températures moyennes de chaque mois en un lieu",
-    "Les précipitations et les températures de chaque jour d'une année",
+    "Les précipitations et les températures moyennes de chaque jour en un lieu",
     "Les températures moyennes de chaque mois, sans les précipitations",
     "Les précipitations moyennes de plusieurs lieux sur une même carte"
    ],
@@ -207,9 +207,9 @@ JEU.enregistrer("cours", {
    "enonce": "Pourquoi utilise-t-on des moyennes sur trente ans plutôt qu'une seule année ?",
    "choix": [
     "Pour montrer le climat habituel du lieu",
-    "Parce qu'on ne mesure la pluie qu'une fois en trente ans",
+    "Pour montrer le temps qu'il fera l'année suivante",
     "Pour que bâtons et courbe aient la même hauteur",
-    "Parce qu'un diagramme couvre la vie d'un habitant"
+    "Pour garder les records de pluie et de chaleur"
    ],
    "explication": "Une année peut être très sèche ou très chaude. La moyenne sur 30 ans montre le climat habituel.",
    "source": {
@@ -244,10 +244,10 @@ JEU.enregistrer("cours", {
     "Le cumul moyen des précipitations de chaque mois",
     "La température moyenne de chaque mois",
     "La pluie tombée un jour précis",
-    "Le nombre d'habitants du lieu",
+    "La température la plus haute jamais relevée",
     "La vitesse du vent chaque mois"
    ],
-   "explication": "Le diagramme ne donne que deux choses : les précipitations et les températures moyennes de chaque mois. Il ne dit rien d'un jour précis, du vent ou des habitants.",
+   "explication": "Le diagramme ne donne que deux choses : les précipitations et les températures moyennes de chaque mois. Il ne dit rien d'un jour précis, d'un record ou du vent.",
    "source": {
     "fichier": "methodes/Fiche methode - Diagramme ombrothermique.pdf",
     "page": 1
@@ -262,17 +262,17 @@ JEU.enregistrer("cours", {
    "niveau": 3,
    "enonce": "Une année, un lieu connaît un été exceptionnellement chaud. Son diagramme ombrothermique en est-il bouleversé ?",
    "choix": [
-    "Non, car chaque valeur est une moyenne sur trente ans",
-    "Oui, car le diagramme ne montre qu'une seule année",
-    "Oui, car on refait le diagramme après chaque été",
-    "Non, car le diagramme ne montre pas les températures"
+    "Non : chaque valeur est une moyenne sur trente ans",
+    "Oui : le diagramme ne montre qu'une seule année",
+    "Oui : on refait le diagramme après chaque été",
+    "Non : le diagramme ne montre jamais les températures"
    ],
    "explication": "Chaque valeur du diagramme est une moyenne sur trente ans. Une seule année exceptionnelle la change donc très peu.",
    "source": {
     "fichier": "methodes/Fiche methode - Diagramme ombrothermique.pdf",
     "page": 1
    },
-   "r": "==wDWsFTOpgEIwAAzI1BQYQUMAQAXEBLAVEUDtxTSUBDSVzBQkAFHk0CaMQCr4URHxUDPpECGwTZ",
+   "r": "==wDdEwBGxgBpcxBRU1Ac0xTXYQLIxhWA5kCIMRSGQzFVdBAUUwDZIVD2wFBd5kTVZECGwTZ",
    "poids": 1
   },
   {
@@ -353,7 +353,7 @@ JEU.enregistrer("cours", {
    "choix": [
     "Il mélange des bâtons et une courbe",
     "Il mélange des mois et des années",
-    "Il mélange deux lieux différents",
+    "Il mélange les climats de deux lieux différents",
     "Il mélange le jour et la nuit"
    ],
    "explication": "Mixte veut dire mélangé. Il combine un diagramme en bâtons et un graphique linéaire.",
@@ -521,7 +521,7 @@ JEU.enregistrer("cours", {
    "enonce": "Comment lire une croix rouge placée en face de la graduation 30 de l'axe de gauche ?",
    "choix": [
     "C'est une température moyenne de 30 °C",
-    "C'est un cumul moyen de 30 mm",
+    "C'est un cumul moyen de précipitations de 30 mm",
     "C'est le trentième jour du mois",
     "C'est une pluie qui a duré 30 jours"
    ],
@@ -650,19 +650,19 @@ JEU.enregistrer("cours", {
    "fiche": "methode-ombrothermique-f4",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "L'axe des températures monte jusqu'à 25 °C. Jusqu'où doit monter l'axe des précipitations ?",
+   "enonce": "L'axe des températures monte jusqu'à 35 °C. Jusqu'où doit monter l'axe des précipitations ?",
    "choix": [
-    "50 mm",
-    "25 mm",
-    "12,5 mm",
-    "100 mm"
+    "70 mm",
+    "35 mm",
+    "17,5 mm",
+    "140 mm"
    ],
-   "explication": "On double la valeur des températures. 2 × 25 donne 50 mm.",
+   "explication": "On double la valeur des températures. 2 × 35 donne 70 mm.",
    "source": {
     "fichier": "methodes/Fiche methode - Diagramme ombrothermique.pdf",
     "page": 1
    },
-   "r": "==ATCsgRZdUZ",
+   "r": "==ATCsgRZVUZ",
    "poids": 1
   },
   {
@@ -688,19 +688,19 @@ JEU.enregistrer("cours", {
    "fiche": "methode-ombrothermique-f4",
    "type": "qcm",
    "niveau": 3,
-   "enonce": "Sur l'axe des précipitations, 2 carreaux valent 10 mm. Combien valent ces 2 carreaux sur l'axe des températures ?",
+   "enonce": "Sur l'axe des précipitations, 6 carreaux valent 30 mm. Combien valent ces 6 carreaux sur l'axe des températures ?",
    "choix": [
-    "5 °C",
-    "10 °C",
-    "20 °C",
-    "2 °C"
+    "15 °C",
+    "30 °C",
+    "45 °C",
+    "7,5 °C"
    ],
-   "explication": "Les valeurs en mm sont le double des valeurs en °C, à la même hauteur. Si 2 carreaux font 10 mm, ils font donc 5 °C.",
+   "explication": "À la même hauteur, la valeur en mm est le double de la valeur en °C. Si 6 carreaux font 30 mm, ils font donc 15 °C.",
    "source": {
     "fichier": "methodes/Fiche methode - Diagramme ombrothermique.pdf",
     "page": 3
    },
-   "r": "==ATsYNpJdUZ",
+   "r": "=8QLfTqRcNUZ",
    "poids": 1
   },
   {
@@ -712,16 +712,16 @@ JEU.enregistrer("cours", {
    "choix": [
     "100 mm et 50 °C",
     "140 mm et 70 °C",
-    "50 mm et 25 °C",
+    "70 mm et 35 °C",
     "100 mm et 100 °C",
     "50 mm et 100 °C"
    ],
-   "explication": "La règle veut que le maximum en mm soit le double du maximum en °C. C'est le cas pour 100 et 50, 140 et 70, 50 et 25.",
+   "explication": "La règle veut que le maximum en mm soit le double du maximum en °C. C'est le cas pour 100 et 50, 140 et 70, 70 et 35.",
    "source": {
     "fichier": "methodes/Fiche methode - Diagramme ombrothermique.pdf",
     "page": 1
    },
-   "r": "1EmbVffDb1lRSwgUq8RVVB0UFxELCr6YdIVFZtwTLsQSCN3QXl0VykNrPJUXjlFAVA0APZlVYBFH",
+   "r": "1EmbVffDbxlRSwgUq8RVVJ0UFxELCr6YdIVFZtwTLsQSCN3QXl0VykNrPJUXjlFAVA0APZlVYBFH",
    "poids": 1
   },
   {
