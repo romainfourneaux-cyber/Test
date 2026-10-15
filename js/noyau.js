@@ -16,9 +16,18 @@
     physique:    { nom: "Physique-chimie", ressource: "alambics", quartier: "forge", couleur: "#2f5a8a" },
     litterature: { nom: "Littérature", ressource: "parchemins", quartier: "scriptorium", couleur: "#7a4a2a" },
     lecture:     { nom: "Lecture suivie", ressource: "parchemins", quartier: "scriptorium", couleur: "#7a4a2a" },
+    langue:      { nom: "Grammaire", ressource: "parchemins", quartier: "scriptorium", couleur: "#8c2f39" },
     anglais:     { nom: "Anglais", ressource: "alliances", quartier: "ambassade", couleur: "#2a7470" }
   };
-  JEU.ORDRE_MATIERES = ["histoire", "geographie", "svt", "physique", "litterature", "lecture", "anglais"];
+  JEU.ORDRE_MATIERES = ["histoire", "geographie", "svt", "physique", "litterature", "lecture", "langue", "anglais"];
+
+  // Grammaire et conjugaison (matière « langue ») : les Cours Griffon les rangent par badges, pas par semaines.
+  // Un cours de langue porte son badge (champ badge) et son rang dans le badge (champ ordre).
+  JEU.BADGES_GRIFFON = [
+    { id: "bois", nom: "Griffon de bois" }, { id: "fer", nom: "Griffon de fer" }, { id: "cuivre", nom: "Griffon de cuivre" },
+    { id: "acier", nom: "Griffon d'acier" }, { id: "bronze", nom: "Griffon de bronze" }, { id: "titane", nom: "Griffon de titane" },
+    { id: "argent", nom: "Griffon d'argent" }, { id: "or", nom: "Griffon d'or" }
+  ];
 
   JEU.RESSOURCES = {
     sceaux:     { nom: "Sceaux", matiere: "histoire" },
@@ -109,7 +118,7 @@
     return String(s || "").split(/\s+/).filter(Boolean).length;
   };
 
-  // Liste des cours « jouables » en tant que fichiers (méthodes, cours du planning, séquences d'anglais).
+  // Liste des cours « jouables » en tant que fichiers (méthodes, cours du planning, cours de langue, séquences d'anglais).
   U.coursCharge = function (id) {
     return JEU.donnees.cours[id] || JEU.donnees.anglais[id] || null;
   };
@@ -118,6 +127,7 @@
     var c = JEU.donnees.cours[coursId];
     if (c && c.matiere) return c.matiere;
     if (/^anglais-/.test(coursId)) return "anglais";
+    if (/^langue-/.test(coursId)) return "langue";
     var m = coursId.match(/^([a-z]+)-s\d\d-\d+$/);
     return m ? m[1] : null;
   };

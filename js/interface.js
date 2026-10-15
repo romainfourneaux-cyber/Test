@@ -226,11 +226,15 @@
     JEU.mesure.questionAffichee();
   };
 
-  // Bandeau de récit : le personnage qui pose la question, et la situation.
+  // Bandeau de récit : le personnage qui pose la question, et la situation. etiquette (facultative) : « Seconde chance »
+  // pour une question ratée qui revient un peu plus tard (rappels.js).
   ui.recit = function (r) {
-    return el("div", { class: "recit" }, [
+    return el("div", { class: "recit" + (r.etiquette ? " rappel" : "") }, [
       el("span", { class: "recit-portrait", html: JEU.icones.icone(r.icone, 34) }),
-      el("div", {}, [el("b", { class: "recit-nom", texte: r.nom }), el("p", { class: "recit-texte", texte: r.texte })])
+      el("div", {}, [
+        el("b", { class: "recit-nom" }, [r.nom, r.etiquette ? el("span", { class: "etiquette-rappel", texte: r.etiquette }) : null]),
+        el("p", { class: "recit-texte", texte: r.texte })
+      ])
     ]);
   };
 
@@ -488,9 +492,14 @@
   };
 
   // ---------- accueil ----------
+  function envoye(d, etat) { return !!(etat.devoirs[d.id] && etat.devoirs[d.id].envoye); }
   function prochainsDevoirs(semaine, etat) {
-    return JEU.donnees.devoirs.filter(function (d) { return d.semaine >= semaine && !(etat.devoirs[d.id] && etat.devoirs[d.id].envoye); })
+    return JEU.donnees.devoirs.filter(function (d) { return typeof d.semaine === "number" && d.semaine >= semaine && !envoye(d, etat); })
       .sort(function (a, b) { return a.semaine - b.semaine; });
+  }
+  // Devoirs sans semaine (grammaire : un devoir par badge Griffon, fait au rythme de l'élève), pas encore envoyés.
+  function devoirsSansSemaine(etat) {
+    return JEU.donnees.devoirs.filter(function (d) { return typeof d.semaine !== "number" && !envoye(d, etat); });
   }
 
   ui.ecrans.accueil = function (s) {
@@ -498,6 +507,7 @@
     var sem = JEU.calendrier.semaine(new Date());
     var devoirs = prochainsDevoirs(sem.numero, etat);
     var prochain = devoirs.length ? devoirs.filter(function (d) { return d.semaine === devoirs[0].semaine; }) : [];
+    prochain = prochain.concat(devoirsSansSemaine(etat));
     s.innerHTML = "";
     var nbBat = etat.batiments.length;
     var st = JEU.domaine.stade(nbBat);
@@ -518,7 +528,7 @@
       el("div", { class: "cartouche" }, [el("h3", { html: JEU.icones.icone("sablier", 20) + " Calendrier" }), el("p", { class: "grand", texte: JEU.calendrier.libelle(sem) })]),
       el("div", { class: "cartouche" }, [el("h3", { html: JEU.icones.icone("parchemin-plume", 20) + " Prochain devoir" }),
         prochain.length ? el("ul", { class: "liste-simple" }, prochain.map(function (d) {
-          return el("li", { texte: d.intitule + " · semaine " + d.semaine });
+          return el("li", { texte: d.intitule + (typeof d.semaine === "number" ? " · semaine " + d.semaine : " · à ton rythme") });
         })) : el("p", { texte: "Aucun devoir à venir." })]),
       el("div", { class: "cartouche" }, [el("h3", { html: JEU.icones.icone("trophee", 20) + " Chronique" }),
         el("p", { class: "stats" }, [el("b", { texte: String(valides) }), document.createTextNode(" cours acquis · "),
@@ -564,6 +574,7 @@
     s.appendChild(zone);
     if (ongletCours === "methode") return rendreMethodes(zone, etat);
     if (ongletCours === "anglais") return rendreAnglais(zone, etat);
+    if (ongletCours === "langue") return rendreLangue(zone, etat);
     zone.appendChild(lignePosition(ongletCours, etat));
     var parSemaine = {};
     JEU.donnees.planning.filter(function (p) { return p.matiere === ongletCours; }).forEach(function (p) {
@@ -638,6 +649,25 @@
     });
   }
 
+  // Grammaire et conjugaison : pas de semaines, les cours sont rangés sous leur badge Griffon (seulement les badges qui
+  // ont au moins un cours), dans l'ordre du badge. Chaque cours s'ouvre dès que son contenu est prêt.
+  function rendreLangue(zone, etat) {
+    var groupes = JEU.progression.groupesLangue();
+    zone.appendChild(lignePosition("langue", etat, "Tes cours de grammaire et de conjugaison sont rangés par badge Griffon. Chacun s'ouvre dès que son contenu est prêt."));
+    if (!groupes.length) zone.appendChild(el("p", { texte: "Contenu à venir : les cours de grammaire n'ont pas encore été déposés." }));
+    groupes.forEach(function (g) {
+      var bloc = el("div", { class: "semaine-bloc badge-bloc", "data-badge": g.badge }, [el("h3", { texte: g.nom })]);
+      g.cours.forEach(function (c) {
+        var st = JEU.progression.etatCours(c.id, etat);
+        bloc.appendChild(el("div", { class: "ligne-cours etat-" + st }, [
+          el("span", { class: st === "brume" ? "titre-brume" : "", texte: c.titre || c.id }),
+          etiquetteCours(c.id, st)
+        ]));
+      });
+      zone.appendChild(bloc);
+    });
+  }
+
   // ---------- réglages ----------
   ui.ecrans.reglages = function (s) {
     var etat = JEU.sauvegarde.etat();
@@ -700,7 +730,9 @@
 
   function listeDevoirs(etat) {
     var liste = el("div", { class: "liste-devoirs" });
-    JEU.donnees.devoirs.slice().sort(function (a, b) { return a.semaine - b.semaine; }).forEach(function (d) {
+    // devoirs datés par semaine d'abord, puis ceux de grammaire (sans semaine : un par badge Griffon)
+    function rang(d) { return typeof d.semaine === "number" ? d.semaine : 99; }
+    JEU.donnees.devoirs.slice().sort(function (a, b) { return rang(a) - rang(b); }).forEach(function (d) {
       var info = etat.devoirs[d.id];
       var date = el("input", { type: "date", value: info && info.envoye ? info.envoye : U.jour() });
       var cb = el("input", { type: "checkbox", checked: !!(info && info.envoye), onchange: maj });
@@ -710,7 +742,7 @@
         JEU.sauvegarde.enregistrer();
       }
       date.addEventListener("change", function () { if (cb.checked) maj(); });
-      liste.appendChild(el("div", { class: "ligne-devoir" }, [el("label", {}, [cb, el("span", { texte: " S" + d.semaine + " · " + d.intitule })]), date]));
+      liste.appendChild(el("div", { class: "ligne-devoir" }, [el("label", {}, [cb, el("span", { texte: (typeof d.semaine === "number" ? " S" + d.semaine + " · " : " ") + d.intitule })]), date]));
     });
     return liste;
   }

@@ -48,7 +48,17 @@
     var scene = el("div", { class: "scene-conseil" });
     zone.appendChild(barre); zone.appendChild(compteur); zone.appendChild(scene);
     jauges(barre);
-    var i = 0, bonnes = 0, montees = {};
+    var i = 0, bonnes = 0, posees = 0, montees = {};
+
+    // Une affirmation ratée revient un peu plus tard (rappels.js), peut-être dans ce conseil : elle prend la place
+    // d'une affirmation encore à venir. Les cartes de décision ne bougent pas et ne comptent pas comme des questions.
+    function replacerRappels() {
+      var places = [];
+      for (var j = i; j < paquet.length; j++) if (paquet[j].q) places.push(j);
+      var reste = JEU.rappels.placer(places.map(function (j) { return paquet[j].q; }), { types: ["vrai_faux"] });
+      places.forEach(function (j, k) { if (k < reste.length) paquet[j].q = reste[k]; });
+      for (var k = places.length - 1; k >= reste.length; k--) paquet.splice(places[k], 1);
+    }
 
     function monter(k, n) {
       JEU.campagne.etat().royaume[k] += n;
@@ -70,6 +80,7 @@
       var carte = el("div", { class: "carte-conseil", style: "--teinte:" + m.couleur, tabindex: "0" }, [
         el("div", { class: "cc-tete" }, [el("span", { class: "cc-portrait", html: JEU.icones.icone(cons.icone, 46) }), el("div", {}, [el("b", { texte: cons.nom }), el("span", { texte: cons.titre })])]),
         el("p", { class: "cc-affaire", texte: cadre.texte }),
+        cadre.etiquette ? el("span", { class: "etiquette-rappel", texte: cadre.etiquette }) : null,
         el("p", { class: "affirmation", texte: "« " + q.enonce + " »" }),
         el("span", { class: "cc-enjeu", html: JEU.icones.icone(JEU.campagne.JAUGES[c.pilier].icone, 20) + " En jeu : " + JEU.campagne.JAUGES[c.pilier].nom }),
         el("div", { class: "indic gauche", texte: "J'EN DOUTE" }),
@@ -118,7 +129,7 @@
       var juste = JEU.questions.corriger(q, rj);
       JEU.questions.enregistrerReponse(q, juste);
       JEU.ui.noterDerniere(q);
-      i++;
+      i++; posees++;
       if (juste) {
         bonnes++;
         monter(c.pilier, 1);
@@ -128,6 +139,7 @@
         JEU.mesure.reponseDonnee();
         suivante();
       } else {
+        replacerRappels();
         JEU.ui.panneauErreur(q, scene, function () { JEU.mesure.reponseDonnee(); suivante(); });
       }
     }
@@ -170,7 +182,7 @@
       etat.stats.parties++;
       JEU.campagne.etat().royaume.conseils++;
       JEU.sauvegarde.enregistrer();
-      var nbQ = qs.length, taux = bonnes / nbQ;
+      var nbQ = posees || 1, taux = bonnes / nbQ;
       if (taux >= 0.8) {
         JEU.mentor.feliciter();
         setTimeout(function () { var b = scene.querySelector(".bilan"); if (b) { var c = JEU.anim.centre(b); JEU.anim.eclat(c.x, c.y - 60, "feuilles", 60); } }, 30);
@@ -180,7 +192,7 @@
       var liste = Object.keys(montees).map(function (k) { return "+" + montees[k] + " " + JEU.campagne.JAUGES[k].nom; }).join(", ");
       scene.appendChild(el("div", { class: "bilan" + (taux >= 0.8 ? " reussi" : "") }, [
         el("h2", { texte: taux >= 0.8 ? "Un conseil avisé !" : "Le conseil est levé" }),
-        el("p", { class: "grand", texte: bonnes + " / " + nbQ + " jugements justes" }),
+        el("p", { class: "grand", texte: bonnes + " / " + posees + " jugements justes" }),
         el("p", { texte: liste ? "Le royaume grandit : " + liste + "." : "Rien de perdu : le royaume garde tout ce qu'il a." }),
         el("div", { class: "actions" }, [
           el("button", { class: "bouton principal", onclick: function () { JEU.ui.finirPartie(); lancer(); }, texte: "Nouveau conseil (Entrée)" }),

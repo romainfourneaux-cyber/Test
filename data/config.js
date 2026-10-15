@@ -6,6 +6,7 @@ JEU.enregistrer("config", {
   semaineDepart: 7,             // les cours des semaines 1 à 6 sont présumés acquis
   seuilBatiment: 0.70,
   leitnerJours: [1, 2, 4, 8, 16],
+  rappelApres: 3,               // une question ratée revient après 3 autres questions
   usureBatiments: false,
   son: true
 });

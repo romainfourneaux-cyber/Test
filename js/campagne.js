@@ -317,7 +317,10 @@
           if (ev.id === "marchands") { var res = JEU.MATIERES[q.matiere].ressource; JEU.sauvegarde.etat().ressources[res] += 2; }
           if (ev.id === "incendie") etat().royaume.peuple++;
           JEU.sons.jouer("coup"); JEU.ui.majRessources(); JEU.mesure.reponseDonnee(); suivante();
-        } else JEU.ui.panneauErreur(q, scene, function () { JEU.mesure.reponseDonnee(); suivante(); });
+        } else {
+          JEU.rappels.replacer(qs, i, qs.length); // la question ratée revient un peu plus tard, peut-être dans cet événement
+          JEU.ui.panneauErreur(q, scene, function () { JEU.mesure.reponseDonnee(); suivante(); });
+        }
       }, { recit: JEU.recit.cadre(q, "evenement") });
     }
     // Quitter en route clôt l'événement avec les réponses déjà données : ce qui est gagné reste, mais on ne peut

@@ -94,7 +94,12 @@
       ]);
       section.appendChild(entete);
       if (ouvert[m] && ids.length) {
-        ids.sort().forEach(function (id) {
+        // grammaire : dans l'ordre des badges Griffon puis du badge ; les autres matières, dans l'ordre des identifiants
+        if (m === "langue") {
+          var rangs = JEU.progression.coursLangue().map(function (c) { return c.id; });
+          ids.sort(function (a, b) { return rangs.indexOf(a) - rangs.indexOf(b); });
+        } else ids.sort();
+        ids.forEach(function (id) {
           var c = U.coursCharge(id);
           var e = JEU.progression.entree(id);
           section.appendChild(el("h3", { class: "codex-cours", texte: c.titre || (e ? e.titre : id) }));

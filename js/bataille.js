@@ -798,12 +798,11 @@
   var ATTENTE_MAX = 5000; // ms : une image qui ne répond pas ne bloque jamais la bataille
 
   // Questions d'une vague, tirées au début de son conseil (le niveau suit les dernières réponses) :
-  // une par fiche, sans reprendre une question ni une fiche déjà posées dans cette bataille.
+  // une par fiche, sans reprendre une question ni une fiche déjà posées dans cette bataille (s'il en manque, sans la
+  // règle des fiches). Une question ratée qui revient (rappels.js) passe outre et prend sa place dans le lot.
   function tirerQuestions(n, posees) {
     var ids = posees.map(function (q) { return q.id; }), fiches = posees.map(function (q) { return q.fiche; });
-    var qs = JEU.recit.suite(n, { exclure: ids, filtre: function (q) { return fiches.indexOf(q.fiche) < 0; } });
-    if (qs.length < n) qs = qs.concat(JEU.recit.suite(n - qs.length, { exclure: ids.concat(qs.map(function (q) { return q.id; })) }));
-    return qs;
+    return JEU.recit.suite(n, { exclure: ids, filtre: function (q) { return fiches.indexOf(q.fiche) < 0; }, completer: true });
   }
 
   // lieu : "domaine" (un camp adverse attaque) ou l'identifiant d'une province.
@@ -1119,6 +1118,8 @@
             questionSuivante(scene);
           } else {
             serie = 0;
+            // la question ratée reviendra un peu plus tard : si c'est dans cette vague, elle prend sa place dans le lot
+            JEU.rappels.replacer(questions, iQ, poseesVague + QUESTIONS_PAR_VAGUE);
             JEU.ui.panneauErreur(q, scene, function () { v.repos = v.horloge + REPOS_APRES_REPONSE; JEU.mesure.reponseDonnee(); questionSuivante(scene); majTout(); });
             montrer(scene, "proche"); // le panneau d'erreur, vu depuis son titre
           }

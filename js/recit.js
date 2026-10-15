@@ -15,6 +15,7 @@
     physique:    { nom: "Le maître d'œuvre", icone: "alambics", titre: "dirige les ateliers et les engins" },
     litterature: { nom: "Le ménestrel", icone: "parchemin-plume", titre: "connaît les récits et les mots" },
     lecture:     { nom: "Le ménestrel", icone: "parchemin-plume", titre: "connaît les récits et les mots" },
+    langue:      { nom: "Le maître scribe", icone: "parchemin-plume", titre: "veille sur la langue du royaume" },
     anglais:     { nom: "L'interprète", icone: "alliances", titre: "parle la langue des marchands d'outre-Manche" }
   };
 
@@ -37,6 +38,12 @@
     evenement: [
       "{N} s'approche : « Seigneur, avant de décider, réponds à ceci. »",
       "{N} hésite, puis te demande : « Sais-tu ceci ? De ta réponse dépend la suite. »"
+    ],
+    // question ratée qui revient un peu plus tard (rappels.js) : une seconde chance, rien à perdre
+    rappel: [
+      "{N} revient vers toi : « Cette question t'a échappé tout à l'heure. Maintenant, tu connais la réponse. »",
+      "{N} sourit : « Je te repose la question de tout à l'heure. Une seconde chance, sans rien à perdre. »",
+      "{N} rouvre son carnet : « Reprenons ce point de tout à l'heure. Tu vas y arriver. »"
     ],
     tresor: [
       "Un marchand veut ouvrir un comptoir sur tes terres. {N} donne son avis devant le conseil :",
@@ -71,10 +78,13 @@
     return camp && camp.armee ? camp.armee : "l'armée ennemie";
   }
 
-  // Cadre narratif d'une question : { nom, icone, texte }. camp (facultatif) : le camp adverse d'une défense.
+  // Cadre narratif d'une question : { nom, icone, texte, etiquette? }. camp (facultatif) : le camp adverse d'une défense.
+  // Une question ratée qui revient (q.rappel) porte l'étiquette « Seconde chance » ; en bataille et dans un événement,
+  // le conseiller le dit avec ses mots. Au conseil du royaume, l'affaire du jour reste la même (seule l'étiquette change).
   function cadre(q, contexte, camp) {
     var c = conseiller(q.matiere);
-    var liste = PHRASES[contexte] || PHRASES.evenement;
+    var rappel = !!q.rappel && (contexte === "preparation" || contexte === "defense" || contexte === "evenement");
+    var liste = rappel ? PHRASES.rappel : PHRASES[contexte] || PHRASES.evenement;
     var texte = U.hasard(liste);
     var nom = c.nom;
     texte = texte.replace("{N}", nom).replace("{n}", nom.charAt(0).toLowerCase() + nom.slice(1));
@@ -82,7 +92,9 @@
       var armee = armeeAdverse(camp);
       texte = texte.replace("{deArmee}", JEU.campagne ? JEU.campagne.avecArticle(armee, "de") : "de " + armee);
     }
-    return { nom: nom, icone: c.icone, texte: texte };
+    var r = { nom: nom, icone: c.icone, texte: texte };
+    if (q.rappel) r.etiquette = JEU.rappels ? JEU.rappels.ETIQUETTE : "Seconde chance";
+    return r;
   }
 
   // ---------- tirage des questions ----------
@@ -101,17 +113,31 @@
     return res;
   }
 
-  // Une suite de questions : une par fiche tirée (Leitner, fiches à revoir d'abord), sans doublon.
-  function suite(nombre, options) {
-    options = options || {};
+  // Tirage ordinaire : une question par fiche tirée (Leitner, fiches à revoir d'abord), sans doublon.
+  function tirage(nombre, filtre, types, exclure) {
     var etat = JEU.sauvegarde.etat();
-    var fiches = JEU.leitner.tirer(candidats(options.filtre), etat, nombre * 2, { aRetravailler: JEU.progression.fichesARevoir() });
-    var vues = (options.exclure || []).slice(), qs = [];
+    var fiches = JEU.leitner.tirer(candidats(filtre), etat, nombre * 2, { aRetravailler: JEU.progression.fichesARevoir() });
+    var vues = exclure.slice(), qs = [];
     for (var i = 0; i < fiches.length && qs.length < nombre; i++) {
-      var q = JEU.questions.choisirPourFiche(fiches[i].fiche, { types: options.types, exclure: vues });
+      var q = JEU.questions.choisirPourFiche(fiches[i].fiche, { types: types, exclure: vues });
       if (q) { qs.push(q); vues.push(q.id); }
     }
     return qs;
+  }
+
+  // Une suite de questions, pour toute partie (bataille, conseil, événement). C'est le seul tirage du jeu.
+  // options : types (types de questions permis), exclure (identifiants déjà posés), filtre (fonction(question) : la
+  // garder ?), completer (s'il manque des questions, un second tirage, sans le filtre).
+  // Les questions ratées en attente (rappels.js) ne sortent pas au tirage ordinaire : elles reviennent à leur place,
+  // au-delà des exclusions et du filtre.
+  function suite(nombre, options) {
+    options = options || {};
+    var exclure = (options.exclure || []).concat(JEU.rappels ? JEU.rappels.enAttente() : []);
+    var qs = tirage(nombre, options.filtre, options.types, exclure);
+    if (qs.length < nombre && options.completer) {
+      qs = qs.concat(tirage(nombre - qs.length, null, options.types, exclure.concat(qs.map(function (q) { return q.id; }))));
+    }
+    return JEU.rappels ? JEU.rappels.placer(qs, { types: options.types, longueur: nombre }) : qs;
   }
 
   JEU.recit = { CONSEILLERS: CONSEILLERS, conseiller: conseiller, cadre: cadre, candidats: candidats, suite: suite };
