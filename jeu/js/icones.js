@@ -63,7 +63,7 @@
     return "<svg viewBox='0 0 100 150' width='100' height='150' aria-hidden='true'>" + banniereSVG(graine, 0, 5, 140) + "</svg>";
   }
 
-  var MATIERE_ICONE = { histoire: "couronne", geographie: "routes", svt: "remedes", physique: "alambics", litterature: "parchemin-plume", lecture: "plume", anglais: "alliances" };
+  var MATIERE_ICONE = { histoire: "couronne", geographie: "routes", svt: "remedes", physique: "alambics", litterature: "parchemin-plume", lecture: "plume", langue: "pupitre", anglais: "alliances" };
   function matiere(m) { return MATIERE_ICONE[m] || "ecu"; }
 
   function objet(k, taille) { return icone(k, taille || 40); }

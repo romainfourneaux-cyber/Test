@@ -136,6 +136,7 @@
   }
 
   // Choisit une question pour une fiche : évite celles déjà vues récemment, adapte le niveau.
+  // Seul JEU.recit.suite l'appelle ; c'est lui qui place ensuite les rappels des questions ratées (rappels.js).
   function choisirPourFiche(ficheId, options) {
     options = options || {};
     var niveaux = options.niveaux || [1, 2];
@@ -210,13 +211,15 @@
     return "";
   }
 
-  // Applique les effets d'une réponse : Leitner, statistiques, ressources (1 par bonne réponse).
+  // Applique les effets d'une réponse : Leitner, statistiques, ressources (1 par bonne réponse), et file des rappels
+  // (une question ratée revient un peu plus tard : jeu/js/rappels.js).
   function enregistrerReponse(q, juste, gain) {
     var etat = JEU.sauvegarde.etat();
     JEU.leitner.noter(etat, q.fiche, juste);
     etat.stats.total++;
     if (juste) etat.stats.bonnes++;
     etat.questionsVues[q.id] = (etat.questionsVues[q.id] || 0) + 1;
+    if (JEU.rappels) JEU.rappels.noter(q, juste, etat);
     retenir(juste);
     var res = null;
     if (juste) {

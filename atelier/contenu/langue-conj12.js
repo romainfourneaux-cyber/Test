@@ -1,0 +1,288 @@
+// Source en clair du cours langue-conj12 (Grammaire, badge Griffon de cuivre) : les homophones grammaticaux.
+// Compilé (réponses brouillées) par node atelier/outils/compiler-cours.js vers jeu/data/cours/langue-conj12.js.
+// Source déposée : la fiche du cours 12 de conjugaison, pages 1 et 2 (les pages 3 et 4 sont des exercices dont
+// les consignes sont données en classe : rien n'en est repris). Fiche à compléter : on ne s'appuie que sur ce qui
+// est imprimé. Les formes que j'aie, qu'il ait et que nous ayons sont imprimées dans le tableau du cours 10.
+// Exemples inventés ; aucun ne reprend ceux de la fiche ni le devoir du badge.
+// Pas de question « trou » sur a / à : le jeu compare les trous sans tenir compte des accents.
+const C12 = (page) => ({ fichier: "cours/langue/Francais 5e - Conjugaison - Cours 12 - Homophones grammaticaux.pdf", page: page });
+
+module.exports = {
+  id: "langue-conj12",
+  matiere: "langue",
+  titre: "Les homophones grammaticaux",
+  badge: "cuivre",
+  ordre: 3,
+  fiches: [
+    {
+      id: "langue-conj12-f1", notion: "a, as ou à",
+      titre: "a, as ou à ?",
+      texte: "Ces trois mots se prononcent pareil : ce sont des homophones. « a » est le verbe avoir avec il ou elle, seul ou comme auxiliaire : « Il a froid », « Elle a gagné ». « as » est avoir avec tu : « Tu as raison ». « à » est une préposition, un mot invariable.",
+      pointsCles: [
+        "a : avoir, avec il ou elle (présent de l'indicatif)",
+        "as : avoir, avec tu",
+        "à : préposition, mot invariable, avec un accent"
+      ],
+      dates: [], lieux: [], personnages: [],
+      vocabulaire: [
+        { mot: "homophones", def: "des mots qui se prononcent de la même façon mais ne s'écrivent pas pareil" },
+        { mot: "préposition", def: "un mot invariable, comme « à », qui peut exprimer un lieu, un temps, un but…" },
+        { mot: "invariable", def: "qui ne change jamais de forme" },
+        { mot: "auxiliaire", def: "le verbe avoir ou être quand il sert à former un temps composé : il a gagné" }
+      ],
+      schema: null, prerequis: [], source: C12(1)
+    },
+    {
+      id: "langue-conj12-f2", notion: "Le truc de « avait »",
+      titre: "Le truc : remplacer a par avait",
+      texte: "Pour choisir entre a et à, mets la phrase à l'imparfait : essaie de remplacer « a » par « avait ». Si la phrase garde son sens, c'est le verbe ou l'auxiliaire avoir : écris a, sans accent. Si la phrase ne veut plus rien dire, c'est la préposition : écris à, avec un accent.",
+      pointsCles: [
+        "« avait » convient : a, sans accent",
+        "« avait » ne convient pas : à, avec un accent"
+      ],
+      astuce: "a peut devenir avait ; à, jamais.",
+      dates: [], lieux: [], personnages: [],
+      vocabulaire: [
+        { mot: "imparfait", def: "un temps simple de l'indicatif : il avait, je dessinais" }
+      ],
+      schema: null, prerequis: ["langue-conj12-f1"], source: C12(1)
+    },
+    {
+      id: "langue-conj12-f3", notion: "Les emplois de la préposition à",
+      titre: "À quoi sert la préposition à ?",
+      texte: "La préposition « à » ne se conjugue pas et ne change jamais. Elle peut exprimer le lieu (aller à la plage), le temps (à midi), l'appartenance (ce sac est à Lina), le but (un fer à repasser), la manière (parler à voix basse), le moyen (fermer à clé) ou une caractéristique (une jupe à fleurs).",
+      pointsCles: [
+        "Lieu (à la plage), temps (à midi), appartenance (à Lina)",
+        "But (un fer à repasser), manière (à voix basse), moyen (à clé)",
+        "Caractéristique (une jupe à fleurs)"
+      ],
+      dates: [], lieux: [], personnages: [],
+      vocabulaire: [
+        { mot: "appartenance", def: "le fait d'être à quelqu'un : ce stylo est à moi" },
+        { mot: "caractéristique", def: "un trait qui distingue une chose : une jupe à fleurs, un pull à pois" }
+      ],
+      schema: null, prerequis: ["langue-conj12-f1"], source: C12(1)
+    },
+    {
+      id: "langue-conj12-f4", notion: "est, es ou et",
+      titre: "est, es ou et ?",
+      texte: "« est » et « es » sont le verbe être à l'indicatif, seul ou auxiliaire : est avec il ou elle (« Le ciel est gris »), es avec tu (« Tu es en retard »). « et » est un mot invariable qui veut dire « + » ou « et puis ».",
+      pointsCles: [
+        "est : être, avec il ou elle",
+        "es : être, avec tu",
+        "et : mot invariable, qui veut dire « + » ou « et puis » ; il ajoute un mot, un groupe de mots ou une phrase à un autre"
+      ],
+      astuce: "Si tu peux dire « et puis », écris et.",
+      dates: [], lieux: [], personnages: [],
+      vocabulaire: [],
+      schema: null, prerequis: ["langue-conj12-f1"], source: C12(1)
+    },
+    {
+      id: "langue-conj12-f5", notion: "ai, aie, aies, ait, aient",
+      titre: "ai ou aie, aies, ait, aient ?",
+      texte: "« ai » est le verbe avoir à l'indicatif, avec je : « J'ai soif ». « aie, aies, ait, aient » sont avoir au subjonctif présent. Pour reconnaître le subjonctif, change de personne : que j'aie devient que nous ayons. Puis choisis la terminaison selon la personne : que j'aie, que tu aies, qu'il ait, qu'ils aient.",
+      pointsCles: [
+        "ai : avoir, indicatif, avec je",
+        "aie (je), aies (tu), ait (il, elle), aient (ils, elles) : avoir au subjonctif présent",
+        "Ces formes servent aussi d'auxiliaire au subjonctif passé : que tu aies gagné",
+        "Sept formes se prononcent pareil : est, es, ai, aie, aies, ait, aient ; pour les distinguer, cherche l'infinitif, le mode, le temps et la personne"
+      ],
+      astuce: "Avec nous, le subjonctif se reconnaît tout de suite : que nous ayons.",
+      dates: [], lieux: [], personnages: [],
+      vocabulaire: [
+        { mot: "terminaison", def: "la fin d'un verbe conjugué, qui change selon la personne : aie, aies, ait, aient" }
+      ],
+      schema: null, prerequis: ["langue-conj12-f1"], source: C12(2)
+    }
+  ],
+  schemas: [],
+  questions: [
+    // f1 : a, as ou à
+    { id: "langue-conj12-q1", fiche: "langue-conj12-f1", type: "qcm", niveau: 1,
+      enonce: "Quel mot complète la phrase ? « Mon frère ___ perdu sa gourde. »",
+      choix: ["a", "à", "as", "ai"],
+      reponse: "a",
+      explication: "On peut dire « mon frère avait perdu sa gourde » : c'est l'auxiliaire avoir, avec il. On écrit donc a, sans accent.", source: C12(1) },
+    { id: "langue-conj12-q2", fiche: "langue-conj12-f1", type: "qcm", niveau: 1,
+      enonce: "Quel mot complète la phrase ? « Nous allons ___ la piscine. »",
+      choix: ["à", "a", "as", "ai"],
+      reponse: "à",
+      explication: "On ne peut pas dire « nous allons avait la piscine ». C'est la préposition à, avec un accent.", source: C12(1) },
+    { id: "langue-conj12-q3", fiche: "langue-conj12-f1", type: "vrai_faux", niveau: 1,
+      enonce: "Dans « Tu as un beau sourire », « as » est une préposition.",
+      corrections: [
+        "Faux : « as » est le verbe avoir, employé avec tu.",
+        "Faux : « as » est le verbe être.",
+        "Faux : « as » est un mot invariable."
+      ],
+      reponse: { vrai: false, correction: "Faux : « as » est le verbe avoir, employé avec tu." },
+      explication: "La préposition s'écrit à et ne change jamais. « As » est le verbe avoir conjugué avec tu.", source: C12(1) },
+    { id: "langue-conj12-q4", fiche: "langue-conj12-f1", type: "qcm", niveau: 2,
+      enonce: "Pourquoi écrit-on « as » et non « a » dans « Tu as gagné » ?",
+      choix: [
+        "Parce que le sujet est tu",
+        "Parce que gagné est au pluriel",
+        "Parce que c'est une préposition",
+        "Parce que la phrase est une question"
+      ],
+      reponse: "Parce que le sujet est tu",
+      explication: "Avec tu, le verbe avoir s'écrit as. Avec il ou elle, il s'écrit a.", source: C12(1) },
+    // f2 : le truc de « avait »
+    { id: "langue-conj12-q5", fiche: "langue-conj12-f2", type: "ordre", niveau: 2,
+      enonce: "Remets dans l'ordre les étapes du truc pour choisir entre a et à.",
+      elements: [
+        "Si la phrase a du sens, écrire a ; sinon, écrire à",
+        "Remplacer ce mot par « avait »",
+        "Repérer le mot qui hésite entre a et à",
+        "Relire la phrase obtenue"
+      ],
+      reponse: [2, 1, 3, 0],
+      explication: "On repère le mot, on essaie « avait », puis on relit. Si la phrase garde son sens, c'est a ; sinon, c'est à.", source: C12(1) },
+    { id: "langue-conj12-q6", fiche: "langue-conj12-f2", type: "qcm", niveau: 1,
+      enonce: "Comment vérifier qu'il faut écrire « a » sans accent ?",
+      choix: [
+        "On essaie de le remplacer par « avait »",
+        "On essaie de le remplacer par « et puis »",
+        "On regarde si le mot suivant est au pluriel",
+        "On compte les mots de la phrase"
+      ],
+      reponse: "On essaie de le remplacer par « avait »",
+      explication: "Si « avait » convient, c'est le verbe ou l'auxiliaire avoir. On écrit alors a, sans accent.", source: C12(1) },
+    { id: "langue-conj12-q7", fiche: "langue-conj12-f2", type: "vrai_faux", niveau: 1,
+      enonce: "Dans « Elle a pris son parapluie », on peut remplacer « a » par « avait » : il faut donc écrire a, sans accent.",
+      corrections: [], reponse: { vrai: true, correction: null },
+      explication: "« Elle avait pris son parapluie » a du sens. C'est l'auxiliaire avoir, écrit sans accent.", source: C12(1) },
+    { id: "langue-conj12-q8", fiche: "langue-conj12-f2", type: "qcm", niveau: 2,
+      enonce: "On essaie le truc : « Le train part avait midi. » Que faut-il en conclure ?",
+      choix: [
+        "La phrase n'a plus de sens : il faut écrire à",
+        "La phrase a du sens : il faut écrire a",
+        "Il faut écrire as",
+        "Il faut garder avait dans la phrase"
+      ],
+      reponse: "La phrase n'a plus de sens : il faut écrire à",
+      explication: "« Le train part avait midi » ne veut rien dire, ce n'est donc pas le verbe avoir. On écrit à, avec un accent.", source: C12(1) },
+    // f3 : les emplois de la préposition à
+    { id: "langue-conj12-q9", fiche: "langue-conj12-f3", type: "association", niveau: 2,
+      enonce: "Relie chaque exemple à ce qu'exprime la préposition à.",
+      gauche: ["Ce ballon est à Hugo.", "Rendez-vous à midi.", "Une chemise à carreaux.", "Nous partons à la mer."],
+      droite: ["Le temps", "Une caractéristique", "Le lieu", "L'appartenance"],
+      reponse: [[0, 3], [1, 0], [2, 1], [3, 2]],
+      explication: "Le ballon est à Hugo : il lui appartient ; midi est un moment, la mer un lieu. Les carreaux, eux, décrivent la chemise.", source: C12(1) },
+    { id: "langue-conj12-q10", fiche: "langue-conj12-f3", type: "qcm", niveau: 2,
+      enonce: "Dans « une canne à pêche », qu'exprime la préposition à ?",
+      choix: ["Le but : la canne sert à pêcher", "Le lieu", "L'appartenance", "Le temps"],
+      reponse: "Le but : la canne sert à pêcher",
+      explication: "Une canne à pêche est faite pour pêcher. La préposition à exprime ici le but.", source: C12(1) },
+    { id: "langue-conj12-q11", fiche: "langue-conj12-f3", type: "vrai_faux", niveau: 1,
+      enonce: "La préposition à change de forme selon la personne, comme un verbe.",
+      corrections: [
+        "Faux : à est un mot invariable, il ne change jamais.",
+        "Faux : à change seulement au pluriel.",
+        "Faux : à change seulement au futur."
+      ],
+      reponse: { vrai: false, correction: "Faux : à est un mot invariable, il ne change jamais." },
+      explication: "Une préposition ne se conjugue pas. Elle garde toujours la même forme : à.", source: C12(1) },
+    { id: "langue-conj12-q12", fiche: "langue-conj12-f3", type: "qcm", niveau: 2,
+      enonce: "Comment s'écrit le mot qui manque dans « Ce cahier est ___ moi », et pourquoi ?",
+      choix: [
+        "à : c'est la préposition, qui dit à qui est le cahier",
+        "a : c'est le verbe avoir, qu'on peut remplacer par avait",
+        "as : c'est le verbe avoir avec tu",
+        "a : c'est la préposition, qui ne prend jamais d'accent"
+      ],
+      reponse: "à : c'est la préposition, qui dit à qui est le cahier",
+      explication: "« Ce cahier est avait moi » n'a pas de sens. C'est la préposition à, qui exprime l'appartenance.", source: C12(1) },
+    // f4 : est, es ou et
+    { id: "langue-conj12-q13", fiche: "langue-conj12-f4", type: "qcm", niveau: 1,
+      enonce: "Quel mot complète la phrase ? « Mon chat ___ très câlin. »",
+      choix: ["est", "et", "es", "ai"],
+      reponse: "est",
+      explication: "Mon chat peut se remplacer par il, et avec il le verbe être s'écrit est. On ne pourrait pas dire « et puis » à cet endroit.", source: C12(1) },
+    { id: "langue-conj12-q14", fiche: "langue-conj12-f4", type: "trou", niveau: 1,
+      enonce: "Complète avec est, es ou et.",
+      texte: "Le chocolat ___ fondu ___ la crème ___ prête.",
+      banque: ["est", "es", "et"],
+      reponse: [["est"], ["et"], ["est"]],
+      explication: "Le chocolat et la crème vont avec il ou elle : on écrit est. Au milieu, on peut dire « et puis » : c'est et.", source: C12(2) },
+    { id: "langue-conj12-q15", fiche: "langue-conj12-f4", type: "vrai_faux", niveau: 1,
+      enonce: "Dans « Tu es mon voisin », on pourrait aussi écrire « est ».",
+      corrections: [
+        "Faux : avec tu, le verbe être s'écrit es.",
+        "Faux : il faut écrire et.",
+        "Faux : il faut écrire ai."
+      ],
+      reponse: { vrai: false, correction: "Faux : avec tu, le verbe être s'écrit es." },
+      explication: "Est va avec il ou elle, es va avec tu. Ici, le sujet est tu.", source: C12(1) },
+    { id: "langue-conj12-q16", fiche: "langue-conj12-f4", type: "qcm", niveau: 2,
+      enonce: "Comment savoir qu'il faut écrire « et » ?",
+      choix: [
+        "On peut le remplacer par « et puis »",
+        "On peut le remplacer par « avait »",
+        "Il change avec la personne",
+        "Il est toujours le premier mot de la phrase"
+      ],
+      reponse: "On peut le remplacer par « et puis »",
+      explication: "« Et » a le sens de « + » ou de « et puis ». Si « et puis » convient, on écrit et.", source: C12(2) },
+    { id: "langue-conj12-q17", fiche: "langue-conj12-f4", type: "qcm_multiple", niveau: 2,
+      enonce: "Dans quelles phrases le mot manquant s'écrit-il « est » ? Coche toutes les bonnes réponses.",
+      choix: ["Le gâteau ___ délicieux.", "Paul ___ Zoé jouent dehors.", "Ma grand-mère ___ partie hier.", "Tu ___ très drôle.", "La porte ___ fermée à clé."],
+      reponse: ["Le gâteau ___ délicieux.", "Ma grand-mère ___ partie hier.", "La porte ___ fermée à clé."],
+      explication: "Le gâteau, ma grand-mère et la porte vont avec il ou elle : c'est est. Entre Paul et Zoé, on peut dire « et puis », et avec tu on écrit es.", source: C12(1) },
+    // f5 : ai, aie, aies, ait, aient
+    { id: "langue-conj12-q18", fiche: "langue-conj12-f5", type: "qcm", niveau: 1,
+      enonce: "Quel mot complète la phrase ? « J'___ un nouveau sac de sport. »",
+      choix: ["ai", "aie", "est", "es"],
+      reponse: "ai",
+      explication: "Avec je, à l'indicatif, le verbe avoir s'écrit ai. Ce n'est pas le subjonctif : on ne dirait pas « nous ayons un nouveau sac ».", source: C12(2) },
+    { id: "langue-conj12-q19", fiche: "langue-conj12-f5", type: "trou", niveau: 1,
+      enonce: "Complète avec la bonne forme de avoir au subjonctif présent.",
+      texte: "Le maître nageur demande que tu ___ ton bonnet et qu'ils ___ leurs lunettes.",
+      banque: ["aie", "aies", "ait", "aient"],
+      reponse: [["aies"], ["aient"]],
+      explication: "Avec tu, on écrit aies ; avec ils, on écrit aient. La terminaison suit la personne.", source: C12(2) },
+    { id: "langue-conj12-q20", fiche: "langue-conj12-f5", type: "association", niveau: 2,
+      enonce: "Relie chaque début à la bonne forme de avoir au subjonctif présent.",
+      gauche: ["que j'", "que tu", "qu'il", "qu'ils"],
+      droite: ["aient", "aie", "ait", "aies"],
+      reponse: [[0, 1], [1, 3], [2, 2], [3, 0]],
+      explication: "Que j'aie, que tu aies, qu'il ait, qu'ils aient. Les quatre se prononcent pareil, seule la terminaison change.", source: C12(2) },
+    { id: "langue-conj12-q21", fiche: "langue-conj12-f5", type: "vrai_faux", niveau: 2,
+      enonce: "« ait » et « est » sont deux formes du même verbe.",
+      corrections: [
+        "Faux : « ait » vient du verbe avoir (subjonctif), « est » du verbe être (indicatif).",
+        "Faux : les deux viennent du verbe avoir.",
+        "Faux : « ait » est une préposition."
+      ],
+      reponse: { vrai: false, correction: "Faux : « ait » vient du verbe avoir (subjonctif), « est » du verbe être (indicatif)." },
+      explication: "Ces deux mots se prononcent pareil mais ne viennent pas du même verbe. Pour les distinguer, on cherche l'infinitif, le mode, le temps et la personne.", source: C12(2) },
+    { id: "langue-conj12-q22", fiche: "langue-conj12-f5", type: "qcm", niveau: 2,
+      enonce: "Comment reconnaître que « aie » est au subjonctif ?",
+      choix: [
+        "On change de personne : avec nous, on dirait « que nous ayons »",
+        "On le remplace par « avait »",
+        "On le remplace par « et puis »",
+        "On regarde si la phrase est longue"
+      ],
+      reponse: "On change de personne : avec nous, on dirait « que nous ayons »",
+      explication: "Le cours conseille de changer de personne. Avec nous, le subjonctif se voit tout de suite : que nous ayons.", source: C12(2) },
+    { id: "langue-conj12-q23", fiche: "langue-conj12-f5", type: "ordre", niveau: 3,
+      enonce: "Remets dans l'ordre la méthode pour écrire une forme de avoir au subjonctif présent.",
+      elements: [
+        "Choisir la terminaison qui va avec cette personne",
+        "Changer de personne pour vérifier que c'est le subjonctif",
+        "Repérer la personne du verbe"
+      ],
+      reponse: [1, 2, 0],
+      explication: "On vérifie d'abord le mode en changeant de personne. Ensuite, on repère la personne pour choisir la bonne terminaison.", source: C12(2) }
+  ],
+  bonus: [],
+  nonCouvert: [
+    "Le rôle de la préposition à devant un complément d'objet indirect (page 1, ligne b) : le mot clé est laissé en blanc et cette fonction n'est expliquée dans aucun cours déposé.",
+    "La nature exacte du mot « et » et le verbe qui dit ce qu'il fait (page 2) sont laissés en blanc sur la fiche.",
+    "Le tableau du subjonctif présent de avoir (page 2) est vide : les formes du jeu viennent du tableau du cours 10 (que j'aie, qu'il ait, que nous ayons) et de la liste des sept formes imprimée page 2.",
+    "L'observation de début de cours et les exercices des pages 3 et 4 : consignes données en classe.",
+    "Notions du Griffon de cuivre sans support déposé (tableau de progression) : COI et COS, complément d'attribution, compléments circonstanciels de lieu et de temps ; adjectifs et pronoms interrogatifs, indéfinis et numéraux ; pronoms relatifs.",
+    "Les fiches d'exercices des cours 6 et 7 de grammaire (natures des mots) : consignes orales, aucune leçon déposée."
+  ]
+};

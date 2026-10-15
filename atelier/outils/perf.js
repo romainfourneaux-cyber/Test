@@ -1,5 +1,6 @@
 // Essai de bout en bout dans Chromium (Playwright) : bataille (tower defense) lancée deux fois de suite,
-// quitter avec Échap, événement du jour, conseil du royaume, signalement, export puis import, noms de la carte de
+// quitter avec Échap, question ratée en bataille qui revient 4 questions plus tard (« Seconde chance »), onglet
+// Grammaire rangé par badges, événement du jour, conseil du royaume, signalement, export puis import, noms de la carte de
 // campagne qui ne se touchent pas (de la première province prise à la dernière, avec les bourgs puis en repli avec les
 // médaillons), carte de campagne entière dans une fenêtre de 1366 × 768 (avec et sans alerte), énoncé de chaque question
 // de bataille visible en haut de la colonne de droite à 1366 × 768 (association longue, erreur, questions suivantes),
@@ -49,6 +50,24 @@ async function repondreJuste(page) {
     case "trou":
       await page.evaluate(r => { document.querySelectorAll(".trou").forEach((c, i) => { c.value = Array.isArray(r[i]) ? r[i][0] : r[i]; }); }, q.reponse);
       await page.keyboard.press("Enter"); break;
+  }
+}
+
+// Répond faux à la question affichée (première réponse fausse, sans essai de plus).
+async function repondreFaux(page) {
+  const q = await page.evaluate(() => { const q = JEU.ui.questionCourante; return { type: q.type, reponse: q.reponse, choix: q.choix, elements: q.elements }; });
+  const k = n => page.keyboard.press(String(n));
+  switch (q.type) {
+    case "qcm": await k(q.choix.findIndex(c => c !== q.reponse) + 1); break;
+    case "vrai_faux": await k(q.reponse.vrai ? 2 : 1); break; // « Faux » pour une affirmation vraie, et inversement
+    case "ordre": { const faux = q.reponse.slice(1).concat(q.reponse.slice(0, 1)); for (const i of faux) await k(i + 1); await page.keyboard.press("Enter"); break; }
+    case "association":
+      for (const [g, d] of q.reponse) { await k(g + 1); await page.locator(".association .colonne").nth(1).locator(".choix").nth((d + 1) % q.reponse.length).click(); }
+      await page.keyboard.press("Enter"); break;
+    case "trou":
+      await page.evaluate(() => { document.querySelectorAll(".trou").forEach(c => { if (c.tagName === "SELECT") c.selectedIndex = 0; else c.value = "zzz"; }); });
+      await page.keyboard.press("Enter"); break;
+    default: await page.keyboard.press("Enter"); // qcm_multiple : rien de coché
   }
 }
 
@@ -368,6 +387,46 @@ async function essaiToile(navigateur, erreurs) {
   bilan.bouclesApresQuitter = await page.evaluate(() => window.__essai.boucles);
   bilan.quitter = "ok";
 
+  // 1 bis. une question ratée revient un peu plus tard : ratée à la 1re question d'une bataille (Forêt de l'Ouest),
+  // elle doit revenir à la 4e question qui suit (après 3 autres : 2 dans cette vague, 1 dans la suivante), avec
+  // l'étiquette « Seconde chance » ; réussie, elle sort de la file des rappels.
+  await page.evaluate(() => JEU.bataille.lancer("foret"));
+  await page.waitForSelector(".td-canvas");
+  await page.clock.runFor(300);
+  await page.waitForFunction(() => document.querySelector(".td-question .question"));
+  const rappel = { ratee: await page.evaluate(() => JEU.ui.questionCourante.id), suivantes: [] };
+  await repondreFaux(page);
+  await page.waitForSelector(".panneau-erreur");
+  rappel.enAttente = await page.evaluate(id => JEU.rappels.enAttente().indexOf(id) >= 0, rappel.ratee);
+  await page.keyboard.press("Enter"); // Continuer
+  const noterQuestion = () => page.evaluate(() => { const q = JEU.ui.questionCourante, e = document.querySelector(".td-question .recit .etiquette-rappel"); return { id: q.id, rappel: !!q.rappel, etiquette: e ? e.textContent : null }; });
+  for (let i = 0; i < 2; i++) {
+    await page.waitForFunction(() => document.querySelector(".td-question .question") && !document.querySelector(".panneau-erreur"));
+    rappel.suivantes.push(await noterQuestion());
+    await repondreJuste(page);
+  }
+  await page.waitForSelector(".td-pret");
+  const cadreF = await page.locator(".td-canvas").boundingBox();
+  for (const e of await page.evaluate(() => JEU.cartesBataille.carte("foret").emplacements.slice(0, 2))) await page.mouse.click(cadreF.x + e[0] / 1000 * cadreF.width, cadreF.y + e[1] / 660 * cadreF.height);
+  for (let k = 0; k < 3 && await page.evaluate(() => JEU.bataille.enCours.phase === "preparation"); k++) { await page.clock.runFor(800); await page.keyboard.press("Enter"); }
+  await page.waitForFunction(() => JEU.bataille.enCours.phase !== "preparation");
+  for (let k = 0; k < 200 && await page.evaluate(() => JEU.bataille.enCours.phase === "vague"); k++) await page.clock.runFor(500);
+  rappel.phase = await page.evaluate(() => JEU.bataille.enCours.phase);
+  if (rappel.phase === "preparation") {
+    for (let i = 0; i < 2; i++) {
+      await page.waitForFunction(() => document.querySelector(".td-question .question"));
+      rappel.suivantes.push(await noterQuestion());
+      await repondreJuste(page);
+    }
+    rappel.sortie = await page.evaluate(id => JEU.rappels.enAttente().indexOf(id) < 0, rappel.ratee);
+  }
+  rappel.position = rappel.suivantes.findIndex(x => x.id === rappel.ratee) + 1; // 4 attendu
+  bilan.rappel = rappel;
+  await page.keyboard.press("Escape");
+  await page.waitForSelector(".confirmation");
+  await page.click(".confirmation .bouton.principal");
+  await page.waitForFunction(() => !JEU.partie && JEU.ui.ecranCourant() === "jouer");
+
   // 2. événement du jour (les marchands) : 3 questions justes, 2 ressources chacune
   const avantEv = await page.evaluate(() => Object.values(JEU.sauvegarde.etat().ressources).reduce((a, b) => a + b, 0));
   await page.evaluate(() => {
@@ -413,6 +472,23 @@ async function essaiToile(navigateur, erreurs) {
   await page.evaluate(t => { localStorage.clear(); JEU.sauvegarde.importer(t); }, avant);
   const apres = await page.evaluate(() => JSON.stringify(JEU.sauvegarde.etat(), null, 1));
   bilan.importIdentique = JSON.stringify(JSON.parse(avant)) === JSON.stringify(JSON.parse(apres));
+
+  // 4 bis. écran Cours, onglet Grammaire : les cours de langue rangés sous leur badge Griffon (seulement les badges qui
+  //    ont un cours), dans l'ordre du badge. Deux cours d'essai sont ajoutés en mémoire, puis retirés.
+  bilan.grammaire = await page.evaluate(() => {
+    const ajout = { "langue-nat98": { badge: "fer", ordre: 1, titre: "Essai fer" }, "langue-conj99": { badge: "cuivre", ordre: 99, titre: "Essai cuivre" } };
+    const avant = Object.keys(JEU.donnees.cours);
+    Object.keys(ajout).forEach(id => { if (!JEU.donnees.cours[id]) JEU.donnees.cours[id] = Object.assign({ id, matiere: "langue", fiches: [], questions: [] }, ajout[id]); });
+    JEU.progression.oublier();
+    JEU.ui.afficher("cours");
+    const onglet = [...document.querySelectorAll("#ecran-cours .onglet")].find(b => b.textContent === "Grammaire");
+    if (onglet) onglet.click();
+    const blocs = [...document.querySelectorAll("#ecran-cours .badge-bloc")].map(b => ({ badge: b.querySelector("h3").textContent, cours: [...b.querySelectorAll(".ligne-cours > span:first-child")].map(x => x.textContent) }));
+    Object.keys(ajout).forEach(id => { if (avant.indexOf(id) < 0) delete JEU.donnees.cours[id]; });
+    JEU.questions.vider(); JEU.progression.oublier();
+    JEU.ui.afficher("jouer");
+    return { onglet: !!onglet, blocs };
+  });
 
   // 5. carte de campagne : aucune étiquette (nom ou ligne sous le nom) ne touche celle d'un autre lieu, de la première
   //    province à la dernière (en particulier toutes prises sauf la dernière de chaque front : les deux places fortes
@@ -501,6 +577,17 @@ async function essaiToile(navigateur, erreurs) {
   const echecs = [];
   if (erreurs.length) echecs.push("erreurs JavaScript dans la page");
   if (bilan.lancementsBataille !== 1) echecs.push("la bataille a commencé " + bilan.lancementsBataille + " fois au lieu d'une");
+  const R = bilan.rappel;
+  if (!R.enAttente) echecs.push("question ratée en bataille : elle n'entre pas dans la file des rappels");
+  if (R.phase !== "preparation") echecs.push("question ratée en bataille : pas de seconde vague pour la voir revenir (phase " + R.phase + ")");
+  else {
+    if (R.position !== 4) echecs.push("question ratée en bataille : revenue à la question " + R.position + " après l'erreur au lieu de la 4e (" + JSON.stringify(R.suivantes) + ")");
+    else if (!R.suivantes[3].rappel || R.suivantes[3].etiquette !== "Seconde chance") echecs.push("question ratée revenue sans l'étiquette « Seconde chance »");
+    if (!R.sortie) echecs.push("question ratée, réussie au rappel : elle reste dans la file");
+  }
+  const G = bilan.grammaire, cuivre = (G.blocs.find(b => b.badge === "Griffon de cuivre") || { cours: [] }).cours;
+  if (!G.onglet) echecs.push("écran Cours : pas d'onglet Grammaire");
+  else if (G.blocs.map(b => b.badge).join("|").indexOf("Griffon de fer|Griffon de cuivre") !== 0 || G.blocs.some(b => !b.cours.length) || cuivre[cuivre.length - 1] !== "Essai cuivre") echecs.push("onglet Grammaire : cours mal rangés par badge (" + JSON.stringify(G.blocs) + ")");
   if (bilan.bouclesApresQuitter > 0) echecs.push("la boucle de la bataille tourne encore après avoir quitté");
   if (bilan.gainEvenement < 6) echecs.push("l'événement n'a pas rapporté ses ressources");
   if (!bilan.royaume || bilan.royaume.tresor + bilan.royaume.peuple + bilan.royaume.garde + bilan.royaume.savoir <= 0) echecs.push("les jauges du royaume n'ont pas monté");

@@ -1,6 +1,8 @@
 // Progression : état de chaque cours. Le jeu ne fait plus passer d'épreuve de validation :
 // c'est le chroniqueur (Romain et Claude) qui estime, d'après les devoirs corrigés, si un cours est acquis
 // (fichier data/suivi.js). États : acquis | a-revoir | presume | ouvert | avenir (méthode sans fichier) | brume.
+// Les cours de langue (grammaire et conjugaison, rangés par badges Griffon) et les séquences d'anglais ne sont pas dans
+// le planning : ouverts dès que leur fichier est chargé, dans la brume sinon.
 (function (racine) {
   "use strict";
   var JEU = racine.JEU;
@@ -30,6 +32,35 @@
     return Object.keys(c).filter(function (k) { return /^methode-/.test(k); }).map(function (k) { return c[k]; });
   }
 
+  // Grammaire et conjugaison : rang d'un badge Griffon (0 = bois … 7 = or ; 99 si inconnu).
+  function rangBadge(id) {
+    var b = JEU.BADGES_GRIFFON || [];
+    for (var i = 0; i < b.length; i++) if (b[i].id === id) return i;
+    return 99;
+  }
+
+  // Cours de langue chargés, rangés par badge (bois, fer, cuivre…) puis par leur champ ordre.
+  function coursLangue() {
+    var c = JEU.donnees.cours;
+    return Object.keys(c).filter(function (k) { return /^langue-/.test(k); }).map(function (k) { return c[k]; })
+      .sort(function (x, y) { return (rangBadge(x.badge) - rangBadge(y.badge)) || ((x.ordre || 0) - (y.ordre || 0)) || (x.id < y.id ? -1 : 1); });
+  }
+
+  // Groupes de l'onglet Grammaire : un groupe par badge qui a au moins un cours, dans l'ordre des badges ;
+  // un cours au badge inconnu va dans « Autres cours », à la fin.
+  function groupesLangue() {
+    var groupes = [], parBadge = {};
+    coursLangue().forEach(function (c) {
+      var r = rangBadge(c.badge), cle = r < 99 ? c.badge : "autres";
+      if (!parBadge[cle]) {
+        parBadge[cle] = { badge: cle, nom: r < 99 ? JEU.BADGES_GRIFFON[r].nom : "Autres cours", cours: [] };
+        groupes.push(parBadge[cle]);
+      }
+      parBadge[cle].cours.push(c);
+    });
+    return groupes;
+  }
+
   // Mémo pour éviter de remonter toute la chaîne à chaque appel (vidé à chaque changement d'état).
   var memo = {};
   function oublier() { memo = {}; }
@@ -53,7 +84,7 @@
     var sauve = etat.cours[id];
     if (sauve && sauve.etat === "valide") return "acquis"; // anciennes épreuves (schéma 2) : on garde l'acquis
     if (/^methode-/.test(id)) return fichierPresent(id) ? "ouvert" : "avenir";
-    if (/^anglais-/.test(id)) return fichierPresent(id) ? "ouvert" : "brume";
+    if (/^anglais-/.test(id) || /^langue-/.test(id)) return fichierPresent(id) ? "ouvert" : "brume"; // hors planning
     var e = entree(id);
     if (e && e.semaine < (config().semaineDepart || 1)) return "presume";
     return fichierPresent(id) ? "ouvert" : "brume";
@@ -88,24 +119,28 @@
     });
   }
 
-  // Rang de récence d'un cours (0 = le plus récent) pour le tirage Leitner.
+  // Rang de récence d'un cours (0 = le plus récent) pour le tirage Leitner. Un cours de langue n'a pas de semaine :
+  // il compte comme un cours de la semaine en cours (l'élève travaille ses badges Griffon en ce moment).
   function recence(etat) {
     etat = etat || JEU.sauvegarde.etat();
     var ids = coursAccessibles(etat);
+    var semCourante = 0;
+    try { semCourante = JEU.calendrier ? JEU.calendrier.semaine(new Date()).numero : 0; } catch (e) { semCourante = 0; }
     var dates = ids.map(function (id) {
       var s = etat.cours[id];
       var e = entree(id);
       var t = s && s.le ? JEU.util.lireDate(s.le).getTime() : 0;
-      return { id: id, t: t, sem: e ? e.semaine : 0 };
+      return { id: id, t: t, sem: e ? e.semaine : (/^langue-/.test(id) ? semCourante : 0) };
     }).sort(function (a, b) { return (b.t - a.t) || (b.sem - a.sem); });
     var r = {};
     dates.forEach(function (d, i) { r[d.id] = i; });
     return r;
   }
 
-  // Cours d'un onglet de l'écran Cours : une matière du planning, « methode » ou « anglais ».
+  // Cours d'un onglet de l'écran Cours : une matière du planning, « methode », « langue » (par badge) ou « anglais ».
   function idsOnglet(onglet) {
     if (onglet === "methode") return methodes().map(function (c) { return c.id; });
+    if (onglet === "langue") return coursLangue().map(function (c) { return c.id; });
     var ids = entreesCours(onglet).map(function (e) { return e.id; });
     if (onglet === "anglais") sequencesAnglais().forEach(function (c) { if (ids.indexOf(c.id) < 0) ids.push(c.id); });
     return ids;
@@ -135,6 +170,7 @@
   JEU.progression = {
     etatCours: etatCours, coursAccessibles: coursAccessibles, recence: recence, position: position, totalAcquis: totalAcquis,
     estimation: estimation, fichesARevoir: fichesARevoir, oublier: oublier, entree: entree,
-    entreesCours: entreesCours, sequencesAnglais: sequencesAnglais, methodes: methodes, fichierPresent: fichierPresent
+    entreesCours: entreesCours, sequencesAnglais: sequencesAnglais, methodes: methodes, fichierPresent: fichierPresent,
+    idsOnglet: idsOnglet, coursLangue: coursLangue, groupesLangue: groupesLangue, rangBadge: rangBadge
   };
 })(typeof window !== "undefined" ? window : globalThis);

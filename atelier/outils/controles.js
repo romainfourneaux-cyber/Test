@@ -3,13 +3,18 @@
 (function (racine) {
   "use strict";
   var TYPES = ["qcm", "qcm_multiple", "vrai_faux", "association", "ordre", "trou", "legende_schema", "clic_carte", "calcul_etapes"];
-  var MATIERES = ["histoire", "geographie", "svt", "physique", "litterature", "lecture", "anglais", "methode"];
+  var MATIERES = ["histoire", "geographie", "svt", "physique", "litterature", "lecture", "langue", "anglais", "methode"];
   var CHAMPS_DEVOIR = ["id", "matiere", "semaine", "intitule", "perimetre"];
+  // Grammaire et conjugaison (matière « langue ») : hors planning, rangées par badges Griffon (même liste que
+  // JEU.BADGES_GRIFFON dans jeu/js/noyau.js). Thèmes : nat (natures), fon (fonctions), log (analyse logique),
+  // conj (conjugaison), txt (analyse de texte) ; numéro du cours Griffon sur deux chiffres.
+  var BADGES = ["bois", "fer", "cuivre", "acier", "bronze", "titane", "argent", "or"];
   var RX = {
     cours: /^(histoire|geographie|svt|physique|litterature|lecture)-s(0[1-9]|[12][0-9]|3[0-4])-\d+$/,
     methode: /^methode-[a-z]+$/,
     anglais: /^anglais-seq\d\d$/,
-    devoir: /^(histoire|geographie|svt|physique|litterature|lecture|anglais)-d\d+$/
+    langue: /^langue-(nat|fon|log|conj|txt)\d\d$/,
+    devoir: /^(histoire|geographie|svt|physique|litterature|lecture|langue|anglais)-d\d+$/
   };
 
   function phrases(s) {
@@ -60,11 +65,12 @@
     });
     devoirs.forEach(function (d) { unique(d.id, "devoirs"); if (!RX.devoir.test(d.id)) E("[2] identifiant de devoir mal formé : " + d.id); });
 
-    // 3. index-cours
+    // 3. index-cours (séquences d'anglais, fiches méthode et cours de langue : hors planning)
     index.forEach(function (id) {
-      var anglais = RX.anglais.test(id), methode = RX.methode.test(id);
-      if (!anglais && !methode && !parId[id]) E("[3] cours de index-cours absent du planning : " + id);
-      if (!anglais && !methode && parId[id] && parId[id].type !== "cours") E("[3] index-cours vise une entrée qui n'est pas un cours : " + id);
+      var horsPlanning = RX.anglais.test(id) || RX.methode.test(id) || RX.langue.test(id);
+      if (/^langue-/.test(id) && !RX.langue.test(id)) E("[2] identifiant de cours de langue mal formé : " + id + " (langue-<nat|fon|log|conj|txt><nn>)");
+      else if (!horsPlanning && !parId[id]) E("[3] cours de index-cours absent du planning : " + id);
+      if (!horsPlanning && parId[id] && parId[id].type !== "cours") E("[3] index-cours vise une entrée qui n'est pas un cours : " + id);
       if (!(donnees.cours[id] || donnees.anglais[id])) E("[3] fichier de cours absent ou illisible : " + id);
     });
     Object.keys(donnees.cours).concat(Object.keys(donnees.anglais)).forEach(function (id) {
@@ -76,6 +82,11 @@
     function rangCours(id) {
       if (RX.methode.test(id)) return { semaine: 0, ordre: 0 };
       if (RX.anglais.test(id)) return { semaine: 0, ordre: Number(id.slice(-2)) };
+      if (RX.langue.test(id)) {
+        // cours de langue : un badge antérieur, ou le même badge avec un ordre plus petit
+        var cl = donnees.cours[id] || {}, rb = BADGES.indexOf(cl.badge);
+        return { semaine: 0, ordre: (rb < 0 ? 99 : rb) * 1000 + (Number(cl.ordre) || 0) };
+      }
       var p = parId[id];
       return p ? { semaine: p.semaine, ordre: p.ordre } : { semaine: 99, ordre: 0 };
     }
@@ -83,6 +94,13 @@
       var c = donnees.cours[cid];
       if (c.id !== cid) E("[2] identifiant de cours différent du nom de fichier : " + cid);
       if (RX.methode.test(cid) && (!c.matiere || !c.titre)) E("[2] fiche méthode sans matiere ou titre : " + cid);
+      if (/^langue-/.test(cid)) {
+        if (!RX.langue.test(cid)) E("[2] identifiant de cours de langue mal formé : " + cid + " (langue-<nat|fon|log|conj|txt><nn>)");
+        if (c.matiere !== "langue") E("[2] cours de langue sans matiere « langue » : " + cid);
+        if (!c.titre || typeof c.titre !== "string") E("[2] cours de langue sans titre : " + cid);
+        if (BADGES.indexOf(c.badge) < 0) E("[2] cours de langue sans badge connu : " + cid + " (" + BADGES.join(", ") + ")");
+        if (!(typeof c.ordre === "number" && c.ordre >= 1 && Math.floor(c.ordre) === c.ordre)) E("[2] cours de langue sans ordre (entier, 1 ou plus) : " + cid);
+      }
       (c.fiches || []).forEach(function (f) {
         unique(f.id, cid);
         if (!new RegExp("^" + cid + "-f\\d+$").test(f.id)) E("[2] identifiant de fiche mal formé : " + f.id);
@@ -213,10 +231,20 @@
     devoirs.forEach(function (d) {
       Object.keys(d).forEach(function (k) { if (CHAMPS_DEVOIR.indexOf(k) < 0) E("[7] champ interdit dans devoirs.js : " + d.id + "." + k); });
       CHAMPS_DEVOIR.forEach(function (k) { if (!(k in d)) E("[7] champ manquant : " + d.id + "." + k); });
-      if (!(d.semaine >= 1 && d.semaine <= 34)) E("[7] semaine invalide : " + d.id);
+      if (d.matiere === "langue") {
+        // grammaire : un devoir par badge Griffon, fait au rythme de l'élève, donc sans semaine
+        if (d.semaine !== null) E("[7] semaine invalide : " + d.id + " (null pour un devoir de langue, hors planning)");
+      } else if (!(d.semaine >= 1 && d.semaine <= 34)) E("[7] semaine invalide : " + d.id);
       if (!Array.isArray(d.perimetre)) { E("[7] périmètre invalide : " + d.id); return; }
       if (d.matiere === "anglais") {
         d.perimetre.forEach(function (p) { if (!RX.anglais.test(p)) E("[7] périmètre d'anglais invalide : " + d.id + " → " + p); });
+      } else if (d.matiere === "langue") {
+        // cours de langue : identifiant bien formé ; s'il a déjà son fichier, c'est bien un cours de langue
+        if (!d.perimetre.length) A("[7] périmètre vide : " + d.id);
+        d.perimetre.forEach(function (p) {
+          if (!RX.langue.test(p)) E("[7] périmètre de langue invalide : " + d.id + " → " + p);
+          else if (donnees.cours[p] && donnees.cours[p].matiere !== "langue") E("[7] périmètre : " + p + " n'est pas un cours de langue (" + d.id + ")");
+        });
       } else {
         if (!d.perimetre.length) A("[7] périmètre vide : " + d.id);
         d.perimetre.forEach(function (p) {
@@ -236,13 +264,13 @@
       Object.keys(su || {}).forEach(function (id) {
         var x = su[id];
         if (!x || typeof x !== "object") { E("[7] suivi : estimation illisible pour " + id); return; }
-        var p = parId[id];
+        var p = parId[id], langue = RX.langue.test(id);
         if (p && p.type !== "cours") E("[7] suivi : " + id + " n'est pas un cours (entrée de type " + p.type + ")");
-        else if (!p && !RX.anglais.test(id) && !RX.methode.test(id)) E("[7] suivi : cours inconnu " + id);
+        else if (!p && !RX.anglais.test(id) && !RX.methode.test(id) && !langue) E("[7] suivi : cours inconnu " + id);
         if (["acquis", "a-revoir"].indexOf(x.etat) < 0) E("[7] suivi : état inconnu pour " + id + " (acquis ou a-revoir)");
         var genre = sourceSuivi(x.source, devoirs);
         if (!genre) E("[7] suivi : devoir source manquant ou inconnu pour " + id + (x.source ? " (" + x.source + ")" : "") + " : identifiant de devoirs.js ou fichier déposé");
-        else if (genre === "devoir" && p && p.type === "cours") {
+        else if (genre === "devoir" && ((p && p.type === "cours") || langue)) {
           var dv = devoirs.filter(function (d) { return d.id === x.source; })[0];
           if (Array.isArray(dv.perimetre) && dv.perimetre.indexOf(id) < 0) A("[7] suivi : " + id + " n'est pas dans le périmètre de " + x.source);
         }
@@ -257,7 +285,7 @@
     return { erreurs: erreurs, alertes: alertes };
   }
 
-  var api = { controler: controler, phrases: phrases, mots: mots, sourceSuivi: sourceSuivi };
+  var api = { controler: controler, phrases: phrases, mots: mots, sourceSuivi: sourceSuivi, BADGES: BADGES, RX: RX };
   if (typeof module !== "undefined" && module.exports) module.exports = api;
   racine.CONTROLES = api;
 })(typeof window !== "undefined" ? window : globalThis);

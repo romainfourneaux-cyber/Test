@@ -528,6 +528,11 @@ main { max-width: 1060px; margin: 0 auto; padding: 1.4rem 1rem 7rem; }
   background: radial-gradient(circle at 35% 30%, #f3e3bf, #c9ae78); color: #3a2a1c; box-shadow: 0 0 0 2px var(--or), 0 0 0 3px #000; }
 .recit-nom { display: block; font-family: var(--titre); font-size: .8rem; letter-spacing: .06em; color: var(--or-clair); text-transform: uppercase; }
 .recit-texte { margin: .1rem 0 0; font-style: italic; font-size: 1.02rem; line-height: 1.35; }
+/* question ratée qui revient un peu plus tard : une seconde chance, signalée par un cartouche doré (jamais en brique) */
+.etiquette-rappel { display: inline-block; margin-left: .6rem; padding: .05rem .55rem; border-radius: .8em; vertical-align: .08em;
+  font-family: var(--titre); font-size: .72rem; letter-spacing: .05em; text-transform: uppercase;
+  background: var(--or-clair); color: var(--encre); box-shadow: 0 0 0 1px var(--or-sombre); }
+.carte-conseil .etiquette-rappel { margin: .2rem 0 0; align-self: center; }
 
 /* ---------- campagne ---------- */
 /* la carte tient dans la hauteur de la fenêtre (1366 × 768 : titre, ligne des royaumes, alerte éventuelle, carte

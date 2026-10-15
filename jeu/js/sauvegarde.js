@@ -3,11 +3,13 @@
   "use strict";
   var JEU = racine.JEU;
   var CLE = "jeu5e";
-  var SCHEMA = 3;
+  var SCHEMA = 4;
 
   function ressourcesVides() {
     return { sceaux: 0, routes: 0, remedes: 0, alambics: 0, parchemins: 0, alliances: 0 };
   }
+
+  function rappelsVides() { return JEU.rappels ? JEU.rappels.vide() : { compteur: 0, file: [] }; }
 
   function nouvelle(maintenant) {
     var t = JEU.util.horodatage(maintenant);
@@ -21,7 +23,9 @@
       stats: { bonnes: 0, total: 0, parties: 0 },
       questionsVues: {},
       // ajout du schéma 3 : la campagne contre le seigneur rival
-      campagne: JEU.campagne ? JEU.campagne.etatVide() : null
+      campagne: JEU.campagne ? JEU.campagne.etatVide() : null,
+      // ajout du schéma 4 : les questions ratées qui reviennent un peu plus tard (rappels.js)
+      rappels: rappelsVides()
     };
   }
 
@@ -44,6 +48,12 @@
       s.campagne = JEU.campagne ? JEU.campagne.completer(s.campagne) : (s.campagne || null);
       if (s.reglages && typeof s.reglages.musique !== "boolean") s.reglages.musique = true;
       s.schema = 3;
+      return s;
+    },
+    // 3 → 4 : la file des questions ratées à reposer un peu plus tard arrive, vide ; rien d'autre ne change.
+    3: function (s) {
+      s.rappels = JEU.rappels ? JEU.rappels.completer(s.rappels) : (s.rappels || rappelsVides());
+      s.schema = 4;
       return s;
     }
   };
@@ -82,6 +92,8 @@
       try { ls.setItem(CLE + "-illisible-" + Date.now(), brut); } catch (e2) { /* rien */ }
       etat = nouvelle();
     }
+    // nouvelle séance : les questions ratées encore en attente passent en tête des prochaines questions
+    if (JEU.rappels) JEU.rappels.ouvrirSession(etat);
     enregistrer();
     return etat;
   }

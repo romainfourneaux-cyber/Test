@@ -13,7 +13,7 @@ function contexte() {
     localStorage: { getItem: k => (k in stock ? stock[k] : null), setItem: (k, v) => { stock[k] = String(v); }, removeItem: k => { delete stock[k]; } } };
   ctx.window = ctx; ctx.globalThis = ctx;
   vm.createContext(ctx);
-  ["noyau", "brouillage", "calendrier", "sauvegarde", "leitner", "progression", "questions", "recit", "bataille-moteur", "cartes-bataille", "campagne"].forEach(m => {
+  ["noyau", "brouillage", "calendrier", "sauvegarde", "leitner", "progression", "questions", "rappels", "recit", "bataille-moteur", "cartes-bataille", "campagne"].forEach(m => {
     vm.runInContext(fs.readFileSync(path.join(RACINE, "jeu", "js", m + ".js"), "utf8"), ctx, { filename: m + ".js" });
   });
   ["config", "planning", "devoirs", "suivi"].forEach(f => vm.runInContext(fs.readFileSync(path.join(RACINE, "jeu", "data", f + ".js"), "utf8"), ctx));
@@ -92,11 +92,12 @@ const v1 = {
 };
 const m = J.sauvegarde.migrer(JSON.parse(JSON.stringify(v1)));
 const conserve = ["cours", "notions", "ressources", "batiments", "devoirs", "signalements", "creeLe"].every(k => JSON.stringify(m[k]) === JSON.stringify(v1[k]));
-verifier("Migration 1 → 3 : rien de perdu", conserve && m.schema === 3);
-verifier("Migration 1 → 3 : campagne neuve et musique", m.campagne && m.campagne.conquises.length === 0 && m.campagne.arsenal.tours.archers === 1 && m.reglages.musique === true);
+verifier("Migration 1 → 4 : rien de perdu", conserve && m.schema === 4);
+verifier("Migration 1 → 4 : file des rappels vide", JSON.stringify(m.rappels) === JSON.stringify({ compteur: 0, file: [] }), m.rappels);
+verifier("Migration 1 → 4 : campagne neuve et musique", m.campagne && m.campagne.conquises.length === 0 && m.campagne.arsenal.tours.archers === 1 && m.reglages.musique === true);
 verifier("Migration 1 → 2 : nouveaux champs", m.reglages && m.reglages.son === true && m.stats.bonnes === 3 && m.stats.total === 4 && typeof m.questionsVues === "object");
 const sansSchema = J.sauvegarde.migrer({ cours: {}, notions: {} });
-verifier("Sauvegarde sans numéro de schéma traitée comme schéma 1", sansSchema.schema === 3 && sansSchema.ressources.sceaux === 0);
+verifier("Sauvegarde sans numéro de schéma traitée comme schéma 1", sansSchema.schema === 4 && sansSchema.ressources.sceaux === 0);
 
 // export puis import : même partie
 J.sauvegarde.remplacer(m);
@@ -108,10 +109,18 @@ const refuse = t => { try { J.sauvegarde.importer(t); return false; } catch (e) 
 const avantImport = JSON.stringify(J.sauvegarde.etat());
 verifier("Import d'un fichier étranger refusé, partie intacte", refuse('{"name":"mon-projet","version":"1.0.0"}') && refuse("[]") && refuse("pas du JSON") && JSON.stringify(J.sauvegarde.etat()) === avantImport);
 
-// migration 2 → 3 : la campagne s'ajoute, le reste ne bouge pas
-const v2 = JSON.parse(JSON.stringify(m)); delete v2.campagne; v2.schema = 2; delete v2.reglages.musique;
+// migration 2 → 3 → 4 : la campagne s'ajoute, puis la file des rappels ; le reste ne bouge pas
+const v2 = JSON.parse(JSON.stringify(m)); delete v2.campagne; delete v2.rappels; v2.schema = 2; delete v2.reglages.musique;
 const m3 = J.sauvegarde.migrer(JSON.parse(JSON.stringify(v2)));
-verifier("Migration 2 → 3 : rien de perdu", ["cours", "notions", "ressources", "batiments", "stats"].every(k => JSON.stringify(m3[k]) === JSON.stringify(v2[k])) && m3.schema === 3 && m3.campagne.provinces.gue.pv === 16);
+verifier("Migration 2 → 4 : rien de perdu", ["cours", "notions", "ressources", "batiments", "stats"].every(k => JSON.stringify(m3[k]) === JSON.stringify(v2[k])) && m3.schema === 4 && m3.campagne.provinces.gue.pv === 16 && m3.rappels.file.length === 0);
+// migration 3 → 4 : seule la file des rappels s'ajoute, tout le reste est identique
+const v3 = JSON.parse(JSON.stringify(m)); delete v3.rappels; v3.schema = 3;
+v3.campagne.conquises = ["gue"]; v3.campagne.royaume.savoir = 5; v3.questionsVues = { "methode-frise-q3": 2 };
+const m4 = J.sauvegarde.migrer(JSON.parse(JSON.stringify(v3)));
+verifier("Migration 3 → 4 : rien de perdu, file des rappels ajoutée",
+  Object.keys(v3).filter(k => k !== "schema").every(k => JSON.stringify(m4[k]) === JSON.stringify(v3[k])) && m4.schema === 4 &&
+  JSON.stringify(m4.rappels) === JSON.stringify({ compteur: 0, file: [] }), Object.keys(m4));
+verifier("Sauvegarde d'un schéma plus récent (5) refusée", (() => { try { J.sauvegarde.migrer({ schema: 5, creeLe: "2026-10-15T10:00:00", notions: {}, ressources: {} }); return false; } catch (e) { return true; } })());
 
 // campagne : rien ne se perd, les coups portés restent, une victoire conquiert
 J.sauvegarde.remplacer(J.sauvegarde.nouvelle());
@@ -186,7 +195,9 @@ function controleSuivi(cours) {
   return controler(d, atelier.debrouiller);
 }
 const suiviBon = controleSuivi({ "histoire-s08-1": { etat: "a-revoir", note: "Revois la différence entre domaine royal et grands fiefs.", source: "histoire-d1", le: "2026-10-13" } });
-verifier("Validateur : une estimation correcte de suivi.js passe", suiviBon.erreurs.length === 0 && suiviBon.alertes.length === 0, suiviBon);
+// (seuls les messages sur suivi.js comptent ici : les alertes de contenu des cours en cours d'écriture n'entrent pas en jeu)
+const surSuivi = t => t.filter(x => x.indexOf("suivi") >= 0);
+verifier("Validateur : une estimation correcte de suivi.js passe", suiviBon.erreurs.length === 0 && surSuivi(suiviBon.alertes).length === 0, { erreurs: suiviBon.erreurs, alertes: surSuivi(suiviBon.alertes) });
 const suiviFaux = controleSuivi({
   "histoire-s02-2": { etat: "acquis", source: "histoire-d1" },
   "histoire-s07-2": { etat: "a-revoir", note: "Corrigé par M. Dupont : 1214.", source: "histoire-d99" },
@@ -268,6 +279,194 @@ J.progression.oublier();
 const far = J.progression.fichesARevoir();
 verifier("Une séquence d'anglais à revoir met ses éléments en priorité", ["ang-v1", "ang-s1", "ang-p1"].every(x => far.indexOf(x) >= 0), far);
 delete J.donnees.anglais["anglais-essai"]; J.donnees.suivi = { cours: {} }; J.progression.oublier();
+
+// ---------- rappels : une question ratée revient « un peu plus tard » (jeu/js/rappels.js) ----------
+// Contexte neuf : seulement deux cours d'essai, en mémoire (un cours d'histoire de S7 et un cours de langue).
+const JR = contexte().JEU;
+JR.sauvegarde.charger();
+const SRC = { fichier: "essai.pdf", page: 1 };
+function coursEssai(id, n, extra) {
+  const fiches = [], questions = [];
+  for (let i = 1; i <= n; i++) {
+    fiches.push({ id: id + "-f" + i, notion: "Notion " + i, titre: "Notion " + i, texte: "", source: SRC });
+    questions.push({ id: id + "-q" + (2 * i - 1), fiche: id + "-f" + i, type: "qcm", niveau: 1, enonce: "Question " + i + " ?", choix: ["a", "b", "c", "d"], reponse: "a", explication: "a.", source: SRC });
+    questions.push({ id: id + "-q" + (2 * i), fiche: id + "-f" + i, type: "vrai_faux", niveau: 1, enonce: "Affirmation " + i + ".", corrections: [], reponse: { vrai: true, correction: null }, explication: "Vrai.", source: SRC });
+  }
+  return Object.assign({ id: id, fiches: fiches, questions: questions, bonus: [], nonCouvert: [] }, extra || {});
+}
+JR.donnees.cours["histoire-s07-2"] = coursEssai("histoire-s07-2", 6);
+JR.donnees.cours["langue-conj10"] = coursEssai("langue-conj10", 4, { matiere: "langue", titre: "Les modes du verbe", badge: "cuivre", ordre: 1 });
+JR.questions.vider(); JR.progression.oublier();
+const RP = JR.rappels;
+const QR = id => JR.questions.questionsDuCours(id.replace(/-q\d+$/, "")).find(q => q.id === id);
+const repondre = (q, juste) => JR.questions.enregistrerReponse(q, juste);
+const neuve = () => { JR.sauvegarde.remplacer(JR.sauvegarde.nouvelle()); };
+const H = n => QR("histoire-s07-2-q" + n);
+
+verifier("Rappels : rappelApres vaut 3 dans config.js", JR.donnees.config.rappelApres === 3 && RP.apres() === 3);
+neuve();
+const qA = H(1);
+repondre(qA, false);
+const eA = RP.etat().file.find(x => x.id === qA.id);
+verifier("Rappel : une erreur programme la même question après 3 autres", RP.etat().compteur === 1 && eA && eA.du === 4 && eA.cours === "histoire-s07-2" && RP.etat().file.length === 1, RP.etat());
+const lot5 = [3, 5, 7, 9, 11].map(H);
+const p0 = RP.placer(lot5.slice());
+verifier("Rappel : jamais la question suivante, mais la 4e (après 3 autres), à la place d'une question ordinaire",
+  p0.length === 5 && p0[3].id === qA.id && p0[3].rappel === true && p0.filter(q => q.rappel).length === 1 && p0[0].id !== qA.id && p0[4].id === lot5[3].id, p0.map(q => q.id));
+verifier("Rappel : l'énoncé ne change pas, la copie est marquée", p0[3].enonce === qA.enonce && !qA.rappel);
+repondre(H(3), true);
+const p1 = RP.placer([5, 7, 9, 11].map(H));
+verifier("Rappel : une réponse plus tard, il avance d'une place", p1[2].id === qA.id && p1.length === 4, p1.map(q => q.id));
+verifier("Rappel : un lot trop court le laisse en attente pour le lot suivant", RP.placer([H(5)]).length === 1 && RP.placer([H(5)])[0].id === H(5).id && RP.enAttente().indexOf(qA.id) >= 0);
+repondre(H(5), true); repondre(H(7), true);
+verifier("Rappel : dû, il passe en tête du lot suivant", RP.placer([9, 11].map(H))[0].id === qA.id);
+repondre(qA, false);
+verifier("Rappel encore raté : reprogrammé de la même façon (une seule entrée)", RP.etat().file.length === 1 && RP.etat().file[0].du === RP.etat().compteur + 3, RP.etat());
+repondre(qA, true);
+verifier("Rappel réussi : il sort de la file", RP.etat().file.length === 0);
+
+// position dans les lots d'une bataille : 3 questions tirées au début de chaque vague, avec les exclusions de la bataille
+neuve();
+const posees = [];
+const tirerVague = n => { const ids = posees.map(q => q.id), fs = posees.map(q => q.fiche); return JR.recit.suite(n, { exclure: ids, filtre: q => fs.indexOf(q.fiche) < 0, completer: true }); };
+const vague1 = tirerVague(3); posees.push(...vague1);
+repondre(vague1[0], false); repondre(vague1[1], true); repondre(vague1[2], true);
+const vague2 = tirerVague(3); posees.push(...vague2);
+verifier("Bataille : la question ratée à la 1re question revient à la 2e place de la vague suivante (après 3 autres)",
+  vague1.length === 3 && vague2.length === 3 && vague2[1].id === vague1[0].id && vague2[1].rappel && vague2[0].id !== vague1[0].id, [vague1.map(q => q.id), vague2.map(q => q.id)]);
+verifier("Bataille : le rappel passe outre « une question par fiche » et « jamais deux fois la même question »",
+  posees.filter(q => q.id === vague1[0].id).length === 2 && vague2.filter(q => !q.rappel).every(q => vague1.every(x => x.fiche !== q.fiche)));
+repondre(vague2[0], true);
+repondre(vague2[1], true);
+verifier("Bataille : réussi au rappel, il ne revient plus", RP.enAttente().length === 0 && tirerVague(3).every(q => !q.rappel));
+
+// conseil du royaume : 8 affirmations tirées d'un coup ; une erreur à la 1re la fait revenir à la 5e
+neuve();
+const lot8 = JR.recit.suite(8, { types: ["vrai_faux"] });
+repondre(lot8[0], false);
+RP.replacer(lot8, 1, lot8.length, { types: ["vrai_faux"] });
+verifier("Conseil : une affirmation ratée revient dans le même conseil, après 3 autres, sans doublon",
+  lot8.length === 8 && lot8[4].id === lot8[0].id && lot8[4].rappel && new Set(lot8.slice(1).map(q => q.id)).size === 7, lot8.map(q => q.id));
+// une question qui n'est pas un vrai ou faux attend une bataille ou un événement
+neuve();
+const qQcm = QR("langue-conj10-q1");
+repondre(qQcm, false); [3, 5, 7].forEach(n => repondre(H(n), true));
+const lotVF = JR.recit.suite(4, { types: ["vrai_faux"] });
+verifier("Conseil : un QCM raté n'y revient pas (vrai ou faux seulement), il attend", lotVF.every(q => q.id !== qQcm.id) && RP.enAttente().indexOf(qQcm.id) >= 0);
+const lotTous = JR.recit.suite(3);
+verifier("Événement : le QCM raté et déjà dû passe en tête", lotTous[0].id === qQcm.id && lotTous[0].rappel && lotTous.length === 3, lotTous.map(q => q.id));
+
+// jamais deux fois de suite
+neuve();
+const qB = H(2);
+repondre(qB, false);
+RP.etat().file[0].du = RP.etat().compteur; // dû tout de suite, alors qu'on vient de la poser
+const pB = RP.placer([1, 3, 5].map(H));
+verifier("Rappel : jamais deux fois de suite (il attend une question)", pB[0].id !== qB.id && pB[1].id === qB.id, pB.map(q => q.id));
+// douze rappels au plus : le plus ancien tombe
+neuve();
+const treize = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(H).concat([QR("langue-conj10-q1")]);
+treize.forEach(q => repondre(q, false));
+verifier("Rappels : douze au plus, le plus ancien tombe", RP.etat().file.length === 12 && RP.enAttente().indexOf(treize[0].id) < 0 && RP.enAttente().indexOf(treize[12].id) >= 0);
+// question disparue (fichier de cours retiré) : le rappel s'efface sans bruit
+neuve();
+RP.etat().file.push({ id: "geographie-s07-1-q1", cours: "geographie-s07-1", du: 0 });
+let sansBruit = true, pDisp;
+try { pDisp = RP.placer([1, 3].map(H)); } catch (e) { sansBruit = false; }
+verifier("Rappel d'une question disparue : effacé sans bruit", sansBruit && RP.etat().file.length === 0 && pDisp.length === 2 && pDisp.every(q => !q.rappel));
+verifier("File des rappels abîmée : réparée sans planter", (() => {
+  const r = RP.completer({ compteur: "x", file: [null, { id: "a" }, { id: "b", du: 2, cours: "c" }] });
+  return r.compteur === 0 && r.file.length === 1 && r.file[0].id === "b" && RP.completer(null).file.length === 0;
+})());
+// récit : « Seconde chance », sans changer l'énoncé
+neuve();
+repondre(H(1), false); [3, 5, 7].forEach(n => repondre(H(n), true));
+const copieR = RP.placer([9, 11].map(H))[0];
+const cadreR = JR.recit.cadre(copieR, "preparation"), cadreN = JR.recit.cadre(H(9), "preparation"), cadreC = JR.recit.cadre(copieR, "savoir");
+verifier("Récit : la question qui revient porte l'étiquette « Seconde chance », sans changer l'énoncé",
+  copieR.rappel && copieR.enonce === H(1).enonce && cadreR.etiquette === "Seconde chance" && /tout à l'heure/.test(cadreR.texte) && !cadreN.etiquette && cadreC.etiquette === "Seconde chance", [cadreR, cadreC]);
+verifier("Récit : jamais de pénalité ni de chrono dans les phrases de seconde chance", (() => {
+  for (let i = 0; i < 40; i++) { const t = JR.recit.cadre(copieR, "evenement").texte; if (/tu perds|perdu|chrono|vite|pénalité/i.test(t)) return false; }
+  return true;
+})());
+
+// sauvegarde : la file est gardée (export, import) ; à la séance suivante, les rappels en attente passent en tête
+verifier("Sauvegarde neuve : schéma 4, file des rappels vide", JR.sauvegarde.nouvelle().schema === 4 && JSON.stringify(JR.sauvegarde.nouvelle().rappels) === JSON.stringify({ compteur: 0, file: [] }));
+neuve();
+repondre(H(1), false);
+const fileAvant = JSON.stringify(JR.sauvegarde.etat().rappels);
+const txtR = JR.sauvegarde.texteExport();
+JR.sauvegarde.remplacer(JR.sauvegarde.nouvelle());
+JR.sauvegarde.importer(txtR);
+verifier("Export puis import : la file des rappels est gardée", JSON.stringify(JR.sauvegarde.etat().rappels) === fileAvant && JR.sauvegarde.etat().rappels.file.length === 1);
+JR.sauvegarde.enregistrer();
+JR.sauvegarde.charger(); // le jeu est rouvert : nouvelle séance
+const eS = JR.sauvegarde.etat().rappels.file[0];
+verifier("Séance suivante : le rappel en attente est dû tout de suite et passe en tête", eS && eS.du <= JR.sauvegarde.etat().rappels.compteur && RP.placer([3, 5, 7].map(H))[0].id === H(1).id, eS);
+
+// ---------- grammaire : la matière « langue », rangée par badges Griffon ----------
+verifier("Grammaire : matière, ressource, quartier et couleur", JSON.stringify(JR.MATIERES.langue) === JSON.stringify({ nom: "Grammaire", ressource: "parchemins", quartier: "scriptorium", couleur: "#8c2f39" }));
+verifier("Grammaire : rangée juste après la lecture suivie", JR.ORDRE_MATIERES.indexOf("langue") === JR.ORDRE_MATIERES.indexOf("lecture") + 1);
+verifier("Grammaire : huit badges Griffon dans l'ordre", JR.BADGES_GRIFFON.map(b => b.id).join() === "bois,fer,cuivre,acier,bronze,titane,argent,or" &&
+  JR.BADGES_GRIFFON.map(b => b.nom).join("|") === "Griffon de bois|Griffon de fer|Griffon de cuivre|Griffon d'acier|Griffon de bronze|Griffon de titane|Griffon d'argent|Griffon d'or");
+verifier("Grammaire : le maître scribe conseille", JR.recit.conseiller("langue").nom === "Le maître scribe" && JR.recit.conseiller("langue").titre === "veille sur la langue du royaume");
+const etatR = JR.sauvegarde.etat();
+JR.progression.oublier();
+verifier("Grammaire : un cours avec fichier est ouvert sans entrée de planning", JR.progression.etatCours("langue-conj10", etatR) === "ouvert" && !JR.progression.entree("langue-conj10"));
+verifier("Grammaire : un cours sans fichier reste dans la brume", JR.progression.etatCours("langue-conj11", etatR) === "brume");
+verifier("Grammaire : la matière se lit dans l'identifiant, même sans fichier", JR.util.matiereDe("langue-conj11") === "langue" && JR.util.matiereDe("langue-conj10") === "langue");
+verifier("Grammaire : ses questions entrent dans le tirage", JR.progression.coursAccessibles(etatR).indexOf("langue-conj10") >= 0 && JR.recit.candidats().some(c => c.cours === "langue-conj10"));
+JR.donnees.cours["langue-conj12"] = coursEssai("langue-conj12", 1, { matiere: "langue", titre: "Les homophones", badge: "cuivre", ordre: 3 });
+JR.donnees.cours["langue-conj11"] = coursEssai("langue-conj11", 1, { matiere: "langue", titre: "Être et avoir", badge: "cuivre", ordre: 2 });
+JR.donnees.cours["langue-nat06"] = coursEssai("langue-nat06", 1, { matiere: "langue", titre: "Le nom", badge: "fer", ordre: 1 });
+JR.donnees.suivi = { cours: { "langue-conj11": { etat: "acquis", source: "langue-d1", le: "2026-10-15" }, "langue-conj12": { etat: "a-revoir", source: "langue-d1", le: "2026-10-15" } } };
+JR.questions.vider(); JR.progression.oublier();
+verifier("Grammaire : le suivi estime un cours de langue (acquis, à revoir)", JR.progression.etatCours("langue-conj11", etatR) === "acquis" && JR.progression.etatCours("langue-conj12", etatR) === "a-revoir");
+const grp = JR.progression.groupesLangue();
+verifier("Onglet Grammaire : groupé par badge (seulement les badges qui ont un cours), trié par ordre",
+  grp.map(g => g.nom).join("|") === "Griffon de fer|Griffon de cuivre" && grp[1].cours.map(c => c.id).join() === "langue-conj10,langue-conj11,langue-conj12" && grp[0].cours[0].id === "langue-nat06",
+  grp.map(g => g.nom + ":" + g.cours.map(c => c.id).join(",")));
+const posL = JR.progression.position("langue", etatR);
+verifier("Onglet Grammaire : compte des cours (acquis, à revoir, en cours)", posL.total === 4 && posL.acquis === 1 && posL.aRevoir === 1 && posL.enCours === 2, posL);
+verifier("Grammaire : comptée dans le total des cours acquis", JR.progression.totalAcquis(etatR) === 1);
+JR.donnees.cours["histoire-s01-1"] = coursEssai("histoire-s01-1", 1); JR.progression.oublier();
+verifier("Grammaire : un cours de langue compte comme un cours de la semaine en cours pour le tirage", (() => { const r = JR.progression.recence(etatR); return r["langue-conj10"] < r["histoire-s01-1"]; })());
+delete JR.donnees.cours["histoire-s01-1"]; JR.questions.vider();
+JR.donnees.suivi = { cours: {} }; JR.progression.oublier();
+
+// validateur : cours de langue hors planning, badge, devoir langue-d1, suivi
+const { brouiller: brl } = atelier;
+function coursLangueVal(id, extra) {
+  const c = coursEssai(id, 1, Object.assign({ matiere: "langue", titre: "Essai", badge: "cuivre", ordre: 1 }, extra || {}));
+  c.questions.forEach(q => { q.r = brl(JSON.stringify(q.reponse)); delete q.reponse; });
+  return c;
+}
+function validerAvec(cours, extra) {
+  const ids = Object.keys(cours);
+  const d = Object.assign({}, donneesVal, { indexCours: donneesVal.indexCours.concat(ids), cours: Object.assign({}, donneesVal.cours, cours) }, extra || {});
+  return controler(d, atelier.debrouiller);
+}
+const surId = (res, id) => res.erreurs.filter(x => x.indexOf(id) >= 0);
+const valL = validerAvec({ "langue-conj13": coursLangueVal("langue-conj13") });
+verifier("Validateur : un cours de langue sans entrée de planning est valide", surId(valL, "langue-conj13").length === 0, surId(valL, "langue-conj13"));
+const valBad = validerAvec({ "langue-conj14": coursLangueVal("langue-conj14", { badge: "platine", ordre: 0 }), "langue-gram01": coursLangueVal("langue-gram01") });
+verifier("Validateur : badge inconnu, ordre absent, identifiant de langue mal formé refusés",
+  surId(valBad, "langue-conj14").some(x => /badge/.test(x)) && surId(valBad, "langue-conj14").some(x => /ordre/.test(x)) && surId(valBad, "langue-gram01").some(x => /mal formé/.test(x)), valBad.erreurs.filter(x => /langue/.test(x)));
+verifier("Validateur : le devoir langue-d1 (semaine null) passe", donneesVal.devoirs.some(dv => dv.id === "langue-d1" && dv.semaine === null) &&
+  controler(donneesVal, atelier.debrouiller).erreurs.filter(x => x.indexOf("langue-d1") >= 0).length === 0);
+const valDv = controler(Object.assign({}, donneesVal, { devoirs: donneesVal.devoirs.concat([
+  { id: "langue-d2", matiere: "langue", semaine: 5, intitule: "Essai", perimetre: ["langue-conj13"] },
+  { id: "langue-d3", matiere: "langue", semaine: null, intitule: "Essai", perimetre: ["histoire-s01-1"] }]) }), atelier.debrouiller);
+verifier("Validateur : devoir de langue avec une semaine, ou périmètre hors langue, refusés",
+  valDv.erreurs.some(x => /semaine invalide : langue-d2/.test(x)) && valDv.erreurs.some(x => /périmètre de langue invalide : langue-d3/.test(x)), valDv.erreurs.filter(x => /langue/.test(x)));
+const valSu = controleSuivi({ "langue-conj10": { etat: "acquis", source: "langue-d1", le: "2026-10-15" }, "langue-conj13": { etat: "a-revoir", source: "langue-d1", le: "2026-10-15" } });
+verifier("Validateur : suivi.js accepte un cours de langue, et alerte hors du périmètre du devoir",
+  valSu.erreurs.length === 0 && !surSuivi(valSu.alertes).some(x => /langue-conj10/.test(x)) && valSu.alertes.some(x => /langue-conj13 n'est pas dans le périmètre de langue-d1/.test(x)), { e: valSu.erreurs, a: surSuivi(valSu.alertes) });
+const gp = require("./generer-planning.js");
+verifier("Générateur du planning : il garde le devoir langue-d1 à chaque génération", (() => {
+  const dv = gp.devoirs(gp.generer()).filter(x => x.id === "langue-d1");
+  return dv.length === 1 && dv[0].semaine === null && dv[0].perimetre.join() === "langue-conj10,langue-conj11,langue-conj12";
+})());
 
 console.log("\n" + ok + " réussis, " + ko + " en échec.");
 process.exit(ko ? 1 : 0);

@@ -24,6 +24,13 @@ const PLAN_DEVOIRS = {
   physique: [12, 20, 30],
   anglais: [5, 13, 18, 22, 28, 32]
 };
+// Devoirs hors planning, recopiés tels quels à chaque génération (l'emploi du temps ne les connaît pas).
+// Grammaire et conjugaison (matière « langue ») : un devoir par badge Griffon, fait au rythme de l'élève, donc
+// semaine null ; le périmètre liste les cours de langue du badge (langue-<thème><nn>). Demandé par Romain le 15/10/2026.
+const DEVOIRS_HORS_PLANNING = [
+  { id: "langue-d1", matiere: "langue", semaine: null, intitule: "Griffon de cuivre, devoir FR-CUIVRE-2A",
+    perimetre: ["langue-conj10", "langue-conj11", "langue-conj12"] }
+];
 const NOMS = {
   histoire: "Histoire", geographie: "Géographie", svt: "SVT", physique: "Physique-chimie",
   litterature: "Littérature", lecture: "Lecture suivie", anglais: "Anglais"
@@ -147,6 +154,7 @@ function devoirs(planning) {
         intitule: NOMS[m] + ", " + nom + (i + 1), perimetre: perimetre });
     });
   }
+  DEVOIRS_HORS_PLANNING.forEach(d => res.push(JSON.parse(JSON.stringify(d))));
   return res;
 }
 
@@ -167,4 +175,4 @@ if (require.main === module) {
   console.log("planning :", p.length, "entrées", JSON.stringify(parType), "; devoirs :", d.length);
 }
 
-module.exports = { generer, devoirs, typeEntree };
+module.exports = { generer, devoirs, typeEntree, DEVOIRS_HORS_PLANNING };

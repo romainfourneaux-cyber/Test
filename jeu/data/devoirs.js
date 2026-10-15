@@ -35,5 +35,6 @@ JEU.enregistrer("devoirs", [
   {"id":"anglais-d3","matiere":"anglais","semaine":18,"intitule":"Anglais, devoir 3","perimetre":[]},
   {"id":"anglais-d4","matiere":"anglais","semaine":22,"intitule":"Anglais, devoir 4","perimetre":[]},
   {"id":"anglais-d5","matiere":"anglais","semaine":28,"intitule":"Anglais, devoir 5","perimetre":[]},
-  {"id":"anglais-d6","matiere":"anglais","semaine":32,"intitule":"Anglais, devoir 6","perimetre":[]}
+  {"id":"anglais-d6","matiere":"anglais","semaine":32,"intitule":"Anglais, devoir 6","perimetre":[]},
+  {"id":"langue-d1","matiere":"langue","semaine":null,"intitule":"Griffon de cuivre, devoir FR-CUIVRE-2A","perimetre":["langue-conj10","langue-conj11","langue-conj12"]}
 ]);

@@ -12,7 +12,7 @@
     marche:        { nom: "Marché et routes", matieres: ["geographie"], x: 720, y: 290 },
     herboristerie: { nom: "Herboristerie", matieres: ["svt"], x: 180, y: 290 },
     forge:         { nom: "Forge et moulin", matieres: ["physique"], x: 690, y: 470 },
-    scriptorium:   { nom: "Scriptorium", matieres: ["litterature", "lecture"], x: 210, y: 470 },
+    scriptorium:   { nom: "Scriptorium", matieres: ["litterature", "lecture", "langue"], x: 210, y: 470 },
     ambassade:     { nom: "Ambassade", matieres: ["anglais"], x: 450, y: 528 }
   };
 
