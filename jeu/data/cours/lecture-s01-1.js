@@ -186,8 +186,8 @@ JEU.enregistrer("cours", {
    "enonce": "L'Arctique, c'est la région du pôle Sud.",
    "corrections": [
     "Faux : l'Arctique, c'est le pôle Nord ; le pôle Sud, c'est l'Antarctique.",
-    "Faux : l'Arctique désigne l'équateur, au milieu de la Terre.",
-    "Faux : l'Arctique désigne un désert chaud."
+    "Faux : l'Arctique, c'est la région de l'équateur, entre les deux pôles.",
+    "Faux : l'Arctique désigne les deux pôles à la fois."
    ],
    "explication": "Arctique renvoie au nord, comme la Grande Ourse du ciel du Nord. L'Antarctique, son opposé, se trouve au sud.",
    "source": {
@@ -204,17 +204,17 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Pourquoi le continent du pôle Sud s'appelle-t-il l'Antarctique ?",
    "choix": [
-    "Parce que son nom vient de anti, « opposé à », et de arktos, la Grande Ourse du ciel du Nord",
-    "Parce qu'il est rempli d'ours",
-    "Parce qu'on y voit très bien la Grande Ourse",
-    "Parce que anti veut dire « très froid »"
+    "Son nom veut dire « opposé à l'Arctique »",
+    "Son nom veut dire « pays des ours »",
+    "Son nom veut dire « très froid » en grec",
+    "Son nom veut dire « sous la Grande Ourse »"
    ],
    "explication": "Antarctique réunit anti, « opposé à », et arktos, la Grande Ourse qu'on voit dans le ciel du Nord. Le nom désigne donc le côté opposé : le pôle Sud.",
    "source": {
     "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
     "page": 1
    },
-   "r": "=cUUfFQIGNRDStyFcYQVE0gTKEgG2IWRQlEAOQRIJNxKSllFaUgAc4gUNcSDRAVDCRNpGlcsntttWoRAZEwTZr6YBwQQD9wTDIQSGkyFcMRVcYAAPxxBw0AAAxlTKUAFIISZ",
+   "r": "=sUyFKFEQQAGd0QHz80LNUs9NcMrVkQGCgiUefaVUsxBLIFH2g0EVAUABYECGESZ",
    "poids": 1
   },
   {
@@ -241,6 +241,81 @@ JEU.enregistrer("cours", {
     "page": 1
    },
    "r": "==ANvcnXG5TWsolQdlCRe8RSEYnQyclSZlCH",
+   "poids": 1
+  },
+  {
+   "id": "lecture-s01-1-q18",
+   "fiche": "lecture-s01-1-f1",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Antarctique vient de arktos et de anti, qui veut dire « au-dessous de ».",
+   "corrections": [
+    "Faux : anti veut dire « opposé à ».",
+    "Faux : anti veut dire « très froid ».",
+    "Faux : anti veut dire « ours »."
+   ],
+   "explication": "Anti veut dire « opposé à » : l'Antarctique est à l'opposé de l'Arctique. C'est arktos qui veut dire « ours ».",
+   "source": {
+    "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
+    "page": 1
+   },
+   "r": "UAVaJfbRVLbSHzaAHMTXKUhhs+0AUAgFnZAAAMQUAoRATgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "lecture-s01-1-q19",
+   "fiche": "lecture-s01-1-f1",
+   "type": "trou",
+   "niveau": 2,
+   "enonce": "Écris le mot grec qui manque.",
+   "texte": "Arctique vient du mot grec ___, qui veut dire « ours ».",
+   "explication": "Arktos veut dire « ours » en grec. C'est le nom de la Grande Ourse.",
+   "source": {
+    "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
+    "page": 1
+   },
+   "r": "eA3RGJkGEQxBLlCH",
+   "poids": 1
+  },
+  {
+   "id": "lecture-s01-1-q20",
+   "fiche": "lecture-s01-1-f1",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Pourquoi un mot qui veut dire « ours » a-t-il servi à nommer le pôle Nord ?",
+   "choix": [
+    "La Grande Ourse se voit dans le ciel du Nord",
+    "Le pôle Nord a la forme d'un gros ours couché",
+    "Les Grecs y chassaient l'ours en hiver",
+    "Le mot « ours » voulait dire « froid »"
+   ],
+   "explication": "Arktos, c'est le nom grec de la Grande Ourse, des étoiles bien visibles dans le ciel du Nord. Le nom est donc venu du ciel, pas des animaux.",
+   "source": {
+    "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
+    "page": 1
+   },
+   "r": "==AUjAgGrUFBN40AXEAINAQWN0RAHIQSG4SHDUEECk0CcAQHM0AARN0DdEiRI4TZ",
+   "poids": 1
+  },
+  {
+   "id": "lecture-s01-1-q21",
+   "fiche": "lecture-s01-1-f1",
+   "type": "qcm_multiple",
+   "niveau": 2,
+   "enonce": "Lesquelles de ces affirmations sont justes ?",
+   "choix": [
+    "Arktos veut dire « ours ».",
+    "Anti veut dire « opposé à ».",
+    "La Grande Ourse se voit dans le ciel du Nord.",
+    "L'Antarctique se trouve au pôle Nord.",
+    "Arktos veut dire « glace »."
+   ],
+   "explication": "Arktos veut dire « ours » et anti « opposé à » ; la Grande Ourse brille dans le ciel du Nord. L'Antarctique, lui, est au pôle Sud.",
+   "source": {
+    "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
+    "page": 1
+   },
+   "r": "==wOEdkF10xOFBQFJJgCbswYIlQFeBgDCYUHbgCBVBgBRxQHdcwJjhUAbxEHoY0BlA1aQtl33GVyt+02rCjQVUkQORMpGxAAuYRVRAAFf4kBGYgAPk0FDUdrGVxGHgiUefaVUsxBLIFH2g0EV4VAb0AFoAFH",
    "poids": 1
   },
   {
@@ -272,8 +347,8 @@ JEU.enregistrer("cours", {
    "enonce": "Pendant la débâcle, la banquise se forme.",
    "corrections": [
     "Faux : pendant la débâcle, la banquise se casse ; elle se forme pendant l'embâcle.",
-    "Faux : pendant la débâcle, la mer se met à bouillir.",
-    "Faux : la débâcle désigne la naissance d'un iceberg."
+    "Faux : pendant la débâcle, la banquise s'épaissit sous l'effet du vent.",
+    "Faux : pendant la débâcle, la banquise fond d'un seul coup en eau douce."
    ],
    "explication": "La débâcle, c'est la dislocation de la banquise. Sa formation s'appelle l'embâcle.",
    "source": {
@@ -291,9 +366,9 @@ JEU.enregistrer("cours", {
    "enonce": "Pourquoi l'eau de mer gèle-t-elle à −1,8 °C ?",
    "choix": [
     "Parce qu'elle est salée",
-    "Parce qu'elle contient des poissons",
-    "Parce que le vent la réchauffe",
-    "Parce qu'il fait nuit en hiver"
+    "Parce qu'elle est très profonde",
+    "Parce qu'elle est poussée par le vent",
+    "Parce qu'elle vient des glaciers"
    ],
    "explication": "C'est le sel de l'eau de mer qui explique cette température de gel. Il faut aussi plusieurs jours d'air froid pour que la banquise se forme.",
    "source": {
@@ -307,16 +382,16 @@ JEU.enregistrer("cours", {
    "id": "lecture-s01-1-q8",
    "fiche": "lecture-s01-1-f2",
    "type": "qcm_multiple",
-   "niveau": 1,
+   "niveau": 3,
    "enonce": "Qu'est-ce qui casse la banquise pendant la débâcle ? Coche toutes les bonnes réponses.",
    "choix": [
     "Le vent",
     "Les courants",
     "Les marées",
-    "Les étoiles",
-    "Les poissons"
+    "Le froid de l'air",
+    "Le sel de l'eau"
    ],
-   "explication": "Le vent est la cause principale de la débâcle. Les courants et les marées y participent aussi.",
+   "explication": "Le vent est la cause principale de la débâcle ; les courants et les marées y participent. Le froid de l'air et le sel jouent, eux, sur la formation de la banquise.",
    "source": {
     "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
     "page": 1
@@ -325,34 +400,108 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "lecture-s01-1-q9",
-   "fiche": "lecture-s01-1-f3",
-   "type": "qcm",
-   "niveau": 1,
-   "enonce": "D'où vient un iceberg ?",
-   "choix": [
-    "Il se détache d'un glacier ou d'une plate-forme de glace flottante",
-    "Il se forme au fond de l'océan",
-    "Il tombe du ciel pendant une tempête",
-    "Il naît de la neige tassée sur un bateau"
+   "id": "lecture-s01-1-q22",
+   "fiche": "lecture-s01-1-f2",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Pour que la banquise se forme, une seule nuit très froide suffit.",
+   "corrections": [
+    "Faux : il faut un air froid pendant plusieurs jours, et une eau à −1,8 °C sur au moins un mètre.",
+    "Faux : il faut un air froid pendant plusieurs mois, sans aucun vent.",
+    "Faux : il suffit que l'eau soit à 0 °C en surface."
    ],
-   "explication": "Un iceberg se détache du front d'un glacier ou d'une barrière de glace qui flotte. Il dérive ensuite sur la mer.",
+   "explication": "La banquise ne se forme qu'après plusieurs jours d'air froid. Il faut aussi une eau à −1,8 °C sur au moins un mètre de profondeur.",
    "source": {
     "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
     "page": 1
    },
-   "r": "LdxMcQREB4RBI80FLISQCUBSK80ALsRHh8FERQRHZ4kCc0BZJVEQC5UHD8gCTsSFVtAAW1gTKoxCikFz2nkTKUhRFsTZ",
+   "r": "=gwRbRxGaccsFM2QQUhXAYQCLk0BmI1BQYQUq4drSB1bccfvP70zlaEHTIiUQsAAR1xCP51GxglCf1QHdMxAAEgMeUQRB8BCKEwFYMWSMo1XI8EFPggUpcQVRAAEP40AbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "lecture-s01-1-q23",
+   "fiche": "lecture-s01-1-f2",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "En général, à quel moment de l'année a lieu la débâcle ?",
+   "choix": [
+    "Vers novembre ou décembre",
+    "Vers juin ou juillet",
+    "Vers février ou mars",
+    "Vers septembre ou octobre"
+   ],
+   "explication": "La débâcle a lieu en général à la fin de l'hiver austral, vers novembre ou décembre. Elle peut parfois arriver plus tôt, si le temps est exceptionnel.",
+   "source": {
+    "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
+    "page": 1
+   },
+   "r": "==QTDQxCfISEcbaERxRAPdhGhAEADJEAPVBFMQSZ",
+   "poids": 1
+  },
+  {
+   "id": "lecture-s01-1-q24",
+   "fiche": "lecture-s01-1-f2",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Comment la banquise se forme-t-elle pendant l'embâcle ?",
+   "choix": [
+    "L'eau de mer gèle après des jours d'air froid",
+    "Des icebergs se soudent les uns aux autres",
+    "Des glaciers glissent de la terre vers la mer",
+    "Le vent pousse la glace des fleuves vers la mer"
+   ],
+   "explication": "Pendant l'embâcle, c'est l'eau de mer elle-même qui gèle, après plusieurs jours d'air froid. Les icebergs et les glaciers, eux, sont faits d'eau douce.",
+   "source": {
+    "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
+    "page": 1
+   },
+   "r": "==ARCAQH1QRVXwBEOpwTBohNC9QFetwCGVRwxWjAUUEEdEcrIIlGmAURQlkTacwAO5TZ",
+   "poids": 1
+  },
+  {
+   "id": "lecture-s01-1-q25",
+   "fiche": "lecture-s01-1-f2",
+   "type": "vrai_faux",
+   "niveau": 1,
+   "enonce": "Le vent est la principale cause de la débâcle.",
+   "corrections": [],
+   "explication": "Le vent est la cause principale de la débâcle. Les courants et les marées y participent aussi.",
+   "source": {
+    "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
+    "page": 1
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "lecture-s01-1-q9",
+   "fiche": "lecture-s01-1-f3",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "D'où vient un iceberg ?",
+   "choix": [
+    "D'un glacier ou d'une barrière de glace",
+    "De l'eau de mer qui gèle en surface",
+    "De petits débris de glace soudés",
+    "De la banquise qui se disloque en blocs"
+   ],
+   "explication": "Un iceberg se détache d'un glacier ou d'une barrière de glace flottante : il est fait d'eau douce. Les blocs détachés de la banquise, eux, forment le pack.",
+   "source": {
+    "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
+    "page": 1
+   },
+   "r": "HBhEIIACS1wJNAwRF2qBUQBCQc2FbAhUVk0GAIlGmQkBUFUCPhwEOZTZ",
    "poids": 1
   },
   {
    "id": "lecture-s01-1-q10",
    "fiche": "lecture-s01-1-f3",
    "type": "vrai_faux",
-   "niveau": 1,
+   "niveau": 2,
    "enonce": "Un iceberg est un bloc d'eau de mer gelée.",
    "corrections": [
     "Faux : un iceberg est fait d'eau douce ; il se détache d'un glacier.",
-    "Faux : un iceberg est fait de sable et de glace.",
+    "Faux : un iceberg est fait d'eau de mer et d'eau douce mélangées.",
     "Faux : un iceberg est un tas de petits débris de 2 m au plus."
    ],
    "explication": "Un iceberg est formé d'eau douce. Il se détache d'un glacier ou d'une barrière de glace.",
@@ -367,7 +516,7 @@ JEU.enregistrer("cours", {
    "id": "lecture-s01-1-q11",
    "fiche": "lecture-s01-1-f3",
    "type": "association",
-   "niveau": 2,
+   "niveau": 3,
    "enonce": "Relie chaque mot à la glace qu'il désigne.",
    "gauche": [
     "ice shelf",
@@ -396,17 +545,17 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Comment repère-t-on, en regardant le ciel, qu'il y a de l'eau près de la glace de mer ?",
    "choix": [
-    "Grâce au water sky : des bandes sombres sous les nuages bas",
-    "Grâce à la Grande Ourse, qui brille plus fort",
-    "Grâce aux nuages, qui deviennent tout blancs",
-    "Grâce à la pluie, qui devient salée"
+    "Des bandes sombres sous les nuages bas",
+    "Des nuages très blancs au-dessus de la glace",
+    "Des étoiles qui brillent près de l'horizon",
+    "Une brume épaisse sur la banquise"
    ],
    "explication": "Le water sky, ce sont des bandes sombres sous les nuages bas. Elles signalent de l'eau près de la glace de mer.",
    "source": {
     "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
     "page": 1
    },
-   "r": "=MlGP0gUbYiSEA0QOxxAKkUAy0hBFZAFbwgAdsxYeBQUD9QDGVBDWcGSVxhHCkEHKYQC00AEU1wCMQcpbUTZ",
+   "r": "==wUa8QDSthJKRAQD5EHDoQSBITHGUkBUsBDC0xGj5FARN0DNYUFMYTZ",
    "poids": 1
   },
   {
@@ -425,6 +574,81 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
+   "id": "lecture-s01-1-q26",
+   "fiche": "lecture-s01-1-f3",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Le brash est un amas de blocs de glace de plusieurs centaines de mètres.",
+   "corrections": [
+    "Faux : le brash est fait de petits débris qui ne dépassent pas 2 m.",
+    "Faux : le brash est un glacier posé sur l'océan.",
+    "Faux : le brash est un bloc d'eau douce qui dérive."
+   ],
+   "explication": "Le brash est fait de petits débris de glace, de 2 m au plus. Ils viennent d'autres glaces qui se sont brisées.",
+   "source": {
+    "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
+    "page": 1
+   },
+   "r": "Qd0GA5UXGVBCCcmBbAgBCggHGHLDjh0CVQ0GeYUFAAQJbbbAVJQHHsxFYMGSBURWH4AAG1RAiIVHWQxAL4kCegUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "lecture-s01-1-q27",
+   "fiche": "lecture-s01-1-f3",
+   "type": "vrai_faux",
+   "niveau": 1,
+   "enonce": "Un ice shelf est un glacier qui repose sur l'océan au lieu de la terre.",
+   "corrections": [],
+   "explication": "Un ice shelf est un glacier posé sur l'océan. Cette plate-forme peut être épaisse de plusieurs centaines de mètres.",
+   "source": {
+    "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
+    "page": 1
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "lecture-s01-1-q28",
+   "fiche": "lecture-s01-1-f3",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Quelle est la différence entre le pack et un iceberg ?",
+   "choix": [
+    "Le pack vient de la banquise, l'iceberg d'un glacier",
+    "Le pack vient d'un glacier, l'iceberg de la banquise",
+    "Le pack est fait d'eau douce, l'iceberg d'eau de mer",
+    "Le pack est un seul bloc, l'iceberg un tas de débris"
+   ],
+   "explication": "Le pack réunit des blocs détachés de la banquise, de l'eau de mer gelée. L'iceberg, fait d'eau douce, se détache d'un glacier.",
+   "source": {
+    "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
+    "page": 1
+   },
+   "r": "HdESHwwBK4gUpcgUBUlFbsQDXsgKKkQFBsAHPMBGcYCEVRQGRxgCPZgBmQ0EVYUDOYhRM4TZ",
+   "poids": 1
+  },
+  {
+   "id": "lecture-s01-1-q29",
+   "fiche": "lecture-s01-1-f3",
+   "type": "qcm_multiple",
+   "niveau": 2,
+   "enonce": "Lesquelles de ces affirmations sur l'iceberg sont justes ?",
+   "choix": [
+    "Il est fait d'eau douce.",
+    "Il dérive sur la mer.",
+    "Il se détache d'un glacier ou d'une barrière de glace.",
+    "Il ne mesure pas plus de 2 m.",
+    "Il est fait d'eau de mer gelée."
+   ],
+   "explication": "Un iceberg est un gros bloc d'eau douce qui dérive, détaché d'un glacier ou d'une barrière de glace. Les petits débris de 2 m au plus forment le brash.",
+   "source": {
+    "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
+    "page": 1
+   },
+   "r": "==wLlxFEGQRHO4kCWgkJf1s9ExRHHQQSXkyBSFQVEYgTdcRAgwUCS1AAaEkAJdxLRQREcLbDOpQAI9CZHlxDA1xALk0ErI1BQYQUMghBAEMgJVUWkx0QEhEDRITHRUEAQwQSLIFHqw0AVkVHKYkCgAFH",
+   "poids": 1
+  },
+  {
    "id": "lecture-s01-1-q14",
    "fiche": "lecture-s01-1-f4",
    "type": "vrai_faux",
@@ -433,7 +657,7 @@ JEU.enregistrer("cours", {
    "corrections": [
     "Faux : méridional veut dire « situé au sud » ; « au nord » se dit septentrional.",
     "Faux : méridional veut dire « situé à l'est ».",
-    "Faux : méridional veut dire « très froid »."
+    "Faux : méridional veut dire « situé à l'ouest »."
    ],
    "explication": "Méridional désigne ce qui est au sud. Son contraire, septentrional, désigne ce qui est au nord.",
    "source": {
@@ -468,7 +692,7 @@ JEU.enregistrer("cours", {
    "id": "lecture-s01-1-q16",
    "fiche": "lecture-s01-1-f4",
    "type": "qcm",
-   "niveau": 2,
+   "niveau": 1,
    "enonce": "Comment dire autrement « les régions situées au nord » ?",
    "choix": [
     "Les régions septentrionales",
@@ -488,10 +712,10 @@ JEU.enregistrer("cours", {
    "id": "lecture-s01-1-q17",
    "fiche": "lecture-s01-1-f4",
    "type": "qcm",
-   "niveau": 2,
+   "niveau": 3,
    "enonce": "Laquelle de ces phrases est juste ?",
    "choix": [
-    "L'Antarctique se trouve dans la partie méridionale de la Terre.",
+    "L'Antarctique est dans la partie méridionale de la Terre.",
     "L'Arctique se trouve dans la partie méridionale de la Terre.",
     "Méridional et septentrional veulent dire la même chose.",
     "Le pôle Nord est le point le plus méridional de la Terre."
@@ -501,7 +725,76 @@ JEU.enregistrer("cours", {
     "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
     "page": 9
    },
-   "r": "QtFAHMAD680EEMGSBUBSC4ACJAgFuAA3miRUMcwGAkwMNQQWN0RAHIQSXEzBacRARxQHPdRHyQUEW91DbgwJO5TZ",
+   "r": "MF0FaEDSxUBTC80ACk0FrMxGKwRFAwhxxWwYIxQQf9wHGdQBSRDHUEQVFoxCPdRHyQUEW91DbgwJO5TZ",
+   "poids": 1
+  },
+  {
+   "id": "lecture-s01-1-q30",
+   "fiche": "lecture-s01-1-f4",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Au féminin, septentrional ne change pas : on dit « une côte septentrional ».",
+   "corrections": [
+    "Faux : au féminin, on écrit septentrionale.",
+    "Faux : au féminin, on écrit méridionale.",
+    "Faux : au féminin, on écrit septentrionaux."
+   ],
+   "explication": "On écrit septentrionale au féminin, comme méridionale. Les deux adjectifs prennent simplement un e.",
+   "source": {
+    "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
+    "page": 9
+   },
+   "r": "I9AQKowBH0hLAEwCQUQGLwhUcoyXGwp7OFQCGVEHuwBHIwtsP4kGTgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "lecture-s01-1-q31",
+   "fiche": "lecture-s01-1-f4",
+   "type": "vrai_faux",
+   "niveau": 1,
+   "enonce": "Septentrional et méridional sont des contraires.",
+   "corrections": [],
+   "explication": "Septentrional veut dire « au nord », méridional « au sud ». Ce sont deux contraires.",
+   "source": {
+    "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
+    "page": 9
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "lecture-s01-1-q32",
+   "fiche": "lecture-s01-1-f4",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Pourquoi employer septentrional plutôt que « du nord » dans une rédaction ?",
+   "choix": [
+    "Pour éviter de répéter « du nord »",
+    "Parce que « du nord » est une faute",
+    "Parce qu'il veut dire « du sud »",
+    "Parce qu'il est plus court à écrire"
+   ],
+   "explication": "Septentrional veut dire « situé au nord » : il remplace « du nord » sans le répéter. Ces mots servent à enrichir une rédaction.",
+   "source": {
+    "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
+    "page": 9
+   },
+   "r": "=clyr60CAcQLNARUNUcrGRBDG4esFwstDk0CLIlGmkFDDRYrPRxEGISZ",
+   "poids": 1
+  },
+  {
+   "id": "lecture-s01-1-q33",
+   "fiche": "lecture-s01-1-f4",
+   "type": "trou",
+   "niveau": 3,
+   "enonce": "Écris l'adjectif qui manque.",
+   "texte": "Le contraire de méridional est ___.",
+   "explication": "Méridional veut dire « au sud » ; son contraire, septentrional, veut dire « au nord ». Attention à l'orthographe : sep-ten-trio-nal.",
+   "source": {
+    "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
+    "page": 9
+   },
+   "r": "==AKsskAOwxBq8VEbhkGfMQFLlCH",
    "poids": 1
   }
  ],

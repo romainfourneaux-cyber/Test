@@ -202,7 +202,7 @@ JEU.enregistrer("cours", {
    "enonce": "Vers quelle époque la Terre a-t-elle atteint un milliard d'habitants ?",
    "choix": [
     "Au début du XIXe siècle",
-    "Au Moyen Âge",
+    "Au début du XXe siècle",
     "Au milieu du XXe siècle",
     "Dans l'Antiquité"
    ],
@@ -237,9 +237,9 @@ JEU.enregistrer("cours", {
    "enonce": "Comment la croissance de la population mondiale évolue-t-elle aujourd'hui ?",
    "choix": [
     "Elle ralentit un peu, mais la population continue d'augmenter",
-    "Elle s'est complètement arrêtée",
-    "Elle s'accélère partout",
-    "La population mondiale diminue déjà"
+    "Elle s'accélère, et la population augmente plus vite que jamais",
+    "Elle s'est arrêtée, et la population reste désormais stable",
+    "Elle s'est inversée, et la population commence à diminuer"
    ],
    "explication": "La hausse ralentit, mais la Terre gagne toujours des habitants. On en attend environ 9 milliards vers le milieu du siècle.",
    "source": {
@@ -254,12 +254,12 @@ JEU.enregistrer("cours", {
    "fiche": "geographie-s01-2-f1",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "D'après le cours, combien d'habitants la Terre devrait-elle compter vers le milieu du siècle ?",
+   "enonce": "Combien d'habitants la Terre devrait-elle compter vers le milieu du siècle ?",
    "choix": [
     "Environ 9 milliards",
     "Environ 3 milliards",
-    "Environ 1 milliard",
-    "Environ 50 milliards"
+    "Environ 5 milliards",
+    "Environ 20 milliards"
    ],
    "explication": "Malgré le ralentissement, la population continue de monter. Elle devrait approcher les 9 milliards.",
    "source": {
@@ -267,6 +267,64 @@ JEU.enregistrer("cours", {
     "page": 1
    },
    "r": "XZREDgwBD4RAu0AXVMUAd8AEHcTZ",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s01-2-q26",
+   "fiche": "geographie-s01-2-f1",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "La forte hausse de la population mondiale depuis 1950 concerne surtout les pays du Nord.",
+   "corrections": [
+    "Faux : elle concerne surtout les pays du Sud.",
+    "Faux : elle touche tous les pays de la même façon.",
+    "Faux : elle s'est arrêtée dans les pays du Sud depuis 1950."
+   ],
+   "explication": "Depuis 1950, ce sont surtout les pays du Sud qui gagnent des habitants. Au Nord, la population augmente peu.",
+   "source": {
+    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
+    "page": 1
+   },
+   "r": "I9AQLMRNJdwISZAHUEQSdogHIdDWKE0XbwhRDcAAiExGKYRUMIwAXgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s01-2-q27",
+   "fiche": "geographie-s01-2-f1",
+   "type": "ordre",
+   "niveau": 2,
+   "enonce": "Remets dans l'ordre ces étapes de la population mondiale.",
+   "elements": [
+    "La population mondiale commence à grimper très fort",
+    "La Terre devrait approcher 9 milliards d'habitants",
+    "La Terre atteint son premier milliard d'habitants"
+   ],
+   "explication": "Le premier milliard est atteint au début du XIXe siècle, et la très forte hausse commence vers 1950. Environ 9 milliards sont attendus vers le milieu du XXIe siècle.",
+   "source": {
+    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
+    "page": 1
+   },
+   "r": "==wMepkVFBEH",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s01-2-q28",
+   "fiche": "geographie-s01-2-f1",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Laquelle de ces phrases sur la population mondiale est juste ?",
+   "choix": [
+    "Elle a environ triplé depuis 1950, et sa hausse ralentit un peu",
+    "Elle a environ triplé depuis 1950, et sa hausse s'accélère",
+    "Elle a environ doublé depuis 1950, et sa hausse ralentit un peu",
+    "Elle a environ triplé depuis 1950, mais elle commence à baisser"
+   ],
+   "explication": "La population mondiale a été multipliée par trois depuis 1950. Sa hausse ralentit un peu, mais elle continue.",
+   "source": {
+    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
+    "page": 1
+   },
+   "r": "QBAAFE1Bb8kBBczQAkFTc80AVoxBmoRVEYQUdswTehldUQVFedgGWMQDS5esZUBHD0hTB0hGqs1CQ1wDPNgCFcTZ",
    "poids": 1
   },
   {
@@ -281,9 +339,9 @@ JEU.enregistrer("cours", {
     "Une meilleure hygiène",
     "Des machines qui rendent le travail moins pénible",
     "Des familles plus nombreuses",
-    "Des villes plus grandes"
+    "L'arrivée de nombreux immigrés"
    ],
-   "explication": "Quatre progrès se sont ajoutés : alimentation, médecine, hygiène et techniques. Ensemble, ils allongent la vie.",
+   "explication": "Quatre progrès se sont ajoutés : alimentation, médecine, hygiène et techniques. Des familles nombreuses ou des immigrés font grossir une population, mais n'allongent pas la vie.",
    "source": {
     "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
     "page": 1
@@ -333,17 +391,17 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Pourquoi les progrès agricoles ont-ils fait reculer la mortalité ?",
    "choix": [
-    "Parce que la nourriture, plus abondante et variée, a fait disparaître les famines",
-    "Parce que les paysans ont arrêté de travailler",
-    "Parce que les champs ont remplacé les hôpitaux",
-    "Parce qu'on mange moins qu'avant"
+    "Parce que, mieux nourris, les gens ne meurent plus de famine",
+    "Parce qu'ils ont fait augmenter le nombre de naissances",
+    "Parce qu'ils ont apporté les vaccins et les antibiotiques",
+    "Parce qu'ils ont rendu les logements plus propres et plus sains"
    ],
-   "explication": "Mieux nourris, les gens ne meurent plus de faim. Les famines et les disettes ont disparu.",
+   "explication": "Les progrès agricoles ont donné une nourriture plus abondante et variée. Les famines et les disettes ont disparu, donc moins de gens meurent.",
    "source": {
     "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
     "page": 1
    },
-   "r": "==wVCwAAG8RCl0gFQFkTKQhEHHrJAQRFGgRDOtxGJUSDEURALYcpPsxExIVAAUFFdAgDWYALPRQFetxAWYURXUzBBwwBDwRABIVCv0AAAxlTKUAFIISZ",
+   "r": "=MFDAYwHJUSDAEVDdohCWkkBpcxBQABHJtQAStRLIJQFetwAGpkGbUDAAowGRFxGKsRBjFAAAxlTKUAFIISZ",
    "poids": 1
   },
   {
@@ -355,14 +413,99 @@ JEU.enregistrer("cours", {
    "corrections": [
     "Faux : ils comptent parmi les raisons principales de cette hausse.",
     "Faux : ils en sont la seule et unique raison.",
-    "Faux : ils font baisser l'espérance de vie."
+    "Faux : ils jouent un rôle, mais bien moins que les machines au travail."
    ],
-   "explication": "Vaccins, antibiotiques et chirurgie ont beaucoup allongé la vie. Le cours les place parmi les causes principales.",
+   "explication": "Vaccins, antibiotiques et chirurgie ont beaucoup allongé la vie. Ils comptent parmi les causes principales, à côté de l'alimentation, de l'hygiène et des techniques.",
    "source": {
     "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
     "page": 1
    },
    "r": "QxUQDUhGHYiGVBQAFwQDPdBDj5FAZxkHGUACAAwNSZwCaIAAP0hUbYSQFxFQc4gFG1BHiYQBIohEJ1xAbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s01-2-q29",
+   "fiche": "geographie-s01-2-f2",
+   "type": "association",
+   "niveau": 2,
+   "enonce": "Relie chaque exemple au progrès qu'il représente.",
+   "gauche": [
+    "Les vaccins",
+    "Les douches et les toilettes dans chaque logement",
+    "Les chariots élévateurs",
+    "La fin des famines"
+   ],
+   "droite": [
+    "Un progrès technique",
+    "Un progrès agricole",
+    "Un progrès médical",
+    "Un progrès de l'hygiène"
+   ],
+   "explication": "Les vaccins relèvent de la médecine, les douches et les toilettes de l'hygiène. Les chariots élévateurs allègent le travail, et une agriculture plus productive a mis fin aux famines.",
+   "source": {
+    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
+    "page": 1
+   },
+   "r": "==ANvYnXG5TWsklQdlCRe4RSEYnQyQlSZlCH",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s01-2-q30",
+   "fiche": "geographie-s01-2-f2",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "L'eau de Javel fait partie des progrès médicaux qui ont allongé la vie.",
+   "corrections": [
+    "Faux : c'est un progrès de l'hygiène.",
+    "Faux : c'est un progrès technique, comme les grues.",
+    "Faux : c'est un progrès agricole."
+   ],
+   "explication": "L'eau de Javel fait partie des progrès de l'hygiène, comme le ramassage des ordures. Les progrès médicaux, ce sont les vaccins, les antibiotiques et la chirurgie.",
+   "source": {
+    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
+    "page": 1
+   },
+   "r": "UAVaXsRz2ihDXcQVEMGSBUhXGzKFBYAA3I1GQUVBasASRgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s01-2-q31",
+   "fiche": "geographie-s01-2-f2",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Une ville se met à traiter ses eaux usées, et ses habitants conservent mieux leurs aliments. Quel progrès est-ce ?",
+   "choix": [
+    "Un progrès de l'hygiène",
+    "Un progrès médical",
+    "Un progrès agricole",
+    "Un progrès technique au travail"
+   ],
+   "explication": "Traiter les eaux usées et mieux conserver les aliments, c'est améliorer l'hygiène. Ce progrès aide, lui aussi, à vivre plus longtemps.",
+   "source": {
+    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
+    "page": 1
+   },
+   "r": "ENwBaT4GSwRHWVgTKYBSwUopHpUAdYhRHcSZ",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s01-2-q32",
+   "fiche": "geographie-s01-2-f2",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Comment les grues et les machines puissantes ont-elles aidé à vivre plus longtemps ?",
+   "choix": [
+    "En rendant le travail moins pénible",
+    "En soignant des maladies graves",
+    "En produisant plus de nourriture",
+    "En rendant les logements plus propres"
+   ],
+   "explication": "Ces progrès techniques rendent le travail moins dur pour le corps. Ils s'ajoutent à l'alimentation, à la médecine et à l'hygiène.",
+   "source": {
+    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
+    "page": 1
+   },
+   "r": "=wkCeogKDxs9d5EHI8gBfcmHcQwAQshGPdBBjl1CUlEAKQhRHcTZ",
    "poids": 1
   },
   {
@@ -397,9 +540,9 @@ JEU.enregistrer("cours", {
    "enonce": "Comment la natalité évolue-t-elle dans les pays émergents comme la Chine ou le Brésil ?",
    "choix": [
     "Elle baisse et se rapproche de la mortalité",
-    "Elle reste très élevée",
-    "Elle monte très vite",
-    "Elle tombe à zéro"
+    "Elle reste très élevée, loin au-dessus de la mortalité",
+    "Elle baisse et passe nettement sous la mortalité",
+    "Elle monte et s'éloigne de plus en plus de la mortalité"
    ],
    "explication": "Dans les pays émergents, il naît moins d'enfants qu'avant. L'écart avec les décès se réduit, donc la croissance ralentit.",
    "source": {
@@ -432,11 +575,11 @@ JEU.enregistrer("cours", {
    "enonce": "Par combien la population de l'Afrique a-t-elle été multipliée depuis 1950 ?",
    "choix": [
     "Par 5",
+    "Par 3",
     "Par 2",
-    "Par 100",
-    "Elle a baissé"
+    "Par 10"
    ],
-   "explication": "C'est un chiffre-clé du cours : cinq fois plus d'habitants en Afrique depuis 1950.",
+   "explication": "C'est un chiffre-clé : cinq fois plus d'habitants en Afrique depuis 1950. Pour le monde entier, c'est environ trois fois plus.",
    "source": {
     "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
     "page": 2
@@ -452,9 +595,9 @@ JEU.enregistrer("cours", {
    "enonce": "Pourquoi la population des PMA augmente-t-elle si vite ?",
    "choix": [
     "Parce que la mortalité y baisse alors que la natalité reste très haute",
-    "Parce que la mortalité y augmente fortement",
+    "Parce que la natalité et la mortalité y augmentent toutes les deux très vite",
     "Parce que la natalité y baisse plus vite que la mortalité",
-    "Parce que les familles y ont de moins en moins d'enfants"
+    "Parce que la mortalité y reste très haute alors que la natalité augmente"
    ],
    "explication": "On y meurt moins qu'avant, mais il naît toujours beaucoup d'enfants. Les naissances dépassent largement les décès, donc la population grimpe.",
    "source": {
@@ -469,18 +612,78 @@ JEU.enregistrer("cours", {
    "fiche": "geographie-s01-2-f3",
    "type": "vrai_faux",
    "niveau": 2,
-   "enonce": "Dans les pays développés, la population augmente toujours très vite.",
+   "enonce": "Dans les pays développés, la natalité est faible mais la population augmente très vite.",
    "corrections": [
-    "Faux : elle augmente peu, et parfois elle diminue.",
-    "Faux : elle augmente plus vite que dans les PMA.",
-    "Faux : elle double tous les dix ans."
+    "Faux : la population y augmente peu, et parfois elle diminue.",
+    "Faux : la natalité y est très forte, comme dans les PMA.",
+    "Faux : la population y augmente vite grâce à une natalité forte."
    ],
    "explication": "Peu de naissances et des gens qui vivent vieux : la population y grandit à peine. Dans certains pays, elle recule.",
    "source": {
     "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
     "page": 2
    },
-   "r": "=8gSthEEbR0AGIgRM4xKXUlFc4xDc4gAIdDSFlBWL8hRD0BHi8hEQQRUMIwAXgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "r": "==AFQl2FAsAHcAgCPdBBvgURGRUAJQxBZI1MXUVSAQRGOpgBGYCQCAETOZhRIYwGzMRGQUgHZ4kDegUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s01-2-q33",
+   "fiche": "geographie-s01-2-f3",
+   "type": "qcm_multiple",
+   "niveau": 2,
+   "enonce": "Lesquels de ces pays sont des pays émergents ?",
+   "choix": [
+    "La Chine",
+    "Le Brésil",
+    "Le Japon",
+    "La Russie",
+    "Le Burkina Faso"
+   ],
+   "explication": "La Chine et le Brésil sont des pays émergents, où la croissance ralentit. Le Japon et la Russie sont des pays développés, et le Burkina Faso n'est qu'au début de sa transition.",
+   "source": {
+    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
+    "page": 2
+   },
+   "r": "==ANQtyGGwstDsiTK4jSv9AAbRkBsY0BlAFH",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s01-2-q34",
+   "fiche": "geographie-s01-2-f3",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Les PMA, où la croissance démographique est très forte, se trouvent notamment en Afrique et en Amérique du Sud.",
+   "corrections": [
+    "Faux : ils se trouvent notamment en Afrique et en Asie du Sud.",
+    "Faux : ils se trouvent notamment en Europe et en Russie.",
+    "Faux : ils se trouvent notamment en Chine et au Brésil."
+   ],
+   "explication": "La croissance est très forte dans les PMA, notamment en Afrique et en Asie du Sud. La Chine et le Brésil sont des pays émergents.",
+   "source": {
+    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
+    "page": 2
+   },
+   "r": "=sxScNyBmUEAVk0CGEQKjNEAVk1CPNwEYsRNUQTRbQRSaEwFF4CTRo1QOtBCD8xBoAQAFBhAJ1xAbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s01-2-q35",
+   "fiche": "geographie-s01-2-f3",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Dans un pays, la natalité baisse et se rapproche de la mortalité, et la vie des habitants s'améliore vite. Dans quel groupe le ranger ?",
+   "choix": [
+    "Les pays émergents",
+    "Les PMA",
+    "Les pays développés",
+    "Les pays en tout début de transition"
+   ],
+   "explication": "Une natalité qui rejoint la mortalité et une vie qui s'améliore : c'est le cas des pays émergents, comme la Chine ou le Brésil. Dans les PMA, la natalité reste très haute.",
+   "source": {
+    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
+    "page": 2
+   },
+   "r": "XZRAfwQCdcRBq7eRGR1DfYUFM4TZ",
    "poids": 1
   },
   {
@@ -507,12 +710,12 @@ JEU.enregistrer("cours", {
    "id": "geographie-s01-2-q16",
    "fiche": "geographie-s01-2-f4",
    "type": "vrai_faux",
-   "niveau": 1,
+   "niveau": 2,
    "enonce": "Pendant la transition démographique, c'est la natalité qui baisse en premier.",
    "corrections": [
     "Faux : c'est la mortalité qui recule d'abord, la natalité suit plus tard.",
-    "Faux : les deux montent en même temps.",
-    "Faux : rien ne change pendant la transition."
+    "Faux : les deux baissent en même temps, au même rythme.",
+    "Faux : la natalité monte d'abord, puis la mortalité baisse."
    ],
    "explication": "La transition commence quand des progrès font reculer les décès. Les naissances ne baissent qu'ensuite.",
    "source": {
@@ -529,25 +732,25 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Pourquoi la population augmente-t-elle vite pendant la transition démographique ?",
    "choix": [
-    "Parce que les décès ont déjà baissé alors que les naissances restent nombreuses",
-    "Parce que les naissances baissent avant les décès",
-    "Parce que tout le monde part à l'étranger",
-    "Parce que la mortalité augmente fortement"
+    "Parce que les décès ont déjà baissé, mais pas encore les naissances",
+    "Parce que les naissances ont déjà baissé, mais pas encore les décès",
+    "Parce que les naissances et les décès montent en même temps",
+    "Parce que la natalité et la mortalité sont déjà toutes les deux basses"
    ],
    "explication": "Il naît encore beaucoup d'enfants, mais on meurt moins. L'écart entre les deux fait grimper la population.",
    "source": {
     "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
     "page": 5
    },
-   "r": "=ckBUoxGKAgCuI0CVkFAKIRFMAwZBAhBbAhGdYwEGMmXAkVDLoxFGpBAo4BFFxtsa0hBTowYNa6XE26CGJxBdcWAdbqFYrqCPFQDv0AAAxlTKUAFIISZ",
+   "r": "=8QHKUACIEANbQxCVJADC80FawiTLAVDd4gFGpxGm8RVJxtsa0hBTowYNa6XE26CGJxBdcWAdbqFYrqCPFQDv0AAAxlTKUAFIISZ",
    "poids": 1
   },
   {
    "id": "geographie-s01-2-q18",
    "fiche": "geographie-s01-2-f4",
    "type": "association",
-   "niveau": 2,
-   "enonce": "Relie chaque pays à l'état de sa transition démographique, d'après le cours.",
+   "niveau": 3,
+   "enonce": "Relie chaque pays à l'état de sa transition démographique.",
    "gauche": [
     "La France",
     "L'Inde",
@@ -570,13 +773,13 @@ JEU.enregistrer("cours", {
    "id": "geographie-s01-2-q19",
    "fiche": "geographie-s01-2-f4",
    "type": "qcm",
-   "niveau": 3,
+   "niveau": 2,
    "enonce": "Quand la transition démographique a-t-elle commencé en France ?",
    "choix": [
     "À la fin du XVIIIe siècle",
     "Dans les années 1920",
     "Dans les années 1960",
-    "Au début du XXIe siècle"
+    "Vers le milieu du XIXe siècle"
    ],
    "explication": "En France, elle a duré de la fin du XVIIIe siècle aux années 1960. Les années 1920, c'est le début de celle de l'Inde.",
    "source": {
@@ -584,6 +787,101 @@ JEU.enregistrer("cours", {
     "page": 5
    },
    "r": "=wkCKUQwx6SAVBAP4ACO3IVHn0wCctkTOogRpHbZ",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s01-2-q36",
+   "fiche": "geographie-s01-2-f4",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "En France, la transition démographique s'est terminée dans les années 1920.",
+   "corrections": [
+    "Faux : elle s'est terminée dans les années 1960.",
+    "Faux : elle n'est pas encore terminée.",
+    "Faux : elle s'est terminée à la fin du XVIIIe siècle."
+   ],
+   "explication": "En France, elle a duré de la fin du XVIIIe siècle aux années 1960. Les années 1920 marquent le début de celle de l'Inde.",
+   "source": {
+    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
+    "page": 5
+   },
+   "r": "=8gSt1xUMwhTcMwzqyRKTUlFQ0RSdEwEMMGSMb/QHIAFD0hUzEAECZQUMIwAXgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s01-2-q37",
+   "fiche": "geographie-s01-2-f4",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Dans un pays, la mortalité vient de chuter, mais il naît encore autant d'enfants qu'avant. Où en est-il ?",
+   "choix": [
+    "Dans la phase 1 de la transition",
+    "Dans le régime démographique ancien",
+    "Dans la phase 2 de la transition",
+    "Dans le régime démographique moderne"
+   ],
+   "explication": "La phase 1 commence quand la mortalité chute, alors que la natalité reste haute. La natalité ne baisse qu'à la phase 2.",
+   "source": {
+    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
+    "page": 5
+   },
+   "r": "==QYDpAXZdAHIcwGGc2EZUEEVk0XPdxGiUUFVwkAPVBCIYTZ",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s01-2-q38",
+   "fiche": "geographie-s01-2-f4",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Comment l'écart entre naissances et décès évolue-t-il à la fin de la transition ?",
+   "choix": [
+    "Il se réduit, car la natalité baisse à son tour",
+    "Il grandit, car la mortalité remonte",
+    "Il grandit, car la natalité augmente encore",
+    "Il reste aussi grand qu'au milieu de la transition"
+   ],
+   "explication": "À la phase 2, la natalité chute et rejoint la mortalité. Dans le régime moderne, les deux sont basses et proches.",
+   "source": {
+    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
+    "page": 5
+   },
+   "r": "==wDcoRCSkEHoEQVFbbUM0BHbkQINws9ZdwAHIBCcc2EZU0BQogTDZQA2kEz2/lTKUhRFsTZ",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s01-2-q39",
+   "fiche": "geographie-s01-2-f4",
+   "type": "qcm_multiple",
+   "niveau": 3,
+   "enonce": "Quelles phrases sur la transition démographique sont justes ?",
+   "choix": [
+    "Elle commence quand la mortalité recule",
+    "La natalité baisse après la mortalité",
+    "Elle s'achève quand natalité et mortalité sont basses",
+    "Elle a commencé partout en même temps",
+    "Elle est déjà terminée en Inde"
+   ],
+   "explication": "La transition part du recul de la mortalité, puis la natalité suit, jusqu'à des taux bas. Elle a commencé à des moments différents selon les pays et n'est pas finie en Inde.",
+   "source": {
+    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
+    "page": 5
+   },
+   "r": "=8iSwgkFGxEDPJBCGEwZbbbEc0BCa0RHFMWWAUBhtuxDKggBmwRVBsBEc8xTX4x6u3gVMlEHGNQBeIAUZdE3y2xBDMBHxIECVwkAPVhzqCwNTUFAGIAAP0gUBDYWMkFTa4ACGhgPl51VAkBBKsQHSFMgZxQWMpRHJsQSTsiURsAFEghTKEhBmAECa5kTKogCsAFH",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s01-2-q40",
+   "fiche": "geographie-s01-2-f4",
+   "type": "vrai_faux",
+   "niveau": 1,
+   "enonce": "Dans le régime démographique moderne, la natalité et la mortalité sont toutes les deux basses.",
+   "corrections": [],
+   "explication": "Oui, c'est la fin de la transition. Au départ, dans le régime ancien, les deux étaient élevées.",
+   "source": {
+    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
+    "page": 5
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -596,7 +894,7 @@ JEU.enregistrer("cours", {
     "Naissances moins décès",
     "Immigrés moins émigrés",
     "Naissances plus décès",
-    "Décès moins immigrés"
+    "Décès moins naissances"
    ],
    "explication": "L'accroissement naturel ne regarde que les naissances et les décès. Les arrivées et les départs forment le solde migratoire.",
    "source": {
@@ -635,8 +933,8 @@ JEU.enregistrer("cours", {
    "enonce": "Le solde migratoire compare les naissances et les décès.",
    "corrections": [
     "Faux : il compare les immigrés qui arrivent et les émigrés qui partent.",
-    "Faux : il compare les villes et les campagnes.",
-    "Faux : il ne compte que les enfants."
+    "Faux : il compare les naissances et les immigrés.",
+    "Faux : il compare les décès et les émigrés."
    ],
    "explication": "Naissances et décès, c'est l'accroissement naturel. Le solde migratoire parle de ceux qui arrivent et de ceux qui partent.",
    "source": {
@@ -683,6 +981,85 @@ JEU.enregistrer("cours", {
     "page": 5
    },
    "r": "T0EXBDYWMkFTa0RCLk0FjIVDQQRBJtwASxBMIJkVNIEHOXqCbToFVZBEdkUVPFAHtwUEc90DHY0AF4hLfU1FA4RGOxxFL0CTWYERPEgRVwgHndRAVghHK40AbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s01-2-q41",
+   "fiche": "geographie-s01-2-f5",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Une ville compte 50 naissances et 20 décès dans l'année, sans arrivée ni départ. Quel est son accroissement naturel ?",
+   "choix": [
+    "+ 30 habitants",
+    "+ 70 habitants",
+    "− 30 habitants",
+    "+ 50 habitants"
+   ],
+   "explication": "L'accroissement naturel, c'est les naissances moins les décès : 50 − 20 = 30. La ville gagne donc 30 habitants.",
+   "source": {
+    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
+    "page": 7
+   },
+   "r": "==ATcYgBikFDXxkBPZVVJlVZ",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s01-2-q42",
+   "fiche": "geographie-s01-2-f5",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Un pays a un accroissement naturel de + 100 et un solde migratoire de − 30. Quelle est sa croissance démographique ?",
+   "choix": [
+    "+ 70",
+    "+ 130",
+    "− 70",
+    "+ 100"
+   ],
+   "explication": "La croissance démographique additionne l'accroissement naturel et le solde migratoire : 100 − 30 = 70. Le pays gagne 70 habitants.",
+   "source": {
+    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
+    "page": 7
+   },
+   "r": "NZVUJlVZ",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s01-2-q43",
+   "fiche": "geographie-s01-2-f5",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Le taux de mortalité compte les décès pour cent habitants.",
+   "corrections": [
+    "Faux : il compte les décès pour mille habitants.",
+    "Faux : il compte les naissances pour mille habitants.",
+    "Faux : il compte le nombre d'enfants par femme."
+   ],
+   "explication": "Natalité et mortalité se comptent pour mille habitants. Le nombre d'enfants par femme, c'est le taux de fécondité.",
+   "source": {
+    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
+    "page": 5
+   },
+   "r": "=8gSt5VEbxkGGQwBBIlIekBDYE1GbAgAIBThmaFhtugRVwgHndRAVghHK40AbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s01-2-q44",
+   "fiche": "geographie-s01-2-f5",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Pourquoi un pays peut-il gagner des habitants alors qu'il compte plus de décès que de naissances ?",
+   "choix": [
+    "Parce que plus d'immigrés arrivent que d'émigrés ne partent",
+    "Parce que son accroissement naturel reste positif",
+    "Parce que plus d'émigrés partent que d'immigrés n'arrivent",
+    "Parce que ses habitants vivent de plus en plus longtemps"
+   ],
+   "explication": "Avec plus de décès que de naissances, l'accroissement naturel est négatif. Seul un solde migratoire positif, plus fort que cette perte, peut faire grandir la population.",
+   "source": {
+    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
+    "page": 7
+   },
+   "r": "==wRB8BDa0xEYMGSLUhXHzKFBAwHuHrUBUFFc8xTGYgJbxwRf9wTV8sqAAyGYgAHW1gTccABz0AAAxlTKUAFIISZ",
    "poids": 1
   }
  ],

@@ -236,17 +236,77 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Combien de temps dure une rotation complète de la Terre sur elle-même ?",
    "choix": [
-    "Un peu moins d'un jour",
-    "Environ une semaine",
-    "Environ un mois",
-    "Environ un an"
+    "Un peu moins d'une journée",
+    "Un peu plus d'une journée",
+    "Environ 27 jours",
+    "Environ 243 jours"
    ],
-   "explication": "La Terre fait un tour sur elle-même en un peu moins d'une journée. Il lui manque quatre minutes pour faire un jour entier.",
+   "explication": "Un tour complet de la Terre sur elle-même prend un peu moins d'une journée entière. Mars, elle, met un peu plus d'une journée.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.pdf",
     "page": 3
    },
-   "r": "QVzBa8QVfwRSLI1GtQkCY1wGKYhRHcSZ",
+   "r": "=wkCPX6BAITHfUEEfwRSLI1GtQkCY1wGKYhRHcSZ",
+   "poids": 1
+  },
+  {
+   "id": "svt-s01-2-q21",
+   "fiche": "svt-s01-2-f1",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "La Terre accomplit sa révolution autour de son axe de rotation.",
+   "corrections": [
+    "Faux : sa révolution se fait autour du Soleil ; autour de son axe, c'est sa rotation.",
+    "Faux : sa révolution se fait autour de la Lune.",
+    "Faux : sa révolution se fait autour du plan de l'écliptique."
+   ],
+   "explication": "Tourner autour du Soleil, c'est la révolution. Tourner sur soi-même, autour de son axe, c'est la rotation.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.pdf",
+    "page": 2
+   },
+   "r": "=IBRIdQHuYAFRoxAJ9AHSxBMIJkVNIkCecQScgSAVBQERtxGAYQHi0gXVE0BKoQC6IlMWU1FA4RHb4gUcoCTDUBSd8ECJAgBy4hGTwtsb4kDBgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "svt-s01-2-q22",
+   "fiche": "svt-s01-2-f1",
+   "type": "qcm_multiple",
+   "niveau": 3,
+   "enonce": "Coche ce qui concerne la révolution de la Terre, et non sa rotation.",
+   "choix": [
+    "Elle se fait autour du Soleil",
+    "Elle suit l'orbite de la Terre",
+    "Elle se fait dans le plan de l'écliptique",
+    "Elle se fait autour de l'axe de rotation",
+    "Elle dure un peu moins d'une journée"
+   ],
+   "explication": "La révolution suit l'orbite autour du Soleil, dans le plan de l'écliptique. Tourner autour de l'axe en un peu moins d'une journée, c'est la rotation.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.pdf",
+    "page": 2
+   },
+   "r": "aAFEQQAGd4hBesg6uLUWNswCGhACecjUQkQVCcwDLIFHqw0AVgUHPNgCFcTZedFAHMAD680EEMGSBUBSaYABUYQVrIVAMAgAJtwAe0SYBcUWEtwAJUTSHMiUHAhGFwxDPZQAisURQ5lTKogCsAFH",
+   "poids": 1
+  },
+  {
+   "id": "svt-s01-2-q23",
+   "fiche": "svt-s01-2-f1",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Pourquoi dit-on que la Terre a deux mouvements à la fois ?",
+   "choix": [
+    "Elle tourne sur elle-même et autour du Soleil",
+    "Elle tourne autour du Soleil, puis autour de la Lune",
+    "Elle tourne sur elle-même le jour et s'arrête la nuit",
+    "Elle avance tout droit, puis revient sur ses pas"
+   ],
+   "explication": "La Terre fait sa rotation sur elle-même et, en même temps, sa révolution autour du Soleil. Ce sont ses deux mouvements.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.pdf",
+    "page": 2
+   },
+   "r": "EVwGi4hG2UFBN4UHHcwNYRQFZtwTDswwxqyXQkQGUkEHaEASmM0FAJkGPNgCFcTZ",
    "poids": 1
   },
   {
@@ -256,36 +316,36 @@ JEU.enregistrer("cours", {
    "niveau": 1,
    "enonce": "Comment est placé l'axe de rotation de la Terre par rapport au plan de l'écliptique ?",
    "choix": [
-    "Il est penché et fait un angle avec ce plan",
-    "Il est parfaitement droit",
-    "Il est couché à plat dans ce plan",
-    "Il change de place chaque jour"
+    "Penché, avec un angle",
+    "Parfaitement droit",
+    "Couché à plat dans ce plan",
+    "Penché seulement en hiver"
    ],
    "explication": "L'axe de rotation est incliné par rapport au plan de l'écliptique. C'est ce qui fait varier la durée du jour selon les lieux.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.pdf",
     "page": 2
    },
-   "r": "==AUpMRGVUFFK4EDX4hINAQWKBgDGhAHSNzGUMQVFwgTGHLAgMEAF1gGcMgRFsTZ",
+   "r": "QJiHSsAFRdwGPFRD1wURZQYrHUACMISZ",
    "poids": 1
   },
   {
    "id": "svt-s01-2-q6",
    "fiche": "svt-s01-2-f2",
    "type": "vrai_faux",
-   "niveau": 1,
-   "enonce": "L'axe de rotation de la Terre est parfaitement droit par rapport au plan de l'écliptique.",
+   "niveau": 2,
+   "enonce": "Comme l'axe de rotation est incliné, le jour et la nuit durent aussi longtemps l'un que l'autre partout sur le globe, toute l'année.",
    "corrections": [
-    "Faux : il est penché et fait un angle avec le plan de l'écliptique.",
-    "Faux : il est couché à plat dans le plan de l'écliptique.",
-    "Faux : la Terre n'a pas d'axe de rotation."
+    "Faux : à cause de cette inclinaison, la durée du jour change beaucoup selon l'endroit.",
+    "Faux : à cause de cette inclinaison, il fait nuit six mois partout sur le globe.",
+    "Faux : l'axe n'est pas incliné, il est parfaitement droit."
    ],
-   "explication": "L'axe de la Terre est incliné. Cette inclinaison change la durée du jour d'un endroit à l'autre.",
+   "explication": "C'est justement l'inclinaison de l'axe qui fait varier la durée du jour et de la nuit d'un lieu à l'autre. Seul l'équateur garde toute l'année autant de jour que de nuit.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.pdf",
     "page": 2
    },
-   "r": "Qd0GIthHPIRGbsSEcbqUdk0CLIlBiEUFVgkAPVwAfMxZXkhAbARSAohUcoCTDURWL80zlGQEpcRBFFgAM40AbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "r": "==AUMFkEPYAAjwBEClRUHEwAXsxYdBhWOthDDQQSXACHU0gFRtxGAgBS2kURQRYrdMhAJNxKSl1CaIAAPEwGEAyQMUBSasxAFk0FjIFEWAAEK40zxiUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -295,24 +355,24 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Pourquoi la durée du jour n'est-elle pas la même partout sur le globe ?",
    "choix": [
-    "Parce que l'axe de rotation de la Terre est incliné",
-    "Parce que la Terre ne tourne pas sur elle-même",
-    "Parce que le Soleil s'éteint la nuit",
-    "Parce que la Lune cache le Soleil"
+    "L'axe de rotation de la Terre est incliné",
+    "L'orbite de la Terre est une ellipse",
+    "La Terre est plus près du Soleil en janvier",
+    "La Lune cache le Soleil à certains endroits"
    ],
-   "explication": "Comme l'axe de rotation est penché, la durée du jour et celle de la nuit varient d'un lieu à l'autre. Selon l'endroit, les journées sont plus ou moins longues.",
+   "explication": "Comme l'axe de rotation est penché, la durée du jour et celle de la nuit varient d'un lieu à l'autre. L'orbite en ellipse, elle, n'explique pas ces différences.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.pdf",
     "page": 2
    },
-   "r": "Hxp7AYgCFcwGnZgBAUFFbwhCmgkIBVEUJ5UAJ8QHTMTHHUEEVk0CXMxTv0AAAxlTKUAFIISZ",
+   "r": "=AF3muBGF0QAbg0NeBQFIxRHDITSTsiUQEQVfYwBbMBHs8VRQlkTK4xBO5TZ",
    "poids": 1
   },
   {
    "id": "svt-s01-2-q8",
    "fiche": "svt-s01-2-f2",
    "type": "trou",
-   "niveau": 2,
+   "niveau": 1,
    "enonce": "Complète la phrase.",
    "texte": "L'axe de rotation de la Terre est ___ par rapport au plan de l'___.",
    "banque": [
@@ -330,6 +390,46 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
+   "id": "svt-s01-2-q24",
+   "fiche": "svt-s01-2-f2",
+   "type": "vrai_faux",
+   "niveau": 3,
+   "enonce": "C'est parce que la durée du jour change selon les lieux que l'axe de rotation de la Terre est incliné.",
+   "corrections": [
+    "Faux : c'est l'inverse, l'inclinaison de l'axe fait varier la durée du jour selon les lieux.",
+    "Faux : l'axe de rotation de la Terre n'est pas incliné.",
+    "Faux : la durée du jour est la même partout sur le globe."
+   ],
+   "explication": "L'inclinaison de l'axe est la cause, la variation de la durée du jour en est la conséquence. La phrase met la cause et la conséquence à l'envers.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.pdf",
+    "page": 2
+   },
+   "r": "VE2AdAESHMgRVwgHnxhGJAhAJxhGdIwYYFQFIdMrUMRDSZiHVdBEYsxDZIFHqw0AVgkFOEkCJdxISthCGgBCAYgHL0CRClVDCpQFUwABpshUJUVBasASRgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "svt-s01-2-q25",
+   "fiche": "svt-s01-2-f2",
+   "type": "qcm_multiple",
+   "niveau": 2,
+   "enonce": "Coche les phrases justes sur l'axe de rotation de la Terre.",
+   "choix": [
+    "C'est une ligne imaginaire",
+    "Il est penché par rapport au plan de l'écliptique",
+    "La Terre tourne sur elle-même autour de lui",
+    "Il est couché à plat dans le plan de l'écliptique",
+    "Il rend la durée du jour égale partout"
+   ],
+   "explication": "L'axe de rotation est une ligne imaginaire, penchée, autour de laquelle la Terre tourne sur elle-même. Son inclinaison rend au contraire la durée du jour différente selon les lieux.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.pdf",
+    "page": 2
+   },
+   "r": "=gyRcQQBOpgFIFDWKEEWP80ALMcsq8FEJkBFJxhGBgkJDdBQCpxTDQxGXMhUUkyVdt0CaMQA30FDZ50xsGkCJdxIStBBZEQSb4gUcEjQVUETc8EFHkhUuHbHGsBFZ40GB0wYBxyFBwkCU8ACc4SFUgAHRxAAIsBBjh0CA1gGcMQQqAFH",
+   "poids": 1
+  },
+  {
    "id": "svt-s01-2-q9",
    "fiche": "svt-s01-2-f3",
    "type": "qcm",
@@ -337,9 +437,9 @@ JEU.enregistrer("cours", {
    "enonce": "Quelle forme a l'orbite de la Terre autour du Soleil ?",
    "choix": [
     "Une ellipse, c'est-à-dire un ovale",
-    "Un carré",
-    "Une ligne droite",
-    "Une spirale"
+    "Un cercle parfait autour du Soleil",
+    "Une spirale qui s'éloigne du Soleil",
+    "Une ligne droite qui passe par le Soleil"
    ],
    "explication": "L'orbite de la Terre est une ellipse. Le Soleil est placé à l'un de ses deux centres.",
    "source": {
@@ -353,12 +453,12 @@ JEU.enregistrer("cours", {
    "id": "svt-s01-2-q10",
    "fiche": "svt-s01-2-f3",
    "type": "vrai_faux",
-   "niveau": 1,
+   "niveau": 3,
    "enonce": "L'aphélie est le point de l'orbite où la Terre est la plus proche du Soleil.",
    "corrections": [
     "Faux : c'est le point le plus éloigné ; le plus proche s'appelle le périhélie.",
-    "Faux : l'aphélie est le centre de l'orbite.",
-    "Faux : l'aphélie est un satellite de la Terre."
+    "Faux : c'est le point le plus éloigné, atteint vers le 3 janvier.",
+    "Faux : c'est le point où la Terre passe à l'équinoxe."
    ],
    "explication": "Aphélie : le plus loin du Soleil, début juillet. Périhélie : le plus près, début janvier.",
    "source": {
@@ -375,17 +475,17 @@ JEU.enregistrer("cours", {
    "niveau": 3,
    "enonce": "Pourquoi ne peut-on pas dire que l'hiver de l'hémisphère nord vient de l'éloignement du Soleil ?",
    "choix": [
-    "Parce qu'en hiver, la Terre est justement au plus près du Soleil",
-    "Parce que la Terre ne s'éloigne jamais du Soleil",
-    "Parce que le Soleil tourne autour de la Terre",
-    "Parce que l'orbite est un cercle parfait"
+    "En hiver, la Terre est justement au plus près du Soleil",
+    "En hiver, la Terre est justement au plus loin du Soleil",
+    "La distance entre la Terre et le Soleil ne change jamais",
+    "Le périhélie tombe en plein été dans l'hémisphère nord"
    ],
    "explication": "Le périhélie, point le plus proche, tombe début janvier, en plein hiver au nord. L'éloignement n'explique donc pas l'hiver.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.pdf",
     "page": 1
    },
-   "r": "==QZewBAZ4hOOphFIBThmeUXOxxEKkhUyMRVRsBFEswGB0RKNEhRI5kCUQBDmc2EZUUWDwAGGoBStgkQAxlTKUAFIISZ",
+   "r": "==AUEoCSJolfOphAGph2ECQBFZABF4xTHkwYZtAUAtwGVMxASNTAQUEEDsxC7IVCv0QSHhEGG4gRHcTZ",
    "poids": 1
   },
   {
@@ -435,6 +535,65 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
+   "id": "svt-s01-2-q26",
+   "fiche": "svt-s01-2-f3",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Vers le 3 juillet, où en est la Terre sur son orbite ?",
+   "choix": [
+    "À l'aphélie, au plus loin du Soleil",
+    "Au périhélie, au plus près du Soleil",
+    "À l'aphélie, au plus près du Soleil",
+    "Au périhélie, au plus loin du Soleil"
+   ],
+   "explication": "Début juillet, la Terre passe à l'aphélie, le point de son orbite le plus éloigné du Soleil. Le périhélie, le plus proche, tombe début janvier.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.pdf",
+    "page": 1
+   },
+   "r": "LJgBXQAL+VEQJ5UAPkQBSRzBZURVEggTDdRAvQopd11DIpgRpHbZ",
+   "poids": 1
+  },
+  {
+   "id": "svt-s01-2-q27",
+   "fiche": "svt-s01-2-f3",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Début juillet, la Terre est au plus loin du Soleil. Quelle saison est-ce alors dans l'hémisphère sud ?",
+   "choix": [
+    "L'hiver",
+    "L'été",
+    "Le printemps",
+    "L'automne"
+   ],
+   "explication": "Au nord, la Terre est au plus loin du Soleil en été. Au sud, c'est l'inverse : à ce moment-là, c'est l'hiver.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.pdf",
+    "page": 1
+   },
+   "r": "X81CZ8gDO5TZ",
+   "poids": 1
+  },
+  {
+   "id": "svt-s01-2-q28",
+   "fiche": "svt-s01-2-f3",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Le Soleil se trouve exactement au milieu de l'orbite de la Terre.",
+   "corrections": [
+    "Faux : il occupe l'un des deux centres de l'ellipse.",
+    "Faux : il se trouve en dehors de l'orbite.",
+    "Faux : il se trouve sur l'orbite, comme la Terre."
+   ],
+   "explication": "L'orbite est une ellipse, qui a deux centres. Le Soleil occupe l'un d'eux, ce qui explique qu'il y ait un point plus proche et un point plus éloigné.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.pdf",
+    "page": 1
+   },
+   "r": "==wENxVDw0FDZF0CIpgRMYxZBAxFB8BDN8kCdYSSFZESK8ECT4kHndRBQYhEG40AbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
    "id": "svt-s01-2-q14",
    "fiche": "svt-s01-2-f4",
    "type": "qcm",
@@ -473,20 +632,20 @@ JEU.enregistrer("cours", {
    "id": "svt-s01-2-q16",
    "fiche": "svt-s01-2-f4",
    "type": "qcm",
-   "niveau": 2,
-   "enonce": "Comment reconnaître le jour d'un équinoxe ?",
+   "niveau": 3,
+   "enonce": "Le jour de l'équinoxe de septembre, comment se partagent le jour et la nuit à Bourges, en France ?",
    "choix": [
-    "Partout sur Terre, le jour dure autant que la nuit",
-    "C'est le jour le plus long de l'année partout",
-    "La Terre est au plus loin du Soleil",
-    "Le Soleil ne se lève nulle part"
+    "Ils durent autant l'un que l'autre",
+    "Le jour dure deux fois plus que la nuit",
+    "La nuit dure deux fois plus que le jour",
+    "Il fait jour pendant toute la journée"
    ],
-   "explication": "Un équinoxe partage la journée en deux parts égales, partout. Cela arrive en mars et en septembre.",
+   "explication": "Le jour d'un équinoxe, jour et nuit ont la même durée en tout point du globe. Bourges ne fait pas exception, même si ses jours varient beaucoup le reste de l'année.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.pdf",
     "page": 2
    },
-   "r": "==wDaYwEIk0ErIFEQQQUdAgDG0hINAwRYpwTUMhBYc2FZUUWUsBHKYCSxglFVk1GAIBFIISZ",
+   "r": "Q1QMZBBVKIwTDMBGSlyBSlQVFcwDbcQCjl1CQ91GLYUFFsTZ",
    "poids": 1
   },
   {
@@ -510,35 +669,109 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
+   "id": "svt-s01-2-q29",
+   "fiche": "svt-s01-2-f4",
+   "type": "qcm",
+   "niveau": 1,
+   "enonce": "Combien y a-t-il de solstices et d'équinoxes en tout au cours d'une année ?",
+   "choix": [
+    "Quatre : deux de chaque",
+    "Deux : un de chaque",
+    "Quatre : un solstice, trois équinoxes",
+    "Six : trois de chaque"
+   ],
+   "explication": "Il y a deux solstices, en juin et en décembre, et deux équinoxes, en mars et en septembre. Ce sont les quatre positions repères de la Terre sur son orbite.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.pdf",
+    "page": 1
+   },
+   "r": "==wSXIzAU0gFRxgCPpQHmkURP0wCdIxBcMSZ",
+   "poids": 1
+  },
+  {
+   "id": "svt-s01-2-q30",
+   "fiche": "svt-s01-2-f4",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Combien de temps sépare environ un équinoxe du solstice qui le suit ?",
+   "choix": [
+    "Environ trois mois",
+    "Environ six mois",
+    "Environ un mois",
+    "Environ un an"
+   ],
+   "explication": "De mars à juin, puis de juin à septembre, il s'écoule environ trois mois. Équinoxes et solstices alternent ainsi tout au long de l'année.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.pdf",
+    "page": 1
+   },
+   "r": "=ckBYYwAPFQAs8VEVMUAd8AEHcTZ",
+   "poids": 1
+  },
+  {
+   "id": "svt-s01-2-q31",
+   "fiche": "svt-s01-2-f4",
+   "type": "vrai_faux",
+   "niveau": 3,
+   "enonce": "Le solstice de décembre a lieu peu avant le passage de la Terre au périhélie.",
+   "corrections": [],
+   "explication": "Le solstice de décembre arrive à la fin de ce mois, et le périhélie vers le 3 janvier. Ils ne sont séparés que d'environ deux semaines.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.pdf",
+    "page": 1
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "svt-s01-2-q32",
+   "fiche": "svt-s01-2-f4",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Les équinoxes ont lieu en juin et en décembre.",
+   "corrections": [
+    "Faux : ce sont les solstices ; les équinoxes ont lieu en mars et en septembre.",
+    "Faux : les équinoxes ont lieu début janvier et début juillet.",
+    "Faux : il n'y a qu'un équinoxe par an, en mars."
+   ],
+   "explication": "Juin et décembre sont les mois des solstices. Les équinoxes tombent entre eux, en mars et en septembre.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.pdf",
+    "page": 1
+   },
+   "r": "==ACHtFFbwgAXwxMIZRFDtwTSMQSBUzEYU0GUk0GKsBBjl1Ca1QHK4RCHshMDwtpVJADC8USIBDSGwVWdMQCVkUAi4RVRshHa4kCRgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
    "id": "svt-s01-2-q18",
    "fiche": "svt-s01-2-f5",
    "type": "qcm",
    "niveau": 1,
    "enonce": "Pourquoi numérote-t-on ses fiches de révision ?",
    "choix": [
-    "Pour pouvoir les ranger dans l'ordre",
-    "Pour savoir combien elles coûtent",
-    "Pour les colorier plus vite",
-    "Pour ne pas avoir à écrire de titre"
+    "Pour les ranger dans l'ordre",
+    "Pour compter les définitions",
+    "Pour choisir la couleur du titre",
+    "Pour remplacer le titre de la leçon"
    ],
    "explication": "Le numéro permet de remettre les fiches dans l'ordre. On s'y retrouve plus vite pour réviser.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 2
    },
-   "r": "=wkCAwQMCJUWN0RAHIQSAISFbQwBRpxCDIlGqI0EAJkHPRxEGISZ",
+   "r": "PsQHCQhBVtiUGsAFVkEHKUhBi8VRGhkAPRxEGISZ",
    "poids": 1
   },
   {
    "id": "svt-s01-2-q19",
    "fiche": "svt-s01-2-f5",
    "type": "vrai_faux",
-   "niveau": 1,
+   "niveau": 2,
    "enonce": "Sur une fiche de révision, on écrit tous les titres de la même couleur.",
    "corrections": [
     "Faux : on choisit une couleur pour chaque niveau de titre.",
-    "Faux : on n'écrit aucun titre sur une fiche.",
-    "Faux : les titres s'écrivent seulement au crayon à papier."
+    "Faux : on change de couleur à chaque nouvelle fiche.",
+    "Faux : on écrit les titres en noir et les définitions en couleur."
    ],
    "explication": "Une couleur par niveau de titre aide à voir le plan d'un coup d'œil. On décale aussi d'un carreau à chaque sous-titre.",
    "source": {
@@ -552,21 +785,121 @@ JEU.enregistrer("cours", {
    "id": "svt-s01-2-q20",
    "fiche": "svt-s01-2-f5",
    "type": "qcm_multiple",
-   "niveau": 2,
+   "niveau": 1,
    "enonce": "Coche ce qu'on trouve sur une bonne fiche de révision.",
    "choix": [
     "Un numéro pour la ranger",
     "Les définitions",
     "Un résumé encadré en couleur",
-    "Un schéma",
-    "Une recette de cuisine"
+    "Un schéma pour visualiser le résumé",
+    "Une seule couleur pour tous les titres"
    ],
-   "explication": "Numéro, définitions, résumé encadré et schéma font une fiche efficace. Le schéma aide à visualiser le résumé.",
+   "explication": "Numéro, définitions, résumé encadré et schéma font une fiche efficace. Les titres, eux, changent de couleur selon leur niveau.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 2
    },
-   "r": "=MTTHsAwx+SEGU0GkskQNBQHmEEEa5kTBMgRAHbNWQhBbQRSHz6HdADhmeUDAoDRKtUAp0BHRwxHAggxxywYeBQePIUTUMgDcYCAVRQGRtxGAIASs8Fz2D0GBYEC8AFH",
+   "r": "1EGhmiFWdYcpUk0FrI1BAYAGF8gGBEQNNcBQC5xTHsAwx+SEGU0GkskQNBQHmEEEa5kTBMgRAHbNWQhBbQRSHz6HdADhmeUDAoDRKtUAp0BHRwxHAggxxywYeBQePIUTUMgDcYCAVRQGRtxGAIASs8Fz2D0GBYEC8AFH",
+   "poids": 1
+  },
+  {
+   "id": "svt-s01-2-q33",
+   "fiche": "svt-s01-2-f5",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Sur une fiche de révision, on décale le texte d'un carreau à chaque niveau de titre inférieur.",
+   "corrections": [],
+   "explication": "Un sous-titre s'écrit un carreau plus loin que le titre au-dessus de lui. Plus le niveau est petit, plus on avance.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "svt-s01-2-q34",
+   "fiche": "svt-s01-2-f5",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Sur une fiche de révision, le résumé s'écrit sans cadre ni couleur.",
+   "corrections": [
+    "Faux : on l'écrit dans un cadre colorié.",
+    "Faux : on ne met jamais de résumé sur une fiche.",
+    "Faux : on l'écrit au dos de la fiche, au crayon."
+   ],
+   "explication": "Le résumé est rangé dans un cadre colorié, bien visible. Un schéma peut ensuite aider à le visualiser.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "SQESAHrLAoRCaIRSL0hFJASDLAUDdEwBCkkBuAgFMbrVF4UAdgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "svt-s01-2-q35",
+   "fiche": "svt-s01-2-f5",
+   "type": "ordre",
+   "niveau": 2,
+   "enonce": "Range ces titres du plus général au plus détaillé, comme sur une fiche de révision.",
+   "elements": [
+    "1.1 Le système solaire dans l'Univers",
+    "Thème A : la planète Terre",
+    "I. La Terre dans le système solaire",
+    "Chapitre 1 : la Terre, une planète en mouvement"
+   ],
+   "explication": "On va du thème au chapitre, puis à la partie et enfin à la sous-partie. Chaque niveau a sa couleur et avance d'un carreau.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "o1hQdpUVFNEH",
+   "poids": 1
+  },
+  {
+   "id": "svt-s01-2-q36",
+   "fiche": "svt-s01-2-f5",
+   "type": "association",
+   "niveau": 3,
+   "enonce": "Relie chaque élément d'une fiche de révision à son rôle.",
+   "gauche": [
+    "Le numéro",
+    "Le cadre colorié",
+    "Le schéma",
+    "Le décalage d'un carreau"
+   ],
+   "droite": [
+    "Visualiser le résumé",
+    "Ranger les fiches dans l'ordre",
+    "Montrer un titre de niveau inférieur",
+    "Regrouper les informations du résumé"
+   ],
+   "explication": "Le numéro range, le cadre regroupe le résumé et le schéma aide à le visualiser. Le décalage d'un carreau signale un niveau de titre inférieur.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "==ANvUnXG5TWsklQdlCRe4RSEYnQyclSZlCH",
+   "poids": 1
+  },
+  {
+   "id": "svt-s01-2-q37",
+   "fiche": "svt-s01-2-f5",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Tu écris un sous-titre juste sous un titre de ta fiche. Que dois-tu faire ?",
+   "choix": [
+    "Avancer d'un carreau et changer de couleur",
+    "Garder la même couleur et la même marge que le titre",
+    "Commencer une nouvelle fiche avec un nouveau numéro",
+    "L'encadrer en couleur, comme le résumé"
+   ],
+   "explication": "Un sous-titre est d'un niveau inférieur : il prend une autre couleur et avance d'un carreau. Le cadre colorié est réservé au résumé.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "=A1BQARHcEADS1wJNcBUKBgDOUQSGIiUAQAEDsxDMIlB2oQAV81CMgwBfMTZ",
    "poids": 1
   }
  ],

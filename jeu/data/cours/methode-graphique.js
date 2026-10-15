@@ -125,7 +125,7 @@ JEU.enregistrer("cours", {
    "id": "methode-graphique-f5",
    "notion": "Tracer les axes",
    "titre": "Deux axes perpendiculaires",
-   "texte": "Les axes se tracent à la règle et au crayon, sur papier millimétré ou à petits carreaux. Ils sont perpendiculaires et se coupent à l'origine O. Chaque axe porte une flèche ; s'il faut des valeurs négatives, on prolonge l'axe de l'autre côté, avec une flèche à chaque bout. On place ensuite l'échelle et les graduations demandées.",
+   "texte": "Les axes se tracent à la règle et au crayon, sur papier millimétré ou à petits carreaux. Ils sont perpendiculaires et se coupent à l'origine O. Chaque axe porte une flèche ; s'il y a des valeurs positives et négatives, on prolonge l'axe de l'autre côté, avec une flèche à chaque bout. On place ensuite l'échelle et les graduations demandées.",
    "pointsCles": [
     "Règle et crayon",
     "Perpendiculaires, coupés en O",
@@ -186,7 +186,7 @@ JEU.enregistrer("cours", {
    "id": "methode-graphique-q1",
    "fiche": "methode-graphique-f1",
    "type": "ordre",
-   "niveau": 2,
+   "niveau": 3,
    "enonce": "Remets dans l'ordre les étapes pour réaliser un graphique.",
    "elements": [
     "Donner un titre",
@@ -213,7 +213,7 @@ JEU.enregistrer("cours", {
     "L'abscisse",
     "L'ordonnée",
     "L'origine",
-    "La légende"
+    "La graduation"
    ],
    "explication": "L'axe horizontal est l'axe des abscisses. L'axe vertical est celui des ordonnées.",
    "source": {
@@ -227,12 +227,12 @@ JEU.enregistrer("cours", {
    "id": "methode-graphique-q3",
    "fiche": "methode-graphique-f1",
    "type": "vrai_faux",
-   "niveau": 1,
+   "niveau": 2,
    "enonce": "On place les points avant d'avoir gradué les axes.",
    "corrections": [
     "Faux : on gradue d'abord les axes, sinon on ne sait pas où mettre les points.",
-    "Faux : on ne gradue jamais les axes.",
-    "Faux : on place les points après avoir écrit la conclusion."
+    "Faux : on place les points avant de nommer les axes, puis on gradue.",
+    "Faux : on place les points en même temps qu'on gradue les axes."
    ],
    "explication": "Placer les points est la dernière étape. Il faut des axes nommés et gradués.",
    "source": {
@@ -250,9 +250,9 @@ JEU.enregistrer("cours", {
    "enonce": "Pourquoi faut-il nommer chaque axe ?",
    "choix": [
     "Pour savoir quelle grandeur chaque axe représente",
-    "Pour décorer le graphique",
-    "Pour remplacer les graduations",
-    "Pour que les points soient plus gros"
+    "Pour savoir où placer l'origine O du graphique",
+    "Pour remplacer les graduations, qui deviennent inutiles",
+    "Pour savoir dans quel ordre relier les points"
    ],
    "explication": "Sans nom ni unité, un axe ne veut rien dire. Le lecteur doit savoir ce qu'il lit.",
    "source": {
@@ -263,23 +263,102 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "methode-graphique-q5",
-   "fiche": "methode-graphique-f2",
-   "type": "qcm",
+   "id": "methode-graphique-q24",
+   "fiche": "methode-graphique-f1",
+   "type": "vrai_faux",
    "niveau": 2,
-   "enonce": "Sur un graphique, l'axe vertical s'appelle « température » et l'axe horizontal « temps ». Quel titre convient ?",
-   "choix": [
-    "Graphique représentant l'évolution de la température en fonction du temps",
-    "Graphique représentant l'évolution du temps en fonction de la température",
-    "Graphique de la casserole",
-    "Température et minutes"
+   "enonce": "On choisit l'unité de chaque axe avant de nommer les axes.",
+   "corrections": [
+    "Faux : on nomme d'abord les deux axes, puis on choisit les unités.",
+    "Faux : on choisit les unités en tout dernier, après avoir placé les points.",
+    "Faux : seul l'axe vertical a besoin d'une unité."
    ],
-   "explication": "Après « évolution de » vient l'axe vertical, ici la température. Après « en fonction de » vient l'axe horizontal, ici le temps.",
+   "explication": "Les deux premières étapes nomment l'axe horizontal puis l'axe vertical. Le choix des unités et les graduations viennent en troisième.",
    "source": {
     "fichier": "methodes/Fiche methode - Realisation graphique.pdf",
     "page": 1
    },
-   "r": "h5VFYhkGPNhAJxBKbEgBb4xDOFwFIZyXQEETcYcpWQwFzIFFJUFFN4UAdEwNYlgWbdMrBpQSGkyEBsAECAcrdIQDx0AAAx1BHYxBbUTZ",
+   "r": "==ASPAEHPXaHbkyBVZBEdkkGGEQAsUkBVMUAPVxDcIwZeZAANARSWoxFMMmXAkVDK0RCEgQVjIFEIghHH4UAdgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "methode-graphique-q25",
+   "fiche": "methode-graphique-f1",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "L'axe vertical d'un graphique s'appelle l'axe des abscisses.",
+   "corrections": [
+    "Faux : c'est l'axe des ordonnées ; l'abscisse est l'axe horizontal.",
+    "Faux : c'est l'axe de l'origine ; l'abscisse est l'axe horizontal.",
+    "Faux : c'est l'axe des graduations ; l'abscisse est l'axe oblique."
+   ],
+   "explication": "Abscisse : axe horizontal. Ordonnée : axe vertical.",
+   "source": {
+    "fichier": "methodes/Fiche methode - Realisation graphique.pdf",
+    "page": 1
+   },
+   "r": "=gxFDIgDSggBI4CAa0QVUExDI5BS34FAVgUHc8QBaAhJVlRROFlGLYcsG0iQBckQOxxACk0F/MhUJUVBasASRgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "methode-graphique-q26",
+   "fiche": "methode-graphique-f1",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Un élève a nommé ses deux axes. Que doit-il faire avant de pouvoir placer des points ?",
+   "choix": [
+    "Choisir une unité pour chaque axe et graduer",
+    "Relier d'abord les points, du premier au dernier",
+    "Prolonger la courbe jusqu'aux deux axes",
+    "Tracer une croix à l'origine O"
+   ],
+   "explication": "Sans unité ni graduation, on ne sait pas où mettre un point. C'est la troisième étape, avant le titre et les points.",
+   "source": {
+    "fichier": "methodes/Fiche methode - Realisation graphique.pdf",
+    "page": 1
+   },
+   "r": "=sEAicQEEcgFJphCS1wOMVEUY9hDOUQSAITHFUE3y2xBBcASmMEEV81Bc8QCBETZ",
+   "poids": 1
+  },
+  {
+   "id": "methode-graphique-q27",
+   "fiche": "methode-graphique-f1",
+   "type": "trou",
+   "niveau": 1,
+   "enonce": "Complète avec le nom des axes.",
+   "texte": "L'axe horizontal s'appelle l'axe des ___ ; l'axe vertical, l'axe des ___.",
+   "banque": [
+    "abscisses",
+    "ordonnées",
+    "origines",
+    "graduations"
+   ],
+   "explication": "Abscisse : l'axe horizontal, nommé en premier. Ordonnée : l'axe vertical, nommé en second.",
+   "source": {
+    "fichier": "methodes/Fiche methode - Realisation graphique.pdf",
+    "page": 1
+   },
+   "r": "=gGcMpwzleAHoYxBKcVXL1hCbvaLDpQUfFQT9oENQJSAGwgFCswDN5lSwgkFGRUDcQwBLlCH",
+   "poids": 1
+  },
+  {
+   "id": "methode-graphique-q5",
+   "fiche": "methode-graphique-f2",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Sur un graphique, l'axe vertical s'appelle « hauteur de la plante » et l'axe horizontal « nombre de jours ». Quel titre convient ?",
+   "choix": [
+    "Graphique représentant l'évolution de la hauteur de la plante en fonction du nombre de jours",
+    "Graphique représentant l'évolution du nombre de jours en fonction de la hauteur de la plante",
+    "Graphique représentant la hauteur de la plante et le nombre de jours",
+    "Graphique représentant l'évolution de la plante en fonction des jours"
+   ],
+   "explication": "Après « évolution de » vient l'axe vertical, ici la hauteur. Après « en fonction de » vient l'axe horizontal, ici le nombre de jours.",
+   "source": {
+    "fichier": "methodes/Fiche methode - Realisation graphique.pdf",
+    "page": 1
+   },
+   "r": "P0RHTkwASJiFVBwBTQQABIVHn0wCaRkGMgQCPIVKXUFAB8BCC8hUJ8SDAEVDcoxASwxEvIFFJUFFN4UAdEwNYlgWbdMrBpQSGkyEBsAECAcrdIQDx0AAAx1BHYxBbUTZ",
    "poids": 1
   },
   {
@@ -319,6 +398,101 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
+   "id": "methode-graphique-q22",
+   "fiche": "methode-graphique-f2",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Comment écrit-on le titre d'un graphique réalisé à l'ordinateur ?",
+   "choix": [
+    "En gras et souligné",
+    "En petits caractères, sans soulignement",
+    "Au crayon à papier",
+    "En italique et souligné"
+   ],
+   "explication": "À l'ordinateur, le titre se met en gras et souligné. À la main, au crayon et souligné à la règle.",
+   "source": {
+    "fichier": "methodes/Fiche methode - Realisation graphique.pdf",
+    "page": 1
+   },
+   "r": "==AUcb6GWAgAa0xGjlFAV41DdEgRHcTZ",
+   "poids": 1
+  },
+  {
+   "id": "methode-graphique-q28",
+   "fiche": "methode-graphique-f2",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Sur un graphique fait à la main, le titre s'écrit au crayon à papier et se souligne à main levée.",
+   "corrections": [
+    "Faux : il s'écrit au crayon à papier et se souligne à la règle.",
+    "Faux : il s'écrit au stylo et se souligne à la règle.",
+    "Faux : il s'écrit en gras et ne se souligne pas."
+   ],
+   "explication": "À la main, le titre s'écrit au crayon à papier et se souligne à la règle. À l'ordinateur, il se met en gras et souligné.",
+   "source": {
+    "fichier": "methodes/Fiche methode - Realisation graphique.pdf",
+    "page": 1
+   },
+   "r": "==ASPAkCKEQwxWjUUkQVRrqTKwxDqEEEa5lTKUhRdcxZAABDFARGO9csI1iQcQ1XN80EHkkBuAgFMbrVa40AbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "methode-graphique-q29",
+   "fiche": "methode-graphique-f2",
+   "type": "qcm_multiple",
+   "niveau": 3,
+   "enonce": "Qu'est-ce qui est demandé pour le titre d'un graphique fait à la main ?",
+   "choix": [
+    "L'écrire au crayon à papier",
+    "Le souligner à la règle",
+    "Suivre le modèle « évolution de… en fonction de… »",
+    "L'écrire en gras",
+    "L'écrire au stylo rouge"
+   ],
+   "explication": "À la main : crayon à papier, souligné à la règle, et toujours le même modèle de phrase. Le gras, c'est pour un graphique fait à l'ordinateur.",
+   "source": {
+    "fichier": "methodes/Fiche methode - Realisation graphique.pdf",
+    "page": 1
+   },
+   "r": "=4xDeffDI/OhD0gUp0BHRYxHGgwTc0wYLW+1IpwTIkAAGIjHaMB3ymUxtKVDvUopRJ0APNgCJdRNEwBEmMVRMpgHPsu7XUBTC8kxlmEAiwhEMkBBG0xTXQSYBc0RIdwHHYRSSToUboADQsRDPdQCjh0Fc9VDGXaQlAFH",
+   "poids": 1
+  },
+  {
+   "id": "methode-graphique-q30",
+   "fiche": "methode-graphique-f2",
+   "type": "vrai_faux",
+   "niveau": 1,
+   "enonce": "Le titre d'un graphique est en général facile à repérer dans la consigne.",
+   "corrections": [],
+   "explication": "Oui : la consigne contient presque toujours la phrase « graphique représentant l'évolution de Y en fonction de X ». Il suffit de la reprendre.",
+   "source": {
+    "fichier": "methodes/Fiche methode - Realisation graphique.pdf",
+    "page": 1
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "methode-graphique-q31",
+   "fiche": "methode-graphique-f2",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "L'axe vertical porte le nombre de visiteurs d'un musée, l'axe horizontal les mois de l'année. Un élève écrit : « Graphique représentant l'évolution des mois de l'année en fonction du nombre de visiteurs ». Quelle est son erreur ?",
+   "choix": [
+    "Il a inversé les deux grandeurs",
+    "Il a oublié le mot « évolution »",
+    "Il a oublié les mots « en fonction de »",
+    "Il a mis trop de mots dans son titre"
+   ],
+   "explication": "Ce qui suit « évolution de » doit être l'axe vertical, ici le nombre de visiteurs. L'élève a mis les mois à cette place, et les visiteurs après « en fonction de ».",
+   "source": {
+    "fichier": "methodes/Fiche methode - Realisation graphique.pdf",
+    "page": 1
+   },
+   "r": "==QYedBQIpQAHQhDS9zBQEQVCwgAPt9qw8FADN0BPdgRFsTZ",
+   "poids": 1
+  },
+  {
    "id": "methode-graphique-q8",
    "fiche": "methode-graphique-f3",
    "type": "qcm",
@@ -327,8 +501,8 @@ JEU.enregistrer("cours", {
    "choix": [
     "Sa valeur sur l'axe horizontal (abscisse)",
     "Sa valeur sur l'axe vertical (ordonnée)",
-    "Le titre du graphique",
-    "Le point suivant"
+    "La position de l'origine O",
+    "La plus grande graduation de l'axe vertical"
    ],
    "explication": "D'abord l'abscisse avec un pointillé vertical. Puis l'ordonnée avec un pointillé horizontal.",
    "source": {
@@ -360,17 +534,17 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Comment trouve-t-on l'emplacement exact d'un point ?",
    "choix": [
-    "Au croisement d'un pointillé vertical (abscisse) et d'un pointillé horizontal (ordonnée)",
-    "En le plaçant à vue d'œil près de l'axe",
-    "En le mettant toujours sur l'origine",
-    "En suivant la flèche de l'axe horizontal"
+    "Au croisement d'un pointillé vertical et d'un pointillé horizontal",
+    "Au croisement de deux pointillés partant tous deux de l'origine",
+    "En le plaçant à vue d'œil, juste au-dessus de l'axe des abscisses",
+    "Au bout d'un pointillé tracé depuis l'axe vertical seulement"
    ],
-   "explication": "Les deux pointillés partent des valeurs lues sur les axes. Le point est à leur intersection.",
+   "explication": "Le pointillé vertical part de la valeur en abscisse, l'horizontal de la valeur en ordonnée. Le point est à leur intersection.",
    "source": {
     "fichier": "methodes/Fiche methode - Realisation graphique.pdf",
     "page": 1
    },
-   "r": "E9EDbTIHboQEDYgRP5RC3MkCPREHA4gRAH7KewREbghBe8EHdQWSFFESOZ0AVoxGkEwFE0VUF8ADbwRMINRFE26AK8QHc4SHFU0GE4kCPZgBmAEAGRUAdUgRcMTZ",
+   "r": "==ARFMxMcoxHcMgBG802r+SQME0QHAgFGdwBgZRVRARUF8ADbwRMINRFE26AK8QHc4SHFU0GE4kCPZgBmAEAGRUAdUgRcMTZ",
    "poids": 1
   },
   {
@@ -381,8 +555,8 @@ JEU.enregistrer("cours", {
    "enonce": "Pour placer un point, on trace un pointillé horizontal à partir de sa valeur en abscisse.",
    "corrections": [
     "Faux : depuis l'abscisse, on trace un pointillé vertical ; depuis l'ordonnée, un pointillé horizontal.",
-    "Faux : on ne trace aucun pointillé.",
-    "Faux : on trace un trait plein jusqu'à l'origine."
+    "Faux : depuis l'abscisse, on trace un trait plein vertical, sans pointillé.",
+    "Faux : on part toujours de l'ordonnée, avec un pointillé vertical."
    ],
    "explication": "On monte verticalement depuis l'axe horizontal. On va horizontalement depuis l'axe vertical.",
    "source": {
@@ -393,14 +567,94 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
+   "id": "methode-graphique-q32",
+   "fiche": "methode-graphique-f3",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Un point a pour abscisse 4 et pour ordonnée 7. D'où part le pointillé vertical ?",
+   "choix": [
+    "De la graduation 4 de l'axe horizontal",
+    "De la graduation 7 de l'axe horizontal",
+    "De la graduation 4 de l'axe vertical",
+    "De la graduation 7 de l'axe vertical"
+   ],
+   "explication": "Le pointillé vertical part de la valeur en abscisse, donc du 4 de l'axe horizontal. Le pointillé horizontal partira du 7 de l'axe vertical.",
+   "source": {
+    "fichier": "methodes/Fiche methode - Realisation graphique.pdf",
+    "page": 1
+   },
+   "r": "==wUF8wGccQOEdhWF5kCecgTec2FRUUQRdQAGYQC2kEBHpkTOogRMYTZ",
+   "poids": 1
+  },
+  {
+   "id": "methode-graphique-q33",
+   "fiche": "methode-graphique-f3",
+   "type": "vrai_faux",
+   "niveau": 3,
+   "enonce": "Le pointillé tracé depuis l'axe vertical est parallèle à l'axe des ordonnées.",
+   "corrections": [
+    "Faux : il est horizontal, donc parallèle à l'axe des abscisses.",
+    "Faux : il est vertical, donc perpendiculaire à l'axe des abscisses.",
+    "Faux : il est oblique et rejoint l'origine des axes."
+   ],
+   "explication": "Depuis l'axe vertical, on trace un pointillé horizontal. Il est donc parallèle à l'axe horizontal, celui des abscisses.",
+   "source": {
+    "fichier": "methodes/Fiche methode - Realisation graphique.pdf",
+    "page": 1
+   },
+   "r": "=MRTIVBDBQzGWYxFQkUHKYBSmUFBSEkTPXqRM4x7xmRCUMACe8UEGwSSFlRQPsBCJMxG10RHFFgAM40AbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "methode-graphique-q34",
+   "fiche": "methode-graphique-f3",
+   "type": "ordre",
+   "niveau": 2,
+   "enonce": "Remets dans l'ordre les gestes pour placer un point.",
+   "elements": [
+    "Tracer un pointillé horizontal",
+    "Chercher la valeur en abscisse",
+    "Dessiner une croix à l'intersection",
+    "Tracer un pointillé vertical",
+    "Chercher la valeur en ordonnée"
+   ],
+   "explication": "D'abord l'abscisse et son pointillé vertical, puis l'ordonnée et son pointillé horizontal. La croix se dessine là où ils se croisent.",
+   "source": {
+    "fichier": "methodes/Fiche methode - Realisation graphique.pdf",
+    "page": 1
+   },
+   "r": "=A3VZ0hQbpUVFNEH",
+   "poids": 1
+  },
+  {
+   "id": "methode-graphique-q35",
+   "fiche": "methode-graphique-f3",
+   "type": "qcm",
+   "niveau": 1,
+   "enonce": "Avec quoi trace-t-on les pointillés qui servent à placer un point ?",
+   "choix": [
+    "Au crayon à papier",
+    "Au stylo à bille",
+    "Au feutre noir",
+    "Au crayon de couleur"
+   ],
+   "explication": "Les pointillés se tracent au crayon à papier. La couleur ne sert qu'à repasser les points, si la consigne le demande.",
+   "source": {
+    "fichier": "methodes/Fiche methode - Realisation graphique.pdf",
+    "page": 1
+   },
+   "r": "XdBEYkxDfIFyA2wCaR1DdUgRcMTZ",
+   "poids": 1
+  },
+  {
    "id": "methode-graphique-q12",
    "fiche": "methode-graphique-f4",
    "type": "vrai_faux",
-   "niveau": 1,
+   "niveau": 2,
    "enonce": "On relie toujours le premier point à l'origine des axes.",
    "corrections": [
     "Faux : on ne relie à l'origine que si elle fait partie des points.",
-    "Faux : on relie le dernier point à l'origine.",
+    "Faux : on relie le dernier point à l'origine, pas le premier.",
     "Faux : on relie chaque point à l'axe horizontal."
    ],
    "explication": "L'origine n'est pas une mesure, sauf si le tableau la donne. On relie seulement les points mesurés.",
@@ -420,8 +674,8 @@ JEU.enregistrer("cours", {
    "choix": [
     "Du premier au dernier, point par point",
     "Du plus haut au plus bas",
-    "Au hasard",
-    "En commençant par l'axe vertical"
+    "Du plus bas au plus haut",
+    "En partant toujours de l'origine O des axes"
    ],
    "explication": "On relie point par point, du premier au dernier. On ne saute aucun point.",
    "source": {
@@ -438,17 +692,91 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Pourquoi ne faut-il pas prolonger la courbe jusqu'à un axe ?",
    "choix": [
-    "Parce qu'on n'a aucune mesure à cet endroit",
-    "Parce que les axes sont fragiles",
-    "Parce que le titre l'interdit",
-    "Parce que la courbe doit rester droite"
+    "Parce que la courbe va seulement du premier au dernier point",
+    "Parce que les axes doivent rester tracés au crayon à papier",
+    "Parce que le titre se place toujours au bout des axes",
+    "Parce qu'une courbe doit toujours rester bien droite"
    ],
-   "explication": "La courbe ne relie que des points mesurés. Aller jusqu'à un axe inventerait une valeur.",
+   "explication": "On relie point par point, du premier au dernier : la courbe s'arrête là. Aller jusqu'à un axe ajouterait un trait sans aucune mesure.",
    "source": {
     "fichier": "methodes/Fiche methode - Realisation graphique.pdf",
     "page": 2
    },
-   "r": "==AUzshGXExHM40GXswYNaaFIxhGVMABSJCHAYAAQk0DIxBStIkQAxlTKUAFIISZ",
+   "r": "=MVHAYQHYM2XAw1QcogAGxxEnBAEMgBFb4xTHwwYZtAUAtwATMgGSZCBVBwFDwRAMIVCv0AAAxlTKUAFIISZ",
+   "poids": 1
+  },
+  {
+   "id": "methode-graphique-q36",
+   "fiche": "methode-graphique-f4",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Si l'origine des axes fait partie des points mesurés, on la relie à la courbe.",
+   "corrections": [],
+   "explication": "Oui : on laisse l'origine de côté seulement quand elle ne fait pas partie des points. Si c'est un point du tableau, on la relie comme les autres.",
+   "source": {
+    "fichier": "methodes/Fiche methode - Realisation graphique.pdf",
+    "page": 2
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "methode-graphique-q37",
+   "fiche": "methode-graphique-f4",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "On relie les points au stylo à bille, pour que la courbe ne s'efface pas.",
+   "corrections": [
+    "Faux : on les relie au crayon à papier, ou de couleur si la consigne le demande.",
+    "Faux : on les relie au feutre, pour bien voir la courbe.",
+    "Faux : on les relie au crayon de couleur, dans tous les cas."
+   ],
+   "explication": "La courbe se trace au crayon à papier. Le crayon de couleur sert seulement si la consigne le demande.",
+   "source": {
+    "fichier": "methodes/Fiche methode - Realisation graphique.pdf",
+    "page": 2
+   },
+   "r": "6A1WAExHIMgCWgkJBVEUDlgBVggBRc2EZUEHCkEHacBB2IkBVgkCPNRCJ5VNXwRFUEQSOzqUGwCVEckTOpxBGxwGrcxBFZAFF4UAdgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "methode-graphique-q38",
+   "fiche": "methode-graphique-f4",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Les mesures d'un tableau vont du jour 3 au jour 12. Où la courbe doit-elle commencer et finir ?",
+   "choix": [
+    "Au point du jour 3 et au point du jour 12",
+    "À l'origine O et au point du jour 12",
+    "Au point du jour 3 et au bout de l'axe horizontal",
+    "Sur l'axe vertical et au point du jour 12"
+   ],
+   "explication": "La courbe relie les points mesurés, du premier au dernier. Elle ne part ni de l'origine ni d'un axe, et ne file pas jusqu'au bout de l'axe.",
+   "source": {
+    "fichier": "methodes/Fiche methode - Realisation graphique.pdf",
+    "page": 2
+   },
+   "r": "==wVXRUUbsBAYgkNJVUQDdAAWYEHTcmBQUkRRtxGAgBS2kURBN0BAYhRcMTZ",
+   "poids": 1
+  },
+  {
+   "id": "methode-graphique-q39",
+   "fiche": "methode-graphique-f4",
+   "type": "qcm_multiple",
+   "niveau": 3,
+   "enonce": "Quels tracés sont interdits quand on relie les points ?",
+   "choix": [
+    "Relier le premier point à l'origine, si l'origine n'est pas un point mesuré",
+    "Prolonger la courbe jusqu'à un axe",
+    "Relier chaque point au point suivant",
+    "Commencer par le premier point du tableau"
+   ],
+   "explication": "La courbe ne touche ni l'origine (si ce n'est pas un point) ni un axe. On relie seulement les points, du premier au dernier.",
+   "source": {
+    "fichier": "methodes/Fiche methode - Realisation graphique.pdf",
+    "page": 2
+   },
+   "r": "=g2DLcxBGdwBnJttCBAAasRBS1QIfBhWO5kDKY0GXACHakgGDkDTDBVwA+FEGh0APJBCA0xNStBEVJACe8kBbYiCLUBSAYQAPsRHg5RVMYQUFtQAb8gKfpgEB50zlaUHc4SHFU0BUAwAKAAGjhUCV81CGowA7AFH",
    "poids": 1
   },
   {
@@ -459,9 +787,9 @@ JEU.enregistrer("cours", {
    "enonce": "Comment sont les deux axes d'un graphique l'un par rapport à l'autre ?",
    "choix": [
     "Perpendiculaires, et ils se coupent à l'origine O",
-    "Parallèles",
-    "Confondus",
-    "Séparés par un carreau"
+    "Parallèles, l'un au-dessus de l'autre",
+    "Perpendiculaires, mais ils ne se touchent jamais au point O",
+    "Parallèles, et séparés par l'origine O"
    ],
    "explication": "Les axes forment un angle droit. Ils se croisent au point O.",
    "source": {
@@ -476,9 +804,9 @@ JEU.enregistrer("cours", {
    "fiche": "methode-graphique-f5",
    "type": "vrai_faux",
    "niveau": 2,
-   "enonce": "Si des valeurs sont négatives, l'axe porte une flèche à chaque extrémité.",
+   "enonce": "Si un axe porte à la fois des valeurs positives et des valeurs négatives, il a une flèche à chaque extrémité.",
    "corrections": [],
-   "explication": "Avec des valeurs positives et négatives, l'axe se prolonge des deux côtés de O. Il a alors deux flèches.",
+   "explication": "Avec des valeurs des deux côtés de O, l'axe se prolonge des deux côtés. Il porte alors une flèche à chaque bout.",
    "source": {
     "fichier": "methodes/Fiche methode - Realisation graphique.pdf",
     "page": 5
@@ -514,9 +842,9 @@ JEU.enregistrer("cours", {
    "enonce": "Comment savoir s'il faut prolonger un axe de l'autre côté de l'origine ?",
    "choix": [
     "On regarde si certaines valeurs sont négatives",
-    "On regarde la couleur du crayon",
-    "On le fait toujours",
-    "On ne le fait jamais"
+    "On regarde si certaines valeurs sont très grandes",
+    "On le fait toujours, pour les deux axes",
+    "On regarde si le graphique doit avoir un titre"
    ],
    "explication": "Des valeurs négatives se placent de l'autre côté de O. Il faut y penser avant de tracer.",
    "source": {
@@ -524,6 +852,80 @@ JEU.enregistrer("cours", {
     "page": 5
    },
    "r": "==ARVwABuYAFCwtsH40GccAMNYxRYtwAHARSBICHcQQADwQDPtxGjhUAHxUCKQhRH0TZ",
+   "poids": 1
+  },
+  {
+   "id": "methode-graphique-q40",
+   "fiche": "methode-graphique-f5",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Les axes se tracent à la règle et au crayon à papier, et ils sont parallèles.",
+   "corrections": [
+    "Faux : ils sont perpendiculaires et se coupent à l'origine O.",
+    "Faux : ils se tracent à main levée, et ils sont parallèles.",
+    "Faux : ils sont perpendiculaires, mais ne se coupent pas."
+   ],
+   "explication": "Les axes se tracent bien à la règle et au crayon. Ils forment un angle droit et se coupent au point O.",
+   "source": {
+    "fichier": "methodes/Fiche methode - Realisation graphique.pdf",
+    "page": 5
+   },
+   "r": "=sxSchgUQsAHWAAHAUFBj1opVkFAKYxEGExZXYQRBQRSdoAABISQQYFRKEwAWsxF3IVALohAJ1xAbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "methode-graphique-q41",
+   "fiche": "methode-graphique-f5",
+   "type": "vrai_faux",
+   "niveau": 1,
+   "enonce": "Le point O a pour abscisse 0 et pour ordonnée 0.",
+   "corrections": [],
+   "explication": "Oui : c'est l'origine, là où les deux axes se coupent. Il faut bien le placer.",
+   "source": {
+    "fichier": "methodes/Fiche methode - Realisation graphique.pdf",
+    "page": 5
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "methode-graphique-q42",
+   "fiche": "methode-graphique-f5",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Les valeurs à placer sur l'axe vertical sont −3, 2, 5 et 8. Comment tracer cet axe ?",
+   "choix": [
+    "Le prolonger sous l'origine, avec une flèche à chaque bout",
+    "Avec une seule flèche vers le haut, sans rien sous l'origine",
+    "En laissant de côté la valeur −3, qui ne se place pas",
+    "En plaçant −3 au-dessus de l'origine, entre 2 et 5"
+   ],
+   "explication": "−3 est une valeur négative : elle se place sous l'origine. Avec des valeurs positives et négatives, l'axe a une flèche à chaque bout.",
+   "source": {
+    "fichier": "methodes/Fiche methode - Realisation graphique.pdf",
+    "page": 5
+   },
+   "r": "=MVHbAAEIZCWUQVRN8kxlm0FvER3mmxFJtQAHgEIINBVNIkCI8gDbUTHSlQVCwRAcIlGmo0CaFUAdYhRM4TZ",
+   "poids": 1
+  },
+  {
+   "id": "methode-graphique-q43",
+   "fiche": "methode-graphique-f5",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Combien de flèches porte un axe dont toutes les valeurs sont positives ?",
+   "choix": [
+    "Une flèche, à une extrémité",
+    "Deux flèches, une à chaque bout",
+    "Aucune flèche",
+    "Une flèche au milieu de l'axe"
+   ],
+   "explication": "Avec des valeurs d'un seul signe, l'axe a une flèche à une extrémité. Il en faut deux quand il y a des valeurs positives et négatives.",
+   "source": {
+    "fichier": "methodes/Fiche methode - Realisation graphique.pdf",
+    "page": 5
+   },
+   "r": "Pws9ZdgAPX6GG8zFVBwGEkkzsKFRmUkBd6uAJY0AHcSZ",
    "poids": 1
   },
   {
@@ -535,7 +937,7 @@ JEU.enregistrer("cours", {
    "choix": [
     "La masse",
     "Le volume",
-    "Le temps",
+    "L'évolution",
     "Le titre"
    ],
    "explication": "Ce qui suit « évolution de » va sur l'axe vertical. Ici, c'est la masse.",
@@ -570,8 +972,8 @@ JEU.enregistrer("cours", {
    "enonce": "Dans « l'évolution de la taille en fonction de l'âge », la taille va sur l'axe horizontal.",
    "corrections": [
     "Faux : la taille va sur l'axe vertical et l'âge sur l'axe horizontal.",
-    "Faux : la taille et l'âge vont sur le même axe.",
-    "Faux : la taille va dans le titre seulement."
+    "Faux : la taille et l'âge vont tous deux sur l'axe vertical.",
+    "Faux : la taille ne va sur aucun axe, seulement dans le titre."
    ],
    "explication": "Ce qui suit « évolution de » va en ordonnée. Ce qui suit « en fonction de » va en abscisse.",
    "source": {
@@ -579,26 +981,6 @@ JEU.enregistrer("cours", {
     "page": 5
    },
    "r": "==gPPsUWMpRAJwBAAgiGVBQDQ4kAPBQHw0AAS9YrIpgRdcxZeQhBcUwGLkhUNsDTClVDcoRFGhABndRGJwBEd4kDegUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
-   "id": "methode-graphique-q22",
-   "fiche": "methode-graphique-f2",
-   "type": "qcm",
-   "niveau": 2,
-   "enonce": "Comment écrit-on le titre d'un graphique réalisé à l'ordinateur ?",
-   "choix": [
-    "En gras et souligné",
-    "En petits caractères, sans soulignement",
-    "Au crayon à papier",
-    "En bas de la page, en italique"
-   ],
-   "explication": "À l'ordinateur, le titre se met en gras et souligné. À la main, au crayon et souligné à la règle.",
-   "source": {
-    "fichier": "methodes/Fiche methode - Realisation graphique.pdf",
-    "page": 1
-   },
-   "r": "==AUcb6GWAgAa0xGjlFAV41DdEgRHcTZ",
    "poids": 1
   },
   {
@@ -610,8 +992,8 @@ JEU.enregistrer("cours", {
    "choix": [
     "Y donne le nom de l'axe vertical et X celui de l'axe horizontal",
     "X donne le nom de l'axe vertical et Y celui de l'axe horizontal",
-    "Elle donne seulement les graduations",
-    "Elle indique la couleur des points"
+    "X et Y donnent tous deux le nom de l'axe vertical",
+    "Elle donne les graduations à placer sur chaque axe"
    ],
    "explication": "Ce qui suit « évolution de » va en ordonnée. Ce qui suit « en fonction de » va en abscisse.",
    "source": {
@@ -619,6 +1001,69 @@ JEU.enregistrer("cours", {
     "page": 5
    },
    "r": "=cVCUUwBBUxGawSRFBVVPgkCGxgFntBAJAhEJZzTG0wYBRgVEpRHDARSX8zESlQVU0gTC0hBjhUCVgEABkgAJtSZ",
+   "poids": 1
+  },
+  {
+   "id": "methode-graphique-q44",
+   "fiche": "methode-graphique-f6",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Consigne : « Trace le graphique représentant l'évolution du prix du pain en fonction des années. » Que mets-tu sur l'axe horizontal ?",
+   "choix": [
+    "Les années",
+    "Le prix du pain",
+    "L'évolution",
+    "Le titre du graphique"
+   ],
+   "explication": "Ce qui suit « en fonction de » va sur l'axe horizontal : ici, les années. Le prix du pain va sur l'axe vertical.",
+   "source": {
+    "fichier": "methodes/Fiche methode - Realisation graphique.pdf",
+    "page": 5
+   },
+   "r": "==gSwgEz2PEAOYUFM4TZ",
+   "poids": 1
+  },
+  {
+   "id": "methode-graphique-q45",
+   "fiche": "methode-graphique-f6",
+   "type": "association",
+   "niveau": 3,
+   "enonce": "Consigne : « Trace le graphique représentant l'évolution de la hauteur d'eau d'un bac en fonction du nombre de seaux versés. » Relie chaque élément à sa place.",
+   "gauche": [
+    "La hauteur d'eau",
+    "Le nombre de seaux versés",
+    "La phrase « Graphique représentant l'évolution… »"
+   ],
+   "droite": [
+    "Le titre",
+    "L'axe horizontal",
+    "L'axe vertical"
+   ],
+   "explication": "Y, la hauteur d'eau, va sur l'axe vertical ; X, le nombre de seaux, sur l'axe horizontal. La phrase de la consigne donne aussi le titre du graphique.",
+   "source": {
+    "fichier": "methodes/Fiche methode - Realisation graphique.pdf",
+    "page": 5
+   },
+   "r": "==AKsklQdlCRewRSEYnQyQlSZlCH",
+   "poids": 1
+  },
+  {
+   "id": "methode-graphique-q46",
+   "fiche": "methode-graphique-f6",
+   "type": "vrai_faux",
+   "niveau": 3,
+   "enonce": "Dans « l'évolution de Y en fonction de X », Y est le nom de l'axe des abscisses.",
+   "corrections": [
+    "Faux : Y est le nom de l'axe des ordonnées, l'axe vertical.",
+    "Faux : Y est le nom de l'axe horizontal, celui des ordonnées.",
+    "Faux : Y est le titre du graphique, pas le nom d'un axe."
+   ],
+   "explication": "Y suit « évolution de » : c'est l'axe vertical, celui des ordonnées. X est l'axe horizontal, celui des abscisses.",
+   "source": {
+    "fichier": "methodes/Fiche methode - Realisation graphique.pdf",
+    "page": 5
+   },
+   "r": "PUGXZQgFY0BHKQASmUFBSEkTDVxAAHbKcoRAH4RSdogFIZSVEIRQOpgAGRQHpIFEJUVBaswTrgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
   }
  ],

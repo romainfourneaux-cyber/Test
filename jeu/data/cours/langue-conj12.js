@@ -169,9 +169,9 @@ JEU.enregistrer("cours", {
    "niveau": 1,
    "enonce": "Quel mot complète la phrase ? « Mon frère ___ perdu sa gourde. »",
    "choix": [
-    "a",
     "à",
     "as",
+    "a",
     "ai"
    ],
    "explication": "On peut dire « mon frère avait perdu sa gourde » : c'est l'auxiliaire avoir, avec il. On écrit donc a, sans accent.",
@@ -189,8 +189,8 @@ JEU.enregistrer("cours", {
    "niveau": 1,
    "enonce": "Quel mot complète la phrase ? « Nous allons ___ la piscine. »",
    "choix": [
-    "à",
     "a",
+    "à",
     "as",
     "ai"
    ],
@@ -206,12 +206,12 @@ JEU.enregistrer("cours", {
    "id": "langue-conj12-q3",
    "fiche": "langue-conj12-f1",
    "type": "vrai_faux",
-   "niveau": 1,
+   "niveau": 2,
    "enonce": "Dans « Tu as un beau sourire », « as » est une préposition.",
    "corrections": [
     "Faux : « as » est le verbe avoir, employé avec tu.",
-    "Faux : « as » est le verbe être.",
-    "Faux : « as » est un mot invariable."
+    "Faux : « as » est le verbe avoir, employé avec il ou elle.",
+    "Faux : « as » est le verbe être, employé avec tu."
    ],
    "explication": "La préposition s'écrit à et ne change jamais. « As » est le verbe avoir conjugué avec tu.",
    "source": {
@@ -229,16 +229,91 @@ JEU.enregistrer("cours", {
    "enonce": "Pourquoi écrit-on « as » et non « a » dans « Tu as gagné » ?",
    "choix": [
     "Parce que le sujet est tu",
-    "Parce que gagné est au pluriel",
-    "Parce que c'est une préposition",
-    "Parce que la phrase est une question"
+    "Parce que « as » sert d'auxiliaire, « a » non",
+    "Parce que le sujet est je",
+    "Parce que « as » est une préposition"
    ],
-   "explication": "Avec tu, le verbe avoir s'écrit as. Avec il ou elle, il s'écrit a.",
+   "explication": "Avec tu, le verbe avoir s'écrit as ; avec il ou elle, il s'écrit a. Les deux peuvent servir d'auxiliaire : tu as gagné, elle a gagné.",
    "source": {
     "fichier": "cours/langue/Francais 5e - Conjugaison - Cours 12 - Homophones grammaticaux.pdf",
     "page": 1
    },
    "r": "ENRHSNTAQUUAUMwGcIVDv0AAAxlTKUAFIISZ",
+   "poids": 1
+  },
+  {
+   "id": "langue-conj12-q24",
+   "fiche": "langue-conj12-f1",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Dans « Elle a lavé la voiture », « a » est le verbe avoir employé seul.",
+   "corrections": [
+    "Faux : « a » est ici l'auxiliaire avoir, qui forme le passé composé de laver.",
+    "Faux : « a » est ici la préposition, écrite sans accent.",
+    "Faux : « a » est ici le verbe être, employé avec elle."
+   ],
+   "explication": "Suivi du participe passé lavé, « a » sert d'auxiliaire au passé composé. On peut dire « elle avait lavé », donc on l'écrit sans accent.",
+   "source": {
+    "fichier": "cours/langue/Francais 5e - Conjugaison - Cours 12 - Homophones grammaticaux.pdf",
+    "page": 1
+   },
+   "r": "6A1WXAxBIIwTXwwYEaqRC5hAJUQSbTYAGQQBRxgAPdRBxI0AVQ0GeYkSbsBKEQRRQMAAPYgHBsDWEIRQOZQBPkkB0cRVefbUI4ExwiUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "langue-conj12-q25",
+   "fiche": "langue-conj12-f1",
+   "type": "qcm_multiple",
+   "niveau": 3,
+   "enonce": "Dans quelles phrases faut-il écrire « a » ? Coche toutes les bonnes réponses.",
+   "choix": [
+    "Je pars ___ la montagne.",
+    "Mon oncle ___ une moto.",
+    "Tu ___ un chien ?",
+    "Ma sœur ___ réussi son gâteau.",
+    "Le bébé ___ sommeil."
+   ],
+   "explication": "Avec mon oncle, ma sœur et le bébé, on peut dire « avait » : c'est avoir, écrit a. « Je pars avait la montagne » n'a pas de sens, et avec tu on écrit as.",
+   "source": {
+    "fichier": "cours/langue/Francais 5e - Conjugaison - Cours 12 - Homophones grammaticaux.pdf",
+    "page": 1
+   },
+   "r": "==wLXtUGYwwAC0xGjJnOq1wxsSwzqCxZXkzRZN1Rb4wFcEu7CUxQBwhRPoRAysttXUlL2EzTA0B0obRFMNSTKR0RdMTHYUEEfwhTw0yNjhUCWNUAPhQCkAFH",
+   "poids": 1
+  },
+  {
+   "id": "langue-conj12-q26",
+   "fiche": "langue-conj12-f1",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Quelle phrase est bien écrite ?",
+   "choix": [
+    "Mon voisin à appris a nager.",
+    "Mon voisin a appris a nager.",
+    "Mon voisin à appris à nager.",
+    "Mon voisin a appris à nager."
+   ],
+   "explication": "On peut dire « mon voisin avait appris » : on écrit a, sans accent. « Avait nager » n'a pas de sens : c'est la préposition à.",
+   "source": {
+    "fichier": "cours/langue/Francais 5e - Conjugaison - Cours 12 - Homophones grammaticaux.pdf",
+    "page": 1
+   },
+   "r": "==wFDwhCBcwBSdesVZBHDkhHOIVCjNEDGRUAZYECG8TZ",
+   "poids": 1
+  },
+  {
+   "id": "langue-conj12-q27",
+   "fiche": "langue-conj12-f1",
+   "type": "vrai_faux",
+   "niveau": 1,
+   "enonce": "Quand « à » est une préposition, il s'écrit avec un accent.",
+   "corrections": [],
+   "explication": "La préposition à porte toujours un accent. Le verbe avoir, lui, s'écrit a, sans accent.",
+   "source": {
+    "fichier": "cours/langue/Francais 5e - Conjugaison - Cours 12 - Homophones grammaticaux.pdf",
+    "page": 1
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -265,15 +340,15 @@ JEU.enregistrer("cours", {
    "id": "langue-conj12-q6",
    "fiche": "langue-conj12-f2",
    "type": "qcm",
-   "niveau": 1,
+   "niveau": 2,
    "enonce": "Comment vérifier qu'il faut écrire « a » sans accent ?",
    "choix": [
-    "On essaie de le remplacer par « avait »",
     "On essaie de le remplacer par « et puis »",
-    "On regarde si le mot suivant est au pluriel",
-    "On compte les mots de la phrase"
+    "On essaie de le remplacer par « avait »",
+    "On change de personne pour dire « ayons »",
+    "On regarde si le mot suivant est au pluriel"
    ],
-   "explication": "Si « avait » convient, c'est le verbe ou l'auxiliaire avoir. On écrit alors a, sans accent.",
+   "explication": "Si « avait » convient, c'est le verbe ou l'auxiliaire avoir : on écrit a, sans accent. « Et puis » sert pour et, et « ayons » pour reconnaître le subjonctif.",
    "source": {
     "fichier": "cours/langue/Francais 5e - Conjugaison - Cours 12 - Homophones grammaticaux.pdf",
     "page": 1
@@ -303,9 +378,9 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "On essaie le truc : « Le train part avait midi. » Que faut-il en conclure ?",
    "choix": [
-    "La phrase n'a plus de sens : il faut écrire à",
+    "La phrase n'a plus de sens : il faut écrire a",
     "La phrase a du sens : il faut écrire a",
-    "Il faut écrire as",
+    "La phrase n'a plus de sens : il faut écrire à",
     "Il faut garder avait dans la phrase"
    ],
    "explication": "« Le train part avait midi » ne veut rien dire, ce n'est donc pas le verbe avoir. On écrit à, avec un accent.",
@@ -314,6 +389,86 @@ JEU.enregistrer("cours", {
     "page": 1
    },
    "r": "==ARGrqUiAAHXYB2q60GHkQJNkAXNQ1TVgADBc2FRUkBEUgHPNxTt0AAGxEHHYhRI4TZ",
+   "poids": 1
+  },
+  {
+   "id": "langue-conj12-q28",
+   "fiche": "langue-conj12-f2",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Pour choisir entre a et à, on remplace le mot par « avait » : si la phrase garde son sens, on écrit à.",
+   "corrections": [
+    "Faux : si la phrase garde son sens, c'est le verbe avoir ; on écrit a, sans accent.",
+    "Faux : on remplace le mot par « et puis », et non par « avait ».",
+    "Faux : on remplace le mot par « avais », et non par « avait »."
+   ],
+   "explication": "Si « avait » convient, c'est le verbe ou l'auxiliaire avoir : a, sans accent. Si la phrase ne veut plus rien dire, c'est la préposition à.",
+   "source": {
+    "fichier": "cours/langue/Francais 5e - Conjugaison - Cours 12 - Homophones grammaticaux.pdf",
+    "page": 1
+   },
+   "r": "bsEXzwBEGYBEJ1RATsxYBQQFZdQHF8sqSlSHV5VVDAQAZMBSm80FQtlTKogRdEgIVZRRZJwBLwhUGwiXFBVSc4QAGxQAmAQHVUFEF4kBBgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "langue-conj12-q29",
+   "fiche": "langue-conj12-f2",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "On fait le test : « Mon cousin avait un scooter. » Que faut-il écrire dans « Mon cousin ___ un scooter » ?",
+   "choix": [
+    "à, car la phrase avec « avait » a du sens",
+    "a, car la phrase avec « avait » a du sens",
+    "à, car c'est un mot invariable",
+    "as, car c'est le verbe avoir"
+   ],
+   "explication": "La phrase avec « avait » garde son sens : c'est le verbe avoir. Avec mon cousin, qu'on peut remplacer par il, on écrit a.",
+   "source": {
+    "fichier": "cours/langue/Francais 5e - Conjugaison - Cours 12 - Homophones grammaticaux.pdf",
+    "page": 1
+   },
+   "r": "lFwGAYQUcowTTgE+vXUQE9QGHYkwweWEQMBFRxQHOAAAz0ABZ1AHOUgRFNRZ",
+   "poids": 1
+  },
+  {
+   "id": "langue-conj12-q30",
+   "fiche": "langue-conj12-f2",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Combien de fois faut-il écrire « à », avec un accent, dans cette phrase ? « Elle ___ offert un livre ___ son frère ___ Noël. »",
+   "choix": [
+    "Une fois",
+    "Trois fois",
+    "Aucune fois",
+    "Deux fois"
+   ],
+   "explication": "« Elle avait offert » a du sens : la première fois, on écrit a. « Avait son frère » et « avait Noël » n'en ont pas : on écrit deux fois à.",
+   "indice": "Fais le test de « avait » à chacun des trois trous.",
+   "source": {
+    "fichier": "cours/langue/Francais 5e - Conjugaison - Cours 12 - Homophones grammaticaux.pdf",
+    "page": 1
+   },
+   "r": "=8gFcJECP5xEMYTZ",
+   "poids": 1
+  },
+  {
+   "id": "langue-conj12-q31",
+   "fiche": "langue-conj12-f2",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Laquelle de ces phrases, après le test de « avait », montre qu'il faut écrire « a » ?",
+   "choix": [
+    "Le facteur avait une sacoche.",
+    "Je vais avait l'école.",
+    "Il habite avait la campagne.",
+    "Un gâteau avait la crème."
+   ],
+   "explication": "« Le facteur avait une sacoche » garde son sens : on écrira « le facteur a une sacoche ». Dans les trois autres phrases, « avait » ne veut rien dire : il faut à.",
+   "source": {
+    "fichier": "cours/langue/Francais 5e - Conjugaison - Cours 12 - Homophones grammaticaux.pdf",
+    "page": 1
+   },
+   "r": "==wFDswBFkgCTQjUQsAAR1xBOQQCj9FEQlVDOAgRM4TZ",
    "poids": 1
   },
   {
@@ -349,17 +504,17 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Dans « une canne à pêche », qu'exprime la préposition à ?",
    "choix": [
-    "Le but : la canne sert à pêcher",
+    "Le but",
     "Le lieu",
-    "L'appartenance",
-    "Le temps"
+    "La manière",
+    "L'appartenance"
    ],
-   "explication": "Une canne à pêche est faite pour pêcher. La préposition à exprime ici le but.",
+   "explication": "Une canne à pêche sert à pêcher : à exprime le but. C'est le même emploi que dans « un fer à repasser ».",
    "source": {
     "fichier": "cours/langue/Francais 5e - Conjugaison - Cours 12 - Homophones grammaticaux.pdf",
     "page": 1
    },
-   "r": "=oUMI1gVH26HGZsqSNDAQYRVUcAAOEBSiEURP0gGaQgRM4TZ",
+   "r": "=8gGaQgRM4TZ",
    "poids": 1
   },
   {
@@ -370,8 +525,8 @@ JEU.enregistrer("cours", {
    "enonce": "La préposition à change de forme selon la personne, comme un verbe.",
    "corrections": [
     "Faux : à est un mot invariable, il ne change jamais.",
-    "Faux : à change seulement au pluriel.",
-    "Faux : à change seulement au futur."
+    "Faux : à ne change pas selon la personne, mais il prend un s avec tu.",
+    "Faux : à ne change pas, car c'est le verbe avoir sans accent."
    ],
    "explication": "Une préposition ne se conjugue pas. Elle garde toujours la même forme : à.",
    "source": {
@@ -388,8 +543,8 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Comment s'écrit le mot qui manque dans « Ce cahier est ___ moi », et pourquoi ?",
    "choix": [
-    "à : c'est la préposition, qui dit à qui est le cahier",
     "a : c'est le verbe avoir, qu'on peut remplacer par avait",
+    "à : c'est la préposition, qui dit à qui est le cahier",
     "as : c'est le verbe avoir avec tu",
     "a : c'est la préposition, qui ne prend jamais d'accent"
    ],
@@ -399,6 +554,87 @@ JEU.enregistrer("cours", {
     "page": 1
    },
    "r": "==AUaYCRNQlTOpgCG1RAiIFHQQQUJ36TGEwJNwAQc50QIkAAG4SAaUB3yuhHPNBBjllFQpQDPxlRJHbZ",
+   "poids": 1
+  },
+  {
+   "id": "langue-conj12-q32",
+   "fiche": "langue-conj12-f3",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Dans « Il ferme le coffre à clé », la préposition à exprime le lieu.",
+   "corrections": [
+    "Faux : elle exprime le moyen ; la clé sert à fermer.",
+    "Faux : elle exprime l'appartenance ; la clé est à lui.",
+    "Faux : elle exprime le temps."
+   ],
+   "explication": "La clé est l'outil avec lequel on ferme : à exprime ici le moyen. Le lieu répond à la question « où », comme dans « aller à la plage ».",
+   "source": {
+    "fichier": "cours/langue/Francais 5e - Conjugaison - Cours 12 - Homophones grammaticaux.pdf",
+    "page": 1
+   },
+   "r": "MsEQdcRBxg0AV0YrPJBFMEwZbbbCWEFCC8USI1CScoFQOpgCGxwHuAQBdARUMIwAXgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "langue-conj12-q33",
+   "fiche": "langue-conj12-f3",
+   "type": "vrai_faux",
+   "niveau": 1,
+   "enonce": "Dans « Cette trottinette est à mon cousin », la préposition à exprime l'appartenance.",
+   "corrections": [],
+   "explication": "La trottinette appartient à mon cousin. C'est l'appartenance, comme dans « ce sac est à Lina ».",
+   "source": {
+    "fichier": "cours/langue/Francais 5e - Conjugaison - Cours 12 - Homophones grammaticaux.pdf",
+    "page": 1
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "langue-conj12-q34",
+   "fiche": "langue-conj12-f3",
+   "type": "qcm_multiple",
+   "niveau": 3,
+   "enonce": "Dans quelles expressions la préposition à exprime-t-elle une caractéristique ? Coche toutes les bonnes réponses.",
+   "choix": [
+    "une machine à coudre",
+    "une robe à pois",
+    "rentrer à minuit",
+    "un pantalon à poches",
+    "marcher à pas lents"
+   ],
+   "explication": "Les pois et les poches décrivent la robe et le pantalon : c'est une caractéristique. Une machine à coudre sert à coudre (le but), minuit est un moment et à pas lents une manière.",
+   "source": {
+    "fichier": "cours/langue/Francais 5e - Conjugaison - Cours 12 - Homophones grammaticaux.pdf",
+    "page": 1
+   },
+   "r": "=8yVWARGKEwHShMgNsgWB9wGIcQGSlyBXl0VCAQAfIFyA2AAXJEHPNACcAFH",
+   "poids": 1
+  },
+  {
+   "id": "langue-conj12-q35",
+   "fiche": "langue-conj12-f3",
+   "type": "association",
+   "niveau": 3,
+   "enonce": "Relie chaque exemple à ce qu'exprime la préposition à.",
+   "gauche": [
+    "une planche à repasser",
+    "rentrer à pied",
+    "arriver à l'aube",
+    "un bonnet à pompon"
+   ],
+   "droite": [
+    "Le temps",
+    "Une caractéristique",
+    "Le but",
+    "Le moyen"
+   ],
+   "explication": "La planche sert à repasser (le but) et l'on rentre grâce à ses pieds (le moyen). L'aube est un moment de la journée, et le pompon décrit le bonnet.",
+   "source": {
+    "fichier": "cours/langue/Francais 5e - Conjugaison - Cours 12 - Homophones grammaticaux.pdf",
+    "page": 1
+   },
+   "r": "==ANvYnXG5TWsklQdlCRe4RSEYnQyQlSZlCH",
    "poids": 1
   },
   {
@@ -445,12 +681,12 @@ JEU.enregistrer("cours", {
    "id": "langue-conj12-q15",
    "fiche": "langue-conj12-f4",
    "type": "vrai_faux",
-   "niveau": 1,
+   "niveau": 2,
    "enonce": "Dans « Tu es mon voisin », on pourrait aussi écrire « est ».",
    "corrections": [
     "Faux : avec tu, le verbe être s'écrit es.",
-    "Faux : il faut écrire et.",
-    "Faux : il faut écrire ai."
+    "Faux : avec tu, le verbe avoir s'écrit es.",
+    "Faux : est va avec je, et es va avec tu."
    ],
    "explication": "Est va avec il ou elle, es va avec tu. Ici, le sujet est tu.",
    "source": {
@@ -467,10 +703,10 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Comment savoir qu'il faut écrire « et » ?",
    "choix": [
-    "On peut le remplacer par « et puis »",
-    "On peut le remplacer par « avait »",
     "Il change avec la personne",
-    "Il est toujours le premier mot de la phrase"
+    "On peut le remplacer par « avait »",
+    "On peut le remplacer par « et puis »",
+    "Il est toujours au début de la phrase"
    ],
    "explication": "« Et » a le sens de « + » ou de « et puis ». Si « et puis » convient, on écrit et.",
    "source": {
@@ -487,10 +723,10 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Dans quelles phrases le mot manquant s'écrit-il « est » ? Coche toutes les bonnes réponses.",
    "choix": [
-    "Le gâteau ___ délicieux.",
     "Paul ___ Zoé jouent dehors.",
-    "Ma grand-mère ___ partie hier.",
+    "Le gâteau ___ délicieux.",
     "Tu ___ très drôle.",
+    "Ma grand-mère ___ partie hier.",
     "La porte ___ fermée à clé."
    ],
    "explication": "Le gâteau, ma grand-mère et la porte vont avec il ou elle : c'est est. Entre Paul et Zoé, on peut dire « et puis », et avec tu on écrit es.",
@@ -502,15 +738,69 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
+   "id": "langue-conj12-q36",
+   "fiche": "langue-conj12-f4",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Dans « Tu es parti tôt », « es » est l'auxiliaire avoir.",
+   "corrections": [
+    "Faux : « es » est ici l'auxiliaire être, employé avec tu.",
+    "Faux : « es » est ici le mot invariable qui veut dire « et puis ».",
+    "Faux : « es » est ici l'auxiliaire être, employé avec il."
+   ],
+   "explication": "Es est une forme du verbe être, avec tu ; ici, il sert d'auxiliaire au passé composé de partir. Avec avoir, on aurait écrit as.",
+   "source": {
+    "fichier": "cours/langue/Francais 5e - Conjugaison - Cours 12 - Homophones grammaticaux.pdf",
+    "page": 1
+   },
+   "r": "==AFQl2BBUkFU8xDPt9q6IUCFB0CPp0AbYQ7xWFAHgBCHMwGQYDTClVDHwwDG1RAiIlznWlAM4ExwiUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "langue-conj12-q37",
+   "fiche": "langue-conj12-f4",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Quelle phrase est bien écrite ?",
+   "choix": [
+    "Mon chien et noir est blanc.",
+    "Mon chien est noir est blanc.",
+    "Mon chien es noir et blanc.",
+    "Mon chien est noir et blanc."
+   ],
+   "explication": "Mon chien va avec il : le verbe être s'écrit est. Entre noir et blanc, on peut dire « et puis » : c'est et.",
+   "source": {
+    "fichier": "cours/langue/Francais 5e - Conjugaison - Cours 12 - Homophones grammaticaux.pdf",
+    "page": 2
+   },
+   "r": "PAEDIcQBQcmBQU0BYYAAPZwGm0wCQRkBMYECG8TZ",
+   "poids": 1
+  },
+  {
+   "id": "langue-conj12-q38",
+   "fiche": "langue-conj12-f4",
+   "type": "trou",
+   "niveau": 3,
+   "enonce": "Écris est, es ou et dans chaque trou.",
+   "texte": "Tu ___ en avance ___ ton frère ___ en retard.",
+   "explication": "Avec tu, on écrit es ; avec ton frère, qu'on peut remplacer par il, on écrit est. Au milieu, on peut dire « et puis » : c'est et.",
+   "source": {
+    "fichier": "cours/langue/Francais 5e - Conjugaison - Cours 12 - Homophones grammaticaux.pdf",
+    "page": 2
+   },
+   "r": "=oxLXFhBUsUND9iS3g0RuFwMNVxALlCH",
+   "poids": 1
+  },
+  {
    "id": "langue-conj12-q18",
    "fiche": "langue-conj12-f5",
    "type": "qcm",
    "niveau": 1,
    "enonce": "Quel mot complète la phrase ? « J'___ une nouvelle trousse. »",
    "choix": [
-    "ai",
     "aie",
     "est",
+    "ai",
     "es"
    ],
    "explication": "Avec je, à l'indicatif, le verbe avoir s'écrit ai. Ce n'est pas le subjonctif : avec nous, on dirait « nous avons une nouvelle trousse », pas « nous ayons ».",
@@ -576,8 +866,8 @@ JEU.enregistrer("cours", {
    "enonce": "« ait » et « est » sont deux formes du même verbe.",
    "corrections": [
     "Faux : « ait » vient du verbe avoir (subjonctif), « est » du verbe être (indicatif).",
-    "Faux : les deux viennent du verbe avoir.",
-    "Faux : « ait » est une préposition."
+    "Faux : les deux viennent du verbe avoir, à deux modes différents.",
+    "Faux : « ait » vient du verbe être (subjonctif), « est » du verbe avoir."
    ],
    "explication": "Ces deux mots se prononcent pareil mais ne viennent pas du même verbe. Pour les distinguer, on cherche l'infinitif, le mode, le temps et la personne.",
    "source": {
@@ -594,17 +884,17 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "« Le cuisinier exige que j'___ les mains propres. » Comment vérifier que le verbe avoir est ici au subjonctif ?",
    "choix": [
-    "On change de personne : avec nous, on dirait « que nous ayons »",
     "On le remplace par « avait »",
-    "On le remplace par « et puis »",
-    "On regarde si la phrase est longue"
+    "On regarde si le verbe est au passé composé",
+    "On change de personne : « que nous ayons »",
+    "On le remplace par « et puis »"
    ],
-   "explication": "Le cours conseille de changer de personne. Avec nous, on dirait « que nous ayons les mains propres » et non « nous avons » : c'est bien le subjonctif, donc on écrit aie.",
+   "explication": "Pour reconnaître le subjonctif, on change de personne : avec nous, on dirait « que nous ayons les mains propres ». C'est bien le subjonctif, donc on écrit aie.",
    "source": {
     "fichier": "cours/langue/Francais 5e - Conjugaison - Cours 12 - Homophones grammaticaux.pdf",
     "page": 2
    },
-   "r": "==QZJfbRG8hBX4gUbYjQLUBSb4hRNvqUzsBFXwRFJBAASREMYpwWN0gCQcQSId2FbsgGCsxCfIVDn0AASN0DHUgRH0TZ",
+   "r": "==AU8DbVWshHQ8wTB0BLDVEUY9xTNTaSId2FbsgGCsxCfIVDn0AASN0DHUgRH0TZ",
    "poids": 1
   },
   {
@@ -624,6 +914,45 @@ JEU.enregistrer("cours", {
     "page": 2
    },
    "r": "==wMfpEVFNEH",
+   "poids": 1
+  },
+  {
+   "id": "langue-conj12-q39",
+   "fiche": "langue-conj12-f5",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Dans « Il faut que tu aies ton casque », « aies » est le verbe avoir à l'indicatif présent.",
+   "corrections": [
+    "Faux : « aies » est le verbe avoir au subjonctif présent, avec tu.",
+    "Faux : « aies » est le verbe être au subjonctif présent, avec tu.",
+    "Faux : « aies » est le verbe avoir au subjonctif présent, avec je."
+   ],
+   "explication": "Avec nous, on dirait « que nous ayons » : c'est le subjonctif présent. Avec tu, avoir s'écrit aies.",
+   "source": {
+    "fichier": "cours/langue/Francais 5e - Conjugaison - Cours 12 - Homophones grammaticaux.pdf",
+    "page": 2
+   },
+   "r": "Qd0GYpxTFMwHTcmXBsAECAcrdIASlQUEWNUAFQwEaIlMTU1Fc4xHP80FKEDSTUBSC8kEVwgU8DbVWABGI4ExwiUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "langue-conj12-q40",
+   "fiche": "langue-conj12-f5",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Quelle phrase est bien écrite ?",
+   "choix": [
+    "Je veux qu'elles ait lavé leurs bottes.",
+    "Je veux qu'elles aient lavé leurs bottes.",
+    "Je veux qu'elles aie lavé leurs bottes.",
+    "Je veux qu'elles ai lavé leurs bottes."
+   ],
+   "explication": "Avec elles, l'auxiliaire avoir au subjonctif s'écrit aient. Ait va avec il ou elle, aie avec je, et ai est l'indicatif.",
+   "source": {
+    "fichier": "cours/langue/Francais 5e - Conjugaison - Cours 12 - Homophones grammaticaux.pdf",
+    "page": 2
+   },
+   "r": "=A1WWARBdEQDStRMYBQWNcMrQcQBSNDHQwAFRpxCD4RDkhFFVU1GKAhRMgTZ",
    "poids": 1
   }
  ],

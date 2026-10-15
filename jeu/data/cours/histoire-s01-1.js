@@ -209,7 +209,7 @@ JEU.enregistrer("cours", {
     "527"
    ],
    "explication": "Le partage a lieu en 395, à la mort de Théodose. Naissent alors l'Empire romain d'Occident et l'Empire romain d'Orient.",
-   "indice": "C'est quinze ans après l'édit de Thessalonique.",
+   "indice": "C'est entre l'édit de Thessalonique et la chute du dernier empereur romain d'Occident.",
    "source": {
     "fichier": "cours/histoire/Histoire 5e - Seance 1 - Support.pdf",
     "page": 1
@@ -221,19 +221,19 @@ JEU.enregistrer("cours", {
    "id": "histoire-s01-1-q2",
    "fiche": "histoire-s01-1-f1",
    "type": "vrai_faux",
-   "niveau": 1,
+   "niveau": 2,
    "enonce": "En 395, Constantinople se trouve dans l'Empire romain d'Occident.",
    "corrections": [
-    "Faux : Constantinople est dans l'Empire romain d'Orient, à l'est.",
-    "Faux : Constantinople est en dehors de l'Empire romain.",
-    "Faux : Constantinople est la capitale de l'Occident."
+    "Faux : Constantinople se trouve dans l'Empire romain d'Orient, à l'est.",
+    "Faux : en 395, Constantinople se trouve dans un royaume germanique.",
+    "Faux : Constantinople se trouve dans l'Empire romain d'Orient, à l'ouest."
    ],
-   "explication": "Sur la carte du partage, Constantinople est dans la moitié est. C'est l'Empire romain d'Orient.",
+   "explication": "En 395, Constantinople est dans la moitié est de l'empire, l'Empire romain d'Orient. Les royaumes germaniques n'arrivent qu'après 476.",
    "source": {
     "fichier": "cours/histoire/Histoire 5e - Seance 1 - Support.pdf",
     "page": 1
    },
-   "r": "QxUQSUBDVtiUVbaVd1BAKshGMoQAVM0BOsQCbIlIAwRFYQjTC8UAGISSFFkXL80AKkRHpsRALQRBaAAAxgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "r": "PoUbZZBUKIwTGXaSeNDHQwwB+4kCPxRAiAkCH1wCd8gFEcDYeUlFbARDOpABdwyXRUBSd80AKkRHpsRALQRBaAAAxgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -243,17 +243,17 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Pourquoi parle-t-on d'un « partage » de l'Empire romain en 395 ?",
    "choix": [
-    "Parce que l'empire est coupé en deux : l'Occident et l'Orient",
-    "Parce que Justinien conquiert l'empire",
-    "Parce que les Turcs prennent Constantinople",
-    "Parce que Byzance change de nom"
+    "L'empire est divisé en deux moitiés, l'Occident et l'Orient",
+    "L'empire perd son dernier empereur et laisse la place à des royaumes germaniques",
+    "Justinien répartit ses conquêtes entre Rome et Constantinople",
+    "Les Turcs et les Romains se partagent la ville de Constantinople"
    ],
-   "explication": "À la mort de Théodose, l'empire est divisé en deux moitiés. L'une est à l'ouest, l'autre à l'est.",
+   "explication": "À la mort de Théodose, en 395, l'empire est coupé en deux moitiés. L'Occident est à l'ouest, l'Orient à l'est.",
    "source": {
     "fichier": "cours/histoire/Histoire 5e - Seance 1 - Support.pdf",
     "page": 1
    },
-   "r": "==wRB8BDH0RPP9SDRAVDaEwACAQEk0jUJU1SJZhGXwwYDBQFE26HTkgCSNTAQUEEDAgHCcxTv0AAAxlTKUAFIISZ",
+   "r": "XVwBLYAAnQWQFFESOtBCD0wGkEhOClRUF1hxxGwNEpAWNYhGDIQScIiUcbqBY8xBLIFHwgURQ91BfswAO5TZ",
    "poids": 1
   },
   {
@@ -278,16 +278,92 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
+   "id": "histoire-s01-1-q24",
+   "fiche": "histoire-s01-1-f1",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "En 395, Rome et Ravenne se trouvent toutes les deux dans l'Empire romain d'Occident.",
+   "corrections": [],
+   "explication": "Oui : ces deux villes sont dans la moitié ouest de l'empire. Constantinople, elle, est dans la moitié est.",
+   "source": {
+    "fichier": "cours/histoire/Histoire 5e - Seance 1 - Support.pdf",
+    "page": 1
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s01-1-q25",
+   "fiche": "histoire-s01-1-f1",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "L'Empire romain est partagé en deux en 395, à la mort de Justinien.",
+   "corrections": [
+    "Faux : il est partagé en 395, à la mort de Théodose.",
+    "Faux : il est partagé en 476, à la mort de Justinien.",
+    "Faux : il est partagé en 527, au début du règne de Justinien."
+   ],
+   "explication": "Le partage de 395 suit la mort de Théodose. Justinien ne règne que bien plus tard, de 527 à 565.",
+   "source": {
+    "fichier": "cours/histoire/Histoire 5e - Seance 1 - Support.pdf",
+    "page": 1
+   },
+   "r": "==ACTd0Cc0BDsQopdlnTKIgRdAAKfUFBZEVyt+kXdpnHFtFSOZcpBggB1MRBFFgAM40AbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s01-1-q26",
+   "fiche": "histoire-s01-1-f1",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Combien d'années séparent l'édit de Thessalonique du partage de l'Empire romain ?",
+   "choix": [
+    "15 ans",
+    "25 ans",
+    "81 ans",
+    "115 ans"
+   ],
+   "explication": "L'édit date de 380 et le partage de 395. 395 moins 380 font 15 ans.",
+   "indice": "Fais la soustraction entre les deux dates.",
+   "source": {
+    "fichier": "cours/histoire/Histoire 5e - Seance 1 - Support.pdf",
+    "page": 1
+   },
+   "r": "=8QHBcgRcNUZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s01-1-q27",
+   "fiche": "histoire-s01-1-f1",
+   "type": "qcm_multiple",
+   "niveau": 2,
+   "enonce": "Quelles phrases sur le partage de 395 sont justes ? (plusieurs réponses)",
+   "choix": [
+    "Il a lieu à la mort de Théodose",
+    "Constantinople est dans la moitié est",
+    "Les deux moitiés bordent la mer Méditerranée",
+    "Rome est dans l'Empire romain d'Orient",
+    "Il suit la chute du dernier empereur romain d'Occident"
+   ],
+   "explication": "En 395, à la mort de Théodose, Rome est à l'ouest et Constantinople à l'est, autour de la Méditerranée. La chute du dernier empereur d'Occident vient après, en 476.",
+   "source": {
+    "fichier": "cours/histoire/Histoire 5e - Seance 1 - Support.pdf",
+    "page": 1
+   },
+   "r": "=wySLYcsGIyXXAVWHswzlSiU1cBGFRRHJpRAXwQMCdQFedMrPIBAdoiUNABEVkUHK4jSv9QEGhkTGX6DdsBKfUFBZElGA4gFIdjXAUBSC8RCIAgBpMRAWshHqw0QQ1AMCFgWE26ByYEDWcmBHoAGRhgAPJ9qjhFAcFkTOYkCgAFH",
+   "poids": 1
+  },
+  {
    "id": "histoire-s01-1-q5",
    "fiche": "histoire-s01-1-f2",
    "type": "qcm",
    "niveau": 1,
-   "enonce": "Que se passe-t-il en 476, d'après la frise ?",
+   "enonce": "Que se passe-t-il en 476 ?",
    "choix": [
     "La chute du dernier empereur romain d'Occident",
     "La prise de Constantinople par les Turcs",
-    "Le début du règne de Justinien",
-    "Le partage de l'Empire romain"
+    "Le partage de l'Empire romain à la mort de Théodose",
+    "Le début du règne de Justinien"
    ],
    "explication": "En 476, l'Empire romain d'Occident perd son dernier empereur. Des royaumes germaniques prennent sa place.",
    "source": {
@@ -301,12 +377,12 @@ JEU.enregistrer("cours", {
    "id": "histoire-s01-1-q6",
    "fiche": "histoire-s01-1-f2",
    "type": "vrai_faux",
-   "niveau": 1,
+   "niveau": 2,
    "enonce": "L'Empire romain d'Orient disparaît en 476, en même temps que celui d'Occident.",
    "corrections": [
     "Faux : il dure jusqu'en 1453, quand les Turcs prennent Constantinople.",
-    "Faux : il disparaît dès 395.",
-    "Faux : il disparaît en 527, avec Justinien."
+    "Faux : il disparaît vers 800, à la fin des royaumes germaniques.",
+    "Faux : il disparaît en 565, à la fin du règne de Justinien."
    ],
    "explication": "Seul l'Occident tombe en 476. L'Orient continue jusqu'en 1453.",
    "source": {
@@ -324,9 +400,9 @@ JEU.enregistrer("cours", {
    "enonce": "Comment l'Empire romain d'Orient prend-il fin ?",
    "choix": [
     "Les Turcs prennent Constantinople en 1453",
-    "Théodose meurt en 395",
-    "Il perd son dernier empereur en 476",
-    "Justinien meurt en 565"
+    "Des royaumes germaniques le remplacent en 476",
+    "Il est coupé en deux à la mort de Théodose",
+    "Il perd sa capitale à la mort de Justinien"
    ],
    "explication": "En 1453, les Turcs s'emparent de Constantinople. C'est la fin de l'Empire romain d'Orient.",
    "source": {
@@ -378,6 +454,83 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
+   "id": "histoire-s01-1-q28",
+   "fiche": "histoire-s01-1-f2",
+   "type": "vrai_faux",
+   "niveau": 1,
+   "enonce": "Après 476, des royaumes germaniques prennent la place de l'Empire romain d'Occident.",
+   "corrections": [],
+   "explication": "Oui : en 476, l'Occident perd son dernier empereur. Les royaumes germaniques occupent ensuite sa place.",
+   "source": {
+    "fichier": "cours/histoire/Histoire 5e - Seance 1 - Support.pdf",
+    "page": 1
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s01-1-q29",
+   "fiche": "histoire-s01-1-f2",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Des deux empires nés du partage de 395, lequel dure le plus longtemps ?",
+   "choix": [
+    "L'Empire romain d'Orient, jusqu'en 1453",
+    "L'Empire romain d'Occident, jusqu'en 1453",
+    "L'Empire romain d'Orient, jusqu'en 476",
+    "Aucun : ils tombent ensemble en 476"
+   ],
+   "explication": "L'Occident tombe dès 476. L'Orient tient jusqu'en 1453, près de mille ans de plus.",
+   "source": {
+    "fichier": "cours/histoire/Histoire 5e - Seance 1 - Support.pdf",
+    "page": 1
+   },
+   "r": "=clQcplXSZgJKABRetRBGpUHcIyGHoiUVkEAGMRBs8VRQ91BfswIO5TZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s01-1-q30",
+   "fiche": "histoire-s01-1-f2",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Combien de temps l'Empire romain d'Occident dure-t-il, du partage de 395 à 476 ?",
+   "choix": [
+    "Environ 80 ans",
+    "Environ 180 ans",
+    "Environ 500 ans",
+    "Plus de mille ans"
+   ],
+   "explication": "476 moins 395 font 81 ans. C'est bien moins qu'un siècle.",
+   "indice": "Fais la soustraction 476 moins 395.",
+   "source": {
+    "fichier": "cours/histoire/Histoire 5e - Seance 1 - Support.pdf",
+    "page": 1
+   },
+   "r": "==ATcwRCj1RXVMUAd8AEHcTZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s01-1-q31",
+   "fiche": "histoire-s01-1-f2",
+   "type": "qcm_multiple",
+   "niveau": 3,
+   "enonce": "Quels événements ont lieu après la chute du dernier empereur romain d'Occident ? (plusieurs réponses)",
+   "choix": [
+    "Le règne de Justinien",
+    "La prise de Constantinople par les Turcs",
+    "Le temps des royaumes germaniques",
+    "Le partage de l'Empire romain",
+    "L'édit de Thessalonique"
+   ],
+   "explication": "La chute date de 476 : les royaumes germaniques, Justinien (527-565) et la prise de Constantinople (1453) viennent après. Le partage (395) et l'édit de Thessalonique (380) viennent avant.",
+   "source": {
+    "fichier": "cours/histoire/Histoire 5e - Seance 1 - Support.pdf",
+    "page": 1
+   },
+   "r": "0wEHX0hMEtAVAxhCBYkGXoyBUwhGDkUHKYBSw0FCQllTKoCRFBFNRcAEhElGLMgUaISXFBVQeAACP0BHmYgBLohMJtwCS1AMEdRRN8wIEp0ScIyGbwQACwBJPdBDjh0CSVYrdY0AlAFH",
+   "poids": 1
+  },
+  {
    "id": "histoire-s01-1-q10",
    "fiche": "histoire-s01-1-f3",
    "type": "ordre",
@@ -400,20 +553,20 @@ JEU.enregistrer("cours", {
    "id": "histoire-s01-1-q11",
    "fiche": "histoire-s01-1-f3",
    "type": "qcm",
-   "niveau": 1,
-   "enonce": "D'où vient le nom de Constantinople ?",
+   "niveau": 2,
+   "enonce": "Au IVe siècle, Byzance prend le nom de Constantinople. Que voulait en faire l'empereur Constantin ?",
    "choix": [
-    "De l'empereur Constantin",
-    "De l'empereur Justinien",
-    "De Théodose",
-    "Des Turcs"
+    "Une sorte de Rome de l'Orient",
+    "La capitale de l'Empire romain d'Occident",
+    "Une nouvelle colonie grecque",
+    "Une ville des royaumes germaniques"
    ],
-   "explication": "Au IVe siècle, la ville prend le nom de l'empereur Constantin. Il voulait en faire une Rome de l'Orient.",
+   "explication": "Le nom de Constantinople rappelle l'empereur Constantin. Il voulait faire de la ville une Rome de l'Orient.",
    "source": {
     "fichier": "cours/histoire/Histoire 5e - Seance 1 - Support.pdf",
     "page": 3
    },
-   "r": "=Q0BbMDHUEhBfYQLPBQHm8FAFB0CIpgRMYTZ",
+   "r": "==wFZBgCPQhJVtiUQEQVUQQA9IVDn0AAB9VAcY0AHcSZ",
    "poids": 1
   },
   {
@@ -439,9 +592,9 @@ JEU.enregistrer("cours", {
    "enonce": "Pourquoi parle-t-on d'« Empire byzantin » pour l'Empire romain d'Orient ?",
    "choix": [
     "En souvenir de Byzance, l'ancien nom de sa capitale",
-    "Parce que son premier empereur s'appelait Byzantin",
-    "Parce qu'il a été fondé par les Turcs",
-    "Parce qu'il se trouve à l'ouest de Rome"
+    "Parce que Constantin voulait en faire une Rome de l'Orient",
+    "Parce que sa capitale s'appelle encore Byzance aujourd'hui",
+    "Parce qu'il remplace l'Empire romain d'Occident en 476"
    ],
    "explication": "Byzance est l'ancien nom de Constantinople. Le mot « byzantin » rappelle ce nom.",
    "source": {
@@ -459,8 +612,8 @@ JEU.enregistrer("cours", {
    "enonce": "Constantinople n'est la capitale de l'Empire romain d'Orient que de 395 à 476.",
    "corrections": [
     "Faux : elle l'est de 395 à 1453.",
-    "Faux : elle ne l'est jamais.",
-    "Faux : elle l'est seulement à partir de 1453."
+    "Faux : elle l'est de 380 à 1453, depuis l'édit de Thessalonique.",
+    "Faux : elle l'est de 527 à 1453, à partir de Justinien."
    ],
    "explication": "476 marque la chute de l'Occident, pas celle de l'Orient. Constantinople reste la capitale jusqu'en 1453.",
    "source": {
@@ -486,6 +639,71 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
+   "id": "histoire-s01-1-q32",
+   "fiche": "histoire-s01-1-f3",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Byzance prend le nom de Constantinople au VIe siècle avant J.-C.",
+   "corrections": [
+    "Faux : elle prend ce nom au IVe siècle après J.-C.",
+    "Faux : elle prend ce nom en 1453, quand les Turcs s'en emparent.",
+    "Faux : elle prend ce nom au VIe siècle après J.-C., sous Justinien."
+   ],
+   "explication": "Au VIe siècle avant J.-C., Byzance naît comme colonie grecque. Elle ne devient Constantinople qu'au IVe siècle après J.-C.",
+   "source": {
+    "fichier": "cours/histoire/Histoire 5e - Seance 1 - Support.pdf",
+    "page": 3
+   },
+   "r": "==wENx1KuNwLV4lxsShFIIlIeYRz2ihGOpAJhMGWEUBQBEgRDogUjwBEXUQUMIwAXgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s01-1-q33",
+   "fiche": "histoire-s01-1-f3",
+   "type": "association",
+   "niveau": 2,
+   "enonce": "Relie chaque nom à ce qu'il désigne.",
+   "gauche": [
+    "Byzance",
+    "Constantinople",
+    "Istanbul",
+    "Empire byzantin"
+   ],
+   "droite": [
+    "Autre nom de l'Empire romain d'Orient",
+    "Nom de la ville aujourd'hui, en Turquie",
+    "Colonie grecque du VIe siècle avant J.-C.",
+    "Nom donné à la ville d'après l'empereur Constantin"
+   ],
+   "explication": "Byzance, la colonie grecque, devient Constantinople en l'honneur de Constantin, puis Istanbul. L'Empire byzantin tire son nom de Byzance.",
+   "source": {
+    "fichier": "cours/histoire/Histoire 5e - Seance 1 - Support.pdf",
+    "page": 3
+   },
+   "r": "==ANvcnXG5TWsglQdlCRe4RSEYnQyQlSZlCH",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s01-1-q34",
+   "fiche": "histoire-s01-1-f3",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "En l'an 1000, sous quel nom connaît-on la capitale de l'Empire byzantin ?",
+   "choix": [
+    "Constantinople",
+    "Byzance",
+    "Istanbul",
+    "Ravenne"
+   ],
+   "explication": "De 395 à 1453, la capitale de l'Empire romain d'Orient s'appelle Constantinople. Byzance est son ancien nom, Istanbul son nom actuel.",
+   "source": {
+    "fichier": "cours/histoire/Histoire 5e - Seance 1 - Support.pdf",
+    "page": 3
+   },
+   "r": "==ATK4BGsMEDBN0DbUBCGETZ",
+   "poids": 1
+  },
+  {
    "id": "histoire-s01-1-q16",
    "fiche": "histoire-s01-1-f4",
    "type": "qcm",
@@ -494,10 +712,10 @@ JEU.enregistrer("cours", {
    "choix": [
     "De 527 à 565",
     "De 395 à 476",
-    "De 768 à 814",
+    "De 476 à 527",
     "De 380 à 395"
    ],
-   "explication": "La frise place le règne de Justinien de 527 à 565. Il dirige alors l'Empire byzantin.",
+   "explication": "Justinien règne de 527 à 565, à la tête de l'Empire byzantin. C'est bien après la chute de l'Occident, en 476.",
    "source": {
     "fichier": "cours/histoire/Histoire 5e - Seance 1 - Support.pdf",
     "page": 1
@@ -512,7 +730,7 @@ JEU.enregistrer("cours", {
    "niveau": 1,
    "enonce": "Les conquêtes de Justinien se font vers l'ouest de la Méditerranée.",
    "corrections": [],
-   "explication": "Oui : sur la carte, ses conquêtes s'étendent à l'ouest de l'empire de 527. Ravenne en fait partie.",
+   "explication": "Oui : ses conquêtes s'étendent à l'ouest de l'empire de 527. Ravenne en fait partie.",
    "source": {
     "fichier": "cours/histoire/Histoire 5e - Seance 1 - Support.pdf",
     "page": 2
@@ -528,11 +746,11 @@ JEU.enregistrer("cours", {
    "enonce": "Comment l'Empire byzantin change-t-il sous le règne de Justinien ?",
    "choix": [
     "Il s'agrandit vers l'ouest grâce à des conquêtes",
-    "Il est coupé en deux",
-    "Il perd Constantinople",
-    "Il est remplacé par des royaumes germaniques"
+    "Il s'agrandit vers l'est en prenant Constantinople",
+    "Il perd ses terres de l'ouest au profit des royaumes germaniques",
+    "Il est coupé en deux moitiés à la mort de l'empereur"
    ],
-   "explication": "Justinien conquiert des terres à l'ouest de la Méditerranée. L'empire devient bien plus vaste.",
+   "explication": "Justinien conquiert des terres à l'ouest de la Méditerranée. Constantinople, elle, est déjà sa capitale.",
    "source": {
     "fichier": "cours/histoire/Histoire 5e - Seance 1 - Support.pdf",
     "page": 2
@@ -545,14 +763,14 @@ JEU.enregistrer("cours", {
    "fiche": "histoire-s01-1-f4",
    "type": "qcm",
    "niveau": 3,
-   "enonce": "En 395, Ravenne est dans l'Empire romain d'Occident. Sous Justinien, à quel empire appartient-elle ?",
+   "enonce": "En 395, Ravenne est dans l'Empire romain d'Occident. Après les conquêtes de Justinien, à quel empire appartient-elle ?",
    "choix": [
     "À l'Empire byzantin, qui l'a conquise",
     "Toujours à l'Empire romain d'Occident",
     "À l'Empire carolingien",
-    "À aucun empire"
+    "À aucun empire, elle est indépendante"
    ],
-   "explication": "La carte des conquêtes de Justinien inclut Ravenne. L'Empire byzantin reprend donc une ville de l'ancien Occident.",
+   "explication": "Ravenne fait partie des conquêtes de Justinien : elle passe à l'Empire byzantin. L'Empire romain d'Occident, lui, a disparu en 476.",
    "source": {
     "fichier": "cours/histoire/Histoire 5e - Seance 1 - Support.pdf",
     "page": 2
@@ -561,18 +779,94 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
+   "id": "histoire-s01-1-q35",
+   "fiche": "histoire-s01-1-f4",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "En 527, quand Justinien arrive au pouvoir, l'Empire byzantin occupe surtout l'ouest de la Méditerranée.",
+   "corrections": [
+    "Faux : il occupe surtout l'est ; Justinien conquiert ensuite des terres à l'ouest.",
+    "Faux : il entoure déjà toute la Méditerranée en 527.",
+    "Faux : il n'existe pas encore en 527 ; il naît avec Justinien."
+   ],
+   "explication": "En 527, l'empire est surtout à l'est, autour de Constantinople. Les conquêtes de Justinien l'étendent ensuite vers l'ouest.",
+   "source": {
+    "fichier": "cours/histoire/Histoire 5e - Seance 1 - Support.pdf",
+    "page": 2
+   },
+   "r": "=QBUpZgBAAgHOJwTSv6YeBwRftwGGVBDWc2FBwAACcwCPZgGmQEEENUAMYECMsRKbEgFAsTSV9kBbYiCJURWbAgEUwRAndRBQYhEG40AbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s01-1-q36",
+   "fiche": "histoire-s01-1-f4",
+   "type": "qcm_multiple",
+   "niveau": 2,
+   "enonce": "Quelles phrases sur Justinien sont justes ? (plusieurs réponses)",
+   "choix": [
+    "Il règne de 527 à 565",
+    "Il conquiert des terres à l'ouest de la Méditerranée",
+    "Ravenne fait partie de ses conquêtes",
+    "Il règne avant le partage de 395",
+    "Il perd Constantinople au profit des Turcs"
+   ],
+   "explication": "Justinien règne de 527 à 565 et conquiert des terres à l'ouest, dont Ravenne. Constantinople ne tombe qu'en 1453, bien après lui.",
+   "source": {
+    "fichier": "cours/histoire/Histoire 5e - Seance 1 - Support.pdf",
+    "page": 2
+   },
+   "r": "=IDUbYSWPbPWfEQCFkUAiEQVAERUMcwGAkwMNEBXMhwTDgwBXEzEncUWTxwxsyRCx8FABRkCGX6KJNxKSBRAVVgGLoRHP9SDFbfDdoAFUwgBnFAEBUVBbsgBHkRLCZQFBdSTKREXEJnUVbaVGt1WPdBDjh0CSVYrdYkCgAFH",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s01-1-q37",
+   "fiche": "histoire-s01-1-f4",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Combien d'années dure le règne de Justinien ?",
+   "choix": [
+    "38 ans",
+    "48 ans",
+    "28 ans",
+    "62 ans"
+   ],
+   "explication": "Justinien règne de 527 à 565. 565 moins 527 font 38 ans.",
+   "indice": "Fais la soustraction 565 moins 527.",
+   "source": {
+    "fichier": "cours/histoire/Histoire 5e - Seance 1 - Support.pdf",
+    "page": 1
+   },
+   "r": "=8QHBcgRRFUZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s01-1-q38",
+   "fiche": "histoire-s01-1-f4",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Justinien règne après la chute du dernier empereur romain d'Occident.",
+   "corrections": [],
+   "explication": "Oui : l'Occident tombe en 476, et Justinien règne de 527 à 565. Ses conquêtes touchent donc d'anciennes terres de l'Occident.",
+   "source": {
+    "fichier": "cours/histoire/Histoire 5e - Seance 1 - Support.pdf",
+    "page": 1
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
    "id": "histoire-s01-1-q20",
    "fiche": "histoire-s01-1-f5",
    "type": "qcm",
    "niveau": 1,
-   "enonce": "Où se trouve la mosaïque de l'empereur Justinien et de sa cour vue en cours ?",
+   "enonce": "Où se trouve la mosaïque qui représente l'empereur Justinien et sa cour ?",
    "choix": [
     "Dans la basilique Saint-Vital de Ravenne",
-    "Dans une église de Rome",
-    "Dans un palais d'Aix-la-Chapelle",
-    "Dans une église d'Istanbul"
+    "Dans une basilique de Rome, ancienne ville de l'Occident",
+    "Dans le palais impérial de Ravenne",
+    "Dans une église de Thessalonique"
    ],
-   "explication": "La mosaïque orne la basilique Saint-Vital. Elle se trouve à Ravenne.",
+   "explication": "La mosaïque orne la basilique Saint-Vital. Elle se trouve à Ravenne, une ville conquise par Justinien.",
    "source": {
     "fichier": "cours/histoire/Histoire 5e - Seance 1 - Support.pdf",
     "page": 2
@@ -600,13 +894,12 @@ JEU.enregistrer("cours", {
    "fiche": "histoire-s01-1-f5",
    "type": "vrai_faux",
    "niveau": 2,
-   "enonce": "La basilique Saint-Vital se trouve à Constantinople.",
+   "enonce": "La basilique Saint-Vital, avec sa mosaïque de Justinien, se trouve à Rome.",
    "corrections": [
     "Faux : elle se trouve à Ravenne, une ville conquise par Justinien.",
-    "Faux : elle se trouve à Rome.",
-    "Faux : elle se trouve à Aix-la-Chapelle."
+    "Faux : elle se trouve à Ravenne, une ville restée dans l'Empire romain d'Occident."
    ],
-   "explication": "Saint-Vital est à Ravenne. Cette ville fait partie des conquêtes de Justinien.",
+   "explication": "Saint-Vital est à Ravenne. Cette ville fait partie des conquêtes de Justinien, bien après la chute de l'Occident.",
    "source": {
     "fichier": "cours/histoire/Histoire 5e - Seance 1 - Support.pdf",
     "page": 2
@@ -623,8 +916,8 @@ JEU.enregistrer("cours", {
    "choix": [
     "Parce que Ravenne fait partie de ses conquêtes",
     "Parce que Ravenne est la capitale de l'Empire byzantin",
-    "Parce que la mosaïque date de 1453",
-    "Parce que Ravenne n'appartient à aucun empire"
+    "Parce que Ravenne est dans l'Orient depuis le partage de 395",
+    "Parce que Ravenne est la capitale de l'Occident sous Justinien"
    ],
    "explication": "Justinien a conquis Ravenne. La ville entre alors dans l'Empire byzantin.",
    "source": {
@@ -632,6 +925,66 @@ JEU.enregistrer("cours", {
     "page": 2
    },
    "r": "==ARVwgBtHLAUshHK4EHXsxYIFQFIdwGUcQGSNzGUMQVUcAAKQQCR0AAAxlTKUAFIISZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s01-1-q39",
+   "fiche": "histoire-s01-1-f5",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "La mosaïque de la basilique Saint-Vital montre l'empereur Théodose entouré de sa cour.",
+   "corrections": [
+    "Faux : elle montre l'empereur Justinien et sa cour.",
+    "Faux : elle montre Théodose seul, sans sa cour.",
+    "Faux : elle montre le partage de l'Empire romain."
+   ],
+   "explication": "La mosaïque de Saint-Vital représente Justinien avec sa cour. Théodose est l'empereur à la mort duquel l'empire est partagé, en 395.",
+   "source": {
+    "fichier": "cours/histoire/Histoire 5e - Seance 1 - Support.pdf",
+    "page": 2
+   },
+   "r": "SAlRxglCW1wDcYkEMIVKXwxCcUgGbUiUaYDSXAVXDoQQKk0F1YwGKgRUMIwAXgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s01-1-q40",
+   "fiche": "histoire-s01-1-f5",
+   "type": "ordre",
+   "niveau": 3,
+   "enonce": "Range ces événements dans l'ordre du temps.",
+   "elements": [
+    "Les Turcs prennent Constantinople",
+    "Justinien conquiert Ravenne",
+    "Au partage, Ravenne est dans l'Empire romain d'Occident",
+    "L'Occident perd son dernier empereur"
+   ],
+   "explication": "395 : Ravenne est dans l'Occident ; 476 : l'Occident tombe ; entre 527 et 565 : Justinien la conquiert ; 1453 : Constantinople tombe.",
+   "source": {
+    "fichier": "cours/histoire/Histoire 5e - Seance 1 - Support.pdf",
+    "page": 2
+   },
+   "r": "o1hQepUVFBEH",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s01-1-q41",
+   "fiche": "histoire-s01-1-f5",
+   "type": "trou",
+   "niveau": 1,
+   "enonce": "Complète la phrase.",
+   "texte": "La mosaïque de l'empereur ___ et de sa cour orne la basilique Saint-Vital de ___.",
+   "banque": [
+    "Justinien",
+    "Ravenne",
+    "Théodose",
+    "Rome"
+   ],
+   "explication": "Cette mosaïque montre Justinien et sa cour. Elle se trouve à Ravenne, conquise par Justinien.",
+   "source": {
+    "fichier": "cours/histoire/Histoire 5e - Seance 1 - Support.pdf",
+    "page": 2
+   },
+   "r": "7szSXkCHQMBFjsUND9iStgEDbRkGcMBLLlCH",
    "poids": 1
   }
  ],

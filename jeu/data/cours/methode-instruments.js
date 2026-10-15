@@ -251,9 +251,9 @@ JEU.enregistrer("cours", {
    "enonce": "Quel instrument vérifie qu'un mur est bien vertical ?",
    "choix": [
     "Le fil à plomb",
-    "La balance de Roberval",
-    "La fiole jaugée",
-    "Le thermomètre"
+    "L'équerre",
+    "Le réglet",
+    "Le mètre ruban"
    ],
    "explication": "Le fil à plomb pend tout droit vers le bas. On compare le mur à ce fil.",
    "source": {
@@ -267,7 +267,7 @@ JEU.enregistrer("cours", {
    "id": "methode-instruments-q2",
    "fiche": "methode-instruments-f1",
    "type": "association",
-   "niveau": 2,
+   "niveau": 3,
    "enonce": "Relie chaque instrument à ce qu'il vérifie.",
    "gauche": [
     "Fil à plomb",
@@ -275,28 +275,28 @@ JEU.enregistrer("cours", {
     "Équerre flottante avec fil à plomb"
    ],
    "droite": [
-    "L'horizontalité",
+    "L'angle droit",
     "La verticalité",
-    "L'angle droit"
+    "L'horizontalité"
    ],
    "explication": "Fil à plomb : vertical. Équerre : angle droit ; équerre flottante : horizontal.",
    "source": {
     "fichier": "methodes/Fiche methode - Instruments de mesure en physique-chimie.pdf",
     "page": 1
    },
-   "r": "==AKsklQdlCRe8RSEYnQyclSZlCH",
+   "r": "==AKsslQdlCRe0RSEYnQyclSZlCH",
    "poids": 1
   },
   {
    "id": "methode-instruments-q3",
    "fiche": "methode-instruments-f1",
    "type": "vrai_faux",
-   "niveau": 1,
+   "niveau": 3,
    "enonce": "L'équerre sert à vérifier qu'une surface est horizontale.",
    "corrections": [
     "Faux : l'équerre vérifie un angle droit ; l'horizontalité se vérifie avec l'équerre flottante munie d'un fil à plomb.",
-    "Faux : l'équerre sert à peser.",
-    "Faux : l'équerre mesure un volume."
+    "Faux : l'équerre vérifie la verticalité ; l'horizontalité se vérifie avec le fil à plomb seul.",
+    "Faux : l'équerre vérifie un angle droit ; l'horizontalité se vérifie avec le réglet."
    ],
    "explication": "L'équerre seule vérifie l'orthogonalité. Pour l'horizontal, il faut l'équerre flottante avec son fil à plomb.",
    "source": {
@@ -313,17 +313,71 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Comment un fil à plomb permet-il de vérifier une verticale ?",
    "choix": [
-    "Le poids tend le fil tout droit vers le bas : on compare la surface au fil",
-    "Il mesure la masse du mur",
-    "Il change de couleur quand c'est droit",
-    "Il sonne quand le mur penche"
+    "Le poids tend le fil vers le bas ; on compare la surface au fil",
+    "On pose le fil à plat sur la surface, puis on lit la graduation",
+    "On mesure la longueur du fil le long de toute la surface",
+    "On fait tourner le fil autour de la surface à vérifier"
    ],
    "explication": "Le fil lesté pend toujours à la verticale. Si la surface le suit, elle est verticale.",
    "source": {
     "fichier": "methodes/Fiche methode - Instruments de mesure en physique-chimie.pdf",
     "page": 1
    },
-   "r": "==wRZRECPNxBJdBJTMxFAIQSPMgUNEDTVglQN8ECJkESnFAFHUFFF4EHA0QNNEBXCxxCGJBHdMjUZwwERxgAPZhBmkVRGl0BAYhRM4TZ",
+   "r": "=cVCccRSb4gUNACTDcEWd80BKk0F1MRBIohEJBAASN1YeRwVNswAGVxGXEjUZwwERxgAPZhBmkVRGl0BAYhRM4TZ",
+   "poids": 1
+  },
+  {
+   "id": "methode-instruments-q28",
+   "fiche": "methode-instruments-f1",
+   "type": "vrai_faux",
+   "niveau": 1,
+   "enonce": "L'équerre flottante, munie d'un fil à plomb, vérifie qu'une surface est horizontale.",
+   "corrections": [],
+   "explication": "Oui : son fil à plomb marque la verticale, et sa base marque l'horizontale.",
+   "source": {
+    "fichier": "methodes/Fiche methode - Instruments de mesure en physique-chimie.pdf",
+    "page": 1
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "methode-instruments-q29",
+   "fiche": "methode-instruments-f1",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Le fil à plomb vérifie l'orthogonalité, c'est-à-dire un angle droit.",
+   "corrections": [
+    "Faux : il vérifie la verticalité ; l'angle droit se vérifie avec l'équerre.",
+    "Faux : il vérifie l'horizontalité ; l'angle droit se vérifie avec l'équerre.",
+    "Faux : il vérifie la verticalité ; l'angle droit se vérifie avec le réglet."
+   ],
+   "explication": "Le fil à plomb vérifie qu'une surface est verticale. C'est l'équerre qui vérifie l'orthogonalité, l'angle droit.",
+   "source": {
+    "fichier": "methodes/Fiche methode - Instruments de mesure en physique-chimie.pdf",
+    "page": 1
+   },
+   "r": "==ACHtFFbwhCHkh6uLUWN0gCQcQSX4CFccB3y+hTKEAS3QkCHlkTKoQAHMBYeUlXVhtqaYgHJACRRcESY80BKk0FuQBHXwtsf40AbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "methode-instruments-q30",
+   "fiche": "methode-instruments-f1",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "On veut vérifier qu'une étagère est bien horizontale. Lequel de ces instruments choisir ?",
+   "choix": [
+    "L'équerre flottante munie d'un fil à plomb",
+    "L'équerre seule, posée contre le mur",
+    "Le mètre ruban, tendu le long de l'étagère",
+    "Le réglet, posé à plat sur l'étagère"
+   ],
+   "explication": "L'équerre flottante, avec son fil à plomb, marque l'horizontale à sa base. L'équerre seule vérifie un angle droit, et le mètre ou le réglet mesurent une longueur.",
+   "source": {
+    "fichier": "methodes/Fiche methode - Instruments de mesure en physique-chimie.pdf",
+    "page": 1
+   },
+   "r": "==AUl8hGJUQUJ36TeEQJNsAQKowTD8wBHoiUQExGQ0hGA4hDjh0FHh0Ge8cpO5TZ",
    "poids": 1
   },
   {
@@ -335,8 +389,8 @@ JEU.enregistrer("cours", {
    "choix": [
     "La balance de Roberval",
     "La balance électronique",
-    "La fiole jaugée",
-    "Le réglet"
+    "La balance à pesée simple",
+    "La balance avec touche tare"
    ],
    "explication": "La balance de Roberval a deux plateaux. On équilibre l'objet avec des poids.",
    "source": {
@@ -368,17 +422,98 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Comment trouve-t-on la masse d'un objet avec une balance de Roberval ?",
    "choix": [
-    "On ajoute des poids sur l'autre plateau jusqu'à l'équilibre",
-    "On lit l'écran",
-    "On appuie sur la touche tare",
-    "On plonge l'objet dans l'eau"
+    "On équilibre l'objet avec des poids sur l'autre plateau",
+    "On lit directement la masse qui s'affiche sur son écran",
+    "On appuie sur la touche tare, puis on lit le plateau",
+    "On pose l'objet sur les deux plateaux à la fois"
    ],
-   "explication": "À l'équilibre, l'objet a la même masse que les poids. On additionne leurs valeurs.",
+   "explication": "À l'équilibre, l'objet a la même masse que les poids posés en face. On additionne alors leurs valeurs.",
    "source": {
     "fichier": "methodes/Fiche methode - Instruments de mesure en physique-chimie.pdf",
     "page": 1
    },
-   "r": "XRxGMYgHBYDXMbvCC8kxl60B2EAAPUFBIswGTQwMNAwRZthDBpQSAITAVZREYYgHPFQDn0AABhVAFcgRH0TZ",
+   "r": "==AUdICSRQVQe80AU0xBmUVGFdABa4EHWEALdVkRIpwTFMwHTcmBQ8wFe4kAPdhGhQUCch1HGXqRH0TZ",
+   "poids": 1
+  },
+  {
+   "id": "methode-instruments-q31",
+   "fiche": "methode-instruments-f2",
+   "type": "vrai_faux",
+   "niveau": 3,
+   "enonce": "La balance de Roberval fait une pesée simple, et la balance électronique une double pesée.",
+   "corrections": [
+    "Faux : c'est l'inverse : double pesée pour Roberval, pesée simple pour l'électronique.",
+    "Faux : les deux balances font une double pesée.",
+    "Faux : les deux balances font une pesée simple."
+   ],
+   "explication": "La balance de Roberval compare l'objet à des poids : double pesée. La balance électronique affiche directement la masse : pesée simple.",
+   "source": {
+    "fichier": "methodes/Fiche methode - Instruments de mesure en physique-chimie.pdf",
+    "page": 1
+   },
+   "r": "=g0DApwEXAAHoAQAGARHA3KSegUMYpQRNswAWsAABc2FcbqBUkhTD5RC18FAXJEPPRxEGIwZXwtpGQRGOpgHKYjQBUxFOpQFUwABpshUJUVBasASRgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "methode-instruments-q32",
+   "fiche": "methode-instruments-f2",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Sur une balance de Roberval, un objet est équilibré par trois poids : 50 g, 10 g et 5 g. Quelle est sa masse ?",
+   "choix": [
+    "65 g",
+    "55 g",
+    "60 g",
+    "3 g"
+   ],
+   "explication": "À l'équilibre, la masse de l'objet est celle de tous les poids réunis. 50 + 10 + 5 donne 65 g.",
+   "indice": "Additionne les poids.",
+   "source": {
+    "fichier": "methodes/Fiche methode - Instruments de mesure en physique-chimie.pdf",
+    "page": 1
+   },
+   "r": "NFgRcRUZ",
+   "poids": 1
+  },
+  {
+   "id": "methode-instruments-q33",
+   "fiche": "methode-instruments-f2",
+   "type": "qcm_multiple",
+   "niveau": 2,
+   "enonce": "Quelles phrases décrivent la balance électronique ?",
+   "choix": [
+    "Elle fait une pesée simple",
+    "Elle affiche directement la masse",
+    "Elle possède une touche « tare »",
+    "Elle a deux plateaux",
+    "On y pose des poids pour équilibrer"
+   ],
+   "explication": "La balance électronique affiche la masse et se remet à zéro avec la tare. Les deux plateaux et les poids, c'est la balance de Roberval.",
+   "source": {
+    "fichier": "methodes/Fiche methode - Instruments de mesure en physique-chimie.pdf",
+    "page": 1
+   },
+   "r": "0wE1wikJfRQQNUcrGNQARITHBUEEfwhTKYBwA6lFa1lTKogCsA1aQBhFGABBO5gHIdzQAgFSawwAUAgFndRHGwxFP8wTXQwLodUGPswAWsAABc2FcbqBUkhTKwRHjlFDUtkTKogCsAFH",
+   "poids": 1
+  },
+  {
+   "id": "methode-instruments-q34",
+   "fiche": "methode-instruments-f2",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Pourquoi dit-on que la balance électronique fait une pesée simple ?",
+   "choix": [
+    "Elle affiche la masse sans qu'on pose de poids",
+    "Elle ne sait peser que des objets très légers, comme un cheveu",
+    "Elle n'a pas de touche « tare »",
+    "Elle pèse deux objets en même temps"
+   ],
+   "explication": "On pose l'objet et la masse s'affiche : une seule opération. Avec la balance de Roberval, il faut équilibrer avec des poids.",
+   "source": {
+    "fichier": "methodes/Fiche methode - Instruments de mesure en physique-chimie.pdf",
+    "page": 1
+   },
+   "r": "EphFu0RBFBRFJtAHdgxYDpgEY9xTVgACBc2FGYBFck0DDIVDr4EDTt0DPNgCFcTZ",
    "poids": 1
   },
   {
@@ -405,11 +540,11 @@ JEU.enregistrer("cours", {
    "id": "methode-instruments-q9",
    "fiche": "methode-instruments-f3",
    "type": "vrai_faux",
-   "niveau": 1,
+   "niveau": 2,
    "enonce": "Après avoir fait la tare avec un récipient vide, l'écran affiche la masse du récipient et du contenu ensemble.",
    "corrections": [
     "Faux : après la tare, l'écran n'affiche que la masse du contenu.",
-    "Faux : après la tare, l'écran n'affiche plus rien.",
+    "Faux : après la tare, l'écran n'affiche plus rien du tout.",
     "Faux : après la tare, l'écran affiche la masse du récipient seul."
    ],
    "explication": "La tare retire la masse du récipient. On lit seulement ce qu'on a versé.",
@@ -428,9 +563,9 @@ JEU.enregistrer("cours", {
    "enonce": "Pourquoi fait-on la tare avant de verser un liquide dans un récipient posé sur la balance ?",
    "choix": [
     "Pour ne pas compter la masse du récipient",
-    "Pour refroidir le liquide",
-    "Pour allumer la balance",
-    "Pour mesurer le volume"
+    "Pour ajouter la masse du récipient à celle du liquide",
+    "Pour que l'écran affiche la masse du récipient seul",
+    "Pour mesurer le volume du liquide versé"
    ],
    "explication": "La tare remet l'écran à 0 avec le récipient dessus. Ensuite, seule la masse du liquide compte.",
    "source": {
@@ -441,6 +576,80 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
+   "id": "methode-instruments-q35",
+   "fiche": "methode-instruments-f3",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Un bol vide posé sur la balance affiche 150 g. On fait la tare, puis on verse de la farine : l'écran affiche 80 g. Quelle est la masse de la farine ?",
+   "choix": [
+    "80 g",
+    "230 g",
+    "70 g",
+    "150 g"
+   ],
+   "explication": "Après la tare, l'écran ne compte plus le bol. Les 80 g affichés sont donc la masse de la farine seule.",
+   "source": {
+    "fichier": "methodes/Fiche methode - Instruments de mesure en physique-chimie.pdf",
+    "page": 1
+   },
+   "r": "NFgRZpUZ",
+   "poids": 1
+  },
+  {
+   "id": "methode-instruments-q36",
+   "fiche": "methode-instruments-f3",
+   "type": "vrai_faux",
+   "niveau": 1,
+   "enonce": "Après la tare, l'écran de la balance affiche 0, même avec le récipient posé dessus.",
+   "corrections": [],
+   "explication": "Oui : la tare remet l'écran à zéro avec le récipient vide. Ensuite, seule la masse du contenu s'affiche.",
+   "source": {
+    "fichier": "methodes/Fiche methode - Instruments de mesure en physique-chimie.pdf",
+    "page": 1
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "methode-instruments-q37",
+   "fiche": "methode-instruments-f3",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Pour faire la tare, on appuie sur « tare » avant de poser le récipient vide.",
+   "corrections": [
+    "Faux : on pose d'abord le récipient vide, puis on appuie sur « tare ».",
+    "Faux : on verse d'abord le contenu, puis on appuie sur « tare ».",
+    "Faux : on appuie sur « tare » après avoir lu la masse du contenu."
+   ],
+   "explication": "La tare se fait avec le récipient vide déjà posé. L'écran revient à 0, puis on verse.",
+   "source": {
+    "fichier": "methodes/Fiche methode - Instruments de mesure en physique-chimie.pdf",
+    "page": 1
+   },
+   "r": "==gEQZE+vXEUf9wGG18qSVzBGUEEYwhHfMBStIURGR0GfYkSMYhLEUVEbQBAeYQEBD4XFBVQOtAFJswEgZRVAYgHZ4UAdgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "methode-instruments-q38",
+   "fiche": "methode-instruments-f3",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Comment peser seulement le lait versé dans une casserole ?",
+   "choix": [
+    "Poser la casserole vide, faire la tare, verser le lait, lire",
+    "Verser le lait dans la casserole, faire la tare, puis lire",
+    "Poser la casserole pleine, puis faire la tare et lire",
+    "Peser la casserole vide, sans tare, puis lire après avoir versé"
+   ],
+   "explication": "La tare se fait avec la casserole vide. Après avoir versé, l'écran n'affiche que la masse du lait.",
+   "source": {
+    "fichier": "methodes/Fiche methode - Instruments de mesure en physique-chimie.pdf",
+    "page": 1
+   },
+   "r": "=MFDcYgHI9WWMQVQOpgCGtxF0AAETUVXMwhDGgkIBVEUfdgDAYURXMyGDUEEdYAHKEwGi4URUFkTdMQFGISZ",
+   "poids": 1
+  },
+  {
    "id": "methode-instruments-q11",
    "fiche": "methode-instruments-f4",
    "type": "qcm",
@@ -448,11 +657,11 @@ JEU.enregistrer("cours", {
    "enonce": "Quel instrument souple permet de mesurer une grande longueur ?",
    "choix": [
     "Le mètre ruban",
-    "La fiole jaugée",
-    "Le fil à plomb",
-    "La balance électronique"
+    "Le réglet",
+    "L'équerre",
+    "L'éprouvette graduée"
    ],
-   "explication": "Le mètre ruban se déroule pour mesurer de grandes dimensions. Le réglet sert pour les petites.",
+   "explication": "Le mètre ruban se déroule pour mesurer de grandes dimensions. Le réglet est une règle rigide, en métal.",
    "source": {
     "fichier": "methodes/Fiche methode - Instruments de mesure en physique-chimie.pdf",
     "page": 2
@@ -482,17 +691,57 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Comment connaître les trois dimensions d'une boîte ?",
    "choix": [
-    "On mesure sa longueur, sa largeur et sa hauteur avec une règle ou un mètre",
-    "On la pèse sur une balance",
-    "On la plonge dans une fiole jaugée",
-    "On utilise un fil à plomb"
+    "On mesure sa longueur, sa largeur et sa hauteur",
+    "On la pèse, puis on lit sa masse sur la balance électronique",
+    "On la plonge dans une éprouvette graduée",
+    "On vérifie ses angles avec une équerre"
    ],
-   "explication": "Les dimensions sont des longueurs. Elles se mesurent avec une règle ou un mètre.",
+   "explication": "Les dimensions sont des longueurs : on les mesure avec une règle ou un mètre. La balance donne une masse, pas une longueur.",
    "source": {
     "fichier": "methodes/Fiche methode - Instruments de mesure en physique-chimie.pdf",
     "page": 2
    },
-   "r": "hh0FBVYrCYECcIlMdUFAZYRwt2hUN0CWFZFSY4gRUwxFzcAFNUFEa40GXgUMYBgUf9wAGdgGStGAAAAAWcQADIVCw0AAHhVHKsgRH0TZ",
+   "r": "==ARUwxFzcAFNUFEa40GXgUMYBgUf9wAGdgGStGAAAAAWcQADIVCw0AAHhVHKsgRH0TZ",
+   "poids": 1
+  },
+  {
+   "id": "methode-instruments-q39",
+   "fiche": "methode-instruments-f4",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Le réglet est un mètre souple qu'on déroule pour mesurer les grandes longueurs.",
+   "corrections": [
+    "Faux : le réglet est une règle métallique ; le mètre souple, c'est le mètre ruban.",
+    "Faux : le réglet est une équerre métallique qui vérifie les angles droits.",
+    "Faux : le réglet est une éprouvette qui mesure des volumes."
+   ],
+   "explication": "Le réglet est une règle métallique graduée. Le mètre ruban, lui, se déroule pour les grandes longueurs.",
+   "source": {
+    "fichier": "methodes/Fiche methode - Instruments de mesure en physique-chimie.pdf",
+    "page": 2
+   },
+   "r": "T0ESIgAEyAQVAcQBB3qAS1wLNEhRIlEDGpEDeczBaYRVUshGHHbBjhUCVYhTKMxFA4xKTEAz2yRSLMQFAD4XFB1Qb8kEVwgUzcRGCwtsb4kCegUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "methode-instruments-q40",
+   "fiche": "methode-instruments-f4",
+   "type": "qcm_multiple",
+   "niveau": 2,
+   "enonce": "Lesquels de ces instruments servent à mesurer des longueurs ?",
+   "choix": [
+    "Le réglet",
+    "Le mètre ruban",
+    "L'éprouvette graduée",
+    "La balance électronique",
+    "Le fil à plomb"
+   ],
+   "explication": "Le réglet et le mètre ruban mesurent des longueurs. L'éprouvette mesure un volume, la balance une masse, et le fil à plomb vérifie une verticale.",
+   "source": {
+    "fichier": "methodes/Fiche methode - Instruments de mesure en physique-chimie.pdf",
+    "page": 2
+   },
+   "r": "=gzFD9QDTQRSXUjBdbKGRxgIN5lS3gUCSRYrdY0AlAFH",
    "poids": 1
   },
   {
@@ -505,7 +754,7 @@ JEU.enregistrer("cours", {
     "Au niveau du ménisque",
     "Au-dessus du ménisque",
     "Au-dessous du ménisque",
-    "N'importe où"
+    "Tout en haut de l'éprouvette"
    ],
    "explication": "L'œil doit être à la hauteur du liquide. Au-dessus ou au-dessous, la lecture est fausse.",
    "source": {
@@ -519,7 +768,7 @@ JEU.enregistrer("cours", {
    "id": "methode-instruments-q15",
    "fiche": "methode-instruments-f5",
    "type": "qcm",
-   "niveau": 2,
+   "niveau": 3,
    "enonce": "Trois élèves lisent la même éprouvette : 73 mL (œil au-dessus), 72 mL (œil au niveau du ménisque), 71,5 mL (œil au-dessous). Quelle est la bonne mesure ?",
    "choix": [
     "72 mL",
@@ -539,19 +788,19 @@ JEU.enregistrer("cours", {
    "id": "methode-instruments-q16",
    "fiche": "methode-instruments-f5",
    "type": "vrai_faux",
-   "niveau": 1,
+   "niveau": 2,
    "enonce": "Dans un récipient étroit, la surface d'un liquide est parfaitement plate.",
    "corrections": [
-    "Faux : elle forme une surface courbée, le ménisque.",
-    "Faux : elle forme des vagues.",
-    "Faux : elle est toujours bombée vers le haut comme une bosse."
+    "Faux : elle forme une surface courbée et creusée, le ménisque.",
+    "Faux : elle est plate, mais un peu penchée vers la paroi.",
+    "Faux : elle est toujours bombée vers le haut, comme une bosse."
    ],
    "explication": "Le liquide forme un ménisque, une surface creusée. On lit là où il touche la graduation.",
    "source": {
     "fichier": "methodes/Fiche methode - Instruments de mesure en physique-chimie.pdf",
     "page": 2
    },
-   "r": "=QBTBdRHy4FDbRYrCY0AFI1aXwtpXMAHBwgUNACTDcEWd80AIwhUi8xBKMRUMIwAXgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "r": "=MRTINAHDQzGbwstck0CDIFRmQopGh1CdUgRdcxZXwtpXMAHBwgUNACTDcEWd80AIwhUi8xBKMRUMIwAXgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -561,17 +810,77 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Pourquoi faut-il avoir l'œil au niveau du ménisque pour lire un volume ?",
    "choix": [
-    "Parce que vu d'en haut ou d'en bas, on lit une graduation décalée",
-    "Parce que le liquide se renverse sinon",
-    "Parce que la graduation disparaît",
-    "Parce que le ménisque change de couleur"
+    "Vu d'en haut ou d'en bas, on lit une graduation décalée",
+    "Sinon le liquide risque de se renverser de l'éprouvette",
+    "Sinon les graduations deviennent impossibles à voir",
+    "Sinon le ménisque change de forme et de couleur"
    ],
    "explication": "Un regard en biais fait lire trop haut ou trop bas. Au niveau du ménisque, la lecture est juste.",
    "source": {
     "fichier": "methodes/Fiche methode - Instruments de mesure en physique-chimie.pdf",
     "page": 2
    },
-   "r": "Ldh7xmBBWgtqK8EHHoSWEAUSP0RAGxAHyIVAMkRUHEwTethIPV0WIl0CGNhBSNzBU0QVfwQSLIVH10AAAxlTKUAFIISZ",
+   "r": "=00FBDYQEYFhtugRIYwGzMBABQxAO4kCc0xYZxQWNAAAGpkGTUiUbAgUVk0GAIFH2wUDVM0CIJgRcQSZ",
+   "poids": 1
+  },
+  {
+   "id": "methode-instruments-q41",
+   "fiche": "methode-instruments-f5",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Pour bien lire un volume, il faut placer l'œil un peu au-dessus du ménisque.",
+   "corrections": [
+    "Faux : l'œil se place au niveau du ménisque, ni au-dessus ni au-dessous.",
+    "Faux : l'œil se place un peu au-dessous du ménisque.",
+    "Faux : l'œil se place tout en haut de l'éprouvette."
+   ],
+   "explication": "Au-dessus, on lit trop haut ; au-dessous, trop bas. Seul l'œil au niveau du ménisque donne la bonne mesure.",
+   "source": {
+    "fichier": "methodes/Fiche methode - Instruments de mesure en physique-chimie.pdf",
+    "page": 2
+   },
+   "r": "=MRTcthNCZhRIpgQTcQSbkiUGAhBCwgCCdQCjR0CVEwCacRFAwh7xiRRAURSb4wFeoyQFBETOpQBHUgAndhBFlBG6vKSegUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "methode-instruments-q42",
+   "fiche": "methode-instruments-f5",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Dans quel récipient le ménisque se voit-il nettement ?",
+   "choix": [
+    "Un récipient étroit, comme une éprouvette",
+    "Un récipient très large, comme un saladier",
+    "Seulement un récipient fermé par un bouchon",
+    "Seulement un récipient rempli à ras bord"
+   ],
+   "explication": "Le ménisque se forme dans un contenant de faible diamètre, comme une éprouvette. C'est pour cela qu'il faut savoir le lire.",
+   "source": {
+    "fichier": "methodes/Fiche methode - Instruments de mesure en physique-chimie.pdf",
+    "page": 2
+   },
+   "r": "==AUiYQAAMABGwxHbv6YItAQNsgALkgCStmBcowBFAcrPZgBmQUFc50xsShRHcSZ",
+   "poids": 1
+  },
+  {
+   "id": "methode-instruments-q43",
+   "fiche": "methode-instruments-f5",
+   "type": "trou",
+   "niveau": 1,
+   "enonce": "Complète la règle de lecture.",
+   "texte": "Dans un récipient étroit, la surface creusée du liquide s'appelle le ___. Pour bien lire, on place l'œil à son ___.",
+   "banque": [
+    "ménisque",
+    "niveau",
+    "col",
+    "sommet"
+   ],
+   "explication": "Le ménisque est la surface courbée du liquide dans un récipient étroit. On le lit l'œil à sa hauteur, ni au-dessus ni au-dessous.",
+   "source": {
+    "fichier": "methodes/Fiche methode - Instruments de mesure en physique-chimie.pdf",
+    "page": 2
+   },
+   "r": "=sDNQJzEQMBHfsUND9iSmgFFGREAGX6CLlCH",
    "poids": 1
   },
   {
@@ -617,17 +926,98 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Comment mesurer le volume d'une petite clé ?",
    "choix": [
-    "Lire le niveau d'eau d'une éprouvette, plonger la clé, relire, puis faire la différence",
-    "Peser la clé et lire sa masse",
-    "Mesurer sa longueur avec un réglet",
-    "Poser la clé sur une équerre"
+    "Plonger la clé dans une éprouvette et faire la différence des niveaux",
+    "Peser la clé sur la balance électronique et lire sa masse en grammes",
+    "Mesurer la longueur de la clé avec un réglet, puis la multiplier par trois",
+    "Poser la clé contre une équerre et lire l'angle qu'elle forme avec elle"
    ],
-   "explication": "Une forme compliquée se mesure par déplacement de liquide. La différence des niveaux donne son volume.",
+   "explication": "Une forme compliquée se mesure par déplacement de liquide. La différence des niveaux, avant et après, donne son volume.",
    "source": {
     "fichier": "methodes/Fiche methode - Instruments de mesure en physique-chimie.pdf",
     "page": 2
    },
-   "r": "=QEDRkyFHwstX8wBLIVCv0AAHR0DJYUFAcwNSlFAHgRBL0hUEpu7JYVDPMgRUwQFp0RGVUVXMoxGX4hNCdRRE26TDgAHVNiUAQAEW1gTaMRD1Q0CVgkAPNAFA4TZ",
+   "r": "=8gFacwAfsRKSZAAREFDNEwFaou7DMFRK80BKk0F1sBFDUVBM4kCGwhJbBhWf5hxlaEDcIjUGsAFVk0xs6xCjxUCV81CIgQCFISZ",
+   "poids": 1
+  },
+  {
+   "id": "methode-instruments-q44",
+   "fiche": "methode-instruments-f6",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Une éprouvette contient 35 mL d'eau. On y plonge deux billes identiques : le niveau monte à 41 mL. Quel est le volume d'une bille ?",
+   "choix": [
+    "3 mL",
+    "6 mL",
+    "41 mL",
+    "38 mL"
+   ],
+   "explication": "Les deux billes ensemble font 41 − 35 = 6 mL. Chacune mesure donc 3 mL.",
+   "indice": "Trouve d'abord le volume des deux billes ensemble.",
+   "source": {
+    "fichier": "methodes/Fiche methode - Instruments de mesure en physique-chimie.pdf",
+    "page": 2
+   },
+   "r": "NpyCJFUZ",
+   "poids": 1
+  },
+  {
+   "id": "methode-instruments-q45",
+   "fiche": "methode-instruments-f6",
+   "type": "vrai_faux",
+   "niveau": 3,
+   "enonce": "Le volume de l'objet plongé est égal au niveau lu après l'avoir plongé.",
+   "corrections": [
+    "Faux : c'est la différence entre le niveau après et le niveau avant.",
+    "Faux : c'est la somme du niveau avant et du niveau après.",
+    "Faux : c'est le niveau lu avant de le plonger."
+   ],
+   "explication": "Le niveau après compte aussi l'eau qui était déjà là. Il faut retirer le niveau avant pour trouver le volume de l'objet.",
+   "source": {
+    "fichier": "methodes/Fiche methode - Instruments de mesure en physique-chimie.pdf",
+    "page": 2
+   },
+   "r": "==gPPsUQD9QGHYEHTICBcsQVUUgTbcBSwUopH11DPNxBMQgLcUFAZEFDcsBHNMGSGsFScYcpA8wGjIFFJUVBasASRgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "methode-instruments-q46",
+   "fiche": "methode-instruments-f6",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Pourquoi le niveau du liquide monte-t-il quand on plonge un objet ?",
+   "choix": [
+    "L'objet prend de la place et déplace le liquide",
+    "L'objet absorbe une partie du liquide",
+    "La masse de l'objet comprime le liquide vers le haut",
+    "L'objet réchauffe le liquide, qui gonfle"
+   ],
+   "explication": "L'objet occupe une place que le liquide doit lui laisser : c'est le déplacement du liquide. Le niveau monte d'un volume égal à celui de l'objet.",
+   "source": {
+    "fichier": "methodes/Fiche methode - Instruments de mesure en physique-chimie.pdf",
+    "page": 2
+   },
+   "r": "=00ACAwB2sRGFBRHJtADTQwMEaaUNohCGNgCTsiAVRQGRxgCPZhBm8VFVk1CFQQCO5TZ",
+   "poids": 1
+  },
+  {
+   "id": "methode-instruments-q47",
+   "fiche": "methode-instruments-f6",
+   "type": "ordre",
+   "niveau": 3,
+   "enonce": "Remets dans l'ordre les étapes pour mesurer le volume d'un caillou.",
+   "elements": [
+    "Plonger le caillou dans l'éprouvette",
+    "Verser de l'eau dans l'éprouvette",
+    "Faire la différence des deux lectures",
+    "Lire le niveau de l'eau",
+    "Relire le niveau de l'eau"
+   ],
+   "explication": "On lit le niveau avant et après avoir plongé le caillou. La différence des deux lectures donne son volume.",
+   "source": {
+    "fichier": "methodes/Fiche methode - Instruments de mesure en physique-chimie.pdf",
+    "page": 2
+   },
+   "r": "=A3VZkhQfpUVFNEH",
    "poids": 1
   },
   {
@@ -638,9 +1028,9 @@ JEU.enregistrer("cours", {
    "enonce": "Quel récipient mesure une contenance très précise grâce à un trait gravé sur son col étroit ?",
    "choix": [
     "La fiole jaugée",
-    "Le saladier",
-    "Le verre à eau",
-    "La casserole"
+    "L'éprouvette graduée",
+    "Le verre doseur",
+    "Le saladier"
    ],
    "explication": "La fiole jaugée a un col très étroit marqué d'un trait. Sa précision va jusqu'à la goutte.",
    "source": {
@@ -658,8 +1048,8 @@ JEU.enregistrer("cours", {
    "enonce": "La fiole jaugée est précise parce que son col est très large.",
    "corrections": [
     "Faux : elle est précise parce que son col est très étroit, avec un trait gravé.",
-    "Faux : elle n'est pas précise du tout.",
-    "Faux : elle est précise parce qu'elle est en plastique."
+    "Faux : elle est précise parce qu'elle porte de nombreuses graduations.",
+    "Faux : elle est précise parce que son col large laisse bien voir le liquide."
    ],
    "explication": "Dans un col étroit, une goutte de plus se voit tout de suite. C'est ce qui rend la mesure précise.",
    "source": {
@@ -676,17 +1066,52 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Pourquoi le col étroit de la fiole jaugée rend-il la mesure précise ?",
    "choix": [
-    "Une toute petite quantité de liquide y fait bouger nettement le niveau",
-    "Il empêche le liquide de s'évaporer",
-    "Il rend le liquide plus lourd",
-    "Il refroidit le liquide"
+    "Une goutte de plus y fait bouger nettement le niveau",
+    "Il empêche le liquide de s'évaporer pendant la mesure",
+    "Il rend le liquide plus lourd, donc plus facile à peser",
+    "Il permet de lire de nombreuses graduations serrées"
    ],
    "explication": "Dans un col fin, le niveau monte vite. On voit donc tout de suite quand on atteint le trait.",
    "source": {
     "fichier": "methodes/Fiche methode - Instruments de mesure en physique-chimie.pdf",
     "page": 3
    },
-   "r": "==ATacwAfsRKSBRCVVwBLIwFccDSLUxXLgwEJsgUzsBFDUFCJtwCb0hMElQFIpwTPXaHbMDHUABBRxgGGYQDz0AABhVAbY0AHcSZ",
+   "r": "HBETLkxDIk0FrIVALABHMoxGXYwYfBgUYFQDGJBATEiUMUkBEUgHPdBDjhUEBhVAIY0AHcSZ",
+   "poids": 1
+  },
+  {
+   "id": "methode-instruments-q48",
+   "fiche": "methode-instruments-f7",
+   "type": "vrai_faux",
+   "niveau": 1,
+   "enonce": "Une fiole jaugée peut mesurer une contenance à la goutte près.",
+   "corrections": [],
+   "explication": "Oui : grâce au trait gravé sur son col très étroit, sa précision peut atteindre la goutte.",
+   "source": {
+    "fichier": "methodes/Fiche methode - Instruments de mesure en physique-chimie.pdf",
+    "page": 3
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "methode-instruments-q49",
+   "fiche": "methode-instruments-f7",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Qu'est-ce qui distingue la fiole jaugée de l'éprouvette graduée ?",
+   "choix": [
+    "La fiole a un seul trait gravé, pour une contenance très précise",
+    "La fiole a beaucoup plus de graduations que l'éprouvette",
+    "La fiole ne forme jamais de ménisque, contrairement à l'éprouvette",
+    "La fiole sert à peser, l'éprouvette à mesurer des volumes"
+   ],
+   "explication": "L'éprouvette porte de nombreuses graduations pour lire des volumes variés. La fiole jaugée n'a qu'un trait gravé, pour une seule contenance mesurée très précisément.",
+   "source": {
+    "fichier": "methodes/Fiche methode - Instruments de mesure en physique-chimie.pdf",
+    "page": 3
+   },
+   "r": "LdBNbYBz2OQGOxh2rGTWFBlTA4ACD0BHoERVAsBBJxhGdgxYBws9b9QHBYUHbYCABUUGEwQHPxRHjxURQFUAGAgRI4TZ",
    "poids": 1
   },
   {
@@ -697,9 +1122,9 @@ JEU.enregistrer("cours", {
    "enonce": "Avec qui réalise-t-on les expériences de physique-chimie à la maison ?",
    "choix": [
     "Toujours sous la surveillance d'un adulte",
-    "Seul, sans prévenir personne",
-    "Avec un camarade de 5e seulement",
-    "Personne : on ne fait jamais d'expérience"
+    "Avec un camarade de classe, sans aucun adulte",
+    "Seul, si l'expérience paraît simple",
+    "Seul, en suivant bien le livret"
    ],
    "explication": "Les expériences se font systématiquement avec un adulte. C'est la règle de sécurité des TP.",
    "source": {
@@ -729,23 +1154,23 @@ JEU.enregistrer("cours", {
    "fiche": "methode-instruments-f8",
    "type": "association",
    "niveau": 2,
-   "enonce": "Relie chaque instrument de la liste de TP à ce qu'il mesure.",
+   "enonce": "Relie chaque instrument du matériel de TP à ce qu'il mesure.",
    "gauche": [
     "Balance électronique",
     "Verre doseur",
     "Thermomètre"
    ],
    "droite": [
-    "Une température",
+    "Un volume de liquide",
     "Une masse",
-    "Un volume de liquide"
+    "Une température"
    ],
    "explication": "La balance donne une masse, le verre doseur un volume. Le thermomètre donne une température.",
    "source": {
     "fichier": "methodes/Physique-chimie - Materiel des TP.pdf",
     "page": 1
    },
-   "r": "==AKsklQdlCRe8RSEYnQyclSZlCH",
+   "r": "==AKsslQdlCRe0RSEYnQyclSZlCH",
    "poids": 1
   },
   {
@@ -755,17 +1180,58 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Comment faire si une expérience du livret ne peut pas être réalisée à la maison ?",
    "choix": [
-    "On étudie ses résultats grâce aux photos du livret",
-    "On invente les résultats",
-    "On saute le chapitre",
-    "On la fait seul en cachette"
+    "On étudie ses résultats sur les photos du livret",
+    "On la remplace par une autre expérience au choix",
+    "On la fait plus tard, seul, sans adulte",
+    "On recopie les résultats d'un camarade"
    ],
    "explication": "Le livret montre les résultats en photo. On peut donc suivre le cours quand même.",
    "source": {
     "fichier": "methodes/Physique-chimie - Materiel des TP.pdf",
     "page": 1
    },
-   "r": "==wDRA1XYYgCGxhFnFgGRoRGZ40FHkwYIZwluzBCGVRHTMjHAYB3yuhTccxGjhEDRhlGGXqRH0TZ",
+   "r": "==wDaoAFQAgHndQEFZgHdEwBCgEMIlQFftBHGVRHTMjHAYB3yuhTccxGjhEDRhlGGXqRH0TZ",
+   "poids": 1
+  },
+  {
+   "id": "methode-instruments-q50",
+   "fiche": "methode-instruments-f8",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Une expérience qui paraît simple peut se faire seul, sans adulte.",
+   "corrections": [
+    "Faux : toutes les expériences se font sous la surveillance d'un adulte.",
+    "Faux : seules les expériences avec une casserole demandent un adulte.",
+    "Faux : on peut la faire avec un camarade du même âge, sans adulte."
+   ],
+   "explication": "La règle ne connaît pas d'exception : chaque expérience se fait avec un adulte qui surveille. C'est une règle de sécurité.",
+   "source": {
+    "fichier": "methodes/Physique-chimie - Materiel des TP.pdf",
+    "page": 1
+   },
+   "r": "PoUbIFRWYpgDGhAHVNiUQYwGQUgAGchHxglFVwkAPVxEGEwZGshCTEFDd8UANAyQAw1XHzqFewgU0cRGFZAFdsBAGgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "methode-instruments-q51",
+   "fiche": "methode-instruments-f8",
+   "type": "qcm_multiple",
+   "niveau": 3,
+   "enonce": "Dans ce matériel de TP, lesquels sont des instruments de mesure ?",
+   "choix": [
+    "Une balance électronique",
+    "Un verre doseur",
+    "Un thermomètre",
+    "Un saladier",
+    "Un mouchoir en papier",
+    "Un ballon de baudruche"
+   ],
+   "explication": "La balance mesure une masse, le verre doseur un volume et le thermomètre une température. Le saladier, le mouchoir et le ballon servent aux expériences, sans rien mesurer.",
+   "source": {
+    "fichier": "methodes/Physique-chimie - Materiel des TP.pdf",
+    "page": 1
+   },
+   "r": "=gyRQMQHGz6HH4yXA0VWOFwMEVEU1cAEWoRFJtQHA0QNNsAYPIUTDMBGbkSHHEhFUUwxsKVDgMEBZxEDPNAC8AFH",
    "poids": 1
   }
  ],
