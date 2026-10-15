@@ -164,7 +164,7 @@ Retirés en 0.5.0 : l'Assaut (à la Slay the Spire, 8 questions, jalon 1) et le 
   - jeu/data/ : config, planning, devoirs, index-cours, a-retravailler, suivi, cours/, anglais/
   - jeu/assets/ : polices, sons, icônes, images, cartes
   - atelier/ : registre.json, index-notions.json, contenu/, extractions/, devoirs/, relectures/, outils/, versions/ ; drive/ (PDF du Drive gardés pour l'inventaire, ignorés par git : ce n'est pas une source tant qu'ils ne sont pas déposés dans DEPOT/)
-- Chargement : config, planning, devoirs, index-cours, a-retravailler et suivi, puis une balise script par cours listé. Un fichier absent ou en erreur ne bloque pas le jeu : le cours reste dans la brume (présumé acquis s'il date des semaines 1 à 6 ; une fiche méthode affiche « contenu à venir »).
+- Chargement : config, planning, devoirs, index-cours, a-retravailler et suivi, puis une balise script par cours listé. Un fichier absent ou en erreur ne bloque pas le jeu : le cours reste dans la brume (présumé acquis s'il date des semaines 1 à 6, avec la mention « contenu à venir » dans la liste des cours ; une fiche méthode affiche « contenu à venir »).
 - Sauvegarde : localStorage (clé jeu5e), schéma versionné (3 depuis la 0.5.0, avec la campagne) et migration sans perte, export et import en JSON. Le jeu rappelle d'exporter si le dernier export a plus de 7 jours.
 - Brouillage des réponses : la même fonction dans jeu/js/brouillage.js et atelier/outils/brouillage.js.
 - Validateur : atelier/outils/valider.js (Node, tous les contrôles, notes de suivi.js comprises, et même numéro dans VERSION.txt et JEU.version) et atelier/outils/validateur.html (navigateur, contrôles qui ne demandent pas les extractions).
