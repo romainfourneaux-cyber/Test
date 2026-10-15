@@ -102,7 +102,7 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s02-2-f1",
    "type": "qcm",
    "niveau": 1,
-   "enonce": "Comment la quantité de vapeur d'eau dans l'atmosphère a-t-elle évolué il y a plus de 4 milliards d'années ?",
+   "enonce": "Comment la quantité de vapeur d'eau de l'atmosphère a-t-elle évolué depuis 4,5 milliards d'années ?",
    "choix": [
     "Elle a chuté très vite, puis s'est stabilisée",
     "Elle a augmenté sans arrêt",

@@ -75,7 +75,7 @@ JEU.enregistrer("cours", {
    "id": "geographie-s03-1-f3",
    "notion": "Les problèmes posés par le vieillissement",
    "titre": "Les défis du vieillissement",
-   "texte": "Avec plus de personnes âgées, les États doivent payer davantage de retraites et créer des services de santé, comme des hôpitaux ou des maisons de retraite, car on se soigne plus en vieillissant. En France, plus de 600 000 personnes âgées vivent en maison de retraite ou en EHPAD. Comme les jeunes manquent, les entreprises manquent aussi de travailleurs.",
+   "texte": "Avec plus de personnes âgées, les États doivent payer davantage de retraites et créer des services de santé, comme des hôpitaux ou des maisons de retraite, car on se soigne plus en vieillissant. En France, plus de 600 000 personnes âgées vivent en maison de retraite ou en EHPAD. Comme les jeunes manquent, le pays manque aussi de travailleurs.",
    "pointsCles": [
     "Financer les retraites",
     "Créer des services de santé : hôpitaux, maisons de retraite",
@@ -213,6 +213,26 @@ JEU.enregistrer("cours", {
     "page": 4
    },
    "r": "PoUbDpAXZ9wATYhBCc2EZU0BYUgAGcRA10QEcxECP9wEYIlIRUVSG8BABIgUGYSDWsFRBIgRD0gUzwhGFtBFJ1xAbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s03-1-q19",
+   "fiche": "geographie-s03-1-f1",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Pourquoi la population des pays développés vieillit-elle ?",
+   "choix": [
+    "Parce qu'il y naît peu d'enfants et qu'on y vit très longtemps",
+    "Parce que les naissances y sont de plus en plus nombreuses",
+    "Parce que l'espérance de vie y baisse",
+    "Parce que les jeunes y sont de plus en plus nombreux"
+   ],
+   "explication": "Peu de naissances, c'est peu de jeunes ; une longue espérance de vie, c'est beaucoup de personnes âgées. La part des personnes âgées grandit donc.",
+   "source": {
+    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
+    "page": 4
+   },
+   "r": "QZQFYQRHJEQHEMmXNb/Xa8kEP8hU+I1GKIFBY40GXgEMZtAVLBgCBJQSHIiAVFx2yiAAPtASvQkQAxlTKUAFIISZ",
    "poids": 1
   },
   {
@@ -363,7 +383,7 @@ JEU.enregistrer("cours", {
     "Parce que les jeunes sont trop nombreux",
     "Parce que les retraités prennent tous les emplois"
    ],
-   "explication": "Peu de naissances hier, c'est peu de travailleurs aujourd'hui. Les entreprises ont du mal à recruter.",
+   "explication": "Peu de naissances hier, c'est peu de travailleurs aujourd'hui. Le cours parle d'une pénurie de main-d'œuvre.",
    "source": {
     "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
     "page": 4
@@ -396,18 +416,18 @@ JEU.enregistrer("cours", {
    "fiche": "geographie-s03-1-f3",
    "type": "association",
    "niveau": 2,
-   "enonce": "Relie chaque effet du vieillissement à ce qu'il oblige à faire.",
+   "enonce": "Relie chaque effet du vieillissement au problème qu'il pose à l'État.",
    "gauche": [
-    "Plus de personnes âgées",
-    "Des dépenses de santé qui augmentent avec l'âge",
-    "Moins de jeunes"
+    "Les retraités sont de plus en plus nombreux",
+    "On a besoin de plus de soins en vieillissant",
+    "Les jeunes sont moins nombreux"
    ],
    "droite": [
-    "Faire face à une pénurie de main-d'œuvre",
-    "Financer davantage de retraites",
-    "Créer des hôpitaux et des maisons de retraite"
+    "Une pénurie de main-d'œuvre",
+    "Des retraites plus coûteuses à financer",
+    "Des hôpitaux et des maisons de retraite à créer"
    ],
-   "explication": "Les personnes âgées touchent une retraite et se soignent plus souvent. Avec moins de jeunes, il manque des travailleurs.",
+   "explication": "Plus de retraités, ce sont plus de retraites à payer, et plus de soins demandent plus d'hôpitaux et de maisons de retraite. Avec moins de jeunes, il manque des travailleurs.",
    "source": {
     "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
     "page": 4

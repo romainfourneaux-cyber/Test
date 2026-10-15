@@ -44,7 +44,7 @@ JEU.enregistrer("cours", {
    "titre": "Une population qui explose",
    "texte": "Depuis 1960, la mortalité du Burkina Faso a beaucoup baissé, alors que la natalité reste forte et ne recule que lentement. Les naissances dépassent donc largement les décès : la population grimpe très vite. D'environ 5 millions d'habitants en 1960, elle pourrait dépasser 30 millions vers 2040. Le pays n'en est qu'au début de sa transition démographique.",
    "pointsCles": [
-    "Natalité : près de 50 pour mille en 1960, encore haute aujourd'hui",
+    "Natalité : un peu moins de 50 pour mille en 1960, encore haute aujourd'hui",
     "Mortalité : près de 30 pour mille en 1960, en forte baisse depuis",
     "Environ 5 millions d'habitants en 1960, plus de 30 millions prévus vers 2040",
     "Un pays au tout début de sa transition démographique"
@@ -109,6 +109,7 @@ JEU.enregistrer("cours", {
     "Espérance de vie : 61 ans au Burkina Faso, 82 ans en France",
     "Mortalité infantile : 54 pour mille, plus de quatre fois celle de la France",
     "PIB par habitant : 786 dollars par an, environ cinquante fois moins qu'en France",
+    "Croissance de la population : + 2,89 % par an, contre + 0,2 % en France",
     "Jusqu'à 120 élèves par classe, et plus de la moitié des enfants travaillent"
    ],
    "dates": [],
@@ -247,7 +248,7 @@ JEU.enregistrer("cours", {
     "Elle n'a pas bougé",
     "Elle a dépassé la natalité"
    ],
-   "explication": "La courbe rouge de la mortalité descend nettement depuis 1960. Elle reste bien sous la natalité.",
+   "explication": "Sur le graphique, la mortalité passe d'un peu moins de 30 pour mille en 1960 à environ 10 pour mille de nos jours. Elle reste toujours bien sous la natalité.",
    "source": {
     "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1 - Etude de cas 1 Burkina Faso.pdf",
     "page": 1
