@@ -512,7 +512,19 @@ JEU.enregistrer("cours", {
    "poids": 1
   }
  ],
- "bonus": [],
+ "bonus": [
+  {
+   "id": "geographie-s03-1-b1",
+   "fiche": "geographie-s03-1-f1",
+   "titre": "Plus d'aînés que de tout-petits",
+   "texte": "L'ONU a fait du 1er octobre la Journée des personnes âgées. Dans le monde, elles étaient trois fois plus nombreuses en 2021 qu'en 1980 : 761 millions. En 2018, elles ont pour la première fois dépassé en nombre les enfants de moins de cinq ans.",
+   "source": {
+    "titre": "Journée internationale des personnes âgées",
+    "editeur": "Organisation des Nations Unies (ONU)",
+    "url": "https://www.un.org/fr/observances/older-persons-day"
+   }
+  }
+ ],
  "nonCouvert": [
   "Les graphiques du cours (espérance de vie des Français depuis 1960, part des personnes âgées dans plusieurs pays) : seuls leurs titres sont lisibles dans l'extraction, leurs valeurs ne sont pas reprises.",
   "Page 9 (la Chine, puissance démographique vieillissante) : exercice non repris dans ce cours.",

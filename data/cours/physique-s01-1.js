@@ -720,7 +720,19 @@ JEU.enregistrer("cours", {
    "poids": 1
   }
  ],
- "bonus": [],
+ "bonus": [
+  {
+   "id": "physique-s01-1-b1",
+   "fiche": "physique-s01-1-f5",
+   "titre": "L'invention du niveau à bulle",
+   "texte": "Le niveau à bulle aurait été inventé vers 1660 par le savant français Melchisédech Thévenot. Il a d'abord servi aux mesures de précision. Jusqu'à la fin du XVIIIe siècle au moins, maçons et charpentiers utilisaient encore un niveau en bois équipé d'un fil à plomb.",
+   "source": {
+    "titre": "Niveau à bulle",
+    "editeur": "Wikipédia, l'encyclopédie libre",
+    "url": "https://fr.wikipedia.org/wiki/Niveau_%C3%A0_bulle"
+   }
+  }
+ ],
  "nonCouvert": [
   "Le livret de cours de la séance n'est pas déposé : seules les réponses du corrigé et la fiche de mémorisation photographiée servent de source.",
   "Le résultat observé de l'expérience du verre retourné (le mouchoir est-il mouillé ?) : le corrigé donne la conclusion sur l'air, pas l'observation.",
