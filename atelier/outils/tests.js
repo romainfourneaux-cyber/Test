@@ -92,12 +92,12 @@ const v1 = {
 };
 const m = J.sauvegarde.migrer(JSON.parse(JSON.stringify(v1)));
 const conserve = ["cours", "notions", "ressources", "batiments", "devoirs", "signalements", "creeLe"].every(k => JSON.stringify(m[k]) === JSON.stringify(v1[k]));
-verifier("Migration 1 → 4 : rien de perdu", conserve && m.schema === 4);
-verifier("Migration 1 → 4 : file des rappels vide", JSON.stringify(m.rappels) === JSON.stringify({ compteur: 0, file: [] }), m.rappels);
-verifier("Migration 1 → 4 : campagne neuve et musique", m.campagne && m.campagne.conquises.length === 0 && m.campagne.arsenal.tours.archers === 1 && m.reglages.musique === true);
+verifier("Migration 1 → 5 : rien de perdu", conserve && m.schema === 5);
+verifier("Migration 1 → 5 : file des rappels vide", JSON.stringify(m.rappels) === JSON.stringify({ compteur: 0, file: [] }), m.rappels);
+verifier("Migration 1 → 5 : campagne neuve et musique", m.campagne && m.campagne.conquises.length === 0 && m.campagne.arsenal.tours.archers === 1 && m.reglages.musique === true);
 verifier("Migration 1 → 2 : nouveaux champs", m.reglages && m.reglages.son === true && m.stats.bonnes === 3 && m.stats.total === 4 && typeof m.questionsVues === "object");
 const sansSchema = J.sauvegarde.migrer({ cours: {}, notions: {} });
-verifier("Sauvegarde sans numéro de schéma traitée comme schéma 1", sansSchema.schema === 4 && sansSchema.ressources.sceaux === 0);
+verifier("Sauvegarde sans numéro de schéma traitée comme schéma 1", sansSchema.schema === 5 && sansSchema.ressources.sceaux === 0);
 
 // export puis import : même partie
 J.sauvegarde.remplacer(m);
@@ -109,18 +109,18 @@ const refuse = t => { try { J.sauvegarde.importer(t); return false; } catch (e) 
 const avantImport = JSON.stringify(J.sauvegarde.etat());
 verifier("Import d'un fichier étranger refusé, partie intacte", refuse('{"name":"mon-projet","version":"1.0.0"}') && refuse("[]") && refuse("pas du JSON") && JSON.stringify(J.sauvegarde.etat()) === avantImport);
 
-// migration 2 → 3 → 4 : la campagne s'ajoute, puis la file des rappels ; le reste ne bouge pas
+// migration 2 → 3 → 4 → 5 : la campagne s'ajoute, puis la file des rappels, puis la mémoire des questions posées ; le reste ne bouge pas
 const v2 = JSON.parse(JSON.stringify(m)); delete v2.campagne; delete v2.rappels; v2.schema = 2; delete v2.reglages.musique;
 const m3 = J.sauvegarde.migrer(JSON.parse(JSON.stringify(v2)));
-verifier("Migration 2 → 4 : rien de perdu", ["cours", "notions", "ressources", "batiments", "stats"].every(k => JSON.stringify(m3[k]) === JSON.stringify(v2[k])) && m3.schema === 4 && m3.campagne.provinces.gue.pv === 16 && m3.rappels.file.length === 0);
-// migration 3 → 4 : seule la file des rappels s'ajoute, tout le reste est identique
-const v3 = JSON.parse(JSON.stringify(m)); delete v3.rappels; v3.schema = 3;
+verifier("Migration 2 → 5 : rien de perdu", ["cours", "notions", "ressources", "batiments", "stats"].every(k => JSON.stringify(m3[k]) === JSON.stringify(v2[k])) && m3.schema === 5 && m3.campagne.provinces.gue.pv === 16 && m3.rappels.file.length === 0);
+// migration 3 → 5 : seules la file des rappels et la mémoire des questions posées s'ajoutent, tout le reste est identique
+const v3 = JSON.parse(JSON.stringify(m)); delete v3.rappels; delete v3.posees; v3.schema = 3;
 v3.campagne.conquises = ["gue"]; v3.campagne.royaume.savoir = 5; v3.questionsVues = { "methode-frise-q3": 2 };
 const m4 = J.sauvegarde.migrer(JSON.parse(JSON.stringify(v3)));
-verifier("Migration 3 → 4 : rien de perdu, file des rappels ajoutée",
-  Object.keys(v3).filter(k => k !== "schema").every(k => JSON.stringify(m4[k]) === JSON.stringify(v3[k])) && m4.schema === 4 &&
-  JSON.stringify(m4.rappels) === JSON.stringify({ compteur: 0, file: [] }), Object.keys(m4));
-verifier("Sauvegarde d'un schéma plus récent (5) refusée", (() => { try { J.sauvegarde.migrer({ schema: 5, creeLe: "2026-10-15T10:00:00", notions: {}, ressources: {} }); return false; } catch (e) { return true; } })());
+verifier("Migration 3 → 5 : rien de perdu, file des rappels et mémoire des questions posées ajoutées",
+  Object.keys(v3).filter(k => k !== "schema").every(k => JSON.stringify(m4[k]) === JSON.stringify(v3[k])) && m4.schema === 5 &&
+  JSON.stringify(m4.rappels) === JSON.stringify({ compteur: 0, file: [] }) && JSON.stringify(m4.posees) === JSON.stringify({ horloge: 0, questions: {} }), Object.keys(m4));
+verifier("Sauvegarde d'un schéma plus récent (6) refusée", (() => { try { J.sauvegarde.migrer({ schema: 6, creeLe: "2026-10-15T10:00:00", notions: {}, ressources: {} }); return false; } catch (e) { return true; } })());
 
 // campagne : rien ne se perd, les coups portés restent, une victoire conquiert
 J.sauvegarde.remplacer(J.sauvegarde.nouvelle());
@@ -391,7 +391,7 @@ verifier("Récit : jamais de pénalité ni de chrono dans les phrases de seconde
 })());
 
 // sauvegarde : la file est gardée (export, import) ; à la séance suivante, les rappels en attente passent en tête
-verifier("Sauvegarde neuve : schéma 4, file des rappels vide", JR.sauvegarde.nouvelle().schema === 4 && JSON.stringify(JR.sauvegarde.nouvelle().rappels) === JSON.stringify({ compteur: 0, file: [] }));
+verifier("Sauvegarde neuve : schéma 5, file des rappels vide", JR.sauvegarde.nouvelle().schema === 5 && JSON.stringify(JR.sauvegarde.nouvelle().rappels) === JSON.stringify({ compteur: 0, file: [] }));
 neuve();
 repondre(H(1), false);
 const fileAvant = JSON.stringify(JR.sauvegarde.etat().rappels);
@@ -608,6 +608,208 @@ verifier("Tirage avec les vrais cours : chaque famille qui a des questions entre
   famillesV.length >= 2 && famillesV.every(f => (pV[f] || 0) >= 0.14 && (pV[f] || 0) <= 0.3), rond(pV));
 tempsV.sort((a, b) => a - b);
 verifier("Tirage avec les vrais cours : un lot de 3 en moins de 5 ms (médiane)", tempsV[Math.floor(tempsV.length / 2)] < 5, tempsV[Math.floor(tempsV.length / 2)].toFixed(2) + " ms");
+
+// ---------- anti-répétition : une question ne revient pas trop tôt (demande de Romain, 15/10/2026 : « elles reviennent souvent ») ----------
+// Contexte neuf : cinq familles, un cours de 10 fiches chacune, 6 questions par fiche (niveaux 1, 1, 2, 2, 3 et 1 ; deux
+// vrai ou faux par fiche) : 300 questions, 100 vrai ou faux.
+const JA = contexte().JEU, QA = JA.questions, RA = JA.rappels;
+JA.sauvegarde.charger();
+function coursRiche(id, n) {
+  const fiches = [], questions = [];
+  let k = 0;
+  const q = (f, type, niveau) => {
+    k++;
+    const base = { id: id + "-q" + k, fiche: f, type: type, niveau: niveau, enonce: "Question " + k + " ?", explication: "a.", source: SRC };
+    return Object.assign(base, type === "vrai_faux" ? { corrections: [], reponse: { vrai: true, correction: null } } : { choix: ["a", "b", "c", "d"], reponse: "a" });
+  };
+  for (let i = 1; i <= n; i++) {
+    const f = id + "-f" + i;
+    fiches.push({ id: f, notion: "Notion " + i, titre: "Notion " + i, texte: "", source: SRC });
+    questions.push(q(f, "qcm", 1), q(f, "vrai_faux", 1), q(f, "qcm", 2), q(f, "vrai_faux", 2), q(f, "qcm", 3), q(f, "qcm", 1));
+  }
+  return { id: id, fiches: fiches, questions: questions, bonus: [], nonCouvert: [] };
+}
+const FAM_A = ["histoire", "geographie", "svt", "physique", "francais"];
+["histoire", "geographie", "svt", "physique", "litterature"].forEach(m => { JA.donnees.cours[m + "-s07-1"] = coursRiche(m + "-s07-1", 10); });
+JA.donnees.aRetravailler = []; JA.donnees.suivi = { cours: {} };
+QA.vider(); JA.progression.oublier();
+// le jeu rouvert (nouvelle séance) : la sauvegarde est relue, les mémoires de la séance repartent de zéro
+function seance(J) { J.sauvegarde.enregistrer(); J.sauvegarde.charger(); J.questions.oublierSeance(); J.recit.oublierHistorique(); J.questions.oublierReponses(); J.progression.oublier(); }
+const neuveA = () => { JA.sauvegarde.remplacer(JA.sauvegarde.nouvelle()); seance(JA); };
+// joue comme le jeu : bataille (4 vagues, 3 questions tirées au début de chaque vague, comme jeu/js/bataille.js),
+// conseil (8 vrai ou faux), événement (3) ; après une erreur, les questions qui restent sont replacées (« Seconde chance »)
+function jouerJeu(J, parties, juste, seulementBatailles, temps) {
+  const Q = J.questions, seq = [];
+  const rep = (q, partie) => { const ok = juste(q); seq.push({ id: q.id, fiche: q.fiche, rappel: !!q.rappel, niveau: q.niveau, matiere: q.matiere, partie: partie, ok: ok }); Q.enregistrerReponse(q, ok); return ok; };
+  const tirer = f => { const t0 = process.hrtime.bigint(); const r = f(); if (temps) temps.push(Number(process.hrtime.bigint() - t0) / 1e6); return r; };
+  for (let i = 0; i < parties; i++) {
+    if (seulementBatailles || i % 4 < 2) {
+      let questions = [], iQ = 0;
+      for (let v = 0; v < 4; v++) {
+        const debut = iQ, ids = questions.map(q => q.id), fs = questions.map(q => q.fiche);
+        questions = questions.concat(tirer(() => Q.avecNiveaux(Q.NIVEAUX_BATAILLE, () => J.recit.suite(3, { exclure: ids, filtre: q => fs.indexOf(q.fiche) < 0, completer: true }))));
+        while (iQ < Math.min(questions.length, debut + 3)) {
+          const ok = rep(questions[iQ], "bataille"); iQ++;
+          if (!ok) Q.avecNiveaux(Q.NIVEAUX_BATAILLE, () => J.rappels.replacer(questions, iQ, debut + 3));
+        }
+      }
+    } else {
+      const vf = i % 4 === 2, opts = vf ? { types: ["vrai_faux"] } : undefined;
+      const qs = tirer(() => J.recit.suite(vf ? 8 : 3, opts));
+      for (let k = 0; k < qs.length; ) { const ok = rep(qs[k], vf ? "conseil" : "evenement"); k++; if (!ok) J.rappels.replacer(qs, k, qs.length, opts); }
+    }
+  }
+  return seq;
+}
+// questions ordinaires (hors « Seconde chance ») déjà posées parmi les fenetre(x) précédentes ; notion déjà posée parmi les n précédentes
+const reposees = (seq, fenetre) => seq.filter((x, i) => !x.rappel && seq.slice(Math.max(0, i - fenetre(x)), i).some(y => y.id === x.id)).length;
+const memeNotion = (seq, n) => seq.filter((x, i) => !x.rappel && seq.slice(Math.max(0, i - n), i).some(y => y.fiche === x.fiche)).length;
+
+// mémoire des questions posées (schéma 5) : sauvegardée, exportée, relue, migrée, réparée
+neuveA();
+const qa1 = QA.questionsDeFiche("histoire-s07-1-f1")[0], qa2 = QA.questionsDeFiche("svt-s07-1-f2")[0];
+QA.enregistrerReponse(qa1, true); QA.enregistrerReponse(qa2, false); QA.enregistrerReponse(qa1, true);
+const memA = JSON.stringify(JA.sauvegarde.etat().posees);
+verifier("Mémoire des questions posées : l'horloge compte les réponses, chaque question garde la dernière fois où elle a été posée",
+  memA === JSON.stringify({ horloge: 3, questions: { [qa1.id]: 3, [qa2.id]: 2 } }) && JSON.stringify(JA.sauvegarde.nouvelle().posees) === JSON.stringify({ horloge: 0, questions: {} }), memA);
+const txtA = JA.sauvegarde.texteExport();
+JA.sauvegarde.remplacer(JA.sauvegarde.nouvelle());
+JA.sauvegarde.importer(txtA);
+const memImport = JSON.stringify(JA.sauvegarde.etat().posees);
+seance(JA);
+verifier("Mémoire des questions posées : gardée par l'export puis l'import, et relue telle quelle quand le jeu est rouvert", memImport === memA && JSON.stringify(JA.sauvegarde.etat().posees) === memA, [memImport, JSON.stringify(JA.sauvegarde.etat().posees)]);
+const v4 = JSON.parse(JSON.stringify(JA.sauvegarde.etat())); delete v4.posees; v4.schema = 4; v4.questionsVues = { [qa1.id]: 3 };
+const m5 = JA.sauvegarde.migrer(JSON.parse(JSON.stringify(v4)));
+verifier("Migration 4 → 5 : rien de perdu, mémoire des questions posées ajoutée, vide",
+  Object.keys(v4).filter(k => k !== "schema").every(k => JSON.stringify(m5[k]) === JSON.stringify(v4[k])) && m5.schema === 5 && JSON.stringify(m5.posees) === JSON.stringify({ horloge: 0, questions: {} }), Object.keys(m5));
+verifier("Mémoire des questions posées abîmée : réparée sans planter ni rien perdre de lisible", (() => {
+  const r = QA.completerPosees({ horloge: "x", questions: { a: 5, b: "z", c: 2 } }), r2 = QA.completerPosees({ horloge: 4, questions: [1, 2] });
+  const vide = JSON.stringify({ horloge: 0, questions: {} });
+  const e = JA.sauvegarde.nouvelle(); e.posees = 7; JA.sauvegarde.remplacer(e);
+  QA.enregistrerReponse(qa1, true);
+  return r.horloge === 5 && r.questions.a === 5 && r.questions.c === 2 && r2.horloge === 4 && JSON.stringify(r2.questions) === "{}" &&
+    JSON.stringify(QA.completerPosees(null)) === vide && JSON.stringify(QA.completerPosees([])) === vide && e.posees.horloge === 1 && e.posees.questions[qa1.id] === 1;
+})());
+// ancienne sauvegarde : une question vue avant le schéma 5 (questionsVues, sans date) compte comme posée il y a longtemps
+neuveA();
+const fA = "physique-s07-1-f3", nivA1 = QA.questionsDeFiche(fA, [1]); // trois questions de niveau 1
+nivA1.slice(0, 2).forEach(q => { JA.sauvegarde.etat().questionsVues[q.id] = 4; });
+QA.oublierReponses(); for (let i = 0; i < 10; i++) QA.retenir(false); // niveau conseillé 1
+const choixVu = QA.choisirPourFiche(fA, { fenetre: 60 });
+verifier("Ancienne sauvegarde : une question vue avant (sans date) passe après une jamais vue du même niveau, et la fenêtre ne la bloque pas",
+  nivA1.length === 3 && choixVu.id === nivA1[2].id && QA.dernierePose(nivA1[0].id, QA.posees(), JA.sauvegarde.etat().questionsVues) <= QA.posees().horloge - 60, choixVu.id);
+
+// dans une fiche : rotation, et le niveau conseillé avant la nouveauté
+neuveA();
+QA.oublierReponses(); for (let i = 0; i < 10; i++) QA.retenir(false); // niveau conseillé 1 (il y reste : réponses fausses)
+const tour = [];
+for (let i = 0; i < 6; i++) { const q = QA.choisirPourFiche(fA); tour.push(q.id); QA.enregistrerReponse(q, false); }
+verifier("Dans une fiche, les questions tournent : jamais posées d'abord, puis la plus anciennement posée (au niveau conseillé)",
+  new Set(tour.slice(0, 3)).size === 3 && tour.slice(3).join() === tour.slice(0, 3).join() && tour.every(id => nivA1.some(q => q.id === id)), tour);
+neuveA();
+const fN = "svt-s07-1-f4";
+QA.questionsDeFiche(fN, [1]).forEach(q => QA.enregistrerReponse(q, false)); // ses questions de niveau 1 ont déjà été posées
+const niveauxTires = (n) => { const c = { 1: 0, 2: 0, 3: 0 }; for (let i = 0; i < n; i++) c[QA.avecNiveaux(QA.NIVEAUX_BATAILLE, () => QA.choisirPourFiche(fN)).niveau]++; return c; };
+QA.oublierReponses(); for (let i = 0; i < 10; i++) QA.retenir(false);
+const nivDiff = niveauxTires(30);
+QA.oublierReponses(); for (let i = 0; i < 10; i++) QA.retenir(true);
+const nivFort = niveauxTires(30);
+QA.oublierReponses(); // au début d'une séance : 1,5
+const nivDebut = niveauxTires(400);
+verifier("Niveau : le niveau conseillé passe avant la question jamais vue (conseillé 1 : niveau 1 déjà posé plutôt que 2 ou 3 jamais vus ; 3 : niveau 3 ; 1,5 : niveaux 1 et 2 une fois sur deux, jamais 3)",
+  nivDiff[1] === 30 && nivFort[3] === 30 && nivDebut[3] === 0 && nivDebut[1] >= 140 && nivDebut[2] >= 140, { nivDiff, nivFort, nivDebut });
+
+// repos d'une notion
+neuveA();
+const r0 = JA.recit.suite(1)[0]; QA.enregistrerReponse(r0, true);
+const apresJuste = []; for (let i = 0; i < 15; i++) { const q = JA.recit.suite(1)[0]; apresJuste.push(q); QA.enregistrerReponse(q, true); }
+neuveA();
+const r1 = JA.recit.suite(1)[0]; QA.enregistrerReponse(r1, false);
+const apresFaux = []; for (let i = 0; i < 10; i++) { const q = JA.recit.suite(1)[0]; apresFaux.push(q); QA.enregistrerReponse(q, true); }
+verifier("Repos d'une notion : réussie, elle ne ressort pas avant 15 questions ; ratée, pas avant 10, sauf sa « Seconde chance », 4e question après",
+  apresJuste.length === 15 && apresJuste.every(q => q.fiche !== r0.fiche) && apresFaux.every((q, i) => i === 3 ? q.id === r1.id && q.rappel : q.fiche !== r1.fiche),
+  { juste: apresJuste.filter(q => q.fiche === r0.fiche).length, faux: apresFaux.map(q => q.id + (q.rappel ? " (rappel)" : "")) });
+neuveA();
+const fR = "geographie-s07-1-f2", qsR = QA.questionsDeFiche(fR, [1, 2]);
+JA.donnees.aRetravailler = [fR]; JA.progression.oublier();
+QA.enregistrerReponse(qsR[0], true);
+const prioUne = QA.aRevoirEnCours([fR]).length === 1;
+QA.enregistrerReponse(qsR[1], true);
+const prioDeux = QA.aRevoirEnCours([fR]).length === 0;
+seance(JA);
+verifier("Notion à revoir réussie deux fois dans la séance : elle perd sa priorité jusqu'à la séance suivante, où elle la retrouve",
+  prioUne && prioDeux && QA.aRevoirEnCours([fR]).length === 1, { prioUne, prioDeux });
+JA.donnees.aRetravailler = []; JA.progression.oublier();
+
+// en jouant : quatre séances de batailles, conseils et événements, 7 réponses justes sur 10
+neuveA();
+let seqA = [];
+for (let s = 0; s < 4; s++) { seqA = seqA.concat(jouerJeu(JA, 16, () => Math.random() < 0.7)); seance(JA); }
+// fenêtre de chaque tirage : 60 en bataille et dans un événement (250 à 300 questions possibles), la moitié des vrai ou
+// faux possibles au conseil (100 au plus, moins ceux qui attendent leur seconde chance) : 40 au moins
+const fenA = x => x.partie === "conseil" ? 40 : 60;
+verifier("Anti-répétition en jouant (4 séances de 140 questions) : aucune question ne revient à moins de 60 questions (40 au conseil), sauf en « Seconde chance »",
+  seqA.length > 500 && seqA.some(x => x.rappel) && reposees(seqA, fenA) === 0, reposees(seqA, fenA));
+verifier("Anti-répétition en jouant : jamais la même notion deux fois en 10 questions (hors « Seconde chance »)", memeNotion(seqA, 10) === 0, memeNotion(seqA, 10));
+const famA = x => JA.recit.famille(x.matiere), pA = parts(seqA, famA);
+verifier("Anti-répétition en jouant : chaque famille garde sa part (15 à 25 %)", FAM_A.every(f => (pA[f] || 0) >= 0.15 && (pA[f] || 0) <= 0.25), rond(pA));
+const triplesA = seqA.filter((x, i) => i >= 2 && famA(x) === famA(seqA[i - 1]) && famA(seqA[i - 1]) === famA(seqA[i - 2]) && !x.rappel && !seqA[i - 1].rappel && !seqA[i - 2].rappel).length;
+verifier("Anti-répétition en jouant : jamais trois fois de suite la même famille, sauf quand une « Seconde chance » l'impose", triplesA === 0, triplesA);
+neuveA();
+const seqS = jouerJeu(JA, 40, () => Math.random() < 0.7, true), ecartsS = [];
+seqS.forEach((x, i) => { if (x.rappel || x.ok) return; const j = seqS.findIndex((y, k) => k > i && y.id === x.id); if (j > 0) ecartsS.push(j - i); });
+verifier("« Seconde chance » à l'heure : en bataille, malgré la fenêtre et le repos des notions, chaque question ratée revient après 3 autres questions",
+  ecartsS.length > 20 && ecartsS.every(e => e === 4), ecartsS.filter(e => e !== 4));
+// à revoir : un cours entier à revoir, des séances de 100 questions environ
+neuveA();
+JA.donnees.suivi = { cours: { "geographie-s07-1": { etat: "a-revoir", note: "essai", source: "geographie-d1", le: "2026-10-15" } } }; JA.progression.oublier();
+let seqRevA = [];
+for (let s = 0; s < 12; s++) { seqRevA = seqRevA.concat(jouerJeu(JA, 12, () => Math.random() < 0.7)); seance(JA); }
+const pRevA = parts(seqRevA.filter(x => !x.rappel), famA), autresRevA = FAM_A.filter(f => f !== "geographie").map(f => pRevA[f] || 0);
+const rapportRevA = (pRevA.geographie || 0) / (autresRevA.reduce((a, b) => a + b, 0) / autresRevA.length);
+verifier("À revoir, en jouant des séances de 100 questions : la famille à revoir sort toujours plus souvent, au plus 1,5 fois plus (1,2 à 1,7)",
+  rapportRevA >= 1.2 && rapportRevA <= 1.7, rond(pRevA) + " ; rapport " + rapportRevA.toFixed(2));
+JA.donnees.suivi = { cours: {} }; JA.progression.oublier();
+
+// petit pool : un cours de 20 fiches, un vrai ou faux chacune ; le conseil en tire 8
+const JP = contexte().JEU;
+JP.sauvegarde.charger();
+JP.donnees.cours["histoire-s07-2"] = coursEssai("histoire-s07-2", 20);
+JP.donnees.aRetravailler = []; JP.donnees.suivi = { cours: {} }; JP.questions.vider(); JP.progression.oublier();
+verifier("Fenêtre : 60 par défaut (config.js), jamais plus de la moitié des questions qui peuvent sortir",
+  JP.donnees.config.fenetreQuestions === 60 && JP.questions.fenetre(1000) === 60 && JP.questions.fenetre(120) === 60 && JP.questions.fenetre(20) === 10 && JP.questions.fenetre(1) === 0);
+function conseilsP(n, taux) {
+  const seq = []; let pleins = true;
+  for (let c = 0; c < n; c++) {
+    const qs = JP.recit.suite(8, { types: ["vrai_faux"] });
+    if (qs.length !== 8) pleins = false;
+    for (let k = 0; k < qs.length; ) { const ok = Math.random() < taux; seq.push({ id: qs[k].id, fiche: qs[k].fiche, rappel: !!qs[k].rappel }); JP.questions.enregistrerReponse(qs[k], ok); k++; if (!ok) JP.rappels.replacer(qs, k, qs.length, { types: ["vrai_faux"] }); }
+  }
+  return { seq, pleins };
+}
+JP.sauvegarde.remplacer(JP.sauvegarde.nouvelle()); seance(JP);
+const cJuste = conseilsP(15, 1);
+verifier("Petit pool (20 vrai ou faux) : la fenêtre descend à 10, chaque conseil reste plein, et rien ne revient à moins de 10 questions",
+  cJuste.pleins && reposees(cJuste.seq, () => 10) === 0, { pleins: cJuste.pleins, reposees: reposees(cJuste.seq, () => 10) });
+JP.sauvegarde.remplacer(JP.sauvegarde.nouvelle()); seance(JP);
+const cMoitie = conseilsP(15, 0.5);
+verifier("Petit pool, une réponse sur deux fausse : le tirage ne bloque jamais (chaque conseil a ses 8 affirmations, « Seconde chance » comprises)",
+  cMoitie.pleins && cMoitie.seq.some(x => x.rappel), cMoitie.pleins);
+
+// vrais cours du jeu : en jouant 40 batailles, 7 réponses justes sur 10
+const ctxR = contexte(), JRV = ctxR.JEU;
+["index-cours", "a-retravailler"].forEach(f => vm.runInContext(fs.readFileSync(path.join(RACINE, "jeu", "data", f + ".js"), "utf8"), ctxR));
+JRV.donnees.indexCours.forEach(id => {
+  const f = path.join(RACINE, "jeu", "data", /^anglais-/.test(id) ? "anglais" : "cours", id + ".js");
+  try { vm.runInContext(fs.readFileSync(f, "utf8"), ctxR); } catch (e) { /* un cours illisible reste dans la brume, comme dans le jeu */ }
+});
+JRV.sauvegarde.charger(); JRV.sauvegarde.remplacer(JRV.sauvegarde.nouvelle()); seance(JRV);
+const tempsR = [], seqR = jouerJeu(JRV, 40, () => Math.random() < 0.7, true, tempsR);
+tempsR.shift(); tempsR.sort((a, b) => a - b); // le tout premier tirage prépare les questions
+verifier("Vrais cours, 40 batailles : aucune question ne revient à moins de 60 questions (hors « Seconde chance »), jamais la même notion deux fois en 10 questions",
+  seqR.length >= 450 && reposees(seqR, () => 60) === 0 && memeNotion(seqR, 10) === 0, { reposees: reposees(seqR, () => 60), notion: memeNotion(seqR, 10) });
+verifier("Vrais cours, en jouant : un lot de 3 en moins de 5 ms (médiane), mémoire des questions posées remplie", tempsR[Math.floor(tempsR.length / 2)] < 5 && Object.keys(JRV.sauvegarde.etat().posees.questions).length > 300,
+  tempsR[Math.floor(tempsR.length / 2)].toFixed(2) + " ms");
 
 // ---------- bataille : mêlée, sang, or perdu sur erreur, niveaux 1 à 3 (demandes de Romain, 15/10/2026) ----------
 const JM = contexte().JEU, MM = JM.batailleMoteur;

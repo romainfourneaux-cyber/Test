@@ -127,12 +127,29 @@
     return cache[coursId];
   }
 
+  // Questions d'un cours rangées par fiche : [{ fiche, questions }] dans l'ordre du cours (gardé en cache, pour le tirage).
+  var parFiche = {};
+  function questionsParFiche(coursId) {
+    if (parFiche[coursId]) return parFiche[coursId];
+    var res = [], ou = {}, liste = questionsDuCours(coursId);
+    liste.forEach(function (q) {
+      var g = ou[q.fiche];
+      if (!g) { g = ou[q.fiche] = { fiche: q.fiche, questions: [] }; res.push(g); }
+      g.questions.push(q);
+    });
+    if (cache[coursId]) parFiche[coursId] = res;
+    return res;
+  }
+
   function questionsDeFiche(ficheId, niveaux) {
     var x = fiche(ficheId);
     if (!x) return [];
-    return questionsDuCours(x.cours).filter(function (q) {
-      return q.fiche === ficheId && (!niveaux || niveaux.indexOf(q.niveau) >= 0);
-    });
+    var groupes = questionsParFiche(x.cours);
+    for (var i = 0; i < groupes.length; i++) {
+      if (groupes[i].fiche !== ficheId) continue;
+      return groupes[i].questions.filter(function (q) { return !niveaux || niveaux.indexOf(q.niveau) >= 0; });
+    }
+    return [];
   }
 
   // Niveaux tirés : 1 et 2 par défaut (conseil du royaume, événements). Une bataille tire aussi le niveau 3 (demande de
@@ -146,23 +163,113 @@
   // Niveau le plus haut du tirage en cours (2 hors bataille, 3 en bataille) : les « Seconde chance » le suivent (rappels.js).
   function niveauMax() { return Math.max.apply(null, niveauxEnCours); }
 
-  // Choisit une question pour une fiche : évite celles déjà vues récemment, adapte le niveau.
-  // Seul JEU.recit.suite l'appelle ; c'est lui qui place ensuite les rappels des questions ratées (rappels.js).
+  // ----- mémoire des questions posées (demande de Romain, 15/10/2026 : « elles reviennent souvent ») -----
+  // Sauvegardée (schéma 5) : etat.posees = { horloge, questions: { id: horloge } }. horloge compte les réponses données
+  // depuis le début, toutes parties confondues ; questions[id] est la valeur de l'horloge quand la question a été posée
+  // pour la dernière fois (« Seconde chance » comprise). Une question posée parmi les « fenêtre » dernières ne ressort pas
+  // au tirage ordinaire (JEU.recit.suite) ; seule sa « Seconde chance » peut revenir plus tôt.
+  var ANCIENNE = -1e9; // vue avant le schéma 5 (questionsVues), sans date : comme posée il y a très longtemps
+  function poseesVides() { return { horloge: 0, questions: {} }; }
+  // Répare une mémoire absente ou abîmée sans rien perdre de ce qui est lisible (une horloge illisible repart de la
+  // plus grande valeur notée, pour qu'aucune question ne semble posée « dans le futur »).
+  function completerPosees(m) {
+    if (!m || typeof m !== "object" || Array.isArray(m)) return poseesVides();
+    if (!m.questions || typeof m.questions !== "object" || Array.isArray(m.questions)) m.questions = {};
+    if (typeof m.horloge !== "number" || !isFinite(m.horloge) || m.horloge < 0) {
+      m.horloge = 0;
+      Object.keys(m.questions).forEach(function (id) { var h = m.questions[id]; if (typeof h === "number" && isFinite(h) && h > m.horloge) m.horloge = h; });
+    }
+    return m;
+  }
+  function posees(etat) {
+    etat = etat || JEU.sauvegarde.etat();
+    if (!etat) return poseesVides();
+    var m = etat.posees;
+    if (!m || typeof m.horloge !== "number" || !m.questions || typeof m.questions !== "object") m = etat.posees = completerPosees(m);
+    return m;
+  }
+  // Dernière fois où la question a été posée : -Infinity si jamais.
+  function dernierePose(id, m, vues) {
+    var h = m.questions[id];
+    if (typeof h === "number" && isFinite(h)) return h;
+    return vues && vues[id] ? ANCIENNE : -Infinity;
+  }
+  function reglage(nom, defaut) {
+    var n = JEU.donnees.config && JEU.donnees.config[nom];
+    return typeof n === "number" && isFinite(n) && n >= 0 ? Math.floor(n) : defaut;
+  }
+  // Fenêtre anti-répétition d'un tirage où « pool » questions peuvent sortir : config.fenetreQuestions (60), jamais plus
+  // de la moitié du pool, pour qu'un petit pool (les vrai ou faux du conseil, un jeu qui commence) ne bloque jamais.
+  function fenetre(pool) { return Math.max(0, Math.min(reglage("fenetreQuestions", 60), Math.floor(pool / 2))); }
+
+  // Séance : en mémoire seulement (elle repart de zéro quand le jeu est rouvert, ou quand la sauvegarde change), pour
+  // chaque fiche, l'horloge de sa dernière bonne réponse et son nombre de bonnes réponses dans la séance.
+  var seance = { etat: null, fiches: {} };
+  function fichesSeance(etat) {
+    if (seance.etat !== etat) seance = { etat: etat, fiches: {} };
+    return seance.fiches;
+  }
+  // Repos d'une fiche au tirage ordinaire (une « Seconde chance » passe outre). derniere : la dernière fois qu'une de
+  // ses questions a été posée.
+  //  - posée parmi les config.reposFiche (10) dernières questions : elle attend ;
+  //  - réussie parmi les config.reposFicheJuste (15) dernières questions de la séance : elle attend.
+  function enRepos(ficheId, derniere, etat) {
+    etat = etat || JEU.sauvegarde.etat();
+    var h = posees(etat).horloge;
+    if (derniere > h - reglage("reposFiche", 10)) return true;
+    var s = fichesSeance(etat)[ficheId];
+    return !!s && s.juste > h - reglage("reposFicheJuste", 15);
+  }
+  // Fiches à revoir (a-retravailler.js, cours « à revoir » de suivi.js) qui gardent leur priorité dans cette séance :
+  // une fiche réussie deux fois dans la séance redevient une notion comme les autres jusqu'à la séance suivante, où sa
+  // priorité revient. (L'écarter tout à fait vidait une matière presque entière à revoir, comme la géographie, des
+  // longues séances : 2 % des questions au lieu de 25 %.)
+  var REUSSITES_A_REVOIR = 2;
+  function aRevoirEnCours(ids, etat) {
+    var f = fichesSeance(etat || JEU.sauvegarde.etat());
+    return ids.filter(function (id) { return !f[id] || f[id].justes < REUSSITES_A_REVOIR; });
+  }
+  // Après chaque réponse (enregistrerReponse) : l'horloge avance, la question est datée, la séance retient les réussites.
+  function noterPosee(q, juste, etat) {
+    var m = posees(etat);
+    m.horloge++;
+    m.questions[q.id] = m.horloge;
+    if (juste) {
+      var f = fichesSeance(etat), s = f[q.fiche] || (f[q.fiche] = { juste: 0, justes: 0 });
+      s.juste = m.horloge; s.justes++;
+    }
+  }
+
+  // Niveau visé pour un choix : le niveau conseillé, arrondi au hasard quand il tombe entre deux (1,5 : le niveau 1 une
+  // fois sur deux, le niveau 2 l'autre), pour que les niveaux posés suivent en moyenne le niveau conseillé.
+  function niveauVise(voulu) { var b = Math.floor(voulu); return b + (Math.random() < voulu - b ? 1 : 0); }
+
+  // Choisit une question pour une fiche. Seul JEU.recit.suite l'appelle ; c'est lui qui place ensuite les rappels des
+  // questions ratées (rappels.js). options : niveaux, types, exclure (identifiants à ne pas prendre), fenetre (nombre :
+  // une question posée parmi les « fenetre » dernières n'est jamais prise ; si toutes le sont, null, et la fiche est
+  // remplacée). Sans fenetre (dernier recours du tirage), une question exclue peut être reprise faute d'autre.
+  // Ordre (15/10/2026) : le niveau le plus proche du niveau visé (niveauVise ; à égalité, du niveau conseillé), avant
+  // tout le reste (avant, une question jamais vue passait devant, si bien qu'un élève en difficulté recevait encore
+  // beaucoup de niveau 3) ; puis les questions jamais posées, puis celle posée il y a le plus longtemps (puis la moins
+  // souvent vue) ; à égalité, au hasard.
   function choisirPourFiche(ficheId, options) {
     options = options || {};
     var niveaux = options.niveaux || niveauxEnCours;
-    var liste = questionsDeFiche(ficheId, niveaux).filter(function (q) {
-      return (!options.types || options.types.indexOf(q.type) >= 0) && (!options.exclure || options.exclure.indexOf(q.id) < 0);
-    });
-    if (!liste.length) liste = questionsDeFiche(ficheId, niveaux).filter(function (q) { return !options.types || options.types.indexOf(q.type) >= 0; });
-    if (!liste.length) return null;
+    var toutes = questionsDeFiche(ficheId, niveaux).filter(function (q) { return !options.types || options.types.indexOf(q.type) >= 0; });
     var etat = JEU.sauvegarde.etat();
-    var vues = (etat && etat.questionsVues) || {};
-    var niveauVoulu = JEU.questions.niveauConseille();
+    var m = posees(etat), vues = (etat && etat.questionsVues) || {};
+    var limite = options.fenetre > 0 ? m.horloge - options.fenetre : null;
+    var liste = toutes.filter(function (q) {
+      return (!options.exclure || options.exclure.indexOf(q.id) < 0) && (limite === null || dernierePose(q.id, m, vues) <= limite);
+    });
+    if (!liste.length && limite === null) liste = toutes;
+    if (!liste.length) return null;
+    var voulu = niveauConseille(), vise = niveauVise(voulu), cle = {};
+    liste.forEach(function (q) { cle[q.id] = [Math.abs(q.niveau - vise), Math.abs(q.niveau - voulu), dernierePose(q.id, m, vues), vues[q.id] || 0]; });
     liste = U.melanger(liste).sort(function (a, b) {
-      var va = vues[a.id] ? 1 : 0, vb = vues[b.id] ? 1 : 0;
-      if (va !== vb) return va - vb;
-      return Math.abs(a.niveau - niveauVoulu) - Math.abs(b.niveau - niveauVoulu);
+      var ka = cle[a.id], kb = cle[b.id];
+      for (var i = 0; i < 4; i++) if (ka[i] !== kb[i]) return ka[i] < kb[i] ? -1 : 1;
+      return 0;
     });
     return liste[0];
   }
@@ -235,6 +342,7 @@
     etat.stats.total++;
     if (juste) etat.stats.bonnes++;
     etat.questionsVues[q.id] = (etat.questionsVues[q.id] || 0) + 1;
+    noterPosee(q, juste, etat);
     if (JEU.rappels) JEU.rappels.noter(q, juste, etat);
     retenir(juste);
     var res = null;
@@ -252,10 +360,13 @@
 
   JEU.questions = {
     JOUABLES: JOUABLES, indexer: indexer, fiche: fiche, toutesFiches: toutesFiches,
-    questionsDuCours: questionsDuCours, questionsDeFiche: questionsDeFiche, choisirPourFiche: choisirPourFiche,
+    questionsDuCours: questionsDuCours, questionsParFiche: questionsParFiche, questionsDeFiche: questionsDeFiche, choisirPourFiche: choisirPourFiche,
     corriger: corriger, texteReponse: texteReponse, enregistrerReponse: enregistrerReponse,
     niveauConseille: niveauConseille, decoder: decoder, retenir: retenir, oublierReponses: function () { recentes = []; },
     NIVEAUX: NIVEAUX, NIVEAUX_BATAILLE: NIVEAUX_BATAILLE, avecNiveaux: avecNiveaux, niveauMax: niveauMax,
-    vider: function () { cache = {}; fiches = null; }
+    ANCIENNE: ANCIENNE, poseesVides: poseesVides, completerPosees: completerPosees, posees: posees, dernierePose: dernierePose,
+    fenetre: fenetre, enRepos: enRepos, aRevoirEnCours: aRevoirEnCours, REUSSITES_A_REVOIR: REUSSITES_A_REVOIR, niveauVise: niveauVise,
+    oublierSeance: function () { seance = { etat: null, fiches: {} }; },
+    vider: function () { cache = {}; parFiche = {}; fiches = null; }
   };
 })(typeof window !== "undefined" ? window : globalThis);

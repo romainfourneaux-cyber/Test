@@ -1,25 +1,50 @@
-// Mesure de la répartition des questions par famille de matières : le vrai tirage du jeu (JEU.recit.suite), avec les
-// vrais cours, suivi.js et a-retravailler.js. Batailles (4 vagues de 3), conseils (8 vrai ou faux), événements (3),
-// avec une sauvegarde neuve ou des notions déjà vues, sans répondre ou en répondant juste 7 fois sur 10.
-// Usage : node atelier/outils/mesurer-tirage.js [nombre de parties par situation, 200 par défaut]
+// Mesures du tirage des questions : le vrai tirage du jeu (JEU.recit.suite), avec les vrais cours, suivi.js et
+// a-retravailler.js.
+//  1. Familles de matières : batailles (4 vagues de 3), conseils (8 vrai ou faux), événements (3), avec une sauvegarde
+//     neuve ou des notions déjà vues, sans répondre ou en répondant juste 7 fois sur 10 : part de chaque famille.
+//  2. Répétitions (15/10/2026, « elles reviennent souvent ») : des séances de 100 questions jouées comme dans le jeu
+//     (l'événement du jour, puis batailles de 4 vagues de 3 questions et conseils de 8 vrai ou faux, « Seconde chance »
+//     comprises), par un élève simulé dont la réussite dépend du niveau de la question ; six séances de suite avec la même
+//     sauvegarde (le jeu rouvert un jour plus tard à chaque fois). Pour la 1re séance (sauvegarde neuve) et la 6e (après
+//     5 séances) : questions reposées dans la séance (hors « Seconde chance »), reposées à moins de 60 questions, même
+//     notion deux fois en 10 questions, niveaux posés face au niveau conseillé, réussite, durée d'un tirage.
+// Usage : node atelier/outils/mesurer-tirage.js [parties par situation, 200 par défaut] [--familles | --repetitions]
+//         [--graines 16] [--seances 6] [--js dossier]
+//   --js : charger les modules du jeu (jeu/js/*.js) depuis un autre dossier, par exemple une copie de l'ancien code
+//          (git show HEAD:jeu/js/recit.js > dossier/recit.js, etc.), pour comparer avant et après sur les mêmes cours.
 "use strict";
 const fs = require("fs");
 const path = require("path");
 const vm = require("vm");
 const RACINE = path.join(__dirname, "..", "..");
 
+const ARGS = process.argv.slice(2);
+function option(nom, defaut) { const i = ARGS.indexOf("--" + nom); return i >= 0 ? ARGS[i + 1] : defaut; }
+const DOSSIER_JS = option("js", path.join(RACINE, "jeu", "js"));
+const MODULES = ["noyau", "brouillage", "calendrier", "sauvegarde", "leitner", "progression", "questions", "rappels", "recit"];
+
 // hasard reproductible (mulberry32)
 function graine(s) { return function () { s |= 0; s = s + 0x6D2B79F5 | 0; let t = Math.imul(s ^ s >>> 15, 1 | s); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
 
-function contexte(seed) {
-  const stock = {};
+// Date du jeu décalée de « jours » jours (une séance par jour pour la répétition espacée).
+function dateDecalee(jours) {
+  const ms = jours * 86400000;
+  function D(...a) { return a.length ? new Date(...a) : new Date(Date.now() + ms); }
+  D.now = () => Date.now() + ms; D.UTC = Date.UTC; D.parse = Date.parse; D.prototype = Date.prototype;
+  return D;
+}
+
+// Un jeu chargé comme au double-clic sur index.html : modules, données, puis la sauvegarde (stock = le localStorage,
+// gardé d'une séance à l'autre).
+function contexte(seed, stock, jours) {
+  stock = stock || {};
   const MathR = Object.create(Math); MathR.random = graine(seed);
-  const ctx = { console, Buffer, Math: MathR, Date, btoa: globalThis.btoa, atob: globalThis.atob,
+  const ctx = { console, Buffer, Math: MathR, Date: jours ? dateDecalee(jours) : Date, btoa: globalThis.btoa, atob: globalThis.atob,
     localStorage: { getItem: k => (k in stock ? stock[k] : null), setItem: (k, v) => { stock[k] = String(v); }, removeItem: k => { delete stock[k]; } } };
   ctx.window = ctx; ctx.globalThis = ctx;
   vm.createContext(ctx);
-  ["noyau", "brouillage", "calendrier", "sauvegarde", "leitner", "progression", "questions", "rappels", "recit"].forEach(m => {
-    vm.runInContext(fs.readFileSync(path.join(RACINE, "jeu", "js", m + ".js"), "utf8"), ctx, { filename: m + ".js" });
+  MODULES.forEach(m => {
+    vm.runInContext(fs.readFileSync(path.join(DOSSIER_JS, m + ".js"), "utf8"), ctx, { filename: m + ".js" });
   });
   ["config", "planning", "devoirs", "index-cours", "a-retravailler", "suivi"].forEach(f => vm.runInContext(fs.readFileSync(path.join(RACINE, "jeu", "data", f + ".js"), "utf8"), ctx));
   ctx.JEU.donnees.indexCours.forEach(id => {
@@ -103,27 +128,171 @@ const SCEN = [
   { nom: "Jeu suivi, notions déjà vues", partie: "mix", vue: true, repondre: true }
 ];
 
-const N = +(process.argv[2] || 200);
-const t0 = Date.now();
-let tempsTirage = [];
-SCEN.forEach((s, k) => {
-  const cpt = nouveauCompte();
-  for (let g = 0; g < 4; g++) {
-    const ctx = contexte(1000 * k + g + 1);
-    const J = ctx.JEU; J.Math = ctx.Math;
-    const rnd = graine(77 + g);
-    J.sauvegarde.remplacer(s.vue ? sauvegardeVue(J, rnd) : J.sauvegarde.nouvelle());
-    J.progression.oublier();
-    const opts = { repondre: s.repondre, taux: 0.7 };
-    for (let i = 0; i < N / 4; i++) {
-      const debut = process.hrtime.bigint();
-      if (s.partie === "mix") { const r = i % 4; if (r === 0 || r === 1) bataille(J, cpt, opts); else if (r === 2) conseil(J, cpt, opts); else evenement(J, cpt, opts); }
-      else s.partie(J, cpt, opts);
-      tempsTirage.push(Number(process.hrtime.bigint() - debut) / 1e6);
-      if (!s.vue && !s.repondre) { J.sauvegarde.remplacer(J.sauvegarde.nouvelle()); }
+function mesurerFamilles(N) {
+  const t0 = Date.now();
+  const tempsTirage = [];
+  SCEN.forEach((s, k) => {
+    const cpt = nouveauCompte();
+    for (let g = 0; g < 4; g++) {
+      const ctx = contexte(1000 * k + g + 1);
+      const J = ctx.JEU; J.Math = ctx.Math;
+      const rnd = graine(77 + g);
+      J.sauvegarde.remplacer(s.vue ? sauvegardeVue(J, rnd) : J.sauvegarde.nouvelle());
+      J.progression.oublier();
+      const opts = { repondre: s.repondre, taux: 0.7 };
+      for (let i = 0; i < N / 4; i++) {
+        const debut = process.hrtime.bigint();
+        if (s.partie === "mix") { const r = i % 4; if (r === 0 || r === 1) bataille(J, cpt, opts); else if (r === 2) conseil(J, cpt, opts); else evenement(J, cpt, opts); }
+        else s.partie(J, cpt, opts);
+        tempsTirage.push(Number(process.hrtime.bigint() - debut) / 1e6);
+        if (!s.vue && !s.repondre) { J.sauvegarde.remplacer(J.sauvegarde.nouvelle()); }
+      }
+    }
+    console.log(tableau(s.nom, cpt) + "\n");
+  });
+  tempsTirage.sort((a, b) => a - b);
+  console.log("Durée d'une partie complète de tirages (ms) : médiane " + tempsTirage[Math.floor(tempsTirage.length / 2)].toFixed(2) + ", max " + tempsTirage[tempsTirage.length - 1].toFixed(2) + " ; total " + (Date.now() - t0) + " ms");
+}
+
+// ---------- 2. répétitions sur des séances de 100 questions ----------
+// Élèves simulés : probabilité de répondre juste aux niveaux 1, 2 et 3 (mêmes profils que la mesure du niveau conseillé,
+// docs/JOURNAL.md, 15/10/2026).
+const PROFILS = [
+  { nom: "élève moyen", p: [0.88, 0.75, 0.55] },
+  { nom: "élève fort", p: [0.95, 0.88, 0.75] },
+  { nom: "élève en difficulté", p: [0.75, 0.60, 0.40] }
+];
+const LONGUEUR = 100;
+
+// Une séance : le jeu vient d'être ouvert. L'événement du jour (3 questions), puis bataille, bataille, conseil, et ainsi
+// de suite jusqu'à 100 questions (la dernière partie est quittée en route). Chaque partie suit sa boucle du jeu : une
+// bataille tire 3 questions au début de chaque vague (jeu/js/bataille.js), le conseil 8 vrai ou faux d'un coup
+// (conseil.js), l'événement les siennes (campagne.js) ; après une erreur, les questions qui restent sont replacées
+// (rappels.replacer), si bien que les « Seconde chance » reviennent à leur place.
+function jouerSeance(J, rnd, p, temps) {
+  const seq = [];
+  const Q = J.questions;
+  let partie = "";
+  const fini = () => seq.length >= LONGUEUR;
+  const tirer = f => { const t0 = process.hrtime.bigint(); const r = f(); temps.push(Number(process.hrtime.bigint() - t0) / 1e6); return r; };
+  const enBataille = f => (Q.avecNiveaux ? Q.avecNiveaux(Q.NIVEAUX_BATAILLE, f) : f());
+  const aRevoir = new Set(J.progression.fichesARevoir());
+  function repondre(q) {
+    const conseille = Q.niveauConseille();
+    const juste = rnd() < p[q.niveau - 1];
+    Q.enregistrerReponse(q, juste);
+    seq.push({ id: q.id, fiche: q.fiche, rappel: !!q.rappel, niveau: q.niveau, conseille: conseille, juste: juste, partie: partie, aRevoir: aRevoir.has(q.fiche) });
+    return juste;
+  }
+  function suiteSimple(qs, opts) {
+    for (let i = 0; i < qs.length && !fini(); ) {
+      const juste = repondre(qs[i]);
+      i++;
+      if (!juste) J.rappels.replacer(qs, i, qs.length, opts);
     }
   }
-  console.log(tableau(s.nom, cpt) + "\n");
-});
-tempsTirage.sort((a, b) => a - b);
-console.log("Durée d'une partie complète de tirages (ms) : médiane " + tempsTirage[Math.floor(tempsTirage.length / 2)].toFixed(2) + ", max " + tempsTirage[tempsTirage.length - 1].toFixed(2) + " ; total " + (Date.now() - t0) + " ms");
+  function bataille() {
+    partie = "bataille";
+    const tirerQuestions = (n, posees) => {
+      const ids = posees.map(q => q.id), fiches = posees.map(q => q.fiche);
+      return tirer(() => enBataille(() => J.recit.suite(n, { exclure: ids, filtre: q => fiches.indexOf(q.fiche) < 0, completer: true })));
+    };
+    let questions = tirerQuestions(3, []), iQ = 0;
+    for (let v = 0; v < 4 && !fini(); v++) {
+      const poseesVague = iQ;
+      if (v > 0) questions = questions.concat(tirerQuestions(3, questions));
+      while (iQ < Math.min(questions.length, poseesVague + 3) && !fini()) {
+        const juste = repondre(questions[iQ]);
+        iQ++;
+        if (!juste) enBataille(() => J.rappels.replacer(questions, iQ, poseesVague + 3));
+      }
+    }
+  }
+  function conseil() {
+    partie = "conseil";
+    suiteSimple(tirer(() => J.recit.suite(8, { types: ["vrai_faux"] })), { types: ["vrai_faux"] });
+  }
+  function evenement() {
+    partie = "evenement";
+    suiteSimple(tirer(() => J.recit.suite(3)));
+  }
+  evenement();
+  while (!fini()) { bataille(); if (!fini()) bataille(); if (!fini()) conseil(); }
+  return seq;
+}
+
+// Compte d'une séance. tout : toutes les questions posées depuis la sauvegarde neuve (séances précédentes comprises),
+// la séance étudiée à la fin, à partir de l'indice debut.
+function compterSeance(tout, debut) {
+  const r = { n: 0, rappels: 0, repSeance: 0, rep60: 0, fiche10: 0, distinctes: 0, justes: 0, aRevoir: 0, aRevoirApres2: 0,
+    niv: { bataille: [0, 0, 0], autre: [0, 0, 0] }, conseilleBataille: 0, nivBataille: 0, nb: 0, na: 0, maxQuestion: 0, maxFiche: 0 };
+  const vuesSeance = {}, parQuestion = {}, parFiche = {}, justesFiche = {};
+  for (let i = debut; i < tout.length; i++) {
+    const x = tout[i];
+    r.n++; if (x.juste) r.justes++;
+    // niveaux : questions ordinaires seulement (une « Seconde chance » garde le niveau de la question ratée)
+    if (x.rappel) { /* rien */ } else if (x.partie === "bataille") { r.niv.bataille[x.niveau - 1]++; r.conseilleBataille += x.conseille; r.nivBataille += x.niveau; r.nb++; }
+    else { r.niv.autre[x.niveau - 1]++; r.na++; }
+    if (x.aRevoir) { r.aRevoir++; if (!x.rappel && (justesFiche[x.fiche] || 0) >= 2) r.aRevoirApres2++; }
+    if (x.juste) justesFiche[x.fiche] = (justesFiche[x.fiche] || 0) + 1;
+    parFiche[x.fiche] = (parFiche[x.fiche] || 0) + 1;
+    if (x.rappel) { r.rappels++; vuesSeance[x.id] = true; continue; }
+    parQuestion[x.id] = (parQuestion[x.id] || 0) + 1;
+    if (vuesSeance[x.id]) r.repSeance++;
+    vuesSeance[x.id] = true;
+    for (let k = Math.max(0, i - 60); k < i; k++) if (tout[k].id === x.id) { r.rep60++; break; }
+    for (let k = Math.max(0, i - 10); k < i; k++) if (tout[k].fiche === x.fiche) { r.fiche10++; break; }
+  }
+  r.distinctes = Object.keys(vuesSeance).length;
+  r.maxQuestion = Math.max(0, ...Object.values(parQuestion));
+  r.maxFiche = Math.max(0, ...Object.values(parFiche));
+  return r;
+}
+
+function mesurerRepetitions() {
+  const G = parseInt(option("graines", "16"), 10), S = parseInt(option("seances", "6"), 10);
+  const t0 = Date.now(), temps = [];
+  const lignes = [];
+  PROFILS.forEach((profil, ip) => {
+    const parSeance = Array.from({ length: S }, () => []);
+    for (let g = 0; g < G; g++) {
+      const stock = {}, tout = [];
+      const rnd = graine(7919 * (g + 1) + ip);
+      for (let s = 0; s < S; s++) {
+        const ctx = contexte(100003 * (g + 1) + 101 * s + ip, stock, s); // le jeu rouvert, un jour plus tard
+        const J = ctx.JEU;
+        if (s === 0) { J.sauvegarde.remplacer(J.sauvegarde.nouvelle()); J.sauvegarde.enregistrer(); }
+        const debut = tout.length;
+        jouerSeance(J, rnd, profil.p, temps).forEach(x => tout.push(x));
+        parSeance[s].push(compterSeance(tout, debut));
+      }
+    }
+    [0, S - 1].forEach(s => {
+      const R = parSeance[s], moy = f => R.reduce((a, r) => a + f(r), 0) / R.length;
+      const nb = moy(r => r.nb) || 1, autres = moy(r => r.na) || 1;
+      const pc = (x, d) => Math.round(100 * x / d);
+      lignes.push({
+        profil: profil.nom, seance: s === 0 ? "sauvegarde neuve" : "après " + s + " séances",
+        repSeance: moy(r => r.repSeance), rep60: moy(r => r.rep60), fiche10: moy(r => r.fiche10), rappels: moy(r => r.rappels),
+        distinctes: moy(r => r.distinctes), maxQuestion: Math.max(...R.map(r => r.maxQuestion)), maxFiche: moy(r => r.maxFiche),
+        aRevoir: moy(r => r.aRevoir), aRevoirApres2: moy(r => r.aRevoirApres2),
+        reussite: pc(moy(r => r.justes), moy(r => r.n)),
+        nivB: [0, 1, 2].map(k => pc(moy(r => r.niv.bataille[k]), nb)), nivA: [0, 1].map(k => pc(moy(r => r.niv.autre[k]), autres)),
+        nivMoyen: moy(r => r.nivBataille) / nb, conseille: moy(r => r.conseilleBataille) / nb
+      });
+    });
+  });
+  const f1 = x => x.toFixed(1).replace(".", ",");
+  console.log("Répétitions sur des séances de " + LONGUEUR + " questions (" + G + " élèves simulés par profil, moyennes par séance ; modules : " + path.relative(RACINE, DOSSIER_JS) + ")\n");
+  console.log("| Élève | Séance | Reposées dans la séance (hors Seconde chance) | dont à moins de 60 questions | Même notion 2 fois en 10 questions | Seconde chance | Questions différentes | Notion la plus posée (fois) | Question la plus posée (fois, pire séance) | Notions à revoir (dont reposées après 2 réussites) | Réussite | Bataille : niveaux 1 / 2 / 3 (hors Seconde chance) | Bataille : niveau moyen / conseillé | Conseil et événement : niveaux 1 / 2 |");
+  console.log("|---|---|---|---|---|---|---|---|---|---|---|---|---|---|");
+  lignes.forEach(l => console.log("| " + [l.profil, l.seance, f1(l.repSeance), f1(l.rep60), f1(l.fiche10), f1(l.rappels), f1(l.distinctes), f1(l.maxFiche), l.maxQuestion,
+    f1(l.aRevoir) + " (" + f1(l.aRevoirApres2) + ")", l.reussite + " %", l.nivB.join(" / ") + " %", f1(l.nivMoyen) + " / " + f1(l.conseille), l.nivA.join(" / ") + " %"].join(" | ") + " |"));
+  temps.sort((a, b) => a - b);
+  console.log("\nDurée d'un tirage de lot (ms) : médiane " + temps[Math.floor(temps.length / 2)].toFixed(2) + ", 99e centile " + temps[Math.floor(temps.length * 0.99)].toFixed(2) +
+    ", max " + temps[temps.length - 1].toFixed(2) + " (le premier tirage d'une séance prépare toutes les questions) ; total " + (Date.now() - t0) + " ms");
+}
+
+const N = +(ARGS.find(a => /^\d+$/.test(a)) || 200);
+if (ARGS.indexOf("--repetitions") < 0) mesurerFamilles(N);
+if (ARGS.indexOf("--familles") < 0) { if (ARGS.indexOf("--repetitions") < 0) console.log(""); mesurerRepetitions(); }

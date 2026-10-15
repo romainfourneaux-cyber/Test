@@ -114,36 +114,72 @@
   }
 
   // Candidats : fiches des cours accessibles qui ont des questions jouables (niveaux 1 et 2).
-  function candidats(filtreQuestion) {
+  // regles (facultatif, anti-répétition du 15/10/2026) : { exclure: { id: true }, attente: { id: true }, souple }.
+  // Alors une fiche n'est candidate que si une de ses questions peut sortir (bon type, niveau
+  // du tirage, pas exclue, pas posée parmi les « fenêtre » dernières questions), et si elle n'est pas au repos
+  // (JEU.questions.enRepos, ou une de ses questions attend sa « Seconde chance » : elle viendra d'elle-même). souple : 0,
+  // toutes ces règles ; 1, sans le repos des fiches ; 2, sans la fenêtre non plus (le tirage d'avant, qui ne bloque
+  // jamais). La fenêtre (JEU.questions.fenetre) se règle sur le nombre de questions qui peuvent sortir : la liste
+  // renvoyée la porte (res.fenetre), pour choisirPourFiche.
+  function candidats(filtreQuestion, regles) {
     var etat = JEU.sauvegarde.etat();
     var rang = JEU.progression.recence(etat);
-    var res = [];
+    var Q = JEU.questions;
+    var mem = regles ? Q.posees(etat) : null, vues = (etat && etat.questionsVues) || {};
+    var datees = mem ? mem.questions : {}, exclues = regles ? regles.exclure : {}, ANCIENNE = Q.ANCIENNE;
+    var attente = regles && regles.attente || {}, nAttente = Object.keys(attente).length;
+    var niveauMax = Q.niveauMax ? Q.niveauMax() : 2;
+    var res = [], pool = 0;
     JEU.progression.coursAccessibles(etat).forEach(function (cid) {
-      var parFiche = {};
-      JEU.questions.questionsDuCours(cid).forEach(function (q) {
-        if (q.niveau <= 2 && (!filtreQuestion || filtreQuestion(q))) parFiche[q.fiche] = true;
-      });
-      var m = U.matiereDe(cid);
-      Object.keys(parFiche).forEach(function (f) { res.push({ fiche: f, cours: cid, recent: rang[cid] || 0, matiere: m, famille: famille(m) }); });
+      var m = U.matiereDe(cid), fam = famille(m), groupes = Q.questionsParFiche(cid);
+      for (var g = 0; g < groupes.length; g++) {
+        var qs = groupes[g].questions, jouable = false, derniere = -Infinity, ancienne = Infinity, attend = false;
+        for (var i = 0; i < qs.length; i++) {
+          var q = qs[i], d = 0;
+          if (mem) { // Q.dernierePose, en ligne ; toute question de la fiche compte pour son repos
+            d = datees[q.id];
+            if (typeof d !== "number") d = vues[q.id] ? ANCIENNE : -Infinity;
+            if (d > derniere) derniere = d;
+            if (nAttente && attente[q.id]) attend = true;
+          }
+          if (filtreQuestion && !filtreQuestion(q)) continue;
+          if (q.niveau <= 2) jouable = true;
+          if (mem && q.niveau <= niveauMax && !exclues[q.id]) { pool++; if (d < ancienne) ancienne = d; }
+        }
+        if (jouable) res.push({ fiche: groupes[g].fiche, cours: cid, recent: rang[cid] || 0, matiere: m, famille: fam, derniere: derniere, ancienne: ancienne, attend: attend });
+      }
     });
-    return res;
+    if (!mem) return res;
+    var n = regles.souple >= 2 ? 0 : Q.fenetre(pool), limite = mem.horloge - n;
+    var garde = res.filter(function (c) {
+      if (n && c.ancienne > limite) return false; // toutes ses questions viennent d'être posées (ou sont exclues)
+      return regles.souple >= 1 || (!c.attend && !Q.enRepos(c.fiche, c.derniere, etat));
+    });
+    garde.fenetre = n;
+    return garde;
   }
+
+  function index(ids) { var o = {}; for (var i = 0; i < ids.length; i++) o[ids[i]] = true; return o; }
 
   // Tirage ordinaire : une question par fiche tirée (Leitner, équilibré entre les familles), sans doublon.
   // Seules les fiches qui ont une question du bon type (et qui passent le filtre) sont candidates.
   // interdits : identifiants qui ne sortent jamais, même quand choisirPourFiche, faute d'autre question pour la fiche,
   // reprend une question exclue (les questions ratées en attente, celles déjà tirées pour ce lot).
   // avant : questions déjà dans le lot (premier tirage d'une vague), pour l'équilibre.
-  function tirage(nombre, filtre, types, exclure, interdits, avant) {
+  // souple : règles anti-répétition relâchées (voir candidats).
+  function tirage(nombre, filtre, types, exclure, interdits, avant, souple) {
     var etat = JEU.sauvegarde.etat();
     var vues = exclure.slice(), qs = [];
     var garder = function (q) { return (!types || types.indexOf(q.type) >= 0) && (!filtre || filtre(q)); };
     var passe = historique.concat((avant || []).map(function (q) { return { famille: famille(q.matiere), matiere: q.matiere }; }));
-    JEU.leitner.tirer(candidats(garder), etat, nombre, {
-      aRetravailler: JEU.progression.fichesARevoir(),
+    var attente = JEU.rappels ? JEU.rappels.enAttente() : [];
+    var cands = candidats(garder, { exclure: index(exclure), attente: index(attente), souple: souple || 0 });
+    JEU.leitner.tirer(cands, etat, nombre, {
+      // une fiche à revoir déjà réussie deux fois dans la séance perd sa priorité jusqu'à la séance suivante
+      aRetravailler: JEU.questions.aRevoirEnCours(JEU.progression.fichesARevoir(), etat),
       historique: passe,
       accepter: function (c) {
-        var q = JEU.questions.choisirPourFiche(c.fiche, { types: types, exclure: vues });
+        var q = JEU.questions.choisirPourFiche(c.fiche, { types: types, exclure: vues, fenetre: cands.fenetre });
         if (!q || (interdits && interdits.indexOf(q.id) >= 0)) return false;
         qs.push(q); vues.push(q.id);
         return true;
@@ -183,17 +219,26 @@
 
   // Une suite de questions, pour toute partie (bataille, conseil, événement). C'est le seul tirage du jeu.
   // options : types (types de questions permis), exclure (identifiants déjà posés), filtre (fonction(question) : la
-  // garder ?), completer (s'il manque des questions, un second tirage, sans le filtre).
+  // garder ?), completer (s'il manque des questions, un tirage de plus, sans le filtre).
   // Les questions ratées en attente (rappels.js) ne sortent pas au tirage ordinaire : elles reviennent à leur place,
-  // au-delà des exclusions et du filtre.
+  // au-delà des exclusions, du filtre et des règles anti-répétition.
+  // Anti-répétition (15/10/2026) : tant que le lot n'est pas plein, du plus strict au plus souple : toutes les règles
+  // (une question posée parmi les 60 dernières ne ressort pas ; une fiche posée parmi les 10 dernières, réussie parmi les
+  // 15 dernières, ou dont une question attend sa « Seconde chance », se repose ; une fiche à revoir réussie deux fois
+  // dans la séance perd sa priorité jusqu'à la séance suivante) ; sans le repos des fiches ; sans le
+  // filtre (completer) ; enfin sans la fenêtre, comme le tirage d'avant : le tirage ne bloque jamais.
   function suite(nombre, options) {
     options = options || {};
     var attente = JEU.rappels ? JEU.rappels.enAttente() : [];
     var exclure = (options.exclure || []).concat(attente);
-    var qs = tirage(nombre, options.filtre, options.types, exclure, attente);
-    if (qs.length < nombre && options.completer) {
+    var f = options.filtre, essais = [[f, 0], [f, 1]];
+    if (options.completer) essais.push([null, 1]);
+    essais.push([f, 2]);
+    if (options.completer) essais.push([null, 2]);
+    var qs = [];
+    for (var i = 0; i < essais.length && qs.length < nombre; i++) {
       var deja = qs.map(function (q) { return q.id; });
-      qs = qs.concat(tirage(nombre - qs.length, null, options.types, exclure.concat(deja), attente.concat(deja), qs));
+      qs = qs.concat(tirage(nombre - qs.length, essais[i][0], options.types, exclure.concat(deja), attente.concat(deja), qs, essais[i][1]));
     }
     if (JEU.rappels) qs = eviterTriples(JEU.rappels.placer(qs, { types: options.types, longueur: nombre }));
     retenir(qs);

@@ -3,13 +3,14 @@
   "use strict";
   var JEU = racine.JEU;
   var CLE = "jeu5e";
-  var SCHEMA = 4;
+  var SCHEMA = 5;
 
   function ressourcesVides() {
     return { sceaux: 0, routes: 0, remedes: 0, alambics: 0, parchemins: 0, alliances: 0 };
   }
 
   function rappelsVides() { return JEU.rappels ? JEU.rappels.vide() : { compteur: 0, file: [] }; }
+  function poseesVides() { return JEU.questions && JEU.questions.poseesVides ? JEU.questions.poseesVides() : { horloge: 0, questions: {} }; }
 
   function nouvelle(maintenant) {
     var t = JEU.util.horodatage(maintenant);
@@ -25,7 +26,9 @@
       // ajout du schéma 3 : la campagne contre le seigneur rival
       campagne: JEU.campagne ? JEU.campagne.etatVide() : null,
       // ajout du schéma 4 : les questions ratées qui reviennent un peu plus tard (rappels.js)
-      rappels: rappelsVides()
+      rappels: rappelsVides(),
+      // ajout du schéma 5 : quand chaque question a été posée pour la dernière fois (questions.js, anti-répétition)
+      posees: poseesVides()
     };
   }
 
@@ -54,6 +57,13 @@
     3: function (s) {
       s.rappels = JEU.rappels ? JEU.rappels.completer(s.rappels) : (s.rappels || rappelsVides());
       s.schema = 4;
+      return s;
+    },
+    // 4 → 5 : la mémoire des questions posées arrive, vide (l'horloge part de zéro ; une question déjà vue d'après
+    // questionsVues compte comme posée il y a longtemps) ; rien d'autre ne change.
+    4: function (s) {
+      s.posees = JEU.questions && JEU.questions.completerPosees ? JEU.questions.completerPosees(s.posees) : (s.posees || poseesVides());
+      s.schema = 5;
       return s;
     }
   };
