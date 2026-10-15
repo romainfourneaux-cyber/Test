@@ -7,7 +7,7 @@ JEU.enregistrer("cours", {
    "id": "lecture-s01-1-f1",
    "notion": "L'origine des mots Arctique et Antarctique",
    "titre": "Arctique et Antarctique : une histoire d'ours",
-   "texte": "Arctique et Antarctique viennent du grec arktos, qui veut dire « ours ». C'est le nom de la Grande Ourse, des étoiles en forme d'ours, ou de casserole, faciles à voir dans le ciel de l'hémisphère Nord. L'Arctique désigne donc le pôle Nord. Avec anti, « opposé à », on obtient l'Antarctique : le continent du pôle Sud.",
+   "texte": "Arctique et Antarctique viennent du grec arktos, qui veut dire « ours ». C'est le nom de la Grande Ourse, des étoiles qui dessinent un ours, ou une casserole, bien visibles dans le ciel de l'hémisphère Nord. L'Arctique désigne donc le pôle Nord. Avec anti, « opposé à », on obtient l'Antarctique : le continent du pôle Sud.",
    "pointsCles": [
     "arktos, en grec, veut dire « ours »",
     "Arctique : la région du pôle Nord",
@@ -25,7 +25,7 @@ JEU.enregistrer("cours", {
     },
     {
      "mot": "Arctique",
-     "def": "la région qui entoure le pôle Nord"
+     "def": "le nom qui désigne le pôle Nord"
     },
     {
      "mot": "Antarctique",
@@ -47,7 +47,7 @@ JEU.enregistrer("cours", {
    "id": "lecture-s01-1-f2",
    "notion": "La formation et la dislocation de la banquise",
    "titre": "Embâcle et débâcle",
-   "texte": "L'embâcle, c'est la formation de la banquise. Il faut plusieurs jours d'air froid et une eau à −1,8 °C sur au moins un mètre de profondeur : l'eau de mer gèle à cette température parce qu'elle est salée. La débâcle, c'est l'inverse : la banquise se casse, poussée surtout par le vent, mais aussi par les courants et les marées.",
+   "texte": "L'embâcle, c'est la formation de la banquise. Il faut plusieurs jours d'air froid et une eau à −1,8 °C sur au moins un mètre de profondeur : l'eau de mer gèle à ce degré parce qu'elle est salée. La débâcle, c'est l'inverse : la banquise se casse, poussée surtout par le vent, mais aussi par les courants et les marées.",
    "pointsCles": [
     "Embâcle : la banquise se forme",
     "Il faut de l'air froid plusieurs jours et une eau à −1,8 °C sur au moins 1 m",
@@ -167,7 +167,7 @@ JEU.enregistrer("cours", {
     "Ours",
     "Glace",
     "Froid",
-    "Étoile"
+    "Neige"
    ],
    "explication": "Arktos veut dire « ours » en grec. C'est aussi le nom de la Grande Ourse, visible dans le ciel du Nord.",
    "indice": "Pense au nom d'un groupe d'étoiles : la Grande…",
@@ -186,7 +186,7 @@ JEU.enregistrer("cours", {
    "enonce": "L'Arctique, c'est la région du pôle Sud.",
    "corrections": [
     "Faux : l'Arctique, c'est le pôle Nord ; le pôle Sud, c'est l'Antarctique.",
-    "Faux : l'Arctique est le nom d'une étoile.",
+    "Faux : l'Arctique désigne l'équateur, au milieu de la Terre.",
     "Faux : l'Arctique désigne un désert chaud."
    ],
    "explication": "Arctique renvoie au nord, comme la Grande Ourse du ciel du Nord. L'Antarctique, son opposé, se trouve au sud.",
@@ -204,17 +204,17 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Pourquoi le continent du pôle Sud s'appelle-t-il l'Antarctique ?",
    "choix": [
-    "Parce que anti veut dire « opposé à » : c'est le pôle opposé à l'Arctique",
+    "Parce que son nom vient de anti, « opposé à », et de arktos, la Grande Ourse du ciel du Nord",
     "Parce qu'il est rempli d'ours",
     "Parce qu'on y voit très bien la Grande Ourse",
     "Parce que anti veut dire « très froid »"
    ],
-   "explication": "Antarctique, c'est anti et arktos réunis : l'opposé de l'Arctique. Le pôle Sud est à l'opposé du pôle Nord.",
+   "explication": "Antarctique réunit anti, « opposé à », et arktos, la Grande Ourse qu'on voit dans le ciel du Nord. Le nom désigne donc le côté opposé : le pôle Sud.",
    "source": {
     "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
     "page": 1
    },
-   "r": "==ATKcQGqklBHxWSDYkxqKl7xagCFEgBOpgHcDYXFBVQOtRFD4UEnhUVefbUJ36TbvKMCVRRC5ExkaEDA4iFVFBAU8hTGYgBi0AAAxlTKUAFIISZ",
+   "r": "=cUUfFQIGNRDStyFcYQVE0gTKEgG2IWRQlEAOQRIJNxKSllFaUgAc4gUNcSDRAVDCRNpGlcsntttWoRAZEwTZr6YBwQQD9wTDIQSGkyFcMRVcYAAPxxBw0AAAxlTKUAFIISZ",
    "poids": 1
   },
   {
@@ -288,7 +288,7 @@ JEU.enregistrer("cours", {
    "fiche": "lecture-s01-1-f2",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "D'après la liste de vocabulaire, pourquoi l'eau de mer gèle-t-elle vers −1,8 °C ?",
+   "enonce": "Pourquoi l'eau de mer gèle-t-elle à −1,8 °C ?",
    "choix": [
     "Parce qu'elle est salée",
     "Parce qu'elle contient des poissons",
@@ -489,11 +489,11 @@ JEU.enregistrer("cours", {
    "fiche": "lecture-s01-1-f4",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Quelle phrase emploie correctement le mot méridional ?",
+   "enonce": "Laquelle de ces phrases est juste ?",
    "choix": [
     "L'Antarctique se trouve dans la partie méridionale de la Terre.",
     "L'Arctique se trouve dans la partie méridionale de la Terre.",
-    "La Grande Ourse brille dans le ciel méridional du pôle Nord.",
+    "Méridional et septentrional veulent dire la même chose.",
     "Le pôle Nord est le point le plus méridional de la Terre."
    ],
    "explication": "Méridional veut dire « au sud » : il convient à l'Antarctique, au pôle Sud. L'Arctique, lui, est septentrional.",
@@ -509,7 +509,8 @@ JEU.enregistrer("cours", {
  "nonCouvert": [
   "La présentation du livre et la vie de l'auteur (p. 1 à 27 du livre) : ni le livre ni un document sur l'auteur ne sont déposés.",
   "La liste de vocabulaire ne dit pas à quel chapitre se rattache chaque mot : ce cours reprend les mots des glaces polaires (page 1 de la liste) et les adjectifs du nord et du sud (page 9).",
-  "Le résumé de l'histoire (page 2 de la liste) : pas de question sur l'intrigue.",
-  "La part immergée d'un iceberg (page 1) : le chiffre donné par la liste est à faire vérifier avant d'être repris."
+  "Le résumé de l'histoire et les cartes (page 2 de la liste) : pas de question sur l'intrigue, qui recoupe le devoir de lecture.",
+  "La part immergée d'un iceberg (page 1) : le chiffre donné par la liste est à faire vérifier avant d'être repris.",
+  "Les animaux de l'Arctique et de l'Antarctique (pages 4 et 5), les nœuds marins (page 10) et la plupart des mots des pages 6 à 9 (sentiments, vêtements, religion, verbes et adverbes courants) : pas encore repris, faute de savoir à quel chapitre ils appartiennent."
  ]
 });
