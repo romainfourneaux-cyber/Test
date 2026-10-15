@@ -312,6 +312,11 @@ main { max-width: 1060px; margin: 0 auto; padding: 1.4rem 1rem 7rem; }
 .tampon b { font-family: var(--titre); font-size: 1.6rem; color: #fff3d0; text-shadow: 0 2px 0 #000, 0 0 8px #000; margin-top: -78px; }
 .tampon span { font-family: var(--titre); font-size: 1.1rem; color: #fff3d0; text-shadow: 0 2px 0 #000; margin-top: 34px; }
 @keyframes tampon { 0% { opacity: 0; transform: translate(-50%, -50%) scale(1.8); } 25% { opacity: 1; transform: translate(-50%, -50%) scale(1); } 70% { opacity: 1; } 100% { opacity: 0; transform: translate(-50%, -50%) scale(.95); } }
+/* or perdu en bataille (réponse fausse) : sceau de plomb gris (pas de cire rouge sombre : sur le champ de bataille,
+   un sceau rouge sombre à coulures ressemblait à une tache de sang), chiffre rouge clair bien détouré pour se lire
+   sur l'herbe */
+.tampon.perte { color: #4a4e57; }
+.tampon.perte span { color: #ffb4a6; font-size: 1.3rem; text-shadow: 0 2px 0 #000, 0 0 6px #000, 0 0 12px rgba(0,0,0,.7); }
 
 /* ---------- domaine ---------- */
 .plan-cadre { border: 3px solid var(--encre); background: radial-gradient(ellipse, rgba(255,250,235,.2), rgba(150,110,50,.25)), var(--parchemin); box-shadow: 0 0 0 2px var(--or), 0 10px 20px rgba(0,0,0,.35); }
@@ -634,6 +639,9 @@ main { max-width: 1060px; margin: 0 auto; padding: 1.4rem 1rem 7rem; }
 .td-hud.discret > span:not(.td-or) { opacity: .3; }
 .td-hud > span { background: rgba(30,20,12,.78); color: #f6e7bf; padding: .2rem .7rem; border-radius: 3px; box-shadow: 0 0 0 1px var(--or); font-family: var(--titre); font-size: .85rem; display: inline-flex; align-items: center; gap: .35rem; }
 .td-or b { font-size: 1.15rem; color: var(--or-clair); }
+/* l'or du bandeau rougit un instant quand une erreur en coûte */
+.td-or.perte b { animation: or-perdu .8s ease-out; }
+@keyframes or-perdu { 0%, 35% { color: #ff8f80; } 100% { color: var(--or-clair); } }
 .td-bas { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: 1rem; margin-top: 1rem; align-items: start; }
 .td-conseil { min-width: 0; }
 .td-conseil .question { margin-top: 0; }

@@ -12,6 +12,9 @@
 // Contrôles de la toile de bataille : jamais réallouée pendant une bataille sans changement de taille de la fenêtre
 // (le conseil de guerre élargit la colonne de droite, la toile ne bouge pas) ; réallouée (fenêtre redimensionnée), elle
 // est redessinée dans la même tâche ; rendue (largeur 0) quand on quitte. Repli : sans terrain 3D, la route est dessinée.
+// Mêlée (15/10/2026) : la vague au Gué donne des combats au corps à corps, dessinés avec le sang, sans le sang, puis sans
+// animations (aucune erreur JavaScript) ; une question ratée en bataille coûte 6 or (sceau « −6 or », bandeau) ; la case
+// « Sang dans les combats » des Réglages est cochée par défaut et s'enregistre.
 // Contrôles d'interface : accords de « verrouillé », un seul sceau à la fois, bonne réponse d'une association montrée
 // une fois, or du bandeau jamais estompé, titre et « Quitter » visibles en 1366 × 768, tribut hors de la carte,
 // lignes sous les noms de la carte d'au moins 14 px à l'écran, noms séparés de 8 px et plus près de leur lieu.
@@ -373,9 +376,17 @@ async function essaiToile(navigateur, erreurs) {
     await page.keyboard.press("Enter");
   }
   await page.waitForFunction(() => JEU.bataille.enCours.phase !== "preparation");
-  // la vague se joue en temps réel : on avance l'horloge du navigateur
-  for (let k = 0; k < 200 && await page.evaluate(() => JEU.bataille.enCours.phase === "vague"); k++) await page.clock.runFor(500);
-  bilan.apresVague = await page.evaluate(() => ({ phase: JEU.bataille.enCours.phase, vague: JEU.bataille.enCours.vague, chateau: JEU.bataille.enCours.chateau.pv }));
+  // la vague se joue en temps réel : on avance l'horloge du navigateur. La mêlée se dessine tour à tour avec le sang
+  // (réglage par défaut), sans sang, puis avec le sang et les animations coupées (pas de giclée), puis comme au début.
+  const reglagesMelee = [[6, { sang: false }], [12, { sang: true, animations: false }], [18, { sang: true, animations: true }]];
+  for (let k = 0; k < 200 && await page.evaluate(() => JEU.bataille.enCours.phase === "vague"); k++) {
+    const r = reglagesMelee.find(x => x[0] === k);
+    if (r) await page.evaluate(o => Object.assign(JEU.sauvegarde.etat().reglages, o), r[1]);
+    await page.clock.runFor(500);
+  }
+  await page.evaluate(() => Object.assign(JEU.sauvegarde.etat().reglages, { sang: true, animations: true }));
+  bilan.apresVague = await page.evaluate(() => ({ phase: JEU.bataille.enCours.phase, vague: JEU.bataille.enCours.vague, chateau: JEU.bataille.enCours.chateau.pv,
+    duels: JEU.bataille.enCours.stats.duels, tombes: JEU.bataille.enCours.stats.tues + JEU.bataille.enCours.stats.pertes }));
   // quitter avec Échap : confirmation dans la page, les coups portés restent ; la boucle d'animation s'arrête
   await page.keyboard.press("Escape");
   await page.waitForSelector(".confirmation");
@@ -395,8 +406,13 @@ async function essaiToile(navigateur, erreurs) {
   await page.clock.runFor(300);
   await page.waitForFunction(() => document.querySelector(".td-question .question"));
   const rappel = { ratee: await page.evaluate(() => JEU.ui.questionCourante.id), suivantes: [] };
+  const orAvantErreur = await page.evaluate(() => JEU.bataille.enCours.or);
   await repondreFaux(page);
   await page.waitForSelector(".panneau-erreur");
+  // l'erreur coûte 6 or (config.js), montrés par un sceau « −6 or » et l'or du bandeau, une image plus tard
+  await page.clock.runFor(60);
+  rappel.or = await page.evaluate(a => ({ avant: a, apres: JEU.bataille.enCours.or, sceau: (document.querySelector(".tampon.perte span") || {}).textContent || null,
+    bandeau: Number(document.querySelector(".td-or b").textContent) }), orAvantErreur);
   rappel.enAttente = await page.evaluate(id => JEU.rappels.enAttente().indexOf(id) >= 0, rappel.ratee);
   await page.keyboard.press("Enter"); // Continuer
   // mise : mise en page du bandeau du conseiller (celui d'une seconde chance doit être celui des autres questions)
@@ -476,6 +492,20 @@ async function essaiToile(navigateur, erreurs) {
   await page.evaluate(t => { localStorage.clear(); JEU.sauvegarde.importer(t); }, avant);
   const apres = await page.evaluate(() => JSON.stringify(JEU.sauvegarde.etat(), null, 1));
   bilan.importIdentique = JSON.stringify(JSON.parse(avant)) === JSON.stringify(JSON.parse(apres));
+
+  // 4 ter. Réglages : la case « Sang dans les combats », cochée par défaut, enregistrée dans la sauvegarde
+  await page.click("#menu button[data-ecran=reglages]");
+  await page.waitForSelector("input[data-reglage=sang]");
+  const caseSang = () => page.evaluate(() => {
+    const c = document.querySelector("input[data-reglage=sang]");
+    const s = JSON.parse(localStorage.getItem(JEU.sauvegarde.CLE)).reglages.sang;
+    return { cochee: c.checked, texte: c.parentNode.textContent.trim(), sauvegarde: s, sang: JEU.anim.sang() };
+  });
+  bilan.reglageSang = { avant: await caseSang() };
+  await page.click("input[data-reglage=sang]");
+  bilan.reglageSang.coupe = await caseSang();
+  await page.click("input[data-reglage=sang]");
+  bilan.reglageSang.remis = await caseSang();
 
   // 4 bis. écran Cours, onglet Grammaire : les cours de langue rangés sous leur badge Griffon (seulement les badges qui
   //    ont un cours), dans l'ordre du badge. Deux cours d'essai sont ajoutés en mémoire, puis retirés.
@@ -594,6 +624,13 @@ async function essaiToile(navigateur, erreurs) {
   if (!G.onglet) echecs.push("écran Cours : pas d'onglet Grammaire");
   else if (G.blocs.map(b => b.badge).join("|").indexOf("Griffon de fer|Griffon de cuivre") !== 0 || G.blocs.some(b => !b.cours.length) || cuivre[cuivre.length - 1] !== "Essai cuivre") echecs.push("onglet Grammaire : cours mal rangés par badge (" + JSON.stringify(G.blocs) + ")");
   if (bilan.bouclesApresQuitter > 0) echecs.push("la boucle de la bataille tourne encore après avoir quitté");
+  if (!(bilan.apresVague.duels > 0)) echecs.push("vague au Gué : aucun combat au corps à corps (" + JSON.stringify(bilan.apresVague) + ")");
+  const OR = R.or;
+  if (!OR || OR.apres !== Math.max(0, OR.avant - 6) || (OR.avant > 0 && OR.sceau !== "−" + Math.min(6, OR.avant) + " or") || OR.bandeau !== Math.floor(OR.apres)) echecs.push("question ratée en bataille : l'or perdu ne se voit pas comme prévu (" + JSON.stringify(OR) + ")");
+  const RS = bilan.reglageSang;
+  if (!RS.avant.cochee || !/Sang dans les combats/.test(RS.avant.texte) || !RS.avant.sang) echecs.push("Réglages : case « Sang dans les combats » absente ou décochée par défaut (" + JSON.stringify(RS.avant) + ")");
+  if (RS.coupe.cochee || RS.coupe.sauvegarde !== false || RS.coupe.sang) echecs.push("Réglages : le sang coupé n'est pas enregistré (" + JSON.stringify(RS.coupe) + ")");
+  if (!RS.remis.cochee || RS.remis.sauvegarde !== true || !RS.remis.sang) echecs.push("Réglages : le sang remis n'est pas enregistré (" + JSON.stringify(RS.remis) + ")");
   if (bilan.gainEvenement < 6) echecs.push("l'événement n'a pas rapporté ses ressources");
   if (!bilan.royaume || bilan.royaume.tresor + bilan.royaume.peuple + bilan.royaume.garde + bilan.royaume.savoir <= 0) echecs.push("les jauges du royaume n'ont pas monté");
   if (bilan.mesures < MESURES_VOULUES) echecs.push("seulement " + bilan.mesures + " mesures (il en faut " + MESURES_VOULUES + ")");

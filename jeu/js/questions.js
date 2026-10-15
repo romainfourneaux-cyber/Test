@@ -135,11 +135,22 @@
     });
   }
 
+  // Niveaux tirés : 1 et 2 par défaut (conseil du royaume, événements). Une bataille tire aussi le niveau 3 (demande de
+  // Romain, 15/10/2026 : difficulté relevée) : elle fait son tirage dans avecNiveaux(NIVEAUX_BATAILLE, tirage).
+  var NIVEAUX = [1, 2], NIVEAUX_BATAILLE = [1, 2, 3], niveauxEnCours = NIVEAUX;
+  function avecNiveaux(niveaux, f) {
+    var avant = niveauxEnCours;
+    niveauxEnCours = niveaux;
+    try { return f(); } finally { niveauxEnCours = avant; }
+  }
+  // Niveau le plus haut du tirage en cours (2 hors bataille, 3 en bataille) : les « Seconde chance » le suivent (rappels.js).
+  function niveauMax() { return Math.max.apply(null, niveauxEnCours); }
+
   // Choisit une question pour une fiche : évite celles déjà vues récemment, adapte le niveau.
   // Seul JEU.recit.suite l'appelle ; c'est lui qui place ensuite les rappels des questions ratées (rappels.js).
   function choisirPourFiche(ficheId, options) {
     options = options || {};
-    var niveaux = options.niveaux || [1, 2];
+    var niveaux = options.niveaux || niveauxEnCours;
     var liste = questionsDeFiche(ficheId, niveaux).filter(function (q) {
       return (!options.types || options.types.indexOf(q.type) >= 0) && (!options.exclure || options.exclure.indexOf(q.id) < 0);
     });
@@ -156,15 +167,20 @@
     return liste[0];
   }
 
-  // Difficulté adaptative : vise environ 8 réussites sur 10 sur les 10 dernières réponses.
+  // Difficulté adaptative : vise environ 7 réussites sur 10 (8 sur 10 avant le 15/10/2026) sur les 10 dernières réponses.
+  // Le niveau conseillé monte d'un demi-cran par tranche de 10 % au-dessus de 7 sur 10 et descend de même en dessous :
+  // 9 sur 10 et plus → 3 ; 8 → 2,5 ; 7 → 2 ; 6 → 1,5 ; moins → 1. Au début (moins de 4 réponses) : 1,5. Les questions du
+  // niveau le plus proche passent d'abord (à égalité, au hasard) ; le conseil et les événements s'arrêtent au niveau 2.
   var recentes = [];
   function retenir(juste) { recentes.push(juste ? 1 : 0); if (recentes.length > 10) recentes.shift(); }
   function niveauConseille() {
-    if (recentes.length < 4) return 1;
+    if (recentes.length < 4) return 1.5;
     var taux = recentes.reduce(function (a, b) { return a + b; }, 0) / recentes.length;
-    if (taux >= 0.85) return 2;
-    if (taux < 0.7) return 1;
-    return 1.5;
+    if (taux >= 0.9) return 3;
+    if (taux >= 0.8) return 2.5;
+    if (taux >= 0.7) return 2;
+    if (taux >= 0.6) return 1.5;
+    return 1;
   }
 
   // ----- correction -----
@@ -238,7 +254,8 @@
     JOUABLES: JOUABLES, indexer: indexer, fiche: fiche, toutesFiches: toutesFiches,
     questionsDuCours: questionsDuCours, questionsDeFiche: questionsDeFiche, choisirPourFiche: choisirPourFiche,
     corriger: corriger, texteReponse: texteReponse, enregistrerReponse: enregistrerReponse,
-    niveauConseille: niveauConseille, decoder: decoder,
+    niveauConseille: niveauConseille, decoder: decoder, retenir: retenir, oublierReponses: function () { recentes = []; },
+    NIVEAUX: NIVEAUX, NIVEAUX_BATAILLE: NIVEAUX_BATAILLE, avecNiveaux: avecNiveaux, niveauMax: niveauMax,
     vider: function () { cache = {}; fiches = null; }
   };
 })(typeof window !== "undefined" ? window : globalThis);

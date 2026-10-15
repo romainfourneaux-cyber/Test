@@ -6,7 +6,7 @@
   var JEU = racine.JEU;
   var U = JEU.util;
   var M = JEU.batailleMoteur;
-  var QUESTIONS_PAR_VAGUE = 3, BONUS_SERIE = 10;
+  var QUESTIONS_PAR_VAGUE = 3;
   var GARDE_ENTREE = 700; // ms : l'Entrée qui finit la dernière question (ou un double appui) ne lance pas la vague
   var REPOS_APRES_REPONSE = 0.25; // s : pendant le conseil, le champ n'est pas redessiné juste après une réponse
   var IMAGES_CONSEIL = 8; // images par seconde du champ pendant le conseil de guerre (il ne fait que respirer)
@@ -358,6 +358,10 @@
     sprite(ctx, "ombre-" + nomPlace(v.campAdverse, p.rival), v.arrivee.x, v.arrivee.y, 0);
     for (i = 0; i < p.toursRivales.length; i++) { tr = p.toursRivales[i]; sprite(ctx, "ombre-" + nomTour(tr, v), tr.x, tr.y, 0); }
     for (i = 0; i < p.tours.length; i++) { tr = p.tours[i]; sprite(ctx, "ombre-" + nomTour(tr, v), tr.x, tr.y, 0); }
+    // soldats tombés et flaques : à plat sur le sol, sous les troupes, les tours et les places fortes (la tour de siège
+    // abattue, haute, est triée avec les volumes)
+    var sang = JEU.anim.sang ? JEU.anim.sang() : true;
+    for (i = 0; i < p.effets.length; i++) { e = p.effets[i]; if (e.genre === "chute" && e.type !== "belier") tombe(ctx, e, v, sang, anim); }
     // portée des tours adverses (préparation) : celle qu'on survole, ou toutes quand on choisit des troupes à envoyer
     var hautPortee = M.HAUTEUR; // haut du plus haut cercle de portée : le bandeau d'or pâlit s'il le cache
     if (p.phase === "preparation") {
@@ -411,17 +415,31 @@
     for (i = 0; i < p.tours.length; i++) volumes.push(p.tours[i]);
     for (i = 0; i < p.unites.length; i++) {
       var un = p.unites[i];
+      if (!un.vivant) continue; // tombée à cette étape : son corps est déjà au sol
       un.prof = un.y;
       if (Math.hypot(un.x - v.porteDepart.x, un.y - v.porteDepart.y) < PRES_PORTE) un.prof = Math.max(un.y, v.piedDepart.y + 0.5);
       else if (Math.hypot(un.x - v.porteArrivee.x, un.y - v.porteArrivee.y) < PRES_PORTE) un.prof = Math.max(un.y, v.piedArrivee.y + 0.5);
       volumes.push(un);
     }
+    // giclées de sang (réglage « Sang dans les combats », animations actives) : juste devant la troupe touchée, triées
+    // avec elle (une façade ou une troupe plus proche de l'écran passe devant) ; les GERBES plus récentes seulement
+    // (un coup porté à la tour de siège n'en fait pas : c'est du bois)
+    if (sang && anim) {
+      for (var ng = 0, ie = p.effets.length - 1; ie >= 0 && ng < GERBES; ie--) {
+        e = p.effets[ie];
+        if ((e.genre === "coup" && e.age < GICLEE_COUP && cibleDuCoup(e, p) !== "belier") || (e.genre === "chute" && e.age < GICLEE_CHUTE && e.type !== "belier")) { e.prof = e.y + 0.5; volumes.push(e); ng++; }
+      }
+    }
+    // tour de siège abattue : elle penche, haute comme avant, triée avec les troupes qui passent devant ou derrière
+    for (i = 0; i < p.effets.length; i++) { e = p.effets[i]; if (e.genre === "chute" && e.type === "belier") { e.prof = e.y; volumes.push(e); } }
     volumes.sort(parProfondeur);
     for (i = 0; i < volumes.length; i++) {
       var o = volumes[i];
       if (o === v.piedDepart) place(ctx, v, false);
       else if (o === v.piedArrivee) place(ctx, v, true);
       else if (o.emplacement !== undefined) tour(ctx, o, v);
+      else if (o.genre === "chute" && o.type === "belier") tombe(ctx, o, v, sang, anim);
+      else if (o.genre !== undefined) giclee(ctx, o);
       else unite(ctx, o, v);
     }
 
@@ -452,6 +470,16 @@
           ctx.beginPath(); ctx.ellipse(e.x, e.y, e.rayon * (0.4 + e.age), e.rayon * 0.5 * (0.4 + e.age), 0, 0, Math.PI * 2); ctx.fill();
         }
         if (e.age < 0.32) sprite(ctx, "effet-eclats", e.x, e.y - 4, vue(e.age, 0.32, 4), false, 1.3);
+      } else if (e.genre === "choc") {
+        // deux troupes s'engagent : un éclat de métal ; une charge soulève en plus un peu de poussière
+        if (e.age < 0.2) { ctx.globalAlpha = 1 - e.age / 0.2; ctx.drawImage(eclatLumiere(), e.x - 12, e.y - HAUT_CORPS * 1.4 - 12, 24, 24); ctx.globalAlpha = 1; }
+        if (e.charge && e.age < 0.45) sprite(ctx, "effet-poussiere", e.x, e.y + 2, vue(e.age, 0.45, 5), false, 0.6);
+      } else if (e.genre === "coup") {
+        // coup porté en mêlée : sans sang (ou sans animations), un petit éclat de métal ; avec, la giclée (plus haut).
+        // Sur la tour de siège : l'éclat de métal et quelques échardes de bois, jamais de sang.
+        var bois = cibleDuCoup(e, p) === "belier";
+        if ((!sang || !anim || bois) && e.age < 0.12) { ctx.globalAlpha = 1 - e.age / 0.12; ctx.drawImage(eclatLumiere(), e.x - 7, e.y - HAUT_CORPS * 1.3 - 7, 14, 14); ctx.globalAlpha = 1; }
+        if (bois && e.age < 0.32) sprite(ctx, "effet-eclats", e.x, e.y - HAUT_CORPS, vue(e.age, 0.32, 4), false, 0.7);
       } else if (e.genre === "retrait") {
         // fin de bataille : la troupe restée sur la route s'efface dans une petite bouffée de poussière
         if (e.age < 0.6) sprite(ctx, "effet-poussiere", e.x, e.y + 2, vue(e.age, 0.6, 5), false, 0.6);
@@ -713,10 +741,14 @@
     return ombreT;
   }
   function unite(ctx, u, v) {
-    // sens d'après la marche sur la route, avec une marge pour les tronçons presque verticaux
+    // sens d'après la marche sur la route, avec une marge pour les tronçons presque verticaux ; en mêlée, face à l'adversaire
     var dir = Math.cos(u.angle) * (u.camp === "rival" ? -1 : 1);
     if (u.gauche === undefined) u.gauche = u.camp === "rival";
-    if (dir < -0.2) u.gauche = true; else if (dir > 0.2) u.gauche = false;
+    if (u.adversaire) u.gauche = u.adversaire.x < u.x;
+    else if (dir < -0.2) u.gauche = true; else if (dir > 0.2) u.gauche = false;
+    // geste : la troupe qui vient de frapper se fend vers son adversaire (0,18 s), si les animations sont actives
+    var ux = u.x;
+    if (u.adversaire && u.frappe >= 0 && JEU.anim.actif()) { var geste = 1 - (v.partie.temps - u.frappe) / 0.18; if (geste > 0) ux += (u.gauche ? -1 : 1) * 3.5 * geste; }
     var d = Math.min(Math.hypot(u.x - v.porteDepart.x, u.y - v.porteDepart.y), Math.hypot(u.x - v.porteArrivee.x, u.y - v.porteArrivee.y));
     var fondu = d < 26 ? Math.max(0, Math.min(1, (d - 2) / 24)) : 1;
     if (v.retrait !== null) fondu *= Math.max(0, 1 - (v.horloge - v.retrait) / 0.6);
@@ -731,14 +763,154 @@
       ctx.fillStyle = an.fond; ctx.fill();
       ctx.lineWidth = 3; ctx.strokeStyle = "rgba(20,12,6,.5)"; ctx.stroke();
       ctx.lineWidth = 1.6; ctx.strokeStyle = an.trait; ctx.stroke();
-      sprite(ctx, nom, u.x, u.y, u.pas * 1.2, u.gauche !== (s.face === "gauche"), sc);
+      sprite(ctx, nom, ux, u.y, u.pas * 1.2, u.gauche !== (s.face === "gauche"), sc);
       if (u.pv < u.max) barreVie(ctx, u, u.y - s.ay * sc - 2);
     } else uniteDessinee(ctx, u, u.camp === "rival" ? v.adverse.couleurs : v.couleurs);
     ctx.globalAlpha = 1;
   }
+  // Barre de vie fine (24 × 5 px) : en mêlée, plusieurs troupes blessées côte à côte ne cachent pas le combat sous une
+  // pile de pavés noirs.
   function barreVie(ctx, u, y) {
-    ctx.fillStyle = "rgba(20,12,6,.9)"; ctx.fillRect(u.x - 15, y - 1, 30, 7);
-    ctx.fillStyle = u.camp === "rival" ? "#d07a5a" : "#9cc06a"; ctx.fillRect(u.x - 14, y, 28 * Math.max(0, u.pv / u.max), 5);
+    ctx.fillStyle = "rgba(20,12,6,.78)"; ctx.fillRect(u.x - 12, y, 24, 5);
+    ctx.fillStyle = u.camp === "rival" ? "#d07a5a" : "#9cc06a"; ctx.fillRect(u.x - 11, y + 1, 22 * Math.max(0, u.pv / u.max), 3);
+  }
+
+  // ---------- mêlée : soldats tombés, sang ----------
+  // Réglage « Sang dans les combats » (Réglages, JEU.anim.sang ; actif par défaut) : giclées rouges aux coups de la mêlée et
+  // aux chutes, petite flaque sous chaque soldat tombé, qui bascule (BASCULE), reste couché (tourné, plus sombre) puis
+  // s'efface avec sa flaque (effet « chute » du moteur, M.DUREE_CHUTE secondes). Même traitement pour tous les camps ;
+  // jamais de démembrement ni de gros plan. La tour de siège, en bois, ne saigne jamais (ni coup ni chute). Sang coupé :
+  // ni giclée ni flaque ; le soldat tombé s'efface vite (CHUTE_SANS_SANG), dans un peu de poussière. Animations réduites :
+  // ni giclée ni bascule ; flaques et soldats tombés restent, sans mouvement.
+  // Plafonds (PC sans carte graphique) : M.TOMBES soldats tombés à la fois (moteur), GERBES giclées, GOUTTES gouttes chacune.
+  var GERBES = 24, GOUTTES = 9, GICLEE_COUP = 0.45, GICLEE_CHUTE = 0.55, FIN_CHUTE = 1.5, CHUTE_SANS_SANG = 1.4;
+  var ROUGES = ["#7a0c0c", "#9c1515", "#560707"];
+
+  // Soldat couché : la première vue de son image, assombrie, gardée dans une petite toile (une par image et par sens).
+  var couches = {};
+  function couche(nom, miroir) {
+    var cle = nom + (miroir ? "<" : ">");
+    if (couches[cle]) return couches[cle];
+    var e = prete(nom);
+    if (!e) return null;
+    var n = e.s.frames || 1, iw = Math.floor(e.img.naturalWidth / n), ih = e.img.naturalHeight;
+    var c = document.createElement("canvas"); c.width = iw; c.height = ih;
+    var g = c.getContext("2d");
+    if (miroir) { g.translate(iw, 0); g.scale(-1, 1); }
+    g.drawImage(e.img, 0, 0, iw, ih, 0, 0, iw, ih);
+    g.setTransform(1, 0, 0, 1, 0, 0);
+    g.globalCompositeOperation = "source-atop"; g.fillStyle = "rgba(30,18,10,.5)"; g.fillRect(0, 0, iw, ih);
+    couches[cle] = c;
+    return c;
+  }
+
+  // Flaque de sang vue de trois quarts (ellipse aplatie, bords irréguliers, reflet mouillé), trois variantes calculées une fois.
+  var flaques = [];
+  function flaque(k) {
+    if (flaques[k]) return flaques[k];
+    var c = document.createElement("canvas"); c.width = 80; c.height = 40;
+    var g = c.getContext("2d");
+    g.scale(2, 2); g.translate(20, 10);
+    g.fillStyle = "rgba(64,5,5,.84)";
+    function tache(x, y, rx, ry) { g.beginPath(); g.ellipse(x, y, rx, ry, 0, 0, Math.PI * 2); g.fill(); }
+    tache(0, 0, 10, 4.4);
+    for (var i = 0; i < 4; i++) tache((hasard(k * 40 + i) - 0.5) * 16, (hasard(k * 40 + i + 9) - 0.5) * 5, 2.5 + 3 * hasard(k * 40 + i + 17), 1.4 + 1.4 * hasard(k * 40 + i + 23));
+    g.globalCompositeOperation = "source-atop";
+    var r = g.createRadialGradient(-2, -1, 1, 0, 0, 12);
+    r.addColorStop(0, "rgba(112,14,12,.4)"); r.addColorStop(0.6, "rgba(90,8,8,0)"); r.addColorStop(1, "rgba(18,0,0,.55)");
+    g.fillStyle = r; g.fillRect(-20, -10, 40, 20);
+    g.fillStyle = "rgba(255,200,180,.14)"; g.beginPath(); g.ellipse(-3, -1.5, 3, 0.9, -0.2, 0, Math.PI * 2); g.fill();
+    flaques[k] = c;
+    return c;
+  }
+
+  // Troupe touchée par un coup de mêlée (effet « coup ») : son type, cherché une fois, au premier dessin (le coup vient
+  // d'être porté : la troupe est encore là, à quelques pixels près ; tombée sous ce coup, son effet « chute » est au même
+  // endroit). Sert à ne jamais faire saigner la tour de siège, qui est en bois.
+  function cibleDuCoup(e, p) {
+    if (e.cible !== undefined) return e.cible;
+    var meilleur = 36, type = "", i, o, d;
+    for (i = 0; i < p.unites.length; i++) {
+      o = p.unites[i];
+      if (o.camp !== e.camp) continue;
+      d = (o.x - e.x) * (o.x - e.x) + (o.y - e.y) * (o.y - e.y);
+      if (d < meilleur) { meilleur = d; type = o.type; }
+    }
+    for (i = 0; i < p.effets.length && meilleur > 0.01; i++) {
+      o = p.effets[i];
+      if (o.genre === "chute" && o.camp === e.camp && Math.abs(o.x - e.x) < 0.1 && Math.abs(o.y - e.y) < 0.1) { meilleur = 0; type = o.type; }
+    }
+    e.cible = type;
+    return type;
+  }
+
+  // Un soldat tombé (effet « chute ») : sa flaque (si le sang est actif), puis son corps couché, tourné vers l'arrière de
+  // son regard (il tombe à la renverse), aplati (vue de trois quarts) ; la tour de siège, elle, penche et s'assombrit.
+  // Animations actives : il bascule en BASCULE secondes (la tour de siège en deux fois plus), au lieu de passer d'un coup
+  // de debout à couché. Animations réduites : couché tout de suite.
+  var BASCULE = 0.2;
+  function tombe(ctx, e, v, sang, anim) {
+    var fin = sang ? M.DUREE_CHUTE : CHUTE_SANS_SANG;
+    if (e.age >= fin) return;
+    var a = sang ? Math.min(1, (fin - e.age) / FIN_CHUTE) : Math.min(1, (fin - e.age) / 0.9);
+    var regard = e.regard || (e.camp === "rival" ? -1 : 1), belier = e.type === "belier";
+    var b = anim ? Math.min(1, e.age / (belier ? 2 * BASCULE : BASCULE)) : 1;
+    b = 1 - (1 - b) * (1 - b); // la chute accélère, puis se pose
+    var nom = "unite-" + e.type + "-" + (e.camp === "rival" ? v.campAdverse : "france"), s = descr(nom);
+    if (sang && !belier) {
+      var k = anim ? Math.min(1, 0.35 + e.age / 0.9) : 1, fx = e.x - regard * 7;
+      ctx.globalAlpha = a;
+      ctx.drawImage(flaque(Math.floor(hasard(e.x * 0.37 + e.y) * 3)), fx - 16 * k, e.y + 1 - 8 * k, 32 * k, 16 * k);
+    }
+    var c = s ? couche(nom, (regard < 0) !== (s.face === "gauche")) : null;
+    ctx.globalAlpha = a;
+    if (c) {
+      var sc = ECHELLE_TROUPE * 0.9;
+      ctx.save(); ctx.translate(e.x, e.y);
+      if (belier) { ctx.rotate(-regard * 0.28 * b); ctx.drawImage(c, -s.ax * sc, -s.ay * sc + 4 * b, s.w * sc, s.h * sc); }
+      else { ctx.scale(1, 1 - 0.45 * b); ctx.rotate((regard > 0 ? -Math.PI / 2 : Math.PI / 2) * b); ctx.drawImage(c, -s.ax * sc, -(s.ay - 14 * b) * sc, s.w * sc, s.h * sc); }
+      ctx.restore();
+    } else ecuCouche(ctx, e, e.camp === "rival" ? v.adverse.couleurs : v.couleurs, regard, b);
+    ctx.globalAlpha = 1;
+  }
+  // Repli sans image (les troupes sont alors des écus) : l'écu tombé, à plat sur le sol, assombri, cerné d'encre.
+  function ecuCouche(ctx, e, coul, regard, b) {
+    var s = 11 * (e.type === "champion" || e.type === "belier" ? 1.5 : e.type === "cavaliers" ? 1.15 : 1);
+    ctx.save(); ctx.translate(e.x, e.y); ctx.rotate(-regard * 0.5 * b); ctx.scale(1, 1 - 0.6 * b);
+    ctx.beginPath(); ctx.moveTo(-s, -s); ctx.lineTo(s, -s); ctx.lineTo(s, 0);
+    ctx.quadraticCurveTo(s, s * 0.8, 0, s * 1.1); ctx.quadraticCurveTo(-s, s * 0.8, -s, 0); ctx.closePath();
+    ctx.fillStyle = coul[0]; ctx.fill();
+    ctx.fillStyle = "rgba(30,18,10,.45)"; ctx.fill();
+    ctx.lineWidth = 1.6; ctx.strokeStyle = "#140c06"; ctx.stroke();
+    ctx.restore();
+  }
+
+  // Giclée : quelques gouttes rouges partent du corps de la troupe touchée, dans le sens du coup (vers l'arrière pour une
+  // chute), retombent et restent là où elles touchent le sol. Gouttes rondes, étirées dans le sens de leur vol tant
+  // qu'elles volent. Tirage fixe par effet (e.graine), dessiné en trois remplissages au plus.
+  var GRAVITE = 260; // px/s² (la moitié de l'accélération)
+  function giclee(ctx, e) {
+    if (e.graine === undefined) e.graine = Math.floor(Math.random() * 997) + 1;
+    var chute = e.genre === "chute", duree = chute ? GICLEE_CHUTE : GICLEE_COUP, t = e.age;
+    var n = chute ? GOUTTES : e.fort ? GOUTTES - 1 : GOUTTES - 3;
+    var dir = chute ? -(e.regard || 1) : e.dir || 1, x0 = e.x, y0 = e.y - HAUT_CORPS, sol = e.y + 2;
+    ctx.globalAlpha = Math.max(0, 1 - t / duree);
+    for (var c = 0; c < 3; c++) {
+      ctx.fillStyle = ROUGES[c]; ctx.beginPath();
+      for (var i = c; i < n; i += 3) {
+        var h1 = hasard(e.graine + i * 7.13), h2 = hasard(e.graine + i * 3.71 + 50), h3 = hasard(e.graine + i * 1.37 + 90);
+        var vx = dir * (20 + 90 * h1) * (chute && h3 < 0.3 ? -0.5 : 1), vy = -(30 + 80 * h2), r = 1 + 1.3 * h3, bas = sol + 3 * h3;
+        // instant où la goutte touche le sol : elle s'y arrête
+        var tSol = (-vy + Math.sqrt(vy * vy + 4 * GRAVITE * (bas - y0))) / (2 * GRAVITE), tt = Math.min(t, tSol);
+        var x = x0 + vx * tt, y = y0 + vy * tt + GRAVITE * tt * tt;
+        var rx = r * 1.3, ry = r * 0.6, rot = 0; // posée : une petite tache à plat
+        if (t < tSol) { var vyt = vy + 2 * GRAVITE * t; rx = r * Math.min(2, 1 + Math.sqrt(vx * vx + vyt * vyt) / 220); ry = r * 0.8; rot = Math.atan2(vyt, vx); }
+        ctx.moveTo(x + rx * Math.cos(rot), y + rx * Math.sin(rot));
+        ctx.ellipse(x, y, rx, ry, rot, 0, Math.PI * 2);
+      }
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
   }
 
   // ---------- repli : dessin vectoriel, si une image manque ----------
@@ -797,12 +969,19 @@
   var enChargement = false; // une seule bataille à la fois, même pendant le chargement des images
   var ATTENTE_MAX = 5000; // ms : une image qui ne répond pas ne bloque jamais la bataille
 
-  // Questions d'une vague, tirées au début de son conseil (le niveau suit les dernières réponses) :
-  // une par fiche, sans reprendre une question ni une fiche déjà posées dans cette bataille (s'il en manque, sans la
-  // règle des fiches). Une question ratée qui revient (rappels.js) passe outre et prend sa place dans le lot.
+  // Questions d'une vague, tirées au début de son conseil (le niveau suit les dernières réponses ; une bataille tire les
+  // niveaux 1 à 3, JEU.questions.NIVEAUX_BATAILLE) : une par fiche, sans reprendre une question ni une fiche déjà posées
+  // dans cette bataille (s'il en manque, sans la règle des fiches). Une question ratée qui revient (rappels.js) passe
+  // outre et prend sa place dans le lot.
   function tirerQuestions(n, posees) {
     var ids = posees.map(function (q) { return q.id; }), fiches = posees.map(function (q) { return q.fiche; });
-    return JEU.recit.suite(n, { exclure: ids, filtre: function (q) { return fiches.indexOf(q.fiche) < 0; }, completer: true });
+    return enBataille(function () { return JEU.recit.suite(n, { exclure: ids, filtre: function (q) { return fiches.indexOf(q.fiche) < 0; }, completer: true }); });
+  }
+  // Tirage ou replacement des « Seconde chance » aux niveaux de la bataille (1 à 3) : une question de niveau 3 ratée
+  // pendant la bataille y revient comme les autres.
+  function enBataille(f) {
+    var Q = JEU.questions;
+    return Q.avecNiveaux ? Q.avecNiveaux(Q.NIVEAUX_BATAILLE, f) : f();
   }
 
   // lieu : "domaine" (un camp adverse attaque) ou l'identifiant d'une province.
@@ -847,6 +1026,8 @@
       var carte = JEU.cartesBataille.carte(carteId);
       var o = C.options(niveau);
       o.vagues = vagues;
+      var cfg = JEU.donnees.config || {};
+      if (typeof cfg.orPerduErreur === "number") o.orPerduErreur = cfg.orPerduErreur; // or perdu par réponse fausse
       if (defense) { o.pvRival = 12; o.pvRivalMax = 12; }
       else { o.pvRival = C.etat().provinces[lieu].pv; o.pvRivalMax = prov.pv; }
       var p = M.creer(carte, o);
@@ -872,7 +1053,7 @@
       var titre = defense ? "Défense du domaine contre " + adv.armee : "Bataille : " + prov.nom;
       var zone = JEU.ui.commencerPartie(titre, function () { JEU.ui.afficher("jouer"); });
       JEU.musique.humeur("guerre");
-      var actif = true, iQ = 0, poseesVague = 0, serie = 0, bonnes = 0, total = 0, finie = false;
+      var actif = true, iQ = 0, poseesVague = 0, bonnes = 0, total = 0, finie = false;
 
       // --- mise en page ---
       var canvas = el("canvas", { class: "td-canvas", width: String(M.LARGEUR), height: String(M.HAUTEUR), tabindex: "0",
@@ -940,6 +1121,13 @@
         [hudOr, hudVague, hudRevenu].forEach(function (e, i) { if (e.textContent !== t[i]) e.textContent = t[i]; });
       }
 
+      // L'or du bandeau rougit un instant quand une erreur en coûte (classe « perte », jeu.css).
+      function orPerdu() {
+        var b = hudOr && hudOr.parentNode;
+        if (!b) return;
+        b.classList.remove("perte"); void b.offsetWidth; b.classList.add("perte");
+      }
+
       // --- ordres : tours, troupes, lancement ---
       // Pastille de touche, comme sur les boutons de réponse ; les mots (Espace, Entrée) en cartouche.
       function touche(t) { return el("span", { class: "touche", style: "margin:0 .25rem;" + (t.length > 1 ? "border-radius:.9em;padding:0 .5em;" : ""), texte: t }); }
@@ -1000,7 +1188,7 @@
           var vit = el("div", { class: "td-vitesse" }, [1, 2, 3].map(function (n) {
             return el("button", { class: "bouton petit" + (v.vitesse === n ? " principal" : ""), "data-cle": "vitesse-" + n, onclick: function () { v.vitesse = n; majOrdres(); }, texte: "×" + n });
           }));
-          ordres.appendChild(el("p", { texte: "Regarde tes tours tenir la route." + (v.envoyesVague ? " Tes troupes marchent sur " + adv.chateau + "." : "") }));
+          ordres.appendChild(el("p", { texte: "Regarde tes tours tenir la route." + (v.envoyesVague ? " Tes troupes marchent sur " + adv.chateau + " : quand elles croisent des soldats adverses, elles se battent au corps à corps." : "") }));
           ordres.appendChild(vit);
           ordres.appendChild(tableauMelee());
         } else {
@@ -1008,6 +1196,7 @@
           ordres.appendChild(el("ul", { class: "td-resume" }, [
             el("li", { texte: "Soldats envoyés : " + p.stats.envoyes }),
             el("li", { texte: "Ennemis arrêtés : " + p.stats.tues }),
+            el("li", { texte: "Combats au corps à corps : " + p.stats.duels }),
             el("li", { texte: "Ennemis passés : " + p.stats.fuites }),
             el("li", { texte: "Coups portés au château adverse : " + p.stats.degatsRival })
           ]));
@@ -1046,7 +1235,7 @@
       function majMelee() {
         if (!melee || !melee.marche[0].isConnected) return;
         var amis = 0, rivaux = 0;
-        p.unites.forEach(function (u) { if (u.camp === "rival") rivaux++; else amis++; });
+        p.unites.forEach(function (u) { if (!u.vivant) return; if (u.camp === "rival") rivaux++; else amis++; }); // une troupe tombée à cette étape compte déjà dans « arrêtés »
         var val = {
           marche: [amis + p.fileAmie.length, rivaux + p.fileRivale.length], arretes: [p.stats.pertes, p.stats.tues],
           murs: [p.stats.arrivees, p.stats.fuites], tours: [p.tours.length, p.toursRivales.length]
@@ -1105,13 +1294,13 @@
           JEU.questions.enregistrerReponse(q, juste);
           JEU.ui.noterDerniere(q);
           iQ++; total++;
+          // or de la réponse (moteur) : juste, +12 (et +10 au 3e succès d'affilée) ; fausse, −6 sur l'or de la bataille,
+          // jamais en dessous de zéro (config.js, orPerduErreur). Rien d'autre n'est jamais perdu.
+          var or = M.repondre(p, juste);
           if (juste) {
-            bonnes++; serie++;
-            var gain = p.orParReponse + (serie >= 3 ? BONUS_SERIE : 0);
-            M.gagnerOr(p, gain);
-            JEU.sons.jouer(serie >= 3 ? "coup-puissant" : "coup");
-            JEU.ui.tampon(serie >= 3 ? "Coup d'éclat" : "Juste", "+" + gain + " or");
-            if (serie >= 3) serie = 0;
+            bonnes++;
+            JEU.sons.jouer(or.eclat ? "coup-puissant" : "coup");
+            JEU.ui.tampon(or.eclat ? "Coup d'éclat" : "Juste", "+" + or.or + " or");
             JEU.mesure.reponseDonnee();
             questionSuivante(scene);
             // or, ressources et boutons de l'arsenal : mis à jour une image plus tard, comme le sceau (la première
@@ -1119,11 +1308,17 @@
             var majApres = function () { JEU.ui.majRessources(); if (actif) majTout(); };
             if (JEU.anim && JEU.anim.apresImage) JEU.anim.apresImage(majApres); else majApres();
           } else {
-            serie = 0;
             // la question ratée reviendra un peu plus tard : si c'est dans cette vague, elle prend sa place dans le lot
-            JEU.rappels.replacer(questions, iQ, poseesVague + QUESTIONS_PAR_VAGUE);
+            enBataille(function () { JEU.rappels.replacer(questions, iQ, poseesVague + QUESTIONS_PAR_VAGUE); });
             JEU.ui.panneauErreur(q, scene, function () { v.repos = v.horloge + REPOS_APRES_REPONSE; JEU.mesure.reponseDonnee(); questionSuivante(scene); majTout(); });
             montrer(scene, "proche"); // le panneau d'erreur, vu depuis son titre
+            // l'or perdu se voit tout de suite, sans rien retarder : sceau « −6 or » et or du bandeau, une image plus tard
+            // (le son d'erreur du panneau suffit)
+            if (or.or < 0) {
+              JEU.ui.tampon("Dommage", "−" + (-or.or) + " or", "perte");
+              var perteApres = function () { if (!actif) return; majTout(); orPerdu(); };
+              if (JEU.anim && JEU.anim.apresImage) JEU.anim.apresImage(perteApres); else perteApres();
+            }
           }
         }, { recit: JEU.recit.cadre(q, defense ? "defense" : "preparation", adv) });
         // la colonne de droite défile à part : la question suivante est montrée depuis son énoncé, jamais coupée par le haut

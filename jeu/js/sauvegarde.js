@@ -19,7 +19,7 @@
       cours: {}, notions: {}, ressources: ressourcesVides(), batiments: [], devoirs: {},
       signalements: [], dernierExport: null,
       // ajouts du schéma 2
-      reglages: { son: son, musique: true, nomDomaine: "Le domaine" },
+      reglages: { son: son, musique: true, sang: true, nomDomaine: "Le domaine" }, // sang : 15/10/2026, absent = actif
       stats: { bonnes: 0, total: 0, parties: 0 },
       questionsVues: {},
       // ajout du schéma 3 : la campagne contre le seigneur rival

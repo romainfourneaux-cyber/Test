@@ -454,9 +454,12 @@ verifier("Onglet Grammaire : groupé par badge (seulement les badges qui ont un 
 const posL = JR.progression.position("langue", etatR);
 verifier("Onglet Grammaire : compte des cours (acquis, à revoir, en cours)", posL.total === 4 && posL.acquis === 1 && posL.aRevoir === 1 && posL.enCours === 2, posL);
 verifier("Grammaire : comptée dans le total des cours acquis", JR.progression.totalAcquis(etatR) === 1);
-JR.donnees.cours["histoire-s01-1"] = coursEssai("histoire-s01-1", 1); JR.progression.oublier();
-verifier("Grammaire : un cours de langue compte comme un cours de la semaine en cours pour le tirage", (() => { const r = JR.progression.recence(etatR); return r["langue-conj10"] < r["histoire-s01-1"]; })());
-delete JR.donnees.cours["histoire-s01-1"]; JR.questions.vider();
+["histoire-s01-1", "histoire-s02-1", "histoire-s03-1"].forEach(id => { JR.donnees.cours[id] = coursEssai(id, 1); }); JR.progression.oublier();
+// semaines des cours du planning accessibles : 7, 3, 2, 1 → médiane 2,5 ; entre eux, Griffon de cuivre (ordre 3, 2, 1) puis de fer
+const ordreRecence = (() => { const r = JR.progression.recence(etatR); return Object.keys(r).sort((a, b) => r[a] - r[b]).join(); })();
+verifier("Grammaire : pour la récence, un cours de langue prend la semaine médiane des cours du planning (plus « semaine en cours »), le badge et l'ordre les plus avancés d'abord",
+  ordreRecence === "histoire-s07-2,histoire-s03-1,langue-conj12,langue-conj11,langue-conj10,langue-nat06,histoire-s02-1,histoire-s01-1", ordreRecence);
+["histoire-s01-1", "histoire-s02-1", "histoire-s03-1"].forEach(id => { delete JR.donnees.cours[id]; }); JR.questions.vider();
 JR.donnees.suivi = { cours: {} }; JR.progression.oublier();
 
 // validateur : cours de langue hors planning, badge, devoir langue-d1, suivi
@@ -492,6 +495,276 @@ verifier("Générateur du planning : il garde le devoir langue-d1 à chaque gén
   const dv = gp.devoirs(gp.generer()).filter(x => x.id === "langue-d1");
   return dv.length === 1 && dv[0].semaine === null && dv[0].perimetre.join() === "langue-conj10,langue-conj11,langue-conj12";
 })());
+
+// ---------- équilibre du tirage entre les familles de matières (leitner.tirer, recit.suite) ----------
+// Contexte neuf : huit fiches par matière ; le français (littérature, lecture suivie, grammaire) en a donc trois fois plus.
+const JE = contexte().JEU;
+JE.sauvegarde.charger();
+const MATS_E = ["histoire", "geographie", "svt", "physique", "litterature", "lecture"];
+MATS_E.forEach(m => { JE.donnees.cours[m + "-s07-1"] = coursEssai(m + "-s07-1", 8); });
+JE.donnees.cours["langue-conj10"] = coursEssai("langue-conj10", 8, { matiere: "langue", titre: "Essai", badge: "cuivre", ordre: 1 });
+JE.donnees.aRetravailler = []; JE.donnees.suivi = { cours: {} };
+JE.questions.vider(); JE.progression.oublier();
+const FAM_E = ["histoire", "geographie", "svt", "physique", "francais"];
+const neuveE = () => { JE.sauvegarde.remplacer(JE.sauvegarde.nouvelle()); JE.progression.oublier(); };
+// une longue suite de parties : batailles (4 vagues de 3), conseils (8 vrai ou faux), événements (3) ; taux : réussite
+function jouerE(parties, taux) {
+  const seq = [];
+  for (let i = 0; i < parties; i++) {
+    const lots = [];
+    if (i % 4 < 2) {
+      const posees = [];
+      for (let v = 0; v < 4; v++) {
+        const lot = JE.recit.suite(3, { exclure: posees.map(q => q.id), filtre: (fs => q => fs.indexOf(q.fiche) < 0)(posees.map(q => q.fiche)), completer: true });
+        lot.forEach(q => { posees.push(q); seq.push(q); if (taux != null) JE.questions.enregistrerReponse(q, Math.random() < taux); });
+      }
+    } else {
+      const lot = i % 4 === 2 ? JE.recit.suite(8, { types: ["vrai_faux"] }) : JE.recit.suite(3);
+      lot.forEach(q => { seq.push(q); if (taux != null) JE.questions.enregistrerReponse(q, Math.random() < taux); });
+    }
+  }
+  return seq;
+}
+const parts = (seq, cle) => { const p = {}; seq.forEach(q => { const k = cle(q); p[k] = (p[k] || 0) + 1 / seq.length; }); return p; };
+const famE = q => JE.recit.famille(q.matiere);
+const rond = p => Object.keys(p).map(k => k + " " + (100 * p[k]).toFixed(1)).join(", ");
+
+verifier("Équilibre : les familles de matières (le français réunit littérature, lecture suivie et grammaire)",
+  JE.recit.famille("litterature") === "francais" && JE.recit.famille("lecture") === "francais" && JE.recit.famille("langue") === "francais" &&
+  JE.recit.famille("geographie") === "geographie" && JE.recit.famille("anglais") === "anglais");
+neuveE(); JE.recit.oublierHistorique();
+const seqE = jouerE(200);
+const pE = parts(seqE, famE);
+verifier("Équilibre : sans rien à revoir, chaque famille a 20 % des questions (± 3), le français pas plus qu'une autre",
+  FAM_E.every(f => Math.abs((pE[f] || 0) - 0.2) <= 0.03), rond(pE));
+const seqFr = seqE.filter(q => famE(q) === "francais"), pFr = parts(seqFr, q => q.matiere);
+verifier("Équilibre : dans le français, un tiers chacun pour la littérature, la lecture suivie et la grammaire (± 5)",
+  ["litterature", "lecture", "langue"].every(m => Math.abs((pFr[m] || 0) - 1 / 3) <= 0.05), rond(pFr));
+const triplesE = s => s.filter((q, i) => i >= 2 && famE(q) === famE(s[i - 1]) && famE(s[i - 1]) === famE(s[i - 2])).length;
+verifier("Équilibre : jamais trois fois de suite la même famille, ni dans un lot ni d'un lot à l'autre", triplesE(seqE) === 0, triplesE(seqE));
+// en jouant (réponses justes 7 fois sur 10) : les « Seconde chance » gardent leur place ; un triple n'arrive que s'il en contient une
+neuveE(); JE.recit.oublierHistorique();
+const seqJ = jouerE(240, 0.7);
+const triplesSansRappel = seqJ.filter((q, i) => i >= 2 && famE(q) === famE(seqJ[i - 1]) && famE(seqJ[i - 1]) === famE(seqJ[i - 2]) && !q.rappel && !seqJ[i - 1].rappel && !seqJ[i - 2].rappel).length;
+verifier("Équilibre en jouant : trois fois la même famille seulement quand une « Seconde chance » à sa place l'impose",
+  seqJ.some(q => q.rappel) && triplesSansRappel === 0, triplesSansRappel);
+const pJ = parts(seqJ, famE);
+verifier("Équilibre en jouant : chaque famille entre 15 et 25 %", FAM_E.every(f => (pJ[f] || 0) >= 0.15 && (pJ[f] || 0) <= 0.25), rond(pJ));
+
+// les questions ratées passent d'abord, à leur place, même quand leur famille vient de sortir deux fois
+neuveE(); JE.recit.oublierHistorique();
+const deuxH = JE.recit.suite(2, { filtre: q => q.matiere === "histoire" });
+const QE = id => JE.questions.questionsDuCours(id.replace(/-q\d+$/, "")).find(q => q.id === id);
+const qRate = ["histoire-s07-1-q1", "histoire-s07-1-q3", "histoire-s07-1-q5"].map(QE).find(q => deuxH.every(x => x.fiche !== q.fiche));
+JE.questions.enregistrerReponse(qRate, false);
+JE.rappels.etat().file[0].du = JE.rappels.etat().compteur; JE.rappels.etat().derniere = "autre";
+const lotR = JE.recit.suite(3);
+verifier("Équilibre : une « Seconde chance » due passe en tête, même après deux questions de sa famille ; les suivantes changent de famille",
+  deuxH.length === 2 && deuxH.every(q => famE(q) === "histoire") && lotR[0].id === qRate.id && lotR[0].rappel && famE(lotR[1]) !== "histoire" && famE(lotR[2]) !== "histoire",
+  lotR.map(q => q.id + (q.rappel ? " (rappel)" : "")));
+
+// à revoir : la famille sort plus souvent, au plus 1,5 fois plus ; dans la matière, ses notions à revoir passent devant
+neuveE(); JE.recit.oublierHistorique();
+JE.donnees.suivi = { cours: { "geographie-s07-1": { etat: "a-revoir", note: "essai", source: "geographie-d1", le: "2026-10-15" } } };
+JE.progression.oublier();
+const pRev = parts(jouerE(200), famE);
+const autresRev = FAM_E.filter(f => f !== "geographie").map(f => pRev[f] || 0);
+const rapportRev = (pRev.geographie || 0) / (autresRev.reduce((a, b) => a + b, 0) / autresRev.length);
+verifier("À revoir : la famille qui a un cours à revoir sort plus souvent, mais au plus 1,5 fois plus que les autres (pas d'inondation)",
+  rapportRev >= 1.3 && rapportRev <= 1.6 && (pRev.geographie || 0) <= 0.3, rond(pRev) + " ; rapport " + rapportRev.toFixed(2));
+JE.donnees.suivi = { cours: {} }; JE.progression.oublier();
+// dans une matière : 6 fiches sur 8 à retravailler, chacune sort plus souvent qu'une autre ; 1 sur 8 : elle prend la moitié des tirages
+const candsL = Array.from({ length: 8 }, (_, i) => ({ fiche: "m-f" + i, cours: "m", recent: 0, famille: "m", matiere: "m" }));
+const compterL = (aRetr, n) => { const c = {}; for (let i = 0; i < n; i++) JE.leitner.tirer(candsL, JE.sauvegarde.nouvelle(), 1, { aRetravailler: aRetr }).forEach(x => { c[x.fiche] = (c[x.fiche] || 0) + 1; }); return c; };
+const six = ["m-f0", "m-f1", "m-f2", "m-f3", "m-f4", "m-f5"], cSix = compterL(six, 8000);
+const parFicheSix = six.reduce((a, f) => a + (cSix[f] || 0), 0) / 6, parFicheAutres = ((cSix["m-f6"] || 0) + (cSix["m-f7"] || 0)) / 2;
+verifier("À revoir : même nombreuses dans leur matière, les notions à revoir sortent chacune plus souvent que les autres (1,5 fois)",
+  parFicheSix / parFicheAutres >= 1.3 && parFicheSix / parFicheAutres <= 1.7, (parFicheSix / parFicheAutres).toFixed(2));
+const cUne = compterL(["m-f7"], 8000);
+verifier("À revoir : une seule notion à revoir dans sa matière y garde la priorité (environ la moitié des tirages)",
+  (cUne["m-f7"] || 0) / 8000 >= 0.45 && (cUne["m-f7"] || 0) / 8000 <= 0.62, (cUne["m-f7"] || 0) / 8000);
+
+// avec les vrais cours du jeu (data/cours, data/suivi.js et data/a-retravailler.js tels qu'ils sont) : aucune famille oubliée
+const ctxV = contexte(), JV = ctxV.JEU;
+["index-cours", "a-retravailler"].forEach(f => vm.runInContext(fs.readFileSync(path.join(RACINE, "jeu", "data", f + ".js"), "utf8"), ctxV));
+JV.donnees.indexCours.forEach(id => {
+  const f = path.join(RACINE, "jeu", "data", /^anglais-/.test(id) ? "anglais" : "cours", id + ".js");
+  try { vm.runInContext(fs.readFileSync(f, "utf8"), ctxV); } catch (e) { /* un cours illisible reste dans la brume, comme dans le jeu */ }
+});
+JV.sauvegarde.charger(); JV.sauvegarde.remplacer(JV.sauvegarde.nouvelle()); JV.progression.oublier();
+const famV = q => JV.recit.famille(q.matiere), seqV = [], tempsV = [];
+for (let i = 0; i < 150; i++) {
+  const posees = [];
+  for (let v = 0; v < 4; v++) {
+    const t0 = process.hrtime.bigint();
+    const lot = JV.recit.suite(3, { exclure: posees.map(q => q.id), filtre: (fs => q => fs.indexOf(q.fiche) < 0)(posees.map(q => q.fiche)), completer: true });
+    if (i || v) tempsV.push(Number(process.hrtime.bigint() - t0) / 1e6); // le tout premier tirage prépare les questions
+    lot.forEach(q => { posees.push(q); seqV.push(q); });
+  }
+}
+const famillesV = Array.from(new Set(JV.recit.candidats().map(c => JV.recit.famille(c.matiere))));
+const pV = parts(seqV, famV);
+verifier("Tirage avec les vrais cours : chaque famille qui a des questions entre 14 et 30 % (géographie et français ne débordent plus)",
+  famillesV.length >= 2 && famillesV.every(f => (pV[f] || 0) >= 0.14 && (pV[f] || 0) <= 0.3), rond(pV));
+tempsV.sort((a, b) => a - b);
+verifier("Tirage avec les vrais cours : un lot de 3 en moins de 5 ms (médiane)", tempsV[Math.floor(tempsV.length / 2)] < 5, tempsV[Math.floor(tempsV.length / 2)].toFixed(2) + " ms");
+
+// ---------- bataille : mêlée, sang, or perdu sur erreur, niveaux 1 à 3 (demandes de Romain, 15/10/2026) ----------
+const JM = contexte().JEU, MM = JM.batailleMoteur;
+// route droite de 600 px : une troupe de chaque camp, qui marchent l'une vers l'autre
+const routeDroite = { route: [[100, 300], [700, 300]], emplacements: [[200, 240]], emplacementsRivaux: [[600, 240]] };
+function duel(typeA, typeR, avant) {
+  const p = MM.creer(routeDroite, { pvRival: 999, pvChateau: 999, arsenal: { tours: {}, troupes: { fantassins: 1, cavaliers: 1, belier: 1 } } });
+  if (avant) avant(p);
+  p.phase = "vague"; p.fileAmie = [typeA]; p.fileRivale = [typeR]; p.stats.envoyes = 1; p.stats.rivaux = 1;
+  p.minuterieAmie = 0; p.minuterieRivale = 0;
+  MM.etape(p, 0.025);
+  const a = p.unites.find(u => u.camp === "joueur"), r = p.unites.find(u => u.camp === "rival");
+  let g = 0;
+  while (!a.adversaire && g++ < 2000) MM.etape(p, 0.025);
+  return { p, a, r };
+}
+const d1 = duel("fantassins", "pietaille");
+const engages = d1.a.adversaire === d1.r && d1.r.adversaire === d1.a && Math.abs(d1.r.s - d1.a.s) <= MM.MELEE.contact;
+const sA = d1.a.s, sR = d1.r.s;
+for (let k = 0; k < 8; k++) MM.etape(d1.p, 0.025);
+const surPlace = Math.abs(d1.a.s - sA) <= MM.MELEE.contact / 2 && Math.abs(d1.r.s - sR) <= MM.MELEE.contact / 2 && d1.r.s - d1.a.s >= MM.MELEE.ecart - 0.01;
+verifier("Mêlée : deux troupes adverses qui se rencontrent s'engagent, s'arrêtent et se font face", engages && surPlace && d1.p.stats.duels === 1,
+  { engages, surPlace, ecart: d1.r.s - d1.a.s });
+let gD = 0;
+while (d1.a.vivant && d1.r.vivant && gD++ < 4000) MM.etape(d1.p, 0.025);
+const chuteM = d1.p.effets.find(e => e.genre === "chute");
+verifier("Mêlée : coups échangés jusqu'à la chute de l'une (fantassin contre piétaille : la piétaille tombe), comptée dans les ennemis arrêtés",
+  !d1.r.vivant && d1.a.vivant && d1.p.stats.tues === 1 && d1.p.stats.pertes === 0 && d1.a.pv < d1.a.max &&
+  d1.p.effets.some(e => e.genre === "choc") && d1.p.effets.filter(e => e.genre === "coup").length >= 2 &&
+  chuteM && chuteM.melee && chuteM.type === "pietaille" && chuteM.camp === "rival" && (chuteM.regard === 1 || chuteM.regard === -1) && chuteM.duree === MM.DUREE_CHUTE,
+  { stats: d1.p.stats, effets: d1.p.effets.map(e => e.genre) });
+const sMort = d1.a.s;
+for (let k = 0; k < 40; k++) MM.etape(d1.p, 0.025);
+verifier("Mêlée : la survivante reprend sa marche (et revient dans sa file)", !d1.a.adversaire && d1.a.s - sMort > 30 && Math.abs(d1.a.cote - 9) < 0.01, { avance: d1.a.s - sMort, cote: d1.a.cote });
+const d2 = duel("cavaliers", "hommes");
+let gC = 0;
+while (d2.r.pv === d2.r.max && gC++ < 400) MM.etape(d2.p, 0.025);
+verifier("Mêlée : la charge des cavaliers frappe vite et double au premier coup", Math.abs(d2.r.max - d2.r.pv - MM.MELEE.charge * MM.TROUPES.cavaliers.coup) < 1e-9 && gC <= Math.ceil(MM.MELEE.chargeCoup / 0.025) + 1,
+  { coup: d2.r.max - d2.r.pv, etapes: gC });
+const d3 = duel("fantassins", "champion", p => { p.vague = 3; });
+let g3 = 0;
+while (d3.a.vivant && d3.r.vivant && g3++ < 4000) MM.etape(d3.p, 0.025);
+verifier("Mêlée : le champion adverse l'emporte sur un fantassin (perte comptée), puis reprend sa marche", !d3.a.vivant && d3.r.vivant && d3.p.stats.pertes === 1 && d3.p.stats.tues === 0 && (MM.etape(d3.p, 0.025), !d3.r.adversaire), d3.p.stats);
+// le moteur ne lit pas le réglage du sang : mêmes effets, coupé ou non (c'est le rendu qui les dessine ou non)
+function effetsDuel(sang) {
+  JM.sauvegarde.remplacer(JM.sauvegarde.nouvelle()); JM.sauvegarde.etat().reglages.sang = sang;
+  const d = duel("fantassins", "pietaille");
+  let g = 0; while (d.r.vivant && g++ < 4000) MM.etape(d.p, 0.025);
+  return d.p.effets.map(e => e.genre + "@" + e.x.toFixed(2)).join(" ");
+}
+verifier("Mêlée : le moteur émet les mêmes effets (choc, coups, chute), sang coupé ou non", effetsDuel(true) === effetsDuel(false) && /coup/.test(effetsDuel(false)));
+// soldats tombés : au plus TOMBES à la fois, effacés après DUREE_CHUTE ; les autres effets durent DUREE_EFFET
+const d4 = duel("fantassins", "pietaille");
+for (let i = 0; i < MM.TOMBES + 5; i++) d4.p.effets.push({ genre: "chute", x: i, y: 0, age: 0, duree: MM.DUREE_CHUTE });
+let g4 = 0; while (d4.r.vivant && g4++ < 4000) MM.etape(d4.p, 0.025);
+const nbChutes = d4.p.effets.filter(e => e.genre === "chute").length, nouvelleGardee = d4.p.effets.some(e => e.genre === "chute" && e.type === "pietaille");
+d4.p.phase = "preparation";
+for (let k = 0; k < Math.round((MM.DUREE_EFFET + 0.1) / 0.05); k++) MM.etape(d4.p, 0.05);
+const apresEffet = d4.p.effets.map(e => e.genre);
+for (let k = 0; k < Math.round(MM.DUREE_CHUTE / 0.05); k++) MM.etape(d4.p, 0.05);
+verifier("Soldats tombés : au plus " + MM.TOMBES + " à l'écran (le plus récent gardé), couchés " + MM.DUREE_CHUTE + " s puis effacés",
+  nbChutes === MM.TOMBES && nouvelleGardee && apresEffet.length && apresEffet.every(x => x === "chute") && d4.p.effets.length === 0, { nbChutes, apresEffet: apresEffet.length, fin: d4.p.effets.length });
+// une vraie vague avec mêlée : le tableau de la mêlée reste juste à chaque instant (chaque soldat est en marche, tombé ou arrivé)
+const touteArmeeM = { tours: { archers: 1, piquiers: 1, baliste: 1, catapulte: 1 }, troupes: { fantassins: 1, cavaliers: 1, belier: 1 } };
+const pv = MM.creer(J.cartesBataille.carte("gue"), { niveau: 2, orDepart: 400, pvRival: 999, arsenal: touteArmeeM });
+MM.poserTour(pv, "archers", 0); MM.poserTour(pv, "baliste", 1);
+["fantassins", "fantassins", "cavaliers", "belier", "fantassins"].forEach(t => MM.envoyer(pv, t));
+let tableauJuste = true, gV = 0;
+for (let w = 0; w < 3 && pv.phase === "preparation"; w++) {
+  if (w) { pv.or = 200; ["fantassins", "cavaliers", "fantassins"].forEach(t => MM.envoyer(pv, t)); }
+  MM.lancerVague(pv);
+  while (pv.phase === "vague" && gV++ < 60000) {
+    MM.etape(pv, 0.025);
+    const amis = pv.unites.filter(u => u.vivant && u.camp === "joueur").length, rivaux = pv.unites.filter(u => u.vivant && u.camp === "rival").length;
+    if (amis + pv.fileAmie.length + pv.stats.pertes + pv.stats.arrivees !== pv.stats.envoyes || rivaux + pv.fileRivale.length + pv.stats.tues + pv.stats.fuites !== pv.stats.rivaux) tableauJuste = false;
+  }
+}
+verifier("Vague avec mêlée : tableau de la mêlée toujours juste (en marche + arrêtés + aux murs = troupes engagées, des deux côtés)",
+  tableauJuste && pv.stats.duels > 0 && pv.stats.tues > 0 && pv.stats.envoyes > 0, pv.stats);
+// or du conseil de guerre : juste +12 (et +10 au 3e succès d'affilée), faux −6 (première réponse ou « Seconde chance »),
+// pris sur l'or de la bataille, jamais sous zéro ; rien d'autre ne bouge
+const pg = MM.creer(routeDroite, { orDepart: 10 });
+const repG = [MM.repondre(pg, true), MM.repondre(pg, true), MM.repondre(pg, true)];
+const orApresSerie = pg.or;
+const repF = MM.repondre(pg, false), orApresErreur = pg.or, serieApresErreur = pg.serie;
+verifier("Or : +12 par bonne réponse, +10 de plus au 3e succès d'affilée", repG.map(r => r.or).join() === "12,12,22" && repG[2].eclat && orApresSerie === 56, repG);
+verifier("Or : une erreur coûte 6 or (config.js, orPerduErreur) et casse la série", JM.donnees.config.orPerduErreur === 6 && MM.OR_PERDU === 6 && repF.or === -6 && orApresErreur === 50 && serieApresErreur === 0 && !repF.eclat, { repF, orApresErreur });
+pg.or = 4;
+const repPlancher = [MM.repondre(pg, false).or, pg.or, MM.repondre(pg, false).or, pg.or];
+verifier("Or : jamais en dessous de zéro (4 or, deux erreurs : −4 puis rien)", repPlancher.join() === "-4,0,0,0", repPlancher);
+const pg0 = MM.creer(routeDroite, { orDepart: 30, orPerduErreur: 0 }), pg6 = MM.creer(routeDroite, { orDepart: 30 });
+MM.repondre(pg0, false); MM.repondre(pg6, false);
+verifier("Or : orPerduErreur 0 coupe la perte ; absent, 6 par défaut", pg0.or === 30 && pg6.or === 24, [pg0.or, pg6.or]);
+JM.sauvegarde.remplacer(JM.sauvegarde.nouvelle());
+const ressourcesAvant = JSON.stringify(JM.sauvegarde.etat().ressources), campagneAvant = JSON.stringify(JM.campagne.etat());
+const pgR = MM.creer(routeDroite, Object.assign(JM.campagne.options(0), { orPerduErreur: JM.donnees.config.orPerduErreur }));
+for (let i = 0; i < 5; i++) MM.repondre(pgR, false);
+verifier("Or : une erreur ne retire rien au royaume (ressources, campagne, provinces)", JSON.stringify(JM.sauvegarde.etat().ressources) === ressourcesAvant && JSON.stringify(JM.campagne.etat()) === campagneAvant && pgR.or === 30);
+
+// niveaux : la bataille tire les niveaux 1 à 3, le conseil et les événements 1 et 2 ; difficulté visée : 7 sur 10
+const JN = contexte().JEU, QN = JN.questions;
+JN.sauvegarde.charger();
+const SRCN = { fichier: "essai.pdf", page: 1 };
+JN.donnees.cours["histoire-s07-2"] = { id: "histoire-s07-2", fiches: [{ id: "histoire-s07-2-f1", notion: "N", titre: "N", texte: "", source: SRCN }], bonus: [], nonCouvert: [],
+  questions: [1, 2, 3].map(n => ({ id: "histoire-s07-2-q" + n, fiche: "histoire-s07-2-f1", type: "qcm", niveau: n, enonce: "Q" + n + " ?", choix: ["a", "b", "c", "d"], reponse: "a", explication: "a.", source: SRCN })) };
+QN.vider(); JN.progression.oublier();
+QN.oublierReponses();
+const niv = seq => { QN.oublierReponses(); seq.forEach(x => QN.retenir(x)); return QN.niveauConseille(); };
+const un = (n, sur) => Array.from({ length: sur }, (_, i) => i < n);
+verifier("Niveau conseillé : vise 7 réussites sur 10 (9/10 → 3, 8 → 2,5, 7 → 2, 6 → 1,5, 5 → 1 ; au début 1,5)",
+  niv([]) === 1.5 && niv(un(9, 10)) === 3 && niv(un(8, 10)) === 2.5 && niv(un(7, 10)) === 2 && niv(un(6, 10)) === 1.5 && niv(un(5, 10)) === 1 && niv(un(10, 10)) === 3,
+  [niv([]), niv(un(9, 10)), niv(un(8, 10)), niv(un(7, 10)), niv(un(6, 10)), niv(un(5, 10))]);
+niv(un(10, 10)); // niveau conseillé 3
+const horsBataille = new Set(), enBataille = new Set();
+for (let i = 0; i < 60; i++) {
+  horsBataille.add(QN.choisirPourFiche("histoire-s07-2-f1").niveau);
+  enBataille.add(QN.avecNiveaux(QN.NIVEAUX_BATAILLE, () => QN.choisirPourFiche("histoire-s07-2-f1")).niveau);
+}
+let restaure = false;
+try { QN.avecNiveaux([3], () => { throw new Error("essai"); }); } catch (e) { restaure = QN.choisirPourFiche("histoire-s07-2-f1").niveau <= 2; }
+verifier("Niveaux : la bataille tire aussi le niveau 3 (le conseil et les événements jamais), et le réglage se referme même après une erreur",
+  !horsBataille.has(3) && enBataille.has(3) && JSON.stringify(QN.NIVEAUX_BATAILLE) === "[1,2,3]" && restaure, { hors: [...horsBataille], bataille: [...enBataille], restaure });
+const srcBataille = fs.readFileSync(path.join(RACINE, "jeu", "js", "bataille.js"), "utf8");
+verifier("Bataille : son tirage passe par avecNiveaux(NIVEAUX_BATAILLE) et son or par M.repondre", /avecNiveaux\(Q\.NIVEAUX_BATAILLE/.test(srcBataille) && /M\.repondre\(p, juste\)/.test(srcBataille) && !/BONUS_SERIE/.test(srcBataille));
+// revue du 15/10/2026 : une question de niveau 3 ratée en bataille n'avait jamais sa « Seconde chance » (rappels.placer
+// ne gardait que les niveaux 1 et 2) ; elle revient maintenant en bataille, et attend la bataille hors bataille
+JN.sauvegarde.remplacer(JN.sauvegarde.nouvelle()); JN.progression.oublier(); JN.recit.oublierHistorique(); QN.oublierReponses();
+const q3N = QN.questionsDeFiche("histoire-s07-2-f1", [3])[0];
+QN.enregistrerReponse(q3N, false);
+const rN = JN.rappels.etat(); rN.file[0].du = rN.compteur; rN.derniere = "autre";
+const lotHors = JN.recit.suite(3), lotEn = QN.avecNiveaux(QN.NIVEAUX_BATAILLE, () => JN.recit.suite(3));
+const ordinaires3 = QN.questionsDeFiche("histoire-s07-2-f1", [1, 2]);
+const replaceHors = JN.rappels.replacer(ordinaires3.slice(), 0, 2), replaceEn = QN.avecNiveaux(QN.NIVEAUX_BATAILLE, () => JN.rappels.replacer(ordinaires3.slice(), 0, 2));
+verifier("Seconde chance d'une question de niveau 3 : elle revient en bataille (tirage et replacement), jamais au conseil ni dans un événement, et attend dans la file",
+  !lotHors.some(q => q.id === q3N.id) && lotEn[0].id === q3N.id && lotEn[0].rappel && !replaceHors.some(q => q.id === q3N.id) && replaceEn[0].id === q3N.id && replaceEn[0].rappel &&
+  JN.rappels.enAttente().indexOf(q3N.id) >= 0 && /enBataille\(function \(\) \{ JEU\.rappels\.replacer\(/.test(srcBataille),
+  { hors: lotHors.map(q => q.id), en: lotEn.map(q => q.id), replaceEn: replaceEn.map(q => q.id) });
+
+// réglage « Sang dans les combats » : actif par défaut, gardé dans la sauvegarde, actif pour une ancienne sauvegarde sans lui
+const ctxS = contexte(), JS = ctxS.JEU;
+vm.runInContext(fs.readFileSync(path.join(RACINE, "jeu", "js", "anim.js"), "utf8"), ctxS, { filename: "anim.js" });
+JS.sauvegarde.remplacer(JS.sauvegarde.nouvelle());
+const sangNeuf = JS.sauvegarde.etat().reglages.sang === true && JS.anim.sang() === true;
+const vieille = JSON.parse(JSON.stringify(v1));
+const vieilleMigree = JS.sauvegarde.migrer(JSON.parse(JSON.stringify(vieille)));
+JS.sauvegarde.remplacer(vieilleMigree);
+const sangAncien = !("sang" in vieilleMigree.reglages) && JS.anim.sang() === true &&
+  ["cours", "notions", "ressources", "batiments", "devoirs", "signalements", "creeLe"].every(k => JSON.stringify(vieilleMigree[k]) === JSON.stringify(vieille[k]));
+const v3s = JSON.parse(JSON.stringify(JS.sauvegarde.nouvelle())); delete v3s.rappels; delete v3s.reglages.sang; v3s.schema = 3; v3s.reglages.animations = false;
+const m3s = JS.sauvegarde.migrer(JSON.parse(JSON.stringify(v3s)));
+JS.sauvegarde.remplacer(m3s);
+const sang3 = JSON.stringify(m3s.reglages) === JSON.stringify(v3s.reglages) && JS.anim.sang() === true;
+verifier("Réglage du sang : actif par défaut, et actif pour une ancienne sauvegarde (schémas 1 et 3) sans qu'elle perde rien", sangNeuf && sangAncien && sang3, { sangNeuf, sangAncien, sang3 });
+JS.sauvegarde.etat().reglages.sang = false;
+const txtSang = JS.sauvegarde.texteExport();
+JS.sauvegarde.importer(txtSang);
+verifier("Réglage du sang : coupé, il le reste après export puis import", JS.sauvegarde.etat().reglages.sang === false && JS.anim.sang() === false);
 
 console.log("\n" + ok + " réussis, " + ko + " en échec.");
 process.exit(ko ? 1 : 0);

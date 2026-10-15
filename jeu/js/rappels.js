@@ -1,5 +1,5 @@
 // Rappels : une question ratée revient « un peu plus tard », où que l'on joue (préparation d'une bataille, conseil du
-// royaume, événement du jour). Seconde chance, jamais une pénalité : rien n'est retiré, aucun chrono.
+// royaume, événement du jour). Seconde chance, aucun chrono ; en bataille, une erreur coûte un peu d'or de la bataille en cours, comme toute erreur.
 //
 // Règle : quand l'élève se trompe, la même question (même identifiant) revient après config.rappelApres autres
 // questions (3 par défaut). Juste au rappel, elle sort de la file ; encore fausse, elle repart pour un tour. Un rappel
@@ -98,9 +98,12 @@
   // d'avant est la même ; il prend la place d'une question ordinaire, qui sort du lot (le lot garde sa taille).
   // options : types (le conseil ne pose que des vrai_faux : un autre rappel attend une bataille ou un événement),
   // longueur (taille voulue du lot, si le tirage en a donné moins). Les rappels déjà placés sont replacés.
+  // Niveaux : ceux du tirage en cours (JEU.questions.niveauMax) ; une question de niveau 3, ratée en bataille, revient
+  // donc dans la bataille (ou la suivante), jamais au conseil du royaume ni dans un événement, qui s'arrêtent au niveau 2.
   function placer(liste, options) {
     options = options || {};
     var r = etatRappels();
+    var niveauMax = JEU.questions && JEU.questions.niveauMax ? JEU.questions.niveauMax() : 2;
     var dejaPlaces = liste.some(function (q) { return q && q.rappel; });
     if (!r.file.length && !dejaPlaces) return liste;
     // un rappel dont la question n'existe plus disparaît sans bruit
@@ -108,7 +111,7 @@
     r.file = r.file.filter(function (e) {
       var q = question(e);
       if (!q) return false;
-      var admis = (!options.types || options.types.indexOf(q.type) >= 0) && q.niveau <= 2;
+      var admis = (!options.types || options.types.indexOf(q.type) >= 0) && q.niveau <= niveauMax;
       if (admis) dus.push({ e: e, q: q });
       return true;
     });
