@@ -2,7 +2,8 @@
 // Compilé (réponses brouillées) par node atelier/outils/compiler-cours.js vers jeu/data/cours/geographie-s01-2.js.
 // Pages utilisées : 1, 2, 5 et 7 du cours 1. Le devoir geographie-d1 couvre ce cours : aucune question ne reprend
 // ses questions, ses documents, ses chiffres ni ses réponses attendues (les mots qu'il demande de définir ne sont
-// pas dans « vocabulaire », pour que le jeu n'en fabrique pas de question de définition).
+// pas posés tels quels). Les définitions du cours (page 5) sont dans « vocabulaire » : le cahier des charges (section 9)
+// autorise définitions et repères du cours, et le devoir corrigé montre qu'elles sont à retravailler.
 const F = "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf";
 const P = (page) => ({ fichier: F, page: page });
 
@@ -35,16 +36,18 @@ module.exports = {
     {
       id: "geographie-s01-2-f1", notion: "Une population mondiale en forte hausse",
       titre: "Toujours plus d'habitants sur Terre",
-      texte: "Vers le début du XIXe siècle, la Terre a atteint son premier milliard d'habitants. Depuis 1950, la population mondiale a triplé, et cette hausse concerne surtout les pays du Sud. Elle ralentit un peu, mais on attend tout de même environ 9 milliards d'habitants vers le milieu du siècle.",
+      texte: "Vers le début du XIXe siècle, la Terre a atteint son premier milliard d'habitants. Depuis 1950, la population mondiale a triplé : environ 2,5 milliards cette année-là, 7,5 milliards en 2020. Cette hausse concerne surtout les pays du Sud. Elle ralentit un peu, mais on attend environ 9 milliards d'habitants vers le milieu du siècle.",
       pointsCles: [
         "Un milliard d'habitants au début du XIXe siècle",
-        "Une population mondiale triplée depuis 1950",
+        "2,5 milliards d'habitants en 1950, 7,5 milliards en 2020 : trois fois plus",
         "Une hausse qui touche surtout les pays du Sud",
         "Croissance démographique : le nombre d'habitants grandit"
       ],
       dates: [{ annee: 1950, evenement: "Début de la très forte hausse de la population mondiale" }],
       lieux: [], personnages: [],
-      vocabulaire: [],
+      vocabulaire: [
+        { mot: "croissance démographique", def: "l'augmentation du nombre d'habitants" }
+      ],
       schema: null, prerequis: [], source: P(1)
     },
     {
@@ -59,8 +62,7 @@ module.exports = {
       ],
       dates: [], lieux: [], personnages: [],
       vocabulaire: [
-        { mot: "espérance de vie", def: "le nombre moyen d'années que peut vivre un bébé qui vient de naître" },
-        { mot: "taux de mortalité", def: "le nombre de décès comptés pour mille habitants" }
+        { mot: "espérance de vie", def: "le nombre moyen d'années que peut vivre un bébé qui vient de naître" }
       ],
       schema: null, prerequis: ["geographie-s01-2-f1"], source: P(1)
     },
@@ -78,7 +80,8 @@ module.exports = {
       dates: [], lieux: ["Afrique", "Asie du Sud", "Chine", "Brésil"], personnages: [],
       vocabulaire: [
         { mot: "PMA", def: "les Pays les Moins Avancés, les moins développés de la planète" },
-        { mot: "pays émergent", def: "un pays dont l'économie grandit vite et où la vie des habitants s'améliore" }
+        { mot: "pays émergent", def: "un pays dont l'économie grandit vite et où la vie des habitants s'améliore" },
+        { mot: "taux de fécondité", def: "le nombre moyen d'enfants par femme" }
       ],
       schema: null, prerequis: ["geographie-s01-2-f2"], source: P(2)
     },
@@ -101,7 +104,7 @@ module.exports = {
     {
       id: "geographie-s01-2-f5", notion: "Accroissement naturel et solde migratoire",
       titre: "Mesurer l'évolution d'une population",
-      texte: "Pour suivre la population d'un pays, on compte les naissances, les décès, les immigrés qui arrivent et les émigrés qui partent. Naissances moins décès donnent l'accroissement naturel. Immigrés moins émigrés donnent le solde migratoire. En additionnant les deux, on obtient la croissance démographique du pays.",
+      texte: "Pour suivre la population d'un pays, on compte les naissances, les décès, les immigrés qui arrivent et les émigrés qui partent. Le taux de natalité donne les naissances pour mille habitants ; le taux de mortalité, les décès. Naissances moins décès donnent l'accroissement naturel, immigrés moins émigrés le solde migratoire. Les deux ensemble font la croissance démographique.",
       pointsCles: [
         "Naissances − décès = accroissement naturel",
         "Immigrés − émigrés = solde migratoire",
@@ -112,7 +115,9 @@ module.exports = {
       vocabulaire: [
         { mot: "accroissement naturel", def: "ce qu'on obtient en retirant le nombre de décès du nombre de naissances" },
         { mot: "solde migratoire", def: "l'écart entre les immigrés qui arrivent et les émigrés qui partent" },
-        { mot: "émigré", def: "une personne qui a quitté son pays pour aller vivre ailleurs" }
+        { mot: "émigré", def: "une personne qui a quitté son pays pour aller vivre ailleurs" },
+        { mot: "taux de natalité", def: "le nombre de naissances comptées pour mille habitants" },
+        { mot: "taux de mortalité", def: "le nombre de décès comptés pour mille habitants" }
       ],
       schema: null, prerequis: ["geographie-s01-2-f1"], source: P(7)
     }
@@ -189,6 +194,11 @@ module.exports = {
       choix: ["Par 5", "Par 2", "Par 100", "Elle a baissé"],
       reponse: "Par 5",
       explication: "C'est un chiffre-clé du cours : cinq fois plus d'habitants en Afrique depuis 1950.", source: P(2) },
+    { id: "geographie-s01-2-q24", fiche: "geographie-s01-2-f3", type: "qcm", niveau: 2,
+      enonce: "Pourquoi la population des PMA augmente-t-elle si vite ?",
+      choix: ["Parce que la mortalité y baisse alors que la natalité reste très haute", "Parce que la mortalité y augmente fortement", "Parce que la natalité y baisse plus vite que la mortalité", "Parce que les familles y ont de moins en moins d'enfants"],
+      reponse: "Parce que la mortalité y baisse alors que la natalité reste très haute",
+      explication: "On y meurt moins qu'avant, mais il naît toujours beaucoup d'enfants. Les naissances dépassent largement les décès, donc la population grimpe.", source: P(2) },
     { id: "geographie-s01-2-q14", fiche: "geographie-s01-2-f3", type: "vrai_faux", niveau: 2,
       enonce: "Dans les pays développés, la population augmente toujours très vite.",
       corrections: ["Faux : elle augmente peu, et parfois elle diminue.", "Faux : elle augmente plus vite que dans les PMA.", "Faux : elle double tous les dix ans."],
@@ -242,7 +252,12 @@ module.exports = {
       enonce: "Un pays a plus de naissances que de décès, et autant d'immigrés que d'émigrés. Que fait sa population ?",
       choix: ["Elle augmente", "Elle baisse", "Elle reste exactement la même", "On ne peut rien en dire"],
       reponse: "Elle augmente",
-      explication: "L'accroissement naturel est positif et le solde migratoire est nul. Leur somme est positive, donc la population grandit.", source: P(7) }
+      explication: "L'accroissement naturel est positif et le solde migratoire est nul. Leur somme est positive, donc la population grandit.", source: P(7) },
+    { id: "geographie-s01-2-q25", fiche: "geographie-s01-2-f5", type: "vrai_faux", niveau: 1,
+      enonce: "Le taux de natalité compte les décès pour mille habitants.",
+      corrections: ["Faux : il compte les naissances pour mille habitants ; les décès, c'est le taux de mortalité.", "Faux : il compte le nombre d'enfants par femme.", "Faux : il compte les immigrés qui arrivent dans le pays."],
+      reponse: { vrai: false, correction: "Faux : il compte les naissances pour mille habitants ; les décès, c'est le taux de mortalité." },
+      explication: "Natalité parle des naissances, mortalité des décès. Les deux se comptent pour mille habitants.", source: P(5) }
   ],
   bonus: [],
   nonCouvert: [

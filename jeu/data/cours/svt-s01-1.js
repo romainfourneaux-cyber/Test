@@ -13,7 +13,7 @@ JEU.enregistrer("cours", {
     "Ordre : Mercure, Vénus, Terre, Mars | ceinture d'astéroïdes | Jupiter, Saturne, Uranus, Neptune",
     "Au-delà de Neptune : la ceinture de Kuiper, puis le nuage d'Oort"
    ],
-   "astuce": "Sur le schéma du corrigé, les initiales Me, Ve, Te, Ma puis Ju, Sa, Ur, Ne suffisent à retrouver l'ordre.",
+   "astuce": "Retiens les abréviations de la fiche modèle : Me, Ve, Te, Ma, puis la ceinture, puis Ju, Sa, Ur, Ne.",
    "dates": [],
    "lieux": [],
    "personnages": [],
@@ -42,8 +42,7 @@ JEU.enregistrer("cours", {
    "pointsCles": [
     "Telluriques (noyau métallo-rocheux) : Mercure, Vénus, Terre, Mars",
     "Gazeuses ou joviennes (seulement du gaz) : Jupiter, Saturne, Uranus, Neptune",
-    "Mars est la tellurique la plus éloignée du Soleil, Neptune la gazeuse la plus éloignée",
-    "Sur le schéma, on colorie chaque famille d'une couleur différente"
+    "Mars est la tellurique la plus éloignée du Soleil, Neptune la gazeuse la plus éloignée"
    ],
    "dates": [],
    "lieux": [],
@@ -75,10 +74,10 @@ JEU.enregistrer("cours", {
    "id": "svt-s01-1-f3",
    "notion": "Le portrait de quelques planètes",
    "titre": "Des planètes très différentes",
-   "texte": "Mercure est la plus petite planète et la plus proche du Soleil. Vénus a presque la taille de la Terre, mais elle est entourée d'une atmosphère épaisse qu'on ne peut pas respirer, et il y fait plus de 400 °C. Jupiter est la plus grosse planète, avec de nombreux satellites. Saturne, géante gazeuse, porte des anneaux.",
+   "texte": "Mercure est la plus petite planète et la plus proche du Soleil. Vénus a la même taille que la Terre, mais elle est entourée d'une atmosphère épaisse qu'on ne peut pas respirer, et il y fait plus de 400 °C. Jupiter est la plus grosse planète, avec de nombreux satellites. Saturne, géante gazeuse, porte des anneaux.",
    "pointsCles": [
     "Mercure : la plus petite, la plus proche du Soleil",
-    "Vénus : taille proche de celle de la Terre, atmosphère très épaisse et irrespirable, plus de 400 °C",
+    "Vénus : même taille que la Terre, atmosphère très épaisse et irrespirable, plus de 400 °C",
     "Jupiter : la plus grosse, juste après la ceinture d'astéroïdes, beaucoup de satellites",
     "Saturne : géante gazeuse à anneaux, voisine de Jupiter ; Uranus entre Saturne et Neptune"
    ],
@@ -310,7 +309,7 @@ JEU.enregistrer("cours", {
     "Sépare les telluriques des gazeuses",
     "Faite uniquement de gaz"
    ],
-   "explication": "Tellurique : métal et roche ; gazeuse : seulement du gaz. La ceinture principale sépare les deux familles, celle de Kuiper borde les gazeuses.",
+   "explication": "Tellurique : métal et roche ; gazeuse : seulement du gaz. La ceinture principale sépare les deux familles, celle de Kuiper sépare les gazeuses du nuage d'Oort.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 1
@@ -342,7 +341,7 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s01-1-f2",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Pourquoi dit-on à la fois que Mars et que Neptune sont « les plus éloignées » du Soleil ?",
+   "enonce": "Pourquoi peut-on dire à la fois que Mars et que Neptune sont « les plus éloignées » du Soleil ?",
    "choix": [
     "Mars est la tellurique la plus éloignée, Neptune la gazeuse la plus éloignée",
     "Elles sont exactement à la même distance du Soleil",
@@ -382,9 +381,9 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s01-1-f3",
    "type": "vrai_faux",
    "niveau": 1,
-   "enonce": "Vénus a presque la même taille que la Terre.",
+   "enonce": "Vénus et la Terre ont la même taille.",
    "corrections": [],
-   "explication": "Vénus et la Terre ont une taille proche. Mais sur Vénus, l'air est irrespirable et il fait plus de 400 °C.",
+   "explication": "Vénus a la même taille que la Terre et, comme elle, elle est tellurique. Mais son atmosphère est irrespirable et il y fait plus de 400 °C.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 1
@@ -651,7 +650,7 @@ JEU.enregistrer("cours", {
  "bonus": [],
  "nonCouvert": [
   "Les définitions d'astre, d'étoile, de planète, de système stellaire, de galaxie, d'astéroïde et de satellite : la fiche modèle du corrigé les liste sans les expliquer, et la leçon du livret n'est pas déposée.",
-  "La comète, la ceinture de Kuiper et le nuage d'Oort sont seulement nommés sur les schémas du corrigé : leur description n'est pas déposée.",
+  "La comète, seulement dessinée sur la fiche modèle, et la nature de la ceinture de Kuiper et du nuage d'Oort (de quoi ils sont faits) : le corrigé ne donne que leur place.",
   "Le nombre de satellites de chaque planète, abrégé et peu lisible sur la fiche modèle, n'est pas repris."
  ]
 });

@@ -7,10 +7,10 @@ JEU.enregistrer("cours", {
    "id": "geographie-s01-2-f1",
    "notion": "Une population mondiale en forte hausse",
    "titre": "Toujours plus d'habitants sur Terre",
-   "texte": "Vers le début du XIXe siècle, la Terre a atteint son premier milliard d'habitants. Depuis 1950, la population mondiale a triplé, et cette hausse concerne surtout les pays du Sud. Elle ralentit un peu, mais on attend tout de même environ 9 milliards d'habitants vers le milieu du siècle.",
+   "texte": "Vers le début du XIXe siècle, la Terre a atteint son premier milliard d'habitants. Depuis 1950, la population mondiale a triplé : environ 2,5 milliards cette année-là, 7,5 milliards en 2020. Cette hausse concerne surtout les pays du Sud. Elle ralentit un peu, mais on attend environ 9 milliards d'habitants vers le milieu du siècle.",
    "pointsCles": [
     "Un milliard d'habitants au début du XIXe siècle",
-    "Une population mondiale triplée depuis 1950",
+    "2,5 milliards d'habitants en 1950, 7,5 milliards en 2020 : trois fois plus",
     "Une hausse qui touche surtout les pays du Sud",
     "Croissance démographique : le nombre d'habitants grandit"
    ],
@@ -22,7 +22,12 @@ JEU.enregistrer("cours", {
    ],
    "lieux": [],
    "personnages": [],
-   "vocabulaire": [],
+   "vocabulaire": [
+    {
+     "mot": "croissance démographique",
+     "def": "l'augmentation du nombre d'habitants"
+    }
+   ],
    "schema": null,
    "prerequis": [],
    "source": {
@@ -48,10 +53,6 @@ JEU.enregistrer("cours", {
     {
      "mot": "espérance de vie",
      "def": "le nombre moyen d'années que peut vivre un bébé qui vient de naître"
-    },
-    {
-     "mot": "taux de mortalité",
-     "def": "le nombre de décès comptés pour mille habitants"
     }
    ],
    "schema": null,
@@ -91,6 +92,10 @@ JEU.enregistrer("cours", {
     {
      "mot": "pays émergent",
      "def": "un pays dont l'économie grandit vite et où la vie des habitants s'améliore"
+    },
+    {
+     "mot": "taux de fécondité",
+     "def": "le nombre moyen d'enfants par femme"
     }
    ],
    "schema": null,
@@ -139,7 +144,7 @@ JEU.enregistrer("cours", {
    "id": "geographie-s01-2-f5",
    "notion": "Accroissement naturel et solde migratoire",
    "titre": "Mesurer l'évolution d'une population",
-   "texte": "Pour suivre la population d'un pays, on compte les naissances, les décès, les immigrés qui arrivent et les émigrés qui partent. Naissances moins décès donnent l'accroissement naturel. Immigrés moins émigrés donnent le solde migratoire. En additionnant les deux, on obtient la croissance démographique du pays.",
+   "texte": "Pour suivre la population d'un pays, on compte les naissances, les décès, les immigrés qui arrivent et les émigrés qui partent. Le taux de natalité donne les naissances pour mille habitants ; le taux de mortalité, les décès. Naissances moins décès donnent l'accroissement naturel, immigrés moins émigrés le solde migratoire. Les deux ensemble font la croissance démographique.",
    "pointsCles": [
     "Naissances − décès = accroissement naturel",
     "Immigrés − émigrés = solde migratoire",
@@ -161,6 +166,14 @@ JEU.enregistrer("cours", {
     {
      "mot": "émigré",
      "def": "une personne qui a quitté son pays pour aller vivre ailleurs"
+    },
+    {
+     "mot": "taux de natalité",
+     "def": "le nombre de naissances comptées pour mille habitants"
+    },
+    {
+     "mot": "taux de mortalité",
+     "def": "le nombre de décès comptés pour mille habitants"
     }
    ],
    "schema": null,
@@ -432,6 +445,26 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
+   "id": "geographie-s01-2-q24",
+   "fiche": "geographie-s01-2-f3",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Pourquoi la population des PMA augmente-t-elle si vite ?",
+   "choix": [
+    "Parce que la mortalité y baisse alors que la natalité reste très haute",
+    "Parce que la mortalité y augmente fortement",
+    "Parce que la natalité y baisse plus vite que la mortalité",
+    "Parce que les familles y ont de moins en moins d'enfants"
+   ],
+   "explication": "On y meurt moins qu'avant, mais il naît toujours beaucoup d'enfants. Les naissances dépassent largement les décès, donc la population grimpe.",
+   "source": {
+    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
+    "page": 2
+   },
+   "r": "XgkGacgDJFw7xeQEVRRHdoAAIpu7RwVQPsxBIk0ErIFEQQQUawBAekwYIZhRE9QDG9RSbToBckAFFsRACIVCv0AAAxlTKUAFIISZ",
+   "poids": 1
+  },
+  {
    "id": "geographie-s01-2-q14",
    "fiche": "geographie-s01-2-f3",
    "type": "vrai_faux",
@@ -631,6 +664,25 @@ JEU.enregistrer("cours", {
     "page": 7
    },
    "r": "NdBHtgECSh1DPNgCFcTZ",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s01-2-q25",
+   "fiche": "geographie-s01-2-f5",
+   "type": "vrai_faux",
+   "niveau": 1,
+   "enonce": "Le taux de natalité compte les décès pour mille habitants.",
+   "corrections": [
+    "Faux : il compte les naissances pour mille habitants ; les décès, c'est le taux de mortalité.",
+    "Faux : il compte le nombre d'enfants par femme.",
+    "Faux : il compte les immigrés qui arrivent dans le pays."
+   ],
+   "explication": "Natalité parle des naissances, mortalité des décès. Les deux se comptent pour mille habitants.",
+   "source": {
+    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
+    "page": 5
+   },
+   "r": "T0EXBDYWMkFTa0RCLk0FjIVDQQRBJtwASxBMIJkVNIEHOXqCbToFVZBEdkUVPFAHtwUEc90DHY0AF4hLfU1FA4RGOxxFL0CTWYERPEgRVwgHndRAVghHK40AbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
   }
  ],

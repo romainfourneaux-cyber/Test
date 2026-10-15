@@ -67,7 +67,7 @@ module.exports = {
   questions: [
     // f1 : la vapeur d'eau
     { id: "svt-s02-2-q1", fiche: "svt-s02-2-f1", type: "qcm", niveau: 1,
-      enonce: "Comment la quantité de vapeur d'eau dans l'atmosphère a-t-elle évolué il y a plus de 4 milliards d'années ?",
+      enonce: "Comment la quantité de vapeur d'eau de l'atmosphère a-t-elle évolué depuis 4,5 milliards d'années ?",
       choix: ["Elle a chuté très vite, puis s'est stabilisée", "Elle a augmenté sans arrêt", "Elle est restée au maximum", "Elle a disparu complètement"],
       reponse: "Elle a chuté très vite, puis s'est stabilisée",
       explication: "Presque au maximum il y a 4,5 milliards d'années, le taux de vapeur d'eau a chuté très vite. Il est ensuite resté à peu près stable.", source: C(3) },

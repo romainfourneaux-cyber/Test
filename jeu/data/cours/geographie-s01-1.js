@@ -7,11 +7,11 @@ JEU.enregistrer("cours", {
    "id": "geographie-s01-1-f1",
    "notion": "L'organisation de l'année de géographie",
    "titre": "Comment se déroule l'année",
-   "texte": "L'année de géographie est découpée en thèmes. Chaque thème alterne des cours, souvent en deux parties, et des études de cas, qui observent de près un pays ou un événement. Certains cours ont des vidéos en plus du papier. Des devoirs facultatifs partent à la correction. Le tableau de progression sert à cocher ce qui est compris et su.",
+   "texte": "L'année de géographie est découpée en thèmes. Chaque thème alterne des cours, souvent en deux parties, et des études de cas, qui observent de près un pays ou un événement. Certains cours ont des vidéos en plus du papier. Des devoirs sont à envoyer à la correction. Le tableau de progression sert à cocher ce qui est compris et su.",
    "pointsCles": [
     "V : vidéos et support papier ; P : support papier seulement",
     "Les outils du géographe 1 à 8 ont été vus en 6e : on peut les relire",
-    "Les devoirs sont facultatifs, mais on peut les envoyer à la correction",
+    "Des devoirs à faire, puis à envoyer à la correction",
     "Le tableau de progression : une case « compris et su » et une case pour noter ce qui reste à revoir"
    ],
    "dates": [],
@@ -34,7 +34,7 @@ JEU.enregistrer("cours", {
     "Cours 1 : I. croissance et développement de la population ; II. les pays du Sud ; III. les pays du Nord",
     "Cours 2 : I. une pauvreté qui recule ; II. des inégalités à différentes échelles",
     "Outil 9 : mesurer la pauvreté et les inégalités",
-    "Deux devoirs facultatifs dans ce thème"
+    "Deux devoirs à envoyer à la correction dans ce thème"
    ],
    "dates": [],
    "lieux": [
@@ -173,18 +173,18 @@ JEU.enregistrer("cours", {
    "fiche": "geographie-s01-1-f1",
    "type": "vrai_faux",
    "niveau": 1,
-   "enonce": "Les devoirs de géographie inscrits au tableau de progression sont obligatoires.",
+   "enonce": "Sur le tableau de progression, la lettre V signale seulement un cours sur papier.",
    "corrections": [
-    "Faux : ils sont facultatifs, mais on peut les envoyer à la correction.",
-    "Faux : il n'y a aucun devoir en géographie.",
-    "Faux : les devoirs remplacent les cours."
+    "Faux : V signale un cours avec des vidéos en plus du papier ; P signale le papier seul.",
+    "Faux : V signale un devoir à envoyer.",
+    "Faux : V signale une étude de cas."
    ],
-   "explication": "Le tableau les marque comme optionnels. On peut quand même les faire et les envoyer.",
+   "explication": "V veut dire vidéos et support papier. P veut dire support papier uniquement.",
    "source": {
     "fichier": "cours/geographie/Geo 5e - Tableau de progression.pdf",
     "page": 1
    },
-   "r": "=URYDsgWEpBDDQxGdQiUUkQVRrqTdcREss1CQ1QHKogRdcgICU1CaElGH4wHI9mXDwVWPshCTowEhIVALohAJ1xAbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "r": "==AUMFkCTwQAnBAEMUAEZ4kCegkJBRwWKdAHGZTSJdGAQwQBQkhTaYBSwgVCF1AAKYUFGsNhWwxEVJADK8UENUDTFZ0XbAQBGdwBndRGEshFA0xTkgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -212,18 +212,18 @@ JEU.enregistrer("cours", {
    "fiche": "geographie-s01-1-f2",
    "type": "association",
    "niveau": 2,
-   "enonce": "Relie chaque étude de cas du thème 1 à son sujet.",
+   "enonce": "Relie chaque étape du thème 1 à son sujet.",
    "gauche": [
-    "Le Burkina Faso",
-    "L'Inde",
-    "L'Afghanistan et la Finlande"
+    "L'étude de cas sur le Burkina Faso",
+    "L'étude de cas sur l'Afghanistan et la Finlande",
+    "L'outil 9"
    ],
    "droite": [
-    "L'éducation",
+    "Mesurer la pauvreté et les inégalités",
     "Une forte croissance démographique",
-    "La situation démographique du pays"
+    "L'éducation"
    ],
-   "explication": "Le Burkina Faso et l'Inde servent au cours 1 sur la population. L'Afghanistan et la Finlande servent au cours 2, sur l'éducation.",
+   "explication": "Le Burkina Faso sert au cours 1, sur la population ; l'Afghanistan et la Finlande servent au cours 2, sur l'éducation. L'outil 9 apprend à mesurer la pauvreté et les inégalités.",
    "source": {
     "fichier": "cours/geographie/Geo 5e - Tableau de progression.pdf",
     "page": 1

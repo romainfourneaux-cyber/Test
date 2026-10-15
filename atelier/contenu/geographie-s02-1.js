@@ -30,7 +30,7 @@ module.exports = {
       titre: "Une population qui explose",
       texte: "Depuis 1960, la mortalité du Burkina Faso a beaucoup baissé, alors que la natalité reste forte et ne recule que lentement. Les naissances dépassent donc largement les décès : la population grimpe très vite. D'environ 5 millions d'habitants en 1960, elle pourrait dépasser 30 millions vers 2040. Le pays n'en est qu'au début de sa transition démographique.",
       pointsCles: [
-        "Natalité : près de 50 pour mille en 1960, encore haute aujourd'hui",
+        "Natalité : un peu moins de 50 pour mille en 1960, encore haute aujourd'hui",
         "Mortalité : près de 30 pour mille en 1960, en forte baisse depuis",
         "Environ 5 millions d'habitants en 1960, plus de 30 millions prévus vers 2040",
         "Un pays au tout début de sa transition démographique"
@@ -65,6 +65,7 @@ module.exports = {
         "Espérance de vie : 61 ans au Burkina Faso, 82 ans en France",
         "Mortalité infantile : 54 pour mille, plus de quatre fois celle de la France",
         "PIB par habitant : 786 dollars par an, environ cinquante fois moins qu'en France",
+        "Croissance de la population : + 2,89 % par an, contre + 0,2 % en France",
         "Jusqu'à 120 élèves par classe, et plus de la moitié des enfants travaillent"
       ],
       dates: [], lieux: ["Burkina Faso", "France"], personnages: [],
@@ -115,7 +116,7 @@ module.exports = {
       enonce: "D'après le graphique de l'étude de cas, comment la mortalité a-t-elle évolué au Burkina Faso depuis 1960 ?",
       choix: ["Elle a beaucoup baissé", "Elle a beaucoup augmenté", "Elle n'a pas bougé", "Elle a dépassé la natalité"],
       reponse: "Elle a beaucoup baissé",
-      explication: "La courbe rouge de la mortalité descend nettement depuis 1960. Elle reste bien sous la natalité.", source: P(1) },
+      explication: "Sur le graphique, la mortalité passe d'un peu moins de 30 pour mille en 1960 à environ 10 pour mille de nos jours. Elle reste toujours bien sous la natalité.", source: P(1) },
     { id: "geographie-s02-1-q6", fiche: "geographie-s02-1-f2", type: "vrai_faux", niveau: 1,
       enonce: "Depuis 1960, la natalité du Burkina Faso est toujours restée bien plus haute que sa mortalité.",
       corrections: [], reponse: { vrai: true, correction: null },

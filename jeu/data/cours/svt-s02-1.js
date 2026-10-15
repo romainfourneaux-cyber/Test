@@ -7,11 +7,11 @@ JEU.enregistrer("cours", {
    "id": "svt-s02-1-f1",
    "notion": "Les lignes imaginaires du globe",
    "titre": "Des lignes pour découper le globe",
-   "texte": "Des lignes imaginaires découpent le globe. L'équateur partage la Terre en deux moitiés : l'hémisphère nord et l'hémisphère sud. En s'éloignant de l'équateur, on rencontre les tropiques, puis les cercles polaires. Tout au bout se trouvent les deux pôles, le pôle Nord et le pôle Sud, par où passe l'axe de rotation.",
+   "texte": "Des lignes imaginaires découpent le globe. L'équateur partage la Terre en deux moitiés : l'hémisphère nord et l'hémisphère sud. En s'éloignant de l'équateur, on rencontre les tropiques, puis les cercles polaires. Tout au bout se trouvent les deux pôles : le pôle Nord et le pôle Sud.",
    "pointsCles": [
     "Équateur : la ligne qui sépare l'hémisphère nord de l'hémisphère sud",
     "De l'équateur vers un pôle : équateur, tropique, cercle polaire, pôle",
-    "L'axe de rotation de la Terre passe par le pôle Nord et le pôle Sud"
+    "Aux deux extrémités du globe : le pôle Nord et le pôle Sud"
    ],
    "dates": [],
    "lieux": [],
@@ -97,10 +97,10 @@ JEU.enregistrer("cours", {
    "id": "svt-s02-1-f4",
    "notion": "Le TP du globe éclairé",
    "titre": "Un même faisceau, des taches différentes",
-   "texte": "Dans le TP, on éclaire un globe avec une lampe et on compare trois endroits : l'équateur, le milieu de l'hémisphère nord et le pôle Nord. À l'équateur, un rayon parallèle à l'équateur dessine une petite tache ronde. Au milieu de l'hémisphère nord, la même tache s'allonge en ovale.",
+   "texte": "Dans le TP, une lampe joue le rôle du Soleil et éclaire un globe. On compare trois endroits : l'équateur, le milieu de l'hémisphère nord et le pôle Nord. À l'équateur, un rayon parallèle à l'équateur dessine une petite tache ronde. Au milieu de l'hémisphère nord, la même tache s'allonge en ovale.",
    "pointsCles": [
     "Trait noir : là où arrive un rayon parallèle à l'équateur",
-    "Trait jaune : la zone éclairée par la lampe, qui joue le Soleil",
+    "Trait jaune : la zone éclairée par le Soleil, joué par la lampe",
     "Équateur : tache ronde ; milieu de l'hémisphère : tache allongée"
    ],
    "dates": [],
@@ -161,7 +161,7 @@ JEU.enregistrer("cours", {
    "id": "svt-s02-1-f6",
    "notion": "Chaque planète tourne à son rythme",
    "titre": "Des rotations toutes différentes",
-   "texte": "Toutes les planètes tournent sur elles-mêmes, mais pas au même rythme. La Terre fait un tour en 23 h 56 min, Mars en 24 h 36 min. Vénus est la plus lente : 243 jours ! Jupiter, la plus rapide, met moins de 10 heures. La Lune met plus de 27 jours. Aucune ne ressemble vraiment à la Terre.",
+   "texte": "Toutes les planètes tournent sur elles-mêmes, mais pas au même rythme. La Terre fait un tour en 23 h 56 min, Mars en 24 h 36 min. Vénus est la plus lente : 243 jours ! Jupiter, la plus rapide : moins de 10 heures. La Lune met plus de 27 jours. Aucune n'a la même durée que la Terre.",
    "pointsCles": [
     "Mercure : 58 j 16 h ; Vénus : 243 j 26 min",
     "Terre : 23 h 56 min ; Mars : 24 h 36 min",
@@ -309,19 +309,19 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s02-1-f2",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Pourquoi la durée du jour change-t-elle autant d'un endroit à l'autre du globe ?",
+   "enonce": "Comment évolue l'écart entre la durée du jour en été et en hiver quand on va de l'équateur vers le cercle polaire ?",
    "choix": [
-    "Parce que l'axe de rotation de la Terre est incliné",
-    "Parce que la Terre s'arrête de tourner en été",
-    "Parce que le Soleil est plus gros au-dessus des pôles",
-    "Parce que la Lune éclaire certains pays la nuit"
+    "Il grandit de plus en plus",
+    "Il diminue jusqu'à disparaître",
+    "Il reste le même partout",
+    "Il n'existe que sur l'équateur"
    ],
-   "explication": "L'axe penché de la Terre fait varier la durée du jour selon le lieu. Près du cercle polaire, l'écart entre hiver et été devient énorme.",
+   "explication": "Près de l'équateur, la durée du jour change peu au fil de l'année. Plus on avance vers le cercle polaire, plus l'écart entre l'été et l'hiver devient grand.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.pdf",
     "page": 2
    },
-   "r": "Hxp7AYgCFcwGnZgBAUFFbwhCmgkIBVEUJ5UAJ8QHTMTHHUEEVk0CXMxTv0AAAxlTKUAFIISZ",
+   "r": "==QTVMRBCcGHQUkBEUgHPdBDjlFDRN0DdEgRFsTZ",
    "poids": 1
   },
   {
@@ -430,7 +430,7 @@ JEU.enregistrer("cours", {
    "niveau": 1,
    "enonce": "Dans le TP du globe éclairé, que montre le trait jaune ?",
    "choix": [
-    "La zone éclairée par la lampe",
+    "La zone éclairée par le Soleil",
     "L'équateur",
     "Le tropique",
     "L'ombre de la Lune"
@@ -440,7 +440,7 @@ JEU.enregistrer("cours", {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 3
    },
-   "r": "PAQRA9wAGdQBSVzEFUEEYrKHGMBBgQopVgEAAwhRI4TZ",
+   "r": "==QYBxAUBFAPGNQBSVzEFUEEYrKHGMBBgQopVgEAAwhRI4TZ",
    "poids": 1
   },
   {
@@ -555,7 +555,7 @@ JEU.enregistrer("cours", {
     "L'hiver",
     "L'équinoxe de printemps"
    ],
-   "explication": "Au sud, l'été et le printemps arrivent quand le nord a l'hiver et l'automne. En Guyane, il pleut surtout de décembre à juillet.",
+   "explication": "Dans l'hémisphère sud, décembre apporte le solstice d'été et septembre l'équinoxe de printemps. En Guyane, la saison des pluies va de décembre à juillet.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 3
@@ -615,7 +615,7 @@ JEU.enregistrer("cours", {
     "Mercure",
     "La Terre"
    ],
-   "explication": "Jupiter fait un tour en moins d'une demi-journée. C'est la rotation la plus rapide du système solaire.",
+   "explication": "Jupiter fait un tour sur elle-même en moins d'une demi-journée. C'est la plus rapide des huit planètes.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.pdf",
     "page": 3
@@ -649,17 +649,17 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Pourquoi peut-on dire que la Terre est unique par sa rotation ?",
    "choix": [
-    "Aucune autre planète ne tourne sur elle-même en un temps vraiment comparable",
+    "Aucune autre planète n'a la même durée de rotation qu'elle",
     "C'est la seule planète qui tourne sur elle-même",
     "Elle tourne plus vite que toutes les autres",
     "Elle ne tourne pas du tout sur elle-même"
    ],
-   "explication": "Chaque planète a sa propre durée de rotation, de quelques heures à des centaines de jours. Aucune n'est vraiment comparable à la Terre.",
+   "explication": "Chaque planète a sa propre durée de rotation, de quelques heures à des centaines de jours. Même Mars, la plus proche de la Terre sur ce point, met environ quarante minutes de plus.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.pdf",
     "page": 3
    },
-   "r": "=AVDv8EBHxkHCkQBJZQKXgBDUMwHOxhAFYSWFtFWOFwAGxwHtHLGIBRHFswTA0BMNAwWftBASYEDcc2FB0stfggAfIVDxkFEU1wCBMRBcMTZ",
+   "r": "XRRBCoQVdITDLoFRa4gEJshUiYRVAwtsbsxCS1gLHaKWN8wAGdgTcc2FB0stfggAfIVDxkFEU1wCBMRBcMTZ",
    "poids": 1
   }
  ],
@@ -667,6 +667,7 @@ JEU.enregistrer("cours", {
  "nonCouvert": [
   "La leçon de la séance 3 n'est pas déposée : seules les lignes citées dans les ressources (équateur, tropiques, cercles polaires, pôles) sont dans le jeu ; le nom et la position exacte de chaque tropique ne sont pas donnés.",
   "La conclusion du TP 3 (ce que la forme de la tache de lumière montre sur l'énergie reçue selon le lieu) n'est pas écrite dans le corrigé.",
-  "Le zénith et la latitude sont employés dans les ressources sans être définis."
+  "Le zénith et la latitude sont employés dans les ressources sans être définis.",
+  "Deux exemples des sources ne sont pas repris parce qu'ils semblent inexacts (à faire vérifier) : Sydney donnée comme lieu situé entre l'équateur et les tropiques (ressources p. 2) et la Guyane placée entre l'équateur et le tropique du Capricorne (corrigé p. 3)."
  ]
 });

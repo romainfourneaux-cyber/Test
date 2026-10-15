@@ -115,11 +115,12 @@ JEU.enregistrer("cours", {
    "id": "svt-s03-1-f4",
    "notion": "Les déplacements de l'air dans l'atmosphère",
    "titre": "Comment l'air se déplace",
-   "texte": "L'air chaud monte et l'air froid redescend : ce sont les mouvements de convection. La force de Coriolis agit sur le sens des vents. Chaque hémisphère compte aussi trois cellules de vents contraires, liées aux anticyclones et aux dépressions. Tous ces mouvements donnent les perturbations, qui apportent les précipitations : pluie, neige ou grêle.",
+   "texte": "L'air chaud monte et l'air froid redescend : ce sont les mouvements de convection. La force de Coriolis agit sur le sens des vents. Chaque hémisphère compte trois cellules de vents contraires, liées aux anticyclones et aux dépressions. Là où anticyclones et dépressions se rencontrent naissent les perturbations, qui apportent les précipitations : pluie, neige ou grêle.",
    "pointsCles": [
     "Convection : l'air chaud monte, l'air froid descend",
     "Force de Coriolis : elle intervient sur le sens des vents",
     "Trois cellules par hémisphère : cellule de Hadley, cellule de Ferrel, cellule polaire",
+    "Perturbations : là où se rencontrent anticyclones et dépressions",
     "Précipitations : pluie, neige, grêle"
    ],
    "dates": [],
@@ -417,19 +418,19 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s03-1-f3",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Comment fabriquer une carte mémo efficace ?",
+   "enonce": "Comment reconnaître une dépression ?",
    "choix": [
-    "Le mot en capitales au recto, sa définition au verso, dans la même couleur",
-    "La définition écrite des deux côtés",
-    "Le mot au crayon à papier, sans définition",
-    "Une seule grande carte pour toute la leçon"
+    "C'est une zone où la pression atmosphérique est basse",
+    "C'est une zone où la pression atmosphérique est haute",
+    "C'est un amas de gouttelettes d'eau en suspension",
+    "C'est la couche la plus haute de l'atmosphère"
    ],
-   "explication": "Une carte, un mot : en capitales au recto, avec sa définition au verso. La même couleur relie le mot et sa définition.",
+   "explication": "Une dépression est une zone de basse pression atmosphérique. Son contraire, l'anticyclone, est une zone de haute pression.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 5
    },
-   "r": "h9FEQF0GAUgRM8R7xiRRU0RSdEwEMMWAKY0XLkhRTggUp0BHRwxHAggxxywYMZRFBEwGFMwGSJzEVZBEdggGGIQCg0wCQ1gGAsgRM4TZ",
+   "r": "KZiXWQ1TOtRFDk0FyMAHXwtsB4BHdUwNMV0WCdAHVMwGCc2EZUEzyagTKwxB50AAbhlTbUxAOFTZ",
    "poids": 1
   },
   {
@@ -493,19 +494,19 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s03-1-f4",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Comment se forment les perturbations ?",
+   "enonce": "Pourquoi une perturbation peut-elle apporter de la neige ?",
    "choix": [
-    "Par l'ensemble des déplacements de l'air : convection, force de Coriolis et cellules de vents",
-    "Par l'ozone de la stratosphère",
-    "Par la rotation de la Lune",
-    "Par les planètes gazeuses"
+    "Parce qu'elle apporte des précipitations, et la neige en est une forme",
+    "Parce qu'elle se forme dans l'exosphère",
+    "Parce que l'air chaud y redescend vers le sol",
+    "Parce qu'elle arrête tous les vents"
    ],
-   "explication": "Convection, force de Coriolis et cellules de vents se combinent. Ensemble, ces déplacements de l'air donnent les perturbations.",
+   "explication": "Une perturbation est une zone de vents et de précipitations. Les précipitations tombent sous forme de pluie, de neige ou de grêle.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 6
    },
-   "r": "P0xGIMwHSJiFVZBEdwhADcxCjlFAV41BDkwDb0BBSBRAVRhCcAAFI92QKwVWNoAEIYQEnhUVXwBEOJwTXwwYeFxWINgCFcQBC4esRUkBU0gTK4hCugkFbhUSDYEFIISZ",
+   "r": "==ATKsAFGQxZXsBEVVgGL8EHNMGSCwFSA80BKkkBiIVWWshHAohDGEwMEZAnuzxHGVBDWc2FBchGBkxDPdBBvgkQAxlTKUAFIISZ",
    "poids": 1
   },
   {
@@ -593,7 +594,7 @@ JEU.enregistrer("cours", {
  "bonus": [],
  "nonCouvert": [
   "La définition de la météorologie et celle de la climatologie, et ce qui les distingue : la leçon de la séance 1 n'est pas déposée et le corrigé ne les donne pas.",
-  "Les qualités de l'air (chaud ou froid, sec ou humide, léger ou lourd) dans une dépression et dans un anticyclone : notées sur les cartes mémo du corrigé, mais peu lisibles et à vérifier dans la leçon.",
+  "Les qualités de l'air (chaud ou froid, sec ou humide, léger ou lourd) dans une dépression et dans un anticyclone : écrites à la main sur les cartes mémo du corrigé (p. 5), en partie illisibles et à vérifier dans la leçon avant de les mettre dans le jeu.",
   "Le rôle précis de chaque cellule de vents (Hadley, Ferrel, polaire) et le fonctionnement de la force de Coriolis : seulement nommés sur l'exemple de carte mentale.",
   "La partie japonaise de la frise de l'histoire de la météorologie : peu lisible sur la photo du corrigé."
  ]

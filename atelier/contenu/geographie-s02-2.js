@@ -2,7 +2,8 @@
 // Compilé (réponses brouillées) par node atelier/outils/compiler-cours.js vers jeu/data/cours/geographie-s02-2.js.
 // Page utilisée : 3 du cours 1. Le devoir geographie-d1 couvre ce cours : aucune question ne reprend ses questions,
 // ses documents, ses exemples, ses chiffres ni ses réponses attendues (le paragraphe sur les défis des pays du Sud
-// n'est pas posé tel quel ; « bidonville » et « front pionnier » ne sont pas dans « vocabulaire »).
+// n'est pas posé tel quel). Les définitions de « bidonville » et « front pionnier » viennent du cours (pages 3 et 5),
+// reformulées : le cahier des charges (section 9) autorise les définitions du cours.
 const F = "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf";
 const P = (page) => ({ fichier: F, page: page });
 
@@ -29,7 +30,7 @@ module.exports = {
     {
       id: "geographie-s02-2-f2", notion: "Le besoin de terres agricoles et les fronts pionniers",
       titre: "Des forêts grignotées",
-      texte: "Dans les pays pauvres, les campagnes comptent de plus en plus d'habitants. Ces ruraux ont besoin de plus de champs, d'eau et de bois. Les forêts reculent : élevage, plantations et mines s'installent sur des fronts pionniers, en bordure des grandes forêts équatoriales d'Amazonie, du bassin du Congo et d'Asie du Sud-Est.",
+      texte: "Dans les pays pauvres, les campagnes comptent de plus en plus d'habitants, qui cherchent des terres à cultiver, de l'eau et du bois. Les forêts reculent devant les fronts pionniers : de nouveaux espaces peuplés et mis en valeur, où s'installent élevage, plantations et mines, comme en Amazonie, dans le bassin du Congo ou en Asie du Sud-Est.",
       pointsCles: [
         "Plus de ruraux, donc plus de terres à cultiver",
         "Front pionnier : de nouveaux espaces mis en valeur et peuplés, souvent en coupant la forêt",
@@ -37,7 +38,9 @@ module.exports = {
         "Lieux : au bord des grandes forêts équatoriales"
       ],
       dates: [], lieux: ["Amazonie", "Bassin du Congo", "Asie du Sud-Est"], personnages: [],
-      vocabulaire: [],
+      vocabulaire: [
+        { mot: "front pionnier", def: "un nouvel espace que l'on peuple et que l'on met en valeur, souvent en coupant la forêt" }
+      ],
       schema: null, prerequis: ["geographie-s02-2-f1"], source: P(3)
     },
     {
@@ -47,11 +50,13 @@ module.exports = {
       pointsCles: [
         "Des besoins en logements qui font grandir les villes",
         "Des ruraux qui quittent la campagne, sans emploi ni ressources suffisantes",
-        "Des bidonvilles : quartiers pauvres et insalubres en matériaux de récupération",
+        "Bidonvilles : des quartiers pauvres et insalubres (mauvais pour la santé), faits de matériaux récupérés",
         "Une urbanisation incontrôlée : pollution et conditions de vie dégradées"
       ],
       dates: [], lieux: [], personnages: [],
-      vocabulaire: [],
+      vocabulaire: [
+        { mot: "bidonville", def: "un quartier pauvre et malsain, aux abris bâtis avec des matériaux de récupération" }
+      ],
       schema: null, prerequis: ["geographie-s02-2-f1"], source: P(3)
     },
     {
@@ -90,7 +95,7 @@ module.exports = {
       explication: "Sans assez de richesses produites, un État ne peut pas répondre à tous les besoins. Certains habitants restent alors privés de l'essentiel.", source: P(3) },
     { id: "geographie-s02-2-q4", fiche: "geographie-s02-2-f1", type: "qcm", niveau: 1,
       enonce: "D'après le cours, combien de pauvres compte-t-on à peu près dans les pays du Sud ?",
-      choix: ["Près de 3 milliards", "Environ 3 millions", "Près de 300", "Aucun"],
+      choix: ["Près de 3 milliards", "Environ 3 millions", "Environ 300 millions", "Aucun"],
       reponse: "Près de 3 milliards",
       explication: "Les pays du Sud comptent près de 3 milliards de pauvres. Beaucoup manquent d'eau potable ou de nourriture.", source: P(3) },
     // f2
@@ -155,7 +160,37 @@ module.exports = {
       gauche: ["Le besoin de nouvelles terres agricoles", "Le besoin de logements", "La recherche d'une vie meilleure"],
       droite: ["Des flux migratoires vers le Nord", "Le recul des forêts", "Une forte urbanisation"],
       reponse: [[0, 1], [1, 2], [2, 0]],
-      explication: "Plus de champs fait reculer la forêt, plus de logements fait grossir les villes. L'espoir d'une vie meilleure pousse certains à partir vers le Nord.", source: P(3) }
+      explication: "Plus de champs fait reculer la forêt, plus de logements fait grossir les villes. L'espoir d'une vie meilleure pousse certains à partir vers le Nord.", source: P(3) },
+    { id: "geographie-s02-2-q17", fiche: "geographie-s02-2-f1", type: "qcm_multiple", niveau: 2,
+      enonce: "Une population jeune grandit vite dans un pays du Sud. Que faut-il lui assurer, d'après le cours ?",
+      choix: ["La nourrir", "La soigner", "La scolariser", "Lui donner du travail", "Lui verser des retraites", "Construire des maisons de retraite"],
+      reponse: ["La nourrir", "La soigner", "La scolariser", "Lui donner du travail"],
+      explication: "Nourrir, soigner, scolariser et faire travailler une population jeune : ce sont les grands défis du Sud. Retraites et maisons de retraite sont plutôt les défis des pays du Nord, qui vieillissent.", source: P(3) },
+    { id: "geographie-s02-2-q18", fiche: "geographie-s02-2-f1", type: "qcm", niveau: 1,
+      enonce: "D'ici le milieu du siècle, comment les besoins en eau, en énergie et en nourriture devraient-ils évoluer ?",
+      choix: ["Ils devraient doubler", "Ils devraient baisser de moitié", "Ils devraient rester les mêmes", "Ils devraient être multipliés par dix"],
+      reponse: "Ils devraient doubler",
+      explication: "Avec une population toujours plus nombreuse, les besoins grandissent. Le cours prévoit deux fois plus d'eau, d'énergie et de nourriture consommées.", source: P(3) },
+    { id: "geographie-s02-2-q19", fiche: "geographie-s02-2-f2", type: "qcm_multiple", niveau: 2,
+      enonce: "D'après le cours, qu'est-ce qui fait reculer les grandes forêts équatoriales ?",
+      choix: ["Des ruraux plus nombreux qui cherchent des terres à cultiver", "La recherche de bois et d'eau", "L'installation d'élevages, de plantations et de mines", "Le vieillissement de la population", "La construction de maisons de retraite"],
+      reponse: ["Des ruraux plus nombreux qui cherchent des terres à cultiver", "La recherche de bois et d'eau", "L'installation d'élevages, de plantations et de mines"],
+      explication: "Plus nombreux, les ruraux ont besoin de champs, de bois et d'eau. Sur les fronts pionniers, l'élevage, les plantations et les mines grignotent aussi la forêt.", source: P(3) },
+    { id: "geographie-s02-2-q20", fiche: "geographie-s02-2-f2", type: "qcm", niveau: 1,
+      enonce: "Où s'ouvrent les fronts pionniers cités par le cours ?",
+      choix: ["Au bord des grandes forêts équatoriales", "Au centre des grandes villes", "Dans les régions polaires", "Sur les côtes de l'Europe"],
+      reponse: "Au bord des grandes forêts équatoriales",
+      explication: "Le cours cite l'Amazonie, le bassin du Congo et l'Asie du Sud-Est. Ce sont de grandes forêts équatoriales.", source: P(3) },
+    { id: "geographie-s02-2-q21", fiche: "geographie-s02-2-f3", type: "qcm", niveau: 1,
+      enonce: "Avec quoi les abris des bidonvilles sont-ils construits ?",
+      choix: ["Avec des matériaux de récupération", "Avec de la pierre de taille", "Avec du béton neuf payé par l'État", "Avec du verre et de l'acier"],
+      reponse: "Avec des matériaux de récupération",
+      explication: "Les habitants des bidonvilles bâtissent avec ce qu'ils trouvent. Ces quartiers sont pauvres et mauvais pour la santé.", source: P(3) },
+    { id: "geographie-s02-2-q22", fiche: "geographie-s02-2-f3", type: "vrai_faux", niveau: 2,
+      enonce: "Un bidonville est un nouvel espace gagné sur la forêt pour y cultiver.",
+      corrections: ["Faux : c'est un quartier pauvre et malsain fait de matériaux récupérés ; l'espace gagné sur la forêt, c'est un front pionnier.", "Faux : c'est un quartier riche du centre-ville.", "Faux : c'est une grande ferme moderne."],
+      reponse: { vrai: false, correction: "Faux : c'est un quartier pauvre et malsain fait de matériaux récupérés ; l'espace gagné sur la forêt, c'est un front pionnier." },
+      explication: "Le bidonville est en ville, le front pionnier au bord de la forêt. Ne confonds pas ces deux mots du cours.", source: P(3) }
   ],
   bonus: [],
   nonCouvert: [

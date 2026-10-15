@@ -12,9 +12,9 @@ module.exports = {
     {
       id: "svt-s01-2-f1", notion: "Rotation et révolution de la Terre",
       titre: "La Terre tourne de deux façons",
-      texte: "La Terre tourne sur elle-même autour de son axe de rotation, qui passe par les deux pôles : c'est la rotation. Un tour complet dure 23 h 56 min. La Terre tourne aussi autour du Soleil en suivant son orbite : c'est la révolution. Elle se fait dans un plan appelé plan de l'écliptique.",
+      texte: "La Terre tourne sur elle-même autour d'une ligne imaginaire, son axe de rotation : c'est la rotation. Un tour complet dure 23 h 56 min. La Terre tourne aussi autour du Soleil en suivant son orbite : c'est la révolution. Elle se fait dans un plan appelé plan de l'écliptique.",
       pointsCles: [
-        "Rotation : la Terre tourne sur elle-même, autour de l'axe des pôles (23 h 56 min)",
+        "Rotation : la Terre tourne sur elle-même, autour de son axe de rotation (23 h 56 min)",
         "Révolution : la Terre tourne autour du Soleil, sur son orbite",
         "Plan de l'écliptique : le plan dans lequel se fait la révolution"
       ],
@@ -37,7 +37,7 @@ module.exports = {
       ],
       dates: [], lieux: [], personnages: [],
       vocabulaire: [
-        { mot: "axe de rotation", def: "la ligne imaginaire, d'un pôle à l'autre, autour de laquelle la Terre tourne sur elle-même" }
+        { mot: "axe de rotation", def: "la ligne imaginaire, penchée, autour de laquelle la Terre tourne sur elle-même" }
       ],
       schema: "svt-s01-2-s1", prerequis: ["svt-s01-2-f1"], source: R(2)
     },
@@ -133,9 +133,9 @@ module.exports = {
     { id: "svt-s01-2-q3", fiche: "svt-s01-2-f1", type: "association", niveau: 2,
       enonce: "Relie chaque mot à ce qu'il désigne.",
       gauche: ["Rotation", "Révolution", "Axe de rotation", "Plan de l'écliptique"],
-      droite: ["Le plan dans lequel la Terre tourne autour du Soleil", "La Terre qui tourne sur elle-même", "La ligne qui passe par les deux pôles", "La Terre qui tourne autour du Soleil"],
+      droite: ["Le plan dans lequel la Terre tourne autour du Soleil", "Le mouvement de la Terre qui tourne sur elle-même", "La ligne imaginaire, penchée, autour de laquelle la Terre tourne", "Le tour que fait la Terre autour du Soleil"],
       reponse: [[0, 1], [1, 3], [2, 2], [3, 0]],
-      explication: "Rotation : sur elle-même, autour de l'axe des pôles. Révolution : autour du Soleil, dans le plan de l'écliptique.", source: R(2) },
+      explication: "Rotation : la Terre tourne sur elle-même, autour de son axe. Révolution : elle tourne autour du Soleil, dans le plan de l'écliptique.", source: R(2) },
     { id: "svt-s01-2-q4", fiche: "svt-s01-2-f1", type: "qcm", niveau: 2,
       enonce: "Combien de temps dure une rotation complète de la Terre sur elle-même ?",
       choix: ["Un peu moins d'un jour", "Environ une semaine", "Environ un mois", "Environ un an"],
@@ -146,7 +146,7 @@ module.exports = {
       enonce: "Comment est placé l'axe de rotation de la Terre par rapport au plan de l'écliptique ?",
       choix: ["Il est penché et fait un angle avec ce plan", "Il est parfaitement droit", "Il est couché à plat dans ce plan", "Il change de place chaque jour"],
       reponse: "Il est penché et fait un angle avec ce plan",
-      explication: "L'axe des pôles est incliné par rapport au plan de l'écliptique. C'est ce qui fait varier la durée du jour selon les lieux.", source: R(2) },
+      explication: "L'axe de rotation est incliné par rapport au plan de l'écliptique. C'est ce qui fait varier la durée du jour selon les lieux.", source: R(2) },
     { id: "svt-s01-2-q6", fiche: "svt-s01-2-f2", type: "vrai_faux", niveau: 1,
       enonce: "L'axe de rotation de la Terre est parfaitement droit par rapport au plan de l'écliptique.",
       corrections: ["Faux : il est penché et fait un angle avec le plan de l'écliptique.", "Faux : il est couché à plat dans le plan de l'écliptique.", "Faux : la Terre n'a pas d'axe de rotation."],
@@ -156,7 +156,7 @@ module.exports = {
       enonce: "Pourquoi la durée du jour n'est-elle pas la même partout sur le globe ?",
       choix: ["Parce que l'axe de rotation de la Terre est incliné", "Parce que la Terre ne tourne pas sur elle-même", "Parce que le Soleil s'éteint la nuit", "Parce que la Lune cache le Soleil"],
       reponse: "Parce que l'axe de rotation de la Terre est incliné",
-      explication: "Comme l'axe des pôles est penché, le jour et la nuit varient d'un lieu à l'autre. Selon l'endroit, les journées sont plus ou moins longues.", source: R(2) },
+      explication: "Comme l'axe de rotation est penché, la durée du jour et celle de la nuit varient d'un lieu à l'autre. Selon l'endroit, les journées sont plus ou moins longues.", source: R(2) },
     { id: "svt-s01-2-q8", fiche: "svt-s01-2-f2", type: "trou", niveau: 2,
       enonce: "Complète la phrase.",
       texte: "L'axe de rotation de la Terre est ___ par rapport au plan de l'___.",

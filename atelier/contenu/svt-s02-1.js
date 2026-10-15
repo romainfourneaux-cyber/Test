@@ -15,11 +15,11 @@ module.exports = {
     {
       id: "svt-s02-1-f1", notion: "Les lignes imaginaires du globe",
       titre: "Des lignes pour découper le globe",
-      texte: "Des lignes imaginaires découpent le globe. L'équateur partage la Terre en deux moitiés : l'hémisphère nord et l'hémisphère sud. En s'éloignant de l'équateur, on rencontre les tropiques, puis les cercles polaires. Tout au bout se trouvent les deux pôles, le pôle Nord et le pôle Sud, par où passe l'axe de rotation.",
+      texte: "Des lignes imaginaires découpent le globe. L'équateur partage la Terre en deux moitiés : l'hémisphère nord et l'hémisphère sud. En s'éloignant de l'équateur, on rencontre les tropiques, puis les cercles polaires. Tout au bout se trouvent les deux pôles : le pôle Nord et le pôle Sud.",
       pointsCles: [
         "Équateur : la ligne qui sépare l'hémisphère nord de l'hémisphère sud",
         "De l'équateur vers un pôle : équateur, tropique, cercle polaire, pôle",
-        "L'axe de rotation de la Terre passe par le pôle Nord et le pôle Sud"
+        "Aux deux extrémités du globe : le pôle Nord et le pôle Sud"
       ],
       dates: [], lieux: [], personnages: [],
       vocabulaire: [
@@ -60,10 +60,10 @@ module.exports = {
     {
       id: "svt-s02-1-f4", notion: "Le TP du globe éclairé",
       titre: "Un même faisceau, des taches différentes",
-      texte: "Dans le TP, on éclaire un globe avec une lampe et on compare trois endroits : l'équateur, le milieu de l'hémisphère nord et le pôle Nord. À l'équateur, un rayon parallèle à l'équateur dessine une petite tache ronde. Au milieu de l'hémisphère nord, la même tache s'allonge en ovale.",
+      texte: "Dans le TP, une lampe joue le rôle du Soleil et éclaire un globe. On compare trois endroits : l'équateur, le milieu de l'hémisphère nord et le pôle Nord. À l'équateur, un rayon parallèle à l'équateur dessine une petite tache ronde. Au milieu de l'hémisphère nord, la même tache s'allonge en ovale.",
       pointsCles: [
         "Trait noir : là où arrive un rayon parallèle à l'équateur",
-        "Trait jaune : la zone éclairée par la lampe, qui joue le Soleil",
+        "Trait jaune : la zone éclairée par le Soleil, joué par la lampe",
         "Équateur : tache ronde ; milieu de l'hémisphère : tache allongée"
       ],
       dates: [], lieux: [], personnages: [],
@@ -90,7 +90,7 @@ module.exports = {
     {
       id: "svt-s02-1-f6", notion: "Chaque planète tourne à son rythme",
       titre: "Des rotations toutes différentes",
-      texte: "Toutes les planètes tournent sur elles-mêmes, mais pas au même rythme. La Terre fait un tour en 23 h 56 min, Mars en 24 h 36 min. Vénus est la plus lente : 243 jours ! Jupiter, la plus rapide, met moins de 10 heures. La Lune met plus de 27 jours. Aucune ne ressemble vraiment à la Terre.",
+      texte: "Toutes les planètes tournent sur elles-mêmes, mais pas au même rythme. La Terre fait un tour en 23 h 56 min, Mars en 24 h 36 min. Vénus est la plus lente : 243 jours ! Jupiter, la plus rapide : moins de 10 heures. La Lune met plus de 27 jours. Aucune n'a la même durée que la Terre.",
       pointsCles: [
         "Mercure : 58 j 16 h ; Vénus : 243 j 26 min",
         "Terre : 23 h 56 min ; Mars : 24 h 36 min",
@@ -158,10 +158,10 @@ module.exports = {
       reponse: { vrai: true, correction: null },
       explication: "Au pôle, le Soleil se lève à l'équinoxe de printemps et ne se couche qu'à l'équinoxe d'automne. Viennent ensuite six mois de nuit.", source: R(2) },
     { id: "svt-s02-1-q7", fiche: "svt-s02-1-f2", type: "qcm", niveau: 2,
-      enonce: "Pourquoi la durée du jour change-t-elle autant d'un endroit à l'autre du globe ?",
-      choix: ["Parce que l'axe de rotation de la Terre est incliné", "Parce que la Terre s'arrête de tourner en été", "Parce que le Soleil est plus gros au-dessus des pôles", "Parce que la Lune éclaire certains pays la nuit"],
-      reponse: "Parce que l'axe de rotation de la Terre est incliné",
-      explication: "L'axe penché de la Terre fait varier la durée du jour selon le lieu. Près du cercle polaire, l'écart entre hiver et été devient énorme.", source: R(2) },
+      enonce: "Comment évolue l'écart entre la durée du jour en été et en hiver quand on va de l'équateur vers le cercle polaire ?",
+      choix: ["Il grandit de plus en plus", "Il diminue jusqu'à disparaître", "Il reste le même partout", "Il n'existe que sur l'équateur"],
+      reponse: "Il grandit de plus en plus",
+      explication: "Près de l'équateur, la durée du jour change peu au fil de l'année. Plus on avance vers le cercle polaire, plus l'écart entre l'été et l'hiver devient grand.", source: R(2) },
     { id: "svt-s02-1-q8", fiche: "svt-s02-1-f2", type: "qcm", niveau: 2,
       enonce: "Dans quelle zone la durée du jour varie-t-elle le moins au cours de l'année ?",
       choix: ["Entre l'équateur et les tropiques", "Entre un tropique et le cercle polaire", "Près du cercle polaire", "Entre le cercle polaire et le pôle"],
@@ -191,8 +191,8 @@ module.exports = {
     // f4 : le TP du globe éclairé
     { id: "svt-s02-1-q13", fiche: "svt-s02-1-f4", type: "qcm", niveau: 1,
       enonce: "Dans le TP du globe éclairé, que montre le trait jaune ?",
-      choix: ["La zone éclairée par la lampe", "L'équateur", "Le tropique", "L'ombre de la Lune"],
-      reponse: "La zone éclairée par la lampe",
+      choix: ["La zone éclairée par le Soleil", "L'équateur", "Le tropique", "L'ombre de la Lune"],
+      reponse: "La zone éclairée par le Soleil",
       explication: "Le trait jaune entoure la zone éclairée. Le trait noir, lui, marque l'arrivée d'un rayon parallèle à l'équateur.", source: C(3) },
     { id: "svt-s02-1-q14", fiche: "svt-s02-1-f4", type: "vrai_faux", niveau: 1,
       enonce: "Dans le TP, la tache de lumière est ronde au niveau de l'équateur.",
@@ -225,7 +225,7 @@ module.exports = {
       gauche: ["Le solstice de décembre, dans l'hémisphère sud", "L'équinoxe de septembre, dans l'hémisphère sud", "Le mois de janvier, dans l'hémisphère nord", "La saison des pluies en Guyane"],
       droite: ["De décembre à juillet", "Le solstice d'été", "L'hiver", "L'équinoxe de printemps"],
       reponse: [[0, 1], [1, 3], [2, 2], [3, 0]],
-      explication: "Au sud, l'été et le printemps arrivent quand le nord a l'hiver et l'automne. En Guyane, il pleut surtout de décembre à juillet.", source: C(3) },
+      explication: "Dans l'hémisphère sud, décembre apporte le solstice d'été et septembre l'équinoxe de printemps. En Guyane, la saison des pluies va de décembre à juillet.", source: C(3) },
     { id: "svt-s02-1-q20", fiche: "svt-s02-1-f5", type: "qcm", niveau: 3,
       enonce: "En Terre Adélie, en Antarctique, à quoi ressemble le ciel tard le soir à la mi-novembre ?",
       choix: ["À un ciel de jour", "À un ciel de pleine nuit étoilée", "À un ciel sans Soleil depuis six mois", "À un ciel d'éclipse"],
@@ -241,7 +241,7 @@ module.exports = {
       enonce: "Quelle planète tourne le plus vite sur elle-même ?",
       choix: ["Jupiter", "Vénus", "Mercure", "La Terre"],
       reponse: "Jupiter",
-      explication: "Jupiter fait un tour en moins d'une demi-journée. C'est la rotation la plus rapide du système solaire.", source: R(3) },
+      explication: "Jupiter fait un tour sur elle-même en moins d'une demi-journée. C'est la plus rapide des huit planètes.", source: R(3) },
     { id: "svt-s02-1-q23", fiche: "svt-s02-1-f6", type: "vrai_faux", niveau: 1,
       enonce: "La Lune met moins d'une journée à faire un tour sur elle-même.",
       corrections: ["Faux : la Lune met plus de 27 jours à tourner sur elle-même.", "Faux : la Lune ne tourne pas du tout sur elle-même.", "Faux : la Lune met exactement une année."],
@@ -249,14 +249,15 @@ module.exports = {
       explication: "La rotation de la Lune dure 27 jours et 8 heures. C'est bien plus long que celle de la Terre.", source: R(3) },
     { id: "svt-s02-1-q24", fiche: "svt-s02-1-f6", type: "qcm", niveau: 2,
       enonce: "Pourquoi peut-on dire que la Terre est unique par sa rotation ?",
-      choix: ["Aucune autre planète ne tourne sur elle-même en un temps vraiment comparable", "C'est la seule planète qui tourne sur elle-même", "Elle tourne plus vite que toutes les autres", "Elle ne tourne pas du tout sur elle-même"],
-      reponse: "Aucune autre planète ne tourne sur elle-même en un temps vraiment comparable",
-      explication: "Chaque planète a sa propre durée de rotation, de quelques heures à des centaines de jours. Aucune n'est vraiment comparable à la Terre.", source: R(3) }
+      choix: ["Aucune autre planète n'a la même durée de rotation qu'elle", "C'est la seule planète qui tourne sur elle-même", "Elle tourne plus vite que toutes les autres", "Elle ne tourne pas du tout sur elle-même"],
+      reponse: "Aucune autre planète n'a la même durée de rotation qu'elle",
+      explication: "Chaque planète a sa propre durée de rotation, de quelques heures à des centaines de jours. Même Mars, la plus proche de la Terre sur ce point, met environ quarante minutes de plus.", source: R(3) }
   ],
   bonus: [],
   nonCouvert: [
     "La leçon de la séance 3 n'est pas déposée : seules les lignes citées dans les ressources (équateur, tropiques, cercles polaires, pôles) sont dans le jeu ; le nom et la position exacte de chaque tropique ne sont pas donnés.",
     "La conclusion du TP 3 (ce que la forme de la tache de lumière montre sur l'énergie reçue selon le lieu) n'est pas écrite dans le corrigé.",
-    "Le zénith et la latitude sont employés dans les ressources sans être définis."
+    "Le zénith et la latitude sont employés dans les ressources sans être définis.",
+    "Deux exemples des sources ne sont pas repris parce qu'ils semblent inexacts (à faire vérifier) : Sydney donnée comme lieu situé entre l'équateur et les tropiques (ressources p. 2) et la Guyane placée entre l'équateur et le tropique du Capricorne (corrigé p. 3)."
   ]
 };

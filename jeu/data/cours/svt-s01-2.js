@@ -7,9 +7,9 @@ JEU.enregistrer("cours", {
    "id": "svt-s01-2-f1",
    "notion": "Rotation et révolution de la Terre",
    "titre": "La Terre tourne de deux façons",
-   "texte": "La Terre tourne sur elle-même autour de son axe de rotation, qui passe par les deux pôles : c'est la rotation. Un tour complet dure 23 h 56 min. La Terre tourne aussi autour du Soleil en suivant son orbite : c'est la révolution. Elle se fait dans un plan appelé plan de l'écliptique.",
+   "texte": "La Terre tourne sur elle-même autour d'une ligne imaginaire, son axe de rotation : c'est la rotation. Un tour complet dure 23 h 56 min. La Terre tourne aussi autour du Soleil en suivant son orbite : c'est la révolution. Elle se fait dans un plan appelé plan de l'écliptique.",
    "pointsCles": [
-    "Rotation : la Terre tourne sur elle-même, autour de l'axe des pôles (23 h 56 min)",
+    "Rotation : la Terre tourne sur elle-même, autour de son axe de rotation (23 h 56 min)",
     "Révolution : la Terre tourne autour du Soleil, sur son orbite",
     "Plan de l'écliptique : le plan dans lequel se fait la révolution"
    ],
@@ -56,7 +56,7 @@ JEU.enregistrer("cours", {
    "vocabulaire": [
     {
      "mot": "axe de rotation",
-     "def": "la ligne imaginaire, d'un pôle à l'autre, autour de laquelle la Terre tourne sur elle-même"
+     "def": "la ligne imaginaire, penchée, autour de laquelle la Terre tourne sur elle-même"
     }
    ],
    "schema": "svt-s01-2-s1",
@@ -217,11 +217,11 @@ JEU.enregistrer("cours", {
    ],
    "droite": [
     "Le plan dans lequel la Terre tourne autour du Soleil",
-    "La Terre qui tourne sur elle-même",
-    "La ligne qui passe par les deux pôles",
-    "La Terre qui tourne autour du Soleil"
+    "Le mouvement de la Terre qui tourne sur elle-même",
+    "La ligne imaginaire, penchée, autour de laquelle la Terre tourne",
+    "Le tour que fait la Terre autour du Soleil"
    ],
-   "explication": "Rotation : sur elle-même, autour de l'axe des pôles. Révolution : autour du Soleil, dans le plan de l'écliptique.",
+   "explication": "Rotation : la Terre tourne sur elle-même, autour de son axe. Révolution : elle tourne autour du Soleil, dans le plan de l'écliptique.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.pdf",
     "page": 2
@@ -261,7 +261,7 @@ JEU.enregistrer("cours", {
     "Il est couché à plat dans ce plan",
     "Il change de place chaque jour"
    ],
-   "explication": "L'axe des pôles est incliné par rapport au plan de l'écliptique. C'est ce qui fait varier la durée du jour selon les lieux.",
+   "explication": "L'axe de rotation est incliné par rapport au plan de l'écliptique. C'est ce qui fait varier la durée du jour selon les lieux.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.pdf",
     "page": 2
@@ -300,7 +300,7 @@ JEU.enregistrer("cours", {
     "Parce que le Soleil s'éteint la nuit",
     "Parce que la Lune cache le Soleil"
    ],
-   "explication": "Comme l'axe des pôles est penché, le jour et la nuit varient d'un lieu à l'autre. Selon l'endroit, les journées sont plus ou moins longues.",
+   "explication": "Comme l'axe de rotation est penché, la durée du jour et celle de la nuit varient d'un lieu à l'autre. Selon l'endroit, les journées sont plus ou moins longues.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.pdf",
     "page": 2

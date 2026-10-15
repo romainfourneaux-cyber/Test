@@ -185,6 +185,20 @@ function sourcesSuivi(d, E) {
   });
 }
 
+// 5 (suite). Le contenu d'un cours vient des fichiers déposés : chaque source citée (fiche, question, schéma)
+// doit exister dans DEPOT/. ALERTE seulement : le cours reste jouable, mais Romain doit déposer le fichier.
+function sourcesDeposees(d, A) {
+  const tous = Object.assign({}, d.cours, d.anglais);
+  Object.keys(tous).sort().forEach(cid => {
+    const c = tous[cid], manquants = {};
+    ["fiches", "questions", "schemas", "vocabulaire", "structures", "phrases"].forEach(k => (c[k] || []).forEach(x => {
+      const f = x && x.source && x.source.fichier;
+      if (f && !fs.existsSync(path.join(RACINE, "DEPOT", f))) manquants[f] = (manquants[f] || 0) + 1;
+    }));
+    Object.keys(manquants).forEach(f => A("[5] source absente de DEPOT/ : " + f + " (citée " + manquants[f] + " fois dans " + cid + ")"));
+  });
+}
+
 // Le numéro de jeu/VERSION.txt et celui que le jeu affiche (JEU.version dans jeu/index.html) sont les mêmes.
 function versionsAlignees(E) {
   let v = "", html = "";
@@ -210,6 +224,7 @@ function valider() {
   brouillageIdentique(E);
   versionsAlignees(E);
   sourcesSuivi(d, E);
+  sourcesDeposees(d, A);
   antiRecopie(d, E);
   antiSpoil(d, E, A);
   antiSpoilSuivi(d, E, A);
