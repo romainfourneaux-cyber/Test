@@ -40,14 +40,15 @@ Ce dossier sert à construire et à nourrir un jeu web de révision pour un él�
 
 ## Jeu : règles fermes
 
-- Jamais de chrono. Difficulté réglée pour environ 8 réussites sur 10.
-- Une erreur ne fait jamais perdre un bâtiment, une province ou une ressource déjà gagnée. Elle amène une explication et une nouvelle tentative.
+- Jamais de chrono. Difficulté réglée pour environ 7 réussites sur 10 (relevée d'environ 15 à 20 % à la demande de Romain, le 15/10/2026 ; avant : 8 sur 10).
+- Une erreur ne fait jamais perdre un bâtiment, une province ni une ressource du royaume. En bataille seulement, une bonne réponse rapporte de l'or et une erreur en coûte un peu, pris sur l'or de la bataille en cours, jamais en dessous de zéro (demande de Romain, 15/10/2026). Une erreur amène une explication, et la question revient un peu plus tard (« Seconde chance »).
 - Un cours s'ouvre dès que son fichier de données existe. Le calendrier ne bloque rien.
 - Pas d'épreuve de validation dans le jeu. C'est toi qui estimes si un cours est acquis ou à revoir, d'après les devoirs corrigés que Romain dépose : tu le notes dans jeu/data/suivi.js (état, note courte, devoir source) et tu mets les fiches fautives dans jeu/data/a-retravailler.js. Elles reviennent alors plus souvent dans les batailles et au conseil.
 - Les cours des semaines 1 à 6 sont présumés acquis : ils entrent dans la répétition espacée.
 - Chaque question est posée dans le récit du jeu (un personnage du domaine la pose pendant la bataille, au conseil ou lors d'un événement), sans changer l'énoncé.
 - Un cours pas encore ouvert reste dans la brume : son titre se voit, sans question, sans indice, sans aperçu.
 - Style : carte de campagne à la Total War, enluminure, héraldique, silhouettes. Ni pixel art, ni manga ou anime, ni dessin enfantin.
+- Combats : quand deux troupes adverses se croisent, elles s'affrontent au corps à corps, avec du sang à la Total War (giclées, flaques, soldats tombés qui s'effacent), pareil pour tous les camps ; pas de démembrement. Le sang se coupe dans les Réglages (demande de Romain, 15/10/2026).
 
 ## Méthode
 
