@@ -42,7 +42,7 @@
     // question ratée qui revient un peu plus tard (rappels.js) : une seconde chance, rien à perdre
     rappel: [
       "{N} revient vers toi : « Cette question t'a échappé tout à l'heure. Maintenant, tu connais la réponse. »",
-      "{N} sourit : « Je te repose la question de tout à l'heure. Une seconde chance, sans rien à perdre. »",
+      "{N} sourit : « Je te repose la question de tout à l'heure. Une seconde chance de bien faire. »",
       "{N} rouvre son carnet : « Reprenons ce point de tout à l'heure. Tu vas y arriver. »"
     ],
     tresor: [
@@ -98,6 +98,21 @@
   }
 
   // ---------- tirage des questions ----------
+  // Familles de matières pour l'équilibre du tirage : chaque famille qui a des questions a la même part (leitner.tirer).
+  // Le français (littérature, lecture suivie, grammaire) forme une seule famille, partagée entre ses trois matières ;
+  // un savoir-faire compte dans la matière de sa fiche méthode (champ matiere du cours).
+  var FAMILLES = { litterature: "francais", lecture: "francais", langue: "francais" };
+  function famille(matiere) { return FAMILLES[matiere] || matiere || ""; }
+
+  // Dernières questions tirées ({ famille, matiere }, la plus récente en dernier), d'un lot à l'autre : l'équilibre se
+  // poursuit de vague en vague et de partie en partie. En mémoire seulement : il repart de zéro à l'ouverture du jeu.
+  var historique = [];
+  function retenir(qs) {
+    qs.forEach(function (q) { historique.push({ famille: famille(q.matiere), matiere: q.matiere }); });
+    var max = JEU.leitner.FENETRE || 20;
+    if (historique.length > max) historique.splice(0, historique.length - max);
+  }
+
   // Candidats : fiches des cours accessibles qui ont des questions jouables (niveaux 1 et 2).
   function candidats(filtreQuestion) {
     var etat = JEU.sauvegarde.etat();
@@ -108,23 +123,62 @@
       JEU.questions.questionsDuCours(cid).forEach(function (q) {
         if (q.niveau <= 2 && (!filtreQuestion || filtreQuestion(q))) parFiche[q.fiche] = true;
       });
-      Object.keys(parFiche).forEach(function (f) { res.push({ fiche: f, cours: cid, recent: rang[cid] || 0 }); });
+      var m = U.matiereDe(cid);
+      Object.keys(parFiche).forEach(function (f) { res.push({ fiche: f, cours: cid, recent: rang[cid] || 0, matiere: m, famille: famille(m) }); });
     });
     return res;
   }
 
-  // Tirage ordinaire : une question par fiche tirée (Leitner, fiches à revoir d'abord), sans doublon.
+  // Tirage ordinaire : une question par fiche tirée (Leitner, équilibré entre les familles), sans doublon.
+  // Seules les fiches qui ont une question du bon type (et qui passent le filtre) sont candidates.
   // interdits : identifiants qui ne sortent jamais, même quand choisirPourFiche, faute d'autre question pour la fiche,
   // reprend une question exclue (les questions ratées en attente, celles déjà tirées pour ce lot).
-  function tirage(nombre, filtre, types, exclure, interdits) {
+  // avant : questions déjà dans le lot (premier tirage d'une vague), pour l'équilibre.
+  function tirage(nombre, filtre, types, exclure, interdits, avant) {
     var etat = JEU.sauvegarde.etat();
-    var fiches = JEU.leitner.tirer(candidats(filtre), etat, nombre * 2, { aRetravailler: JEU.progression.fichesARevoir() });
     var vues = exclure.slice(), qs = [];
-    for (var i = 0; i < fiches.length && qs.length < nombre; i++) {
-      var q = JEU.questions.choisirPourFiche(fiches[i].fiche, { types: types, exclure: vues });
-      if (q && (!interdits || interdits.indexOf(q.id) < 0)) { qs.push(q); vues.push(q.id); }
-    }
+    var garder = function (q) { return (!types || types.indexOf(q.type) >= 0) && (!filtre || filtre(q)); };
+    var passe = historique.concat((avant || []).map(function (q) { return { famille: famille(q.matiere), matiere: q.matiere }; }));
+    JEU.leitner.tirer(candidats(garder), etat, nombre, {
+      aRetravailler: JEU.progression.fichesARevoir(),
+      historique: passe,
+      accepter: function (c) {
+        var q = JEU.questions.choisirPourFiche(c.fiche, { types: types, exclure: vues });
+        if (!q || (interdits && interdits.indexOf(q.id) >= 0)) return false;
+        qs.push(q); vues.push(q.id);
+        return true;
+      }
+    });
     return qs;
+  }
+
+  // Après le placement des rappels (qui gardent leur place), remet dans l'ordre les questions ordinaires du lot pour
+  // qu'une même famille ne vienne pas trois fois de suite, lots précédents compris, quand c'est évitable.
+  function eviterTriples(qs) {
+    var f = historique.map(function (h) { return h.famille; });
+    var d = f.length;
+    var libres = qs.filter(function (q) { return !q.rappel; });
+    var res = [];
+    function triple(k) { return k >= 2 && f[k] === f[k - 1] && f[k - 1] === f[k - 2]; }
+    for (var i = 0; i < qs.length; i++) {
+      if (qs[i].rappel) { res.push(qs[i]); f[d + i] = famille(qs[i].matiere); continue; }
+      var choix = 0;
+      for (var j = 0; j < libres.length; j++) {
+        f[d + i] = famille(libres[j].matiere);
+        // la place i, et les rappels qui la suivent immédiatement, ne doivent pas faire un triple
+        var ok = !triple(d + i);
+        for (var k = i + 1; ok && k < qs.length && qs[k].rappel; k++) {
+          f[d + k] = famille(qs[k].matiere);
+          if (triple(d + k)) ok = false;
+        }
+        if (ok) { choix = j; break; }
+      }
+      var q = libres.splice(choix, 1)[0];
+      res.push(q);
+      f[d + i] = famille(q.matiere);
+      f.length = d + i + 1;
+    }
+    return res;
   }
 
   // Une suite de questions, pour toute partie (bataille, conseil, événement). C'est le seul tirage du jeu.
@@ -139,10 +193,15 @@
     var qs = tirage(nombre, options.filtre, options.types, exclure, attente);
     if (qs.length < nombre && options.completer) {
       var deja = qs.map(function (q) { return q.id; });
-      qs = qs.concat(tirage(nombre - qs.length, null, options.types, exclure.concat(deja), attente.concat(deja)));
+      qs = qs.concat(tirage(nombre - qs.length, null, options.types, exclure.concat(deja), attente.concat(deja), qs));
     }
-    return JEU.rappels ? JEU.rappels.placer(qs, { types: options.types, longueur: nombre }) : qs;
+    if (JEU.rappels) qs = eviterTriples(JEU.rappels.placer(qs, { types: options.types, longueur: nombre }));
+    retenir(qs);
+    return qs;
   }
 
-  JEU.recit = { CONSEILLERS: CONSEILLERS, conseiller: conseiller, cadre: cadre, candidats: candidats, suite: suite };
+  JEU.recit = {
+    CONSEILLERS: CONSEILLERS, conseiller: conseiller, cadre: cadre, candidats: candidats, suite: suite, famille: famille,
+    historique: function () { return historique.slice(); }, oublierHistorique: function () { historique = []; }
+  };
 })(typeof window !== "undefined" ? window : globalThis);

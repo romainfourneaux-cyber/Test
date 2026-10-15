@@ -20,6 +20,13 @@
     return true;
   }
 
+  // Réglage « Sang dans les combats » (bataille : giclées, flaques, soldats tombés). Actif par défaut : une sauvegarde
+  // sans ce réglage (plus ancienne que le 15/10/2026) le garde actif. Seul le rendu de la bataille le lit.
+  function sang() {
+    var etat = JEU.sauvegarde && JEU.sauvegarde.etat();
+    return !(etat && etat.reglages && etat.reglages.sang === false);
+  }
+
   // Chaque gerbe de particules a sa petite toile, posée autour de son point de départ (et non une toile sur toute la
   // fenêtre) : sur un PC sans carte graphique, la page ne recompose à chaque image que ce petit carré, et la question
   // suivante n'attend pas. Les particules qui sortent du carré (elles s'effacent déjà) sont coupées. ETENDUE : marges
@@ -144,5 +151,5 @@
     setTimeout(function () { d.remove(); }, 900);
   }
 
-  JEU.anim = { actif: actif, eclat: eclat, gain: gain, secouer: secouer, degats: degats, centre: centre, apresImage: apresImage };
+  JEU.anim = { actif: actif, sang: sang, eclat: eclat, gain: gain, secouer: secouer, degats: degats, centre: centre, apresImage: apresImage };
 })(typeof window !== "undefined" ? window : globalThis);

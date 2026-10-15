@@ -7,6 +7,7 @@ JEU.enregistrer("config", {
   seuilBatiment: 0.70,
   leitnerJours: [1, 2, 4, 8, 16],
   rappelApres: 3,               // une question ratée revient après 3 autres questions
+  orPerduErreur: 6,             // bataille : or retiré par réponse fausse (or de la bataille en cours, jamais sous zéro)
   usureBatiments: false,
   son: true
 });

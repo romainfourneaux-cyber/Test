@@ -119,19 +119,32 @@
     });
   }
 
-  // Rang de récence d'un cours (0 = le plus récent) pour le tirage Leitner. Un cours de langue n'a pas de semaine :
-  // il compte comme un cours de la semaine en cours (l'élève travaille ses badges Griffon en ce moment).
+  // Semaine médiane d'une liste de semaines (0 si la liste est vide).
+  function mediane(t) {
+    if (!t.length) return 0;
+    var s = t.slice().sort(function (a, b) { return a - b; }), k = Math.floor(s.length / 2);
+    return s.length % 2 ? s[k] : (s[k - 1] + s[k]) / 2;
+  }
+
+  // Rang de récence d'un cours (0 = le plus récent) pour le tirage Leitner : la semaine du planning, la plus récente
+  // d'abord (un cours d'une ancienne épreuve passe devant, par date). Il ne sert qu'à l'intérieur d'une matière : le
+  // tirage équilibre d'abord les familles de matières (leitner.tirer). Un cours de langue n'a pas de semaine : il prend
+  // la semaine médiane des cours accessibles du planning (ni en tête, ni en queue) ; entre eux, le badge le plus avancé
+  // puis le plus grand ordre passent devant. Méthodes et séquences d'anglais, sans semaine, viennent en dernier.
   function recence(etat) {
     etat = etat || JEU.sauvegarde.etat();
     var ids = coursAccessibles(etat);
-    var semCourante = 0;
-    try { semCourante = JEU.calendrier ? JEU.calendrier.semaine(new Date()).numero : 0; } catch (e) { semCourante = 0; }
+    var semaines = [];
+    ids.forEach(function (id) { var e = entree(id); if (e && typeof e.semaine === "number") semaines.push(e.semaine); });
+    var semLangue = mediane(semaines);
     var dates = ids.map(function (id) {
       var s = etat.cours[id];
       var e = entree(id);
       var t = s && s.le ? JEU.util.lireDate(s.le).getTime() : 0;
-      return { id: id, t: t, sem: e ? e.semaine : (/^langue-/.test(id) ? semCourante : 0) };
-    }).sort(function (a, b) { return (b.t - a.t) || (b.sem - a.sem); });
+      var langue = /^langue-/.test(id) ? JEU.donnees.cours[id] : null;
+      var rb = langue ? rangBadge(langue.badge) : 99;
+      return { id: id, t: t, sem: e ? e.semaine : (langue ? semLangue : 0), sous: langue && rb < 99 ? rb * 1000 + (langue.ordre || 0) : -1 };
+    }).sort(function (a, b) { return (b.t - a.t) || (b.sem - a.sem) || (b.sous - a.sous); });
     var r = {};
     dates.forEach(function (d, i) { r[d.id] = i; });
     return r;

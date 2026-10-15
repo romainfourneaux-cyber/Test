@@ -97,12 +97,13 @@
 
   // Sceau qui s'imprime au centre de l'écran (350 ms), sans retarder la question suivante : il est posé une image
   // après elle (JEU.anim.apresImage). Un nouveau sceau remplace celui qui est encore affiché : deux bonnes réponses
-  // rapprochées ne les impriment jamais l'un sur l'autre.
-  ui.tampon = function (texte, sous) {
+  // rapprochées ne les impriment jamais l'un sur l'autre. genre « perte » : l'or qu'une erreur coûte en bataille
+  // (cire plus sombre, chiffre rouge clair).
+  ui.tampon = function (texte, sous, genre) {
     var poser = function () {
       Array.prototype.forEach.call(document.querySelectorAll(".tampon"), function (x) { x.remove(); });
       var t = document.createElement("div");
-      t.className = "tampon";
+      t.className = "tampon" + (genre ? " " + genre : "");
       t.innerHTML = JEU.icones.icone("sceau", 120) + "<b>" + U.echapper(texte) + "</b>" + (sous ? "<span>" + U.echapper(sous) + "</span>" : "");
       document.body.appendChild(t);
       setTimeout(function () { t.remove(); }, 700);
@@ -721,6 +722,15 @@
       el("h3", { texte: "Animations" }),
       el("label", {}, [animCase, el("span", { texte: " Ambiance animée (fumées, nuages, villageois, drapeaux, particules)" })]),
       el("p", { class: "note", texte: "À décocher si l'ordinateur rame ou si le mouvement gêne. Le jeu reste aussi rapide dans les deux cas." })
+    ]));
+    // sang dans les combats (absent d'une ancienne sauvegarde : actif)
+    var sangCase = el("input", { type: "checkbox", "data-reglage": "sang", checked: etat.reglages.sang !== false, onchange: function () {
+      etat.reglages.sang = sangCase.checked; JEU.sauvegarde.enregistrer();
+    } });
+    s.appendChild(el("div", { class: "cartouche" }, [
+      el("h3", { texte: "Combats" }),
+      el("label", {}, [sangCase, el("span", { texte: " Sang dans les combats" })]),
+      el("p", { class: "note", texte: "Coché : un peu de sang quand un soldat est blessé au corps à corps ou tombe, et les soldats tombés restent quelques secondes au sol. Décoché : pas de sang du tout, les soldats tombés s'effacent vite dans un peu de poussière." })
     ]));
     s.appendChild(el("div", { class: "cartouche" }, [
       el("h3", { texte: "Crédits" }),
