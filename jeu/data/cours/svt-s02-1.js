@@ -663,7 +663,19 @@ JEU.enregistrer("cours", {
    "poids": 1
   }
  ],
- "bonus": [],
+ "bonus": [
+  {
+   "id": "svt-s02-1-b1",
+   "fiche": "svt-s02-1-f1",
+   "titre": "Le milieu du monde",
+   "texte": "L'équateur fait le tour de la Terre sur environ 40 075 km. Il traverse 11 pays, dont sept en Afrique. Des monuments marquent son passage, comme le « Mitad del Mundo », le « milieu du monde », près de Quito, la capitale de l'Équateur.",
+   "source": {
+    "titre": "Équateur terrestre",
+    "editeur": "Wikipédia, l'encyclopédie libre",
+    "url": "https://fr.wikipedia.org/wiki/%C3%89quateur_terrestre"
+   }
+  }
+ ],
  "nonCouvert": [
   "La leçon de la séance 3 n'est pas déposée : seules les lignes citées dans les ressources (équateur, tropiques, cercles polaires, pôles) sont dans le jeu ; le nom et la position exacte de chaque tropique ne sont pas donnés.",
   "La conclusion du TP 3 (ce que la forme de la tache de lumière montre sur l'énergie reçue selon le lieu) n'est pas écrite dans le corrigé.",

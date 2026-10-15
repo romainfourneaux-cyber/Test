@@ -165,7 +165,15 @@ module.exports = {
       reponse: "L'Antarctique se trouve dans la partie méridionale de la Terre.",
       explication: "Méridional veut dire « au sud » : il convient à l'Antarctique, au pôle Sud. L'Arctique, lui, est septentrional.", source: S(9) }
   ],
-  bonus: [],
+  bonus: [
+    {
+      id: "lecture-s01-1-b1",
+      fiche: "lecture-s01-1-f2",
+      titre: "Banquise ou calotte glaciaire ?",
+      texte: "La banquise est de l'eau de mer gelée, épaisse de quelques mètres au plus et bien moins salée que la mer. La calotte glaciaire est un immense glacier d'eau douce, né de neige accumulée très longtemps. Elle couvre 98 % du continent antarctique et atteint jusqu'à 4 800 m d'épaisseur.",
+      source: { titre: "Quelle est la différence entre la banquise et la calotte glaciaire ?", editeur: "Météo-France", url: "https://meteofrance.com/meteo-a-z/quelle-est-la-difference-entre-la-banquise-et-la-calotte-glaciaire" }
+    }
+  ],
   nonCouvert: [
     "La présentation du livre et la vie de l'auteur (p. 1 à 27 du livre) : ni le livre ni un document sur l'auteur ne sont déposés.",
     "La liste de vocabulaire ne dit pas à quel chapitre se rattache chaque mot : ce cours reprend les mots des glaces polaires (page 1 de la liste) et les adjectifs du nord et du sud (page 9).",

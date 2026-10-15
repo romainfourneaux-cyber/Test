@@ -594,7 +594,19 @@ JEU.enregistrer("cours", {
    "poids": 1
   }
  ],
- "bonus": [],
+ "bonus": [
+  {
+   "id": "lecture-s02-1-b1",
+   "fiche": "lecture-s02-1-f4",
+   "titre": "Avant le sextant, l'octant",
+   "texte": "Le sextant a un ancêtre : l'octant, apparu en 1731. Il sert à connaître la hauteur d'un astre pour faire le point, c'est-à-dire trouver la position du navire. À partir de 1758, son champ de mesure passe de 90 à 120 degrés : le sextant est né.",
+   "source": {
+    "titre": "Octant",
+    "editeur": "Musée national de la Marine",
+    "url": "https://www.musee-marine.fr/nos-musees/brest/collections/oeuvres-phares/octant.html"
+   }
+  }
+ ],
  "nonCouvert": [
   "Le contenu des chapitres 1 et 2 (p. 31 à 44 du livre) : le livre n'est pas déposé, et la liste de vocabulaire ne dit pas à quel chapitre appartient chaque mot. Ce cours reprend le vocabulaire du navire et de l'équipage (pages 3, 6 et 7 de la liste).",
   "Le brick : la définition de la liste mélange deux sens (un voilier, un guetteur) ; seul « sorte de voilier » est repris.",

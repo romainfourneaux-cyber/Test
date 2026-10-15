@@ -200,7 +200,15 @@ module.exports = {
       reponse: "Environ un tiers",
       explication: "À peu près un déchet sur trois est en plastique.", source: P(2) }
   ],
-  bonus: [],
+  bonus: [
+    {
+      id: "geographie-s02-1-b1",
+      fiche: "geographie-s02-1-f1",
+      titre: "Des noms venus de trois langues",
+      texte: "Adopté en 1984, le nom Burkina Faso mêle deux langues : « burkina » veut dire intégrité, honneur en moré, et « faso », terre ou patrie en dioula. Pour nommer les Burkinabè, on ajoute « -bè », un suffixe peul qui signifie « les habitants de ».",
+      source: { titre: "Burkina Faso", editeur: "Wikipédia, l'encyclopédie libre", url: "https://fr.wikipedia.org/wiki/Burkina_Faso" }
+    }
+  ],
   nonCouvert: [
     "La capsule vidéo n° 3 (outil du géographe n° 3), à regarder pour la question sur la transition démographique, n'est pas déposée.",
     "Les valeurs du graphique d'évolution démographique sont lues à l'œil sur le PDF : seules des valeurs arrondies sont reprises.",

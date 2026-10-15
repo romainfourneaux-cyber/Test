@@ -233,7 +233,15 @@ module.exports = {
       reponse: "Parce que Ravenne fait partie de ses conquêtes",
       explication: "Justinien a conquis Ravenne. La ville entre alors dans l'Empire byzantin.", source: S(2) }
   ],
-  bonus: [],
+  bonus: [
+    {
+      id: "histoire-s01-1-b1",
+      fiche: "histoire-s01-1-f5",
+      titre: "Théodora, face à Justinien",
+      texte: "À Saint-Vital, deux grandes mosaïques se font face : Justinien avec sa cour, et son épouse, l'impératrice Théodora, entourée de ses dames d'honneur. Leur fond d'or est typique de l'art byzantin. Avec d'autres monuments de Ravenne, la basilique est inscrite au patrimoine mondial de l'UNESCO depuis 1996.",
+      source: { titre: "Basilique Saint-Vital de Ravenne", editeur: "Wikipédia, l'encyclopédie libre", url: "https://fr.wikipedia.org/wiki/Basilique_Saint-Vital_de_Ravenne" }
+    }
+  ],
   nonCouvert: [
     "La leçon à apprendre : le cadre est laissé vide dans le support, la leçon est donnée dans la vidéo du cours.",
     "Ce qu'est l'édit de Thessalonique : la frise donne seulement son nom et sa date.",

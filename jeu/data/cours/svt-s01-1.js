@@ -647,7 +647,19 @@ JEU.enregistrer("cours", {
    "poids": 1
   }
  ],
- "bonus": [],
+ "bonus": [
+  {
+   "id": "svt-s01-1-b1",
+   "fiche": "svt-s01-1-f6",
+   "titre": "Un cœur sur Pluton",
+   "texte": "Lancée par la NASA, la sonde New Horizons est la première à avoir visité Pluton. Sur cette planète naine s'étend une zone claire large de plus de 2 000 km, surnommée le « cœur » : la région Tombaugh. Pluton avait été découverte en 1930 par l'Américain Clyde Tombaugh.",
+   "source": {
+    "titre": "Pluton (planète naine)",
+    "editeur": "Wikipédia, l'encyclopédie libre",
+    "url": "https://fr.wikipedia.org/wiki/Pluton_(plan%C3%A8te_naine)"
+   }
+  }
+ ],
  "nonCouvert": [
   "Les définitions d'astre, d'étoile, de planète, de système stellaire, de galaxie, d'astéroïde et de satellite : la fiche modèle du corrigé les liste sans les expliquer, et la leçon du livret n'est pas déposée.",
   "La comète, seulement dessinée sur la fiche modèle, et la nature de la ceinture de Kuiper et du nuage d'Oort (de quoi ils sont faits) : le corrigé ne donne que leur place.",

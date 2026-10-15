@@ -183,7 +183,15 @@ module.exports = {
       reponse: "Pour appuyer sa réponse sur les mots exacts du texte",
       explication: "La citation sert de preuve : on montre dans le texte ce qu'on affirme. Ensuite seulement, on explique l'effet.", source: S }
   ],
-  bonus: [],
+  bonus: [
+    {
+      id: "litterature-s01-2-b1",
+      fiche: "litterature-s01-2-f3",
+      titre: "Choucroute : une fausse piste",
+      texte: "« Étymologie » remonte au grec etumos, « vrai ». Mais attention : on croit voir « chou » et « croûte » dans « choucroute », alors que ce mot vient d'un parler allemand : surkrut, « chou aigre ». Ce rapprochement trompeur s'appelle une étymologie populaire.",
+      source: { titre: "étymologie", editeur: "Dictionnaire de français Larousse", url: "https://www.larousse.fr/dictionnaires/francais/%C3%A9tymologie/31605" }
+    }
+  ],
   nonCouvert: [
     "La leçon littéraire elle-même (livret 1, pages 9 à 11, et la page 12 citée par l'emploi du temps) n'est pas déposée : seules les réponses du corrigé le sont, et les notions en sont tirées.",
     "La définition de l'énumération donnée par la leçon : le corrigé en commente seulement un exemple.",

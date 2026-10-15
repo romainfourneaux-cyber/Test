@@ -225,7 +225,15 @@ module.exports = {
       reponse: "5 bouteilles",
       explication: "9 ÷ 2 donne 4,5 : avec 4 bouteilles, il manque encore de l'eau. On arrondit au nombre entier supérieur, donc il en faut 5.", indice: "Divise la contenance du bac par celle d'une bouteille, puis arrondis.", source: P(4) }
   ],
-  bonus: [],
+  bonus: [
+    {
+      id: "physique-s03-1-b1",
+      fiche: "physique-s03-1-f3",
+      titre: "L'objet qui définissait le kilogramme",
+      texte: "Dès 1889, le kilogramme est la masse d'un objet unique en platine iridié, conservé au Bureau international des poids et mesures. Mais ses copies s'en sont écartées d'environ 25 microgrammes en moyenne. En 2018, pour plus de stabilité, on adopte une nouvelle définition, fondée sur une constante physique.",
+      source: { titre: "Perspective historique : l'unité de masse, le kilogramme", editeur: "Bureau international des poids et mesures (BIPM)", url: "https://www.bipm.org/fr/history-si/kilogram" }
+    }
+  ],
   nonCouvert: [
     "Le livret de cours de la séance n'est pas déposé : seules les réponses du corrigé servent de source.",
     "Les conversions entre unités de masse (combien de grammes dans un kilogramme, etc.) : le corrigé ne les donne pas.",

@@ -686,7 +686,19 @@ JEU.enregistrer("cours", {
    "poids": 1
   }
  ],
- "bonus": [],
+ "bonus": [
+  {
+   "id": "geographie-s01-2-b1",
+   "fiche": "geographie-s01-2-f2",
+   "titre": "La variole, une maladie disparue",
+   "texte": "Pendant au moins 3 000 ans, la variole a frappé l'humanité : au XXe siècle, elle a encore tué 300 millions de personnes. En 1980, après un programme mondial appuyé sur la vaccination, l'OMS a déclaré le monde libéré de cette maladie. Aucune autre maladie humaine n'a été éradiquée.",
+   "source": {
+    "titre": "L'OMS célèbre le quarantième anniversaire de l'éradication de la variole",
+    "editeur": "Organisation mondiale de la Santé (OMS)",
+    "url": "https://www.who.int/fr/news/item/13-12-2019-who-commemorates-the-40th-anniversary-of-smallpox-eradication"
+   }
+  }
+ ],
  "nonCouvert": [
   "Les graphiques et la carte du cours (évolution de la population mondiale, croissance dans le monde, fécondité par pays) : seuls leurs titres sont lisibles dans l'extraction, leurs valeurs ne sont pas reprises.",
   "Page 6 (les pays les plus peuplés du monde) : exercice qui recoupe le devoir n° 1, non repris.",

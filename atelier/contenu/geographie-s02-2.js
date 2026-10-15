@@ -192,7 +192,15 @@ module.exports = {
       reponse: { vrai: false, correction: "Faux : c'est un quartier pauvre et malsain fait de matériaux récupérés ; l'espace gagné sur la forêt, c'est un front pionnier." },
       explication: "Le bidonville est en ville, le front pionnier au bord de la forêt. Ne confonds pas ces deux mots du cours.", source: P(3) }
   ],
-  bonus: [],
+  bonus: [
+    {
+      id: "geographie-s02-2-b1",
+      fiche: "geographie-s02-2-f4",
+      titre: "Une journée pour les migrants",
+      texte: "Le 18 décembre est la Journée internationale des migrants, proclamée par l'ONU en 2000. Elle rappelle l'adoption d'une convention qui protège les droits des travailleurs migrants et de leur famille. Dans la définition reprise par l'ONU, un étudiant parti à l'étranger compte aussi comme migrant.",
+      source: { titre: "Journée internationale des migrants : Historique", editeur: "Organisation des Nations Unies (ONU)", url: "https://www.un.org/fr/observances/migrants-day/background" }
+    }
+  ],
   nonCouvert: [
     "Le graphique du nombre d'habitants vivant dans des bidonvilles (ONU-Habitat) : seul son titre est lisible dans l'extraction, ses valeurs ne sont pas reprises.",
     "Les photos du cours (famille rurale en Afghanistan, culture sur brûlis au Congo, frontière de Ceuta) ne sont pas reproduites.",

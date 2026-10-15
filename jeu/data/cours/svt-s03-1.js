@@ -591,7 +591,19 @@ JEU.enregistrer("cours", {
    "poids": 1
   }
  ],
- "bonus": [],
+ "bonus": [
+  {
+   "id": "svt-s03-1-b1",
+   "fiche": "svt-s03-1-f3",
+   "titre": "Le parrain des nuages",
+   "texte": "En 1802, le pharmacien britannique Luke Howard propose des noms pour classer les nuages. Il en distingue trois grandes familles : les cumulus, les stratus et les cirrus. Avant lui, Jean-Baptiste de Lamarck avait proposé des mots français, mais ce sont les noms latins de Howard qui l'ont emporté.",
+   "source": {
+    "titre": "Luke Howard",
+    "editeur": "Wikipédia, l'encyclopédie libre",
+    "url": "https://fr.wikipedia.org/wiki/Luke_Howard"
+   }
+  }
+ ],
  "nonCouvert": [
   "La définition de la météorologie et celle de la climatologie, et ce qui les distingue : la leçon de la séance 1 n'est pas déposée et le corrigé ne les donne pas.",
   "Les qualités de l'air (chaud ou froid, sec ou humide, léger ou lourd) dans une dépression et dans un anticyclone : écrites à la main sur les cartes mémo du corrigé (p. 5), en partie illisibles et à vérifier dans la leçon avant de les mettre dans le jeu.",

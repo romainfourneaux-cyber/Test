@@ -241,7 +241,15 @@ module.exports = {
       reponse: "Leur eau douce peut servir directement à boire, à cultiver et à fabriquer",
       explication: "Les océans et les mers ont bien plus d'eau, mais elle n'est pas potable. L'eau douce des cours d'eau, environ 0,01 % du total, est celle qu'on utilise directement.", source: P(3) }
   ],
-  bonus: [],
+  bonus: [
+    {
+      id: "physique-s02-1-b1",
+      fiche: "physique-s02-1-f6",
+      titre: "Un réservoir d'eau douce gelé",
+      texte: "En Antarctique, l'inlandsis, une immense calotte de glace, couvre la plus grande partie du continent. Cette glace contient environ 61 % de l'eau douce de la Terre. Si elle fondait, le niveau des mers monterait d'environ 58 m.",
+      source: { titre: "Inlandsis de l'Antarctique", editeur: "Wikipédia, l'encyclopédie libre", url: "https://fr.wikipedia.org/wiki/Inlandsis_de_l%27Antarctique" }
+    }
+  ],
   nonCouvert: [
     "Le livret de cours de la séance n'est pas déposé : seules les réponses du corrigé servent de source.",
     "Le cycle de l'eau lui-même (le trajet de l'eau entre océans, nuages, pluie et cours d'eau, et son schéma) : le corrigé de la séance ne le décrit pas.",

@@ -198,7 +198,15 @@ module.exports = {
       reponse: "3 704 m",
       explication: "Un mille marin vaut 1 852 m. Deux milles font donc 1 852 + 1 852 = 3 704 m.", source: S(3) }
   ],
-  bonus: [],
+  bonus: [
+    {
+      id: "lecture-s03-1-b1",
+      fiche: "lecture-s03-1-f4",
+      titre: "Lire le vent sur la mer",
+      texte: "L'échelle de Beaufort va de 0 à 12. Elle permet de juger la vitesse moyenne du vent d'après l'aspect de la mer. En météo marine, la force 10 correspond à la tempête : le vent moyen atteint alors au moins 89 km/h.",
+      source: { titre: "Vents violents et tempêtes : quelles sont les différences ?", editeur: "Météo-France", url: "https://meteofrance.com/meteo-a-z/vents-violents-et-tempetes-quelles-sont-les-differences" }
+    }
+  ],
   nonCouvert: [
     "Le contenu des chapitres 3 et 4 (p. 45 à 54 du livre) : le livre n'est pas déposé, et la liste de vocabulaire ne dit pas à quel chapitre appartient chaque mot. Ce cours reprend le vocabulaire de la navigation (pages 3, 6, 8 et 9 de la liste).",
     "Le pouce : la liste donne deux valeurs différentes (page 3 et page 7) ; il n'est pas repris.",

@@ -416,7 +416,19 @@ JEU.enregistrer("cours", {
    "poids": 1
   }
  ],
- "bonus": [],
+ "bonus": [
+  {
+   "id": "svt-s02-2-b1",
+   "fiche": "svt-s02-2-f2",
+   "titre": "Le bon et le mauvais ozone",
+   "texte": "L'ozone est une forme de l'oxygène faite de trois atomes : O3. En altitude, la couche d'ozone absorbe une partie des rayons ultraviolets du Soleil, dangereux pour la vie : c'est le « bon » ozone. Près du sol, l'ozone dû à la pollution est un « mauvais » ozone.",
+   "source": {
+    "titre": "Science de l'ozone (Journée internationale de la protection de la couche d'ozone)",
+    "editeur": "Organisation des Nations unies",
+    "url": "https://www.un.org/fr/observances/ozone-day/science"
+   }
+  }
+ ],
  "nonCouvert": [
   "Le mécanisme de l'effet de serre et le rôle des gaz de l'atmosphère : la leçon de la séance 4 n'est pas déposée et le corrigé ne l'explique pas.",
   "Pourquoi Vénus est plus chaude que Mercure : le corrigé donne les données, pas l'explication.",

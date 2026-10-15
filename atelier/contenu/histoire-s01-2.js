@@ -231,7 +231,15 @@ module.exports = {
       reponse: [["Charlemagne"], ["carolingienne"]],
       explication: "Le renouveau culturel commence sous Charlemagne. On l'appelle renaissance carolingienne.", source: S(3) }
   ],
-  bonus: [],
+  bonus: [
+    {
+      id: "histoire-s01-2-b1",
+      fiche: "histoire-s01-2-f5",
+      titre: "Une écriture au nom de Charlemagne",
+      texte: "Vers 770-780 naît une nouvelle écriture, la minuscule caroline, qui doit son nom à Charlemagne. Ses lettres rondes et régulières se lisent facilement, et les mots y sont séparés par des espaces. La police de caractères Times New Roman en descend directement.",
+      source: { titre: "Minuscule caroline", editeur: "Wikipédia, l'encyclopédie libre", url: "https://fr.wikipedia.org/wiki/Minuscule_caroline" }
+    }
+  ],
   nonCouvert: [
     "La leçon à apprendre : le cadre est laissé vide dans le support, la leçon est donnée dans la vidéo du cours.",
     "Qui est Pépin le Bref et son lien avec Charlemagne : la carte cite seulement son royaume à sa mort.",

@@ -443,7 +443,19 @@ JEU.enregistrer("cours", {
    "poids": 1
   }
  ],
- "bonus": [],
+ "bonus": [
+  {
+   "id": "histoire-s02-1-b1",
+   "fiche": "histoire-s02-1-f4",
+   "titre": "Aux origines de la Sorbonne",
+   "texte": "En 1257, à Paris, un collège est fondé par Robert de Sorbon pour accueillir des étudiants pauvres qui apprennent la théologie. Il prend vite le nom de « collège de Sorbonne ». Plus tard, « la Sorbonne » désigne la faculté de théologie, puis toute l'université de Paris.",
+   "source": {
+    "titre": "Collège de Sorbonne",
+    "editeur": "Wikipédia, l'encyclopédie libre",
+    "url": "https://fr.wikipedia.org/wiki/Coll%C3%A8ge_de_Sorbonne"
+   }
+  }
+ ],
  "nonCouvert": [
   "Le contenu du tableau comparatif, rempli pendant la vidéo : seules la capitale byzantine (cours 1) et le rôle du pape (cours 2) sont donnés par les supports.",
   "La capitale de l'Empire carolingien.",

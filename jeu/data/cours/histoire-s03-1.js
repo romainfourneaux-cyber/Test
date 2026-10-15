@@ -421,7 +421,19 @@ JEU.enregistrer("cours", {
    "poids": 1
   }
  ],
- "bonus": [],
+ "bonus": [
+  {
+   "id": "histoire-s03-1-b1",
+   "fiche": "histoire-s03-1-f3",
+   "titre": "Madinat Azahra, la ville brillante",
+   "texte": "Peu après la création du califat de Cordoue, on bâtit à huit kilomètres de cette ville une immense ville-palais, Madinat Azahra, la « ville brillante ». Les travaux commencent en 936, et le gouvernement siège dans ses murs. Ses ruines sont inscrites au patrimoine mondial de l'UNESCO depuis 2018.",
+   "source": {
+    "titre": "Madinat Azahra",
+    "editeur": "Wikipédia, l'encyclopédie libre",
+    "url": "https://fr.wikipedia.org/wiki/Madinat_Azahra"
+   }
+  }
+ ],
  "nonCouvert": [
   "Les trois images commentées en classe (un personnage avec des ailes, une écriture, une mosquée avec une tour) ne sont pas dans le fichier : seules les questions y figurent, sans réponse.",
   "Le sens des mots Hégire, calife, califat, émirat et dynastie : le cadre « Mots importants » est vide.",

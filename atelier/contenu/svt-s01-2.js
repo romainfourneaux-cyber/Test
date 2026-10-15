@@ -228,7 +228,15 @@ module.exports = {
       reponse: ["Un numéro pour la ranger", "Les définitions", "Un résumé encadré en couleur", "Un schéma"],
       explication: "Numéro, définitions, résumé encadré et schéma font une fiche efficace. Le schéma aide à visualiser le résumé.", source: C(2) }
   ],
-  bonus: [],
+  bonus: [
+    {
+      id: "svt-s01-2-b1",
+      fiche: "svt-s01-2-f1",
+      titre: "Voir la Terre tourner",
+      texte: "En 1851, le physicien Léon Foucault suspend un pendule de 67 mètres sous la voûte du Panthéon, à Paris. Au fil des heures, la direction de ses allers-retours tourne lentement. Cette expérience montre que la Terre tourne sur elle-même.",
+      source: { titre: "Pendule de Foucault", editeur: "Wikipédia, l'encyclopédie libre", url: "https://fr.wikipedia.org/wiki/Pendule_de_Foucault" }
+    }
+  ],
   nonCouvert: [
     "Le lien entre l'inclinaison de l'axe et l'alternance des saisons : la leçon du livret n'est pas déposée, et les ressources n'expliquent que les variations de la durée du jour.",
     "La durée de la révolution de la Terre autour du Soleil n'est donnée dans aucun fichier déposé.",

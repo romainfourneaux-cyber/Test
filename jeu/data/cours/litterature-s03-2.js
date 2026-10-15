@@ -426,7 +426,19 @@ JEU.enregistrer("cours", {
    "poids": 1
   }
  ],
- "bonus": [],
+ "bonus": [
+  {
+   "id": "litterature-s03-2-b1",
+   "fiche": "litterature-s03-2-f1",
+   "titre": "L'oxymore, une alliance de mots",
+   "texte": "Une autre figure de style joue sur les contraires : l'oxymore. Il réunit deux mots qui ont l'air de se contredire, comme dans « un silence éloquent ». On le nomme aussi « alliance de mots ».",
+   "source": {
+    "titre": "oxymore, oxymoron",
+    "editeur": "Dictionnaire de français Larousse",
+    "url": "https://www.larousse.fr/dictionnaires/francais/oxymore/57123"
+   }
+  }
+ ],
  "nonCouvert": [
   "La leçon littéraire elle-même (livret 1, pages 24 à 26) n'est pas déposée : seules les réponses du corrigé le sont, et les notions en sont tirées.",
   "La définition de l'antithèse donnée par la leçon : le corrigé en commente seulement un exemple.",
