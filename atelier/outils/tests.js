@@ -690,6 +690,19 @@ verifier("Mémoire des questions posées abîmée : réparée sans planter ni ri
   return r.horloge === 5 && r.questions.a === 5 && r.questions.c === 2 && r2.horloge === 4 && JSON.stringify(r2.questions) === "{}" &&
     JSON.stringify(QA.completerPosees(null)) === vide && JSON.stringify(QA.completerPosees([])) === vide && e.posees.horloge === 1 && e.posees.questions[qa1.id] === 1;
 })());
+// revue du 15/10/2026 : une sauvegarde au schéma 5 dont la mémoire a « questions » en tableau (ou une horloge négative)
+// n'était pas réparée en jeu : les dates étaient écrites dans le tableau, puis perdues à chaque enregistrement.
+verifier("Mémoire des questions posées en tableau (sauvegarde au schéma 5 abîmée) : réparée au premier usage, les dates survivent à l'export et à l'import", (() => {
+  const s = JA.sauvegarde.nouvelle(); s.posees = { horloge: 3, questions: [] };
+  JA.sauvegarde.importer(JSON.stringify(s));
+  QA.enregistrerReponse(qa1, true);
+  const txt = JA.sauvegarde.texteExport();
+  JA.sauvegarde.remplacer(JA.sauvegarde.nouvelle()); JA.sauvegarde.importer(txt);
+  const relue = JA.sauvegarde.etat().posees;
+  const n = JA.sauvegarde.nouvelle(); n.posees = { horloge: -4, questions: { [qa2.id]: 2 } }; JA.sauvegarde.remplacer(n);
+  QA.enregistrerReponse(qa1, true);
+  return !Array.isArray(relue.questions) && relue.horloge === 4 && relue.questions[qa1.id] === 4 && n.posees.horloge === 3 && n.posees.questions[qa1.id] === 3 && n.posees.questions[qa2.id] === 2;
+})());
 // ancienne sauvegarde : une question vue avant le schéma 5 (questionsVues, sans date) compte comme posée il y a longtemps
 neuveA();
 const fA = "physique-s07-1-f3", nivA1 = QA.questionsDeFiche(fA, [1]); // trois questions de niveau 1
@@ -808,8 +821,12 @@ const tempsR = [], seqR = jouerJeu(JRV, 40, () => Math.random() < 0.7, true, tem
 tempsR.shift(); tempsR.sort((a, b) => a - b); // le tout premier tirage prépare les questions
 verifier("Vrais cours, 40 batailles : aucune question ne revient à moins de 60 questions (hors « Seconde chance »), jamais la même notion deux fois en 10 questions",
   seqR.length >= 450 && reposees(seqR, () => 60) === 0 && memeNotion(seqR, 10) === 0, { reposees: reposees(seqR, () => 60), notion: memeNotion(seqR, 10) });
-verifier("Vrais cours, en jouant : un lot de 3 en moins de 5 ms (médiane), mémoire des questions posées remplie", tempsR[Math.floor(tempsR.length / 2)] < 5 && Object.keys(JRV.sauvegarde.etat().posees.questions).length > 300,
-  tempsR[Math.floor(tempsR.length / 2)].toFixed(2) + " ms");
+// mémoire remplie : exactement les questions posées (sauvegarde neuve). Avant la revue du 15/10/2026 : « plus de 300 »,
+// au bord de ce que donnent 480 réponses (289 à 327 questions différentes selon le hasard) : le test échouait 1 fois sur 15.
+const datees = Object.keys(JRV.sauvegarde.etat().posees.questions), poseesR = new Set(seqR.map(x => x.id));
+verifier("Vrais cours, en jouant : un lot de 3 en moins de 5 ms (médiane), mémoire des questions posées remplie (chaque question posée, et elles seules)",
+  tempsR[Math.floor(tempsR.length / 2)] < 5 && datees.length === poseesR.size && datees.length > 200 && datees.every(id => poseesR.has(id)),
+  tempsR[Math.floor(tempsR.length / 2)].toFixed(2) + " ms ; " + datees.length + " datées, " + poseesR.size + " posées");
 
 // ---------- bataille : mêlée, sang, or perdu sur erreur, niveaux 1 à 3 (demandes de Romain, 15/10/2026) ----------
 const JM = contexte().JEU, MM = JM.batailleMoteur;
@@ -908,6 +925,56 @@ const ressourcesAvant = JSON.stringify(JM.sauvegarde.etat().ressources), campagn
 const pgR = MM.creer(routeDroite, Object.assign(JM.campagne.options(0), { orPerduErreur: JM.donnees.config.orPerduErreur }));
 for (let i = 0; i < 5; i++) MM.repondre(pgR, false);
 verifier("Or : une erreur ne retire rien au royaume (ressources, campagne, provinces)", JSON.stringify(JM.sauvegarde.etat().ressources) === ressourcesAvant && JSON.stringify(JM.campagne.etat()) === campagneAvant && pgR.or === 30);
+
+// seigneur rival réglé niveau par niveau (15/10/2026, atelier/outils/simuler-bataille.js) : tout passe par la table RIVAL,
+// tes troupes ne changent pas ; défense du domaine : troupes adverses plus solides (assaut), coups aux murs doublés
+const RV = MM.RIVAL, CLES_RIVAL = ["renfort", "pv", "tirs", "coup", "toursDepart", "toursVague", "assaut"];
+verifier("Rival par niveau : une ligne par niveau de province (0 à 4), chaque réglage présent ; tes troupes n'ont pas changé",
+  RV.length === 5 && RV.every(r => CLES_RIVAL.every(k => typeof r[k] === "number" && r[k] >= 0) && r.pv > 0 && r.tirs > 0 && r.coup > 0 && r.assaut >= 1 &&
+    Number.isInteger(r.renfort) && Number.isInteger(r.toursDepart) && Number.isInteger(r.toursVague)) &&
+  JSON.stringify(["fantassins", "cavaliers", "belier"].map(t => [MM.TROUPES[t].pv, MM.TROUPES[t].coup])) === "[[8,3],[12,3.5],[80,5]]", RV);
+// une piétaille adverse qui entre en jeu (vague 1), sans tours ni troupes à toi
+function rivalEnJeu(niveau, carte, opts) {
+  const p = MM.creer(carte || routeDroite, Object.assign({ niveau: niveau, pvRival: 999, pvChateau: 999 }, opts || {}));
+  p.phase = "vague"; p.fileRivale = ["pietaille"]; p.stats.rivaux = 1; p.minuterieRivale = 0; p.minuterieAmie = 99;
+  MM.etape(p, 0.025);
+  return { p, u: p.unites.find(x => x.camp === "rival") };
+}
+const tourRivale = { rivale: true, type: "archers", niveau: 1 }, presque = (a, b) => Math.abs(a - b) < 1e-9;
+const parNiveau = RV.map((r, n) => {
+  const { p, u } = rivalEnJeu(n), E = MM.ENNEMIS.pietaille;
+  return !p.defense && presque(u.max, E.pv * r.pv) && presque(u.coup, E.coup * r.coup) && u.degats === E.degats && presque(MM.degatsTour(p, tourRivale), MM.TOURS_RIVALES.archers.degats * r.tirs);
+});
+verifier("Rival par niveau : points de vie et coups de ses troupes, tirs de ses tours suivent la table", parNiveau.every(Boolean), parNiveau);
+const vaguesNiveau = RV.map((r, n) => {
+  const carte = JM.cartesBataille.carte("gue"), p = MM.creer(carte, { niveau: n, vagues: 4, pvRival: 999, pvChateau: 999 });
+  MM.lancerVague(p);
+  const tours0 = p.toursRivales.length, file0 = p.fileRivale.length;
+  p.phase = "preparation"; p.fileRivale = []; p.vague = 1;
+  MM.lancerVague(p);
+  return tours0 === r.toursDepart && p.toursRivales.length === Math.min(carte.emplacementsRivaux.length, r.toursDepart + r.toursVague) &&
+    file0 === MM.VAGUES.base + r.renfort && p.fileRivale.length === MM.VAGUES.base + MM.VAGUES.parVague + r.renfort;
+});
+verifier("Rival par niveau : renfort de chaque vague, tours bâties avant la première vague puis avant chacune des suivantes", vaguesNiveau.every(Boolean), vaguesNiveau);
+const pHors = MM.creer(routeDroite, { niveau: 9 }), pNeg = MM.creer(routeDroite, { niveau: -2 });
+verifier("Rival par niveau : un niveau hors de la table prend le plus proche", presque(MM.degatsTour(pHors, tourRivale), RV[4].tirs) && presque(MM.degatsTour(pNeg, tourRivale), RV[0].tirs));
+const dDom = rivalEnJeu(2, JM.cartesBataille.carte("domaine")), dGue = rivalEnJeu(2, JM.cartesBataille.carte("gue"));
+const dForce = rivalEnJeu(2, routeDroite, { defense: true }), dNon = rivalEnJeu(2, JM.cartesBataille.carte("domaine"), { defense: false });
+verifier("Défense du domaine : reconnue à sa carte (ou à options.defense) ; troupes adverses « assaut » fois plus solides, coups aux murs doublés, seulement là",
+  dDom.p.defense && !dGue.p.defense && dForce.p.defense && !dNon.p.defense && Number.isInteger(MM.DEFENSE.degats) && MM.DEFENSE.degats === 2 &&
+  presque(dDom.u.max, MM.ENNEMIS.pietaille.pv * RV[2].pv * RV[2].assaut) && dDom.u.degats === MM.ENNEMIS.pietaille.degats * MM.DEFENSE.degats &&
+  presque(dGue.u.max, MM.ENNEMIS.pietaille.pv * RV[2].pv) && dGue.u.degats === MM.ENNEMIS.pietaille.degats && presque(dDom.u.coup, dGue.u.coup) &&
+  presque(dNon.u.max, dGue.u.max), { domaine: [dDom.u.max, dDom.u.degats], gue: [dGue.u.max, dGue.u.degats] });
+const brecheDom = rivalEnJeu(0, routeDroite, { defense: true });
+let gBr = 0; while (!brecheDom.p.stats.fuites && gBr++ < 4000) MM.etape(brecheDom.p, 0.025);
+const effetBreche = brecheDom.p.effets.find(e => e.genre === "breche");
+verifier("Défense du domaine : une piétaille qui atteint tes murs y porte 2 coups (« −2 » à l'écran)",
+  brecheDom.p.stats.fuites === 1 && brecheDom.p.chateau.pv === 997 && effetBreche && effetBreche.degats === 2, { pv: brecheDom.p.chateau.pv, effet: effetBreche });
+// le simulateur d'équilibre tourne encore (2 graines, deux niveaux) et rend des résultats lisibles
+const simJ = JSON.parse(require("child_process").execFileSync(process.execPath, [path.join(__dirname, "simuler-bataille.js"), "--graines", "2", "--p", "0.8", "--niveaux", "0,4", "--json"], { encoding: "utf8" }));
+const simL = simJ.resultats["0.8"] || [];
+verifier("Simulateur d'équilibre : tourne et rend, par niveau, batailles pour prendre, coups portés et défense tenue",
+  simL.length === 2 && simL.every(l => typeof l.batailles === "number" && typeof l.degats === "number" && typeof l.defenseTenue === "number" && typeof l.defenseMursTenue === "number"), simL);
 
 // niveaux : la bataille tire les niveaux 1 à 3, le conseil et les événements 1 et 2 ; difficulté visée : 7 sur 10
 const JN = contexte().JEU, QN = JN.questions;

@@ -1,6 +1,6 @@
 # Format des données
 
-Point de départ fixé le 13 octobre 2026, complété au jalon 1 (version 0.1.0 du jeu), mis à jour pour la version 0.5.0 (suivi.js, sauvegarde au schéma 3, épreuve de validation retirée) puis le 15 octobre 2026 (matière langue rangée par badges Griffon, devoir langue-d1, rappelApres, sauvegarde au schéma 4 avec la file des questions ratées). Toute évolution se reporte ici dans la même livraison, avec une ligne au journal.
+Point de départ fixé le 13 octobre 2026, complété au jalon 1 (version 0.1.0 du jeu), mis à jour pour la version 0.5.0 (suivi.js, sauvegarde au schéma 3, épreuve de validation retirée) puis le 15 octobre 2026 (matière langue rangée par badges Griffon, devoir langue-d1, rappelApres, sauvegarde au schéma 4 avec la file des questions ratées, puis au schéma 5 avec la mémoire des questions posées ; fenetreQuestions, reposFiche et reposFicheJuste). Toute évolution se reporte ici dans la même livraison, avec une ligne au journal.
 
 Toutes les données du jeu sont des fichiers .js placés dans jeu/data/. Chacun fait un seul appel à une fonction globale définie dans jeu/js/noyau.js :
 
@@ -32,6 +32,9 @@ JEU.enregistrer("config", {
   seuilBatiment: 0.70,
   leitnerJours: [1, 2, 4, 8, 16],
   rappelApres: 3,               // une question ratée revient après 3 autres questions
+  fenetreQuestions: 60,         // une question posée ne ressort pas avant 60 autres (sauf « Seconde chance ») ; moins si peu de questions
+  reposFiche: 10,               // une notion posée attend 10 autres questions avant de ressortir
+  reposFicheJuste: 15,          // une notion réussie attend 15 autres questions (et une notion à revoir réussie 2 fois, la séance suivante)
   orPerduErreur: 6,             // bataille : or retiré par réponse fausse (or de la bataille en cours, jamais sous zéro)
   usureBatiments: false,
   son: true
@@ -39,6 +42,8 @@ JEU.enregistrer("config", {
 ```
 
 rappelApres (depuis le 15/10/2026) : nombre d'autres questions posées avant qu'une question ratée revienne (jeu/js/rappels.js). Entier, 1 ou plus ; absent ou invalide : 3.
+
+fenetreQuestions, reposFiche, reposFicheJuste (depuis le 15/10/2026, demande de Romain : « elles reviennent souvent » ; lus par jeu/js/questions.js, appliqués par le tirage JEU.recit.suite) : entiers, 0 ou plus ; absents ou invalides : 60, 10 et 15. fenetreQuestions : une question posée parmi les N dernières (toutes parties confondues, séances précédentes comprises) ne ressort pas au tirage ordinaire ; seule sa « Seconde chance » peut revenir plus tôt. Pour chaque tirage, N est ramené à la moitié des questions qui peuvent sortir (bon type, niveaux du tirage, pas exclues) quand elles sont peu nombreuses : 20 vrai ou faux possibles, N = 10. reposFiche : une fiche dont une question a été posée parmi les N dernières n'est pas tirée. reposFicheJuste : une fiche réussie parmi les N dernières questions de la séance n'est pas tirée. Une fiche dont une question attend sa « Seconde chance » n'est pas tirée non plus, et une fiche à revoir (a-retravailler.js, cours « à revoir » de suivi.js) réussie deux fois dans la séance perd sa priorité jusqu'à la séance suivante. Quand ces règles laissent un lot incomplet, le tirage les relâche dans l'ordre : repos des fiches, puis le filtre de la partie (une fiche par bataille), puis la fenêtre ; il ne bloque jamais.
 
 orPerduErreur (depuis le 15/10/2026, demande de Romain) : or retiré par réponse fausse au conseil de guerre d'une bataille (première réponse ou « Seconde chance »), pris sur l'or de la bataille en cours, jamais en dessous de zéro (jeu/js/bataille-moteur.js, repondre). Nombre, 0 ou plus (0 : aucune perte) ; absent : 6. Rien d'autre n'est jamais retiré : ni ressource, ni jauge du royaume, ni province, ni bâtiment ; le conseil du royaume et les événements ne retirent rien.
 
@@ -230,11 +235,11 @@ Dans une séquence d'anglais, le champ `fiche` d'une question ou d'un bonus cont
 
 ## Sauvegarde (localStorage, clé jeu5e)
 
-Schéma actuel : 4 (depuis le 15/10/2026). Migrations, testées par atelier/outils/tests.js : 1 → 2 ajoute reglages, stats et questionsVues ; 2 → 3 ajoute campagne (complétée par JEU.campagne.completer) et reglages.musique ; 3 → 4 ajoute rappels, vide (complétée par JEU.rappels.completer). Aucune ne retire rien. Une sauvegarde sans numéro est lue comme un schéma 1 ; une sauvegarde d'un schéma plus récent que le jeu est refusée. Le réglage reglages.sang (15/10/2026) n'a pas demandé de nouveau schéma : absent (sauvegarde plus ancienne), il vaut vrai, comme animations ; une sauvegarde neuve l'écrit à vrai ; la case des Réglages l'écrit à vrai ou faux (testé par tests.js, contrôlé par perf.js).
+Schéma actuel : 5 (depuis le 15/10/2026). Migrations, testées par atelier/outils/tests.js : 1 → 2 ajoute reglages, stats et questionsVues ; 2 → 3 ajoute campagne (complétée par JEU.campagne.completer) et reglages.musique ; 3 → 4 ajoute rappels, vide (complétée par JEU.rappels.completer) ; 4 → 5 ajoute posees, vide (complétée par JEU.questions.completerPosees). Aucune ne retire rien. Une sauvegarde sans numéro est lue comme un schéma 1 ; une sauvegarde d'un schéma plus récent que le jeu est refusée. Le réglage reglages.sang (15/10/2026) n'a pas demandé de nouveau schéma : absent (sauvegarde plus ancienne), il vaut vrai, comme animations ; une sauvegarde neuve l'écrit à vrai ; la case des Réglages l'écrit à vrai ou faux (testé par tests.js, contrôlé par perf.js).
 
 ```js
 {
-  schema: 4,
+  schema: 5,
   creeLe: "2026-10-13T18:00:00", majLe: "...",
   cours: { "histoire-s01-1": { etat: "valide", le: "...", score: 0.875 } },  // hérité des épreuves (0.1.0 à 0.4.0), plus écrit
   notions: { "histoire-s01-1-f1": { boite: 1, vue: "...", ok: 3, ko: 1 } },
@@ -250,7 +255,7 @@ Schéma actuel : 4 (depuis le 15/10/2026). Migrations, testées par atelier/outi
                                                  // musique : schéma 3 ; animations absent = vrai ;
                                                  // sang (15/10/2026, « Sang dans les combats ») absent = vrai
   stats: { bonnes: 0, total: 0, parties: 0 },
-  questionsVues: { "physique-s01-1-q1": 2 },     // pour varier les questions
+  questionsVues: { "physique-s01-1-q1": 2 },     // nombre de fois où chaque question a été posée
   // schéma 3 : la campagne
   campagne: {
     provinces: { "gue": { pv: 16 } },            // solidité restante de chaque place forte adverse (dix provinces)
@@ -273,6 +278,11 @@ Schéma actuel : 4 (depuis le 15/10/2026). Migrations, testées par atelier/outi
     file: [{ id: "histoire-s07-2-q3", cours: "histoire-s07-2", du: 60 }],
                                                  // douze au plus ; du : la question est due quand compteur atteint du
     derniere: "geographie-s02-1-q4"              // dernière question répondue (absente au début)
+  },
+  // schéma 5 : quand chaque question a été posée pour la dernière fois (jeu/js/questions.js, anti-répétition)
+  posees: {
+    horloge: 57,                                 // réponses données depuis le début, toutes parties confondues
+    questions: { "histoire-s07-2-q3": 55 }       // valeur de l'horloge à la dernière fois où la question a été posée
   }
 }
 ```
@@ -281,6 +291,9 @@ Schéma actuel : 4 (depuis le 15/10/2026). Migrations, testées par atelier/outi
 - notions[idFiche].boite : boîte Leitner de 1 à 5 ; une bonne réponse fait monter d'une boîte, une erreur ramène en boîte 1.
 - campagne : réparée au chargement par JEU.campagne.completer (une valeur absente ou du mauvais genre reprend sa valeur neuve, le reste ne bouge pas).
 - rappels : une erreur met la question (son identifiant, et celui de son cours) dans la file avec du = compteur + rappelApres ; si elle y était déjà, elle est reprogrammée. Une bonne réponse l'en retire. Au-delà de douze, la plus ancienne tombe. Chaque tirage (JEU.recit.suite) place les questions dues à leur rang dans le lot (rang = du − compteur, 0 si elle est déjà due), jamais juste après elle-même (derniere : la question répondue en dernier, gardée d'une séance à l'autre), à la place d'une question ordinaire ; pendant une partie, une erreur replace les questions qui restent à poser (JEU.rappels.replacer). Une question en attente ne sort jamais au tirage ordinaire, même quand toutes les questions de sa fiche attendent. Le conseil du royaume ne reprend que les vrai_faux ; les autres attendent une bataille ou un événement. Une question de niveau 3 n'est reprise qu'en bataille, la seule partie qui tire ce niveau (JEU.questions.niveauMax ; la bataille replace aussi ses questions dans JEU.questions.avecNiveaux) ; ailleurs, elle attend. Une entrée dont la question n'existe plus est effacée au tirage suivant. À l'ouverture du jeu (nouvelle séance), les questions en attente deviennent dues tout de suite (celle répondue en dernier vient en second). Réparée au besoin par JEU.rappels.completer (une derniere qui n'est pas un texte est oubliée).
+
+- posees : après chaque réponse (JEU.questions.enregistrerReponse), horloge avance de 1 et questions[id] prend sa valeur (« Seconde chance » comprise). Le tirage ordinaire s'en sert pour la fenêtre (une question posée parmi les fenetreQuestions dernières ne ressort pas), pour le repos des fiches (reposFiche) et, dans une fiche, pour reposer la question posée il y a le plus longtemps. Une question absente de posees mais vue d'après questionsVues (sauvegarde d'avant le schéma 5) compte comme posée il y a très longtemps : après les questions jamais posées, jamais bloquée par la fenêtre. Réparée au besoin par JEU.questions.completerPosees, vérifiée à chaque usage, sauvegarde au schéma 5 comprise (questions qui n'est pas un objet, ou qui est un tableau, devient vide ; une horloge illisible ou négative reprend la plus grande valeur notée). Environ 30 octets par question posée : 45 Ko pour 1 500 questions.
+- Séance (rien dans la sauvegarde) : pour chaque fiche, la dernière bonne réponse et le nombre de bonnes réponses depuis l'ouverture du jeu (repos de reposFicheJuste questions après une bonne réponse ; une fiche à revoir réussie deux fois perd sa priorité jusqu'à la séance suivante). Tout repart de zéro quand le jeu est rouvert ou qu'une sauvegarde est importée.
 
 Export : fichier `sauvegarde-jeu5e-AAAA-MM-JJ.json`. Import : le fichier doit ressembler à une sauvegarde du jeu (creeLe, notions, ressources), sinon il est refusé et la partie en cours ne bouge pas ; après confirmation, il remplace la partie en cours, dont une copie reste dans le navigateur (clé jeu5e-avant-import).
 
@@ -292,7 +305,7 @@ Export : fichier `sauvegarde-jeu5e-AAAA-MM-JJ.json`. Import : le fichier doit re
 - extractions/*.txt : texte intégral, mot pour mot, des fichiers lus (sans le nom de l'élève, de sa famille ou d'un correcteur, ni numéro de sécurité sociale), pour ne pas les relire et pour l'anti-recopie et l'anti-spoil.
 - devoirs/<id>.md : notions évaluées ; si le devoir est corrigé, notions réussies, notions à retravailler et estimation par cours, reportée dans jeu/data/suivi.js. Ni nom de l'élève ou du correcteur, ni numéro.
 - relectures/ : fiches HTML et derniere.txt (date de la dernière relecture).
-- outils/ : valider.js et controles.js (validateur), validateur.html, brouillage.js, tests.js (logique), perf.js (essai de bout en bout et mesure de vitesse, demande Playwright), simuler-bataille.js (équilibre de la bataille : le vrai moteur joué par un élève scripté, issues et coups portés par niveau de province et en défense ; option --moteur pour comparer avec une copie d'un ancien moteur), compiler-cours.js, generer-planning.js (planning.js et devoirs.js, devoirs hors planning compris), generer-sons.js, scripts Python d'extraction de l'emploi du temps, extraire-icones.py et icones-choisies.json (icônes Game-icons), generer-textures.py et generer-terrain.py (textures et fond de carte), rendu-3d/ (scripts Blender des images de bataille).
+- outils/ : valider.js et controles.js (validateur), validateur.html, brouillage.js, tests.js (logique), perf.js (essai de bout en bout et mesure de vitesse, demande Playwright), simuler-bataille.js (équilibre de la bataille : le vrai moteur joué par un élève scripté, 80 graines par défaut ; par niveau de province, issues, coups portés et batailles pour prendre la province ; défense du domaine tenue et murs restants ; --moteur pour jouer une copie d'un ancien moteur, --json pour enregistrer un essai, --comparer pour les écarts par niveau avec un essai enregistré, --regle pour essayer un réglage du seigneur rival (table RIVAL et DEFENSE de jeu/js/bataille-moteur.js) sans toucher au fichier, --seulement attaque ou defense, la partie non jouée s'affichant « — »), mesurer-tirage.js (le vrai tirage des questions avec les vrais cours : part de chaque famille de matières ; répétitions sur des séances de 100 questions jouées par des élèves simulés, questions reposées, même notion en 10 questions, niveaux posés face au niveau conseillé ; option --avant pour comparer avec une copie d'anciens modules), compiler-cours.js, generer-planning.js (planning.js et devoirs.js, devoirs hors planning compris), generer-sons.js, scripts Python d'extraction de l'emploi du temps, extraire-icones.py et icones-choisies.json (icônes Game-icons), generer-textures.py et generer-terrain.py (textures et fond de carte), rendu-3d/ (scripts Blender des images de bataille).
 - versions/ : copies datées de jeu/ si git n'est pas installé.
 - drive/ : PDF téléchargés du Drive pour l'inventaire, ignorés par git. Ce n'est pas une source : le contenu des cours vient de DEPOT/.
 

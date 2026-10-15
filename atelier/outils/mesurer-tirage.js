@@ -9,9 +9,12 @@
 //     5 séances) : questions reposées dans la séance (hors « Seconde chance »), reposées à moins de 60 questions, même
 //     notion deux fois en 10 questions, niveaux posés face au niveau conseillé, réussite, durée d'un tirage.
 // Usage : node atelier/outils/mesurer-tirage.js [parties par situation, 200 par défaut] [--familles | --repetitions]
-//         [--graines 16] [--seances 6] [--js dossier]
+//         [--graines 16] [--seances 6] [--js dossier] [--avant dossier]
 //   --js : charger les modules du jeu (jeu/js/*.js) depuis un autre dossier, par exemple une copie de l'ancien code
-//          (git show HEAD:jeu/js/recit.js > dossier/recit.js, etc.), pour comparer avant et après sur les mêmes cours.
+//          (git show <commit>:jeu/js/recit.js > dossier/recit.js, etc. : noyau, brouillage, calendrier, sauvegarde,
+//          leitner, progression, questions, rappels, recit) ;
+//   --avant : répétitions mesurées aussi avec les modules de ce dossier, et un seul tableau « avant / après » (mêmes
+//          cours, mêmes élèves simulés). Mesures du 15/10/2026 : docs/JOURNAL.md, rubrique Décisions.
 "use strict";
 const fs = require("fs");
 const path = require("path");
@@ -36,7 +39,7 @@ function dateDecalee(jours) {
 
 // Un jeu chargé comme au double-clic sur index.html : modules, données, puis la sauvegarde (stock = le localStorage,
 // gardé d'une séance à l'autre).
-function contexte(seed, stock, jours) {
+function contexte(seed, stock, jours, dossierJs) {
   stock = stock || {};
   const MathR = Object.create(Math); MathR.random = graine(seed);
   const ctx = { console, Buffer, Math: MathR, Date: jours ? dateDecalee(jours) : Date, btoa: globalThis.btoa, atob: globalThis.atob,
@@ -44,7 +47,7 @@ function contexte(seed, stock, jours) {
   ctx.window = ctx; ctx.globalThis = ctx;
   vm.createContext(ctx);
   MODULES.forEach(m => {
-    vm.runInContext(fs.readFileSync(path.join(DOSSIER_JS, m + ".js"), "utf8"), ctx, { filename: m + ".js" });
+    vm.runInContext(fs.readFileSync(path.join(dossierJs || DOSSIER_JS, m + ".js"), "utf8"), ctx, { filename: m + ".js" });
   });
   ["config", "planning", "devoirs", "index-cours", "a-retravailler", "suivi"].forEach(f => vm.runInContext(fs.readFileSync(path.join(RACINE, "jeu", "data", f + ".js"), "utf8"), ctx));
   ctx.JEU.donnees.indexCours.forEach(id => {
@@ -249,8 +252,9 @@ function compterSeance(tout, debut) {
   return r;
 }
 
-function mesurerRepetitions() {
-  const G = parseInt(option("graines", "16"), 10), S = parseInt(option("seances", "6"), 10);
+const G_REP = parseInt(option("graines", "16"), 10), S_REP = parseInt(option("seances", "6"), 10);
+function mesurerRepetitions(dossierJs, version) {
+  const G = G_REP, S = S_REP;
   const t0 = Date.now(), temps = [];
   const lignes = [];
   PROFILS.forEach((profil, ip) => {
@@ -259,7 +263,7 @@ function mesurerRepetitions() {
       const stock = {}, tout = [];
       const rnd = graine(7919 * (g + 1) + ip);
       for (let s = 0; s < S; s++) {
-        const ctx = contexte(100003 * (g + 1) + 101 * s + ip, stock, s); // le jeu rouvert, un jour plus tard
+        const ctx = contexte(100003 * (g + 1) + 101 * s + ip, stock, s, dossierJs); // le jeu rouvert, un jour plus tard
         const J = ctx.JEU;
         if (s === 0) { J.sauvegarde.remplacer(J.sauvegarde.nouvelle()); J.sauvegarde.enregistrer(); }
         const debut = tout.length;
@@ -272,7 +276,7 @@ function mesurerRepetitions() {
       const nb = moy(r => r.nb) || 1, autres = moy(r => r.na) || 1;
       const pc = (x, d) => Math.round(100 * x / d);
       lignes.push({
-        profil: profil.nom, seance: s === 0 ? "sauvegarde neuve" : "après " + s + " séances",
+        profil: profil.nom, seance: s === 0 ? "sauvegarde neuve" : "après " + s + (s > 1 ? " séances" : " séance"), version: version,
         repSeance: moy(r => r.repSeance), rep60: moy(r => r.rep60), fiche10: moy(r => r.fiche10), rappels: moy(r => r.rappels),
         distinctes: moy(r => r.distinctes), maxQuestion: Math.max(...R.map(r => r.maxQuestion)), maxFiche: moy(r => r.maxFiche),
         aRevoir: moy(r => r.aRevoir), aRevoirApres2: moy(r => r.aRevoirApres2),
@@ -282,17 +286,37 @@ function mesurerRepetitions() {
       });
     });
   });
-  const f1 = x => x.toFixed(1).replace(".", ",");
-  console.log("Répétitions sur des séances de " + LONGUEUR + " questions (" + G + " élèves simulés par profil, moyennes par séance ; modules : " + path.relative(RACINE, DOSSIER_JS) + ")\n");
-  console.log("| Élève | Séance | Reposées dans la séance (hors Seconde chance) | dont à moins de 60 questions | Même notion 2 fois en 10 questions | Seconde chance | Questions différentes | Notion la plus posée (fois) | Question la plus posée (fois, pire séance) | Notions à revoir (dont reposées après 2 réussites) | Réussite | Bataille : niveaux 1 / 2 / 3 (hors Seconde chance) | Bataille : niveau moyen / conseillé | Conseil et événement : niveaux 1 / 2 |");
-  console.log("|---|---|---|---|---|---|---|---|---|---|---|---|---|---|");
-  lignes.forEach(l => console.log("| " + [l.profil, l.seance, f1(l.repSeance), f1(l.rep60), f1(l.fiche10), f1(l.rappels), f1(l.distinctes), f1(l.maxFiche), l.maxQuestion,
-    f1(l.aRevoir) + " (" + f1(l.aRevoirApres2) + ")", l.reussite + " %", l.nivB.join(" / ") + " %", f1(l.nivMoyen) + " / " + f1(l.conseille), l.nivA.join(" / ") + " %"].join(" | ") + " |"));
   temps.sort((a, b) => a - b);
-  console.log("\nDurée d'un tirage de lot (ms) : médiane " + temps[Math.floor(temps.length / 2)].toFixed(2) + ", 99e centile " + temps[Math.floor(temps.length * 0.99)].toFixed(2) +
-    ", max " + temps[temps.length - 1].toFixed(2) + " (le premier tirage d'une séance prépare toutes les questions) ; total " + (Date.now() - t0) + " ms");
+  return { lignes: lignes, temps: temps, duree: Date.now() - t0 };
 }
 
-const N = +(ARGS.find(a => /^\d+$/.test(a)) || 200);
+function afficherRepetitions(mesures) {
+  const f1 = x => x.toFixed(1).replace(".", ",");
+  console.log("Répétitions sur des séances de " + LONGUEUR + " questions (" + G_REP + " élèves simulés par profil, moyennes par séance ; 1re séance avec une sauvegarde neuve, " + S_REP + "e après " + (S_REP - 1) + " séances)\n");
+  console.log("| Élève | Séance | Version | Reposées à moins de 60 questions (hors Seconde chance) | Reposées dans la séance (plus de 60 questions après comprises) | Même notion 2 fois en 10 questions | Notion la plus posée (fois, Seconde chance comprises) | Questions différentes | Seconde chance | Notions à revoir posées (dont après 2 réussites dans la séance) | Réussite | Bataille : niveaux 1 / 2 / 3 (hors Seconde chance) | Bataille : niveau moyen / conseillé | Conseil et événement : niveaux 1 / 2 |");
+  console.log("|---|---|---|---|---|---|---|---|---|---|---|---|---|---|");
+  const n = mesures[0].lignes.length;
+  for (let i = 0; i < n; i++) mesures.forEach((m, k) => {
+    const l = m.lignes[i];
+    console.log("| " + [k ? "" : l.profil, k ? "" : l.seance, l.version, f1(l.rep60), f1(l.repSeance), f1(l.fiche10), f1(l.maxFiche), f1(l.distinctes), f1(l.rappels),
+      f1(l.aRevoir) + " (" + f1(l.aRevoirApres2) + ")", l.reussite + " %", l.nivB.join(" / ") + " %", f1(l.nivMoyen) + " / " + f1(l.conseille), l.nivA.join(" / ") + " %"].join(" | ") + " |");
+  });
+  mesures.forEach(m => {
+    const t = m.temps;
+    console.log("\nDurée d'un tirage de lot (" + m.lignes[0].version + ", ms, dans le bac à sable vm de Node) : médiane " + t[Math.floor(t.length / 2)].toFixed(2) + ", 99e centile " + t[Math.floor(t.length * 0.99)].toFixed(2) +
+      ", max " + t[t.length - 1].toFixed(2) + " (le premier tirage d'une séance prépare toutes les questions) ; mesure en " + m.duree + " ms");
+  });
+}
+
+// nombre de parties par situation : le premier nombre qui n'est pas la valeur d'une option (--graines 16 n'est pas N)
+const AVEC_VALEUR = ["--graines", "--seances", "--js", "--avant"];
+const N = +(ARGS.find((a, i) => /^\d+$/.test(a) && AVEC_VALEUR.indexOf(ARGS[i - 1]) < 0) || 200);
 if (ARGS.indexOf("--repetitions") < 0) mesurerFamilles(N);
-if (ARGS.indexOf("--familles") < 0) { if (ARGS.indexOf("--repetitions") < 0) console.log(""); mesurerRepetitions(); }
+if (ARGS.indexOf("--familles") < 0) {
+  if (ARGS.indexOf("--repetitions") < 0) console.log("");
+  const avant = option("avant", null);
+  const mesures = [];
+  if (avant) mesures.push(mesurerRepetitions(avant, "avant"));
+  mesures.push(mesurerRepetitions(DOSSIER_JS, avant ? "après" : path.relative(RACINE, DOSSIER_JS) || "jeu/js"));
+  afficherRepetitions(mesures);
+}

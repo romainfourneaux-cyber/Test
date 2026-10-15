@@ -4,21 +4,25 @@
 // dépensé en tours, améliorations et troupes (stratégie simple et raisonnable, la même pour tous les essais), et la vague
 // est jouée. Pour chaque niveau de province (0 à 4, les deux fronts) et pour la défense du domaine, il affiche :
 //  - les issues de la première bataille (victoire, tenu, retraite) et les coups moyens portés à la place forte adverse ;
-//  - le nombre de batailles pour prendre la province (les coups restent d'une bataille à l'autre, comme dans le jeu).
+//  - le nombre de batailles pour prendre la province (les coups restent d'une bataille à l'autre, comme dans le jeu) ;
+//  - pour la défense (niveau = celui de la campagne, PROGRESSION du même niveau) : part des défenses tenues (dont celles
+//    gagnées en abattant le château adverse), murs restants en moyenne, et quand la défense tient.
 // Arsenal et jauges du royaume supposés à chaque niveau : voir PROGRESSION (un élève qui joue régulièrement).
-// Usage : node atelier/outils/simuler-bataille.js [--graines 40] [--p 0.6,0.7,0.8,0.9] [--niveaux 0,1,2,3,4] [--moteur chemin] [--perte n]
-// (environ 1 min 30 avec les réglages par défaut). Résultats et réglages du 15/10/2026 : docs/JOURNAL.md, Décisions.
+// Usage : node atelier/outils/simuler-bataille.js [--graines 80] [--p 0.6,0.7,0.8,0.9] [--niveaux 0,1,2,3,4] [--moteur chemin] [--perte n]
+// (environ 3 min avec les réglages par défaut ; 80 graines par province et par front, 160 défenses par niveau : à 40, le
+// niveau 4 bouge encore de 5 points d'un tirage à l'autre). Résultats et réglages du 15/10/2026 : docs/JOURNAL.md, Décisions.
 //   --moteur : un autre fichier de moteur, par exemple une copie de l'ancien (git show f9939e2:jeu/js/bataille-moteur.js),
 //              pour comparer avant et après ;
 //   --perte : or perdu par erreur (par défaut celui de jeu/data/config.js, orPerduErreur, sinon celui du moteur ;
 //             0 = règle d'avant le 15/10/2026) ;
 //   --detail : batailles pour prendre chaque province, graine par graine ;
 //   --json : résultats en JSON (pour comparer deux réglages) ;
-//   --regle "M.RIVAL[4].tirs = 1.4; M.DEFENSE.renfort = 2" : essai d'un réglage du moteur (M), sans toucher au fichier ;
+//   --regle "M.RIVAL[4].tirs = 1.4; M.DEFENSE.degats = 3" : essai d'un réglage du moteur (M), sans toucher au fichier ;
 //   --troupes 0.75 : part de l'or dépensée en troupes avant les améliorations de tours ;
 //   --seulement attaque (ou defense) : ne joue que les provinces (ou que la défense du domaine), pour aller plus vite ;
-//   --comparer avant.json : écarts par niveau avec un essai enregistré par --json (par exemple l'ancien moteur, avec
-//              --moteur et --perte 0) : batailles pour prendre la province et coups portés à la 1re bataille.
+//   --comparer avant.json : écarts par niveau avec un essai enregistré par --json, mêmes graines (par exemple l'ancien
+//              moteur : --moteur <copie de f9939e2> --perte 0 --json > avant.json) : batailles pour prendre la province
+//              et coups portés à la 1re bataille.
 "use strict";
 const fs = require("fs");
 const path = require("path");
@@ -26,13 +30,15 @@ const RACINE = path.join(__dirname, "..", "..");
 
 const args = process.argv.slice(2);
 function option(nom, defaut) { const i = args.indexOf("--" + nom); return i >= 0 ? args[i + 1] : defaut; }
-const GRAINES = parseInt(option("graines", "40"), 10);
+const GRAINES = parseInt(option("graines", "80"), 10);
 const PS = option("p", "0.6,0.7,0.8,0.9").split(",").map(Number);
 const MOTEUR = option("moteur", path.join(RACINE, "jeu", "js", "bataille-moteur.js"));
 const JSON_SORTIE = args.indexOf("--json") >= 0, DETAIL = args.indexOf("--detail") >= 0;
 const NIVEAUX = option("niveaux", "0,1,2,3,4").split(",").map(Number);
 const SEULEMENT = option("seulement", null);
-const COMPARER = option("comparer", null) ? JSON.parse(fs.readFileSync(option("comparer"), "utf8")) : null;
+// (un fichier écrit par « > » dans Windows PowerShell est en UTF-16 : il est lu aussi)
+function lireJSON(f) { const o = fs.readFileSync(f); return JSON.parse(o[0] === 0xFF && o[1] === 0xFE ? o.toString("utf16le", 2) : o.toString("utf8").replace(/^\uFEFF/, "")); }
+const COMPARER = option("comparer", null) ? lireJSON(option("comparer")) : null;
 
 // ---------- chargement des modules du jeu ----------
 // Chaque fichier est une fonction appelée avec une fausse fenêtre (et non dans un bac à sable vm : les accès aux globales
@@ -187,12 +193,12 @@ function attaque(niveau, pJuste) {
   return res;
 }
 function defense(niveau, pJuste) {
-  const res = { victoire: 0, tenu: 0, retraite: 0, degats: 0, n: 0, murs: 0 };
+  const res = { victoire: 0, tenu: 0, retraite: 0, degats: 0, n: 0, murs: 0, mursTenue: 0 };
   for (let g = 0; g < 2 * GRAINES; g++) {
     const o = optionsBataille(niveau);
     o.vagues = 3; o.pvRival = 12; o.pvRivalMax = 12;
     const b = jouerBataille("domaine", o, pJuste, 5000 * g + 13 * niveau + 3);
-    res[b.issue]++; res.degats += b.degats; res.n++; res.murs += b.murs;
+    res[b.issue]++; res.degats += b.degats; res.n++; res.murs += b.murs; if (b.issue !== "retraite") res.mursTenue += b.murs;
   }
   return res;
 }
@@ -204,31 +210,36 @@ if (!JSON_SORTIE) console.log("Moteur : " + sortie.moteur + " · or perdu par er
 PS.forEach(pJuste => {
   const lignes = [];
   NIVEAUX.forEach(niveau => {
-    const vide = { victoire: 0, tenu: 0, retraite: 0, degats: 0, batailles: 0, maxBatailles: 0, prises: 0, n: 0, tues: 0, pertes: 0, murs: 0 };
+    const vide = { victoire: 0, tenu: 0, retraite: 0, degats: 0, batailles: 0, maxBatailles: 0, prises: 0, n: 0, tues: 0, pertes: 0, murs: 0, mursTenue: 0 };
     const a = SEULEMENT === "defense" ? vide : attaque(niveau, pJuste), d = SEULEMENT === "attaque" ? vide : defense(niveau, pJuste);
     if (DETAIL) console.log("niveau " + niveau + ", batailles pour prendre, graine par graine : " + JSON.stringify(a.detail));
     lignes.push({
       niveau: niveau, victoire: pc(a.victoire, a.n), tenu: pc(a.tenu, a.n), retraite: pc(a.retraite, a.n),
-      degats: Math.round(100 * a.degats / a.n) / 100, pv: C.FRONTS.map(f => f.provinces[niveau].pv).join("/"),
+      degats: a.n ? Math.round(100 * a.degats / a.n) / 100 : null, pv: C.FRONTS.map(f => f.provinces[niveau].pv).join("/"),
       batailles: a.prises ? Math.round(100 * a.batailles / a.prises) / 100 : null, maxBatailles: a.maxBatailles, prises: pc(a.prises, 2 * GRAINES),
-      tues: Math.round(10 * a.tues / a.n) / 10, pertes: Math.round(10 * a.pertes / a.n) / 10,
-      defenseTenue: pc(d.victoire + d.tenu, d.n), defenseVictoire: pc(d.victoire, d.n), defenseMurs: pc(d.murs, d.n)
+      tues: a.n ? Math.round(10 * a.tues / a.n) / 10 : null, pertes: a.n ? Math.round(10 * a.pertes / a.n) / 10 : null,
+      defenseTenue: pc(d.victoire + d.tenu, d.n), defenseVictoire: pc(d.victoire, d.n), defenseMurs: pc(d.murs, d.n),
+      defenseMursTenue: pc(d.mursTenue, d.victoire + d.tenu)
     });
   });
   sortie.resultats[pJuste] = lignes;
   if (JSON_SORTIE) return;
   console.log("\np = " + pJuste + " (réponses justes)");
-  console.log("niv | pv     | victoire tenu retraite | coups 1re bataille | batailles pour prendre (max) | ennemis tués / tes pertes | défense tenue (dont victoire), murs restants");
+  console.log("niv | pv     | victoire tenu retraite | coups 1re bataille | batailles pour prendre (max) | ennemis tués / tes pertes | défense tenue (dont victoire), murs restants (quand elle tient)");
+  // avec --seulement, la partie qui n'a pas été jouée s'affiche « — » (et non « null % » ou « NaN »)
+  const pct = x => (x === null ? "—" : x + " %"), val = x => (x === null ? "—" : String(x));
   lignes.forEach(l => console.log(
-    " " + l.niveau + "  | " + l.pv.padEnd(6) + " | " + String(l.victoire).padStart(5) + " % " + String(l.tenu).padStart(3) + " % " + String(l.retraite).padStart(4) + " %   | " +
-    String(l.degats).padStart(18) + " | " + String(l.batailles === null ? "jamais" : l.batailles).padStart(18) + " (" + l.maxBatailles + ")" + (l.prises < 100 ? " prises " + l.prises + " %" : "") +
-    " | " + String(l.tues).padStart(8) + " / " + l.pertes + " | " + l.defenseTenue + " % (" + l.defenseVictoire + " %), " + l.defenseMurs + " %"));
+    " " + l.niveau + "  | " + l.pv.padEnd(6) + " | " + pct(l.victoire).padStart(7) + " " + pct(l.tenu).padStart(5) + " " + pct(l.retraite).padStart(6) + "   | " +
+    val(l.degats).padStart(18) + " | " + (SEULEMENT === "defense" ? "—" : String(l.batailles === null ? "jamais" : l.batailles)).padStart(18) + (SEULEMENT === "defense" ? "" : " (" + l.maxBatailles + ")" + (l.prises < 100 ? " prises " + l.prises + " %" : "")) +
+    " | " + val(l.tues).padStart(8) + " / " + val(l.pertes) + " | " + pct(l.defenseTenue) + " (" + pct(l.defenseVictoire) + "), " + pct(l.defenseMurs) + " (" + pct(l.defenseMursTenue) + ")"));
   const moy = k => Math.round(10 * lignes.reduce((s, l) => s + (l[k] || 0), 0) / lignes.length) / 10;
-  console.log("moy |        | " + String(moy("victoire")).padStart(5) + " % " + String(moy("tenu")).padStart(3) + " % " + String(moy("retraite")).padStart(4) + " %   | " + String(moy("degats")).padStart(18) + " | " + String(moy("batailles")).padStart(18) + "     |                       | " + moy("defenseTenue") + " %, murs " + moy("defenseMurs") + " %");
+  const moyA = k => (SEULEMENT === "defense" ? "—" : String(moy(k))), moyAp = k => (SEULEMENT === "defense" ? "—" : moy(k) + " %"), moyD = k => (SEULEMENT === "attaque" ? "—" : moy(k) + " %");
+  console.log("moy |        | " + moyAp("victoire").padStart(7) + " " + moyAp("tenu").padStart(5) + " " + moyAp("retraite").padStart(6) + "   | " + moyA("degats").padStart(18) + " | " + moyA("batailles").padStart(18) + "     |                       | " + moyD("defenseTenue") + ", murs " + moyD("defenseMurs"));
   const ref = COMPARER && COMPARER.resultats[pJuste];
   if (!ref || SEULEMENT === "defense") return;
   const ecart = (x, y) => x && y != null ? (y >= x ? "+" : "−") + Math.abs(Math.round(100 * (y / x - 1))) + " %" : "—";
-  console.log("écarts avec " + option("comparer") + " (" + (COMPARER.moteur || "?") + ", or perdu " + COMPARER.perte + ") : batailles pour prendre ; coups à la 1re bataille");
+  console.log("écarts avec " + option("comparer") + " (" + (COMPARER.moteur || "?") + ", or perdu " + COMPARER.perte + ") : batailles pour prendre ; coups à la 1re bataille" +
+    (COMPARER.graines !== GRAINES ? " (attention : " + COMPARER.graines + " graines dans l'essai comparé, " + GRAINES + " ici : les moyennes ne portent pas sur les mêmes batailles)" : ""));
   lignes.forEach(l => {
     const r = ref.find(x => x.niveau === l.niveau);
     if (r) console.log(" " + l.niveau + "  | " + r.batailles + " → " + l.batailles + " (" + ecart(r.batailles, l.batailles) + ") ; " + r.degats + " → " + l.degats + " (" + ecart(r.degats, l.degats) + ")");
