@@ -114,13 +114,15 @@
   }
 
   // Tirage ordinaire : une question par fiche tirée (Leitner, fiches à revoir d'abord), sans doublon.
-  function tirage(nombre, filtre, types, exclure) {
+  // interdits : identifiants qui ne sortent jamais, même quand choisirPourFiche, faute d'autre question pour la fiche,
+  // reprend une question exclue (les questions ratées en attente, celles déjà tirées pour ce lot).
+  function tirage(nombre, filtre, types, exclure, interdits) {
     var etat = JEU.sauvegarde.etat();
     var fiches = JEU.leitner.tirer(candidats(filtre), etat, nombre * 2, { aRetravailler: JEU.progression.fichesARevoir() });
     var vues = exclure.slice(), qs = [];
     for (var i = 0; i < fiches.length && qs.length < nombre; i++) {
       var q = JEU.questions.choisirPourFiche(fiches[i].fiche, { types: types, exclure: vues });
-      if (q) { qs.push(q); vues.push(q.id); }
+      if (q && (!interdits || interdits.indexOf(q.id) < 0)) { qs.push(q); vues.push(q.id); }
     }
     return qs;
   }
@@ -132,10 +134,12 @@
   // au-delà des exclusions et du filtre.
   function suite(nombre, options) {
     options = options || {};
-    var exclure = (options.exclure || []).concat(JEU.rappels ? JEU.rappels.enAttente() : []);
-    var qs = tirage(nombre, options.filtre, options.types, exclure);
+    var attente = JEU.rappels ? JEU.rappels.enAttente() : [];
+    var exclure = (options.exclure || []).concat(attente);
+    var qs = tirage(nombre, options.filtre, options.types, exclure, attente);
     if (qs.length < nombre && options.completer) {
-      qs = qs.concat(tirage(nombre - qs.length, null, options.types, exclure.concat(qs.map(function (q) { return q.id; }))));
+      var deja = qs.map(function (q) { return q.id; });
+      qs = qs.concat(tirage(nombre - qs.length, null, options.types, exclure.concat(deja), attente.concat(deja)));
     }
     return JEU.rappels ? JEU.rappels.placer(qs, { types: options.types, longueur: nombre }) : qs;
   }

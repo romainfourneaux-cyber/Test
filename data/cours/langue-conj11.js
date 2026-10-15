@@ -107,7 +107,7 @@ JEU.enregistrer("cours", {
    "id": "langue-conj11-f4",
    "notion": "Avoir : une relation",
    "titre": "Avoir : un lien avec un animal ou une personne",
-   "texte": "Avoir peut aussi exprimer une relation. Avec un animal, c'est un lien où l'animal dépend de nous : « J'ai un lapin » veut dire que j'en suis responsable et que je m'en occupe. Avec une personne, c'est une relation familiale, sentimentale ou professionnelle : « J'ai une marraine », « J'ai un entraîneur de judo ».",
+   "texte": "Le verbe avoir sert aussi à dire une relation. Avec un animal, c'est un lien où l'animal dépend de nous : « J'ai un lapin » veut dire que j'en suis responsable et que je m'en occupe. Avec une personne, c'est une relation familiale, sentimentale ou professionnelle : « J'ai une marraine », « J'ai un entraîneur de judo ».",
    "pointsCles": [
     "Un animal : il dépend de moi ; j'en ai la responsabilité, je décide pour lui et je m'en occupe",
     "Une personne : relation familiale, sentimentale (amitié, amour) ou professionnelle",
@@ -206,14 +206,14 @@ JEU.enregistrer("cours", {
    "gauche": [
     "Ce chat est noir.",
     "Mon cousin est courageux.",
-    "Le chêne est un arbre."
+    "La rose est une fleur."
    ],
    "droite": [
     "Ce que l'on est de façon permanente",
     "Une qualité physique",
     "Une qualité morale"
    ],
-   "explication": "La couleur du pelage est une qualité physique, le courage une qualité morale. Un chêne, lui, est un arbre pour toujours.",
+   "explication": "La couleur du pelage est une qualité physique, le courage une qualité morale. Une rose, elle, est une fleur pour toujours.",
    "source": {
     "fichier": "cours/langue/Francais 5e - Conjugaison - Cours 11 - Etre et avoir.pdf",
     "page": 1
@@ -375,10 +375,10 @@ JEU.enregistrer("cours", {
     "J'ai une casquette rouge.",
     "Tu as deux crayons.",
     "Il a un ballon neuf.",
-    "Il est dans sa chambre.",
+    "J'ai une grande sœur.",
     "Elle est joyeuse."
    ],
-   "explication": "Avoir une casquette, des crayons ou un ballon, c'est les posséder. Les phrases avec être disent où l'on est ou ce que l'on est.",
+   "explication": "Avoir une casquette, des crayons ou un ballon, c'est les posséder. Avoir une grande sœur exprime une relation familiale, et « elle est joyeuse » dit ce qu'elle est.",
    "source": {
     "fichier": "cours/langue/Francais 5e - Conjugaison - Cours 11 - Etre et avoir.pdf",
     "page": 2

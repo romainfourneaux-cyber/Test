@@ -8,9 +8,11 @@
 // question n'existe plus (fichier de cours retiré) disparaît sans bruit. La file est sauvegardée : si la séance
 // s'arrête avant, les rappels en attente passent en tête à la séance suivante.
 //
-// État dans la sauvegarde (schéma 4) : etat.rappels = { compteur, file: [{ id, cours, du }] }
+// État dans la sauvegarde (schéma 4) : etat.rappels = { compteur, file: [{ id, cours, du }], derniere }
 //  - compteur : nombre de réponses données depuis le début, toutes parties confondues ;
-//  - du : valeur du compteur à partir de laquelle la question est due (compteur après l'erreur + rappelApres).
+//  - du : valeur du compteur à partir de laquelle la question est due (compteur après l'erreur + rappelApres) ;
+//  - derniere : identifiant de la dernière question répondue (absent au début) ; gardé d'une séance à l'autre, pour
+//    qu'une question ratée juste avant de fermer le jeu ne soit pas la toute première à sa réouverture.
 // Points d'accroche, et seulement ceux-là :
 //  - JEU.questions.enregistrerReponse appelle noter(q, juste) après chaque réponse ;
 //  - JEU.recit.suite (tout tirage de questions : bataille, conseil, événement) passe son lot par placer() ;
@@ -20,9 +22,6 @@
   var JEU = racine.JEU;
   var MAX = 12;
   var ETIQUETTE = "Seconde chance";
-
-  // Identifiant de la dernière question répondue (en mémoire seulement) : un rappel ne la suit jamais tout de suite.
-  var derniere = null;
 
   function apres() {
     var n = JEU.donnees.config && JEU.donnees.config.rappelApres;
@@ -37,6 +36,7 @@
   function completer(r) {
     if (!r || typeof r !== "object" || Array.isArray(r)) return vide();
     if (typeof r.compteur !== "number" || !isFinite(r.compteur) || r.compteur < 0) r.compteur = 0;
+    if ("derniere" in r && typeof r.derniere !== "string") delete r.derniere;
     if (!Array.isArray(r.file)) r.file = [];
     else if (!r.file.every(bienForme)) r.file = r.file.filter(bienForme);
     if (r.file.length > MAX) r.file.splice(0, r.file.length - MAX);
@@ -59,7 +59,7 @@
   function noter(q, juste, etat) {
     var r = etatRappels(etat);
     r.compteur++;
-    derniere = q.id;
+    r.derniere = q.id; // un rappel ne suit jamais tout de suite la question qu'on vient de répondre
     var i = position(r, q.id);
     if (i >= 0) r.file.splice(i, 1);
     if (juste) return null;
@@ -69,11 +69,11 @@
     return e;
   }
 
-  // Nouvelle séance (le jeu vient d'être ouvert) : les rappels encore en attente sont dus tout de suite.
+  // Nouvelle séance (le jeu vient d'être ouvert) : les rappels encore en attente sont dus tout de suite (celui de la
+  // dernière question répondue, s'il y en a un, vient en second : jamais deux fois de suite, même d'une séance à l'autre).
   function ouvrirSession(etat) {
     var r = etatRappels(etat);
     r.file.forEach(function (e) { if (e.du > r.compteur) e.du = r.compteur; });
-    derniere = null;
   }
 
   // Question préparée d'un rappel, ou null si elle n'existe plus.
@@ -117,7 +117,7 @@
     // questions qui vont revenir dans ce lot : leur exemplaire ordinaire en sort (pas deux fois la même dans le lot)
     var vontVenir = dus.filter(function (x) { return x.e.du - r.compteur < L; }).map(function (x) { return x.e.id; });
     var ordinaires = liste.filter(function (q) { return q && !q.rappel && vontVenir.indexOf(q.id) < 0; });
-    var res = [], prec = derniere, iN = 0;
+    var res = [], prec = r.derniere || null, iN = 0;
     for (var pos = 0; pos < L; pos++) {
       var k = -1;
       for (var j = 0; j < dus.length; j++) if (dus[j].e.du - r.compteur <= pos && dus[j].q.id !== prec) { k = j; break; }
@@ -143,6 +143,6 @@
   JEU.rappels = {
     MAX: MAX, ETIQUETTE: ETIQUETTE, apres: apres, vide: vide, completer: completer, etat: etatRappels,
     noter: noter, ouvrirSession: ouvrirSession, enAttente: enAttente, placer: placer, replacer: replacer,
-    derniere: function () { return derniere; }
+    derniere: function () { return etatRappels().derniere || null; }
   };
 })(typeof window !== "undefined" ? window : globalThis);
