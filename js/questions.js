@@ -181,11 +181,17 @@
     }
     return m;
   }
+  // Mémoire mal formée ? (questions en tableau : les dates y seraient écrites, puis perdues à chaque enregistrement, car
+  // JSON ne garde d'un tableau que ses cases numérotées ; corrigé le 15/10/2026)
+  function abimee(m) {
+    return !m || typeof m !== "object" || Array.isArray(m) || typeof m.horloge !== "number" || !isFinite(m.horloge) || m.horloge < 0 ||
+      !m.questions || typeof m.questions !== "object" || Array.isArray(m.questions);
+  }
   function posees(etat) {
     etat = etat || JEU.sauvegarde.etat();
     if (!etat) return poseesVides();
     var m = etat.posees;
-    if (!m || typeof m.horloge !== "number" || !m.questions || typeof m.questions !== "object") m = etat.posees = completerPosees(m);
+    if (abimee(m)) m = etat.posees = completerPosees(m);
     return m;
   }
   // Dernière fois où la question a été posée : -Infinity si jamais.

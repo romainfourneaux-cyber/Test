@@ -50,18 +50,25 @@
   var VAGUES = { base: 4, parVague: 2, pvVague: 0.07, ecartSortie: 1.05 };
   // Le seigneur rival selon le niveau de la province (0 à 4 ; la défense du domaine prend le niveau de la campagne).
   // renfort : troupes de plus à chaque vague ; pv : points de vie de ses troupes (×) ; tirs : dégâts de ses tours (×) ;
-  // cadence : leurs tirs par seconde (×) ; coup : ses coups au corps à corps (×) ; toursDepart : tours qu'il bâtit avant la première vague ; toursVague : tours
-  // de plus à chaque vague suivante.
+  // coup : ses coups au corps à corps (×) ; toursDepart : tours qu'il bâtit avant la première vague ; toursVague : tours
+  // de plus avant chacune des suivantes ; assaut : points de vie de ses troupes quand il attaque ton domaine (× pv).
+  // Réglé niveau par niveau le 15/10/2026 avec atelier/outils/simuler-bataille.js (docs/JOURNAL.md, Décisions) : chaque
+  // province demande 12 à 30 % de batailles de plus qu'avant la mêlée, à 7 comme à 8 bonnes réponses sur 10. Tes troupes
+  // n'ont pas changé : au début, le rival frappe moins fort et ses tours tirent à moitié (la mêlée suffit à ralentir) ;
+  // à la Forteresse, ses tours abattent un soldat en une flèche de moins. Les tirs comptent par seuils (un soldat tombe en
+  // 6 ou en 7 flèches) : un petit changement de « tirs » peut faire un grand saut, vérifie-le au simulateur.
   var RIVAL = [
-    { renfort: 0, pv: 0.8, tirs: 0.5, cadence: 1, coup: 0.5, toursDepart: 0, toursVague: 1 },
-    { renfort: 0, pv: 1.1, tirs: 1.08, cadence: 1, coup: 0.7, toursDepart: 0, toursVague: 1 },
-    { renfort: 2, pv: 1.2, tirs: 1.16, cadence: 1, coup: 0.55, toursDepart: 1, toursVague: 1 },
-    { renfort: 2, pv: 1.3, tirs: 1.24, cadence: 1, coup: 0.8, toursDepart: 1, toursVague: 1 },
-    { renfort: 2, pv: 1.4, tirs: 1.62, cadence: 1, coup: 1, toursDepart: 2, toursVague: 2 }
+    { renfort: 0, pv: 0.8, tirs: 0.5, coup: 0.5, toursDepart: 0, toursVague: 1, assaut: 2.8 },
+    { renfort: 0, pv: 1.1, tirs: 1.08, coup: 0.7, toursDepart: 0, toursVague: 1, assaut: 2.6 },
+    { renfort: 2, pv: 1.2, tirs: 1.16, coup: 0.55, toursDepart: 1, toursVague: 1, assaut: 1.8 },
+    { renfort: 2, pv: 1.3, tirs: 1.24, coup: 0.7, toursDepart: 1, toursVague: 1, assaut: 2.5 },
+    { renfort: 2, pv: 1.2, tirs: 1.62, coup: 1, toursDepart: 2, toursVague: 2, assaut: 2.6 }
   ];
-  // Défense du domaine (carte « domaine », ou options.defense) : le rival y vient en force, en plus de son niveau.
-  // renfort : troupes de plus à chaque vague ; pv, coup : × sur les points de vie et les coups de ses troupes.
-  var DEFENSE = { renfort: 0, pv: 1, coup: 1 };
+  // Défense du domaine (carte « domaine », ou options.defense) : le rival y vient en force, pour que la défense inquiète un
+  // peu (tenue environ 9 fois sur 10 à 8 bonnes réponses sur 10, murs entamés). Ses troupes ont « assaut » fois les points
+  // de vie de son niveau (RIVAL) et chacune porte DEFENSE.degats fois ses coups à tes murs (un nombre entier : le rendu
+  // affiche « −2 », « −4 »). Une défense perdue ne coûte rien (jeu/js/campagne.js, apresBataille).
+  var DEFENSE = { degats: 2 };
   // Mêlée. contact : écart le long de la route (px) où deux troupes adverses libres s'engagent ; ecart : distance où elles
   // se battent ; cadence : secondes entre deux coups ; premierCoup : délai du premier coup (chargeCoup pour une charge, qui
   // frappe « charge » fois plus fort) ; coteCombat : décalage sur le côté de la route pendant le combat (les files de
@@ -190,7 +197,7 @@
   function composerVague(p) {
     var w = p.vague, n = p.niveau;
     var file = [];
-    var nb = VAGUES.base + VAGUES.parVague * w + rival(p).renfort + (p.defense ? DEFENSE.renfort : 0);
+    var nb = VAGUES.base + VAGUES.parVague * w + rival(p).renfort;
     for (var i = 0; i < nb; i++) {
       var r = (i * 7 + w * 3) % 10;
       if (w >= 2 && r < 2 + n) file.push("hommes");
@@ -233,11 +240,11 @@
   // prochain coup est celui d'une charge ; frappe : heure (p.temps) de son dernier coup, pour le geste du rendu.
   function creerUnite(p, camp, type) {
     var d = camp === "rival" ? ENNEMIS[type] : TROUPES[type], r = rival(p), def = camp === "rival" && p.defense;
-    var echelle = camp === "rival" ? (r.pv + VAGUES.pvVague * p.vague) * (def ? DEFENSE.pv : 1) : bonusArsenal(p, "troupes", type);
+    var echelle = camp === "rival" ? (r.pv + VAGUES.pvVague * p.vague) * (def ? r.assaut : 1) : bonusArsenal(p, "troupes", type);
     var pv = d.pv * echelle;
     var v = d.vitesse * (p.modificateurs.pluie ? 0.8 : 1);
-    var coup = (d.coup || 1) * (camp === "rival" ? r.coup * (def ? DEFENSE.coup : 1) : 1);
-    var u = { camp: camp, type: type, pv: pv, max: pv, vitesse: v, degats: d.degats, coup: coup, charge: !!d.charge,
+    var coup = (d.coup || 1) * (camp === "rival" ? r.coup : 1);
+    var u = { camp: camp, type: type, pv: pv, max: pv, vitesse: v, degats: d.degats * (def ? DEFENSE.degats : 1), coup: coup, charge: !!d.charge,
       s: camp === "rival" ? p.route.longueur : 0, cote: camp === "rival" ? -9 : 9, ralenti: 0, vivant: true, pas: Math.random() * 6,
       adversaire: null, recharge: 0, premier: false, frappe: -1 };
     var pos = surRoute(p.route, u.s, u.cote); u.x = pos.x; u.y = pos.y; u.angle = pos.angle;
@@ -362,7 +369,7 @@
       if (t.recharge > 0) return;
       var u = cible(p, t);
       if (!u) return;
-      t.recharge = 1 / (d.cadence * (t.rivale ? rival(p).cadence : 1));
+      t.recharge = 1 / d.cadence;
       t.angle = Math.atan2(u.y - t.y, u.x - t.x);
       var duree = dist(t, u) / d.vitesse;
       p.projectiles.push({ genre: d.projectile, x0: t.x, y0: t.y - 18, cible: u, cx: u.x, cy: u.y, t: 0, duree: Math.max(0.12, duree), degats: degatsTour(p, t), zone: d.zone || 0, camp: t.rivale ? "rival" : "joueur" });
