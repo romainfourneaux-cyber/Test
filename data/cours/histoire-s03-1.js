@@ -124,14 +124,14 @@ JEU.enregistrer("cours", {
    "fiche": "histoire-s03-1-f1",
    "type": "qcm",
    "niveau": 1,
-   "enonce": "En quelle année a lieu l'Hégire, d'après la frise ?",
+   "enonce": "En quelle année a lieu l'Hégire ?",
    "choix": [
     "622",
     "570",
     "632",
-    "750"
+    "661"
    ],
-   "explication": "La frise place l'Hégire en 622. C'est pendant la vie de Mohamed.",
+   "explication": "L'Hégire a lieu en 622. C'est pendant la vie de Mohamed, qui vit de 570 à 632.",
    "source": {
     "fichier": "cours/histoire/Histoire 5e - Seance 4 - Support.pdf",
     "page": 1
@@ -147,8 +147,8 @@ JEU.enregistrer("cours", {
    "enonce": "L'Hégire a lieu après la mort de Mohamed.",
    "corrections": [
     "Faux : elle a lieu en 622, alors que Mohamed vit jusqu'en 632.",
-    "Faux : elle a lieu en 570.",
-    "Faux : elle a lieu en 750."
+    "Faux : elle a lieu en 570, l'année où commence la vie de Mohamed.",
+    "Faux : elle a lieu en 661, au début de la dynastie omeyyade."
    ],
    "explication": "Mohamed vit de 570 à 632. L'Hégire, en 622, se passe donc de son vivant.",
    "source": {
@@ -163,12 +163,12 @@ JEU.enregistrer("cours", {
    "fiche": "histoire-s03-1-f1",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Comment la frise montre-t-elle que l'Hégire a lieu du vivant de Mohamed ?",
+   "enonce": "Comment voit-on que l'Hégire a lieu du vivant de Mohamed ?",
    "choix": [
     "L'année 622 se situe entre 570 et 632",
     "L'année 622 vient après 632",
     "L'Hégire et la dynastie omeyyade commencent la même année",
-    "L'année 622 se situe après 750"
+    "L'année 622 se situe avant 570"
    ],
    "explication": "Mohamed vit de 570 à 632. L'année 622 se trouve entre ces deux dates.",
    "source": {
@@ -191,7 +191,7 @@ JEU.enregistrer("cours", {
     "Clovis",
     "Constantin"
    ],
-   "explication": "La frise écrit « Mohamed (Mahomet) ». Ce sont deux noms pour la même personne.",
+   "explication": "On écrit « Mohamed (Mahomet) ». Ce sont deux noms pour la même personne.",
    "source": {
     "fichier": "cours/histoire/Histoire 5e - Seance 4 - Support.pdf",
     "page": 1
@@ -204,7 +204,7 @@ JEU.enregistrer("cours", {
    "fiche": "histoire-s03-1-f1",
    "type": "qcm",
    "niveau": 3,
-   "enonce": "D'après la frise, combien d'années séparent l'Hégire de la mort de Mohamed ?",
+   "enonce": "Combien d'années séparent l'Hégire de la mort de Mohamed ?",
    "choix": [
     "10 ans",
     "52 ans",
@@ -221,18 +221,77 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
+   "id": "histoire-s03-1-q16",
+   "fiche": "histoire-s03-1-f1",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Mohamed, aussi appelé Mahomet, vit de 570 à 622.",
+   "corrections": [
+    "Faux : il vit de 570 à 632 ; 622 est l'année de l'Hégire.",
+    "Faux : il vit de 622 à 632.",
+    "Faux : il vit de 661 à 750."
+   ],
+   "explication": "Mohamed vit de 570 à 632. L'année 622 est celle de l'Hégire, dix ans avant sa mort.",
+   "source": {
+    "fichier": "cours/histoire/Histoire 5e - Seance 4 - Support.pdf",
+    "page": 1
+   },
+   "r": "PUGXQcBHWAcrnUFBjhUAVg0xsiACIU1KSFgFQE1WcllUTN2HWNQDOzqRW51RndREFFAGf40AbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s03-1-q17",
+   "fiche": "histoire-s03-1-f1",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Pendant la vie de Mohamed (570-632), quel empire chrétien existe à l'est de la Méditerranée ?",
+   "choix": [
+    "L'Empire byzantin",
+    "L'Empire carolingien",
+    "L'Empire romain d'Occident",
+    "Aucun, ils n'existent pas encore"
+   ],
+   "explication": "L'Empire byzantin existe de 395 à 1453, donc pendant toute la vie de Mohamed. L'Occident a disparu en 476 et l'Empire carolingien ne naît qu'en 800.",
+   "source": {
+    "fichier": "cours/histoire/Histoire 5e - Seance 2 - Support.pdf",
+    "page": 1
+   },
+   "r": "==wVfAgGBMhE68URQ91BfswIO5TZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s03-1-q18",
+   "fiche": "histoire-s03-1-f1",
+   "type": "ordre",
+   "niveau": 2,
+   "enonce": "Remets dans l'ordre du temps ces repères de la vie de Mohamed et de la suite.",
+   "elements": [
+    "Mort de Mohamed",
+    "L'Hégire",
+    "Début de la dynastie omeyyade",
+    "Naissance de Mohamed"
+   ],
+   "explication": "570 : naissance de Mohamed ; 622 : l'Hégire ; 632 : sa mort ; 661 : début de la dynastie omeyyade.",
+   "source": {
+    "fichier": "cours/histoire/Histoire 5e - Seance 4 - Support.pdf",
+    "page": 1
+   },
+   "r": "o9hQfp0VFFEH",
+   "poids": 1
+  },
+  {
    "id": "histoire-s03-1-q6",
    "fiche": "histoire-s03-1-f2",
    "type": "qcm",
    "niveau": 1,
-   "enonce": "D'après la frise, à quelle ville la dynastie abbasside est-elle liée ?",
+   "enonce": "À quelle ville la dynastie abbasside est-elle liée ?",
    "choix": [
     "Bagdad",
     "Damas",
     "Cordoue",
     "Constantinople"
    ],
-   "explication": "La frise associe la dynastie abbasside à Bagdad. La dynastie omeyyade, elle, est liée à Damas.",
+   "explication": "La dynastie abbasside est liée à Bagdad. La dynastie omeyyade, elle, est liée à Damas.",
    "source": {
     "fichier": "cours/histoire/Histoire 5e - Seance 4 - Support.pdf",
     "page": 1
@@ -245,9 +304,9 @@ JEU.enregistrer("cours", {
    "fiche": "histoire-s03-1-f2",
    "type": "vrai_faux",
    "niveau": 1,
-   "enonce": "Sur la frise, la dynastie omeyyade est liée à Damas et va de 661 à 750.",
+   "enonce": "La dynastie omeyyade de Damas va de 661 à 750.",
    "corrections": [],
-   "explication": "Oui : c'est ce qu'indique la frise. Elle précède la dynastie abbasside.",
+   "explication": "Oui : la dynastie omeyyade de Damas va de 661 à 750. Elle précède la dynastie abbasside.",
    "source": {
     "fichier": "cours/histoire/Histoire 5e - Seance 4 - Support.pdf",
     "page": 1
@@ -260,19 +319,19 @@ JEU.enregistrer("cours", {
    "fiche": "histoire-s03-1-f2",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Pourquoi peut-on dire que la dynastie abbasside succède à la dynastie omeyyade ?",
+   "enonce": "Pourquoi peut-on dire que la dynastie abbasside succède à la dynastie omeyyade de Damas ?",
    "choix": [
-    "La dynastie abbasside commence en 750, l'année où finit la dynastie omeyyade",
-    "Elles sont liées à la même ville, Damas",
-    "La dynastie abbasside commence en 622",
-    "La dynastie omeyyade dure jusqu'en 1258"
+    "Elle commence en 750, quand s'arrête la dynastie omeyyade de Damas",
+    "Elle est liée à la même ville que la dynastie omeyyade, Damas",
+    "Elle commence en 622, avec l'Hégire, avant les Omeyyades",
+    "Elle commence en 1258, quand s'arrête la dynastie omeyyade de Damas"
    ],
-   "explication": "La dynastie omeyyade s'arrête en 750. La dynastie abbasside commence justement cette année-là.",
+   "explication": "La dynastie omeyyade de Damas s'arrête en 750. La dynastie abbasside commence justement cette année-là.",
    "source": {
     "fichier": "cours/histoire/Histoire 5e - Seance 4 - Support.pdf",
     "page": 1
    },
-   "r": "=AVDnwEHMh0AAY0AAYANTsBHREFCC8kBB0CRDUBltCgRDAcspwBFClRUF5lWFhULIVEUOBgCLsgBRc2FRwgBCgADNMBSmQUEGxEAWIgRI4TZ",
+   "r": "LFgJfQRIVRRDOpgFJoDVAglQOpwDSoxEpsQEFRRHJtwGYvaMfRgEe50CIcAHDcmXFBlQRdwCPdxCtgECYJUDPNgCFcTZ",
    "poids": 1
   },
   {
@@ -280,7 +339,7 @@ JEU.enregistrer("cours", {
    "fiche": "histoire-s03-1-f2",
    "type": "association",
    "niveau": 2,
-   "enonce": "Relie chaque repère de la frise à ses dates.",
+   "enonce": "Relie chaque repère à ses dates.",
    "gauche": [
     "Dynastie omeyyade",
     "Dynastie abbasside",
@@ -306,19 +365,80 @@ JEU.enregistrer("cours", {
    "fiche": "histoire-s03-1-f2",
    "type": "qcm",
    "niveau": 3,
-   "enonce": "D'après la frise, laquelle des deux dynasties dure le plus longtemps ?",
+   "enonce": "De la dynastie omeyyade de Damas et de la dynastie abbasside, laquelle dure le plus longtemps ?",
    "choix": [
     "La dynastie abbasside, plus de cinq siècles",
-    "La dynastie omeyyade, plus de cinq siècles",
+    "La dynastie omeyyade de Damas, plus de cinq siècles",
     "Elles durent exactement le même temps",
-    "La dynastie omeyyade, plus de mille ans"
+    "La dynastie omeyyade de Damas, plus de mille ans"
    ],
-   "explication": "La dynastie omeyyade dure 89 ans, de 661 à 750. La dynastie abbasside dure 508 ans, de 750 à 1258.",
+   "explication": "La dynastie omeyyade de Damas dure 89 ans, de 661 à 750. La dynastie abbasside dure 508 ans, de 750 à 1258.",
    "source": {
     "fichier": "cours/histoire/Histoire 5e - Seance 4 - Support.pdf",
     "page": 1
    },
    "r": "==AU0cRGG0tsA0xTDYgKOVEUJ5EHToQGSt2FRwgBCgADNMBSmQUEGxEAWIgRI4TZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s03-1-q19",
+   "fiche": "histoire-s03-1-f2",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "La dynastie omeyyade est liée à Bagdad, et la dynastie abbasside à Damas.",
+   "corrections": [
+    "Faux : c'est l'inverse, Damas pour les Omeyyades et Bagdad pour les Abbassides.",
+    "Faux : les deux dynasties sont liées à Damas.",
+    "Faux : les deux dynasties sont liées à Bagdad."
+   ],
+   "explication": "La dynastie omeyyade est liée à Damas, la dynastie abbasside à Bagdad. Retiens l'ordre : Damas d'abord, Bagdad ensuite.",
+   "source": {
+    "fichier": "cours/histoire/Histoire 5e - Seance 4 - Support.pdf",
+    "page": 1
+   },
+   "r": "==ACHtlAMogBBshIPdAdN0hCKY0GHgiAVFAFV4wDtIFHm0gFQl0DW8xAE0zZBARCVNAHB8hUbICQEEXDCpQFUwABpshUJUVBasASRgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s03-1-q20",
+   "fiche": "histoire-s03-1-f2",
+   "type": "qcm_multiple",
+   "niveau": 3,
+   "enonce": "Quels événements ont lieu pendant la dynastie abbasside (750-1258) ? (plusieurs réponses)",
+   "choix": [
+    "Charlemagne devient empereur d'Occident",
+    "Le califat de Cordoue commence",
+    "L'Hégire",
+    "Le règne de Justinien",
+    "La prise de Constantinople par les Turcs"
+   ],
+   "explication": "800 et 929 se trouvent entre 750 et 1258. L'Hégire (622) et Justinien (527-565) viennent avant, la prise de Constantinople (1453) après.",
+   "source": {
+    "fichier": "cours/histoire/Histoire 5e - Seance 4 - Support.pdf",
+    "page": 1
+   },
+   "r": "==AOXgUDBMwCE0BJSBBEaUxGBwiUNcSDRQ1SHMwBFk0FLAVWHFwHMogBRsADKEQFfthCUMQGfIiUBsAEY8xCLIVDtoEBYhkAdcgDqAFH",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s03-1-q21",
+   "fiche": "histoire-s03-1-f2",
+   "type": "qcm_multiple",
+   "niveau": 2,
+   "enonce": "Quelles phrases sur les deux dynasties sont justes ? (plusieurs réponses)",
+   "choix": [
+    "La dynastie omeyyade commence après la mort de Mohamed",
+    "La dynastie abbasside dure jusqu'en 1258",
+    "La dynastie abbasside est liée à Bagdad",
+    "La dynastie omeyyade dure plus longtemps que la dynastie abbasside",
+    "Les deux dynasties commencent en 661"
+   ],
+   "explication": "La dynastie omeyyade commence en 661, après 632, et la dynastie abbasside va de 750 à 1258, à Bagdad. Elle dure donc bien plus longtemps que la première.",
+   "source": {
+    "fichier": "cours/histoire/Histoire 5e - Seance 4 - Support.pdf",
+    "page": 1
+   },
+   "r": "=8iSnwUASxELPZcpJdh7xyRCVVgGL80FMoiXWQ1TM4gRDAgB0MxGcERUIISTep0eYcFBNAgCBNBGBIDGVBwBE0gTKYRAw4FBX90DPNwDdEgJcwQAVBRJMNEUMYCQE0lQj80ACkkB10BGFRRHJ1xxxqxMMVEUOBgCLsgBRc2FRQADIwwAAIVDqklFUN0FLY0BlAFH",
    "poids": 1
   },
   {
@@ -333,7 +453,7 @@ JEU.enregistrer("cours", {
     "750",
     "1258"
    ],
-   "explication": "La frise place le début du califat de Cordoue en 929. La dynastie abbasside existe alors encore.",
+   "explication": "Le califat de Cordoue commence en 929. La dynastie abbasside existe alors encore.",
    "source": {
     "fichier": "cours/histoire/Histoire 5e - Seance 4 - Support.pdf",
     "page": 1
@@ -345,12 +465,12 @@ JEU.enregistrer("cours", {
    "id": "histoire-s03-1-q12",
    "fiche": "histoire-s03-1-f3",
    "type": "vrai_faux",
-   "niveau": 1,
+   "niveau": 2,
    "enonce": "Le califat de Cordoue commence avant la dynastie omeyyade.",
    "corrections": [
     "Faux : il commence en 929, bien après le début de la dynastie omeyyade en 661.",
-    "Faux : il commence en 622, avec l'Hégire.",
-    "Faux : il commence en 1258."
+    "Faux : il commence en 622, l'année de l'Hégire.",
+    "Faux : il commence en 750, en même temps que la dynastie abbasside."
    ],
    "explication": "La dynastie omeyyade commence en 661. Le califat de Cordoue ne commence qu'en 929.",
    "source": {
@@ -365,14 +485,14 @@ JEU.enregistrer("cours", {
    "fiche": "histoire-s03-1-f3",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "En 929, quand commence le califat de Cordoue, quelle dynastie la frise place-t-elle à Bagdad ?",
+   "enonce": "En 929, quand commence le califat de Cordoue, quelle dynastie est liée à Bagdad ?",
    "choix": [
     "La dynastie abbasside",
     "La dynastie omeyyade",
-    "Aucune dynastie",
-    "Les deux dynasties à la fois"
+    "Aucune : la dynastie de Bagdad a disparu",
+    "Aucune : la dynastie de Bagdad n'existe pas encore"
    ],
-   "explication": "La frise place la dynastie abbasside à Bagdad, de 750 à 1258. L'année 929 se trouve dans cette période.",
+   "explication": "La dynastie abbasside est liée à Bagdad, de 750 à 1258. L'année 929 se trouve dans cette période.",
    "source": {
     "fichier": "cours/histoire/Histoire 5e - Seance 4 - Support.pdf",
     "page": 1
@@ -404,20 +524,101 @@ JEU.enregistrer("cours", {
    "id": "histoire-s03-1-q15",
    "fiche": "histoire-s03-1-f3",
    "type": "qcm",
-   "niveau": 3,
-   "enonce": "Comment relier le califat de Cordoue à la carte de l'Empire carolingien du cours 2 ?",
+   "niveau": 2,
+   "enonce": "Au temps de Charlemagne, comment se présente Cordoue par rapport à son empire ?",
    "choix": [
-    "Cordoue y figure déjà, comme émirat voisin de la Marche espagnole",
-    "Cordoue y figure comme une conquête de Charlemagne",
-    "Cordoue y figure comme la capitale de Charlemagne",
-    "Cordoue n'y figure pas du tout"
+    "Comme un émirat voisin, au-delà de la Marche espagnole",
+    "Comme une conquête de Charlemagne, au sud de la Marche espagnole",
+    "Comme la capitale de l'Empire carolingien",
+    "Comme une ville de l'Empire byzantin de Justinien"
    ],
-   "explication": "Sur la carte du cours 2, l'émirat de Cordoue est au sud-ouest, après la Marche espagnole. En 929, un califat y commence.",
+   "explication": "Sur la carte de l'empire de Charlemagne, l'émirat de Cordoue est au sud-ouest, après la Marche espagnole. En 929, un califat y commence.",
    "source": {
     "fichier": "cours/histoire/Histoire 5e - Seance 2 - Support.pdf",
     "page": 1
    },
-   "r": "==ARM4BKcIBBFIADOpgGLEDToUBTC80ACkEHuEAHKMQUd8QHbUg6uXEUANAAFYURSTIGcbaERxAHaURAl0AHVg0GAIAFGETZ",
+   "r": "==AUN8iQLIFTewxAGxgGkAAFoUFEF4kCWg04unAUJNkGHYURc4SAcowAR1xDdsRBq7eRbhlTKswCGETZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s03-1-q22",
+   "fiche": "histoire-s03-1-f3",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Le califat de Cordoue commence en 929, après la fin de la dynastie abbasside.",
+   "corrections": [
+    "Faux : en 929, la dynastie abbasside existe encore ; elle dure jusqu'en 1258.",
+    "Faux : le califat de Cordoue commence en 1258, à la fin de la dynastie abbasside.",
+    "Faux : le califat de Cordoue commence en 750, avec la dynastie abbasside."
+   ],
+   "explication": "La dynastie abbasside dure de 750 à 1258. En 929, elle est donc toujours là quand commence le califat de Cordoue.",
+   "source": {
+    "fichier": "cours/histoire/Histoire 5e - Seance 4 - Support.pdf",
+    "page": 1
+   },
+   "r": "=gwUHZlWAl1YDBgEY9BHTwQSXUzBRUEEdUwCPlESm8lCWN0CPNgEasxPXUFARghGd4AEKISDAwVWd4ACf0gUm4RVJx0QQ5UAXgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s03-1-q23",
+   "fiche": "histoire-s03-1-f3",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Combien de temps sépare l'Hégire du début du califat de Cordoue ?",
+   "choix": [
+    "Environ trois siècles",
+    "Environ un demi-siècle",
+    "Environ six siècles",
+    "Plus de mille ans"
+   ],
+   "explication": "929 moins 622 font 307 ans. C'est environ trois siècles.",
+   "indice": "Fais la soustraction 929 moins 622.",
+   "source": {
+    "fichier": "cours/histoire/Histoire 5e - Seance 4 - Support.pdf",
+    "page": 1
+   },
+   "r": "QRzFZYQ3yCQHPFQAs8VEVMUAd8AEHcTZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s03-1-q24",
+   "fiche": "histoire-s03-1-f3",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Au temps de Charlemagne, on parle de l'émirat de Cordoue, et non du califat de Cordoue. Pourquoi ?",
+   "choix": [
+    "Le califat de Cordoue ne commence qu'en 929, après son règne",
+    "Le califat de Cordoue a déjà pris fin avant son règne",
+    "Cordoue fait alors partie des conquêtes de Charlemagne, au sud",
+    "Le califat de Cordoue est lié à Bagdad, pas à Cordoue"
+   ],
+   "explication": "Charlemagne règne de 768 à 814. Le califat de Cordoue ne commence qu'en 929, plus d'un siècle après.",
+   "source": {
+    "fichier": "cours/histoire/Histoire 5e - Seance 4 - Support.pdf",
+    "page": 1
+   },
+   "r": "==wRQ8hDGzKAI1iQWUhXGzKFWggUrt0RcV1HMkkGDgkJOtAUANAAFYEDcc2FAoQEDYQLPdBDjlFBTRkAOUgRM4TZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s03-1-q25",
+   "fiche": "histoire-s03-1-f3",
+   "type": "qcm_multiple",
+   "niveau": 3,
+   "enonce": "En 929, quand commence le califat de Cordoue, qu'est-ce qui existe encore ? (plusieurs réponses)",
+   "choix": [
+    "La dynastie abbasside de Bagdad",
+    "L'Empire byzantin",
+    "L'Empire romain d'Occident",
+    "Le règne de Charlemagne",
+    "Le règne de Justinien"
+   ],
+   "explication": "La dynastie abbasside dure jusqu'en 1258 et l'Empire byzantin jusqu'en 1453. L'Occident est tombé en 476, et les règnes de Justinien et de Charlemagne sont finis depuis longtemps.",
+   "source": {
+    "fichier": "cours/histoire/Histoire 5e - Seance 4 - Support.pdf",
+    "page": 1
+   },
+   "r": "==AcHtFRaEwBcABEndxBMUAHsk0IQRUYJRQUK9QLGNQDSJiFcYhBQsADOIVDqklFUN0FLY0BlAFH",
    "poids": 1
   }
  ],

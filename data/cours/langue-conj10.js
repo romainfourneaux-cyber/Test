@@ -222,10 +222,10 @@ JEU.enregistrer("cours", {
    "niveau": 1,
    "enonce": "Combien de modes un verbe a-t-il en tout ?",
    "choix": [
-    "Sept",
+    "Six",
     "Quatre",
-    "Trois",
-    "Huit"
+    "Sept",
+    "Trois"
    ],
    "explication": "Il y a quatre modes personnels et trois modes impersonnels. Quatre plus trois font sept.",
    "indice": "Additionne les modes personnels et les modes impersonnels.",
@@ -240,19 +240,19 @@ JEU.enregistrer("cours", {
    "id": "langue-conj10-q2",
    "fiche": "langue-conj10-f1",
    "type": "vrai_faux",
-   "niveau": 1,
-   "enonce": "Tous les modes du verbe changent selon la personne (je, tu, il…).",
+   "niveau": 2,
+   "enonce": "Trois modes changent selon la personne, et quatre modes ne changent pas.",
    "corrections": [
-    "Faux : seuls les quatre modes personnels changent selon la personne ; les trois modes impersonnels, non.",
-    "Faux : aucun mode ne change selon la personne.",
-    "Faux : seul l'infinitif change selon la personne."
+    "Faux : c'est l'inverse ; quatre modes changent selon la personne, trois ne changent pas.",
+    "Faux : les sept modes changent tous selon la personne.",
+    "Faux : deux modes changent selon la personne, cinq ne changent pas."
    ],
-   "explication": "Les modes personnels varient avec je, tu, il… Les modes impersonnels gardent la même forme pour tout le monde.",
+   "explication": "Les quatre modes personnels varient avec la personne : je, tu, il, nous, vous, ils. Les trois modes impersonnels gardent la même forme pour tout le monde.",
    "source": {
     "fichier": "cours/langue/Francais 5e - Conjugaison - Memento 4 Modes.pdf",
     "page": 1
    },
-   "r": "=8QZcthCbEVRdMwFG0iQWcESeIwDGpxFj0BGFZAGGwxGSthJBVkDNsQAIkgGAIiAVRQGRdQADcxGjl1CQpEAO4QBJFwKXsxCaIwGL8hUbYSSKgVDL0hEHwxAnFAEJUlAFshCBgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "r": "==AUMFUFHkhUzwBECsBEB0wTXYwYexgWfpxTKNwBcgSAHAQBRhgAPxxBvgkFVkFAKEACIoBJSZAAR4BBOpAAcICWUUhFOpQFUwABpshUJUVBasASRgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -262,12 +262,12 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Pourquoi dit-on que l'infinitif est un mode impersonnel ?",
    "choix": [
+    "Parce qu'il n'a qu'un seul temps, sans aucun passé",
     "Parce que sa forme ne change pas selon la personne",
-    "Parce qu'il n'existe qu'au futur",
-    "Parce qu'il commence toujours par « que »",
-    "Parce qu'il ne s'emploie jamais dans une phrase"
+    "Parce qu'il s'écrit toujours après le mot « en »",
+    "Parce qu'il ne se conjugue qu'au singulier"
    ],
-   "explication": "L'infinitif chanter garde la même forme, quelle que soit la personne. Comme il ne varie pas en personne, on le dit impersonnel.",
+   "explication": "Chanter garde la même forme, quelle que soit la personne : c'est pour cela qu'on le dit impersonnel. Il a pourtant aussi un passé : avoir chanté.",
    "source": {
     "fichier": "cours/langue/Francais 5e - Conjugaison - Memento 4 Modes.pdf",
     "page": 1
@@ -279,23 +279,98 @@ JEU.enregistrer("cours", {
    "id": "langue-conj10-q4",
    "fiche": "langue-conj10-f1",
    "type": "qcm_multiple",
-   "niveau": 2,
+   "niveau": 3,
    "enonce": "Ces formes viennent toutes du verbe dessiner. Lesquelles sont à un mode personnel ? Coche toutes les bonnes réponses.",
    "choix": [
-    "il dessine",
-    "que vous dessiniez",
-    "nous dessinerions",
-    "dessiner",
     "dessinant",
-    "en dessinant"
+    "il dessine",
+    "dessinez",
+    "en dessinant",
+    "que vous dessiniez",
+    "nous dessinerions"
    ],
-   "explication": "Il, vous et nous montrent une personne : ce sont des modes personnels. Dessiner, dessinant et en dessinant n'ont pas de personne.",
-   "indice": "Cherche les formes qui ont un pronom : je, tu, nous, vous…",
+   "explication": "Il dessine, que vous dessiniez et nous dessinerions montrent leur personne, et dessinez, à l'impératif, change aussi avec elle (dessine, dessinons). Dessinant et en dessinant ne changent jamais : ils sont impersonnels.",
+   "indice": "Attention à l'impératif : il n'a pas de pronom sujet, mais il change selon la personne.",
    "source": {
     "fichier": "cours/langue/Francais 5e - Conjugaison - Cours 10 - Les modes du verbe.pdf",
     "page": 1
    },
-   "r": "==AcHZ0QBYAFDcwG0EAEBUlAcEQAQRUYXBAXDdAHVMQDSRzBaMRVUwxHN5lSmMEDG51CLYkCAAFH",
+   "r": "vclFb4BAcoAHBAjXAEVDdoRCIskXlhAEMsBGa0hCWgEMYpwQNsgGXQURQ1zFbwgBCwgCN5lSmMEDG51CLYkCAAFH",
+   "poids": 1
+  },
+  {
+   "id": "langue-conj10-q23",
+   "fiche": "langue-conj10-f1",
+   "type": "vrai_faux",
+   "niveau": 1,
+   "enonce": "Les formes d'un mode personnel changent avec la personne du verbe.",
+   "corrections": [],
+   "explication": "Je chante, tu chantes, nous chantons : la forme suit la personne. C'est ce qui fait d'un mode un mode personnel.",
+   "source": {
+    "fichier": "cours/langue/Francais 5e - Conjugaison - Memento 4 Modes.pdf",
+    "page": 1
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "langue-conj10-q24",
+   "fiche": "langue-conj10-f1",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "La forme « chantant » change quand on passe de je à nous.",
+   "corrections": [
+    "Faux : chantant est au participe, un mode impersonnel ; il garde la même forme.",
+    "Faux : chantant est au gérondif, c'est pour cela qu'il ne change pas.",
+    "Faux : chantant est à l'infinitif, c'est pour cela qu'il ne change pas."
+   ],
+   "explication": "Chantant garde toujours la même forme, quelle que soit la personne. Sans « en » devant, c'est le participe présent, un mode impersonnel.",
+   "source": {
+    "fichier": "cours/langue/Francais 5e - Conjugaison - Memento 4 Modes.pdf",
+    "page": 1
+   },
+   "r": "=8wVLBBHbEQCS1gLHaKWN8wAGNQDAYSFVlAHRJlTDchBtIkFHhkHC8gRMYBKfU1CAEVRL8xGLoSWXQVXOpxBG1RAiIVALQRBH8wBRgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "langue-conj10-q25",
+   "fiche": "langue-conj10-f1",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Comment savoir si un mode est personnel ?",
+   "choix": [
+    "On regarde s'il possède un présent et un passé",
+    "On regarde s'il commence par « que »",
+    "On regarde si sa forme change avec la personne",
+    "On regarde s'il se termine par -er"
+   ],
+   "explication": "Un mode personnel change avec je, tu, il, nous, vous, ils. Avoir un présent et un passé ne suffit pas : l'infinitif en a deux, et il est impersonnel.",
+   "source": {
+    "fichier": "cours/langue/Francais 5e - Conjugaison - Cours 10 - Les modes du verbe.pdf",
+    "page": 1
+   },
+   "r": "ExAHp0hBXARAJ9wAStgJbRQFIlQAH4gCSJyHHowERhQHPtxGjhUAHxUCKQhRH0TZ",
+   "poids": 1
+  },
+  {
+   "id": "langue-conj10-q26",
+   "fiche": "langue-conj10-f1",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Quel groupe ne contient que des formes à un mode impersonnel ?",
+   "choix": [
+    "sauter, sautant, en sautant",
+    "sautez, sautant, sauter",
+    "que je saute, sauter, en sautant",
+    "je sauterais, sautant, ayant sauté"
+   ],
+   "explication": "Sauter, sautant et en sautant sont à l'infinitif, au participe et au gérondif. Sautez, que je saute et je sauterais changent selon la personne.",
+   "indice": "Cherche le groupe où aucune forme ne change avec je, tu, nous.",
+   "source": {
+    "fichier": "cours/langue/Francais 5e - Conjugaison - Memento 4 Modes.pdf",
+    "page": 1
+   },
+   "r": "=w0GIcQHHYSAVtAERVkGBMBH2wkFVEAHKIxEIEQZ",
    "poids": 1
   },
   {
@@ -305,19 +380,19 @@ JEU.enregistrer("cours", {
    "niveau": 1,
    "enonce": "Lesquels sont des modes personnels ? Coche toutes les bonnes réponses.",
    "choix": [
-    "L'indicatif",
-    "Le conditionnel",
-    "Le subjonctif",
-    "L'impératif",
     "L'infinitif",
-    "Le gérondif"
+    "Le conditionnel",
+    "L'indicatif",
+    "Le gérondif",
+    "L'impératif",
+    "Le subjonctif"
    ],
    "explication": "Les quatre modes personnels sont l'indicatif, le conditionnel, le subjonctif et l'impératif. L'infinitif et le gérondif sont des modes impersonnels.",
    "source": {
     "fichier": "cours/langue/Francais 5e - Conjugaison - Memento 4 Modes.pdf",
     "page": 1
    },
-   "r": "==AOXdBAa4AABDYXIwlCi0kSE9wGzExGK8xEc0xTXQSYBcUWIBQAJ8QHbMCHaYQVUUCTDBlDqkFBWRkCB8QQlAFH",
+   "r": "==AOXdBAawAHHkyTQYUDLMCRKtEFuYAFXwtsZMgBVRSYBc0UEphDF8QDc4SV5cUWTVwCBwxBqkFDRNUAMY0AlAFH",
    "poids": 1
   },
   {
@@ -350,17 +425,17 @@ JEU.enregistrer("cours", {
    "id": "langue-conj10-q7",
    "fiche": "langue-conj10-f2",
    "type": "vrai_faux",
-   "niveau": 1,
+   "niveau": 2,
    "enonce": "Le subjonctif fait partie des modes impersonnels.",
    "corrections": [
     "Faux : le subjonctif est un mode personnel, ses formes changent selon la personne.",
-    "Faux : le subjonctif n'est pas un mode du verbe.",
-    "Faux : le subjonctif est un temps de l'infinitif."
+    "Faux : le subjonctif est un temps de l'indicatif, pas un mode.",
+    "Faux : le subjonctif est un mode personnel, mais il n'a qu'un seul temps."
    ],
-   "explication": "Que je parle, que tu parles, qu'il parle : le subjonctif change avec la personne. C'est donc un mode personnel.",
+   "explication": "Que je parle, que tu parles, qu'il parle : le subjonctif change avec la personne. Il a même plusieurs temps : présent, passé, imparfait et plus-que-parfait.",
    "source": {
-    "fichier": "cours/langue/Francais 5e - Conjugaison - Memento 4 Modes.pdf",
-    "page": 1
+    "fichier": "cours/langue/Francais 5e - Conjugaison - Cours 10 - Les modes du verbe.pdf",
+    "page": 2
    },
    "r": "==wDlxFELshHawhCCgkIBV0WCJgCVYUHcISFbQQHSkUHK8hGssURGhUHPpkCMwRKdYwFQEQSLsQHFM2QQURWdogRAAgBkwhGPcBBa4kCegUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
@@ -372,12 +447,12 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Comment reconnaître une forme du subjonctif dans un tableau de conjugaison ?",
    "choix": [
+    "Elle se termine par -rais ou par -rait",
+    "Elle commence par le petit mot « en »",
     "Elle est précédée de « que »",
-    "Elle commence par « en »",
-    "Elle n'a jamais de personne",
     "Elle se termine toujours par -ant"
    ],
-   "explication": "Dans les tableaux, le subjonctif s'écrit toujours après « que » : que je parle, qu'il parle. « En » annonce le gérondif, et -ant le participe présent.",
+   "explication": "Dans les tableaux, le subjonctif s'écrit toujours après « que » : que je parle, qu'il parle. Je parlerais est au conditionnel, et en parlant au gérondif.",
    "source": {
     "fichier": "cours/langue/Francais 5e - Conjugaison - Cours 10 - Les modes du verbe.pdf",
     "page": 2
@@ -389,12 +464,12 @@ JEU.enregistrer("cours", {
    "id": "langue-conj10-q9",
    "fiche": "langue-conj10-f2",
    "type": "vrai_faux",
-   "niveau": 2,
+   "niveau": 3,
    "enonce": "« Il dessinera » et « il dessinerait » sont au même mode.",
    "corrections": [
     "Faux : « il dessinera » est au futur simple de l'indicatif, « il dessinerait » au présent du conditionnel.",
-    "Faux : les deux formes sont à l'impératif.",
-    "Faux : « il dessinerait » est au subjonctif."
+    "Faux : « il dessinera » est au conditionnel, « il dessinerait » au futur simple de l'indicatif.",
+    "Faux : « il dessinerait » est au subjonctif présent."
    ],
    "explication": "Ces deux formes se ressemblent beaucoup, mais elles ne sont pas au même mode. Il dessinera est au futur simple de l'indicatif, il dessinerait au présent du conditionnel.",
    "source": {
@@ -402,6 +477,67 @@ JEU.enregistrer("cours", {
     "page": 2
    },
    "r": "I9AQDMACH0hLGwRAb4hCOphFIdzQAYEht2hFGxxEnl8tFFAGIwhCcEAMeBQUNIgBG18qStGFcEBFSAgCBsxTv0AAR1wCDYxCAEwZAAQEAcRSb4gUcADSF547O5AFDcwG0EAEBUVHA4ExwiUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "langue-conj10-q27",
+   "fiche": "langue-conj10-f2",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "À quel mode et à quel temps est « que nous dansions » ?",
+   "choix": [
+    "Indicatif imparfait",
+    "Subjonctif imparfait",
+    "Conditionnel présent",
+    "Subjonctif présent"
+   ],
+   "explication": "Avec « que » devant, c'est le subjonctif présent, comme que nous rangions. Sans « que », nous dansions serait à l'imparfait de l'indicatif.",
+   "indice": "Regarde le petit mot placé devant nous.",
+   "source": {
+    "fichier": "cours/langue/Francais 5e - Conjugaison - Cours 10 - Les modes du verbe.pdf",
+    "page": 2
+   },
+   "r": "XFxGUoxxsCAGjtEDB5EAAwABcESZ",
+   "poids": 1
+  },
+  {
+   "id": "langue-conj10-q28",
+   "fiche": "langue-conj10-f2",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "À l'impératif présent, le verbe danser a trois formes : danse, dansons, dansent.",
+   "corrections": [
+    "Faux : la troisième forme est dansez.",
+    "Faux : la première forme est danses, avec un s.",
+    "Faux : l'impératif présent n'a que deux formes."
+   ],
+   "explication": "L'impératif présent a trois formes, sans pronom sujet : danse, dansons, dansez. Dansent va avec ils, et l'impératif n'a pas de forme pour ils.",
+   "source": {
+    "fichier": "cours/langue/Francais 5e - Conjugaison - Cours 10 - Les modes du verbe.pdf",
+    "page": 2
+   },
+   "r": "=8QZc9AAG8BCK8kBbYSDAg1XBkgRDQg2EuhBMoxAd4kDegUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "langue-conj10-q29",
+   "fiche": "langue-conj10-f2",
+   "type": "trou",
+   "niveau": 1,
+   "enonce": "Complète avec le nom du mode.",
+   "texte": "« Tu jouerais » est au ___, et « joue ! » est à l'___.",
+   "banque": [
+    "conditionnel",
+    "impératif",
+    "indicatif",
+    "subjonctif"
+   ],
+   "explication": "Tu jouerais se termine comme je rangerais : c'est le conditionnel. Joue n'a pas de pronom sujet, c'est l'impératif.",
+   "source": {
+    "fichier": "cours/langue/Francais 5e - Conjugaison - Cours 10 - Les modes du verbe.pdf",
+    "page": 2
+   },
+   "r": "whzFLdwGHQBwxezHcckLdRDTDchBtIEDBRkCBkQBLlCH",
    "poids": 1
   },
   {
@@ -459,7 +595,7 @@ JEU.enregistrer("cours", {
    "corrections": [
     "Faux : chacun a deux temps, un présent et un passé.",
     "Faux : ils ont autant de temps que l'indicatif.",
-    "Faux : ils n'ont aucun temps."
+    "Faux : chacun a deux temps, l'imparfait et le futur."
    ],
    "explication": "Chaque mode impersonnel a un présent et un passé, comme parler et avoir parlé. Ils ne varient pas en personne, mais ils varient dans le temps.",
    "source": {
@@ -476,10 +612,10 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Comment distinguer le gérondif du participe présent ?",
    "choix": [
-    "Le gérondif a « en » devant : en marchant",
     "Le gérondif se termine par -er : marcher",
-    "Le gérondif a toujours un pronom sujet : je marche",
-    "Le gérondif s'écrit avec « que » : que je marche"
+    "Le gérondif a « en » devant : en marchant",
+    "Le gérondif a un pronom sujet : je marche",
+    "Le gérondif s'écrit après « que » : que je marche"
    ],
    "explication": "Marchant seul est un participe présent. Avec « en » devant, en marchant devient un gérondif.",
    "source": {
@@ -502,6 +638,66 @@ JEU.enregistrer("cours", {
     "page": 1
    },
    "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "langue-conj10-q30",
+   "fiche": "langue-conj10-f3",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Quelle forme est l'infinitif passé du verbe sauter ?",
+   "choix": [
+    "avoir sauté",
+    "ayant sauté",
+    "en ayant sauté",
+    "sauté"
+   ],
+   "explication": "L'infinitif passé se forme avec avoir et le participe passé, comme avoir rangé. Ayant sauté est au participe passé, et en ayant sauté au gérondif passé.",
+   "source": {
+    "fichier": "cours/langue/Francais 5e - Conjugaison - Cours 10 - Les modes du verbe.pdf",
+    "page": 2
+   },
+   "r": "=AVwAmFEU5lTd8QCfMRZ",
+   "poids": 1
+  },
+  {
+   "id": "langue-conj10-q31",
+   "fiche": "langue-conj10-f3",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "« Ayant joué » est le gérondif passé du verbe jouer.",
+   "corrections": [
+    "Faux : ayant joué est au participe passé ; le gérondif passé est en ayant joué.",
+    "Faux : ayant joué est l'infinitif passé du verbe jouer.",
+    "Faux : ayant joué est au participe présent du verbe jouer."
+   ],
+   "explication": "Sans « en », ayant joué appartient au mode participe. Le gérondif passé, lui, commence par « en » : en ayant joué.",
+   "source": {
+    "fichier": "cours/langue/Francais 5e - Conjugaison - Cours 10 - Les modes du verbe.pdf",
+    "page": 2
+   },
+   "r": "bsEXuHLAK8RUdAgDLkwYDBQFZ1hCG9sqBQzEFU0EY0AAAAQwAqURQFkTUZ0zqGANTUQRQEAANYgBaISXFBETOtRFDk02EegGPUVBH8gFTgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "langue-conj10-q32",
+   "fiche": "langue-conj10-f3",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Verbe partir : comment écrire « En étant ___ très tôt, mes sœurs ont trouvé de bonnes places » ?",
+   "choix": [
+    "parti",
+    "partis",
+    "parties",
+    "partie"
+   ],
+   "explication": "Au gérondif passé, le participe passé s'accorde quand même avec le sujet. Mes sœurs est au féminin pluriel : en étant parties.",
+   "indice": "Qui est parti ? Regarde son genre et son nombre.",
+   "source": {
+    "fichier": "cours/langue/Francais 5e - Conjugaison - Memento 4 Modes.pdf",
+    "page": 1
+   },
+   "r": "X41CGIBFIIQZ",
    "poids": 1
   },
   {
@@ -537,8 +733,8 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "« Vous avez sauté » est au passé composé. Quel temps simple lui correspond ?",
    "choix": [
-    "Le présent",
     "L'imparfait",
+    "Le présent",
     "Le passé simple",
     "Le futur simple"
    ],
@@ -572,17 +768,99 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Pourquoi « elle est sortie » est-il à un temps composé ?",
    "choix": [
-    "Parce qu'il est formé de être et du participe passé sortie",
-    "Parce que la phrase parle d'une fille",
+    "Parce qu'il est au passé simple de l'indicatif",
     "Parce que le verbe se termine par -ie",
-    "Parce qu'il a un pronom sujet"
+    "Parce qu'il a un pronom sujet, elle",
+    "Parce qu'il réunit être et un participe passé"
    ],
    "explication": "Un temps composé demande deux mots : avoir ou être, puis le participe passé. Ici, c'est est puis sortie.",
    "source": {
     "fichier": "cours/langue/Francais 5e - Conjugaison - Memento 4 Modes.pdf",
     "page": 1
    },
-   "r": "XRBAa0RHbMGhmakXP8hRDkxGksRAXQRAJtxCSxhJNAwRZRMrGNQDS5esYchGXkkGccBSvQkQAxlTKUAFIISZ",
+   "r": "=00zlqRAmIQVAUAGKcwGAkwMNsAQNohCGNwGG0esVFBHfwxxsCASvQkQAxlTKUAFIISZ",
+   "poids": 1
+  },
+  {
+   "id": "langue-conj10-q33",
+   "fiche": "langue-conj10-f4",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Le plus-que-parfait est le temps composé qui correspond au passé simple.",
+   "corrections": [
+    "Faux : le plus-que-parfait correspond à l'imparfait ; au passé simple correspond le passé antérieur.",
+    "Faux : le plus-que-parfait correspond au futur simple.",
+    "Faux : le plus-que-parfait est un temps simple de l'indicatif."
+   ],
+   "explication": "J'avais rangé va avec je rangeais : le plus-que-parfait est le partenaire de l'imparfait. Celui du passé simple est le passé antérieur, j'eus rangé.",
+   "source": {
+    "fichier": "cours/langue/Francais 5e - Conjugaison - Cours 10 - Les modes du verbe.pdf",
+    "page": 2
+   },
+   "r": "=8QZcdAEQgxGHzqBGISDMbvXd4gFGxgHnZxGKUgAMwRHdswYIlQRAdAHG9sqBQzEFUEAQkUVPZQAis0FU11AGEkCJJNhSFxCaEgGL0BAHASDRwFTI0xBWQ0FyMAWWAQHZ4kCegUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "langue-conj10-q34",
+   "fiche": "langue-conj10-f4",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "« Elles avaient dessiné » : à quel temps de l'indicatif est ce verbe ?",
+   "choix": [
+    "Passé composé",
+    "Plus-que-parfait",
+    "Passé antérieur",
+    "Imparfait"
+   ],
+   "explication": "Avaient dessiné est formé comme j'avais rangé : c'est le plus-que-parfait. Il faut deux mots, ce n'est donc pas l'imparfait, qui est un temps simple.",
+   "source": {
+    "fichier": "cours/langue/Francais 5e - Conjugaison - Cours 10 - Les modes du verbe.pdf",
+    "page": 2
+   },
+   "r": "T1xBOQhGi0FSQh1HCVxEFISZ",
+   "poids": 1
+  },
+  {
+   "id": "langue-conj10-q35",
+   "fiche": "langue-conj10-f4",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "« Ils chanteront » est au futur simple. Quelle forme est au temps composé qui lui correspond ?",
+   "choix": [
+    "ils auraient chanté",
+    "ils avaient chanté",
+    "ils eurent chanté",
+    "ils auront chanté"
+   ],
+   "explication": "Au futur simple correspond le futur antérieur, formé comme j'aurai rangé. Ils auraient chanté est au conditionnel passé, et ils avaient chanté au plus-que-parfait.",
+   "source": {
+    "fichier": "cours/langue/Francais 5e - Conjugaison - Cours 10 - Les modes du verbe.pdf",
+    "page": 2
+   },
+   "r": "=cE3y2BAOoxCjl1Ca91GOYUFFsRZ",
+   "poids": 1
+  },
+  {
+   "id": "langue-conj10-q36",
+   "fiche": "langue-conj10-f4",
+   "type": "qcm_multiple",
+   "niveau": 3,
+   "enonce": "Lesquelles de ces formes sont à un temps composé ? Coche toutes les bonnes réponses.",
+   "choix": [
+    "tu dansais",
+    "j'ai joué",
+    "elle sauta",
+    "nous étions partis",
+    "nous chanterons",
+    "ils auront dessiné"
+   ],
+   "explication": "Un temps composé s'écrit en deux mots : avoir ou être, puis le participe passé. Dans tu dansais, elle sauta et nous chanterons, le verbe tient en un seul mot : ce sont des temps simples.",
+   "indice": "Compte les mots du verbe, sans le pronom.",
+   "source": {
+    "fichier": "cours/langue/Francais 5e - Conjugaison - Memento 4 Modes.pdf",
+    "page": 1
+   },
+   "r": "==wLKpu7LwlXdogAG1BHoAAAEUlAFcQTepEMEFxRM5xTVggBbMz22WkBEYAAN5lSq7OEadkTGcQQDAFH",
    "poids": 1
   },
   {
@@ -590,19 +868,19 @@ JEU.enregistrer("cours", {
    "fiche": "langue-conj10-f5",
    "type": "qcm",
    "niveau": 1,
-   "enonce": "D'après le cours, d'où viennent la plupart des fautes d'orthographe ?",
+   "enonce": "D'où viennent la plupart des fautes d'orthographe ?",
    "choix": [
-    "D'erreurs d'analyse grammaticale ou de conjugaison",
-    "D'une écriture trop rapide",
-    "D'un stylo qui écrit mal",
-    "De livres trop difficiles"
+    "De faiblesses en analyse de texte et en vocabulaire",
+    "De faiblesses en analyse logique et en récitation de poèmes",
+    "De faiblesses en analyse grammaticale et en conjugaison",
+    "D'un vocabulaire trop pauvre pour trouver le mot juste"
    ],
    "explication": "La plupart des fautes viennent d'un mot mal analysé ou d'un verbe mal conjugué. Travailler la grammaire et la conjugaison en évite beaucoup.",
    "source": {
     "fichier": "cours/langue/Orthographe et expression ecrite.pdf",
     "page": 1
    },
-   "r": "==wDAAQFPgQFygxGKYRUMowTHcwYIlAVOdwGHsABTUTFVBgBIUwDBMxTn0gFHh1CdQxAOZTZ",
+   "r": "K1iQWwFTJoBDIYQEnxBEFFAFJtwATsgKZRAWA9QHBYEDB4jHUsAFRdwCPFQDw4FAZ90BOAgRMYTZ",
    "poids": 1
   },
   {
@@ -651,19 +929,101 @@ JEU.enregistrer("cours", {
    "fiche": "langue-conj10-f5",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Pourquoi bien connaître la conjugaison aide-t-il à faire moins de fautes ?",
+   "enonce": "Pourquoi bien connaître la conjugaison aide-t-il à faire moins de fautes d'orthographe ?",
    "choix": [
+    "Parce que la conjugaison apprend l'écriture des mots du dictionnaire",
     "Parce que beaucoup de fautes viennent d'un verbe mal conjugué",
-    "Parce que la conjugaison remplace le dictionnaire",
-    "Parce qu'on écrit ensuite sans aucun verbe",
-    "Parce que la conjugaison apprend à écrire plus vite"
+    "Parce que la conjugaison étudie la fonction des propositions",
+    "Parce que la conjugaison aide surtout à trouver le mot juste"
    ],
-   "explication": "Une grande partie des fautes vient d'une erreur d'analyse ou de conjugaison. Bien conjuguer en évite donc beaucoup.",
+   "explication": "Une grande partie des fautes vient d'une erreur d'analyse grammaticale ou de conjugaison. Les mots du dictionnaire relèvent de l'orthographe d'usage, les propositions de l'analyse logique.",
    "source": {
     "fichier": "cours/langue/Orthographe et expression ecrite.pdf",
     "page": 1
    },
    "r": "==wRcLLHJoBGGwiTFlFTD80AEsxFxI1GQIVFJpRAXYQLIxwQN0hCSMBCUc2FRUUBEYQDaMRDh0AAAxlTKUAFIISZ",
+   "poids": 1
+  },
+  {
+   "id": "langue-conj10-q37",
+   "fiche": "langue-conj10-f5",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "L'analyse logique étudie la nature et la fonction de chaque mot.",
+   "corrections": [
+    "Faux : elle étudie la nature et la fonction des propositions ; les mots, c'est l'analyse grammaticale.",
+    "Faux : elle étudie l'orthographe des mots du dictionnaire.",
+    "Faux : elle étudie la conjugaison des verbes."
+   ],
+   "explication": "L'analyse grammaticale s'occupe des mots, l'analyse logique des propositions. Les deux étudient leur nature et leur fonction.",
+   "source": {
+    "fichier": "cours/langue/Orthographe et expression ecrite.pdf",
+    "page": 1
+   },
+   "r": "==gOQtFAZAhCHsxEF4CTXIVDLwxHKgAHmUVGFFgAMkEDSREMZpAWN0hCKYkUSRDHawQAYoRAf0hGz0gFQlkTBkwDdERKdMRRU0RSaogUNEDWRQ1QO5gCGxwGjcQAMbbUMIwAXgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "langue-conj10-q38",
+   "fiche": "langue-conj10-f5",
+   "type": "qcm_multiple",
+   "niveau": 2,
+   "enonce": "Les cours de grammaire et de conjugaison sont rangés en cinq thèmes. Lesquels en font partie ? Coche toutes les bonnes réponses.",
+   "choix": [
+    "L'orthographe d'usage",
+    "Les natures des mots",
+    "La conjugaison",
+    "La récitation",
+    "Les fonctions des mots",
+    "L'analyse de texte"
+   ],
+   "explication": "Les cinq thèmes sont les natures des mots, les fonctions des mots, l'analyse logique, la conjugaison et l'analyse de texte. L'orthographe d'usage n'en fait pas partie : elle s'apprend surtout en lisant.",
+   "source": {
+    "fichier": "cours/langue/Orthographe et expression ecrite.pdf",
+    "page": 1
+   },
+   "r": "ocEEFExCbIVDn0AAGRlAOgwBO5TZedlFB4BBOxxFMMmXLoFRawACJ8gU0cROHl1UHEAHbkAJY9wWC1wTHoySeVWABoAGRpxCLI1Gm8FEBxEAPVxAlAFH",
+   "poids": 1
+  },
+  {
+   "id": "langue-conj10-q39",
+   "fiche": "langue-conj10-f5",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Tu hésites : « girafe » s'écrit-il avec un f ou avec deux ? De quoi relève cette difficulté ?",
+   "choix": [
+    "De l'analyse grammaticale",
+    "De la conjugaison",
+    "De l'analyse logique",
+    "De l'orthographe d'usage"
+   ],
+   "explication": "L'écriture d'un mot telle qu'on la trouve dans le dictionnaire, c'est l'orthographe d'usage. Elle ne dépend ni de la nature, ni de la fonction du mot dans la phrase.",
+   "source": {
+    "fichier": "cours/langue/Orthographe et expression ecrite.pdf",
+    "page": 1
+   },
+   "r": "=QEDVYSAAIUERxgBfMhGkIUDB9VAIpgRMYTZ",
+   "poids": 1
+  },
+  {
+   "id": "langue-conj10-q40",
+   "fiche": "langue-conj10-f5",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Tu cherches la fonction de chaque proposition d'une longue phrase. Quelle analyse fais-tu ?",
+   "choix": [
+    "L'analyse logique",
+    "L'analyse grammaticale",
+    "L'analyse de texte",
+    "La conjugaison"
+   ],
+   "explication": "Les propositions sont étudiées par l'analyse logique, même quand on cherche leur fonction. L'analyse grammaticale, elle, s'occupe de la fonction des mots.",
+   "indice": "Regarde sur quoi porte la recherche : des mots ou des propositions ?",
+   "source": {
+    "fichier": "cours/langue/Orthographe et expression ecrite.pdf",
+    "page": 1
+   },
+   "r": "==wVUwxHGUxBv0AAGRlAOgwBO5TZ",
    "poids": 1
   }
  ],

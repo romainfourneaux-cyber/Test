@@ -198,14 +198,14 @@ JEU.enregistrer("cours", {
    "fiche": "physique-s01-1-f1",
    "type": "qcm",
    "niveau": 1,
-   "enonce": "Quelle propriété toute matière possède-t-elle ?",
+   "enonce": "Quelle propriété toute matière possède-t-elle, quel que soit son état ?",
    "choix": [
-    "Elle coule toujours",
+    "Elle a une forme propre",
     "Elle a une masse",
-    "Elle est toujours colorée",
-    "Elle est toujours solide"
+    "Elle se laisse comprimer",
+    "Elle coule quand on la verse"
    ],
-   "explication": "La matière, c'est ce qui a une masse. On peut donc la peser, qu'elle soit solide, liquide ou gazeuse.",
+   "explication": "La matière, c'est tout ce qui a une masse : on peut la peser. Avoir une forme propre, se comprimer ou couler dépend de l'état.",
    "source": {
     "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
     "page": 1
@@ -218,40 +218,40 @@ JEU.enregistrer("cours", {
    "fiche": "physique-s01-1-f1",
    "type": "qcm_multiple",
    "niveau": 2,
-   "enonce": "Dans le tableau à simple entrée, lesquels vont dans la colonne « solide » ?",
+   "enonce": "Lesquels de ces exemples sont à l'état solide ?",
    "choix": [
-    "Le jus de pomme",
+    "La peau",
     "Le sang",
-    "Un stylo",
-    "Le fer",
+    "Le verre",
     "La fumée",
-    "Une feuille d'arbre"
+    "Le jus de pomme",
+    "Le bois"
    ],
-   "explication": "Le stylo, la feuille et le fer gardent leur forme : ce sont des solides. Le sang et le jus de pomme sont liquides, la fumée est un gaz.",
+   "explication": "La peau, le verre et le bois sont rangés parmi les solides. Le sang et le jus de pomme sont liquides, la fumée est un gaz.",
    "source": {
     "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
     "page": 1
    },
-   "r": "==AKHdAFP4kC+o0bPAwRPxhDBJQSXsiHcABEXk0CBciSv9gCZRlGcYEC8AFH",
+   "r": "=gzFedAAEYED+UmXXBwBDwAGPdBJhFwRAx0CfY0BlAFH",
    "poids": 1
   },
   {
    "id": "physique-s01-1-q3",
    "fiche": "physique-s01-1-f1",
    "type": "vrai_faux",
-   "niveau": 1,
-   "enonce": "La fumée est un liquide.",
+   "niveau": 2,
+   "enonce": "La fumée est à l'état liquide, comme le sang.",
    "corrections": [
-    "Faux : la fumée est un gaz, comme l'air.",
-    "Faux : la fumée est un solide, comme le bois.",
-    "Faux : la fumée n'est pas de la matière."
+    "Faux : la fumée est à l'état gazeux, comme l'air.",
+    "Faux : la fumée est à l'état solide, comme le bois.",
+    "Faux : la fumée n'est pas de la matière, car elle n'a pas de masse."
    ],
-   "explication": "Dans le tableau de la séance, la fumée est rangée avec l'air. Ce sont deux gaz.",
+   "explication": "La fumée est rangée avec l'air : ce sont deux gaz. Le sang, lui, est un liquide.",
    "source": {
     "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
     "page": 1
    },
-   "r": "=sBRHBgLTIVCVRBBDAQEI92VEIVDAohRSoxFndB3miBBP4kDegUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "r": "==wENxlGqwkQZ1wCCsQCKI1aKAAAPAhDOtxEcou7ClVDOzqRSoxFndB3miBBP4kDegUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -259,19 +259,19 @@ JEU.enregistrer("cours", {
    "fiche": "physique-s01-1-f1",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Comment ranger des exemples de matière selon leur état ?",
+   "enonce": "On range des exemples de matière dans un tableau à simple entrée. À quoi correspond chaque colonne ?",
    "choix": [
-    "Du plus lourd au plus léger",
-    "Selon leur couleur",
-    "Dans un tableau à simple entrée, avec une colonne par état",
-    "Par ordre alphabétique"
+    "À un état de la matière",
+    "À un seul exemple de matière",
+    "À une propriété, comme « compressible »",
+    "À la masse de chaque exemple"
    ],
-   "explication": "On fait une colonne « solide », une « liquide » et une « gazeux ». Chaque exemple va dans la colonne de son état.",
+   "explication": "On fait une colonne « solide », une « liquide » et une « gazeux ». Chaque exemple va ensuite dans la colonne de son état.",
    "source": {
     "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
     "page": 1
    },
-   "r": "XVACaYcsIFDTVUBSAEQCKYQEndxGQUlEMghDSRkJEa6RZBgCGNQBCoyGGUU1ym0GOcBBhwUEVM0GPVBCIYTZ",
+   "r": "==QTDQRwx6iBUgQVQUgTKYBS3wUEc6uTBMhRpHbZ",
    "poids": 1
   },
   {
@@ -290,6 +290,71 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
+   "id": "physique-s01-1-q28",
+   "fiche": "physique-s01-1-f1",
+   "type": "association",
+   "niveau": 2,
+   "enonce": "Relie chaque exemple de matière à son état.",
+   "gauche": [
+    "Le sang",
+    "Le fer",
+    "L'air"
+   ],
+   "droite": [
+    "Gazeux",
+    "Solide",
+    "Liquide"
+   ],
+   "explication": "Le sang est liquide et le fer est solide. L'air, comme la fumée, est un gaz.",
+   "source": {
+    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
+    "page": 1
+   },
+   "r": "==AKsklQdlCRewRSEYnQyQlSZlCH",
+   "poids": 1
+  },
+  {
+   "id": "physique-s01-1-q29",
+   "fiche": "physique-s01-1-f1",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Pourquoi l'air, qu'on ne voit pas, est-il quand même de la matière ?",
+   "choix": [
+    "Parce qu'il a une masse",
+    "Parce qu'il a une forme propre",
+    "Parce qu'il est non compressible",
+    "Parce qu'il coule comme un liquide"
+   ],
+   "explication": "Tout ce qui a une masse est de la matière, qu'on le voie ou non. L'air est rangé parmi les gaz : il a donc une masse.",
+   "source": {
+    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
+    "page": 1
+   },
+   "r": "==wSXQTAUgQVUcwGPNBSvQkQAxlTKUAFIISZ",
+   "poids": 1
+  },
+  {
+   "id": "physique-s01-1-q30",
+   "fiche": "physique-s01-1-f1",
+   "type": "trou",
+   "niveau": 1,
+   "enonce": "Complète la phrase sur la matière.",
+   "texte": "La matière, c'est tout ce qui possède une ___ : on peut donc la ___.",
+   "banque": [
+    "masse",
+    "peser",
+    "forme",
+    "voir"
+   ],
+   "explication": "Avoir une masse, c'est pouvoir être pesé. L'air ne se voit pas, et pourtant c'est de la matière.",
+   "source": {
+    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
+    "page": 1
+   },
+   "r": "ogzVDwQHKIgSYEAOXgUHccwCLlCH",
+   "poids": 1
+  },
+  {
    "id": "physique-s01-1-q6",
    "fiche": "physique-s01-1-f2",
    "type": "qcm",
@@ -298,10 +363,10 @@ JEU.enregistrer("cours", {
    "choix": [
     "Il a une forme propre",
     "Il prend la forme du récipient",
-    "Il coule",
-    "Il se comprime facilement"
+    "Il est expansible",
+    "Il se laisse comprimer"
    ],
-   "explication": "Un solide garde sa forme tout seul. C'est le liquide qui prend la forme du récipient.",
+   "explication": "Un solide garde sa forme tout seul. C'est le liquide qui prend la forme du récipient, et le gaz qui se comprime et s'étend.",
    "source": {
     "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
     "page": 1
@@ -313,19 +378,19 @@ JEU.enregistrer("cours", {
    "id": "physique-s01-1-q7",
    "fiche": "physique-s01-1-f2",
    "type": "vrai_faux",
-   "niveau": 1,
+   "niveau": 2,
    "enonce": "En appuyant fort, on peut comprimer un morceau de fer pour qu'il prenne moins de place.",
    "corrections": [
-    "Faux : un solide comme le fer n'est pas compressible.",
-    "Faux : le fer est un gaz, il s'échapperait.",
-    "Faux : le fer est un liquide, il coulerait."
+    "Faux : un solide comme le fer est non compressible.",
+    "Faux : le fer se comprime, mais il reprend aussitôt sa place.",
+    "Faux : seuls les solides mous, comme la peau, se laissent comprimer."
    ],
-   "explication": "Un solide est non compressible. Seuls les gaz se laissent comprimer.",
+   "explication": "Un solide est non compressible, qu'il soit dur ou mou. Seuls les gaz se laissent comprimer.",
    "source": {
     "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
     "page": 1
    },
-   "r": "=QBTBdBBhQkFGhEHfsQCKIFNTUQRBIADJFgUaYySFBVQOpwCLYQEndREMkhHa4UAHgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "r": "SAlRmE0Bc5VHKQhFE0BJSthCbEVHdogUaYySFBVQOpwCLYQEndREMkhHa4UAHgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -357,17 +422,91 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Pourquoi un stylo posé dans un verre ne prend-il pas la forme du verre ?",
    "choix": [
-    "Parce que le verre est trop petit",
     "Parce qu'un solide a une forme propre",
-    "Parce qu'un stylo est compressible",
-    "Parce que le stylo est un liquide"
+    "Parce qu'un solide est non compressible",
+    "Parce qu'un stylo se saisit avec la main",
+    "Parce que le stylo est plus long que le verre"
    ],
-   "explication": "Le stylo est un solide : il garde sa forme où qu'on le pose. Un liquide, lui, prendrait la forme du verre.",
+   "explication": "Le stylo est un solide : il garde sa forme où qu'on le pose. Être non compressible ne suffit pas, car un liquide l'est aussi et prend pourtant la forme du verre.",
    "source": {
     "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
     "page": 1
    },
    "r": "LtQHCcQMdVEUAxBAAYEDcIjUUUEEVAgAAEAStglQAxlTKUAFIISZ",
+   "poids": 1
+  },
+  {
+   "id": "physique-s01-1-q31",
+   "fiche": "physique-s01-1-f2",
+   "type": "vrai_faux",
+   "niveau": 1,
+   "enonce": "La peau et une feuille d'arbre sont des solides.",
+   "corrections": [],
+   "explication": "Oui : elles sont rangées avec le stylo, le bois et le fer. Ce sont des solides, même si elles sont souples.",
+   "source": {
+    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
+    "page": 1
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "physique-s01-1-q32",
+   "fiche": "physique-s01-1-f2",
+   "type": "vrai_faux",
+   "niveau": 3,
+   "enonce": "Un solide a une forme propre, se saisit avec la main et se laisse comprimer.",
+   "corrections": [
+    "Faux : il a une forme propre et se saisit, mais il est non compressible.",
+    "Faux : il se laisse comprimer, mais il n'a pas de forme propre.",
+    "Faux : il a une forme propre, mais il ne se saisit pas avec la main."
+   ],
+   "explication": "Les trois marques du solide sont : forme propre, se saisit, non compressible. C'est le gaz qui se laisse comprimer.",
+   "source": {
+    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
+    "page": 1
+   },
+   "r": "PoUbIlwVE1BHDQRGfgSEVtgGfkkGccBSvQURGR0DCYkSdsBNbQhFVRhGOtxFIZyXVo1Xe80ALsRHhIFELAQUI40AbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "physique-s01-1-q33",
+   "fiche": "physique-s01-1-f2",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Quelle propriété le solide a-t-il en commun avec le liquide ?",
+   "choix": [
+    "Ils gardent tous deux leur forme propre",
+    "Ils sont tous deux non compressibles",
+    "Ils coulent tous les deux",
+    "Ils sont tous deux expansibles"
+   ],
+   "explication": "Ni le solide ni le liquide ne se laissent comprimer. En revanche, seul le solide a une forme propre et seul le liquide coule.",
+   "source": {
+    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
+    "page": 1
+   },
+   "r": "=wEHXQQIEZhRIxxHLkgCSlSHbUUDEwgCPFQHskVRBNUAcYUFFsTZ",
+   "poids": 1
+  },
+  {
+   "id": "physique-s01-1-q34",
+   "fiche": "physique-s01-1-f2",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Un objet garde la même forme dans une boîte ou dans un bol, et on ne peut pas le comprimer. Dans quel état est-il ?",
+   "choix": [
+    "Solide",
+    "Liquide",
+    "Gazeux",
+    "On ne peut pas le savoir"
+   ],
+   "explication": "Garder sa forme, c'est avoir une forme propre. Avec la non-compressibilité, c'est la marque du solide.",
+   "source": {
+    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
+    "page": 1
+   },
+   "r": "=8wCL8gCGESZ",
    "poids": 1
   },
   {
@@ -378,9 +517,9 @@ JEU.enregistrer("cours", {
    "enonce": "Quand on verse le paquet, le sucre en poudre semble couler. Dans quel état est-il ?",
    "choix": [
     "Solide",
-    "Il change d'état en coulant",
     "Liquide",
-    "Gazeux"
+    "Gazeux",
+    "Il change d'état en coulant"
    ],
    "explication": "Le sucre en poudre est fait de minuscules cristaux solides. Il n'est donc pas liquide, même s'il a l'air de couler.",
    "source": {
@@ -412,17 +551,17 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Pourquoi le sucre en poudre donne-t-il l'impression de couler ?",
    "choix": [
-    "Parce qu'il est compressible",
-    "Parce qu'il fond dans le paquet",
-    "Parce que ses minuscules grains roulent les uns sur les autres",
-    "Parce qu'il contient de l'eau"
+    "Parce que ses grains roulent les uns sur les autres",
+    "Parce que ses grains fondent un peu quand on le verse",
+    "Parce que ses grains se compriment les uns contre les autres",
+    "Parce qu'il contient un peu d'eau entre ses grains"
    ],
-   "explication": "Les grains glissent et roulent entre eux quand on verse. Chaque grain, lui, reste solide.",
+   "explication": "Quand on verse le paquet, les minuscules cristaux roulent les uns sur les autres. Chaque grain, lui, reste solide et garde sa forme.",
    "source": {
     "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
     "page": 2
    },
-   "r": "==wRGQxGaoxEIBDSJUxXbwhRVcwBnFAEJUVBHswAHcQMNYxWE9QHBYkGXsyBWYBAfAwAPFQDw0AAAxlTKUAFIISZ",
+   "r": "=chXL0hETggU0cRGFdABa4EHc0xYeBQWNoRADoAHdUjUGsAHQsRCPFQDw0AAAxlTKUAFIISZ",
    "poids": 1
   },
   {
@@ -433,8 +572,8 @@ JEU.enregistrer("cours", {
    "enonce": "Le sucre en poudre est un liquide, puisqu'il coule quand on le verse.",
    "corrections": [
     "Faux : c'est un solide fait de minuscules cristaux qui roulent les uns sur les autres.",
-    "Faux : c'est un gaz, puisqu'il se comprime.",
-    "Faux : le sucre en poudre n'est pas de la matière."
+    "Faux : c'est un solide, car chaque grain est compressible.",
+    "Faux : c'est un mélange de solide et de liquide."
    ],
    "explication": "Il ne faut pas se fier à l'apparence : chaque grain garde sa forme et ne se comprime pas. Le sucre en poudre est un solide.",
    "source": {
@@ -445,18 +584,100 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
+   "id": "physique-s01-1-q35",
+   "fiche": "physique-s01-1-f3",
+   "type": "qcm_multiple",
+   "niveau": 3,
+   "enonce": "Quels arguments prouvent que le sucre en poudre est un solide ?",
+   "choix": [
+    "Chaque grain a une forme propre",
+    "Chaque grain est non compressible",
+    "Il est fait de minuscules cristaux solides",
+    "Il coule quand on verse le paquet",
+    "Il prend la forme du paquet",
+    "Il se verse comme du jus de pomme"
+   ],
+   "explication": "Forme propre, non compressible, cristaux solides : ce sont des preuves de l'état solide. Couler n'est qu'une impression, due aux grains qui roulent.",
+   "source": {
+    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "=IDRVwgFu4hGWUVCc8wGBEQMOVkRIJgGFUBHc4yHVBQER1xBOQBS34FAVE0JNpERM4RJbYgFQMQGDAQEI1iQLURWdogRIAwE1URVAAAAIYALQRUYIdRRCxxHGNABAgCFVBwGEk0DPxRAi8lAVg0GecgDqAFH",
+   "poids": 1
+  },
+  {
+   "id": "physique-s01-1-q36",
+   "fiche": "physique-s01-1-f3",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Le sucre en poudre semble couler parce que ses grains fondent quand on verse le paquet.",
+   "corrections": [
+    "Faux : il semble couler parce que ses grains roulent les uns sur les autres.",
+    "Faux : il semble couler parce que ses grains se compriment en tombant.",
+    "Faux : il semble couler parce qu'il devient liquide au contact de l'air."
+   ],
+   "explication": "Les grains ne fondent pas : ils restent solides. Ils roulent simplement les uns sur les autres.",
+   "source": {
+    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "==ADLBEHXoxNYRQFetwAGRBHBcWAbARVCwgAPZgBmEEEa9lTcgwDIAAISZAAGEFDb4hUNAyXEUUDcogCTYQEndRGHgBFa40AbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "physique-s01-1-q37",
+   "fiche": "physique-s01-1-f3",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Comment savoir dans quel état est le sucre en poudre ?",
+   "choix": [
+    "En observant un seul grain : il garde sa forme et ne se comprime pas",
+    "En regardant le tas de sucre s'écouler comme un liquide quand on verse le paquet",
+    "En comparant sa couleur à celle des autres solides",
+    "En pesant le paquet avant et après l'avoir versé"
+   ],
+   "explication": "Il faut regarder un grain, pas le tas qui s'écoule : un grain garde sa forme et ne se laisse pas comprimer. C'est la marque d'un solide.",
+   "source": {
+    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "==ARaMxNSBBCcMQGDAQEIZiXFB1QOtxAGxwH10xEFRhAJtwCAkAJNkAXNQ1TI8ACAAiUZABECkEAaIFHtw0EHhUHNkgRHcTZ",
+   "poids": 1
+  },
+  {
+   "id": "physique-s01-1-q38",
+   "fiche": "physique-s01-1-f3",
+   "type": "trou",
+   "niveau": 1,
+   "enonce": "Complète la phrase sur le sucre en poudre.",
+   "texte": "Le sucre en poudre est formé de minuscules ___ solides, qui ___ les uns sur les autres quand on verse le paquet.",
+   "banque": [
+    "cristaux",
+    "roulent",
+    "gouttes",
+    "fondent"
+   ],
+   "explication": "Ce sont des cristaux, donc des grains solides. Ils roulent entre eux, ce qui donne l'impression que le sucre coule.",
+   "source": {
+    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "=sDNQNDHQkAAesBT04VNhVFEUlVHGQRBLlCH",
+   "poids": 1
+  },
+  {
    "id": "physique-s01-1-q14",
    "fiche": "physique-s01-1-f4",
    "type": "qcm",
-   "niveau": 1,
+   "niveau": 2,
    "enonce": "Quelle forme prend un liquide ?",
    "choix": [
     "La forme du récipient qui le contient",
-    "Une forme propre qu'il garde partout",
-    "Toujours une forme de boule",
-    "Aucune, il disparaît"
+    "Une forme propre, qu'il garde partout",
+    "La forme du premier récipient où on l'a versé",
+    "La forme qu'on lui donne en le comprimant"
    ],
-   "explication": "Un liquide n'a pas de forme propre. Il épouse la forme de son récipient.",
+   "explication": "Un liquide n'a pas de forme propre : il épouse la forme de son récipient. Et comme il est non compressible, on ne peut pas le façonner en le serrant.",
    "source": {
     "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
     "page": 2
@@ -468,12 +689,12 @@ JEU.enregistrer("cours", {
    "id": "physique-s01-1-q15",
    "fiche": "physique-s01-1-f4",
    "type": "vrai_faux",
-   "niveau": 1,
+   "niveau": 2,
    "enonce": "On peut comprimer un liquide pour qu'il prenne moins de place.",
    "corrections": [
     "Faux : un liquide est non compressible, comme un solide.",
-    "Faux : un liquide se comprime seulement s'il est coloré.",
-    "Faux : un liquide n'occupe aucune place."
+    "Faux : un liquide se comprime, mais beaucoup moins qu'un gaz.",
+    "Faux : un liquide se comprime seulement dans un récipient fermé."
    ],
    "explication": "Un liquide coule, mais il ne se comprime pas. Seul le gaz est compressible.",
    "source": {
@@ -511,10 +732,10 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Comment reconnaître qu'une matière est à l'état liquide ?",
    "choix": [
-    "Elle garde sa forme partout",
     "Elle coule et prend la forme de son récipient",
-    "Elle se laisse comprimer",
-    "Elle est transparente"
+    "Elle garde sa forme et ne se comprime pas",
+    "Elle n'a pas de forme et se laisse comprimer",
+    "Elle coule, mais elle se laisse aussi comprimer"
    ],
    "explication": "Couler et prendre la forme du récipient, c'est la marque du liquide. Un solide garde sa forme, un gaz se comprime.",
    "source": {
@@ -522,6 +743,82 @@ JEU.enregistrer("cours", {
     "page": 1
    },
    "r": "E1BHisRBMYB2qyxTccAMNAQUNsgAUkwDSZiHVFwGUshHPZQDjhUCAJUDPNgCFcTZ",
+   "poids": 1
+  },
+  {
+   "id": "physique-s01-1-q39",
+   "fiche": "physique-s01-1-f4",
+   "type": "vrai_faux",
+   "niveau": 1,
+   "enonce": "Un liquide coule, mais on ne peut pas le comprimer.",
+   "corrections": [],
+   "explication": "Oui : couler et être non compressible sont deux propriétés du liquide. Il partage la seconde avec le solide.",
+   "source": {
+    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
+    "page": 1
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "physique-s01-1-q40",
+   "fiche": "physique-s01-1-f4",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "La surface libre d'un liquide, celle qui touche l'air, est plane et verticale.",
+   "corrections": [
+    "Faux : elle est plane et horizontale.",
+    "Faux : elle est arrondie et horizontale.",
+    "Faux : elle prend la forme du récipient."
+   ],
+   "explication": "La surface libre d'un liquide est plane et horizontale. C'est le fil à plomb qui donne la verticale.",
+   "source": {
+    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
+    "page": 1
+   },
+   "r": "==gOQtFAZARHAAACBEjQNURWL80AIggH3IVAWARUMIwAXgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "physique-s01-1-q41",
+   "fiche": "physique-s01-1-f4",
+   "type": "qcm_multiple",
+   "niveau": 3,
+   "enonce": "Coche toutes les propriétés d'un liquide.",
+   "choix": [
+    "Il n'a pas de forme propre",
+    "Il coule",
+    "Il est non compressible",
+    "Sa surface libre est plane et horizontale",
+    "Il est expansible",
+    "Il a une forme propre"
+   ],
+   "explication": "Le liquide a quatre marques : pas de forme propre, il coule, il est non compressible, sa surface libre est plane et horizontale. Être expansible, c'est le gaz.",
+   "source": {
+    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
+    "page": 1
+   },
+   "r": "aAFEJQRBHEQFboBLFVUQI5kCIcQBCcmBGAQVUsBDG4BSm4EBT91GcY0B6A1aQBRCXghGdoAAY4iQGUxQBEgRSoxFn5BPHl1UMIgGdswYBxyFBwkCUYhBAcjUQgwBe8gTKYBSwwUFVwUSBYkCgAFH",
+   "poids": 1
+  },
+  {
+   "id": "physique-s01-1-q42",
+   "fiche": "physique-s01-1-f4",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Qu'est-ce qui distingue un liquide d'un gaz ?",
+   "choix": [
+    "Le liquide est non compressible, le gaz est compressible",
+    "Le liquide a une forme propre, le gaz n'en a pas",
+    "Le liquide est expansible, le gaz ne l'est pas",
+    "Le gaz a une surface libre horizontale, le liquide non"
+   ],
+   "explication": "Ni le liquide ni le gaz n'ont de forme propre. Mais seul le gaz se laisse comprimer, et seul le liquide a une surface libre plane et horizontale.",
+   "source": {
+    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
+    "page": 1
+   },
+   "r": "==AUN8yTMYkXL0hFLYQEnZgBAU1CIkwTXQwYBAQWPdAHVMwGCoSHWU0GecgTbEQDjhUAch1HGogRM4TZ",
    "poids": 1
   },
   {
@@ -548,12 +845,12 @@ JEU.enregistrer("cours", {
    "id": "physique-s01-1-q19",
    "fiche": "physique-s01-1-f5",
    "type": "vrai_faux",
-   "niveau": 2,
+   "niveau": 3,
    "enonce": "Dans un ballon de verre arrondi, la surface libre de l'eau suit la forme arrondie du ballon.",
    "corrections": [
     "Faux : elle reste plane et horizontale, quelle que soit la forme du récipient.",
-    "Faux : dans un ballon, elle devient verticale.",
-    "Faux : un ballon ne peut pas contenir d'eau."
+    "Faux : elle reste horizontale, mais elle se creuse comme le fond du ballon.",
+    "Faux : elle suit la forme du ballon seulement quand il est penché."
    ],
    "explication": "Dans un bécher comme dans un ballon, la surface libre est plane et horizontale. La forme du récipient n'y change rien.",
    "source": {
@@ -570,17 +867,17 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Pourquoi le niveau du bricoleur permet-il de tester si un objet est horizontal ?",
    "choix": [
-    "Parce que son tube se plie à la forme de l'objet",
-    "Parce que sa bulle d'air est un solide",
-    "Parce que la surface libre du liquide qui borde la bulle reste horizontale, quelle que soit la position du tube",
-    "Parce que son liquide coloré est compressible"
+    "La surface libre qui borde la bulle reste toujours horizontale",
+    "Le liquide coloré garde sa forme propre, même quand le tube penche",
+    "Le liquide coloré se comprime du côté où le tube penche",
+    "La bulle d'air est un solide qui reste toujours horizontal"
    ],
-   "explication": "La surface libre du liquide reste horizontale, même si le tube penche. La bulle sert donc de repère pour savoir si l'objet est à plat.",
+   "explication": "La surface libre du liquide reste horizontale, quelle que soit la position du tube. La bulle sert donc de repère pour savoir si l'objet est à plat.",
    "source": {
     "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
     "page": 2
    },
-   "r": "=s0FlcQAFBQFJBAAbwhKepQRN8wAGJBAdQjUQABBRxgADcRHy0QSQF0DbgQCTsRNd0RRQUgGL0hUN8SQQcVDPMgRD0AAoARVMAAAJtwCb0hMElQFYpwTDQxCbsiUQYAFXsxGcIVCv0AAAxlTKUAFIISZ",
+   "r": "==wRQ0BCaEQHSoyXK0VDd0xEJMwBoYQVAEgAMwxTXQwLYdQFMJwTDIwGdUiUcABBRxAHNsBBjhkBUtEHaUhRI4TZ",
    "poids": 1
   },
   {
@@ -590,17 +887,71 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Le fil à plomb montre la verticale. Comment en déduire l'horizontale ?",
    "choix": [
-    "L'horizontale est parallèle au fil : elle va dans le même sens que lui",
-    "L'horizontale est perpendiculaire à la verticale : elle forme avec elle un angle droit",
-    "On ne peut rien en déduire, il faut un autre outil",
-    "On pèse le fil à plomb : son poids donne l'horizontale"
+    "Elle forme un angle droit avec le fil",
+    "Elle est parallèle au fil, dans le même sens",
+    "Elle suit la direction où le poids tire le fil",
+    "Elle forme avec le fil un angle plus petit qu'un angle droit"
    ],
    "explication": "La verticale et l'horizontale se coupent à angle droit. Connaître l'une permet donc de trouver l'autre.",
    "source": {
     "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
     "page": 2
    },
-   "r": "=UmBcowBVk0CDUhBi0wCA1wCDowAJFhIEQRRQwxGBkgUN8SQAUxFOpgCHowGzAAETUFEF40zxikJfxAVBtBDPIwBXcDAQURVFoxCPdBBik1Cad1BdkgDO5TZ",
+   "r": "LJgBUgkJBVkVIhhDGJBAdUjFVBQGWcwDPxRHjhECHJECPNgCFcTZ",
+   "poids": 1
+  },
+  {
+   "id": "physique-s01-1-q43",
+   "fiche": "physique-s01-1-f5",
+   "type": "vrai_faux",
+   "niveau": 1,
+   "enonce": "Le tube du niveau du bricoleur contient un liquide coloré et une bulle d'air.",
+   "corrections": [],
+   "explication": "Oui : la bulle est bordée par la surface libre du liquide coloré. Cette surface reste horizontale.",
+   "source": {
+    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "physique-s01-1-q44",
+   "fiche": "physique-s01-1-f5",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Le fil à plomb donne l'horizontale ; la verticale lui est perpendiculaire.",
+   "corrections": [
+    "Faux : il donne la verticale ; l'horizontale lui est perpendiculaire.",
+    "Faux : il donne la verticale ; l'horizontale lui est parallèle.",
+    "Faux : il donne l'horizontale ; la verticale lui est parallèle."
+   ],
+   "explication": "Le fil à plomb pend à la verticale. L'horizontale forme avec lui un angle droit.",
+   "source": {
+    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "Qd0GIxhBHoAHR4iFbAQBDwgHPZwGm0ADAFkTKowBdwBKIwxFakhTC8USIZSQEYFRa0xAQk0ErIFELshHN40AbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "physique-s01-1-q45",
+   "fiche": "physique-s01-1-f5",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Un maçon n'a qu'un fil à plomb. Comment peut-il vérifier qu'une marche est horizontale ?",
+   "choix": [
+    "En vérifiant qu'elle forme un angle droit avec le fil",
+    "En vérifiant que la marche est bien parallèle au fil tendu",
+    "En posant le fil à plat sur la marche, comme une règle",
+    "Il ne peut pas : le fil à plomb ne donne que la verticale"
+   ],
+   "explication": "Le fil donne la verticale, et l'horizontale lui est perpendiculaire. Si la marche fait un angle droit avec le fil, elle est horizontale.",
+   "source": {
+    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "=EWQMMVDLMgRFwABmIVAMoxAN4kCe8QLMV0WY5kCLQhBUc2FZkAEWxxHPZgBiQ0Ac91xsChRHcTZ",
    "poids": 1
   },
   {
@@ -613,9 +964,9 @@ JEU.enregistrer("cours", {
     "La fumée",
     "Le sang",
     "Le fer",
-    "Le verre"
+    "Le jus de pomme"
    ],
-   "explication": "La fumée, comme l'air, est à l'état gazeux. Le sang est liquide, le fer et le verre sont solides.",
+   "explication": "La fumée, comme l'air, est à l'état gazeux. Le sang et le jus de pomme sont liquides, le fer est solide.",
    "source": {
     "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
     "page": 1
@@ -667,12 +1018,12 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "On enfonce bien droit dans un saladier d'eau un verre retourné, avec un mouchoir coincé au fond. Que fait l'air enfermé dans le verre ?",
    "choix": [
-    "Il se transforme en eau",
     "Il résiste à la pression de l'eau",
-    "Il traverse le verre",
-    "Il disparaît aussitôt"
+    "Il devient liquide sous la pression de l'eau",
+    "Il garde une forme propre, comme un solide",
+    "Il n'oppose aucune résistance à l'eau"
    ],
-   "explication": "L'eau pousse sur l'air enfermé, et l'air lui résiste en cherchant à s'étendre. L'expérience montre que les gaz sont expansibles.",
+   "explication": "L'eau pousse sur l'air enfermé, et l'air lui résiste en cherchant à s'étendre. Il reste un gaz, sans forme propre.",
    "source": {
     "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
     "page": 2
@@ -687,17 +1038,17 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Pourquoi faut-il tenir fermement le verre retourné pendant qu'on l'enfonce dans l'eau ?",
    "choix": [
-    "Parce que l'eau repousse l'air enfermé et le verre risque de pencher",
-    "Parce que l'air enfermé devient solide",
-    "Parce que le verre devient brûlant",
-    "Parce que l'eau se met à bouillir"
+    "L'eau repousse l'air, et le verre risque de pencher",
+    "L'air enfermé devient solide et alourdit beaucoup le verre",
+    "L'air enfermé risque de se transformer en eau",
+    "L'air enfermé se comprime jusqu'à disparaître"
    ],
    "explication": "L'eau repousse l'air enfermé dans le verre, et l'air lui résiste. Sans le tenir, le verre risquerait de pencher et de couler au fond du saladier.",
    "source": {
     "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
     "page": 2
    },
-   "r": "=QEFMoBJcARFVRRDOpwBZADRXUBSc0xAQk0FrIVAAUF2qOQHX4QLIV0RE9ASKYEDBQzBaUBEDk0GOcxTv0AAAxlTKUAFIISZ",
+   "r": "=cxXLcQBIwgAndREFBBBY0hBAgkJfdBUb5kCKYUHXcmXHwAFWVgTKEwG2IUFQ9lTacwAO5TZ",
    "poids": 1
   },
   {
@@ -705,18 +1056,97 @@ JEU.enregistrer("cours", {
    "fiche": "physique-s01-1-f6",
    "type": "vrai_faux",
    "niveau": 2,
-   "enonce": "Un gaz a une forme propre, comme un solide.",
+   "enonce": "Un gaz est compressible et expansible, et il a une forme propre.",
    "corrections": [
-    "Faux : un gaz n'a pas de forme propre, comme un liquide.",
-    "Faux : un gaz a toujours la forme d'une bulle.",
-    "Faux : un gaz n'a aucune propriété."
+    "Faux : il est compressible et expansible, mais il n'a pas de forme propre.",
+    "Faux : il a une forme propre, mais il n'est pas expansible.",
+    "Faux : il est expansible et a une forme propre, mais il n'est pas compressible."
    ],
-   "explication": "Seul le solide a une forme propre. Le liquide et le gaz n'en ont pas.",
+   "explication": "Un gaz se comprime et s'étend, mais n'a pas de forme propre. Seul le solide a une forme propre.",
    "source": {
     "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
     "page": 1
    },
-   "r": "=gxVfxgCGcQGqEURbhlTKswCGExZeBxFF4xGe80FFEjQDUBSK8UFHkhUmU1GF9AEO4UAHgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "r": "=MRTc1QMdpwRd5kCLQhBUc2FRUkBQkhTOUlBjFEDV41BOsgRFdxKQwhFbARGWogUcYSDAk1THwRFDshAq0hFFFgAM40AbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "physique-s01-1-q46",
+   "fiche": "physique-s01-1-f6",
+   "type": "ordre",
+   "niveau": 3,
+   "enonce": "Remets dans l'ordre les étapes de l'expérience du verre retourné.",
+   "elements": [
+    "Plonger le verre bien droit dans l'eau, en le tenant",
+    "Coincer le mouchoir au fond du verre",
+    "Ressortir le verre bien verticalement",
+    "Retourner le verre, ouverture vers le bas"
+   ],
+   "explication": "On coince d'abord le mouchoir, puis on retourne le verre et on le plonge bien droit. On le ressort enfin, toujours verticalement.",
+   "source": {
+    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "o9hQfpUVFNEH",
+   "poids": 1
+  },
+  {
+   "id": "physique-s01-1-q47",
+   "fiche": "physique-s01-1-f6",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Pendant l'expérience du verre retourné, on plonge le verre dans l'eau en le penchant sur le côté.",
+   "corrections": [
+    "Faux : on le plonge bien verticalement, et on le ressort de la même façon.",
+    "Faux : on le plonge à l'endroit, l'ouverture tournée vers le haut.",
+    "Faux : on le plonge droit, mais on le ressort en le penchant."
+   ],
+   "explication": "Le verre se plonge bien verticalement, et il se ressort de la même façon. Il faut aussi le tenir, car l'eau repousse l'air enfermé.",
+   "source": {
+    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "==ADLBUAd8MgMNQFINQxluQSTsiUQEQVFsRAcEQDx0AAZ1AAAYkEMI1aGsBAYQRBPwwGcEDSTUxQLYABGxQFp0RGVUFFF4UAdgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "physique-s01-1-q48",
+   "fiche": "physique-s01-1-f6",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Quel point commun le gaz a-t-il avec le liquide ?",
+   "choix": [
+    "Il n'a pas de forme propre",
+    "Il est non compressible",
+    "Il a une surface libre horizontale",
+    "Il est expansible"
+   ],
+   "explication": "Ni le gaz ni le liquide n'ont de forme propre. Mais le gaz se comprime et s'étend, alors que le liquide est non compressible.",
+   "source": {
+    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
+    "page": 1
+   },
+   "r": "==QTDQRGdUjAVBAGDYACPdBDj5FBF1wDIhgRFsTZ",
+   "poids": 1
+  },
+  {
+   "id": "physique-s01-1-q49",
+   "fiche": "physique-s01-1-f6",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Quelle propriété des gaz l'expérience du verre retourné met-elle en évidence ?",
+   "choix": [
+    "Ils sont expansibles",
+    "Ils ont une forme propre",
+    "Ils sont non compressibles",
+    "Ils coulent comme les liquides"
+   ],
+   "explication": "L'air enfermé résiste à la pression de l'eau par l'effet inverse : il cherche à s'étendre. Cette expansion montre que les gaz sont expansibles.",
+   "source": {
+    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "==AUGAQGTAQHBMBG7gURBNUAcYUFFsTZ",
    "poids": 1
   }
  ],

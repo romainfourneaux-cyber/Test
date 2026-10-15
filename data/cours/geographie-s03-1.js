@@ -148,7 +148,7 @@ JEU.enregistrer("cours", {
    "niveau": 1,
    "enonce": "En Europe de l'Est et en Russie, la population diminue.",
    "corrections": [],
-   "explication": "Oui, le cours dit même qu'elle y baisse dangereusement. Il n'y naît plus assez d'enfants.",
+   "explication": "Oui, elle y baisse même dangereusement. Il n'y naît plus assez d'enfants.",
    "source": {
     "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
     "page": 4
@@ -161,14 +161,14 @@ JEU.enregistrer("cours", {
    "fiche": "geographie-s03-1-f1",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "D'après le cours, comment la part des personnes âgées dans la population mondiale va-t-elle évoluer d'ici le milieu du siècle ?",
+   "enonce": "Comment la part des personnes âgées dans la population mondiale devrait-elle évoluer d'ici le milieu du siècle ?",
    "choix": [
     "Elle va presque doubler",
     "Elle va baisser de moitié",
-    "Elle ne changera pas",
+    "Elle va presque tripler",
     "Elle va être multipliée par dix"
    ],
-   "explication": "Le schéma du cours montre une part qui passe d'environ 8 % à presque le double. Le monde entier vieillit, pas seulement les pays riches.",
+   "explication": "La part des plus âgés passerait d'environ 8 % à presque le double. Le monde entier vieillit, pas seulement les pays riches.",
    "source": {
     "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
     "page": 4
@@ -181,26 +181,26 @@ JEU.enregistrer("cours", {
    "fiche": "geographie-s03-1-f1",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Que se passe-t-il quand une population n'a plus assez d'enfants pour se renouveler ?",
+   "enonce": "Que se passe-t-il quand les couples d'un pays ont trop peu d'enfants pendant longtemps ?",
    "choix": [
-    "Elle ne se renouvelle plus naturellement et peut diminuer",
-    "Elle double en quelques années",
-    "Elle rajeunit",
-    "Elle se renouvelle plus vite"
+    "Sa population ne se renouvelle plus et peut diminuer",
+    "Sa transition démographique commence à peine",
+    "Sa population double en quelques années",
+    "Sa natalité dépasse de plus en plus nettement sa mortalité"
    ],
-   "explication": "Les naissances ne compensent plus les décès. Sans arrivées de l'étranger, la population finit par baisser.",
+   "explication": "Les naissances ne suffisent plus à remplacer les générations. Sans arrivées de l'étranger, la population finit par baisser.",
    "source": {
     "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
     "page": 4
    },
-   "r": "=0EANYzQMgFRK8kETwgAnZAEFFwHMMgCeQgJfBRQMBwTVMRBCc2FZkAEHwRABchGjhkFVgEAPNgCFcTZ",
+   "r": "HdESbEwDLAgFnZAAAUQUdswTB0xLdVEUBJgCQMhBcICAVBgBRxAAPxxBqkFBZhlHAYhRIESZ",
    "poids": 1
   },
   {
    "id": "geographie-s03-1-q4",
    "fiche": "geographie-s03-1-f1",
    "type": "vrai_faux",
-   "niveau": 2,
+   "niveau": 1,
    "enonce": "Au Japon, en Russie et en Europe, les couples ont de plus en plus d'enfants.",
    "corrections": [
     "Faux : ils en ont de moins en moins, ce qui fait vieillir la population.",
@@ -223,9 +223,9 @@ JEU.enregistrer("cours", {
    "enonce": "Pourquoi la population des pays développés vieillit-elle ?",
    "choix": [
     "Parce qu'il y naît peu d'enfants et qu'on y vit très longtemps",
-    "Parce que les naissances y sont de plus en plus nombreuses",
-    "Parce que l'espérance de vie y baisse",
-    "Parce que les jeunes y sont de plus en plus nombreux"
+    "Parce qu'il y naît beaucoup d'enfants et qu'on y vit très longtemps",
+    "Parce qu'il y naît peu d'enfants et qu'on y meurt de plus en plus jeune",
+    "Parce que les jeunes partent en masse s'installer dans les pays du Sud"
    ],
    "explication": "Peu de naissances, c'est peu de jeunes ; une longue espérance de vie, c'est beaucoup de personnes âgées. La part des personnes âgées grandit donc.",
    "source": {
@@ -233,6 +233,64 @@ JEU.enregistrer("cours", {
     "page": 4
    },
    "r": "QZQFYQRHJEQHEMmXNb/Xa8kEP8hU+I1GKIFBY40GXgEMZtAVLBgCBJQSHIiAVFx2yiAAPtASvQkQAxlTKUAFIISZ",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s03-1-q20",
+   "fiche": "geographie-s03-1-f1",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Le vieillissement est surtout marqué dans les pays où l'espérance de vie est faible.",
+   "corrections": [
+    "Faux : il est marqué là où l'espérance de vie est très élevée.",
+    "Faux : il est marqué là où les couples ont beaucoup d'enfants.",
+    "Faux : il ne touche aucun pays développé."
+   ],
+   "explication": "Le vieillissement touche surtout les pays développés, où l'on vit très longtemps. Il s'y ajoute des couples qui ont peu d'enfants.",
+   "source": {
+    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
+    "page": 4
+   },
+   "r": "Qd0GIdMrQMQBbToUG0stD0hTbEQDjhEDD1wCLY0AKwhJAwtpFIADJNgURDoQFVp7C80zlyxA1MBGFFgAM40AbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s03-1-q21",
+   "fiche": "geographie-s03-1-f1",
+   "type": "vrai_faux",
+   "niveau": 3,
+   "enonce": "Seuls les pays riches verront la part de leurs personnes âgées augmenter d'ici le milieu du siècle.",
+   "corrections": [
+    "Faux : leur part dans la population mondiale doit presque doubler.",
+    "Faux : seuls les pays pauvres sont concernés.",
+    "Faux : leur part doit baisser partout."
+   ],
+   "explication": "La part des personnes âgées dans la population mondiale doit presque doubler. Le vieillissement est le plus marqué au Nord, mais il gagne toute la planète.",
+   "source": {
+    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
+    "page": 4
+   },
+   "r": "QxUQUMQBQITHRUEEEgRHKAAGjlFDalkTKowBAYRKdgRRb4BAa4gHdMjQVUBTC8UFIggFnZwBEUQUbshCegUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s03-1-q22",
+   "fiche": "geographie-s03-1-f1",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Dans un village, il naît de moins en moins d'enfants et les habitants vivent de plus en plus vieux. Que se passe-t-il ?",
+   "choix": [
+    "La part des personnes âgées augmente : le village vieillit",
+    "La part des jeunes augmente : le village rajeunit",
+    "Le village rajeunit, car ses habitants vivent plus longtemps qu'avant",
+    "Rien ne change, car les deux effets s'annulent"
+   ],
+   "explication": "Moins de naissances, c'est moins de jeunes ; une vie plus longue, c'est plus de personnes âgées. La part des aînés grandit : le village vieillit.",
+   "source": {
+    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
+    "page": 4
+   },
+   "r": "=MVHHMgHBYCRTUBSJ4gCKAABndRGF9UUMoRAXUAJYRQFetgxlGwyxeWAQswGeoBHKIASwgUAVkFHOYhRI4TZ",
    "poids": 1
   },
   {
@@ -262,9 +320,9 @@ JEU.enregistrer("cours", {
    "enonce": "Pourquoi la population européenne ne se renouvelle-t-elle plus naturellement ?",
    "choix": [
     "Parce que les femmes ont trop peu d'enfants pour remplacer les générations",
-    "Parce qu'il naît trop d'enfants",
-    "Parce que l'espérance de vie s'effondre",
-    "Parce que tout le monde quitte l'Europe"
+    "Parce que l'espérance de vie y baisse depuis les années 1970",
+    "Parce que la plupart des jeunes Européens partent vivre dans les pays du Sud",
+    "Parce que la mortalité y a fortement augmenté depuis les années 1970"
    ],
    "explication": "La fécondité est trop basse depuis les années 1970. Les jeunes générations sont moins nombreuses que celles qu'elles remplacent.",
    "source": {
@@ -282,11 +340,11 @@ JEU.enregistrer("cours", {
    "enonce": "Depuis quand la population européenne ne se renouvelle-t-elle plus naturellement ?",
    "choix": [
     "Depuis les années 1970",
-    "Depuis le Moyen Âge",
-    "Depuis l'an 2000",
-    "Depuis le XIXe siècle"
+    "Depuis 2012",
+    "Depuis les années 1920",
+    "Depuis la fin du XVIIIe siècle"
    ],
-   "explication": "Le cours date le début de l'hiver démographique européen des années 1970.",
+   "explication": "Depuis les années 1970, la fécondité est trop faible pour remplacer les générations. Depuis 2012, les décès dépassent même les naissances.",
    "source": {
     "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
     "page": 10
@@ -302,11 +360,11 @@ JEU.enregistrer("cours", {
    "enonce": "Une année récente, l'Europe a eu environ 4,2 millions de naissances. Combien a-t-elle compté de décès ?",
    "choix": [
     "Environ 4,7 millions",
-    "Environ 2 millions",
-    "Environ 1 million",
-    "Aucun"
+    "Environ 3,7 millions",
+    "Environ 4,2 millions",
+    "Environ 8,4 millions"
    ],
-   "explication": "Il y a eu plus de décès que de naissances. C'est le signe de l'hiver démographique.",
+   "explication": "Il y a eu environ 4,7 millions de décès, soit plus que de naissances. C'est le signe de l'hiver démographique.",
    "source": {
     "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
     "page": 10
@@ -327,12 +385,92 @@ JEU.enregistrer("cours", {
     "été",
     "1920"
    ],
-   "explication": "Depuis les années 1970, il naît trop peu d'enfants en Europe. Le cours appelle cela l'hiver démographique.",
+   "explication": "Depuis les années 1970, il naît trop peu d'enfants en Europe. On appelle cela l'hiver démographique.",
    "source": {
     "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
     "page": 10
    },
    "r": "=gDKTtxCZsBAhZXSo9gXY91VLlCH",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s03-1-q23",
+   "fiche": "geographie-s03-1-f2",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Depuis les années 1970, la fécondité européenne suffit tout juste à remplacer les générations.",
+   "corrections": [
+    "Faux : elle est trop faible pour remplacer les générations.",
+    "Faux : elle est bien plus forte que dans les PMA.",
+    "Faux : elle ne remplace les générations que depuis 2012."
+   ],
+   "explication": "Depuis les années 1970, les Européennes ont trop peu d'enfants pour que les générations se remplacent. C'est le début de l'hiver démographique.",
+   "source": {
+    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
+    "page": 10
+   },
+   "r": "==AFQlWAboAHFgAHGHrBq7uAV41CDYEFMEhJeUACQMQScoRHYMGSJcFRPkgRWYAAzIVAWARUMIwAXgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s03-1-q24",
+   "fiche": "geographie-s03-1-f2",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Une année, un pays compte 500 naissances et 700 décès, sans migrations. Quelle situation vit-il ?",
+   "choix": [
+    "Une baisse naturelle de sa population, comme l'Europe",
+    "Une forte croissance naturelle, comme les pays les moins avancés",
+    "Un solde migratoire très positif",
+    "Le début de sa transition démographique"
+   ],
+   "explication": "Il y a plus de décès que de naissances : la population baisse d'elle-même. C'est ce que vit l'Europe chaque année depuis 2012.",
+   "source": {
+    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
+    "page": 10
+   },
+   "r": "==wDAUkQcoxIBVgUi8BGKYRUFBAAbwhIBBRRC5xTHURSXMiUQkQGUsxGbMhBjhkFGR0DNY0AHcSZ",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s03-1-q25",
+   "fiche": "geographie-s03-1-f2",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Dans un pays, les femmes ont depuis longtemps trop peu d'enfants pour remplacer les générations, et les décès dépassent maintenant les naissances. Comment appelle-t-on cette situation ?",
+   "choix": [
+    "L'hiver démographique",
+    "La transition démographique",
+    "L'exode rural",
+    "Le régime démographique ancien"
+   ],
+   "explication": "Une population qui ne se renouvelle plus faute de naissances vit un hiver démographique, comme l'Europe. La transition démographique, elle, est le passage de taux élevés à des taux bas.",
+   "source": {
+    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
+    "page": 10
+   },
+   "r": "QJyBEwQHBgAHI0RBq7eAV81CZ8gDO5TZ",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s03-1-q26",
+   "fiche": "geographie-s03-1-f2",
+   "type": "qcm_multiple",
+   "niveau": 2,
+   "enonce": "Quelles phrases décrivent l'hiver démographique de l'Europe ?",
+   "choix": [
+    "Une fécondité trop faible depuis les années 1970",
+    "Plus de décès que de naissances chaque année depuis 2012",
+    "Une population qui ne se renouvelle plus par les naissances",
+    "Une natalité qui dépasse nettement la mortalité",
+    "Une population de plus en plus jeune"
+   ],
+   "explication": "Trop peu d'enfants depuis les années 1970, puis plus de décès que de naissances depuis 2012 : l'Europe ne se renouvelle plus. Sa population ne rajeunit donc pas.",
+   "source": {
+    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
+    "page": 10
+   },
+   "r": "=QDU0chFLQhAacgDcgEMIlQFf9wHGVBHecjUQkQGU8xGAwRDx0AAG1wCBY0DcMwZcoBDBARBb8RHYMGSLA2DC1EVXlFQnFAHQUAFN4kCbvaLDRQFIthHH4gCSRzFWsAFCoxBOwBSmkURQh1HPVhzqGh7xGRRQURSdohH4EWAHVgGX5lRVww2EyxGEUlAMIwTBEgNdBQUNswAE8ACUcmAacRARBcrbsBDtIkBc6OCPNAC8AFH",
    "poids": 1
   },
   {
@@ -379,11 +517,11 @@ JEU.enregistrer("cours", {
    "enonce": "Pourquoi les pays vieillissants manquent-ils de main-d'œuvre ?",
    "choix": [
     "Parce qu'ils ont trop peu de jeunes en âge de travailler",
-    "Parce que toutes les usines ferment",
-    "Parce que les jeunes sont trop nombreux",
-    "Parce que les retraités prennent tous les emplois"
+    "Parce que leurs usines ont toutes fermé",
+    "Parce que leurs jeunes partent presque tous vivre dans les pays du Sud",
+    "Parce que leurs jeunes sont trop nombreux"
    ],
-   "explication": "Peu de naissances hier, c'est peu de travailleurs aujourd'hui. Le cours parle d'une pénurie de main-d'œuvre.",
+   "explication": "Peu de naissances hier, c'est peu de travailleurs aujourd'hui. On parle d'une pénurie de main-d'œuvre.",
    "source": {
     "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
     "page": 4
@@ -396,12 +534,12 @@ JEU.enregistrer("cours", {
    "fiche": "geographie-s03-1-f3",
    "type": "qcm",
    "niveau": 1,
-   "enonce": "D'après le cours, combien de personnes âgées vivent en maison de retraite ou en EHPAD en France ?",
+   "enonce": "Combien de personnes âgées vivent en maison de retraite ou en EHPAD en France ?",
    "choix": [
     "Plus de 600 000",
-    "Environ 600",
     "Environ 6 000",
-    "Plus de 600 millions"
+    "Plus de 6 millions",
+    "Environ 600"
    ],
    "explication": "Plus de 600 000 personnes âgées vivent dans ces établissements. Cela montre l'importance des besoins.",
    "source": {
@@ -415,7 +553,7 @@ JEU.enregistrer("cours", {
    "id": "geographie-s03-1-q17",
    "fiche": "geographie-s03-1-f3",
    "type": "association",
-   "niveau": 2,
+   "niveau": 3,
    "enonce": "Relie chaque effet du vieillissement au problème qu'il pose à l'État.",
    "gauche": [
     "Les retraités sont de plus en plus nombreux",
@@ -436,6 +574,66 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
+   "id": "geographie-s03-1-q27",
+   "fiche": "geographie-s03-1-f3",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Pour faire face au vieillissement, un État doit surtout construire plus d'écoles.",
+   "corrections": [
+    "Faux : il doit surtout financer les retraites et créer des services de santé.",
+    "Faux : il doit surtout ouvrir de nouveaux fronts pionniers.",
+    "Faux : il doit surtout fermer des hôpitaux."
+   ],
+   "explication": "Avec plus de personnes âgées, il faut payer plus de retraites et créer des hôpitaux et des maisons de retraite. Les écoles sont plutôt un défi des pays du Sud, où la population est jeune.",
+   "source": {
+    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
+    "page": 4
+   },
+   "r": "==ACHtF2qqRATsxYIFQFetADPAxGXQjUGAQERtxCGHrGg0QEQ1QHKIxDIAwMXcQRGQRBO1xFL0CTLw1SOtxEJ0BAyEQVRwhHN40AbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s03-1-q28",
+   "fiche": "geographie-s03-1-f3",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Quel défi est propre à un pays qui vieillit, et non à un pays du Sud à la population jeune ?",
+   "choix": [
+    "Financer les retraites d'un nombre croissant de personnes âgées",
+    "Scolariser des enfants toujours plus nombreux dans des classes pleines",
+    "Nourrir une population qui grandit très vite",
+    "Loger les ruraux qui arrivent en ville"
+   ],
+   "explication": "Un pays qui vieillit doit payer les retraites de personnes âgées toujours plus nombreuses. Scolariser, nourrir et loger une population jeune, ce sont les défis du Sud.",
+   "source": {
+    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
+    "page": 4
+   },
+   "r": "==QZBABz2axyt+UAN0yQKY0XL8hRD0gUzwBFWYAGGwBDS1QMPhgWD5UATEUDSRzFBwAFD0xCdI1GmEURHhUDBcACAQTZ",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s03-1-q29",
+   "fiche": "geographie-s03-1-f3",
+   "type": "trou",
+   "niveau": 2,
+   "enonce": "Complète la phrase.",
+   "texte": "Dans un pays qui vieillit, l'État doit payer plus de ___, et il manque de ___ pour travailler.",
+   "banque": [
+    "retraites",
+    "jeunes",
+    "écoles",
+    "naissances"
+   ],
+   "explication": "Plus de personnes âgées, c'est plus de retraites à financer. Et avec moins de jeunes, le pays manque de main-d'œuvre.",
+   "source": {
+    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
+    "page": 4
+   },
+   "r": "=sDNQRzFbABEbsUND9iSwgUEcxEHbMAFLlCH",
+   "poids": 1
+  },
+  {
    "id": "geographie-s03-1-q13",
    "fiche": "geographie-s03-1-f4",
    "type": "qcm",
@@ -443,9 +641,9 @@ JEU.enregistrer("cours", {
    "enonce": "Quelle solution la Hongrie a-t-elle choisie face au vieillissement ?",
    "choix": [
     "Aider les familles nombreuses pour encourager les naissances",
-    "Faire venir beaucoup d'immigrés",
-    "Supprimer les retraites",
-    "Fermer ses maisons de retraite"
+    "Faire venir des immigrés pour trouver de la main-d'œuvre",
+    "Repousser l'âge de la retraite pour garder des travailleurs",
+    "Construire des maisons de retraite dans tout le pays"
    ],
    "explication": "La Hongrie pousse les couples à avoir plus d'enfants. La France et l'Allemagne misent plutôt sur l'immigration.",
    "source": {
@@ -462,7 +660,7 @@ JEU.enregistrer("cours", {
    "niveau": 1,
    "enonce": "Pour lutter contre le vieillissement, la France et l'Allemagne favorisent l'immigration venue des pays du Sud.",
    "corrections": [],
-   "explication": "Oui, c'est leur choix, d'après le cours. La Hongrie a choisi d'aider les familles nombreuses.",
+   "explication": "Oui, c'est leur choix. La Hongrie, elle, a choisi d'aider les familles nombreuses.",
    "source": {
     "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
     "page": 4
@@ -480,10 +678,10 @@ JEU.enregistrer("cours", {
     "Des aides en argent",
     "Des places en crèche",
     "Des avantages sur les impôts",
-    "Des voyages gratuits à l'étranger",
+    "L'arrivée de travailleurs immigrés",
     "Une retraite plus tôt pour tous"
    ],
-   "explication": "La Hongrie donne de l'argent, des places en crèche et des avantages fiscaux aux familles nombreuses.",
+   "explication": "La Hongrie donne de l'argent, des places en crèche et des avantages fiscaux aux familles nombreuses. Faire venir des immigrés, c'est le choix de l'Allemagne.",
    "source": {
     "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
     "page": 10
@@ -500,8 +698,8 @@ JEU.enregistrer("cours", {
    "choix": [
     "Pour trouver de la main-d'œuvre",
     "Pour remplir ses maisons de retraite",
-    "Pour faire baisser sa population",
-    "Pour fermer ses usines"
+    "Pour faire baisser le nombre de naissances",
+    "Pour payer moins de retraites"
    ],
    "explication": "Avec une population vieillissante, l'Allemagne manque de travailleurs. Les immigrés viennent combler ce manque.",
    "source": {
@@ -509,6 +707,88 @@ JEU.enregistrer("cours", {
     "page": 10
    },
    "r": "==QYIdxQY1vqBJARc4yEYUEFdk0CLIlGmsFEa9lGPRxEGISZ",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s03-1-q30",
+   "fiche": "geographie-s03-1-f4",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "La Hongrie favorise l'immigration pour lutter contre le vieillissement.",
+   "corrections": [
+    "Faux : elle aide plutôt les familles nombreuses pour encourager les naissances.",
+    "Faux : elle supprime les aides aux familles.",
+    "Faux : elle interdit aux couples d'avoir plus d'un enfant."
+   ],
+   "explication": "La Hongrie mise sur les naissances : elle aide les familles nombreuses. Ce sont la France et l'Allemagne qui favorisent l'immigration.",
+   "source": {
+    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
+    "page": 4
+   },
+   "r": "=8wVLZAFKAgDBshKMtQFetwAGRBDVYCAAogFfwgTdcwBz0gFQ51GKQBBE0RKSZAAZ0BAD4AFIBDSJURWazqETUgAndREMQRUMIwAXgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s03-1-q31",
+   "fiche": "geographie-s03-1-f4",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Face au vieillissement, tous les pays font le même choix.",
+   "corrections": [
+    "Faux : certains favorisent l'immigration, d'autres aident les familles nombreuses.",
+    "Faux : aucun pays n'agit contre le vieillissement.",
+    "Faux : tous ferment leurs frontières aux immigrés."
+   ],
+   "explication": "La France et l'Allemagne favorisent l'immigration, la Hongrie aide les familles nombreuses. Les choix sont donc différents.",
+   "source": {
+    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
+    "page": 4
+   },
+   "r": "==wDlxlBAYABMwRDfcQLNYBUBJgBLcwDSRzFZUUAfwgCGMBSwg0FBh1DIJgRFxBKbEABHYBADIwGP9SDRsFSdYAFJ8xEhIlBLwBEdwhCRgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s03-1-q32",
+   "fiche": "geographie-s03-1-f4",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Un pays vieillissant décide de verser de l'argent aux familles nombreuses et d'ouvrir des places en crèche. Quel choix fait-il ?",
+   "choix": [
+    "Encourager les naissances, comme la Hongrie",
+    "Favoriser l'immigration venue du Sud, comme l'Allemagne",
+    "Financer surtout les retraites",
+    "Créer surtout des maisons de retraite"
+   ],
+   "explication": "Aider les familles nombreuses, c'est pousser les couples à avoir plus d'enfants. C'est la politique choisie par la Hongrie.",
+   "source": {
+    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
+    "page": 10
+   },
+   "r": "ldBHXIxHGYyTTQwYIhAWC1wTKVBDRkyEGYBHQcgTccBBj9FASxEHakQBHcTZ",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s03-1-q33",
+   "fiche": "geographie-s03-1-f4",
+   "type": "association",
+   "niveau": 3,
+   "enonce": "Relie chaque mesure à son but.",
+   "gauche": [
+    "Faire venir des immigrés",
+    "Aider les familles nombreuses",
+    "Créer des maisons de retraite"
+   ],
+   "droite": [
+    "Accueillir des personnes âgées toujours plus nombreuses",
+    "Trouver de la main-d'œuvre",
+    "Pousser les couples à avoir plus d'enfants"
+   ],
+   "explication": "L'immigration apporte des travailleurs, l'aide aux familles vise plus de naissances. Les maisons de retraite accueillent des personnes âgées toujours plus nombreuses.",
+   "source": {
+    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
+    "page": 4
+   },
+   "r": "==AKsklQdlCRe8RSEYnQyclSZlCH",
    "poids": 1
   }
  ],

@@ -171,8 +171,8 @@ JEU.enregistrer("cours", {
    "choix": [
     "Pays des hommes intègres",
     "Pays des grands fleuves",
-    "Terre des montagnes",
-    "Pays de l'or"
+    "Terre des hautes montagnes",
+    "Pays de l'or et du zinc"
    ],
    "explication": "Burkina Faso veut dire « pays des hommes intègres ». Avant, le pays s'appelait la Haute-Volta.",
    "source": {
@@ -204,17 +204,17 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Comment vivent surtout les habitants du Burkina Faso ?",
    "choix": [
-    "De l'élevage, et en cultivant du mil et du sorgho",
-    "De la pêche en mer",
-    "Du tourisme en montagne",
-    "De l'industrie automobile"
+    "De l'élevage et des cultures de mil et de sorgho",
+    "Surtout des mines d'or et de zinc du sous-sol",
+    "De la pêche et des plantations au bord de la mer",
+    "Des usines et des bureaux de la capitale"
    ],
-   "explication": "Les Burkinabés vivent surtout de l'élevage et des céréales comme le mil et le sorgho.",
+   "explication": "Les Burkinabés vivent surtout de l'élevage et de céréales comme le mil et le sorgho. Le sous-sol a un peu d'or et de zinc, mais ce n'est pas l'essentiel.",
    "source": {
     "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1 - Etude de cas 1 Burkina Faso.pdf",
     "page": 1
    },
-   "r": "==wDBcQAUYQAndQEFFAFJJgBfgkNJVUQD9QGPIRBHQiUbAQVFwgTDdxDisFAZRYrIpgRMYTZ",
+   "r": "MBgDBsRH0IFEBUVBM40AbUwYIFQFetQHTIRBHQiUGAQER1xCPdxDisFAZRYrIpgRMYTZ",
    "poids": 1
   },
   {
@@ -222,18 +222,92 @@ JEU.enregistrer("cours", {
    "fiche": "geographie-s02-1-f1",
    "type": "vrai_faux",
    "niveau": 2,
-   "enonce": "Le Burkina Faso dispose d'eau en abondance.",
+   "enonce": "Le Burkina Faso a quelques richesses dans son sous-sol, et de l'eau en abondance.",
    "corrections": [
-    "Faux : le pays manque cruellement d'eau.",
-    "Faux : il n'a aucune richesse dans son sous-sol.",
-    "Faux : il est entièrement couvert de forêts."
+    "Faux : il a un peu d'or et de zinc, mais il manque cruellement d'eau.",
+    "Faux : il n'a aucune richesse dans son sous-sol, et peu d'eau.",
+    "Faux : il a d'immenses richesses dans son sous-sol, mais peu d'eau."
    ],
-   "explication": "Son climat est semi-aride et l'eau y manque beaucoup. Il a pourtant un peu d'or et de zinc dans son sous-sol.",
+   "explication": "Le sous-sol contient quelques richesses, comme l'or et le zinc. Mais le pays, au climat semi-aride, manque cruellement d'eau.",
    "source": {
     "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1 - Etude de cas 1 Burkina Faso.pdf",
     "page": 1
    },
-   "r": "==wGLxlMTAhQREVHAowHN8SQAA0XN80ATgBHm8RVWwAEZ4kCegUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "r": "Qd0GY9gCBJQSGkyFYAQGdwwGdEBSmgFFbx0APpwDJFgLTgRRZJxBHUhUNcSDRAVDcAQQCk0BiIQVLAQUI40AbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s02-1-q22",
+   "fiche": "geographie-s02-1-f1",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Le Burkina Faso est environ deux fois plus grand que la France.",
+   "corrections": [
+    "Faux : sa superficie fait environ la moitié de celle de la France.",
+    "Faux : il est exactement aussi grand que la France.",
+    "Faux : il est environ dix fois plus petit que la France."
+   ],
+   "explication": "Le Burkina Faso couvre à peu près la moitié de la superficie de la France. C'est un pays de vastes plaines.",
+   "source": {
+    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1 - Etude de cas 1 Burkina Faso.pdf",
+    "page": 1
+   },
+   "r": "==ASPAkCFgACAEgUUkQVU0gTK4BBm4URQlkTGX6DdsBKfUFBZE1BB0xGe0CSFFERPkgRDAQEuQxBAUABa4kDBgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s02-1-q23",
+   "fiche": "geographie-s02-1-f1",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Quelle est la langue officielle du Burkina Faso ?",
+   "choix": [
+    "Le français",
+    "Le moré",
+    "Le dioula",
+    "Le peul"
+   ],
+   "explication": "La langue officielle est le français. Les habitants parlent aussi de nombreuses autres langues, comme le moré, le peul ou le dioula.",
+   "source": {
+    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1 - Etude de cas 1 Burkina Faso.pdf",
+    "page": 1
+   },
+   "r": "=A1Gqwkw2P0DdAgRM4TZ",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s02-1-q24",
+   "fiche": "geographie-s02-1-f1",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Quel portrait du Burkina Faso est juste ?",
+   "choix": [
+    "Des plaines semi-arides, de l'élevage et un grave manque d'eau",
+    "Des plaines semi-arides, de la pêche et beaucoup d'eau",
+    "De hautes montagnes froides, de l'élevage et un grave manque d'eau",
+    "Des forêts équatoriales, des plantations et beaucoup d'eau"
+   ],
+   "explication": "Le Burkina Faso est fait de vastes plaines au climat semi-aride, où l'on vit surtout de l'élevage et des céréales. L'eau y manque cruellement.",
+   "source": {
+    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1 - Etude de cas 1 Burkina Faso.pdf",
+    "page": 1
+   },
+   "r": "=cFEUQhTK80FdIzQEgVDLkxBU4gUpcQVRARUMkgDE0wLEaqEB5kCCYURBIiFccBFcBwAKEASwg0CcxkAfYUFMYTZ",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s02-1-q25",
+   "fiche": "geographie-s02-1-f1",
+   "type": "vrai_faux",
+   "niveau": 1,
+   "enonce": "Ouagadougou est la capitale du Burkina Faso.",
+   "corrections": [],
+   "explication": "Oui, Ouagadougou est la capitale. Elle grandit très vite.",
+   "source": {
+    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1 - Etude de cas 1 Burkina Faso.pdf",
+    "page": 2
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -241,14 +315,14 @@ JEU.enregistrer("cours", {
    "fiche": "geographie-s02-1-f2",
    "type": "qcm",
    "niveau": 1,
-   "enonce": "D'après le graphique de l'étude de cas, comment la mortalité a-t-elle évolué au Burkina Faso depuis 1960 ?",
+   "enonce": "Comment la mortalité du Burkina Faso a-t-elle évolué depuis 1960 ?",
    "choix": [
     "Elle a beaucoup baissé",
     "Elle a beaucoup augmenté",
-    "Elle n'a pas bougé",
-    "Elle a dépassé la natalité"
+    "Elle n'a presque pas bougé",
+    "Elle a fini par dépasser la natalité"
    ],
-   "explication": "Sur le graphique, la mortalité passe d'un peu moins de 30 pour mille en 1960 à environ 10 pour mille de nos jours. Elle reste toujours bien sous la natalité.",
+   "explication": "La mortalité passe d'un peu moins de 30 pour mille en 1960 à environ 10 pour mille de nos jours. Elle reste toujours bien sous la natalité.",
    "source": {
     "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1 - Etude de cas 1 Burkina Faso.pdf",
     "page": 1
@@ -278,17 +352,17 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Comment voit-on que le Burkina Faso n'est qu'au début de sa transition démographique ?",
    "choix": [
-    "Sa mortalité a déjà bien baissé, mais sa natalité reste très haute",
-    "Sa natalité et sa mortalité sont toutes les deux très basses",
-    "Sa natalité a baissé avant sa mortalité",
-    "Sa population diminue depuis 1960"
+    "Sa mortalité a déjà bien baissé, mais sa natalité reste haute",
+    "Sa natalité a déjà bien baissé, mais sa mortalité reste haute",
+    "Sa natalité et sa mortalité sont déjà toutes les deux basses",
+    "Sa natalité et sa mortalité sont encore toutes les deux très hautes"
    ],
    "explication": "La première étape est faite : on meurt moins. Mais les naissances n'ont pas encore vraiment baissé.",
    "source": {
     "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1 - Etude de cas 1 Burkina Faso.pdf",
     "page": 1
    },
-   "r": "=8wCbMxBBIFNab7FBEFDawxFaMGhmGERC4gEHcgUmEQVWwBEE40QbvKMexAVP5UAD8wCSdesfwstVk0DPt9q3QUCUlFHAsgRIESZ",
+   "r": "=AlIGAABdEFDawxFaMGhmGERC4gEHcgUmEQVWwBEE40QbvKMexAVP5UAD8wCSdesfwstVk0DPt9q3QUCUlFHAsgRIESZ",
    "poids": 1
   },
   {
@@ -296,19 +370,120 @@ JEU.enregistrer("cours", {
    "fiche": "geographie-s02-1-f2",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "D'après les prévisions du graphique, combien d'habitants le Burkina Faso pourrait-il compter vers 2040 ?",
+   "enonce": "Combien d'habitants le Burkina Faso pourrait-il compter vers 2040, selon les prévisions ?",
    "choix": [
     "Plus de 30 millions",
+    "Environ 20 millions",
     "Environ 5 millions",
-    "Environ 1 million",
     "Plus de 300 millions"
    ],
-   "explication": "La courbe de la population monte sans arrêt. Elle passe d'environ 5 millions en 1960 à plus de 30 millions prévus vers 2040.",
+   "explication": "La population monte sans arrêt. Elle passe d'environ 5 millions en 1960 à plus de 30 millions prévus vers 2040.",
    "source": {
     "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1 - Etude de cas 1 Burkina Faso.pdf",
     "page": 1
    },
    "r": "XZxGeAgADsRBj1hVVgkCPVxEFISZ",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s02-1-q26",
+   "fiche": "geographie-s02-1-f2",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Depuis 1960, la natalité du Burkina Faso n'a pas baissé du tout.",
+   "corrections": [
+    "Faux : elle baisse, mais lentement, et elle reste forte.",
+    "Faux : elle a chuté plus vite que la mortalité.",
+    "Faux : elle est passée sous la mortalité."
+   ],
+   "explication": "La natalité recule doucement, alors que la mortalité a chuté bien plus vite. Les naissances restent donc très nombreuses.",
+   "source": {
+    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1 - Etude de cas 1 Burkina Faso.pdf",
+    "page": 1
+   },
+   "r": "=gxVfxgGd0hDjhUEGhEHPNgCFcxZGARRZVwBLIwFc0CSJUhXH4wCGV0F0EAHEcRUMIwAXgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s02-1-q27",
+   "fiche": "geographie-s02-1-f2",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Pourquoi la population du Burkina Faso grimpe-t-elle si vite ?",
+   "choix": [
+    "Parce que les naissances dépassent largement les décès",
+    "Parce que la natalité a chuté bien plus vite que la mortalité",
+    "Parce que la mortalité a augmenté depuis 1960",
+    "Parce que les naissances et les décès sont à égalité"
+   ],
+   "explication": "Il naît beaucoup plus d'enfants qu'il ne meurt de personnes. Cet écart fait grimper la population très vite.",
+   "source": {
+    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1 - Etude de cas 1 Burkina Faso.pdf",
+    "page": 1
+   },
+   "r": "=0UAADoTMbfSOxxAKkkBpcBGAIxAIIwTGYgJeZBVddMrCYkGXQCHUYhBYgAAPFQDv0AAAxlTKUAFIISZ",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s02-1-q28",
+   "fiche": "geographie-s02-1-f2",
+   "type": "trou",
+   "niveau": 2,
+   "enonce": "Complète la phrase.",
+   "texte": "Au Burkina Faso, la ___ a beaucoup baissé depuis 1960, mais la ___ reste forte.",
+   "banque": [
+    "mortalité",
+    "natalité",
+    "population",
+    "superficie"
+   ],
+   "explication": "On meurt bien moins qu'en 1960, mais il naît toujours beaucoup d'enfants. C'est le début de la transition démographique.",
+   "source": {
+    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1 - Etude de cas 1 Burkina Faso.pdf",
+    "page": 1
+   },
+   "r": "wNTTPXaHbsyEBQwGTJjQyAVwAmFDZxkGdkwCLlCH",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s02-1-q29",
+   "fiche": "geographie-s02-1-f2",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Le Burkina Faso comptait environ 5 millions d'habitants en 1960, et plus de 30 millions sont prévus vers 2040. Par combien sa population serait-elle multipliée ?",
+   "choix": [
+    "Par plus de 6",
+    "Par 2 environ",
+    "Par 3 environ",
+    "Par 30 environ"
+   ],
+   "explication": "30 millions, c'est six fois 5 millions. Avec plus de 30 millions, la population serait donc multipliée par plus de 6.",
+   "source": {
+    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1 - Etude de cas 1 Burkina Faso.pdf",
+    "page": 1
+   },
+   "r": "NRESmkURGhlAfYEFIISZ",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s02-1-q30",
+   "fiche": "geographie-s02-1-f2",
+   "type": "qcm_multiple",
+   "niveau": 3,
+   "enonce": "Quelles phrases décrivent bien l'évolution du Burkina Faso depuis 1960 ?",
+   "choix": [
+    "La mortalité a beaucoup baissé",
+    "La natalité reste forte et ne recule que lentement",
+    "La population a fortement augmenté",
+    "La natalité est passée sous la mortalité",
+    "La population a commencé à baisser"
+   ],
+   "explication": "Les décès ont reculé alors que les naissances restent nombreuses. La population grimpe donc très vite, sans jamais baisser.",
+   "source": {
+    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1 - Etude de cas 1 Burkina Faso.pdf",
+    "page": 1
+   },
+   "r": "=wySHzqBGYCQCAETOtBCDQwFzAgGDUFEJBAAbwhIBBRRC5xTHoySeVmBbAAGU0BAK4BSmgFFVgkAaUwAbIlIcUVEQEFDa0RHOMGSRYESc80zl2xGrMRAEsRUIISTepk6ubhRE9QDGZBHdQyBUAwFRhgTGHLHqEEBB9VACY0BlAFH",
    "poids": 1
   },
   {
@@ -319,9 +494,9 @@ JEU.enregistrer("cours", {
    "enonce": "Qu'est-ce qui fait grossir Ouagadougou de façon mal maîtrisée ?",
    "choix": [
     "La croissance démographique et l'exode rural",
-    "Le tourisme et les croisières",
-    "L'arrivée de retraités venus d'Europe",
-    "La fonte des glaciers"
+    "La baisse des naissances et le départ vers les campagnes",
+    "Le tourisme et l'arrivée de retraités étrangers",
+    "La construction de nouvelles usines et de mines"
    ],
    "explication": "Il naît beaucoup d'enfants et beaucoup de ruraux viennent s'installer en ville. La capitale grossit trop vite.",
    "source": {
@@ -340,9 +515,9 @@ JEU.enregistrer("cours", {
    "corrections": [
     "Faux : à côté d'espaces lotis bien organisés, il y a des quartiers pauvres et des bidonvilles.",
     "Faux : la ville n'a aucun quartier organisé.",
-    "Faux : Ouagadougou n'est qu'un petit village."
+    "Faux : tous ses quartiers sont des bidonvilles."
    ],
-   "explication": "La vue aérienne montre deux types de quartiers. Les uns sont bien tracés, les autres sont pauvres et mal équipés.",
+   "explication": "L'ouest de la ville montre deux paysages : des espaces lotis bien tracés et des quartiers pauvres avec des bidonvilles.",
    "source": {
     "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1 - Etude de cas 1 Burkina Faso.pdf",
     "page": 1
@@ -354,22 +529,22 @@ JEU.enregistrer("cours", {
    "id": "geographie-s02-1-q11",
    "fiche": "geographie-s02-1-f3",
    "type": "qcm_multiple",
-   "niveau": 2,
+   "niveau": 3,
    "enonce": "Quels problèmes la croissance très rapide de Ouagadougou pose-t-elle ?",
    "choix": [
     "La pollution",
     "Les transports",
     "La sécurité",
-    "Le manque de neige",
-    "La montée de la mer",
-    "Trop de personnes âgées"
+    "L'accès à l'eau potable",
+    "Le vieillissement de la population",
+    "Le manque de main-d'œuvre"
    ],
-   "explication": "Une ville qui grandit trop vite peine à gérer ses déchets, ses déplacements et sa sécurité. Ses équipements ne suivent pas.",
+   "explication": "Une ville qui grandit trop vite peine à gérer ses déchets, ses déplacements, sa sécurité et son eau potable. Le vieillissement et le manque de travailleurs sont plutôt des problèmes des pays du Nord.",
    "source": {
     "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1 - Etude de cas 1 Burkina Faso.pdf",
     "page": 2
    },
-   "r": "==wOEBcszsxBQYB2q2xTTQSYBckRZxBAWUxBTUjBVZBE9skQNxxBqkFEZFUAfY0BlAFH",
+   "r": "=A3RQFEDOIRCZIlMTAhQZEVyt+UAADoTGQlCi0kSEBcszsxBQYB2q2xTTQSYBckRZxBAWUxBTUjBVZBE9skQNxxBqkFEZFUAfY0BlAFH",
    "poids": 1
   },
   {
@@ -379,24 +554,98 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Pourquoi les infrastructures de Ouagadougou ne sont-elles pas adaptées ?",
    "choix": [
-    "Parce que la population augmente bien trop vite pour elles",
-    "Parce que la ville perd des habitants",
-    "Parce qu'elles sont trop nombreuses",
-    "Parce que personne n'habite la capitale"
+    "Parce que la population grandit bien plus vite qu'elles",
+    "Parce que la ville perd des habitants chaque année depuis 1960",
+    "Parce qu'elles ont été construites pour les touristes",
+    "Parce que la capitale a déjà trop d'équipements neufs"
    ],
    "explication": "La capitale gagne des habitants à un rythme record. Routes, réseaux et services n'arrivent pas à suivre.",
    "source": {
     "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1 - Etude de cas 1 Burkina Faso.pdf",
     "page": 2
    },
-   "r": "MxxFE8CSFdEWB8hRD0xGxIVBKcQBJBgCbowYIFxWINACTcQScgyGBQQGEkRAfIVCv0AAAxlTKUAFIISZ",
+   "r": "KBDSJkFSJpxFGxgBuQQVWAQHZ4UAXEQINEBXJBgDUEQScgyGBQQGEkRAfIVCv0AAAxlTKUAFIISZ",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s02-1-q31",
+   "fiche": "geographie-s02-1-f3",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Ouagadougou grossit surtout parce que beaucoup d'habitants des villes partent vivre à la campagne.",
+   "corrections": [
+    "Faux : ce sont les habitants des campagnes qui viennent s'installer en ville.",
+    "Faux : la ville grossit surtout grâce aux touristes.",
+    "Faux : la ville perd des habitants chaque année."
+   ],
+   "explication": "C'est l'exode rural : des habitants des campagnes s'installent en ville. Avec les nombreuses naissances, il fait exploser la capitale.",
+   "source": {
+    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1 - Etude de cas 1 Burkina Faso.pdf",
+    "page": 1
+   },
+   "r": "=gwUHtwAeEQNNsAUNwhCKoACGQDHcIkBR1BAKwhBmQ0EVQ0GeYUFMwBITUACUIRSdogFIBTWLQVWH0wBOkUAi4RVRshHa4kCRgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s02-1-q32",
+   "fiche": "geographie-s02-1-f3",
+   "type": "vrai_faux",
+   "niveau": 1,
+   "enonce": "La capitale du Burkina Faso approche les 3 millions d'habitants.",
+   "corrections": [],
+   "explication": "Oui, Ouagadougou compte presque 3 millions d'habitants. Et elle grandit très vite.",
+   "source": {
+    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1 - Etude de cas 1 Burkina Faso.pdf",
+    "page": 2
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s02-1-q33",
+   "fiche": "geographie-s02-1-f3",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Comment appelle-t-on le départ des habitants des campagnes vers la ville ?",
+   "choix": [
+    "L'exode rural",
+    "Le front pionnier",
+    "L'immigration",
+    "Le solde migratoire"
+   ],
+   "explication": "L'exode rural vide les campagnes et fait grossir les villes. L'immigration, c'est s'installer dans un autre pays.",
+   "source": {
+    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1 - Etude de cas 1 Burkina Faso.pdf",
+    "page": 1
+   },
+   "r": "N5RCxg1FVgkCA4xAO5TZ",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s02-1-q34",
+   "fiche": "geographie-s02-1-f3",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "À quel rythme la population de Ouagadougou grandit-elle ?",
+   "choix": [
+    "À l'un des rythmes les plus rapides du monde",
+    "Moins vite que celle du reste du pays",
+    "Au même rythme que celle de la France",
+    "Elle ne grandit plus depuis plusieurs années"
+   ],
+   "explication": "La capitale gagne chaque année plus de 7 % d'habitants, l'un des taux les plus élevés du monde. Ses équipements n'arrivent pas à suivre.",
+   "source": {
+    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1 - Etude de cas 1 Burkina Faso.pdf",
+    "page": 2
+   },
+   "r": "=s0FjwhGIUFBN4EHXwgKdRwRN0hGKYRSBIiHVZBEcEgGWAASwgUAVM0GIpgRpHbZ",
    "poids": 1
   },
   {
    "id": "geographie-s02-1-q13",
    "fiche": "geographie-s02-1-f4",
    "type": "association",
-   "niveau": 2,
+   "niveau": 3,
    "enonce": "Relie chaque indicateur à sa valeur au Burkina Faso.",
    "gauche": [
     "Nombre d'enfants par femme",
@@ -410,7 +659,7 @@ JEU.enregistrer("cours", {
     "61 ans",
     "+ 2,89 % par an"
    ],
-   "explication": "Ces chiffres viennent du tableau de l'étude de cas. Ils montrent un pays pauvre où la population grandit vite.",
+   "explication": "Plus de cinq enfants par femme, une vie plus courte et peu de richesse par habitant. Ces chiffres montrent un pays pauvre où la population grandit vite.",
    "source": {
     "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1 - Etude de cas 1 Burkina Faso.pdf",
     "page": 2
@@ -426,7 +675,7 @@ JEU.enregistrer("cours", {
    "enonce": "Pourquoi la population du Burkina Faso est-elle très jeune ?",
    "choix": [
     "Parce que chaque femme y a en moyenne plus de cinq enfants",
-    "Parce que les personnes âgées partent toutes à l'étranger",
+    "Parce que la mortalité des enfants y est plus faible qu'en France",
     "Parce qu'on y vit plus longtemps qu'en France",
     "Parce que les familles y ont très peu d'enfants"
    ],
@@ -446,8 +695,8 @@ JEU.enregistrer("cours", {
    "enonce": "Au Burkina Faso, on vit en moyenne plus longtemps qu'en France.",
    "corrections": [
     "Faux : on y vit en moyenne environ 61 ans, contre 82 ans en France.",
-    "Faux : on y vit exactement aussi longtemps qu'en France.",
-    "Faux : l'espérance de vie n'y est pas mesurée."
+    "Faux : on y vit à peu près aussi longtemps qu'en France.",
+    "Faux : on y vit environ 5 ans de moins qu'en France."
    ],
    "explication": "On y vit environ vingt ans de moins qu'en France. C'est un signe de faible développement.",
    "source": {
@@ -465,8 +714,8 @@ JEU.enregistrer("cours", {
    "enonce": "Dans une école primaire du Burkina Faso, combien d'élèves peut-il y avoir dans une classe ?",
    "choix": [
     "Jusqu'à 120",
-    "Une dizaine",
     "Une vingtaine au plus",
+    "Une quarantaine au plus",
     "Toujours moins de 30"
    ],
    "explication": "Les classes peuvent compter jusqu'à 120 élèves. Et ces enfants ont de la chance, car beaucoup d'autres travaillent.",
@@ -484,12 +733,88 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Au Burkina Faso, plus de la moitié des enfants travaillent.",
    "corrections": [],
-   "explication": "Oui, d'après l'étude de cas, c'est le cas d'un peu plus de la moitié des enfants.",
+   "explication": "Oui, c'est le cas d'un peu plus de la moitié des enfants. Ceux qui vont à l'école sont parmi les plus chanceux.",
    "source": {
     "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1 - Etude de cas 1 Burkina Faso.pdf",
     "page": 2
    },
    "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s02-1-q35",
+   "fiche": "geographie-s02-1-f4",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Au Burkina Faso, une femme a en moyenne un peu plus de deux enfants.",
+   "corrections": [
+    "Faux : elle en a en moyenne un peu plus de cinq.",
+    "Faux : elle en a moins de deux, comme en France.",
+    "Faux : elle en a en moyenne une dizaine."
+   ],
+   "explication": "Une femme y a en moyenne 5,1 enfants, contre moins de 2 en France. Avec autant de naissances, la population est très jeune.",
+   "source": {
+    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1 - Etude de cas 1 Burkina Faso.pdf",
+    "page": 2
+   },
+   "r": "+8wSEN0BMY0ANIFNHkRFVRADe8EHdMGSLsFSXAwCGdwFnNRVLARUMIwAXgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s02-1-q36",
+   "fiche": "geographie-s02-1-f4",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "La mortalité infantile du Burkina Faso est plus de quatre fois plus forte qu'en France.",
+   "corrections": [],
+   "explication": "Oui, elle atteint 54 pour mille, plus de quatre fois le niveau français. C'est un signe de faible développement.",
+   "source": {
+    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1 - Etude de cas 1 Burkina Faso.pdf",
+    "page": 2
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s02-1-q37",
+   "fiche": "geographie-s02-1-f4",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "La richesse produite par habitant est environ cinquante fois plus faible au Burkina Faso qu'en France. Que signifie cet écart ?",
+   "choix": [
+    "Chaque habitant produit en moyenne bien moins de richesse",
+    "Le pays compte cinquante fois moins d'habitants que la France",
+    "Le pays est cinquante fois plus petit que la France",
+    "Les habitants y vivent cinquante ans de moins"
+   ],
+   "explication": "Le PIB par habitant partage la richesse produite entre tous les habitants. Au Burkina Faso, chacun en produit en moyenne beaucoup moins qu'en France.",
+   "source": {
+    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1 - Etude de cas 1 Burkina Faso.pdf",
+    "page": 2
+   },
+   "r": "=00FbADSNYFRc80ACkUApshGIU1HMcQDS1QLDBATCNwTIMQSG4yBRowBBkkGBMBHq8EBd1wCacxBBETZ",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s02-1-q38",
+   "fiche": "geographie-s02-1-f4",
+   "type": "qcm_multiple",
+   "niveau": 3,
+   "enonce": "Lesquelles de ces valeurs sont celles du Burkina Faso, et non de la France ?",
+   "choix": [
+    "Une espérance de vie de 61 ans",
+    "Une mortalité infantile de 54 pour mille",
+    "Un PIB par habitant de 786 dollars par an",
+    "Une espérance de vie de 82 ans",
+    "Une croissance de + 0,2 % par an",
+    "Moins de deux enfants par femme"
+   ],
+   "explication": "Le Burkina Faso a une vie plus courte, une mortalité infantile plus forte et un PIB par habitant bien plus faible. Les trois autres valeurs sont celles de la France.",
+   "source": {
+    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1 - Etude de cas 1 Burkina Faso.pdf",
+    "page": 2
+   },
+   "r": "1E2QEUxXP8hRVsxEr4hGBU1RRl1TXwwYZtAVZdQDH4QSAYiAVdCPhkEA6AFRhhUCZR0APRxEGIwZGBURQURSLMwGc0CTDsFROZcpSAgHmYwBKgRUMAgOQRUYetAVN8VWGNQDSJyGDUEEVk0CMwRCxQopF51CPNAC8AFH",
    "poids": 1
   },
   {
@@ -500,9 +825,9 @@ JEU.enregistrer("cours", {
    "enonce": "Où finit une bonne partie des ordures de Ouagadougou ?",
    "choix": [
     "Dans la rue ou dans des décharges sauvages",
-    "Dans des usines de recyclage",
-    "Dans des centres de tri modernes",
-    "Dans la mer"
+    "Dans des usines de recyclage modernes",
+    "Ramassées et triées chaque jour par la ville",
+    "Enterrées dans des décharges contrôlées"
    ],
    "explication": "Plus d'un tiers des ordures sont jetées dans la rue ou dans des décharges sauvages. Elles forment de petites montagnes de déchets.",
    "source": {
@@ -519,16 +844,16 @@ JEU.enregistrer("cours", {
    "niveau": 1,
    "enonce": "La quantité de déchets produite à Ouagadougou diminue chaque année.",
    "corrections": [
-    "Faux : elle augmente chaque année, et elle a triplé en vingt ans.",
-    "Faux : la ville ne produit aucun déchet.",
-    "Faux : elle a été divisée par trois."
+    "Faux : elle augmente chaque année et a triplé en vingt ans.",
+    "Faux : elle augmente, et a doublé en vingt ans.",
+    "Faux : elle reste la même depuis vingt ans."
    ],
    "explication": "La masse de déchets grossit chaque année. La ville en produit trois fois plus qu'il y a vingt ans.",
    "source": {
     "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1 - Etude de cas 1 Burkina Faso.pdf",
     "page": 2
    },
-   "r": "==ASPAEHIcQSGACHcMRVfwgTGHLBzQ0FB1wDPNgCFcxZGARRZRBwtGAHJMGSQQETGwgRD0BHi8hEQQRUMIwAXgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "r": "==AFQlWAbQQVF4AAGQAStgURc6uAf8AFdIlJSFAAVRBwtGAHJMGSQQETGwgRD0BHi8hEQQRUMIwAXgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -541,7 +866,7 @@ JEU.enregistrer("cours", {
     "L'urbanisation",
     "L'explosion démographique",
     "Certaines habitudes alimentaires",
-    "Le froid de l'hiver",
+    "Le manque d'eau du pays",
     "La baisse de la population"
    ],
    "explication": "Plus d'habitants, une ville qui s'étend et certaines façons de manger produisent plus d'ordures.",
@@ -560,16 +885,79 @@ JEU.enregistrer("cours", {
    "enonce": "Quelle part des déchets de la capitale est en plastique ?",
    "choix": [
     "Environ un tiers",
-    "Presque aucune",
-    "La totalité",
+    "Environ la moitié",
+    "Environ les trois quarts",
     "Environ un dixième"
    ],
-   "explication": "À peu près un déchet sur trois est en plastique.",
+   "explication": "À peu près un déchet sur trois est en plastique. Sacs et emballages font partie du paysage de la ville.",
    "source": {
     "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1 - Etude de cas 1 Burkina Faso.pdf",
     "page": 2
    },
    "r": "TpBHKsBHjNEEVMUAd8AEHcTZ",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s02-1-q39",
+   "fiche": "geographie-s02-1-f5",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Les déchets de Ouagadougou augmentent seulement parce que la ville s'étend.",
+   "corrections": [
+    "Faux : l'explosion démographique et certaines habitudes alimentaires jouent aussi.",
+    "Faux : ils augmentent seulement à cause du tourisme.",
+    "Faux : ils n'augmentent pas, ils diminuent."
+   ],
+   "explication": "Trois causes s'ajoutent : l'urbanisation, l'explosion démographique et certaines habitudes alimentaires. Ensemble, elles font grossir la masse d'ordures.",
+   "source": {
+    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1 - Etude de cas 1 Burkina Faso.pdf",
+    "page": 2
+   },
+   "r": "=QBUpthBWAAEJpRAX0BLHVkRIxhBHIxBXoyGZQQVCwgCaYQAhwUDV41CB8wBdAgIRUVEQEFDb4xGAMDTXIlQDYcpCkEHoshBKkRARsASegUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s02-1-q40",
+   "fiche": "geographie-s02-1-f5",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "À Ouagadougou, la quantité de déchets a triplé en vingt ans. Une rue suit la même évolution : si elle en produisait 100 kilos il y a vingt ans, combien en produit-elle aujourd'hui ?",
+   "choix": [
+    "300 kilos",
+    "200 kilos",
+    "130 kilos",
+    "400 kilos"
+   ],
+   "explication": "Tripler, c'est multiplier par trois : 100 × 3 = 300. La masse de déchets grossit donc très vite.",
+   "source": {
+    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1 - Etude de cas 1 Burkina Faso.pdf",
+    "page": 2
+   },
+   "r": "=8gFaF0BEYkVZFUZ",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s02-1-q41",
+   "fiche": "geographie-s02-1-f5",
+   "type": "association",
+   "niveau": 3,
+   "enonce": "Relie chaque chiffre à ce qu'il décrit à Ouagadougou.",
+   "gauche": [
+    "Environ un tiers",
+    "Trois fois plus",
+    "Environ 3 millions"
+   ],
+   "droite": [
+    "Le nombre d'habitants de la capitale",
+    "La part de plastique dans les déchets",
+    "Les déchets d'aujourd'hui, comparés à il y a vingt ans"
+   ],
+   "explication": "Un déchet sur trois environ est en plastique, et la ville en produit trois fois plus qu'il y a vingt ans. Elle compte près de 3 millions d'habitants.",
+   "source": {
+    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1 - Etude de cas 1 Burkina Faso.pdf",
+    "page": 2
+   },
+   "r": "==AKsklQdlCRe8RSEYnQyclSZlCH",
    "poids": 1
   }
  ],

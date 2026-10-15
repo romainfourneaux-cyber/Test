@@ -244,11 +244,11 @@ JEU.enregistrer("cours", {
    "id": "svt-s03-1-q3",
    "fiche": "svt-s03-1-f1",
    "type": "vrai_faux",
-   "niveau": 1,
+   "niveau": 2,
    "enonce": "La Station spatiale internationale tourne dans la troposphère.",
    "corrections": [
     "Faux : elle tourne bien plus haut, à la limite entre la thermosphère et l'exosphère.",
-    "Faux : elle reste posée au sol.",
+    "Faux : elle tourne dans la mésosphère, vers 85 km d'altitude.",
     "Faux : elle tourne dans la stratosphère, au milieu de l'ozone."
    ],
    "explication": "La troposphère est la couche du bas. La Station spatiale tourne tout en haut de la thermosphère, au bord de l'exosphère.",
@@ -280,6 +280,86 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
+   "id": "svt-s03-1-q21",
+   "fiche": "svt-s03-1-f1",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "La thermosphère est la couche la plus haute de l'atmosphère.",
+   "corrections": [
+    "Faux : au-dessus d'elle se trouve encore l'exosphère.",
+    "Faux : la couche la plus haute est la mésosphère.",
+    "Faux : la couche la plus haute est la stratosphère."
+   ],
+   "explication": "Au-dessus de la thermosphère vient l'exosphère, la dernière couche. La Station spatiale tourne à la limite entre les deux.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
+    "page": 4
+   },
+   "r": "MsEQKAAwAWUFGJkFKEkCJdRNdYxCQEFDYoRHacTDAYUDLMgCD4kFnFAAWYAFNMkGTgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "svt-s03-1-q22",
+   "fiche": "svt-s03-1-f1",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Un avion vole à 8 km d'altitude. Dans quelle couche de l'atmosphère se trouve-t-il ?",
+   "choix": [
+    "La troposphère",
+    "La stratosphère",
+    "La mésosphère",
+    "La thermosphère"
+   ],
+   "explication": "La troposphère part du niveau de la mer et monte plus haut que 8 km. L'avion vole donc dans cette première couche.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
+    "page": 4
+   },
+   "r": "=s0Cdo9qr0lFa1VAdIhRI4TZ",
+   "poids": 1
+  },
+  {
+   "id": "svt-s03-1-q23",
+   "fiche": "svt-s03-1-f1",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Une fusée atteint 100 km d'altitude. Dans quelle couche de l'atmosphère se trouve-t-elle ?",
+   "choix": [
+    "La thermosphère",
+    "La mésosphère",
+    "L'exosphère",
+    "La stratosphère"
+   ],
+   "explication": "La mésosphère s'arrête à 85 km ; au-dessus commence la thermosphère, qui monte bien plus haut que 100 km. La fusée est donc dans la thermosphère.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
+    "page": 4
+   },
+   "r": "TxAHHHLAz4lCY91CHIhRI4TZ",
+   "poids": 1
+  },
+  {
+   "id": "svt-s03-1-q24",
+   "fiche": "svt-s03-1-f1",
+   "type": "qcm_multiple",
+   "niveau": 3,
+   "enonce": "Coche les couches de l'atmosphère situées au-dessus de 50 km d'altitude.",
+   "choix": [
+    "La mésosphère",
+    "La thermosphère",
+    "L'exosphère",
+    "La stratosphère",
+    "La troposphère"
+   ],
+   "explication": "La stratosphère s'arrête à 50 km. Au-dessus viennent la mésosphère, la thermosphère et l'exosphère.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
+    "page": 4
+   },
+   "r": "=g2DL0hzlGgA00RDAIVPLJUTXox6u3QReFgAUMQAGc2E5cUWTxAHHHLAz4lCGRYrCY0BlAFH",
+   "poids": 1
+  },
+  {
    "id": "svt-s03-1-q5",
    "fiche": "svt-s03-1-f2",
    "type": "qcm",
@@ -303,12 +383,12 @@ JEU.enregistrer("cours", {
    "id": "svt-s03-1-q6",
    "fiche": "svt-s03-1-f2",
    "type": "vrai_faux",
-   "niveau": 1,
-   "enonce": "Sur le graphique, il fait de plus en plus chaud quand on monte de 50 à 85 km d'altitude.",
+   "niveau": 2,
+   "enonce": "Quand on monte de 50 à 85 km d'altitude, il fait de plus en plus chaud.",
    "corrections": [
     "Faux : il fait de plus en plus froid ; la température passe bien en dessous de 0 °C.",
-    "Faux : la température reste la même à toutes les altitudes.",
-    "Faux : au-dessus de 50 km, il n'y a plus d'atmosphère du tout."
+    "Faux : la température reste à 0 °C sur toute cette hauteur.",
+    "Faux : à cette altitude, il n'y a plus d'atmosphère du tout."
    ],
    "explication": "Vers 50 km, il fait environ 0 °C. Plus haut, dans la mésosphère, la température chute fortement.",
    "source": {
@@ -343,19 +423,93 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s03-1-f2",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Comment trouve-t-on l'épaisseur d'une couche de l'atmosphère sur le graphique ?",
+   "enonce": "Comment trouve-t-on l'épaisseur d'une couche de l'atmosphère ?",
    "choix": [
-    "On soustrait l'altitude de sa limite basse à celle de sa limite haute",
-    "On additionne les altitudes de ses deux limites",
-    "On lit la température en son milieu",
-    "On compte les nuages qu'elle contient"
+    "On soustrait l'altitude du bas de la couche à celle du haut",
+    "On additionne l'altitude du bas de la couche et celle du haut",
+    "On lit seulement l'altitude du haut de la couche",
+    "On soustrait la température du haut à celle du bas"
    ],
    "explication": "L'épaisseur, c'est la différence entre le haut et le bas de la couche. Par exemple, la mésosphère fait 85 − 50 = 35 km.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 4
    },
-   "r": "NNgEcMxLSBREcwBAC80EbMGSBUBSCMwAFkk0EKFEWYAEL4kCGEgLElQFM1xTDIQSXMyBBwQAdgQSDIFHqw0FB51GAUhRH0TZ",
+   "r": "=MVHb4gGIZTSFBVQCoQBGlcsndRHGAgHK4kDegkJJVkRMxwTTIQSXMyBBwQAdgQSDIFHqw0FB51GAUhRH0TZ",
+   "poids": 1
+  },
+  {
+   "id": "svt-s03-1-q25",
+   "fiche": "svt-s03-1-f2",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Quelle est l'épaisseur de la stratosphère ?",
+   "choix": [
+    "38 km",
+    "50 km",
+    "62 km",
+    "35 km"
+   ],
+   "explication": "La stratosphère va du sommet de la troposphère jusqu'à 50 km : son épaisseur est de 38 km. La mésosphère, juste au-dessus, en fait 35.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
+    "page": 4
+   },
+   "r": "==ATC0gRRFUZ",
+   "poids": 1
+  },
+  {
+   "id": "svt-s03-1-q26",
+   "fiche": "svt-s03-1-f2",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Laquelle de ces couches de l'atmosphère est la plus épaisse ?",
+   "choix": [
+    "La thermosphère",
+    "La stratosphère",
+    "La mésosphère",
+    "La troposphère"
+   ],
+   "explication": "La thermosphère est épaisse de 415 km. Les trois couches du dessous font chacune moins de 40 km.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
+    "page": 4
+   },
+   "r": "TxAHHHLAz4lCY91CHIhRI4TZ",
+   "poids": 1
+  },
+  {
+   "id": "svt-s03-1-q27",
+   "fiche": "svt-s03-1-f2",
+   "type": "vrai_faux",
+   "niveau": 1,
+   "enonce": "Vers 50 km d'altitude, la température est d'environ 0 °C.",
+   "corrections": [],
+   "explication": "À 50 km, à la limite entre stratosphère et mésosphère, il fait environ 0 °C. Plus haut, la température chute fortement.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
+    "page": 4
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "svt-s03-1-q28",
+   "fiche": "svt-s03-1-f2",
+   "type": "vrai_faux",
+   "niveau": 3,
+   "enonce": "On connaît l'altitude des deux limites de l'exosphère, ce qui permet de calculer son épaisseur.",
+   "corrections": [
+    "Faux : on ne connaît que sa limite basse, au sommet de la thermosphère ; son épaisseur ne se calcule pas.",
+    "Faux : on ne connaît que sa limite haute, au bord de l'espace.",
+    "Faux : son épaisseur est la même que celle de la thermosphère."
+   ],
+   "explication": "Pour calculer une épaisseur, il faut l'altitude du haut et celle du bas de la couche. Pour l'exosphère, seule la limite basse est connue.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
+    "page": 4
+   },
+   "r": "SQESaMxNSBRCAIRBPwgUNATDAsVDcoxAVoxGmIA3mW1HG0xTJhkJf1s9F5BHJswGX8iBVRQGRxgCPZQDuAkCG1wGOYkSMEANTcRRQUAADYgHIJiXFBFWf8kEIr6EpwhGGUFFH4UAdgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -368,7 +522,7 @@ JEU.enregistrer("cours", {
     "Une zone de haute pression atmosphérique",
     "Une zone de basse pression atmosphérique",
     "Un amas de gouttelettes d'eau",
-    "Une couche de l'atmosphère"
+    "Une zone de vents et de précipitations"
    ],
    "explication": "Anticyclone : haute pression. Dépression : basse pression.",
    "source": {
@@ -401,9 +555,9 @@ JEU.enregistrer("cours", {
    "enonce": "Comment appelle-t-on la zone de vents et de précipitations qui se forme entre une dépression et un anticyclone ?",
    "choix": [
     "Une perturbation",
-    "Un nuage",
-    "La stratosphère",
-    "Un équinoxe"
+    "Une dépression",
+    "Un anticyclone",
+    "Un nuage"
    ],
    "explication": "La perturbation naît à la limite entre une dépression et un anticyclone. Elle apporte du vent et des précipitations.",
    "source": {
@@ -418,19 +572,80 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s03-1-f3",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Comment reconnaître une dépression ?",
+   "enonce": "Quelle est la différence entre une dépression et un anticyclone ?",
    "choix": [
-    "C'est une zone où la pression atmosphérique est basse",
-    "C'est une zone où la pression atmosphérique est haute",
-    "C'est un amas de gouttelettes d'eau en suspension",
-    "C'est la couche la plus haute de l'atmosphère"
+    "La pression est basse dans l'une, haute dans l'autre",
+    "L'une est faite de gouttelettes, l'autre de grêle",
+    "L'une est dans la troposphère, l'autre dans l'exosphère",
+    "L'une est un nuage, l'autre une perturbation"
    ],
    "explication": "Une dépression est une zone de basse pression atmosphérique. Son contraire, l'anticyclone, est une zone de haute pression.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 5
    },
-   "r": "KZiXWQ1TOtRFDk0FyMAHXwtsB4BHdUwNMV0WCdAHVMwGCc2EZUEzyagTKwxB50AAbhlTbUxAOFTZ",
+   "r": "HB1XaoxBBVgU0wBFBUFFdshDag0bItAQKIwTVgACWc2FGYBFTkkGccBStIEDG51CdYhRI4TZ",
+   "poids": 1
+  },
+  {
+   "id": "svt-s03-1-q29",
+   "fiche": "svt-s03-1-f3",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Une perturbation se forme au centre d'un anticyclone.",
+   "corrections": [
+    "Faux : elle se forme à la limite entre une dépression et un anticyclone.",
+    "Faux : elle se forme au centre d'une dépression.",
+    "Faux : elle se forme tout en haut, dans l'exosphère."
+   ],
+   "explication": "Une perturbation naît là où une dépression et un anticyclone se rencontrent. Elle apporte du vent et des précipitations.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
+    "page": 5
+   },
+   "r": "=MRTc1QLClgVU1gBSgACSlyBVFBERdQAGEwGm8VFc6uCPNACcIlIAEwCQEFDaYwHB8SDEkVDOzqRDQAAoQRVAYQUMIwAXgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "svt-s03-1-q30",
+   "fiche": "svt-s03-1-f3",
+   "type": "qcm_multiple",
+   "niveau": 3,
+   "enonce": "Coche les zones qu'on définit par leur pression atmosphérique.",
+   "choix": [
+    "Une dépression",
+    "Un anticyclone",
+    "Une perturbation",
+    "Un nuage",
+    "La stratosphère"
+   ],
+   "explication": "Dépression et anticyclone se distinguent par leur pression, basse ou haute. Une perturbation se définit par ses vents et ses précipitations, un nuage par ses gouttelettes.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
+    "page": 5
+   },
+   "r": "vokJDpQWOdBDPIxBTcGHgcUWTdQAGEwGm8VFc6uCPNAC8AFH",
+   "poids": 1
+  },
+  {
+   "id": "svt-s03-1-q31",
+   "fiche": "svt-s03-1-f3",
+   "type": "trou",
+   "niveau": 1,
+   "enonce": "Complète la phrase.",
+   "texte": "Une dépression est une zone de ___ pression ; un anticyclone, une zone de ___ pression.",
+   "banque": [
+    "basse",
+    "haute",
+    "moyenne",
+    "nulle"
+   ],
+   "explication": "Une dépression est une zone de basse pression, un anticyclone une zone de haute pression. À leur limite se forment les perturbations.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
+    "page": 5
+   },
+   "r": "=MjMQ1wNfpwUPIUTDIBHT8CUukEKTxgANsRCl8QSXgUHccABLlCH",
    "poids": 1
   },
   {
@@ -441,9 +656,9 @@ JEU.enregistrer("cours", {
    "enonce": "Dans un mouvement de convection, que fait l'air chaud ?",
    "choix": [
     "Il monte",
-    "Il descend",
+    "Il redescend",
     "Il reste immobile",
-    "Il se transforme en grêle"
+    "Il reste au ras du sol"
    ],
    "explication": "Dans la convection, l'air chaud monte et l'air froid redescend. C'est l'un des déplacements de l'air dans l'atmosphère.",
    "source": {
@@ -457,7 +672,7 @@ JEU.enregistrer("cours", {
    "id": "svt-s03-1-q14",
    "fiche": "svt-s03-1-f4",
    "type": "vrai_faux",
-   "niveau": 1,
+   "niveau": 2,
    "enonce": "Chaque hémisphère compte trois cellules de vents contraires.",
    "corrections": [],
    "explication": "Il y en a trois par hémisphère : la cellule de Hadley, la cellule de Ferrel et la cellule polaire. Elles sont liées aux anticyclones et aux dépressions.",
@@ -472,16 +687,16 @@ JEU.enregistrer("cours", {
    "id": "svt-s03-1-q15",
    "fiche": "svt-s03-1-f4",
    "type": "qcm_multiple",
-   "niveau": 1,
+   "niveau": 2,
    "enonce": "Coche les formes de précipitations.",
    "choix": [
     "La pluie",
     "La neige",
     "La grêle",
     "Le vent",
-    "L'ozone"
+    "Le nuage"
    ],
-   "explication": "Pluie, neige et grêle sont des précipitations : de l'eau qui tombe du ciel. Le vent et l'ozone n'en sont pas.",
+   "explication": "Pluie, neige et grêle sont des précipitations : de l'eau qui tombe du ciel. Le vent n'en est pas une, et un nuage reste en suspension dans l'air.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 6
@@ -493,27 +708,27 @@ JEU.enregistrer("cours", {
    "id": "svt-s03-1-q16",
    "fiche": "svt-s03-1-f4",
    "type": "qcm",
-   "niveau": 2,
+   "niveau": 3,
    "enonce": "Pourquoi une perturbation peut-elle apporter de la neige ?",
    "choix": [
-    "Parce qu'elle apporte des précipitations, et la neige en est une forme",
-    "Parce qu'elle se forme dans l'exosphère",
-    "Parce que l'air chaud y redescend vers le sol",
-    "Parce qu'elle arrête tous les vents"
+    "La neige est une des précipitations qu'elle apporte",
+    "Elle se forme toujours au cœur d'un anticyclone",
+    "L'air froid y monte au lieu de redescendre vers le sol",
+    "Elle se forme tout en haut, dans l'exosphère"
    ],
    "explication": "Une perturbation est une zone de vents et de précipitations. Les précipitations tombent sous forme de pluie, de neige ou de grêle.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 6
    },
-   "r": "==ATKsAFGQxZXsBEVVgGL8EHNMGSCwFSA80BKkkBiIVWWshHAohDGEwMEZAnuzxHGVBDWc2FBchGBkxDPdBBvgkQAxlTKUAFIISZ",
+   "r": "HBVWcAgFWggUi4RGAIFBY4EHccgKZRQQE5hBF8sqAcjUGAQERxAAaIFHwgURQp0BKggRI4TZ",
    "poids": 1
   },
   {
    "id": "svt-s03-1-q17",
    "fiche": "svt-s03-1-f4",
    "type": "association",
-   "niveau": 2,
+   "niveau": 3,
    "enonce": "Relie chaque notion à ce qu'elle désigne.",
    "gauche": [
     "Convection",
@@ -536,6 +751,59 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
+   "id": "svt-s03-1-q32",
+   "fiche": "svt-s03-1-f4",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "La force de Coriolis agit sur le sens des vents.",
+   "corrections": [],
+   "explication": "La force de Coriolis intervient dans le sens que prennent les vents. Avec la convection et les trois cellules de vents, elle fait partie des déplacements de l'air.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
+    "page": 6
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "svt-s03-1-q33",
+   "fiche": "svt-s03-1-f4",
+   "type": "vrai_faux",
+   "niveau": 3,
+   "enonce": "Chaque hémisphère compte trois cellules de vents : la cellule de Hadley, la cellule de Ferrel et la cellule de Coriolis.",
+   "corrections": [
+    "Faux : la troisième est la cellule polaire ; Coriolis est le nom d'une force qui agit sur le sens des vents.",
+    "Faux : il n'y a que deux cellules, celles de Hadley et de Ferrel.",
+    "Faux : ces trois cellules existent pour toute la Terre, pas dans chaque hémisphère."
+   ],
+   "explication": "Les trois cellules de chaque hémisphère sont celles de Hadley, de Ferrel et la cellule polaire. Coriolis, c'est une force, pas une cellule.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
+    "page": 6
+   },
+   "r": "==wENhUFdwhIEUlFQURSdEwFbMGSJUxXbwhRSAQFmIFHQQQUM0QHd4wYItAQKowTLkwBSJiHVFhBUkUHG4xBq8lC21QVPNAFAMxKdUQRQ0BHCMwFLMGTJURWdogRDQg2EuhBMoxAd4kDegUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "svt-s03-1-q34",
+   "fiche": "svt-s03-1-f4",
+   "type": "ordre",
+   "niveau": 2,
+   "enonce": "Remets dans l'ordre ce qui mène aux précipitations.",
+   "elements": [
+    "La pluie, la neige ou la grêle tombent",
+    "Un anticyclone rencontre une dépression",
+    "Une perturbation se forme"
+   ],
+   "explication": "Là où un anticyclone et une dépression se rencontrent naît une perturbation. C'est elle qui apporte les précipitations.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
+    "page": 6
+   },
+   "r": "==wMfpEVFNEH",
+   "poids": 1
+  },
+  {
    "id": "svt-s03-1-q18",
    "fiche": "svt-s03-1-f5",
    "type": "qcm",
@@ -545,7 +813,7 @@ JEU.enregistrer("cours", {
     "Météo-France",
     "Le Bureau central météorologique",
     "L'Office national météorologique",
-    "L'Observatoire de Paris"
+    "La Météorologie nationale"
    ],
    "explication": "Depuis 1993, le service s'appelle Météo-France. Avant, il a porté plusieurs autres noms.",
    "source": {
@@ -588,6 +856,111 @@ JEU.enregistrer("cours", {
     "page": 7
    },
    "r": "o9hQfpUVFNEH",
+   "poids": 1
+  },
+  {
+   "id": "svt-s03-1-q35",
+   "fiche": "svt-s03-1-f5",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Le service météorologique français s'appelle Météo-France depuis 1945.",
+   "corrections": [
+    "Faux : en 1945, il devient la Météorologie nationale ; il ne s'appelle Météo-France qu'en 1993.",
+    "Faux : il s'appelle Météo-France depuis 1855.",
+    "Faux : il s'appelle Météo-France depuis 1920."
+   ],
+   "explication": "En 1945, le service prend le nom de Météorologie nationale. Le nom de Météo-France n'arrive qu'en 1993.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
+    "page": 7
+   },
+   "r": "IM1RdZ1SZN2QAIBWf80AFcwE1QDWKwtsdcMr/gkJBlAUd5hDBVRSXkiUZwQVKl0CDMhBsQUEUNkTK8QAG4BKAoBz2WAwtKiUJ8SDRsFSHkxACkkHuIVWQFESY5UAXgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "svt-s03-1-q36",
+   "fiche": "svt-s03-1-f5",
+   "type": "qcm",
+   "niveau": 1,
+   "enonce": "Où commencent les relevés météorologiques en France, en 1855 ?",
+   "choix": [
+    "À l'Observatoire de Paris",
+    "Au Bureau central météorologique",
+    "À l'Office national météorologique",
+    "À la Météorologie nationale"
+   ],
+   "explication": "Les premiers relevés sont faits à l'Observatoire de Paris, en 1855. Le Bureau central météorologique n'arrive qu'en 1878.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
+    "page": 7
+   },
+   "r": "==QTV8wGTchUQEQVUsxBAYQC18FAG9UIIpgRpHbZ",
+   "poids": 1
+  },
+  {
+   "id": "svt-s03-1-q37",
+   "fiche": "svt-s03-1-f5",
+   "type": "association",
+   "niveau": 3,
+   "enonce": "Relie chaque date au nom que prend le service météorologique français.",
+   "gauche": [
+    "1878",
+    "1920",
+    "1945",
+    "1993"
+   ],
+   "droite": [
+    "Météo-France",
+    "Bureau central météorologique",
+    "Météorologie nationale",
+    "Office national météorologique"
+   ],
+   "explication": "Le service devient Bureau central en 1878, puis Office national en 1920 et Météorologie nationale en 1945. Il prend le nom de Météo-France en 1993.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
+    "page": 7
+   },
+   "r": "==ANvcnXG5TWsslQdlCRe4RSEYnQyclSZlCH",
+   "poids": 1
+  },
+  {
+   "id": "svt-s03-1-q38",
+   "fiche": "svt-s03-1-f5",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Combien d'années séparent le début des relevés, en 1855, et la naissance de Météo-France, en 1993 ?",
+   "choix": [
+    "138 ans",
+    "148 ans",
+    "132 ans",
+    "38 ans"
+   ],
+   "explication": "On soustrait : 1993 − 1855 = 138. La période couvre donc 138 ans.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
+    "page": 7
+   },
+   "r": "X4FAOYkXaNUZ",
+   "poids": 1
+  },
+  {
+   "id": "svt-s03-1-q39",
+   "fiche": "svt-s03-1-f5",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "On trace une frise de 1855 à 1993 avec une échelle d'un centimètre pour dix ans. Quelle longueur doit-elle mesurer, environ ?",
+   "choix": [
+    "Environ 14 cm",
+    "Environ 138 cm",
+    "Environ 1,4 cm",
+    "Environ 7 cm"
+   ],
+   "explication": "La période dure 138 ans ; à un centimètre pour dix ans, cela fait environ 14 cm. La frise tient donc sur la largeur d'une page.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
+    "page": 7
+   },
+   "r": "N9xCjlBVVMUAd8AEHcTZ",
    "poids": 1
   }
  ],

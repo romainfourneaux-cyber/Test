@@ -101,13 +101,13 @@ JEU.enregistrer("cours", {
    "id": "svt-s02-2-q1",
    "fiche": "svt-s02-2-f1",
    "type": "qcm",
-   "niveau": 1,
+   "niveau": 2,
    "enonce": "Comment la quantité de vapeur d'eau de l'atmosphère a-t-elle évolué depuis 4,5 milliards d'années ?",
    "choix": [
     "Elle a chuté très vite, puis s'est stabilisée",
-    "Elle a augmenté sans arrêt",
-    "Elle est restée au maximum",
-    "Elle a disparu complètement"
+    "Elle a augmenté peu à peu, puis s'est stabilisée",
+    "Elle a chuté très vite, puis est remontée au maximum",
+    "Elle est restée stable, puis a chuté très vite"
    ],
    "explication": "Presque au maximum il y a 4,5 milliards d'années, le taux de vapeur d'eau a chuté très vite. Il est ensuite resté à peu près stable.",
    "source": {
@@ -141,19 +141,100 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s02-2-f1",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Il y a 4,5 milliards d'années, l'atmosphère contenait-elle beaucoup de vapeur d'eau ?",
+   "enonce": "Vers quand la vapeur d'eau de l'atmosphère a-t-elle chuté très vite ?",
    "choix": [
-    "Oui, presque le maximum possible",
-    "Non, pas du tout",
-    "Seulement quelques traces",
-    "On ne peut pas le savoir"
+    "Il y a environ 4 milliards d'années",
+    "Il y a environ 2,4 milliards d'années",
+    "Il y a environ 800 millions d'années",
+    "Il y a environ 2 milliards d'années"
    ],
-   "explication": "Au début, la vapeur d'eau était presque au maximum possible. C'est ensuite que son taux a chuté.",
+   "explication": "Presque au maximum il y a 4,5 milliards d'années, la vapeur d'eau chute très vite vers 4 milliards d'années. Les autres dates concernent le dioxygène et l'ozone.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 3
    },
-   "r": "==QYIlwVE1BHJYRSfIzHc0BFck0CDIVD2wlFQ9lHPp0Dc0TZ",
+   "r": "=wEHXEMgDtAVKowTVIwGT4iHZwAGR1lTB0hGqs1CQ1wDP9hRFsTZ",
+   "poids": 1
+  },
+  {
+   "id": "svt-s02-2-q17",
+   "fiche": "svt-s02-2-f1",
+   "type": "vrai_faux",
+   "niveau": 3,
+   "enonce": "Quand le dioxygène a commencé à apparaître, l'atmosphère contenait encore presque toute la vapeur d'eau possible.",
+   "corrections": [
+    "Faux : la vapeur d'eau avait chuté bien avant, vers 4 milliards d'années.",
+    "Faux : la vapeur d'eau n'est apparue qu'après le dioxygène.",
+    "Faux : le dioxygène et la vapeur d'eau sont apparus en même temps."
+   ],
+   "explication": "La vapeur d'eau chute vers 4 milliards d'années, alors que le dioxygène n'apparaît qu'après 2,4 milliards d'années. À ce moment-là, la vapeur d'eau était déjà basse depuis longtemps.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
+    "page": 3
+   },
+   "r": "UwUQB0g6uvwWMl0CGVRDAYyGZkAHckkWPFgGmsVRZkFAOAxBJxhIbcRRcLbHbcQEIdDREMETOpxBD4kFnBAAAUAEf4kDegUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "svt-s02-2-q18",
+   "fiche": "svt-s02-2-f1",
+   "type": "trou",
+   "niveau": 1,
+   "enonce": "Complète la phrase.",
+   "texte": "Il y a 4,5 milliards d'années, la vapeur d'eau était proche de son ___ possible ; son taux a ensuite ___ très vite.",
+   "banque": [
+    "maximum",
+    "chuté",
+    "minimum",
+    "augmenté"
+   ],
+   "explication": "Au départ, l'atmosphère contenait presque toute la vapeur d'eau possible. Son taux a ensuite chuté très vite, puis il s'est stabilisé.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
+    "page": 3
+   },
+   "r": "a8yVMbLBHcgAbwQYBcEnu3BHPcwCQtGUcbaAEEQDNlCRe8ACAB0BXcwCLlCH",
+   "poids": 1
+  },
+  {
+   "id": "svt-s02-2-q19",
+   "fiche": "svt-s02-2-f1",
+   "type": "qcm_multiple",
+   "niveau": 2,
+   "enonce": "Coche les phrases justes sur la vapeur d'eau de l'atmosphère.",
+   "choix": [
+    "Elle était déjà là il y a 4,5 milliards d'années",
+    "Elle a chuté très vite vers 4 milliards d'années",
+    "Son taux est à peu près stable depuis",
+    "Son taux monte fortement de nos jours",
+    "Elle est apparue en même temps que l'ozone"
+   ],
+   "explication": "La vapeur d'eau était abondante dès le début, puis elle a chuté très vite avant de se stabiliser. L'ozone, lui, n'apparaît que bien plus tard.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
+    "page": 3
+   },
+   "r": "ockBYwhHKYBSmE0BUlVHPVhzqCwNSBAAFEVyt+kBbYSDdAETa8ECJoDUrBlBAwtsHAgDVxwYeFwRMdwAK8ABSNnUGcBEHk0CbshHj5Vz2/lGP9cpdcwLRUFBVRRBCoCUEFmXAwp7AEwBB1gU0YxBEwRHFcgAS11bZUEVNcxTK8QSSToHVVstbAcrLIFHqwUEc6uTKogCsAFH",
+   "poids": 1
+  },
+  {
+   "id": "svt-s02-2-q20",
+   "fiche": "svt-s02-2-f1",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Il y a 3 milliards d'années, comment était le taux de vapeur d'eau de l'atmosphère, comparé à aujourd'hui ?",
+   "choix": [
+    "À peu près le même qu'aujourd'hui",
+    "Proche du maximum possible",
+    "Nul : il n'y en avait pas",
+    "Bien plus élevé qu'aujourd'hui"
+   ],
+   "explication": "Depuis sa chute, vers 4 milliards d'années, le taux de vapeur d'eau reste à peu près stable. Il y a 3 milliards d'années, il était donc déjà proche du niveau actuel.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
+    "page": 3
+   },
+   "r": "=wkBHAAZJdBQCRgGHEEHDc2FY8stck0CDI1Gr7+FF1wGKYhRpHbZ",
    "poids": 1
   },
   {
@@ -180,7 +261,7 @@ JEU.enregistrer("cours", {
    "id": "svt-s02-2-q5",
    "fiche": "svt-s02-2-f2",
    "type": "vrai_faux",
-   "niveau": 1,
+   "niveau": 2,
    "enonce": "Il y a 3 milliards d'années, l'atmosphère contenait déjà du dioxygène.",
    "corrections": [
     "Faux : il n'y avait pas de dioxygène avant 2,4 milliards d'années environ.",
@@ -223,9 +304,9 @@ JEU.enregistrer("cours", {
    "enonce": "Comment le dioxygène est-il apparu dans l'atmosphère ?",
    "choix": [
     "Peu à peu, à partir d'environ 2,4 milliards d'années",
-    "D'un seul coup, il y a 800 millions d'années",
-    "Dès le début, il y a 4,5 milliards d'années",
-    "Il n'y en a jamais eu"
+    "D'un seul coup, il y a environ 800 millions d'années",
+    "Peu à peu, dès le début, il y a 4,5 milliards d'années",
+    "D'un seul coup, il y a environ 2 milliards d'années"
    ],
    "explication": "Le dioxygène apparaît progressivement après 2,4 milliards d'années. Son taux se stabilise vers 2 milliards d'années.",
    "source": {
@@ -236,18 +317,104 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
+   "id": "svt-s02-2-q21",
+   "fiche": "svt-s02-2-f2",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "L'ozone est apparu il y a 800 millions d'années, en grande quantité.",
+   "corrections": [
+    "Faux : il est bien apparu à cette époque, mais en faible quantité.",
+    "Faux : il est apparu il y a 4,5 milliards d'années, en grande quantité.",
+    "Faux : il est apparu en même temps que le dioxygène."
+   ],
+   "explication": "L'ozone n'apparaît qu'il y a 800 millions d'années, et en faible quantité. C'est bien après le dioxygène.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
+    "page": 3
+   },
+   "r": "Qd0GE26GPIxBTIzAVBQGTAwDJIlBm0gFcx0APp0AcMAKCwtpVRRHaoQEINu7FB0XP8hFHkEHisxFFFgAM40AbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "svt-s02-2-q22",
+   "fiche": "svt-s02-2-f2",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Pendant combien de temps environ l'atmosphère est-elle restée sans dioxygène, à partir de 4,5 milliards d'années ?",
+   "choix": [
+    "Environ 2 milliards d'années",
+    "Environ 800 millions d'années",
+    "Environ 4,5 milliards d'années",
+    "Environ 400 millions d'années"
+   ],
+   "explication": "Il n'y a pas de dioxygène de 4,5 à 2,4 milliards d'années. Cela fait environ 2 milliards d'années sans lui.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
+    "page": 3
+   },
+   "r": "==wFetgxliwBTAmFVZREDgwBD4RAu0wVVMUAd8AEHcTZ",
+   "poids": 1
+  },
+  {
+   "id": "svt-s02-2-q23",
+   "fiche": "svt-s02-2-f2",
+   "type": "qcm_multiple",
+   "niveau": 3,
+   "enonce": "Il y a 3,5 milliards d'années, coche ce qui était vrai de l'atmosphère.",
+   "choix": [
+    "Elle n'avait pas de dioxygène",
+    "Elle n'avait pas d'ozone",
+    "Sa vapeur d'eau avait déjà chuté",
+    "Elle avait autant de dioxygène qu'aujourd'hui",
+    "Elle avait presque toute la vapeur d'eau possible"
+   ],
+   "explication": "À cette époque, la vapeur d'eau avait déjà chuté, et ni le dioxygène ni l'ozone n'étaient encore là. Le dioxygène n'apparaît qu'après 2,4 milliards d'années.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
+    "page": 3
+   },
+   "r": "wdEnurhGOUQSSTIGcbaER1xBOQQCjhFBQpgCPRxEMIgJEUFBmMVRMpAHHkjQCFVDd4gFG1xGmQAFCtRUMIwA3o0bPAwWF2KCf4hBbMiUQEQVCggHPZQAisFBSMkTKogCsAFH",
+   "poids": 1
+  },
+  {
+   "id": "svt-s02-2-q24",
+   "fiche": "svt-s02-2-f2",
+   "type": "association",
+   "niveau": 2,
+   "enonce": "Relie chaque moment à ce qui se passe dans l'atmosphère.",
+   "gauche": [
+    "Il y a 4 milliards d'années",
+    "Il y a 2,4 milliards d'années",
+    "Il y a 2 milliards d'années",
+    "Il y a 800 millions d'années"
+   ],
+   "droite": [
+    "L'ozone apparaît, en faible quantité",
+    "La vapeur d'eau a chuté très vite",
+    "Le taux de dioxygène se stabilise",
+    "Le dioxygène commence à apparaître"
+   ],
+   "explication": "Vers 4 milliards d'années, la vapeur d'eau chute ; après 2,4 milliards, le dioxygène arrive et se stabilise vers 2 milliards. L'ozone ne vient qu'il y a 800 millions d'années.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
+    "page": 3
+   },
+   "r": "==ANvcnXG5TWsslQdlCRe4RSEYnQyclSZlCH",
+   "poids": 1
+  },
+  {
    "id": "svt-s02-2-q8",
    "fiche": "svt-s02-2-f3",
    "type": "qcm",
-   "niveau": 1,
+   "niveau": 2,
    "enonce": "Laquelle de ces planètes est la plus froide ?",
    "choix": [
     "Neptune",
-    "Mars",
-    "Mercure",
-    "Vénus"
+    "Uranus",
+    "Saturne",
+    "Jupiter"
    ],
-   "explication": "Neptune est la planète la plus éloignée du Soleil. C'est aussi la plus froide, à −230 °C.",
+   "explication": "Neptune, la plus éloignée du Soleil, est aussi la plus froide, à −230 °C. Uranus la suit de près, à −221 °C.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 4
@@ -259,12 +426,12 @@ JEU.enregistrer("cours", {
    "id": "svt-s02-2-q9",
    "fiche": "svt-s02-2-f3",
    "type": "vrai_faux",
-   "niveau": 1,
+   "niveau": 2,
    "enonce": "Mercure, la planète la plus proche du Soleil, est la plus chaude du système solaire.",
    "corrections": [
     "Faux : Vénus, pourtant plus loin du Soleil, est plus chaude que Mercure.",
-    "Faux : la planète la plus chaude est Neptune.",
-    "Faux : Mercure est la planète la plus froide."
+    "Faux : la planète la plus chaude est la Terre.",
+    "Faux : Mercure est plus froide que la Terre."
    ],
    "explication": "Vénus atteint 477 °C, Mercure 167 °C. La plus proche n'est donc pas la plus chaude.",
    "source": {
@@ -278,40 +445,40 @@ JEU.enregistrer("cours", {
    "id": "svt-s02-2-q10",
    "fiche": "svt-s02-2-f3",
    "type": "qcm",
-   "niveau": 2,
+   "niveau": 3,
    "enonce": "Pourquoi peut-on dire que la distance au Soleil n'explique pas tout ?",
    "choix": [
-    "Parce que Vénus est plus chaude que Mercure, alors qu'elle est plus loin du Soleil",
-    "Parce que Neptune est la planète la plus chaude",
-    "Parce que toutes les planètes ont la même température",
-    "Parce que la Terre est plus froide que Mars"
+    "Vénus est plus chaude que Mercure, qui est pourtant plus proche du Soleil",
+    "Neptune est plus chaude qu'Uranus, qui est pourtant plus proche du Soleil",
+    "Mars est plus chaude que la Terre, qui est pourtant plus proche du Soleil",
+    "Jupiter est plus chaude que Mars, qui est pourtant plus proche du Soleil"
    ],
-   "explication": "En général, plus loin veut dire plus froid. Vénus est l'exception : plus loin que Mercure, elle est pourtant plus chaude.",
+   "explication": "En général, plus une planète est loin du Soleil, plus elle est froide. Vénus fait exception : plus loin que Mercure, elle est pourtant plus chaude.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 4
    },
-   "r": "==wVdAwCD0xOjhVAVM0BAogRacwKCUVEGQRSLMgHNQGWUUhXcAgCHkkXiAAAGcAFk4kCHkxYIFAQMZADGVBHecjUBYBERpxGBs9qV0AAAxlTKUAFIISZ",
+   "r": "==wRZR0CDkQNJdwISBRDW4xGe8UAd8SXFF0QPsBFTYgAnZgBAUFGc8xTe1QMYZwRINyTDMBGSJiFAQQHSkUHa4BGjllFQ1QHagwzqSSZ",
    "poids": 1
   },
   {
    "id": "svt-s02-2-q11",
    "fiche": "svt-s02-2-f3",
    "type": "qcm",
-   "niveau": 2,
-   "enonce": "Quelle température le tableau indique-t-il pour la Terre ?",
+   "niveau": 1,
+   "enonce": "Quelle température donne-t-on pour la Terre quand on compare les planètes ?",
    "choix": [
-    "Environ 15 °C",
-    "Environ 167 °C",
-    "Environ −40 °C",
-    "Environ 477 °C"
+    "15 °C",
+    "−40 °C",
+    "167 °C",
+    "477 °C"
    ],
-   "explication": "La Terre est à 15 °C. Mercure et Vénus sont bien plus chaudes, Mars plus froide.",
+   "explication": "La Terre est à 15 °C. Mercure et Vénus sont bien plus chaudes, Mars est sous zéro.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 4
    },
-   "r": "==ATsIsqjhBVVMUAd8AEHcTZ",
+   "r": "=8QLfTqRcNUZ",
    "poids": 1
   },
   {
@@ -319,7 +486,7 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s02-2-f3",
    "type": "association",
    "niveau": 2,
-   "enonce": "Relie chaque planète à la température donnée dans le tableau.",
+   "enonce": "Relie chaque planète à sa température.",
    "gauche": [
     "Mercure",
     "Vénus",
@@ -338,6 +505,64 @@ JEU.enregistrer("cours", {
     "page": 4
    },
    "r": "==ANvcnXG5TWsolQdlCRe8RSEYnQyclSZlCH",
+   "poids": 1
+  },
+  {
+   "id": "svt-s02-2-q25",
+   "fiche": "svt-s02-2-f3",
+   "type": "qcm_multiple",
+   "niveau": 2,
+   "enonce": "Coche les planètes dont la température est sous 0 °C.",
+   "choix": [
+    "Mars",
+    "Jupiter",
+    "Neptune",
+    "La Terre",
+    "Vénus",
+    "Mercure"
+   ],
+   "explication": "Mars, Jupiter et Neptune sont sous zéro, comme toutes les planètes situées après la Terre. La Terre est à 15 °C, Mercure et Vénus sont brûlantes.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
+    "page": 4
+   },
+   "r": "==gMENwBHMjAQsyVdtEHKYQAzg1LXEATcQxBkAFH",
+   "poids": 1
+  },
+  {
+   "id": "svt-s02-2-q26",
+   "fiche": "svt-s02-2-f3",
+   "type": "vrai_faux",
+   "niveau": 1,
+   "enonce": "Mars, plus loin du Soleil que la Terre, est aussi plus froide qu'elle.",
+   "corrections": [],
+   "explication": "Mars est à −40 °C, la Terre à 15 °C. Ici, la règle « plus loin, plus froid » se vérifie.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
+    "page": 4
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "svt-s02-2-q27",
+   "fiche": "svt-s02-2-f3",
+   "type": "ordre",
+   "niveau": 3,
+   "enonce": "Range ces planètes de la plus chaude à la plus froide.",
+   "elements": [
+    "Mercure",
+    "Mars",
+    "Vénus",
+    "Jupiter",
+    "La Terre"
+   ],
+   "explication": "Vénus est la plus chaude, devant Mercure, puis viennent la Terre, Mars et Jupiter. Seule Vénus ne suit pas l'ordre des distances au Soleil.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
+    "page": 4
+   },
+   "r": "=AnVZwhQbpkVFBEH",
    "poids": 1
   },
   {
@@ -365,7 +590,7 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s02-2-f4",
    "type": "vrai_faux",
    "niveau": 1,
-   "enonce": "Dans ce graphique, on lit la température de chaque planète sur l'axe des ordonnées.",
+   "enonce": "Sur le graphique des planètes, on lit la température de chaque planète sur l'axe des ordonnées.",
    "corrections": [],
    "explication": "Ici, l'ordonnée donne la température et l'abscisse la distance. On recopie ces deux valeurs pour chaque planète.",
    "source": {
@@ -404,8 +629,8 @@ JEU.enregistrer("cours", {
    "choix": [
     "On lit l'abscisse de son point",
     "On lit l'ordonnée de son point",
-    "On compte les points du graphique",
-    "On mesure la taille du point"
+    "On compte les points avant lui",
+    "On mesure la taille de son point"
    ],
    "explication": "Sur ce graphique, l'abscisse donne la distance au Soleil. L'ordonnée donne la température.",
    "source": {
@@ -413,6 +638,85 @@ JEU.enregistrer("cours", {
     "page": 4
    },
    "r": "=cUQDdAAWY0BdQjUQEQVUoRHGExGhwkQZ1gGGogRH0TZ",
+   "poids": 1
+  },
+  {
+   "id": "svt-s02-2-q28",
+   "fiche": "svt-s02-2-f4",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Pour ranger le nom, la distance au Soleil et la température des huit planètes, il faut un tableau de huit colonnes.",
+   "corrections": [
+    "Faux : il faut trois colonnes, une par information, et une ligne par planète.",
+    "Faux : il faut neuf colonnes, une par planète plus l'en-tête.",
+    "Faux : il faut une seule colonne pour tout écrire."
+   ],
+   "explication": "On fait une colonne par information : planète, distance, température. Les huit planètes occupent, elles, huit lignes sous l'en-tête.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
+    "page": 4
+   },
+   "r": "Yc1XMoxxxagIBVRFf9wHGNwBV4iHVBwGEkkGKIFRtIEDBx0AdkAAHsxZAQRFVRxBb8kXbYyQLoVQBwgRVAQH1YQVRAAEP40AbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "svt-s02-2-q29",
+   "fiche": "svt-s02-2-f4",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Dans le tableau des planètes, en quelle unité note-t-on la distance au Soleil ?",
+   "choix": [
+    "En millions de kilomètres",
+    "En milliers de kilomètres",
+    "En degrés Celsius",
+    "En milliards d'années"
+   ],
+   "explication": "Les distances au Soleil sont si grandes qu'on les note en millions de kilomètres. Les températures, elles, sont en degrés Celsius.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
+    "page": 4
+   },
+   "r": "==QTVMwGG8esYoQGYIgTKYBSwMkCcFkAGsgRHcTZ",
+   "poids": 1
+  },
+  {
+   "id": "svt-s02-2-q30",
+   "fiche": "svt-s02-2-f4",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Si on ne gardait que les quatre planètes telluriques, combien de lignes aurait le tableau, ligne d'en-tête comprise ?",
+   "choix": [
+    "Cinq",
+    "Quatre",
+    "Huit",
+    "Neuf"
+   ],
+   "explication": "Une ligne par planète, plus la ligne d'en-tête : 4 + 1 = 5. Le nombre de colonnes, lui, ne change pas.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
+    "page": 4
+   },
+   "r": "NdBCAETZ",
+   "poids": 1
+  },
+  {
+   "id": "svt-s02-2-q31",
+   "fiche": "svt-s02-2-f4",
+   "type": "ordre",
+   "niveau": 2,
+   "enonce": "Remets dans l'ordre les étapes pour passer du graphique au tableau.",
+   "elements": [
+    "Recopier, pour chaque point, son abscisse et son ordonnée",
+    "Tracer un tableau de trois colonnes",
+    "Écrire le nom de chaque planète, une par ligne",
+    "Écrire la ligne d'en-tête"
+   ],
+   "explication": "On prépare d'abord le tableau, son en-tête et le nom des planètes. Ensuite seulement, on lit chaque point pour remplir les cases.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
+    "page": 4
+   },
+   "r": "o1hQdpUVFNEH",
    "poids": 1
   }
  ],

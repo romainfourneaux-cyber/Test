@@ -250,8 +250,8 @@ JEU.enregistrer("cours", {
    "enonce": "Accoster veut dire s'éloigner de la côte.",
    "corrections": [
     "Faux : accoster, c'est venir se placer le long d'un quai ou d'un ponton.",
-    "Faux : accoster veut dire changer de direction.",
-    "Faux : accoster veut dire passer l'hiver à l'abri."
+    "Faux : accoster, c'est changer de direction.",
+    "Faux : accoster, c'est faire une halte en pleine mer."
    ],
    "explication": "Accoster, c'est se ranger le long d'un quai ou d'un ponton. Rester loin de la terre se dit tenir le large.",
    "source": {
@@ -292,7 +292,7 @@ JEU.enregistrer("cours", {
    "fiche": "lecture-s03-1-f1",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Comment dit-on d'un navire qui passe l'hiver à l'abri ?",
+   "enonce": "Comment dit-on d'un navire qui reste à l'abri jusqu'à la fin de la saison froide ?",
    "choix": [
     "Il hiverne",
     "Il vire",
@@ -308,6 +308,79 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
+   "id": "lecture-s03-1-q21",
+   "fiche": "lecture-s03-1-f1",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Un navire qui relâche reprend la mer après une halte.",
+   "corrections": [
+    "Faux : relâcher, c'est s'arrêter, faire une halte.",
+    "Faux : relâcher, c'est changer de direction.",
+    "Faux : relâcher, c'est rester loin de la terre."
+   ],
+   "explication": "Pour un navire, relâcher veut dire s'arrêter, faire une halte. Reprendre la mer, c'est appareiller.",
+   "source": {
+    "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
+    "page": 8
+   },
+   "r": "==wENxVD3EEBd1wCBMhRMAgLTMRRZNADaUcsaEDTCZUDawxABpgUrBAENYx0qKgCAgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "lecture-s03-1-q22",
+   "fiche": "lecture-s03-1-f1",
+   "type": "vrai_faux",
+   "niveau": 1,
+   "enonce": "Tenir le large, c'est rester loin de la terre.",
+   "corrections": [],
+   "explication": "Un navire qui tient le large reste loin de la terre. Le contraire serait d'accoster le long d'un quai.",
+   "source": {
+    "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
+    "page": 8
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "lecture-s03-1-q23",
+   "fiche": "lecture-s03-1-f1",
+   "type": "ordre",
+   "niveau": 3,
+   "enonce": "Range ces verbes dans l'ordre d'un voyage : le départ, une halte en route, puis l'arrivée le long d'un quai.",
+   "elements": [
+    "accoster",
+    "appareiller",
+    "relâcher"
+   ],
+   "explication": "On appareille pour partir, puis on relâche pour faire une halte. On accoste enfin le long d'un quai.",
+   "source": {
+    "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
+    "page": 8
+   },
+   "r": "==wMfpEVFNEH",
+   "poids": 1
+  },
+  {
+   "id": "lecture-s03-1-q24",
+   "fiche": "lecture-s03-1-f1",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Pour éviter un obstacle droit devant, le capitaine fait changer de direction à son navire. Quel verbe convient ?",
+   "choix": [
+    "Il vire",
+    "Il relâche",
+    "Il tient le large",
+    "Il accoste"
+   ],
+   "explication": "Virer, c'est changer de direction. Relâcher, c'est s'arrêter, et tenir le large, rester loin de la terre.",
+   "source": {
+    "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
+    "page": 8
+   },
+   "r": "XgEHGAhRFsTZ",
+   "poids": 1
+  },
+  {
    "id": "lecture-s03-1-q5",
    "fiche": "lecture-s03-1-f2",
    "type": "qcm",
@@ -315,9 +388,9 @@ JEU.enregistrer("cours", {
    "enonce": "Un marin dit : « Le vent fraîchissait. » Que veut-il dire ?",
    "choix": [
     "Le vent se levait",
-    "Le vent s'arrêtait",
-    "Le vent tournait vers le sud",
-    "Le vent faisait fondre la glace"
+    "Le vent faiblissait",
+    "Le vent tournait",
+    "Le vent soufflait de face"
    ],
    "explication": "Pour un marin, le vent fraîchit quand il se lève. C'est un verbe du 2e groupe.",
    "source": {
@@ -331,12 +404,12 @@ JEU.enregistrer("cours", {
    "id": "lecture-s03-1-q6",
    "fiche": "lecture-s03-1-f2",
    "type": "vrai_faux",
-   "niveau": 1,
+   "niveau": 2,
    "enonce": "Quand le vent adonne, il vient davantage de l'avant du navire.",
    "corrections": [
     "Faux : quand il adonne, il vient plus de l'arrière ; quand il vient plus de l'avant, il refuse.",
-    "Faux : quand il adonne, le vent s'arrête complètement.",
-    "Faux : adonner veut dire que le vent devient violent."
+    "Faux : quand il adonne, il souffle de côté, sans aider la marche.",
+    "Faux : adonner veut dire que le vent se lève."
    ],
    "explication": "Le vent adonne quand il tourne pour aider la marche du navire, en soufflant plus de l'arrière. S'il souffle plus de l'avant, on dit qu'il refuse.",
    "source": {
@@ -353,8 +426,8 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Pourquoi un capitaine fait-il mettre son navire à la cape ?",
    "choix": [
-    "Pour ralentir le bateau en baissant les voiles",
-    "Pour aller plus vite en ajoutant des voiles",
+    "Pour ralentir en baissant les voiles",
+    "Pour accélérer en hissant toutes les voiles",
     "Pour tendre les voiles au maximum",
     "Pour accoster le long d'un quai"
    ],
@@ -363,7 +436,7 @@ JEU.enregistrer("cours", {
     "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
     "page": 8
    },
-   "r": "EpxFrshGTUlAMIwTGYgIeZBXMxwTIMQSHYyFBQwFRxgAPBQA3MEAZxEHPRxEGISZ",
+   "r": "=wEHXQgKCNRFetwAGJxBTQTAcQwFRdwCPBQA3MEAZxEHPRxEGISZ",
    "poids": 1
   },
   {
@@ -385,6 +458,81 @@ JEU.enregistrer("cours", {
     "page": 8
    },
    "r": "==ANvU2FbsgGVgAT04VNhhEEE91Db8cpLlCH",
+   "poids": 1
+  },
+  {
+   "id": "lecture-s03-1-q25",
+   "fiche": "lecture-s03-1-f2",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Quand le vent refuse, il tourne pour aider la marche du navire.",
+   "corrections": [
+    "Faux : il vient plus de l'avant ; c'est quand il adonne qu'il aide la marche.",
+    "Faux : il s'arrête complètement de souffler.",
+    "Faux : il se lève et devient violent."
+   ],
+   "explication": "Le vent refuse quand il souffle plus de l'avant : il gêne la marche. Quand il aide, en venant plus de l'arrière, il adonne.",
+   "source": {
+    "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
+    "page": 8
+   },
+   "r": "=gwUHtwBRohIAVEVB5kCC8ACStyGSBBBRxAAB0BDi0QCc1gCBcwEYI1MBAhQWElUOtBHJUDTClVDLsgRVwhH3IVALABGf40AbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "lecture-s03-1-q26",
+   "fiche": "lecture-s03-1-f2",
+   "type": "vrai_faux",
+   "niveau": 1,
+   "enonce": "Étarquer une voile, c'est la hisser en la tendant le plus possible.",
+   "corrections": [],
+   "explication": "Étarquer, c'est hisser la voile en la tendant au maximum. Une voile carguée, elle, est attachée au mât.",
+   "source": {
+    "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
+    "page": 8
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "lecture-s03-1-q27",
+   "fiche": "lecture-s03-1-f2",
+   "type": "qcm_multiple",
+   "niveau": 2,
+   "enonce": "Lesquels de ces verbes parlent du vent ?",
+   "choix": [
+    "fraîchir",
+    "adonner",
+    "refuser",
+    "étarquer",
+    "appareiller"
+   ],
+   "explication": "Le vent fraîchit quand il se lève, il adonne ou il refuse selon sa direction. Étarquer concerne une voile, appareiller le navire qui part.",
+   "source": {
+    "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
+    "page": 8
+   },
+   "r": "wd0RI1hGAMwGQtGUHAwGfYgCOAFRh9FDd5EwseAFPAFH",
+   "poids": 1
+  },
+  {
+   "id": "lecture-s03-1-q28",
+   "fiche": "lecture-s03-1-f2",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Pris dans une bourrasque, un capitaine veut ralentir son navire. Que fait-il ?",
+   "choix": [
+    "Il met son navire à la cape",
+    "Il étarque toutes les voiles",
+    "Il tient le large",
+    "Il appareille aussitôt"
+   ],
+   "explication": "Mettre à la cape, c'est baisser les voiles pour ralentir. Étarquer les voiles, au contraire, les tend au maximum.",
+   "source": {
+    "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
+    "page": 8
+   },
+   "r": "PswHHUQSTsiUVbaVUsxBZMhBjNkCG1gGKsgRFsTZ",
    "poids": 1
   },
   {
@@ -411,12 +559,12 @@ JEU.enregistrer("cours", {
    "id": "lecture-s03-1-q10",
    "fiche": "lecture-s03-1-f3",
    "type": "vrai_faux",
-   "niveau": 1,
+   "niveau": 2,
    "enonce": "Une voile carguée est une voile tendue au maximum.",
    "corrections": [
     "Faux : une voile carguée est attachée au mât ; la tendre au maximum, c'est l'étarquer.",
-    "Faux : une voile carguée est une voile déchirée.",
-    "Faux : une voile carguée est une voile neuve."
+    "Faux : une voile carguée est une voile déchirée par la bourrasque.",
+    "Faux : une voile carguée est une voile neuve, jamais hissée."
    ],
    "explication": "Une voile carguée est attachée au mât. La tendre au maximum se dit l'étarquer.",
    "source": {
@@ -462,6 +610,66 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
+   "id": "lecture-s03-1-q29",
+   "fiche": "lecture-s03-1-f3",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Un navire debout au vent a le vent dans le dos.",
+   "corrections": [
+    "Faux : debout au vent, il est face au vent.",
+    "Faux : debout au vent, il n'a plus aucune voile.",
+    "Faux : debout au vent, il ne peut plus être dirigé."
+   ],
+   "explication": "Debout au vent veut dire face au vent. Sans aucune voile, on dit « à sec de toiles ».",
+   "source": {
+    "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
+    "page": 9
+   },
+   "r": "==wENhkEHcRMSBABVRhCPkgUcADSFlFRONkEIwABndAFFFABGwgCWgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "lecture-s03-1-q30",
+   "fiche": "lecture-s03-1-f3",
+   "type": "vrai_faux",
+   "niveau": 1,
+   "enonce": "Un navire désemparé est un navire qu'on ne peut plus diriger.",
+   "corrections": [],
+   "explication": "Pour un navire, désemparé veut dire impossible à diriger. On ne peut plus choisir sa route.",
+   "source": {
+    "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
+    "page": 9
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "lecture-s03-1-q31",
+   "fiche": "lecture-s03-1-f3",
+   "type": "association",
+   "niveau": 3,
+   "enonce": "Relie chaque expression à son sens.",
+   "gauche": [
+    "à sec de toiles",
+    "debout au vent",
+    "cargué",
+    "désemparé"
+   ],
+   "droite": [
+    "face au vent",
+    "sans aucune voile",
+    "impossible à diriger",
+    "attaché au mât"
+   ],
+   "explication": "À sec de toiles : sans voile ; debout au vent : face au vent. Une voile carguée est attachée au mât, et un navire désemparé ne se dirige plus.",
+   "source": {
+    "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
+    "page": 9
+   },
+   "r": "==ANvUnXG5TWsolQdlCRe0RSEYnQyclSZlCH",
+   "poids": 1
+  },
+  {
    "id": "lecture-s03-1-q13",
    "fiche": "lecture-s03-1-f4",
    "type": "qcm",
@@ -485,12 +693,12 @@ JEU.enregistrer("cours", {
    "id": "lecture-s03-1-q14",
    "fiche": "lecture-s03-1-f4",
    "type": "vrai_faux",
-   "niveau": 1,
+   "niveau": 2,
    "enonce": "Une avarie est une grosse vague.",
    "corrections": [
     "Faux : une avarie est un dégât subi par un bateau ; les vagues s'appellent des lames.",
     "Faux : une avarie est un vent violent.",
-    "Faux : une avarie est une réserve de nourriture."
+    "Faux : une avarie est un puissant tourbillon marin."
    ],
    "explication": "Une avarie, c'est la détérioration d'un bateau. Les vagues, ce sont les lames.",
    "source": {
@@ -542,6 +750,81 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
+   "id": "lecture-s03-1-q32",
+   "fiche": "lecture-s03-1-f4",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "L'échelle de Beaufort sert à mesurer la hauteur des lames.",
+   "corrections": [
+    "Faux : elle mesure la vitesse moyenne du vent.",
+    "Faux : elle sert à grimper le long du mât.",
+    "Faux : elle mesure la distance entre deux points."
+   ],
+   "explication": "L'échelle de Beaufort mesure la vitesse moyenne du vent, en mer. Ce n'est ni une échelle pour grimper, ni une mesure des vagues.",
+   "source": {
+    "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
+    "page": 6
+   },
+   "r": "==AGXMgGBMAEJdwISBxCbQBEBIgUNAjXAEERY80BKk0F1cgBAgRUMIwAXgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "lecture-s03-1-q33",
+   "fiche": "lecture-s03-1-f4",
+   "type": "vrai_faux",
+   "niveau": 1,
+   "enonce": "Dans un récit de mer, les lames, ce sont les vagues.",
+   "corrections": [],
+   "explication": "Les lames sont les vagues. Ici, le mot n'a rien à voir avec une lame de couteau.",
+   "source": {
+    "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
+    "page": 6
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "lecture-s03-1-q34",
+   "fiche": "lecture-s03-1-f4",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "« Après la bourrasque, le capitaine découvrit plusieurs avaries. » Qu'a-t-il découvert ?",
+   "choix": [
+    "Des dégâts sur son bateau",
+    "Des vagues énormes",
+    "Des vents violents",
+    "Des réserves de nourriture"
+   ],
+   "explication": "Une avarie est un dégât subi par un bateau. La bourrasque, ce vent violent, a abîmé le navire.",
+   "source": {
+    "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
+    "page": 6
+   },
+   "r": "=wkGHMQHTUiUbogBRtxGcI1G38opSRYrLYUFMYTZ",
+   "poids": 1
+  },
+  {
+   "id": "lecture-s03-1-q35",
+   "fiche": "lecture-s03-1-f4",
+   "type": "qcm_multiple",
+   "niveau": 2,
+   "enonce": "Un récit raconte une tempête. Lesquels de ces mots désignent le vent ou les vagues ?",
+   "choix": [
+    "bourrasque",
+    "lames",
+    "avarie",
+    "cambuse",
+    "encablure"
+   ],
+   "explication": "La bourrasque est un vent violent et les lames sont les vagues. L'avarie est un dégât, la cambuse une pièce et l'encablure une mesure.",
+   "source": {
+    "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
+    "page": 6
+   },
+   "r": "==wLXZBEcggAN5lSmgFFGxEHdMRCLAFH",
+   "poids": 1
+  },
+  {
    "id": "lecture-s03-1-q17",
    "fiche": "lecture-s03-1-f5",
    "type": "qcm",
@@ -569,8 +852,8 @@ JEU.enregistrer("cours", {
    "enonce": "Une demi-encablure mesure environ 400 m.",
    "corrections": [
     "Faux : une demi-encablure mesure environ 100 m, la moitié d'une encablure.",
-    "Faux : une demi-encablure mesure environ 1 852 m.",
-    "Faux : une demi-encablure mesure environ 32 cm."
+    "Faux : une demi-encablure mesure environ 200 m.",
+    "Faux : une demi-encablure mesure environ 926 m, la moitié d'un mille."
    ],
    "explication": "Demi veut dire moitié : une demi-encablure, c'est la moitié de 200 m. Elle mesure donc environ 100 m.",
    "source": {
@@ -618,6 +901,65 @@ JEU.enregistrer("cours", {
     "page": 3
    },
    "r": "XAkTbZVUJFUZ",
+   "poids": 1
+  },
+  {
+   "id": "lecture-s03-1-q36",
+   "fiche": "lecture-s03-1-f5",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Un navire jette l'ancre à trois encablures de la côte. À quelle distance de la côte est-il, environ ?",
+   "choix": [
+    "Environ 600 m",
+    "Environ 300 m",
+    "Environ 5 556 m",
+    "Environ 96 cm"
+   ],
+   "explication": "Une encablure vaut environ 200 m. Trois encablures font donc 3 × 200 = 600 m.",
+   "source": {
+    "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
+    "page": 3
+   },
+   "r": "N9BSz1xUVMUAd8AEHcTZ",
+   "poids": 1
+  },
+  {
+   "id": "lecture-s03-1-q37",
+   "fiche": "lecture-s03-1-f5",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Un pied mesure environ 32 m.",
+   "corrections": [
+    "Faux : un pied mesure environ 32 cm.",
+    "Faux : un pied mesure environ 200 m.",
+    "Faux : un pied mesure environ 1 852 m."
+   ],
+   "explication": "Le pied est une ancienne mesure d'environ 32 cm, pas 32 m. Les grandes distances se mesurent en encablures et en milles.",
+   "source": {
+    "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
+    "page": 3
+   },
+   "r": "Pc1SYIRScxlUGwyXMM0QL80AUwRAi8RVBABGZ4UAHgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "lecture-s03-1-q38",
+   "fiche": "lecture-s03-1-f5",
+   "type": "qcm_multiple",
+   "niveau": 3,
+   "enonce": "Lesquelles de ces distances valent environ 200 m ?",
+   "choix": [
+    "une encablure",
+    "deux demi-encablures",
+    "un mille marin",
+    "deux pieds"
+   ],
+   "explication": "Une encablure vaut environ 200 m, et deux demi-encablures aussi : 100 + 100. Un mille fait 1 852 m, et deux pieds environ 64 cm.",
+   "source": {
+    "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
+    "page": 3
+   },
+   "r": "==ALL1hCA0xLPRgVDtgQPsADWcmCAAQETVETKAQHv8EBWN0CPNACcAFH",
    "poids": 1
   }
  ],

@@ -196,10 +196,10 @@ JEU.enregistrer("cours", {
    "choix": [
     "Mercure",
     "Vénus",
-    "Mars",
-    "Neptune"
+    "La Terre",
+    "Mars"
    ],
-   "explication": "Mercure est la première planète après le Soleil. C'est aussi la plus petite.",
+   "explication": "Mercure est la première planète après le Soleil. C'est aussi la plus petite des huit.",
    "indice": "C'est aussi la plus petite planète.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
@@ -234,19 +234,19 @@ JEU.enregistrer("cours", {
    "id": "svt-s01-1-q3",
    "fiche": "svt-s01-1-f1",
    "type": "vrai_faux",
-   "niveau": 1,
-   "enonce": "Le Soleil est une planète.",
+   "niveau": 2,
+   "enonce": "Le Soleil est une étoile qui gravite autour des planètes du système solaire.",
    "corrections": [
-    "Faux : le Soleil est une étoile, et les planètes tournent autour de lui.",
-    "Faux : le Soleil est un satellite de la Terre.",
-    "Faux : le Soleil est une galaxie."
+    "Faux : c'est l'inverse, ce sont les planètes qui gravitent autour du Soleil.",
+    "Faux : le Soleil n'est pas une étoile, c'est une planète gazeuse.",
+    "Faux : le Soleil gravite seulement autour de la Terre."
    ],
-   "explication": "Le Soleil est l'étoile du système solaire. Les huit planètes gravitent autour de lui.",
+   "explication": "Le Soleil est bien une étoile, mais ce sont les huit planètes qui tournent autour de lui. On dit qu'elles gravitent autour du Soleil.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 1
    },
-   "r": "=MRTcFgNBVEUJ5UHTkQHHYiUBsAEfsxGAYASwgUEd6OAOogFJFgIeUVEQEVRLMwGHcDhmWBSAohRSoxFn5BHAkhH64kCegUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "r": "=gwUHJgBXQAL+VEQJ5UHTkQHHYiUBsAEFAAGOAwDjREEE1QHKIhzqyhJeUQRGQRBOtBHHATDAYVDCpQFUwABpshUJUVBasASRgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -254,19 +254,100 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s01-1-f1",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Comment s'appelle la zone située au-delà de Neptune, avant le nuage d'Oort ?",
+   "enonce": "Comment s'appelle la zone située juste après Neptune, quand on s'éloigne du Soleil ?",
    "choix": [
     "La ceinture de Kuiper",
+    "Le nuage d'Oort",
     "La ceinture principale d'astéroïdes",
-    "La Voie lactée",
-    "L'atmosphère"
+    "La Voie lactée"
    ],
-   "explication": "Après Neptune, on trouve la ceinture de Kuiper, puis le nuage d'Oort. La ceinture principale, elle, se trouve entre Mars et Jupiter.",
+   "explication": "Après Neptune vient la ceinture de Kuiper, puis, plus loin, le nuage d'Oort. La ceinture principale, elle, se trouve entre Mars et Jupiter.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 1
    },
    "r": "=UGAQUBHEIiTKYBSm8FEBN0BKUgRI4TZ",
+   "poids": 1
+  },
+  {
+   "id": "svt-s01-1-q24",
+   "fiche": "svt-s01-1-f1",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "La ceinture principale d'astéroïdes se trouve entre la Terre et Mars.",
+   "corrections": [
+    "Faux : elle se trouve entre Mars et Jupiter.",
+    "Faux : elle se trouve entre Neptune et le nuage d'Oort.",
+    "Faux : elle se trouve entre Mercure et Vénus."
+   ],
+   "explication": "La ceinture principale sépare Mars, dernière planète tellurique, de Jupiter, première planète gazeuse. Au-delà de Neptune, c'est la ceinture de Kuiper.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
+    "page": 1
+   },
+   "r": "=AFTBRxAdsxNH8TRBQRSd0xElMGSXE0QL80AQwRH1YQVAYQUMIwAXgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "svt-s01-1-q25",
+   "fiche": "svt-s01-1-f1",
+   "type": "ordre",
+   "niveau": 3,
+   "enonce": "Range ces éléments du plus proche au plus éloigné du Soleil.",
+   "elements": [
+    "Nuage d'Oort",
+    "Uranus",
+    "Ceinture de Kuiper",
+    "Saturne",
+    "Neptune"
+   ],
+   "explication": "Saturne, Uranus et Neptune sont les trois dernières planètes. Viennent ensuite la ceinture de Kuiper, puis le nuage d'Oort.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
+    "page": 1
+   },
+   "r": "=AXVZ8hQbp0VFFEH",
+   "poids": 1
+  },
+  {
+   "id": "svt-s01-1-q26",
+   "fiche": "svt-s01-1-f1",
+   "type": "trou",
+   "niveau": 1,
+   "enonce": "Complète la phrase.",
+   "texte": "En partant du Soleil : Mercure, Vénus, la Terre, ___, puis la ceinture principale d'astéroïdes, puis ___ et Saturne.",
+   "banque": [
+    "Mars",
+    "Jupiter",
+    "Neptune",
+    "Uranus"
+   ],
+   "explication": "Mars est la dernière planète avant la ceinture principale d'astéroïdes. Jupiter est la première juste après elle.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
+    "page": 1
+   },
+   "r": "==wLoc0BU0xBfcgIhZXSo9QHdcwKLlCH",
+   "poids": 1
+  },
+  {
+   "id": "svt-s01-1-q27",
+   "fiche": "svt-s01-1-f1",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Quelle planète est la cinquième en partant du Soleil ?",
+   "choix": [
+    "Jupiter",
+    "Mars",
+    "Saturne",
+    "Uranus"
+   ],
+   "explication": "Mercure, Vénus, la Terre et Mars viennent d'abord, puis la ceinture d'astéroïdes. Jupiter est donc la cinquième planète.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
+    "page": 1
+   },
+   "r": "X81Cb8gFcgTZ",
    "poids": 1
   },
   {
@@ -321,39 +402,118 @@ JEU.enregistrer("cours", {
    "id": "svt-s01-1-q7",
    "fiche": "svt-s01-1-f2",
    "type": "vrai_faux",
-   "niveau": 1,
-   "enonce": "Jupiter est une planète tellurique.",
+   "niveau": 2,
+   "enonce": "Jupiter, la plus grosse planète, est une planète tellurique.",
    "corrections": [
-    "Faux : Jupiter est une planète gazeuse, faite uniquement de gaz.",
-    "Faux : Jupiter est une étoile.",
-    "Faux : Jupiter est un satellite de Saturne."
+    "Faux : Jupiter est bien la plus grosse, mais c'est une planète gazeuse.",
+    "Faux : Jupiter est tellurique, mais la plus grosse planète est Saturne.",
+    "Faux : Jupiter est gazeuse, et la plus grosse planète est Saturne."
    ],
-   "explication": "Jupiter est la plus grosse des planètes gazeuses. Les telluriques sont Mercure, Vénus, la Terre et Mars.",
+   "explication": "Jupiter est la plus grosse planète, et elle est faite uniquement de gaz. Les telluriques sont Mercure, Vénus, la Terre et Mars.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 1
    },
-   "r": "=MRTIxBCVc2FRUUAfwwAKcQGqMEEVgkGGcAAJ5lIBAAAPAhDOpgBAD4QEkVXOpACTkkB0cRVXARBA4hG4gUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "r": "PoUbIZBQIRhDBYEDG8esbQQGBk0CBcAS34FAS4kTc8wBEI1aXYgFaMgDOxxBEMTDEkVDAowDEkkB0cRVXARBA4hG4gUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
   },
   {
    "id": "svt-s01-1-q8",
    "fiche": "svt-s01-1-f2",
    "type": "qcm",
-   "niveau": 2,
+   "niveau": 3,
    "enonce": "Pourquoi peut-on dire à la fois que Mars et que Neptune sont « les plus éloignées » du Soleil ?",
    "choix": [
-    "Mars est la tellurique la plus éloignée, Neptune la gazeuse la plus éloignée",
-    "Elles sont exactement à la même distance du Soleil",
-    "Ce sont deux satellites de Jupiter",
-    "Elles sont toutes les deux gazeuses"
+    "Mars ferme la famille des telluriques, Neptune celle des gazeuses",
+    "Mars ferme la famille des gazeuses, Neptune celle des telluriques",
+    "Mars et Neptune tournent toutes deux sur la même orbite",
+    "Mars et Neptune sont toutes deux après la ceinture de Kuiper"
    ],
    "explication": "Chaque famille a sa planète la plus lointaine. Mars ferme les telluriques, Neptune ferme les gazeuses.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 1
    },
-   "r": "==ATKs9qtoEDaF0xsaUFc4xNSRRCVRhGboACJQSDEkVDLEwESkxFJIVWAwtsHkgBdQg6uXkRYJwHGdQBSJyBEwwBEUgAKYASiEURB51CPVBFI8TZ",
+   "r": "==QZBAhFAQxEPggUbYSSFBVQCoQBGxAHyYQBAsTUF1hCHkhKfBRWBtwGGVBDWc2FZkAHcgACPNBBjhECHhECPVBFI8TZ",
+   "poids": 1
+  },
+  {
+   "id": "svt-s01-1-q28",
+   "fiche": "svt-s01-1-f2",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Mars est la planète gazeuse la plus proche du Soleil.",
+   "corrections": [
+    "Faux : Mars est tellurique ; la gazeuse la plus proche du Soleil est Jupiter.",
+    "Faux : Mars est gazeuse, mais c'est la plus éloignée du Soleil.",
+    "Faux : Mars est tellurique ; la gazeuse la plus proche du Soleil est Saturne."
+   ],
+   "explication": "Mars est la dernière tellurique avant la ceinture d'astéroïdes. Juste après celle-ci vient Jupiter, la première des gazeuses.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
+    "page": 1
+   },
+   "r": "=gwUHxhCGEwMY9SFZ1hCGpAAXsSHmUEAVk0CHExBx0VRGhlAfY0BFIlIBAAAPAhDO5gHIhXDAAEXH0xEKUwFzIVAWARUawhD/gUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "svt-s01-1-q29",
+   "fiche": "svt-s01-1-f2",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Uranus est une planète tellurique, voisine de Saturne et de Neptune.",
+   "corrections": [
+    "Faux : Uranus est une planète gazeuse, comme ses voisines Saturne et Neptune.",
+    "Faux : Uranus est tellurique, mais elle est voisine de Mars.",
+    "Faux : Uranus est une planète naine, comme Pluton."
+   ],
+   "explication": "Uranus est gazeuse, comme Saturne et Neptune qui l'entourent. Les quatre gazeuses se trouvent toutes au-delà de la ceinture d'astéroïdes.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
+    "page": 1
+   },
+   "r": "Yc1XMAgGGghJjVUQI5kCIQBHGYSIVZBEfAQHG0hHj5FAG1wCCsQCKI1aXYAEQsACJ80Fcsu7LQVQe80AIwhUzEAEFZABH8QHngUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "svt-s01-1-q30",
+   "fiche": "svt-s01-1-f2",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Une des huit planètes se trouve au-delà de la ceinture principale d'astéroïdes. Que peut-on en déduire ?",
+   "choix": [
+    "C'est une planète gazeuse",
+    "C'est une planète tellurique",
+    "C'est forcément Jupiter, la plus grosse",
+    "C'est forcément Neptune, la plus lointaine"
+   ],
+   "explication": "La ceinture principale sépare les telluriques, avant elle, des gazeuses, après elle. Les quatre planètes situées au-delà sont donc gazeuses.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
+    "page": 1
+   },
+   "r": "==QTDUBHX0zESUEEFEcrBMBBz0AAbhlTbUxAOFTZ",
+   "poids": 1
+  },
+  {
+   "id": "svt-s01-1-q31",
+   "fiche": "svt-s01-1-f2",
+   "type": "qcm_multiple",
+   "niveau": 2,
+   "enonce": "Coche les phrases justes sur les planètes gazeuses.",
+   "choix": [
+    "Elles sont faites uniquement de gaz",
+    "On les appelle aussi planètes joviennes",
+    "Neptune est la plus éloignée d'entre elles",
+    "Elles ont un noyau de métal et de roche",
+    "Elles sont plus proches du Soleil que les telluriques"
+   ],
+   "explication": "Les gazeuses, ou joviennes, sont faites seulement de gaz, et Neptune est la plus lointaine. Le noyau de métal et de roche est la marque des telluriques, plus proches du Soleil.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
+    "page": 1
+   },
+   "r": "oMlGLMgHNMGSXE0QLgkAGxw2EyhEMoRHA36TB0xLdVEVB50GVMQSXkyBBUBE/skQNFQDtMEActVAFYUFMYw7xuBBZEQSHwRAdISDAkVQL8hFHkUAi4RVLozUFxUFT8wYIFQFZBgCLMAHD4CHAUkBU0xBOQBS3MkCG1QHKogCsAFH",
    "poids": 1
   },
   {
@@ -364,11 +524,11 @@ JEU.enregistrer("cours", {
    "enonce": "Quelle est la plus grosse planète du système solaire ?",
    "choix": [
     "Jupiter",
-    "Mercure",
-    "La Terre",
-    "Vénus"
+    "Saturne",
+    "Neptune",
+    "Uranus"
    ],
-   "explication": "Jupiter est la plus grosse planète. Elle a aussi de nombreux satellites.",
+   "explication": "Jupiter est la plus grosse planète, juste après la ceinture d'astéroïdes. Saturne, sa voisine, est aussi une géante gazeuse.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 1
@@ -398,17 +558,17 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Pourquoi un être humain ne pourrait-il pas respirer sur Vénus ?",
    "choix": [
-    "Son atmosphère, très épaisse, est irrespirable",
+    "Son atmosphère est irrespirable",
     "Elle n'a aucune atmosphère",
     "Elle est faite uniquement de gaz",
-    "Elle est la planète la plus éloignée du Soleil"
+    "Elle est trop éloignée du Soleil"
    ],
    "explication": "Vénus est entourée d'une atmosphère très épaisse qu'on ne peut pas respirer. En plus, il y fait plus de 400 °C.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 1
    },
-   "r": "MpgCEgAAuIgBAcwAA40GB0wYBAgRedgDW8sqSRj22eRARV0Cdo9qr0lFaBkGOYECGESZ",
+   "r": "==QYIlwVMxhBWUBDAUzGVFhBUk0Cdo9qr0lFaBkGOYECGESZ",
    "poids": 1
   },
   {
@@ -420,9 +580,9 @@ JEU.enregistrer("cours", {
    "texte": "Saturne, une géante gazeuse voisine de Jupiter, est entourée d'___.",
    "banque": [
     "anneaux",
+    "astéroïdes",
     "océans",
-    "forêts",
-    "volcans"
+    "étoiles"
    ],
    "explication": "Saturne se reconnaît à ses anneaux. C'est une planète gazeuse, comme Jupiter.",
    "source": {
@@ -433,6 +593,86 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
+   "id": "svt-s01-1-q32",
+   "fiche": "svt-s01-1-f3",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Mercure est à la fois la plus petite planète et la plus proche du Soleil.",
+   "corrections": [],
+   "explication": "Mercure réunit les deux records : la plus petite et la plus proche du Soleil. La plus grosse, c'est Jupiter.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
+    "page": 1
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "svt-s01-1-q33",
+   "fiche": "svt-s01-1-f3",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Vénus, de la même taille que la Terre, est une planète gazeuse.",
+   "corrections": [
+    "Faux : Vénus a bien la taille de la Terre, et elle est tellurique comme elle.",
+    "Faux : Vénus est gazeuse, mais elle est bien plus grosse que la Terre.",
+    "Faux : Vénus est tellurique, mais elle est bien plus petite que la Terre."
+   ],
+   "explication": "Vénus a la taille de la Terre et elle est tellurique, elle aussi. Ce qui la distingue, c'est son atmosphère irrespirable et sa chaleur de plus de 400 °C.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
+    "page": 1
+   },
+   "r": "Yc1XMIwAXgkJAhgWO5kCTcBAAIjHZAQAR1RHKIVDvEEAVk1CPp0AbAgImUFBZEFDK80FE8CREEUDPMgRIwwGlIFFFZABHcMrkgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "svt-s01-1-q34",
+   "fiche": "svt-s01-1-f3",
+   "type": "association",
+   "niveau": 2,
+   "enonce": "Relie chaque planète à son portrait.",
+   "gauche": [
+    "Mercure",
+    "Vénus",
+    "Jupiter",
+    "Saturne"
+   ],
+   "droite": [
+    "Géante gazeuse entourée d'anneaux",
+    "La plus petite, la plus proche du Soleil",
+    "Taille de la Terre, atmosphère irrespirable",
+    "La plus grosse, avec de nombreux satellites"
+   ],
+   "explication": "Mercure est la plus petite et Jupiter la plus grosse. Vénus a la taille de la Terre, et Saturne porte des anneaux.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
+    "page": 1
+   },
+   "r": "==ANvcnXG5TWsolQdlCRe8RSEYnQyclSZlCH",
+   "poids": 1
+  },
+  {
+   "id": "svt-s01-1-q35",
+   "fiche": "svt-s01-1-f3",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Laquelle de ces comparaisons entre Vénus et la Terre est juste ?",
+   "choix": [
+    "Même taille, mais une atmosphère irrespirable",
+    "Même taille, mais Vénus est une planète gazeuse",
+    "Plus petite que la Terre, mais même atmosphère",
+    "Plus grosse que la Terre, et bien plus froide"
+   ],
+   "explication": "Vénus et la Terre ont la même taille et sont toutes deux telluriques. Mais l'atmosphère de Vénus, très épaisse, ne se respire pas, et il y fait plus de 400 °C.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
+    "page": 1
+   },
+   "r": "==ARDUAEmAAHVYAFbwhBS1QMFaaXd1BALIBCSJCHAUkBYgwAP5VDvEEDUllTKsAzq+TZ",
+   "poids": 1
+  },
+  {
    "id": "svt-s01-1-q13",
    "fiche": "svt-s01-1-f4",
    "type": "qcm",
@@ -440,9 +680,9 @@ JEU.enregistrer("cours", {
    "enonce": "À quelle place se trouve la Terre en partant du Soleil ?",
    "choix": [
     "La troisième",
-    "La première",
-    "La cinquième",
-    "La huitième"
+    "La deuxième",
+    "La quatrième",
+    "La cinquième"
    ],
    "explication": "Après Mercure et Vénus vient la Terre. Mars arrive juste après elle.",
    "source": {
@@ -456,12 +696,11 @@ JEU.enregistrer("cours", {
    "id": "svt-s01-1-q14",
    "fiche": "svt-s01-1-f4",
    "type": "vrai_faux",
-   "niveau": 1,
-   "enonce": "La Terre possède plusieurs satellites.",
+   "niveau": 2,
+   "enonce": "La Terre possède deux satellites, dont la Lune.",
    "corrections": [
     "Faux : la Terre n'a qu'un seul satellite, la Lune.",
-    "Faux : la Terre n'a aucun satellite.",
-    "Faux : la Terre a des anneaux à la place des satellites."
+    "Faux : la Terre n'a aucun satellite ; la Lune est une planète naine."
    ],
    "explication": "La Terre a un seul satellite : la Lune. Jupiter, elle, en a beaucoup.",
    "source": {
@@ -482,9 +721,10 @@ JEU.enregistrer("cours", {
     "Elle a une atmosphère",
     "Elle a de l'eau liquide",
     "Elle est gazeuse",
-    "Elle a des anneaux"
+    "Elle a des anneaux",
+    "Elle a plusieurs satellites"
    ],
-   "explication": "La Terre est une planète tellurique avec une atmosphère et de l'eau liquide. Elle n'a pas d'anneaux.",
+   "explication": "La Terre est une planète tellurique avec une atmosphère et de l'eau liquide. Elle n'a ni anneaux ni plusieurs satellites : seulement la Lune.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 2
@@ -502,7 +742,7 @@ JEU.enregistrer("cours", {
     "Entre Vénus et Mars",
     "Entre Mars et Jupiter",
     "Entre Mercure et Vénus",
-    "Après Neptune"
+    "Entre Jupiter et Saturne"
    ],
    "explication": "La Terre est entourée de Vénus, plus près du Soleil, et de Mars, plus loin. Toutes trois sont telluriques.",
    "source": {
@@ -513,6 +753,66 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
+   "id": "svt-s01-1-q36",
+   "fiche": "svt-s01-1-f4",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Pourquoi la Terre est-elle classée parmi les planètes telluriques ?",
+   "choix": [
+    "Pour son noyau de métal et de roche",
+    "Pour son atmosphère et son eau liquide",
+    "Pour son unique satellite, la Lune",
+    "Pour sa place juste avant Mars"
+   ],
+   "explication": "Une planète est tellurique quand elle a un noyau de métal et de roche. L'atmosphère, l'eau liquide ou la Lune sont des traits de la Terre, pas la raison de ce classement.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
+    "page": 1
+   },
+   "r": "=wkCasALfVEUJ50GDYUBTMz22iQVU0gTaMREsMURbJUHPRxEGISZ",
+   "poids": 1
+  },
+  {
+   "id": "svt-s01-1-q37",
+   "fiche": "svt-s01-1-f4",
+   "type": "vrai_faux",
+   "niveau": 1,
+   "enonce": "La Lune est une planète tellurique voisine de la Terre.",
+   "corrections": [
+    "Faux : la Lune est le satellite de la Terre, pas une planète.",
+    "Faux : la Lune est une planète gazeuse voisine de Mars.",
+    "Faux : la Lune est une planète naine, comme Pluton."
+   ],
+   "explication": "La Lune est le seul satellite de la Terre. Elle ne fait pas partie des huit planètes.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "=sxScJiBdb6GQUgHPdhB20gFU1lTDNAFbcxESRRCVRRDOpgBB8SQAEETd80AKkkB0cRVAsBBl4kDegUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "svt-s01-1-q38",
+   "fiche": "svt-s01-1-f4",
+   "type": "qcm_multiple",
+   "niveau": 3,
+   "enonce": "Coche ce que la Terre a en commun avec Vénus.",
+   "choix": [
+    "Elles sont telluriques",
+    "Elles ont la même taille",
+    "Elles ont une atmosphère",
+    "Leur atmosphère se respire",
+    "Il y fait plus de 400 °C"
+   ],
+   "explication": "La Terre et Vénus sont deux telluriques de même taille, entourées d'une atmosphère. Mais celle de Vénus est irrespirable, et il y fait plus de 400 °C.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
+    "page": 1
+   },
+   "r": "==wMNdhGr7eDF5VACIxBJdRKHUVEb4RSdogHEYwDJdBSCMwDH0hUi8x3miRUIIwTGYALNYBUBJgKEp0SBIyBEwwBEUgAKYAS3MkCG1QHKogCsAFH",
+   "poids": 1
+  },
+  {
    "id": "svt-s01-1-q17",
    "fiche": "svt-s01-1-f5",
    "type": "qcm",
@@ -520,11 +820,11 @@ JEU.enregistrer("cours", {
    "enonce": "Comment s'appelle la galaxie où se trouve le système solaire ?",
    "choix": [
     "La Voie lactée",
-    "La ceinture de Kuiper",
     "Le nuage d'Oort",
-    "La Lune"
+    "La ceinture de Kuiper",
+    "L'Univers"
    ],
-   "explication": "Notre galaxie est la Voie lactée. Le système solaire n'en est qu'une petite partie.",
+   "explication": "Notre galaxie est la Voie lactée, et le système solaire n'en est qu'une petite partie. L'Univers, lui, compte de nombreuses galaxies.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 2
@@ -536,19 +836,19 @@ JEU.enregistrer("cours", {
    "id": "svt-s01-1-q18",
    "fiche": "svt-s01-1-f5",
    "type": "vrai_faux",
-   "niveau": 1,
+   "niveau": 2,
    "enonce": "Le système solaire est le seul système stellaire de sa galaxie.",
    "corrections": [
-    "Faux : la Voie lactée contient aussi beaucoup d'autres systèmes stellaires.",
+    "Faux : la Voie lactée abrite aussi beaucoup d'autres systèmes stellaires.",
     "Faux : le système solaire ne se trouve dans aucune galaxie.",
-    "Faux : c'est la galaxie qui se trouve à l'intérieur du système solaire."
+    "Faux : le système solaire est une galaxie à lui tout seul."
    ],
    "explication": "Dans la Voie lactée, il y a bien d'autres systèmes stellaires. Et l'Univers compte d'autres galaxies encore.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 2
    },
-   "r": "=gwUH1hCAEgIBlAUZ1xTVMABaToBGwhBRpxCdYQHioQAV01GAUwEIcRJSxhFGQACOtBHNoSWLolTOpwzl2REm4RVAwhH/4kDegUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "r": "UwUQB0QMERQWBtwGVYkGXoi22GhBIohTcchG3gFBSkkTfMRCKcgJXcRRcIgGb4gUNcDRXcFTOpwzl2REm4RVAwhH/4kDegUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -572,18 +872,99 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
+   "id": "svt-s01-1-q39",
+   "fiche": "svt-s01-1-f5",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "L'Univers ne compte qu'une seule galaxie : la Voie lactée.",
+   "corrections": [
+    "Faux : l'Univers compte de nombreuses autres galaxies.",
+    "Faux : la Voie lactée est plus grande que l'Univers.",
+    "Faux : l'Univers ne contient aucune galaxie, seulement des planètes."
+   ],
+   "explication": "La Voie lactée n'est qu'une galaxie parmi beaucoup d'autres. L'Univers les contient toutes.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "MsEQccRA7wUCUpkTcMAFdcgJSZAAGQADc0wHH0SDAEVDLshFLYQEnFwBAMAGHsDSegUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "svt-s01-1-q40",
+   "fiche": "svt-s01-1-f5",
+   "type": "qcm_multiple",
+   "niveau": 3,
+   "enonce": "Coche les ensembles qui contiennent le système solaire.",
+   "choix": [
+    "La Voie lactée",
+    "L'Univers",
+    "La Terre",
+    "La ceinture de Kuiper",
+    "Le nuage d'Oort"
+   ],
+   "explication": "Le système solaire est dans la Voie lactée, elle-même dans l'Univers. La Terre, la ceinture de Kuiper et le nuage d'Oort sont au contraire des parties du système solaire.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "==AaP0RHDABAcIRV5cUWTxwxsawCiEURQRUA5Y0BlAFH",
+   "poids": 1
+  },
+  {
+   "id": "svt-s01-1-q41",
+   "fiche": "svt-s01-1-f5",
+   "type": "trou",
+   "niveau": 1,
+   "enonce": "Complète la phrase.",
+   "texte": "Le système solaire appartient à une ___ : la Voie lactée.",
+   "banque": [
+    "galaxie",
+    "planète",
+    "étoile",
+    "ceinture"
+   ],
+   "explication": "La Voie lactée est une galaxie. Elle contient le système solaire et bien d'autres systèmes stellaires.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "==QNe8AAcV1DDcQALlCH",
+   "poids": 1
+  },
+  {
+   "id": "svt-s01-1-q42",
+   "fiche": "svt-s01-1-f5",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Qu'ont en commun le système solaire et un autre système stellaire de la Voie lactée ?",
+   "choix": [
+    "Ils sont dans la même galaxie",
+    "Ce sont tous deux des galaxies",
+    "Ils sont dans deux galaxies différentes",
+    "Ils forment à eux deux l'Univers"
+   ],
+   "explication": "La Voie lactée abrite le système solaire et beaucoup d'autres systèmes stellaires. Ils partagent donc la même galaxie, qui n'est elle-même qu'une galaxie parmi d'autres dans l'Univers.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "=cEUEZhDKcgDSJyHfbKGRhgAPFgBikURBNUAcYUFFsTZ",
+   "poids": 1
+  },
+  {
    "id": "svt-s01-1-q20",
    "fiche": "svt-s01-1-f6",
    "type": "qcm",
    "niveau": 1,
-   "enonce": "Laquelle de ces planètes est une planète naine ?",
+   "enonce": "Lequel de ces astres est une planète naine ?",
    "choix": [
     "Pluton",
-    "Neptune",
+    "Mercure",
     "Mars",
-    "Saturne"
+    "Neptune"
    ],
-   "explication": "Pluton est considérée aujourd'hui comme une planète naine. Neptune, Mars et Saturne font partie des huit planètes.",
+   "explication": "Pluton est considérée aujourd'hui comme une planète naine. Mercure, la plus petite, reste l'une des huit planètes.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.pdf",
     "page": 1
@@ -613,17 +994,17 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Pourquoi Pluton n'est-elle pas comptée parmi les huit planètes ?",
    "choix": [
-    "C'est une planète naine : petite, rocheuse, et pas seule sur son orbite",
-    "C'est une étoile",
-    "C'est une planète gazeuse géante",
-    "C'est le satellite de la Terre"
+    "C'est une planète naine, qui partage son orbite",
+    "C'est une planète gazeuse, au-delà de Neptune",
+    "C'est un satellite qui tourne autour de Neptune",
+    "C'est une étoile, trop petite pour briller"
    ],
-   "explication": "Une planète naine est petite et rocheuse, et d'autres corps partagent son orbite. C'est le cas de Pluton.",
+   "explication": "Une planète naine est petite et rocheuse, et d'autres corps célestes partagent son orbite. C'est le cas de Pluton.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.pdf",
     "page": 1
    },
-   "r": "=8wCb8ABb0xZcohFVNAHd80FEYDSWUhXP8hRSwgUrdhBQARGKEQHSRkJZxQQI5xTcZEDc4yEbUEEFEcrBMBBz0AAbhlTbUxAOFTZ",
+   "r": "=00ASAAE10RVLohAJtACTwRMMVRFEthHGpEDc4yEbUEEFEcrBMBBz0AAbhlTbUxAOFTZ",
    "poids": 1
   },
   {
@@ -631,12 +1012,12 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s01-1-f6",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Combien de planètes naines connaît-on aujourd'hui, d'après le cours ?",
+   "enonce": "Combien de planètes naines connaît-on aujourd'hui ?",
    "choix": [
     "Cinq",
-    "Une",
-    "Huit",
-    "Deux"
+    "Deux",
+    "Quatre",
+    "Huit"
    ],
    "explication": "On connaît cinq planètes naines. Pluton est la première, Cérès en est une autre.",
    "source": {
@@ -644,6 +1025,66 @@ JEU.enregistrer("cours", {
     "page": 1
    },
    "r": "NdBCAETZ",
+   "poids": 1
+  },
+  {
+   "id": "svt-s01-1-q43",
+   "fiche": "svt-s01-1-f6",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Une planète naine est une petite planète gazeuse.",
+   "corrections": [
+    "Faux : c'est une petite planète rocheuse.",
+    "Faux : c'est une très grosse planète rocheuse.",
+    "Faux : c'est une petite étoile, comme le Soleil."
+   ],
+   "explication": "Une planète naine est petite et rocheuse. D'autres corps célestes partagent son orbite.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.pdf",
+    "page": 1
+   },
+   "r": "SQESMEgMX0hBaMQSLsh2r2CTJUUDLsxDSwgAndxGQUVBasASRgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "svt-s01-1-q44",
+   "fiche": "svt-s01-1-f6",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Un petit astre rocheux tourne autour du Soleil, mais d'autres corps célestes partagent son orbite. Comment le classer ?",
+   "choix": [
+    "Comme une planète naine",
+    "Comme une planète tellurique",
+    "Comme une planète gazeuse",
+    "Comme une étoile"
+   ],
+   "explication": "Petit, rocheux et pas seul sur son orbite : ce sont les traits d'une planète naine. Une planète tellurique, comme la Terre, compte parmi les huit planètes.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.pdf",
+    "page": 1
+   },
+   "r": "=QEDc4yEbUEEFEcrBMBBz0AAbhlTKswCGETZ",
+   "poids": 1
+  },
+  {
+   "id": "svt-s01-1-q45",
+   "fiche": "svt-s01-1-f6",
+   "type": "qcm_multiple",
+   "niveau": 3,
+   "enonce": "Coche les phrases justes sur Pluton.",
+   "choix": [
+    "C'est une planète naine",
+    "C'est la première des planètes naines connues",
+    "Elle est petite et rocheuse",
+    "C'est la plus petite des huit planètes",
+    "Elle est seule sur son orbite"
+   ],
+   "explication": "Pluton est la première des cinq planètes naines connues, petite et rocheuse, avec d'autres corps sur son orbite. La plus petite des huit planètes, c'est Mercure.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.pdf",
+    "page": 1
+   },
+   "r": "4cFFashCasALfVUQI5kCS8QHXcjUBYBERxgADcjSv9gFQhFABkQBJFgIcwBBbElGLsh2r2CTJUUDdogAGxAAvHLHIAxAZ4kDeg0NeBgEux0QENwBbYCHVBQAZrKAO4BGjh0CA1gGcMQQqAFH",
    "poids": 1
   }
  ],

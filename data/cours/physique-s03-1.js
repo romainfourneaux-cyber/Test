@@ -235,16 +235,16 @@ JEU.enregistrer("cours", {
    "enonce": "Comment trouver ce que vaut un petit trait sur une éprouvette ?",
    "choix": [
     "On divise l'écart entre deux grands traits par le nombre de petits traits",
-    "On divise l'écart entre deux grands traits par le nombre d'espaces qui les séparent",
-    "Un petit trait vaut toujours 1 mL",
-    "On compte tous les traits de l'éprouvette"
+    "On divise l'écart entre deux grands traits par le nombre d'espaces entre eux",
+    "On compte tous les petits traits de l'éprouvette, du bas jusqu'en haut",
+    "On admet qu'un petit trait vaut toujours 1 mL, sur toutes les éprouvettes"
    ],
    "explication": "Ce sont les espaces, pas les traits, qui se partagent l'écart. Avec 4 petits traits entre 40 et 50 mL, il y a 5 espaces de 2 mL.",
    "source": {
     "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
     "page": 4
    },
-   "r": "XFxGUsxDfs9qw0gFQFkTGMxFJFgIRQRFGQhTK80FaECQKsVDLMgRUggAnFQAMQxAd4EHWYgIfJQFVthCCYEDAMDHQUUADgQDGH7Tv0AAGREGGIgRH0TZ",
+   "r": "==gS7gFAVgEHbgwAJFgIRQRFGQhTK80FaECQKsVDLMgRUggAnFQAMQxAd4EHWYgIfJQFVthCCYEDAMDHQUUADgQDGH7Tv0AAGREGGIgRH0TZ",
    "poids": 1
   },
   {
@@ -255,8 +255,8 @@ JEU.enregistrer("cours", {
    "enonce": "Si 4 petits traits séparent deux grands traits distants de 10 mL, chaque petit trait vaut 2,5 mL.",
    "corrections": [
     "Faux : 4 traits découpent 5 intervalles, donc chaque petit trait vaut 2 mL.",
-    "Faux : chaque petit trait vaut 4 mL.",
-    "Faux : chaque petit trait vaut 10 mL."
+    "Faux : 4 traits découpent 3 intervalles, donc chaque petit trait vaut plus de 3 mL.",
+    "Faux : un petit trait vaut toujours 1 mL, quel que soit l'écart."
    ],
    "explication": "On compte les intervalles, pas les traits. 10 mL en 5 intervalles, cela fait 2 mL.",
    "source": {
@@ -285,6 +285,82 @@ JEU.enregistrer("cours", {
     "page": 4
    },
    "r": "=8Q3tuQBJpUZ",
+   "poids": 1
+  },
+  {
+   "id": "physique-s03-1-q27",
+   "fiche": "physique-s03-1-f1",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Entre les grands traits 60 mL et 70 mL d'une éprouvette, il y a 4 petits traits. Le liquide arrive au 3e petit trait au-dessus de 60 mL. Quel volume lit-on ?",
+   "choix": [
+    "63 mL",
+    "66 mL",
+    "67,5 mL",
+    "69 mL"
+   ],
+   "explication": "4 petits traits font 5 intervalles de 2 mL entre 60 et 70 mL. Trois petits traits au-dessus de 60, cela fait 60 + 3 × 2 = 66 mL.",
+   "indice": "Trouve d'abord ce que vaut un petit trait.",
+   "source": {
+    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
+    "page": 4
+   },
+   "r": "==ATjsgRfRUZ",
+   "poids": 1
+  },
+  {
+   "id": "physique-s03-1-q28",
+   "fiche": "physique-s03-1-f1",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Un objet de 5 cm³ plongé dans une éprouvette fait monter l'eau de 5 mL.",
+   "corrections": [],
+   "explication": "Oui : l'objet fait monter le niveau de son propre volume. Et 5 cm³, c'est 5 mL.",
+   "source": {
+    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
+    "page": 4
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "physique-s03-1-q29",
+   "fiche": "physique-s03-1-f1",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Sur une éprouvette, chaque petit trait vaut 2 mL. Un caillou plongé fait monter l'eau de 3 petits traits. Quel est son volume ?",
+   "choix": [
+    "3 cm³",
+    "5 cm³",
+    "6 cm³",
+    "1,5 cm³"
+   ],
+   "explication": "3 petits traits de 2 mL font 6 mL. Comme 1 mL vaut 1 cm³, le caillou mesure 6 cm³.",
+   "source": {
+    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
+    "page": 4
+   },
+   "r": "=8Q3tuQBJRUZ",
+   "poids": 1
+  },
+  {
+   "id": "physique-s03-1-q30",
+   "fiche": "physique-s03-1-f1",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Pourquoi trouve-t-on le volume d'un objet plongé en soustrayant les deux lectures ?",
+   "choix": [
+    "Parce que l'objet déplace un volume de liquide égal au sien",
+    "Parce que l'objet absorbe une partie du liquide de l'éprouvette",
+    "Parce que la masse de l'objet s'ajoute à celle du liquide",
+    "Parce que le liquide se comprime quand on plonge l'objet"
+   ],
+   "explication": "En plongeant, l'objet prend la place d'un peu de liquide, qui monte d'autant. La différence des niveaux donne donc le volume de l'objet.",
+   "source": {
+    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
+    "page": 4
+   },
+   "r": "X9BDHwhUdISDJQlSHzqRD0wGyMAHJUFFN4kCf0xLCNRFDtxTDUACecz22GQVFwABN0xTv0AAAxlTKUAFIISZ",
    "poids": 1
   },
   {
@@ -336,8 +412,8 @@ JEU.enregistrer("cours", {
    "enonce": "Le calcul donne 8,6 bouteilles pour remplir un bac : 8 bouteilles suffisent donc.",
    "corrections": [
     "Faux : 8 bouteilles ne suffisent pas, il en faut 9 pour finir de remplir le bac.",
-    "Faux : il en faut 86.",
-    "Faux : 7 bouteilles suffisent."
+    "Faux : il en faut 8,6, car on ne peut pas arrondir.",
+    "Faux : il en faut 10, car on arrondit toujours à la dizaine."
    ],
    "explication": "Avec 8 bouteilles, il manque encore un peu d'eau. On arrondit donc au nombre entier supérieur : 9.",
    "source": {
@@ -354,17 +430,134 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Comment trouver combien de bouteilles il faut pour remplir un aquarium ?",
    "choix": [
-    "On calcule son volume, on le met en litres, puis on le divise par la contenance d'une bouteille",
-    "On pèse l'aquarium vide",
-    "On multiplie la hauteur par le nombre de bouteilles",
-    "On compte les bouteilles au hasard"
+    "On calcule son volume, puis on le divise par la contenance d'une bouteille",
+    "On calcule son volume, puis on le multiplie par la contenance d'une bouteille",
+    "On mesure sa hauteur, puis on la divise par la hauteur d'une bouteille",
+    "On additionne ses trois dimensions, puis on divise par la contenance d'une bouteille"
    ],
-   "explication": "Le volume de l'aquarium divisé par la contenance d'une bouteille donne le nombre de bouteilles. On arrondit au-dessus pour finir de le remplir.",
+   "explication": "Le volume, mis dans la même unité que la bouteille, divisé par sa contenance donne le nombre de bouteilles. On arrondit ensuite au-dessus pour finir de le remplir.",
    "source": {
     "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
     "page": 4
    },
-   "r": "==wFIJwAPMQHHgCEVBwGE4kCPdxCtw0CQlFAAUgRI4xZAQRFVRhGHkxGMMGSJUxQB8UFPwhAn5lBAcQBAIwTc0wYZBAWNswAGhgBSt2FYARGe8hTB0xGjhUCA5kAOUgRH0TZ",
+   "r": "==wRQFkAGMgEc0RJSBxCAYVDOpQEGIyQAE0QBwgRHUgU1MRBFBhAAghBWgkJBV0WC5EHPMRGSt2FYARGe8hTB0xGjhUCA5kAOUgRH0TZ",
+   "poids": 1
+  },
+  {
+   "id": "physique-s03-1-q26",
+   "fiche": "physique-s03-1-f2",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Un bac a une contenance de 9 L. Combien de bouteilles de 2 L faut-il pour le remplir entièrement ?",
+   "choix": [
+    "4 bouteilles",
+    "4,5 bouteilles",
+    "5 bouteilles",
+    "18 bouteilles"
+   ],
+   "explication": "9 ÷ 2 donne 4,5 : avec 4 bouteilles, il manque encore de l'eau. On arrondit au nombre entier supérieur, donc il en faut 5.",
+   "indice": "Divise la contenance du bac par celle d'une bouteille, puis arrondis.",
+   "source": {
+    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
+    "page": 4
+   },
+   "r": "=A1GmEUCchkGakABJdUZ",
+   "poids": 1
+  },
+  {
+   "id": "physique-s03-1-q31",
+   "fiche": "physique-s03-1-f2",
+   "type": "vrai_faux",
+   "niveau": 1,
+   "enonce": "Avec des mesures en centimètres, la formule V = L × l × h donne un volume en cm³.",
+   "corrections": [],
+   "explication": "Oui : trois longueurs en cm multipliées donnent des cm³. On peut ensuite convertir ce volume en litres.",
+   "source": {
+    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
+    "page": 4
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "physique-s03-1-q32",
+   "fiche": "physique-s03-1-f2",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Un aquarium mesure 40 cm de long, 25 cm de large et 30 cm de haut. Quel est son volume ?",
+   "choix": [
+    "95 cm³",
+    "1 000 cm³",
+    "30 000 cm³",
+    "300 000 cm³"
+   ],
+   "explication": "V = 40 × 25 × 30. Comme 40 × 25 = 1 000, le volume est de 30 000 cm³.",
+   "indice": "Multiplie d'abord 40 par 25.",
+   "source": {
+    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
+    "page": 4
+   },
+   "r": "==gSw/OCW1gXfZlRZFUZ",
+   "poids": 1
+  },
+  {
+   "id": "physique-s03-1-q33",
+   "fiche": "physique-s03-1-f2",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Pour trouver le volume d'un pavé, on additionne sa longueur, sa largeur et sa hauteur.",
+   "corrections": [
+    "Faux : on les multiplie : V = L × l × h.",
+    "Faux : on multiplie seulement la longueur par la largeur.",
+    "Faux : on additionne seulement la longueur et la largeur."
+   ],
+   "explication": "Le volume d'un pavé est le produit de ses trois dimensions. Les additionner ne donne pas un volume.",
+   "source": {
+    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
+    "page": 4
+   },
+   "r": "SQESBIF0xWVCVZuqONiUVN2eF9QDLYgCWAgBrcAGFZAFF4UAdgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "physique-s03-1-q34",
+   "fiche": "physique-s03-1-f2",
+   "type": "trou",
+   "niveau": 2,
+   "enonce": "Complète la méthode pour remplir un bac avec des bouteilles.",
+   "texte": "On divise le volume du bac par la ___ d'une bouteille, puis on arrondit au nombre entier ___.",
+   "banque": [
+    "contenance",
+    "supérieur",
+    "inférieur",
+    "masse"
+   ],
+   "explication": "La contenance, c'est ce qu'une bouteille peut contenir. On arrondit au-dessus, sinon le bac ne serait pas tout à fait plein.",
+   "source": {
+    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
+    "page": 4
+   },
+   "r": "==AK4c1AcsgBA0wMYZxFBwUHTMAAA4esFAhBTJjQyAVDgMEBbhkGBkQBLlCH",
+   "poids": 1
+  },
+  {
+   "id": "physique-s03-1-q35",
+   "fiche": "physique-s03-1-f2",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Pourquoi arrondit-on au nombre entier supérieur le nombre de bouteilles ?",
+   "choix": [
+    "Parce qu'avec une bouteille de moins, le bac ne serait pas plein",
+    "Parce qu'on achète toujours les bouteilles par paquets entiers",
+    "Parce que l'eau se comprime un peu une fois versée dans le bac",
+    "Parce que le volume calculé en cm³ est toujours un peu trop petit"
+   ],
+   "explication": "La partie après la virgule représente encore de l'eau à verser. Il faut donc une bouteille de plus pour finir de remplir le bac.",
+   "source": {
+    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
+    "page": 4
+   },
+   "r": "QtBDQ0RGOxxEYMWWMQ1XLwhRDcgUkMxFFBRHJJEHcEALAVEUJ5kCKoAAXMzBacQVUcwGPFRD1wkQAxlTKUAFIISZ",
    "poids": 1
   },
   {
@@ -455,17 +648,17 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Comment choisir l'unité pour exprimer une masse ?",
    "choix": [
-    "On choisit l'unité au hasard",
-    "On prend toujours le gramme",
-    "On prend toujours la tonne",
-    "On prend l'unité adaptée à l'objet : la tonne pour un très lourd, le milligramme pour un très léger"
+    "On prend une unité adaptée à la masse de l'objet",
+    "On prend toujours le gramme, car c'est l'unité la plus précise",
+    "On prend toujours le kilogramme, quelle que soit la masse",
+    "On prend toujours la tonne, la plus grande des unités"
    ],
-   "explication": "Une unité adaptée donne un nombre simple à lire. Une baleine bleue se compte en tonnes, un cheveu en milligrammes.",
+   "explication": "Une unité adaptée donne un nombre simple à lire. Un hélicoptère se compte en tonnes, un cheveu en milligrammes.",
    "source": {
     "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
     "page": 4
    },
-   "r": "=c1AMkgxxSwYe1s9fpxTIMRSAITHFUEEcQwDdURAvEEDY1wCDYkSNAgMdkRRGktqcshUGYTDXAkQe80AIcQHzIFFJU1SJphCYoALKkQFN26TD8sqGczERQQVYrqGGwRHkFURRN0CdYhRH0TZ",
+   "r": "=cRWLUABJ4kHndREFBhAa8gASlwLNUs9NsgxlKRGTMyEVxstFAAAaIVDtgVRRN0CdYhRH0TZ",
    "poids": 1
   },
   {
@@ -488,6 +681,87 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
+   "id": "physique-s03-1-q36",
+   "fiche": "physique-s03-1-f3",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Un papillon a une masse d'environ 30 g.",
+   "corrections": [
+    "Faux : environ 30 mg ; 30 g, c'est plutôt une mésange.",
+    "Faux : environ 30 kg ; 30 g, c'est plutôt un crayon.",
+    "Faux : environ 30 t ; 30 g, c'est plutôt un cheveu."
+   ],
+   "explication": "Un papillon est très léger : environ 30 mg. Les 30 g correspondent à une mésange.",
+   "source": {
+    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
+    "page": 4
+   },
+   "r": "=gxVfxQCBMxGq7OCVgEAaYkEdH7MHkRFVVgGLgUEI9mSFVgHORlRBQgU3FUVLoxAAgRAXgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "physique-s03-1-q37",
+   "fiche": "physique-s03-1-f3",
+   "type": "ordre",
+   "niveau": 2,
+   "enonce": "Range-les du plus léger au plus lourd.",
+   "elements": [
+    "Une mésange",
+    "Un hélicoptère",
+    "Un papillon",
+    "Un homme adulte"
+   ],
+   "explication": "Papillon (environ 30 mg), mésange (environ 30 g), adulte (environ 75 kg). L'hélicoptère, lui, se compte en tonnes.",
+   "source": {
+    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
+    "page": 4
+   },
+   "r": "oxhQcpkVFBEH",
+   "poids": 1
+  },
+  {
+   "id": "physique-s03-1-q38",
+   "fiche": "physique-s03-1-f3",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Une mésange a une masse d'environ 30 g et un papillon d'environ 30 mg. Que peut-on dire ?",
+   "choix": [
+    "La mésange est bien plus lourde : 30 g, c'est beaucoup plus que 30 mg",
+    "Ils ont la même masse, puisque le nombre est 30 dans les deux cas",
+    "Le papillon est plus lourd, car le milligramme est une grande unité",
+    "On ne peut pas comparer deux masses écrites avec des unités différentes"
+   ],
+   "explication": "Le milligramme est une unité bien plus petite que le gramme. À nombre égal, 30 g pèsent donc beaucoup plus que 30 mg.",
+   "source": {
+    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
+    "page": 4
+   },
+   "r": "NFwCJJEdSBBEEElGbMgAINDWKYFWPoABG1RAiUlFFllFJ5FXSJ1YIFwRYFwAGVBHecjUbAAHTkkGccBSmo0CU51xsugRI4TZ",
+   "poids": 1
+  },
+  {
+   "id": "physique-s03-1-q39",
+   "fiche": "physique-s03-1-f3",
+   "type": "qcm_multiple",
+   "niveau": 2,
+   "enonce": "Pour quels êtres ou objets le gramme est-il l'unité de masse la mieux adaptée ?",
+   "choix": [
+    "Un crayon",
+    "Une mésange",
+    "Un cheveu",
+    "Un sac d'école",
+    "Un papillon",
+    "Un hélicoptère"
+   ],
+   "explication": "Un crayon et une mésange se pèsent en grammes. Le cheveu et le papillon se comptent en milligrammes, le sac en kilogrammes et l'hélicoptère en tonnes.",
+   "source": {
+    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
+    "page": 4
+   },
+   "r": "==gMENgDcYSAcbKGRxAA6AFRhNkCMxEHMYEC8AFH",
+   "poids": 1
+  },
+  {
    "id": "physique-s03-1-q17",
    "fiche": "physique-s03-1-f4",
    "type": "vrai_faux",
@@ -495,8 +769,8 @@ JEU.enregistrer("cours", {
    "enonce": "Deux objets qui ont le même volume ont forcément la même masse.",
    "corrections": [
     "Faux : des cylindres de même volume peuvent avoir des masses toutes différentes.",
-    "Faux : deux objets n'ont jamais le même volume.",
-    "Faux : un objet n'a pas de masse."
+    "Faux : deux objets de même volume ont toujours des masses différentes.",
+    "Faux : ils ont la même masse seulement s'ils sont tous deux solides."
    ],
    "explication": "Dans l'expérience, des cylindres de 70 cm³ ont chacun une masse différente. Masse et volume sont deux grandeurs différentes.",
    "source": {
@@ -554,17 +828,77 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Comment montrer que la masse et le volume sont deux grandeurs différentes ?",
    "choix": [
-    "Un objet plus gros est toujours plus lourd",
-    "La masse et le volume se mesurent avec le même instrument",
-    "Des objets de même volume peuvent avoir des masses différentes, et des objets de même masse des volumes différents",
-    "Tous les objets de même taille ont la même masse"
+    "Avec des objets de même volume mais de masses différentes",
+    "En montrant qu'un objet plus gros est toujours plus lourd",
+    "En mesurant la masse et le volume avec le même instrument",
+    "En pesant plusieurs fois de suite le même objet"
    ],
-   "explication": "C'est ce que montrent les deux séries de cylindres. Connaître le volume ne suffit donc pas pour connaître la masse.",
+   "explication": "C'est ce que montrent les cylindres : même volume, masses différentes, et l'inverse. Connaître le volume ne suffit donc pas pour connaître la masse.",
    "source": {
     "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
     "page": 4
    },
-   "r": "HZUWAoAFPrKFhsREFZAFEsxAd4xYeBQUNsAHVcABSJyHfbKGRxgCPFAHmc0Ba1QHKIgRdcxZeZAAB8BDcYcsOUCRBUhXLwRFHQgU0cREFdAGGghDSxRLINBQI5xTDsAHegCBVBAGbr6APdBDj5VEQdEDAYUFMYTZ",
+   "r": "==wSdogBGYyXMb/SIYgAGpxF0EAFIUFFN4EHbkgLNAAWYJAAQYEDf0esYUEEVkUHbchAhIURGhkCPVwAfMTZ",
+   "poids": 1
+  },
+  {
+   "id": "physique-s03-1-q40",
+   "fiche": "physique-s03-1-f4",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Les cylindres qui avaient tous le même volume, 70 cm³, avaient aussi tous la même masse.",
+   "corrections": [
+    "Faux : ils avaient le même volume, mais aucun n'avait la même masse.",
+    "Faux : ils avaient la même masse, mais pas le même volume.",
+    "Faux : ils avaient la même masse, mais un volume plus petit que 70 cm³."
+   ],
+   "explication": "Même volume ne veut pas dire même masse : chaque cylindre de 70 cm³ avait sa propre masse. Masse et volume sont deux grandeurs différentes.",
+   "source": {
+    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
+    "page": 4
+   },
+   "r": "==gPPsEUe1hDLYEDf0esYUEFdkkGGMhHiowCVM0GMMxBJFgLTgRRZRBBbMQHeMGSI8p7D80AKkkBpcBHEMAEJ1xAbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "physique-s03-1-q41",
+   "fiche": "physique-s03-1-f4",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Deux objets ont exactement la même masse. Que peut-on dire de leurs volumes ?",
+   "choix": [
+    "Ils peuvent être différents",
+    "Ils sont forcément égaux",
+    "Ils sont forcément différents",
+    "On les trouve en lisant la balance"
+   ],
+   "explication": "Les cylindres de même masse avaient chacun leur volume : même masse ne veut pas dire même volume. Mais rien n'empêche non plus deux objets d'avoir le même volume.",
+   "source": {
+    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
+    "page": 4
+   },
+   "r": "==wFepRADQBwxGCFcEQVUshGFHLS3MEADh1CfYUFFsTZ",
+   "poids": 1
+  },
+  {
+   "id": "physique-s03-1-q42",
+   "fiche": "physique-s03-1-f4",
+   "type": "qcm_multiple",
+   "niveau": 3,
+   "enonce": "Quelles conclusions tire-t-on de l'expérience des cylindres ?",
+   "choix": [
+    "Un même volume peut avoir des masses différentes",
+    "Une même masse peut avoir des volumes différents",
+    "Plus un cylindre est gros, plus il est lourd",
+    "Deux cylindres de même masse ont le même volume",
+    "La masse et le volume sont deux grandeurs différentes"
+   ],
+   "explication": "Les cylindres montrent qu'un volume ne donne pas la masse, et inversement. La masse et le volume sont donc deux grandeurs différentes.",
+   "source": {
+    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
+    "page": 4
+   },
+   "r": "=gzFetwGIMwGbTIFTwQERpBHacBDtw0FS1gFaMgAJZQKdYQRQwBHCAABIZSQFFESOpQFVgwHnNROHl1UaoRAXoh6uPwUEpwTVMABHsSHDUkBU0gTdsxB1wURBh1CfY0AaEgJfUFAYstqD80FGYxDJdhXLsBCDsx2ESxEMERUasAHBkgLNYBUJ5UHPkwHTcmBAAQBRxwAa4xB10AAYdYrCYEC8AFH",
    "poids": 1
   },
   {
@@ -579,7 +913,7 @@ JEU.enregistrer("cours", {
     "Les deux ont la même densité",
     "L'aluminium est plus dense que le plomb"
    ],
-   "explication": "À masse égale, la matière la plus dense prend le moins de place. Ici, c'est le plomb.",
+   "explication": "Les deux blocs sont aussi lourds l'un que l'autre. Mais à masse égale, la matière la plus dense prend le moins de place : ici, c'est le plomb.",
    "source": {
     "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
     "page": 5
@@ -595,8 +929,8 @@ JEU.enregistrer("cours", {
    "enonce": "À masse égale, la matière la plus dense occupe le plus grand volume.",
    "corrections": [
     "Faux : à masse égale, la plus dense occupe le plus petit volume.",
-    "Faux : la densité ne dépend ni de la masse ni du volume.",
-    "Faux : à masse égale, toutes les matières ont le même volume."
+    "Faux : à masse égale, toutes les matières occupent le même volume.",
+    "Faux : à masse égale, c'est la moins dense qui occupe le plus petit volume."
    ],
    "explication": "Le plomb est plus dense que l'aluminium : pour la même masse, il est plus petit. La plus dense prend donc le moins de place.",
    "source": {
@@ -613,17 +947,17 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Comment reconnaître plusieurs liquides transparents dont on ignore la nature ?",
    "choix": [
-    "On mesure la hauteur du verre",
-    "On regarde lequel coule le plus vite",
-    "On compare leur couleur",
-    "On pèse le même volume de chacun et on compare les masses à un tableau"
+    "On pèse un même volume de chacun et on compare les masses",
+    "On mesure la hauteur atteinte par chacun dans des verres identiques",
+    "On regarde lequel coule le plus vite quand on le verse",
+    "On compare leur couleur à celle de l'eau du robinet"
    ],
-   "explication": "Chaque matière a sa densité propre. Pour un même volume, chaque liquide a donc sa masse à lui.",
+   "explication": "Chaque matière a sa densité propre. Pour un même volume, chaque liquide a donc sa masse à lui, qu'on retrouve dans un tableau.",
    "source": {
     "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
     "page": 5
    },
-   "r": "Xg1DKoABIYwZcAQRVLbSdoQAbICQFZESC80AUggAq0hFFthHJphCSZgNORQXO5kCCYEDfIjHaMRVUQAxs+BSmEURQ5lxsahRH0TZ",
+   "r": "==wSdoQAbICQFZESC80AUggAq0hFFthHJphCSZgNORQXO5kCCYEDfIjHaMRVUQAxs+BStgVRQ5lxsahRH0TZ",
    "poids": 1
   },
   {
@@ -634,8 +968,8 @@ JEU.enregistrer("cours", {
    "enonce": "« Dense » et « lourd » veulent dire exactement la même chose.",
    "corrections": [
     "Faux : deux blocs de plomb et d'aluminium de même masse sont aussi lourds l'un que l'autre, mais le plomb est plus dense.",
-    "Faux : un objet dense est toujours plus léger.",
-    "Faux : la densité, c'est la couleur d'une matière."
+    "Faux : un objet dense est toujours plus léger qu'un objet lourd.",
+    "Faux : la densité, c'est seulement la taille d'un objet."
    ],
    "explication": "« Lourd » parle seulement de la masse d'un objet. « Dense » compare des matières à volume égal ou à masse égale.",
    "source": {
@@ -666,24 +1000,78 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "physique-s03-1-q26",
-   "fiche": "physique-s03-1-f2",
-   "type": "qcm",
-   "niveau": 3,
-   "enonce": "Un bac a une contenance de 9 L. Combien de bouteilles de 2 L faut-il pour le remplir entièrement ?",
-   "choix": [
-    "4 bouteilles",
-    "4,5 bouteilles",
-    "5 bouteilles",
-    "18 bouteilles"
-   ],
-   "explication": "9 ÷ 2 donne 4,5 : avec 4 bouteilles, il manque encore de l'eau. On arrondit au nombre entier supérieur, donc il en faut 5.",
-   "indice": "Divise la contenance du bac par celle d'une bouteille, puis arrondis.",
+   "id": "physique-s03-1-q43",
+   "fiche": "physique-s03-1-f5",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "À masse égale, le plomb occupe moins de place que l'aluminium.",
+   "corrections": [],
+   "explication": "Oui : le bloc de plomb est plus petit que le bloc d'aluminium de même masse. C'est pour cela que le plomb est plus dense.",
    "source": {
     "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
-    "page": 4
+    "page": 5
    },
-   "r": "=A1GmEUCchkGakABJdUZ",
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "physique-s03-1-q44",
+   "fiche": "physique-s03-1-f5",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Deux billes ont exactement le même volume, mais la bille A a une plus grande masse que la bille B. Laquelle est faite de la matière la plus dense ?",
+   "choix": [
+    "La bille A",
+    "La bille B",
+    "Elles sont aussi denses l'une que l'autre",
+    "On ne peut pas le savoir sans connaître leur couleur"
+   ],
+   "explication": "Pour comparer, on regarde les masses à volume égal. La matière la plus dense a la plus grande masse : c'est la bille A.",
+   "source": {
+    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
+    "page": 5
+   },
+   "r": "hxWRQFkAGQgRI4TZ",
+   "poids": 1
+  },
+  {
+   "id": "physique-s03-1-q45",
+   "fiche": "physique-s03-1-f5",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Un bloc de plomb et un bloc d'aluminium ont exactement le même volume. Lequel a la plus grande masse ?",
+   "choix": [
+    "Le bloc de plomb",
+    "Le bloc d'aluminium",
+    "Ils ont la même masse",
+    "On ne peut pas comparer deux métaux"
+   ],
+   "explication": "Le plomb est plus dense que l'aluminium. À volume égal, c'est donc le bloc de plomb qui a la plus grande masse.",
+   "source": {
+    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
+    "page": 5
+   },
+   "r": "TtwAA4BGjhUAV4UADQgRM4TZ",
+   "poids": 1
+  },
+  {
+   "id": "physique-s03-1-q46",
+   "fiche": "physique-s03-1-f5",
+   "type": "qcm_multiple",
+   "niveau": 2,
+   "enonce": "Pour comparer la densité de deux matières, que peut-on faire ?",
+   "choix": [
+    "Comparer leurs masses pour un même volume",
+    "Comparer leurs volumes pour une même masse",
+    "Comparer leurs masses, quels que soient leurs volumes",
+    "Comparer leurs volumes, quelles que soient leurs masses"
+   ],
+   "explication": "Il faut garder l'une des deux grandeurs égale pour comparer l'autre. Comparer des masses sans tenir compte des volumes, c'est confondre lourd et dense.",
+   "source": {
+    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
+    "page": 5
+   },
+   "r": "=szSXQTAUgQVUQAxs+BSmMEEV81GAYhRachKHkhCDElGcoxFEM2XAcETeIQClskXldBGQkhHf4kCfIMgAV0WY5UHTkQGSRzFGYBFckUHdcQDv0wFQ91DfsQCqAFH",
    "poids": 1
   }
  ],

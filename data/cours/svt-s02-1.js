@@ -214,12 +214,12 @@ JEU.enregistrer("cours", {
    "id": "svt-s02-1-q2",
    "fiche": "svt-s02-1-f1",
    "type": "vrai_faux",
-   "niveau": 1,
+   "niveau": 2,
    "enonce": "Les cercles polaires sont plus proches de l'équateur que les tropiques.",
    "corrections": [
     "Faux : en partant de l'équateur, on rencontre d'abord les tropiques, puis les cercles polaires.",
-    "Faux : les cercles polaires sont exactement sur l'équateur.",
-    "Faux : il n'existe qu'un seul cercle polaire, au milieu du globe."
+    "Faux : les cercles polaires et les tropiques sont à la même distance de l'équateur.",
+    "Faux : les cercles polaires sont exactement sur l'équateur."
    ],
    "explication": "Depuis l'équateur, on passe un tropique, puis un cercle polaire, avant d'arriver au pôle. Les cercles polaires sont donc plus loin.",
    "source": {
@@ -253,13 +253,13 @@ JEU.enregistrer("cours", {
    "id": "svt-s02-1-q4",
    "fiche": "svt-s02-1-f1",
    "type": "qcm",
-   "niveau": 2,
+   "niveau": 1,
    "enonce": "Comment appelle-t-on chacune des deux moitiés du globe séparées par l'équateur ?",
    "choix": [
     "Un hémisphère",
     "Un tropique",
     "Un pôle",
-    "Un crépuscule"
+    "Un cercle polaire"
    ],
    "explication": "Chaque moitié du globe est un hémisphère. Il y a l'hémisphère nord et l'hémisphère sud.",
    "source": {
@@ -267,6 +267,65 @@ JEU.enregistrer("cours", {
     "page": 2
    },
    "r": "=s0Cdo9qr0lFcB0xs6gRHcSZ",
+   "poids": 1
+  },
+  {
+   "id": "svt-s02-1-q25",
+   "fiche": "svt-s02-1-f1",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Combien de tropiques et de cercles polaires le globe compte-t-il en tout ?",
+   "choix": [
+    "Deux tropiques et deux cercles polaires",
+    "Un tropique et un cercle polaire",
+    "Deux tropiques et un seul cercle polaire",
+    "Un seul tropique et deux cercles polaires"
+   ],
+   "explication": "Il y a un tropique et un cercle polaire de chaque côté de l'équateur. Cela fait deux tropiques et deux cercles polaires.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.pdf",
+    "page": 2
+   },
+   "r": "=clAMwhBTQALdVkRIJADUMgCS9zBQEQVFwgTccRHyQUFa9lGP5xEMYTZ",
+   "poids": 1
+  },
+  {
+   "id": "svt-s02-1-q26",
+   "fiche": "svt-s02-1-f1",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Une exploratrice part de l'équateur et marche tout droit vers le pôle Sud. Quelle ligne imaginaire franchit-elle en deuxième ?",
+   "choix": [
+    "Un cercle polaire",
+    "Un tropique",
+    "L'équateur",
+    "L'axe de rotation"
+   ],
+   "explication": "Depuis l'équateur, on franchit d'abord un tropique, puis un cercle polaire, avant d'atteindre le pôle. L'ordre est le même vers le nord et vers le sud.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.pdf",
+    "page": 2
+   },
+   "r": "==wVUsxBO4xBz0AAZ5EHKUgRHcSZ",
+   "poids": 1
+  },
+  {
+   "id": "svt-s02-1-q27",
+   "fiche": "svt-s02-1-f1",
+   "type": "vrai_faux",
+   "niveau": 1,
+   "enonce": "Le pôle Nord et le pôle Sud se trouvent dans le même hémisphère.",
+   "corrections": [
+    "Faux : le pôle Nord est au bout de l'hémisphère nord, le pôle Sud au bout de l'hémisphère sud.",
+    "Faux : les deux pôles se trouvent sur l'équateur.",
+    "Faux : il n'y a qu'un seul pôle, au nord."
+   ],
+   "explication": "L'équateur sépare les deux hémisphères, et chaque pôle se trouve au bout de l'un d'eux. Ils sont aux deux extrémités du globe.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.pdf",
+    "page": 2
+   },
+   "r": "==AGX9VDbwhUNEThm2VXdYwCPrqGg5RVAERUdsBAQgkNMVUUY1zTDoQ3xejUQkQVd1AHAwBSm8Vz2XkHc8wCAH7LVlRRQURSaoRHKMGWEURWdogRCsRHJIFEJEssZ4kCegUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -278,8 +337,8 @@ JEU.enregistrer("cours", {
    "choix": [
     "Sur l'équateur",
     "Au pôle Nord",
-    "Sur le cercle polaire",
-    "À Bourges"
+    "Sur un cercle polaire",
+    "Sur un tropique"
    ],
    "explication": "Seul l'équateur a toute l'année autant de jour que de nuit. Ailleurs, cela n'arrive qu'aux équinoxes.",
    "source": {
@@ -314,7 +373,7 @@ JEU.enregistrer("cours", {
     "Il grandit de plus en plus",
     "Il diminue jusqu'à disparaître",
     "Il reste le même partout",
-    "Il n'existe que sur l'équateur"
+    "Il grandit, puis il diminue"
    ],
    "explication": "Près de l'équateur, la durée du jour change peu au fil de l'année. Plus on avance vers le cercle polaire, plus l'écart entre l'été et l'hiver devient grand.",
    "source": {
@@ -365,30 +424,89 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
+   "id": "svt-s02-1-q28",
+   "fiche": "svt-s02-1-f2",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "À Bourges, en France, combien de temps dure environ le jour au solstice d'été ?",
+   "choix": [
+    "Environ 16 heures",
+    "Environ 8 heures",
+    "Environ 5 heures",
+    "Environ six mois"
+   ],
+   "explication": "À Bourges, le jour dure environ 16 heures en été et 8 heures en hiver. Cet écart est typique de la zone entre un tropique et le cercle polaire.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.pdf",
+    "page": 2
+   },
+   "r": "==wVCwAHacBAjtBVVMUAd8AEHcTZ",
+   "poids": 1
+  },
+  {
+   "id": "svt-s02-1-q29",
+   "fiche": "svt-s02-1-f2",
+   "type": "vrai_faux",
+   "niveau": 3,
+   "enonce": "À Yellowknife, au Canada, près du cercle polaire, le jour est très long au solstice d'hiver.",
+   "corrections": [
+    "Faux : en hiver, le jour y est très court, à peine plus de 5 heures ; c'est en été qu'il est très long.",
+    "Faux : le jour y dure autant que la nuit toute l'année.",
+    "Faux : le jour y dure six mois sans interruption."
+   ],
+   "explication": "Près du cercle polaire, le jour est très court en hiver et très long en été. À Yellowknife, en été, le Soleil ne se couche que vers 1 heure du matin.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.pdf",
+    "page": 2
+   },
+   "r": "SQESOwBKeUlFdL7Ga8kBbYSDJwlCb4hRPrqBuHbVLARUd0hCVtwYWUkRIxhGD4QSHd2FRUkBEUgHPdhBqgUFV0YrPpkEbcAKRUlFdL7Ga8kBbYSDcUxXbAADGxgHn51BAMAGB4UAXgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "svt-s02-1-q30",
+   "fiche": "svt-s02-1-f2",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Au pôle, à quel moment de l'année le Soleil se lève-t-il ?",
+   "choix": [
+    "À l'équinoxe de printemps",
+    "À l'équinoxe d'automne",
+    "Au solstice d'été",
+    "Chaque matin, comme ailleurs"
+   ],
+   "explication": "Au pôle, le Soleil se lève à l'équinoxe de printemps et brille ensuite six mois. Il se couche à l'équinoxe d'automne pour six mois de nuit.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.pdf",
+    "page": 2
+   },
+   "r": "=wEHWsADGkyGHURVU0gTKowBtQEEERYrIpgRpHbZ",
+   "poids": 1
+  },
+  {
    "id": "svt-s02-1-q10",
    "fiche": "svt-s02-1-f3",
    "type": "qcm",
    "niveau": 1,
    "enonce": "Qu'est-ce que le crépuscule ?",
    "choix": [
-    "Le moment où les rayons du Soleil sont rasants et sa lumière rougeoie",
-    "Le milieu de la nuit",
-    "Le moment où le Soleil est le plus haut",
-    "Une ligne imaginaire du globe"
+    "Un moment où les rayons arrivent rasants et rougeoient",
+    "Un moment où le Soleil brille au plus haut, juste à midi",
+    "Une nuit de six mois au-dessus des pôles",
+    "Un jour où la nuit dure autant que le jour, partout"
    ],
    "explication": "Le crépuscule, c'est l'aube ou le coucher du Soleil. Les rayons arrivent rasants et la lumière devient rouge.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.pdf",
     "page": 2
    },
-   "r": "==ATK8QCMUhMdcQRQMQwtawHd8SDEYUDaogRV0BHmEAFXUVBHEAHSRgKIlgW+5kGCYkGcgyCUcRVCwgAPt8qs0QEbh0AAsgRM4TZ",
+   "r": "KdzQAwlQLgwEJshUzcRVWEwHI0hDAg0NDBwQExRHHYkGcgyCUcRVCwgAPt8qs0QEbh0AAsgRHcSZ",
    "poids": 1
   },
   {
    "id": "svt-s02-1-q11",
    "fiche": "svt-s02-1-f3",
    "type": "vrai_faux",
-   "niveau": 1,
+   "niveau": 2,
    "enonce": "Près de l'équateur, le crépuscule dure très longtemps.",
    "corrections": [
     "Faux : il est très court près de l'équateur ; il s'allonge vers le cercle polaire.",
@@ -407,33 +525,113 @@ JEU.enregistrer("cours", {
    "id": "svt-s02-1-q12",
    "fiche": "svt-s02-1-f3",
    "type": "qcm",
-   "niveau": 2,
-   "enonce": "Comment change la durée du crépuscule quand on va de l'équateur vers le cercle polaire ?",
+   "niveau": 3,
+   "enonce": "Pourquoi le crépuscule est-il très court près de l'équateur ?",
    "choix": [
-    "Elle s'allonge, jusqu'à de nombreuses heures",
-    "Elle raccourcit jusqu'à disparaître",
-    "Elle reste la même partout",
-    "Elle dure toujours exactement une minute"
+    "Le Soleil y est au zénith chaque jour",
+    "Le jour y dure six mois d'affilée",
+    "La Terre y est aplatie",
+    "Les rayons y arrivent toujours rasants"
    ],
-   "explication": "Plus on s'éloigne de l'équateur, plus le crépuscule dure. Près du cercle polaire, il peut s'étirer sur des heures.",
+   "explication": "Près de l'équateur, le Soleil est au zénith chaque jour, et le crépuscule y est donc très court. Près du cercle polaire, le Soleil l'est rarement et le crépuscule s'allonge.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.pdf",
     "page": 2
    },
-   "r": "=sUAiAAAA0RUasAHH0QMPhgWD5kCCYUyxC2BEYBAbkkQKUhBsEUCUpQHPNgCFcTZ",
+   "r": "==wUbsBAYgkJYRBVF1wTOIBAc4esPUEAQkkGccBS60QCchkAAUjRM4TZ",
+   "poids": 1
+  },
+  {
+   "id": "svt-s02-1-q31",
+   "fiche": "svt-s02-1-f3",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Le crépuscule n'a lieu que le soir, au coucher du Soleil.",
+   "corrections": [
+    "Faux : il a lieu aussi le matin, à l'aube.",
+    "Faux : il n'a lieu qu'à midi, quand le Soleil est au plus haut.",
+    "Faux : il n'a lieu que la nuit, une fois le Soleil couché."
+   ],
+   "explication": "Le crépuscule désigne l'aube comme le coucher du Soleil. Dans les deux cas, les rayons arrivent rasants et la lumière rougeoie.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.pdf",
+    "page": 2
+   },
+   "r": "==wENh0ALcgJVlRRVLbSCFwGcICQFBVQOZQFVwxEndAEMkRUI40AbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "svt-s02-1-q32",
+   "fiche": "svt-s02-1-f3",
+   "type": "qcm_multiple",
+   "niveau": 2,
+   "enonce": "Coche ce qui est vrai du crépuscule.",
+   "choix": [
+    "Les rayons du Soleil arrivent rasants",
+    "La lumière du Soleil rougeoie",
+    "Il est très court près de l'équateur",
+    "Il dure le même temps partout sur le globe",
+    "Le Soleil est alors au plus haut dans le ciel"
+   ],
+   "explication": "Au crépuscule, les rayons sont rasants et la lumière rougeoie. Sa durée change selon le lieu : très courte à l'équateur, longue près du cercle polaire.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.pdf",
+    "page": 2
+   },
+   "r": "=IDRUwxFzMBAUwtsOJwTXwwYe1s9f5xTSQBHdQiUG0stD0hTbEQDjFELXEATK8QCMUhMdcQRZgBDCAQIIZTSFB1XGz6DLwhHnNROHl1UaoRATshIfVUQDtQGPQxGTcmHcAQGeojTaYBSwMkCMxEHPVxAlAFH",
+   "poids": 1
+  },
+  {
+   "id": "svt-s02-1-q33",
+   "fiche": "svt-s02-1-f3",
+   "type": "ordre",
+   "niveau": 3,
+   "enonce": "Range ces lieux du crépuscule le plus court au plus long.",
+   "elements": [
+    "Yellowknife, près du cercle polaire",
+    "Un lieu sur l'équateur",
+    "Bourges, en France"
+   ],
+   "explication": "Le crépuscule s'allonge à mesure qu'on s'éloigne de l'équateur vers le cercle polaire. Bourges est entre les deux, Yellowknife tout près du cercle polaire.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.pdf",
+    "page": 2
+   },
+   "r": "==wMfpEVFNEH",
+   "poids": 1
+  },
+  {
+   "id": "svt-s02-1-q34",
+   "fiche": "svt-s02-1-f3",
+   "type": "trou",
+   "niveau": 1,
+   "enonce": "Complète la phrase.",
+   "texte": "Au crépuscule, les rayons du Soleil sont ___ et sa lumière ___.",
+   "banque": [
+    "rasants",
+    "rougeoie",
+    "verticaux",
+    "bleuit"
+   ],
+   "explication": "Au crépuscule, à l'aube ou au coucher, les rayons arrivent rasants. La lumière du Soleil prend alors une teinte rouge.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.pdf",
+    "page": 2
+   },
+   "r": "=sDNQJyGaAgEEYAHNlCRe8gFBN0DccAFLlCH",
    "poids": 1
   },
   {
    "id": "svt-s02-1-q13",
    "fiche": "svt-s02-1-f4",
    "type": "qcm",
-   "niveau": 1,
+   "niveau": 2,
    "enonce": "Dans le TP du globe éclairé, que montre le trait jaune ?",
    "choix": [
     "La zone éclairée par le Soleil",
-    "L'équateur",
-    "Le tropique",
-    "L'ombre de la Lune"
+    "L'arrivée d'un rayon parallèle à l'équateur",
+    "La ligne de l'équateur",
+    "La zone qui reste dans l'ombre"
    ],
    "explication": "Le trait jaune entoure la zone éclairée. Le trait noir, lui, marque l'arrivée d'un rayon parallèle à l'équateur.",
    "source": {
@@ -468,7 +666,7 @@ JEU.enregistrer("cours", {
     "Elle s'allonge en ovale",
     "Elle devient plus petite et plus ronde",
     "Elle disparaît complètement",
-    "Elle devient carrée"
+    "Elle reste ronde et de même taille"
    ],
    "explication": "La même lumière dessine une tache ronde à l'équateur. Plus au nord, la tache s'étire en ovale.",
    "source": {
@@ -476,6 +674,65 @@ JEU.enregistrer("cours", {
     "page": 3
    },
    "r": "==wSXsyEDoQVfwgTKUhBsEUCUpQHPNgCFcTZ",
+   "poids": 1
+  },
+  {
+   "id": "svt-s02-1-q35",
+   "fiche": "svt-s02-1-f4",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Dans le TP, le trait noir marque l'arrivée d'un rayon parallèle à l'axe de rotation.",
+   "corrections": [
+    "Faux : il marque l'arrivée d'un rayon parallèle à l'équateur.",
+    "Faux : il marque toute la zone éclairée par le Soleil.",
+    "Faux : il marque la ligne des tropiques."
+   ],
+   "explication": "Le trait noir montre où arrive un rayon parallèle à l'équateur. La zone éclairée, elle, est entourée par le trait jaune.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
+    "page": 3
+   },
+   "r": "=MRTIRBHXMzEAQB3y6kAPJ9qjhUCd6uADcAFIIwZcoBHUMQSAoRVMMGSMb/WH0BFH4kHndBAUcAEE40AbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "svt-s02-1-q36",
+   "fiche": "svt-s02-1-f4",
+   "type": "qcm_multiple",
+   "niveau": 1,
+   "enonce": "Coche les endroits du globe comparés dans le TP.",
+   "choix": [
+    "Au niveau de l'équateur",
+    "Au milieu de l'hémisphère nord",
+    "Au niveau du pôle Nord",
+    "Au niveau du pôle Sud",
+    "Au milieu de l'hémisphère sud"
+   ],
+   "explication": "Le TP éclaire l'équateur, le milieu de l'hémisphère nord, puis le pôle Nord. On compare la lumière reçue en allant vers le nord.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
+    "page": 3
+   },
+   "r": "=oBURchG/k0CDY8qz0AER1wGOMAEAwxZHQzRZNVDcAAHIZyXNbfRewxDLAcsvUVGFBRFJthCbQgKAVEQsx0QERBHXMzEAQB3y6kAPdBDjhFBQt1BBY0EoAFH",
+   "poids": 1
+  },
+  {
+   "id": "svt-s02-1-q37",
+   "fiche": "svt-s02-1-f4",
+   "type": "vrai_faux",
+   "niveau": 3,
+   "enonce": "Dans le TP, la tache de lumière est allongée à l'équateur et devient ronde au milieu de l'hémisphère nord.",
+   "corrections": [
+    "Faux : c'est l'inverse, ronde à l'équateur, elle s'allonge plus au nord.",
+    "Faux : elle reste ronde partout.",
+    "Faux : elle disparaît dès qu'on quitte l'équateur."
+   ],
+   "explication": "La tache est ronde à l'équateur. Au milieu de l'hémisphère nord, la même lumière s'étale en ovale.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
+    "page": 3
+   },
+   "r": "=MRTcxQMCtQFY9wTVMRBCc2FSsgGdUwDIFASmEUCQ1gQdMxAdMhMDwtpS1RSOzqUNcyQKcUDCpQFUwABpshUJUVBasASRgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -502,12 +759,12 @@ JEU.enregistrer("cours", {
    "id": "svt-s02-1-q17",
    "fiche": "svt-s02-1-f5",
    "type": "vrai_faux",
-   "niveau": 1,
+   "niveau": 2,
    "enonce": "Quand c'est l'hiver à New York, c'est aussi l'hiver à Sydney.",
    "corrections": [
     "Faux : Sydney est dans l'hémisphère sud, où c'est l'été à ce moment-là.",
     "Faux : à Sydney, c'est toujours le printemps.",
-    "Faux : Sydney et New York sont dans le même hémisphère."
+    "Faux : Sydney et New York sont dans le même hémisphère, mais Sydney n'a pas d'hiver."
    ],
    "explication": "New York est au nord, Sydney au sud. Leurs saisons sont donc inversées.",
    "source": {
@@ -524,24 +781,24 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Pourquoi la Guyane française n'a-t-elle pas de saison astronomique ?",
    "choix": [
-    "Parce qu'elle est dans la zone climatique équatoriale",
-    "Parce qu'elle est au pôle Sud",
-    "Parce qu'il n'y pleut jamais",
-    "Parce qu'elle est près du cercle polaire"
+    "Parce qu'elle est en zone climatique équatoriale",
+    "Parce qu'elle se trouve tout près d'un cercle polaire",
+    "Parce qu'il y pleut autant tous les mois de l'année",
+    "Parce qu'elle se trouve en Antarctique, au pôle Sud"
    ],
    "explication": "En zone équatoriale, il n'y a pas de saisons astronomiques. On y distingue seulement une saison des pluies et une saison sèche.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 3
    },
-   "r": "=EGSJQFRcAgEHwxAuHbVAAAAAohDfEwLOVEUDFQFGdQBSRDHUEQVFoxCPdBBvgkQAxlTKUAFIISZ",
+   "r": "MpgCHAAAoYAFQQA2q6kCHkhKZRAWEJADGNwBd0jUbAQVFoxCPdBBvgkQAxlTKUAFIISZ",
    "poids": 1
   },
   {
    "id": "svt-s02-1-q19",
    "fiche": "svt-s02-1-f5",
    "type": "association",
-   "niveau": 2,
+   "niveau": 3,
    "enonce": "Relie chaque moment à ce qu'il représente.",
    "gauche": [
     "Le solstice de décembre, dans l'hémisphère sud",
@@ -573,7 +830,7 @@ JEU.enregistrer("cours", {
     "À un ciel de jour",
     "À un ciel de pleine nuit étoilée",
     "À un ciel sans Soleil depuis six mois",
-    "À un ciel d'éclipse"
+    "À un ciel de crépuscule très court"
    ],
    "explication": "À la mi-novembre, le pôle Sud est entre l'équinoxe de printemps et le solstice d'été. Le Soleil y brille donc encore tard le soir.",
    "source": {
@@ -584,6 +841,65 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
+   "id": "svt-s02-1-q38",
+   "fiche": "svt-s02-1-f5",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "En Guyane française, la saison sèche va de décembre à juillet.",
+   "corrections": [
+    "Faux : de décembre à juillet, c'est la saison des pluies ; la saison sèche va de juillet à décembre.",
+    "Faux : la Guyane n'a aucune saison sèche.",
+    "Faux : la saison sèche y dure toute l'année."
+   ],
+   "explication": "En Guyane, il pleut beaucoup de décembre à juillet. La saison sèche occupe le reste de l'année, de juillet à décembre.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
+    "page": 3
+   },
+   "r": "UAVaXcwBYQhCHzqFINu7FFESCMwDTMgUiYRVEMQUMYADavKMNsgWedgDVYECecWSVZBEYwhAfI1GmkURbJUHGcQFJNxKSFgFQYlCONkBN8SQMA0RO9cpGxAAl8BEGwtsN4kCWgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "svt-s02-1-q39",
+   "fiche": "svt-s02-1-f5",
+   "type": "qcm_multiple",
+   "niveau": 2,
+   "enonce": "Le 15 janvier, coche les villes où c'est l'été.",
+   "choix": [
+    "São Paulo",
+    "Sydney",
+    "New York",
+    "Tokyo"
+   ],
+   "explication": "São Paulo et Sydney sont dans l'hémisphère sud, où janvier tombe en été. New York et Tokyo, au nord, sont alors en hiver.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
+    "page": 3
+   },
+   "r": "=oBUMAwGVARPN5lSsEEEU1nTAUcp6AFH",
+   "poids": 1
+  },
+  {
+   "id": "svt-s02-1-q40",
+   "fiche": "svt-s02-1-f5",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Pourquoi distingue-t-on pourtant deux saisons en Guyane française ?",
+   "choix": [
+    "Il pleut bien plus à certains mois",
+    "Il fait beaucoup plus froid certains mois",
+    "Le jour y dure six mois, puis la nuit six mois",
+    "Les saisons y sont inversées chaque année"
+   ],
+   "explication": "La Guyane n'a pas de saison astronomique, mais la pluie n'y tombe pas de la même façon toute l'année. On distingue donc une saison des pluies et une saison sèche.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
+    "page": 3
+   },
+   "r": "==QTBEALAVkRDdgDSQBDRcm02WkBEUgHPxRDq8URBh1CDYhRFsTZ",
+   "poids": 1
+  },
+  {
    "id": "svt-s02-1-q21",
    "fiche": "svt-s02-1-f6",
    "type": "qcm",
@@ -591,11 +907,11 @@ JEU.enregistrer("cours", {
    "enonce": "Quelle planète tourne le plus lentement sur elle-même ?",
    "choix": [
     "Vénus",
-    "Jupiter",
-    "La Terre",
-    "Mars"
+    "Mercure",
+    "Mars",
+    "Jupiter"
    ],
-   "explication": "Vénus met 243 jours pour faire un tour sur elle-même. C'est de loin la plus lente.",
+   "explication": "Vénus met 243 jours pour faire un tour sur elle-même. Mercure, la suivante, met environ 58 jours.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.pdf",
     "page": 3
@@ -607,15 +923,15 @@ JEU.enregistrer("cours", {
    "id": "svt-s02-1-q22",
    "fiche": "svt-s02-1-f6",
    "type": "qcm",
-   "niveau": 1,
+   "niveau": 2,
    "enonce": "Quelle planète tourne le plus vite sur elle-même ?",
    "choix": [
     "Jupiter",
-    "Vénus",
-    "Mercure",
+    "Saturne",
+    "Neptune",
     "La Terre"
    ],
-   "explication": "Jupiter fait un tour sur elle-même en moins d'une demi-journée. C'est la plus rapide des huit planètes.",
+   "explication": "Jupiter fait un tour sur elle-même en moins de dix heures. Saturne, sa voisine, est presque aussi rapide.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.pdf",
     "page": 3
@@ -627,12 +943,12 @@ JEU.enregistrer("cours", {
    "id": "svt-s02-1-q23",
    "fiche": "svt-s02-1-f6",
    "type": "vrai_faux",
-   "niveau": 1,
+   "niveau": 2,
    "enonce": "La Lune met moins d'une journée à faire un tour sur elle-même.",
    "corrections": [
     "Faux : la Lune met plus de 27 jours à tourner sur elle-même.",
-    "Faux : la Lune ne tourne pas du tout sur elle-même.",
-    "Faux : la Lune met exactement une année."
+    "Faux : la Lune met 243 jours à tourner sur elle-même.",
+    "Faux : la Lune ne tourne pas du tout sur elle-même."
    ],
    "explication": "La rotation de la Lune dure 27 jours et 8 heures. C'est bien plus long que celle de la Terre.",
    "source": {
@@ -649,17 +965,105 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Pourquoi peut-on dire que la Terre est unique par sa rotation ?",
    "choix": [
-    "Aucune autre planète n'a la même durée de rotation qu'elle",
-    "C'est la seule planète qui tourne sur elle-même",
-    "Elle tourne plus vite que toutes les autres",
-    "Elle ne tourne pas du tout sur elle-même"
+    "Aucune autre n'a la même durée de rotation qu'elle",
+    "C'est la seule à tourner sur elle-même",
+    "C'est elle qui tourne le plus vite sur elle-même",
+    "C'est elle qui tourne le plus lentement sur elle-même"
    ],
    "explication": "Chaque planète a sa propre durée de rotation, de quelques heures à des centaines de jours. Même Mars, la plus proche de la Terre sur ce point, met environ quarante minutes de plus.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.pdf",
     "page": 3
    },
-   "r": "XRRBCoQVdITDLoFRa4gEJshUiYRVAwtsbsxCS1gLHaKWN8wAGdgTcc2FB0stfggAfIVDxkFEU1wCBMRBcMTZ",
+   "r": "HBVQCoQQTghUp0BHRQRBGwxTXwwYIxs9ftxCGNABYT4HVRQGRhQSBIVDxkFEU1wCBMRBcMTZ",
+   "poids": 1
+  },
+  {
+   "id": "svt-s02-1-q41",
+   "fiche": "svt-s02-1-f6",
+   "type": "ordre",
+   "niveau": 3,
+   "enonce": "Range ces astres de celui qui tourne le plus vite sur lui-même à celui qui tourne le plus lentement.",
+   "elements": [
+    "La Lune",
+    "Mars",
+    "Jupiter",
+    "Vénus",
+    "La Terre"
+   ],
+   "explication": "Jupiter fait un tour en moins de dix heures, la Terre en un peu moins d'une journée et Mars en un peu plus. La Lune met plus de 27 jours et Vénus 243 jours.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.pdf",
+    "page": 3
+   },
+   "r": "=AnVZ0hQepkUFBEH",
+   "poids": 1
+  },
+  {
+   "id": "svt-s02-1-q42",
+   "fiche": "svt-s02-1-f6",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Mars tourne sur elle-même un peu plus vite que la Terre.",
+   "corrections": [
+    "Faux : Mars tourne un peu moins vite, il lui faut une quarantaine de minutes de plus.",
+    "Faux : Mars tourne bien plus vite, en moins de dix heures.",
+    "Faux : Mars met plus de 27 jours à faire un tour."
+   ],
+   "explication": "La Terre fait un tour en un peu moins d'une journée, Mars en un peu plus. Leurs rotations sont proches, mais pas identiques.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.pdf",
+    "page": 3
+   },
+   "r": "==wGEdUAy4RBFBRFJ1hCG0RLEhQFIpwTDgAATMDHUcBFEghTKwRHjlFEUtkTGMhCJ5hLSlFABgxHOxBHBwCQFBESe8ECTk0FpAAAKEQUawhD/gUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "svt-s02-1-q43",
+   "fiche": "svt-s02-1-f6",
+   "type": "qcm_multiple",
+   "niveau": 3,
+   "enonce": "Coche les planètes qui font un tour sur elles-mêmes en moins d'une journée.",
+   "choix": [
+    "Jupiter",
+    "Saturne",
+    "La Terre",
+    "Mars",
+    "Vénus",
+    "Mercure"
+   ],
+   "explication": "Jupiter et Saturne tournent en une dizaine d'heures, la Terre en un peu moins d'une journée. Mars dépasse la journée d'un peu plus d'une demi-heure, Mercure et Vénus mettent des dizaines ou des centaines de jours.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.pdf",
+    "page": 3
+   },
+   "r": "=gzFIxRHDITSTsAUZdEEfsxGbMxOhFwRHhkGGYxEjAFH",
+   "poids": 1
+  },
+  {
+   "id": "svt-s02-1-q44",
+   "fiche": "svt-s02-1-f6",
+   "type": "association",
+   "niveau": 2,
+   "enonce": "Relie chaque astre à sa durée de rotation.",
+   "gauche": [
+    "Vénus",
+    "Mercure",
+    "La Lune",
+    "Jupiter"
+   ],
+   "droite": [
+    "9 heures et 55 minutes",
+    "243 jours et 26 minutes",
+    "27 jours et 8 heures",
+    "58 jours et 16 heures"
+   ],
+   "explication": "Vénus est la plus lente et Jupiter la plus rapide. Entre les deux, Mercure met près de deux mois et la Lune près d'un mois.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.pdf",
+    "page": 3
+   },
+   "r": "==ANvcnXG5TWsslQdlCRe4RSEYnQyclSZlCH",
    "poids": 1
   }
  ],
