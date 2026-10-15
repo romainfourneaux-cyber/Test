@@ -212,7 +212,7 @@ JEU.enregistrer("cours", {
    "fiche": "physique-s03-1-f1",
    "type": "qcm",
    "niveau": 1,
-   "enonce": "Le volume d'un caillou est de 12 mL. Combien cela fait-il en cm³ ?",
+   "enonce": "Le volume d'une bille est de 12 mL. Combien cela fait-il en cm³ ?",
    "choix": [
     "0,12 cm³",
     "120 cm³",
@@ -232,19 +232,19 @@ JEU.enregistrer("cours", {
    "fiche": "physique-s03-1-f1",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Pourquoi faut-il trouver ce que vaut un petit trait avant de lire un volume ?",
+   "enonce": "Comment trouver ce que vaut un petit trait sur une éprouvette ?",
    "choix": [
-    "Parce qu'on lit toujours le grand trait le plus proche",
-    "Parce que les petits traits valent toujours 1 mL",
-    "Parce que les petits traits ne portent pas de nombre : il faut savoir combien chacun vaut",
-    "Parce que l'éprouvette change de taille"
+    "On divise l'écart entre deux grands traits par le nombre de petits traits",
+    "On divise l'écart entre deux grands traits par le nombre d'espaces qui les séparent",
+    "Un petit trait vaut toujours 1 mL",
+    "On compte tous les traits de l'éprouvette"
    ],
-   "explication": "Seuls les grands traits sont numérotés. Sans la valeur d'un petit trait, on ne peut pas lire entre eux.",
+   "explication": "Ce sont les espaces, pas les traits, qui se partagent l'écart. Avec 4 petits traits entre 40 et 50 mL, il y a 5 espaces de 2 mL.",
    "source": {
     "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
     "page": 4
    },
-   "r": "==wSGIzEDU0GEowDHEBStgEDXBUAMYEFA0RMTYQRBQACI8kHBM2FFB1XMIQCIk0FjIlBEUQUdAgCGoBLdVEUD5EHS8ACAMjUGEBHFwgHPFQDv0AAAxlTKUAFIISZ",
+   "r": "XFxGUsxDfs9qw0gFQFkTGMxFJFgIRQRFGQhTK80FaECQKsVDLMgRUggAnFQAMQxAd4EHWYgIfJQFVthCCYEDAMDHQUUADgQDGH7Tv0AAGREGGIgRH0TZ",
    "poids": 1
   },
   {
@@ -270,21 +270,21 @@ JEU.enregistrer("cours", {
    "id": "physique-s03-1-q6",
    "fiche": "physique-s03-1-f1",
    "type": "qcm",
-   "niveau": 2,
-   "enonce": "Une éprouvette contient de l'eau jusqu'à 64 mL. On y plonge une figurine : l'eau monte à 71 mL. Quel est le volume de la figurine ?",
+   "niveau": 3,
+   "enonce": "Une figurine plongée dans une éprouvette fait monter l'eau de 30 mL à 38 mL. Quel est son volume en cm³ ?",
    "choix": [
-    "7 cm³",
-    "71 cm³",
-    "135 cm³",
-    "64 cm³"
+    "8 cm³",
+    "38 cm³",
+    "68 cm³",
+    "0,8 cm³"
    ],
-   "explication": "71 − 64 donne 7 mL de différence. Comme 1 mL vaut 1 cm³, la figurine mesure 7 cm³.",
+   "explication": "38 − 30 donne 8 mL de différence. Comme 1 mL vaut 1 cm³, la figurine mesure 8 cm³.",
    "indice": "Fais la différence, puis pense que 1 mL = 1 cm³.",
    "source": {
     "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
     "page": 4
    },
-   "r": "=8Q3tuQBJVUZ",
+   "r": "=8Q3tuQBJpUZ",
    "poids": 1
   },
   {
@@ -311,7 +311,7 @@ JEU.enregistrer("cours", {
    "id": "physique-s03-1-q8",
    "fiche": "physique-s03-1-f2",
    "type": "qcm",
-   "niveau": 2,
+   "niveau": 3,
    "enonce": "Une boîte mesure 10 cm de long, 5 cm de large et 4 cm de haut. Quel est son volume ?",
    "choix": [
     "50 cm³",
@@ -405,7 +405,7 @@ JEU.enregistrer("cours", {
     "Le milligramme",
     "Le kilogramme"
    ],
-   "explication": "La tonne sert pour un hélicoptère, le kilogramme pour un sac, le gramme pour un crayon. Le milligramme sert pour un cheveu.",
+   "explication": "Plus l'objet est lourd, plus l'unité qui lui convient est grande : la tonne pour un hélicoptère, le kilogramme pour un sac. Viennent ensuite le gramme pour un crayon et le milligramme pour un cheveu.",
    "source": {
     "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
     "page": 4
@@ -633,7 +633,7 @@ JEU.enregistrer("cours", {
    "niveau": 1,
    "enonce": "« Dense » et « lourd » veulent dire exactement la même chose.",
    "corrections": [
-    "Faux : pour comparer des densités, on compare des masses pour un même volume, ou des volumes pour une même masse.",
+    "Faux : deux blocs de plomb et d'aluminium de même masse sont aussi lourds l'un que l'autre, mais le plomb est plus dense.",
     "Faux : un objet dense est toujours plus léger.",
     "Faux : la densité, c'est la couleur d'une matière."
    ],
@@ -642,7 +642,7 @@ JEU.enregistrer("cours", {
     "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
     "page": 5
    },
-   "r": "=8gSthkFGx0APNwCDHrKSBxCAE1GbAgAIBDSIAUQBkhRVwgFndgGFlFFEsxAd4xYIhwnuPwTIMRSAITHFUkBUoRHO8BSwgUAVgEHOYxCGExZcoRRZJAwtuxGb0CSBUhXLsgRUwAAmIAGKYRUbsBACgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "r": "=gxVfxQHBcBDj5FEZ1lTbUxAJBhKdkRFVRRBOxxGJ4SDJB1XaoxBBVgUicABFtBBOJwTBwQMYpQWNcAHVMBCSNDHaYRVUoRHO8BSmA0z2DkTKIgREcgLcwBCA0BCJtgUcYSDHglQC8hRD0gU0EhGJcRURshCWgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -664,12 +664,34 @@ JEU.enregistrer("cours", {
    },
    "r": "EBcszshBLARFJtQHCcQMdVEVe5kDGNwGaT4GBQAGRxwGeMBAg0AAAxlTKUAFIISZ",
    "poids": 1
+  },
+  {
+   "id": "physique-s03-1-q26",
+   "fiche": "physique-s03-1-f2",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Un bac a une contenance de 9 L. Combien de bouteilles de 2 L faut-il pour le remplir entièrement ?",
+   "choix": [
+    "4 bouteilles",
+    "4,5 bouteilles",
+    "5 bouteilles",
+    "18 bouteilles"
+   ],
+   "explication": "9 ÷ 2 donne 4,5 : avec 4 bouteilles, il manque encore de l'eau. On arrondit au nombre entier supérieur, donc il en faut 5.",
+   "indice": "Divise la contenance du bac par celle d'une bouteille, puis arrondis.",
+   "source": {
+    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
+    "page": 4
+   },
+   "r": "=A1GmEUCchkGakABJdUZ",
+   "poids": 1
   }
  ],
  "bonus": [],
  "nonCouvert": [
   "Le livret de cours de la séance n'est pas déposé : seules les réponses du corrigé servent de source.",
-  "Les conversions entre unités de masse (combien de grammes dans un kilogramme, etc.) et entre litres et centimètres cubes : le corrigé ne les donne pas.",
+  "Les conversions entre unités de masse (combien de grammes dans un kilogramme, etc.) : le corrigé ne les donne pas.",
+  "La règle de conversion des centimètres cubes en litres : le corrigé fait la conversion pour l'aquarium sans l'expliquer ; seule l'égalité 1 mL = 1 cm³ est écrite.",
   "La définition précise de la densité et son calcul : le corrigé compare des matières sans définir la densité.",
   "Pourquoi la cuillère coule et les mouchoirs en papier flottent (TP 4) : le corrigé note l'observation sans l'expliquer."
  ]
