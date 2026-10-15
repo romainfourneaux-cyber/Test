@@ -125,7 +125,7 @@ module.exports = {
       explication: "Une case répond aux deux critères à la fois : la taille du gâteau et l'ingrédient. Ce 4, ce sont les œufs d'un gâteau pour 8 personnes.", source: S },
     { id: "methode-tableau-q16", fiche: "methode-tableau-f2", type: "qcm", niveau: 3,
       enonce: "Un tableau a 4 rangs et 5 colonnes de données, sans compter les en-têtes. Combien de cases de données compte-t-il ?",
-      choix: ["20", "9", "45", "25"],
+      choix: ["20", "9", "30", "25"],
       reponse: "20",
       explication: "Chaque rang croise chaque colonne : 4 × 5 = 20 cases. C'est le cas d'un tableau de recette pour 4 tailles de gâteau et 5 ingrédients.", source: S },
     { id: "methode-tableau-q17", fiche: "methode-tableau-f2", type: "vrai_faux", niveau: 2,
@@ -176,10 +176,10 @@ module.exports = {
       reponse: { vrai: false, correction: "Faux : on l'appelle le rang d'en-tête." },
       explication: "La première ligne est le rang d'en-tête : elle porte les catégories rangées en colonnes. Les données viennent dans les rangs suivants.", source: S },
     { id: "methode-tableau-q23", fiche: "methode-tableau-f3", type: "qcm_multiple", niveau: 3,
-      enonce: "Un tableau range les notes de chaque élève dans chaque matière : les élèves en rangs, les matières en colonnes. Coche les catégories de l'entrée « matières ».",
-      choix: ["Français", "Histoire", "SVT", "Léa", "Tom"],
+      enonce: "Un tableau range les notes d'un élève : les trimestres en rangs, les matières en colonnes. Coche les catégories de l'entrée « matières ».",
+      choix: ["Français", "Histoire", "SVT", "Premier trimestre", "Deuxième trimestre"],
       reponse: ["Français", "Histoire", "SVT"],
-      explication: "Les matières sont l'entrée rangée en colonnes : le français, l'histoire et les SVT en sont les catégories. Léa et Tom sont des catégories de l'autre entrée, les élèves.", source: S }
+      explication: "Les matières sont l'entrée rangée en colonnes : le français, l'histoire et les SVT en sont les catégories. Les trimestres sont les catégories de l'autre entrée, écrite en tête des rangs.", source: S }
   ],
   bonus: [],
   nonCouvert: []

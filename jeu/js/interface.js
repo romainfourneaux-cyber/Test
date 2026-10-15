@@ -250,7 +250,8 @@
 
   var RENDUS = {
     qcm: function (q, corps, repondre) {
-      var choix = q.choix.slice();
+      // choix mélangés à chaque affichage : dans les fichiers, la bonne réponse est souvent écrite en premier
+      var choix = U.melanger(q.choix.slice());
       choix.forEach(function (c, i) { corps.appendChild(boutonChoix(i + 1, c, function () { repondre(c); })); });
       ui.clavier = function (k) {
         var n = parseInt(k, 10);
@@ -261,13 +262,14 @@
     qcm_multiple: function (q, corps, repondre) {
       var choisis = [];
       corps.appendChild(el("p", { class: "consigne", texte: "Plusieurs réponses possibles." }));
-      var boutons = q.choix.map(function (c, i) {
+      var choix = U.melanger(q.choix.slice()); // mélangés à chaque affichage, comme pour le QCM simple
+      var boutons = choix.map(function (c, i) {
         var b = boutonChoix(i + 1, c, function () { basculer(i); });
         corps.appendChild(b);
         return b;
       });
       function basculer(i) {
-        var c = q.choix[i];
+        var c = choix[i];
         var k = choisis.indexOf(c);
         if (k >= 0) choisis.splice(k, 1); else choisis.push(c);
         boutons[i].classList.toggle("coche", k < 0);
@@ -275,7 +277,7 @@
       corps.appendChild(boutonValider(function () { repondre(choisis.slice()); }));
       ui.clavier = function (k) {
         var n = parseInt(k, 10);
-        if (n >= 1 && n <= q.choix.length) { basculer(n - 1); return true; }
+        if (n >= 1 && n <= choix.length) { basculer(n - 1); return true; }
         if (k === "Enter") { repondre(choisis.slice()); return true; }
         return false;
       };

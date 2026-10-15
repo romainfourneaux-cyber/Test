@@ -30,13 +30,22 @@ try { ({ chromium } = require("playwright")); } catch (e) {
 const URL = "file://" + path.join(__dirname, "..", "..", "jeu", "index.html").replace(/\\/g, "/");
 const MESURES_VOULUES = 50;
 
+// Rang affiché (1, 2…) d'un choix, retrouvé par son texte : les choix des QCM sont mélangés à l'affichage.
+const rangsQcm = []; // rang affiché de la bonne réponse des QCM simples répondus juste (doit varier)
+async function rangAffiche(page, texte) {
+  return page.evaluate(t => {
+    const b = [...document.querySelectorAll(".reponses button.choix[data-n]")].find(x => x.lastElementChild.textContent === t);
+    return b ? Number(b.dataset.n) : 0;
+  }, texte);
+}
+
 // Répond juste à la question affichée, au clavier (et à la souris pour la colonne de droite des associations).
 async function repondreJuste(page) {
   const q = await page.evaluate(() => { const q = JEU.ui.questionCourante; return { type: q.type, reponse: q.reponse, choix: q.choix, corrections: q.corrections, texte: q.texte }; });
   const k = n => page.keyboard.press(String(n));
   switch (q.type) {
-    case "qcm": await k(q.choix.indexOf(q.reponse) + 1); break;
-    case "qcm_multiple": for (const c of q.reponse) await k(q.choix.indexOf(c) + 1); await page.keyboard.press("Enter"); break;
+    case "qcm": { const r = await rangAffiche(page, q.reponse); rangsQcm.push(r); await k(r); break; }
+    case "qcm_multiple": for (const c of q.reponse) await k(await rangAffiche(page, c)); await page.keyboard.press("Enter"); break;
     case "vrai_faux":
       if (q.reponse.vrai) await k(1);
       else {
@@ -61,7 +70,7 @@ async function repondreFaux(page) {
   const q = await page.evaluate(() => { const q = JEU.ui.questionCourante; return { type: q.type, reponse: q.reponse, choix: q.choix, elements: q.elements }; });
   const k = n => page.keyboard.press(String(n));
   switch (q.type) {
-    case "qcm": await k(q.choix.findIndex(c => c !== q.reponse) + 1); break;
+    case "qcm": await k(await rangAffiche(page, q.choix.find(c => c !== q.reponse))); break;
     case "vrai_faux": await k(q.reponse.vrai ? 2 : 1); break; // « Faux » pour une affirmation vraie, et inversement
     case "ordre": { const faux = q.reponse.slice(1).concat(q.reponse.slice(0, 1)); for (const i of faux) await k(i + 1); await page.keyboard.press("Enter"); break; }
     case "association":
@@ -641,6 +650,10 @@ async function essaiToile(navigateur, erreurs) {
   bilan.portable.carte.forEach(m => { if (m.bas > m.vue + 0.5) echecs.push("carte de campagne coupée à 1366 × 768 (" + m.cas + " : bas à " + m.bas + " px pour " + m.vue + ")"); });
   bilan.portable.questions.forEach(m => { if (!m.visible) echecs.push("bataille à 1366 × 768 : " + m.quoi + " coupé par le haut (" + m.haut + " px, haut visible de la colonne à " + m.hautVisible + ")"); });
   if (bilan.portable.questions.length < 4) echecs.push("bataille à 1366 × 768 : seulement " + bilan.portable.questions.length + " contrôles d'énoncé");
+  // les choix des QCM sont mélangés à l'affichage : la bonne réponse ne doit pas être presque toujours la première
+  bilan.rangsQcm = { mesures: rangsQcm.length, premiere: rangsQcm.filter(r => r === 1).length };
+  console.log("QCM : bonne réponse affichée en premier " + bilan.rangsQcm.premiere + " fois sur " + rangsQcm.length);
+  if (rangsQcm.length >= 12 && bilan.rangsQcm.premiere / rangsQcm.length > 0.6) echecs.push("QCM : la bonne réponse est affichée en premier " + bilan.rangsQcm.premiere + " fois sur " + rangsQcm.length + " (choix non mélangés ?)");
   bilan.tempsReel.forEach(m => {
     if (m.mesures < 6) echecs.push("temps réel " + m.taille + " : seulement " + m.mesures + " mesures");
     if (m.max > 100) echecs.push("temps réel " + m.taille + " : " + m.max + " ms entre une réponse et la question suivante peinte (plus de 100 ms)");

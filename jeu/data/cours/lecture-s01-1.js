@@ -289,7 +289,7 @@ JEU.enregistrer("cours", {
     "Les Grecs y chassaient l'ours en hiver",
     "Le mot « ours » voulait dire « froid »"
    ],
-   "explication": "Arktos, c'est le nom grec de la Grande Ourse, des étoiles bien visibles dans le ciel du Nord. Le nom est donc venu du ciel, pas des animaux.",
+   "explication": "Arktos, c'est aussi le nom grec de la Grande Ourse, des étoiles bien visibles dans le ciel du Nord. C'est de là que vient le nom du pôle Nord, l'Arctique.",
    "source": {
     "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
     "page": 1
@@ -324,7 +324,7 @@ JEU.enregistrer("cours", {
    "type": "trou",
    "niveau": 1,
    "enonce": "Complète avec le bon mot.",
-   "texte": "Quand la banquise se forme, c'est l'___. Quand elle se casse, c'est la ___.",
+   "texte": "Quand la banquise se forme : ___. Quand elle se casse : ___.",
    "banque": [
     "embâcle",
     "débâcle",

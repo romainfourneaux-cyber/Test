@@ -259,10 +259,10 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Pourquoi dit-on que l'eau qui gèle se solidifie ?",
    "choix": [
-    "Parce qu'elle passe de l'état liquide à l'état solide",
     "Parce qu'elle passe de l'état solide à l'état liquide",
     "Parce qu'elle passe de l'état gazeux à l'état solide",
-    "Parce qu'elle passe de l'état liquide à l'état gazeux"
+    "Parce qu'elle passe de l'état liquide à l'état gazeux",
+    "Parce qu'elle passe de l'état liquide à l'état solide"
    ],
    "explication": "Geler, c'est devenir solide : l'eau liquide se change en glace. Le nom du changement d'état le dit : solidification.",
    "source": {
@@ -335,9 +335,9 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Comment savoir si un changement d'état est une fusion ?",
    "choix": [
-    "On vérifie qu'un solide devient liquide",
     "On vérifie qu'un liquide devient solide",
     "On vérifie qu'un liquide devient gazeux",
+    "On vérifie qu'un solide devient liquide",
     "On vérifie qu'un gaz devient liquide"
    ],
    "explication": "La fusion, c'est le passage du solide au liquide, comme la neige qui fond. Le passage inverse est la solidification.",
@@ -356,8 +356,8 @@ JEU.enregistrer("cours", {
    "enonce": "Comment s'appelle le passage de l'état liquide à l'état gazeux ?",
    "choix": [
     "La fusion",
-    "La vaporisation",
     "La liquéfaction",
+    "La vaporisation",
     "La solidification"
    ],
    "explication": "Le liquide devient vapeur : c'est la vaporisation. L'évaporation de l'eau d'un lac en est un exemple.",
@@ -390,10 +390,10 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "En été, le niveau d'un lac baisse. Quel changement d'état de son eau en est la cause ?",
    "choix": [
+    "Une vaporisation",
     "Une fusion",
     "Une solidification",
-    "Une liquéfaction",
-    "Une vaporisation"
+    "Une liquéfaction"
    ],
    "explication": "L'eau liquide du lac s'évapore : elle part sous forme de vapeur. L'évaporation est une vaporisation.",
    "source": {
@@ -474,10 +474,10 @@ JEU.enregistrer("cours", {
    "niveau": 3,
    "enonce": "Le brouillard est fait de minuscules gouttelettes d'eau. Dans quel état était cette eau juste avant de former les gouttelettes ?",
    "choix": [
-    "À l'état gazeux : c'était de la vapeur d'eau",
     "À l'état solide : c'était de la glace",
     "À l'état liquide : c'était déjà des gouttes de pluie",
-    "Dans aucun état : ce n'était pas de la matière"
+    "Dans aucun état : ce n'était pas de la matière",
+    "À l'état gazeux : c'était de la vapeur d'eau"
    ],
    "explication": "Le brouillard vient d'une liquéfaction : la vapeur d'eau, un gaz, devient liquide. Avant, l'eau était donc à l'état gazeux.",
    "source": {
@@ -494,8 +494,8 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Pourquoi l'évaporation de l'eau d'un lac est-elle une vaporisation ?",
    "choix": [
-    "Parce que l'eau liquide devient gazeuse",
     "Parce que l'eau gazeuse devient liquide",
+    "Parce que l'eau liquide devient gazeuse",
     "Parce que l'eau solide devient liquide",
     "Parce que l'eau liquide devient solide"
    ],
@@ -515,9 +515,9 @@ JEU.enregistrer("cours", {
    "enonce": "Lesquels de ces changements d'état donnent de l'eau liquide ?",
    "choix": [
     "La fusion",
-    "La liquéfaction",
+    "La vaporisation",
     "La solidification",
-    "La vaporisation"
+    "La liquéfaction"
    ],
    "explication": "La fusion part du solide et la liquéfaction part du gaz : toutes deux donnent un liquide. La solidification et la vaporisation, elles, partent du liquide.",
    "source": {
@@ -534,12 +534,12 @@ JEU.enregistrer("cours", {
    "niveau": 3,
    "enonce": "Coche les formes que prend l'eau à l'état solide.",
    "choix": [
+    "La neige",
     "La buée",
     "La rosée",
-    "La neige",
+    "La vapeur d'eau",
     "Le givre",
-    "La grêle",
-    "La vapeur d'eau"
+    "La grêle"
    ],
    "explication": "Givre, grêle, neige (et glace) sont de l'eau solide. La rosée et la buée sont liquides, la vapeur est un gaz.",
    "source": {
@@ -576,8 +576,8 @@ JEU.enregistrer("cours", {
    "enonce": "Laquelle de ces formes de l'eau est à l'état gazeux ?",
    "choix": [
     "La buée",
-    "Le brouillard",
     "La vapeur d'eau",
+    "Le brouillard",
     "La rosée du matin"
    ],
    "explication": "La vapeur d'eau est la seule forme gazeuse de la liste. Buée, brouillard et rosée sont de l'eau liquide.",
@@ -595,10 +595,10 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Pourquoi le brouillard est-il rangé dans l'eau liquide, et non dans le gaz ?",
    "choix": [
-    "Parce qu'il est fait de fines gouttelettes d'eau",
     "Parce qu'il est fait de minuscules cristaux de glace",
     "Parce qu'il est fait de vapeur d'eau qu'on voit",
-    "Parce qu'il se forme par une vaporisation de l'eau"
+    "Parce qu'il se forme par une vaporisation de l'eau",
+    "Parce qu'il est fait de fines gouttelettes d'eau"
    ],
    "explication": "Des gouttelettes, ce sont de toutes petites gouttes de liquide. Le brouillard est donc de l'eau liquide, même s'il flotte dans l'air.",
    "source": {
@@ -715,8 +715,8 @@ JEU.enregistrer("cours", {
    "choix": [
     "Jaune",
     "Noir",
-    "Rouge",
-    "Bleu"
+    "Bleu",
+    "Rouge"
    ],
    "explication": "Blanc au départ, il devient bleu s'il y a de l'eau. C'est ce qui permet de la repérer.",
    "source": {
@@ -752,12 +752,12 @@ JEU.enregistrer("cours", {
    "niveau": 3,
    "enonce": "Avec quels liquides le sulfate de cuivre anhydre devient-il bleu ?",
    "choix": [
-    "Le white-spirit",
-    "L'alcool ménager",
-    "Un soda au cola",
     "L'eau écarlate",
     "Le jus de fruits",
-    "Le lait"
+    "Un soda au cola",
+    "Le lait",
+    "L'alcool ménager",
+    "Le white-spirit"
    ],
    "explication": "Le lait, le jus de fruits et le cola contiennent de l'eau : la poudre bleuit. Avec les trois autres, elle reste blanche.",
    "source": {
@@ -774,9 +774,9 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Comment savoir si un liquide contient de l'eau ?",
    "choix": [
-    "On teste avec du sulfate de cuivre anhydre, qui bleuit",
     "On regarde s'il est transparent et incolore, comme de l'eau",
     "On le chauffe et on regarde s'il fait de la vapeur",
+    "On teste avec du sulfate de cuivre anhydre, qui bleuit",
     "On le verse et on regarde s'il coule comme de l'eau"
    ],
    "explication": "Le sulfate de cuivre anhydre, blanc, devient bleu au contact de l'eau. S'il reste blanc, le liquide ne contient pas d'eau.",
@@ -848,10 +848,10 @@ JEU.enregistrer("cours", {
    "niveau": 3,
    "enonce": "Un liquide inconnu fait bleuir le sulfate de cuivre anhydre. Que peut-on en conclure ?",
    "choix": [
-    "Il contient de l'eau",
     "C'est forcément de l'eau pure",
     "Il ne contient pas d'eau",
-    "C'est forcément un poison"
+    "C'est forcément un poison",
+    "Il contient de l'eau"
    ],
    "explication": "Le bleu montre seulement qu'il y a de l'eau dans le liquide. Le lait ou le jus de fruits font aussi bleuir la poudre, sans être de l'eau pure.",
    "source": {
@@ -868,8 +868,8 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Pourquoi le test au sulfate de cuivre anhydre montre-t-il que tous les liquides ne contiennent pas d'eau ?",
    "choix": [
-    "Parce que certains liquides laissent la poudre blanche",
     "Parce que tous les liquides font bleuir la poudre",
+    "Parce que certains liquides laissent la poudre blanche",
     "Parce que certains liquides font devenir la poudre rouge",
     "Parce que la poudre bleuit même sans aucun liquide"
    ],
@@ -903,8 +903,8 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Pourquoi ne faut-il surtout pas boire de white-spirit ni d'alcool ménager ?",
    "choix": [
-    "Ce sont des liquides sans eau, et ce sont des poisons",
     "Ce sont des liquides qui contiennent beaucoup trop d'eau",
+    "Ce sont des liquides sans eau, et ce sont des poisons",
     "Ils font bleuir le sulfate de cuivre anhydre",
     "Ce sont des gaz, et non de vrais liquides"
    ],
@@ -942,10 +942,10 @@ JEU.enregistrer("cours", {
    "niveau": 1,
    "enonce": "Dans l'expérience du sulfate de cuivre, lequel de ces liquides est un poison ?",
    "choix": [
-    "L'alcool ménager",
     "Le jus de fruits",
     "Le lait",
-    "Une boisson au cola"
+    "Une boisson au cola",
+    "L'alcool ménager"
    ],
    "explication": "L'alcool ménager ne contient pas d'eau : c'est un poison. Les trois autres contiennent de l'eau.",
    "source": {
@@ -984,7 +984,7 @@ JEU.enregistrer("cours", {
     "Il repère les liquides sans eau, à ne pas boire",
     "Il rend potables les liquides qui le font bleuir",
     "Il retire l'eau des liquides dangereux",
-    "Il prouve qu'un liquide bleu se boit sans danger"
+    "Il prouve qu'un liquide qui le fait bleuir se boit sans danger"
    ],
    "explication": "Le corps a besoin d'eau, et un liquide sans eau ne doit pas être bu. Le test repère ces liquides, car la poudre y reste blanche.",
    "source": {
@@ -992,6 +992,28 @@ JEU.enregistrer("cours", {
     "page": 3
    },
    "r": "MpAFPYAEnFAFVUFFH40zxi0bYRAUN0RAHURSBIiFcABBYUgTccBBjh0Fd6uHKQhRFsTZ",
+   "poids": 1
+  },
+  {
+   "id": "physique-s02-1-q50",
+   "fiche": "physique-s02-1-f5",
+   "type": "qcm_multiple",
+   "niveau": 2,
+   "enonce": "Dans l'expérience du sulfate de cuivre, lesquels de ces liquides ne faut-il surtout pas boire ?",
+   "choix": [
+    "Le white-spirit",
+    "Le lait",
+    "L'eau écarlate",
+    "Une boisson au cola",
+    "L'alcool ménager",
+    "Le jus de fruits"
+   ],
+   "explication": "Le white-spirit, l'eau écarlate et l'alcool ménager laissent la poudre blanche : sans eau, ce sont des poisons. Le lait, le jus de fruits et le cola, eux, contiennent de l'eau.",
+   "source": {
+    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
+    "page": 3
+   },
+   "r": "1E2XAIFTAYcpLkkHo0hFJQhVlw0QQ1wNMlwRM1gxlaEHTISV5cUWT1xBdsBGwAAABRkBYY0AlAFH",
    "poids": 1
   },
   {
@@ -1003,8 +1025,8 @@ JEU.enregistrer("cours", {
    "choix": [
     "Les cours d'eau",
     "Les nuages",
-    "La vapeur d'eau de l'air",
-    "Les océans et les mers"
+    "Les océans et les mers",
+    "La vapeur d'eau de l'air"
    ],
    "explication": "Les océans et les mers contiennent le plus d'eau. Mais cette eau n'est pas potable.",
    "source": {
@@ -1040,9 +1062,9 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Quelle part de toute l'eau représente l'eau douce des cours d'eau, utilisable directement ?",
    "choix": [
-    "Environ la moitié",
     "Environ 0,01 %",
     "Environ 25 %",
+    "Environ la moitié",
     "Environ 75 %"
    ],
    "explication": "L'eau douce utilisable directement est une toute petite part de l'eau. C'est environ 0,01 % du total.",
@@ -1060,9 +1082,9 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Pourquoi les cours d'eau sont-ils une réserve si importante, alors qu'ils contiennent très peu d'eau ?",
    "choix": [
-    "Leur eau douce sert à boire, à cultiver et à fabriquer",
     "Ils contiennent la plus grande partie de l'eau de la Terre",
     "Leur eau ne s'évapore jamais, même en été",
+    "Leur eau douce sert à boire, à cultiver et à fabriquer",
     "Leur eau est la seule qui ne gèle jamais en hiver"
    ],
    "explication": "Les océans et les mers ont bien plus d'eau, mais elle n'est pas potable. L'eau douce des cours d'eau, environ 0,01 % du total, est celle qu'on utilise directement.",

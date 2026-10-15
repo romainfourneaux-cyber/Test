@@ -718,7 +718,7 @@ JEU.enregistrer("cours", {
     "Avec l'échelle de Beaufort",
     "Avec un sextant",
     "Avec une encablure",
-    "Avec un pavillon"
+    "Avec la ligne de flottaison"
    ],
    "explication": "L'échelle de Beaufort n'est pas une échelle pour grimper. Elle sert aux marins à mesurer la vitesse moyenne du vent.",
    "source": {
@@ -739,7 +739,7 @@ JEU.enregistrer("cours", {
     "bourrasque",
     "lames",
     "avarie",
-    "cambuse"
+    "chaloupes"
    ],
    "explication": "La bourrasque est un vent violent. Les lames sont les vagues.",
    "source": {

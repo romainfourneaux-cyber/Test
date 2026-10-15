@@ -342,9 +342,9 @@ JEU.enregistrer("cours", {
     "On regarde s'il possède un présent et un passé",
     "On regarde s'il commence par « que »",
     "On regarde si sa forme change avec la personne",
-    "On regarde s'il se termine par -er"
+    "On regarde s'il a toujours un pronom sujet"
    ],
-   "explication": "Un mode personnel change avec je, tu, il, nous, vous, ils. Avoir un présent et un passé ne suffit pas : l'infinitif en a deux, et il est impersonnel.",
+   "explication": "Un mode personnel change avec la personne, même l'impératif, qui n'a pas de pronom sujet. Avoir un présent et un passé ne suffit pas : l'infinitif en a deux, et il est impersonnel.",
    "source": {
     "fichier": "cours/langue/Francais 5e - Conjugaison - Cours 10 - Les modes du verbe.pdf",
     "page": 1
@@ -871,7 +871,7 @@ JEU.enregistrer("cours", {
    "enonce": "D'où viennent la plupart des fautes d'orthographe ?",
    "choix": [
     "De faiblesses en analyse de texte et en vocabulaire",
-    "De faiblesses en analyse logique et en récitation de poèmes",
+    "De faiblesses en analyse logique et en analyse de texte",
     "De faiblesses en analyse grammaticale et en conjugaison",
     "D'un vocabulaire trop pauvre pour trouver le mot juste"
    ],
@@ -968,16 +968,16 @@ JEU.enregistrer("cours", {
    "fiche": "langue-conj10-f5",
    "type": "qcm_multiple",
    "niveau": 2,
-   "enonce": "Les cours de grammaire et de conjugaison sont rangés en cinq thèmes. Lesquels en font partie ? Coche toutes les bonnes réponses.",
+   "enonce": "La grammaire et la conjugaison s'étudient en cinq thèmes. Lesquels en font partie ? Coche toutes les bonnes réponses.",
    "choix": [
     "L'orthographe d'usage",
     "Les natures des mots",
     "La conjugaison",
-    "La récitation",
+    "Les dictées corrigées",
     "Les fonctions des mots",
     "L'analyse de texte"
    ],
-   "explication": "Les cinq thèmes sont les natures des mots, les fonctions des mots, l'analyse logique, la conjugaison et l'analyse de texte. L'orthographe d'usage n'en fait pas partie : elle s'apprend surtout en lisant.",
+   "explication": "Les cinq thèmes sont les natures des mots, les fonctions des mots, l'analyse logique, la conjugaison et l'analyse de texte. L'orthographe d'usage s'apprend surtout en lisant, et les dictées corrigées viennent en plus des thèmes.",
    "source": {
     "fichier": "cours/langue/Orthographe et expression ecrite.pdf",
     "page": 1

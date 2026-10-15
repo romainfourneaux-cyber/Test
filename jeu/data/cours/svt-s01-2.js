@@ -237,7 +237,7 @@ JEU.enregistrer("cours", {
    "enonce": "Combien de temps dure une rotation complète de la Terre sur elle-même ?",
    "choix": [
     "Un peu moins d'une journée",
-    "Un peu plus d'une journée",
+    "Un peu plus d'une journée entière",
     "Environ 27 jours",
     "Environ 243 jours"
    ],
@@ -297,9 +297,9 @@ JEU.enregistrer("cours", {
    "enonce": "Pourquoi dit-on que la Terre a deux mouvements à la fois ?",
    "choix": [
     "Elle tourne sur elle-même et autour du Soleil",
-    "Elle tourne autour du Soleil, puis autour de la Lune",
-    "Elle tourne sur elle-même le jour et s'arrête la nuit",
-    "Elle avance tout droit, puis revient sur ses pas"
+    "Elle tourne sur elle-même et autour de la Lune",
+    "Elle tourne autour des deux centres de son orbite",
+    "Elle tourne autour du Soleil, et le Soleil autour d'elle"
    ],
    "explication": "La Terre fait sa rotation sur elle-même et, en même temps, sa révolution autour du Soleil. Ce sont ses deux mouvements.",
    "source": {
@@ -415,18 +415,33 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Coche les phrases justes sur l'axe de rotation de la Terre.",
    "choix": [
-    "C'est une ligne imaginaire",
     "Il est penché par rapport au plan de l'écliptique",
     "La Terre tourne sur elle-même autour de lui",
+    "Son inclinaison fait varier la durée du jour selon les lieux",
     "Il est couché à plat dans le plan de l'écliptique",
-    "Il rend la durée du jour égale partout"
+    "La Terre fait sa révolution autour de lui"
    ],
-   "explication": "L'axe de rotation est une ligne imaginaire, penchée, autour de laquelle la Terre tourne sur elle-même. Son inclinaison rend au contraire la durée du jour différente selon les lieux.",
+   "explication": "La Terre tourne sur elle-même autour de son axe, penché par rapport au plan de l'écliptique, et cette inclinaison fait varier la durée du jour selon les lieux. Sa révolution, elle, se fait autour du Soleil.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.pdf",
     "page": 2
    },
-   "r": "=gyRcQQBOpgFIFDWKEEWP80ALMcsq8FEJkBFJxhGBgkJDdBQCpxTDQxGXMhUUkyVdt0CaMQA30FDZ50xsGkCJdxIStBBZEQSb4gUcEjQVUETc8EFHkhUuHbHGsBFZ40GB0wYBxyFBwkCU8ACc4SFUgAHRxAAIsBBjh0CA1gGcMQQqAFH",
+   "r": "==gHP0BQIdwAGVBDecGHakAECkEHa0hAjhVAVg0xsSxENIlJeU1FQgxGPkhUcoCTDUxQBwxDHcwGrExGMU1HG0TTepkKYlQFIpwTUMhBGIzEVBAGbr6ACdBBvgURHhVHPNACbcAKGUFAHMAD680EkEWAHBFWfYgEWAgHksttClRUMowTckwLdVEQM50GUkQGCYCAVdBFBk0xsqxCtgUFVkVHKYkCgAFH",
+   "poids": 1
+  },
+  {
+   "id": "svt-s01-2-q38",
+   "fiche": "svt-s01-2-f2",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "L'axe de rotation de la Terre est penché par rapport au plan dans lequel elle tourne autour du Soleil.",
+   "corrections": [],
+   "explication": "Le plan dans lequel la Terre tourne autour du Soleil s'appelle le plan de l'écliptique. Son axe de rotation fait un angle avec ce plan.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.pdf",
+    "page": 2
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -478,7 +493,7 @@ JEU.enregistrer("cours", {
     "En hiver, la Terre est justement au plus près du Soleil",
     "En hiver, la Terre est justement au plus loin du Soleil",
     "La distance entre la Terre et le Soleil ne change jamais",
-    "Le périhélie tombe en plein été dans l'hémisphère nord"
+    "Le périhélie tombe en plein été, dans l'hémisphère nord"
    ],
    "explication": "Le périhélie, point le plus proche, tombe début janvier, en plein hiver au nord. L'éloignement n'explique donc pas l'hiver.",
    "source": {
@@ -693,12 +708,12 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s01-2-f4",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Combien de temps sépare environ un équinoxe du solstice qui le suit ?",
+   "enonce": "Combien de temps sépare un équinoxe du solstice qui le suit ?",
    "choix": [
     "Environ trois mois",
     "Environ six mois",
-    "Environ un mois",
-    "Environ un an"
+    "Environ six semaines",
+    "Environ deux mois"
    ],
    "explication": "De mars à juin, puis de juin à septembre, il s'écoule environ trois mois. Équinoxes et solstices alternent ainsi tout au long de l'année.",
    "source": {

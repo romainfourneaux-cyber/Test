@@ -178,10 +178,10 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Sur une éprouvette, les grands traits 40 mL et 50 mL sont séparés par 4 petits traits. Combien vaut chaque petit trait ?",
    "choix": [
-    "4 mL",
+    "1 mL",
     "2 mL",
     "2,5 mL",
-    "1 mL"
+    "4 mL"
    ],
    "explication": "4 petits traits découpent 5 intervalles entre 40 et 50 mL. 10 mL partagés en 5, cela fait 2 mL par petit trait.",
    "indice": "Compte les espaces entre les traits, pas les traits.",
@@ -215,9 +215,9 @@ JEU.enregistrer("cours", {
    "enonce": "Le volume d'une bille est de 12 mL. Combien cela fait-il en cm³ ?",
    "choix": [
     "0,12 cm³",
+    "12 cm³",
     "120 cm³",
-    "1 200 cm³",
-    "12 cm³"
+    "1 200 cm³"
    ],
    "explication": "1 mL vaut 1 cm³. 12 mL font donc 12 cm³.",
    "source": {
@@ -235,7 +235,7 @@ JEU.enregistrer("cours", {
    "enonce": "Comment trouver ce que vaut un petit trait sur une éprouvette ?",
    "choix": [
     "On divise l'écart entre deux grands traits par le nombre de petits traits",
-    "On divise l'écart entre deux grands traits par le nombre d'espaces entre eux",
+    "On divise l'écart entre deux grands traits par le nombre d'espaces",
     "On compte tous les petits traits de l'éprouvette, du bas jusqu'en haut",
     "On admet qu'un petit trait vaut toujours 1 mL, sur toutes les éprouvettes"
    ],
@@ -244,7 +244,7 @@ JEU.enregistrer("cours", {
     "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
     "page": 4
    },
-   "r": "==gS7gFAVgEHbgwAJFgIRQRFGQhTK80FaECQKsVDLMgRUggAnFQAMQxAd4EHWYgIfJQFVthCCYEDAMDHQUUADgQDGH7Tv0AAGREGGIgRH0TZ",
+   "r": "LFgIRQRFGQhTK80FaECQKsVDLMgRUggAnFQAMQxAd4EHWYgIfJQFVthCCYEDAMDHQUUADgQDGH7Tv0AAGREGGIgRH0TZ",
    "poids": 1
   },
   {
@@ -273,10 +273,10 @@ JEU.enregistrer("cours", {
    "niveau": 3,
    "enonce": "Une figurine plongée dans une éprouvette fait monter l'eau de 30 mL à 38 mL. Quel est son volume en cm³ ?",
    "choix": [
+    "0,8 cm³",
     "8 cm³",
     "38 cm³",
-    "68 cm³",
-    "0,8 cm³"
+    "68 cm³"
    ],
    "explication": "38 − 30 donne 8 mL de différence. Comme 1 mL vaut 1 cm³, la figurine mesure 8 cm³.",
    "indice": "Fais la différence, puis pense que 1 mL = 1 cm³.",
@@ -330,10 +330,10 @@ JEU.enregistrer("cours", {
    "niveau": 3,
    "enonce": "Sur une éprouvette, chaque petit trait vaut 2 mL. Un caillou plongé fait monter l'eau de 3 petits traits. Quel est son volume ?",
    "choix": [
+    "1,5 cm³",
     "3 cm³",
     "5 cm³",
-    "6 cm³",
-    "1,5 cm³"
+    "6 cm³"
    ],
    "explication": "3 petits traits de 2 mL font 6 mL. Comme 1 mL vaut 1 cm³, le caillou mesure 6 cm³.",
    "source": {
@@ -350,10 +350,10 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Pourquoi trouve-t-on le volume d'un objet plongé en soustrayant les deux lectures ?",
    "choix": [
-    "Parce que l'objet déplace un volume de liquide égal au sien",
     "Parce que l'objet absorbe une partie du liquide de l'éprouvette",
     "Parce que la masse de l'objet s'ajoute à celle du liquide",
-    "Parce que le liquide se comprime quand on plonge l'objet"
+    "Parce que le liquide se comprime quand on plonge l'objet",
+    "Parce que l'objet déplace un volume de liquide égal au sien"
    ],
    "explication": "En plongeant, l'objet prend la place d'un peu de liquide, qui monte d'autant. La différence des niveaux donne donc le volume de l'objet.",
    "source": {
@@ -370,10 +370,10 @@ JEU.enregistrer("cours", {
    "niveau": 1,
    "enonce": "Quelle formule donne le volume d'un aquarium en forme de pavé ?",
    "choix": [
+    "V = L × l × h",
     "V = L + l + h",
     "V = 2 × (L + l)",
-    "V = L × l",
-    "V = L × l × h"
+    "V = L × l"
    ],
    "explication": "On multiplie la longueur, la largeur et la hauteur. Avec des cm, on obtient des cm³.",
    "source": {
@@ -390,10 +390,10 @@ JEU.enregistrer("cours", {
    "niveau": 3,
    "enonce": "Une boîte mesure 10 cm de long, 5 cm de large et 4 cm de haut. Quel est son volume ?",
    "choix": [
-    "50 cm³",
     "19 cm³",
-    "200 cm³",
-    "40 cm³"
+    "40 cm³",
+    "50 cm³",
+    "200 cm³"
    ],
    "explication": "V = 10 × 5 × 4. Le volume est de 200 cm³.",
    "indice": "Multiplie les trois mesures.",
@@ -430,9 +430,9 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Comment trouver combien de bouteilles il faut pour remplir un aquarium ?",
    "choix": [
-    "On calcule son volume, puis on le divise par la contenance d'une bouteille",
     "On calcule son volume, puis on le multiplie par la contenance d'une bouteille",
     "On mesure sa hauteur, puis on la divise par la hauteur d'une bouteille",
+    "On calcule son volume, puis on le divise par la contenance d'une bouteille",
     "On additionne ses trois dimensions, puis on divise par la contenance d'une bouteille"
    ],
    "explication": "Le volume, mis dans la même unité que la bouteille, divisé par sa contenance donne le nombre de bouteilles. On arrondit ensuite au-dessus pour finir de le remplir.",
@@ -547,9 +547,9 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Pourquoi arrondit-on au nombre entier supérieur le nombre de bouteilles ?",
    "choix": [
-    "Parce qu'avec une bouteille de moins, le bac ne serait pas plein",
     "Parce qu'on achète toujours les bouteilles par paquets entiers",
     "Parce que l'eau se comprime un peu une fois versée dans le bac",
+    "Parce qu'avec une bouteille de moins, le bac ne serait pas plein",
     "Parce que le volume calculé en cm³ est toujours un peu trop petit"
    ],
    "explication": "La partie après la virgule représente encore de l'eau à verser. Il faut donc une bouteille de plus pour finir de remplir le bac.",
@@ -628,10 +628,10 @@ JEU.enregistrer("cours", {
    "niveau": 1,
    "enonce": "Quelle masse correspond le mieux à une mésange ?",
    "choix": [
-    "30 g",
-    "30 t",
     "30 mg",
-    "30 kg"
+    "30 g",
+    "30 kg",
+    "30 t"
    ],
    "explication": "Une mésange est un petit oiseau d'environ 30 g. Les 30 mg correspondent plutôt à un papillon.",
    "source": {
@@ -726,10 +726,10 @@ JEU.enregistrer("cours", {
    "niveau": 3,
    "enonce": "Une mésange a une masse d'environ 30 g et un papillon d'environ 30 mg. Que peut-on dire ?",
    "choix": [
-    "La mésange est bien plus lourde : 30 g, c'est beaucoup plus que 30 mg",
     "Ils ont la même masse, puisque le nombre est 30 dans les deux cas",
     "Le papillon est plus lourd, car le milligramme est une grande unité",
-    "On ne peut pas comparer deux masses écrites avec des unités différentes"
+    "On ne peut pas comparer deux masses écrites avec des unités différentes",
+    "La mésange est bien plus lourde : 30 g, c'est beaucoup plus que 30 mg"
    ],
    "explication": "Le milligramme est une unité bien plus petite que le gramme. À nombre égal, 30 g pèsent donc beaucoup plus que 30 mg.",
    "source": {
@@ -746,12 +746,12 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Pour quels êtres ou objets le gramme est-il l'unité de masse la mieux adaptée ?",
    "choix": [
-    "Un crayon",
     "Une mésange",
+    "Un hélicoptère",
     "Un cheveu",
-    "Un sac d'école",
     "Un papillon",
-    "Un hélicoptère"
+    "Un sac d'école",
+    "Un crayon"
    ],
    "explication": "Un crayon et une mésange se pèsent en grammes. Le cheveu et le papillon se comptent en milligrammes, le sac en kilogrammes et l'hélicoptère en tonnes.",
    "source": {
@@ -787,10 +787,10 @@ JEU.enregistrer("cours", {
    "niveau": 1,
    "enonce": "D'après la pesée de l'eau, quelle masse a 1 L d'eau ?",
    "choix": [
-    "1 kg",
-    "10 kg",
+    "1 mg",
     "1 g",
-    "1 mg"
+    "1 kg",
+    "10 kg"
    ],
    "explication": "La pesée de l'eau le montre : 1 L d'eau a une masse de 1 kg. C'est un repère à retenir.",
    "source": {
@@ -811,7 +811,7 @@ JEU.enregistrer("cours", {
     "volume",
     "masse",
     "couleur",
-    "température"
+    "forme"
    ],
    "explication": "Un même volume peut avoir des masses différentes, et l'inverse. Masse et volume ne se confondent pas.",
    "source": {
@@ -828,8 +828,8 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Comment montrer que la masse et le volume sont deux grandeurs différentes ?",
    "choix": [
-    "Avec des objets de même volume mais de masses différentes",
     "En montrant qu'un objet plus gros est toujours plus lourd",
+    "En pesant des objets qui ont tous le même volume",
     "En mesurant la masse et le volume avec le même instrument",
     "En pesant plusieurs fois de suite le même objet"
    ],
@@ -838,7 +838,7 @@ JEU.enregistrer("cours", {
     "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
     "page": 4
    },
-   "r": "==wSdogBGYyXMb/SIYgAGpxF0EAFIUFFN4EHbkgLNAAWYJAAQYEDf0esYUEEVkUHbchAhIURGhkCPVwAfMTZ",
+   "r": "MpwCTUQHxIFEI8tsE4kCegEMYpQQNoRAJYEAHYjUGEBEbsQAPFQDn0QEbxUHKYhRHcTZ",
    "poids": 1
   },
   {
@@ -867,8 +867,8 @@ JEU.enregistrer("cours", {
    "niveau": 3,
    "enonce": "Deux objets ont exactement la même masse. Que peut-on dire de leurs volumes ?",
    "choix": [
-    "Ils peuvent être différents",
     "Ils sont forcément égaux",
+    "Ils peuvent être différents",
     "Ils sont forcément différents",
     "On les trouve en lisant la balance"
    ],
@@ -887,11 +887,11 @@ JEU.enregistrer("cours", {
    "niveau": 3,
    "enonce": "Quelles conclusions tire-t-on de l'expérience des cylindres ?",
    "choix": [
-    "Un même volume peut avoir des masses différentes",
-    "Une même masse peut avoir des volumes différents",
-    "Plus un cylindre est gros, plus il est lourd",
     "Deux cylindres de même masse ont le même volume",
-    "La masse et le volume sont deux grandeurs différentes"
+    "Un même volume peut avoir des masses différentes",
+    "La masse et le volume sont deux grandeurs différentes",
+    "Une même masse peut avoir des volumes différents",
+    "Plus un cylindre est gros, plus il est lourd"
    ],
    "explication": "Les cylindres montrent qu'un volume ne donne pas la masse, et inversement. La masse et le volume sont donc deux grandeurs différentes.",
    "source": {
@@ -909,9 +909,9 @@ JEU.enregistrer("cours", {
    "enonce": "Un bloc de plomb et un bloc d'aluminium ont la même masse, mais le bloc de plomb est plus petit. Que peut-on dire ?",
    "choix": [
     "Le plomb est plus lourd que l'aluminium",
-    "Le plomb est plus dense que l'aluminium",
     "Les deux ont la même densité",
-    "L'aluminium est plus dense que le plomb"
+    "L'aluminium est plus dense que le plomb",
+    "Le plomb est plus dense que l'aluminium"
    ],
    "explication": "Les deux blocs sont aussi lourds l'un que l'autre. Mais à masse égale, la matière la plus dense prend le moins de place : ici, c'est le plomb.",
    "source": {
@@ -987,8 +987,8 @@ JEU.enregistrer("cours", {
    "enonce": "Pourquoi peut-on reconnaître un liquide en pesant un volume connu de ce liquide ?",
    "choix": [
     "Parce que la balance donne le nom du liquide",
-    "Parce que chaque matière a sa propre densité",
     "Parce que le volume change la couleur du liquide",
+    "Parce que chaque matière a sa propre densité",
     "Parce que tous les liquides ont la même masse"
    ],
    "explication": "Pour un même volume, deux liquides différents n'ont pas la même masse. La masse mesurée permet de retrouver le liquide dans un tableau.",
@@ -1021,9 +1021,9 @@ JEU.enregistrer("cours", {
    "niveau": 3,
    "enonce": "Deux billes ont exactement le même volume, mais la bille A a une plus grande masse que la bille B. Laquelle est faite de la matière la plus dense ?",
    "choix": [
-    "La bille A",
     "La bille B",
     "Elles sont aussi denses l'une que l'autre",
+    "La bille A",
     "On ne peut pas le savoir sans connaître leur couleur"
    ],
    "explication": "Pour comparer, on regarde les masses à volume égal. La matière la plus dense a la plus grande masse : c'est la bille A.",
@@ -1062,9 +1062,9 @@ JEU.enregistrer("cours", {
    "enonce": "Pour comparer la densité de deux matières, que peut-on faire ?",
    "choix": [
     "Comparer leurs masses pour un même volume",
+    "Comparer leurs volumes, quelles que soient leurs masses",
     "Comparer leurs volumes pour une même masse",
-    "Comparer leurs masses, quels que soient leurs volumes",
-    "Comparer leurs volumes, quelles que soient leurs masses"
+    "Comparer leurs masses, quels que soient leurs volumes"
    ],
    "explication": "Il faut garder l'une des deux grandeurs égale pour comparer l'autre. Comparer des masses sans tenir compte des volumes, c'est confondre lourd et dense.",
    "source": {

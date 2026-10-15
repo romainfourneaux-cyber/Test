@@ -122,8 +122,8 @@ module.exports = {
       choix: [
         "Parce que le sujet est tu",
         "Parce que « as » sert d'auxiliaire, « a » non",
-        "Parce que le sujet est je",
-        "Parce que « as » est une préposition"
+        "Parce que « a » sans accent est une préposition",
+        "Parce que le verbe est au passé composé"
       ],
       reponse: "Parce que le sujet est tu",
       explication: "Avec tu, le verbe avoir s'écrit as ; avec il ou elle, il s'écrit a. Les deux peuvent servir d'auxiliaire : tu as gagné, elle a gagné.", source: C12(1) },
@@ -138,9 +138,9 @@ module.exports = {
       explication: "Suivi du participe passé lavé, « a » sert d'auxiliaire au passé composé. On peut dire « elle avait lavé », donc on l'écrit sans accent.", source: C12(1) },
     { id: "langue-conj12-q25", fiche: "langue-conj12-f1", type: "qcm_multiple", niveau: 3,
       enonce: "Dans quelles phrases faut-il écrire « a » ? Coche toutes les bonnes réponses.",
-      choix: ["Je pars ___ la montagne.", "Mon oncle ___ une moto.", "Tu ___ un chien ?", "Ma sœur ___ réussi son gâteau.", "Le bébé ___ sommeil."],
+      choix: ["Je pars ___ la gare.", "Mon oncle ___ une moto.", "Tu ___ un chien ?", "Ma sœur ___ réussi son gâteau.", "Le bébé ___ sommeil."],
       reponse: ["Mon oncle ___ une moto.", "Ma sœur ___ réussi son gâteau.", "Le bébé ___ sommeil."],
-      explication: "Avec mon oncle, ma sœur et le bébé, on peut dire « avait » : c'est avoir, écrit a. « Je pars avait la montagne » n'a pas de sens, et avec tu on écrit as.", source: C12(1) },
+      explication: "Avec mon oncle, ma sœur et le bébé, on peut dire « avait » : c'est avoir, écrit a. « Je pars avait la gare » n'a pas de sens, et avec tu on écrit as.", source: C12(1) },
     { id: "langue-conj12-q26", fiche: "langue-conj12-f1", type: "qcm", niveau: 3,
       enonce: "Quelle phrase est bien écrite ?",
       choix: ["Mon voisin à appris a nager.", "Mon voisin a appris a nager.", "Mon voisin à appris à nager.", "Mon voisin a appris à nager."],
@@ -181,7 +181,7 @@ module.exports = {
         "La phrase n'a plus de sens : il faut écrire a",
         "La phrase a du sens : il faut écrire a",
         "La phrase n'a plus de sens : il faut écrire à",
-        "Il faut garder avait dans la phrase"
+        "La phrase a du sens : il faut écrire à"
       ],
       reponse: "La phrase n'a plus de sens : il faut écrire à",
       explication: "« Le train part avait midi » ne veut rien dire, ce n'est donc pas le verbe avoir. On écrit à, avec un accent.", source: C12(1) },
@@ -212,7 +212,7 @@ module.exports = {
       indice: "Fais le test de « avait » à chacun des trois trous.", source: C12(1) },
     { id: "langue-conj12-q31", fiche: "langue-conj12-f2", type: "qcm", niveau: 2,
       enonce: "Laquelle de ces phrases, après le test de « avait », montre qu'il faut écrire « a » ?",
-      choix: ["Le facteur avait une sacoche.", "Je vais avait l'école.", "Il habite avait la campagne.", "Un gâteau avait la crème."],
+      choix: ["Le facteur avait une sacoche.", "Je vais avait l'école.", "Il habite avait la campagne.", "Ce livre est avait Lucie."],
       reponse: "Le facteur avait une sacoche.",
       explication: "« Le facteur avait une sacoche » garde son sens : on écrira « le facteur a une sacoche ». Dans les trois autres phrases, « avait » ne veut rien dire : il faut à.", source: C12(1) },
     // f3 : les emplois de la préposition à
@@ -249,11 +249,11 @@ module.exports = {
     { id: "langue-conj12-q32", fiche: "langue-conj12-f3", type: "vrai_faux", niveau: 2,
       enonce: "Dans « Il ferme le coffre à clé », la préposition à exprime le lieu.",
       corrections: [
-        "Faux : elle exprime le moyen ; la clé sert à fermer.",
+        "Faux : elle exprime le moyen ; on ferme le coffre grâce à la clé.",
         "Faux : elle exprime l'appartenance ; la clé est à lui.",
         "Faux : elle exprime le temps."
       ],
-      reponse: { vrai: false, correction: "Faux : elle exprime le moyen ; la clé sert à fermer." },
+      reponse: { vrai: false, correction: "Faux : elle exprime le moyen ; on ferme le coffre grâce à la clé." },
       explication: "La clé est l'outil avec lequel on ferme : à exprime ici le moyen. Le lieu répond à la question « où », comme dans « aller à la plage ».", source: C12(1) },
     { id: "langue-conj12-q33", fiche: "langue-conj12-f3", type: "vrai_faux", niveau: 1,
       enonce: "Dans « Cette trottinette est à mon cousin », la préposition à exprime l'appartenance.",
@@ -266,10 +266,10 @@ module.exports = {
       explication: "Les pois et les poches décrivent la robe et le pantalon : c'est une caractéristique. Une machine à coudre sert à coudre (le but), minuit est un moment et à pas lents une manière.", source: C12(1) },
     { id: "langue-conj12-q35", fiche: "langue-conj12-f3", type: "association", niveau: 3,
       enonce: "Relie chaque exemple à ce qu'exprime la préposition à.",
-      gauche: ["une planche à repasser", "rentrer à pied", "arriver à l'aube", "un bonnet à pompon"],
+      gauche: ["une planche à repasser", "rentrer à pied", "se coucher à dix heures", "un bonnet à pompon"],
       droite: ["Le temps", "Une caractéristique", "Le but", "Le moyen"],
       reponse: [[0, 2], [1, 3], [2, 0], [3, 1]],
-      explication: "La planche sert à repasser (le but) et l'on rentre grâce à ses pieds (le moyen). L'aube est un moment de la journée, et le pompon décrit le bonnet.", source: C12(1) },
+      explication: "La planche sert à repasser (le but) et l'on rentre grâce à ses pieds (le moyen). Dix heures est un moment de la journée, et le pompon décrit le bonnet.", source: C12(1) },
     // f4 : est, es ou et
     { id: "langue-conj12-q13", fiche: "langue-conj12-f4", type: "qcm", niveau: 1,
       enonce: "Quel mot complète la phrase ? « Mon chat ___ très câlin. »",
@@ -297,7 +297,7 @@ module.exports = {
         "Il change avec la personne",
         "On peut le remplacer par « avait »",
         "On peut le remplacer par « et puis »",
-        "Il est toujours au début de la phrase"
+        "On change de personne pour vérifier le mode"
       ],
       reponse: "On peut le remplacer par « et puis »",
       explication: "« Et » a le sens de « + » ou de « et puis ». Si « et puis » convient, on écrit et.", source: C12(2) },

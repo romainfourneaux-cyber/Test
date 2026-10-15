@@ -184,17 +184,17 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Pourquoi « Le chêne est un arbre » exprime-t-il quelque chose de permanent ?",
    "choix": [
-    "Parce que le chêne se trouve au milieu de la forêt",
-    "Parce que le chêne possède des feuilles",
-    "Parce que le chêne est un arbre toute sa vie",
-    "Parce que le chêne est malade cette année"
+    "Parce que la phrase dit à quel endroit le chêne a poussé",
+    "Parce que la phrase dit ce que le chêne possède",
+    "Parce qu'être un arbre ne change pas avec le temps",
+    "Parce que la phrase décrit l'aspect du chêne"
    ],
-   "explication": "Être un arbre ne change pas avec le temps. Le verbe être dit ici ce que le chêne est, pour toujours.",
+   "explication": "Un chêne reste un arbre toute sa vie : le verbe être dit ici ce qu'il est, pour toujours. La phrase ne dit ni où il a poussé, ni ce qu'il possède, ni à quoi il ressemble.",
    "source": {
     "fichier": "cours/langue/Francais 5e - Conjugaison - Cours 11 - Etre et avoir.pdf",
     "page": 1
    },
-   "r": "=s0FuQQVEYQUMohGdwxYIdxVf9wTIMRSGQzFVBwGbrqBMIVDv0AAAxlTKUAFIISZ",
+   "r": "=chXeIwASk0FrIlFAMAEJ1hDCgkJKtAVF1wTDgQSXUDEHQQVfwhTKAAHp7uQAxlTKUAFIISZ",
    "poids": 1
   },
   {
@@ -349,17 +349,17 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Comment sait-on que « Le vélo est dans le garage » indique une situation dans l'espace ?",
    "choix": [
-    "La phrase dit de quelle couleur est le vélo",
-    "La phrase dit à qui appartient le vélo",
-    "La phrase dit que le vélo est cassé pour l'instant",
-    "La phrase dit où se trouve le vélo"
+    "« Dans le garage » dit ce qu'est le vélo pour toujours",
+    "« Dans le garage » dit à qui appartient le vélo",
+    "« Dans le garage » dit une qualité physique du vélo",
+    "« Dans le garage » dit où se trouve le vélo"
    ],
    "explication": "« Dans le garage » répond à la question « où ». Le verbe être situe donc le vélo dans l'espace.",
    "source": {
     "fichier": "cours/langue/Francais 5e - Conjugaison - Cours 11 - Etre et avoir.pdf",
     "page": 1
    },
-   "r": "=wEAeEMgbVEUB5kCQMhBAMjUQYRVIraAPZQAn0AAGxEHHYhRI4TZ",
+   "r": "==ARJUw2ESQVAkRUMghGdoxNNAgRNcNrJYUHbMiUOfaVU4wDdMxDjhUCV4FAOIiRCDbZ",
    "poids": 1
   },
   {
@@ -698,7 +698,7 @@ JEU.enregistrer("cours", {
     "Parce que l'animal et moi avons une relation familiale",
     "Parce que l'animal dépend de moi et que je m'en occupe",
     "Parce que l'animal dit ce que je suis, mon identité",
-    "Parce que l'animal décide de tout pour moi"
+    "Parce que je dépends de l'animal et qu'il s'occupe de moi"
    ],
    "explication": "L'animal compte sur moi pour ses repas et ses soins. C'est pour cela que j'en suis responsable.",
    "source": {

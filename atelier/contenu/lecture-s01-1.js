@@ -109,7 +109,7 @@ module.exports = {
       enonce: "Pourquoi un mot qui veut dire « ours » a-t-il servi à nommer le pôle Nord ?",
       choix: ["La Grande Ourse se voit dans le ciel du Nord", "Le pôle Nord a la forme d'un gros ours couché", "Les Grecs y chassaient l'ours en hiver", "Le mot « ours » voulait dire « froid »"],
       reponse: "La Grande Ourse se voit dans le ciel du Nord",
-      explication: "Arktos, c'est le nom grec de la Grande Ourse, des étoiles bien visibles dans le ciel du Nord. Le nom est donc venu du ciel, pas des animaux.", source: S(1) },
+      explication: "Arktos, c'est aussi le nom grec de la Grande Ourse, des étoiles bien visibles dans le ciel du Nord. C'est de là que vient le nom du pôle Nord, l'Arctique.", source: S(1) },
     { id: "lecture-s01-1-q21", fiche: "lecture-s01-1-f1", type: "qcm_multiple", niveau: 2,
       enonce: "Lesquelles de ces affirmations sont justes ?",
       choix: ["Arktos veut dire « ours ».", "Anti veut dire « opposé à ».", "La Grande Ourse se voit dans le ciel du Nord.", "L'Antarctique se trouve au pôle Nord.", "Arktos veut dire « glace »."],
@@ -119,7 +119,7 @@ module.exports = {
     // f2 : embâcle et débâcle
     { id: "lecture-s01-1-q5", fiche: "lecture-s01-1-f2", type: "trou", niveau: 1,
       enonce: "Complète avec le bon mot.",
-      texte: "Quand la banquise se forme, c'est l'___. Quand elle se casse, c'est la ___.",
+      texte: "Quand la banquise se forme : ___. Quand elle se casse : ___.",
       banque: ["embâcle", "débâcle", "marée", "brash"],
       reponse: [["embâcle"], ["débâcle"]],
       explication: "Embâcle : la banquise se forme. Débâcle : elle se disloque.", source: S(1) },

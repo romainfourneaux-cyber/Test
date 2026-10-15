@@ -413,14 +413,14 @@ JEU.enregistrer("cours", {
    "fiche": "litterature-s02-2-f2",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Quelle différence y a-t-il entre « Le mur est gris » et « Ce mur gris est sinistre » ?",
+   "enonce": "Quelle différence y a-t-il entre « Le mur est gris » et « Ce mur gris est déprimant » ?",
    "choix": [
     "La seconde ajoute un avis du narrateur",
     "La seconde est plus objective que la première",
     "La première contient une métaphore",
     "La première grossit la couleur du mur"
    ],
-   "explication": "« Sinistre » dit l'impression du narrateur : la seconde phrase est subjective. La première s'en tient à la couleur, elle est objective.",
+   "explication": "« Déprimant » dit l'impression du narrateur : la seconde phrase est subjective. La première s'en tient à la couleur, elle est objective.",
    "source": {
     "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
     "page": 2
@@ -881,8 +881,8 @@ JEU.enregistrer("cours", {
    "enonce": "« Je déteste ceux qui lisent par-dessus mon épaule. » Quel comportement le narrateur dénonce-t-il ?",
    "choix": [
     "La curiosité indiscrète",
-    "La timidité",
-    "La paresse",
+    "La timidité devant les autres",
+    "La paresse en classe",
     "La vantardise"
    ],
    "explication": "Lire par-dessus l'épaule de quelqu'un, c'est vouloir voir ce qui ne nous regarde pas. Le narrateur dénonce cette indiscrétion.",
@@ -933,13 +933,13 @@ JEU.enregistrer("cours", {
    "fiche": "litterature-s02-2-f5",
    "type": "vrai_faux",
    "niveau": 2,
-   "enonce": "Un narrateur qui écrit « je n'aime pas les gens qui… » fait une description objective du comportement qu'il dénonce.",
+   "enonce": "Un narrateur qui écrit « je ne supporte pas ceux qui… » fait une description objective du comportement qu'il dénonce.",
    "corrections": [
     "Faux : il donne ouvertement son avis, la description est subjective.",
     "Faux : il ne dénonce rien, il décrit seulement.",
     "Faux : c'est une description rapide, donc ni objective ni subjective."
    ],
-   "explication": "« Je n'aime pas » montre l'agacement du narrateur. Son avis personnel rend la description subjective.",
+   "explication": "« Je ne supporte pas » montre l'agacement du narrateur. Son avis personnel rend la description subjective.",
    "source": {
     "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
     "page": 2
@@ -972,19 +972,19 @@ JEU.enregistrer("cours", {
    "fiche": "litterature-s02-2-f5",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Comment une description peut-elle dénoncer un comportement ?",
+   "enonce": "Un narrateur décrit quelqu'un qui observe les autres en silence pour ne pas être vu, puis il dit que cela l'agace. Que fait sa description ?",
    "choix": [
-    "Le narrateur dit ouvertement qu'il ne l'aime pas",
-    "Le narrateur le décrit sans donner le moindre avis",
-    "Le narrateur en fait une longue liste",
-    "Le narrateur l'exagère jusqu'à en rire"
+    "Elle dénonce un comportement, de façon subjective",
+    "Elle dénonce un comportement, de façon objective",
+    "Elle décrit seulement l'apparence de quelqu'un",
+    "Elle présente un comportement sans le juger du tout"
    ],
-   "explication": "Le narrateur montre le comportement et dit son agacement, avec des mots comme « je n'aime pas ». C'est un jugement personnel, donc une description subjective.",
+   "explication": "En disant son agacement, le narrateur juge ce comportement : il le dénonce. Cet avis personnel rend la description subjective.",
    "source": {
     "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
     "page": 2
    },
-   "r": "=0UFHkhUi8BHEIVHJtQASRgKKABRNoRADsADGUzFDAhGR1xBLIlG2gUEU9FHOggRM4TZ",
+   "r": "=cBSYYgEFwAGlcgBFthHO3qDUgkJJVUGZBgCLMQHAgiAYogFRdwGPdxCtI0Cc6uCPNgCFcTZ",
    "poids": 1
   },
   {

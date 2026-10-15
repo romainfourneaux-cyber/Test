@@ -294,7 +294,7 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s02-1-f1",
    "type": "qcm",
    "niveau": 3,
-   "enonce": "Une exploratrice part de l'équateur et marche tout droit vers le pôle Sud. Quelle ligne imaginaire franchit-elle en deuxième ?",
+   "enonce": "Une exploratrice quitte l'équateur et marche tout droit vers le pôle Sud. Après son départ, quelle est la deuxième ligne imaginaire qu'elle franchit ?",
    "choix": [
     "Un cercle polaire",
     "Un tropique",
@@ -433,7 +433,7 @@ JEU.enregistrer("cours", {
     "Environ 16 heures",
     "Environ 8 heures",
     "Environ 5 heures",
-    "Environ six mois"
+    "Environ six mois d'affilée"
    ],
    "explication": "À Bourges, le jour dure environ 16 heures en été et 8 heures en hiver. Cet écart est typique de la zone entre un tropique et le cercle polaire.",
    "source": {
@@ -736,6 +736,32 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
+   "id": "svt-s02-1-q45",
+   "fiche": "svt-s02-1-f4",
+   "type": "association",
+   "niveau": 2,
+   "enonce": "Relie chaque observation du TP du globe éclairé à ce qu'elle montre.",
+   "gauche": [
+    "Le trait noir",
+    "Le trait jaune",
+    "La tache ronde",
+    "La tache allongée en ovale"
+   ],
+   "droite": [
+    "La lumière reçue au milieu de l'hémisphère nord",
+    "La zone éclairée par le Soleil",
+    "L'arrivée d'un rayon parallèle à l'équateur",
+    "La lumière reçue au niveau de l'équateur"
+   ],
+   "explication": "Le trait noir marque l'arrivée d'un rayon parallèle à l'équateur, le trait jaune la zone éclairée. La tache est ronde à l'équateur et s'allonge au milieu de l'hémisphère nord.",
+   "source": {
+    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
+    "page": 3
+   },
+   "r": "==ANvcnXG5TWsolQdlCRewRSEYnQyQlSZlCH",
+   "poids": 1
+  },
+  {
    "id": "svt-s02-1-q16",
    "fiche": "svt-s02-1-f5",
    "type": "qcm",
@@ -801,10 +827,10 @@ JEU.enregistrer("cours", {
    "niveau": 3,
    "enonce": "Relie chaque moment à ce qu'il représente.",
    "gauche": [
-    "Le solstice de décembre, dans l'hémisphère sud",
-    "L'équinoxe de septembre, dans l'hémisphère sud",
-    "Le mois de janvier, dans l'hémisphère nord",
-    "La saison des pluies en Guyane"
+    "En décembre, dans l'hémisphère sud",
+    "En septembre, dans l'hémisphère sud",
+    "En janvier, dans l'hémisphère nord",
+    "En Guyane, la saison des pluies"
    ],
    "droite": [
     "De décembre à juillet",
@@ -884,7 +910,7 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s02-1-f5",
    "type": "qcm",
    "niveau": 3,
-   "enonce": "Pourquoi distingue-t-on pourtant deux saisons en Guyane française ?",
+   "enonce": "La Guyane française n'a pas de saison astronomique. Pourquoi y distingue-t-on pourtant deux saisons ?",
    "choix": [
     "Il pleut bien plus à certains mois",
     "Il fait beaucoup plus froid certains mois",

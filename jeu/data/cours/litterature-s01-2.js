@@ -441,20 +441,20 @@ JEU.enregistrer("cours", {
    "id": "litterature-s01-2-q28",
    "fiche": "litterature-s01-2-f2",
    "type": "qcm",
-   "niveau": 2,
-   "enonce": "Comment reconnaître une énumération dans un texte ?",
+   "niveau": 3,
+   "enonce": "« J'ai rangé mes livres, mes jeux, mes habits et mes chaussures : il m'a fallu mille ans ! » Quels procédés trouve-t-on dans cette phrase ?",
    "choix": [
-    "Plusieurs éléments y sont cités à la suite",
-    "Un seul élément y est grossi à l'excès",
-    "Un mot y est expliqué par son origine",
-    "Une chose y est décrite avec l'image d'une autre"
+    "Une énumération et une hyperbole",
+    "Une énumération seulement",
+    "Une hyperbole seulement",
+    "Une étymologie et une énumération"
    ],
-   "explication": "Une énumération cite des éléments les uns après les autres, comme une liste. Grossir un élément, c'est faire une hyperbole.",
+   "explication": "Les livres, les jeux, les habits et les chaussures sont cités à la suite : c'est une énumération. « Mille ans » grossit la durée du rangement : c'est une hyperbole.",
    "source": {
     "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
     "page": 1
    },
-   "r": "ExgBucgBFRRHJ5MrSth6uHBXO50GIkgGS5jUGExGUQwxs6RwA2gFHh1CGUxEFISZ",
+   "r": "Q1wLCdwRI5hFOYEDcIjUBAQVfYwBbMhGq7OCAN0xsa0AHcSZ",
    "poids": 1
   },
   {
@@ -506,7 +506,7 @@ JEU.enregistrer("cours", {
     "On donne le mot grec d'origine et son sens",
     "On cherche des mots qui veulent dire la même chose",
     "On décrit ce qu'on voit dans une salle de cinéma",
-    "On compte ses lettres"
+    "On dit ce que le mot veut dire aujourd'hui"
    ],
    "explication": "L'étymologie, c'est l'origine du mot. On donne donc le mot grec kinêma et son sens, « mouvement ».",
    "source": {

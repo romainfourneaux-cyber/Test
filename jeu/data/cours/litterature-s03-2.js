@@ -139,7 +139,7 @@ JEU.enregistrer("cours", {
    "choix": [
     "Pour faire ressortir leur silence",
     "Pour montrer qu'ils bavardent sans arrêt",
-    "Pour décrire la rue",
+    "Pour montrer que la rue est aussi calme qu'eux",
     "Pour énumérer tous les bruits de la rue"
    ],
    "explication": "Le contraste avec le vacarme fait ressortir le silence. On devine des sentiments forts que les personnages n'arrivent pas à dire.",
@@ -237,7 +237,7 @@ JEU.enregistrer("cours", {
    "fiche": "litterature-s03-2-f1",
    "type": "qcm",
    "niveau": 3,
-   "enonce": "« Autour de lui, toute la fête rit ; lui reste seul et muet. » Que fait sentir ce contraste ?",
+   "enonce": "« Autour de lui, toute la fête rit ; lui ne dit pas un mot. » Que fait sentir ce contraste ?",
    "choix": [
     "Sa solitude au milieu de la joie",
     "La joie partagée de tous les invités",
@@ -375,8 +375,8 @@ JEU.enregistrer("cours", {
    "enonce": "Un personnage espérait qu'on salue son courage, mais son chef n'en parle même pas. Que ressent-il sans doute ?",
    "choix": [
     "Un sentiment d'injustice",
-    "Un soulagement",
-    "De l'indifférence",
+    "Un grand soulagement",
+    "Une parfaite indifférence",
     "Une grande fierté"
    ],
    "explication": "Il attendait qu'on reconnaisse sa qualité, et rien ne vient. Ce silence le peine : il se sent injustement traité.",
@@ -487,14 +487,14 @@ JEU.enregistrer("cours", {
    "fiche": "litterature-s03-2-f2",
    "type": "qcm",
    "niveau": 3,
-   "enonce": "Un garçon est d'abord « froissé » par une remarque, puis « blessé » par un silence. Comment ses sentiments évoluent-ils ?",
+   "enonce": "Un garçon est d'abord « froissé » par une remarque de son chef, puis « blessé » que ce chef ne dise rien du courage qu'il a montré. Comment ses sentiments évoluent-ils ?",
    "choix": [
     "De la vexation à l'injustice",
     "De la joie à la colère",
     "De la peur au soulagement",
     "De la fierté à l'indifférence"
    ],
-   "explication": "Froissé veut dire vexé ; être blessé par un silence, c'est se sentir injustement traité. Ses sentiments vont donc de la vexation à l'injustice.",
+   "explication": "Froissé veut dire vexé ; être blessé qu'on taise son courage, c'est se sentir injustement traité. Ses sentiments vont donc de la vexation à l'injustice.",
    "source": {
     "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
     "page": 2
@@ -547,7 +547,7 @@ JEU.enregistrer("cours", {
     "On sait ce qu'un personnage désire et regrette",
     "On ne voit que ses gestes, jamais ses pensées",
     "Le texte énumère des faits sans émotion",
-    "Le narrateur décrit les lieux sans personnage"
+    "Le narrateur décrit les lieux, sans aucun personnage"
    ],
    "explication": "La focalisation interne passe par le ressenti d'un personnage. Ses désirs et ses regrets en sont les indices.",
    "source": {
@@ -605,17 +605,17 @@ JEU.enregistrer("cours", {
    "niveau": 3,
    "enonce": "Comment prouver qu'un passage est raconté en focalisation interne ?",
    "choix": [
-    "En citant ce qu'il ressent et pense",
+    "En citant ce que le personnage ressent et pense",
     "En comptant les personnages du passage",
-    "En résumant le passage",
-    "En citant les mots qui décrivent les lieux"
+    "En résumant le passage avec ses propres mots",
+    "En citant les mots qui décrivent les lieux du passage"
    ],
    "explication": "On nomme la focalisation, puis on cite les passages où l'on entend les désirs et les regrets du personnage. La citation sert de preuve.",
    "source": {
     "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
     "page": 2
    },
-   "r": "==QTXsRLIVRFZtwTSgADBQzFHUUGY40GeIVDg0QEbxkGGUgRHcTZ",
+   "r": "==ARDoBHiIQVRARUdAgCBshJfVEUK9QAIkgGAIiAVBQGRxwGeIVDg0QEbxkGGUgRHcTZ",
    "poids": 1
   },
   {
@@ -676,7 +676,7 @@ JEU.enregistrer("cours", {
    "choix": [
     "On entend ce qu'il souhaite",
     "On voit une porte, un objet du décor",
-    "On compte les gens",
+    "On connaît l'heure exacte de la scène",
     "On lit des faits sans aucun sentiment"
    ],
    "explication": "« Pourvu qu'elle ne s'ouvre pas » montre son désir et sa peur : on est dans sa tête. Une porte, à elle seule, ne dit rien de ce qu'il ressent.",
