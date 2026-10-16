@@ -1,0 +1,1025 @@
+// litterature-s02-2
+// Généré par atelier/outils/compiler-cours.js depuis atelier/contenu/litterature-s02-2.js. Ne pas modifier à la main.
+JEU.enregistrer("cours", {
+ "id": "litterature-s02-2",
+ "fiches": [
+  {
+   "id": "litterature-s02-2-f1",
+   "notion": "La description objective",
+   "titre": "Décrire seulement ce qu'on voit",
+   "texte": "Une description objective s'en tient à ce qu'on peut voir ou constater directement : une taille, une couleur, un vêtement. Le narrateur n'y glisse ni son avis ni ses émotions, il n'interprète rien. Exemple : « La table est en bois et porte trois assiettes. »",
+   "pointsCles": [
+    "Objective : seulement ce qui est visible, directement observable",
+    "Aucune interprétation, aucun avis du narrateur",
+    "Exemple : une tenue décrite pièce par pièce, sans jugement"
+   ],
+   "dates": [],
+   "lieux": [],
+   "personnages": [],
+   "vocabulaire": [
+    {
+     "mot": "description objective",
+     "def": "une description qui s'en tient à ce qu'on voit, sans avis ni émotion du narrateur"
+    }
+   ],
+   "schema": null,
+   "prerequis": [],
+   "source": {
+    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
+    "page": 2
+   }
+  },
+  {
+   "id": "litterature-s02-2-f2",
+   "notion": "La description subjective",
+   "titre": "Décrire avec ses sentiments",
+   "texte": "Dans une description subjective, le narrateur ajoute à ce qu'il observe ce qu'il ressent et ce qu'il pense. Un narrateur amoureux, par exemple, décrit la personne aimée avec admiration. Des mots comme « je n'aime pas » trahissent un avis personnel. Exemple : « Cette rue triste me donne envie de partir. »",
+   "pointsCles": [
+    "Subjective : ce qu'on voit, plus ce que le narrateur ressent et pense",
+    "Indices : « j'aime », « je n'aime pas », des mots qui jugent",
+    "Une description peut juger un comportement : c'est un avis personnel"
+   ],
+   "dates": [],
+   "lieux": [],
+   "personnages": [],
+   "vocabulaire": [
+    {
+     "mot": "description subjective",
+     "def": "une description où le narrateur mêle à ce qu'il voit ses sentiments et ses idées"
+    }
+   ],
+   "schema": null,
+   "prerequis": [
+    "litterature-s02-2-f1"
+   ],
+   "source": {
+    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
+    "page": 2
+   }
+  },
+  {
+   "id": "litterature-s02-2-f3",
+   "notion": "Description précise ou rapide",
+   "titre": "Beaucoup de détails, ou quelques mots",
+   "texte": "Une description peut être précise et fouillée : elle accumule les détails et peut même contenir une image, comme une métaphore. Elle peut aussi être rapide et simple : quelques mots suffisent, sans chercher la précision. Exemple de description rapide : « Le village est petit. »",
+   "pointsCles": [
+    "Précise, fouillée : beaucoup de détails, parfois une image",
+    "Rapide, simple : quelques mots, peu de précision",
+    "Une description fouillée peut contenir une métaphore"
+   ],
+   "dates": [],
+   "lieux": [],
+   "personnages": [],
+   "vocabulaire": [
+    {
+     "mot": "description fouillée",
+     "def": "une description très précise, pleine de détails"
+    }
+   ],
+   "schema": null,
+   "prerequis": [],
+   "source": {
+    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
+    "page": 2
+   }
+  },
+  {
+   "id": "litterature-s02-2-f4",
+   "notion": "La métaphore dans une description",
+   "titre": "Parler d'une chose avec l'image d'une autre",
+   "texte": "La métaphore évoque une chose à l'aide de l'image d'une autre. Un narrateur peut parler de celle qu'il aime avec l'image de la musique, ou donner à un personnage peu aimable un air d'insecte. Exemple de tous les jours : « Mon frère est un vrai moulin à paroles. »",
+   "pointsCles": [
+    "Métaphore : une image, on évoque une chose à l'aide de l'image d'une autre",
+    "Image de la musique pour dire l'amour ; image de l'insecte pour un personnage déplaisant",
+    "C'est une figure de style"
+   ],
+   "dates": [],
+   "lieux": [],
+   "personnages": [],
+   "vocabulaire": [
+    {
+     "mot": "métaphore",
+     "def": "une image : on parle d'une chose à l'aide d'une autre, par exemple de l'amour avec l'image de la musique"
+    }
+   ],
+   "schema": null,
+   "prerequis": [
+    "litterature-s02-2-f3"
+   ],
+   "source": {
+    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
+    "page": 2
+   }
+  },
+  {
+   "id": "litterature-s02-2-f5",
+   "notion": "Ce qu'une description laisse deviner",
+   "titre": "Lire entre les lignes d'un portrait",
+   "texte": "Une description ne montre pas seulement l'apparence : elle peut sous-entendre un caractère. Des yeux qui fouillent sans cesse le regard des autres font penser à quelqu'un de méfiant. Une description peut aussi dénoncer un comportement, comme celui d'une personne curieuse qui observe en silence pour ne pas être repérée.",
+   "pointsCles": [
+    "Un détail physique, comme un regard, peut révéler un caractère",
+    "Une description peut dénoncer un comportement, par exemple l'indiscrétion",
+    "Un narrateur qui dit ouvertement son agacement fait une description subjective"
+   ],
+   "dates": [],
+   "lieux": [],
+   "personnages": [],
+   "vocabulaire": [
+    {
+     "mot": "sous-entendre",
+     "def": "faire comprendre une chose sans la dire directement"
+    }
+   ],
+   "schema": null,
+   "prerequis": [
+    "litterature-s02-2-f2"
+   ],
+   "source": {
+    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
+    "page": 2
+   }
+  }
+ ],
+ "schemas": [],
+ "questions": [
+  {
+   "id": "litterature-s02-2-q1",
+   "fiche": "litterature-s02-2-f1",
+   "type": "qcm",
+   "niveau": 1,
+   "enonce": "Qu'est-ce qu'une description objective ?",
+   "choix": [
+    "Elle s'en tient à ce qu'on voit, sans avis",
+    "Elle mêle à ce qu'on voit l'avis du narrateur",
+    "Elle accumule tous les détails possibles",
+    "Elle grossit ce qu'elle montre pour frapper"
+   ],
+   "explication": "Objective veut dire : seulement ce qu'on peut observer. Le narrateur n'interprète pas.",
+   "source": {
+    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "lFAHTQRUaAgDBg0bZxgWb5UAJEEHDc2FWUU1ymkGBcRA30wCQpQHPNgCFcTZ",
+   "poids": 1
+  },
+  {
+   "id": "litterature-s02-2-q2",
+   "fiche": "litterature-s02-2-f1",
+   "type": "vrai_faux",
+   "niveau": 1,
+   "enonce": "« Le sac est bleu et il a deux poches. » C'est une description objective.",
+   "corrections": [],
+   "explication": "La phrase dit seulement ce qu'on voit, une couleur et des poches. Le narrateur ne donne aucun avis.",
+   "source": {
+    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "litterature-s02-2-q3",
+   "fiche": "litterature-s02-2-f1",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Pourquoi la phrase « Le garçon porte un pull rouge et un bonnet noir » est-elle une description objective ?",
+   "choix": [
+    "Elle ne dit que ce qui se voit",
+    "Elle montre l'admiration du narrateur",
+    "Elle contient une métaphore",
+    "Elle grossit la réalité pour frapper"
+   ],
+   "explication": "Un pull rouge, un bonnet noir : tout se voit. Rien ne dit ce que pense le narrateur.",
+   "source": {
+    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "=cUQEFQGGNgGS5yBEUEESk0CaMAS3QUAVgEAPNgCFcTZ",
+   "poids": 1
+  },
+  {
+   "id": "litterature-s02-2-q4",
+   "fiche": "litterature-s02-2-f1",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Dans une description objective, le narrateur dit ce qu'il ressent face à ce qu'il voit.",
+   "corrections": [
+    "Faux : il s'en tient à ce qu'on peut voir, sans y mêler ses sentiments.",
+    "Faux : il dit ce qu'il ressent, mais seulement à la fin de la description.",
+    "Faux : il dit ce qu'il pense, mais jamais ce qu'il ressent."
+   ],
+   "explication": "Les sentiments du narrateur, c'est la marque d'une description subjective. L'objective reste sur ce qui se voit.",
+   "source": {
+    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "==gEQZEMZtAUAdwGIMgGSRzFGU0BUUAxs+BS60gFbxUHPpEFA0RMSFAEQEQSAAQVdITDAYVDOzqRScwFuYQVLAhVa40AbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "litterature-s02-2-q24",
+   "fiche": "litterature-s02-2-f1",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Laquelle de ces phrases est une description objective ?",
+   "choix": [
+    "Le cartable est noir et se ferme par une boucle.",
+    "Le cartable noir se ferme par une jolie boucle.",
+    "Le cartable est noir et bien trop sombre à mon goût.",
+    "Ce vieux cartable noir me rappelle mon grand frère."
+   ],
+   "explication": "Une couleur et une boucle, cela se voit, sans aucun avis. « Jolie », « à mon goût » et « me rappelle » ajoutent ce que pense ou ressent le narrateur.",
+   "indice": "Cherche la phrase où personne ne donne son avis, même avec un seul mot.",
+   "source": {
+    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "=0ESDUQEy0xFFBxHc4UHTgxYIhwRIhwTDURSGIiUHwgGfkkGccBSmE0BUlFHOUgRM4TZ",
+   "poids": 1
+  },
+  {
+   "id": "litterature-s02-2-q27",
+   "fiche": "litterature-s02-2-f1",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "« La table est en bois et porte trois assiettes, toutes très jolies. » C'est une description objective.",
+   "corrections": [
+    "Faux : « très jolies » donne un avis, la description devient subjective.",
+    "Faux : elle est rapide, donc elle ne peut pas être objective.",
+    "Faux : elle contient une métaphore, donc elle est subjective."
+   ],
+   "explication": "Le bois et les trois assiettes se voient, mais « très jolies » est un avis. Un seul mot qui juge suffit à rendre la description subjective.",
+   "source": {
+    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "UwUQX4hKZZAUHxgGVYUHcIyGDAQERdQAGYAGq8lBGhkCPdgCJ5FNbMABV9BHOpAHGwSSF547OxxAPUQHtIlBNb7Ad4ExwiUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "litterature-s02-2-q28",
+   "fiche": "litterature-s02-2-f1",
+   "type": "qcm_multiple",
+   "niveau": 3,
+   "enonce": "Lesquelles de ces phrases sont des descriptions objectives ?",
+   "choix": [
+    "Le vélo a deux roues et un panier.",
+    "Ce vélo rouillé me fait honte.",
+    "La salle compte vingt chaises.",
+    "Ce gâteau a l'air délicieux.",
+    "Le gâteau est rond et couvert de crème."
+   ],
+   "explication": "Deux roues, vingt chaises, un gâteau rond : tout se voit ou se compte. « Me fait honte » et « délicieux » donnent l'avis du narrateur.",
+   "source": {
+    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "=IDRIxwHvH7BGUFFN40GA0QNYpgVNohCGJwBdUjUBYBERxxDKYgyAqURQFGTDRESacBNbQRDWEVHJEwGeMGSRUEQBwgRDUgHmEQVEkzUFxUQA0gKDRQRNAgGGJBDSRzFAowBRFxGKYBSi0gCZRYrZY0AlAFH",
+   "poids": 1
+  },
+  {
+   "id": "litterature-s02-2-q29",
+   "fiche": "litterature-s02-2-f1",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Comment rendre objective la phrase « Ce manteau ridicule est trop long » ?",
+   "choix": [
+    "En retirant les mots qui jugent le manteau",
+    "En ajoutant d'autres détails sur le manteau",
+    "En ajoutant une image pour mieux le décrire",
+    "En écrivant la phrase avec « je »"
+   ],
+   "explication": "« Ridicule » et « trop » donnent un avis : il faut les retirer. Il reste alors ce qu'on voit, un manteau long.",
+   "source": {
+    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "=AFAEARBH8gAS1wLNExWIlgGMYEAHYjUGEhGckUHK4BS3MEBHRkGKQhRHcTZ",
+   "poids": 1
+  },
+  {
+   "id": "litterature-s02-2-q30",
+   "fiche": "litterature-s02-2-f1",
+   "type": "vrai_faux",
+   "niveau": 1,
+   "enonce": "Une description objective n'interprète rien : elle s'en tient à ce qu'on peut observer.",
+   "corrections": [],
+   "explication": "Le narrateur décrit seulement ce qui se voit ou se constate. Il ne donne ni avis ni émotion.",
+   "source": {
+    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "litterature-s02-2-q5",
+   "fiche": "litterature-s02-2-f2",
+   "type": "qcm",
+   "niveau": 1,
+   "enonce": "Dans une description subjective, qu'est-ce qui se mêle à ce que le narrateur observe ?",
+   "choix": [
+    "Ses sentiments et ses idées",
+    "Des détails de plus en plus précis",
+    "Des mesures précises",
+    "Des exagérations pour faire rire"
+   ],
+   "explication": "Le narrateur décrit ce qu'il voit avec ce qu'il ressent et pense. C'est ce qui rend la description subjective.",
+   "source": {
+    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "P0hCPXaDbcWAQYRVFwgTcYgBmAEDBN0CcYUFMESZ",
+   "poids": 1
+  },
+  {
+   "id": "litterature-s02-2-q6",
+   "fiche": "litterature-s02-2-f2",
+   "type": "vrai_faux",
+   "niveau": 1,
+   "enonce": "« Je n'aime pas cette maison sombre. » C'est une description subjective.",
+   "corrections": [],
+   "explication": "« Je n'aime pas » montre un avis personnel du narrateur. La description est donc subjective.",
+   "source": {
+    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "litterature-s02-2-q7",
+   "fiche": "litterature-s02-2-f2",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Comment repérer qu'une description est subjective ?",
+   "choix": [
+    "Des mots y jugent ou disent ce qu'on ressent",
+    "Tout ce qu'elle dit peut se voir ou se mesurer",
+    "Elle accumule beaucoup de détails précis",
+    "Elle cite des éléments à la suite, en liste"
+   ],
+   "explication": "Un avis, une émotion, un mot qui juge : ce sont les indices d'une description subjective. Ce qui se voit ou se mesure reste objectif.",
+   "source": {
+    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "==AUzwBEWYAFb4UAd8kNcVEUO50GIMgGbMiUAoQVFcwCIcgAjRVRGlVACYUFMYTZ",
+   "poids": 1
+  },
+  {
+   "id": "litterature-s02-2-q8",
+   "fiche": "litterature-s02-2-f2",
+   "type": "qcm_multiple",
+   "niveau": 3,
+   "enonce": "Lesquelles de ces descriptions sont subjectives ?",
+   "choix": [
+    "La porte verte est franchement laide.",
+    "La porte est verte et a deux serrures.",
+    "Ce chat adorable dort sur le canapé.",
+    "Le chat a les yeux jaunes.",
+    "Je trouve ce jardin magnifique."
+   ],
+   "explication": "Laide, adorable, magnifique : ces mots disent ce que pense le narrateur, même sans « je ». Les serrures et les yeux jaunes se voient, sans avis.",
+   "indice": "Cherche les mots qui donnent un avis.",
+   "source": {
+    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "==wOEd0FyMAHDwxHO8gASZgKJdBVH5kCFYEDEITHHERVUMCTDBlRq7eFUN0DMY0AFIVNHYQRBMgBK80FEECTXoVSP8kEHEQEndhNHl1UHtwCbkwLNExWINgCOUwBTUDFVFhBUk0CbAQD10AAB9VAfY0BlAFH",
+   "poids": 1
+  },
+  {
+   "id": "litterature-s02-2-q9",
+   "fiche": "litterature-s02-2-f2",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Un narrateur amoureux décrit celle qu'il aime : son amour se mêle à ce qu'il voit, et pourtant la description reste objective.",
+   "corrections": [
+    "Faux : ses sentiments se mêlent à ce qu'il voit, la description est subjective.",
+    "Faux : c'est une description rapide, ni objective ni subjective.",
+    "Faux : un narrateur amoureux ne décrit jamais ce qu'il voit."
+   ],
+   "explication": "Son amour colore tout ce qu'il observe. C'est le signe d'une description subjective.",
+   "source": {
+    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "6A1WAMAGd0gCYogNeVUQetwTIkAAGczGHYgBU0gTO4BSvlFDatlTD8QQcMwZXYRRVLbSaEwFEku7IUBSd8UFScwFqsRALAhAJ1hCBgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "litterature-s02-2-q25",
+   "fiche": "litterature-s02-2-f2",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Quelle différence y a-t-il entre « Le mur est gris » et « Ce mur gris est déprimant » ?",
+   "choix": [
+    "La seconde ajoute un avis du narrateur",
+    "La seconde est plus objective que la première",
+    "La première contient une métaphore",
+    "La première grossit la couleur du mur"
+   ],
+   "explication": "« Déprimant » dit l'impression du narrateur : la seconde phrase est subjective. La première s'en tient à la couleur, elle est objective.",
+   "source": {
+    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "==wUbshCGkQMfRwWNsxCGVBAEYiUbARVU0xGAgRCjhUAbJUDKUhRI4TZ",
+   "poids": 1
+  },
+  {
+   "id": "litterature-s02-2-q26",
+   "fiche": "litterature-s02-2-f2",
+   "type": "trou",
+   "niveau": 1,
+   "enonce": "Complète la phrase.",
+   "texte": "Une description ___ s'en tient à ce qu'on voit ; une description ___ y mêle les sentiments du narrateur.",
+   "banque": [
+    "objective",
+    "subjective",
+    "rapide",
+    "précise"
+   ],
+   "explication": "Objective : seulement ce qu'on observe. Subjective : ce qu'on observe, avec les sentiments et les idées du narrateur.",
+   "source": {
+    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "wNTTDABAGQyFfcAACsUND9iSmsFDB50CFQQCLlCH",
+   "poids": 1
+  },
+  {
+   "id": "litterature-s02-2-q31",
+   "fiche": "litterature-s02-2-f2",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "« Cette rue est sinistre. » Même sans le mot « je », cette description est subjective.",
+   "corrections": [],
+   "explication": "« Sinistre » juge la rue : c'est l'avis du narrateur. Un mot qui juge suffit, même sans « je ».",
+   "source": {
+    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "litterature-s02-2-q32",
+   "fiche": "litterature-s02-2-f2",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Dans « Ce chien affreux me terrifie », quels mots rendent la description subjective ?",
+   "choix": [
+    "« affreux » et « me terrifie »",
+    "« Ce chien » seulement",
+    "« chien » et « affreux »",
+    "Aucun : la phrase est entièrement objective"
+   ],
+   "explication": "« Affreux » juge le chien et « me terrifie » dit ce que ressent le narrateur. « Chien », lui, nomme seulement ce qu'on voit.",
+   "source": {
+    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "QNdgNAAXLdQHUMQHSJyHV58tR1xCPlsqjVFEQ9FCJcgRCDbZ",
+   "poids": 1
+  },
+  {
+   "id": "litterature-s02-2-q10",
+   "fiche": "litterature-s02-2-f3",
+   "type": "qcm",
+   "niveau": 1,
+   "enonce": "Comment appelle-t-on une description qui accumule beaucoup de détails ?",
+   "choix": [
+    "Une description fouillée",
+    "Une description rapide",
+    "Une description subjective",
+    "Une description objective"
+   ],
+   "explication": "Beaucoup de détails, c'est une description précise, qu'on dit aussi fouillée. Objective ou subjective, cela dépend de l'avis du narrateur, pas du nombre de détails.",
+   "source": {
+    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "ENAwxuiHcAhGXkEAAsBHzQ0FW51CLY0AHcSZ",
+   "poids": 1
+  },
+  {
+   "id": "litterature-s02-2-q11",
+   "fiche": "litterature-s02-2-f3",
+   "type": "vrai_faux",
+   "niveau": 1,
+   "enonce": "« La ville est grande. » C'est une description rapide et simple.",
+   "corrections": [],
+   "explication": "Quelques mots, aucun détail : la description est rapide. Elle ne cherche pas la précision.",
+   "source": {
+    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "litterature-s02-2-q12",
+   "fiche": "litterature-s02-2-f3",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Comment reconnaît-on une description rapide ?",
+   "choix": [
+    "Quelques mots lui suffisent, sans détails",
+    "Elle accumule les détails, parfois une image",
+    "Elle parle forcément de vitesse",
+    "Elle dit seulement ce que pense le narrateur"
+   ],
+   "explication": "Une description rapide reste simple et peu précise. Quelques mots lui suffisent.",
+   "source": {
+    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "=AlBJwBEdcMrWgEMDRgRNI0GIMgGbECFAYRVYwhAPFAHsAURGh0GeowAcMSZ",
+   "poids": 1
+  },
+  {
+   "id": "litterature-s02-2-q13",
+   "fiche": "litterature-s02-2-f3",
+   "type": "trou",
+   "niveau": 1,
+   "enonce": "Complète la phrase.",
+   "texte": "Une description ___ accumule les détails ; une description ___ se contente de quelques mots.",
+   "banque": [
+    "précise",
+    "rapide",
+    "subjective",
+    "objective"
+   ],
+   "explication": "Précise ou fouillée quand il y a beaucoup de détails. Rapide ou simple quand il y en a peu.",
+   "source": {
+    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "==wLaAFEJUAHA0RTepkJJxQRMxRT9oENQJy22mQGYwRAJAFRhhkFc50xsShFLlCH",
+   "poids": 1
+  },
+  {
+   "id": "litterature-s02-2-q14",
+   "fiche": "litterature-s02-2-f3",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Une description précise et fouillée ne peut jamais contenir de métaphore.",
+   "corrections": [
+    "Faux : une description fouillée peut même contenir une métaphore.",
+    "Faux : seule une description rapide peut contenir une métaphore.",
+    "Faux : une description fouillée contient toujours une métaphore."
+   ],
+   "explication": "Une description pleine de détails peut aussi contenir une image. Les détails n'empêchent pas la métaphore.",
+   "source": {
+    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "=gxFDsQHJ4QGTMz22iQVUcwGPBQAtgUEbJUDPNwCDHrKSFAEQEQSLYcsE8CRQo1SOFQCP0hAuAgFWARFJtQAHgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "litterature-s02-2-q33",
+   "fiche": "litterature-s02-2-f3",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "« La maison est vieille. » C'est une description précise et fouillée.",
+   "corrections": [
+    "Faux : quelques mots, sans détails, c'est une description rapide et simple.",
+    "Faux : c'est une métaphore de la maison.",
+    "Faux : c'est une énumération de détails."
+   ],
+   "explication": "Un seul adjectif, aucun détail : la description est rapide. Une description fouillée accumulerait les détails.",
+   "source": {
+    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "==ADLBkCeghLEZRFZtwTDIAACYCAVtgGY0hHGAwCwgUAVgEAaYkEacBYRUVSG0BAPsx2reSDWsFTd8kSV0RHqIlBAAAAFsgGDgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "litterature-s02-2-q34",
+   "fiche": "litterature-s02-2-f3",
+   "type": "qcm_multiple",
+   "niveau": 2,
+   "enonce": "Que peut-on trouver dans une description précise et fouillée ?",
+   "choix": [
+    "Beaucoup de détails",
+    "Une image, comme une métaphore",
+    "Quelques mots, sans précision",
+    "Une seule information rapide"
+   ],
+   "explication": "Une description fouillée accumule les détails et peut contenir une métaphore. Quelques mots sans précision, c'est une description rapide.",
+   "source": {
+    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "==wLKZyXK0VXPsxzlSgUiwBAFBBHEEADSRkJKRAWE5kCIMzSeVWAZwAFFAcrLIVDn0QFAJUDacwArAFH",
+   "poids": 1
+  },
+  {
+   "id": "litterature-s02-2-q35",
+   "fiche": "litterature-s02-2-f3",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "« L'immeuble est haut. » Comment rendre cette description plus fouillée ?",
+   "choix": [
+    "En ajoutant des détails précis",
+    "En ajoutant « que je trouve laid »",
+    "En remplaçant « haut » par « très haut »",
+    "En retirant « haut »"
+   ],
+   "explication": "Une description fouillée accumule les détails : étages, couleur, fenêtres. Ajouter un avis la rend subjective, pas plus précise.",
+   "source": {
+    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "==QYexgVE2aHWYkGe4yEBwstVkUHKYBS3MEBBhVAFcgRHcTZ",
+   "poids": 1
+  },
+  {
+   "id": "litterature-s02-2-q36",
+   "fiche": "litterature-s02-2-f3",
+   "type": "ordre",
+   "niveau": 1,
+   "enonce": "Range ces descriptions de la plus rapide à la plus fouillée.",
+   "elements": [
+    "La rue est longue, étroite et pavée, bordée de platanes.",
+    "La rue est longue.",
+    "La rue est longue, étroite et pavée, bordée de platanes et de boutiques aux vitrines dorées.",
+    "La rue est longue et étroite."
+   ],
+   "explication": "Chaque phrase ajoute des détails à la précédente. La dernière, la plus fouillée, en accumule le plus.",
+   "source": {
+    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "o9hQfpUVFNEH",
+   "poids": 1
+  },
+  {
+   "id": "litterature-s02-2-q15",
+   "fiche": "litterature-s02-2-f4",
+   "type": "qcm",
+   "niveau": 1,
+   "enonce": "Qu'est-ce qu'une métaphore ?",
+   "choix": [
+    "Parler d'une chose avec l'image d'une autre",
+    "Exagérer une chose pour la rendre frappante",
+    "Décrire une chose sans donner son avis",
+    "Citer plusieurs choses à la suite"
+   ],
+   "explication": "La métaphore évoque une chose par l'image d'une autre. Par exemple, l'amour avec l'image de la musique.",
+   "source": {
+    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "ldxBRAAEJtQAH80JNAgUMNgBBpQSRICBUUEECYgBMIVDtglQR1AHKoAFIISZ",
+   "poids": 1
+  },
+  {
+   "id": "litterature-s02-2-q16",
+   "fiche": "litterature-s02-2-f4",
+   "type": "vrai_faux",
+   "niveau": 1,
+   "enonce": "« Mon frère est un vrai moulin à paroles. » Cette phrase contient une métaphore.",
+   "corrections": [],
+   "explication": "On parle du frère avec l'image d'un moulin. On comprend qu'il parle sans arrêt.",
+   "source": {
+    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "litterature-s02-2-q17",
+   "fiche": "litterature-s02-2-f4",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Un narrateur évoque celle qu'il aime avec l'image de la musique. Quelle figure de style emploie-t-il ?",
+   "choix": [
+    "Une métaphore",
+    "Une hyperbole",
+    "Une énumération",
+    "Une description objective"
+   ],
+   "explication": "Il parle de son amour avec l'image de la musique. Parler d'une chose avec l'image d'une autre, c'est une métaphore.",
+   "source": {
+    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "==ATKAwBr0FBBRYrCY0AHcSZ",
+   "poids": 1
+  },
+  {
+   "id": "litterature-s02-2-q18",
+   "fiche": "litterature-s02-2-f4",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Pourquoi dit-on qu'un portrait qui donne à un personnage un air d'insecte contient une métaphore ?",
+   "choix": [
+    "On lui prête l'image d'un insecte",
+    "Il est réellement changé en insecte",
+    "Il cite des insectes",
+    "Le narrateur décrit un insecte sans avis"
+   ],
+   "explication": "Le personnage n'est pas un insecte : on lui en donne l'image. C'est le principe de la métaphore.",
+   "source": {
+    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "Q1wNOBgRDdwTIMhTWc2FSQAGY4kAPdBHp7+FF1wBaogRH0TZ",
+   "poids": 1
+  },
+  {
+   "id": "litterature-s02-2-q19",
+   "fiche": "litterature-s02-2-f4",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Dans « Mon frère est un vrai moulin à paroles », l'image du moulin veut dire que le frère parle très peu.",
+   "corrections": [
+    "Faux : l'image veut dire qu'il parle sans arrêt.",
+    "Faux : l'image veut dire qu'il parle très fort.",
+    "Faux : ce n'est pas une image, c'est une description objective."
+   ],
+   "explication": "Un moulin tourne sans s'arrêter : le frère parle sans arrêt. Une métaphore ne se prend pas mot à mot.",
+   "source": {
+    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "==QFhNQEf6OHdcgRawhJBUFAZMACe8kHBQGWUUBScYgAG1xBiQQVAIBEEcASegUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "litterature-s02-2-q37",
+   "fiche": "litterature-s02-2-f4",
+   "type": "association",
+   "niveau": 3,
+   "enonce": "Relie chaque phrase à ce qu'elle est.",
+   "gauche": [
+    "Le parc est grand.",
+    "Le parc a des allées de graviers, des bancs verts, une fontaine et trois grands chênes.",
+    "Ce parc est un vrai labyrinthe.",
+    "Je trouve ce parc magnifique."
+   ],
+   "droite": [
+    "une métaphore",
+    "une description subjective",
+    "une description rapide",
+    "une description fouillée"
+   ],
+   "explication": "Le parc devient un labyrinthe : c'est une image, une métaphore. « Magnifique » donne un avis ; la première phrase est rapide, la deuxième accumule les détails.",
+   "source": {
+    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "==ANvYnXG5TWsklQdlCRe4RSEYnQyQlSZlCH",
+   "poids": 1
+  },
+  {
+   "id": "litterature-s02-2-q38",
+   "fiche": "litterature-s02-2-f4",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Dans « Ce coureur est une flèche », on parle du coureur avec l'image d'une flèche.",
+   "corrections": [],
+   "explication": "On évoque la vitesse du coureur à l'aide de l'image d'une flèche. C'est une métaphore.",
+   "source": {
+    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "litterature-s02-2-q39",
+   "fiche": "litterature-s02-2-f4",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Dans « Cette classe est une vraie ruche », que veut faire comprendre la métaphore ?",
+   "choix": [
+    "Elle est bruyante et très active",
+    "Elle est remplie de vraies abeilles",
+    "Elle est calme et presque vide",
+    "Elle est décorée de jaune et de noir"
+   ],
+   "explication": "Une ruche bourdonne et s'agite sans cesse : la classe est animée. Comme toute métaphore, l'image ne se prend pas mot à mot.",
+   "source": {
+    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "=okJbxQQO9wTV4sqAMjUBAQVU0BAOsQHx8URB51CPNgCFcTZ",
+   "poids": 1
+  },
+  {
+   "id": "litterature-s02-2-q40",
+   "fiche": "litterature-s02-2-f4",
+   "type": "qcm_multiple",
+   "niveau": 3,
+   "enonce": "Lesquelles de ces phrases contiennent une métaphore ?",
+   "choix": [
+    "Ce garçon est un ours, il ne parle à personne.",
+    "Mon oncle est une encyclopédie vivante.",
+    "Ce garçon a deux sœurs.",
+    "J'ai mille choses à faire.",
+    "Mon sac contient un stylo, une gomme et un cahier."
+   ],
+   "explication": "L'ours et l'encyclopédie sont des images : on parle d'une personne avec l'image d'autre chose. « Mille choses » est une hyperbole, et le sac contient une énumération.",
+   "source": {
+    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "=MTTINQHcYCBcMRVUAgCGHLGsEkBM5EAKY0AHcwZGYAAVRRBNEQHI1iQocRAMF0AIcQH0AAEVUV0q6kCeohIdVEUD50APYURBUzBaU0GEkkGccBStIkw2/1DIY0AqAFH",
+   "poids": 1
+  },
+  {
+   "id": "litterature-s02-2-q20",
+   "fiche": "litterature-s02-2-f5",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Un narrateur décrit un homme dont les yeux fouillent sans cesse le regard des autres. Que peut-on deviner de son caractère ?",
+   "choix": [
+    "Il est sans doute méfiant",
+    "Il est sans doute timide",
+    "Il est sans doute distrait et rêveur",
+    "Il est sans doute joyeux et confiant"
+   ],
+   "explication": "Ce regard qui scrute les autres fait penser à la méfiance. Le narrateur le suggère sans le dire.",
+   "source": {
+    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "==QTSgACbEy22iQVU0xGAYBSwMEBG1gGcMgRFsTZ",
+   "poids": 1
+  },
+  {
+   "id": "litterature-s02-2-q21",
+   "fiche": "litterature-s02-2-f5",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Une description ne dit jamais rien du caractère d'un personnage.",
+   "corrections": [
+    "Faux : elle peut laisser deviner son caractère, par exemple la méfiance.",
+    "Faux : elle dit toujours le caractère en toutes lettres.",
+    "Faux : elle ne parle que du caractère, jamais de l'apparence."
+   ],
+   "explication": "Un regard, une attitude en disent long sur un personnage. Une description peut donc sous-entendre un caractère.",
+   "source": {
+    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "=MRTc1AIDRAXLdMrLYECec2FZUBGUExCPBQCz0QSQ9lxsKRBIAgJRU1CaIQScoAHBUDSBUxXLwRFPggHnZAAAUQUMIwAXgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "litterature-s02-2-q22",
+   "fiche": "litterature-s02-2-f5",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "« Je déteste ceux qui lisent par-dessus mon épaule. » Quel comportement le narrateur dénonce-t-il ?",
+   "choix": [
+    "La curiosité indiscrète",
+    "La timidité devant les autres",
+    "La paresse en classe",
+    "La vantardise"
+   ],
+   "explication": "Lire par-dessus l'épaule de quelqu'un, c'est vouloir voir ce qui ne nous regarde pas. Le narrateur dénonce cette indiscrétion.",
+   "source": {
+    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "ENQHaTIAWYBHVcwBPt9q3QkFaREHaUgRI4TZ",
+   "poids": 1
+  },
+  {
+   "id": "litterature-s02-2-q23",
+   "fiche": "litterature-s02-2-f5",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Comment sait-on que « Je déteste ceux qui lisent par-dessus mon épaule » est une description subjective ?",
+   "choix": [
+    "« Je déteste » montre un avis personnel",
+    "Elle ne dit que des gestes qu'on peut voir",
+    "Elle accumule beaucoup de détails précis",
+    "Elle contient une image"
+   ],
+   "explication": "Le narrateur dit ouvertement qu'il est agacé. Son avis personnel rend la description subjective.",
+   "source": {
+    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "=AVGAsxHG0RHXgxYexwQM5UATYEDAMDHagQVKvqTKYwGmkFz2nkTKwiRCDbZ",
+   "poids": 1
+  },
+  {
+   "id": "litterature-s02-2-q41",
+   "fiche": "litterature-s02-2-f5",
+   "type": "vrai_faux",
+   "niveau": 1,
+   "enonce": "Un détail physique, comme un regard, peut révéler le caractère d'un personnage.",
+   "corrections": [],
+   "explication": "Un regard qui scrute les autres fait penser à la méfiance, par exemple. La description sous-entend le caractère sans le dire.",
+   "source": {
+    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "litterature-s02-2-q42",
+   "fiche": "litterature-s02-2-f5",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Un narrateur qui écrit « je ne supporte pas ceux qui… » fait une description objective du comportement qu'il dénonce.",
+   "corrections": [
+    "Faux : il donne ouvertement son avis, la description est subjective.",
+    "Faux : il ne dénonce rien, il décrit seulement.",
+    "Faux : c'est une description rapide, donc ni objective ni subjective."
+   ],
+   "explication": "« Je ne supporte pas » montre l'agacement du narrateur. Son avis personnel rend la description subjective.",
+   "source": {
+    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "=gxFDsQGPIhCX0CEAYRVFoxCPxxBqkVFc9VDcMgAJNxKSllFccACOFQHbMWWLAFQLsBFD8xBoIFELshHN40AbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "litterature-s02-2-q43",
+   "fiche": "litterature-s02-2-f5",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "« Il regarde sans cesse derrière lui et sursaute au moindre bruit. » Que laisse deviner ce portrait ?",
+   "choix": [
+    "Il est inquiet, sur ses gardes",
+    "Il est calme et parfaitement sûr de lui",
+    "Il est curieux et indiscret",
+    "Il est joyeux et bavard"
+   ],
+   "explication": "Ces gestes laissent deviner la peur et la méfiance. La description sous-entend un caractère sans le nommer.",
+   "source": {
+    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "=ckRIpQHHEQSBISAVdBACkkQbcRA2w1Cc1gGcMgRFsTZ",
+   "poids": 1
+  },
+  {
+   "id": "litterature-s02-2-q44",
+   "fiche": "litterature-s02-2-f5",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Un narrateur décrit quelqu'un qui observe les autres en silence pour ne pas être vu, puis il dit que cela l'agace. Que fait sa description ?",
+   "choix": [
+    "Elle dénonce un comportement, de façon subjective",
+    "Elle dénonce un comportement, de façon objective",
+    "Elle décrit seulement l'apparence de quelqu'un",
+    "Elle présente un comportement sans le juger du tout"
+   ],
+   "explication": "En disant son agacement, le narrateur juge ce comportement : il le dénonce. Cet avis personnel rend la description subjective.",
+   "source": {
+    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "=cBSYYgEFwAGlcgBFthHO3qDUgkJJVUGZBgCLMQHAgiAYogFRdwGPdxCtI0Cc6uCPNgCFcTZ",
+   "poids": 1
+  },
+  {
+   "id": "litterature-s02-2-q45",
+   "fiche": "litterature-s02-2-f5",
+   "type": "association",
+   "niveau": 3,
+   "enonce": "Relie chaque détail au caractère qu'il laisse deviner.",
+   "gauche": [
+    "Il fouille du regard les yeux des autres.",
+    "Il écoute aux portes sans faire de bruit.",
+    "Il partage toujours son goûter.",
+    "Il rougit dès qu'on lui parle."
+   ],
+   "droite": [
+    "la générosité",
+    "la timidité",
+    "la méfiance",
+    "la curiosité indiscrète"
+   ],
+   "explication": "Fouiller le regard des autres fait penser à la méfiance, écouter aux portes à l'indiscrétion. Partager montre la générosité, rougir la timidité.",
+   "source": {
+    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "==ANvYnXG5TWsklQdlCRe4RSEYnQyQlSZlCH",
+   "poids": 1
+  }
+ ],
+ "bonus": [],
+ "nonCouvert": [
+  "La leçon littéraire elle-même (livret 1, pages 19 à 22, et les pages 18 et 20 citées par l'emploi du temps) n'est pas déposée : seules les réponses du corrigé le sont, et les notions en sont tirées.",
+  "Une définition complète de la métaphore : le corrigé en donne seulement deux exemples (l'image de la musique, l'air d'insecte).",
+  "Le résumé de la leçon et les outils de la langue à apprendre.",
+  "Les extraits lus (livret, pages 13 à 17) ne sont pas déposés. Les réponses de compréhension du corrigé qui portent sur eux (pages 1 et 2 : humeur d'un narrateur, accueil des voyageurs par Kubilaï dans le Livre des merveilles) relèvent de la lecture des textes (litterature-s02-1) et ne sont pas reprises ici.",
+  "Le dessin du capitaine Flint demandé en compréhension : production personnelle, hors jeu."
+ ]
+});

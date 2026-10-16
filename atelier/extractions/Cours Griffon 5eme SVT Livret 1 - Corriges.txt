@@ -1,0 +1,628 @@
+             THÈME A – Corrigé des exercices
+                 et des questions de TP
+Dans les corrigés : en noir = énoncé, en vert = conseils de méthodologie, en rouge = réponse attendue
+
+
+
+Chapitre 1
+
+Séance 1
+
+EXERCICE DE MÉMORISATION : représenter le système solaire
+
+  - Le Soleil est l’étoile autour de laquelle gravitent toutes les planètes du système solaire. Étape ①
+  - Mercure est une planète tellurique (avec un noyau métallo-rocheux), et est la plus petite planète et la
+  plus proche du Soleil. Étape ①
+  - Jupiter est une planète gazeuse (constituée uniquement de gaz), c’est la plus grosse, elle est située
+  immédiatement après la première ceinture d’astéroïdes, et possède de nombreux satellites. Étape ②
+  - La Terre est une planète tellurique qui possède une atmosphère et un satellite : la Lune. Elle est située
+  entre Vénus et Mars. Étape ⑧
+  - Vénus est de la même taille que la Terre, elle est elle aussi tellurique, et entourée d’une atmosphère très
+  importante et irrespirable. Il y fait plus de 400°C. Étape ⑨
+  - Saturne est une planète géante, entourée d’anneaux, c’est une planète gazeuse, voisine de Jupiter. Étape
+  ③
+  - La ceinture principale d’astéroïdes sépare les planètes telluriques des planètes gazeuses. Étape ②
+  - La ceinture de Kuiper sépare les planètes gazeuses du nuage d’Oort. Étape ④
+  - Neptune est la planète gazeuse la plus éloignée du Soleil. Étape ⑤
+  - Mars est la planète tellurique la plus éloignée du Soleil. Étape ⑥
+  - Uranus, gazeuse, est proche de Saturne et de Neptune. Étape ⑦
+  - Colorier les planètes telluriques d’une couleur (ici, bleue), et les planètes gazeuses d’une autre (ici, jaune).
+  Étape 10
+Séance 2
+EXERCICE DE MÉMORISATION : faire des fiches. Exemple de fiches :
+Séance 3
+TP3 :
+
+
+
+
+EXERCICE D’APPLICATION : pour répondre aux questions, il faut situer géographiquement les lieux sur la
+mappemonde.
+   - Le 15 janvier est une date qui correspond à l’hiver dans l’hémisphère Nord et à l’été dans
+       l’hémisphère Sud. Comme New York et Tokyo sont dans l’hémisphère Nord, Linda et Paul sont en
+       hiver. À l’inverse, comme Sao Paulo et Sidney sont dans l’hémisphère Sud, Manuel et Erika sont en
+       été.
+   - Le solstice d’été aura donc lieu le 21 décembre pour Erika et l’équinoxe de printemps aura lieu le 21
+       septembre pour Manuel.
+   - La Guyane française où se trouve Jasmine est un département d’outre-mer situé entre l’équateur et
+       le tropique du Capricorne, c’est-à-dire dans la zone climatique équatoriale. Elle n’a donc pas de saison
+       astronomique. Cependant, en raison d’une différence de pluviosité, on distingue deux saisons
+       météorologiques : une saison des pluies de décembre à juillet et une saison sèche de juillet à
+       décembre.
+   - La Terre Adélie est située sur le continent antarctique, donc au pôle Sud. Le 15 novembre, Pierre est
+       entre l’équinoxe de printemps (le 21 septembre dans l’hémisphère Sud) et le 21 décembre (le solstice
+       d’été dans l’hémisphère Sud). À 23 heures, il voit donc un ciel de jour !
+
+Séance 4
+EXERCICE 1 : Lecture de graphique
+   - Pour la courbe représentant la vapeur d’eau : Il y a 4,5 milliards d’années, il y avait 90% de la quantité
+       maximale possible de vapeur d’eau sur Terre. Ce pourcentage a chuté très rapidement aux alentours
+       de 10% il y a 4 milliards d’années, pour se maintenir à ce niveau jusqu’à aujourd’hui.
+   - Pour la courbe représentant le dioxygène atmosphérique : De 4,5 à 2,4 milliards d’années, on ne note
+       pas de présence de dioxygène dans l’atmosphère. Il apparaît progressivement ensuite, pour se
+       stabiliser à un taux de 18% il y a 2 milliards d’années et jusqu’à aujourd’hui.
+   - Pour la courbe de l’ozone : On observe l’apparition de l’ozone en teneur faible dans l’atmosphère il y
+       a 800 millions d’années.
+EXERCICE 2 : Il faut reporter dans un tableau à double entrée (voir fiche méthode sur la plateforme) les
+données du graphique. La première colonne correspond au nom des planètes (indiqués directement sur la
+courbe) consigné dans chaque rang suivant. La deuxième colonne correspond à la distance au Soleil des
+planètes et la troisième colonne à leurs températures. Le tableau comprendra donc 3 colonnes. Comme il y a
+8 planètes et 1 rang d’en-tête, le tableau comprendra 9 rangs au total. On indique donc :
+
+                PLANÈTE                     DISTANCE AU SOLEIL (en              TEMPÉRATURE (en degrés
+                                             millions de kilomètres)                   Celsius)
+                 Vénus
+                Mercure
+                  Terre
+                  Mars
+                 Jupiter
+                Saturne
+                Uranus
+                Neptune
+
+Pour remplir la suite du tableau, il faut repérer chaque point du graphique correspondant à une planète et
+inscrire ses coordonnées dans le tableau, l’abscisse étant la distance au Soleil, et l’ordonnée la température.
+
+
+                PLANÈTE                     DISTANCE AU SOLEIL (en              TEMPÉRATURE (en degrés
+                                             millions de kilomètres)                   Celsius)
+                 Vénus                                 108                               477
+                Mercure                                58                                167
+                  Terre                                150                                15
+                  Mars                                 228                               -40
+                 Jupiter                               778                              -110
+                Saturne                               1 427                             -180
+                Uranus                                2 870                             -221
+                Neptune                               4 497                             -230
+
+Chapitre 2
+
+Séance 1
+EXERCICE : lecture d’un graphique à plusieurs entrées
+
+    1) L’épaisseur de la troposphère se lit entre l’altitude zéro (0), le niveau de la mer, et le trait de séparation
+       bleu d’avec la stratosphère, soit 12 km. L’épaisseur de la stratosphère est la différence d’altitude entre
+       les traits de séparation d’avec la troposphère et la mésosphère, soit 50 - 12 = 38 km. En suivant le
+       même raisonnement, l’épaisseur de la mésosphère est donc 85 – 50 = 35 km. De même la
+       thermosphère a une épaisseur de 500 – 85 = 415 km. Enfin on ne peut pas calculer l’épaisseur de
+       l’exosphère sur ce graphique.
+    2) À 50 km d’altitude, la température est indiquée sur la ligne brisée rouge ; elle est de 0°C. À 85 km
+       d’altitude, cette ligne brisée indique – 90°C.
+    3) La couche atmosphérique où se concentre l’ozone est la stratosphère.
+    4) La Station Spatiale Internationale tourne à la limite entre la thermosphère et l’exosphère, soit à 500
+       km d’altitude.
+EXERCICES DE MÉMORISATION :
+   - Exemple de carte mémo :
+
+
+
+
+Prévois une boîte pour ranger tes cartes ; tu peux en réaliser d’autres sur le même modèle dans toutes les
+matières.
+
+Réalisation de la carte mentale : indique le titre de ta carte au centre. Choisis des couleurs qui te plaisent ou
+qui correspondent à un code couleur. Réalise ta carte mentale au feutre ou au stylo à bille. Le but est de te
+faire apprendre ta leçon en la comprenant. Lorsque tu réviseras pour l’évaluation, tu pourras reprendre ta
+carte et la colorier au crayon de couleur, cela t’aidera à mémoriser. Le sens de lecture, et donc de fabrication
+d’une carte mentale, est le sens des aiguilles d’une montre ou sens horaire. Tu peux agrémenter ta carte de
+schémas, dessins, photos… Tout ce qui te permet de bien apprendre et comprendre !
+• étape 1 : centrer et écrire le titre
+• étape 2 : écrire la première notion correspondante en haut à droite. Ici, le rappel de schéma permet de bien
+comprendre de quoi il s’agit. Changer de couleur pour chaque notion principale.
+• étape 3 : dans le sens horaire, écrire la deuxième notion.
+
+
+
+
+• étape 4 : continuer d’inscrire les notions selon le même principe. Ici, on rajoute des sous-notions qui partent
+de la troisième notion. Dans ce cas, on ne change pas de couleur (grise pour la notion et la sous-notion), mais
+de ton (l’une est foncée, l’autre claire). Les signes « + » et « = » indiquent la relation entre les notions. La
+double flèche exprime la relation de cause à effet particulière entre les deux notions. Dans la bulle bleue, les
+mots sont écrits dans deux couleurs conventionnelles.
+• étape 5 : la notion peut comprendre une définition (ici dans un autre ton de violet).
+• étape 6 : pour voir du premier coup qu’il s’agit des précipitations, la bulle prend la forme d’un nuage.
+
+EXERCICE DE RECHERCHE : histoire des sciences. But de l’exercice : récolter des informations et les classer sur
+une frise chronologique.
+Pour commencer, va sur les sites indiqués et note sur un brouillon les informations importantes (elles sont
+indiquées en première page), en précisant les dates et les événements correspondants. Tu as la matière pour
+réaliser ta frise chronologique.
+La première date est 1855, la
+dernière est 1993, soit 138 ans.
+L’écart le plus petit entre deux
+dates est de 3 ans (entre 1920 et
+1923). Une page A4 à petits
+carreaux mesure 21 cm de large,
+on peut donc choisir de réaliser
+une frise de 144 cm avec une
+échelle de 1 cm pour 10 ans :
+
+
+
+
+Ensuite, il faut indiquer les dates de début et de fin de la période ainsi que l’échelle (étape 1). Puis on trace
+des segments perpendiculaires aux dates importantes (étape 2). Après il faut écrire à quoi correspondent les
+périodes (étape 3) et les dates (étape 4). Il reste alors à colorier les périodes pour bien les différencier les
+unes des autres (étape 5) et enfin à écrire le titre (étape 6).
+Séance 2
+EXERCICE DE MÉMORISATION : schéma de la circulation thermohaline
+
+
+
+
+EXERCICE D’APPLICATION : diagramme ombrothermique
+Séance 3
+
+
+
+
+Analysons maintenant ce diagramme : quand on se focalise sur les précipitations, on constate qu’il
+y a une forte différence entre les moyennes des cumuls mensuels minimales et maximales,
+respectivement 2 mm et 327 mm. De plus, les précipitations sont très intenses pendant 8 mois de
+l’année, d’octobre à mai, puis à l’inverse quasi inexistantes de juin à septembre. On a donc deux
+saisons et non quatre ce qui permet de dire que ce territoire est en climat tropical, caractérisé par
+une saison sèche et une saison humide. Si maintenant on regarde les températures, on constate une
+grande homogénéité des moyennes thermiques mensuelles, entre 21,3°C et 26,3°C ce qui conforte
+l’idée que le territoire est en climat tropical. Mais on note aussi que les plus basses températures
+moyennes sont en juin juillet et août, ce qui correspond à l’hiver austral, le territoire est donc en
+zone tropicale de l’hémisphère sud. On peut imaginer qu’il s’agit de Mayotte, de la Réunion ou de la
+Polynésie française.
+Séance 4
+QUESTIONS :
+   1) Pour mesurer la durée d’une période glaciaire, il faut repérer son début et sa fin dans chaque cycle
+      glaciaire, puis faire la moyenne des durées obtenues. Les périodes glaciaires sont en bleu. L’échelle
+      utilisée est lisible sur le graphique à droite : 1 grande graduation correspond à 50 000 ans et par
+      déduction une petite graduation correspond à 10 000 ans. Par conséquent dans le premier cycle
+      glaciaire, la période glaciaire commence il y a 400 000 ans environ et termine il y a environ 330 000
+      ans, soit une durée de 70 000 ans. Pour le deuxième cycle, le début et la fin de la période glaciaire
+      sont – 320 000 et – 240 000 ans. Sa durée est donc 80 000 ans. Pour le troisième cycle, le début et la
+      fin de la période glaciaire sont – 230 000 et – 130 000 ans soit une durée de 100 000 ans. Enfin pour
+      le dernier cycle, le début et la fin de la période glaciaire sont – 120 000 et – 10 000 ans soit une durée
+      de 110 000 ans. La durée moyenne d’une période glaciaire est donc de :
+      (70 000 + 80 000 + 100 000 + 110 000) ÷ 4 = 90 000 ans.
+   2) Les pics de réchauffement correspondent aux périodes interglaciaires. Elles sont figurées en rose.
+      Visiblement elles durent approximativement 10 000 ans.
+
+
+EXERCICE DE COMPRÉHENSION :
+En lisant les notes des sept nains, on peut estimer que c’est Atchoum qui a travaillé le plus régulièrement,
+mais que c’est Prof qui a le mieux progressé.
+Les calculs des moyennes des 7 nains se font ainsi :
+Atchoum : (5+5+5+5) ÷ 4 = 5
+Simplet : (9+5+1+5) ÷ 4 = 5
+Dormeur : (9+6+4+1) ÷ 4 = 5
+Joyeux : (9+1+9+1) ÷ 4 = 5
+Timide : (5+4+7+4) ÷ 4 = 5
+Prof : (0+2+9+9) ÷ 4 = 5
+Grincheux : (6+4+3+7) ÷ 4 = 5
+Les sept nains ont la même moyenne. On constate donc qu’une moyenne ne reflète ni la valeur des écarts
+(Prof a eu un 0 au début !), ni leur nombre.
+Ainsi une température très éloignée de la moyenne des températures prises pendant trente ans n’est pas le
+signe d’un changement du climat.
+Dans notre exemple des 7 nains, pour que l’un d’entre eux augmente sa moyenne de deux points, il aurait
+fallu que l’ensemble de ses notes soit bien meilleur. De la même façon, une augmentation de 2°C de la
+température moyenne du globe reflète une augmentation de l’ensemble des températures mesurées pour la
+calculer.
+EXERCICE D’APPLICATION : la répartition des pollens en Europe
+Pour répondre à la question posée, il faut tout d’abord lire la légende qui est en dessous des cartes. Il s’agit
+d’une échelle colorimétrique en unité arbitraire reflétant la quantité de pollens d’arbres. S’il n’y a pas de ces
+pollens, la couleur est blanche. Plus il y a de pollens d’arbres, plus le vert est intense.
+La carte de l’Europe d’il y a 5 000 ans est intégralement verte ce qui signifie qu’on a retrouvé dans les
+sédiments datant de cette époque des pollens fossilisés appartenant à des espèces d’arbres. Il y a plusieurs
+nuances de vert qui indiquent la densité plus ou moins importante des arbres à cette époque. On peut en
+déduire que l’Europe d’il y a 5 000 ans était couverte de forêts.
+La carte de l’Europe d’il y a 18 000 ans est à l’inverse presque entièrement blanche. Quelques zones très bien
+délimitées seulement sont vertes. On en déduit que les sédiments de cette époque contenaient très peu de
+pollens d’arbres et que ceux-ci se concentraient dans certaines zones d’Europe seulement. Ces zones étant
+donc peuplées de forêts.
+Que pouvait-il y avoir alors dans les zones blanches majoritaires ? Il n’y avait pas d’arbre, mais cela ne veut
+pas dire qu’il n’y avait absolument pas de végétaux. Il y a 18 000 ans, il pouvait y avoir une végétation
+majoritairement composée d’herbes ou pas de végétation du tout selon la saison. Quel climat peut
+correspondre à cette situation ?
+C’est un paysage de toundra, typique des climats très froids. Effectivement, tu sais qu’il y a 18
+000 ans, l’Europe est en pleine période glaciaire.
+Si tu compares la carte proposée avec une carte de géographie physique actuelle de l’Europe, tu verras que
+la majorité des zones correspondant à des forêts se calque sur les principales vallées, plus encaissées, moins
+froides, plus propices au développement d’une végétation d’arbres bas, le reste de l’Europe étant couvert
+d’une prairie l’été et de neige en hiver. C’est le paysage des territoires du nord de l’Europe actuelle où vivent
+encore les rennes.
+
+Séance 5
+
+EXERCICE D’APPLICATION : les cyclones
+   1) Les enjeux sont : les personnes (« beaucoup de personnes sont déjà sur leur lieu de travail » « 16 000
+       sinistrés, 150 blessés, 27 morts et 10 disparus »), les habitations (« plusieurs maisons seront
+       détruites »), la flotte de pêche (« des barques de pêcheurs sont sorties en mer »), la flotte de
+       tourisme (« un paquebot brisera ses amarres ») et les transports terrestres (« les wagons de chemin
+       de fer… »).
+       Les aléas sont les cyclones dont 5 sont cités dans le tableau.
+       La vulnérabilité est traduite par la colonne dégâts du tableau : les 5 cyclones ont provoqué des dégâts
+       majeurs, mais surtout considérables.
+   2) Le risque est la combinaison d’un aléa avec la vulnérabilité des enjeux. (Il faut toujours redonner une
+       définition si on ne te demande pas de donner un exemple, ce qui était le cas dans la question
+       précédente). On observe dans le tableau que le nombre de morts a considérablement baissé entre
+       1962 et 2014. On sait que l’aléa « cyclone » est toujours présent pour l’île de la Réunion. S’il y a une
+       évolution, c’est qu’il y a une modification des enjeux ou de leur vulnérabilité. Dans aucun document
+       on n’indique une évolution de la population réunionnaise. C’est donc que cet enjeu n’a pas eu
+       d’influence sur le risque.
+   3) Dans le texte du bilan du passage de Jenny en 1962, on remarque qu’il y a une différence entre les
+       prévisions météorologiques qui avaient été faites et la réalité, bien plus grave ; la phrase : « le bulletin
+       d’alerte sur les ondes de la RTF arrive trop tard » montre le caractère exceptionnel de la prévision. Or
+       aujourd’hui Météo France combine des bulletins systématiques gradués avec une échelle de couleur
+       et des consignes correspondant aux degrés d’alerte. De plus chaque Réunionnais dispose d’un kit de
+       survie. Comme le nombre de morts a été divisé par 25 depuis 1980, on en déduit que ces deux
+       précautions diminuent considérablement la vulnérabilité des personnes.
+
+Chapitre 2
+
+Séance 1
+EXERCICE : Lire le triangle de Holdridge
+   1) Pour trouver le biome caractéristique, il faut chercher le trapèze correspondant à l’intersection du
+       climat tropical (à gauche) et du gradient d’humidité très aride (en bas). C’est le biome désert chaud.
+       De la même façon, le biome caractéristique des hautes montagnes très humides est la toundra
+       pluvieuse.
+   2) Le biome maquis se trouve à cheval sur 5 zones climatiques : la zone boréale, la zone tempérée froide,
+       la zone tempérée chaude, la zone subtropicale et la zone tropicale.
+   3) On retrouve le biome désert polaire aussi bien en zone polaire qu’en très haute montagne.
+EXERCICE : Lire une carte de géographie
+   1) On retrouve le maquis méditerranéen, de couleur violette sur la carte, sur le pourtour de la
+       Méditerranée bien sûr, mais aussi au sud-ouest de l’Australie ou au sud de l’Australie.
+   2) La plus grande zone de forêt tropicale pluvieuse, en vert très foncé sur la carte, est située en Amérique
+       du Sud, principalement au Brésil ; il s’agit donc de la forêt amazonienne.
+   3) Les déserts très secs sont signalés en marron dans la légende. On les retrouve en Afrique (le Sahara),
+       mais aussi en Asie (désert d’Arabie, sud de la Russie, Mongolie).
+
+EXERCICES DE MÉMORISATION : carte mentale sur les biomes
+
+
+
+
+Séance 2
+QUESTIONS :
+Les ressources naturelles biologiques permettant la construction sont : le bois, ou le chanvre par exemple ;
+on retrouve encore le bois dans la fabrication du papier, mais aussi le coton ; pour l’habillement, le coton, la
+soie, la laine, le lin… Pour fabriquer des médicaments, on retrouve des arbres, comme le saule dont on tire
+un précurseur de l’aspirine, d’autres plantes à fleurs (comme la digitale) des champignons, comme ceux qui
+permettent de fabriquer des fromages bleus, le venin de certains serpents ou scorpions… Pour les meubles,
+principalement le bois. Les instruments de musique sont généralement en bois, avec des pièces en bambou
+ou en crin de cheval. En cosmétique, on utilise comme ressource naturelle biologique surtout les algues.
+La ressource naturelle la plus précieuse est minérale : c’est l’eau.
+
+N.B. Le liège est l’écorce d’un arbre particulier, le chêne-liège. C’est donc une sorte de bois.
+Ne confonds pas la laine, qui est du poil d’animal, avec les pulls tricotés, qui peuvent l’être avec du fil de
+coton ! Parmi les poils d’animaux qui donnent de la laine, on a le mouton bien sûr, mais aussi la chèvre (laine
+cachemire), l’alpaga (un cousin du lama), le lapin (laine angora), et aussi… Certaines races de chien !
+Le chanvre et le lin sont des tiges d’herbes hautes, très solides.
+EXERCICE DE MÉMORISATION : schéma d’une coupe de sol
+En relisant ta leçon, et en dessinant au fur et à mesure, voici ce que tu peux obtenir :
+
+
+
+
+EXERCICE D’APPLICATION : Diagramme circulaire du « mix énergétique mondial de 2015 »
+
+
+
+
+Pour s’assurer de n’avoir pas fait d’erreur de calcul, on vérifie en additionnant les angles obtenus :
+111,6 + 50,4 + 72 + 21,6 + 104,4 = 360.
+En suivant le pas à pas proposé, voici comment arriver à faire le diagramme circulaire :
+
+
+
+
+Il ne reste plus qu’à mettre le titre :
+
+
+
+
+Séance 3
+EXERCICE D’APPLICATION : Vaut-il mieux prendre une douche ou un bain ?
+   1) Pimprenelle se douche tous les jours. Il faut donc calculer la quantité d’eau qu’elle utilise pour une
+       douche puis la doubler :
+       La quantité d’eau utilisée en une douche est le débit que multiplie le temps de douche soit :
+       12 x 15 = 180 L pour une douche, soit 360 L en deux jours.
+       Nicolas prend un bain tous les deux jours et se lave au gant le reste du temps en utilisant 5 L d’eau. Il
+       faut donc calculer la quantité d’eau utilisée pour un bain et y ajouter les 5 L pour obtenir la quantité
+       d’eau utilisée en deux jours par Nicolas. Pour calculer la quantité d’eau utilisée par bain, il suffit de
+       déterminer le volume d’eau de la baignoire, qui est assimilé au volume du pavé droit, soit :
+       V = Longueur x largeur x hauteur en dm3. Pour obtenir le résultat dans cette unité, il faut mettre les
+       valeurs numériques en dm. (Tu remarqueras que tu n’as pas besoin du débit pour effectuer ce calcul).
+       V = 16 x 6 x 2 = 192 dm3. Nicolas utilise donc 192 L d’eau pour un bain et 197 L d’eau en deux jours.
+       C’est donc Pimprenelle qui consomme le plus d’eau en deux jours.
+    2) Pour que les deux personnes consomment la même quantité d’eau, il faudrait que
+       Pimprenelle prenne des douches plus courtes :
+       Calculons le volume d’eau par douche : 197 ÷2 = 98,5 L
+       Puis le temps mis pour obtenir ce volume : 98,5 ÷ 12 = 8,2 minutes soit 8 minutes et 12 secondes.
+
+        Cet exercice te prouve que ce n’est pas le fait de prendre des douches plutôt que des bains qui permet
+        d’économiser de l’eau, mais le temps mis sous la douche ou la hauteur d’eau dans le bain qui feront
+        la différence… (si tu fais le calcul, pour prendre un bain par jour en consommant 98,5 L d’eau par bain,
+        Nicolas devrait se baigner dans 10,2 cm d’eau).
+
+Séance 4
+
+EXERCICES D’APPLICATION :
+Exercice 1 : Calcul de l’économie d’eau réalisée avec une cuve de récupération de l’eau de pluie.
+On sait que la cuve enterrée a une capacité de 90 % de la pluviométrie prévue, qui est de 80 000 L par an.
+La cuve enterrée a donc la capacité de recueillir 90% de 80 000 L = 0,9 x 80 000 = 72 000 L.
+L’installateur a expliqué quelles sont les situations dans lesquelles la famille peut utiliser cette eau récupérée
+et dans quelles situations elle ne le peut pas.
+Pour déterminer le pourcentage d’économie réalisée avec cette cuve, il faut calculer le rapport entre le
+volume d’eau économisé par la cuve et le volume d’eau total utilisé.
+On calcule donc la somme des volumes d’eau consommés dans les situations où on peut utiliser l’eau de la
+cuve :            Ménage           7 000 L
+                  WC              33 000 L
+                  Voiture          1 200 L
+                  Lave-linge      20 300 L
+                  Arrosage         7 500 L
+                  Somme =         69 000 L
+69 000 < 72 000 donc la cuve permet d’assurer toutes ces dépenses d’eau pendant un an.
+On calcule maintenant la somme des volumes d’eau de ville nécessaires dans les autres situations :
+                  Boisson 1 600 L
+                  Cuisine          7 000 L
+                  Vaisselle       15 000 L
+                  Toilette        58 000 L
+                  Somme =         81 600 L
+Le volume total d’eau consommée par an par cette famille est la somme des résultats intermédiaires :
+Volume total = 69 000 + 81 600 = 150 600 L
+
+Le pourcentage d’économie réalisée est donc de 69 000 ÷ 150 600 = 0,46 soit 46%.
+Exercice 2 : les nappes phréatiques
+    1) La tendance est le sens d’un changement. Il faut donc s’intéresser d’abord à la forme des spots, carrés,
+        ou en triangle vers le bas ou vers l’eau (légende : évolution récente). On compte le nombre de
+        formes :
+Triangles vers le haut : 1        Carrés : 18    Triangles vers le bas : 14.
+La tendance est donc à la stabilité générale. Cependant, seuls quatre spots indiquent un niveau des nappes
+phréatiques supérieur à la normale, onze indiquent un niveau normal, treize un niveau inférieur et quatre un
+niveau très inférieur. En conséquence, la tendance générale est à la stabilité de la baisse du niveau des nappes
+phréatiques en France en 2014.
+    2) La plus grande partie de l’eau potable en France est tirée des sources naturelles qui sont des
+        résurgences des nappes phréatiques. Par conséquent, si le niveau des nappes est en baisse, il y a un
+        risque de tarissement des sources et donc de la quantité d’eau potable disponible.
+    3) Il ne faut pas gaspiller l’eau des nappes phréatiques, car c’est une eau qui est sortie du cycle de l’eau.
+        Cela veut dire qu’une goutte d’eau sur des milliards arrive, au cours de son cycle, jusqu’à une nappe
+        phréatique. Une fois dans la nappe, elle peut mettre des dizaines, voire des centaines d’années pour
+        se retrouver dans une source et retourner dans le cycle. Par ailleurs, en puisant dans les nappes
+        phréatiques, les hommes ont introduit beaucoup d’eau dans le cycle de l’eau, eau qui part dans les
+        océans, et qui devient donc impropre à la consommation, car elle est salée. Cela contribue, avec le
+        réchauffement climatique, à la montée du niveau des eaux et à l’apparition de phénomènes
+        météorologiques extrêmes.
+
+Séance 5
+QUESTIONS :
+   1) Au sein de la biocénose, on trouve :
+      Interaction de prédation : la chouette hulotte, la mésange bleue, le blaireau, le renard roux.
+      Interaction de nourrissage : pâturage : écureuil roux, chenille du chêne, cerf et biche, chenilles
+      processionnaires du pin, criquet, papillon, blaireau, campagnol.
+      Interaction de défense : chenilles processionnaires du pin.
+      Interaction de décomposition : lombric, pleurote.
+      Interaction de protection : la souche d’arbre.
+      Interaction de symbiose : Bolet et racines du chêne.
+      Entre le biotope et la biocénose on trouve :
+      Les végétaux qui puisent les sels minéraux dans le sol : chêne, pin, renoncule bulbeuse, violette.
+      Interaction de protection : le terrier de blaireau
+    2) Tableau-liste :
+
+
+
+
+    3) Chaînes alimentaires
+
+Herbes, fleurs => insectes => blaireau => renard roux
+Sol => lombric => blaireau => renard roux
+Renoncule bulbeuse => papillon => mésange bleue => renard roux
+Violette des bois => criquet => mésange bleue => renard roux
+Violette des bois => criquet => blaireau => renard roux
+Pin => chenilles processionnaires
+Glands => écureuil
+Chêne => chenilles => mésange bleue => renard roux
+Chêne => chenilles => blaireau => renard roux
+Baies, graines et feuilles => campagnol => chouette hulotte
+Baies, graines et feuilles => campagnol => blaireau => renard roux
+Baies, graines et feuilles => campagnol => renard roux
+Souche => pleurote
+    4) Réseau trophique :
+
+
+
+
+Séance 6
+Tâche complexe : ATTENTION ! Il s’agit d’un exercice guidé qui sert de cours aussi bien sur le plan
+méthodologique que dans son contenu. Le fait d’avoir tenté de réaliser l’exercice est suffisant en cinquième !
+
+La réalisation de la tâche complexe telle que proposée ci-après est un pas-à-pas qui montre le résultat à
+atteindre en fin de collège, et avec moins de documents. Mais dans le cadre des connaissances à acquérir,
+toutes les informations données sont nécessaires, intéressantes et ont dû susciter des questionnements
+bénéfiques. Bonne lecture !
+Pour prendre connaissance de chaque document, il faut procéder comme indiqué dans
+l’encadré, en réalisant un tableau comme suit :
+
+ Nu    Titre           Type           Informations                                                      Ordre
+ mér                                                                                                    logique
+ o
+ 1     Ressource       Schéma         Indique ce qui constitue le stock et ce qui l’épuise
+       halieutique     bilan/
+       :               organigram
+       dynamique       me
+       et stock
+ 2     Fiche           Article avec   3 espèces de « thon rouge », une en Atlantique et                 Docu-
+       d’identité      photo          Méditerranée une dans le Pacifique, une dernière dont la          ment
+       du thon                        localisation n’est pas précisée. Poids max 700 kg.                intro-
+                                      Superprédateur. Contribue à la stabilité des écosystèmes.         duction
+ 3     ONG       et    Article avec   Curieuse maquette sur la voiture = thonmobile. Manifestation      Va avec
+       décisions       photo          de l’ONG Greenpeace. Monaco veut interdire la pêche               le doc 8
+       politiques
+ 4     Évolution       Graphique      La courbe est en dents de scie entre 225 000 et 300 000 tonnes    Va avec
+       de         la   linéaire       entre 1945 et 1990, puis la courbe décroît fortement jusqu’à      le doc 5
+       biomasse                       150 000 tonnes en 2010 avant de remonter très rapidement à
+       des thons                      600 000 tonnes en 2020
+       rouges
+       reproducte
+       urs
+ 5     Déplaceme       Article        80% du thon pêché est consommé par les Japonais. Dans les         Va avec
+       nt        du                   années 90 ; fermes pour le marché japonais en Méditerranée,       le doc 4
+       problème                       aujourd’hui dans le Pacifique
+ 6     Évolution       Diagramme      Les prises déclarées en Atlantique Est sont globalement           Explica-
+       de         la   et             constantes aux alentours de 10 000. Les prises déclarées en       tions des
+       mortalité       graphique      Méditerranée sont aux alentours de 20 000 jusqu’en 1994 où        causes
+       par pêche       linéaire       elles augmentent très rapidement pour atteindre 50 000, puis      dans
+       du      thon                   décroître avec de petits rebonds jusqu’à 35 000 en 2010. Elles    le doc 7
+       rouge                          chutent ensuite de nouveau à 15 000 en 2015, pour recroître
+                                      constamment et atteindre 40 000 en 2022. En parallèle, les
+                                      prises non déclarées dépassent les prises déclarées en 2000 et
+                                      atteignent 60 000 en 2007, pour chuter et repasser sous la
+                                      barre des 35 000 en 2009. Enfin, les quotas sont mis en place
+                                      en 1998 à environ 30 000 têtes, puis diminuent fortement dix
+                                      ans plus tard, passant à 15 000 en 2010, pour remonter
+                                      constamment depuis 2014 : en 2022 le quota est à 35 000 têtes.
+ 7     Causes de       Article avec   Essor du marché de sushis et sashimis. Une denrée rare qui        Dates en
+       l’augmenta      source         devient chère et qui donc est encore plus recherchée : c’est la   correspo
+       tion de la      internet       surexploitation.                                                  ndance
+       pêche des       (national                                                                        avec le
+       thons           geographic)                                                                      doc 6
+ 8     L’importan      Article de     La lecture de cet article permet par analogie de déduire que le   Va avec
+       ce       de     journal (la    thon étant une espèce clef de voûte sa surexploitation dérègle    le doc 3
+       l’espèce        gazette de     puis détruit l’écosystème marin méditerranéen.                    & le doc
+       clef     de     Monaco)                                                                          12
+       voûte
+ 9       Des              Article avec   Pêche industrielle par des thonniers senneurs. Pêche des thons
+         techniques       source         reproducteurs, vide les fonds marins et atteint aussi d’autres
+         de capture       internet       espèces menacées.
+         d’une            (oceano)
+         efficacité
+         redoutable
+ 10      L’horizon        Article   du   Existe des aires marines protégées permettant la reproduction    Va avec
+         s’éclaircit      WWF            des thons du Pacifique.                                          le doc 11
+         pour        le
+         thon       du
+         Pacifique
+ 11      Pas de titre     Interview      Volonté politique nécessaire pour mettre en place les            Va avec
+                          France info    recommandations des scientifiques.                               le doc 10
+ 12      Le    thon,      Article        Régime alimentaire du thon rouge : carnivore superprédateur.     Va avec
+         une espèce                      Avec la baisse du nombre de thon, on observe la baisse du        le doc 8
+         clef     de                     nombre d’anchois, de sardines, de maquereaux, de calmar et
+         voûte                           de crevettes.
+
+Réponses aux questions :
+
+      1) Les deux situations différentes sont expliquées dans le document 2 et le document 5 : il existe 3
+         espèces de thon rouge. Thunnus thynnus est le thon de Méditerranée et sa situation est décrite dans
+         de nombreux documents ; Thunnus orientalis est le thon du Pacifique dont il est aussi question dans
+         les documents. On ne parle pas de Thunnus maccoyii ici.
+      2) Avant 2010, d’après le document 4, la biomasse de thon est stable jusqu’en 1990, puis diminue très
+         fortement jusqu’à 150 000 tonnes. D’après le document 6, jusqu’en 1994 la quantité de prises
+         déclarées est stable, aussi bien en Méditerranée qu’en Atlantique Est ; à partir de 1994 et jusqu’en
+         2010 ; les prises ne cessent d’augmenter en Méditerranée, qu’elles soient déclarées ou non. Le
+         document 5 fournit une explication à ce phénomène : « 80% du thon pêché dans le monde est
+         consommé par les Japonais ». « Dans les années 1990 », la pêche au thon au profit des Japonais se
+         concentrait en Méditerranée.
+      3) La surpêche des thons est provoquée par la mode de la cuisine des sushis et sashimis, qui commence
+         au début des années 1990 (document 7), et est pratiquée par les thonniers-senniers qui capturent de
+         grosses prises aussi bien en taille qu’en nombre. De plus ils pêchent aussi d’autres espèces menacées
+         (document 9).
+      4) « En novembre 2010 », sous la pression de l’organisation non gouvernementale Greenpeace et de la
+         Principauté de Monaco, « les quotas de pêche sont drastiquement baissés. » (document 3). Le
+         document 4 montre que la biomasse de thon s’est mise à croître de façon extrêmement rapide à
+         partir de l’établissement de ces quotas. Il a fallu tout de même 4 ans pour que la pêche en
+         Méditerranée ne dépasse plus les quotas. Mais dès 2010, la pêche non déclarée n’a plus lieu.
+         (document 6). Ceci grâce à la « volonté politique » qui a suivi les « recommandations des
+         scientifiques » (document 11).
+      5) Le document 1 montre que le stock de ressource halieutique se constitue grâce à la reproduction puis
+         la croissance des êtres vivants. Il faut attendre qu’ils aient atteint une taille minimale correspondant
+         à la taille adulte (capable de se reproduire), avant de puiser dans le stock. Par ailleurs le stock dépend
+         aussi de la mortalité naturelle par prédation à tous les moments de la vie, par maladie et vieillesse.
+         Donc si on prélève trop de ressource, et/ou une ressource non adulte, on l’empêche de se reproduire
+         et donc de reconstituer le stock.
+    6) Le thon de l’Atlantique est un superprédateur. Cela signifie qu’il est au sommet du réseau trophique.
+       Il se nourrit de nombreuses autres espèces animales, elles-mêmes prédatrices. Il est donc une
+       « espèce clef de voûte » (document 12). Il est donc un régulateur, il empêche la prolifération d’autres
+       espèces qui finissent malgré tout par s’éteindre, car elles ont épuisé le stock de nourriture à force d’y
+       puiser comme le montre l’exemple de l’étoile de mer dans un écosystème de 15 espèces de Robert
+       Paine (document 8).
+    7) Le document 5 montre que le thon de Méditerranée est beaucoup moins pêché pour les besoins des
+       Japonais. Mais ceux-ci se sont rabattus sur le thon du Pacifique, qui a subi les mêmes surpêches que
+       celles subies par le thon méditerranéen jusqu’en 2010. Cependant, il existe une réserve marine dans
+       les eaux d’Hawaï qui permet aux populations de thon du Pacifique de se reconstituer, ce qui laisse un
+       espoir.
+    8) Afin de préserver la ressource halieutique en thon, il faudrait tout d’abord que les Japonais
+       diversifient leur alimentation, ce qui permettrait de faire baisser la pression de pêche sur cette espèce
+       de poisson. Ensuite on pourrait interdire la pêche à la senne qui capture des thons trop jeunes et
+       beaucoup d’autres espèces, dont des espèces en danger. Enfin, on peut décider individuellement de
+       manger moins de protéines animales en général ce qui permettrait de baisser la quantité de thon
+       vendu (thon frais ou thon en boîte), et donc limiterait leur pêche.
+
+Rédaction du texte au propre à partir des questions :
+
+Le thon rouge est un poisson superprédateur pouvant atteindre 700kg. Il existe trois espèces différentes, dont
+deux sont encore très pêchées. Thunnus thynnus est le thon de Méditerranée et sa situation est décrite dans
+de nombreux documents ; Thunnus orientalis est le thon du Pacifique dont il est aussi question dans certains
+documents. Thunnus maccoyii est en danger critique d’extinction (cf doc2 « fiche d’identité du thon »). En
+quoi l’exemple de la pêche au thon rouge permet-il de comprendre la fragilité de la ressource halieutique,
+des écosystèmes et de la biodiversité ?
+         Tout d’abord, quelle est la pression de pêche sur la ressource halieutique en thon par les Hommes ?
+Avant 2010, d’après le graphique du document 4 « évolution de la biomasse des thons rouges
+reproducteurs », la biomasse de thon est stable jusqu’en 1990, puis diminue très fortement jusqu’à 150 000
+tonnes. D’après le graphique du document 6 « évolution de la mortalité par pêche du thon rouge », jusqu’en
+1994 la quantité de prises déclarées est stable, aussi bien en Méditerranée qu’en Atlantique Est ; à partir de
+1994 et jusqu’en 2010, les prises ne cessent d’augmenter en Méditerranée, qu’elles soient déclarées ou non.
+Le document 5 fournit une explication à ce phénomène : « 80% du thon pêché dans le monde est consommé
+par les Japonais ». « Dans les années 1990 », la pêche au thon au profit des Japonais se concentrait en
+Méditerranée.
+La surpêche des thons est provoquée par la mode de la cuisine des sushis et sashimis, qui commence au
+début des années 1990 (document 7, article de national geographic : « causes de l’augmentation de la pêche
+des thons »), et est pratiquée par les thonniers-senniers qui capturent de grosses prises aussi bien en taille
+qu’en nombre. De plus ils pêchent aussi d’autres espèces menacées (document 9 article du site oceano, « des
+techniques de capture d’une efficacité redoutable »).
+     Cependant, « en novembre 2010 », sous la pression de l’organisation non gouvernementale Greenpeace
+et de la Principauté de Monaco, « les quotas de pêche sont drastiquement baissés. » (Document 3, article
+« ONG et décisions politiques » et photo « la thonmobile »). Le document 4 montre que la biomasse de thon
+s’est mise à croître de façon extrêmement rapide à partir de l’établissement de ces quotas. Il a fallu tout de
+même 4 ans pour que la pêche en Méditerranée ne dépasse plus les quotas. Mais dès 2010, la pêche non
+déclarée n’a plus lieu. (Document 6). Ceci grâce à la « volonté politique » qui a suivi les « recommandations
+des scientifiques » (document 11, interview de Tristan Rouyer sur France info).
+     Le schéma bilan du document 1 « ressource halieutique : dynamique du stock » montre pourquoi la
+ressource halieutique en général est si fragile : son stock se constitue grâce à la reproduction puis la
+croissance des êtres vivants. Il faut attendre qu’ils aient atteint une taille minimale correspondant à la taille
+adulte (capable de se reproduire), avant d’y puiser.
+     Par ailleurs le stock dépend aussi de la mortalité naturelle par prédation à tous les moments de la vie, par
+maladie et vieillesse. Donc si on prélève trop de ressource, et/ou une ressource non adulte, on l’empêche de
+se reproduire et donc de reconstituer le stock.
+     De plus, comme le thon de l’Atlantique est un superprédateur, il est au sommet du réseau trophique. Il
+se nourrit de nombreuses autres espèces animales, elles-mêmes prédatrices. Il est donc une « espèce clef
+de voûte » (document 12). Il est donc un régulateur. Sa disparition modifie profondément l’écosystème : les
+autres espèces prolifèrent le temps d’épuiser leurs propres ressources, puis s’éteignent à leur tour et
+l’écosystème meurt par chute de la biodiversité comme le montre l’exemple de l’étoile de mer dans un
+écosystème de 15 espèces de Robert Paine (article de la Gazette de Monaco du document 8 « l’importance
+de l’espèce clef de voûte »).
+     En conclusion, l’article du document 5 intitulé « déplacement du problème » montre que le thon de
+Méditerranée est beaucoup moins pêché aujourd’hui pour les besoins des Japonais. Mais ceux-ci se sont
+rabattus sur le thon du Pacifique, qui est victime des mêmes surpêches que celles subies par le thon
+méditerranéen jusqu’en 2010. Cependant, il existe une réserve marine dans les eaux d’Hawaï qui permet aux
+populations de thon du Pacifique de se reconstituer, ce qui laisse un espoir d’éviter l’extinction de l’espèce,
+et les conséquences sur l’écosystème marin et la biodiversité globale.
+Cet exemple de l’exploitation de la ressource halieutique en thon rouge montre l’importance des
+comportements humains sur les écosystèmes et la biodiversité ; la diversification alimentaire et la
+spécialisation de la pêche pourraient permettre de préserver un écosystème riche et indispensable aussi pour
+l’humanité.
+

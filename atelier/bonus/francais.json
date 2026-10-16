@@ -1,0 +1,62 @@
+[
+  {
+    "id": "litterature-s01-2-b1",
+    "fiche": "litterature-s01-2-f3",
+    "titre": "Choucroute : une fausse piste",
+    "texte": "« Étymologie » remonte au grec etumos, « vrai ». Mais attention : on croit voir « chou » et « croûte » dans « choucroute », alors que ce mot vient d'un parler allemand : surkrut, « chou aigre ». Ce rapprochement trompeur s'appelle une étymologie populaire.",
+    "source": {
+      "titre": "étymologie",
+      "editeur": "Dictionnaire de français Larousse",
+      "url": "https://www.larousse.fr/dictionnaires/francais/%C3%A9tymologie/31605"
+    },
+    "preuve": "Vérifié le 2026-10-15 (page chargée, HTTP 200, Larousse). Ligne d'origine de l'entrée : « latin etymologia, du grec etumologia, de etumos, vrai ». Rubrique Expressions, « Étymologie populaire ou croisée » : rattacher un mot à une forme sans aucune parenté ; exemple : on voit chou et croûte dans choucroute, mot qui vient de l'allemand dialectal surkrut, « chou aigre ». Plus longue suite de mots commune avec la page : 5 (« chou et croûte dans choucroute »). 48 mots. Fiche f3 (étymologie, cinéma/kinêma) prolongée sans contradiction. Rien du devoir de littérature 1."
+  },
+  {
+    "id": "litterature-s03-2-b1",
+    "fiche": "litterature-s03-2-f1",
+    "titre": "L'oxymore, une alliance de mots",
+    "texte": "Une autre figure de style joue sur les contraires : l'oxymore. Il réunit deux mots qui ont l'air de se contredire, comme dans « un silence éloquent ». On le nomme aussi « alliance de mots ».",
+    "source": {
+      "titre": "oxymore, oxymoron",
+      "editeur": "Dictionnaire de français Larousse",
+      "url": "https://www.larousse.fr/dictionnaires/francais/oxymore/57123"
+    },
+    "preuve": "Vérifié le 2026-10-15 (page chargée, HTTP 200, Larousse). Définition unique (Rhétorique) : figure de style qui réunit deux mots en apparence contradictoires, exemple « un silence éloquent » ; synonyme donné : « alliance de mots ». Plus longue suite commune : 3 mots (« figure de style »). 37 mots. Prolonge la fiche f1 (antithèse, jeu sur les contraires) sans la contredire ; aucune question du cours ne propose « oxymore ». Rien du devoir de littérature 1."
+  },
+  {
+    "id": "lecture-s01-1-b1",
+    "fiche": "lecture-s01-1-f2",
+    "titre": "Banquise ou calotte glaciaire ?",
+    "texte": "La banquise est de l'eau de mer gelée, épaisse de quelques mètres au plus et bien moins salée que la mer. La calotte glaciaire est un immense glacier d'eau douce, né de neige accumulée très longtemps. Elle couvre 98 % du continent antarctique et atteint jusqu'à 4 800 m d'épaisseur.",
+    "source": {
+      "titre": "Quelle est la différence entre la banquise et la calotte glaciaire ?",
+      "editeur": "Météo-France",
+      "url": "https://meteofrance.com/meteo-a-z/quelle-est-la-difference-entre-la-banquise-et-la-calotte-glaciaire"
+    },
+    "preuve": "Vérifié le 2026-10-15 (page chargée, HTTP 200, Météo-France). Paragraphe « Banquise » : glace d'au maximum quelques mètres d'épaisseur formée par congélation d'eau salée ; sel de moins d'1 à environ 10 g/kg de glace contre environ 35 g/kg pour l'eau de mer (d'où « bien moins salée »). Paragraphe « Calotte glaciaire » : glacier d'eau douce très étendu, 98 % du continent Antarctique, épaisseur maximale 4 800 m, formé par accumulation de neige sur de très longues périodes. Plus longue suite commune : 5 mots. 50 mots au plus (49 sans le signe %). Cohérent avec la fiche f2 (−1,8 °C, la page le dit aussi). Ni Groenland ni cadre du récit : rien de la fiche de lecture 1."
+  },
+  {
+    "id": "lecture-s02-1-b1",
+    "fiche": "lecture-s02-1-f4",
+    "titre": "Avant le sextant, l'octant",
+    "texte": "Le sextant a un ancêtre : l'octant, apparu en 1731. Il sert à connaître la hauteur d'un astre pour faire le point, c'est-à-dire trouver la position du navire. À partir de 1758, son champ de mesure passe de 90 à 120 degrés : le sextant est né.",
+    "source": {
+      "titre": "Octant",
+      "editeur": "Musée national de la Marine",
+      "url": "https://www.musee-marine.fr/nos-musees/brest/collections/oeuvres-phares/octant.html"
+    },
+    "preuve": "Vérifié le 2026-10-15 (page chargée, HTTP 200, Musée national de la Marine). Premier paragraphe : l'octant sert à connaître la hauteur d'un astre afin de faire le point en mer, c'est-à-dire connaître la position du navire. Paragraphe suivant : l'octant, apparu en 1731, élargit ses capacités de mesure de 90 à 120 degrés et donne naissance au sextant à partir de 1758. Plus longue suite commune : 6 mots (« connaître la hauteur d'un astre »), sous le seuil de 8. 47 mots. Prolonge la fiche f4 (sextant). Aucune des quatre pièces à légender, ni auteur, ni récit."
+  },
+  {
+    "id": "lecture-s03-1-b1",
+    "fiche": "lecture-s03-1-f4",
+    "titre": "Lire le vent sur la mer",
+    "texte": "L'échelle de Beaufort va de 0 à 12. Elle permet de juger la vitesse moyenne du vent d'après l'aspect de la mer. En météo marine, la force 10 correspond à la tempête : le vent moyen atteint alors au moins 89 km/h.",
+    "source": {
+      "titre": "Vents violents et tempêtes : quelles sont les différences ?",
+      "editeur": "Météo-France",
+      "url": "https://meteofrance.com/meteo-a-z/vents-violents-et-tempetes-quelles-sont-les-differences"
+    },
+    "preuve": "Vérifié le 2026-10-15 (page chargée, HTTP 200, Météo-France). Section « Tempête : des définitions spécifiques en météo marine et tropicale » : en météorologie marine, la tempête correspond à la force 10 de l'échelle Beaufort, qui va de 0 à 12 et permet d'estimer la vitesse moyenne du vent en fonction de l'état de la mer. Premier paragraphe : vents moyens d'au moins 89 km/h, valeur minimale de la force 10. Plus longue suite commune : 5 mots (« la vitesse moyenne du vent »). 42 mots. Prolonge la fiche f4 (échelle de Beaufort) sans contradiction. Rien sur les épreuves de l'équipage ni sur le récit."
+  }
+]

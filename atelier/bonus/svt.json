@@ -1,0 +1,62 @@
+[
+  {
+    "id": "svt-s01-1-b1",
+    "fiche": "svt-s01-1-f6",
+    "titre": "Un cœur sur Pluton",
+    "texte": "Lancée par la NASA, la sonde New Horizons est la première à avoir visité Pluton. Sur cette planète naine s'étend une zone claire large de plus de 2 000 km, surnommée le « cœur » : la région Tombaugh. Pluton avait été découverte en 1930 par l'Américain Clyde Tombaugh.",
+    "source": {
+      "titre": "Pluton (planète naine)",
+      "editeur": "Wikipédia, l'encyclopédie libre",
+      "url": "https://fr.wikipedia.org/wiki/Pluton_(plan%C3%A8te_naine)"
+    },
+    "preuve": "Vérifié (page chargée, HTTP 200, relue le 2026-10-15) : introduction « lancée en janvier 2006 par la NASA » ; section Exploration « la première sonde spatiale à visiter Pluton » ; section Géographie « la région Tombaugh, surnommée le « Cœur », grande zone claire de plus de 2 000 km de large » ; introduction « découverte par l'astronome américain Clyde Tombaugh en 1930 ». Plus longue suite commune avec la page : 6 mots (« de plus de 2 000 km »). Fiche f6 (planètes naines) prolongée sans contradiction ; rien sur la place de Pluton dans le schéma du devoir."
+  },
+  {
+    "id": "svt-s01-2-b1",
+    "fiche": "svt-s01-2-f1",
+    "titre": "Voir la Terre tourner",
+    "texte": "En 1851, le physicien Léon Foucault suspend un pendule de 67 mètres sous la voûte du Panthéon, à Paris. Au fil des heures, la direction de ses allers-retours tourne lentement. Cette expérience montre que la Terre tourne sur elle-même.",
+    "source": {
+      "titre": "Pendule de Foucault",
+      "editeur": "Wikipédia, l'encyclopédie libre",
+      "url": "https://fr.wikipedia.org/wiki/Pendule_de_Foucault"
+    },
+    "preuve": "Vérifié (page chargée, HTTP 200, relue le 2026-10-15) : introduction « du nom du physicien français Léon Foucault », dispositif conçu pour mettre en évidence la rotation de la Terre ; section Historique : démonstration publique en 1851, « le pendule étant accroché à la voûte du Panthéon de Paris », déviation constante du plan d'oscillation ; section des pendules dans le monde : pendule du Panthéon de 1851 « mesurait 67 mètres », déviait de 11° par heure. Plus longue suite commune : 4 mots. Prolonge la fiche f1 (rotation) ; rien sur solstices, équinoxes ni saisons (devoir, exercice 3)."
+  },
+  {
+    "id": "svt-s02-1-b1",
+    "fiche": "svt-s02-1-f1",
+    "titre": "Le milieu du monde",
+    "texte": "L'équateur fait le tour de la Terre sur environ 40 075 km. Il traverse 11 pays, dont sept en Afrique. Des monuments marquent son passage, comme le « Mitad del Mundo », le « milieu du monde », près de Quito, la capitale de l'Équateur.",
+    "source": {
+      "titre": "Équateur terrestre",
+      "editeur": "Wikipédia, l'encyclopédie libre",
+      "url": "https://fr.wikipedia.org/wiki/%C3%89quateur_terrestre"
+    },
+    "preuve": "Vérifié (page chargée, HTTP 200, relue le 2026-10-15) : section Géodésie « 40 074,155 89 km » et modèles « 40 075 017 m », récapitulatif 40 075 km ; section Pays traversés « Les 11 pays traversés par l'équateur » et « L'équateur traverse sept pays africains » ; Équateur : environ 20 km au nord de sa capitale Quito ; section Monuments : monument à une vingtaine de km au nord de Quito, baptisé Mitad del Mundo, « Milieu du monde ». Plus longue suite commune : 3 mots. Prolonge la fiche f1 (lignes imaginaires) ; aucun lien avec le devoir."
+  },
+  {
+    "id": "svt-s02-2-b1",
+    "fiche": "svt-s02-2-f2",
+    "titre": "Le bon et le mauvais ozone",
+    "texte": "L'ozone est une forme de l'oxygène faite de trois atomes : O3. En altitude, la couche d'ozone absorbe une partie des rayons ultraviolets du Soleil, dangereux pour la vie : c'est le « bon » ozone. Près du sol, l'ozone dû à la pollution est un « mauvais » ozone.",
+    "source": {
+      "titre": "Science de l'ozone (Journée internationale de la protection de la couche d'ozone)",
+      "editeur": "Organisation des Nations unies",
+      "url": "https://www.un.org/fr/observances/ozone-day/science"
+    },
+    "preuve": "Vérifié (page chargée, HTTP 200, relue le 2026-10-15) : rubrique « Qu'est-ce que l'ozone ? » : variété gazeuse de l'oxygène de formule O3 (trois atomes d'oxygène) ; ozone stratosphérique en altitude formant la couche d'ozone, qui absorbe certains rayons ultraviolets du soleil nocifs pour la santé et la vie : « bon » ozone ; ozone à la surface formé par les polluants : « mauvais » ozone. Plus longue suite commune : 4 mots. Prolonge la fiche f2 (apparition de l'ozone) sans la contredire ; ne parle pas de l'effet de serre (non couvert) ; aucun lien avec le devoir."
+  },
+  {
+    "id": "svt-s03-1-b1",
+    "fiche": "svt-s03-1-f3",
+    "titre": "Le parrain des nuages",
+    "texte": "En 1802, le pharmacien britannique Luke Howard propose des noms pour classer les nuages. Il en distingue trois grandes familles : les cumulus, les stratus et les cirrus. Avant lui, Jean-Baptiste de Lamarck avait proposé des mots français, mais ce sont les noms latins de Howard qui l'ont emporté.",
+    "source": {
+      "titre": "Luke Howard",
+      "editeur": "Wikipédia, l'encyclopédie libre",
+      "url": "https://fr.wikipedia.org/wiki/Luke_Howard"
+    },
+    "preuve": "Vérifié (page chargée, HTTP 200, relue le 2026-10-15) : introduction « pharmacien britannique », nomenclature des nuages proposée dans une présentation en 1802 ; « appelé « le parrain des nuages » » ; « les trois principales catégories de nuages — cumulus, stratus, et cirrus » ; Lamarck avait déjà proposé des termes en français, « le succès du système de Howard est dû à son utilisation du latin ». Plus longue suite commune : 4 mots. Prolonge la fiche f3 (nuage) ; ne définit pas la météorologie et ne cite aucun instrument (devoir, exercices 1 et 2)."
+  }
+]

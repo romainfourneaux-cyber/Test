@@ -1,0 +1,1397 @@
+[
+ {
+  "id": "methode-frise-f1",
+  "matiere": "histoire",
+  "semaine": 0,
+  "cours": "methode-frise",
+  "notion": "Les quatre étapes d'une frise",
+  "prerequis": []
+ },
+ {
+  "id": "methode-frise-f2",
+  "matiere": "histoire",
+  "semaine": 0,
+  "cours": "methode-frise",
+  "notion": "Choisir une échelle de temps",
+  "prerequis": [
+   "methode-frise-f1"
+  ]
+ },
+ {
+  "id": "methode-frise-f3",
+  "matiere": "histoire",
+  "semaine": 0,
+  "cours": "methode-frise",
+  "notion": "Placer un événement ou une période",
+  "prerequis": [
+   "methode-frise-f2"
+  ]
+ },
+ {
+  "id": "methode-graphique-f1",
+  "matiere": "physique",
+  "semaine": 0,
+  "cours": "methode-graphique",
+  "notion": "Les cinq étapes d'un graphique",
+  "prerequis": []
+ },
+ {
+  "id": "methode-graphique-f2",
+  "matiere": "physique",
+  "semaine": 0,
+  "cours": "methode-graphique",
+  "notion": "Le titre d'un graphique",
+  "prerequis": [
+   "methode-graphique-f1"
+  ]
+ },
+ {
+  "id": "methode-graphique-f3",
+  "matiere": "physique",
+  "semaine": 0,
+  "cours": "methode-graphique",
+  "notion": "Placer un point",
+  "prerequis": [
+   "methode-graphique-f1"
+  ]
+ },
+ {
+  "id": "methode-graphique-f4",
+  "matiere": "physique",
+  "semaine": 0,
+  "cours": "methode-graphique",
+  "notion": "Relier les points",
+  "prerequis": [
+   "methode-graphique-f3"
+  ]
+ },
+ {
+  "id": "methode-graphique-f5",
+  "matiere": "physique",
+  "semaine": 0,
+  "cours": "methode-graphique",
+  "notion": "Tracer les axes",
+  "prerequis": [
+   "methode-graphique-f1"
+  ]
+ },
+ {
+  "id": "methode-graphique-f6",
+  "matiere": "physique",
+  "semaine": 0,
+  "cours": "methode-graphique",
+  "notion": "La phrase astuce",
+  "prerequis": [
+   "methode-graphique-f2"
+  ]
+ },
+ {
+  "id": "methode-instruments-f1",
+  "matiere": "physique",
+  "semaine": 0,
+  "cours": "methode-instruments",
+  "notion": "Verticalité et horizontalité",
+  "prerequis": []
+ },
+ {
+  "id": "methode-instruments-f2",
+  "matiere": "physique",
+  "semaine": 0,
+  "cours": "methode-instruments",
+  "notion": "Mesurer une masse",
+  "prerequis": []
+ },
+ {
+  "id": "methode-instruments-f3",
+  "matiere": "physique",
+  "semaine": 0,
+  "cours": "methode-instruments",
+  "notion": "Faire la tare",
+  "prerequis": [
+   "methode-instruments-f2"
+  ]
+ },
+ {
+  "id": "methode-instruments-f4",
+  "matiere": "physique",
+  "semaine": 0,
+  "cours": "methode-instruments",
+  "notion": "Mesurer des longueurs",
+  "prerequis": []
+ },
+ {
+  "id": "methode-instruments-f5",
+  "matiere": "physique",
+  "semaine": 0,
+  "cours": "methode-instruments",
+  "notion": "Lire au ménisque",
+  "prerequis": []
+ },
+ {
+  "id": "methode-instruments-f6",
+  "matiere": "physique",
+  "semaine": 0,
+  "cours": "methode-instruments",
+  "notion": "Volume d'un objet par déplacement de liquide",
+  "prerequis": [
+   "methode-instruments-f5"
+  ]
+ },
+ {
+  "id": "methode-instruments-f7",
+  "matiere": "physique",
+  "semaine": 0,
+  "cours": "methode-instruments",
+  "notion": "La fiole jaugée",
+  "prerequis": [
+   "methode-instruments-f5"
+  ]
+ },
+ {
+  "id": "methode-instruments-f8",
+  "matiere": "physique",
+  "semaine": 0,
+  "cours": "methode-instruments",
+  "notion": "Le matériel des travaux pratiques",
+  "prerequis": []
+ },
+ {
+  "id": "methode-ombrothermique-f1",
+  "matiere": "svt",
+  "semaine": 0,
+  "cours": "methode-ombrothermique",
+  "notion": "Ce que montre un diagramme ombrothermique",
+  "prerequis": []
+ },
+ {
+  "id": "methode-ombrothermique-f2",
+  "matiere": "svt",
+  "semaine": 0,
+  "cours": "methode-ombrothermique",
+  "notion": "Bâtons et courbe",
+  "prerequis": [
+   "methode-ombrothermique-f1"
+  ]
+ },
+ {
+  "id": "methode-ombrothermique-f3",
+  "matiere": "svt",
+  "semaine": 0,
+  "cours": "methode-ombrothermique",
+  "notion": "Les trois axes",
+  "prerequis": [
+   "methode-ombrothermique-f2"
+  ]
+ },
+ {
+  "id": "methode-ombrothermique-f4",
+  "matiere": "svt",
+  "semaine": 0,
+  "cours": "methode-ombrothermique",
+  "notion": "La règle des graduations",
+  "prerequis": [
+   "methode-ombrothermique-f3"
+  ]
+ },
+ {
+  "id": "methode-ombrothermique-f5",
+  "matiere": "svt",
+  "semaine": 0,
+  "cours": "methode-ombrothermique",
+  "notion": "Construire le diagramme",
+  "prerequis": [
+   "methode-ombrothermique-f4"
+  ]
+ },
+ {
+  "id": "methode-tableau-f1",
+  "matiere": "svt",
+  "semaine": 0,
+  "cours": "methode-tableau",
+  "notion": "À quoi sert un tableau à double entrée",
+  "prerequis": []
+ },
+ {
+  "id": "methode-tableau-f2",
+  "matiere": "svt",
+  "semaine": 0,
+  "cours": "methode-tableau",
+  "notion": "Lire une case",
+  "prerequis": [
+   "methode-tableau-f1"
+  ]
+ },
+ {
+  "id": "methode-tableau-f3",
+  "matiere": "svt",
+  "semaine": 0,
+  "cours": "methode-tableau",
+  "notion": "Les deux entrées",
+  "prerequis": [
+   "methode-tableau-f1"
+  ]
+ },
+ {
+  "id": "geographie-s01-1-f1",
+  "matiere": "geographie",
+  "semaine": 1,
+  "cours": "geographie-s01-1",
+  "notion": "L'organisation de l'année de géographie",
+  "prerequis": []
+ },
+ {
+  "id": "geographie-s01-1-f2",
+  "matiere": "geographie",
+  "semaine": 1,
+  "cours": "geographie-s01-1",
+  "notion": "Le thème 1 : la croissance démographique et l'inégal développement",
+  "prerequis": [
+   "geographie-s01-1-f1"
+  ]
+ },
+ {
+  "id": "geographie-s01-1-f3",
+  "matiere": "geographie",
+  "semaine": 1,
+  "cours": "geographie-s01-1",
+  "notion": "Le thème 2 : des ressources limitées à gérer et à renouveler",
+  "prerequis": [
+   "geographie-s01-1-f1"
+  ]
+ },
+ {
+  "id": "geographie-s01-1-f4",
+  "matiere": "geographie",
+  "semaine": 1,
+  "cours": "geographie-s01-1",
+  "notion": "Le thème 3 : prévenir les risques, s'adapter au changement global",
+  "prerequis": [
+   "geographie-s01-1-f1"
+  ]
+ },
+ {
+  "id": "geographie-s01-2-f1",
+  "matiere": "geographie",
+  "semaine": 1,
+  "cours": "geographie-s01-2",
+  "notion": "Une population mondiale en forte hausse",
+  "prerequis": []
+ },
+ {
+  "id": "geographie-s01-2-f2",
+  "matiere": "geographie",
+  "semaine": 1,
+  "cours": "geographie-s01-2",
+  "notion": "Les causes de la hausse de l'espérance de vie",
+  "prerequis": [
+   "geographie-s01-2-f1"
+  ]
+ },
+ {
+  "id": "geographie-s01-2-f3",
+  "matiere": "geographie",
+  "semaine": 1,
+  "cours": "geographie-s01-2",
+  "notion": "Croissance démographique et niveau de développement",
+  "prerequis": [
+   "geographie-s01-2-f2"
+  ]
+ },
+ {
+  "id": "geographie-s01-2-f4",
+  "matiere": "geographie",
+  "semaine": 1,
+  "cours": "geographie-s01-2",
+  "notion": "La transition démographique",
+  "prerequis": [
+   "geographie-s01-2-f3"
+  ]
+ },
+ {
+  "id": "geographie-s01-2-f5",
+  "matiere": "geographie",
+  "semaine": 1,
+  "cours": "geographie-s01-2",
+  "notion": "Accroissement naturel et solde migratoire",
+  "prerequis": [
+   "geographie-s01-2-f1"
+  ]
+ },
+ {
+  "id": "geographie-s02-1-f1",
+  "matiere": "geographie",
+  "semaine": 2,
+  "cours": "geographie-s02-1",
+  "notion": "Présentation du Burkina Faso",
+  "prerequis": []
+ },
+ {
+  "id": "geographie-s02-1-f2",
+  "matiere": "geographie",
+  "semaine": 2,
+  "cours": "geographie-s02-1",
+  "notion": "L'évolution démographique du Burkina Faso",
+  "prerequis": [
+   "geographie-s01-2-f4"
+  ]
+ },
+ {
+  "id": "geographie-s02-1-f3",
+  "matiere": "geographie",
+  "semaine": 2,
+  "cours": "geographie-s02-1",
+  "notion": "L'explosion urbaine à Ouagadougou",
+  "prerequis": [
+   "geographie-s02-1-f2"
+  ]
+ },
+ {
+  "id": "geographie-s02-1-f4",
+  "matiere": "geographie",
+  "semaine": 2,
+  "cours": "geographie-s02-1",
+  "notion": "Les indicateurs de développement du Burkina Faso",
+  "prerequis": [
+   "geographie-s02-1-f2"
+  ]
+ },
+ {
+  "id": "geographie-s02-1-f5",
+  "matiere": "geographie",
+  "semaine": 2,
+  "cours": "geographie-s02-1",
+  "notion": "La pollution à Ouagadougou",
+  "prerequis": [
+   "geographie-s02-1-f3"
+  ]
+ },
+ {
+  "id": "geographie-s02-2-f1",
+  "matiere": "geographie",
+  "semaine": 2,
+  "cours": "geographie-s02-2",
+  "notion": "Les besoins en ressources et en services",
+  "prerequis": [
+   "geographie-s01-2-f3"
+  ]
+ },
+ {
+  "id": "geographie-s02-2-f2",
+  "matiere": "geographie",
+  "semaine": 2,
+  "cours": "geographie-s02-2",
+  "notion": "Le besoin de terres agricoles et les fronts pionniers",
+  "prerequis": [
+   "geographie-s02-2-f1"
+  ]
+ },
+ {
+  "id": "geographie-s02-2-f3",
+  "matiere": "geographie",
+  "semaine": 2,
+  "cours": "geographie-s02-2",
+  "notion": "Une urbanisation forte et incontrôlée",
+  "prerequis": [
+   "geographie-s02-2-f1"
+  ]
+ },
+ {
+  "id": "geographie-s02-2-f4",
+  "matiere": "geographie",
+  "semaine": 2,
+  "cours": "geographie-s02-2",
+  "notion": "La hausse des flux migratoires",
+  "prerequis": [
+   "geographie-s02-2-f1"
+  ]
+ },
+ {
+  "id": "geographie-s03-1-f1",
+  "matiere": "geographie",
+  "semaine": 3,
+  "cours": "geographie-s03-1",
+  "notion": "Le vieillissement des pays riches",
+  "prerequis": [
+   "geographie-s01-2-f3"
+  ]
+ },
+ {
+  "id": "geographie-s03-1-f2",
+  "matiere": "geographie",
+  "semaine": 3,
+  "cours": "geographie-s03-1",
+  "notion": "L'hiver démographique de l'Europe",
+  "prerequis": [
+   "geographie-s03-1-f1"
+  ]
+ },
+ {
+  "id": "geographie-s03-1-f3",
+  "matiere": "geographie",
+  "semaine": 3,
+  "cours": "geographie-s03-1",
+  "notion": "Les problèmes posés par le vieillissement",
+  "prerequis": [
+   "geographie-s03-1-f1"
+  ]
+ },
+ {
+  "id": "geographie-s03-1-f4",
+  "matiere": "geographie",
+  "semaine": 3,
+  "cours": "geographie-s03-1",
+  "notion": "Les politiques face au vieillissement",
+  "prerequis": [
+   "geographie-s03-1-f3"
+  ]
+ },
+ {
+  "id": "histoire-s01-1-f1",
+  "matiere": "histoire",
+  "semaine": 1,
+  "cours": "histoire-s01-1",
+  "notion": "Le partage de l'Empire romain en 395",
+  "prerequis": []
+ },
+ {
+  "id": "histoire-s01-1-f2",
+  "matiere": "histoire",
+  "semaine": 1,
+  "cours": "histoire-s01-1",
+  "notion": "Deux destins : 476 et 1453",
+  "prerequis": [
+   "histoire-s01-1-f1"
+  ]
+ },
+ {
+  "id": "histoire-s01-1-f3",
+  "matiere": "histoire",
+  "semaine": 1,
+  "cours": "histoire-s01-1",
+  "notion": "Byzance, Constantinople, Istanbul",
+  "prerequis": [
+   "histoire-s01-1-f1"
+  ]
+ },
+ {
+  "id": "histoire-s01-1-f4",
+  "matiere": "histoire",
+  "semaine": 1,
+  "cours": "histoire-s01-1",
+  "notion": "Justinien et ses conquêtes",
+  "prerequis": [
+   "histoire-s01-1-f1"
+  ]
+ },
+ {
+  "id": "histoire-s01-1-f5",
+  "matiere": "histoire",
+  "semaine": 1,
+  "cours": "histoire-s01-1",
+  "notion": "La mosaïque de Saint-Vital de Ravenne",
+  "prerequis": [
+   "histoire-s01-1-f4"
+  ]
+ },
+ {
+  "id": "histoire-s01-2-f1",
+  "matiere": "histoire",
+  "semaine": 1,
+  "cours": "histoire-s01-2",
+  "notion": "Des rois francs à l'empereur Charlemagne",
+  "prerequis": [
+   "histoire-s01-1-f2"
+  ]
+ },
+ {
+  "id": "histoire-s01-2-f2",
+  "matiere": "histoire",
+  "semaine": 1,
+  "cours": "histoire-s01-2",
+  "notion": "Les conquêtes de Charlemagne",
+  "prerequis": [
+   "histoire-s01-2-f1"
+  ]
+ },
+ {
+  "id": "histoire-s01-2-f3",
+  "matiere": "histoire",
+  "semaine": 1,
+  "cours": "histoire-s01-2",
+  "notion": "Le couronnement de Charlemagne en 800",
+  "prerequis": [
+   "histoire-s01-2-f1"
+  ]
+ },
+ {
+  "id": "histoire-s01-2-f4",
+  "matiere": "histoire",
+  "semaine": 1,
+  "cours": "histoire-s01-2",
+  "notion": "Gouverner l'empire : comtes, missi dominici, bénéfices",
+  "prerequis": []
+ },
+ {
+  "id": "histoire-s01-2-f5",
+  "matiere": "histoire",
+  "semaine": 1,
+  "cours": "histoire-s01-2",
+  "notion": "La renaissance carolingienne",
+  "prerequis": [
+   "histoire-s01-2-f1"
+  ]
+ },
+ {
+  "id": "histoire-s02-1-f1",
+  "matiere": "histoire",
+  "semaine": 2,
+  "cours": "histoire-s02-1",
+  "notion": "Deux empires chrétiens : Orient et Occident",
+  "prerequis": [
+   "histoire-s01-1-f3",
+   "histoire-s01-2-f1",
+   "histoire-s01-2-f3"
+  ]
+ },
+ {
+  "id": "histoire-s02-1-f2",
+  "matiere": "histoire",
+  "semaine": 2,
+  "cours": "histoire-s02-1",
+  "notion": "La christianisation",
+  "prerequis": [
+   "histoire-s02-1-f1"
+  ]
+ },
+ {
+  "id": "histoire-s02-1-f3",
+  "matiere": "histoire",
+  "semaine": 2,
+  "cours": "histoire-s02-1",
+  "notion": "Le schisme",
+  "prerequis": [
+   "histoire-s02-1-f1"
+  ]
+ },
+ {
+  "id": "histoire-s02-1-f4",
+  "matiere": "histoire",
+  "semaine": 2,
+  "cours": "histoire-s02-1",
+  "notion": "La théologie",
+  "prerequis": [
+   "histoire-s02-1-f1"
+  ]
+ },
+ {
+  "id": "histoire-s03-1-f1",
+  "matiere": "histoire",
+  "semaine": 3,
+  "cours": "histoire-s03-1",
+  "notion": "Mohamed et l'Hégire",
+  "prerequis": []
+ },
+ {
+  "id": "histoire-s03-1-f2",
+  "matiere": "histoire",
+  "semaine": 3,
+  "cours": "histoire-s03-1",
+  "notion": "Les dynasties omeyyade et abbasside",
+  "prerequis": [
+   "histoire-s03-1-f1"
+  ]
+ },
+ {
+  "id": "histoire-s03-1-f3",
+  "matiere": "histoire",
+  "semaine": 3,
+  "cours": "histoire-s03-1",
+  "notion": "Le califat de Cordoue (929)",
+  "prerequis": [
+   "histoire-s03-1-f2",
+   "histoire-s01-2-f2"
+  ]
+ },
+ {
+  "id": "langue-conj10-f1",
+  "matiere": "langue",
+  "semaine": 0,
+  "cours": "langue-conj10",
+  "notion": "Les sept modes du verbe",
+  "prerequis": []
+ },
+ {
+  "id": "langue-conj10-f2",
+  "matiere": "langue",
+  "semaine": 0,
+  "cours": "langue-conj10",
+  "notion": "Les quatre modes personnels",
+  "prerequis": [
+   "langue-conj10-f1"
+  ]
+ },
+ {
+  "id": "langue-conj10-f3",
+  "matiere": "langue",
+  "semaine": 0,
+  "cours": "langue-conj10",
+  "notion": "Les trois modes impersonnels",
+  "prerequis": [
+   "langue-conj10-f1"
+  ]
+ },
+ {
+  "id": "langue-conj10-f4",
+  "matiere": "langue",
+  "semaine": 0,
+  "cours": "langue-conj10",
+  "notion": "Temps simples et temps composés",
+  "prerequis": [
+   "langue-conj10-f2",
+   "langue-conj10-f3"
+  ]
+ },
+ {
+  "id": "langue-conj10-f5",
+  "matiere": "langue",
+  "semaine": 0,
+  "cours": "langue-conj10",
+  "notion": "Grammaire, conjugaison et orthographe",
+  "prerequis": []
+ },
+ {
+  "id": "langue-conj11-f1",
+  "matiere": "langue",
+  "semaine": 0,
+  "cours": "langue-conj11",
+  "notion": "Être : l'identité et les qualités",
+  "prerequis": []
+ },
+ {
+  "id": "langue-conj11-f2",
+  "matiere": "langue",
+  "semaine": 0,
+  "cours": "langue-conj11",
+  "notion": "Être : un état ou une situation",
+  "prerequis": [
+   "langue-conj11-f1"
+  ]
+ },
+ {
+  "id": "langue-conj11-f3",
+  "matiere": "langue",
+  "semaine": 0,
+  "cours": "langue-conj11",
+  "notion": "Avoir : la possession",
+  "prerequis": [
+   "langue-conj11-f1"
+  ]
+ },
+ {
+  "id": "langue-conj11-f4",
+  "matiere": "langue",
+  "semaine": 0,
+  "cours": "langue-conj11",
+  "notion": "Avoir : une relation",
+  "prerequis": [
+   "langue-conj11-f3"
+  ]
+ },
+ {
+  "id": "langue-conj12-f1",
+  "matiere": "langue",
+  "semaine": 0,
+  "cours": "langue-conj12",
+  "notion": "a, as ou à",
+  "prerequis": []
+ },
+ {
+  "id": "langue-conj12-f2",
+  "matiere": "langue",
+  "semaine": 0,
+  "cours": "langue-conj12",
+  "notion": "Le truc de « avait »",
+  "prerequis": [
+   "langue-conj12-f1"
+  ]
+ },
+ {
+  "id": "langue-conj12-f3",
+  "matiere": "langue",
+  "semaine": 0,
+  "cours": "langue-conj12",
+  "notion": "Les emplois de la préposition à",
+  "prerequis": [
+   "langue-conj12-f1"
+  ]
+ },
+ {
+  "id": "langue-conj12-f4",
+  "matiere": "langue",
+  "semaine": 0,
+  "cours": "langue-conj12",
+  "notion": "est, es ou et",
+  "prerequis": [
+   "langue-conj12-f1"
+  ]
+ },
+ {
+  "id": "langue-conj12-f5",
+  "matiere": "langue",
+  "semaine": 0,
+  "cours": "langue-conj12",
+  "notion": "ai, aie, aies, ait, aient",
+  "prerequis": [
+   "langue-conj12-f1"
+  ]
+ },
+ {
+  "id": "lecture-s01-1-f1",
+  "matiere": "lecture",
+  "semaine": 1,
+  "cours": "lecture-s01-1",
+  "notion": "L'origine des mots Arctique et Antarctique",
+  "prerequis": []
+ },
+ {
+  "id": "lecture-s01-1-f2",
+  "matiere": "lecture",
+  "semaine": 1,
+  "cours": "lecture-s01-1",
+  "notion": "La formation et la dislocation de la banquise",
+  "prerequis": []
+ },
+ {
+  "id": "lecture-s01-1-f3",
+  "matiere": "lecture",
+  "semaine": 1,
+  "cours": "lecture-s01-1",
+  "notion": "Les glaces qui flottent",
+  "prerequis": [
+   "lecture-s01-1-f2"
+  ]
+ },
+ {
+  "id": "lecture-s01-1-f4",
+  "matiere": "lecture",
+  "semaine": 1,
+  "cours": "lecture-s01-1",
+  "notion": "Situer au nord ou au sud",
+  "prerequis": [
+   "lecture-s01-1-f1"
+  ]
+ },
+ {
+  "id": "lecture-s02-1-f1",
+  "matiere": "lecture",
+  "semaine": 2,
+  "cours": "lecture-s02-1",
+  "notion": "Les sortes de navires",
+  "prerequis": []
+ },
+ {
+  "id": "lecture-s02-1-f2",
+  "matiere": "lecture",
+  "semaine": 2,
+  "cours": "lecture-s02-1",
+  "notion": "Les rôles à bord",
+  "prerequis": [
+   "lecture-s02-1-f1"
+  ]
+ },
+ {
+  "id": "lecture-s02-1-f3",
+  "matiere": "lecture",
+  "semaine": 2,
+  "cours": "lecture-s02-1",
+  "notion": "Gréement courant et gréement dormant",
+  "prerequis": []
+ },
+ {
+  "id": "lecture-s02-1-f4",
+  "matiere": "lecture",
+  "semaine": 2,
+  "cours": "lecture-s02-1",
+  "notion": "Les parties du navire et le sextant",
+  "prerequis": [
+   "lecture-s02-1-f3"
+  ]
+ },
+ {
+  "id": "lecture-s02-1-f5",
+  "matiere": "lecture",
+  "semaine": 2,
+  "cours": "lecture-s02-1",
+  "notion": "Se repérer dans le navire",
+  "prerequis": [
+   "lecture-s02-1-f2"
+  ]
+ },
+ {
+  "id": "lecture-s03-1-f1",
+  "matiere": "lecture",
+  "semaine": 3,
+  "cours": "lecture-s03-1",
+  "notion": "Les verbes du voyage en mer",
+  "prerequis": []
+ },
+ {
+  "id": "lecture-s03-1-f2",
+  "matiere": "lecture",
+  "semaine": 3,
+  "cours": "lecture-s03-1",
+  "notion": "Parler du vent et régler les voiles",
+  "prerequis": [
+   "lecture-s03-1-f1"
+  ]
+ },
+ {
+  "id": "lecture-s03-1-f3",
+  "matiere": "lecture",
+  "semaine": 3,
+  "cours": "lecture-s03-1",
+  "notion": "Les expressions de la navigation",
+  "prerequis": [
+   "lecture-s03-1-f2"
+  ]
+ },
+ {
+  "id": "lecture-s03-1-f4",
+  "matiere": "lecture",
+  "semaine": 3,
+  "cours": "lecture-s03-1",
+  "notion": "Le gros temps en mer",
+  "prerequis": []
+ },
+ {
+  "id": "lecture-s03-1-f5",
+  "matiere": "lecture",
+  "semaine": 3,
+  "cours": "lecture-s03-1",
+  "notion": "Les mesures de la marine",
+  "prerequis": []
+ },
+ {
+  "id": "litterature-s01-2-f1",
+  "matiere": "litterature",
+  "semaine": 1,
+  "cours": "litterature-s01-2",
+  "notion": "L'hyperbole",
+  "prerequis": []
+ },
+ {
+  "id": "litterature-s01-2-f2",
+  "matiere": "litterature",
+  "semaine": 1,
+  "cours": "litterature-s01-2",
+  "notion": "L'énumération",
+  "prerequis": []
+ },
+ {
+  "id": "litterature-s01-2-f3",
+  "matiere": "litterature",
+  "semaine": 1,
+  "cours": "litterature-s01-2",
+  "notion": "L'étymologie d'un mot",
+  "prerequis": []
+ },
+ {
+  "id": "litterature-s01-2-f4",
+  "matiere": "litterature",
+  "semaine": 1,
+  "cours": "litterature-s01-2",
+  "notion": "Relever un procédé et dire ce qu'il apporte",
+  "prerequis": [
+   "litterature-s01-2-f1",
+   "litterature-s01-2-f2"
+  ]
+ },
+ {
+  "id": "litterature-s02-2-f1",
+  "matiere": "litterature",
+  "semaine": 2,
+  "cours": "litterature-s02-2",
+  "notion": "La description objective",
+  "prerequis": []
+ },
+ {
+  "id": "litterature-s02-2-f2",
+  "matiere": "litterature",
+  "semaine": 2,
+  "cours": "litterature-s02-2",
+  "notion": "La description subjective",
+  "prerequis": [
+   "litterature-s02-2-f1"
+  ]
+ },
+ {
+  "id": "litterature-s02-2-f3",
+  "matiere": "litterature",
+  "semaine": 2,
+  "cours": "litterature-s02-2",
+  "notion": "Description précise ou rapide",
+  "prerequis": []
+ },
+ {
+  "id": "litterature-s02-2-f4",
+  "matiere": "litterature",
+  "semaine": 2,
+  "cours": "litterature-s02-2",
+  "notion": "La métaphore dans une description",
+  "prerequis": [
+   "litterature-s02-2-f3"
+  ]
+ },
+ {
+  "id": "litterature-s02-2-f5",
+  "matiere": "litterature",
+  "semaine": 2,
+  "cours": "litterature-s02-2",
+  "notion": "Ce qu'une description laisse deviner",
+  "prerequis": [
+   "litterature-s02-2-f2"
+  ]
+ },
+ {
+  "id": "litterature-s03-2-f1",
+  "matiere": "litterature",
+  "semaine": 3,
+  "cours": "litterature-s03-2",
+  "notion": "L'antithèse",
+  "prerequis": []
+ },
+ {
+  "id": "litterature-s03-2-f2",
+  "matiere": "litterature",
+  "semaine": 3,
+  "cours": "litterature-s03-2",
+  "notion": "Les sentiments d'un personnage et leur évolution",
+  "prerequis": []
+ },
+ {
+  "id": "litterature-s03-2-f3",
+  "matiere": "litterature",
+  "semaine": 3,
+  "cours": "litterature-s03-2",
+  "notion": "La focalisation interne",
+  "prerequis": [
+   "litterature-s03-2-f2"
+  ]
+ },
+ {
+  "id": "physique-s01-1-f1",
+  "matiere": "physique",
+  "semaine": 1,
+  "cours": "physique-s01-1",
+  "notion": "La matière et ses trois états",
+  "prerequis": []
+ },
+ {
+  "id": "physique-s01-1-f2",
+  "matiere": "physique",
+  "semaine": 1,
+  "cours": "physique-s01-1",
+  "notion": "L'état solide",
+  "prerequis": [
+   "physique-s01-1-f1"
+  ]
+ },
+ {
+  "id": "physique-s01-1-f3",
+  "matiere": "physique",
+  "semaine": 1,
+  "cours": "physique-s01-1",
+  "notion": "Le sucre en poudre, un solide qui semble couler",
+  "prerequis": [
+   "physique-s01-1-f2"
+  ]
+ },
+ {
+  "id": "physique-s01-1-f4",
+  "matiere": "physique",
+  "semaine": 1,
+  "cours": "physique-s01-1",
+  "notion": "L'état liquide",
+  "prerequis": [
+   "physique-s01-1-f1"
+  ]
+ },
+ {
+  "id": "physique-s01-1-f5",
+  "matiere": "physique",
+  "semaine": 1,
+  "cours": "physique-s01-1",
+  "notion": "La surface libre, un repère d'horizontalité",
+  "prerequis": [
+   "physique-s01-1-f4",
+   "methode-instruments-f1"
+  ]
+ },
+ {
+  "id": "physique-s01-1-f6",
+  "matiere": "physique",
+  "semaine": 1,
+  "cours": "physique-s01-1",
+  "notion": "L'état gazeux",
+  "prerequis": [
+   "physique-s01-1-f1"
+  ]
+ },
+ {
+  "id": "physique-s02-1-f1",
+  "matiere": "physique",
+  "semaine": 2,
+  "cours": "physique-s02-1",
+  "notion": "Fusion et solidification",
+  "prerequis": [
+   "physique-s01-1-f1"
+  ]
+ },
+ {
+  "id": "physique-s02-1-f2",
+  "matiere": "physique",
+  "semaine": 2,
+  "cours": "physique-s02-1",
+  "notion": "Vaporisation et liquéfaction",
+  "prerequis": [
+   "physique-s02-1-f1"
+  ]
+ },
+ {
+  "id": "physique-s02-1-f3",
+  "matiere": "physique",
+  "semaine": 2,
+  "cours": "physique-s02-1",
+  "notion": "L'eau dans la nature sous ses trois états",
+  "prerequis": [
+   "physique-s01-1-f1"
+  ]
+ },
+ {
+  "id": "physique-s02-1-f4",
+  "matiere": "physique",
+  "semaine": 2,
+  "cours": "physique-s02-1",
+  "notion": "Repérer l'eau avec le sulfate de cuivre anhydre",
+  "prerequis": []
+ },
+ {
+  "id": "physique-s02-1-f5",
+  "matiere": "physique",
+  "semaine": 2,
+  "cours": "physique-s02-1",
+  "notion": "L'eau, indispensable au corps",
+  "prerequis": [
+   "physique-s02-1-f4"
+  ]
+ },
+ {
+  "id": "physique-s02-1-f6",
+  "matiere": "physique",
+  "semaine": 2,
+  "cours": "physique-s02-1",
+  "notion": "Les réserves d'eau de la Terre",
+  "prerequis": []
+ },
+ {
+  "id": "physique-s03-1-f1",
+  "matiere": "physique",
+  "semaine": 3,
+  "cours": "physique-s03-1",
+  "notion": "Lire une graduation et trouver un volume",
+  "prerequis": [
+   "methode-instruments-f5",
+   "methode-instruments-f6"
+  ]
+ },
+ {
+  "id": "physique-s03-1-f2",
+  "matiere": "physique",
+  "semaine": 3,
+  "cours": "physique-s03-1",
+  "notion": "Le volume d'un pavé",
+  "prerequis": [
+   "physique-s03-1-f1"
+  ]
+ },
+ {
+  "id": "physique-s03-1-f3",
+  "matiere": "physique",
+  "semaine": 3,
+  "cours": "physique-s03-1",
+  "notion": "Les unités de masse",
+  "prerequis": [
+   "methode-instruments-f2"
+  ]
+ },
+ {
+  "id": "physique-s03-1-f4",
+  "matiere": "physique",
+  "semaine": 3,
+  "cours": "physique-s03-1",
+  "notion": "Masse et volume, deux grandeurs différentes",
+  "prerequis": [
+   "physique-s01-1-f1",
+   "physique-s03-1-f1"
+  ]
+ },
+ {
+  "id": "physique-s03-1-f5",
+  "matiere": "physique",
+  "semaine": 3,
+  "cours": "physique-s03-1",
+  "notion": "Dense ou lourd ?",
+  "prerequis": [
+   "physique-s03-1-f4"
+  ]
+ },
+ {
+  "id": "svt-s01-1-f1",
+  "matiere": "svt",
+  "semaine": 1,
+  "cours": "svt-s01-1",
+  "notion": "Le Soleil et l'ordre des planètes",
+  "prerequis": []
+ },
+ {
+  "id": "svt-s01-1-f2",
+  "matiere": "svt",
+  "semaine": 1,
+  "cours": "svt-s01-1",
+  "notion": "Planètes telluriques et planètes gazeuses",
+  "prerequis": [
+   "svt-s01-1-f1"
+  ]
+ },
+ {
+  "id": "svt-s01-1-f3",
+  "matiere": "svt",
+  "semaine": 1,
+  "cours": "svt-s01-1",
+  "notion": "Le portrait de quelques planètes",
+  "prerequis": [
+   "svt-s01-1-f2"
+  ]
+ },
+ {
+  "id": "svt-s01-1-f4",
+  "matiere": "svt",
+  "semaine": 1,
+  "cours": "svt-s01-1",
+  "notion": "La Terre, une planète à part",
+  "prerequis": [
+   "svt-s01-1-f2"
+  ]
+ },
+ {
+  "id": "svt-s01-1-f5",
+  "matiere": "svt",
+  "semaine": 1,
+  "cours": "svt-s01-1",
+  "notion": "Le système solaire dans l'Univers",
+  "prerequis": [
+   "svt-s01-1-f1"
+  ]
+ },
+ {
+  "id": "svt-s01-1-f6",
+  "matiere": "svt",
+  "semaine": 1,
+  "cours": "svt-s01-1",
+  "notion": "Les planètes naines",
+  "prerequis": [
+   "svt-s01-1-f1"
+  ]
+ },
+ {
+  "id": "svt-s01-2-f1",
+  "matiere": "svt",
+  "semaine": 1,
+  "cours": "svt-s01-2",
+  "notion": "Rotation et révolution de la Terre",
+  "prerequis": []
+ },
+ {
+  "id": "svt-s01-2-f2",
+  "matiere": "svt",
+  "semaine": 1,
+  "cours": "svt-s01-2",
+  "notion": "Un axe de rotation incliné",
+  "prerequis": [
+   "svt-s01-2-f1"
+  ]
+ },
+ {
+  "id": "svt-s01-2-f3",
+  "matiere": "svt",
+  "semaine": 1,
+  "cours": "svt-s01-2",
+  "notion": "L'orbite en ellipse : périhélie et aphélie",
+  "prerequis": [
+   "svt-s01-2-f1"
+  ]
+ },
+ {
+  "id": "svt-s01-2-f4",
+  "matiere": "svt",
+  "semaine": 1,
+  "cours": "svt-s01-2",
+  "notion": "Solstices et équinoxes",
+  "prerequis": [
+   "svt-s01-2-f3"
+  ]
+ },
+ {
+  "id": "svt-s01-2-f5",
+  "matiere": "svt",
+  "semaine": 1,
+  "cours": "svt-s01-2",
+  "notion": "Faire des fiches de révision",
+  "prerequis": []
+ },
+ {
+  "id": "svt-s02-1-f1",
+  "matiere": "svt",
+  "semaine": 2,
+  "cours": "svt-s02-1",
+  "notion": "Les lignes imaginaires du globe",
+  "prerequis": [
+   "svt-s01-2-f2"
+  ]
+ },
+ {
+  "id": "svt-s02-1-f2",
+  "matiere": "svt",
+  "semaine": 2,
+  "cours": "svt-s02-1",
+  "notion": "La durée du jour selon le lieu",
+  "prerequis": [
+   "svt-s02-1-f1"
+  ]
+ },
+ {
+  "id": "svt-s02-1-f3",
+  "matiere": "svt",
+  "semaine": 2,
+  "cours": "svt-s02-1",
+  "notion": "Le crépuscule",
+  "prerequis": [
+   "svt-s02-1-f2"
+  ]
+ },
+ {
+  "id": "svt-s02-1-f4",
+  "matiere": "svt",
+  "semaine": 2,
+  "cours": "svt-s02-1",
+  "notion": "Le TP du globe éclairé",
+  "prerequis": [
+   "svt-s02-1-f1"
+  ]
+ },
+ {
+  "id": "svt-s02-1-f5",
+  "matiere": "svt",
+  "semaine": 2,
+  "cours": "svt-s02-1",
+  "notion": "Les saisons dans les deux hémisphères",
+  "prerequis": [
+   "svt-s02-1-f1",
+   "svt-s01-2-f4"
+  ]
+ },
+ {
+  "id": "svt-s02-1-f6",
+  "matiere": "svt",
+  "semaine": 2,
+  "cours": "svt-s02-1",
+  "notion": "Chaque planète tourne à son rythme",
+  "prerequis": [
+   "svt-s01-2-f1"
+  ]
+ },
+ {
+  "id": "svt-s02-2-f1",
+  "matiere": "svt",
+  "semaine": 2,
+  "cours": "svt-s02-2",
+  "notion": "La vapeur d'eau de l'atmosphère au fil du temps",
+  "prerequis": [
+   "svt-s01-1-f4"
+  ]
+ },
+ {
+  "id": "svt-s02-2-f2",
+  "matiere": "svt",
+  "semaine": 2,
+  "cours": "svt-s02-2",
+  "notion": "L'apparition du dioxygène et de l'ozone",
+  "prerequis": [
+   "svt-s02-2-f1"
+  ]
+ },
+ {
+  "id": "svt-s02-2-f3",
+  "matiere": "svt",
+  "semaine": 2,
+  "cours": "svt-s02-2",
+  "notion": "Distance au Soleil et température des planètes",
+  "prerequis": [
+   "svt-s01-1-f3"
+  ]
+ },
+ {
+  "id": "svt-s02-2-f4",
+  "matiere": "svt",
+  "semaine": 2,
+  "cours": "svt-s02-2",
+  "notion": "Du graphique au tableau à double entrée",
+  "prerequis": []
+ },
+ {
+  "id": "svt-s03-1-f1",
+  "matiere": "svt",
+  "semaine": 3,
+  "cours": "svt-s03-1",
+  "notion": "Les couches de l'atmosphère",
+  "prerequis": [
+   "svt-s02-2-f1"
+  ]
+ },
+ {
+  "id": "svt-s03-1-f2",
+  "matiere": "svt",
+  "semaine": 3,
+  "cours": "svt-s03-1",
+  "notion": "Lire le graphique de l'atmosphère",
+  "prerequis": [
+   "svt-s03-1-f1"
+  ]
+ },
+ {
+  "id": "svt-s03-1-f3",
+  "matiere": "svt",
+  "semaine": 3,
+  "cours": "svt-s03-1",
+  "notion": "Le vocabulaire du temps qu'il fait",
+  "prerequis": []
+ },
+ {
+  "id": "svt-s03-1-f4",
+  "matiere": "svt",
+  "semaine": 3,
+  "cours": "svt-s03-1",
+  "notion": "Les déplacements de l'air dans l'atmosphère",
+  "prerequis": [
+   "svt-s03-1-f3"
+  ]
+ },
+ {
+  "id": "svt-s03-1-f5",
+  "matiere": "svt",
+  "semaine": 3,
+  "cours": "svt-s03-1",
+  "notion": "Petite histoire de la météorologie en France",
+  "prerequis": []
+ }
+]
