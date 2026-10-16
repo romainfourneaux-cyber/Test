@@ -15,6 +15,10 @@
 // Mêlée (15/10/2026) : la vague au Gué donne des combats au corps à corps, dessinés avec le sang, sans le sang, puis sans
 // animations (aucune erreur JavaScript) ; une question ratée en bataille coûte 6 or (sceau « −6 or », bandeau) ; la case
 // « Sang dans les combats » des Réglages est cochée par défaut et s'enregistre.
+// Bataillons (16/10/2026) : pendant la vague au Gué, chaque troupe est dessinée en formation de plusieurs figurines, et des
+// figurines tombées restent couchées au sol. Grosse mêlée forcée (dernière vague de la Forteresse anglaise, armée nombreuse
+// des deux côtés), en temps réel, en 1366 × 768 et en 1920 × 1080 : écarts entre deux images (médiane 16,7 ms attendue,
+// au plus 2 % au-delà de 34 ms) et durée de la boucle de bataille (moteur et dessin ; 95 % des images sous 8 ms).
 // Contrôles d'interface : accords de « verrouillé », un seul sceau à la fois, bonne réponse d'une association montrée
 // une fois, or du bandeau jamais estompé, titre et « Quitter » visibles en 1366 × 768, tribut hors de la carte,
 // lignes sous les noms de la carte d'au moins 14 px à l'écran, noms séparés de 8 px et plus près de leur lieu.
@@ -301,6 +305,72 @@ async function tempsReel(navigateur, w, h, erreurs) {
     reallocations: toile.realloc.length, toilesRendues: toile.rendues };
 }
 
+// Grosse mêlée en temps réel (bataillons, 16/10/2026) : dernière vague de la Forteresse anglaise, avec une armée
+// nombreuse des deux côtés (or et arsenal donnés par l'essai). La vague avance à ×3 jusqu'à ce que six troupes se battent
+// au corps à corps, puis à ×1 pendant la mesure : écarts entre deux images (requestAnimationFrame) et durée de chaque
+// passage de la boucle de bataille (moteur et dessin), pendant MESURE_MELEE secondes.
+const MESURE_MELEE = 6;
+async function grosseMelee(navigateur, w, h, erreurs) {
+  const page = await navigateur.newPage({ viewport: { width: w, height: h } });
+  await page.addInitScript(() => {
+    window.__boucle = [];
+    const raf = window.requestAnimationFrame;
+    window.requestAnimationFrame = function (f) {
+      if (f && f.name === "boucle") return raf.call(window, function boucle(t) { const a = performance.now(); f(t); window.__boucle.push(performance.now() - a); });
+      return raf.call(window, f);
+    };
+  });
+  page.on("pageerror", e => erreurs.push(e.message));
+  page.on("console", m => { if (m.type() === "error") erreurs.push(m.text()); });
+  await page.goto(URL);
+  await page.waitForFunction(() => window.JEU && JEU.pret);
+  await page.click("#menu button[data-ecran=jouer]");
+  await page.waitForSelector("#ecran-jouer .carte-campagne");
+  await page.evaluate(() => JEU.bataille.lancer("chateau"));
+  for (let i = 0; i < 3; i++) {
+    await page.waitForFunction(() => document.querySelector(".td-question .question"));
+    await attendre(200);
+    await repondreJuste(page);
+  }
+  await page.waitForSelector(".td-pret");
+  await page.evaluate(() => {
+    const p = JEU.bataille.enCours, M = JEU.batailleMoteur;
+    p.arsenal.troupes = { fantassins: 1, cavaliers: 1, belier: 1 };
+    p.or = 5000;
+    for (let i = 0; i < 5; i++) M.envoyer(p, "fantassins");
+    for (let i = 0; i < 3; i++) M.envoyer(p, "cavaliers");
+    M.envoyer(p, "belier");
+    p.vague = p.vagues - 1; p.or = 0;
+  });
+  // l'Entrée qui suit de trop près la dernière réponse ne lance pas la vague : on réessaie
+  for (let k = 0; k < 5 && await page.evaluate(() => JEU.bataille.enCours.phase === "preparation"); k++) { await attendre(400); await page.keyboard.press("Enter"); }
+  await page.waitForFunction(() => JEU.bataille.enCours.phase === "vague");
+  await page.click('[data-cle="vitesse-3"]');
+  await page.waitForFunction(() => JEU.bataille.enCours.phase !== "vague" || JEU.bataille.enCours.unites.filter(u => u.adversaire).length >= 6, null, { timeout: 60000 });
+  await page.click('[data-cle="vitesse-1"]').catch(() => {});
+  const r = await page.evaluate(async d => {
+    window.__boucle.length = 0;
+    const ecarts = [], fin = performance.now() + d * 1000;
+    let avant = null, engages = 0, figures = 0, corps = 0;
+    await new Promise(res => {
+      function f(t) {
+        if (avant !== null) ecarts.push(t - avant);
+        avant = t;
+        const p = JEU.bataille.enCours, R = JEU.bataille.rendu;
+        engages = Math.max(engages, p.unites.filter(u => u.adversaire).length); figures = Math.max(figures, R.figures); corps = Math.max(corps, R.corps);
+        if (performance.now() < fin) requestAnimationFrame(f); else res();
+      }
+      requestAnimationFrame(f);
+    });
+    const tri = ecarts.slice().sort((a, b) => a - b), b = window.__boucle.slice().sort((a, b) => a - b);
+    const q = (t, x) => Math.round(t[Math.min(t.length - 1, Math.floor(t.length * x))] * 10) / 10;
+    return { images: ecarts.length, mediane: q(tri, 0.5), max: q(tri, 1), plus34: ecarts.filter(x => x > 34).length,
+      boucleMediane: q(b, 0.5), boucle95: q(b, 0.95), boucleMax: q(b, 1), engages, figures, corps };
+  }, MESURE_MELEE);
+  await page.close();
+  return Object.assign({ taille: w + " × " + h }, r);
+}
+
 // Toile de bataille en 1920 × 1080 : le conseil de guerre ne la réalloue pas ; une fenêtre redimensionnée la réalloue
 // et elle est redessinée dans la même tâche. Repli : sans terrain 3D (images retirées de sprites.js), la route, les
 // ponts et le gué sont dessinés ; avec lui, ils ne le sont pas (déjà dans l'image).
@@ -388,10 +458,15 @@ async function essaiToile(navigateur, erreurs) {
   // la vague se joue en temps réel : on avance l'horloge du navigateur. La mêlée se dessine tour à tour avec le sang
   // (réglage par défaut), sans sang, puis avec le sang et les animations coupées (pas de giclée), puis comme au début.
   const reglagesMelee = [[6, { sang: false }], [12, { sang: true, animations: false }], [18, { sang: true, animations: true }]];
+  bilan.bataillons = { troupes: 0, figures: 0, corps: 0, bannieres: 0 };
   for (let k = 0; k < 200 && await page.evaluate(() => JEU.bataille.enCours.phase === "vague"); k++) {
     const r = reglagesMelee.find(x => x[0] === k);
     if (r) await page.evaluate(o => Object.assign(JEU.sauvegarde.etat().reglages, o), r[1]);
     await page.clock.runFor(500);
+    // bataillons : figurines debout par troupe dessinée, figurines couchées, bannières (dernière image dessinée)
+    const R = await page.evaluate(() => Object.assign({}, JEU.bataille.rendu));
+    if (R.bataillons > bilan.bataillons.troupes) Object.assign(bilan.bataillons, { troupes: R.bataillons, figures: R.figures, bannieres: R.bannieres });
+    bilan.bataillons.corps = Math.max(bilan.bataillons.corps, R.corps);
   }
   await page.evaluate(() => Object.assign(JEU.sauvegarde.etat().reglages, { sang: true, animations: true }));
   bilan.apresVague = await page.evaluate(() => ({ phase: JEU.bataille.enCours.phase, vague: JEU.bataille.enCours.vague, chateau: JEU.bataille.enCours.chateau.pv,
@@ -613,6 +688,9 @@ async function essaiToile(navigateur, erreurs) {
   for (const [w, h] of [[1366, 768], [1920, 1080]]) bilan.tempsReel.push(await tempsReel(navigateur, w, h, erreurs));
   // 9. toile de bataille : pas de réallocation pendant le conseil, redessin immédiat, repli du terrain
   bilan.toile = await essaiToile(navigateur, erreurs);
+  // 10. grosse mêlée de bataillons en temps réel : images par seconde et durée de la boucle de bataille
+  bilan.grosseMelee = [];
+  for (const [w, h] of [[1366, 768], [1920, 1080]]) bilan.grosseMelee.push(await grosseMelee(navigateur, w, h, erreurs));
   bilan.erreursJS = erreurs;
   console.log(JSON.stringify(bilan, null, 1));
   await navigateur.close();
@@ -634,6 +712,15 @@ async function essaiToile(navigateur, erreurs) {
   else if (G.blocs.map(b => b.badge).join("|").indexOf("Griffon de fer|Griffon de cuivre") !== 0 || G.blocs.some(b => !b.cours.length) || cuivre[cuivre.length - 1] !== "Essai cuivre") echecs.push("onglet Grammaire : cours mal rangés par badge (" + JSON.stringify(G.blocs) + ")");
   if (bilan.bouclesApresQuitter > 0) echecs.push("la boucle de la bataille tourne encore après avoir quitté");
   if (!(bilan.apresVague.duels > 0)) echecs.push("vague au Gué : aucun combat au corps à corps (" + JSON.stringify(bilan.apresVague) + ")");
+  const BA = bilan.bataillons;
+  if (!(BA.troupes > 0 && BA.figures >= 4 * BA.troupes && BA.bannieres > 0)) echecs.push("vague au Gué : les troupes ne sont pas dessinées en bataillons (" + JSON.stringify(BA) + ")");
+  if (!(BA.corps > 0)) echecs.push("vague au Gué : aucune figurine tombée couchée au sol (" + JSON.stringify(BA) + ")");
+  bilan.grosseMelee.forEach(m => {
+    if (!(m.engages >= 6 && m.figures >= 60)) echecs.push("grosse mêlée " + m.taille + " : pas assez de troupes engagées pour la mesure (" + JSON.stringify(m) + ")");
+    if (!(m.mediane <= 17.5)) echecs.push("grosse mêlée " + m.taille + " : " + m.mediane + " ms entre deux images en médiane (60 images par seconde attendues)");
+    if (m.plus34 > Math.max(2, 0.02 * m.images)) echecs.push("grosse mêlée " + m.taille + " : " + m.plus34 + " images sur " + m.images + " à plus de 34 ms");
+    if (!(m.boucle95 < 8)) echecs.push("grosse mêlée " + m.taille + " : boucle de bataille à " + m.boucle95 + " ms pour 95 % des images (moins de 8 ms attendu)");
+  });
   const OR = R.or;
   if (!OR || OR.apres !== Math.max(0, OR.avant - 6) || (OR.avant > 0 && OR.sceau !== "−" + Math.min(6, OR.avant) + " or") || OR.bandeau !== Math.floor(OR.apres)) echecs.push("question ratée en bataille : l'or perdu ne se voit pas comme prévu (" + JSON.stringify(OR) + ")");
   const RS = bilan.reglageSang;

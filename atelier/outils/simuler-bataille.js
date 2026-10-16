@@ -16,13 +16,22 @@
 //   --perte : or perdu par erreur (par défaut celui de jeu/data/config.js, orPerduErreur, sinon celui du moteur ;
 //             0 = règle d'avant le 15/10/2026) ;
 //   --detail : batailles pour prendre chaque province, graine par graine ;
+//   --trace : la 1re bataille de la 1re graine de chaque province du 1er front, vague par vague (ce que tu fais, ce que fait le rival) ;
 //   --json : résultats en JSON (pour comparer deux réglages) ;
 //   --regle "M.RIVAL[4].tirs = 1.4; M.DEFENSE.degats = 3" : essai d'un réglage du moteur (M), sans toucher au fichier ;
 //   --troupes 0.75 : part de l'or dépensée en troupes avant les améliorations de tours ;
 //   --seulement attaque (ou defense) : ne joue que les provinces (ou que la défense du domaine), pour aller plus vite ;
 //   --comparer avant.json : écarts par niveau avec un essai enregistré par --json, mêmes graines (par exemple l'ancien
 //              moteur : --moteur <copie de f9939e2> --perte 0 --json > avant.json) : batailles pour prendre la province
-//              et coups portés à la 1re bataille.
+//              et coups portés à la 1re bataille (stratégie « equilibre ») ;
+//   --strategies equilibre,rush,tortue : stratégies du joueur scripté (par défaut : equilibre seulement) :
+//              equilibre : le joueur d'avant le 16/10/2026 (tours, puis troupes, puis améliorations, voir depenser) ;
+//              rush : tout l'or en troupes dès la 1re vague (tour de siège comprise), jamais de tour ;
+//              tortue : rien que des tours et des améliorations, jamais de troupe.
+//              Avec plusieurs stratégies, un tableau par stratégie, puis la comparaison (coups à la 1re vague, en part
+//              de la solidité de la place forte, coups à la 1re bataille, batailles pour prendre, défense tenue).
+//              Le seigneur rival réagit à ce que fait le joueur (jeu/js/bataille-moteur.js, rivalReagit) : le tableau
+//              dit aussi ce qu'il a fait (tours bâties, gardes de plus, troupes de renfort, en moyenne par bataille).
 "use strict";
 const fs = require("fs");
 const path = require("path");
@@ -33,9 +42,11 @@ function option(nom, defaut) { const i = args.indexOf("--" + nom); return i >= 0
 const GRAINES = parseInt(option("graines", "80"), 10);
 const PS = option("p", "0.6,0.7,0.8,0.9").split(",").map(Number);
 const MOTEUR = option("moteur", path.join(RACINE, "jeu", "js", "bataille-moteur.js"));
-const JSON_SORTIE = args.indexOf("--json") >= 0, DETAIL = args.indexOf("--detail") >= 0;
+const JSON_SORTIE = args.indexOf("--json") >= 0, DETAIL = args.indexOf("--detail") >= 0, TRACE = args.indexOf("--trace") >= 0;
 const NIVEAUX = option("niveaux", "0,1,2,3,4").split(",").map(Number);
 const SEULEMENT = option("seulement", null);
+const STRATEGIES = option("strategies", "equilibre").split(",").map(s => s.trim()).filter(Boolean);
+STRATEGIES.forEach(s => { if (["equilibre", "rush", "tortue"].indexOf(s) < 0) { console.error("Stratégie inconnue : " + s + " (equilibre, rush ou tortue)"); process.exit(1); } });
 // (un fichier écrit par « > » dans Windows PowerShell est en UTF-16 : il est lu aussi)
 function lireJSON(f) { const o = fs.readFileSync(f); return JSON.parse(o[0] === 0xFF && o[1] === 0xFE ? o.toString("utf16le", 2) : o.toString("utf8").replace(/^\uFEFF/, "")); }
 const COMPARER = option("comparer", null) ? lireJSON(option("comparer")) : null;
@@ -107,9 +118,10 @@ function couverture(carteId, carte, type) {
 }
 const ORDRE_TOURS = ["archers", "baliste", "piquiers", "catapulte"];
 const PART_TROUPES = Number(option("troupes", "0.75"));
-function acheterTroupes(p, budget) {
+// belierDesLeDebut : la tour de siège dès la 1re vague (stratégie rush) ; sinon dès la 2e, comme avant.
+function acheterTroupes(p, budget, belierDesLeDebut) {
   for (;;) {
-    const choix = ["belier", "cavaliers", "fantassins"].filter(t => M.niveauArsenal(p, "troupes", t) > 0 && (t !== "belier" || p.vague >= 1))
+    const choix = ["belier", "cavaliers", "fantassins"].filter(t => M.niveauArsenal(p, "troupes", t) > 0 && (t !== "belier" || p.vague >= 1 || belierDesLeDebut))
       .find(t => M.TROUPES[t].cout <= Math.min(budget, p.or));
     if (!choix || !M.envoyer(p, choix)) return;
     budget -= M.TROUPES[choix].cout;
@@ -138,6 +150,26 @@ function depenser(p, carteId, carte) {
   }
   acheterTroupes(p, Infinity);
 }
+// Rush : tout l'or en troupes, dès la 1re vague, la plus chère d'abord (tour de siège, cavaliers, fantassins).
+function depenserRush(p) { acheterTroupes(p, Infinity, true); }
+// Tortue : des tours sur chaque emplacement libre (types en alternance, celui qui couvre le plus de route d'abord), puis
+// des améliorations (la moins chère d'abord) ; jamais de troupe.
+function depenserTortue(p, carteId, carte) {
+  const dispo = ORDRE_TOURS.filter(t => M.niveauArsenal(p, "tours", t) > 0);
+  for (;;) {
+    const type = dispo[p.tours.length % dispo.length];
+    if (p.tours.length >= carte.emplacements.length || p.or < M.TOURS[type].cout) break;
+    const cov = couverture(carteId, carte, type);
+    let meilleur = -1;
+    cov.forEach((n, i) => { if (M.emplacementLibre(p, i) && (meilleur < 0 || n > cov[meilleur])) meilleur = i; });
+    if (meilleur < 0 || !M.poserTour(p, type, meilleur)) break;
+  }
+  for (;;) {
+    const t = p.tours.filter(x => x.niveau < M.AMELIORATION.max).sort((a, b) => M.coutAmelioration(a) - M.coutAmelioration(b))[0];
+    if (!t || p.or < M.coutAmelioration(t) || !M.ameliorerTour(p, t.emplacement)) break;
+  }
+}
+const DEPENSES = { equilibre: depenser, rush: depenserRush, tortue: depenserTortue };
 
 // Or d'une réponse : celui du moteur s'il sait le faire (M.repondre), sinon l'ancienne règle de bataille.js.
 function repondre(p, juste, etat) {
@@ -155,25 +187,37 @@ function nouvelles(p, r) {
   else p.modificateurs[k] = true;
 }
 
-function jouerBataille(carteId, o, pJuste, graine) {
+// Une bataille, jouée vague par vague. Rend l'issue, les coups portés (en tout et à la 1re vague), les murs restants et ce
+// que le seigneur rival a fait (tours bâties en cours de bataille, gardes ajoutés à sa garnison, troupes de renfort).
+function jouerBataille(carteId, o, pJuste, graine, strategie, trace) {
   const r = alea(graine);
   tirage = r;
   const carte = CB.carte(carteId);
   const p = M.creer(carte, o);
-  const etat = { serie: 0 };
-  let garde = 0;
+  const etat = { serie: 0 }, depense = DEPENSES[strategie || "equilibre"];
+  const toursAuDepart = p.toursRivales.length;
+  let garde = 0, vague1 = null;
   while (p.phase !== "fin" && garde++ < 20) {
     for (let i = 0; i < 3; i++) repondre(p, r() < pJuste, etat);
     nouvelles(p, r);
-    depenser(p, carteId, carte);
+    depense(p, carteId, carte);
+    const avant = TRACE && trace ? { vague: p.vague + 1, or: p.or, envois: p.envois.length, tours: p.tours.length, coups: p.stats.degatsRival, sorties: p.stats.sorties || 0, journal: p.ia ? p.ia.journal.length : 0 } : null;
     M.jouerVague(p, 0.025);
+    if (vague1 === null) vague1 = p.stats.degatsRival;
+    if (avant) trace.push("   vague " + avant.vague + " : tu envoies " + avant.envois + " soldats, tu as " + avant.tours + " tours, tu gardes " + avant.or + " or ; garnison " + (p.garnison ? p.garnison.taille : "—") +
+      ", sorties " + ((p.stats.sorties || 0) - avant.sorties) + ", coups portés " + (p.stats.degatsRival - avant.coups) + " ; rival : " + (p.ia ? p.ia.journal.slice(avant.journal).map(j => j.posture + " " + JSON.stringify(j.actions)).join(" ; ") : "—") + (p.ia ? " (trésor " + p.ia.or + ")" : ""));
   }
-  return { issue: p.fin, degats: p.stats.degatsRival, murs: Math.max(0, p.chateau.pv) / o.pvChateau, stats: p.stats };
+  const ia = { tours: p.toursRivales.length - toursAuDepart, gardes: 0, renforts: 0, rappels: 0 };
+  ((p.ia && p.ia.journal) || []).forEach(j => j.actions.forEach(a => {
+    if (a.genre === "garde") ia.gardes += a.nombre; else if (a.genre === "renfort") ia.renforts += a.nombre; else if (a.genre === "rappel") ia.rappels += a.nombre;
+  }));
+  return { issue: p.fin, degats: p.stats.degatsRival, vague1: vague1 || 0, murs: Math.max(0, p.chateau.pv) / o.pvChateau, stats: p.stats, ia: ia };
 }
 
 // ---------- essais ----------
-function attaque(niveau, pJuste) {
-  const res = { victoire: 0, tenu: 0, retraite: 0, degats: 0, batailles: 0, maxBatailles: 0, prises: 0, n: 0, tues: 0, pertes: 0 };
+function attaque(niveau, pJuste, strategie) {
+  const res = { victoire: 0, tenu: 0, retraite: 0, degats: 0, batailles: 0, maxBatailles: 0, prises: 0, n: 0, tues: 0, pertes: 0,
+    vague1: 0, part1: 0, fortes1: 0, sorties: 0, iaTours: 0, iaGardes: 0, iaRenforts: 0, iaRappels: 0 };
   C.FRONTS.forEach((f, iF) => {
     const prov = f.provinces[niveau];
     for (let g = 0; g < GRAINES; g++) {
@@ -181,10 +225,17 @@ function attaque(niveau, pJuste) {
       while (pv > 0 && n < 12) {
         const o = optionsBataille(niveau);
         o.vagues = 4; o.pvRival = pv; o.pvRivalMax = prov.pv;
-        const b = jouerBataille(prov.carte, o, pJuste, 1000 * g + 97 * niveau + 31 * iF + 7 * n + 1);
-        if (n === 0) { res[b.issue]++; res.degats += b.degats; res.n++; res.tues += b.stats.tues; res.pertes += b.stats.pertes; }
+        const tr = TRACE && g === 0 && iF === 0 && n === 0 ? [] : null;
+        const b = jouerBataille(prov.carte, o, pJuste, 1000 * g + 97 * niveau + 31 * iF + 7 * n + 1, strategie, tr);
+        if (tr) console.log(" " + strategie + ", p = " + pJuste + ", " + prov.nom + " (niveau " + niveau + "), 1re bataille, graine 0 : " + b.issue + ", " + b.degats + " coups\n" + tr.join("\n"));
+        if (n === 0) {
+          res[b.issue]++; res.degats += b.degats; res.n++; res.tues += b.stats.tues; res.pertes += b.stats.pertes;
+          res.vague1 += b.vague1; res.part1 += b.vague1 / prov.pv; if (b.vague1 > prov.pv / 3) res.fortes1++;
+          res.sorties += b.stats.sorties || 0; res.iaTours += b.ia.tours; res.iaGardes += b.ia.gardes; res.iaRenforts += b.ia.renforts; res.iaRappels += b.ia.rappels;
+        }
         pv = b.issue === "victoire" ? 0 : Math.max(0, pv - b.degats);
         n++;
+        if (!b.stats.envoyes && !b.degats) { n = 12; break; } // aucune troupe envoyée (tortue) : la province ne tombera jamais
       }
       if (pv <= 0) { res.prises++; res.batailles += n; res.maxBatailles = Math.max(res.maxBatailles, n); }
       if (DETAIL) (res.detail = res.detail || {})[prov.id] = ((res.detail[prov.id] || "") + " " + (pv <= 0 ? n : "x")).trim();
@@ -192,57 +243,78 @@ function attaque(niveau, pJuste) {
   });
   return res;
 }
-function defense(niveau, pJuste) {
+function defense(niveau, pJuste, strategie) {
   const res = { victoire: 0, tenu: 0, retraite: 0, degats: 0, n: 0, murs: 0, mursTenue: 0 };
   for (let g = 0; g < 2 * GRAINES; g++) {
     const o = optionsBataille(niveau);
     o.vagues = 3; o.pvRival = 12; o.pvRivalMax = 12;
-    const b = jouerBataille("domaine", o, pJuste, 5000 * g + 13 * niveau + 3);
+    const b = jouerBataille("domaine", o, pJuste, 5000 * g + 13 * niveau + 3, strategie);
     res[b.issue]++; res.degats += b.degats; res.n++; res.murs += b.murs; if (b.issue !== "retraite") res.mursTenue += b.murs;
   }
   return res;
 }
 
 const pc = (a, n) => n ? Math.round(100 * a / n) : null;
+const r2 = (a, n) => n ? Math.round(100 * a / n) / 100 : null;
 const t0 = Date.now();
-const sortie = { graines: GRAINES, perte: PERTE, moteur: path.relative(RACINE, MOTEUR), resultats: {} };
-if (!JSON_SORTIE) console.log("Moteur : " + sortie.moteur + " · or perdu par erreur : " + PERTE + " · " + GRAINES + " graines par province (deux fronts), " + 2 * GRAINES + " défenses par niveau");
+const sortie = { graines: GRAINES, perte: PERTE, moteur: path.relative(RACINE, MOTEUR), resultats: {}, strategies: {} };
+if (!JSON_SORTIE) console.log("Moteur : " + sortie.moteur + " · or perdu par erreur : " + PERTE + " · " + GRAINES + " graines par province (deux fronts), " + 2 * GRAINES + " défenses par niveau" +
+  (STRATEGIES.length > 1 || STRATEGIES[0] !== "equilibre" ? " · stratégies : " + STRATEGIES.join(", ") : ""));
+// avec --seulement, la partie qui n'a pas été jouée s'affiche « — » (et non « null % » ou « NaN »)
+const pct = x => (x === null || x === undefined ? "—" : x + " %"), val = x => (x === null || x === undefined ? "—" : String(x));
 PS.forEach(pJuste => {
-  const lignes = [];
-  NIVEAUX.forEach(niveau => {
-    const vide = { victoire: 0, tenu: 0, retraite: 0, degats: 0, batailles: 0, maxBatailles: 0, prises: 0, n: 0, tues: 0, pertes: 0, murs: 0, mursTenue: 0 };
-    const a = SEULEMENT === "defense" ? vide : attaque(niveau, pJuste), d = SEULEMENT === "attaque" ? vide : defense(niveau, pJuste);
-    if (DETAIL) console.log("niveau " + niveau + ", batailles pour prendre, graine par graine : " + JSON.stringify(a.detail));
-    lignes.push({
-      niveau: niveau, victoire: pc(a.victoire, a.n), tenu: pc(a.tenu, a.n), retraite: pc(a.retraite, a.n),
-      degats: a.n ? Math.round(100 * a.degats / a.n) / 100 : null, pv: C.FRONTS.map(f => f.provinces[niveau].pv).join("/"),
-      batailles: a.prises ? Math.round(100 * a.batailles / a.prises) / 100 : null, maxBatailles: a.maxBatailles, prises: pc(a.prises, 2 * GRAINES),
-      tues: a.n ? Math.round(10 * a.tues / a.n) / 10 : null, pertes: a.n ? Math.round(10 * a.pertes / a.n) / 10 : null,
-      defenseTenue: pc(d.victoire + d.tenu, d.n), defenseVictoire: pc(d.victoire, d.n), defenseMurs: pc(d.murs, d.n),
-      defenseMursTenue: pc(d.mursTenue, d.victoire + d.tenu)
+  STRATEGIES.forEach(strategie => {
+    const lignes = [];
+    NIVEAUX.forEach(niveau => {
+      const vide = { victoire: 0, tenu: 0, retraite: 0, degats: 0, batailles: 0, maxBatailles: 0, prises: 0, n: 0, tues: 0, pertes: 0, murs: 0, mursTenue: 0,
+        vague1: 0, part1: 0, fortes1: 0, sorties: 0, iaTours: 0, iaGardes: 0, iaRenforts: 0, iaRappels: 0 };
+      const a = SEULEMENT === "defense" ? vide : attaque(niveau, pJuste, strategie), d = SEULEMENT === "attaque" ? vide : defense(niveau, pJuste, strategie);
+      if (DETAIL) console.log(strategie + ", niveau " + niveau + ", batailles pour prendre, graine par graine : " + JSON.stringify(a.detail));
+      lignes.push({
+        niveau: niveau, victoire: pc(a.victoire, a.n), tenu: pc(a.tenu, a.n), retraite: pc(a.retraite, a.n),
+        degats: r2(a.degats, a.n), pv: C.FRONTS.map(f => f.provinces[niveau].pv).join("/"),
+        batailles: a.prises ? Math.round(100 * a.batailles / a.prises) / 100 : null, maxBatailles: a.maxBatailles, prises: pc(a.prises, 2 * GRAINES),
+        tues: a.n ? Math.round(10 * a.tues / a.n) / 10 : null, pertes: a.n ? Math.round(10 * a.pertes / a.n) / 10 : null,
+        vague1: r2(a.vague1, a.n), part1: pc(a.part1, a.n), fortes1: pc(a.fortes1, a.n), sorties: r2(a.sorties, a.n),
+        iaTours: r2(a.iaTours, a.n), iaGardes: r2(a.iaGardes, a.n), iaRenforts: r2(a.iaRenforts, a.n), iaRappels: r2(a.iaRappels, a.n),
+        defenseTenue: pc(d.victoire + d.tenu, d.n), defenseVictoire: pc(d.victoire, d.n), defenseMurs: pc(d.murs, d.n),
+        defenseMursTenue: pc(d.mursTenue, d.victoire + d.tenu)
+      });
+    });
+    if (strategie === "equilibre") sortie.resultats[pJuste] = lignes;
+    (sortie.strategies[strategie] = sortie.strategies[strategie] || {})[pJuste] = lignes;
+    if (JSON_SORTIE) return;
+    console.log("\np = " + pJuste + " (réponses justes)" + (STRATEGIES.length > 1 || strategie !== "equilibre" ? " · stratégie " + strategie : ""));
+    console.log("niv | pv     | victoire tenu retraite | coups 1re bataille | batailles pour prendre (max) | ennemis tués / tes pertes | défense tenue (dont victoire), murs restants (quand elle tient)");
+    lignes.forEach(l => console.log(
+      " " + l.niveau + "  | " + l.pv.padEnd(6) + " | " + pct(l.victoire).padStart(7) + " " + pct(l.tenu).padStart(5) + " " + pct(l.retraite).padStart(6) + "   | " +
+      val(l.degats).padStart(18) + " | " + (SEULEMENT === "defense" ? "—" : String(l.batailles === null ? "jamais" : l.batailles)).padStart(18) + (SEULEMENT === "defense" ? "" : " (" + l.maxBatailles + ")" + (l.prises < 100 ? " prises " + l.prises + " %" : "")) +
+      " | " + val(l.tues).padStart(8) + " / " + val(l.pertes) + " | " + pct(l.defenseTenue) + " (" + pct(l.defenseVictoire) + "), " + pct(l.defenseMurs) + " (" + pct(l.defenseMursTenue) + ")"));
+    const moy = k => Math.round(10 * lignes.reduce((s, l) => s + (l[k] || 0), 0) / lignes.length) / 10;
+    const moyA = k => (SEULEMENT === "defense" ? "—" : String(moy(k))), moyAp = k => (SEULEMENT === "defense" ? "—" : moy(k) + " %"), moyD = k => (SEULEMENT === "attaque" ? "—" : moy(k) + " %");
+    console.log("moy |        | " + moyAp("victoire").padStart(7) + " " + moyAp("tenu").padStart(5) + " " + moyAp("retraite").padStart(6) + "   | " + moyA("degats").padStart(18) + " | " + moyA("batailles").padStart(18) + "     |                       | " + moyD("defenseTenue") + ", murs " + moyD("defenseMurs"));
+    if (SEULEMENT !== "defense") {
+      console.log("1re bataille : coups à la 1re vague (part de la solidité ; batailles où elle dépasse un tiers) · sorties de la garnison · le rival en cours de bataille : tours bâties, gardes ajoutés à sa garnison, gardes rappelés par ses guetteurs (toutes vagues), troupes de renfort");
+      lignes.forEach(l => console.log(" " + l.niveau + "  | " + val(l.vague1).padStart(5) + " (" + pct(l.part1) + " ; " + pct(l.fortes1) + ") · " + val(l.sorties) + " sorties · " + val(l.iaTours) + " tours, " + val(l.iaGardes) + " gardes, " + val(l.iaRappels) + " rappelés, " + val(l.iaRenforts) + " renforts"));
+    }
+    const ref = strategie === "equilibre" && COMPARER && COMPARER.resultats[pJuste];
+    if (!ref || SEULEMENT === "defense") return;
+    const ecart = (x, y) => x && y != null ? (y >= x ? "+" : "−") + Math.abs(Math.round(100 * (y / x - 1))) + " %" : "—";
+    console.log("écarts avec " + option("comparer") + " (" + (COMPARER.moteur || "?") + ", or perdu " + COMPARER.perte + ") : batailles pour prendre ; coups à la 1re bataille" +
+      (COMPARER.graines !== GRAINES ? " (attention : " + COMPARER.graines + " graines dans l'essai comparé, " + GRAINES + " ici : les moyennes ne portent pas sur les mêmes batailles)" : ""));
+    lignes.forEach(l => {
+      const r = ref.find(x => x.niveau === l.niveau);
+      if (r) console.log(" " + l.niveau + "  | " + r.batailles + " → " + l.batailles + " (" + ecart(r.batailles, l.batailles) + ") ; " + r.degats + " → " + l.degats + " (" + ecart(r.degats, l.degats) + ")");
     });
   });
-  sortie.resultats[pJuste] = lignes;
-  if (JSON_SORTIE) return;
-  console.log("\np = " + pJuste + " (réponses justes)");
-  console.log("niv | pv     | victoire tenu retraite | coups 1re bataille | batailles pour prendre (max) | ennemis tués / tes pertes | défense tenue (dont victoire), murs restants (quand elle tient)");
-  // avec --seulement, la partie qui n'a pas été jouée s'affiche « — » (et non « null % » ou « NaN »)
-  const pct = x => (x === null ? "—" : x + " %"), val = x => (x === null ? "—" : String(x));
-  lignes.forEach(l => console.log(
-    " " + l.niveau + "  | " + l.pv.padEnd(6) + " | " + pct(l.victoire).padStart(7) + " " + pct(l.tenu).padStart(5) + " " + pct(l.retraite).padStart(6) + "   | " +
-    val(l.degats).padStart(18) + " | " + (SEULEMENT === "defense" ? "—" : String(l.batailles === null ? "jamais" : l.batailles)).padStart(18) + (SEULEMENT === "defense" ? "" : " (" + l.maxBatailles + ")" + (l.prises < 100 ? " prises " + l.prises + " %" : "")) +
-    " | " + val(l.tues).padStart(8) + " / " + val(l.pertes) + " | " + pct(l.defenseTenue) + " (" + pct(l.defenseVictoire) + "), " + pct(l.defenseMurs) + " (" + pct(l.defenseMursTenue) + ")"));
-  const moy = k => Math.round(10 * lignes.reduce((s, l) => s + (l[k] || 0), 0) / lignes.length) / 10;
-  const moyA = k => (SEULEMENT === "defense" ? "—" : String(moy(k))), moyAp = k => (SEULEMENT === "defense" ? "—" : moy(k) + " %"), moyD = k => (SEULEMENT === "attaque" ? "—" : moy(k) + " %");
-  console.log("moy |        | " + moyAp("victoire").padStart(7) + " " + moyAp("tenu").padStart(5) + " " + moyAp("retraite").padStart(6) + "   | " + moyA("degats").padStart(18) + " | " + moyA("batailles").padStart(18) + "     |                       | " + moyD("defenseTenue") + ", murs " + moyD("defenseMurs"));
-  const ref = COMPARER && COMPARER.resultats[pJuste];
-  if (!ref || SEULEMENT === "defense") return;
-  const ecart = (x, y) => x && y != null ? (y >= x ? "+" : "−") + Math.abs(Math.round(100 * (y / x - 1))) + " %" : "—";
-  console.log("écarts avec " + option("comparer") + " (" + (COMPARER.moteur || "?") + ", or perdu " + COMPARER.perte + ") : batailles pour prendre ; coups à la 1re bataille" +
-    (COMPARER.graines !== GRAINES ? " (attention : " + COMPARER.graines + " graines dans l'essai comparé, " + GRAINES + " ici : les moyennes ne portent pas sur les mêmes batailles)" : ""));
-  lignes.forEach(l => {
-    const r = ref.find(x => x.niveau === l.niveau);
-    if (r) console.log(" " + l.niveau + "  | " + r.batailles + " → " + l.batailles + " (" + ecart(r.batailles, l.batailles) + ") ; " + r.degats + " → " + l.degats + " (" + ecart(r.degats, l.degats) + ")");
+  // comparaison des stratégies : la stratégie équilibrée doit faire au moins aussi bien que rush et tortue
+  if (JSON_SORTIE || STRATEGIES.length < 2) return;
+  console.log("\np = " + pJuste + " · comparaison des stratégies, par niveau : coups à la 1re vague (part de la solidité) ; coups à la 1re bataille ; batailles pour prendre (prises en 12) ; défense tenue");
+  NIVEAUX.forEach((niveau, i) => {
+    console.log(" " + niveau + "  | " + STRATEGIES.map(s => {
+      const l = sortie.strategies[s][pJuste][i];
+      return s + " " + val(l.vague1) + " (" + pct(l.part1) + ") ; " + val(l.degats) + " ; " + (l.batailles === null ? "jamais" : l.batailles) + (l.prises < 100 ? " (" + pct(l.prises) + ")" : "") + " ; " + pct(l.defenseTenue);
+    }).join(" | "));
   });
 });
 if (JSON_SORTIE) console.log(JSON.stringify(sortie));

@@ -1035,5 +1035,80 @@ const txtSang = JS.sauvegarde.texteExport();
 JS.sauvegarde.importer(txtSang);
 verifier("Réglage du sang : coupé, il le reste après export puis import", JS.sauvegarde.etat().reglages.sang === false && JS.anim.sang() === false);
 
+// ---------- bataillons (16/10/2026, demande de Romain : « des bataillons au lieu de soldats ») ----------
+// Le rendu (jeu/js/bataille.js) montre chaque troupe du moteur en formation de figurines ; le moteur ne change pas.
+const BT = JB.bataille.bataillons, MBT = JB.batailleMoteur;
+const typesMoteur = Object.keys(MBT.TROUPES).concat(Object.keys(MBT.ENNEMIS)).filter((t, i, a) => a.indexOf(t) === i);
+const formesOk = typesMoteur.map(t => {
+  const f = BT.formation(t), d = f.d, noyaux = f.places.filter(q => q.noyau).length;
+  let ok = noyaux === 1 && f.places.every(q => q.echelle > 0 && q.type);
+  if (t === "cavaliers") ok = ok && d.rangs.length === 2 && d.rangs.every(n => n >= 2 && n <= 3);
+  else if (t === "champion") ok = ok && f.places[0].noyau && f.places[0].echelle > f.places[1].echelle && f.places.length - 1 >= 2 && f.places.length - 1 <= 6 && f.banniere > 0;
+  else if (t === "belier") ok = ok && f.places[0].noyau && f.places.length - 1 >= 2 && f.places.length - 1 <= 4 && f.places.slice(1).every(q => q.a < 0) && !f.banniere;
+  else ok = ok && d.rangs.length === 2 && d.rangs.every(n => n >= 3 && n <= 4) && f.banniere > 0;
+  return { t, n: f.places.length, ok };
+});
+verifier("Bataillons : chaque troupe du moteur a sa formation (fantassins, piétaille, hommes d'armes : 2 rangs de 3 ou 4 ; cavaliers : 2 rangs de 2 ou 3 ; champion : grande figurine et sa garde ; tour de siège : l'engin et ses pousseurs), un seul porte-bannière",
+  formesOk.every(x => x.ok) && BT.formation("type-inconnu").places.length >= 4, formesOk);
+const deboutOk = typesMoteur.every(t => {
+  const n = BT.formation(t).places.length;
+  let avant = n;
+  for (let k = 100; k >= 1; k--) { const d = BT.debout(n, k / 10, 10, true); if (d > avant || d < 1 || d > n) return false; avant = d; }
+  return BT.debout(n, 10, 10, true) === n && BT.debout(n, 0, 10, false) === 0 && BT.debout(n, 0.01, 10, true) === 1;
+});
+verifier("Bataillons : les figurines tombent une à une avec les points de vie (toutes à pleine vie, au moins une tant que la troupe vit, aucune morte)", deboutOk);
+const largeurOk = typesMoteur.every(t => {
+  const f = BT.formation(t);
+  return [-9, -MBT.MELEE.coteCombat, -2, 0, 2, MBT.MELEE.coteCombat, 9].every(c => { const cc = BT.cote(f, c); return f.places.every(q => Math.abs(cc + q.b) <= BT.BORD_ROUTE + 1e-9); });
+});
+verifier("Bataillons : toute la formation reste dans la largeur de la route (" + BT.BORD_ROUTE + " px du milieu au plus ; route de 30 à 38 px)", largeurOk && BT.BORD_ROUTE <= 14);
+// mêlée : aux distances du moteur (engagement et combat), les deux premiers rangs se font face sans se traverser
+const pairesMelee = [];
+Object.keys(MBT.TROUPES).forEach(a => Object.keys(MBT.ENNEMIS).forEach(r => [MBT.MELEE.contact, MBT.MELEE.ecart, MBT.MELEE.ecart - 4].forEach(g => {
+  const fa = BT.formation(a), fr = BT.formation(r), sa = 500, sr = 500 + g;
+  const fronteA = sa + fa.tete - BT.recul(fa, sa, sr) + fa.allonge, fronteR = sr - fr.tete + BT.recul(fr, sr, sa) - fr.allonge;
+  pairesMelee.push({ a, r, g, ecart: Math.round((fronteR - fronteA) * 100) / 100, reculA: BT.recul(fa, sa, sr), libre: BT.recul(fa, sa, sa + 200) });
+})));
+verifier("Bataillons en mêlée : premiers rangs face à face, jamais l'un dans l'autre (recul à l'œil, moteur inchangé : contact " + MBT.MELEE.contact + " px, combat " + MBT.MELEE.ecart + " px)",
+  pairesMelee.every(x => x.ecart >= BT.ECART_FRONTS - 1e-6 && x.libre === 0) && pairesMelee.some(x => x.reculA > 0), pairesMelee.filter(x => x.ecart < BT.ECART_FRONTS - 1e-6));
+const routeG = MBT.preparerRoute(JB.cartesBataille.carte("gue").route), ptB = { x: 0, y: 0 };
+let ecartRoute = 0;
+for (let s = -20; s <= routeG.longueur + 20; s += 7.3) [-12, 0, 9].forEach(c => { const a = MBT.surRoute(routeG, s, c), b = BT.pointRoute(routeG, s, c, ptB); ecartRoute = Math.max(ecartRoute, Math.hypot(a.x - b.x, a.y - b.y)); });
+verifier("Bataillons : les figurines sont posées sur le tracé du moteur (même point que surRoute)", ecartRoute < 1e-9, ecartRoute);
+// une vague jouée par le vrai moteur, suivie par le rendu à chaque pas (sans toile) : figurines debout = points de vie,
+// le porte-bannière tombe le dernier, figurines sur la route, figurines couchées gardées et plafonnées
+(function () {
+  const p = MBT.creer(JB.cartesBataille.carte("gue"), { niveau: 2, arsenal: { tours: { archers: 1 }, troupes: { fantassins: 1, cavaliers: 1, belier: 1 } }, orDepart: 400 });
+  ["fantassins", "fantassins", "cavaliers", "belier", "fantassins"].forEach(t => MBT.envoyer(p, t));
+  p.vague = 2;
+  MBT.lancerVague(p);
+  const v = { partie: p, campAdverse: "angleterre", corps: [], vus: [], tempsRendu: 0 };
+  const pts = []; for (let s = 0; s <= p.route.longueur; s += 1) pts.push(MBT.surRoute(p.route, s, 0));
+  const horsRoute = (x, y) => { let d = Infinity; for (const q of pts) d = Math.min(d, Math.hypot(q.x - x, q.y - y)); return d; };
+  const pb = { debout: 0, noyau: 0, route: 0, corpsMax: 0, vus: new Set(), finis: 0 }, morts = new Set();
+  let n = 0;
+  while (p.phase === "vague" && n++ < 6000) {
+    MBT.etape(p, 1 / 60);
+    BT.suivre(v, true, true);
+    pb.corpsMax = Math.max(pb.corpsMax, v.corps.length);
+    p.unites.forEach(u => {
+      if (!u.bat || u.pv <= 0 || !u.vivant) return;
+      pb.vus.add(u);
+      const debout = u.bat.figs.filter(f => f.debout);
+      if (debout.length !== BT.debout(u.bat.figs.length, u.pv, u.max, true)) pb.debout++;
+      if (!u.bat.figs.some(f => f.noyau && f.debout)) pb.noyau++;
+      if (n % 30 === 0) debout.forEach(f => { if (f.alpha > 0 && horsRoute(f.x, f.y) > BT.BORD_ROUTE + 2.5) pb.route++; });
+    });
+  }
+  BT.suivre(v, true, true); BT.suivre(v, true, true);
+  pb.vus.forEach(u => { if (u.pv <= 0) { morts.add(u); if (u.bat.debout === 0 && u.bat.mort) pb.finis++; } });
+  verifier("Bataillons sur une vraie vague : figurines debout = points de vie, porte-bannière (champion, engin) jusqu'au bout, figurines sur la route, toutes les figurines d'une troupe abattue couchées, au plus " + BT.CORPS_MAX + " à la fois",
+    p.phase !== "vague" && morts.size > 0 && pb.debout === 0 && pb.noyau === 0 && pb.route === 0 && pb.finis === morts.size && pb.corpsMax > 0 && pb.corpsMax <= BT.CORPS_MAX,
+    { phase: p.phase, morts: morts.size, finis: pb.finis, debout: pb.debout, noyau: pb.noyau, horsRoute: pb.route, corpsMax: pb.corpsMax });
+})();
+const srcB = fs.readFileSync(path.join(RACINE, "jeu", "js", "bataille.js"), "utf8");
+verifier("Bataillons : le rendu ne touche pas au moteur (aucune écriture de la place, des points de vie ou de l'adversaire d'une troupe dans bataille.js)",
+  !/\bu\.(s|x|y|pv|max|cote|vivant|adversaire)\s*[-+*/]?=(?!=)/.test(srcB));
+
 console.log("\n" + ok + " réussis, " + ko + " en échec.");
 process.exit(ko ? 1 : 0);
