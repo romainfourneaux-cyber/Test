@@ -6,7 +6,8 @@
 
   JEU.donnees = {
     config: null, planning: [], devoirs: [], indexCours: [], aRetravailler: [], suivi: { cours: {} },
-    cours: {}, anglais: {}, erreurs: []
+    cours: {}, anglais: {}, erreurs: [],
+    personnages: null // jeu/data/personnages.js : souverains et rivaux de la campagne (absent : un « seigneur rival » sans nom)
   };
 
   JEU.MATIERES = {
@@ -57,6 +58,9 @@
         case "anglais":
           if (!obj || !obj.id) throw new Error("séquence mal formée");
           d.anglais[obj.id] = obj; break;
+        case "personnages":
+          if (!obj || !Array.isArray(obj.personnages)) throw new Error("personnages mal formés");
+          d.personnages = obj; break;
         default: throw new Error("type inconnu : " + type);
       }
     } catch (e) {

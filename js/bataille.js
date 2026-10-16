@@ -400,8 +400,9 @@
       var pr = p.projectiles[i];
       if (pr.genre !== "pierre") continue;
       var kk = Math.min(1, pr.t / pr.duree), haut = Math.sin(kk * Math.PI);
+      viseeTrait(pr);
       ctx.fillStyle = "rgba(0,0,0," + (0.34 - 0.18 * haut) + ")";
-      ctx.beginPath(); ctx.ellipse(pr.x0 + (pr.cx - pr.x0) * kk, pr.y0 + 18 + (pr.cy - pr.y0 - 18) * kk, 6 - 2 * haut, 3 - haut, 0, 0, Math.PI * 2); ctx.fill();
+      ctx.beginPath(); ctx.ellipse(pr.x0 + (pr.cx + pr.dvx - pr.x0) * kk, pr.y0 + 18 + (pr.cy + pr.dvy - pr.y0 - 18) * kk, 6 - 2 * haut, 3 - haut, 0, 0, Math.PI * 2); ctx.fill();
     }
     // ombres de nuages qui passent
     if (anim) {
@@ -417,9 +418,11 @@
     for (i = 0; i < p.unites.length; i++) {
       var un = p.unites[i];
       if (!un.vivant) continue; // tombée à cette étape : son corps est déjà au sol
-      un.prof = un.y;
-      if (Math.hypot(un.x - v.porteDepart.x, un.y - v.porteDepart.y) < PRES_PORTE) un.prof = Math.max(un.y, v.piedDepart.y + 0.5);
-      else if (Math.hypot(un.x - v.porteArrivee.x, un.y - v.porteArrivee.y) < PRES_PORTE) un.prof = Math.max(un.y, v.piedArrivee.y + 0.5);
+      // trié là où son bataillon est dessiné (une mêlée rangée le décale un peu de sa place du moteur)
+      var ux = un.bat && un.bat.vx !== undefined ? un.bat.vx : un.x, uy = un.bat && un.bat.vx !== undefined ? un.bat.vy : un.y;
+      un.prof = uy;
+      if (Math.hypot(ux - v.porteDepart.x, uy - v.porteDepart.y) < PRES_PORTE) un.prof = Math.max(uy, v.piedDepart.y + 0.5);
+      else if (Math.hypot(ux - v.porteArrivee.x, uy - v.porteArrivee.y) < PRES_PORTE) un.prof = Math.max(uy, v.piedArrivee.y + 0.5);
       volumes.push(un);
     }
     // giclées de sang (réglage « Sang dans les combats », animations actives) : juste devant la figurine touchée ou
@@ -436,7 +439,7 @@
       }
     }
     // tour de siège abattue : elle penche, haute comme avant, triée avec les troupes qui passent devant ou derrière
-    for (i = 0; i < p.effets.length; i++) { e = p.effets[i]; if (e.genre === "chute" && e.type === "belier") { e.prof = e.y; volumes.push(e); } }
+    for (i = 0; i < p.effets.length; i++) { e = p.effets[i]; if (e.genre === "chute" && e.type === "belier") { decalEffet(e, v); e.prof = e.y + e.dvy; volumes.push(e); } }
     volumes.sort(parProfondeur);
     for (i = 0; i < volumes.length; i++) {
       var o = volumes[i];
@@ -451,10 +454,12 @@
     // --- projectiles : flèches et carreaux tournés le long de leur trajectoire, pierres en cloche ---
     for (i = 0; i < p.projectiles.length; i++) projectile(ctx, p.projectiles[i], v);
 
-    // --- effets ---
+    // --- effets --- (ceux posés à la place d'une troupe se dessinent là où est son bataillon : decalEffet)
     for (i = 0; i < p.effets.length; i++) {
       e = p.effets[i];
-      var a = 1 - e.age / 1.2;
+      var a = 1 - e.age / 1.2, dg = e.genre;
+      var decale = dg === "touche" || dg === "pique" || dg === "impact" || dg === "choc" || dg === "chute";
+      if (decale) { decalEffet(e, v); if (e.dvx || e.dvy) { ctx.save(); ctx.translate(e.dvx, e.dvy); } else decale = false; }
       if (e.genre === "touche" || e.genre === "pique") {
         // coup porté à un soldat : une petite bouffée de terre (et, pour un trait, un éclat de lumière), sans sang
         if (prete("effet-poussiere")) {
@@ -485,7 +490,7 @@
         // Sur un bataillon, l'éclat part de l'homme du premier rang touché (gx, gy).
         var bois = cibleDuCoup(e, p) === "belier", cx = e.gx !== undefined ? e.gx : e.x, cy = (e.gy !== undefined ? e.gy : e.y) - (e.haut || HAUT_CORPS) * 1.3;
         if ((!sang || !anim || bois) && e.age < 0.12) { ctx.globalAlpha = 1 - e.age / 0.12; ctx.drawImage(eclatLumiere(), cx - 7, cy - 7, 14, 14); ctx.globalAlpha = 1; }
-        if (bois && e.age < 0.32) sprite(ctx, "effet-eclats", e.x, e.y - HAUT_CORPS, vue(e.age, 0.32, 4), false, 0.7);
+        if (bois && e.age < 0.32) sprite(ctx, "effet-eclats", e.gx !== undefined ? e.gx : e.x, (e.gy !== undefined ? e.gy : e.y) - HAUT_CORPS, vue(e.age, 0.32, 4), false, 0.7);
       } else if (e.genre === "retrait") {
         // fin de bataille : le bataillon resté sur la route s'efface dans une bouffée de poussière
         if (e.age < 0.6) sprite(ctx, "effet-poussiere", e.x, e.y + 2, vue(e.age, 0.6, 5), false, 0.9);
@@ -503,6 +508,7 @@
         ctx.fillStyle = (e.camp === "rival" ? "rgba(255,215,94," : "rgba(255,122,92,") + a + ")"; // or vif : le château adverse ; rouge clair : le tien
         ctx.strokeText("−" + e.degats, touchee.chiffreX, ty); ctx.fillText("−" + e.degats, touchee.chiffreX, ty);
       }
+      if (decale) ctx.restore();
     }
 
     // sang coupé : une figurine qui tombe soulève un peu de poussière
@@ -570,10 +576,31 @@
     ctx.lineWidth = largeur; ctx.strokeStyle = "#fbe9bd"; ctx.stroke();
   }
 
+  // Un trait vise le bataillon de sa cible là où il est dessiné (dvx, dvy : décalage du dessin, gardé si la cible tombe).
+  function viseeTrait(pr) {
+    var c = pr.cible;
+    if (c && c.vivant && c.bat && c.bat.vx !== undefined) { pr.dvx = c.bat.vx - c.x; pr.dvy = c.bat.vy - c.y; }
+    else if (pr.dvx === undefined) { pr.dvx = 0; pr.dvy = 0; }
+  }
+  // Effet du moteur posé à la place d'une troupe (trait qui touche, chute, choc…) : il se dessine là où est son
+  // bataillon (dvx, dvy), cherché une fois, au premier dessin, parmi les troupes vues et celles tombées depuis peu.
+  function decalEffet(e, v) {
+    if (e.dvx !== undefined) return;
+    e.dvx = 0; e.dvy = 0;
+    var meilleur = e.genre === "choc" ? 196 : 36, n = v.vus.length, morts = v.morts || [], k, u, d;
+    for (k = 0; k < n + morts.length; k++) {
+      u = k < n ? v.vus[k] : morts[k - n].u;
+      if (!u.bat || u.bat.vx === undefined) continue;
+      d = (u.x - e.x) * (u.x - e.x) + (u.y - e.y) * (u.y - e.y);
+      if (d < meilleur) { meilleur = d; e.dvx = u.bat.vx - u.x; e.dvy = u.bat.vy - u.y; }
+    }
+  }
+
   function projectile(ctx, pr, v) {
     var k = Math.min(1, pr.t / pr.duree), pierre = pr.genre === "pierre";
+    viseeTrait(pr);
     // départ en haut de la tour, arrivée à mi-corps (la pierre, elle, tombe au sol)
-    var x0 = pr.x0, y0 = pr.y0 - HAUT_TIR, dx = pr.cx - x0, dy = pr.cy - (pierre ? 0 : HAUT_CORPS) - y0;
+    var x0 = pr.x0, y0 = pr.y0 - HAUT_TIR, dx = pr.cx + pr.dvx - x0, dy = pr.cy + pr.dvy - (pierre ? 0 : HAUT_CORPS) - y0;
     var A = pierre ? 70 : pr.genre === "fleche" ? 18 : 5; // hauteur de la cloche
     var x = x0 + dx * k, y = y0 + dy * k - Math.sin(k * Math.PI) * A;
     if (pierre) {
@@ -746,8 +773,10 @@
   // - Mêlée : les deux bataillons se font face, premier rang contre premier rang. Le premier rang se fend et frappe,
   //   chaque homme à son rythme, et tout le premier rang se fend quand la troupe porte un coup ; le second rang pousse.
   //   Le moteur engage deux troupes à 20 px (MELEE.contact) et les fait combattre à 16 px (MELEE.ecart) : des cavaliers,
-  //   longs, se seraient traversés ; chaque bataillon recule donc, à l'œil seulement (pas dans le moteur), juste ce qu'il
-  //   faut pour garder ECART_FRONTS px entre les deux premiers rangs (reculMelee).
+  //   longs, se seraient traversés ; et plusieurs duels se tiennent souvent au même endroit. Chaque mêlée est donc rangée
+  //   en ligne de front, à l'œil seulement (pas dans le moteur) : premiers rangs à ECART_FRONTS px l'un de l'autre, les
+  //   autres bataillons engagés en deuxième ligne, les troupes libres à la file derrière (placerMelees, plus bas).
+  //   Ceux de la deuxième ligne poussent : seuls les premiers rangs au contact se fendent.
   // - Barre de vie : seulement pour le champion et la tour de siège (une grande figurine seule) ; pour les autres, les
   //   figurines qui tombent la remplacent (une pile de barres cachait la mêlée).
   // Vitesse (PC sans carte graphique) : chaque vue de chaque figurine est réduite une fois, à la netteté de la toile,
@@ -793,7 +822,10 @@
     var amin = Infinity, amax = -Infinity, bmin = Infinity, bmax = -Infinity;
     places.forEach(function (q) { amin = Math.min(amin, q.a); amax = Math.max(amax, q.a); bmin = Math.min(bmin, q.b); bmax = Math.max(bmax, q.b); });
     var avant = d.chef ? 0 : -(amin + amax) / 2;
-    return (formes[type] = { type: type, d: d, places: places, avant: avant, tete: amax + avant, bmin: bmin, bmax: bmax, allonge: d.allonge, banniere: d.banniere, barre: !!d.barre });
+    // devant, derriere : étendue du bataillon le long de la route, depuis son milieu, vers l'avant (premier rang et son
+    // allonge) et vers l'arrière (dernier rang et un peu plus de la moitié d'une figurine)
+    return (formes[type] = { type: type, d: d, places: places, avant: avant, tete: amax + avant, queue: amin + avant, bmin: bmin, bmax: bmax,
+      allonge: d.allonge, devant: amax + avant + d.allonge, derriere: 0.6 * d.allonge - (amin + avant), banniere: d.banniere, barre: !!d.barre });
   }
   // Figurines debout pour une troupe de « n » figurines : toutes à pleine vie, au moins une tant qu'elle vit, aucune morte.
   function deboutVoulu(n, pv, max, vivant) {
@@ -806,13 +838,130 @@
     var haut = BORD_ROUTE - f.bmax, bas = -BORD_ROUTE - f.bmin;
     return haut < bas ? (haut + bas) / 2 : Math.max(bas, Math.min(haut, cote));
   }
-  // Recul (px, le long de la route) d'un bataillon en mêlée, pour que son premier rang (et son allonge) s'arrête à
-  // ECART_FRONTS / 2 px du milieu des deux troupes : s, sAdv : places des deux troupes sur la route (moteur).
-  function reculMelee(f, s, sAdv) {
-    var dir = sAdv > s ? 1 : sAdv < s ? -1 : 1, milieu = (s + sAdv) / 2;
-    var place = dir * (milieu - (s + dir * f.tete)); // du premier rang au milieu, vers l'adversaire
-    return Math.max(0, ECART_FRONTS / 2 + f.allonge - place);
+  // ---------- mêlées : la ligne de front, à l'œil ----------
+  // Le moteur engage deux troupes à 20 px (MELEE.contact) et les fait combattre à 16 px (MELEE.ecart) ; il laisse aussi
+  // plusieurs duels se tenir au même endroit (la paire la plus proche d'abord), une troupe libre traverser une mêlée qui
+  // ne la concerne pas, un garde passer devant tes troupes déjà engagées (il peut ensuite se battre « à l'envers », du
+  // côté de ton château), et il arrête tes troupes devant la porte du rival tant que sa garnison tient (u.porte).
+  // Dessinés à leur place du moteur, les bataillons des deux camps se mêlaient. Le dessin range donc chaque mêlée en une
+  // ligne de front, sans rien changer au moteur (placerMelees, avant chaque image) :
+  // - les duels dont les bataillons se toucheraient forment une seule mêlée ; sa ligne de front (F, le long de la route)
+  //   est au milieu des milieux de ses duels, gardée assez loin des portes pour que le premier bataillon de chaque camp
+  //   tienne devant la sienne ; tes bataillons du côté de ton château, ceux du rival du côté du sien (un duel « à
+  //   l'envers » est remis dans ce sens) ;
+  // - de chaque côté, les bataillons engagés de ce camp se rangent l'un derrière l'autre, dans l'ordre où ils se sont
+  //   engagés (l'ordre ne saute pas d'une image à l'autre) : le premier au contact, premier rang contre premier rang
+  //   (ECART_FRONTS px entre les deux, allonges comprises), les autres en deuxième ligne, à ECART_FILE px du précédent :
+  //   ils poussent ; deux mêlées qui, rangées, se chevauchent n'en font qu'une ;
+  // - une troupe libre qui arrive sur une mêlée attend à la file derrière les siens, tant que le moteur ne l'a pas fait
+  //   passer de l'autre côté ; quand il l'a fait passer, elle traverse vite (TRAVERSE px/s) pour rejoindre sa place ;
+  // - devant la porte du rival, tes troupes arrêtées par sa garnison se rangent à la file, devant la porte et bien visibles.
+  // Décalage le long de la route : DECAL_MELEE px au plus pour un bataillon engagé, DECAL_FILE pour une troupe libre,
+  // DECAL_PORTE devant la porte. Les traits des tours, les coups et les chutes suivent le bataillon là où il est dessiné.
+  var ECART_FILE = 3, DECAL_MELEE = 60, DECAL_FILE = 60, DECAL_PORTE = 140, MARGE_PORTE = 2, GLISSE = 120, TRAVERSE = 170;
+  var paires = [], melees = [], libres = [];
+  function parS(a, b) { return a.s - b.s; }
+  function parEngagement(x, y) { return x.bat.engage - y.bat.engage; }
+  // Écrit dans u.bat : cible (décalage voulu le long de la route, px), slot (0 : au contact, 1 et plus : deuxième ligne,
+  // −1 : hors mêlée), front (ligne de front de sa mêlée, le long de la route), file (troupe libre qui attend derrière une
+  // mêlée ou devant la porte). liste : troupes vivantes, avec leur bataillon. Rend les mêlées (essais).
+  function placerMelees(p, liste) {
+    var L = p.route.longueur, i, j, u, b, a, pr, m;
+    paires.length = 0; melees.length = 0; libres.length = 0;
+    for (i = 0; i < liste.length; i++) {
+      u = liste[i]; b = u.bat;
+      b.cible = 0; b.slot = -1; b.file = false; b.front = undefined;
+      a = u.adversaire && u.adversaire.vivant && u.adversaire.pv > 0 && u.adversaire.bat ? u.adversaire : null;
+      if (!a) { b.engage = Infinity; libres.push(u); continue; }
+      if (b.engage === Infinity || b.engage === undefined) b.engage = p.temps + i * 1e-6; // heure de son engagement
+      if (u.camp === "rival" || a.camp !== "rival") continue; // chaque duel une fois, par ta troupe
+      var fa = b.f, fr = a.bat.f;
+      paires.push({ a: u, r: a, m: (u.s + a.s) / 2, ext: ECART_FRONTS / 2 + Math.max(fa.devant + fa.derriere, fr.devant + fr.derriere) });
+    }
+    paires.sort(function (x, y) { return x.m - y.m; });
+    // duels qui se touchent : une seule mêlée
+    for (i = 0; i < paires.length; i++) {
+      pr = paires[i]; m = melees[melees.length - 1];
+      if (!m || pr.m - m.der.m >= m.der.ext + pr.ext) melees.push(m = { somme: 0, n: 0, J: [], R: [], der: pr });
+      m.somme += pr.m; m.n++; m.der = pr; m.J.push(pr.a); m.R.push(pr.r);
+    }
+    for (i = 0; i < melees.length; i++) rangerMelee(melees[i], L);
+    // deux mêlées voisines qui, rangées, se chevauchent (leurs deuxièmes lignes) n'en font qu'une
+    for (i = 1; i < melees.length; i++) {
+      var m0 = melees[i - 1];
+      m = melees[i];
+      if (m0.finR > m.finJ - ECART_FILE) {
+        m0.somme += m.somme; m0.n += m.n;
+        for (j = 0; j < m.J.length; j++) m0.J.push(m.J[j]);
+        for (j = 0; j < m.R.length; j++) m0.R.push(m.R[j]);
+        melees.splice(i, 1);
+        rangerMelee(m0, L);
+        i = Math.max(0, i - 2);
+      }
+    }
+    // troupes libres : à la file derrière les leurs, sur la première mêlée qu'elles n'ont pas encore traversée (ou devant
+    // la porte du rival), de la plus avancée à la moins avancée ; une troupe dessinée déjà de l'autre côté de la ligne de
+    // front (elle vient de la traverser) n'y est pas reprise, sauf ta troupe arrêtée devant la porte du rival (elle n'a
+    // rien traversé : elle attend) ; une troupe pas encore dessinée n'a rien traversé
+    libres.sort(parS);
+    var porte = L - MARGE_PORTE, porteFermee = false, f, lim, vu;
+    for (j = libres.length - 1; j >= 0; j--) {
+      u = libres[j];
+      if (u.camp === "rival") continue;
+      m = null; vu = u.porte || u.bat.decal === undefined ? -Infinity : u.s + u.bat.decal;
+      for (i = 0; i < melees.length && !m; i++) if (u.s <= melees[i].finR + 2 && vu <= melees[i].F) m = melees[i];
+      var cap = u.porte ? DECAL_PORTE : DECAL_FILE, avant = m && i > 1 ? melees[i - 2] : null;
+      f = u.bat.f;
+      if (m) {
+        if (m.fermeJ) continue;
+        // jamais reculée dans la mêlée d'avant, qu'elle a déjà traversée : entre les deux, elle reste parmi les siens
+        lim = Math.max(m.posJ - f.devant, avant ? avant.finR + f.derriere + 1 : -Infinity);
+        if (u.s > lim) { aLaFile(u, Math.max(lim, u.s - cap), m.F); m.posJ = u.s + u.bat.cible - f.derriere - ECART_FILE; } else m.fermeJ = true;
+      } else if (u.porte && !porteFermee) {
+        lim = porte - f.devant;
+        if (u.s > lim) { aLaFile(u, Math.max(lim, u.s - cap), L); porte = u.s + u.bat.cible - f.derriere - ECART_FILE; } else porteFermee = true;
+      }
+    }
+    for (j = 0; j < libres.length; j++) {
+      u = libres[j];
+      if (u.camp !== "rival") continue;
+      m = null; vu = u.bat.decal === undefined ? Infinity : u.s + u.bat.decal;
+      for (i = melees.length - 1; i >= 0 && !m; i--) if (u.s >= melees[i].finJ - 2 && vu >= melees[i].F) m = melees[i];
+      if (!m || m.fermeR) continue;
+      var apres = i + 2 < melees.length ? melees[i + 2] : null;
+      f = u.bat.f; lim = Math.min(m.posR + f.devant, apres ? apres.finJ - f.derriere - 1 : Infinity);
+      if (u.s < lim) { aLaFile(u, Math.min(lim, u.s + DECAL_FILE), m.F); m.posR = u.s + u.bat.cible + f.derriere + ECART_FILE; } else m.fermeR = true;
+    }
+    return melees;
   }
+  // Range une mêlée : de part et d'autre de sa ligne de front F, tes bataillons engagés vers ton château (s plus petit),
+  // ceux du rival vers le sien. posJ, posR : place du bataillon suivant de chaque camp (troupes libres à la file) ;
+  // finJ, finR : bouts de la mêlée.
+  function rangerMelee(m, L) {
+    var F = m.somme / m.n;
+    m.J.sort(parEngagement); m.R.sort(parEngagement);
+    var bas = m.J[0].bat.f, haut = m.R[0].bat.f;
+    var fmin = MARGE_PORTE + ECART_FRONTS / 2 + bas.devant + bas.derriere, fmax = L - MARGE_PORTE - ECART_FRONTS / 2 - haut.devant - haut.derriere;
+    if (fmin <= fmax) F = Math.max(fmin, Math.min(fmax, F));
+    m.F = F;
+    m.posJ = rangerFront(m.J, F - ECART_FRONTS / 2, -1, F);
+    m.posR = rangerFront(m.R, F + ECART_FRONTS / 2, 1, F);
+    m.finJ = m.posJ + ECART_FILE; m.finR = m.posR - ECART_FILE;
+    m.fermeJ = m.fermeR = false;
+  }
+  // Range les bataillons engagés d'un camp, du premier au contact au dernier : « front » est le bout de leur premier rang
+  // (allonge comprise), « dos » le sens de leur arrière le long de la route. Rend la place du bataillon suivant.
+  function rangerFront(liste, front, dos, F) {
+    for (var k = 0; k < liste.length; k++) {
+      var u = liste[k], b = u.bat, f = b.f;
+      var c = front + dos * f.devant;
+      c = Math.max(u.s - DECAL_MELEE, Math.min(u.s + DECAL_MELEE, c));
+      b.cible = c - u.s; b.slot = k; b.front = F;
+      front = c + dos * (f.derriere + ECART_FILE);
+    }
+    return front;
+  }
+  function aLaFile(u, c, F) { u.bat.cible = c - u.s; u.bat.file = true; u.bat.front = F; }
 
   // Point de la route à la distance s, décalé de « cote » px sur le côté : le calcul de M.surRoute (même résultat), avec
   // une recherche par moitiés dans les longueurs cumulées (les routes ont 200 à 400 points), écrit dans « o ».
@@ -822,7 +971,7 @@
     while (lo < hi) { mi = (lo + hi) >> 1; if (c[mi] < s) lo = mi + 1; else hi = mi; }
     var t = (s - c[lo - 1]) / ((c[lo] - c[lo - 1]) || 1);
     var dx = p[lo][0] - p[lo - 1][0], dy = p[lo][1] - p[lo - 1][1], l = Math.sqrt(dx * dx + dy * dy) || 1;
-    o.x = p[lo - 1][0] + dx * t - dy / l * cote; o.y = p[lo - 1][1] + dy * t + dx / l * cote;
+    o.x = p[lo - 1][0] + dx * t - dy / l * cote; o.y = p[lo - 1][1] + dy * t + dx / l * cote; o.tx = dx / l; // tx : sens de la route (vers l'est > 0)
     return o;
   }
 
@@ -835,8 +984,9 @@
         delai: Math.random() * 0.14, debout: true, noyau: q.noyau, nom: "unite-" + q.type + "-" + cleCamp, x: u.x, y: u.y, s: u.s, alpha: 0, vu: false });
     }
     var sens = u.camp === "rival" ? -1 : 1;
-    return { f: f, figs: figs, debout: figs.length, marche: sens, dir: sens, recul: 0, s: u.s, gauche: u.camp === "rival", mort: false,
-      cleCamp: cleCamp, phaseBanniere: Math.random() * 4, ordre: [] };
+    return { f: f, figs: figs, debout: figs.length, marche: sens, dir: sens, s: u.s, gauche: u.camp === "rival", mort: false,
+      cleCamp: cleCamp, phaseBanniere: Math.random() * 4, ordre: [], pasV: u.pas || 0, decal: undefined, cible: 0, slot: -1, file: false,
+      etaitFile: false, lache: false };
   }
 
   // Une figurine du bataillon tombe : en mêlée, un homme du premier rang encore debout ; ailleurs, un homme au hasard ;
@@ -879,21 +1029,32 @@
   // couchées vieillissent (temps de la partie : la vitesse ×2 ou ×3 compte). Animations coupées : pas de geste, de
   // balancement ni de glissement (les rangs se resserrent d'un coup).
   var pointTmp = { x: 0, y: 0 };
+  // v.morts : troupes tombées depuis peu (une seconde et demie de partie), pour que l'effet « chute » du moteur se
+  // dessine là où était leur bataillon.
+  function abattre(u, v) {
+    u.bat.mort = true;
+    while (u.bat.debout > 0) faireTomber(u, u.bat, v);
+    if (v.morts) v.morts.push({ u: u, t: v.partie.temps });
+  }
   function majBataillons(v, anim, sang) {
     var p = v.partie, dt = Math.max(0, Math.min(0.25, p.temps - v.tempsRendu)), i, u;
     v.tempsRendu = p.temps;
     for (i = 0; i < v.vus.length; i++) {
       u = v.vus[i];
-      if (u.pv <= 0 && u.bat && !u.bat.mort) { u.bat.mort = true; while (u.bat.debout > 0) faireTomber(u, u.bat, v); }
+      if (u.pv <= 0 && u.bat && !u.bat.mort) abattre(u, v);
     }
+    if (v.morts) { var km = 0; for (i = 0; i < v.morts.length; i++) if (p.temps - v.morts[i].t < 1.5) v.morts[km++] = v.morts[i]; v.morts.length = km; }
     v.vus.length = 0;
     for (i = 0; i < p.unites.length; i++) {
       u = p.unites[i];
-      if (u.pv <= 0) { if (u.bat && !u.bat.mort) { u.bat.mort = true; while (u.bat.debout > 0) faireTomber(u, u.bat, v); } continue; }
+      if (u.pv <= 0) { if (u.bat && !u.bat.mort) abattre(u, v); continue; }
       if (!u.vivant) continue; // arrivée à la porte d'en face (ou garde rentré) à cette étape
-      majBataillon(u, v, dt, anim);
+      if (!u.bat) u.bat = creerBataillon(u, formation(u.type), u.camp === "rival" ? v.campAdverse : "france");
       v.vus.push(u);
     }
+    // la ligne de front de chaque mêlée, puis chaque bataillon suit sa troupe
+    placerMelees(p, v.vus);
+    for (i = 0; i < v.vus.length; i++) majBataillon(v.vus[i], v, dt, anim);
     // figurines couchées : vieillissent, puis s'effacent (plus vite sans le sang)
     var fin = sang ? M.DUREE_CHUTE : CHUTE_SANS_SANG, k = 0;
     for (i = 0; i < v.corps.length; i++) { var c = v.corps[i]; c.age += dt; if (c.age < fin) v.corps[k++] = c; }
@@ -901,8 +1062,7 @@
   }
 
   function majBataillon(u, v, dt, anim) {
-    var p = v.partie, route = p.route, f = formation(u.type), cleCamp = u.camp === "rival" ? v.campAdverse : "france";
-    var bat = u.bat || (u.bat = creerBataillon(u, f, cleCamp));
+    var p = v.partie, route = p.route, bat = u.bat, f = bat.f;
     var voulu = deboutVoulu(f.places.length, u.pv, u.max, u.vivant);
     while (bat.debout > voulu) faireTomber(u, bat, v);
     // sens de marche : d'après le déplacement le long de la route ; en mêlée, vers l'adversaire
@@ -910,27 +1070,51 @@
     if (ds > 0.01) bat.marche = 1; else if (ds < -0.01) bat.marche = -1;
     bat.s = u.s;
     var adv = u.adversaire && u.adversaire.vivant ? u.adversaire : null;
-    var dirV = adv ? (adv.s > u.s ? 1 : adv.s < u.s ? -1 : bat.marche) : bat.marche;
-    var rv = adv ? reculMelee(f, u.s, adv.s) : 0;
-    if (anim) {
-      bat.dir += Math.max(-6 * dt, Math.min(6 * dt, dirV - bat.dir)); // demi-tour en un tiers de seconde
-      bat.recul += Math.max(-50 * dt, Math.min(50 * dt, rv - bat.recul));
-    } else { bat.dir = dirV; bat.recul = rv; }
-    // regard (image retournée ou non) : vers l'adversaire, sinon vers où il marche (marge pour les tronçons verticaux)
-    var vers = Math.cos(u.angle || 0) * bat.marche;
-    if (adv) bat.gauche = adv.x < u.x;
-    else if (vers < -0.2) bat.gauche = true; else if (vers > 0.2) bat.gauche = false;
-    // en travers : sa file (cote), ou presque le milieu de la route en mêlée (les deux premiers rangs face à face)
-    var ccV = coteBataillon(f, adv ? u.cote * MILIEU_MELEE : u.cote);
+    // en mêlée, vers sa ligne de front : tes troupes vers le château du rival, les siennes vers le tien (placerMelees)
+    var dirV = adv ? (bat.front !== undefined ? (u.camp === "rival" ? -1 : 1) : adv.s > u.s ? 1 : adv.s < u.s ? -1 : bat.marche) : bat.marche;
+    // décalage le long de la route (placerMelees) : glisse vers sa place (une troupe libre que le moteur a fait passer de
+    // l'autre côté d'une mêlée traverse vite) ; au premier dessin, tout de suite à sa place
+    if (bat.etaitFile && !bat.file) bat.lache = true;
+    bat.etaitFile = bat.file;
+    if (bat.decal === undefined || !anim) bat.decal = bat.cible;
+    else {
+      var vg = (bat.lache || !adv ? TRAVERSE : GLISSE) * dt;
+      bat.decal += Math.max(-vg, Math.min(vg, bat.cible - bat.decal));
+    }
+    if (Math.abs(bat.cible - bat.decal) < 0.5) bat.lache = false;
+    if (anim) bat.dir += Math.max(-6 * dt, Math.min(6 * dt, dirV - bat.dir)); // demi-tour en un tiers de seconde
+    else bat.dir = dirV;
+    // en travers : sa file (cote), ou presque le milieu de la route en mêlée et à la file derrière elle (premiers rangs
+    // face à face)
+    var ccV = coteBataillon(f, adv || bat.file ? u.cote * MILIEU_MELEE : u.cote);
     if (bat.cc === undefined || !anim) bat.cc = ccV; else bat.cc += Math.max(-14 * dt, Math.min(14 * dt, ccV - bat.cc));
+    var cc = bat.cc, centre = u.s + bat.decal, L = route.longueur, t = p.temps;
+    // pas : au rythme de la marche dessinée (une troupe qui attend à la file ne marche pas sur place), piétinement en mêlée
+    var dc = bat.centre === undefined ? 0 : Math.abs(centre - bat.centre);
+    bat.pasV += adv ? dt * 1.5 : Math.min(dc, 4) / 9;
+    bat.centre = centre;
+    // milieu du bataillon dessiné : les traits des tours, les coups et les chutes y tombent
+    pointRoute(route, centre, Math.max(-BORD_ROUTE, Math.min(BORD_ROUTE, cc)), pointTmp);
+    var mx = pointTmp.x, my = pointTmp.y;
     // sur un pont (tablier de 28 px), le bataillon se resserre en travers ; il reprend sa largeur sur la rive
     var serre = 1, ponts = v.carte && v.carte.ponts;
     if (ponts) for (var j = 0; j < ponts.length; j++) {
-      var dxp = u.x - ponts[j].x, dyp = u.y - ponts[j].y, dp = Math.sqrt(dxp * dxp + dyp * dyp);
+      var dxp = mx - ponts[j].x, dyp = my - ponts[j].y, dp = Math.sqrt(dxp * dxp + dyp * dyp);
       if (dp < 40) serre = Math.min(serre, SERRE_PONT + (1 - SERRE_PONT) * Math.max(0, (dp - 22) / 18));
     }
-    var cc = bat.cc, centre = u.s - dirV * bat.recul, L = route.longueur, t = p.temps;
-    var depuisCoup = adv && u.frappe >= 0 ? t - u.frappe : 99, figs = bat.figs, glisse = 18 * dt;
+    if (serre < 1) { pointRoute(route, centre, Math.max(-BORD_ROUTE, Math.min(BORD_ROUTE, cc)) * serre, pointTmp); mx = pointTmp.x; my = pointTmp.y; }
+    bat.vx = mx; bat.vy = my;
+    // regard (image retournée ou non), là où le bataillon est dessiné : en mêlée, vers sa ligne de front (sans elle, vers
+    // l'adversaire) ; sinon vers où il marche ; marge pour les tronçons presque verticaux (il garde son regard)
+    var vers = pointTmp.tx * bat.marche;
+    if (adv && bat.front !== undefined) {
+      pointRoute(route, bat.front, 0, pointTmp);
+      if (Math.abs(pointTmp.x - mx) > 1.5) bat.gauche = pointTmp.x < mx;
+    } else if (adv) bat.gauche = adv.x < u.x;
+    else if (vers < -0.2) bat.gauche = true; else if (vers > 0.2) bat.gauche = false;
+    // en deuxième ligne d'une mêlée, le premier rang pousse (il ne frappe pas dans le vide)
+    var contact = adv && bat.slot <= 0;
+    var depuisCoup = contact && u.frappe >= 0 ? t - u.frappe : 99, figs = bat.figs, glisse = 18 * dt;
     for (var i = 0; i < figs.length; i++) {
       var fg = figs[i];
       if (!fg.debout) continue;
@@ -940,20 +1124,21 @@
       // geste : en mêlée, le premier rang se fend (chacun à son rythme, et tous ensemble quand la troupe frappe)
       var fente = 0;
       if (adv && anim) {
-        if (q.rang === 0) {
+        if (q.rang === 0 && contact) {
           var g = depuisCoup - fg.delai, coup = g >= 0 && g < 0.2 ? 1 - g / 0.2 : 0;
           fente = Math.max(3.2 * coup, 1.5 * Math.max(0, Math.sin(t * 6.3 + fg.phase * 2.2)));
         } else fente = 0.8 * Math.max(0, Math.sin(t * 4.1 + fg.phase * 1.7));
       }
       var la = fg.a + f.avant + fg.ja + fente;
-      var lb = fg.b + fg.jb + (anim ? 0.35 * Math.sin(u.pas * 0.9 + fg.phase * 1.9) : 0);
+      var lb = fg.b + fg.jb + (anim ? 0.35 * Math.sin(bat.pasV * 0.9 + fg.phase * 1.9) : 0);
       var sf = centre + bat.dir * la, cf = Math.max(-BORD_ROUTE - 0.7, Math.min(BORD_ROUTE + 0.7, cc + lb)) * serre;
       pointRoute(route, sf, cf, pointTmp);
       fg.x = pointTmp.x; fg.y = pointTmp.y; fg.s = sf; fg.vu = true;
       // fondu sur le seuil des portes : chaque figurine sort (ou entre) à son tour, sur 16 px de marche ; en mêlée (les
-      // gardes du rival se battent devant sa porte), sur 6 px seulement : on ne se bat pas en fantôme
+      // gardes du rival se battent devant sa porte), sur 6 px seulement : on ne se bat pas en fantôme ; ta troupe arrêtée
+      // devant la porte du rival (u.porte) n'entre pas : elle reste bien visible
       var bout = Math.min(sf, L - sf), bande = adv ? 6 : 16;
-      fg.alpha = bout >= bande + 2 ? 1 : Math.max(0, Math.min(1, (bout - 2) / bande));
+      fg.alpha = u.porte || bout >= bande + 2 ? 1 : Math.max(0, Math.min(1, (bout - 2) / bande));
     }
   }
 
@@ -1112,7 +1297,7 @@
     if (!ordre.length) return;
     ordre.sort(parY);
     ctx.setTransform(1, 0, 0, 1, 0, 0);
-    var k0 = u.pas * 1.2, chef = null;
+    var k0 = bat.pasV * 1.2, chef = null;
     for (i = 0; i < ordre.length; i++) {
       fg = ordre[i];
       var q = f.places[fg.place];
@@ -1293,7 +1478,7 @@
     var img = vueFigure("unite-" + e.type + "-" + cleCamp, e.type, cleCamp, e.camp === "rival" ? v.adverse.couleurs : v.couleurs, 0, regard < 0, formation(e.type).places[0].echelle * 0.9, v.ratio);
     var so = sombre(img);
     ctx.globalAlpha = a;
-    ctx.save(); ctx.translate(e.x, e.y); ctx.rotate(-regard * 0.28 * b);
+    ctx.save(); ctx.translate(e.x + (e.dvx || 0), e.y + (e.dvy || 0)); ctx.rotate(-regard * 0.28 * b);
     ctx.drawImage(so, -so.ax, -so.ay + 4 * b, so.lw, so.lh);
     ctx.restore();
     ctx.globalAlpha = 1;
@@ -1451,9 +1636,10 @@
         placeArrivee: placerJauge(arrivee, carte, p.route, true, !!prete(nomPlace(campAdv, p.rival))),
         horloge: 0, survol: -1, curseur: -1, choix: "archers", choixTour: -1, vitesse: 1, envoyesVague: 0, gardeEntree: 0,
         survolRivale: -1, porteesRivales: false, retrait: null, hud: null, hudDiscret: false, repos: 0,
-        // bataillons : figurines couchées, troupes vues à l'image d'avant, heure de la partie au dernier dessin, et
-        // compteurs de la dernière image (bataillons, figurines debout, figurines couchées, bannières : essais)
-        corps: [], vus: [], tempsRendu: 0, rendu: { bataillons: 0, figures: 0, corps: 0, bannieres: 0 } };
+        // bataillons : figurines couchées, troupes vues à l'image d'avant, troupes tombées depuis peu (decalEffet), heure
+        // de la partie au dernier dessin, et compteurs de la dernière image (bataillons, figurines debout, figurines
+        // couchées, bannières : essais)
+        corps: [], vus: [], morts: [], tempsRendu: 0, rendu: { bataillons: 0, figures: 0, corps: 0, bannieres: 0 } };
       var titre = defense ? "Défense du domaine contre " + adv.armee : "Bataille : " + prov.nom;
       var zone = JEU.ui.commencerPartie(titre, function () { JEU.ui.afficher("jouer"); });
       JEU.musique.humeur("guerre");
@@ -1909,7 +2095,7 @@
           if (p.phase === "fin") {
             // les troupes restées sur la route s'effacent (0,6 s) dans une bouffée de poussière : pas d'arrêt sur image
             v.retrait = v.horloge;
-            p.unites.forEach(function (u) { p.effets.push({ genre: "retrait", x: u.x, y: u.y, age: 0 }); });
+            p.unites.forEach(function (u) { var b = u.bat && u.bat.vx !== undefined ? u.bat : null; p.effets.push({ genre: "retrait", x: b ? b.vx : u.x, y: b ? b.vy : u.y, age: 0 }); });
             bilan();
           }
         }
@@ -1998,5 +2184,6 @@
   JEU.bataille = { lancer: lancer, QUESTIONS_PAR_VAGUE: QUESTIONS_PAR_VAGUE, verrouille: verrouille,
     // formations des bataillons (essais sous Node : tests.js)
     bataillons: { BATAILLONS: BATAILLONS, BORD_ROUTE: BORD_ROUTE, ECART_FRONTS: ECART_FRONTS, CORPS_MAX: CORPS_MAX,
-      formation: formation, debout: deboutVoulu, cote: coteBataillon, recul: reculMelee, pointRoute: pointRoute, suivre: majBataillons } };
+      ECART_FILE: ECART_FILE, DECAL_MELEE: DECAL_MELEE, DECAL_FILE: DECAL_FILE, DECAL_PORTE: DECAL_PORTE,
+      formation: formation, debout: deboutVoulu, cote: coteBataillon, placer: placerMelees, pointRoute: pointRoute, suivre: majBataillons } };
 })(typeof window !== "undefined" ? window : globalThis);

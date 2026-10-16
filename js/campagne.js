@@ -78,6 +78,13 @@
   var PRIX_REMPARTS = [8, 14, 22];
   var NIVEAU_MAX = 3;
 
+  // Rivalité (16/10/2026) : ce qui la fait monter sur un front. Une retraite ne la change pas.
+  // province : tu lui prends une province ; victoire : tu repousses son attaque ; tenu : sa place forte tient après
+  // une bataille complète ; attaque : il attaque ton domaine.
+  var GAINS_RIVALITE = { province: 15, victoire: 10, tenu: 4, attaque: 8 };
+  // Niveaux de rivalité : ils choisissent les répliques et l'humeur du rival.
+  var NIVEAUX_RIVALITE = [{ id: "calme", min: 0, nom: "courtoise" }, { id: "pique", min: 30, nom: "vive" }, { id: "acharne", min: 65, nom: "acharnée" }];
+
   // Jauges du royaume : elles ne font que monter ; chaque point renforce tes batailles (plafond 12 points utiles).
   var JAUGES = {
     tresor: { nom: "Trésor", icone: "tresor", effet: function (n) { return "+" + 5 * Math.min(n, 12) + " or au début des batailles"; } },
@@ -96,9 +103,27 @@
       rival: { menace: 0, attaque: false, defaites: 0 }, // attaque : false ou l'identifiant du front qui attaque
       arsenal: { tours: tours, troupes: troupes, remparts: 0 },
       royaume: { tresor: 0, peuple: 0, garde: 0, savoir: 0, conseils: 0 },
-      dernierJour: null, evenement: null, bonus: {}, chronique: []
+      dernierJour: null, evenement: null, bonus: {}, chronique: [],
+      // 16/10/2026 : rivalité de chaque front (0 à 100) et mémoire des missives (personnages.js)
+      rivalite: rivaliteDepart([]), missives: missivesNeuves()
     };
   }
+
+  // Rivalité de départ d'un front : 15 par province déjà prise sur ce front (une ancienne campagne en cours garde
+  // ainsi une rivalité à la mesure de ses conquêtes), 100 au plus.
+  function rivaliteDepart(conquises) {
+    var r = {};
+    FRONTS.forEach(function (f) {
+      var n = f.provinces.filter(function (p) { return (conquises || []).indexOf(p.id) >= 0; }).length;
+      r[f.id] = Math.min(100, GAINS_RIVALITE.province * n);
+    });
+    return r;
+  }
+  // presentees : souverain et rivaux déjà présentés (première visite de la campagne) ; chef : souverain annoncé en
+  // dernier ; dernieres : dernière réplique tirée par camp et situation (jamais deux fois la même de suite) ;
+  // defi : la dernière bataille lancée a eu son défi (une sur deux) ; apres : la dernière bataille sans conquête a eu
+  // sa réaction (une sur deux).
+  function missivesNeuves() { return { presentees: false, chef: null, dernieres: {}, defi: false, apres: false }; }
 
   // Complète ou répare une campagne (sauvegarde plus ancienne ou abîmée) sans toucher à ce qui est valable :
   // une valeur absente, nulle ou du mauvais genre (objet, tableau, nombre) reprend sa valeur neuve.
@@ -107,6 +132,7 @@
     if (!c || typeof c !== "object" || Array.isArray(c)) return v;
     function nombre(x) { return typeof x === "number" && isFinite(x); }
     function objet(x) { return !!x && typeof x === "object" && !Array.isArray(x); }
+    var sansRivalite = !objet(c.rivalite); // campagne d'avant le 16/10/2026 (ou abîmée) : rivalité tirée des conquêtes
     Object.keys(v).forEach(function (k) {
       if (c[k] === undefined) c[k] = v[k];
       else if (v[k] !== null && (c[k] === null || typeof c[k] !== typeof v[k] || Array.isArray(c[k]) !== Array.isArray(v[k]))) c[k] = v[k];
@@ -128,6 +154,16 @@
     if (typeof c.rival.attaque !== "string" || !front(c.rival.attaque)) c.rival.attaque = false;
     if (c.bonus.or !== undefined && !nombre(c.bonus.or)) delete c.bonus.or;
     if (c.chronique.some(function (x) { return !x || typeof x.texte !== "string"; })) c.chronique = c.chronique.filter(function (x) { return x && typeof x.texte === "string"; });
+    var depart = rivaliteDepart(c.conquises);
+    if (sansRivalite) c.rivalite = depart;
+    FRONTS.forEach(function (f) {
+      if (!nombre(c.rivalite[f.id])) c.rivalite[f.id] = depart[f.id];
+      else if (c.rivalite[f.id] < 0 || c.rivalite[f.id] > 100) c.rivalite[f.id] = Math.max(0, Math.min(100, c.rivalite[f.id]));
+    });
+    var m = c.missives, mv = missivesNeuves();
+    ["presentees", "defi", "apres"].forEach(function (k) { if (typeof m[k] !== "boolean") m[k] = mv[k]; });
+    if (m.chef !== null && typeof m.chef !== "string") m.chef = null;
+    if (!objet(m.dernieres)) m.dernieres = {};
     return c;
   }
 
@@ -208,6 +244,188 @@
     return o;
   }
 
+  // ---------- personnages : souverains réels du cours et rivaux (jeu/data/personnages.js), rivalité, missives ----------
+  // Brume : un personnage relié à un cours n'existe que si le fichier de ce cours est chargé (même règle qu'un cours :
+  // ouvert dès que son fichier existe). Un rival « titre seul » sans cours (le roi d'Angleterre) suit son camp.
+  // Faute de personnage, un front a pour rival « un seigneur rival », sans nom ; ton camp n'a alors pas de souverain.
+  var SITUATIONS_RIVAL = ["presentation", "defi", "victoire", "tenu", "retraite", "province", "attaque"];
+  var ORDRE_LETTRES = { province: 1, victoire: 1, tenu: 1, retraite: 1, changement: 2, attaque: 3 };
+  var attente = []; // lettres à montrer à la prochaine visite de la campagne (mémoire seulement)
+
+  function donneesPersonnages() {
+    var d = JEU.donnees.personnages;
+    return d && Array.isArray(d.personnages) ? d : { personnages: [], humeurs: {}, repliques: {}, changement: [] };
+  }
+  function coursOuvert(id) { return !!(id && U.coursCharge(id)); }
+  function disponible(p) {
+    if (!p) return false;
+    if (p.cours) return coursOuvert(p.cours);
+    return !!p.titreSeul && p.camp !== "joueur" && !(p.faits && p.faits.length) && !p.dates;
+  }
+  function personnagesDuCamp(camp) { return donneesPersonnages().personnages.filter(function (p) { return p.camp === camp && disponible(p); }); }
+  function provincesPrises(c) { return (c || etat()).conquises.length; }
+  // Le dernier personnage du camp (dans l'ordre du fichier) dont le cours est ouvert et le seuil atteint.
+  function enTete(camp, c) {
+    var n = provincesPrises(c), r = null;
+    personnagesDuCamp(camp).forEach(function (p) { if ((p.seuil || 0) <= n) r = p; });
+    return r;
+  }
+  // Le souverain que tu sers (null si aucun cours ouvert n'en cite un).
+  function souverain(c) { return enTete("joueur", c); }
+  function rivalGenerique(camp) { return { id: "seigneur-rival-" + camp, nom: "Un seigneur rival", camp: camp, titreSeul: true, generique: true, faits: [], portrait: null }; }
+  function rivalDe(frontId, c) {
+    var f = front(frontId);
+    if (!f) return null;
+    return enTete(f.camp, c) || rivalGenerique(f.camp);
+  }
+  // Faits d'une fiche de personnage : seulement ceux dont le cours est ouvert, chacun avec sa source.
+  function faitsVisibles(p) {
+    return (p.faits || []).filter(function (x) { return coursOuvert(x.cours || p.cours); })
+      .map(function (x) { return { texte: x.texte, source: x.source || p.source }; });
+  }
+
+  function rivalite(frontId, c) { var v = (c || etat()).rivalite[frontId]; return typeof v === "number" ? v : 0; }
+  function niveauRivalite(v) {
+    var r = NIVEAUX_RIVALITE[0];
+    NIVEAUX_RIVALITE.forEach(function (x) { if (v >= x.min) r = x; });
+    return r;
+  }
+  function monterRivalite(frontId, n) {
+    var c = etat();
+    if (!front(frontId) || !n) return;
+    c.rivalite[frontId] = Math.max(0, Math.min(100, rivalite(frontId, c) + n));
+  }
+
+  // Remplit {nom}, {province}, {souverain} ; au milieu d'une phrase, l'article du nom passe en minuscule
+  // (« le roi d'Angleterre », « le Gué », « un seigneur rival »).
+  function minusculeArticle(t) {
+    return String(t).replace(/^(Les|Le|La|Une|Un)(?=\s)|^L(?=['’])/, function (m) { return m.toLowerCase(); });
+  }
+  function remplir(texte, valeurs) {
+    valeurs = valeurs || {};
+    return String(texte).replace(/\{(nom|province|souverain)\}/g, function (m, k, pos, tout) {
+      var v = valeurs[k];
+      if (v == null) v = k === "souverain" ? "ton souverain" : "";
+      var debut = pos === 0 || /[.!?…]\s+$|«\s*$/.test(tout.slice(0, pos));
+      return debut ? String(v) : minusculeArticle(v);
+    });
+  }
+  function humeur(frontId, c) {
+    var f = front(frontId), n = niveauRivalite(rivalite(frontId, c));
+    var h = (donneesPersonnages().humeurs[f.camp] || {})[n.id] || "{nom} t'observe.";
+    return remplir(h, { nom: rivalDe(frontId, c).nom });
+  }
+
+  // Tire une réplique (texte), jamais la même que la dernière tirée pour la même clé ; celles du niveau de rivalité
+  // d'abord (une réplique sans niveau convient à tous).
+  function tirer(lignes, cle, niveau) {
+    if (!lignes || !lignes.length) return null;
+    var m = etat().missives, derniere = m.dernieres[cle];
+    var tous = lignes.map(function (l, i) { return i; });
+    function niv(i) { return typeof lignes[i] === "string" ? null : lignes[i].niveau; }
+    var choix = tous.filter(function (i) { return (!niveau || !niv(i) || niv(i) === niveau) && i !== derniere; });
+    if (!choix.length) choix = tous.filter(function (i) { return i !== derniere; });
+    if (!choix.length) choix = tous;
+    var i = U.hasard(choix);
+    m.dernieres[cle] = i;
+    return typeof lignes[i] === "string" ? lignes[i] : lignes[i].texte;
+  }
+  function missivesActives() {
+    var r = JEU.sauvegarde.etat().reglages;
+    return !r || r.rivaux !== false; // « Messages des rivaux » (Réglages) : absent = actif
+  }
+  function lettreRival(frontId, situation, valeurs) {
+    var f = front(frontId);
+    if (!f) return null;
+    var p = rivalDe(frontId), n = niveauRivalite(rivalite(frontId));
+    var t = tirer(((donneesPersonnages().repliques[f.camp]) || {})[situation], f.camp + "/" + situation, n.id);
+    if (!t) return null;
+    var v = Object.assign({ nom: p.nom }, valeurs || {});
+    if (v.province) v.province = minusculeArticle(v.province);
+    return { qui: p, front: frontId, camp: f.camp, situation: situation, niveau: n.id, texte: remplir(t, v) };
+  }
+  function lettreSouverain(p, situation) {
+    if (!p) return null;
+    var lignes = (p.repliques && p.repliques[situation]) || [];
+    if (!lignes.length && situation === "changement") lignes = donneesPersonnages().changement || [];
+    var t = tirer(lignes, p.id + "/" + situation, null);
+    return t ? { qui: p, front: null, camp: "joueur", situation: situation, texte: remplir(t, { nom: p.nom }) } : null;
+  }
+  function prevoir(lettre) {
+    if (!lettre) return;
+    attente.push(lettre);
+    if (attente.length > 6) attente.shift();
+  }
+
+  // Défi avant une bataille, par le rival du front (l'attaquant pour une défense du domaine) : une bataille sur deux,
+  // jamais deux de suite. Renvoie la missive ({ lettres, bouton }) ou null.
+  function missiveAvantBataille(lieu) {
+    var c = etat();
+    var frontId = lieu === "domaine" ? c.rival.attaque : (province(lieu) || {}).front;
+    if (!frontId || !front(frontId)) return null;
+    var avant = c.missives.defi;
+    c.missives.defi = !avant;
+    var l = !avant && missivesActives() ? lettreRival(frontId, lieu === "domaine" ? "attaque" : "defi") : null;
+    JEU.sauvegarde.enregistrer();
+    return l ? { lettres: [l], bouton: "Relever le défi", situation: l.situation } : null;
+  }
+
+  // Réaction du rival après une bataille : toujours quand une province tombe ou que son attaque est repoussée ;
+  // une bataille sur deux sinon (sa place forte tient, ou tu as reculé).
+  function reagir(frontId, situation, valeurs) {
+    var m = etat().missives;
+    if (situation !== "province" && situation !== "victoire") {
+      var avant = m.apres;
+      m.apres = !avant;
+      if (avant) return;
+    }
+    if (missivesActives()) prevoir(lettreRival(frontId, situation, valeurs));
+  }
+
+  // Missive à montrer en arrivant sur la carte de campagne, ou null. Première visite : ton souverain et les deux
+  // rivaux se présentent (et rien d'autre). Sinon : réaction à la dernière bataille, changement de souverain, attaque.
+  // Messages des rivaux coupés : rien, sauf { silencieux: true, changement } quand le souverain change (une ligne
+  // discrète suffit). Le changement de souverain entre aussi dans la chronique.
+  function prendreMissives() {
+    var c = etat(), m = c.missives, chef = souverain(c), actives = missivesActives(), lettres;
+    if (!m.presentees) {
+      m.presentees = true;
+      m.chef = chef ? chef.id : null;
+      attente.length = 0;
+      JEU.sauvegarde.enregistrer();
+      if (!actives) return null;
+      lettres = [lettreSouverain(chef, "presentation")].concat(FRONTS.map(function (f) { return lettreRival(f.id, "presentation"); })).filter(Boolean);
+      JEU.sauvegarde.enregistrer();
+      return lettres.length ? { lettres: lettres, bouton: "Continuer", situation: "presentation" } : null;
+    }
+    var change = chef && chef.id !== m.chef ? chef : null;
+    m.chef = chef ? chef.id : null;
+    lettres = attente.splice(0, attente.length);
+    if (change) {
+      noter(change.nom + " est maintenant ton souverain.");
+      if (actives) lettres.push(lettreSouverain(change, "changement"));
+    }
+    JEU.sauvegarde.enregistrer();
+    if (!actives) return change ? { silencieux: true, changement: change } : null;
+    lettres = lettres.filter(Boolean).sort(function (a, b) { return (ORDRE_LETTRES[a.situation] || 9) - (ORDRE_LETTRES[b.situation] || 9); }).slice(0, 3);
+    return lettres.length ? { lettres: lettres, bouton: "Continuer", situation: lettres[0].situation } : null;
+  }
+  function oublierMissives() { attente.length = 0; }
+
+  // Galerie des souverains (Codex) : tes souverains (rencontrés, celui qui règne, et ceux qui viendront avec des
+  // provinces de plus, seulement si leur cours est ouvert) et le rival de chaque front.
+  function galerie(c) {
+    c = c || etat();
+    var n = provincesPrises(c), chef = souverain(c);
+    return {
+      souverains: personnagesDuCamp("joueur").map(function (p) {
+        var seuil = p.seuil || 0;
+        return { perso: p, etat: chef && p.id === chef.id ? "regne" : seuil <= n ? "passe" : "avenir", reste: Math.max(0, seuil - n) };
+      }),
+      rivaux: FRONTS.map(function (f) { return { front: f, perso: rivalDe(f.id, c), rivalite: rivalite(f.id, c) }; })
+    };
+  }
+
   // ---------- un nouveau jour : tributs, menace du rival, événement ----------
   var EVENEMENTS = [
     { id: "marchands", titre: "Des marchands à la porte", icone: "marchand", texte: "Une caravane demande à vendre au marché du domaine. Chaque bonne réponse rapporte 2 ressources.", questions: 3 },
@@ -238,6 +456,8 @@
       if (c.rival.menace >= 2 && !c.rival.attaque) {
         c.rival.attaque = U.hasard(FRONTS).id; c.rival.menace = 0; res.attaque = c.rival.attaque;
         noter(maj1(campDe(c.rival.attaque).armee) + " marche sur ton domaine.");
+        monterRivalite(c.rival.attaque, GAINS_RIVALITE.attaque);
+        if (missivesActives() && c.missives.presentees) prevoir(lettreRival(c.rival.attaque, "attaque"));
       }
     }
     // un événement par jour, souvent
@@ -266,13 +486,16 @@
     var gains = {};
     function gagner(res, n) { r[res] += n; gains[res] = (gains[res] || 0) + n; }
     c.bonus = {}; // les bonus des événements ont servi pendant cette bataille
+    var frontRival = null, situation = null, valeurs = {};
     if (bilan.lieu === "domaine") {
-      var adv = campDe(bilan.front || c.rival.attaque);
+      frontRival = front(bilan.front) ? bilan.front : c.rival.attaque;
+      var adv = campDe(frontRival);
       if (bilan.issue !== "retraite") {
         c.rival.attaque = false; c.rival.defaites++;
         gagner("sceaux", 4); gagner("routes", 2);
         noter("Tu as repoussé l'attaque " + avecArticle(adv.armee, "de") + ".");
-      } else noter(maj1(adv.armee) + " campe toujours devant tes murs.");
+        situation = "victoire";
+      } else { noter(maj1(adv.armee) + " campe toujours devant tes murs."); situation = "retraite"; }
     } else {
       var prov = c.provinces[bilan.lieu];
       var def = province(bilan.lieu);
@@ -288,6 +511,14 @@
         noter("Ton armée a porté " + bilan.degatsRival + (bilan.degatsRival > 1 ? " coups" : " coup") + " à la place forte " + avecArticle(def.nom, "de") + ".");
       }
       if (bilan.issue !== "retraite") gagner(def.tribut, 2);
+      frontRival = def.front;
+      situation = bilan.conquise ? "province" : bilan.issue !== "retraite" ? "tenu" : "retraite";
+      valeurs.province = def.nom;
+    }
+    // rivalité (une retraite ne la change pas) et réaction du rival, montrée au retour sur la carte de campagne
+    if (front(frontRival)) {
+      monterRivalite(frontRival, GAINS_RIVALITE[situation] || 0);
+      reagir(frontRival, situation, valeurs);
     }
     JEU.sauvegarde.enregistrer();
     return gains;
@@ -367,6 +598,12 @@
     avecArticle: avecArticle, etatVide: etatVide, completer: completer, etat: etat, noter: noter, prochaineProvince: prochaineProvince,
     totalRessources: totalRessources, payer: payer, prixArsenal: prixArsenal, ameliorerArsenal: ameliorerArsenal,
     prixRemparts: prixRemparts, renforcerRemparts: renforcerRemparts, options: options,
-    nouveauJour: nouveauJour, evenementDuJour: evenementDuJour, apresBataille: apresBataille, jouerEvenement: jouerEvenement
+    nouveauJour: nouveauJour, evenementDuJour: evenementDuJour, apresBataille: apresBataille, jouerEvenement: jouerEvenement,
+    // personnages, rivalité et missives (16/10/2026)
+    GAINS_RIVALITE: GAINS_RIVALITE, NIVEAUX_RIVALITE: NIVEAUX_RIVALITE, SITUATIONS_RIVAL: SITUATIONS_RIVAL,
+    coursOuvert: coursOuvert, disponible: disponible, souverain: souverain, rivalDe: rivalDe, faitsVisibles: faitsVisibles,
+    rivalite: rivalite, niveauRivalite: niveauRivalite, monterRivalite: monterRivalite, humeur: humeur, remplir: remplir,
+    missivesActives: missivesActives, missiveAvantBataille: missiveAvantBataille, prendreMissives: prendreMissives,
+    oublierMissives: oublierMissives, galerie: galerie, rivaliteDepart: rivaliteDepart
   };
 })(typeof window !== "undefined" ? window : globalThis);

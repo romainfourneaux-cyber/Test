@@ -113,9 +113,11 @@
 
   // ---------- fenêtre modale ----------
   var retourModale = null;
-  ui.ouvrirModale = function (titre, contenu, fermeture) {
+  // classe : habillage particulier de la boîte (« missive-boite »), retiré à la fenêtre suivante
+  ui.ouvrirModale = function (titre, contenu, fermeture, classe) {
     var m = document.getElementById("modale");
     var boite = m.querySelector(".modale-boite");
+    boite.className = "modale-boite" + (classe ? " " + classe : "");
     boite.innerHTML = "";
     boite.appendChild(el("button", { class: "modale-fermer", "aria-label": "Fermer", onclick: ui.fermerModale, texte: "×" }));
     if (titre) boite.appendChild(el("h2", { texte: titre }));
@@ -142,6 +144,52 @@
     if (r) r();
   };
   ui.modaleOuverte = function () { return !document.getElementById("modale").hidden; };
+
+  // ---------- missive : une lettre scellée (personnages de la campagne, 16/10/2026) ----------
+  // o : { entete, lettres: [{ medaillon (HTML), nom, sous, texte, camp }], bouton, sceau (HTML), apres }
+  // Une à trois lettres dans la même fenêtre, un seul bouton (« Relever le défi » ou « Continuer »). Entrée (bouton
+  // qui a le focus), Échap, la croix ou un clic à côté la ferment, et apres() suit dans tous les cas. Tab reste dans
+  // la fenêtre. Aucun délai : rien ne se ferme tout seul. Un clic ou une Entrée dans les 350 premières ms ne compte pas
+  // (un double clic sur la carte ne saute pas la lettre). Une partie qui commence (bataille, conseil, événement) ferme
+  // la missive sans suite : une missive ne se glisse jamais entre deux questions.
+  var missiveDepuis = 0;
+  function maintenant() { return (racine.performance || Date).now(); }
+  ui.ouvrirMissive = function (o) {
+    var bouton = el("button", { class: "bouton principal missive-bouton", onclick: function () { if (maintenant() - missiveDepuis >= 350) ui.fermerModale(); } }, [
+      document.createTextNode(o.bouton || "Continuer"), el("span", { class: "touche-texte", texte: " (Entrée)" })]);
+    var lettres = (o.lettres || []).map(function (l) {
+      return el("article", { class: "lettre" + (l.camp ? " camp-" + l.camp : "") }, [
+        el("span", { class: "lettre-medaillon", html: l.medaillon || "" }),
+        el("div", { class: "lettre-corps" }, [
+          el("h3", { class: "lettre-qui", texte: l.nom || "" }),
+          l.sous ? el("p", { class: "lettre-sous", texte: l.sous }) : null,
+          el("p", { class: "lettre-texte", texte: l.texte || "" })
+        ])
+      ]);
+    });
+    var boite = el("div", { class: "missive" }, [
+      el("p", { class: "missive-entete", texte: o.entete || "Une missive" }),
+      el("div", { class: "missive-lettres" }, lettres),
+      el("div", { class: "missive-pied" }, [o.sceau ? el("span", { class: "missive-sceau", html: o.sceau }) : null, bouton])
+    ]);
+    missiveDepuis = maintenant();
+    ui.ouvrirModale(null, boite, o.apres || null, "missive-boite");
+    bouton.focus();
+  };
+  ui.missiveOuverte = function () {
+    var b = document.querySelector("#modale .modale-boite");
+    return ui.modaleOuverte() && !!b && b.classList.contains("missive-boite");
+  };
+  // sansSuite : la missive se ferme sans lancer ce qui devait suivre (une partie commence déjà)
+  ui.fermerMissive = function (sansSuite) {
+    if (!ui.missiveOuverte()) return;
+    if (sansSuite) retourModale = null;
+    ui.fermerModale();
+  };
+  // clic à côté de la missive juste après son ouverture : ignoré (voir plus haut)
+  document.addEventListener("click", function (ev) {
+    if (ev.target && ev.target.id === "modale" && ui.missiveOuverte() && maintenant() - missiveDepuis < 350) { ev.stopPropagation(); ev.preventDefault(); }
+  }, true);
 
   // Confirmation dans la page (les boîtes confirm() et alert() sont bloquées sur la version web).
   ui.confirmer = function (question, texteOui, siOui, texteNon) {
@@ -456,6 +504,7 @@
 
   // ---------- partie en cours (bataille, conseil, événement) ----------
   ui.commencerPartie = function (titre, quitter) {
+    ui.fermerMissive(true); // jamais de missive pendant une partie (16/10/2026)
     JEU.partie = { enCours: true, titre: titre, quitter: quitter, derniere: null };
     JEU.mesure.debut = null;
     document.body.classList.add("en-partie");
@@ -734,9 +783,19 @@
       el("label", {}, [sangCase, el("span", { texte: " Sang dans les combats" })]),
       el("p", { class: "note", texte: "Coché : un peu de sang quand un soldat est blessé au corps à corps ou tombe, et les soldats tombés restent quelques secondes au sol. Décoché : pas de sang du tout, les soldats tombés s'effacent vite dans un peu de poussière." })
     ]));
+    // missives des personnages de la campagne (16/10/2026 ; absent d'une ancienne sauvegarde : actif)
+    var rivauxCase = el("input", { type: "checkbox", "data-reglage": "rivaux", checked: etat.reglages.rivaux !== false, onchange: function () {
+      etat.reglages.rivaux = rivauxCase.checked; JEU.sauvegarde.enregistrer();
+      if (!rivauxCase.checked && JEU.campagne && JEU.campagne.oublierMissives) JEU.campagne.oublierMissives();
+    } });
+    s.appendChild(el("div", { class: "cartouche" }, [
+      el("h3", { texte: "Campagne" }),
+      el("label", {}, [rivauxCase, el("span", { texte: " Messages des rivaux" })]),
+      el("p", { class: "note", texte: "Coché : ton souverain et tes rivaux t'écrivent de temps en temps (avant une bataille sur deux, après une bataille, quand une province tombe). Décoché : plus de lettres ; leurs médaillons et la rivalité restent sur la carte." })
+    ]));
     s.appendChild(el("div", { class: "cartouche" }, [
       el("h3", { texte: "Crédits" }),
-      el("p", { texte: "Icônes de Game-icons.net (Lorc, Delapouite et d'autres auteurs, licence CC BY 3.0). Tapisseries et œuvres du Metropolitan Museum of Art (domaine public, CC0). Polices Cinzel et Crimson Text (SIL Open Font License). Sons, musique, textures, cartes et blasons créés pour ce jeu (CC0). Détail dans CREDITS.md." }),
+      el("p", { texte: "Icônes de Game-icons.net (Lorc, Delapouite et d'autres auteurs, licence CC BY 3.0). Tapisseries, œuvres et portraits des souverains du Metropolitan Museum of Art (domaine public, CC0). Polices Cinzel et Crimson Text (SIL Open Font License). Sons, musique, textures, cartes et blasons créés pour ce jeu (CC0). Détail dans CREDITS.md." }),
       el("p", { class: "note", texte: "Version " + (JEU.version || "") })
     ]));
   };
