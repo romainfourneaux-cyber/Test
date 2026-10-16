@@ -6,6 +6,12 @@
 // route, elles s'arrêtent, se font face et échangent des coups jusqu'à ce que l'une tombe ; la survivante reprend sa
 // marche. Les tours continuent de tirer. Le moteur émet des effets (choc, coup, chute) que le rendu dessine ; il ignore
 // le réglage « Sang dans les combats », que seul le rendu lit.
+// Seigneur rival (depuis le 16/10/2026, demande de Romain : « il ne crée pas de défense au début, on peut spammer les
+// soldats dès la première manche ») : il a des tours devant sa porte dès le début et une garnison dont les gardes sortent
+// au-devant de tes troupes quand elles approchent de sa porte ; il a son trésor, et entre deux vagues il regarde ce que
+// tu as fait pour décider (rivalReagit) ; au départ d'une vague, ses guetteurs voient ton armée sortir (rivalGuetteurs).
+// Tout est sans hasard : la même partie donne les mêmes décisions. Chaque décision est notée dans p.ia.journal (avec une
+// phrase prête à afficher) et laisse un effet pour le rendu (tourRivale, alerte, sortie, rentree).
 (function (racine) {
   "use strict";
   var JEU = racine.JEU = racine.JEU || {};
@@ -50,20 +56,51 @@
   var VAGUES = { base: 4, parVague: 2, pvVague: 0.07, ecartSortie: 1.05 };
   // Le seigneur rival selon le niveau de la province (0 à 4 ; la défense du domaine prend le niveau de la campagne).
   // renfort : troupes de plus à chaque vague ; pv : points de vie de ses troupes (×) ; tirs : dégâts de ses tours (×) ;
-  // coup : ses coups au corps à corps (×) ; toursDepart : tours qu'il bâtit avant la première vague ; toursVague : tours
-  // de plus avant chacune des suivantes ; assaut : points de vie de ses troupes quand il attaque ton domaine (× pv).
-  // Réglé niveau par niveau le 15/10/2026 avec atelier/outils/simuler-bataille.js (docs/JOURNAL.md, Décisions) : chaque
-  // province demande 12 à 30 % de batailles de plus qu'avant la mêlée, à 7 comme à 8 bonnes réponses sur 10. Tes troupes
-  // n'ont pas changé : au début, le rival frappe moins fort et ses tours tirent à moitié (la mêlée suffit à ralentir) ;
-  // à la Forteresse, ses tours abattent un soldat en une flèche de moins. Les tirs comptent par seuils (un soldat tombe en
-  // 6 ou en 7 flèches) : un petit changement de « tirs » peut faire un grand saut, vérifie-le au simulateur.
+  // coup : ses coups au corps à corps (×) ; assaut : points de vie de ses troupes quand il attaque ton domaine (× pv).
+  // Depuis le 16/10/2026 (IA du rival) : toursDepart : tours déjà debout devant sa porte au début de la bataille (une au
+  // moins à chaque niveau) ; garnison : gardes de sa porte (la garnison se reforme à chaque vague) ; garde : solidité et
+  // coups d'un garde (× ceux d'un homme d'armes) ; tresor : son or au début de la bataille ; impot : son or de plus à
+  // chaque vague. Ses tours de plus, ses gardes de plus et ses renforts, c'est lui qui les paie (rivalReagit).
+  // Réglé niveau par niveau avec atelier/outils/simuler-bataille.js (docs/JOURNAL.md, Décisions) : le 15/10/2026, chaque
+  // province demandait 16 à 25 % de batailles de plus qu'avant la mêlée (f9939e2), à 7 comme à 8 bonnes réponses sur
+  // 10 ; le 16/10/2026, la garnison et l'IA ont été ajoutées en gardant ces écarts pour le joueur équilibré. Les tirs
+  // comptent par seuils (un soldat tombe en 6 ou en 7 flèches) : un petit changement de « tirs » peut faire un grand
+  // saut, vérifie-le au simulateur.
   var RIVAL = [
-    { renfort: 0, pv: 0.8, tirs: 0.5, coup: 0.5, toursDepart: 0, toursVague: 1, assaut: 2.8 },
-    { renfort: 0, pv: 1.1, tirs: 1.08, coup: 0.7, toursDepart: 0, toursVague: 1, assaut: 2.6 },
-    { renfort: 2, pv: 1.2, tirs: 1.16, coup: 0.55, toursDepart: 1, toursVague: 1, assaut: 1.8 },
-    { renfort: 2, pv: 1.3, tirs: 1.24, coup: 0.7, toursDepart: 1, toursVague: 1, assaut: 2.5 },
-    { renfort: 2, pv: 1.2, tirs: 1.62, coup: 1, toursDepart: 2, toursVague: 2, assaut: 2.6 }
+    { renfort: 0, pv: 0.8, tirs: 0.5, coup: 0.5, toursDepart: 1, garnison: 2, garde: 1, tresor: 60, impot: 30, assaut: 2.8 },
+    { renfort: 0, pv: 1.1, tirs: 1.08, coup: 0.7, toursDepart: 1, garnison: 2, garde: 1.1, tresor: 70, impot: 35, assaut: 2.6 },
+    { renfort: 2, pv: 1.2, tirs: 1.16, coup: 0.55, toursDepart: 2, garnison: 3, garde: 1.2, tresor: 80, impot: 40, assaut: 1.8 },
+    { renfort: 2, pv: 1.3, tirs: 1.24, coup: 0.7, toursDepart: 2, garnison: 3, garde: 1.3, tresor: 90, impot: 45, assaut: 2.5 },
+    { renfort: 2, pv: 1.2, tirs: 1.62, coup: 1, toursDepart: 3, garnison: 4, garde: 1.4, tresor: 100, impot: 50, assaut: 2.6 }
   ];
+  // Garnison de la porte rivale. type : les gardes sont des hommes d'armes (images déjà dessinées) ; zone : quand une de
+  // tes troupes est à moins de « zone » px de la porte (le long de la route), un garde sort, un de plus par troupe dans la
+  // zone, toutes les « ecart » secondes, tant qu'il en reste ; un garde ne s'éloigne jamais de la porte de plus de
+  // zone + marge px ; sans troupe à toi dans la zone, il rentre (il compte de nouveau dans la garnison de cette vague).
+  // taille : gardes au plus dans la garnison ; rappel : gardes rappelés au plus par ses guetteurs pour une vague ;
+  // contreSiege : un garde frappe la tour de siège « contreSiege » fois plus fort (haches et torches contre le bois).
+  var GARNISON = { type: "hommes", zone: 200, marge: 30, ecart: 0.4, taille: 8, rappel: 6, contreSiege: 3 };
+  // Décisions du rival. Prix (son or) : une tour d'archers ou une baliste, un garde de plus dans sa garnison, une troupe de
+  // renfort dans sa prochaine vague. Seuils : ratio (« surtout des troupes » : l'or de tes troupes vaut ratio fois celui
+  // de tes tours, et au moins seuilTroupes) ; « tortue » : tu as au moins ecartTours tours de plus que lui sur le champ
+  // de bataille et tu n'as pas envoyé plus de seuilTortue or de troupes ; breche : coups portés à sa place forte en une
+  // seule vague qui le font aussi fortifier sa porte ; gardesPorte : gardes
+  // achetés au plus par vague quand il fortifie sa porte ; orGarde : or gardé par toi au départ de la vague qui le rend
+  // méfiant ; renfortMax : troupes de renfort au plus par vague ; porte : longueur de route (px) devant sa porte que
+  // couvre une « tour de porte ». Guetteurs (rivalGuetteurs) : au départ d'une vague, si l'or de tes troupes dépasse ratio
+  // fois celui de tes tours de plus de alerte, un garde rappelé pour cette vague par tranche de parGarde or au-delà (au
+  // plus GARNISON.rappel, sans rien payer).
+  var PRIX_RIVAL = { archers: 30, baliste: 50, garde: 15, pietaille: 5, cavaliers: 10, hommes: 15 };
+  var IA = { ratio: 2, seuilTroupes: 45, ecartTours: 2, seuilTortue: 15, breche: 8, gardesPorte: 2, orGarde: 45, renfortMax: 6, porte: 300, alerte: 30, parGarde: 8 };
+  // Phrases du journal du rival (le rendu peut les afficher telles quelles ; « Ton rival » se remplace par son nom).
+  var TEXTES_RIVAL = {
+    depart: "Ton rival t'attend : des tours gardent sa porte, et sa garnison est prête à sortir.",
+    porte: "Ton rival a vu tes troupes foncer sur sa porte : il la fortifie.",
+    armee: "Ton rival a compté tes tours : il lève des hommes d'armes pour sa prochaine vague.",
+    mefiance: "Tu gardes de l'or : ton rival se méfie d'une grosse attaque et renforce sa garde.",
+    equilibre: "Ton rival renforce son armée.",
+    alerte: "Les guetteurs du rival ont vu ton armée sortir : il rappelle des gardes à sa porte."
+  };
   // Défense du domaine (carte « domaine », ou options.defense) : le rival y vient en force, pour que la défense inquiète un
   // peu (tenue environ 9 fois sur 10 à 8 bonnes réponses sur 10, murs entamés). Ses troupes ont « assaut » fois les points
   // de vie de son niveau (RIVAL) et chacune porte DEFENSE.degats fois ses coups à tes murs (un nombre entier : le rendu
@@ -125,9 +162,15 @@
       modificateurs: o.espion ? { espion: true } : {}, orParReponse: o.orParReponse || 12,
       orPerduErreur: typeof o.orPerduErreur === "number" && o.orPerduErreur >= 0 ? o.orPerduErreur : OR_PERDU, serie: 0, temps: 0,
       // tues, pertes : soldats tombés (sous les tirs ou au corps à corps) ; fuites, arrivees : troupes qui ont atteint le
-      // château d'en face ; rivaux : troupes adverses entrées en jeu ; duels : rencontres au corps à corps
-      stats: { tues: 0, fuites: 0, degatsRival: 0, envoyes: 0, pertes: 0, arrivees: 0, rivaux: 0, duels: 0 }
+      // château d'en face ; rivaux : troupes adverses en jeu ou sorties du jeu (un garde rentré à la porte n'y compte
+      // plus) ; duels : rencontres au corps à corps ; sorties, rentrees, gardesTombes : gardes de la garnison sortis,
+      // rentrés à la porte, tombés
+      stats: { tues: 0, fuites: 0, degatsRival: 0, envoyes: 0, pertes: 0, arrivees: 0, rivaux: 0, duels: 0, sorties: 0, rentrees: 0, gardesTombes: 0 },
+      // depenses : or dépensé pendant la préparation en cours (troupes, tours et améliorations), ce que les guetteurs
+      // et le rival regardent ; rapport : ce que tu as fait à la vague jouée (rivalReagit le lit)
+      depenses: { troupes: 0, tours: 0, belier: 0, soldats: 0 }, rapport: null
     };
+    rivalDepart(p);
     return p;
   }
 
@@ -145,7 +188,7 @@
     var d = TOURS[type];
     if (!d || p.phase !== "preparation" || !niveauArsenal(p, "tours", type)) return false;
     if (i < 0 || i >= p.carte.emplacements.length || !emplacementLibre(p, i) || p.or < d.cout) return false;
-    p.or -= d.cout;
+    p.or -= d.cout; p.depenses.tours += d.cout;
     var e = p.carte.emplacements[i];
     p.tours.push({ type: type, emplacement: i, x: e[0], y: e[1], niveau: 1, recharge: 0, investi: d.cout, angle: 0 });
     return true;
@@ -158,14 +201,15 @@
     if (!t || p.phase !== "preparation" || t.niveau >= AMELIORATION.max) return false;
     var c = coutAmelioration(t);
     if (p.or < c) return false;
-    p.or -= c; t.niveau++; t.investi += c;
+    p.or -= c; t.niveau++; t.investi += c; p.depenses.tours += c;
     return true;
   }
 
   function envoyer(p, type) {
     var d = TROUPES[type];
     if (!d || p.phase !== "preparation" || !niveauArsenal(p, "troupes", type) || p.or < d.cout) return false;
-    p.or -= d.cout;
+    p.or -= d.cout; p.depenses.troupes += d.cout; p.depenses.soldats += d.nombre || 1;
+    if (type === "belier") p.depenses.belier++;
     for (var k = 0; k < (d.nombre || 1); k++) p.envois.push(type);
     p.revenu += d.revenu;
     return true;
@@ -193,7 +237,8 @@
   // Réglage du seigneur rival pour cette bataille (RIVAL, selon le niveau de la province).
   function rival(p) { return RIVAL[Math.max(0, Math.min(RIVAL.length - 1, p.niveau | 0))]; }
 
-  // Composition d'une vague rivale : grossit avec le numéro de vague et le niveau de la province.
+  // Composition d'une vague rivale : grossit avec le numéro de vague et le niveau de la province ; les renforts payés par
+  // le rival (rivalReagit) partent en tête, juste derrière les premiers soldats.
   function composerVague(p) {
     var w = p.vague, n = p.niveau;
     var file = [];
@@ -204,49 +249,165 @@
       else if (w >= 1 && r < 5) file.push("cavaliers");
       else file.push("pietaille");
     }
+    var renforts = p.ia ? p.ia.renfort : [];
+    for (var k = 0; k < renforts.length; k++) file.splice(Math.min(file.length, 1 + 2 * k), 0, renforts[k]);
     if (w === p.vagues - 1) file.push("champion");
     if (p.modificateurs.espion && file.length) file.splice(file.indexOf("hommes") >= 0 ? file.indexOf("hommes") : file.length - 1, 1);
     return file;
   }
 
-  // Le rival bâtit ses tours avant chaque vague : toursDepart avant la première, toursVague avant chacune des suivantes.
-  function rivalConstruit(p) {
-    var nb = p.vague === 0 ? rival(p).toursDepart : rival(p).toursVague;
-    var libres = p.carte.emplacementsRivaux.map(function (e, i) { return i; }).filter(function (i) {
-      return !p.toursRivales.some(function (t) { return t.emplacement === i; });
+  // ---------- le seigneur rival : défenses, garnison, trésor et décisions ----------
+  // Couverture de chaque emplacement rival : points de la route (tous les 10 px, sur la file de tes troupes) à portée
+  // d'une tour d'archers rivale ; « porte » : seulement sur les IA.porte derniers px, devant sa place forte. Calculée une
+  // fois par bataille.
+  function couvertureRivale(p) {
+    if (p.couvRivale) return p.couvRivale;
+    var r = p.route, portee = TOURS_RIVALES.archers.portee, c = [];
+    p.carte.emplacementsRivaux.forEach(function (e, i) {
+      var tout = 0, porte = 0;
+      for (var s = 0; s <= r.longueur; s += 10) {
+        var q = surRoute(r, s, 9), dx = q.x - e[0], dy = q.y - e[1];
+        if (dx * dx + dy * dy <= portee * portee) { tout++; if (s >= r.longueur - IA.porte) porte++; }
+      }
+      c.push({ i: i, tout: tout, porte: porte });
     });
-    for (var k = 0; k < nb && libres.length; k++) {
-      var i = libres.shift();
-      var e = p.carte.emplacementsRivaux[i];
-      var type = (p.toursRivales.length + p.niveau) % 3 === 2 ? "baliste" : "archers";
-      p.toursRivales.push({ type: type, emplacement: i, x: e[0], y: e[1], niveau: 1, recharge: 0, rivale: true, angle: Math.PI });
+    return (p.couvRivale = c);
+  }
+
+  // Le rival bâtit une tour sur un de ses emplacements libres : vers « porte », celui qui couvre le plus la route devant sa
+  // porte ; vers « route », celui qui en couvre le plus en tout (à égalité, le premier). Rend la tour, ou null.
+  function rivalBatit(p, type, vers, effetVisible) {
+    var libres = couvertureRivale(p).filter(function (c) { return !p.toursRivales.some(function (t) { return t.emplacement === c.i; }); });
+    if (!libres.length) return null;
+    libres.sort(function (a, b) {
+      return vers === "porte" ? (b.porte - a.porte) || (b.tout - a.tout) || (a.i - b.i) : (b.tout - a.tout) || (b.porte - a.porte) || (a.i - b.i);
+    });
+    var i = libres[0].i, e = p.carte.emplacementsRivaux[i];
+    var t = { type: type, emplacement: i, x: e[0], y: e[1], niveau: 1, recharge: 0, rivale: true, angle: Math.PI };
+    p.toursRivales.push(t);
+    if (effetVisible) effet(p, "tourRivale", e[0], e[1], { type: type, emplacement: i, duree: 2 });
+    return t;
+  }
+
+  function noter(p, posture, actions) {
+    var j = { vague: p.vague, posture: posture, actions: actions, texte: TEXTES_RIVAL[posture] };
+    p.ia.journal.push(j);
+    return j;
+  }
+
+  // Au début de la bataille : RIVAL.toursDepart tours devant sa porte (baliste pour la 2e à partir du niveau 2), une
+  // garnison de RIVAL.garnison gardes, RIVAL.tresor or dans son trésor.
+  function rivalDepart(p) {
+    var r = rival(p), actions = [];
+    p.ia = { or: r.tresor, posture: "depart", renfort: [], journal: [], belierVu: false };
+    p.garnison = { taille: r.garnison, reserve: r.garnison, rappel: 0, minuterie: 0 };
+    for (var k = 0; k < r.toursDepart; k++) {
+      var t = rivalBatit(p, k === 1 && p.niveau >= 2 ? "baliste" : "archers", "porte", false);
+      if (t) actions.push({ genre: "tour", type: t.type, emplacement: t.emplacement });
+    }
+    actions.push({ genre: "garnison", nombre: r.garnison });
+    noter(p, "depart", actions);
+  }
+
+  // Entre deux vagues (appelé quand une vague se termine) : le rival touche RIVAL.impot or, la garnison se reforme
+  // (gardes tombés remplacés), puis il regarde ce que tu as fait à la vague jouée (p.rapport) et choisit une posture :
+  //  1. « porte » : tu as surtout envoyé des troupes (leur or ≥ IA.ratio × celui de tes tours, et ≥ IA.seuilTroupes), ou
+  //     tu lui as fait mal (au moins IA.breche coups portés à sa place forte pendant la vague) : une tour devant sa porte (une baliste si tu as déjà envoyé une tour de siège, à partir du niveau 1), puis jusqu'à
+  //     IA.gardesPorte gardes de plus dans sa garnison ;
+  //  2. « armee » : tu te retranches (au moins IA.ecartTours tours de plus que lui, et pas plus de IA.seuilTortue or de
+  //     troupes envoyées) : des hommes d'armes en renfort dans sa prochaine vague, plus solides que la piétaille ;
+  //  3. « mefiance » : tu as gardé au moins IA.orGarde or : un garde de plus (il craint une grosse attaque), le reste gardé ;
+  //  4. « equilibre » : une tour sur la route s'il en a moins que 1 + numéro de la vague, sinon des renforts.
+  function rivalReagit(p) {
+    var r = rival(p), ia = p.ia, g = p.garnison, rap = p.rapport || { troupes: 0, tours: 0, belier: 0, orGarde: 0, degats: 0 };
+    ia.or += r.impot;
+    ia.renfort = [];
+    if (rap.belier) ia.belierVu = true;
+    var posture, actions = [];
+    if ((rap.troupes >= IA.ratio * rap.tours && rap.troupes >= IA.seuilTroupes) || rap.degats >= IA.breche) posture = "porte";
+    else if (p.tours.length >= p.toursRivales.length + IA.ecartTours && rap.troupes <= IA.seuilTortue) posture = "armee";
+    else if (rap.orGarde >= IA.orGarde) posture = "mefiance";
+    else posture = "equilibre";
+    ia.posture = posture;
+    function tour(vers) {
+      var type = ia.belierVu && p.niveau >= 1 && ia.or >= PRIX_RIVAL.baliste ? "baliste" : "archers";
+      if (ia.or < PRIX_RIVAL[type]) return false;
+      var t = rivalBatit(p, type, vers, true);
+      if (!t) return false;
+      ia.or -= PRIX_RIVAL[type];
+      actions.push({ genre: "tour", type: type, emplacement: t.emplacement });
+      return true;
+    }
+    function gardes(max) {
+      var n = 0;
+      while (n < max && g.taille < GARNISON.taille && ia.or >= PRIX_RIVAL.garde) { g.taille++; ia.or -= PRIX_RIVAL.garde; n++; }
+      if (n) actions.push({ genre: "garde", nombre: n });
+    }
+    function renforts(types) {
+      var n = 0;
+      while (ia.renfort.length < IA.renfortMax) {
+        var type = types[ia.renfort.length % types.length];
+        if (ia.or < PRIX_RIVAL[type]) break;
+        ia.or -= PRIX_RIVAL[type]; ia.renfort.push(type); n++;
+      }
+      if (n) actions.push({ genre: "renfort", nombre: n, types: ia.renfort.slice() });
+    }
+    if (posture === "porte") { tour("porte"); gardes(IA.gardesPorte); }
+    else if (posture === "armee") renforts(["hommes"]);
+    else if (posture === "mefiance") gardes(1);
+    else if (p.toursRivales.length < 1 + p.vague) tour("route");
+    else renforts(p.vague >= 1 ? ["pietaille", "cavaliers"] : ["pietaille"]);
+    g.reserve = g.taille; g.rappel = 0;
+    noter(p, posture, actions);
+  }
+
+  // Au départ d'une vague, les guetteurs du rival voient ton armée sortir et tes nouvelles tours : si l'or de tes troupes
+  // dépasse IA.ratio fois celui de tes tours (et améliorations) de cette préparation de plus de IA.alerte, il rappelle un
+  // garde de plus pour cette vague par tranche de IA.parGarde or au-delà (au plus GARNISON.rappel ; des gens du pays,
+  // qu'il ne paie pas). Une armée grosse face à des défenses maigres, c'est une ruée : sa porte s'y prépare. Les guetteurs
+  // ne voient que ce qui se voit sur le champ de bataille, jamais tes réponses.
+  function rivalGuetteurs(p) {
+    var g = p.garnison, valeur = p.depenses.troupes - IA.ratio * p.depenses.tours, n = 0;
+    g.reserve = g.taille;
+    while (n < GARNISON.rappel && valeur - IA.alerte >= IA.parGarde * (n + 1)) n++;
+    g.rappel = n; g.reserve += n;
+    if (n) {
+      noter(p, "alerte", [{ genre: "rappel", nombre: n }]);
+      var porte = surRoute(p.route, p.route.longueur, 0);
+      effet(p, "alerte", porte.x, porte.y, { nombre: n, duree: 2 });
     }
   }
 
   function lancerVague(p) {
     if (p.phase !== "preparation" || p.fin) return false;
     p.phase = "vague";
-    rivalConstruit(p);
+    rivalGuetteurs(p);
     p.fileRivale = composerVague(p);
     p.stats.rivaux += p.fileRivale.length;
     p.fileAmie = p.envois.slice();
     p.stats.envoyes += p.envois.length;
     p.envois = [];
-    p.minuterieRivale = 0.6; p.minuterieAmie = 0.3;
+    // ce que tu as fait pour cette vague (lu par rivalReagit à la fin de la vague) ; degats : coups portés pendant la vague
+    p.rapport = { vague: p.vague, troupes: p.depenses.troupes, tours: p.depenses.tours, belier: p.depenses.belier, soldats: p.depenses.soldats,
+      orGarde: p.or, toursJoueur: p.tours.length, degats: 0, avant: p.stats.degatsRival };
+    p.depenses = { troupes: 0, tours: 0, belier: 0, soldats: 0 };
+    p.minuterieRivale = 0.6; p.minuterieAmie = 0.3; p.garnison.minuterie = 0;
     return true;
   }
 
   // adversaire : la troupe d'en face en mêlée (ou null) ; recharge : secondes avant son prochain coup ; premier : son
   // prochain coup est celui d'une charge ; frappe : heure (p.temps) de son dernier coup, pour le geste du rendu.
-  function creerUnite(p, camp, type) {
-    var d = camp === "rival" ? ENNEMIS[type] : TROUPES[type], r = rival(p), def = camp === "rival" && p.defense;
-    var echelle = camp === "rival" ? (r.pv + VAGUES.pvVague * p.vague) * (def ? r.assaut : 1) : bonusArsenal(p, "troupes", type);
+  // garde : un garde de la garnison (camp rival, type GARNISON.type) : RIVAL.garde fois la solidité et les coups d'un homme
+  // d'armes, quel que soit le numéro de la vague ou la défense du domaine ; il ne frappe jamais tes murs (degats 0).
+  function creerUnite(p, camp, type, garde) {
+    var d = camp === "rival" ? ENNEMIS[type] : TROUPES[type], r = rival(p), def = camp === "rival" && p.defense && !garde;
+    var echelle = garde ? r.garde : camp === "rival" ? (r.pv + VAGUES.pvVague * p.vague) * (def ? r.assaut : 1) : bonusArsenal(p, "troupes", type);
     var pv = d.pv * echelle;
     var v = d.vitesse * (p.modificateurs.pluie ? 0.8 : 1);
-    var coup = (d.coup || 1) * (camp === "rival" ? r.coup : 1);
-    var u = { camp: camp, type: type, pv: pv, max: pv, vitesse: v, degats: d.degats * (def ? DEFENSE.degats : 1), coup: coup, charge: !!d.charge,
+    var coup = (d.coup || 1) * (garde ? r.garde : camp === "rival" ? r.coup : 1);
+    var u = { camp: camp, type: type, pv: pv, max: pv, vitesse: v, degats: garde ? 0 : d.degats * (def ? DEFENSE.degats : 1), coup: coup, charge: !!d.charge,
       s: camp === "rival" ? p.route.longueur : 0, cote: camp === "rival" ? -9 : 9, ralenti: 0, vivant: true, pas: Math.random() * 6,
-      adversaire: null, recharge: 0, premier: false, frappe: -1 };
+      adversaire: null, recharge: 0, premier: false, frappe: -1, garnison: !!garde };
     var pos = surRoute(p.route, u.s, u.cote); u.x = pos.x; u.y = pos.y; u.angle = pos.angle;
     p.unites.push(u);
     return u;
@@ -305,8 +466,8 @@
       for (var i = p.effets.length - 1, chutes = 0; i >= 0; i--) {
         if (p.effets[i].genre === "chute" && ++chutes >= TOMBES) p.effets.splice(i, 1);
       }
-      effet(p, "chute", u.x, u.y, { camp: u.camp, type: u.type, regard: regard(u), melee: !!melee, duree: DUREE_CHUTE });
-      if (u.camp === "rival") { p.stats.tues++; p.or += 1; } else p.stats.pertes++;
+      effet(p, "chute", u.x, u.y, { camp: u.camp, type: u.type, regard: regard(u), melee: !!melee, duree: DUREE_CHUTE, garnison: u.garnison });
+      if (u.camp === "rival") { p.stats.tues++; p.or += 1; if (u.garnison) p.stats.gardesTombes++; } else p.stats.pertes++;
     }
   }
 
@@ -323,7 +484,7 @@
     effet(p, "choc", (a.x + r.x) / 2, (a.y + r.y) / 2, { charge: a.charge || r.charge });
   }
   function frapper(p, u, c) {
-    var d = u.coup * (u.premier ? MELEE.charge : 1);
+    var d = u.coup * (u.premier ? MELEE.charge : 1) * (u.garnison && c.type === "belier" ? GARNISON.contreSiege : 1);
     effet(p, "coup", c.x, c.y, { camp: c.camp, dir: c.x >= u.x ? 1 : -1, fort: u.premier || d >= 3 });
     u.premier = false; u.recharge = MELEE.cadence; u.frappe = p.temps;
     blesser(p, c, d, true);
@@ -398,25 +559,53 @@
     u.cote = Math.abs(voulu - u.cote) <= pas ? voulu : u.cote + (voulu > u.cote ? pas : -pas);
   }
 
+  // Un garde libre va au-devant de la troupe à toi la plus proche dans la zone de la porte (sans jamais s'éloigner de la
+  // porte de plus de GARNISON.zone + GARNISON.marge px) et attend à l'écart de combat si elle se bat déjà ; sans troupe à
+  // toi dans la zone, il rentre. Rend le sens de sa marche (−1 vers toi, 1 vers sa porte) et la distance voulue.
+  function marcheGarde(p, u, v, dt) {
+    var L = p.route.longueur, seuil = L - GARNISON.zone, cible = null, ecartCible = Infinity, i, a;
+    for (i = 0; i < p.unites.length; i++) {
+      a = p.unites[i];
+      if (!a.vivant || a.camp !== "joueur" || a.s < seuil) continue;
+      var e = Math.abs(a.s - u.s) + (a.adversaire ? 1000 : 0); // une troupe libre d'abord
+      if (e < ecartCible) { ecartCible = e; cible = a; }
+    }
+    if (!cible) return { sens: 1, avance: v * dt };
+    var sens = cible.s < u.s ? -1 : 1, reste = Math.abs(cible.s - u.s) - (cible.adversaire ? MELEE.ecart : 0);
+    if (sens < 0) reste = Math.min(reste, u.s - (seuil - GARNISON.marge));
+    return { sens: sens, avance: Math.max(0, Math.min(v * dt, reste)) };
+  }
+
   function etapeUnites(p, dt) {
     p.unites.forEach(function (u) {
       if (!u.vivant) return;
       var v = u.vitesse * (u.ralenti > 0 ? (1 - TOURS.piquiers.ralentit) : 1);
       u.ralenti = Math.max(0, u.ralenti - dt);
-      var sens = u.camp === "rival" ? -1 : 1, avance;
+      var sens = u.camp === "rival" ? -1 : 1, avance, recul = false;
       if (u.adversaire) {
         // en mêlée : les deux troupes se rapprochent jusqu'à l'écart de combat, puis piétinent sur place
         var ecart = sens * (u.adversaire.s - u.s);
         avance = ecart > MELEE.ecart ? Math.min(v * dt, (ecart - MELEE.ecart) / 2) : 0;
         u.pas += dt * 1.5;
+      } else if (u.garnison) {
+        var m = marcheGarde(p, u, v, dt);
+        sens = m.sens; avance = m.avance; recul = sens > 0;
+        u.pas += avance / 9;
       } else {
         avance = v * dt;
         u.pas += avance / 9;
       }
       u.s += sens * avance;
       versCote(u, dt);
-      var pos = surRoute(p.route, u.s, u.cote); u.x = pos.x; u.y = pos.y; u.angle = pos.angle;
-      if (u.camp === "rival" && u.s <= 0) {
+      // (un garde qui rentre regarde vers sa porte : son angle est celui de sa marche)
+      var pos = surRoute(p.route, u.s, u.cote); u.x = pos.x; u.y = pos.y; u.angle = recul ? pos.angle + Math.PI : pos.angle;
+      if (u.garnison && recul && u.s >= p.route.longueur) {
+        // le garde rentre à la porte : il compte de nouveau dans la garnison de cette vague
+        u.vivant = false; u.rentre = true;
+        p.garnison.reserve++;
+        p.stats.rivaux--; p.stats.rentrees++;
+        effet(p, "rentree", u.x, u.y, { camp: "rival" });
+      } else if (u.camp === "rival" && u.s <= 0) {
         u.vivant = false;
         p.chateau.pv = Math.max(0, p.chateau.pv - u.degats);
         p.stats.fuites++;
@@ -438,6 +627,26 @@
     if (p.fileAmie.length && p.minuterieAmie <= 0) { creerUnite(p, "joueur", p.fileAmie.shift()); p.minuterieAmie = 0.55; }
   }
 
+  // Sorties de la garnison : tant que tes troupes dans la zone de la porte sont plus nombreuses que ses gardes dehors, un
+  // garde sort (toutes les GARNISON.ecart secondes), s'il en reste dans la garnison de cette vague (p.garnison.reserve).
+  function etapeGarnison(p, dt) {
+    var g = p.garnison;
+    g.minuterie -= dt;
+    if (g.reserve <= 0 || g.minuterie > 0) return;
+    var seuil = p.route.longueur - GARNISON.zone, menace = 0, dehors = 0;
+    for (var i = 0; i < p.unites.length; i++) {
+      var u = p.unites[i];
+      if (!u.vivant) continue;
+      if (u.camp === "joueur" && u.s >= seuil) menace++;
+      else if (u.garnison) dehors++;
+    }
+    if (menace <= dehors) return;
+    var garde = creerUnite(p, "rival", GARNISON.type, true);
+    g.reserve--; g.minuterie = GARNISON.ecart;
+    p.stats.rivaux++; p.stats.sorties++;
+    effet(p, "sortie", garde.x, garde.y, { camp: "rival" });
+  }
+
   // Avance la simulation de dt secondes. Renvoie la phase en cours.
   function etape(p, dt) {
     p.temps += dt;
@@ -445,6 +654,7 @@
     p.effets = p.effets.filter(function (e) { return e.age < (e.duree || DUREE_EFFET); });
     if (p.phase !== "vague") return p.phase;
     etapeFiles(p, dt);
+    etapeGarnison(p, dt);
     etapeMelee(p, dt);
     etapeUnites(p, dt);
     etapeTours(p, dt, p.tours);
@@ -453,11 +663,13 @@
     if (p.rival.pv <= 0) return terminer(p, "victoire");
     if (p.chateau.pv <= 0) return terminer(p, "retraite");
     if (!p.fileRivale.length && !p.fileAmie.length && !p.unites.length && !p.projectiles.length) {
+      if (p.rapport) p.rapport.degats = p.stats.degatsRival - p.rapport.avant;
       p.vague++;
       p.modificateurs = {};
       if (p.vague >= p.vagues) return terminer(p, "tenu");
       p.phase = "preparation";
       p.or += p.revenu;
+      rivalReagit(p); // le rival décide pour la vague suivante : ses nouvelles tours se voient pendant ta préparation
     }
     return p.phase;
   }
@@ -481,6 +693,7 @@
   JEU.batailleMoteur = {
     LARGEUR: LARGEUR, HAUTEUR: HAUTEUR, TOURS: TOURS, TROUPES: TROUPES, ENNEMIS: ENNEMIS, TOURS_RIVALES: TOURS_RIVALES, AMELIORATION: AMELIORATION,
     VAGUES: VAGUES, RIVAL: RIVAL, DEFENSE: DEFENSE, MELEE: MELEE, DUREE_EFFET: DUREE_EFFET, DUREE_CHUTE: DUREE_CHUTE, TOMBES: TOMBES, BONUS_SERIE: BONUS_SERIE, OR_PERDU: OR_PERDU,
+    GARNISON: GARNISON, IA: IA, PRIX_RIVAL: PRIX_RIVAL, TEXTES_RIVAL: TEXTES_RIVAL, couvertureRivale: couvertureRivale, rivalReagit: rivalReagit,
     creer: creer, poserTour: poserTour, ameliorerTour: ameliorerTour, coutAmelioration: coutAmelioration, envoyer: envoyer, gagnerOr: gagnerOr,
     perdreOr: perdreOr, repondre: repondre,
     lancerVague: lancerVague, etape: etape, jouerVague: jouerVague, surRoute: surRoute, preparerRoute: preparerRoute,
