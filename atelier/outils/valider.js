@@ -1,4 +1,4 @@
-// Validateur complet (Node) : contrôles 1 à 9 de docs/FORMAT_DONNEES.md, notes de suivi.js comprises,
+// Validateur complet (Node) : contrôles 1 à 10 de docs/FORMAT_DONNEES.md, notes de suivi.js et personnages.js compris,
 // et même numéro de version dans jeu/VERSION.txt et jeu/index.html.
 // Usage : node atelier/outils/valider.js
 // Sortie : lignes ERREUR et ALERTE ; code de sortie 1 s'il y a au moins une erreur.
@@ -14,7 +14,7 @@ const DATA = path.join(RACINE, "jeu", "data");
 const EXTRACTIONS = path.join(RACINE, "atelier", "extractions");
 
 function chargerDonnees() {
-  const d = { config: null, planning: null, devoirs: null, indexCours: null, aRetravailler: [], suivi: null, cours: {}, anglais: {}, erreursChargement: [] };
+  const d = { config: null, planning: null, devoirs: null, indexCours: null, aRetravailler: [], suivi: null, personnages: null, cours: {}, anglais: {}, erreursChargement: [] };
   function executer(fichier) {
     const ctx = {
       JEU: {
@@ -28,6 +28,7 @@ function chargerDonnees() {
             case "suivi": d.suivi = obj; break;
             case "cours": d.cours[obj.id] = obj; break;
             case "anglais": d.anglais[obj.id] = obj; break;
+            case "personnages": d.personnages = obj; break;
             default: d.erreursChargement.push(path.relative(RACINE, fichier) + " : type inconnu " + type);
           }
         }
@@ -43,6 +44,9 @@ function chargerDonnees() {
     const f = path.join(DATA, n + ".js");
     if (fs.existsSync(f)) executer(f); else d.erreursChargement.push("jeu/data/" + n + ".js manquant");
   });
+  // personnages de la campagne (facultatif : sans lui, un « seigneur rival » sans nom sur chaque front)
+  const fp = path.join(DATA, "personnages.js");
+  if (fs.existsSync(fp)) executer(fp); else d.personnagesAbsent = true;
   ["cours", "anglais"].forEach(dossier => {
     const rep = path.join(DATA, dossier);
     if (!fs.existsSync(rep)) return;
@@ -111,6 +115,11 @@ function antiRecopie(d, E) {
       });
     });
   });
+  // personnages.js : faits et répliques reformulés, rien de recopié
+  if (d.personnages) textesPersonnages(d).forEach(t => {
+    const g = [...ngrammes(motsDe(t), 12)].find(x => grammes.has(x));
+    if (g) E("[8] suite de 12 mots recopiée de « " + grammes.get(g) + " » dans personnages.js : « " + g + " »");
+  });
   // notes de suivi.js : affichées à l'élève, elles ne recopient ni un livret ni un corrigé (une ligne par note suffit)
   notesSuivi(d).forEach(([cid, note]) => {
     const g = [...ngrammes(motsDe(note), 12)].find(x => grammes.has(x));
@@ -176,6 +185,65 @@ function antiSpoilSuivi(d, E, A) {
   });
 }
 
+// Textes de personnages.js montrés à l'élève (noms, titres, faits, humeurs, répliques), sans les crédits des portraits.
+function textesPersonnages(d) {
+  const P = d.personnages || {}, t = [];
+  (P.personnages || []).forEach(p => {
+    if (!p) return;
+    [p.nom, p.titre].forEach(x => { if (typeof x === "string") t.push(x); });
+    (p.faits || []).forEach(f => { if (f && typeof f.texte === "string") t.push(f.texte); });
+    Object.values(p.repliques || {}).forEach(l => (Array.isArray(l) ? l : []).forEach(x => { if (typeof x === "string") t.push(x); }));
+  });
+  Object.values(P.humeurs || {}).forEach(h => Object.values(h || {}).forEach(x => { if (typeof x === "string") t.push(x); }));
+  Object.values(P.repliques || {}).forEach(c => Object.values(c || {}).forEach(l => (Array.isArray(l) ? l : []).forEach(x => { if (x && typeof x.texte === "string") t.push(x.texte); })));
+  (P.changement || []).forEach(x => { if (typeof x === "string") t.push(x); });
+  return t;
+}
+
+// 9 (suite). personnages.js : ni tournure (8 mots) ni nombre propre à un devoir (énoncés et corrigés du registre).
+function antiSpoilPersonnages(d, E, A) {
+  if (!d.personnages) return;
+  const textes = textesPersonnages(d);
+  const registre = lireRegistre();
+  registre.filter(r => r.type === "enonce" || r.type === "corrige").forEach(r => {
+    const fx = path.join(EXTRACTIONS, r.extraction || "");
+    if (!r.extraction || !fs.existsSync(fx)) return;
+    const texte = fs.readFileSync(fx, "utf8");
+    const g8 = ngrammes(motsDe(texte), 8), nbDevoir = new Set(nombresDe(texte));
+    const perimetre = [].concat(...(r.cours || []).map(id => ((d.devoirs || []).find(x => x.id === id) || {}).perimetre || []));
+    const nbCours = nombresDesCours(registre, perimetre);
+    const nom = (r.cours || []).join(", ") || r.chemin;
+    textes.forEach(t => {
+      const g = [...ngrammes(motsDe(t), 8)].find(x => g8.has(x));
+      if (g) E("[9] personnages.js recoupe le devoir " + nom + " : « " + g + " »");
+      nombresDe(t).forEach(n => { if (nbDevoir.has(n) && !nbCours.has(n)) E("[9] personnages.js reprend le nombre " + n + " du devoir " + nom); });
+    });
+  });
+}
+
+// 10 (suite). personnages.js : chaque source existe dans DEPOT/, chaque portrait dans jeu/ (120 Ko au plus, sinon
+// ALERTE), avec sa ligne de crédit dans jeu/CREDITS.md (nom du fichier et adresse de l'œuvre).
+function fichiersPersonnages(d, E, A) {
+  if (d.personnagesAbsent) { A("[10] jeu/data/personnages.js absent : pas de souverain, et un « seigneur rival » sans nom sur chaque front"); return; }
+  if (!d.personnages || !Array.isArray(d.personnages.personnages)) return;
+  let credits = "";
+  try { credits = fs.readFileSync(path.join(RACINE, "jeu", "CREDITS.md"), "utf8"); } catch (e) { E("[10] jeu/CREDITS.md illisible"); }
+  d.personnages.personnages.forEach(p => {
+    if (!p) return;
+    const ou = "personnage " + p.id;
+    [p.source].concat((p.faits || []).map(f => f && f.source)).forEach(src => {
+      if (src && typeof src.fichier === "string" && !fs.existsSync(path.join(RACINE, "DEPOT", src.fichier))) E("[10] " + ou + " : source introuvable dans DEPOT/ (" + src.fichier + ")");
+    });
+    const r = p.portrait;
+    if (r && typeof r.fichier === "string") {
+      const f = path.join(RACINE, "jeu", r.fichier);
+      if (!fs.existsSync(f)) E("[10] " + ou + " : portrait introuvable (jeu/" + r.fichier + ")");
+      else if (fs.statSync(f).size > 120 * 1024) A("[10] " + ou + " : portrait de plus de 120 Ko (" + Math.round(fs.statSync(f).size / 1024) + " Ko)");
+      if (credits && (!credits.includes(path.basename(r.fichier)) || (r.url && !credits.includes(r.url)))) E("[10] " + ou + " : crédit absent de jeu/CREDITS.md (fichier " + path.basename(r.fichier) + " et adresse " + r.url + ")");
+    }
+  });
+}
+
 // 7 (suite). Une estimation de suivi.js dont la source est un fichier : il doit avoir été déposé (chemin relatif à DEPOT/).
 function sourcesSuivi(d, E) {
   estimationsSuivi(d).forEach(([cid, x]) => {
@@ -228,6 +296,8 @@ function valider() {
   antiRecopie(d, E);
   antiSpoil(d, E, A);
   antiSpoilSuivi(d, E, A);
+  antiSpoilPersonnages(d, E, A);
+  fichiersPersonnages(d, E, A);
   return { res, d };
 }
 
@@ -241,4 +311,4 @@ if (require.main === module) {
     Object.keys(d.cours).length + " cours, " + nbF + " fiches, " + nbQ + " questions · planning " + (d.planning || []).length + " entrées, " + (d.devoirs || []).length + " devoirs.");
   process.exit(res.erreurs.length ? 1 : 0);
 }
-module.exports = { valider, chargerDonnees, motsDe, ngrammes };
+module.exports = { valider, chargerDonnees, motsDe, ngrammes, textesPersonnages };

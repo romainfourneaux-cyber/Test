@@ -9,8 +9,10 @@
 //    gagnées en abattant le château adverse), murs restants en moyenne, et quand la défense tient.
 // Arsenal et jauges du royaume supposés à chaque niveau : voir PROGRESSION (un élève qui joue régulièrement).
 // Usage : node atelier/outils/simuler-bataille.js [--graines 80] [--p 0.6,0.7,0.8,0.9] [--niveaux 0,1,2,3,4] [--moteur chemin] [--perte n]
-// (environ 3 min avec les réglages par défaut ; 80 graines par province et par front, 160 défenses par niveau : à 40, le
-// niveau 4 bouge encore de 5 points d'un tirage à l'autre). Résultats et réglages du 15/10/2026 : docs/JOURNAL.md, Décisions.
+// (environ 3 min avec les réglages par défaut, 10 min avec les trois stratégies ; 80 graines par province et par front,
+// 160 défenses par niveau : à 40, le niveau 4 bouge encore de 5 points d'un tirage à l'autre ; lancer un processus par
+// niveau avec --niveaux 0, --niveaux 1… va quatre fois plus vite sur quatre cœurs). Résultats et réglages du 15/10/2026,
+// puis du 16/10/2026 (IA du seigneur rival : tours dès le début, garnison à sa porte, guetteurs) : docs/JOURNAL.md, Décisions.
 //   --moteur : un autre fichier de moteur, par exemple une copie de l'ancien (git show f9939e2:jeu/js/bataille-moteur.js),
 //              pour comparer avant et après ;
 //   --perte : or perdu par erreur (par défaut celui de jeu/data/config.js, orPerduErreur, sinon celui du moteur ;
@@ -30,8 +32,11 @@
 //              tortue : rien que des tours et des améliorations, jamais de troupe.
 //              Avec plusieurs stratégies, un tableau par stratégie, puis la comparaison (coups à la 1re vague, en part
 //              de la solidité de la place forte, coups à la 1re bataille, batailles pour prendre, défense tenue).
-//              Le seigneur rival réagit à ce que fait le joueur (jeu/js/bataille-moteur.js, rivalReagit) : le tableau
-//              dit aussi ce qu'il a fait (tours bâties, gardes de plus, troupes de renfort, en moyenne par bataille).
+//              Le seigneur rival réagit à ce que fait le joueur (jeu/js/bataille-moteur.js, rivalReagit et
+//              rivalGuetteurs) : le tableau dit aussi ce qu'il a fait (tours bâties, gardes achetés, gardes rappelés par
+//              ses guetteurs, troupes de renfort, en moyenne par bataille). Cibles du 16/10/2026 : la stratégie équilibrée
+//              fait au moins aussi bien que rush et tortue ; la ruée ne porte pas plus d'un tiers de la solidité à la 1re
+//              vague au niveau 0, moins aux niveaux suivants.
 "use strict";
 const fs = require("fs");
 const path = require("path");

@@ -17,6 +17,14 @@
     devoir: /^(histoire|geographie|svt|physique|litterature|lecture|langue|anglais)-d\d+$/
   };
 
+  // 10. personnages.js (16/10/2026) : souverains réels cités par les cours d'histoire et rivaux de la campagne.
+  var CAMPS_PERSONNAGES = ["joueur", "angleterre", "omeyyades"];
+  var CAMPS_RIVAUX = ["angleterre", "omeyyades"];
+  var SITUATIONS_RIVAL = ["presentation", "defi", "victoire", "tenu", "retraite", "province", "attaque"];
+  var NIVEAUX_RIVALITE = ["calme", "pique", "acharne"];
+  // Répliques : jeu seulement. Ni religion, ni insulte (mots repérés en entier, accents compris).
+  var MOTS_INTERDITS = /(^|[^a-zà-ÿœæ])(dieux?|papes?|[ée]glises?|chr[ée]tien\w*|musulman\w*|islam\w*|mosqu[ée]e\w*|croisades?|infid[èe]le\w*|pri[èe]res?|saints?|saintes?|paradis|enfer|messe|proph[èe]te\w*|religi\w*|idiot\w*|imb[ée]cile\w*|cr[ée]tin\w*|stupide\w*|minable\w*|l[âa]che|l[âa]ches|mis[ée]rable\w*|path[ée]tique\w*|ridicule\w*|abruti\w*|nullard\w*)(?![a-zà-ÿœæ])/i;
+
   function phrases(s) {
     var t = String(s || "").trim();
     if (!t) return 0;
@@ -282,10 +290,133 @@
       });
     }
 
+    // 10. personnages.js (facultatif : sans lui, chaque front a « un seigneur rival » et ton camp n'a pas de souverain)
+    if (donnees.personnages !== undefined && donnees.personnages !== null) controlerPersonnages(donnees.personnages, parId, index, E, A);
+
     return { erreurs: erreurs, alertes: alertes };
   }
 
-  var api = { controler: controler, phrases: phrases, mots: mots, sourceSuivi: sourceSuivi, BADGES: BADGES, RX: RX };
+  // Contrôle 10 : champs, camps, cours reliés (planning, fiche méthode ou cours de langue), sources, portraits
+  // (fichier et crédit vérifiés par valider.js), règle des rivaux « titre seul », répliques (nombre, longueur,
+  // marques {nom} {province} {souverain}, ni chiffre, ni religion, ni insulte, ni nom d'un personnage historique dans la
+  // bouche d'un rival).
+  function controlerPersonnages(P, parId, index, E, A) {
+    function objet(x) { return !!x && typeof x === "object" && !Array.isArray(x); }
+    if (!objet(P) || !Array.isArray(P.personnages)) { E("[10] personnages : objet { personnages: [...] } attendu"); return; }
+    var ids = {}, noms = [];
+    function coursValide(c, ou) {
+      if (typeof c !== "string" || !c) { E("[10] " + ou + " : cours manquant"); return; }
+      var p = parId[c];
+      if (p) { if (p.type !== "cours") E("[10] " + ou + " : " + c + " n'est pas un cours (entrée de type " + p.type + ")"); }
+      else if (!RX.methode.test(c) && !RX.langue.test(c)) E("[10] " + ou + " : cours inconnu " + c + " (planning, fiche méthode ou cours de langue)");
+      if (index.indexOf(c) < 0) A("[10] " + ou + " : le cours " + c + " n'est pas encore dans index-cours.js (le personnage ou le fait reste dans la brume)");
+    }
+    function sourceValide(src, ou) {
+      if (!objet(src) || typeof src.fichier !== "string" || !src.fichier || typeof src.page !== "number" || src.page < 1 || Math.floor(src.page) !== src.page) E("[10] " + ou + " : source { fichier, page } manquante ou mal écrite");
+      else if (/^(\/|[a-z]:)|\.\./i.test(src.fichier)) E("[10] " + ou + " : chemin de source à écrire relatif à DEPOT/ (" + src.fichier + ")");
+    }
+    function texteCourt(t, ou, maxMots) {
+      if (typeof t !== "string" || !t.trim()) { E("[10] " + ou + " : texte vide"); return false; }
+      if (phrases(t) > 2) E("[10] " + ou + " : plus de deux phrases (« " + t + " »)");
+      if (mots(t) > (maxMots || 28)) E("[10] " + ou + " : plus de " + (maxMots || 28) + " mots (« " + t + " »)");
+      return true;
+    }
+    function replique(t, ou, marques, autorises) {
+      if (!texteCourt(t, ou)) return;
+      if (/\d/.test(t)) E("[10] " + ou + " : chiffre dans une réplique (pas de date ni de fait historique) : « " + t + " »");
+      var m = MOTS_INTERDITS.exec(t);
+      if (m) E("[10] " + ou + " : mot interdit dans une réplique (religion ou insulte) « " + m[2] + " » : « " + t + " »");
+      (t.match(/\{[^}]*\}/g) || []).forEach(function (x) { if (marques.indexOf(x) < 0) E("[10] " + ou + " : marque " + x + " inconnue ici (permises : " + marques.join(", ") + ")"); });
+      noms.forEach(function (n) { if (autorises.indexOf(n) < 0 && t.indexOf(n) >= 0) E("[10] " + ou + " : la réplique nomme " + n + " (un personnage relié à un cours qui peut être fermé)"); });
+    }
+    P.personnages.forEach(function (p, i) {
+      if (!objet(p)) { E("[10] personnages[" + i + "] illisible"); return; }
+      if (!p.titreSeul && typeof p.nom === "string" && p.nom) noms.push(p.nom);
+    });
+    P.personnages.forEach(function (p, i) {
+      if (!objet(p)) return;
+      var ou = "personnage " + (p.id || "#" + i);
+      if (typeof p.id !== "string" || !/^[a-z0-9]+(-[a-z0-9]+)*$/.test(p.id)) E("[10] " + ou + " : identifiant mal formé");
+      else if (ids[p.id]) E("[10] identifiant de personnage en double : " + p.id);
+      ids[p.id] = true;
+      if (typeof p.nom !== "string" || !p.nom.trim()) E("[10] " + ou + " : nom manquant");
+      if (CAMPS_PERSONNAGES.indexOf(p.camp) < 0) E("[10] " + ou + " : camp inconnu " + p.camp + " (" + CAMPS_PERSONNAGES.join(", ") + ")");
+      if (typeof p.seuil !== "number" || p.seuil < 0 || Math.floor(p.seuil) !== p.seuil) E("[10] " + ou + " : seuil (provinces prises, entier ≥ 0) manquant");
+      if (p.dates !== undefined && p.dates !== null && !(typeof p.dates === "string" && /^\d{3,4}(-\d{3,4})?$/.test(p.dates))) E("[10] " + ou + " : dates mal écrites (« 481-511 » ou null)");
+      if (p.titre !== undefined && p.titre !== null && !(typeof p.titre === "string" && p.titre.trim() && p.titre.length <= 60)) E("[10] " + ou + " : titre mal écrit (60 caractères au plus, ou null)");
+      var faits = p.faits === undefined ? [] : p.faits;
+      if (!Array.isArray(faits)) { E("[10] " + ou + " : faits doit être une liste"); faits = []; }
+      if (p.cours === null || p.cours === undefined) {
+        // sans cours : seulement un rival « titre seul », sans date, sans titre ni fait (rien d'un cours fermé)
+        if (!p.titreSeul || p.camp === "joueur") E("[10] " + ou + " : un personnage sans cours n'est permis que pour un rival « titre seul »");
+        if (p.dates || p.titre || faits.length) E("[10] " + ou + " : sans cours, ni titre, ni date, ni fait");
+        if (p.source) E("[10] " + ou + " : source sans cours");
+      } else {
+        coursValide(p.cours, ou);
+        sourceValide(p.source, ou);
+      }
+      if (p.titreSeul) {
+        if (p.portrait) E("[10] " + ou + " : un rival « titre seul » n'a pas de visage (portrait: null, médaillon héraldique)");
+        if (p.dates) E("[10] " + ou + " : un rival « titre seul » n'a pas de dates");
+      }
+      faits.forEach(function (f, k) {
+        var o = ou + ", fait " + (k + 1);
+        if (!objet(f)) { E("[10] " + o + " illisible"); return; }
+        texteCourt(f.texte, o, 35);
+        if (f.cours !== undefined) { coursValide(f.cours, o); sourceValide(f.source, o); }
+        else if (f.source !== undefined) sourceValide(f.source, o);
+      });
+      if (p.portrait !== undefined && p.portrait !== null) {
+        var r = p.portrait;
+        if (!objet(r)) E("[10] " + ou + " : portrait illisible");
+        else {
+          if (typeof r.fichier !== "string" || !/^assets\/images\/personnages\/[a-z0-9-]+\.(jpe?g|png)$/.test(r.fichier)) E("[10] " + ou + " : portrait.fichier attendu dans assets/images/personnages/ (jpg ou png)");
+          ["oeuvre", "artiste", "date", "institution", "licence", "url"].forEach(function (k) { if (typeof r[k] !== "string" || !r[k].trim()) E("[10] " + ou + " : portrait." + k + " manquant (crédit complet)"); });
+          if (typeof r.licence === "string" && !/domaine public|CC0|CC BY/i.test(r.licence)) E("[10] " + ou + " : licence du portrait refusée (domaine public, CC0 ou CC BY)");
+          if (typeof r.url === "string" && !/^https:\/\//.test(r.url)) E("[10] " + ou + " : portrait.url doit commencer par https://");
+        }
+      } else if (p.camp === "joueur") A("[10] " + ou + " : pas de portrait (médaillon héraldique)");
+      if (p.repliques !== undefined) {
+        if (!objet(p.repliques)) E("[10] " + ou + " : repliques illisibles");
+        else Object.keys(p.repliques).forEach(function (k) {
+          if (["presentation", "changement"].indexOf(k) < 0) E("[10] " + ou + " : situation inconnue " + k + " (presentation, changement)");
+          (Array.isArray(p.repliques[k]) ? p.repliques[k] : []).forEach(function (t, j) { replique(t, ou + ", " + k + " " + (j + 1), ["{nom}", "{souverain}"], [p.nom]); });
+        });
+      }
+      if (p.camp === "joueur" && !(objet(p.repliques) && Array.isArray(p.repliques.presentation) && p.repliques.presentation.length)) A("[10] " + ou + " : pas de réplique de présentation");
+    });
+    // humeurs et répliques des rivaux, par camp
+    CAMPS_RIVAUX.forEach(function (camp) {
+      var h = objet(P.humeurs) ? P.humeurs[camp] : null;
+      NIVEAUX_RIVALITE.forEach(function (n) {
+        if (!h || typeof h[n] !== "string") E("[10] humeur manquante : " + camp + "." + n);
+        else replique(h[n], "humeur " + camp + "." + n, ["{nom}"], []);
+      });
+      var R = objet(P.repliques) ? P.repliques[camp] : null;
+      SITUATIONS_RIVAL.forEach(function (sit) {
+        var l = R && Array.isArray(R[sit]) ? R[sit] : [];
+        var ou = "répliques " + camp + "." + sit;
+        if (l.length < 6) E("[10] " + ou + " : " + l.length + " au lieu de 6 au moins");
+        NIVEAUX_RIVALITE.forEach(function (n) {
+          var k = l.filter(function (x) { return objet(x) && (!x.niveau || x.niveau === n); }).length;
+          if (l.length && k < 2) E("[10] " + ou + " : " + k + " réplique(s) pour la rivalité « " + n + " » (2 au moins, pour ne jamais redire la même)");
+        });
+        l.forEach(function (x, j) {
+          if (!objet(x)) { E("[10] " + ou + " " + (j + 1) + " : { niveau, texte } attendu"); return; }
+          if (x.niveau !== undefined && NIVEAUX_RIVALITE.indexOf(x.niveau) < 0) E("[10] " + ou + " " + (j + 1) + " : niveau inconnu " + x.niveau);
+          replique(x.texte, ou + " " + (j + 1), sit === "province" ? ["{nom}", "{province}", "{souverain}"] : ["{nom}", "{souverain}"], []);
+        });
+      });
+    });
+    if (!Array.isArray(P.changement) || !P.changement.length) E("[10] changement : au moins une annonce de changement de souverain ({nom})");
+    else P.changement.forEach(function (t, j) {
+      replique(t, "changement " + (j + 1), ["{nom}"], []);
+      if (String(t).indexOf("{nom}") < 0) E("[10] changement " + (j + 1) + " : {nom} manquant");
+    });
+  }
+
+  var api = { controler: controler, phrases: phrases, mots: mots, sourceSuivi: sourceSuivi, BADGES: BADGES, RX: RX,
+    controlerPersonnages: controlerPersonnages, SITUATIONS_RIVAL: SITUATIONS_RIVAL, NIVEAUX_RIVALITE: NIVEAUX_RIVALITE, MOTS_INTERDITS: MOTS_INTERDITS };
   if (typeof module !== "undefined" && module.exports) module.exports = api;
   racine.CONTROLES = api;
 })(typeof window !== "undefined" ? window : globalThis);

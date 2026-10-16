@@ -351,12 +351,20 @@ async function grosseMelee(navigateur, w, h, erreurs) {
   const r = await page.evaluate(async d => {
     window.__boucle.length = 0;
     const ecarts = [], fin = performance.now() + d * 1000;
-    let avant = null, engages = 0, figures = 0, corps = 0;
+    let avant = null, engages = 0, figures = 0, corps = 0, releves = 0, meles = 0, n = 0;
+    // une image sur six : deux bataillons ennemis l'un dans l'autre le long de la route (figurines debout), hors des
+    // deux adversaires d'un même duel (ligne de front des mêlées, 16/10/2026)
+    function melange(p) {
+      const b = p.unites.filter(u => u.vivant && u.bat).map(u => { let a = Infinity, z = -Infinity;
+        u.bat.figs.forEach(g => { if (g.debout && g.vu && g.alpha > 0) { a = Math.min(a, g.s); z = Math.max(z, g.s); } }); return { u, a, z }; }).filter(x => x.a <= x.z);
+      return b.some(x => x.u.camp !== "rival" && b.some(y => y.u.camp === "rival" && x.u.adversaire !== y.u && Math.min(x.z, y.z) - Math.max(x.a, y.a) > 1));
+    }
     await new Promise(res => {
       function f(t) {
         if (avant !== null) ecarts.push(t - avant);
         avant = t;
         const p = JEU.bataille.enCours, R = JEU.bataille.rendu;
+        if (++n % 6 === 0) { releves++; if (melange(p)) meles++; }
         engages = Math.max(engages, p.unites.filter(u => u.adversaire).length); figures = Math.max(figures, R.figures); corps = Math.max(corps, R.corps);
         if (performance.now() < fin) requestAnimationFrame(f); else res();
       }
@@ -365,7 +373,7 @@ async function grosseMelee(navigateur, w, h, erreurs) {
     const tri = ecarts.slice().sort((a, b) => a - b), b = window.__boucle.slice().sort((a, b) => a - b);
     const q = (t, x) => Math.round(t[Math.min(t.length - 1, Math.floor(t.length * x))] * 10) / 10;
     return { images: ecarts.length, mediane: q(tri, 0.5), max: q(tri, 1), plus34: ecarts.filter(x => x > 34).length,
-      boucleMediane: q(b, 0.5), boucle95: q(b, 0.95), boucleMax: q(b, 1), engages, figures, corps };
+      boucleMediane: q(b, 0.5), boucle95: q(b, 0.95), boucleMax: q(b, 1), engages, figures, corps, melange: Math.round(meles / Math.max(1, releves) * 100) };
   }, MESURE_MELEE);
   await page.close();
   return Object.assign({ taille: w + " × " + h }, r);
@@ -720,6 +728,7 @@ async function essaiToile(navigateur, erreurs) {
     if (!(m.mediane <= 17.5)) echecs.push("grosse mêlée " + m.taille + " : " + m.mediane + " ms entre deux images en médiane (60 images par seconde attendues)");
     if (m.plus34 > Math.max(2, 0.02 * m.images)) echecs.push("grosse mêlée " + m.taille + " : " + m.plus34 + " images sur " + m.images + " à plus de 34 ms");
     if (!(m.boucle95 < 8)) echecs.push("grosse mêlée " + m.taille + " : boucle de bataille à " + m.boucle95 + " ms pour 95 % des images (moins de 8 ms attendu)");
+    if (!(m.melange <= 35)) echecs.push("grosse mêlée " + m.taille + " : bataillons ennemis l'un dans l'autre sur " + m.melange + " % des images (35 % au plus ; ligne de front des mêlées)");
   });
   const OR = R.or;
   if (!OR || OR.apres !== Math.max(0, OR.avant - 6) || (OR.avant > 0 && OR.sceau !== "−" + Math.min(6, OR.avant) + " or") || OR.bandeau !== Math.floor(OR.apres)) echecs.push("question ratée en bataille : l'or perdu ne se voit pas comme prévu (" + JSON.stringify(OR) + ")");

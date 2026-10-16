@@ -71,6 +71,48 @@
     return ((c && c.bonus) || []).filter(function (b) { return b.fiche === ficheId; });
   }
 
+  // Galerie des souverains (16/10/2026) : les personnages de la campagne dont le cours est ouvert (brume : un
+  // personnage d'un cours pas encore ouvert n'y figure pas, même pas en silhouette). Tes souverains rencontrés, celui
+  // qui règne, ceux qui viendront avec des provinces de plus (sans nom), et le rival de chaque front.
+  function galerie(s) {
+    var el = JEU.ui.el, C = JEU.campagne, E = JEU.ecranCampagne;
+    if (!C || !C.galerie || !E) return;
+    var g = C.galerie();
+    var vus = g.souverains.filter(function (x) { return x.etat !== "avenir"; }).length;
+    var section = el("section", { class: "codex-matiere codex-galerie", style: "--teinte:#b08d3a" });
+    section.appendChild(el("button", { class: "codex-entete", onclick: function () { ouvert.galerie = !ouvert.galerie; JEU.ui.ecrans.codex(s); } }, [
+      el("span", { html: JEU.icones.icone("couronne", 26) + "Galerie des souverains" }),
+      el("span", { class: "note", texte: (vus ? vus + " souverain" + (vus > 1 ? "s" : "") + " rencontré" + (vus > 1 ? "s" : "") : "aucun souverain encore") + " · " + g.rivaux.length + " rivaux" })
+    ]));
+    if (ouvert.galerie) {
+      section.appendChild(el("h3", { class: "galerie-titre", texte: "Tes souverains" }));
+      var grille = el("div", { class: "galerie-souverains" });
+      g.souverains.forEach(function (x) {
+        if (x.etat === "avenir") {
+          grille.appendChild(el("article", { class: "fiche-perso avenir" }, [el("div", { class: "fp-tete" }, [
+            el("span", { class: "medaillon-perso heraldique", style: "--t:104px", html: E.medaillonHeraldique("joueur", true) }),
+            el("div", {}, [el("h3", { texte: "Un souverain à venir" }),
+              el("p", { class: "note", texte: "Prends encore " + x.reste + " province" + (x.reste > 1 ? "s" : "") + " pour le rencontrer." })])
+          ])]));
+          return;
+        }
+        var f = E.fichePersonnage(x.perso);
+        if (x.etat === "regne") f.insertBefore(el("p", { class: "fp-regne", texte: "Il règne aujourd'hui" }), f.firstChild);
+        grille.appendChild(f);
+      });
+      if (!g.souverains.length) grille.appendChild(el("p", { class: "note", texte: "Aucun de tes cours ouverts ne cite encore un souverain." }));
+      section.appendChild(grille);
+      section.appendChild(el("h3", { class: "galerie-titre", texte: "Tes rivaux" }));
+      section.appendChild(el("div", { class: "galerie-souverains" }, g.rivaux.map(function (r) {
+        var f = E.fichePersonnage(r.perso);
+        f.appendChild(el("p", { class: "note", texte: "Rivalité : " + r.rivalite + " sur 100 (" + C.niveauRivalite(r.rivalite).nom + "). " + C.humeur(r.front.id) }));
+        return f;
+      })));
+      E.surveillerPortraits(section);
+    }
+    s.appendChild(section);
+  }
+
   JEU.ui.ecrans.codex = function (s) {
     var el = JEU.ui.el;
     var etat = JEU.sauvegarde.etat();
@@ -78,6 +120,7 @@
     s.appendChild(el("div", { class: "bandeau-oeuvre", title: "Tapisserie « La chasse au faucon », vers 1500-1530 (The Met, domaine public)" }));
     s.appendChild(el("h1", { class: "titre-ecran", texte: "Le Codex" }));
     s.appendChild(el("p", { class: "note", texte: "Les fiches de tes cours ouverts et acquis. Les fiches bonus sont marquées d'un sceau doré : elles ne comptent jamais dans une bataille." }));
+    galerie(s);
     var acces = JEU.progression.coursAccessibles(etat);
     var groupes = {};
     acces.forEach(function (id) {

@@ -33,6 +33,15 @@ Images du programme Open Access du Metropolitan Museum of Art (New York), versé
 - `assets/images/oeuvres/chevalier-or.jpg` : « Ornamental Plaque of a Knight on Horseback », artiste inconnu, ca. 1300. The Metropolitan Museum of Art, objet 23346, Bashford Dean Memorial Collection, Funds from various donors, 1929. https://www.metmuseum.org/art/collection/search/23346
 - `assets/images/oeuvres/bataille-cavalerie.jpg` : « A Cavalry Engagement », Adam Frans van der Meulen, date non indiquée. The Metropolitan Museum of Art, objet 437074, Purchase, 1871. https://www.metmuseum.org/art/collection/search/437074
 
+## Portraits des souverains (domaine public, CC0)
+
+Images du programme Open Access du Metropolitan Museum of Art (New York), versées au domaine public (Creative Commons Zero, champ isPublicDomain vrai sur la fiche de l'objet). Pour le jeu : détail recadré en 240 × 300, passé en camaïeu d'encre brune sur parchemin (`atelier/outils/preparer-portraits.py`). Scènes profanes seulement ; aucune de ces œuvres n'est reproduite dans les supports des Cours Griffon.
+
+- `assets/images/personnages/clovis.jpg` (Clovis) : « Clovis le grand / Vaillant, sage..., from "Game of the Kings of France" (Jeu des Rois de France) », Stefano della Bella, 1644, eau-forte. The Metropolitan Museum of Art, objet 412341, Bequest of Phyllis Massar, 2011. Domaine public (CC0). Détail : le buste du roi debout sur son char ; le texte de la carte n'est pas repris. https://www.metmuseum.org/art/collection/search/412341
+- `assets/images/personnages/pepin-le-bref.jpg` (Pépin le Bref) : « Pepin le bref / Chef de la seconde race..., from "Game of the Kings of France" (Jeu des Rois de France) », Stefano della Bella, 1644, eau-forte. The Metropolitan Museum of Art, objet 412342, Bequest of Phyllis Massar, 2011. Domaine public (CC0). Détail : le cavalier en armure ; le texte de la carte n'est pas repris. https://www.metmuseum.org/art/collection/search/412342
+- `assets/images/personnages/charlemagne.jpg` (Charlemagne) : « The Entrance of Charlemagne into Pavia » (L'entrée de Charlemagne à Pavie), Julius Schnorr von Carolsfeld, 1840, dessin (pierre noire, mine de plomb, aquarelle brune). The Metropolitan Museum of Art, objet 359448, Purchase, Anna-Maria and Stephen Kellen Foundation Gift, 2003. Domaine public (CC0). Détail : le roi à cheval ; la petite croix au sommet de sa couronne a été effacée (recouverte du papier voisin), pour qu'aucun symbole religieux ne figure dans un médaillon du jeu. https://www.metmuseum.org/art/collection/search/359448
+- Médaillons des rivaux (silhouette couronnée, sans visage, sur les armes du camp), écus et sceaux de cire des missives : dessinés en SVG pour ce jeu (CC0 1.0), avec les emblèmes lion, tour et lys de Game-icons (voir plus haut).
+
 ## Images, textures, blasons, décors
 
 - Textures `assets/images/parchemin.png`, `cuir.png`, `bois.png` : bruit procédural généré pour ce jeu par `atelier/outils/generer-textures.py` (CC0 1.0).

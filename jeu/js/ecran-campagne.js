@@ -220,6 +220,187 @@
     });
   }
 
+  // ---------- personnages (16/10/2026) : médaillons, sceaux de cire, missives, fiches ----------
+  // Ton souverain a un portrait (œuvre du domaine public, jeu/assets/images/personnages/) ; un rival « titre seul »
+  // a un médaillon héraldique : silhouette couronnée, sans visage, sur les armes de son camp (de gueules au lion d'or
+  // pour l'Angleterre, ivoire et vert à la tour pour l'Empire omeyyade), avec l'écu du camp suspendu dessous.
+  // Aucun symbole religieux.
+  var ARMES = {
+    joueur: { champ: "#24407a", clair: "#4467ad", meuble: "lys", teinte: "#e2c272", silhouette: "#0f1a33", couronne: "fleurons" },
+    angleterre: { champ: "#9b1f1f", clair: "#c4413a", meuble: "lion", teinte: "#e2c272", silhouette: "#2a1410", couronne: "fleurons" },
+    omeyyades: { champ: "#e9e1cc", clair: "#fbf7ea", meuble: "tour", teinte: "#2f6b52", silhouette: "#1f4234", couronne: "creneaux" }
+  };
+  var CIRES = { joueur: ["#2d4f94", "#14284f", "#9db2df"], angleterre: ["#a32626", "#561010", "#e8907e"], omeyyades: ["#2f6b52", "#14382a", "#8fcaab"] };
+  var nSvg = 0;
+  var COURONNES = {
+    fleurons: "<path d='M39.5 37V27.5l4 3.6 3-7.1 3.5 6.2 3.5-6.2 3 7.1 4-3.6V37z'/><circle cx='39.5' cy='27' r='1.5'/><circle cx='46.5' cy='23.6' r='1.5'/><circle cx='53.5' cy='23.6' r='1.5'/><circle cx='60.5' cy='27' r='1.5'/>",
+    creneaux: "<path d='M39.5 37V26.5h5v3.7h3v-3.7h5v3.7h3v-3.7h5V37z'/>",
+    tortil: "<path d='M40 37.2v-4.4h20v4.4z'/><circle cx='42.5' cy='30.8' r='2.1'/><circle cx='50' cy='30.4' r='2.1'/><circle cx='57.5' cy='30.8' r='2.1'/>"
+  };
+  function medaillonHeraldique(camp, generique) {
+    var a = ARMES[camp] || ARMES.angleterre, k = "mh" + (++nSvg);
+    var ecu = "M39 70h22v9c0 9-6 14.5-11 17-5-2.5-11-8-11-17z";
+    return "<svg viewBox='0 0 100 100' class='medaillon-svg' aria-hidden='true'>" +
+      "<defs><radialGradient id='" + k + "g' cx='.4' cy='.3' r='.78'><stop offset='0' stop-color='" + a.clair + "'/><stop offset='1' stop-color='" + a.champ + "'/></radialGradient>" +
+      "<clipPath id='" + k + "c'><circle cx='50' cy='50' r='39.6'/></clipPath>" +
+      "<pattern id='" + k + "p' width='8' height='8' patternUnits='userSpaceOnUse' patternTransform='rotate(45)'><path d='M0 0H8M0 0V8' stroke='" + a.teinte + "' stroke-width='.7' opacity='.3'/></pattern></defs>" +
+      "<circle cx='50' cy='50' r='48' fill='#b08d3a' stroke='#2e2419' stroke-width='2'/>" +
+      "<circle cx='50' cy='50' r='44.4' fill='none' stroke='#2e2419' stroke-width='1.8' stroke-dasharray='.1 3.4' stroke-linecap='round'/>" +
+      "<circle cx='50' cy='50' r='40.6' fill='url(#" + k + "g)' stroke='#2e2419' stroke-width='1.6'/>" +
+      "<g clip-path='url(#" + k + "c)'><rect width='100' height='100' fill='url(#" + k + "p)'/>" +
+      "<g fill='" + a.silhouette + "'><ellipse cx='50' cy='46' rx='10.4' ry='12.4'/><path d='M45.2 54h9.6v11h-9.6z'/><path d='M15 100c1-19 13-31 29.5-34.5h11C72 69 84 81 85 100z'/></g>" +
+      "<g fill='#e2c272' stroke='#5a3e12' stroke-width='1.1' stroke-linejoin='round'>" + COURONNES[generique ? "tortil" : a.couronne] + "</g></g>" +
+      "<path d='" + ecu + "' fill='" + a.champ + "' stroke='#2e2419' stroke-width='1.8'/>" +
+      "<path d='" + ecu + "' fill='none' stroke='#e2c272' stroke-width='1' transform='translate(50 81) scale(.84) translate(-50 -81)'/>" +
+      JEU.icones.dans(a.meuble, 42.5, 72.5, 15, a.teinte) + "</svg>";
+  }
+  // Médaillon d'un personnage (HTML) : portrait dans un cerclage d'or, ou médaillon héraldique.
+  function medaillon(p, taille) {
+    var t = "--t:" + (taille || 60) + "px";
+    if (p && p.portrait && p.portrait.fichier)
+      return "<span class='medaillon-perso portrait' style='" + t + "'><img src='" + U.echapper(p.portrait.fichier) + "' alt='' draggable='false' data-camp='" + U.echapper(p.camp) + "'></span>";
+    return "<span class='medaillon-perso heraldique' style='" + t + "'>" + medaillonHeraldique(p ? p.camp : "angleterre", !!(p && p.generique)) + "</span>";
+  }
+  // Un portrait qui ne se charge pas laisse la place au médaillon héraldique de son camp (sans image cassée).
+  function surveillerPortraits(zone) {
+    if (!zone) return;
+    Array.prototype.forEach.call(zone.querySelectorAll(".medaillon-perso.portrait img"), function (im) {
+      function repli() {
+        var sp = im.parentNode;
+        if (!sp) return;
+        sp.className = "medaillon-perso heraldique";
+        sp.innerHTML = medaillonHeraldique(im.getAttribute("data-camp") || "joueur", false);
+      }
+      if (im.complete && im.naturalWidth === 0) repli(); else im.addEventListener("error", repli);
+    });
+  }
+  // Sceau de cire au bas d'une missive, à l'emblème du camp qui écrit.
+  function sceau(camp) {
+    var c = CIRES[camp] || CIRES.joueur, k = "sc" + (++nSvg), pts = [];
+    for (var i = 0; i < 40; i++) {
+      var a = i / 40 * 2 * Math.PI, r = 33 + 2 * Math.sin(i * 2.6) + 1.3 * Math.cos(i * 1.7);
+      pts.push((40 + r * Math.cos(a)).toFixed(1) + " " + (40 + r * Math.sin(a)).toFixed(1));
+    }
+    var meuble = (ARMES[camp] || ARMES.joueur).meuble;
+    return "<svg viewBox='0 0 80 80' class='sceau-cire' aria-hidden='true'><defs><radialGradient id='" + k + "' cx='.38' cy='.32' r='.75'>" +
+      "<stop offset='0' stop-color='" + c[2] + "'/><stop offset='.45' stop-color='" + c[0] + "'/><stop offset='1' stop-color='" + c[1] + "'/></radialGradient></defs>" +
+      "<path d='M" + pts.join(" L") + "Z' fill='url(#" + k + ")' stroke='" + c[1] + "' stroke-width='1.2'/>" +
+      "<circle cx='40' cy='40' r='23.5' fill='none' stroke='" + c[1] + "' stroke-width='2.6' opacity='.75'/>" +
+      "<circle cx='39.3' cy='39.3' r='23.5' fill='none' stroke='" + c[2] + "' stroke-width='.8' opacity='.55'/>" +
+      JEU.icones.dans(meuble, 25.2, 25.2, 29, c[2], " opacity='.6'") + JEU.icones.dans(meuble, 26, 26, 29, c[1]) + "</svg>";
+  }
+
+  function titreDe(p) {
+    var C = JEU.campagne;
+    return [p.titre ? C.maj1(p.titre) : null, p.dates].filter(Boolean).join(", ");
+  }
+  function sousLettre(l) {
+    var C = JEU.campagne;
+    if (l.camp === "joueur") return l.situation === "changement" ? "Nouvelles de la cour" : "Ton souverain" + (titreDe(l.qui) ? " · " + titreDe(l.qui) : "");
+    var f = C.front(l.front);
+    return (f ? f.nom : "Un rival") + " · rivalité " + C.niveauRivalite(C.rivalite(l.front)).nom;
+  }
+  var ENTETES = { presentation: "Missives des cours voisines", defi: "Un défi", attaque: "Une missive de guerre", changement: "Nouvelles de la cour",
+    province: "Une missive du rival", victoire: "Une missive du rival", tenu: "Une missive du rival", retraite: "Une missive du rival" };
+  // m : { lettres, bouton, situation } (JEU.campagne.prendreMissives ou missiveAvantBataille). apres : ce qui suit.
+  function ouvrirMissive(m, apres) {
+    JEU.ui.ouvrirMissive({
+      // plusieurs lettres de camps différents (réaction du rival et nouveau souverain) : un en-tête commun
+      entete: m.situation !== "presentation" && m.lettres.some(function (l) { return l.camp !== m.lettres[0].camp; }) ? "Des nouvelles du royaume" : ENTETES[m.situation] || "Une missive",
+      lettres: m.lettres.map(function (l) { return { medaillon: medaillon(l.qui, 78), nom: l.qui.nom, sous: sousLettre(l), texte: l.texte, camp: l.camp }; }),
+      bouton: m.bouton, sceau: sceau(m.lettres[0].camp), apres: apres
+    });
+    surveillerPortraits(document.getElementById("modale"));
+    JEU.sons.jouer("sceau");
+  }
+
+  // Lancer une bataille depuis la campagne : une fois sur deux, le rival lance d'abord son défi ; la bataille suit
+  // quand la missive se ferme (Relever le défi, Entrée, Échap ou la croix).
+  function lancerBataille(lieu) {
+    if (JEU.partie || JEU.ui.modaleOuverte()) return;
+    var m = JEU.campagne.missiveAvantBataille(lieu);
+    if (m) ouvrirMissive(m, function () { JEU.bataille.lancer(lieu); });
+    else JEU.bataille.lancer(lieu);
+  }
+
+  // Fiche d'un personnage (Codex et clic sur un médaillon) : titre et dates imprimés dans le cours, faits des cours
+  // ouverts avec leur source, crédit du portrait.
+  function fichePersonnage(p) {
+    var el = JEU.ui.el, C = JEU.campagne;
+    var role = p.camp === "joueur" ? "Souverain que tu sers dans la campagne" :
+      "Ton rival · " + ((C.FRONTS.filter(function (f) { return f.camp === p.camp; })[0] || {}).nom || "");
+    var carte = el("article", { class: "fiche-perso camp-" + p.camp }, [
+      el("div", { class: "fp-tete" }, [el("span", { html: medaillon(p, 104) }), el("div", {}, [
+        el("h3", { texte: p.nom }),
+        titreDe(p) ? el("p", { class: "fp-titre", texte: titreDe(p) }) : null,
+        el("p", { class: "note", texte: role })
+      ])])
+    ]);
+    var faits = C.faitsVisibles(p);
+    if (faits.length) carte.appendChild(el("ul", { class: "fp-faits" }, faits.map(function (x) {
+      return el("li", {}, [document.createTextNode(x.texte), x.source ? el("span", { class: "fiche-source", texte: " (" + String(x.source.fichier).replace(/^.*\//, "") + ", page " + x.source.page + ")" }) : null]);
+    })));
+    if (p.generique) carte.appendChild(el("p", { class: "note", texte: "Aucun de tes cours ouverts ne nomme ce rival : c'est « un seigneur rival », sans nom ni visage." }));
+    else if (p.titreSeul) carte.appendChild(el("p", { class: "note", texte: "Ton cours ne donne pas son nom : il n'a que son titre et ses armes, pas de visage." }));
+    if (p.portrait) carte.appendChild(el("p", { class: "fiche-source", texte: "Portrait : « " + p.portrait.oeuvre + " », " + p.portrait.artiste + ", " + p.portrait.date + ". " + p.portrait.institution + ", " + p.portrait.licence + "." }));
+    return carte;
+  }
+  function ouvrirFichePersonnage(p) {
+    if (!p) return;
+    JEU.ui.ouvrirModale(null, JEU.ui.el("div", { class: "fiche-perso-modale" }, [fichePersonnage(p)]));
+    surveillerPortraits(document.getElementById("modale"));
+  }
+
+  // Bandeau de la cour, de part et d'autre du titre : ton souverain à gauche, les deux rivaux à droite (médaillon,
+  // jauge de rivalité). Un clic ouvre la fiche.
+  function cour(c) {
+    var el = JEU.ui.el, C = JEU.campagne, chef = C.souverain(c);
+    var gauche = chef
+      ? el("button", { class: "cour-chip cour-souverain", title: "Fiche de " + chef.nom, onclick: function () { ouvrirFichePersonnage(chef); } }, [
+        el("span", { html: medaillon(chef, 62) }),
+        el("span", { class: "cc-texte" }, [el("small", { texte: "Ton souverain" }), el("b", { texte: chef.nom }), titreDe(chef) ? el("i", { texte: titreDe(chef) }) : null])])
+      : el("div", { class: "cour-chip cour-souverain" }, [el("span", { class: "medaillon-perso heraldique", style: "--t:62px", html: medaillonHeraldique("joueur", false) }),
+        el("span", { class: "cc-texte" }, [el("small", { texte: "Ton camp" }), el("b", { texte: "Royaume de France" })])]);
+    var droite = el("div", { class: "cour-rivaux" }, C.FRONTS.map(function (f) {
+      var p = C.rivalDe(f.id, c), v = C.rivalite(f.id, c), n = C.niveauRivalite(v);
+      return el("button", { class: "cour-chip cour-rival niveau-" + n.id, "data-front": f.id, title: C.humeur(f.id, c) + " (rivalité " + v + " sur 100)", onclick: function () { ouvrirFichePersonnage(p); } }, [
+        el("span", { html: medaillon(p, 38) }),
+        el("span", { class: "cc-texte" }, [el("b", { texte: p.nom }), el("span", { class: "cc-jauge" }, [
+          el("span", { class: "jr-barre rivalite-barre" }, [el("span", { style: "width:" + v + "%" })]), el("i", { texte: n.nom })])])
+      ]);
+    }));
+    return el("div", { class: "cour-campagne" }, [gauche, droite]);
+  }
+
+  // Rivaux dans le cartouche du bas : médaillon, jauge de rivalité, humeur, provinces prises.
+  function lignesRivaux(c) {
+    var el = JEU.ui.el, C = JEU.campagne;
+    return C.FRONTS.map(function (f) {
+      var p = C.rivalDe(f.id, c), v = C.rivalite(f.id, c);
+      var pris = f.provinces.filter(function (x) { return c.conquises.indexOf(x.id) >= 0; }).length;
+      return el("div", { class: "ligne-rival", "data-front": f.id }, [
+        el("button", { class: "lr-medaillon", title: "Fiche : " + p.nom, onclick: function () { ouvrirFichePersonnage(p); }, html: medaillon(p, 54) }),
+        el("div", {}, [
+          el("p", { class: "lr-nom" }, [el("b", { texte: p.nom }), el("span", { texte: " · " + f.nom + " (" + camp(f.camp).nom + ")" })]),
+          el("div", { class: "lr-rivalite" }, [el("span", { texte: "Rivalité" }), el("span", { class: "jr-barre rivalite-barre" }, [el("span", { style: "width:" + v + "%" })]),
+            el("b", { texte: v + " / 100" })]),
+          el("p", { class: "note lr-humeur", texte: C.humeur(f.id, c) }),
+          el("p", { class: "note", texte: pris + " province" + (pris > 1 ? "s" : "") + " prise" + (pris > 1 ? "s" : "") + " sur " + f.provinces.length + "." })
+        ])
+      ]);
+    });
+  }
+
+  // Missives en attente, montrées en arrivant sur la carte (jamais pendant une partie, jamais par-dessus une autre
+  // fenêtre : elles attendent alors la visite suivante).
+  function afficherMissives(annonce) {
+    if (JEU.partie || JEU.ui.modaleOuverte()) return annonce;
+    var m = JEU.campagne.prendreMissives();
+    if (m && m.silencieux) return (annonce ? annonce + " " : "") + "Les années passent : " + m.changement.nom + " est maintenant ton souverain.";
+    if (m) ouvrirMissive(m, null);
+    return annonce;
+  }
+
   JEU.ui.ecrans.jouer = function (s) {
     var el = JEU.ui.el;
     var C = JEU.campagne;
@@ -229,12 +410,16 @@
     var ev = C.evenementDuJour();
     s.innerHTML = "";
     s.appendChild(el("h1", { class: "titre-ecran", texte: "La campagne" }));
-    s.appendChild(el("p", { class: "sous-titre-campagne", html: JEU.icones.icone("lys", 22) + " Royaume de France <span>contre</span> royaume d'Angleterre <span>et</span> Empire omeyyade" }));
+    s.appendChild(el("p", { class: "sous-titre-campagne", html: JEU.icones.icone("lys", 22) + " Royaume de France <span>contre</span> deux rivaux" }));
+    var zoneCour = cour(c);
+    s.appendChild(zoneCour);
+    surveillerPortraits(zoneCour);
 
+    var annonce = null;
     if (jour) {
       var t = Object.keys(jour.tributs).map(function (r) { return "+" + jour.tributs[r] + " " + JEU.RESSOURCES[r].nom.toLowerCase(); });
       // en haut à droite, sous le bandeau : le message ne cache aucun nom de la carte
-      if (t.length) JEU.ui.toast("Tes provinces t'ont versé leur tribut : " + t.join(", ") + ".", "tribut", 5000);
+      if (t.length) annonce = "Tes provinces t'ont versé leur tribut : " + t.join(", ") + ".";
       JEU.ui.majRessources();
     }
 
@@ -243,7 +428,7 @@
       s.appendChild(el("div", { class: "alerte-rival" }, [
         el("span", { class: "ar-banniere", html: JEU.icones.icone(attaquant.embleme, 52) }),
         el("div", {}, [el("h2", { texte: C.maj1(attaquant.armee) + " marche sur ton domaine !" }), el("p", { texte: "Ses troupes approchent par la route. Défends tes murs : tu ne perdras rien, quoi qu'il arrive." })]),
-        el("button", { class: "bouton principal", onclick: function () { JEU.bataille.lancer("domaine"); }, html: "<span class='touche'>1</span> Défendre le domaine" })
+        el("button", { class: "bouton principal", onclick: function () { lancerBataille("domaine"); }, html: "<span class='touche'>1</span> Défendre le domaine" })
       ]));
     }
 
@@ -251,16 +436,16 @@
     surveillerImages(carte);
     s.appendChild(carte);
     Array.prototype.forEach.call(carte.querySelectorAll(".noeud.cible, .noeud.attaque"), function (n) {
-      function go() { JEU.bataille.lancer(n.getAttribute("data-lieu")); }
+      function go() { lancerBataille(n.getAttribute("data-lieu")); }
       n.addEventListener("click", go);
       n.addEventListener("keydown", function (e) { if (e.key === "Enter") { e.stopPropagation(); go(); } });
     });
 
     var options = [];
-    if (attaquant) options.push({ titre: "Défendre le domaine", texte: C.maj1(attaquant.nom) + " attaque. Pose tes tours sur la route de ton domaine.", icone: "rempart", action: function () { JEU.bataille.lancer("domaine"); } });
+    if (attaquant) options.push({ titre: "Défendre le domaine", texte: C.maj1(attaquant.nom) + " attaque. Pose tes tours sur la route de ton domaine.", icone: "rempart", action: function () { lancerBataille("domaine"); } });
     C.FRONTS.forEach(function (f) {
       var cible = C.prochaineProvince(f.id), adv = camp(f.camp);
-      if (cible) options.push({ titre: "Attaquer : " + cible.province.nom, texte: f.nom + ", contre " + adv.nom + ". Place forte : " + c.provinces[cible.province.id].pv + " / " + cible.province.pv + ". Les coups portés restent acquis.", icone: "assaut", action: function () { JEU.bataille.lancer(cible.province.id); } });
+      if (cible) options.push({ titre: "Attaquer : " + cible.province.nom, texte: f.nom + ", contre " + adv.nom + ". Place forte : " + c.provinces[cible.province.id].pv + " / " + cible.province.pv + ". Les coups portés restent acquis.", icone: "assaut", action: function () { lancerBataille(cible.province.id); } });
     });
     if (!C.prochaineProvince()) options.push({ titre: "Les deux fronts sont tenus", texte: "Toutes les provinces sont à toi. Défends ton domaine et tiens ton conseil.", icone: "couronne", action: function () { JEU.ui.toast("Toutes les provinces sont prises !"); } });
     options.push({ titre: "Conseil du royaume", texte: "Tes conseillers t'apportent leurs affaires. Juge juste et le royaume grandit.", icone: "conseil", action: function () { JEU.conseil.lancer(); } });
@@ -285,11 +470,8 @@
       el("div", { class: "cartouche" }, [el("h3", { html: JEU.icones.icone("royaume", 20) + " Ton royaume" }), jz,
         el("p", { class: "note", texte: Object.keys(C.JAUGES).map(function (k) { return C.JAUGES[k].effet(c.royaume[k]); }).join(" · ") })]),
       el("div", { class: "cartouche rival" }, [
-        el("h3", { html: JEU.icones.icone("defi", 20) + " Les fronts" }),
-        el("ul", { class: "liste-simple" }, C.FRONTS.map(function (f) {
-          var pris = f.provinces.filter(function (p) { return c.conquises.indexOf(p.id) >= 0; }).length;
-          return el("li", { texte: f.nom + " (" + camp(f.camp).nom + ") : " + pris + " province" + (pris > 1 ? "s" : "") + " prise" + (pris > 1 ? "s" : "") + " sur " + f.provinces.length });
-        })),
+        el("h3", { html: JEU.icones.icone("defi", 20) + " Les fronts et tes rivaux" }),
+        el("div", { class: "lignes-rivaux" }, lignesRivaux(c)),
         el("p", { texte: c.rival.defaites + " attaque" + (c.rival.defaites > 1 ? "s" : "") + " repoussée" + (c.rival.defaites > 1 ? "s" : "") + "." }),
         el("div", { class: "menace" }, [el("span", { texte: "Menace" }), el("span", { class: "jr-barre" }, [el("span", { style: "width:" + Math.min(100, c.rival.attaque ? 100 : c.rival.menace * 50) + "%" })])]),
         c.chronique.length ? el("ul", { class: "chronique" }, c.chronique.slice(0, 5).map(function (x) { return el("li", { texte: x.texte }); })) : el("p", { class: "note", texte: "La chronique des campagnes est encore vierge." })
@@ -301,6 +483,8 @@
       if (n >= 1 && n <= options.length) { options[n - 1].action(); return true; }
       return false;
     };
+    annonce = afficherMissives(annonce);
+    if (annonce) JEU.ui.toast(annonce, "tribut", 5000);
   };
 
   // ---------- arsenal : gestion de l'armée ----------
@@ -358,5 +542,8 @@
     JEU.ui.ouvrirModale("L'arsenal", boite, function () { if (JEU.ui.ecranCourant() === "jouer") JEU.ui.afficher("jouer"); });
   }
 
-  JEU.ecranCampagne = { ouvrirArsenal: ouvrirArsenal, carteSVG: carteSVG };
+  JEU.ecranCampagne = { ouvrirArsenal: ouvrirArsenal, carteSVG: carteSVG,
+    // personnages (16/10/2026)
+    medaillon: medaillon, medaillonHeraldique: medaillonHeraldique, sceau: sceau, surveillerPortraits: surveillerPortraits,
+    fichePersonnage: fichePersonnage, ouvrirFichePersonnage: ouvrirFichePersonnage, ouvrirMissive: ouvrirMissive, lancerBataille: lancerBataille };
 })(typeof window !== "undefined" ? window : globalThis);
