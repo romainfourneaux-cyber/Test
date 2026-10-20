@@ -1565,5 +1565,36 @@ verifier("Bataillons : le rendu ne touche pas au moteur (aucune écriture de la 
     /function afficherMissives[^]*?if \(JEU\.partie \|\| JEU\.ui\.modaleOuverte\(\)\) return/.test(src("ecran-campagne.js")), appelants);
 })();
 
+// ---------- le seigneur rival parle en bataille (16/10/2026) : ses décisions du moteur (p.ia.journal), au titre du rival du front ----------
+(function () {
+  const PR = JB.bataille.phraseRival, T = JB.batailleMoteur.TEXTES_RIVAL;
+  const journal = [{ vague: 0, posture: "depart", texte: T.depart }, { vague: 0, posture: "alerte", texte: T.alerte },
+    { vague: 1, posture: "mefiance", texte: T.mefiance }, { vague: 1, posture: "porte", texte: T.porte + " " + T.releve }];
+  const dit = [PR(journal, 0, false, "Le roi d'Angleterre"), PR(journal, 0, true, "Le roi d'Angleterre"), PR(journal, 0, true, "L'émir de Cordoue"),
+    PR(journal, 1, false, "L'émir de Cordoue"), PR([{ vague: 2, posture: "mefiance", texte: T.mefiance }], 2, false, "Un seigneur rival")];
+  verifier("Rival en bataille : « Ton rival » remplacé par son titre (article en minuscule au milieu d'une phrase, « du rival » accordé), la dernière décision de la vague sans l'alerte, l'alerte à part, rien sinon",
+    dit[0] === "Le roi d'Angleterre t'attend : des tours gardent sa porte, et sa garnison est prête à sortir." &&
+    dit[1] === "Les guetteurs du roi d'Angleterre ont vu ton armée sortir : il rappelle des gardes à sa porte." &&
+    dit[2] === "Les guetteurs de l'émir de Cordoue ont vu ton armée sortir : il rappelle des gardes à sa porte." &&
+    dit[3] === "L'émir de Cordoue a vu tes troupes foncer sur sa porte : il la fortifie. Il paie de nouveaux gardes pour remplacer ceux que tu as abattus." &&
+    dit[4] === "Tu gardes de l'or : un seigneur rival se méfie d'une grosse attaque et renforce sa garde." &&
+    PR(journal, 1, true, "Le roi d'Angleterre") === null && PR(journal, 3, false, "x") === null && PR([], 0, false, "x") === null && PR(null, 0, false, "x") === null, dit);
+  // une vraie bataille du moteur : une phrase pour la 1re vague (départ) et pour chaque vague suivante (sa décision), jamais vide
+  const pJ = JB.batailleMoteur.creer(JB.cartesBataille.carte("gue"), { niveau: 1, vagues: 4, pvRival: 999, pvChateau: 999, orDepart: 40 });
+  const phrases = [PR(pJ.ia.journal, 0, false, "Le roi d'Angleterre")];
+  for (let k = 0; k < 2; k++) { JB.batailleMoteur.jouerVague(pJ); if (pJ.phase === "preparation") phrases.push(PR(pJ.ia.journal, pJ.vague, false, "Le roi d'Angleterre")); }
+  verifier("Rival en bataille : une phrase à la 1re vague et après chaque vague repoussée, toutes au titre du rival et sans « Ton rival »",
+    phrases.length >= 2 && phrases.every(t => typeof t === "string" && /^Le roi d'Angleterre|le roi d'Angleterre|du roi d'Angleterre/.test(t) && !/[Tt]on rival|du rival/.test(t)), phrases);
+  // place dans le rendu : en tête du conseil de guerre (avant la première question de la vague) et au départ de la vague ;
+  // jamais dans questionSuivante (entre deux questions) ; le moteur n'est pas touché
+  const src = fs.readFileSync(path.join(RACINE, "jeu", "js", "bataille.js"), "utf8");
+  const iPrep = src.indexOf("function preparation() {"), iQS = src.indexOf("function questionSuivante(scene) {"), iFinQS = src.indexOf("function orADepenser()"),
+    iLancer = src.indexOf("function lancerVague() {"), iMot = src.indexOf("motDuRival(false)"), iAlerte = src.indexOf("motDuRival(true)");
+  verifier("Rival en bataille : sa ligne vient en tête du conseil de guerre (avant la première question de la vague) et au départ de la vague, jamais entre deux questions",
+    iPrep > 0 && iMot > iPrep && iMot < iQS && iMot < src.indexOf("questionSuivante(scene);", iPrep) && !/motDuRival|phraseRival|ia\.journal/.test(src.slice(iQS, iFinQS)) &&
+    iAlerte > iLancer && iAlerte < src.indexOf("montrer(cadre); // l'élève regarde la vague", iLancer) && (src.match(/motDuRival\((true|false)\)/g) || []).length === 2 &&
+    !/TEXTES_RIVAL\s*=/.test(src), { iPrep, iQS, iMot, iLancer, iAlerte });
+})();
+
 console.log("\n" + ok + " réussis, " + ko + " en échec.");
 process.exit(ko ? 1 : 0);
