@@ -66,6 +66,16 @@ rétro-éclairés) et l'alcôve sud, ouverte sur la salle haute. Volume ≈ 85 m
   - Atmosphère saline : la notice interdit les « atmosphères agressives », alors que la page produit revendique une tenue au sel. Faire confirmer par écrit.
   - Bruit : 54 dB(A) à 3 m. Chaleur rejetée : environ 2,7 kW. Condensats : environ 2 kg/h en continu.
   - Caisson en pin massif d'au moins 18 mm sans finition : classement M3 sans essai (AM 15). Si le contrôleur le traite en habillage mural, il faut M2 / C-s3,d0.
+  - **Variante Dantherm DH 65 (étudiée le 20/10/2026) : non retenue.**
+    - Notice : 1 306 × 720 × 265 mm ; 30 cm libres dessus et dessous, 20 cm sur les côtés, 50 cm devant ; air aspiré par-dessous et soufflé par-dessus.
+    - Hauteur : avec 30 cm dessous, le dessus arrive à 1,02 m, au-dessus de la limite de 1,0 m de la zone 2. Il faudrait une dérogation écrite de Dantherm pour 28 cm.
+    - Largeur : il faut 1,706 m pour 1,667 m d'alcôve. Ça passe seulement si le tableau de l'ouverture reste libre :
+      le mur est continue jusqu'à 1,758 m, donc pas de joue de coffrage de ce côté.
+    - Coffrage : forcément un cadre ouvert dessus et dessous, avec une façade à claire-voie à au moins 50 cm de l'appareil, soit 0,785 m de profondeur.
+      Le passage devant reste de 1,50 m.
+    - Capacité : moins que le DH 60. La notice donne 45,8 L/24 h à 30 °C / 60 % (même point de rosée que 35 °C / 45 %) ;
+      j'extrapole environ 30 à 34 L/24 h à 35 °C / 45 %, contre 48,8 pour le DH 60.
+    - Seuls avantages : plus silencieux (48 dB(A) à 1 m). Inconvénients supplémentaires : IPX2 et frigorigène R454C légèrement inflammable près des poêles.
 - **Issue de secours de l'alcôve** : cotes estimées sur photo (vantail actif ≈ 0,75 m). Si le passage libre fait moins de 0,80 m, mettre aussi une barre antipanique sur le 2e vantail.
 - **Arche d'entrée** : la barre antipanique est côté salle carrelée. La salle carrelée évacue donc à travers la grotte vers l'alcôve,
   sur 5,1 m de chemin d'au moins 1,58 m de large. Faire valider l'effectif de la salle carrelée et le principe par le bureau de contrôle.

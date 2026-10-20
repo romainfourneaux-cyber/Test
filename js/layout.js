@@ -123,6 +123,11 @@ window.LAYOUT = {
   // Paroi = mur est de l'alcôve (y 84 → 1751, cote 1,67 m du plan papier). hMur = naissance de la voûte de l'alcôve à 1,81 m (SketchUp).
   // NF C 15-100-7-703 (local contenant un poêle de sauna) : au-dessus de 1,0 m (zone 3), matériel tenant 125 °C → le DH 60 (40 °C maxi)
   // doit rester en zone 2 : dessus à 1,0 m au plus (zone2Max), à plus de 0,5 m des poêles ; fiche branchée hors de la grotte, câble sous 1,0 m.
+  // Variante étudiée le 20/10/2026, Dantherm DH 65 (notice DAN-BA-DH20-DH35-DH35H-DH65-DH65H, p. 34-37) : 1306 × 720 × 265 mm, 76 kg,
+  //   dégagements 300 dessus / 300 dessous / 200 côtés / 500 devant, aspiration par le dessous, soufflage par le dessus, 800 m³/h, 48 dB(A) à 1 m,
+  //   IPX2, R454C (A2L), 40–80 % HR. NON RETENU : dessus à 1020 mm (300 + 720) > 1000 mm de la zone 2 ; largeur 1706 mm > 1667 mm
+  //   (passe seulement en laissant libre le tableau de l'ouverture, le mur est continuant jusqu'à y 1842 soit 1758 mm) ;
+  //   capacité à 35 °C / 45 % non publiée, ≈ 30–34 L/24 h extrapolés (45,8 L/24 h à 30 °C / 60 %), inférieure au DH 60 (48,8 L/24 h).
   deshumidificateur: { x: 7863, y: 917, face: 'O', murX: 7991, paroi: { y0: 84, y1: 1751 }, hMur: 1810, zBas: 250, zone2Max: 1000,
     nom: 'Déshumidificateur Trotec DH 60 (alcôve est, à la place du banc B20B)', L: 1253, Pr: 255, H: 651,
     degLat: 125, degHaut: 125, degBas: 125, degAvant: 125, debitAir_m3h: 1165,
