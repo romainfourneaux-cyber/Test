@@ -5,6 +5,8 @@ Document de conception, 20 octobre 2026. Lecture seule du code : rien n'est enco
 - « le jeu est trop court, il faut intégrer sur la map de campagne quelque chose de procédural, de plus en plus dur en avançant sur la carte, version Hadès roguelite où on s'améliore de partie en partie » ;
 - « intégrer jusqu'à la semaine 8, et du coup tu vois les semaines défiler dans les questions et les batailles ».
 
+Relu le 20 octobre 2026 contre le code (exports, signatures, noms d'icônes et de sprites, chiffres du journal) : les écarts trouvés sont corrigés ci-dessous, et les deux points qui restent à confirmer au moment de la livraison sont dits là où ils comptent (section 11 : `reagir` à exporter ; section 13 : numéro de schéma).
+
 Angle : pragmatique et pédagogique. Le but est la plus petite version qui donne la sensation d'un roguelite (une route à embranchements, des choix, des dons temporaires, une progression permanente, une défaite qui n'efface rien) en réutilisant au maximum le moteur de bataille, l'écran de campagne, le conseil et les événements, et sans toucher aux règles d'apprentissage : 7 réussites sur 10, variété des matières, notions à revoir, Seconde chance, aucune punition. D'abord le MVP (quatre jours de travail, section 16), puis deux incréments.
 
 Le document voisin atelier/conception/expeditions-hades.md décrit la version complète « à la Hadès » (18 faveurs à trois rangs, duos, Serments, modificateurs d'élite, Chronique). Le présent document en est le noyau : même vocabulaire (expédition, halte, gardien, faveur, renommée, Armorial), mêmes accroches dans le code, mêmes structures de sauvegarde, pour que l'un soit l'étape 1 de l'autre. Les différences sont dites en section 3.
@@ -18,7 +20,7 @@ Une **expédition** est une partie à part, lancée depuis la carte de campagne,
 - La **renommée** reste pour toujours. Elle paie l'**Armorial** (quatre améliorations permanentes dans le MVP), qui rend chaque expédition suivante un peu plus facile. Une défaite (plus de **vivres**) renvoie au domaine avec la renommée gagnée. Rien n'est jamais retiré au royaume : ni province, ni bâtiment, ni ressource, ni jauge, ni bâtiment du domaine, ni cours.
 - La difficulté monte avec la semaine traversée (le réglage du seigneur rival suit la semaine comme il suit aujourd'hui le niveau de la province) et, dans chaque semaine, de la première halte au gardien. Partir plus loin dans l'année rapporte plus de renommée.
 
-Le MVP tient en deux fichiers nouveaux (jeu/js/expedition.js, sans DOM, testé sous Node ; jeu/js/ecran-expedition.js, l'écran), trois accroches facultatives dans le code existant (un `contexte` pour `JEU.bataille.lancer`, un `quota` pour `JEU.recit.suite`, un paramètre pour `JEU.campagne.jouerEvenement`), un schéma de sauvegarde (6), et **aucun changement du moteur de bataille** : les faveurs du MVP passent toutes par des options que `M.creer` lit déjà.
+Le MVP tient en deux fichiers nouveaux (jeu/js/expedition.js, sans DOM, testé sous Node ; jeu/js/ecran-expedition.js, l'écran), trois accroches facultatives dans le code existant (un `contexte` pour `JEU.bataille.lancer`, un `quota` pour `JEU.recit.suite`, un paramètre pour `JEU.campagne.jouerEvenement`), quelques lignes d'affichage et un export (section 15), un schéma de sauvegarde (6), et **aucun changement du moteur de bataille** : les faveurs du MVP passent toutes par des options que `M.creer` lit déjà.
 
 ## 2. Ce que les règles imposent, et ce que je tranche
 
@@ -45,7 +47,7 @@ Décisions prises faute d'arbitrage (à reporter dans docs/JOURNAL.md, rubrique 
 3. **La défaite vient des vivres** (3 au départ), perdus un par bataille où les murs cèdent, jamais par une question ni par un événement. Un gardien raté se retente tant qu'il reste des vivres, et les coups portés à son camp restent (comme pour une place forte de la campagne).
 4. **Les faveurs se méritent par une question** du conseiller qui les offre : juste, trois faveurs au choix ; fausse, deux. Jamais de porte vide, jamais de faveur imposée.
 5. **Rien de permanent ne vient des faveurs.** La renommée et l'Armorial sont la seule progression entre deux expéditions. Les ressources du domaine gagnées par bonne réponse (règle générale de `enregistrerReponse`) et par les événements restent acquises comme partout : même une expédition perdue fait grandir le domaine.
-6. **Les gardiens se jouent en défense** (le mode `defense` du moteur : troupes d'assaut, coups aux murs doublés), les escarmouches en attaque. Le mode défense est déjà réglé pour « inquiéter un peu » (tenue 73 à 83 % à 7 sur 10, 86 à 95 % à 8 sur 10, journal du 16/10/2026) : c'est exactement le taux qu'on veut pour un boss de semaine. Les escarmouches, en attaque, se tiennent presque toujours ; leur enjeu est la **victoire éclatante** (le camp adverse tombe), qui double la porte.
+6. **Les gardiens se jouent en défense** (le mode `defense` du moteur : troupes d'assaut, coups aux murs doublés), les escarmouches en attaque. Le mode défense est déjà réglé pour « inquiéter un peu » (tenue 73 à 83 % à 7 sur 10, 89 à 95 % à 8 sur 10 : journal du 16/10/2026, Décisions) : c'est exactement le taux qu'on veut pour un boss de semaine. Les escarmouches, en attaque, se tiennent presque toujours ; leur enjeu est la **victoire éclatante** (le camp adverse tombe), qui double la porte.
 
 ## 3. Rapport avec expeditions-hades.md
 
@@ -262,7 +264,7 @@ Une par conseiller (donc par famille de matières), un rang, cumulable une fois 
 | Le chroniqueur (histoire) | **Annales** | +3 or par bonne réponse | +6 | `orParReponse` |
 | La cartographe (géographie) | **Éclaireurs** | la première vague adverse perd un homme d'armes (ou son dernier soldat) | et la deuxième | `espion` (modificateur existant), appliqué à la vague suivante par le rendu au rang 2 |
 | L'herboriste (SVT) | **Onguents** | tes troupes ont un niveau d'arsenal de plus (+15 % de points de vie, plafond 3) | deux | `arsenal.troupes` (copie) |
-| Le maître d'œuvre (physique-chimie) | **Engrenages** | dégâts de tes tours +10 % | +20 % | `bonusDegats` (plafond total, jauge Garde comprise : +60 %) |
+| Le maître d'œuvre (physique-chimie) | **Engrenages** | dégâts de tes tours +10 % | +20 % | `bonusDegats` (plafond total +50 % : la Garde au maximum donne +30 %, le rang 2 +20 % ; le moteur a été réglé entre 0 et +30 %, d'où la mesure au simulateur avec `--faveurs engrenages:2`) |
 | Le ménestrel et le maître scribe (français) | **Chant de marche** | +20 or au début de chaque bataille | +40 | `orDepart` (plafond 180) |
 | L'interprète (anglais) | **Parlementaire** | le camp adverse a 2 points de solidité en moins (jamais sous 4) | 4 | `pvRival` |
 
@@ -317,7 +319,7 @@ Total : 810 points, six ou sept expéditions complètes ; le premier quartier (B
 - **Partir** : une carte de la grille de la campagne, après « Conseil du royaume » et avant « Arsenal », avec sa touche. « Reprendre l'expédition · semaine 7, gardien » quand une expédition est en cours. Une attaque du domaine en cours n'empêche pas de partir ; elle attend. Une expédition en cours n'empêche pas de jouer la campagne.
 - **Jauges, arsenal, remparts** : s'appliquent aux batailles de route par `C.options`. Le conseil du royaume et l'arsenal restent la progression lente ; l'Armorial est la progression « roguelite ». Les deux poussent dans le même sens.
 - **Événements du jour** : rejoués sur la route avec leurs gains de campagne (6.2). L'événement du jour de la campagne reste à jouer à part.
-- **Rivaux et missives** : avant le grand gardien, le défi du rival du front par `C.missiveAvantBataille(idDeLaProchaineProvinceDuFront)` (une bataille sur deux, « Relever le défi », rien à écrire ; sans province restante sur ce front, pas de lettre) ; après une victoire, `C.reagir(front, "victoire")` et `C.monterRivalite(front, 6)` ; après un retour, rien (une défaite ne fait rien perdre, ni gagner). Les gardiens de semaine sont « un seigneur rival » (médaillon héraldique au tortil, `medaillonHeraldique(camp, true)`), sans missive. Dans la bataille, le mot du rival (`phraseRival`, p.ia.journal) s'affiche sous ce nom, comme aujourd'hui.
+- **Rivaux et missives** : avant le grand gardien, le défi du rival du front par `C.missiveAvantBataille(idDeLaProchaineProvinceDuFront)` (une bataille sur deux, « Relever le défi », rien à écrire ; sans province restante sur ce front, pas de lettre) ; après une victoire, `C.reagir(front, "victoire")` (fonction interne de campagne.js aujourd'hui : à ajouter à son export, une ligne) et `C.monterRivalite(front, 6)` ; après un retour, rien (une défaite ne fait rien perdre, ni gagner). Les gardiens de semaine sont « un seigneur rival » (médaillon héraldique au tortil, `medaillonHeraldique(camp, true)`), sans missive. Dans la bataille, le mot du rival (`phraseRival`, p.ia.journal) s'affiche sous ce nom, comme aujourd'hui.
 - **Souverain** : il change toujours avec les provinces prises ; l'expédition y contribue par ses 3 coups à chaque retour triomphal. Sa phrase de départ est un texte du jeu avec `{nom}` ; une situation `expedition` dans personnages.js (six répliques, contrôle 10) est l'incrément 3.
 - **Chronique** : départ, semaine franchie, retour, dans les vingt faits de la campagne.
 - **Réglage « Messages des rivaux »** coupé : pas de missive de défi ni de réaction, comme en campagne.
@@ -337,7 +339,7 @@ Total : 810 points, six ou sept expéditions complètes ; le premier quartier (B
 
 ## 13. Sauvegarde : schéma 6 et réglages
 
-Migration 5 → 6 : ajoute `expedition`, vide, complété par `JEU.expedition.completer` (même méthode que `JEU.campagne.completer` : une valeur absente, nulle ou du mauvais genre reprend sa valeur neuve, le reste ne bouge pas). Rien n'est retiré. Une sauvegarde du schéma 6 lue par un jeu plus ancien est refusée, comme aujourd'hui.
+Migration 5 → 6 (6 est le premier numéro libre au 20/10/2026 : les chantiers personnages et anglais n'ont pas pris de schéma, ils complètent `campagne` ; vérifier `SCHEMA` dans sauvegarde.js le jour de la livraison et prendre le numéro suivant s'il a bougé) : ajoute `expedition`, vide, complété par `JEU.expedition.completer` (même méthode que `JEU.campagne.completer` : une valeur absente, nulle ou du mauvais genre reprend sa valeur neuve, le reste ne bouge pas). Rien n'est retiré. Une sauvegarde du schéma 6 lue par un jeu plus ancien est refusée, comme aujourd'hui.
 
 ```js
 expedition: {
@@ -415,7 +417,7 @@ Toutes les accroches sont des ajouts facultatifs : sans `contexte`, sans `quota`
 | `jeu/js/bataille.js` | `lancer(lieu, contexte)` : avec un `contexte` ({ carte, titre, front, camp, niveau, vagues, defense, pvRival, pvRivalMax, options (fusionnées sur `C.options`), semaine, tirage(n, posees) → questions, cadre(q) → cadre du récit, nomRival, rivalPerso, eclaireurs, sansFiche, surFin(bilan), surQuitter(entamee), retour() }), la bataille ne touche pas la campagne (`C.apresBataille` n'est pas appelé) et rend son bilan à `JEU.expedition` ; `lancerVague` prévient `contexte.surVague()` (pour `entamee`) ; le retour va à l'écran de la route. Une vingtaine de lignes, toutes sous `if (contexte)`. |
 | `jeu/js/recit.js` | `suite(nombre, options)` : option `quota` (7.1). `cadre(q, contexte, camp, extra)` : contextes `route`, `gardien`, `bivouac`, `marchand`, `archives`, `porte` ; `r.semaine`. |
 | `jeu/js/interface.js` | `ui.recit` affiche `r.semaine` ; `panneauErreur(q, zone, suite, options)` avec `options.sansFiche`. |
-| `jeu/js/campagne.js` | `jouerEvenement(ev, contexte)` (6.2). Rien d'autre : rivalité, missives, chronique se font par les fonctions déjà exportées. |
+| `jeu/js/campagne.js` | `jouerEvenement(ev, contexte)` (6.2) ; `reagir` ajouté à l'export `JEU.campagne` (une ligne : la réaction du rival après le grand gardien). Rien d'autre : rivalité, missives et chronique passent par `monterRivalite`, `missiveAvantBataille`, `rivalDe`, `prochaineProvince` et `noter`, déjà exportés. |
 | `jeu/js/ecran-campagne.js` | La carte « Partir en expédition / Reprendre » dans la grille, avec sa touche. |
 | `jeu/js/sauvegarde.js` | `SCHEMA = 6`, migration 5 → 6, `nouvelle()` avec `expedition`. |
 | `jeu/js/progression.js` | `semaineDe(coursId)` si le chantier « semaine visible » ne l'a pas déjà mise là. |
@@ -450,7 +452,7 @@ var o = JEU.campagne.options(niv);
 o.vagues = halte.vagues; o.defense = halte.defense; o.pvRival = places[halte.id] || halte.place; o.pvRivalMax = halte.place;
 o.orDepart = Math.min(180, o.orDepart + 10 * arm.bourse + 20 * rang("chant") + e.plan); e.plan = 0;
 o.pvChateau += 2 * arm.murs;
-o.bonusDegats = Math.min(0.6, o.bonusDegats + 0.1 * rang("engrenages"));
+o.bonusDegats = Math.min(0.5, o.bonusDegats + 0.1 * rang("engrenages"));
 o.orParReponse += 3 * rang("annales");
 o.pvRival = Math.max(4, o.pvRival - 2 * rang("parlementaire"));
 o.espion = o.espion || rang("eclaireurs") > 0;
@@ -529,7 +531,7 @@ Cibles de départ (à ajuster avec Romain après quelques expéditions réelles)
 |---|---|---|---|---|
 | Escarmouche tenue | ≥ 92 % | ≥ 85 % | ≥ 98 % | ≥ 75 % |
 | Escarmouche éclatante | 30 à 50 % | 20 à 40 % | ≥ 60 % | ≥ 15 % |
-| Gardien vaincu, 1re tentative | 72 à 82 % (mesuré en défense aujourd'hui : 73 à 81 %) | 65 à 78 % | ≥ 94 % | 55 à 65 % |
+| Gardien vaincu, 1re tentative | 72 à 82 % (la défense du domaine mesurée le 16/10/2026 : 73 à 83 % à 7 sur 10) | 65 à 78 % | ≥ 94 % | 55 à 65 % |
 | Grand gardien vaincu, 1re tentative | 60 à 70 % | 50 à 62 % | ≥ 88 % | ≥ 40 % |
 
 Leviers, dans l'ordre où le journal du 16/10/2026 les a classés : solidité des camps de route (8, 10, 12, 16), nombre de vagues, `difficulte`, et seulement ensuite la table `RIVAL` (jamais dans le MVP : elle est partagée avec la campagne). Attention aux paliers de flèches (1,534 ; 1,725) : un changement de niveau change tout d'un coup, d'où le simulateur avant tout réglage.
@@ -547,7 +549,19 @@ Leviers, dans l'ordre où le journal du 16/10/2026 les a classés : solidité de
 
 ### 17.4 La réussite d'une expédition entière
 
-Dans le MVP, par le calcul à partir de 17.2 : avec 3 vivres, trois escarmouches (murs cédés 8 %), deux gardiens (22 %) et un grand gardien (35 %) qui se retentent, la probabilité de perdre trois batailles avant la fin est d'environ 12 % à p = 0,7 : **≈ 85 % d'expéditions S1 → S3 complètes** ; S6 → S8 (gardiens 30 %, grand gardien 45 %) ≈ 70 %. C'est plus doux que Hadès, voulu pour « pas trop d'échecs » : la tension vient du gardien à retenter, des portes doublées et du choix de profondeur, et les premières défaites arrivent quand l'élève part plus loin. Cibles : S1 → S3 : 75 à 85 % sans Armorial, ≥ 90 % avec ; S6 → S8 : 55 à 70 % sans, ≥ 80 % avec ; à p = 0,6 : ≥ 60 % et ≥ 40 %. Si les expéditions réelles sont trop faciles, le premier levier est `vivres: 2` (la probabilité tombe d'un tiers) ; trop dures, `difficulte: −1`. L'incrément 2 remplace ce calcul par `simuler-expedition.js` (le joueur scripté qui parcourt une route à graine, prend les faveurs au hasard, achète un vivre au marchand quand il lui en reste un).
+Dans le MVP, par le calcul à partir des taux de 17.2 (une convolution de quelques lignes, que `simuler-bataille.js --expedition` imprime à la fin de son tableau à partir des taux qu'il vient de mesurer ; refaite à la main le 20/10/2026) : une expédition échoue quand les murs cèdent autant de fois qu'il y a de vivres ; une escarmouche cédée ne se rejoue pas, un gardien ou le grand gardien se retente jusqu'à la victoire, chaque échec coûtant un vivre.
+
+| Expédition de trois semaines, 2 ou 3 escarmouches | 2 vivres | **3 vivres (départ)** | 4 vivres (Armorial 60) | 5 vivres (Armorial 210) |
+|---|---|---|---|---|
+| S1 → S3, p = 0,7 (murs cédés : escarmouche 8 %, gardien 22 %, grand gardien 35 %) | 63 à 66 % | **83 à 85 %** | 93 à 94 % | 97 à 98 % |
+| S6 → S8, p = 0,7 (12 %, 30 %, 45 %) | 45 à 48 % | **68 à 70 %** | 83 à 84 % | 91 à 92 % |
+| S1 → S3, p = 0,6 (20 %, 40 %, 55 %) | 26 à 30 % | **46 à 50 %** | 63 à 67 % | 76 à 79 % |
+| S6 → S8, p = 0,6 (25 %, 45 %, 60 %) | 18 à 22 % | **35 à 39 %** | 52 à 56 % | 66 à 69 % |
+| S1 → S3, p = 0,9 (2 %, 6 %, 12 %) | 95 à 96 % | **99 %** | 100 % | 100 % |
+
+Lecture : à 7 sur 10, **environ 85 % des expéditions S1 → S3 vont au bout** dès la première, et 70 % des expéditions S6 → S8 ; c'est plus doux que Hadès, voulu pour « pas trop d'échecs ». La tension vient du gardien à retenter, des portes doublées et du choix de profondeur ; les premières défaites arrivent quand l'élève part plus loin dans l'année. Un élève à 6 sur 10 finit une expédition sur deux : c'est le seul cas où le mode échoue souvent, et il est transitoire (le niveau conseillé des questions redescend pour le ramener vers 7 sur 10) ; une défaite lui paie quand même 25 à 40 points de renommée, et le premier quartier de vivres (60) le remonte à deux expéditions sur trois.
+
+Cibles : S1 → S3 : 75 à 85 % sans Armorial, ≥ 90 % avec un vivre de plus ; S6 → S8 : 55 à 70 % sans, ≥ 80 % avec ; à p = 0,6 : ≈ 50 % et ≈ 40 % (pas moins de 40 % et 30 %). Leviers, si les expéditions réelles s'écartent : trop faciles, `vivres: 2` dans config.js (S1 → S3 tombe à ≈ 65 %) ou `difficulte: +1` ; trop dures, `difficulte: −1` (le niveau du rival baisse d'un cran partout) avant de toucher aux vivres. L'incrément 2 remplace ce calcul par `simuler-expedition.js` (le joueur scripté qui parcourt une route à graine, prend les faveurs au hasard, achète un vivre au marchand quand il lui en reste un), qui tiendra compte des faveurs et des achats que le calcul ignore.
 
 ### 17.5 perf.js (bout en bout, Chromium)
 
@@ -569,7 +583,7 @@ Rien de nouveau dans jeu/data/cours : le validateur ne change pas, sauf le même
 
 1. **Départ libre, défaut sur les trois dernières semaines** (plutôt que des relais à débloquer, ou toujours la semaine 1 comme dans Hadès) : d'accord ? C'est le choix qui révise le mieux ce que ton fils travaille en ce moment.
 2. **Longueur** : trois semaines, 25 à 35 minutes à vitesse ×1. Préfères-tu deux semaines par défaut (18 à 25 minutes), avec trois au choix ?
-3. **Vivres** : une bataille où les murs cèdent coûte un vivre (trois au départ) ; c'est la seule chose qu'on « perd », et seulement dans l'expédition. Le calcul vise ≈ 85 % d'expéditions S1 → S3 réussies à 7 sur 10 au début, plus dur en partant plus loin. Trop doux ? Trop dur ? `vivres` et `difficulte` dans config.js se changent sans code.
+3. **Vivres** : une bataille où les murs cèdent coûte un vivre (trois au départ) ; c'est la seule chose qu'on « perd », et seulement dans l'expédition. Le calcul (17.4) donne ≈ 85 % d'expéditions S1 → S3 réussies à 7 sur 10 au début, ≈ 70 % sur S6 → S8, une sur deux pour un élève à 6 sur 10. Trop doux ? Trop dur ? `vivres` et `difficulte` dans config.js se changent sans code.
 4. **Fermer le jeu au milieu d'une bataille de route** après la première vague : compté comme une retraite (−1 vivre), comme un abandon volontaire ? Proposé : oui, pour qu'on ne puisse pas annuler une vague qui tourne mal en fermant la fenêtre.
 5. **Or de route perdu au retour** : clair pour un élève de 13 ans si le jeu le dit avant le grand gardien ? Autre solution : le changer en ressources du domaine (1 pour 10) au bilan.
 6. **Noms** : « Expédition », « halte », « gardien », « grand gardien », « faveur », « renommée », « Armorial », « vivres », « or de route ». Tous changeables avant le code (les identifiants internes ne porteront pas ces mots).
@@ -596,7 +610,7 @@ Rien de nouveau dans jeu/data/cours : le validateur ne change pas, sauf le même
 | Armorial | 4 quartiers, 810 points en tout, premier achat à 30 |
 | Retour triomphal, lien campagne | +3 coups à la prochaine place forte du front, rivalité +6, 8 ressources de la meilleure matière |
 | Durée visée | 25 à 35 minutes (×1), 20 à 25 (×2) ; une semaine seule : 10 à 12 ; reprise après chaque nœud |
-| Réussite visée (p = 0,7, sans Armorial) | S1 → S3 : 75 à 85 % ; S6 → S8 : 55 à 70 % |
+| Réussite visée (sans Armorial) | p = 0,7 : S1 → S3 83 à 85 %, S6 → S8 68 à 70 % (calcul 17.4) ; p = 0,6 : ≈ 50 % et ≈ 40 % ; un vivre d'Armorial : 93 % et 83 % |
 | Volume de code | ≈ 900 lignes JS, 250 CSS, 45 tests ; aucun changement du moteur de bataille |
 
 ## Annexe B : une expédition type, S6 → S8 vers l'ouest, racontée
