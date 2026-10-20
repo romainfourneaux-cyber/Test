@@ -827,3 +827,6 @@ button.cour-chip:hover { background: rgba(255,250,236,.55); box-shadow: 0 0 0 1p
 /* galerie : médaillon au-dessus du nom (les titres longs, « Le roi d'Angleterre », ont toute la largeur) */
 .galerie-souverains .fp-tete { flex-direction: column; text-align: center; gap: .5rem; }
 .galerie-souverains .fp-tete h3 { font-size: 1.12rem; }
+/* en bataille : le mot du rival (sa décision entre deux vagues, p.ia.journal), son médaillon à la place de l'icône du récit */
+.recit-rival .recit-portrait { background: none; box-shadow: none; }
+.recit-rival .recit-portrait .medaillon-perso { display: block; }

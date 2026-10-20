@@ -27,6 +27,24 @@
     return prep + " " + nom;
   }
   function pluriel(n, mot) { return n + " " + mot + (n >= 2 ? "s" : ""); }
+  // ---------- le seigneur rival parle (16/10/2026) ----------
+  // Le moteur note chaque décision du rival dans p.ia.journal ({ vague, posture, texte }) ; ses phrases commencent par
+  // « Ton rival ». Ici, le rival du front prend son titre (jeu/data/personnages.js : « Le roi d'Angleterre », « L'émir de
+  // Cordoue » ; sinon « un seigneur rival ») : « Le roi d'Angleterre a vu tes troupes foncer sur sa porte », « Tu gardes
+  // de l'or : le roi d'Angleterre se méfie… », « Les guetteurs de l'émir de Cordoue… ». alerte : la phrase de ses
+  // guetteurs au départ de la vague ; sinon sa décision pour cette vague (la dernière notée). Null s'il n'a rien dit.
+  function phraseRival(journal, vague, alerte, nom) {
+    if (!journal || !journal.length) return null;
+    var d = null;
+    for (var i = journal.length - 1; i >= 0 && !d; i--) {
+      var j = journal[i];
+      if (j && j.vague === vague && typeof j.texte === "string" && (j.posture === "alerte") === !!alerte) d = j;
+    }
+    if (!d) return null;
+    nom = nom || "Un seigneur rival";
+    var bas = nom.replace(/^(Les|Le|La|Une|Un)(?=\s)|^L(?=['’])/, function (m) { return m.toLowerCase(); });
+    return d.texte.replace(/^Ton rival\b/, nom).replace(/\bton rival\b/g, bas).replace(/\bdu rival\b/g, avecArticle(bas, "de"));
+  }
   // « verrouillé » accordé au nom du bouton : la Tour d'archers, la Palissade, la Baliste, la Tour de siège (féminin) ;
   // le Trébuchet (masculin) ; les Fantassins, les Cavaliers (masculin pluriel).
   var GENRES = { archers: "f", piquiers: "f", baliste: "f", catapulte: "m", fantassins: "mp", cavaliers: "mp", belier: "f" };
@@ -1641,6 +1659,21 @@
         // couchées, bannières : essais)
         corps: [], vus: [], morts: [], tempsRendu: 0, rendu: { bataillons: 0, figures: 0, corps: 0, bannieres: 0 } };
       var titre = defense ? "Défense du domaine contre " + adv.armee : "Bataille : " + prov.nom;
+      // Le rival du front, à son titre seul (jeu/data/personnages.js ; sinon « un seigneur rival ») : ses décisions du
+      // moteur (p.ia.journal) se lisent dans la colonne de droite, sous son médaillon, en tête du conseil de guerre de
+      // chaque vague et au départ d'une vague. Jamais entre deux questions.
+      var rivalPerso = C.rivalDe ? C.rivalDe(frontId) : null, nomRival = rivalPerso ? rivalPerso.nom : "Un seigneur rival";
+      function motDuRival(alerte) {
+        var t = phraseRival(p.ia && p.ia.journal, p.vague, alerte, nomRival);
+        if (!t) return null;
+        var carte = JEU.ui.recit({ nom: nomRival, icone: "defi", texte: t }), E = JEU.ecranCampagne;
+        carte.classList.add("recit-rival");
+        if (E && E.medaillon) {
+          var port = carte.querySelector(".recit-portrait");
+          if (port) { port.innerHTML = E.medaillon(rivalPerso, 50); E.surveillerPortraits(carte); }
+        }
+        return carte;
+      }
       var zone = JEU.ui.commencerPartie(titre, function () { JEU.ui.afficher("jouer"); });
       JEU.musique.humeur("guerre");
       var actif = true, iQ = 0, poseesVague = 0, bonnes = 0, total = 0, finie = false;
@@ -1861,6 +1894,8 @@
         JEU.mesure.debut = null; // la première question suit une vague, pas une réponse
         v.curseur = -1;
         conseil.innerHTML = "";
+        var mot = motDuRival(false); // sa décision pour cette vague, prise par le moteur à la fin de la précédente
+        if (mot) conseil.appendChild(mot);
         var nouv = nouvellesDuFront();
         if (nouv) conseil.appendChild(JEU.ui.recit({ nom: "Un éclaireur", icone: "trompe", texte: nouv }));
         var scene = el("div", { class: "td-question" });
@@ -1974,6 +2009,8 @@
           ? Adv(adv.troupes) + " chargent ! Tes tours tiennent la route." + (v.envoyesVague ? " Tes soldats partent vers " + adv.chateau + "." : "")
           : (v.envoyesVague ? "Tes troupes s'élancent. " : "Tes tours attendent l'ennemi. ") + Adv(adv.soldats) + " marchent sur ton château.";
         conseil.appendChild(JEU.ui.recit({ nom: "Le capitaine", icone: "rallier", texte: texte }));
+        var alerte = motDuRival(true); // ses guetteurs ont vu ton armée sortir : il rappelle des gardes à sa porte
+        if (alerte) conseil.appendChild(alerte);
         majTout();
         montrer(cadre); // l'élève regarde la vague
       }
@@ -2181,7 +2218,7 @@
     }
   }
 
-  JEU.bataille = { lancer: lancer, QUESTIONS_PAR_VAGUE: QUESTIONS_PAR_VAGUE, verrouille: verrouille,
+  JEU.bataille = { lancer: lancer, QUESTIONS_PAR_VAGUE: QUESTIONS_PAR_VAGUE, verrouille: verrouille, phraseRival: phraseRival,
     // formations des bataillons (essais sous Node : tests.js)
     bataillons: { BATAILLONS: BATAILLONS, BORD_ROUTE: BORD_ROUTE, ECART_FRONTS: ECART_FRONTS, CORPS_MAX: CORPS_MAX,
       ECART_FILE: ECART_FILE, DECAL_MELEE: DECAL_MELEE, DECAL_FILE: DECAL_FILE, DECAL_PORTE: DECAL_PORTE,
