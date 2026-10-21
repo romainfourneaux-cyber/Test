@@ -98,11 +98,12 @@ window.LAYOUT = {
   // de part et d'autre de la porte, au plus près des murs de sel. Les radiants IR ne sont plus installés (pose « aucun »).
   chauffage: 'poeles',
   poele: {
-    // MODÈLE PROVISOIRE : cotes et distances à remplacer par celles de la notice du modèle retenu (null = à renseigner)
-    // Puissance : 2 × 6 kW = 12 kW (bilan paroi par paroi du 12/10/2026, docs/BILAN_THERMIQUE.md) ; 15 à 18 kW si l'air neuf est pris dehors sans récupération
-    nom: 'Poêle de sauna électrique (modèle à choisir)', P: 6000, L: 500, Pr: 400, H: 800,
+    // Matériel installé (21/10/2026) : 2 poêles de 9 kW = 18 kW. Modèle à renseigner : cotes et distances de la notice (null = à renseigner).
+    // Bilan paroi par paroi (12/10/2026, docs/BILAN_THERMIQUE.md) : 3,0 à 7,5 kW en régime établi ; 18 kW = haut de la fourchette conseillée,
+    // utile si l'air neuf est pris dehors sans récupération. 400 V tri : ≈ 13 A par phase et par poêle, 26 A par phase pour les deux.
+    nom: 'Poêle de sauna électrique 9 kW (modèle à renseigner)', P: 9000, L: 500, Pr: 400, H: 800,
     distPlafond: null, distArriere: null, distCotes: null, distAvant: null, gardeCorps: true,
-    volMin: null, volMax: null, thermostat: 'régulation maison : thermostat d\'ambiance qui pilote les contacteurs des 2 poêles', source: '',
+    volMin: null, volMax: null, thermostat: 'régulation maison : thermostat d\'ambiance qui pilote les contacteurs des 2 poêles, en 2 étages', source: '',
   },
   // Décalés vers la porte (demande du 12/10/2026) pour ne plus être collés aux murs de sel. Les notices (Harvia, Helo, Tylö, EOS, Narvi, Sentiotec)
   // ne demandent que 40 à 120 mm aux murs, mais les murs de sel contiennent des LED : zone 1 de la NF C 15-100-7-703 = 0,50 m autour du poêle,
@@ -114,35 +115,34 @@ window.LAYOUT = {
   ],
 
   // ---------- Déshumidificateur mural (à la place du banc B20B est de l'alcôve) ----------
-  // Trotec DH 60 (appareil déjà utilisé et connu de l'exploitation), notice Trotec TRT-BA-DH15-DH30-DH60-TC-007-FR (2022) :
-  //   mural, 1253 × 651 × 255 mm, 1165 m³/h, 5–40 °C, 1,52 kW, 7,5 A ; 12,5 cm libres sur toutes les faces (p. 14) ;
-  //   entrée d'air par le DESSOUS, sortie par la grille HAUTE de la façade (p. 5), air soufflé ≈ 5 °C plus chaud (p. 4) ;
-  //   hygrostat 30–60 % (bouton sous le carter), interrupteur MODE à mettre sur CONT ; « ne pas couvrir l'appareil » (p. 3).
-  // Capacité lue sur le diagramme de la notice (p. 15) : 48,8 L/24 h (2,0 kg/h) à 35 °C / 45 %, 56,5 L/24 h à 35 °C / 50 %, 38 L/24 h à 20 °C / 60 %.
-  // Retenu une fois habillé : ≈ 1,9 kg/h (46 L/24 h). Besoin : 1,0–1,6 kg/h en moyenne, 2,4 kg/h en pointe (air neuf de la pièce à 26 °C / 75 %).
-  // Paroi = mur est de l'alcôve (y 84 → 1751, cote 1,67 m du plan papier). hMur = naissance de la voûte de l'alcôve à 1,81 m (SketchUp).
-  // NF C 15-100-7-703 (local contenant un poêle de sauna) : au-dessus de 1,0 m (zone 3), matériel tenant 125 °C → le DH 60 (40 °C maxi)
-  // doit rester en zone 2 : dessus à 1,0 m au plus (zone2Max), à plus de 0,5 m des poêles ; fiche branchée hors de la grotte, câble sous 1,0 m.
-  // Variante étudiée le 20/10/2026, Dantherm DH 65 (notice DAN-BA-DH20-DH35-DH35H-DH65-DH65H, p. 34-37) : 1306 × 720 × 265 mm, 76 kg,
-  //   dégagements 300 dessus / 300 dessous / 200 côtés / 500 devant, aspiration par le dessous, soufflage par le dessus, 800 m³/h, 48 dB(A) à 1 m,
-  //   IPX2, R454C (A2L), 40–80 % HR. NON RETENU : dessus à 1020 mm (300 + 720) > 1000 mm de la zone 2 ; largeur 1706 mm > 1667 mm
-  //   (passe seulement en laissant libre le tableau de l'ouverture, le mur est continuant jusqu'à y 1842 soit 1758 mm) ;
-  //   capacité à 35 °C / 45 % non publiée, ≈ 30–34 L/24 h extrapolés (45,8 L/24 h à 30 °C / 60 %), inférieure au DH 60 (48,8 L/24 h).
-  deshumidificateur: { x: 7863, y: 917, face: 'O', murX: 7991, paroi: { y0: 84, y1: 1751 }, hMur: 1810, zBas: 250, zone2Max: 1000,
-    nom: 'Déshumidificateur Trotec DH 60 (alcôve est, à la place du banc B20B)', L: 1253, Pr: 255, H: 651,
-    degLat: 125, degHaut: 125, degBas: 125, degAvant: 125, debitAir_m3h: 1165,
-    debit_L_j: 48.8, debitCond: '35 °C / 45 % HR (diagramme de la notice, p. 15)', debit35_L_j: 46, besoin_L_j: 36, besoinPointe_L_j: 58, tMin: 5, tMax: 40,
-    bruit: '54 dB(A) à 3 m', chaleur_W: 2700,
-    elec: '230 V mono, 7,5 A (démarrage 30 A), 1,52 kW : circuit dédié 16 A + différentiel 30 mA, interrupteur hors de la salle',
-    condensats: '≈ 2 kg/h en continu : raccord vers un siphon des eaux usées, ou pompe de relevage Trotec (option 6.100.000.019)',
-    source: 'https://uk.trotec.com/fileadmin/downloads/Entfeuchtung/DH-15-30-60/TRT-BA-DH15-DH30-DH60-TC-007-FR.pdf',
-    // Habillage bois (demande du 12/10/2026), posé au sol, ne prenant pas appui sur l'appareil : 12,5 cm libres à l'intérieur ;
-    // reprise d'air par une bande basse de façade à claire-voie (l'appareil aspire par-dessous), façade médiane pleine doublée,
-    // soufflage par une bande haute à claire-voie devant la grille, cloison horizontale 175 mm sous le dessus de l'appareil (pas de recyclage
-    // de l'air soufflé, plus chaud), façade démontable à l'outil pour le contrôle mensuel des bouches et la dépose annuelle du carter.
+  // Dantherm DH 65 (matériel retenu par l'exploitation le 21/10/2026), notice DAN-BA-DH20-DH35-DH35H-DH65-DH65H (p. 11, 15-16, 25, 34-37) :
+  //   mural, 1306 × 720 × 265 mm, 76 kg, sur mur brique ou béton ; 800 m³/h ; 48 dB(A) à 1 m ; IPX2 ; R-454C (A2L, légèrement inflammable), 850 g ;
+  //   1,263 kW et 5,3 A maxi, aucun câble fourni (raccordement par électricien, DDR obligatoire) ; réglage 40–80 % HR ; plage 5–40 °C,
+  //   enveloppe 40–80 % HR jusqu'à 35 °C (notice p. 36 ; le guide produit s'arrête à 30 °C) ;
+  //   dégagements « par rapport aux murs et aux objets » : 300 dessus, 300 dessous, 200 sur les côtés, 500 devant ;
+  //   aspiration par toute la face inférieure (filtre), soufflage vers le haut par la face supérieure, air ≈ 5 °C plus chaud.
+  // Capacité : 45,8 L/24 h à 30 °C / 60 % (notice). 35 °C / 45 % a le même point de rosée (21,3 °C) mais n'est pas publié :
+  //   ≈ 30 à 34 L/24 h extrapolés le long de l'iso-rosée sur les courbes du DH 65 (1,25 à 1,4 kg/h), 32 retenus.
+  // Paroi = mur est de l'alcôve (y 84 → 1751, 1,67 m) ; il continue jusqu'à y 1842 (tableau de l'ouverture, 1,758 m en tout) :
+  //   1306 + 2 × 200 = 1706 mm ne passe qu'en laissant libre le côté ouverture (aucune joue d'habillage de ce côté).
+  // NF C 15-100-7-703 : dessus de l'appareil à 1,0 m au plus (zone 2) → pose à 280 mm du sol au lieu des 300 mm de la notice
+  //   (accord écrit de Dantherm à obtenir), ou pose à 300 mm avec un dessus à 1,02 m accepté par le bureau de contrôle.
+  deshumidificateur: { x: 7858, y: 953, face: 'O', murX: 7991, paroi: { y0: 84, y1: 1751, y1Mur: 1842 }, hMur: 1810, zBas: 280, zone2Max: 1000,
+    nom: 'Déshumidificateur Dantherm DH 65 (alcôve est, à la place du banc B20B)', marque: 'Dantherm', L: 1306, Pr: 265, H: 720, poids: 76,
+    degLat: 200, degHaut: 300, degBas: 300, degAvant: 500, debitAir_m3h: 800, IP: 'IPX2', frigorigene: 'R-454C (A2L, légèrement inflammable), 850 g',
+    debit_L_j: 45.8, debitCond: '30 °C / 60 % HR (notice ; même point de rosée que 35 °C / 45 %)', debit35_L_j: 32, debit35Estime: true,
+    besoin_L_j: 36, besoinPointe_L_j: 58, hrMoy: 46, hrPointe: 51, tMin: 5, tMax: 40,
+    plageNote: 'Plage 5–40 °C, mais l\'enveloppe de fonctionnement de la notice (40–80 % HR) s\'arrête à 35 °C (30 °C dans le guide produit) : à 35 °C on est en limite, à 40 °C au-delà.',
+    bruit_dBA: 48, bruit: '48 dB(A) à 1 m', chaleur_W: 2100, reglage: 'hygrostat 40–80 % HR, réglé sur 45 %',
+    elec: '230 V mono, 1,263 kW et 5,3 A maxi, aucun câble fourni : raccordement par un électricien avant la pose, circuit dédié 16 A, DDR 30 mA (notice p. 15-16), interrupteur hors de la salle, câble sous 1,0 m',
+    condensats: '≈ 1,3 kg/h en continu : raccord à un siphon des eaux usées en pente',
+    source: 'Dantherm, notice DAN-BA-DH20-DH35-DH35H-DH65-DH65H',
+    // Habillage bois (demande du 12/10/2026) adapté au DH 65 : la notice exige 30 cm libres dessus et dessous et 50 cm devant « par rapport
+    // aux objets », donc pas de caisson fermé. Écran à claire-voie posé au sol à 50 cm devant l'appareil, du mur sud de l'alcôve
+    // jusqu'à l'ouverture, ouvert dessus, sans joue côté ouverture, panneaux démontables pour l'entretien du filtre (face inférieure).
     // Réaction au feu (ERP, AM 15) : M3 minimum = résineux massif ≥ 18 mm sans finition, ou panneau D-s2,d0 ; M2 si traité en habillage mural (AM 4).
-    habillage: { pose: 'sol', essence: 'pin massif 20 mm (M3 conventionnel, sans finition) ou bois ignifugé M2', couleur: 0xb07a4c, ep: 20, jeuLat: 125, jeuHaut: 125, jeuAvant: 125,
-      lame: 45, vide: 0.5, bandeAsp: 230, cloisonSousHaut: 175 } },
+    habillage: { type: 'ecran', pose: 'sol', essence: 'pin massif 20 mm (M3 conventionnel, sans finition) ou bois ignifugé M2', couleur: 0xb07a4c, ep: 20,
+      jeuAvant: 500, hEcran: 1320, socle: 60, lame: 45, vide: 0.5, panneaux: 3 } },
 
   // ---------- Suspensions : 6 lustres industriels « loft » finition rouille (ManoMano 14035860) ----------
   // Abat-jour cylindrique en métal Ø 33 × H 35 cm, chaîne réglable 50 cm, douille E27 100 W max (fiche ManoMano). Forme modélisée : cage cylindrique.

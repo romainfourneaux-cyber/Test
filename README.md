@@ -40,14 +40,14 @@ On y trouve enfin une **visite guidée** animée et une **photo HD** (3840 × 21
   croûte de sel blanche (voûte de la salle 2, d'après les photos), briques de sel de l'Himalaya rétro-éclairées.
 - **Équipements** (`js/layout.js`, d'après le plan annoté `docs/plan_annote.jpg`) :
   - salle haute : 6 chaises longues B17 et 4 fauteuils B4A KD ;
-  - partie basse : 2 canapés B6 KD face à 2 poêles de sauna de 6 kW, avec garde-corps, au fond de part et d'autre de la porte du frigidarium, à au moins 0,50 m des 2 murs de sel (nord et sud) ;
-  - alcôve sud, ouverte sur la salle haute : 1 banc B20B, le déshumidificateur Trotec DH 60 dans un caisson bois posé au sol contre le mur est (dessus à 0,90 m, zone 2 de la NF C 15-100-7-703) et l'issue de secours cintrée au fond ;
+  - partie basse : 2 canapés B6 KD face à 2 poêles de sauna de 9 kW (18 kW installés), avec garde-corps, au fond de part et d'autre de la porte du frigidarium, à au moins 0,50 m des 2 murs de sel (nord et sud) ;
+  - alcôve sud, ouverte sur la salle haute : 1 banc B20B, le déshumidificateur Dantherm DH 65 au mur est (de 0,28 à 1,00 m du sol, zone 2 de la NF C 15-100-7-703) derrière un écran bois à claire-voie posé à 50 cm devant lui et l'issue de secours cintrée au fond ;
   - sol de la salle haute et de l'alcôve en lames vinyle Florafloor « People » (Élégance Fix 55 collée) ;
   - 6 suspensions industrielles rouille ; entrée par une arche vitrée en plein cintre (vitrage clair) ;
   - frigidarium : fumée au sol, lumière bleue, vue sur la rivière en contrebas par l'arc sud ;
   - 2 mains courantes inox à 0,90 m.
-- **Chauffage et humidité** : bilan paroi par paroi dans [docs/BILAN_THERMIQUE.md](docs/BILAN_THERMIQUE.md). Il conclut à 12 kW installés, à une régulation maison
-  avec limiteurs de sécurité, à de l'air neuf à ne pas prendre dans la pièce d'entrée, et au plafond sous la route à isoler avec un pare-vapeur.
+- **Chauffage et humidité** : bilan paroi par paroi dans [docs/BILAN_THERMIQUE.md](docs/BILAN_THERMIQUE.md). Il conseillait 12 kW ; les 18 kW installés suffisent largement, avec une régulation maison
+  en 2 étages et des limiteurs de sécurité. Le DH 65 tient ≈ 46 % HR en moyenne et ≈ 51 % en pointe. L'air neuf est à prendre dehors, pas dans la pièce d'entrée, et le plafond sous la route est à isoler avec un pare-vapeur.
 - **Locaux** : la grotte de sel, chaude et sèche, comprend la salle haute, la partie basse et l'alcôve (≈ 85 m³). Le frigidarium, froid et humide, est derrière la porte
   vitrée de 0,80 m (vue rivière).
 - **Simulation** : bouton **Séance** — arrivée par la double porte du pignon ouest (seule porte de circulation),

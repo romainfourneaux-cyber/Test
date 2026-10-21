@@ -14,6 +14,7 @@ d'avant-projet (U des parois et température de la roche supposés) : à valider
 | Mur côté frigidarium | 9,32 m² de grosse brique + porte vitrée 0,80 m (1,68 m²), frigidarium à 15 °C / 80 % HR |
 | Plafond | lames de bois sans isolant, sous la route goudronnée |
 | Grotte existante (référence) | 5,90 × 2,80 × 1,88 m, 9 kW, 52 % HR mesurés à 40 °C |
+| Matériel installé (21/10/2026) | 2 poêles de sauna de 9 kW = **18 kW** ; déshumidificateur **Dantherm DH 65** |
 | Régulation | maison : thermostat d'ambiance qui pilote les contacteurs des 2 poêles |
 
 ## 2. Pertes paroi par paroi (cas central)
@@ -45,17 +46,24 @@ Le besoin en régime établi ne fixe pas la puissance. Elle est fixée par la **
 | 10 kW | 12 h |
 | **12 kW** | **3,8 h** |
 | 15 kW | 0,5 h (l'air seulement, les parois restent froides) |
+| **18 kW (installés)** | **moins de 0,5 h pour l'air** ; les parois suivent au même rythme qu'avec 12 à 15 kW |
 
 Une fois 35 °C atteints, la puissance appelée est de 8,5 kW à J+1, 6,5 kW à J+3, 5,4 kW à J+7 et 4,3 kW à J+30.
 
-> **Conseil : 12 kW, soit 2 poêles de 6 kW**, avec l'air neuf pris dans la pièce d'entrée ou par une double flux.
+> **Conseil du 12/10 : 12 kW, soit 2 poêles de 6 kW**, avec l'air neuf pris dans la pièce d'entrée ou par une double flux.
 > Si l'air neuf est pris dehors sans récupération de chaleur, il faut 15 à 18 kW. Au-delà, la puissance ne sert à rien.
-> Alimentation : 12 kW, c'est environ 17 A par phase en triphasé 400 V.
+>
+> **Installé : 2 × 9 kW = 18 kW.** C'est le haut de la fourchette, donc pas de manque de puissance, même avec l'air neuf pris dehors
+> sans récupération (300 m³/h d'air à −5 °C demandent 3,8 kW). En régime établi (3 à 7,5 kW), **un seul poêle suffit** : voir la régulation ci-dessous.
+> Alimentation : 18 kW, c'est environ 26 A par phase en triphasé 400 V (13 A par poêle), avec une protection et un contacteur par poêle.
 
 Le calage sur la grotte existante (9 kW pour un besoin de 2,2 à 5,4 kW) donne 13 à 14 kW. Il confirme le bas de la première estimation
 par proportion (13 à 18 kW). Le facteur de surdimensionnement de l'existante est cependant un choix d'installateur, pas une donnée physique.
 
-**Régulation maison** : elle permet la consigne de 35 °C et pilote les 2 poêles ensemble. Placer la sonde d'ambiance dans la salle haute,
+**Régulation maison** : elle permet la consigne de 35 °C. Avec 18 kW pour 3 à 7,5 kW de besoin, piloter en **2 étages** :
+un poêle en base sur la consigne, le second en relance seulement (consigne − 2 °C, mise en chauffe et retour de réduit), en alternant les poêles
+chaque semaine pour user également les résistances. Différentiel d'au moins 1 K et temps minimal de marche et d'arrêt pour ménager les contacteurs.
+Sinon, les 18 kW en tout ou rien font osciller la température et stratifient l'air chaud sous le plafond de la partie basse. Placer la sonde d'ambiance dans la salle haute,
 pas dans le panache au-dessus des poêles. Garder la sécurité : sur beaucoup de poêles, le limiteur de surchauffe à réarmement manuel est
 dans le boîtier sonde du régulateur d'origine. Sans ce régulateur, il faut un limiteur homologué par poêle, sonde au-dessus du poêle
 à l'emplacement prévu par la notice, en série sur les contacteurs, plus une minuterie de coupure. Faire valider le schéma par le bureau de contrôle.
@@ -81,19 +89,48 @@ C'est une grotte très humide : toute surface sous 28 °C y condense (vitrages, 
 C'est exactement le cas calculé avec l'air de la pièce d'entrée et peu de renouvellement (6 personnes avec 150 m³/h de cet air donnent 50 % à 40 °C).
 À ne pas reproduire : la nouvelle grotte doit être déshumidifiée.
 
-**Déshumidificateur** : il faut retirer 1,0 à 1,6 kg/h en moyenne (≈ 36 L/24 h), et 2,4 kg/h en pointe si l'air neuf vient de la pièce d'entrée.
+**Besoin de déshumidification** : il faut retirer 1,0 à 1,6 kg/h en moyenne (≈ 36 L/24 h), et 2,4 kg/h en pointe (14 curistes)
+si l'air neuf vient de la pièce d'entrée.
 
-| Modèle | Cotes L × H × P | Capacité à 30 °C / 60 % (≈ à 35 °C / 45 %) | Place sur le mur est (1 667 mm) |
-|---|---|---|---|
-| **Microwell DRY 500 Silver + option TEV** (retenu) | 1 245 × 642 × 300 mm | 66 L/24 h (≈ 56 L, 2,3 kg/h) : couvre la pointe | 1 645 mm avec les 200 mm latéraux : passe à 11 mm près, mesurer le mur fini |
-| Microwell DRY 400 Silver | 780 × 642 × 300 mm | 48 L/24 h (≈ 41 L, 1,7 kg/h) : besoin moyen seulement | 1 180 mm : passe large ; suffit si l'air neuf vient de dehors ou du frigidarium |
-| Dantherm CDP 50 (alternative) | 1 160 × 770 × 326 mm | 53 L/24 h (≈ 45 L, 1,9 kg/h) | passe ; plage 10–36 °C seulement |
+**Appareil installé : Dantherm DH 65** (notice DAN-BA-DH20-DH35-DH35H-DH65-DH65H), mural, au mur est de l'alcôve.
 
-Choix : **DRY 500 Silver avec l'option TEV**, car la mesure de la grotte existante confirme le cas humide. Pose murale obligatoire,
-≥ 200 mm libres sur les côtés et au-dessus, ≥ 150 mm au-dessous. Plage 22–42 °C avec l'option TEV, 22–35 °C sans. Le texte général
-de la notice dit 22–35 °C : faire confirmer par écrit à Microwell le fonctionnement continu à 35 °C. Il rejette environ 3,5 kW dans la grotte.
-Le raccorder en 230 V, avec une protection 16 A et un différentiel 30 mA, un câble 3G2,5, un interrupteur hors de la salle et une évacuation gravitaire Ø ≥ 18 mm.
-Si le mur est fini fait moins de 1 645 mm, le poser sur le mur du fond de l'alcôve (2,52 m).
+| | DH 65 |
+|---|---|
+| Cotes | 1 306 × 720 × 265 mm, 76 kg, sur mur brique ou béton |
+| Dégagements (notice) | 300 mm dessus, 300 mm dessous, 200 mm sur les côtés, 500 mm devant, « par rapport aux murs et aux objets » |
+| Air | aspiré par toute la face inférieure (filtre), soufflé vers le haut ; 800 m³/h ; 48 dB(A) à 1 m |
+| Plage | 5 à 40 °C ; enveloppe 40–80 % HR jusqu'à 35 °C (notice p. 36), réglage 40 à 80 % HR |
+| Capacité | 45,8 L/24 h à 30 °C / 60 % (publié) ; **≈ 32 L/24 h (30 à 34), soit 1,33 kg/h, à 35 °C / 45 %** (même point de rosée, valeur extrapolée, non publiée) |
+| Électricité | 230 V, 1,263 kW et 5,3 A maxi, aucun câble fourni, DDR obligatoire ; IPX2 ; R-454C (A2L), 850 g |
+| Chaleur rejetée dans la grotte | ≈ 2,1 kW (1,2 kW électrique + 0,9 kW de chaleur de condensation) |
+
+**Humidité d'équilibre avec le DH 65** (calcul vérifié : l'air neuf assèche la grotte dès qu'elle dépasse la teneur en eau de l'air entrant) :
+
+| Air neuf (300 m³/h) | Moyenne (1,5 kg/h) | Pointe (2,4 kg/h) |
+|---|---|---|
+| Pièce d'entrée (26 °C / 75 %) | **≈ 46 % HR** | **≈ 51 % HR** (point de rosée 23,4 °C) |
+| Dehors, été humide (26 °C / 70 %) | ≈ 44 % HR | ≈ 49 % HR |
+| Dehors, hiver (≈ 5 g/kg) | 26 % HR sans le DH | 33 % HR sans le DH : l'appareil ne tourne pas |
+| Pour mémoire, sans déshumidificateur, air de la pièce d'entrée | 57 % HR | 64 % HR |
+
+Lecture :
+- Le DH 65 tient la moyenne (≈ 46 %, pour 45 % visés) mais pas tout à fait la pointe (≈ 51 %). Les deux restent loin du seuil du sel (75 %).
+- À 51 %, toute surface sous 23,4 °C condense : porte vitrée du frigidarium en simple vitrage, vide du plafond. Ce sont les points du § 5, déjà à traiter.
+- Prendre l'air neuf dehors règle presque tout : en hiver l'air extérieur assèche seul, et l'été humide reste sous 50 %.
+- Le DH 60 aurait eu environ 1,5 fois cette capacité (48,8 L/24 h à 35 °C / 45 %). Avec le DH 65, pour tenir 45 % en pointe, il faut l'air neuf dehors ou un appoint d'environ 1 kg/h.
+- Réglage : hygrostat sur 45 %. Il ne descend pas sous 40 %, ce qui convient.
+
+**Pose dans l'alcôve** :
+- Largeur : 1 306 + 2 × 200 = 1 706 mm pour 1 667 mm d'alcôve. Le mur est continue jusqu'au tableau de l'ouverture (1 758 mm en tout) :
+  l'appareil est à 0,22 m du mur sud et à 0,24 m du bout du mur, et son dégagement nord déborde de 55 mm dans le tableau. Rien ne doit être fixé là.
+- Hauteur : la zone 2 de la NF C 15-100-7-703 s'arrête à 1,0 m. Avec 300 mm dessous, le dessus arrive à 1,02 m.
+  Modélisé à 280 mm du sol, dessus à 1,00 m : il faut l'accord écrit de Dantherm pour 280 mm. Sinon, pose à 300 mm et dessus à 1,02 m, à faire accepter par le bureau de contrôle.
+- Habillage : pas de caisson fermé, la notice demandant 30 cm libres dessus et dessous et 50 cm devant les objets. Il faut un écran bois à claire-voie,
+  posé au sol à 50 cm devant l'appareil (0,785 m du mur), du mur sud jusqu'à l'ouverture, haut de 1,32 m, ouvert dessus, sans joue côté ouverture,
+  en 3 panneaux démontables. La section libre est de 0,92 m² pour 0,11 m² nécessaires. Il reste 1,49 m de passage jusqu'au banc ouest.
+- Raccordement : circuit dédié 16 A, DDR 30 mA, interrupteur hors de la salle, câble sous 1,0 m. Condensats ≈ 1,3 kg/h vers un siphon.
+- **Indice de protection IPX2 : non conforme.** La NF C 15-100-7-703 s'applique à toute la grotte dès qu'elle contient un poêle de sauna, et exige IP24
+  pour tout le matériel, zone 2 comprise (703.512.2). Voir CONTROLES.md, NOK 1 quater.
 
 ## 5. Risques de condensation
 
@@ -131,13 +168,13 @@ Lecture :
   cela confirme qu'il faut prendre l'air neuf dehors (double flux) et non dans la pièce d'entrée.
 - **Le chauffage seul assèche vite.** À 19 °C, l'air passe sous 75 % ; à 22,5 °C, sous 60 % ; à 30 °C (réduit de nuit), il est à 38 %.
 - **Pièce tempérée sans chauffage.** Elle reste à 18,6 °C quand il fait 3 à 5 °C dehors. La roche et les locaux voisins la tiennent donc chaude,
-  ce qui va vers l'hypothèse basse du bilan (roche à environ 18 °C, besoin en régime établi d'environ 3 kW). Les 12 kW prévus sont largement suffisants.
+  ce qui va vers l'hypothèse basse du bilan (roche à environ 18 °C, besoin en régime établi d'environ 3 kW). Les 18 kW installés sont largement suffisants.
   C'est à confirmer par la mesure de la roche et l'essai de co-chauffage.
 - **Condensation actuelle.** Toute surface sous 14,3 °C se couvre d'eau. Vérifier au thermomètre infrarouge la voûte sous la route, le sol et les angles contre la roche.
 
 À faire tout de suite :
 1. Laisser les briques de sel dans leurs films. Ne pas les entreposer ouvertes dans la grotte.
-2. Mettre en route le DH 60 dès qu'il est posé (il fonctionne de 5 à 40 °C), hygrostat vers 55–60 %, et chauffer à 22–25 °C si possible.
+2. Mettre en route le DH 65 dès qu'il est posé (il fonctionne de 5 à 40 °C), hygrostat vers 55–60 %, et chauffer à 22–25 °C si possible.
    Cela accélère aussi le séchage de la chape. L'eau à retirer vient surtout des matériaux : l'air de la grotte n'en contient que 0,2 kg au-dessus de 60 % HR.
 3. Avant le collage du Florafloor, mesurer l'humidité de la chape à la bombe à carbure (CM).
 4. Poser un enregistreur température + humidité pendant au moins 7 jours, et relever la météo extérieure sur la même période.
