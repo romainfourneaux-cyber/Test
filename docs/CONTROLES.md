@@ -44,6 +44,11 @@ rétro-éclairés) et l'alcôve sud, ouverte sur la salle haute. Volume ≈ 85 m
   - Les notices demandent une pièce entre 15 et 27 °C : obtenir l'accord écrit d'ESTIVAL (01 81 80 10 20) pour 35 °C, le sel et le lavage humide.
   - Support contre la roche : mesures CM, barrière époxy anti-remontées sous Avis Technique, ragréage P3. Poser chauffage coupé.
   - Glissance : seule la classe DS est déclarée. Faire un essai pieds nus sur sol mouillé (NF EN 16165 annexe A).
+- **Mesure du 21/10/2026, grotte non chauffée** : 18,6 °C et 76 % HR (point de rosée 14,3 °C) quand il fait 3 à 5 °C dehors.
+  C'est au-dessus du seuil de 75 % du sel : garder les briques de sel emballées, ne pas monter les murs de sel avant que la pièce soit tenue sous 60 %.
+  L'air contient deux fois plus d'eau que dehors : elle vient du séchage des travaux, de la roche ou des locaux voisins.
+  Chauffée à 35 °C, cette même eau ne donnerait que 29 % HR. Mettre le DH 60 en route dès sa pose et chauffer à 22–25 °C, mesurer la chape (CM) avant le sol,
+  poser un enregistreur pendant 7 jours. Détail : BILAN_THERMIQUE.md § 5 bis.
 - **Régulation maison** : sonde d'ambiance dans la salle haute. Garder un limiteur de surchauffe homologué par poêle, souvent placé
   dans le boîtier sonde du régulateur d'origine, plus une minuterie de coupure.
 - **Air neuf** : ne pas le prendre dans la pièce d'entrée (26 °C / 75 %), mais dehors en double flux ou au frigidarium. Grotte en légère dépression, jamais en surpression.
