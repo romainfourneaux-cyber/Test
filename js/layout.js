@@ -132,12 +132,17 @@ window.LAYOUT = {
     degLat: 200, degHaut: 300, degBas: 300, degAvant: 500, debitAir_m3h: 800, IP: 'IPX2', frigorigene: 'R-454C (A2L, légèrement inflammable), 850 g',
     debit_L_j: 45.8, debitCond: '30 °C / 60 % HR (notice ; même point de rosée que 35 °C / 45 %)', debit35_L_j: 32, debit35Estime: true,
     besoin_L_j: 36, besoinPointe_L_j: 58, hrMoy: 46, hrPointe: 51, tMin: 5, tMax: 40,
-    // Enveloppe de fonctionnement (notice p. 36, diagramme « Plage de fonctionnement (température) ») : 40 à 80 % HR de 5 à 35 °C,
-    // puis la HR maxi descend en ligne droite jusqu'à 40 % à 40 °C (80 − 8 × (T − 35)). Hors enveloppe, l'appareil se met en défaut.
-    enveloppe: { hrMin: 40, hrMax: 80, tPlein: 35, tMax: 40, hrMaxTmax: 40 },
-    // HR d'équilibre de la grotte SANS déshumidificateur (air neuf de la pièce d'entrée 300 m³/h, curistes 1,5 / 2,4 kg/h) selon la température de séance
-    seances: [{ t: 35, sansDH: [57, 64] }, { t: 38, sansDH: [48, 54] }, { t: 40, sansDH: [43, 49] }],
-    bruit_dBA: 48, bruit: '48 dB(A) à 1 m', chaleur_W: 2100, reglage: 'hygrostat 40–80 % HR, réglé sur 45 %',
+    // Enveloppe de fonctionnement : HR maxi admise selon la température de l'air. Les documents se contredisent :
+    //   notice p. 36 (diagramme « Plage de fonctionnement ») : 40–80 % HR jusqu'à 35 °C, puis 80 − 8 × (T − 35), soit 40 % à 40 °C ;
+    //   guide produit DH 20-35-65-120 (03-2025) p. 5 et fiche Trotec FT.127-1 : 80 % jusqu'à 30 °C, puis 80 − 4 × (T − 30), soit 60 % à 35 °C, 40 % à 40 °C.
+    //   Retenue : la plus restrictive (guide) jusqu'à confirmation écrite de Dantherm. Hors enveloppe : voyant d'état irrégulier, appareil en défaut (p. 27).
+    enveloppe: { hrMin: 40, hrMax: 80, tMax: 40, hrMaxTmax: 40, tPlein: 30, tPleinNotice: 35 },
+    // HR de la grotte selon la température de séance (air neuf de la pièce d'entrée 300 m³/h, curistes 1,5 / 2,4 kg/h) :
+    //   sans déshumidificateur (moyenne, pointe) et avec le DH 65 en pointe (capacité supposée 1,33 kg/h, non publiée au-delà de 30 °C).
+    seances: [{ t: 35, sansDH: [57, 64], avecDH: 51 }, { t: 37, sansDH: [51, 57], avecDH: 48 }, { t: 38, sansDH: [48, 54], avecDH: 45 }, { t: 40, sansDH: [43, 49], avecDH: 41 }],
+    // Coupure par la régulation maison : bornier JB « pour interrupteur marche/arrêt distant » (livré ponté, TBTS 24 V, schéma p. 44) → contact sec.
+    commandeExterne: 'bornier JB (interrupteur marche/arrêt distant, livré ponté, très basse tension) : un contact sec de la régulation maison peut arrêter l\'appareil',
+    bruit_dBA: 48, bruit: '48 dB(A) à 1 m', chaleur_W: 2100, reglage: 'hygrostat 40–80 % HR, bouton non gradué (repères MIN. et CONT., p. 24) : à caler vers 45 % avec un hygromètre de référence',
     elec: '230 V mono, 1,263 kW et 5,3 A maxi, aucun câble fourni : raccordement par un électricien avant la pose, circuit dédié 16 A, DDR 30 mA (notice p. 15-16), interrupteur hors de la salle, câble sous 1,0 m',
     condensats: '≈ 1,3 kg/h en continu : raccord à un siphon des eaux usées en pente',
     source: 'Dantherm, notice DAN-BA-DH20-DH35-DH35H-DH65-DH65H',

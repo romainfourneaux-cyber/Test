@@ -99,7 +99,7 @@ si l'air neuf vient de la pièce d'entrée.
 | Cotes | 1 306 × 720 × 265 mm, 76 kg, sur mur brique ou béton |
 | Dégagements (notice) | 300 mm dessus, 300 mm dessous, 200 mm sur les côtés, 500 mm devant, « par rapport aux murs et aux objets » |
 | Air | aspiré par toute la face inférieure (filtre), soufflé vers le haut ; 800 m³/h ; 48 dB(A) à 1 m |
-| Plage | 5 à 40 °C ; enveloppe (notice p. 36) : 40–80 % HR jusqu'à 35 °C, puis HR maxi 80 − 8 × (T − 35), soit 72 % à 36 °C, 64 % à 37 °C, 56 % à 38 °C, 48 % à 39 °C, 40 % à 40 °C ; réglage 40 à 80 % HR |
+| Plage | 5 à 40 °C, mais HR maxi réduite au-dessus de 30 ou 35 °C selon le document (voir « Séances de 35 à 40 °C ») ; réglage 40 à 80 % HR, bouton non gradué (repères MIN. et CONT.) |
 | Capacité | 45,8 L/24 h à 30 °C / 60 % (publié) ; **≈ 32 L/24 h (30 à 34), soit 1,33 kg/h, à 35 °C / 45 %** (même point de rosée, valeur extrapolée, non publiée) |
 | Électricité | 230 V, 1,263 kW et 5,3 A maxi, aucun câble fourni, DDR obligatoire ; IPX2 ; R-454C (A2L), 850 g |
 | Chaleur rejetée dans la grotte | ≈ 2,1 kW (1,2 kW électrique + 0,9 kW de chaleur de condensation) |
@@ -118,22 +118,37 @@ Lecture :
 - À 51 %, toute surface sous 23,4 °C condense : porte vitrée du frigidarium en simple vitrage, vide du plafond. Ce sont les points du § 5, déjà à traiter.
 - Prendre l'air neuf dehors règle presque tout : en hiver l'air extérieur assèche seul, et l'été humide reste sous 50 %.
 - Le DH 60 aurait eu environ 1,5 fois cette capacité (48,8 L/24 h à 35 °C / 45 %). Avec le DH 65, pour tenir 45 % en pointe, il faut l'air neuf dehors ou un appoint d'environ 1 kg/h.
-- Réglage : hygrostat sur 45 %. Il ne descend pas sous 40 %, ce qui convient.
+- Réglage : le bouton de l'hygrostat n'est pas gradué en % (repères MIN. et CONT., p. 24). Le caler vers 45 % avec un hygromètre de référence. Il ne descend pas sous 40 %.
 
-**Séances de 35 à 40 °C** : la plage du DH 65 se resserre au-dessus de 35 °C.
+**Séances de 35 à 40 °C** : au-dessus de 30 ou 35 °C, le DH 65 n'admet plus qu'une humidité de plus en plus basse. Les documents Dantherm se contredisent :
+- notice p. 36 : 80 % HR maxi jusqu'à 35 °C, puis la limite descend en ligne droite jusqu'à 40 % à 40 °C ;
+- guide produit DH 20-35-65-120 (03-2025) p. 5 et fiche Trotec FT.127-1 : 80 % jusqu'à 30 °C seulement, puis 40 % à 40 °C.
 
-| Air de la séance | HR maxi admise par le DH 65 | Grotte sans DH (air neuf de la pièce d'entrée), moyenne / pointe | Verdict |
-|---|---|---|---|
-| 35 °C | 80 % | 57 % / 64 % | dans la plage |
-| 37 °C | 64 % | 51 % / 57 % | dans la plage |
-| 38 °C | 56 % | 48 % / 54 % | dans la plage, juste en pointe |
-| 39 °C | 48 % | 46 % / 51 % | hors plage en pointe |
-| 40 °C | 40 % | 43 % / 49 % | **hors plage** : l'hygrostat ne descend pas sous 40 %, l'appareil ne peut tourner qu'en dehors de sa plage |
+Je retiens la limite du guide, la plus restrictive, jusqu'à confirmation écrite de Dantherm.
 
-- À 40 °C, la même quantité d'eau donne une HR plus basse (43 à 49 %), mais le point de rosée reste de 25 à 27 °C. C'est la situation de la grotte existante (52 % à 40 °C).
-- Hors plage, l'appareil se met en défaut : voyant d'état irrégulier, compresseur arrêté, cause « température ambiante » ou « pression du circuit ».
-- Conduite à tenir si l'on fait des séances à 40 °C : couper le DH 65 par la régulation au-dessus de 38 °C, mesuré à son aspiration (à 0,28 m du sol, l'air y est plus frais que dans la salle haute), et le faire tourner avant et après, pendant le réduit et les séances à 35 °C.
-  L'air neuf pris dehors devient alors le vrai moyen de sécher : en hiver, 20 à 25 % HR à 40 °C sans déshumidificateur.
+| Air de la séance | HR maxi, guide / notice | Grotte en pointe sans DH | Grotte en pointe avec DH 65 | Verdict |
+|---|---|---|---|---|
+| 35 °C | 60 % / 80 % | 64 % | ≈ 51 % | dans la plage (le DH est nécessaire en pointe) |
+| 37 °C | 52 % / 64 % | 57 % | ≈ 48 % | dans la plage, 4 points de marge |
+| 38 °C | 48 % / 56 % | 54 % | ≈ 45 % | en limite, 3 points de marge |
+| 40 °C | 40 % / 40 % | 49 % | ≈ 41 % | **hors plage** |
+
+Le calcul prend l'air neuf de la pièce d'entrée, 300 m³/h, 14 curistes. La capacité du DH 65 au-delà de 30 °C n'est pas publiée : j'ai supposé 1,33 kg/h.
+
+- **À 40 °C, le DH 65 ne peut pas fonctionner.** Le seul point admis, 40 %, est aussi le réglage minimal de l'hygrostat. Quand l'appareil tourne, c'est que l'humidité dépasse 40 %, donc qu'il est hors de sa plage.
+  Il se met alors en défaut : le voyant d'état clignote irrégulièrement (p. 27), pour une cause de température ou de pression du circuit.
+  De plus, 40 °C est aussi sa température maximale : la moindre surchauffe des poêles le fait sortir.
+- À 40 °C, la même eau donne une HR plus basse (43 à 49 %), mais le point de rosée reste de 25 à 27 °C. Le risque de condensation sur le plafond et la porte du frigidarium reste le même.
+- **La grotte existante (52 % à 40 °C, point de rosée 28,3 °C) est hors des deux enveloppes à 40 °C.** Elle reste dans celle de la notice seulement jusqu'à 37,6 °C, et dans celle du guide à aucune température.
+  Elle est aussi plus humide que le modèle : il faudrait environ 3 kg/h d'apport, ou un débit d'air neuf plus faible, pour l'expliquer.
+- **Conduite à tenir :**
+  1. Séances à 35 °C, ou jusqu'à 37 °C : le DH 65 convient.
+  2. Séances à 40 °C : couper le DH 65 pendant la séance et le faire tourner avant et après (réduit de nuit, séances plus fraîches).
+     La coupure se fait par le bornier JB, prévu pour un interrupteur marche/arrêt à distance (livré ponté, très basse tension, schéma p. 44) : un contact sec de la régulation maison suffit.
+     Seuil : environ 37 °C, mesuré à l'aspiration (0,28 m du sol), avec un écart de réenclenchement d'au moins 1 K. Éviter les coupures fréquentes : le compresseur attend 3 min avant de redémarrer.
+     La notice FR dit à tort, p. 41, que le DH 65 ne peut pas recevoir de télécommande : les versions DE et EN disent le contraire.
+  3. Pendant les séances à 40 °C, l'air neuf pris dehors devient le seul moyen de sécher : en hiver, 20 à 25 % HR sans déshumidificateur.
+- **À demander par écrit à Dantherm** : l'enveloppe qui fait foi (coude à 30 ou à 35 °C), la capacité de 35 à 40 °C, et le sens du repère CONT. de l'hygrostat.
 
 **Pose dans l'alcôve** :
 - Largeur : 1 306 + 2 × 200 = 1 706 mm pour 1 667 mm d'alcôve. Le mur est continue jusqu'au tableau de l'ouverture (1 758 mm en tout) :
@@ -189,7 +204,7 @@ Lecture :
 
 À faire tout de suite :
 1. Laisser les briques de sel dans leurs films. Ne pas les entreposer ouvertes dans la grotte.
-2. Mettre en route le DH 65 dès qu'il est posé (il fonctionne de 5 à 40 °C), hygrostat vers 55–60 %, et chauffer à 22–25 °C si possible.
+2. Mettre en route le DH 65 dès qu'il est posé (il fonctionne de 5 à 40 °C), hygrostat vers 55–60 % (bouton non gradué : caler avec un hygromètre), et chauffer à 22–25 °C si possible.
    Cela accélère aussi le séchage de la chape. L'eau à retirer vient surtout des matériaux : l'air de la grotte n'en contient que 0,2 kg au-dessus de 60 % HR.
 3. Avant le collage du Florafloor, mesurer l'humidité de la chape à la bombe à carbure (CM).
 4. Poser un enregistreur température + humidité pendant au moins 7 jours, et relever la météo extérieure sur la même période.

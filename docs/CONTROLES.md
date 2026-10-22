@@ -84,13 +84,15 @@ rétro-éclairés) et l'alcôve sud, ouverte sur la salle haute. Volume ≈ 85 m
     Vérifier le chapitre A2L de la notice (surface minimale du local, sources d'inflammation).
   - **Entretien** : filtre à nettoyer chaque mois en ambiance saline. Il se sort par le dessous, d'où les panneaux démontables.
     Atmosphère saline : la notice exclut les « atmosphères agressives ». Faire confirmer par écrit à Dantherm l'usage en grotte de sel.
-  - **Réglages et branchement** : hygrostat sur 45 % (plage 40 à 80 %). Circuit dédié 16 A, DDR 30 mA, interrupteur hors de la salle, câble sous 1,0 m :
+  - **Réglages et branchement** : bouton d'hygrostat non gradué (repères MIN. et CONT.), à caler vers 45 % avec un hygromètre de référence ; il ne descend pas sous 40 %. Circuit dédié 16 A, DDR 30 mA, interrupteur hors de la salle, câble sous 1,0 m :
     aucun câble n'est fourni, l'électricien raccorde avant la pose. Condensats ≈ 1,3 kg/h vers un siphon.
-  - **Température de séance** : plage 5 à 40 °C, mais au-dessus de 35 °C la HR maxi admise baisse en ligne droite jusqu'à 40 % à 40 °C (notice p. 36).
-    - 35 °C : 40–80 % ; 38 °C : 40–56 % (la grotte sans DH est à 48–54 %) : ça passe.
-    - **40 °C : 40 % seulement, alors que la grotte y serait à 43–49 % : hors plage.** L'appareil se met en défaut et ne déshumidifie plus.
-    - Si l'on fait des séances à 40 °C : couper le DH 65 par la régulation au-dessus de 38 °C (sonde à son aspiration), le faire tourner avant et après,
-      et compter sur l'air neuf pris dehors pendant la séance.
+  - **Température de séance** : au-dessus de 30 ou 35 °C, l'humidité maxi admise baisse jusqu'à 40 % à 40 °C. Les documents se contredisent :
+    coude à 35 °C dans la notice (p. 36), à 30 °C dans le guide produit (p. 5) et la fiche Trotec FT.127-1. La limite du guide est retenue.
+    - 35 °C : 60 % admis, ≈ 51 % en pointe avec le DH : ça passe. 37 °C : 52 % admis, ≈ 48 % : ça passe. 38 °C : 48 % admis, ≈ 45 % : en limite.
+    - **40 °C : 40 % seulement, soit le réglage mini de l'hygrostat : l'appareil ne peut tourner qu'en dehors de sa plage.** Il se met en défaut et ne déshumidifie plus.
+    - Pour des séances à 40 °C : couper le DH 65 par un contact sec de la régulation maison sur le bornier JB (marche/arrêt à distance, schéma p. 44),
+      vers 37 °C mesurés à son aspiration, et le faire tourner avant et après. Pendant la séance, sécher par l'air neuf pris dehors.
+    - Faire confirmer par écrit à Dantherm l'enveloppe qui fait foi et la capacité de 35 à 40 °C.
   - **Bruit** : 48 dB(A) à 1 m, soit environ 40 à 43 dB(A) à 3 m dans l'alcôve voûtée. Chaleur rejetée : environ 2,1 kW.
 - **Issue de secours de l'alcôve** : cotes estimées sur photo (vantail actif ≈ 0,75 m). Si le passage libre fait moins de 0,80 m, mettre aussi une barre antipanique sur le 2e vantail.
 - **Arche d'entrée** : la barre antipanique est côté salle carrelée. La salle carrelée évacue donc à travers la grotte vers l'alcôve,
