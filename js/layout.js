@@ -140,6 +140,10 @@ window.LAYOUT = {
     // HR de la grotte selon la température de séance (air neuf de la pièce d'entrée 300 m³/h, curistes 1,5 / 2,4 kg/h) :
     //   sans déshumidificateur (moyenne, pointe) et avec le DH 65 en pointe (capacité supposée 1,33 kg/h, non publiée au-delà de 30 °C).
     seances: [{ t: 35, sansDH: [57, 64], avecDH: 51 }, { t: 37, sansDH: [51, 57], avecDH: 48 }, { t: 38, sansDH: [48, 54], avecDH: 45 }, { t: 40, sansDH: [43, 49], avecDH: 41 }],
+    // Nuit en réduit (demande du 22/10/2026) : DH 65 en marche à 30 °C, dans la plage des deux documents, au point de capacité publié.
+    //   hrSans : HR à 30 °C de l'air de fin de séance refroidi sans déshumidifier, après une séance à 37 °C avec DH et à 40 °C sans DH (moyenne, pointe).
+    //   purge : minutes de ventilation à plein débit avant d'autoriser le DH (constante de temps de l'air ≈ 16 min à 300 m³/h).
+    nuit: { t: 30, hygro: 45, hrSans37: 71, hrSans40: [75, 85], purge: 45, tAutorise: 35, tCoupe: 37 },
     // Coupure par la régulation maison : bornier JB « pour interrupteur marche/arrêt distant » (livré ponté, TBTS 24 V, schéma p. 44) → contact sec.
     commandeExterne: 'bornier JB (interrupteur marche/arrêt distant, livré ponté, très basse tension) : un contact sec de la régulation maison peut arrêter l\'appareil',
     bruit_dBA: 48, bruit: '48 dB(A) à 1 m', chaleur_W: 2100, reglage: 'hygrostat 40–80 % HR, bouton non gradué (repères MIN. et CONT., p. 24) : à caler vers 45 % avec un hygromètre de référence',
