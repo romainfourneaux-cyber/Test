@@ -54,7 +54,7 @@ Une fois 35 °C atteints, la puissance appelée est de 8,5 kW à J+1, 6,5 kW à 
 > Si l'air neuf est pris dehors sans récupération de chaleur, il faut 15 à 18 kW. Au-delà, la puissance ne sert à rien.
 >
 > **Installé : 2 × 9 kW = 18 kW.** C'est le haut de la fourchette, donc pas de manque de puissance, même avec l'air neuf pris dehors
-> sans récupération (300 m³/h d'air à −5 °C demandent 3,8 kW). En régime établi (3 à 7,5 kW), **un seul poêle suffit** : voir la régulation ci-dessous.
+> sans récupération (300 m³/h d'air à −5 °C demandent 4,1 kW pour 35 °C, 4,65 kW pour 40 °C). En régime établi (3 à 7,5 kW), **un seul poêle suffit** : voir la régulation ci-dessous.
 > Alimentation : 18 kW, c'est environ 26 A par phase en triphasé 400 V (13 A par poêle), avec une protection et un contacteur par poêle.
 
 Le calage sur la grotte existante (9 kW pour un besoin de 2,2 à 5,4 kW) donne 13 à 14 kW. Il confirme le bas de la première estimation
@@ -148,6 +148,9 @@ Le calcul prend l'air neuf de la pièce d'entrée, 300 m³/h, 14 curistes. La ca
      Seuil : environ 37 °C, mesuré à l'aspiration (0,28 m du sol), avec un écart de réenclenchement d'au moins 1 K. Éviter les coupures fréquentes : le compresseur attend 3 min avant de redémarrer.
      La notice FR dit à tort, p. 41, que le DH 65 ne peut pas recevoir de télécommande : les versions DE et EN disent le contraire.
   3. Pendant les séances à 40 °C, l'air neuf pris dehors devient le seul moyen de sécher : en hiver, 20 à 25 % HR sans déshumidificateur.
+     L'été, prévoir un ventilateur d'air neuf extérieur à deux vitesses (300 puis 550–600 m³/h) piloté sur le point de rosée de la grotte :
+     avec 300 m³/h, la grotte dépasse 40 % HR en pointe à 40 °C environ 290 h par an (réanalyse ERA5 2016–2025) ; avec 550 m³/h, environ 18 h.
+     Un dessicant en air neuf (TTR 250 ou 500 D) ne fait guère mieux qu'un tel ventilateur : voir COMPARATIF_DH65_TTR500D.md.
 - **À demander par écrit à Dantherm** : l'enveloppe qui fait foi (coude à 30 ou à 35 °C), la capacité de 35 à 40 °C, et le sens du repère CONT. de l'hygrostat.
 
 **La nuit, en réduit à 30 °C** (proposition de l'exploitation du 22/10/2026, calculs vérifiés) :

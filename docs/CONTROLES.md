@@ -63,6 +63,7 @@ rétro-éclairés) et l'alcôve sud, ouverte sur la salle haute. Volume ≈ 85 m
     - Microwell DRY 500 DUCT avec option 15–42 °C (≈ 2 kg/h, ≈ 5 000 €) ;
     - Trotec TTR 500 D (adsorption, 35 °C maxi, sel nuisible à la roue, ≈ 1,1 kWh/kg).
     Ils restent la solution si le bureau de contrôle refuse l'IPX2 dans la grotte.
+    Comparatif détaillé DH 65 / TTR 500 D : [COMPARATIF_DH65_TTR500D.md](COMPARATIF_DH65_TTR500D.md).
   - **À obtenir avant la mise en service :**
     1. Bureau de contrôle : application de la NF C 15-100-7-703 et IPX2 (DH 65) / IP20 (suspensions) ; dessus du DH à 1,00 ou 1,02 m.
     2. Dantherm, par écrit : enveloppe qui fait foi (coude à 30 ou 35 °C), capacité de 35 à 40 °C, pose à 280 mm, écran bois à 50 cm, atmosphère saline, sens du repère CONT.
