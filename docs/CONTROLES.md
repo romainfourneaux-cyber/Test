@@ -58,6 +58,16 @@ rétro-éclairés) et l'alcôve sud, ouverte sur la salle haute. Volume ≈ 85 m
 - **Régime de chauffe** : chauffage permanent, réduit de nuit ≥ 30 °C. Avec 18 kW pour 3 à 7,5 kW de besoin, un seul poêle suffit en régime établi :
   régulation en 2 étages (un poêle en base, le second en relance à consigne − 2 °C), poêles alternés chaque semaine.
 - **Déshumidificateur Dantherm DH 65** (matériel retenu le 21/10/2026), au mur est de l'alcôve :
+  - **Décision du 22/10/2026 : DH 65 conservé** (appareil déjà acquis). Les gainables déportés étudiés en alternative, pour mémoire :
+    - Microwell DRY 400 DUCT (9–42 °C, ≈ 1,6 kg/h, ≈ 4 000 € TTC en Allemagne) ;
+    - Microwell DRY 500 DUCT avec option 15–42 °C (≈ 2 kg/h, ≈ 5 000 €) ;
+    - Trotec TTR 500 D (adsorption, 35 °C maxi, sel nuisible à la roue, ≈ 1,1 kWh/kg).
+    Ils restent la solution si le bureau de contrôle refuse l'IPX2 dans la grotte.
+  - **À obtenir avant la mise en service :**
+    1. Bureau de contrôle : application de la NF C 15-100-7-703 et IPX2 (DH 65) / IP20 (suspensions) ; dessus du DH à 1,00 ou 1,02 m.
+    2. Dantherm, par écrit : enveloppe qui fait foi (coude à 30 ou 35 °C), capacité de 35 à 40 °C, pose à 280 mm, écran bois à 50 cm, atmosphère saline, sens du repère CONT.
+    3. Électricien : circuit dédié 16 A, DDR 30 mA, interrupteur hors de la salle, câble sous 1,0 m, contact sec de la régulation sur le bornier JB.
+    4. Régulation maison : JB ouvert en séance à 40 °C, fermé de 35 à 37 °C, sécurité à 38,5 / 36 °C ; nuit = purge 30–45 min puis DH sous 35 °C, hygrostat 50–55 %.
   - **Capacité** : 45,8 L/24 h à 30 °C / 60 % dans la notice ; à 35 °C / 45 % (même point de rosée), environ 32 L/24 h (30 à 34), soit 1,33 kg/h,
     valeur extrapolée à faire confirmer par Dantherm.
     - Humidité d'équilibre calculée avec l'air neuf de la pièce d'entrée : **≈ 46 % HR en moyenne, ≈ 51 % en pointe** (14 curistes),
