@@ -150,6 +150,33 @@ Le calcul prend l'air neuf de la pièce d'entrée, 300 m³/h, 14 curistes. La ca
   3. Pendant les séances à 40 °C, l'air neuf pris dehors devient le seul moyen de sécher : en hiver, 20 à 25 % HR sans déshumidificateur.
 - **À demander par écrit à Dantherm** : l'enveloppe qui fait foi (coude à 30 ou à 35 °C), la capacité de 35 à 40 °C, et le sens du repère CONT. de l'hygrostat.
 
+**La nuit, en réduit à 30 °C** (proposition de l'exploitation du 22/10/2026, calculs vérifiés) :
+- À 30 °C, le DH 65 est dans sa plage selon les deux documents (40 à 80 % HR). C'est aussi le haut de ses données publiées : 45,8 L/24 h à 60 %, 64,2 L/24 h à 80 %.
+- Sans ventiler ni déshumidifier, l'air de fin de séance refroidi à 30 °C monterait à :
+  - 68 % après une séance à 35 °C avec le DH, 71 % après 37 °C ;
+  - 75 à 84 % après une séance à 40 °C sans DH ;
+  - 90 % au niveau d'humidité de la grotte existante.
+  Le sel (NaCl) prend l'eau à partir de 75,1 % à 30 °C (Greenspan 1977).
+- Juste après une séance à 40 °C, l'air est trop humide pour l'enveloppe du guide entre 30 et 40 °C : il faut d'abord renouveler l'air.
+  La constante de temps est de 16 min à 300 m³/h. Avec le relargage du bois et du sel, compter 20 à 30 min ; 30 à 45 min laissent de la marge.
+- Avec l'air de la pièce d'entrée, la ventilation seule tient déjà la nuit à 59 % (à 30 °C). Le DH apporte la marge jusqu'à 50–55 % et sèche le bois et le sel.
+
+Séquence pour la régulation maison :
+1. Fin de la dernière séance : poêles en réduit à 30 °C, ventilation à plein débit pendant 30 à 45 min.
+2. DH autorisé (bornier JB fermé) quand l'air à son aspiration passe sous 35 °C. Si l'on ajoute une sonde d'humidité, exiger aussi une HR inférieure à 80 − 4 × (T − 30) − 5 points.
+3. La nuit : hygrostat calé vers 50–55 % avec un hygromètre de référence, pas sur CONT. (sous 40 %, le bois se fend : notice p. 11).
+   Ventilateur en continu, pour que l'hygrostat mesure l'air de la pièce. Ventilation au minimum.
+4. Le jour : JB piloté par le programme de séance (séance à 40 °C : ouvert ; 35–37 °C : fermé), pas par un seuil de température seul,
+   avec une sécurité qui ouvre JB au-dessus de 38,5 °C et le referme sous 36 °C. Arrêt mini 5 min, marche mini 10 min, sonde à l'abri du soufflage du DH.
+
+Apport de chaleur du DH la nuit : environ 0,7 à 0,8 kW en moyenne, car il tourne environ un tiers du temps (charge ≈ 0,45 kg/h avec 100 m³/h d'air de la pièce d'entrée).
+Les 2,4 kW ne valent qu'en marche continue.
+
+**Point nouveau : l'humidité au contact des murs.** Pendant une séance à 40 °C sans DH, le point de rosée est de 25,1 à 27,1 °C.
+Sur un mur à 27–29 °C, l'humidité à la surface serait de 79 à 100 % : le sel reprendrait l'eau pendant la séance, quelle que soit la nuit.
+À 35 °C avec le DH (rosée 23,4 °C), un mur à 28 °C serait encore vers 76 %. Les parois lourdes ont été estimées à 27–29,5 °C pour 35 °C d'air.
+Les murs de sel, montés sur un vide technique rétro-éclairé, sont sans doute plus chauds. **Mesurer leur température de surface au thermomètre infrarouge en fin de séance.**
+
 **Pose dans l'alcôve** :
 - Largeur : 1 306 + 2 × 200 = 1 706 mm pour 1 667 mm d'alcôve. Le mur est continue jusqu'au tableau de l'ouverture (1 758 mm en tout) :
   l'appareil est à 0,22 m du mur sud et à 0,24 m du bout du mur, et son dégagement nord déborde de 55 mm dans le tableau. Rien ne doit être fixé là.

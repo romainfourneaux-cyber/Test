@@ -93,6 +93,12 @@ rétro-éclairés) et l'alcôve sud, ouverte sur la salle haute. Volume ≈ 85 m
     - Pour des séances à 40 °C : couper le DH 65 par un contact sec de la régulation maison sur le bornier JB (marche/arrêt à distance, schéma p. 44),
       vers 37 °C mesurés à son aspiration, et le faire tourner avant et après. Pendant la séance, sécher par l'air neuf pris dehors.
     - Faire confirmer par écrit à Dantherm l'enveloppe qui fait foi et la capacité de 35 à 40 °C.
+  - **La nuit, en réduit à 30 °C** : le DH 65 est dans sa plage (40–80 %) selon les deux documents, au point de capacité publié.
+    Après une séance à 40 °C, renouveler d'abord l'air à plein débit pendant 30 à 45 min, puis autoriser le DH (JB fermé) sous 35 °C à l'aspiration.
+    Hygrostat vers 50–55 % (pas CONT.), ventilateur en continu. Sans cela, l'air refroidi à 30 °C monterait à 75–84 %, au seuil du sel (75 %).
+    Détail et séquence : BILAN_THERMIQUE.md.
+  - **Murs de sel pendant les séances à 40 °C** : rosée de l'air 25 à 27 °C ; sur un mur à 27–29 °C, 79 à 100 % d'humidité à la surface.
+    Mesurer la température de surface des murs de sel au thermomètre infrarouge en fin de séance.
   - **Bruit** : 48 dB(A) à 1 m, soit environ 40 à 43 dB(A) à 3 m dans l'alcôve voûtée. Chaleur rejetée : environ 2,1 kW.
 - **Issue de secours de l'alcôve** : cotes estimées sur photo (vantail actif ≈ 0,75 m). Si le passage libre fait moins de 0,80 m, mettre aussi une barre antipanique sur le 2e vantail.
 - **Arche d'entrée** : la barre antipanique est côté salle carrelée. La salle carrelée évacue donc à travers la grotte vers l'alcôve,
