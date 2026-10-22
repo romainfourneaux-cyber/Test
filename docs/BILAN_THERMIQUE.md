@@ -99,7 +99,7 @@ si l'air neuf vient de la pièce d'entrée.
 | Cotes | 1 306 × 720 × 265 mm, 76 kg, sur mur brique ou béton |
 | Dégagements (notice) | 300 mm dessus, 300 mm dessous, 200 mm sur les côtés, 500 mm devant, « par rapport aux murs et aux objets » |
 | Air | aspiré par toute la face inférieure (filtre), soufflé vers le haut ; 800 m³/h ; 48 dB(A) à 1 m |
-| Plage | 5 à 40 °C ; enveloppe 40–80 % HR jusqu'à 35 °C (notice p. 36), réglage 40 à 80 % HR |
+| Plage | 5 à 40 °C ; enveloppe (notice p. 36) : 40–80 % HR jusqu'à 35 °C, puis HR maxi 80 − 8 × (T − 35), soit 72 % à 36 °C, 64 % à 37 °C, 56 % à 38 °C, 48 % à 39 °C, 40 % à 40 °C ; réglage 40 à 80 % HR |
 | Capacité | 45,8 L/24 h à 30 °C / 60 % (publié) ; **≈ 32 L/24 h (30 à 34), soit 1,33 kg/h, à 35 °C / 45 %** (même point de rosée, valeur extrapolée, non publiée) |
 | Électricité | 230 V, 1,263 kW et 5,3 A maxi, aucun câble fourni, DDR obligatoire ; IPX2 ; R-454C (A2L), 850 g |
 | Chaleur rejetée dans la grotte | ≈ 2,1 kW (1,2 kW électrique + 0,9 kW de chaleur de condensation) |
@@ -119,6 +119,21 @@ Lecture :
 - Prendre l'air neuf dehors règle presque tout : en hiver l'air extérieur assèche seul, et l'été humide reste sous 50 %.
 - Le DH 60 aurait eu environ 1,5 fois cette capacité (48,8 L/24 h à 35 °C / 45 %). Avec le DH 65, pour tenir 45 % en pointe, il faut l'air neuf dehors ou un appoint d'environ 1 kg/h.
 - Réglage : hygrostat sur 45 %. Il ne descend pas sous 40 %, ce qui convient.
+
+**Séances de 35 à 40 °C** : la plage du DH 65 se resserre au-dessus de 35 °C.
+
+| Air de la séance | HR maxi admise par le DH 65 | Grotte sans DH (air neuf de la pièce d'entrée), moyenne / pointe | Verdict |
+|---|---|---|---|
+| 35 °C | 80 % | 57 % / 64 % | dans la plage |
+| 37 °C | 64 % | 51 % / 57 % | dans la plage |
+| 38 °C | 56 % | 48 % / 54 % | dans la plage, juste en pointe |
+| 39 °C | 48 % | 46 % / 51 % | hors plage en pointe |
+| 40 °C | 40 % | 43 % / 49 % | **hors plage** : l'hygrostat ne descend pas sous 40 %, l'appareil ne peut tourner qu'en dehors de sa plage |
+
+- À 40 °C, la même quantité d'eau donne une HR plus basse (43 à 49 %), mais le point de rosée reste de 25 à 27 °C. C'est la situation de la grotte existante (52 % à 40 °C).
+- Hors plage, l'appareil se met en défaut : voyant d'état irrégulier, compresseur arrêté, cause « température ambiante » ou « pression du circuit ».
+- Conduite à tenir si l'on fait des séances à 40 °C : couper le DH 65 par la régulation au-dessus de 38 °C, mesuré à son aspiration (à 0,28 m du sol, l'air y est plus frais que dans la salle haute), et le faire tourner avant et après, pendant le réduit et les séances à 35 °C.
+  L'air neuf pris dehors devient alors le vrai moyen de sécher : en hiver, 20 à 25 % HR à 40 °C sans déshumidificateur.
 
 **Pose dans l'alcôve** :
 - Largeur : 1 306 + 2 × 200 = 1 706 mm pour 1 667 mm d'alcôve. Le mur est continue jusqu'au tableau de l'ouverture (1 758 mm en tout) :

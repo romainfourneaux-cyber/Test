@@ -132,7 +132,11 @@ window.LAYOUT = {
     degLat: 200, degHaut: 300, degBas: 300, degAvant: 500, debitAir_m3h: 800, IP: 'IPX2', frigorigene: 'R-454C (A2L, légèrement inflammable), 850 g',
     debit_L_j: 45.8, debitCond: '30 °C / 60 % HR (notice ; même point de rosée que 35 °C / 45 %)', debit35_L_j: 32, debit35Estime: true,
     besoin_L_j: 36, besoinPointe_L_j: 58, hrMoy: 46, hrPointe: 51, tMin: 5, tMax: 40,
-    plageNote: 'Plage 5–40 °C, mais l\'enveloppe de fonctionnement de la notice (40–80 % HR) s\'arrête à 35 °C (30 °C dans le guide produit) : à 35 °C on est en limite, à 40 °C au-delà.',
+    // Enveloppe de fonctionnement (notice p. 36, diagramme « Plage de fonctionnement (température) ») : 40 à 80 % HR de 5 à 35 °C,
+    // puis la HR maxi descend en ligne droite jusqu'à 40 % à 40 °C (80 − 8 × (T − 35)). Hors enveloppe, l'appareil se met en défaut.
+    enveloppe: { hrMin: 40, hrMax: 80, tPlein: 35, tMax: 40, hrMaxTmax: 40 },
+    // HR d'équilibre de la grotte SANS déshumidificateur (air neuf de la pièce d'entrée 300 m³/h, curistes 1,5 / 2,4 kg/h) selon la température de séance
+    seances: [{ t: 35, sansDH: [57, 64] }, { t: 38, sansDH: [48, 54] }, { t: 40, sansDH: [43, 49] }],
     bruit_dBA: 48, bruit: '48 dB(A) à 1 m', chaleur_W: 2100, reglage: 'hygrostat 40–80 % HR, réglé sur 45 %',
     elec: '230 V mono, 1,263 kW et 5,3 A maxi, aucun câble fourni : raccordement par un électricien avant la pose, circuit dédié 16 A, DDR 30 mA (notice p. 15-16), interrupteur hors de la salle, câble sous 1,0 m',
     condensats: '≈ 1,3 kg/h en continu : raccord à un siphon des eaux usées en pente',

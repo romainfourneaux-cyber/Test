@@ -86,7 +86,11 @@ rétro-éclairés) et l'alcôve sud, ouverte sur la salle haute. Volume ≈ 85 m
     Atmosphère saline : la notice exclut les « atmosphères agressives ». Faire confirmer par écrit à Dantherm l'usage en grotte de sel.
   - **Réglages et branchement** : hygrostat sur 45 % (plage 40 à 80 %). Circuit dédié 16 A, DDR 30 mA, interrupteur hors de la salle, câble sous 1,0 m :
     aucun câble n'est fourni, l'électricien raccorde avant la pose. Condensats ≈ 1,3 kg/h vers un siphon.
-  - **Température** : plage 5 à 40 °C, mais l'enveloppe de la notice s'arrête à 35 °C (30 °C dans le guide produit). À 35 °C, on est en limite.
+  - **Température de séance** : plage 5 à 40 °C, mais au-dessus de 35 °C la HR maxi admise baisse en ligne droite jusqu'à 40 % à 40 °C (notice p. 36).
+    - 35 °C : 40–80 % ; 38 °C : 40–56 % (la grotte sans DH est à 48–54 %) : ça passe.
+    - **40 °C : 40 % seulement, alors que la grotte y serait à 43–49 % : hors plage.** L'appareil se met en défaut et ne déshumidifie plus.
+    - Si l'on fait des séances à 40 °C : couper le DH 65 par la régulation au-dessus de 38 °C (sonde à son aspiration), le faire tourner avant et après,
+      et compter sur l'air neuf pris dehors pendant la séance.
   - **Bruit** : 48 dB(A) à 1 m, soit environ 40 à 43 dB(A) à 3 m dans l'alcôve voûtée. Chaleur rejetée : environ 2,1 kW.
 - **Issue de secours de l'alcôve** : cotes estimées sur photo (vantail actif ≈ 0,75 m). Si le passage libre fait moins de 0,80 m, mettre aussi une barre antipanique sur le 2e vantail.
 - **Arche d'entrée** : la barre antipanique est côté salle carrelée. La salle carrelée évacue donc à travers la grotte vers l'alcôve,
