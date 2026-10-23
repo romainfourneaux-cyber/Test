@@ -52,6 +52,8 @@ rétro-éclairés) et l'alcôve sud, ouverte sur la salle haute. Volume ≈ 85 m
   L'air contient deux fois plus d'eau que dehors : elle vient du séchage des travaux, de la roche ou des locaux voisins.
   Chauffée à 35 °C, cette même eau ne donnerait que 29 % HR. Mettre le DH 65 en route dès sa pose et chauffer à 22–25 °C, mesurer la chape (CM) avant le sol,
   poser un enregistreur pendant 7 jours. Détail : BILAN_THERMIQUE.md § 5 bis.
+- **Mesure du 23/10/2026** : 16,3 °C et 85,7 % HR, soit la même eau (10,6 g/kg) dans un air plus froid ; point de rosée 13,9 °C.
+  Chauffer à 20 °C ou plus (68 %), puis lancer le DH 65 ; contrôler au thermomètre infrarouge les surfaces sous 14 °C (voûte sous la route, dalle, angles contre la roche).
 - **Régulation maison** : sonde d'ambiance dans la salle haute. Garder un limiteur de surchauffe homologué par poêle, souvent placé
   dans le boîtier sonde du régulateur d'origine, plus une minuterie de coupure.
 - **Air neuf** : ne pas le prendre dans la pièce d'entrée (26 °C / 75 %), mais dehors en double flux ou au frigidarium. Grotte en légère dépression, jamais en surpression.

@@ -212,6 +212,8 @@ Les murs de sel, montés sur un vide technique rétro-éclairé, sont sans doute
 | | Température | HR | Point de rosée | Eau dans l'air |
 |---|---|---|---|---|
 | Grotte, sans chauffage | 18,6 °C | 76 % | 14,3 °C | 10,8 g/kg |
+| Grotte, sans chauffage, 23/10/2026 (RS PRO RS-325) | 16,3 °C | 85,7 % | 13,9 °C | 10,6 g/kg |
+| Dehors le 23/10 (modèle Open-Meteo, 555 m, journée) | 11 à 13 °C | 63 à 78 % | 5 à 8 °C | ≈ 6 à 7 g/kg |
 | Dehors (AROME Meteociel, après-midi) | 3 à 5 °C | 85 à 98 % | 2 à 4 °C | ≈ 5 g/kg |
 | Cible en séance | 35 °C | 45 % | 21,3 °C | 17,0 g/kg |
 
@@ -231,6 +233,14 @@ Lecture :
   ce qui va vers l'hypothèse basse du bilan (roche à environ 18 °C, besoin en régime établi d'environ 3 kW). Les 18 kW installés sont largement suffisants.
   C'est à confirmer par la mesure de la roche et l'essai de co-chauffage.
 - **Condensation actuelle.** Toute surface sous 14,3 °C se couvre d'eau. Vérifier au thermomètre infrarouge la voûte sous la route, le sol et les angles contre la roche.
+
+**Mesure du 23/10** : la grotte a perdu 2,3 °C mais garde la même eau (10,6 g/kg contre 10,8). L'humidité monte donc à 85,7 % par simple refroidissement.
+La source d'eau est intérieure et régulière (matériaux, roche) ; l'air extérieur, à 6–7 g/kg, est plus sec que la grotte.
+- Au-dessus du seuil du sel (75 %) et au-dessus de 80 % : seuil de risque de moisissure sur le bois s'il dure des semaines.
+- Toute surface sous 13,9 °C se mouille (13,0 à 14,8 °C selon la précision de l'hygromètre, ±3 à 5 % HR pour ce type d'appareil).
+- Il suffit de chauffer : 18 °C donne 77 %, 19 °C 72 %, 20 °C 68 %, 22,5 °C 58 %, à eau égale.
+- DH 65 : le diagramme de la notice s'arrête à 80 % HR (la p. 34 admet 90 %). Chauffer de 2 à 3 °C d'abord, puis le lancer. Vers 20 °C / 68 %, il retire environ 1,6 L/h (courbes de la notice).
+  Le volume de condensats relevé chaque jour dira combien d'eau les matériaux rendent encore.
 
 À faire tout de suite :
 1. Laisser les briques de sel dans leurs films. Ne pas les entreposer ouvertes dans la grotte.
