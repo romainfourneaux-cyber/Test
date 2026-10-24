@@ -718,7 +718,7 @@ JEU.enregistrer("cours", {
     "Faux : elle a fait reculer la production agricole.",
     "Faux : elle a provoqué de nouvelles famines."
    ],
-   "explication": "Elle a permis de nourrir une population toujours plus nombreuse. Mais ses produits chimiques ont des effets négatifs sur l'environnement.",
+   "explication": "Grâce à elle, le pays nourrit une population qui ne cesse de grandir. Mais l'environnement en paie le prix : c'est son revers.",
    "source": {
     "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1 - Etude de cas 2 Inde.pdf",
     "page": 2

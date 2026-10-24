@@ -346,7 +346,7 @@ JEU.enregistrer("cours", {
    "choix": [
     "Parce que près de la moitié des enfants ne vont pas à l'école, dans un pays en guerre depuis quarante ans",
     "Parce que la langue du pays ne s'écrit pas",
-    "Parce que l'école n'y est pas obligatoire",
+    "Parce que l'école n'y est pas obligatoire, si bien que les familles n'y envoient leurs enfants que si elles le souhaitent",
     "Parce que le pays est trop peuplé"
    ],
    "explication": "Qui ne va pas à l'école n'apprend pas à lire. La guerre, le manque d'écoles et le travail des enfants tiennent la moitié des enfants loin de la classe.",
