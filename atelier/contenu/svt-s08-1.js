@@ -18,25 +18,25 @@ function schemaMarin() {
   s += "<path d='M60 70 H560 V300 H60 Z' fill='#9fd0ea'/>";
   s += "<path d='M60 70 L130 70 L200 150 L330 230 L400 262 L470 262 L500 230 L560 150 V300 H60 Z' fill='#4a93c6'/>";
   s += "<path d='M300 220 L330 230 L400 262 L470 262 L500 230 L430 200 Z' fill='#2b5f8e'/>";
-  // fond marin
-  s += "<path d='M0 60 L60 70 L130 70 L200 150 L330 230 L400 262 L470 262 L500 230 L560 150 V300 H0 Z' fill='#7a6a4f'/>";
-  s += "<path d='M60 70 L130 70 L200 150 L330 230 L400 262 L470 262 L500 230 L560 150' stroke='#4f412c' stroke-width='3' fill='none'/>";
+  // fond marin et côte
+  s += "<path d='M0 20 L55 70 L130 70 L200 150 L330 230 L400 262 L470 262 L500 230 L560 150 V300 H0 Z' fill='#7a6a4f'/>";
+  s += "<path d='M55 70 L130 70 L200 150 L330 230 L400 262 L470 262 L500 230 L560 150' stroke='#4f412c' stroke-width='3' fill='none'/>";
   // fosse abyssale et dorsale
   s += "<path d='M400 262 L420 295 L450 295 L470 262 Z' fill='#1f3b5c'/>";
   s += "<path d='M520 250 Q535 200 550 250 Z' fill='#c25a3c'/>";
   // limites de profondeur
-  s += "<g stroke='" + encre + "' stroke-dasharray='4 3' stroke-width='1'><line x1='200' y1='110' x2='560' y2='110'/><line x1='300' y1='200' x2='560' y2='200'/></g>";
-  s += "<g fill='" + encre + "' font-size='10'><text x='210' y='106'>− 200 m : limite de la zone néritique</text><text x='305' y='196'>plus de végétaux en dessous</text></g>";
+  s += "<g stroke='" + encre + "' stroke-dasharray='4 3' stroke-width='1'><line x1='170' y1='112' x2='560' y2='112'/><line x1='300' y1='200' x2='560' y2='200'/></g>";
+  s += "<g fill='" + encre + "' font-size='10'><text x='340' y='124'>− 200 m : limite de la zone néritique</text><text x='305' y='196'>plus de végétaux en dessous</text></g>";
   // étiquettes
   s += "<g fill='" + encre + "' font-weight='bold'>";
-  s += "<text x='64' y='62'>zone littorale</text>";
-  s += "<text x='136' y='92'>zone néritique</text><text x='136' y='104' font-weight='normal' font-size='10'>récifs coralliens, forêts de kelp</text>";
+  s += "<text x='60' y='62'>zone littorale</text>";
+  s += "<text x='150' y='92'>zone néritique</text><text x='186' y='106' font-weight='normal' font-size='10'>récifs coralliens, forêts de kelp</text>";
   s += "<text x='330' y='92'>zone pélagique (pleine mer, surface)</text>";
   s += "<text x='250' y='180' fill='#fff'>zone benthique (profondeurs)</text>";
   s += "<text x='380' y='288' fill='#fff' font-size='10'>fosse : biome abyssal</text>";
   s += "<text x='470' y='245' fill='#fff' font-size='10'>fumeurs</text>";
   s += "</g>";
-  s += "<text x='8' y='40' fill='" + encre + "' font-size='10'>côte</text>";
+  s += "<text x='6' y='14' fill='" + encre + "' font-size='10'>côte</text>";
   return s + "</svg>";
 }
 

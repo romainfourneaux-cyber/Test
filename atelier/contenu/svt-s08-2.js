@@ -26,16 +26,16 @@ function schemaSol() {
   s += "<path d='M250 70 q-10 20 -20 40 M250 70 q8 25 15 50 M250 70 v45' stroke='#d9c8a3' stroke-width='2' fill='none'/>";
   // feuilles et lombric
   s += "<g fill='#8a5a1b'><ellipse cx='160' cy='86' rx='12' ry='5'/><ellipse cx='330' cy='90' rx='12' ry='5' transform='rotate(-20 330 90)'/></g>";
-  s += "<path d='M290 130 q10 -8 20 0 q10 8 20 0' stroke='#e39a8c' stroke-width='4' fill='none'/>";
-  s += "<ellipse cx='170' cy='150' rx='22' ry='9' fill='#3a2817'/>";
+  s += "<path d='M290 126 q10 -8 20 0 q10 8 20 0' stroke='#e39a8c' stroke-width='4' fill='none'/>";
+  s += "<ellipse cx='170' cy='146' rx='22' ry='9' fill='#3a2817'/>";
   // étiquettes
   s += "<g fill='" + encre + "'>";
   s += "<text x='392' y='92'>litière : débris végétaux</text>";
   s += "<text x='392' y='132'>humus : couche vivante,</text><text x='392' y='147'>pleine de décomposeurs</text>";
   s += "<text x='392' y='212'>couches profondes :</text><text x='392' y='227'>roche + matière organique</text>";
   s += "<text x='392' y='285'>roche : basalte (volcanique)</text><text x='392' y='300'>ou calcaire (sédimentaire)</text>";
-  s += "<text x='20' y='92'>végétal</text><text x='20' y='106'>enraciné</text>";
-  s += "<text x='20' y='155' font-size='10'>terrier</text><text x='60' y='128' font-size='10'>lombric →</text>";
+  s += "<text x='282' y='40'>végétal enraciné</text>";
+  s += "<text x='150' y='166' font-size='10' fill='#f6f1e7'>terrier</text><text x='292' y='146' font-size='10' fill='#f6f1e7'>lombric</text>";
   s += "</g>";
   return s + "</svg>";
 }

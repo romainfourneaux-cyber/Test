@@ -11,29 +11,29 @@ const R = (page) => ({ fichier: "cours/svt/Cours Griffon 5eme SVT Livret 1 - Res
 // Boucle de la circulation thermohaline, redessinée.
 function schemaBoucle() {
   const encre = "#2e2419";
-  let s = "<svg viewBox='0 0 560 330' xmlns='http://www.w3.org/2000/svg' font-family='Georgia,serif' font-size='13'>";
+  let s = "<svg viewBox='0 0 720 330' xmlns='http://www.w3.org/2000/svg' font-family='Georgia,serif' font-size='13'>";
   // quatre côtés de la boucle
-  s += "<path d='M130 80 H400' stroke='#d9463b' stroke-width='26' fill='none' stroke-linecap='round'/>";
-  s += "<path d='M430 110 V230' stroke='#7b3fa0' stroke-width='26' fill='none' stroke-linecap='round'/>";
-  s += "<path d='M400 260 H130' stroke='#1f3b78' stroke-width='26' fill='none' stroke-linecap='round'/>";
-  s += "<path d='M100 230 V110' stroke='#9a62b8' stroke-width='26' fill='none' stroke-linecap='round'/>";
+  s += "<path d='M230 80 H500' stroke='#d9463b' stroke-width='26' fill='none' stroke-linecap='round'/>";
+  s += "<path d='M530 110 V230' stroke='#7b3fa0' stroke-width='26' fill='none' stroke-linecap='round'/>";
+  s += "<path d='M500 260 H230' stroke='#1f3b78' stroke-width='26' fill='none' stroke-linecap='round'/>";
+  s += "<path d='M200 230 V110' stroke='#9a62b8' stroke-width='26' fill='none' stroke-linecap='round'/>";
   // coins
-  s += "<path d='M400 80 Q430 80 430 110' stroke='#a8408a' stroke-width='26' fill='none'/>";
-  s += "<path d='M430 230 Q430 260 400 260' stroke='#4b3a8c' stroke-width='26' fill='none'/>";
-  s += "<path d='M130 260 Q100 260 100 230' stroke='#5f4e9c' stroke-width='26' fill='none'/>";
-  s += "<path d='M100 110 Q100 80 130 80' stroke='#c04a6a' stroke-width='26' fill='none'/>";
+  s += "<path d='M500 80 Q530 80 530 110' stroke='#a8408a' stroke-width='26' fill='none'/>";
+  s += "<path d='M530 230 Q530 260 500 260' stroke='#4b3a8c' stroke-width='26' fill='none'/>";
+  s += "<path d='M230 260 Q200 260 200 230' stroke='#5f4e9c' stroke-width='26' fill='none'/>";
+  s += "<path d='M200 110 Q200 80 230 80' stroke='#c04a6a' stroke-width='26' fill='none'/>";
   // flèches blanches : sens du courant
-  s += "<g fill='#fff'><path d='M250 70 l22 10 -22 10z'/><path d='M420 160 l10 22 10 -22z'/><path d='M290 250 l-22 10 22 10z'/><path d='M90 180 l10 -22 10 22z'/></g>";
+  s += "<g fill='#fff'><path d='M350 70 l22 10 -22 10z'/><path d='M520 160 l10 22 10 -22z'/><path d='M390 250 l-22 10 22 10z'/><path d='M190 180 l10 -22 10 22z'/></g>";
   // étiquettes
   s += "<g fill='" + encre + "'>";
-  s += "<text x='265' y='48' text-anchor='middle' fill='#b2322a' font-weight='bold'>Surface : eau chaude et peu salée</text>";
-  s += "<text x='265' y='300' text-anchor='middle' fill='#1f3b78' font-weight='bold'>Fond : eau froide et très salée</text>";
-  s += "<text x='455' y='160' fill='#5a2d78'>Courant descendant :</text><text x='455' y='178' fill='#5a2d78'>plus froid, plus salé</text>";
-  s += "<text x='78' y='160' text-anchor='end' fill='#5a2d78'>Courant ascendant :</text><text x='78' y='178' text-anchor='end' fill='#5a2d78'>plus chaud, moins salé</text>";
+  s += "<text x='365' y='48' text-anchor='middle' fill='#b2322a' font-weight='bold'>Surface : eau chaude et peu salée</text>";
+  s += "<text x='365' y='300' text-anchor='middle' fill='#1f3b78' font-weight='bold'>Fond : eau froide et très salée</text>";
+  s += "<text x='556' y='160' fill='#5a2d78'>Courant descendant :</text><text x='556' y='178' fill='#5a2d78'>plus froid, plus salé</text>";
+  s += "<text x='176' y='160' text-anchor='end' fill='#5a2d78'>Courant ascendant :</text><text x='176' y='178' text-anchor='end' fill='#5a2d78'>plus chaud, moins salé</text>";
   s += "</g>";
   // flèche de la profondeur
-  s += "<line x1='535' y1='70' x2='535' y2='270' stroke='" + encre + "' stroke-width='2'/><path d='M529 262 l6 14 6 -14z' fill='" + encre + "'/>";
-  s += "<text x='548' y='170' fill='" + encre + "' font-size='11' transform='rotate(90 548 170)'>vers la profondeur</text>";
+  s += "<line x1='700' y1='70' x2='700' y2='270' stroke='" + encre + "' stroke-width='2'/><path d='M694 262 l6 14 6 -14z' fill='" + encre + "'/>";
+  s += "<text x='712' y='112' fill='" + encre + "' font-size='11' transform='rotate(90 712 112)'>vers la profondeur</text>";
   return s + "</svg>";
 }
 
@@ -63,9 +63,9 @@ function schemaPalerme() {
     s += "<text x='" + (X1 + 6) + "' y='" + (yP(t * 2) + 4) + "' fill='#1f3b78'>" + (t * 2) + "</text>";
   }
   s += "<text x='" + X0 + "' y='" + (Y0 - H - 18) + "' fill='#d9463b'>°C</text><text x='" + (X1 - 10) + "' y='" + (Y0 - H - 18) + "' fill='#1f3b78'>mm</text>";
-  s += "<g font-size='10'><rect x='70' y='40' width='12' height='8' fill='#5fb6e6'/><text x='86' y='48' fill='" + encre + "'>précipitations</text>";
-  s += "<line x1='70' y1='62' x2='82' y2='62' stroke='#d9463b' stroke-width='2'/><text x='86' y='65' fill='" + encre + "'>températures maximales</text>";
-  s += "<line x1='70' y1='76' x2='82' y2='76' stroke='#1f3b78' stroke-width='2'/><text x='86' y='79' fill='" + encre + "'>températures minimales</text></g>";
+  s += "<g font-size='10'><rect x='180' y='40' width='12' height='8' fill='#5fb6e6'/><text x='196' y='48' fill='" + encre + "'>précipitations</text>";
+  s += "<line x1='180' y1='62' x2='192' y2='62' stroke='#d9463b' stroke-width='2'/><text x='196' y='65' fill='" + encre + "'>températures maximales</text>";
+  s += "<line x1='180' y1='76' x2='192' y2='76' stroke='#1f3b78' stroke-width='2'/><text x='196' y='79' fill='" + encre + "'>températures minimales</text></g>";
   return s + "</svg>";
 }
 
