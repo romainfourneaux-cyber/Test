@@ -1692,6 +1692,7 @@
     }
     charger(imagesDeBataille(terrain, campAdv), function () { suivant(0); });
     setTimeout(partir, ATTENTE_MAX);
+    return true; // la bataille démarre (après le chargement du terrain) : l'écran des expéditions le sait (24/10/2026)
 
     function demarrer() {
       var carte = JEU.cartesBataille.carte(carteId);
@@ -2323,7 +2324,7 @@
     }
   }
 
-  JEU.bataille = { lancer: lancer, QUESTIONS_PAR_VAGUE: QUESTIONS_PAR_VAGUE, verrouille: verrouille, phraseRival: phraseRival,
+  JEU.bataille = { lancer: lancer, enChargement: function () { return enChargement; }, QUESTIONS_PAR_VAGUE: QUESTIONS_PAR_VAGUE, verrouille: verrouille, phraseRival: phraseRival,
     // formations des bataillons (essais sous Node : tests.js)
     bataillons: { BATAILLONS: BATAILLONS, BORD_ROUTE: BORD_ROUTE, ECART_FRONTS: ECART_FRONTS, CORPS_MAX: CORPS_MAX,
       ECART_FILE: ECART_FILE, DECAL_MELEE: DECAL_MELEE, DECAL_FILE: DECAL_FILE, DECAL_PORTE: DECAL_PORTE,
