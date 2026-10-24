@@ -7,6 +7,7 @@
 // ni les épreuves de l'équipage : conspirer et menée sont repris comme simples mots, sans qui ni quoi ;
 // les quatre mots du schéma de navire du devoir n'apparaissent nulle part.
 // Relu le 2026-10-24 : définitions vérifiées une à une contre les pages 6 à 10 de la liste (page 10 rendue en image).
+// Seconde relecture indépendante le 2026-10-24 : fidélité à la liste, bonus revérifiés en ligne, anti-spoil.
 const F = "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf";
 const S = p => ({ fichier: F, page: p });
 
@@ -16,14 +17,13 @@ module.exports = {
     {
       id: "lecture-s08-1-f1", notion: "Le nœud en huit et le nœud de chaise",
       titre: "Bloquer une corde, faire une boucle",
-      texte: "Le nœud en huit termine un cordage : il bloque la corde au bout. Il est très simple à faire et à défaire, mais il est plus gros qu'un nœud simple. Le nœud de chaise, lui, forme une boucle. C'est le nœud préféré des marins, parce qu'il ne glisse pas : il sert à l'amarrage ou à fixer des voiles.",
+      texte: "Le nœud en huit termine un cordage : il bloque la corde au bout. Facile à faire comme à défaire, il forme pourtant un nœud plus gros que le nœud simple. Le nœud de chaise forme une boucle qui ne glisse pas : c'est le plus utilisé par les marins, pour l'amarrage ou pour fixer des voiles.",
       pointsCles: ["Nœud en huit : termine un cordage, bloque la corde", "Simple à faire et à défaire, mais plus gros que le nœud simple", "Nœud de chaise : une boucle qui ne glisse pas", "Le nœud le plus utilisé par les marins : amarrage, voiles"],
       astuce: "Le huit bloque le bout ; la chaise fait une boucle solide.",
       dates: [], lieux: [], personnages: [],
       vocabulaire: [
         { mot: "nœud en huit", def: "un nœud qui termine un cordage en bloquant la corde, simple à faire et à défaire" },
-        { mot: "nœud de chaise", def: "un nœud qui forme une boucle et ne glisse pas, utilisé pour l'amarrage ou pour fixer des voiles" },
-        { mot: "amarrage", def: "le fait d'attacher un bateau avec des cordes" }
+        { mot: "nœud de chaise", def: "un nœud qui forme une boucle et ne glisse pas, utilisé pour l'amarrage ou pour fixer des voiles" }
       ],
       schema: null, prerequis: ["lecture-s02-1-f3"], source: S(10)
     },
@@ -164,7 +164,7 @@ module.exports = {
       corrections: [], reponse: { vrai: true, correction: null },
       explication: "Oui : deux demi-nœuds inversés forment le nœud plat. Il relie les deux bouts d'une même corde.", source: S(10) },
     { id: "lecture-s08-1-q11", fiche: "lecture-s08-1-f2", type: "vrai_faux", niveau: 2,
-      enonce: "Le nœud de taquet sert à faire une boucle dans laquelle on peut s'asseoir.",
+      enonce: "Le nœud de taquet sert à faire une boucle qui ne glisse pas.",
       corrections: ["Faux : le nœud de taquet attache un cordage à un objet, pour brider une écoute ou une amarre.", "Faux : le nœud de taquet relie deux cordes entre elles.", "Faux : le nœud de taquet termine un cordage."],
       reponse: { vrai: false, correction: "Faux : le nœud de taquet attache un cordage à un objet, pour brider une écoute ou une amarre." },
       explication: "Le nœud de taquet sert à attacher un cordage à un objet. La boucle, c'est le nœud de chaise.", source: S(10) },
@@ -190,7 +190,7 @@ module.exports = {
       reponse: [[0, 2], [1, 0], [2, 3], [3, 1]],
       explication: "Le huit bloque le bout d'un cordage, la chaise fait une boucle. Le cabestan attache une corde à une barre fixe, le plat relie deux bouts d'une même corde.", source: S(10) },
     { id: "lecture-s08-1-q16", fiche: "lecture-s08-1-f2", type: "qcm_multiple", niveau: 3,
-      enonce: "Lesquels de ces nœuds servent à s'amarrer ou à attacher une corde à quelque chose ?",
+      enonce: "Lesquels de ces nœuds servent à s'amarrer ou à attacher une corde à un objet ?",
       choix: ["le nœud de cabestan", "le nœud de taquet", "le nœud de chaise", "le nœud plat", "le nœud en huit"],
       reponse: ["le nœud de cabestan", "le nœud de taquet", "le nœud de chaise"],
       explication: "Le cabestan sert à s'amarrer, le taquet attache un cordage à un objet, la chaise sert à l'amarrage. Le plat relie deux bouts d'une même corde et le huit termine un cordage.", source: S(10) },
@@ -380,7 +380,7 @@ module.exports = {
   nonCouvert: [
     "Le contenu des chapitres 13 et 14 (p. 101 à 109 du livre) : le livre n'est pas déposé, et la liste de vocabulaire ne dit pas à quel chapitre appartient chaque mot. Ce cours reprend les cinq nœuds marins (page 10 de la liste) et les mots pour raconter : complots, adverbes, expressions anciennes, mots au sens particulier (pages 6 à 9).",
     "Les photos des nœuds (page 10) : aucune image n'est reprise et aucun schéma n'est redessiné ; le jeu décrit les nœuds avec des mots.",
-    "L'écoute et l'amarre (nœud de taquet) : la liste ne les définit pas.",
+    "L'amarrage, l'écoute et l'amarre (nœuds de chaise et de taquet) : la liste ne les définit pas.",
     "Mots de la liste non repris, faute de place : absoudre, acculer, amonceler, déplorer, osciller, recourir, garroté, éphémère, péremptoire, ichtyophage, présomption sans portée (pages 7 à 9).",
     "Les mots de la religion de la liste (chasuble, étole, habits sacerdotaux, messe basse, Providence, sacristie, sœur de charité, vicaire, pieux) : laissés de côté."
   ]

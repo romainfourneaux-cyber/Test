@@ -46,10 +46,10 @@ module.exports = {
     {
       id: "litterature-s08-2-f3", notion: "L'enjambement",
       titre: "Une phrase qui déborde sur le vers suivant",
-      texte: "Il y a enjambement quand une phrase ne s'arrête pas à la fin du vers et continue sur le vers suivant, sans pause. Pour en créer un, on écrit deux vers et on coupe la phrase entre les deux. Exemple de tous les jours : « Mon chat dort sur le tapis / du salon, près de la porte. »",
+      texte: "Il y a enjambement quand une phrase ne s'arrête pas à la fin du vers et continue sur le vers suivant. Pour en créer un, on écrit deux vers et on coupe la phrase entre les deux. Exemple de tous les jours : « Mon chat dort sur le tapis / du salon, près de la porte. »",
       pointsCles: [
         "Enjambement : la phrase continue d'un vers sur le suivant",
-        "Pas de pause à la fin du premier vers",
+        "La phrase ne s'arrête pas à la fin du premier vers",
         "On le crée en coupant une phrase entre deux vers"
       ],
       dates: [], lieux: [], personnages: [],
@@ -285,7 +285,7 @@ module.exports = {
       id: "litterature-s08-2-b1",
       fiche: "litterature-s08-2-f1",
       titre: "D'où vient le sonnet ?",
-      texte: "Le mot « sonnet » vient de l'italien sonetto, lui-même tiré d'un vieux mot du sud de la France, sonet, qui veut dire « petite chanson ». Cette forme de poème serait née au XIIIe siècle en Sicile, à la cour de l'empereur Frédéric II. En France, le premier sonnet est écrit par Clément Marot en 1536.",
+      texte: "Le mot « sonnet » vient de l'italien sonetto, lui-même tiré d'un vieux mot du sud de la France, sonet, qui veut dire « petite chanson ». Cette forme de poème serait née en Sicile, à la cour de l'empereur Frédéric II (1194-1250). En France, le premier sonnet est écrit par Clément Marot en 1536.",
       source: { titre: "Sonnet", editeur: "Wikipédia, l'encyclopédie libre", url: "https://fr.wikipedia.org/wiki/Sonnet" }
     }
   ],

@@ -648,9 +648,9 @@ JEU.enregistrer("cours", {
    "enonce": "Comment appelle-t-on la perte d'énergie d'un marin épuisé ?",
    "choix": [
     "L'affadissement",
-    "La torpeur du sommeil",
-    "La transe d'angoisse",
-    "La commotion du choc"
+    "La torpeur",
+    "La transe",
+    "La commotion"
    ],
    "explication": "L'affadissement est une perte d'énergie. La torpeur est une fatigue qui endort, la transe un frisson d'angoisse.",
    "source": {
@@ -852,19 +852,19 @@ JEU.enregistrer("cours", {
    "fiche": "lecture-s07-1-f4",
    "type": "qcm",
    "niveau": 3,
-   "enonce": "Pourquoi une mante est-elle facile à enfiler ?",
+   "enonce": "Une femme porte un manteau très simple, ample et sans manches. Comment s'appelle ce vêtement, dans ce vocabulaire ?",
    "choix": [
-    "Elle est ample et sans manches",
-    "Elle se ferme par des lacets",
-    "Elle est courte et serrée",
-    "Elle est faite de laine de bœuf musqué"
+    "Une mante",
+    "Une casaque",
+    "Des mocassins",
+    "Un cordial"
    ],
-   "explication": "La mante est un manteau ample et sans manches : on la passe sans effort. Les lacets, eux, manquent justement aux mocassins.",
+   "explication": "La mante est un manteau de femme très simple, ample et sans manches. La casaque, elle, est une veste.",
    "source": {
     "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
     "page": 7
    },
-   "r": "=ckRIZADIcABSRDHUYRVFwgTK4BGuwURB51CPNgCFcTZ",
+   "r": "=8AABN0DCY0AHcSZ",
    "poids": 1
   },
   {
@@ -1163,7 +1163,7 @@ JEU.enregistrer("cours", {
    "id": "lecture-s07-1-b1",
    "fiche": "lecture-s07-1-f2",
    "titre": "Le scorbut vaincu par les citrons",
-   "texte": "Le scorbut vient d'un manque de vitamine C, que le corps humain ne sait pas fabriquer. En 1747, le médecin James Lind compare des marins malades : ceux qui reçoivent des oranges et des citrons guérissent le plus vite. À partir de 1795, la marine britannique donne chaque jour du jus de citron à ses marins.",
+   "texte": "Le scorbut vient d'un manque de vitamine C, que le corps humain ne sait pas fabriquer. En 1747, le médecin James Lind compare des marins malades : ceux qui reçoivent des oranges et des citrons guérissent le plus vite. En 1795, la marine britannique impose une ration quotidienne de jus de citron à ses marins.",
    "source": {
     "titre": "Scorbut",
     "editeur": "Wikipédia, l'encyclopédie libre",

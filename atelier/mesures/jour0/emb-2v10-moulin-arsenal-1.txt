@@ -15,3 +15,21 @@ niv | carte          | tenue (éclatante) | tenu  retraite | murs restants (quan
  3  | moulin         |   93 % ( 34 %)   |  59 %    8 %   |                      89 % (96 %) |              5.29 (1.88) |     15.4 / 4.7    | 1.45 · 1, 0, 0, 0
  4  | moulin         |  100 % (  0 %)   | 100 %    0 %   |                      78 % (78 %) |              4.19 (4.19) |     12.7 / 5      | 0.88 · 1, 0.35, 0, 0
 moy |                | 94.8 % (10.5 %)   |                |                           85.5 % |                        4
+
+p = 0.8 (réponses justes) · bataille de route : defense, 2 vagues, camp de 10, carte moulin, arsenal du niveau − 1
+niv | carte          | tenue (éclatante) | tenu  retraite | murs restants (quand elle tient) | coups portés (1re vague) | ennemis tués / tes pertes | sorties · rival : tours, gardes, rappelés, renforts
+ 1  | moulin         |   93 % ( 22 %)   |  71 %    7 %   |                      92 % (99 %) |              4.64 (3.15) |     15.8 / 4.2    | 1.43 · 1, 0, 0, 0
+ 2  | moulin         |   99 % (  0 %)   |  99 %    1 %   |                      95 % (96 %) |              4.02 (2.45) |     15.8 / 4.7    | 1.81 · 1, 0, 0, 0
+ 3  | moulin         |   96 % ( 58 %)   |  38 %    4 %   |                     95 % (100 %) |              8.58 (2.81) |     16.2 / 4.8    | 1.64 · 1, 0, 0, 0
+ 4  | moulin         |  100 % (  0 %)   | 100 %    0 %   |                      86 % (86 %) |                5.4 (5.4) |     13.2 / 5      | 1.01 · 1, 0.53, 0, 0
+moy |                |   97 % ( 20 %)   |                |                             92 % |                      5.7
+
+p = 0.9 (réponses justes) · bataille de route : defense, 2 vagues, camp de 10, carte moulin, arsenal du niveau − 1
+niv | carte          | tenue (éclatante) | tenu  retraite | murs restants (quand elle tient) | coups portés (1re vague) | ennemis tués / tes pertes | sorties · rival : tours, gardes, rappelés, renforts
+ 1  | moulin         |   99 % ( 51 %)   |  48 %    1 %   |                    101 % (102 %) |                 6.84 (4) |     16.2 / 4.4    | 1.73 · 1, 0, 0, 0
+ 2  | moulin         |  100 % (  0 %)   | 100 %    0 %   |                      99 % (99 %) |              5.24 (3.05) |     16.3 / 5.5    | 2.31 · 1, 0, 0, 0
+ 3  | moulin         |   99 % ( 73 %)   |  26 %    1 %   |                    100 % (101 %) |             11.59 (4.28) |     16.6 / 4.4    | 1.77 · 1, 0, 0, 0
+ 4  | moulin         |  100 % (  0 %)   | 100 %    0 %   |                      88 % (88 %) |              6.59 (6.59) |     13.3 / 4.1    | 1.05 · 1, 0.74, 0, 0
+moy |                | 99.5 % ( 31 %)   |                |                             97 % |                      7.6
+
+(34 s)

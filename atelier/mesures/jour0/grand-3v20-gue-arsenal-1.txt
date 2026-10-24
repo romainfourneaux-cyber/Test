@@ -1,0 +1,9 @@
+Moteur : jeu/js/bataille-moteur.js · or perdu par erreur : 6 · 160 batailles par niveau · bataille de route : defense, 3 vagues, camp de 20, carte gue, arsenal du niveau − 1
+
+p = 0.6 (réponses justes) · bataille de route : defense, 3 vagues, camp de 20, carte gue, arsenal du niveau − 1
+niv | carte          | tenue (éclatante) | tenu  retraite | murs restants (quand elle tient) | coups portés (1re vague) | ennemis tués / tes pertes | sorties · rival : tours, gardes, rappelés, renforts
+ 1  | gue            |   41 % (  0 %)   |  41 %   59 %   |                      21 % (52 %) |              2.91 (1.79) |       17 / 5.4    | 1.68 · 1.73, 0.06, 0, 0
+ 2  | gue            |   59 % (  0 %)   |  59 %   41 %   |                      23 % (39 %) |              3.48 (2.75) |     21.4 / 5.5    | 1.01 · 2, 0.06, 0, 0
+ 3  | gue            |    3 % (  0 %)   |   3 %   97 %   |                       1 % (16 %) |               3.24 (1.6) |     17.5 / 6.7    | 1.18 · 1.9, 0, 0, 0
+ 4  | gue            |    6 % (  0 %)   |   6 %   94 %   |                       1 % (10 %) |              3.61 (1.36) |     14.8 / 8.7    | 1.18 · 2, 0.02, 0, 0
+moy |                | 27.3 % (  0 %)   |                |                           11.5 % |                      3.3

@@ -7,7 +7,7 @@ JEU.enregistrer("cours", {
    "id": "litterature-s06-2-f1",
    "notion": "Donner une impression de vitesse",
    "titre": "Du lointain au tout proche, en un instant",
-   "texte": "Un récit peut donner une impression de vitesse, comme un film en accéléré. Le navire que Jim Hawkins rejoint est d'abord une forme vague, au loin ; puis ses détails apparaissent ; l'instant d'après, le garçon le touche. Ce qui accélère tout, c'est le courant, très fort : il joue le rôle d'un accélérateur de temps.",
+   "texte": "Un récit peut donner une impression de vitesse, comme un film en accéléré. Le navire que Jim Hawkins rejoint est d'abord une forme vague, au loin ; puis ses mâts et sa coque se dessinent ; l'instant d'après, le garçon s'y accroche. Ce qui accélère tout, c'est le courant, très fort : il joue le rôle d'un accélérateur de temps.",
    "pointsCles": [
     "Impression de vitesse : comme dans un film en accéléré",
     "L'objet décrit passe du lointain au tout proche en un instant",
@@ -33,11 +33,11 @@ JEU.enregistrer("cours", {
    "id": "litterature-s06-2-f2",
    "notion": "Le passé simple et le personnage pris de court",
    "titre": "Des actions brusques, un personnage surpris",
-   "texte": "Dans ce passage rapide, les verbes sont au passé simple : les actions tombent d'un coup, l'une après l'autre. Ce temps montre aussi que Jim est pris de court : tout va si vite qu'il n'est plus sûr de ce qu'il perçoit, et il le dit. Exemple : « Il ouvrit, entra, s'assit : tout alla très vite. »",
+   "texte": "Dans ce passage rapide, les verbes sont au passé simple. Ce temps montre la conscience troublée de Jim : il est pris de court, tout va si vite qu'il n'est plus sûr de ce qu'il a perçu, et il le dit. Exemple de phrases au passé simple : « Il ouvrit, entra, s'assit : tout alla vite. »",
    "pointsCles": [
-    "Passé simple : des actions brusques qui s'enchaînent",
-    "Il montre un personnage pris de court, surpris",
-    "Le personnage n'est plus sûr de ce qu'il perçoit"
+    "Les verbes du passage rapide sont au passé simple",
+    "Ce temps montre Jim pris de court, la conscience troublée",
+    "Jim n'est plus sûr de ce qu'il a perçu, et il le dit"
    ],
    "dates": [],
    "lieux": [],
@@ -46,6 +46,10 @@ JEU.enregistrer("cours", {
     {
      "mot": "pris de court",
      "def": "surpris par quelque chose qui arrive trop vite"
+    },
+    {
+     "mot": "conscience troublée",
+     "def": "l'esprit brouillé d'un personnage qui ne sait plus bien ce qu'il a perçu"
     }
    ],
    "schema": null,
@@ -231,16 +235,16 @@ JEU.enregistrer("cours", {
    "choix": [
     "Le navire passe du lointain au tout proche en un instant",
     "Un courant fort accélère tout",
-    "Les verbes sont au passé simple et les actions s'enchaînent",
+    "Le passé simple montre Jim pris de court par la vitesse",
     "Le narrateur énumère tous les objets du navire",
     "Le narrateur compare le navire à une vieille maison"
    ],
-   "explication": "Loin puis tout près, un courant accélérateur, des actions brusques au passé simple : trois ingrédients de la vitesse. Une énumération d'objets ou une comparaison ne sont pas dans ce passage.",
+   "explication": "Loin puis tout près, un courant accélérateur, un passé simple qui montre Jim dépassé : trois ingrédients de la vitesse. Une énumération d'objets ou une comparaison ne sont pas dans ce passage.",
    "source": {
     "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
     "page": 3
    },
-   "r": "=szSGkyFbsstQEQDBcxTw0gFbJ0BbUwBJFgIeUVEQEFDC8xHBATDMbvXd4gFGxxEnZwGKYQUasQDA0QNNYBUhx0QEJBHdMjUQcR3yWwxsGxCi0QEHJECPJBCIAgMdYRRbQySC1kBGISWWsFROFwEGdwFndRHGoxAZ40GHcwNNABVNAgBHIxBbgiHVBRERxQHcMBGjh0Fct1DBY0AlAFH",
+   "r": "ocEECoxCbshHjxUCV81DfYkEbcAKRUFARElGH0hAI5CRvUBScsBCJQgUi4RBIwhAJdMrBshIdVEUhx0QEJBHdMjUQcR3yWwxsGxCi0QEHJECPJBCIAgMdYRRbQySC1kBGISWWsFROFwEGdwFndRHGoxAZ40GHcwNNABVNAgBHIxBbgiHVBRERxQHcMBGjh0Fct1DBY0AlAFH",
    "poids": 1
   },
   {
@@ -255,7 +259,7 @@ JEU.enregistrer("cours", {
     "Au futur",
     "Au présent"
    ],
-   "explication": "Les actions sont au passé simple : elles tombent d'un coup, l'une après l'autre. L'imparfait aurait étiré la scène.",
+   "explication": "Le passage est au passé simple. Ce temps montre la conscience troublée de Jim, pris de court par la vitesse.",
    "source": {
     "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
     "page": 3
@@ -268,9 +272,9 @@ JEU.enregistrer("cours", {
    "fiche": "litterature-s06-2-f2",
    "type": "vrai_faux",
    "niveau": 1,
-   "enonce": "Dans ce passage, le passé simple fait sentir que les actions tombent d'un coup, l'une après l'autre.",
+   "enonce": "Dans ce passage, le passé simple montre un Jim pris de court, la conscience troublée.",
    "corrections": [],
-   "explication": "Oui : le passé simple enchaîne des actions brusques. Il va avec la vitesse du passage.",
+   "explication": "Oui : tout va si vite que Jim n'est plus sûr de ce qu'il a perçu. Le passé simple fait sentir ce trouble.",
    "source": {
     "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
     "page": 3
@@ -283,19 +287,19 @@ JEU.enregistrer("cours", {
    "fiche": "litterature-s06-2-f2",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Comment le texte montre-t-il que Jim est pris de court ?",
+   "enonce": "Comment le passage montre-t-il que Jim est pris de court ?",
    "choix": [
-    "Il n'est plus sûr de ce qu'il perçoit, tant tout va vite",
-    "Il décrit calmement, détail après détail, chaque partie du navire",
+    "Il précise que c'est ce qu'il lui a semblé : il doute de ce qu'il a perçu",
+    "Il décrit calmement, détail après détail, chaque partie du navire et de son équipage",
     "Il compte lentement les secondes qui passent",
     "Il explique qu'il avait tout prévu depuis longtemps"
    ],
-   "explication": "Jim précise que c'est ce qu'il lui a semblé : il doute de ce qu'il a perçu. Tout est allé trop vite pour lui.",
+   "explication": "Jim doute de ce qu'il a perçu, et il le dit en racontant. Tout est allé trop vite pour lui.",
    "source": {
     "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
     "page": 3
    },
-   "r": "MpgBBUTDEMUDaoRCSkkBpMRAFlVBAEAyxqhJdVUWElkGXYEDRc2FRU0BKraHPFQHv0VRB51CIhgRFsTZ",
+   "r": "hhlw2/1CfY0BJ5hLVBAFVRhCOpgFIZSWQoVSONwDGNlUuHbGHgBFa4kDSFgNBVUWElkGXYEDRcmBGAgUSk0CaMASm4FDWRYrdYhRFsTZ",
    "poids": 1
   },
   {
@@ -329,7 +333,7 @@ JEU.enregistrer("cours", {
     "Faux : il montre un personnage qui se souvient de son enfance.",
     "Faux : il montre un personnage qui décrit un paysage immobile."
    ],
-   "explication": "Le passé simple enchaîne des actions brusques : Jim est surpris, pas calme. Il n'est même plus sûr de ce qu'il a vu.",
+   "explication": "Le passé simple montre ici la conscience troublée de Jim : il est surpris, pas calme. Il n'est même plus sûr de ce qu'il a vu.",
    "source": {
     "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
     "page": 3
@@ -350,7 +354,7 @@ JEU.enregistrer("cours", {
     "Nous partirons demain.",
     "Le chat dort."
    ],
-   "explication": "« Ouvrit », « entra », « sauta » sont au passé simple : des actions brusques. « Ouvrait » est à l'imparfait, « partirons » au futur, « dort » au présent.",
+   "explication": "« Ouvrit », « entra », « sauta » sont au passé simple. « Ouvrait » est à l'imparfait, « partirons » au futur, « dort » au présent.",
    "source": {
     "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
     "page": 3
@@ -363,19 +367,19 @@ JEU.enregistrer("cours", {
    "fiche": "litterature-s06-2-f2",
    "type": "qcm",
    "niveau": 3,
-   "enonce": "Pourquoi le passé simple convient-il à un passage qui va très vite ?",
+   "enonce": "Pourquoi Jim n'est-il plus sûr de ce qu'il a perçu quand il rejoint le navire ?",
    "choix": [
-    "Il enchaîne des actions brusques, l'une après l'autre",
-    "Il décrit un décor qui ne bouge pas",
-    "Il annonce ce qui se passera plus tard",
-    "Il exprime une habitude qui se répète tous les jours de l'année"
+    "Parce que le navire est arrivé sur lui trop vite, dans un courant de plus en plus rapide",
+    "Parce que le capitaine lui a raconté une fausse histoire",
+    "Parce qu'il a gardé les yeux fermés pendant toute la traversée, de peur de tomber à l'eau",
+    "Parce qu'il ne connaît pas le nom du navire qu'il cherche"
    ],
-   "explication": "Au passé simple, chaque action tombe d'un coup et la suivante arrive aussitôt. Le récit avance donc à toute vitesse.",
+   "explication": "Plus Jim avance, plus le courant est rapide : le navire surgit d'un coup. Pris de court, Jim ne sait plus très bien ce qu'il a vu.",
    "source": {
     "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
     "page": 3
    },
-   "r": "KZyXRAETJNgRVEcs1IAFFBxHck0ASREMIBBRetRHEYkGcgyGBYAFRpxCLIVDtMopUVUDBMgRFsTZ",
+   "r": "==wSXMyGFQwBRpxGDIAStgURGhlAfY0ANI1McQxFA4hCOFwBIBzQEEVDCpgEP8hU30xBRUFGcIwTA0BMNws9bdQHUcQSGQzFVBwBY8xDBIVDv0AAAxlTKUAFIISZ",
    "poids": 1
   },
   {
@@ -391,7 +395,7 @@ JEU.enregistrer("cours", {
     "composé",
     "longue"
    ],
-   "explication": "Le passé simple enchaîne les actions brusques. Jim, dépassé par la vitesse, est pris de court.",
+   "explication": "Les verbes du passage sont au passé simple. Jim, dépassé par la vitesse, est pris de court.",
    "source": {
     "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
     "page": 3

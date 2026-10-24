@@ -5,6 +5,7 @@
 // Anti-spoil (devoir lecture-d1) : rien sur le titre, l'auteur, les personnages, le cadre du récit ni les épreuves
 // de l'équipage ; les quatre mots du schéma de navire du devoir n'apparaissent nulle part.
 // Relu le 2026-10-24 : définitions vérifiées une à une contre la page 4 de la liste (texte et page rendue en image).
+// Seconde relecture indépendante le 2026-10-24 : fidélité à la liste, bonus revérifiés en ligne, anti-spoil.
 const F = "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf";
 const S = p => ({ fichier: F, page: p });
 
@@ -30,16 +31,16 @@ module.exports = {
     {
       id: "lecture-s04-1-f2", notion: "Le pingouin et les grands animaux de l'océan Arctique",
       titre: "Pingouin ou manchot ? Et les géants de l'océan",
-      texte: "Ne confonds pas le pingouin et le manchot. Le pingouin est plus petit que le manchot et, surtout, il sait voler : le manchot, lui, en est incapable. Dans l'océan Arctique nagent aussi de grands animaux marins, comme la baleine blanche, le requin du Groenland et l'orque.",
+      texte: "Ne confonds pas le pingouin et le manchot. Le pingouin est plus petit que le manchot et, surtout, il sait voler : le manchot, lui, en est incapable. Dans l'océan Arctique vivent aussi la baleine blanche, le requin du Groenland et l'orque.",
       pointsCles: ["Le pingouin est plus petit que le manchot", "Le pingouin vole, le manchot non", "Dans l'océan Arctique : baleine blanche, requin du Groenland, orque"],
       astuce: "Le pingouin a des ailes qui volent ; le manchot, comme son nom le dit, est « manchot » pour voler.",
       dates: [], lieux: [], personnages: [],
       vocabulaire: [
         { mot: "pingouin", def: "un oiseau plus petit que le manchot, et qui sait voler" },
         { mot: "manchot", def: "un oiseau marin qui ne sait pas voler" },
-        { mot: "baleine blanche", def: "un grand animal marin de l'océan Arctique" },
+        { mot: "baleine blanche", def: "un animal marin de l'océan Arctique" },
         { mot: "requin du Groenland", def: "un requin qui vit dans l'océan Arctique" },
-        { mot: "orque", def: "un grand animal marin qui vit aussi dans l'océan Arctique" }
+        { mot: "orque", def: "un animal marin qui vit aussi dans l'océan Arctique" }
       ],
       schema: null, prerequis: ["lecture-s04-1-f1"], source: S(4)
     },
@@ -48,11 +49,10 @@ module.exports = {
       titre: "Un oiseau blanc aux yeux jaunes et un tout petit rongeur",
       texte: "Le harfang des neiges vit dans la toundra arctique. On le reconnaît à son plumage blanc et à ses yeux jaunes. Le lemming arctique, lui, est un rongeur proche de la souris, et aucun mammifère de l'Arctique n'est plus petit que lui.",
       pointsCles: ["Harfang des neiges : oiseau blanc aux yeux jaunes, dans la toundra arctique", "Lemming arctique : un rongeur voisin de la souris", "Le lemming est le plus petit mammifère de l'Arctique"],
-      astuce: "Le harfang des neiges, c'est la chouette blanche qui accompagne le héros de Harry Potter.",
+      astuce: "Le harfang des neiges, c'est l'oiseau blanc qui tient compagnie au héros de Harry Potter.",
       dates: [], lieux: [], personnages: [],
       vocabulaire: [
         { mot: "harfang des neiges", def: "un oiseau blanc aux yeux jaunes, qui vit dans la toundra arctique" },
-        { mot: "toundra", def: "le paysage de l'Arctique où vit le harfang des neiges" },
         { mot: "lemming arctique", def: "un rongeur voisin de la souris, le plus petit mammifère de l'Arctique" }
       ],
       schema: null, prerequis: [], source: S(4)
@@ -155,7 +155,7 @@ module.exports = {
       reponse: "Il sait voler",
       explication: "Seul le pingouin sait voler ; le manchot en est incapable. Le pingouin est aussi le plus petit des deux.", source: S(4) },
     { id: "lecture-s04-1-q14", fiche: "lecture-s04-1-f2", type: "qcm", niveau: 3,
-      enonce: "Un marin aperçoit un grand animal qui nage dans l'océan Arctique. Lequel de ces animaux peut-il voir ?",
+      enonce: "Un marin aperçoit un animal qui nage dans l'océan Arctique. Lequel de ces animaux peut-il voir ?",
       choix: ["Une orque", "Un bœuf musqué", "Un lemming arctique", "Un harfang des neiges"],
       reponse: "Une orque",
       explication: "L'orque vit dans l'océan Arctique, comme la baleine blanche et le requin du Groenland. Le bœuf musqué, le lemming et le harfang vivent sur la terre.", source: S(4) },
@@ -168,7 +168,7 @@ module.exports = {
     { id: "lecture-s04-1-q16", fiche: "lecture-s04-1-f2", type: "vrai_faux", niveau: 3,
       enonce: "L'orque, la baleine blanche et le requin du Groenland vivent tous les trois dans l'océan Arctique.",
       corrections: [], reponse: { vrai: true, correction: null },
-      explication: "Oui : ces trois grands animaux marins se rencontrent dans l'océan Arctique.", source: S(4) },
+      explication: "Oui : ces trois animaux marins se rencontrent dans l'océan Arctique.", source: S(4) },
 
     // f3 : le harfang des neiges et le lemming
     { id: "lecture-s04-1-q17", fiche: "lecture-s04-1-f3", type: "qcm", niveau: 1,
@@ -294,7 +294,7 @@ module.exports = {
       id: "lecture-s04-1-b1",
       fiche: "lecture-s04-1-f3",
       titre: "Le harfang des neiges, un géant blanc",
-      texte: "Le harfang des neiges peut mesurer jusqu'à 70 cm de long, et une femelle aux ailes ouvertes atteint 170 à 177 cm d'envergure. Le mâle est d'un blanc pur ; la femelle et les jeunes portent des taches brunes. Son plat préféré est le lemming. Au Canada, l'espèce est classée « menacée » depuis 2025.",
+      texte: "Le harfang des neiges peut mesurer jusqu'à 70 cm de long, et une femelle aux ailes ouvertes atteint 170 à 177 cm d'envergure. Le mâle est d'un blanc pur ; la femelle et les jeunes sont légèrement tachetés de brun. Le lemming est sa principale nourriture. Au Canada, un comité d'experts l'a déclarée « menacée » en 2025.",
       source: { titre: "Harfang des neiges", editeur: "Wikipédia, l'encyclopédie libre", url: "https://fr.wikipedia.org/wiki/Harfang_des_neiges" }
     }
   ],

@@ -9,8 +9,10 @@
 // avec l'arsenal de la semaine (fichiers « -arsenal-1 »). Cartes : gue, foret, moulin, col, chateau selon la semaine ; le
 // Grand Gardien sur la carte de la prochaine province du front (gue par défaut).
 // Usage : node atelier/mesures/convolution-expedition.js [--departs 1,6] [--p 0.6,0.7,0.8,0.9] [--vivres 3,4,5]
-//   [--esc 1v6|2v8] [--sansChampion] [--emb 2v10] [--gard 2v12] [--grand 3v16] [--carteGrand gue] [--decalage 0]
+//   [--esc 1v6|2v6|2v8] [--sansChampion] [--emb 2v10] [--gard 2v12] [--grand 3v16] [--carteGrand gue] [--decalage 0]
+//   [--embPlus 1] [--grandPlus 1]
 //   [--repos 0] [--dossier atelier/mesures/jour0] [--detail]
+//   --embPlus, --grandPlus : lignes de plus pour l'embuscade et le Grand Gardien (1 dans le cahier, 0 = ligne de la semaine) ;
 //   --decalage : config.expedition.difficulte (−1, 0, +1) ajouté à chaque ligne ; --repos q : à chaque semaine, chance q
 //   qu'un bivouac de 3e couche rende un vivre (au plus 5) ; --detail : les taux de chaque nœud.
 "use strict";
@@ -25,6 +27,9 @@ const VIVRES = option("vivres", "3,4,5").split(",").map(Number);
 const ESC = option("esc", "1v6"), SANS_CHAMPION = args.indexOf("--sansChampion") >= 0;
 const EMB = option("emb", "2v10"), GARD = option("gard", "2v12"), GRAND = option("grand", "3v16");
 const CARTE_GRAND = option("carteGrand", "gue");
+// Ligne du rival de l'embuscade et du Grand Gardien : ligne de la semaine + EMB_PLUS / GRAND_PLUS (1 dans le cahier de
+// conception, 0 pour l'essai « à la ligne de la semaine »), plafond 4 ; l'arsenal reste celui de la semaine.
+const EMB_PLUS = parseInt(option("embPlus", "1"), 10), GRAND_PLUS = parseInt(option("grandPlus", "1"), 10);
 const DECALAGE = parseInt(option("decalage", "0"), 10);
 const REPOS = Number(option("repos", "0"));
 const DETAIL = args.indexOf("--detail") >= 0;
@@ -55,12 +60,13 @@ function tenue(nom, niveau, p) {
 // Les quatre nœuds d'une semaine de ligne L (déjà décalée), sur sa carte.
 function noeuds(semaine, L, p) {
   const carte = CARTES[(semaine - 1) % 5];
-  const plus = borne(L + 1);
+  // un nœud joué à la ligne L + 1 avec l'arsenal de la ligne L se lit dans le fichier « -arsenal-1 » au niveau L + 1
+  const decale = (prefixe, c, plus) => (plus && L < 4 ? tenue(prefixe + "-" + c + "-arsenal-1", borne(L + 1), p) : tenue(prefixe + "-" + c, L, p));
   return {
     esc: tenue("esc-" + ESC + "-" + carte + (SANS_CHAMPION ? "-sans-champion" : ""), L, p),
-    emb: L < 4 ? tenue("emb-" + EMB + "-" + carte + "-arsenal-1", plus, p) : tenue("emb-" + EMB + "-" + carte, 4, p),
+    emb: decale("emb-" + EMB, carte, EMB_PLUS),
     gard: tenue("gard-" + GARD + "-" + carte, L, p),
-    grand: L < 4 ? tenue("grand-" + GRAND + "-" + CARTE_GRAND + "-arsenal-1", plus, p) : tenue("grand-" + GRAND + "-" + CARTE_GRAND, 4, p)
+    grand: decale("grand-" + GRAND, CARTE_GRAND, GRAND_PLUS)
   };
 }
 // Convolution : distribution des vivres, nœud après nœud. Rend { reussite, premierGardien, vivresMoyens }.
@@ -99,7 +105,7 @@ function expedition(depart, p, vivres) {
 }
 
 const pc = x => Math.round(100 * x) + " %";
-console.log("Réussite d'une expédition de " + SEMAINES + " semaines (calcul 17.3) · escarmouche " + ESC + (SANS_CHAMPION ? " sans champion" : "") + ", embuscade " + EMB + ", gardien " + GARD + ", Grand Gardien " + GRAND + " sur " + CARTE_GRAND +
+console.log("Réussite d'une expédition de " + SEMAINES + " semaines (calcul 17.3) · escarmouche " + ESC + (SANS_CHAMPION ? " sans champion" : "") + ", embuscade " + EMB + " (ligne + " + EMB_PLUS + "), gardien " + GARD + ", Grand Gardien " + GRAND + " (ligne + " + GRAND_PLUS + ") sur " + CARTE_GRAND +
   (DECALAGE ? " · difficulté " + (DECALAGE > 0 ? "+" : "") + DECALAGE : "") + (REPOS ? " · repos au bivouac " + REPOS : "") + " · mesures : " + path.relative(process.cwd(), DOSSIER));
 console.log("| Expédition | p | " + VIVRES.map(v => v + " vivres").join(" | ") + " | premier gardien franchi (3 vivres) |");
 console.log("|---|---|" + VIVRES.map(() => "---").join("|") + "|---|");
@@ -111,7 +117,7 @@ DEPARTS.forEach(dep => {
 });
 if (DETAIL) {
   console.log("\nTaux de tenue de chaque nœud (part des batailles où les murs tiennent), semaine par semaine :");
-  console.log("| Semaine | ligne | carte | p | escarmouche | embuscade (ligne + 1) | gardien | Grand Gardien (ligne + 1, " + CARTE_GRAND + ") |");
+  console.log("| Semaine | ligne | carte | p | escarmouche | embuscade (ligne + " + EMB_PLUS + ") | gardien | Grand Gardien (ligne + " + GRAND_PLUS + ", " + CARTE_GRAND + ") |");
   console.log("|---|---|---|---|---|---|---|---|");
   DEPARTS.forEach(dep => {
     for (let i = 0; i < SEMAINES; i++) {

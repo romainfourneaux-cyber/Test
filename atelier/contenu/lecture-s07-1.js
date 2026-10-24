@@ -6,6 +6,7 @@
 // Anti-spoil (devoir lecture-d1) : rien sur le titre, l'auteur, les personnages, le cadre du récit ni les épreuves
 // de l'équipage ; les quatre mots du schéma de navire du devoir n'apparaissent nulle part.
 // Relu le 2026-10-24 : définitions vérifiées une à une contre les pages 6, 7, 8 et 9 de la liste.
+// Seconde relecture indépendante le 2026-10-24 : fidélité à la liste, bonus revérifiés en ligne, anti-spoil.
 const F = "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf";
 const S = p => ({ fichier: F, page: p });
 
@@ -208,7 +209,7 @@ module.exports = {
       explication: "La transe est un frisson d'angoisse. La fatigue qui endort, c'est la torpeur.", source: S(7) },
     { id: "lecture-s07-1-q20", fiche: "lecture-s07-1-f3", type: "qcm", niveau: 2,
       enonce: "Comment appelle-t-on la perte d'énergie d'un marin épuisé ?",
-      choix: ["L'affadissement", "La torpeur du sommeil", "La transe d'angoisse", "La commotion du choc"],
+      choix: ["L'affadissement", "La torpeur", "La transe", "La commotion"],
       reponse: "L'affadissement",
       explication: "L'affadissement est une perte d'énergie. La torpeur est une fatigue qui endort, la transe un frisson d'angoisse.", source: S(6) },
     { id: "lecture-s07-1-q21", fiche: "lecture-s07-1-f3", type: "association", niveau: 2,
@@ -260,10 +261,10 @@ module.exports = {
       reponse: [[0, 2], [1, 3], [2, 0], [3, 1]],
       explication: "La casaque est une veste, la mante un manteau de femme sans manches. Les mocassins sont des chaussures sans lacets, et usuel veut dire habituel.", source: S(7) },
     { id: "lecture-s07-1-q30", fiche: "lecture-s07-1-f4", type: "qcm", niveau: 3,
-      enonce: "Pourquoi une mante est-elle facile à enfiler ?",
-      choix: ["Elle est ample et sans manches", "Elle se ferme par des lacets", "Elle est courte et serrée", "Elle est faite de laine de bœuf musqué"],
-      reponse: "Elle est ample et sans manches",
-      explication: "La mante est un manteau ample et sans manches : on la passe sans effort. Les lacets, eux, manquent justement aux mocassins.", source: S(7) },
+      enonce: "Une femme porte un manteau très simple, ample et sans manches. Comment s'appelle ce vêtement, dans ce vocabulaire ?",
+      choix: ["Une mante", "Une casaque", "Des mocassins", "Un cordial"],
+      reponse: "Une mante",
+      explication: "La mante est un manteau de femme très simple, ample et sans manches. La casaque, elle, est une veste.", source: S(7) },
 
     // f5 : courage et solidité
     { id: "lecture-s07-1-q31", fiche: "lecture-s07-1-f5", type: "qcm", niveau: 1,
@@ -348,7 +349,7 @@ module.exports = {
       id: "lecture-s07-1-b1",
       fiche: "lecture-s07-1-f2",
       titre: "Le scorbut vaincu par les citrons",
-      texte: "Le scorbut vient d'un manque de vitamine C, que le corps humain ne sait pas fabriquer. En 1747, le médecin James Lind compare des marins malades : ceux qui reçoivent des oranges et des citrons guérissent le plus vite. À partir de 1795, la marine britannique donne chaque jour du jus de citron à ses marins.",
+      texte: "Le scorbut vient d'un manque de vitamine C, que le corps humain ne sait pas fabriquer. En 1747, le médecin James Lind compare des marins malades : ceux qui reçoivent des oranges et des citrons guérissent le plus vite. En 1795, la marine britannique impose une ration quotidienne de jus de citron à ses marins.",
       source: { titre: "Scorbut", editeur: "Wikipédia, l'encyclopédie libre", url: "https://fr.wikipedia.org/wiki/Scorbut" }
     }
   ],
