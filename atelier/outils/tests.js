@@ -390,6 +390,32 @@ verifier("Récit : jamais de pénalité ni de chrono dans les phrases de seconde
   return true;
 })());
 
+// récit : repère du cours (semaine, matière, numéro du cours) dans le cadre de chaque question, sans toucher l'énoncé
+// (demande de Romain, 16/10/2026 : « tu vois les semaines défiler dans les questions et les batailles »)
+(() => {
+  const ctxW = contexte(), JW = ctxW.JEU;
+  ["histoire-s04-1", "lecture-s04-1", "geographie-s01-2", "geographie-s01-1", "methode-frise", "langue-conj10"].forEach(id => vm.runInContext(fs.readFileSync(path.join(RACINE, "jeu", "data", "cours", id + ".js"), "utf8"), ctxW));
+  vm.runInContext(fs.readFileSync(path.join(RACINE, "jeu", "data", "anglais", "anglais-seq01.js"), "utf8"), ctxW);
+  JW.sauvegarde.charger();
+  const R = JW.recit.repere;
+  verifier("Repère : « Semaine 4 · Histoire · Cours 5 » pour un cours du planning (semaine, matière, numéro du titre)", R("histoire-s04-1") === "Semaine 4 · Histoire · Cours 5", R("histoire-s04-1"));
+  verifier("Repère : le numéro du cours quand le titre commence par le thème ; semaine et matière seules quand le titre n'en a pas",
+    R("geographie-s01-2") === "Semaine 1 · Géographie · Cours 1" && R("lecture-s04-1") === "Semaine 4 · Lecture suivie" && R("geographie-s01-1") === "Semaine 1 · Géographie", [R("geographie-s01-2"), R("lecture-s04-1"), R("geographie-s01-1")]);
+  verifier("Repère : badge Griffon pour la grammaire, « Savoir-faire » pour une fiche méthode, séquence pour l'anglais, rien pour un cours inconnu",
+    R("langue-conj10") === "Grammaire · Griffon de cuivre" && R("methode-frise") === "Savoir-faire · Histoire" && R("anglais-seq01") === "Anglais · Séquence 1" && R("inconnu-s99-1") === "" && R("") === "", [R("langue-conj10"), R("methode-frise"), R("anglais-seq01")]);
+  const q = JW.questions.questionsDuCours("histoire-s04-1")[0], enonce = q.enonce;
+  const cadres = ["preparation", "defense", "evenement", "savoir"].map(c => JW.recit.cadre(q, c));
+  verifier("Repère : porté par le cadre de récit en bataille, en événement et au conseil, sans changer l'énoncé ni la phrase du conseiller ; absent sans cours",
+    cadres.every(c => c.repere === "Semaine 4 · Histoire · Cours 5" && c.texte.indexOf("Semaine") < 0 && c.nom === "Le chroniqueur") && q.enonce === enonce && !JW.recit.cadre({ matiere: "histoire" }, "defense").repere, cadres);
+  const t0 = Date.now(); for (let i = 0; i < 1000; i++) JW.recit.cadre(q, "preparation"); const dt = Date.now() - t0;
+  verifier("Repère : mémorisé par cours, mille cadres en moins de 100 ms (la question suivante n'attend rien)", dt < 100, dt);
+  // affiché sur la ligne du nom du conseiller (bataille, événement : aucune hauteur de plus en 1366 × 768) et dans la carte du conseil
+  const srcI = fs.readFileSync(path.join(RACINE, "jeu", "js", "interface.js"), "utf8"), srcC = fs.readFileSync(path.join(RACINE, "jeu", "js", "conseil.js"), "utf8"), css = fs.readFileSync(path.join(RACINE, "jeu", "css", "jeu.css"), "utf8");
+  const iNom = srcI.indexOf('class: "recit-nom"'), iTexte = srcI.indexOf('class: "recit-texte"');
+  verifier("Repère : affiché par ui.recit sur la ligne du nom (classe recit-repere, avant la phrase) et par la carte du conseil, avec sa règle CSS",
+    iNom > 0 && iTexte > iNom && srcI.slice(iNom, iTexte).indexOf('class: "recit-repere", texte: r.repere') > 0 && /class: "recit-repere", texte: cadre\.repere/.test(srcC) && /\.recit-repere \{/.test(css) && /\.carte-conseil \.cc-tete \.recit-repere/.test(css), { iNom, iTexte });
+})();
+
 // sauvegarde : la file est gardée (export, import) ; à la séance suivante, les rappels en attente passent en tête
 verifier("Sauvegarde neuve : schéma 5, file des rappels vide", JR.sauvegarde.nouvelle().schema === 5 && JSON.stringify(JR.sauvegarde.nouvelle().rappels) === JSON.stringify({ compteur: 0, file: [] }));
 neuve();
@@ -585,6 +611,11 @@ verifier("À revoir : une seule notion à revoir dans sa matière y garde la pri
   (cUne["m-f7"] || 0) / 8000 >= 0.45 && (cUne["m-f7"] || 0) / 8000 <= 0.62, (cUne["m-f7"] || 0) / 8000);
 
 // avec les vrais cours du jeu (data/cours, data/suivi.js et data/a-retravailler.js tels qu'ils sont) : aucune famille oubliée
+// Borne du temps d'un lot de 3 : 5 ms avec les 34 cours du 15/10/2026 (2 ms mesurés). Le tirage parcourt toutes les
+// questions préparées des cours ouverts, son temps suit le contenu : la borne suit le nombre de questions préparées
+// (5 ms par tranche de 2 000, 5 ms au moins), loin du budget de 100 ms entre une réponse et la question suivante, que
+// perf.js mesure de bout en bout. 16/10/2026 : 65 cours, 3 474 questions préparées, 4 ms environ (borne 10 ms).
+const borneTirage = J => { let n = 0; J.donnees.indexCours.forEach(id => J.questions.questionsParFiche(id).forEach(g => { n += g.questions.length; })); return Math.max(5, 5 * Math.ceil(n / 2000)); };
 const ctxV = contexte(), JV = ctxV.JEU;
 ["index-cours", "a-retravailler"].forEach(f => vm.runInContext(fs.readFileSync(path.join(RACINE, "jeu", "data", f + ".js"), "utf8"), ctxV));
 JV.donnees.indexCours.forEach(id => {
@@ -607,7 +638,7 @@ const pV = parts(seqV, famV);
 verifier("Tirage avec les vrais cours : chaque famille qui a des questions entre 14 et 30 % (géographie et français ne débordent plus)",
   famillesV.length >= 2 && famillesV.every(f => (pV[f] || 0) >= 0.14 && (pV[f] || 0) <= 0.3), rond(pV));
 tempsV.sort((a, b) => a - b);
-verifier("Tirage avec les vrais cours : un lot de 3 en moins de 5 ms (médiane)", tempsV[Math.floor(tempsV.length / 2)] < 5, tempsV[Math.floor(tempsV.length / 2)].toFixed(2) + " ms");
+verifier("Tirage avec les vrais cours : un lot de 3 en moins de " + borneTirage(JV) + " ms (médiane ; borne suivant le nombre de questions)", tempsV[Math.floor(tempsV.length / 2)] < borneTirage(JV), tempsV[Math.floor(tempsV.length / 2)].toFixed(2) + " ms");
 
 // ---------- anti-répétition : une question ne revient pas trop tôt (demande de Romain, 15/10/2026 : « elles reviennent souvent ») ----------
 // Contexte neuf : cinq familles, un cours de 10 fiches chacune, 6 questions par fiche (niveaux 1, 1, 2, 2, 3 et 1 ; deux
@@ -824,8 +855,8 @@ verifier("Vrais cours, 40 batailles : aucune question ne revient à moins de 60 
 // mémoire remplie : exactement les questions posées (sauvegarde neuve). Avant la revue du 15/10/2026 : « plus de 300 »,
 // au bord de ce que donnent 480 réponses (289 à 327 questions différentes selon le hasard) : le test échouait 1 fois sur 15.
 const datees = Object.keys(JRV.sauvegarde.etat().posees.questions), poseesR = new Set(seqR.map(x => x.id));
-verifier("Vrais cours, en jouant : un lot de 3 en moins de 5 ms (médiane), mémoire des questions posées remplie (chaque question posée, et elles seules)",
-  tempsR[Math.floor(tempsR.length / 2)] < 5 && datees.length === poseesR.size && datees.length > 200 && datees.every(id => poseesR.has(id)),
+verifier("Vrais cours, en jouant : un lot de 3 en moins de " + borneTirage(JRV) + " ms (médiane), mémoire des questions posées remplie (chaque question posée, et elles seules)",
+  tempsR[Math.floor(tempsR.length / 2)] < borneTirage(JRV) && datees.length === poseesR.size && datees.length > 200 && datees.every(id => poseesR.has(id)),
   tempsR[Math.floor(tempsR.length / 2)].toFixed(2) + " ms ; " + datees.length + " datées, " + poseesR.size + " posées");
 
 // ---------- bataille : mêlée, sang, or perdu sur erreur, niveaux 1 à 3 (demandes de Romain, 15/10/2026) ----------

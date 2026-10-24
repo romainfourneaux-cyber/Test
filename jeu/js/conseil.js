@@ -78,7 +78,8 @@
       var q = c.q, cons = JEU.recit.conseiller(q.matiere), m = JEU.MATIERES[q.matiere];
       var cadre = JEU.recit.cadre(q, c.pilier);
       var carte = el("div", { class: "carte-conseil", style: "--teinte:" + m.couleur, tabindex: "0" }, [
-        el("div", { class: "cc-tete" }, [el("span", { class: "cc-portrait", html: JEU.icones.icone(cons.icone, 46) }), el("div", {}, [el("b", { texte: cons.nom }), el("span", { texte: cons.titre })])]),
+        el("div", { class: "cc-tete" }, [el("span", { class: "cc-portrait", html: JEU.icones.icone(cons.icone, 46) }), el("div", {}, [el("b", { texte: cons.nom }), el("span", { texte: cons.titre }),
+          cadre.repere ? el("span", { class: "recit-repere", texte: cadre.repere }) : null])]), // semaine et matière du cours (recit.js)
         el("p", { class: "cc-affaire", texte: cadre.texte }),
         cadre.etiquette ? el("span", { class: "etiquette-rappel", texte: cadre.etiquette }) : null,
         el("p", { class: "affirmation", texte: "« " + q.enonce + " »" }),

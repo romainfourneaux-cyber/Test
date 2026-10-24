@@ -5,9 +5,10 @@
 // Une bataille où les murs cèdent coûte un vivre ; escarmouche ou embuscade cédée ne se rejoue pas ; gardien et Grand
 // Gardien se retentent tant qu'il reste des vivres (taux de la 1re tentative repris à chaque essai : prudent, puisque les
 // coups portés restent). À 0 vivre, l'expédition s'arrête. Aucun vivre regagné (le bivouac s'essaie avec --repos).
-// Lignes du rival : S1-2 : 0, S3-5 : 1, S6-8 : 2, S9-12 : 3, S13+ : 4 ; embuscade et Grand Gardien : + 1 (plafond 4),
-// avec l'arsenal de la semaine (fichiers « -arsenal-1 »). Cartes : gue, foret, moulin, col, chateau selon la semaine ; le
-// Grand Gardien sur la carte de la prochaine province du front (gue par défaut).
+// Lignes du rival : S1-2 : 0, S3-5 : 1, S6-8 : 2, S9-12 : 3, S13+ : 4 ; embuscade et Grand Gardien : + --embPlus et
+// + --grandPlus (1 et 1 dans le cahier ; 1 et 0 retenus au jour 0), plafond 4, avec l'arsenal de la semaine (fichiers
+// « -arsenal-1 »). Cartes : gue, foret, moulin, col, chateau selon la semaine ; le Grand Gardien sur la carte de la
+// prochaine province du front (gue par défaut).
 // Usage : node atelier/mesures/convolution-expedition.js [--departs 1,6] [--p 0.6,0.7,0.8,0.9] [--vivres 3,4,5]
 //   [--esc 1v6|2v6|2v8] [--sansChampion] [--emb 2v10] [--gard 2v12] [--grand 3v16] [--carteGrand gue] [--decalage 0]
 //   [--embPlus 1] [--grandPlus 1]

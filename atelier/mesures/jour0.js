@@ -2,8 +2,10 @@
 // atelier/outils/simuler-bataille.js et range les résultats dans atelier/mesures/jour0/ (un .txt lisible et un .json par
 // mesure). Rien de ce dossier n'entre dans jeu/. Lecture des résultats : atelier/conception/expeditions-mesures.md.
 // Usage : node atelier/mesures/jour0.js [--paralleles 3] [--graines 80] [--seulement esc-1v6,gard-2v12-gue]
-//   (environ 10 minutes avec 3 processus en parallèle ; --seulement ne rejoue que les mesures nommées, ou celles dont le
-//   nom commence ainsi). Puis : node atelier/mesures/convolution-expedition.js (réussite d'une expédition entière).
+//   (une cinquantaine de mesures, environ 20 minutes avec 3 processus en parallèle sur une machine au repos ;
+//   --seulement ne rejoue que les mesures nommées, ou celles dont le nom commence ainsi).
+//   Puis : node atelier/mesures/tableaux-jour0.js (tableaux Markdown) et node atelier/mesures/convolution-expedition.js
+//   (réussite d'une expédition entière).
 "use strict";
 const fs = require("fs");
 const path = require("path");

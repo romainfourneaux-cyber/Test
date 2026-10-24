@@ -446,6 +446,239 @@
   ]
  },
  {
+  "id": "geographie-s04-1-f1",
+  "matiere": "geographie",
+  "semaine": 4,
+  "cours": "geographie-s04-1",
+  "notion": "La population de l'Inde",
+  "prerequis": [
+   "geographie-s01-2-f1"
+  ]
+ },
+ {
+  "id": "geographie-s04-1-f2",
+  "matiere": "geographie",
+  "semaine": 4,
+  "cours": "geographie-s04-1",
+  "notion": "Les causes de la croissance démographique indienne",
+  "prerequis": [
+   "geographie-s01-2-f2",
+   "geographie-s01-2-f4"
+  ]
+ },
+ {
+  "id": "geographie-s04-1-f3",
+  "matiere": "geographie",
+  "semaine": 4,
+  "cours": "geographie-s04-1",
+  "notion": "Les écarts de fécondité entre le nord et le sud de l'Inde",
+  "prerequis": [
+   "geographie-s01-2-f4"
+  ]
+ },
+ {
+  "id": "geographie-s04-1-f4",
+  "matiere": "geographie",
+  "semaine": 4,
+  "cours": "geographie-s04-1",
+  "notion": "La Révolution verte en Inde",
+  "prerequis": [
+   "geographie-s02-2-f1"
+  ]
+ },
+ {
+  "id": "geographie-s04-1-f5",
+  "matiere": "geographie",
+  "semaine": 4,
+  "cours": "geographie-s04-1",
+  "notion": "La faim et la malnutrition en Inde",
+  "prerequis": [
+   "geographie-s04-1-f4"
+  ]
+ },
+ {
+  "id": "geographie-s04-1-f6",
+  "matiere": "geographie",
+  "semaine": 4,
+  "cours": "geographie-s04-1",
+  "notion": "Le développement de l'Inde depuis 1950 et ses inégalités",
+  "prerequis": [
+   "geographie-s02-1-f4",
+   "geographie-s02-2-f3"
+  ]
+ },
+ {
+  "id": "geographie-s07-1-f1",
+  "matiere": "geographie",
+  "semaine": 7,
+  "cours": "geographie-s07-1",
+  "notion": "Qu'est-ce que la pauvreté ?",
+  "prerequis": [
+   "geographie-s02-2-f1"
+  ]
+ },
+ {
+  "id": "geographie-s07-1-f2",
+  "matiere": "geographie",
+  "semaine": 7,
+  "cours": "geographie-s07-1",
+  "notion": "Ressources matérielles et ressources immatérielles",
+  "prerequis": [
+   "geographie-s07-1-f1"
+  ]
+ },
+ {
+  "id": "geographie-s07-1-f3",
+  "matiere": "geographie",
+  "semaine": 7,
+  "cours": "geographie-s07-1",
+  "notion": "Le seuil de pauvreté et l'extrême pauvreté",
+  "prerequis": [
+   "geographie-s07-1-f1"
+  ]
+ },
+ {
+  "id": "geographie-s07-1-f4",
+  "matiere": "geographie",
+  "semaine": 7,
+  "cours": "geographie-s07-1",
+  "notion": "Le recul de la pauvreté dans le monde",
+  "prerequis": [
+   "geographie-s07-1-f3",
+   "geographie-s01-2-f1"
+  ]
+ },
+ {
+  "id": "geographie-s07-1-f5",
+  "matiere": "geographie",
+  "semaine": 7,
+  "cours": "geographie-s07-1",
+  "notion": "Inégalités et développement",
+  "prerequis": [
+   "geographie-s07-1-f1",
+   "geographie-s01-2-f3"
+  ]
+ },
+ {
+  "id": "geographie-s08-1-f1",
+  "matiere": "geographie",
+  "semaine": 8,
+  "cours": "geographie-s08-1",
+  "notion": "Le PIB : mesurer la richesse d'un pays",
+  "prerequis": [
+   "geographie-s02-1-f4",
+   "geographie-s07-1-f5"
+  ]
+ },
+ {
+  "id": "geographie-s08-1-f2",
+  "matiere": "geographie",
+  "semaine": 8,
+  "cours": "geographie-s08-1",
+  "notion": "L'IDH : mesurer le développement",
+  "prerequis": [
+   "geographie-s08-1-f1",
+   "geographie-s07-1-f5"
+  ]
+ },
+ {
+  "id": "geographie-s08-1-f3",
+  "matiere": "geographie",
+  "semaine": 8,
+  "cours": "geographie-s08-1",
+  "notion": "Lire la carte de l'IDH",
+  "prerequis": [
+   "geographie-s08-1-f2",
+   "geographie-s01-2-f3"
+  ]
+ },
+ {
+  "id": "geographie-s08-1-f4",
+  "matiere": "geographie",
+  "semaine": 8,
+  "cours": "geographie-s08-1",
+  "notion": "Espérance de vie et mortalité infantile",
+  "prerequis": [
+   "geographie-s08-1-f2",
+   "geographie-s02-1-f4"
+  ]
+ },
+ {
+  "id": "geographie-s08-1-f5",
+  "matiere": "geographie",
+  "semaine": 8,
+  "cours": "geographie-s08-1",
+  "notion": "L'accès aux soins dans un pays pauvre : un dispensaire de brousse",
+  "prerequis": [
+   "geographie-s07-1-f2"
+  ]
+ },
+ {
+  "id": "geographie-s08-2-f1",
+  "matiere": "geographie",
+  "semaine": 8,
+  "cours": "geographie-s08-2",
+  "notion": "La situation scolaire en Afghanistan",
+  "prerequis": [
+   "geographie-s07-1-f2",
+   "geographie-s08-1-f2"
+  ]
+ },
+ {
+  "id": "geographie-s08-2-f2",
+  "matiere": "geographie",
+  "semaine": 8,
+  "cours": "geographie-s08-2",
+  "notion": "Les freins à la scolarisation en Afghanistan",
+  "prerequis": [
+   "geographie-s08-2-f1"
+  ]
+ },
+ {
+  "id": "geographie-s08-2-f3",
+  "matiere": "geographie",
+  "semaine": 8,
+  "cours": "geographie-s08-2",
+  "notion": "L'école en Finlande",
+  "prerequis": [
+   "geographie-s08-2-f1"
+  ]
+ },
+ {
+  "id": "geographie-s08-2-f4",
+  "matiere": "geographie",
+  "semaine": 8,
+  "cours": "geographie-s08-2",
+  "notion": "Afghanistan et Finlande : population et richesse",
+  "prerequis": [
+   "geographie-s08-1-f1",
+   "geographie-s08-1-f4",
+   "geographie-s01-2-f3"
+  ]
+ },
+ {
+  "id": "geographie-s08-2-f5",
+  "matiere": "geographie",
+  "semaine": 8,
+  "cours": "geographie-s08-2",
+  "notion": "Afghanistan et Finlande : deux écoles",
+  "prerequis": [
+   "geographie-s08-2-f4",
+   "geographie-s08-2-f3"
+  ]
+ },
+ {
+  "id": "geographie-s08-2-f6",
+  "matiere": "geographie",
+  "semaine": 8,
+  "cours": "geographie-s08-2",
+  "notion": "L'alphabétisation dans le monde",
+  "prerequis": [
+   "geographie-s08-2-f1",
+   "geographie-s08-1-f3"
+  ]
+ },
+ {
   "id": "histoire-s01-1-f1",
   "matiere": "histoire",
   "semaine": 1,
@@ -610,6 +843,319 @@
   "prerequis": [
    "histoire-s03-1-f2",
    "histoire-s01-2-f2"
+  ]
+ },
+ {
+  "id": "histoire-s04-1-f1",
+  "matiere": "histoire",
+  "semaine": 4,
+  "cours": "histoire-s04-1",
+  "notion": "L'Empire abbasside (750-1258)",
+  "prerequis": [
+   "histoire-s03-1-f2"
+  ]
+ },
+ {
+  "id": "histoire-s04-1-f2",
+  "matiere": "histoire",
+  "semaine": 4,
+  "cours": "histoire-s04-1",
+  "notion": "L'Empire omeyyade comparé à l'Empire abbasside",
+  "prerequis": [
+   "histoire-s04-1-f1",
+   "histoire-s03-1-f3"
+  ]
+ },
+ {
+  "id": "histoire-s04-1-f3",
+  "matiere": "histoire",
+  "semaine": 4,
+  "cours": "histoire-s04-1",
+  "notion": "Les lieux : La Mecque, Médine, Damas, Jérusalem, le Yarmouk",
+  "prerequis": [
+   "histoire-s04-1-f1"
+  ]
+ },
+ {
+  "id": "histoire-s04-1-f4",
+  "matiere": "histoire",
+  "semaine": 4,
+  "cours": "histoire-s04-1",
+  "notion": "Le calendrier hégirien",
+  "prerequis": [
+   "histoire-s03-1-f1"
+  ]
+ },
+ {
+  "id": "histoire-s04-1-f5",
+  "matiere": "histoire",
+  "semaine": 4,
+  "cours": "histoire-s04-1",
+  "notion": "Un texte du Coran sur le jeûne du ramadan",
+  "prerequis": []
+ },
+ {
+  "id": "histoire-s04-3-f1",
+  "matiere": "histoire",
+  "semaine": 4,
+  "cours": "histoire-s04-3",
+  "notion": "Les campagnes de l'an mil à 1348 : repères",
+  "prerequis": []
+ },
+ {
+  "id": "histoire-s04-3-f2",
+  "matiere": "histoire",
+  "semaine": 4,
+  "cours": "histoire-s04-3",
+  "notion": "Les paysans, plus de 90 % de la population",
+  "prerequis": []
+ },
+ {
+  "id": "histoire-s04-3-f3",
+  "matiere": "histoire",
+  "semaine": 4,
+  "cours": "histoire-s04-3",
+  "notion": "Les travaux des paysans mois par mois",
+  "prerequis": [
+   "histoire-s04-3-f2"
+  ]
+ },
+ {
+  "id": "histoire-s04-3-f4",
+  "matiere": "histoire",
+  "semaine": 4,
+  "cours": "histoire-s04-3",
+  "notion": "La famine de 1033",
+  "prerequis": [
+   "histoire-s04-3-f2"
+  ]
+ },
+ {
+  "id": "histoire-s05-1-f1",
+  "matiere": "histoire",
+  "semaine": 5,
+  "cours": "histoire-s05-1",
+  "notion": "La seigneurie : tenures et réserve",
+  "prerequis": [
+   "histoire-s04-3-f1"
+  ]
+ },
+ {
+  "id": "histoire-s05-1-f2",
+  "matiere": "histoire",
+  "semaine": 5,
+  "cours": "histoire-s05-1",
+  "notion": "Les droits du seigneur : forêt, chasse, justice",
+  "prerequis": [
+   "histoire-s05-1-f1"
+  ]
+ },
+ {
+  "id": "histoire-s05-1-f3",
+  "matiere": "histoire",
+  "semaine": 5,
+  "cours": "histoire-s05-1",
+  "notion": "Les banalités : moulin, four, pressoir",
+  "prerequis": [
+   "histoire-s05-1-f1"
+  ]
+ },
+ {
+  "id": "histoire-s05-1-f4",
+  "matiere": "histoire",
+  "semaine": 5,
+  "cours": "histoire-s05-1",
+  "notion": "Le plan de la seigneurie de Wismes (XIVe siècle)",
+  "prerequis": [
+   "histoire-s05-1-f1",
+   "histoire-s05-1-f2"
+  ]
+ },
+ {
+  "id": "histoire-s05-2-f1",
+  "matiere": "histoire",
+  "semaine": 5,
+  "cours": "histoire-s05-2",
+  "notion": "Les redevances de Verson, de la saint Jean à la saint Denis",
+  "prerequis": [
+   "histoire-s05-1-f1"
+  ]
+ },
+ {
+  "id": "histoire-s05-2-f2",
+  "matiere": "histoire",
+  "semaine": 5,
+  "cours": "histoire-s05-2",
+  "notion": "Les redevances de Verson, de l'hiver à Pâques",
+  "prerequis": [
+   "histoire-s05-2-f1"
+  ]
+ },
+ {
+  "id": "histoire-s05-2-f3",
+  "matiere": "histoire",
+  "semaine": 5,
+  "cours": "histoire-s05-2",
+  "notion": "Quatre façons de payer le seigneur : argent, récolte, usage, travail",
+  "prerequis": [
+   "histoire-s05-1-f1",
+   "histoire-s05-1-f3",
+   "histoire-s05-2-f1"
+  ]
+ },
+ {
+  "id": "histoire-s05-2-f4",
+  "matiere": "histoire",
+  "semaine": 5,
+  "cours": "histoire-s05-2",
+  "notion": "Où vont les redevances : manoir, grange, château, moulin, four",
+  "prerequis": [
+   "histoire-s05-2-f1",
+   "histoire-s05-2-f2"
+  ]
+ },
+ {
+  "id": "histoire-s06-1-f1",
+  "matiere": "histoire",
+  "semaine": 6,
+  "cours": "histoire-s06-1",
+  "notion": "La charrue, une invention du Moyen Âge (XIIe siècle)",
+  "prerequis": [
+   "histoire-s04-3-f2"
+  ]
+ },
+ {
+  "id": "histoire-s06-1-f2",
+  "matiere": "histoire",
+  "semaine": 6,
+  "cours": "histoire-s06-1",
+  "notion": "Le collier d'épaule et les laboureurs",
+  "prerequis": [
+   "histoire-s06-1-f1"
+  ]
+ },
+ {
+  "id": "histoire-s06-1-f3",
+  "matiere": "histoire",
+  "semaine": 6,
+  "cours": "histoire-s06-1",
+  "notion": "Les taxes dues par tous les paysans : cens, banalités, champart, corvées",
+  "prerequis": [
+   "histoire-s05-1-f1",
+   "histoire-s05-2-f3"
+  ]
+ },
+ {
+  "id": "histoire-s06-1-f4",
+  "matiere": "histoire",
+  "semaine": 6,
+  "cours": "histoire-s06-1",
+  "notion": "Les taxes propres aux serfs : chevage, formariage, mainmorte",
+  "prerequis": [
+   "histoire-s06-1-f3",
+   "histoire-s05-2-f3"
+  ]
+ },
+ {
+  "id": "histoire-s07-2-f1",
+  "matiere": "histoire",
+  "semaine": 7,
+  "cours": "histoire-s07-2",
+  "notion": "La frise de 900 à 1500 : rois, batailles et guerre de Cent Ans",
+  "prerequis": [
+   "histoire-s04-3-f1"
+  ]
+ },
+ {
+  "id": "histoire-s07-2-f2",
+  "matiere": "histoire",
+  "semaine": 7,
+  "cours": "histoire-s07-2",
+  "notion": "987 : Hugues Capet élu roi",
+  "prerequis": [
+   "histoire-s07-2-f1",
+   "histoire-s04-3-f1"
+  ]
+ },
+ {
+  "id": "histoire-s07-2-f3",
+  "matiere": "histoire",
+  "semaine": 7,
+  "cours": "histoire-s07-2",
+  "notion": "Vassal et seigneur, duchés et comtés",
+  "prerequis": [
+   "histoire-s01-2-f4"
+  ]
+ },
+ {
+  "id": "histoire-s08-1-f1",
+  "matiere": "histoire",
+  "semaine": 8,
+  "cours": "histoire-s08-1",
+  "notion": "Le domaine royal, autour de Paris, et les principaux fiefs",
+  "prerequis": [
+   "histoire-s07-2-f3"
+  ]
+ },
+ {
+  "id": "histoire-s08-1-f2",
+  "matiere": "histoire",
+  "semaine": 8,
+  "cours": "histoire-s08-1",
+  "notion": "Philippe Auguste (1180-1223) et la bataille de Bouvines (1214)",
+  "prerequis": [
+   "histoire-s07-2-f1"
+  ]
+ },
+ {
+  "id": "histoire-s08-1-f3",
+  "matiere": "histoire",
+  "semaine": 8,
+  "cours": "histoire-s08-1",
+  "notion": "Louis IX (1226-1270) et Philippe le Bel (1285-1314)",
+  "prerequis": [
+   "histoire-s08-1-f2"
+  ]
+ },
+ {
+  "id": "histoire-s08-1-f4",
+  "matiere": "histoire",
+  "semaine": 8,
+  "cours": "histoire-s08-1",
+  "notion": "La guerre de Cent Ans (1337-1453) et Jeanne d'Arc (1428)",
+  "prerequis": [
+   "histoire-s08-1-f3"
+  ]
+ },
+ {
+  "id": "histoire-s08-2-f1",
+  "matiere": "histoire",
+  "semaine": 8,
+  "cours": "histoire-s08-2",
+  "notion": "Le document : une enluminure de Jean Fouquet dans les Grandes Chroniques de France",
+  "prerequis": [
+   "histoire-s01-2-f3"
+  ]
+ },
+ {
+  "id": "histoire-s08-2-f2",
+  "matiere": "histoire",
+  "semaine": 8,
+  "cours": "histoire-s08-2",
+  "notion": "La scène : l'hommage d'Édouard Ier à Philippe le Bel",
+  "prerequis": [
+   "histoire-s08-1-f3",
+   "histoire-s08-2-f1"
+  ]
+ },
+ {
+  "id": "histoire-s08-2-f3",
+  "matiere": "histoire",
+  "semaine": 8,
+  "cours": "histoire-s08-2",
+  "notion": "Lire l'image : trône, couronnes, manteau à fleurs de lys, livre",
+  "prerequis": [
+   "histoire-s08-2-f2"
   ]
  },
  {
@@ -872,6 +1418,254 @@
   "prerequis": []
  },
  {
+  "id": "lecture-s04-1-f1",
+  "matiere": "lecture",
+  "semaine": 4,
+  "cours": "lecture-s04-1",
+  "notion": "L'ours polaire et les pinnipèdes",
+  "prerequis": [
+   "lecture-s01-1-f1"
+  ]
+ },
+ {
+  "id": "lecture-s04-1-f2",
+  "matiere": "lecture",
+  "semaine": 4,
+  "cours": "lecture-s04-1",
+  "notion": "Le pingouin et les grands animaux de l'océan Arctique",
+  "prerequis": [
+   "lecture-s04-1-f1"
+  ]
+ },
+ {
+  "id": "lecture-s04-1-f3",
+  "matiere": "lecture",
+  "semaine": 4,
+  "cours": "lecture-s04-1",
+  "notion": "Le harfang des neiges et le lemming",
+  "prerequis": []
+ },
+ {
+  "id": "lecture-s04-1-f4",
+  "matiere": "lecture",
+  "semaine": 4,
+  "cours": "lecture-s04-1",
+  "notion": "Le lièvre arctique et le renard polaire",
+  "prerequis": []
+ },
+ {
+  "id": "lecture-s04-1-f5",
+  "matiere": "lecture",
+  "semaine": 4,
+  "cours": "lecture-s04-1",
+  "notion": "Le loup arctique et le bœuf musqué",
+  "prerequis": [
+   "lecture-s04-1-f4"
+  ]
+ },
+ {
+  "id": "lecture-s05-1-f1",
+  "matiere": "lecture",
+  "semaine": 5,
+  "cours": "lecture-s05-1",
+  "notion": "L'Antarctique et le manchot empereur",
+  "prerequis": [
+   "lecture-s01-1-f1",
+   "lecture-s04-1-f2"
+  ]
+ },
+ {
+  "id": "lecture-s05-1-f2",
+  "matiere": "lecture",
+  "semaine": 5,
+  "cours": "lecture-s05-1",
+  "notion": "Les oiseaux de l'Antarctique",
+  "prerequis": [
+   "lecture-s05-1-f1"
+  ]
+ },
+ {
+  "id": "lecture-s05-1-f3",
+  "matiere": "lecture",
+  "semaine": 5,
+  "cours": "lecture-s05-1",
+  "notion": "Pinnipèdes et cétacés de l'Antarctique",
+  "prerequis": [
+   "lecture-s04-1-f1"
+  ]
+ },
+ {
+  "id": "lecture-s05-1-f4",
+  "matiere": "lecture",
+  "semaine": 5,
+  "cours": "lecture-s05-1",
+  "notion": "Les oiseaux rencontrés par les marins",
+  "prerequis": []
+ },
+ {
+  "id": "lecture-s06-1-f1",
+  "matiere": "lecture",
+  "semaine": 6,
+  "cours": "lecture-s06-1",
+  "notion": "Les mots du port",
+  "prerequis": [
+   "lecture-s03-1-f1"
+  ]
+ },
+ {
+  "id": "lecture-s06-1-f2",
+  "matiere": "lecture",
+  "semaine": 6,
+  "cours": "lecture-s06-1",
+  "notion": "Acheter, gagner, vendre",
+  "prerequis": [
+   "lecture-s02-1-f1"
+  ]
+ },
+ {
+  "id": "lecture-s06-1-f3",
+  "matiere": "lecture",
+  "semaine": 6,
+  "cours": "lecture-s06-1",
+  "notion": "Le matériel du bord",
+  "prerequis": [
+   "lecture-s02-1-f3"
+  ]
+ },
+ {
+  "id": "lecture-s06-1-f4",
+  "matiere": "lecture",
+  "semaine": 6,
+  "cours": "lecture-s06-1",
+  "notion": "Les verbes de l'aventure",
+  "prerequis": [
+   "lecture-s03-1-f1"
+  ]
+ },
+ {
+  "id": "lecture-s06-1-f5",
+  "matiere": "lecture",
+  "semaine": 6,
+  "cours": "lecture-s06-1",
+  "notion": "Pris dans les glaces",
+  "prerequis": [
+   "lecture-s01-1-f2",
+   "lecture-s03-1-f3"
+  ]
+ },
+ {
+  "id": "lecture-s07-1-f1",
+  "matiere": "lecture",
+  "semaine": 7,
+  "cours": "lecture-s07-1",
+  "notion": "Manger et se laver à bord",
+  "prerequis": [
+   "lecture-s02-1-f5"
+  ]
+ },
+ {
+  "id": "lecture-s07-1-f2",
+  "matiere": "lecture",
+  "semaine": 7,
+  "cours": "lecture-s07-1",
+  "notion": "Les maladies du bord",
+  "prerequis": [
+   "lecture-s07-1-f1"
+  ]
+ },
+ {
+  "id": "lecture-s07-1-f3",
+  "matiere": "lecture",
+  "semaine": 7,
+  "cours": "lecture-s07-1",
+  "notion": "Fatigue et peur",
+  "prerequis": [
+   "lecture-s07-1-f2"
+  ]
+ },
+ {
+  "id": "lecture-s07-1-f4",
+  "matiere": "lecture",
+  "semaine": 7,
+  "cours": "lecture-s07-1",
+  "notion": "S'habiller contre le froid",
+  "prerequis": []
+ },
+ {
+  "id": "lecture-s07-1-f5",
+  "matiere": "lecture",
+  "semaine": 7,
+  "cours": "lecture-s07-1",
+  "notion": "Courage et solidité",
+  "prerequis": [
+   "lecture-s07-1-f3"
+  ]
+ },
+ {
+  "id": "lecture-s07-1-f6",
+  "matiere": "lecture",
+  "semaine": 7,
+  "cours": "lecture-s07-1",
+  "notion": "Le paysage et la lumière des glaces",
+  "prerequis": [
+   "lecture-s01-1-f3"
+  ]
+ },
+ {
+  "id": "lecture-s08-1-f1",
+  "matiere": "lecture",
+  "semaine": 8,
+  "cours": "lecture-s08-1",
+  "notion": "Le nœud en huit et le nœud de chaise",
+  "prerequis": [
+   "lecture-s02-1-f3"
+  ]
+ },
+ {
+  "id": "lecture-s08-1-f2",
+  "matiere": "lecture",
+  "semaine": 8,
+  "cours": "lecture-s08-1",
+  "notion": "Nœud de cabestan, nœud de taquet et nœud plat",
+  "prerequis": [
+   "lecture-s08-1-f1"
+  ]
+ },
+ {
+  "id": "lecture-s08-1-f3",
+  "matiere": "lecture",
+  "semaine": 8,
+  "cours": "lecture-s08-1",
+  "notion": "Complots et désaccords",
+  "prerequis": []
+ },
+ {
+  "id": "lecture-s08-1-f4",
+  "matiere": "lecture",
+  "semaine": 8,
+  "cours": "lecture-s08-1",
+  "notion": "Les adverbes de la rapidité et de la certitude",
+  "prerequis": []
+ },
+ {
+  "id": "lecture-s08-1-f5",
+  "matiere": "lecture",
+  "semaine": 8,
+  "cours": "lecture-s08-1",
+  "notion": "Des expressions d'autrefois",
+  "prerequis": []
+ },
+ {
+  "id": "lecture-s08-1-f6",
+  "matiere": "lecture",
+  "semaine": 8,
+  "cours": "lecture-s08-1",
+  "notion": "Prévenir, affecter, abîmé, assurer, naturel",
+  "prerequis": [
+   "lecture-s08-1-f3"
+  ]
+ },
+ {
   "id": "litterature-s01-2-f1",
   "matiere": "litterature",
   "semaine": 1,
@@ -976,6 +1770,119 @@
   "notion": "La focalisation interne",
   "prerequis": [
    "litterature-s03-2-f2"
+  ]
+ },
+ {
+  "id": "litterature-s05-2-f1",
+  "matiere": "litterature",
+  "semaine": 5,
+  "cours": "litterature-s05-2",
+  "notion": "L'énumération d'actions",
+  "prerequis": [
+   "litterature-s01-2-f2"
+  ]
+ },
+ {
+  "id": "litterature-s05-2-f2",
+  "matiere": "litterature",
+  "semaine": 5,
+  "cours": "litterature-s05-2",
+  "notion": "L'onomatopée",
+  "prerequis": []
+ },
+ {
+  "id": "litterature-s05-2-f3",
+  "matiere": "litterature",
+  "semaine": 5,
+  "cours": "litterature-s05-2",
+  "notion": "Les projections d'un personnage",
+  "prerequis": [
+   "litterature-s05-2-f1"
+  ]
+ },
+ {
+  "id": "litterature-s05-2-f4",
+  "matiere": "litterature",
+  "semaine": 5,
+  "cours": "litterature-s05-2",
+  "notion": "Écrire un court récit : respecter le sujet",
+  "prerequis": [
+   "litterature-s05-2-f3"
+  ]
+ },
+ {
+  "id": "litterature-s06-2-f1",
+  "matiere": "litterature",
+  "semaine": 6,
+  "cours": "litterature-s06-2",
+  "notion": "Donner une impression de vitesse",
+  "prerequis": []
+ },
+ {
+  "id": "litterature-s06-2-f2",
+  "matiere": "litterature",
+  "semaine": 6,
+  "cours": "litterature-s06-2",
+  "notion": "Le passé simple et le personnage pris de court",
+  "prerequis": [
+   "litterature-s06-2-f1"
+  ]
+ },
+ {
+  "id": "litterature-s06-2-f3",
+  "matiere": "litterature",
+  "semaine": 6,
+  "cours": "litterature-s06-2",
+  "notion": "Changer de narrateur",
+  "prerequis": [
+   "litterature-s03-2-f3",
+   "litterature-s05-2-f4"
+  ]
+ },
+ {
+  "id": "litterature-s08-2-f1",
+  "matiere": "litterature",
+  "semaine": 8,
+  "cours": "litterature-s08-2",
+  "notion": "Le sonnet",
+  "prerequis": []
+ },
+ {
+  "id": "litterature-s08-2-f2",
+  "matiere": "litterature",
+  "semaine": 8,
+  "cours": "litterature-s08-2",
+  "notion": "L'alexandrin",
+  "prerequis": []
+ },
+ {
+  "id": "litterature-s08-2-f3",
+  "matiere": "litterature",
+  "semaine": 8,
+  "cours": "litterature-s08-2",
+  "notion": "L'enjambement",
+  "prerequis": [
+   "litterature-s08-2-f2"
+  ]
+ },
+ {
+  "id": "litterature-s08-2-f4",
+  "matiere": "litterature",
+  "semaine": 8,
+  "cours": "litterature-s08-2",
+  "notion": "La comparaison",
+  "prerequis": [
+   "litterature-s02-2-f4"
+  ]
+ },
+ {
+  "id": "litterature-s08-2-f5",
+  "matiere": "litterature",
+  "semaine": 8,
+  "cours": "litterature-s08-2",
+  "notion": "La métonymie",
+  "prerequis": [
+   "litterature-s08-2-f4"
   ]
  },
  {
@@ -1143,6 +2050,237 @@
   "notion": "Dense ou lourd ?",
   "prerequis": [
    "physique-s03-1-f4"
+  ]
+ },
+ {
+  "id": "physique-s04-1-f1",
+  "matiere": "physique",
+  "semaine": 4,
+  "cours": "physique-s04-1",
+  "notion": "Mélange homogène, mélange hétérogène",
+  "prerequis": [
+   "physique-s01-1-f1"
+  ]
+ },
+ {
+  "id": "physique-s04-1-f2",
+  "matiere": "physique",
+  "semaine": 4,
+  "cours": "physique-s04-1",
+  "notion": "Laisser reposer pour connaître un mélange",
+  "prerequis": [
+   "physique-s04-1-f1"
+  ]
+ },
+ {
+  "id": "physique-s04-1-f3",
+  "matiere": "physique",
+  "semaine": 4,
+  "cours": "physique-s04-1",
+  "notion": "Solvant et soluté",
+  "prerequis": [
+   "physique-s04-1-f1"
+  ]
+ },
+ {
+  "id": "physique-s04-1-f4",
+  "matiere": "physique",
+  "semaine": 4,
+  "cours": "physique-s04-1",
+  "notion": "La solubilité du sel : une limite",
+  "prerequis": [
+   "physique-s04-1-f3",
+   "physique-s03-1-f4"
+  ]
+ },
+ {
+  "id": "physique-s04-1-f5",
+  "matiere": "physique",
+  "semaine": 4,
+  "cours": "physique-s04-1",
+  "notion": "Doser un soluté : la proportionnalité",
+  "prerequis": [
+   "physique-s04-1-f3"
+  ]
+ },
+ {
+  "id": "physique-s04-1-f6",
+  "matiere": "physique",
+  "semaine": 4,
+  "cours": "physique-s04-1",
+  "notion": "La masse d'une eau salée",
+  "prerequis": [
+   "physique-s04-1-f3",
+   "methode-instruments-f2"
+  ]
+ },
+ {
+  "id": "physique-s05-1-f1",
+  "matiere": "physique",
+  "semaine": 5,
+  "cours": "physique-s05-1",
+  "notion": "Vaporisation puis fusion dans un ballon",
+  "prerequis": [
+   "physique-s02-1-f1",
+   "physique-s02-1-f2"
+  ]
+ },
+ {
+  "id": "physique-s05-1-f2",
+  "matiere": "physique",
+  "semaine": 5,
+  "cours": "physique-s05-1",
+  "notion": "Pendant un changement d'état, la température ne change pas",
+  "prerequis": [
+   "physique-s05-1-f1"
+  ]
+ },
+ {
+  "id": "physique-s05-1-f3",
+  "matiere": "physique",
+  "semaine": 5,
+  "cours": "physique-s05-1",
+  "notion": "Fusion et solidification de l'eau pure : 0 °C",
+  "prerequis": [
+   "physique-s02-1-f1",
+   "physique-s05-1-f2"
+  ]
+ },
+ {
+  "id": "physique-s05-1-f4",
+  "matiere": "physique",
+  "semaine": 5,
+  "cours": "physique-s05-1",
+  "notion": "Lire le graphique de solidification de l'eau salée",
+  "prerequis": [
+   "methode-graphique-f5",
+   "physique-s05-1-f2"
+  ]
+ },
+ {
+  "id": "physique-s05-1-f5",
+  "matiere": "physique",
+  "semaine": 5,
+  "cours": "physique-s05-1",
+  "notion": "L'eau salée ne gèle pas comme l'eau pure",
+  "prerequis": [
+   "physique-s05-1-f4",
+   "physique-s04-1-f3"
+  ]
+ },
+ {
+  "id": "physique-s06-1-f1",
+  "matiere": "physique",
+  "semaine": 6,
+  "cours": "physique-s06-1",
+  "notion": "Masse et volume au cours du changement d'état",
+  "prerequis": [
+   "physique-s02-1-f1",
+   "methode-instruments-f2"
+  ]
+ },
+ {
+  "id": "physique-s06-1-f2",
+  "matiere": "physique",
+  "semaine": 6,
+  "cours": "physique-s06-1",
+  "notion": "Les quatre changements d'état de l'eau et leurs températures",
+  "prerequis": [
+   "physique-s02-1-f1",
+   "physique-s02-1-f2",
+   "physique-s05-1-f3"
+  ]
+ },
+ {
+  "id": "physique-s06-1-f3",
+  "matiere": "physique",
+  "semaine": 6,
+  "cours": "physique-s06-1",
+  "notion": "Corps pur ou alliage : la température de fusion",
+  "prerequis": [
+   "physique-s05-1-f3"
+  ]
+ },
+ {
+  "id": "physique-s06-1-f4",
+  "matiere": "physique",
+  "semaine": 6,
+  "cours": "physique-s06-1",
+  "notion": "Reconnaître un métal par sa densité",
+  "prerequis": [
+   "physique-s03-1-f5",
+   "physique-s06-1-f3"
+  ]
+ },
+ {
+  "id": "physique-s06-1-f5",
+  "matiere": "physique",
+  "semaine": 6,
+  "cours": "physique-s06-1",
+  "notion": "Deux verres pour modéliser la fonte des glaces",
+  "prerequis": [
+   "physique-s06-1-f1"
+  ]
+ },
+ {
+  "id": "physique-s06-1-f6",
+  "matiere": "physique",
+  "semaine": 6,
+  "cours": "physique-s06-1",
+  "notion": "Banquise, calottes glaciaires et niveau des océans",
+  "prerequis": [
+   "physique-s06-1-f5",
+   "physique-s05-1-f5"
+  ]
+ },
+ {
+  "id": "physique-s08-1-f1",
+  "matiere": "physique",
+  "semaine": 8,
+  "cours": "physique-s08-1",
+  "notion": "Fabriquer un papier pH avec du chou rouge",
+  "prerequis": [
+   "physique-s04-1-f1"
+  ]
+ },
+ {
+  "id": "physique-s08-1-f2",
+  "matiere": "physique",
+  "semaine": 8,
+  "cours": "physique-s08-1",
+  "notion": "L'échelle de couleurs du chou rouge",
+  "prerequis": [
+   "physique-s08-1-f1"
+  ]
+ },
+ {
+  "id": "physique-s08-1-f3",
+  "matiere": "physique",
+  "semaine": 8,
+  "cours": "physique-s08-1",
+  "notion": "Le pH : acide, neutre ou basique",
+  "prerequis": [
+   "physique-s08-1-f2"
+  ]
+ },
+ {
+  "id": "physique-s08-1-f4",
+  "matiere": "physique",
+  "semaine": 8,
+  "cours": "physique-s08-1",
+  "notion": "Le pH de boissons et de produits ménagers",
+  "prerequis": [
+   "physique-s08-1-f3"
+  ]
+ },
+ {
+  "id": "physique-s08-1-f5",
+  "matiere": "physique",
+  "semaine": 8,
+  "cours": "physique-s08-1",
+  "notion": "Les acides agissent sur la matière",
+  "prerequis": [
+   "physique-s08-1-f3"
   ]
  },
  {
@@ -1393,6 +2531,318 @@
   "cours": "svt-s03-1",
   "notion": "Petite histoire de la météorologie en France",
   "prerequis": []
+ },
+ {
+  "id": "svt-s04-1-f1",
+  "matiere": "svt",
+  "semaine": 4,
+  "cours": "svt-s04-1",
+  "notion": "La circulation thermohaline",
+  "prerequis": [
+   "svt-s03-1-f4"
+  ]
+ },
+ {
+  "id": "svt-s04-1-f2",
+  "matiere": "svt",
+  "semaine": 4,
+  "cours": "svt-s04-1",
+  "notion": "Simuler les courants chauds et froids",
+  "prerequis": [
+   "svt-s04-1-f1"
+  ]
+ },
+ {
+  "id": "svt-s04-1-f3",
+  "matiere": "svt",
+  "semaine": 4,
+  "cours": "svt-s04-1",
+  "notion": "Simuler un courant d'eau salée",
+  "prerequis": [
+   "svt-s04-1-f2"
+  ]
+ },
+ {
+  "id": "svt-s04-1-f4",
+  "matiere": "svt",
+  "semaine": 4,
+  "cours": "svt-s04-1",
+  "notion": "Le diagramme ombrothermique de Palerme",
+  "prerequis": [
+   "methode-ombrothermique-f1"
+  ]
+ },
+ {
+  "id": "svt-s04-2-f1",
+  "matiere": "svt",
+  "semaine": 4,
+  "cours": "svt-s04-2",
+  "notion": "Saison sèche et saison humide",
+  "prerequis": [
+   "methode-ombrothermique-f1"
+  ]
+ },
+ {
+  "id": "svt-s04-2-f2",
+  "matiere": "svt",
+  "semaine": 4,
+  "cours": "svt-s04-2",
+  "notion": "Le climat tropical",
+  "prerequis": [
+   "svt-s04-2-f1"
+  ]
+ },
+ {
+  "id": "svt-s04-2-f3",
+  "matiere": "svt",
+  "semaine": 4,
+  "cours": "svt-s04-2",
+  "notion": "L'hiver austral et l'hémisphère sud",
+  "prerequis": [
+   "svt-s02-1-f5",
+   "svt-s04-2-f2"
+  ]
+ },
+ {
+  "id": "svt-s04-2-f4",
+  "matiere": "svt",
+  "semaine": 4,
+  "cours": "svt-s04-2",
+  "notion": "Analyser un diagramme ombrothermique",
+  "prerequis": [
+   "svt-s04-2-f1",
+   "svt-s04-2-f3"
+  ]
+ },
+ {
+  "id": "svt-s05-1-f1",
+  "matiere": "svt",
+  "semaine": 5,
+  "cours": "svt-s05-1",
+  "notion": "Périodes glaciaires et interglaciaires",
+  "prerequis": []
+ },
+ {
+  "id": "svt-s05-1-f2",
+  "matiere": "svt",
+  "semaine": 5,
+  "cours": "svt-s05-1",
+  "notion": "Mesurer la durée d'une période glaciaire",
+  "prerequis": [
+   "svt-s05-1-f1"
+  ]
+ },
+ {
+  "id": "svt-s05-1-f3",
+  "matiere": "svt",
+  "semaine": 5,
+  "cours": "svt-s05-1",
+  "notion": "Ce qu'une moyenne ne dit pas",
+  "prerequis": [
+   "svt-s05-1-f2"
+  ]
+ },
+ {
+  "id": "svt-s05-1-f4",
+  "matiere": "svt",
+  "semaine": 5,
+  "cours": "svt-s05-1",
+  "notion": "Lire les cartes de pollens d'Europe",
+  "prerequis": [
+   "svt-s05-1-f1"
+  ]
+ },
+ {
+  "id": "svt-s05-1-f5",
+  "matiere": "svt",
+  "semaine": 5,
+  "cours": "svt-s05-1",
+  "notion": "La toundra de l'Europe glaciaire",
+  "prerequis": [
+   "svt-s05-1-f4"
+  ]
+ },
+ {
+  "id": "svt-s05-2-f1",
+  "matiere": "svt",
+  "semaine": 5,
+  "cours": "svt-s05-2",
+  "notion": "L'aléa",
+  "prerequis": [
+   "svt-s03-1-f4"
+  ]
+ },
+ {
+  "id": "svt-s05-2-f2",
+  "matiere": "svt",
+  "semaine": 5,
+  "cours": "svt-s05-2",
+  "notion": "Les enjeux",
+  "prerequis": [
+   "svt-s05-2-f1"
+  ]
+ },
+ {
+  "id": "svt-s05-2-f3",
+  "matiere": "svt",
+  "semaine": 5,
+  "cours": "svt-s05-2",
+  "notion": "La vulnérabilité et le risque",
+  "prerequis": [
+   "svt-s05-2-f2"
+  ]
+ },
+ {
+  "id": "svt-s05-2-f4",
+  "matiere": "svt",
+  "semaine": 5,
+  "cours": "svt-s05-2",
+  "notion": "Analyser un risque",
+  "prerequis": [
+   "svt-s05-2-f3"
+  ]
+ },
+ {
+  "id": "svt-s06-1-f1",
+  "matiere": "svt",
+  "semaine": 6,
+  "cours": "svt-s06-1",
+  "notion": "Le cyclone, un risque climatique à la Réunion",
+  "prerequis": [
+   "svt-s05-2-f1",
+   "svt-s05-2-f3"
+  ]
+ },
+ {
+  "id": "svt-s06-1-f2",
+  "matiere": "svt",
+  "semaine": 6,
+  "cours": "svt-s06-1",
+  "notion": "1962 : le cyclone Jenny",
+  "prerequis": [
+   "svt-s06-1-f1"
+  ]
+ },
+ {
+  "id": "svt-s06-1-f3",
+  "matiere": "svt",
+  "semaine": 6,
+  "cours": "svt-s06-1",
+  "notion": "Prévenir aujourd'hui : alertes graduées et kit de survie",
+  "prerequis": [
+   "svt-s06-1-f2"
+  ]
+ },
+ {
+  "id": "svt-s06-1-f4",
+  "matiere": "svt",
+  "semaine": 6,
+  "cours": "svt-s06-1",
+  "notion": "Un risque qui baisse sans que l'aléa change",
+  "prerequis": [
+   "svt-s06-1-f3",
+   "svt-s05-2-f4"
+  ]
+ },
+ {
+  "id": "svt-s08-1-f1",
+  "matiere": "svt",
+  "semaine": 8,
+  "cours": "svt-s08-1",
+  "notion": "Qu'est-ce qu'un biome ?",
+  "prerequis": [
+   "svt-s04-2-f2"
+  ]
+ },
+ {
+  "id": "svt-s08-1-f2",
+  "matiere": "svt",
+  "semaine": 8,
+  "cours": "svt-s08-1",
+  "notion": "Le triangle de Holdridge",
+  "prerequis": [
+   "svt-s08-1-f1"
+  ]
+ },
+ {
+  "id": "svt-s08-1-f3",
+  "matiere": "svt",
+  "semaine": 8,
+  "cours": "svt-s08-1",
+  "notion": "La carte des biomes terrestres",
+  "prerequis": [
+   "svt-s08-1-f1"
+  ]
+ },
+ {
+  "id": "svt-s08-1-f4",
+  "matiere": "svt",
+  "semaine": 8,
+  "cours": "svt-s08-1",
+  "notion": "Les biomes d'eau douce",
+  "prerequis": [
+   "svt-s08-1-f1"
+  ]
+ },
+ {
+  "id": "svt-s08-1-f5",
+  "matiere": "svt",
+  "semaine": 8,
+  "cours": "svt-s08-1",
+  "notion": "Les biomes marins",
+  "prerequis": [
+   "svt-s08-1-f4"
+  ]
+ },
+ {
+  "id": "svt-s08-2-f1",
+  "matiere": "svt",
+  "semaine": 8,
+  "cours": "svt-s08-2",
+  "notion": "Le sol en coupe",
+  "prerequis": [
+   "svt-s08-1-f1"
+  ]
+ },
+ {
+  "id": "svt-s08-2-f2",
+  "matiere": "svt",
+  "semaine": 8,
+  "cours": "svt-s08-2",
+  "notion": "Les ressources naturelles biologiques",
+  "prerequis": [
+   "svt-s08-1-f1"
+  ]
+ },
+ {
+  "id": "svt-s08-2-f3",
+  "matiere": "svt",
+  "semaine": 8,
+  "cours": "svt-s08-2",
+  "notion": "Laine, liège, chanvre et lin",
+  "prerequis": [
+   "svt-s08-2-f2"
+  ]
+ },
+ {
+  "id": "svt-s08-2-f4",
+  "matiere": "svt",
+  "semaine": 8,
+  "cours": "svt-s08-2",
+  "notion": "Le mix énergétique mondial en 2015",
+  "prerequis": [
+   "svt-s08-2-f2"
+  ]
+ },
+ {
+  "id": "svt-s08-2-f5",
+  "matiere": "svt",
+  "semaine": 8,
+  "cours": "svt-s08-2",
+  "notion": "Construire un diagramme circulaire",
+  "prerequis": [
+   "svt-s08-2-f4"
+  ]
  },
  {
   "id": "anglais-seq01-v1",

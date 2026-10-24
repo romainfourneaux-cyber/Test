@@ -69,6 +69,30 @@
 
   function conseiller(matiere) { return CONSEILLERS[matiere] || CONSEILLERS.histoire; }
 
+  // Repère du cours d'une question, pour voir les semaines défiler dans les batailles, les événements et au conseil
+  // (demande de Romain, 16/10/2026) : « Semaine 4 · Histoire · Cours 5 » pour un cours du planning (semaine, matière et
+  // le numéro que porte son titre : Cours, Séance, Étude de cas, Outil, sinon Thème ; rien de plus si le titre n'en a
+  // pas), « Grammaire · Griffon de cuivre » pour un cours de langue (son badge), « Savoir-faire · Histoire » pour une
+  // fiche méthode, « Anglais · Séquence 1 » pour une séquence. L'énoncé ne change pas : le repère s'ajoute au cadre.
+  // Mémorisé par cours : la question suivante n'attend rien.
+  var reperes = {};
+  function repere(coursId) {
+    if (!coursId) return "";
+    if (Object.prototype.hasOwnProperty.call(reperes, coursId)) return reperes[coursId];
+    var m = U.matiereDe(coursId), nomM = JEU.MATIERES[m] ? JEU.MATIERES[m].nom : "", c = U.coursCharge(coursId) || {}, P = JEU.progression, r;
+    if (/^methode-/.test(coursId)) r = ["Savoir-faire", nomM];
+    else if (m === "langue") { var rb = P && c.badge ? P.rangBadge(c.badge) : 99; r = [nomM, rb < 99 ? JEU.BADGES_GRIFFON[rb].nom : ""]; }
+    else if (m === "anglais") { var s = String(c.titre || "").match(/^Séquence\s+\d+/); r = [nomM, s ? s[0] : (c.ordre ? "Séquence " + c.ordre : "")]; }
+    else {
+      var e = P ? P.entree(coursId) : null, t = e ? String(e.titre || "") : "";
+      var n = t.match(/(?:^|\s)((?:Cours|Séance|Étude de cas|Outil)\s*\d+)/) || t.match(/(?:^|\s)(Thème\s*\d+)/);
+      r = e && typeof e.semaine === "number" ? ["Semaine " + e.semaine, nomM, n ? n[1] : ""] : [nomM];
+    }
+    r = r.filter(Boolean).join(" · ");
+    reperes[coursId] = r;
+    return r;
+  }
+
   // Armée qui attaque le domaine : celle du camp donné, sinon celle du front qui attaque dans la campagne.
   function armeeAdverse(camp) {
     if (!camp && JEU.campagne) {
@@ -78,7 +102,8 @@
     return camp && camp.armee ? camp.armee : "l'armée ennemie";
   }
 
-  // Cadre narratif d'une question : { nom, icone, texte, etiquette? }. camp (facultatif) : le camp adverse d'une défense.
+  // Cadre narratif d'une question : { nom, icone, texte, repere?, etiquette? }. camp (facultatif) : le camp adverse d'une
+  // défense. repere : la semaine et la matière du cours (fonction repere), affiché sur la ligne du conseiller.
   // Une question ratée qui revient (q.rappel) porte l'étiquette « Seconde chance » ; en bataille et dans un événement,
   // le conseiller le dit avec ses mots. Au conseil du royaume, l'affaire du jour reste la même (seule l'étiquette change).
   function cadre(q, contexte, camp) {
@@ -93,6 +118,8 @@
       texte = texte.replace("{deArmee}", JEU.campagne ? JEU.campagne.avecArticle(armee, "de") : "de " + armee);
     }
     var r = { nom: nom, icone: c.icone, texte: texte };
+    var rep = repere(q.cours);
+    if (rep) r.repere = rep;
     if (q.rappel) r.etiquette = JEU.rappels ? JEU.rappels.ETIQUETTE : "Seconde chance";
     return r;
   }
@@ -246,7 +273,7 @@
   }
 
   JEU.recit = {
-    CONSEILLERS: CONSEILLERS, conseiller: conseiller, cadre: cadre, candidats: candidats, suite: suite, famille: famille,
+    CONSEILLERS: CONSEILLERS, conseiller: conseiller, cadre: cadre, repere: repere, candidats: candidats, suite: suite, famille: famille,
     historique: function () { return historique.slice(); }, oublierHistorique: function () { historique = []; }
   };
 })(typeof window !== "undefined" ? window : globalThis);
