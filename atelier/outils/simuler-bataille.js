@@ -40,6 +40,25 @@
 //              ses guetteurs, troupes de renfort, en moyenne par bataille). Cibles du 16/10/2026 : la stratégie équilibrée
 //              fait au moins aussi bien que rush et tortue ; la ruée ne porte pas plus d'un tiers de la solidité à la 1re
 //              vague au niveau 0, moins aux niveaux suivants.
+// Batailles de route (expéditions, jour 0 du 24/10/2026 : atelier/conception/expeditions.md 16.1 et 17.2, mesures dans
+// atelier/conception/expeditions-mesures.md). Dès qu'une de ces options est donnée, le simulateur ne joue plus les
+// provinces ni la défense du domaine : il joue une seule bataille de route par graine (2 × 80 batailles par niveau), avec
+// l'arsenal de PROGRESSION[niveau] et le seigneur rival de la ligne RIVAL[niveau], et imprime par niveau la part des
+// batailles tenues (les murs n'ont pas cédé), la part des éclatantes (le camp de route tombe), les murs restants et les
+// coups portés. Sans ces options, rien ne change (à prouver par --comparer atelier/mesures/avant-expedition.json) :
+//   --vagues n : vagues de la bataille (par défaut 4 en attaque, 3 en défense) ;
+//   --pvRival n : solidité du camp de route (par défaut 16 en attaque, 12 en défense) ;
+//   --mode attaque|defense : mode du moteur (option defense de M.creer ; par défaut attaque, defense si la carte est domaine) ;
+//   --carte gue|foret|moulin|col|chateau|domaine : la carte ; par défaut, en attaque, la carte de la province du niveau sur
+//              chaque front (80 graines par front, comme les provinces), en défense, domaine (160 graines) ;
+//   --arsenal n : rangée de PROGRESSION (ton arsenal et tes jauges) si elle diffère du niveau du rival, par exemple
+//              l'embuscade d'une semaine de ligne 1 jouée à la ligne 2 : --niveaux 2 --arsenal 1 ; avec un signe, un
+//              écart au niveau (--arsenal -1 : à chaque niveau, l'arsenal de la rangée du dessous, borné à 0..4) ;
+//   --sortie fichier.json : écrit aussi les résultats en JSON dans ce fichier (UTF-8), en plus des tableaux ;
+//   --sansChampion : le champion adverse de la dernière vague est retiré de la file (dans le simulateur seulement, le
+//              moteur n'est pas touché) : mesure de ce que coûte le champion dans une escarmouche à une vague ;
+//   --comparer route.json : en mode route, écarts de tenue, d'éclatante, de coups et de murs avec un essai de route
+//              enregistré par --json (par exemple avec et sans champion).
 "use strict";
 const fs = require("fs");
 const path = require("path");
@@ -58,6 +77,31 @@ STRATEGIES.forEach(s => { if (["equilibre", "rush", "tortue", "attente"].indexOf
 // (un fichier écrit par « > » dans Windows PowerShell est en UTF-16 : il est lu aussi)
 function lireJSON(f) { const o = fs.readFileSync(f); return JSON.parse(o[0] === 0xFF && o[1] === 0xFE ? o.toString("utf16le", 2) : o.toString("utf8").replace(/^\uFEFF/, "")); }
 const COMPARER = option("comparer", null) ? lireJSON(option("comparer")) : null;
+// Mode route (batailles d'expédition) : seulement si une de ces options est donnée ; sinon ROUTE est null et rien ne change.
+const ROUTE = (function () {
+  if (!["vagues", "pvRival", "mode", "carte", "arsenal", "sansChampion"].some(k => args.indexOf("--" + k) >= 0)) return null;
+  const carte = option("carte", null);
+  const mode = option("mode", carte === "domaine" ? "defense" : "attaque");
+  if (mode !== "attaque" && mode !== "defense") { console.error("Mode inconnu : " + mode + " (attaque ou defense)"); process.exit(1); }
+  const r = {
+    carte: carte, mode: mode,
+    vagues: parseInt(option("vagues", mode === "defense" ? "3" : "4"), 10),
+    pvRival: parseInt(option("pvRival", mode === "defense" ? "12" : "16"), 10),
+    arsenal: option("arsenal", null) === null ? null : parseInt(option("arsenal"), 10),
+    arsenalRelatif: /^[+-]/.test(option("arsenal", "")),
+    sansChampion: args.indexOf("--sansChampion") >= 0
+  };
+  if (!(r.vagues >= 1) || !(r.pvRival >= 1)) { console.error("--vagues et --pvRival demandent un entier d'au moins 1"); process.exit(1); }
+  if (r.arsenal !== null && !r.arsenalRelatif && !(r.arsenal >= 0 && r.arsenal <= 4)) { console.error("--arsenal : une rangée de PROGRESSION, de 0 à 4, ou un écart signé (-1, +1)"); process.exit(1); }
+  if (r.arsenal !== null && r.arsenalRelatif && !(r.arsenal >= -4 && r.arsenal <= 4)) { console.error("--arsenal : écart de -4 à +4"); process.exit(1); }
+  return r;
+})();
+// Rangée de PROGRESSION d'une bataille de route au niveau donné (--arsenal absolu ou relatif, sinon le niveau).
+function rangArsenal(niveau) {
+  if (!ROUTE || ROUTE.arsenal === null) return niveau;
+  return ROUTE.arsenalRelatif ? Math.max(0, Math.min(4, niveau + ROUTE.arsenal)) : ROUTE.arsenal;
+}
+const SORTIE_FICHIER = option("sortie", null);
 
 // ---------- chargement des modules du jeu ----------
 // Chaque fichier est une fonction appelée avec une fausse fenêtre (et non dans un bac à sable vm : les accès aux globales
@@ -78,6 +122,7 @@ function charger() {
 const J = charger();
 const M = J.batailleMoteur, C = J.campagne, CB = J.cartesBataille;
 if (option("regle", null)) new Function("M", option("regle"))(M);
+if (ROUTE && ROUTE.carte && !CB.LIEUX[ROUTE.carte]) { console.error("Carte inconnue : " + ROUTE.carte + " (" + Object.keys(CB.LIEUX).join(", ") + ")"); process.exit(1); }
 const CONFIG = J.donnees.config || {};
 const PERTE = option("perte", null) !== null ? Number(option("perte")) : typeof CONFIG.orPerduErreur === "number" ? CONFIG.orPerduErreur : (M.OR_PERDU || 0);
 const BONUS_SERIE = 10; // ancien moteur (sans M.repondre) : même règle que jeu/js/bataille.js avant le 15/10/2026
@@ -103,9 +148,10 @@ const PROGRESSION = [
   { tours: { archers: 2, piquiers: 2, baliste: 2, catapulte: 1 }, troupes: { fantassins: 2, cavaliers: 2, belier: 1 }, jauges: 6, remparts: 1 },
   { tours: { archers: 3, piquiers: 2, baliste: 2, catapulte: 2 }, troupes: { fantassins: 2, cavaliers: 2, belier: 2 }, jauges: 8, remparts: 1 }
 ];
-function optionsBataille(niveau) {
+// rang : rangée de PROGRESSION (par défaut celle du niveau ; le mode route peut en prendre une autre, --arsenal).
+function optionsBataille(niveau, rang) {
   J.sauvegarde.remplacer(J.sauvegarde.nouvelle());
-  const c = C.etat(), pr = PROGRESSION[niveau];
+  const c = C.etat(), pr = PROGRESSION[rang == null ? niveau : rang];
   c.arsenal.tours = Object.assign({}, pr.tours); c.arsenal.troupes = Object.assign({}, pr.troupes); c.arsenal.remparts = pr.remparts;
   ["tresor", "peuple", "garde", "savoir"].forEach(k => { c.royaume[k] = pr.jauges; });
   const o = C.options(niveau);
@@ -220,7 +266,14 @@ function jouerBataille(carteId, o, pJuste, graine, strategie, trace) {
     nouvelles(p, r);
     depense(p, carteId, carte);
     const avant = TRACE && trace ? { vague: p.vague + 1, or: p.or, envois: p.envois.length, tours: p.tours.length, coups: p.stats.degatsRival, sorties: p.stats.sorties || 0, journal: p.ia ? p.ia.journal.length : 0 } : null;
-    M.jouerVague(p, 0.025);
+    if (ROUTE && ROUTE.sansChampion) {
+      // même déroulement que M.jouerVague, le champion ôté de la file adverse entre le lancement et le premier pas
+      M.lancerVague(p);
+      const iCh = p.fileRivale.indexOf("champion");
+      if (iCh >= 0) { p.fileRivale.splice(iCh, 1); p.stats.rivaux--; }
+      let pas = 0;
+      while (p.phase === "vague" && pas++ < 40000) M.etape(p, 0.025);
+    } else M.jouerVague(p, 0.025);
     if (vague1 === null) vague1 = p.stats.degatsRival;
     if (avant) trace.push("   vague " + avant.vague + " : tu envoies " + avant.envois + " soldats, tu as " + avant.tours + " tours, tu gardes " + avant.or + " or ; garnison " + (p.garnison ? p.garnison.taille : "—") +
       ", sorties " + ((p.stats.sorties || 0) - avant.sorties) + ", coups portés " + (p.stats.degatsRival - avant.coups) + " ; rival : " + (p.ia ? p.ia.journal.slice(avant.journal).map(j => j.posture + " " + JSON.stringify(j.actions)).join(" ; ") : "—") + (p.ia ? " (trésor " + p.ia.or + ")" : ""));
@@ -272,15 +325,85 @@ function defense(niveau, pJuste, strategie) {
   return res;
 }
 
+// Bataille de route (mode ROUTE) : une seule bataille par graine, 2 × GRAINES par niveau (80 par carte de front en
+// attaque sans --carte ; 160 sur la carte donnée, ou sur le domaine en défense). Les graines sont celles des provinces
+// (1re bataille) ou de la défense du domaine, selon le cas.
+function route(niveau, pJuste, strategie) {
+  const res = { victoire: 0, tenu: 0, retraite: 0, degats: 0, n: 0, murs: 0, mursTenue: 0, vague1: 0, tues: 0, pertes: 0,
+    sorties: 0, iaTours: 0, iaGardes: 0, iaRenforts: 0, iaRappels: 0, cartes: [] };
+  const cartes = ROUTE.carte ? [ROUTE.carte] : ROUTE.mode === "defense" ? ["domaine"] : C.FRONTS.map(f => f.provinces[niveau].carte);
+  res.cartes = cartes;
+  const parCarte = Math.round(2 * GRAINES / cartes.length);
+  cartes.forEach((carte, iC) => {
+    for (let g = 0; g < parCarte; g++) {
+      const o = optionsBataille(niveau, rangArsenal(niveau));
+      o.vagues = ROUTE.vagues; o.pvRival = ROUTE.pvRival; o.pvRivalMax = ROUTE.pvRival; o.defense = ROUTE.mode === "defense";
+      const tr = TRACE && g === 0 && iC === 0 ? [] : null;
+      const b = jouerBataille(carte, o, pJuste, cartes.length > 1 ? 1000 * g + 97 * niveau + 31 * iC + 1 : 5000 * g + 13 * niveau + 3, strategie, tr);
+      if (tr) console.log(" " + strategie + ", p = " + pJuste + ", route " + carte + " (niveau " + niveau + "), graine 0 : " + b.issue + ", " + b.degats + " coups\n" + tr.join("\n"));
+      res[b.issue]++; res.degats += b.degats; res.n++; res.murs += b.murs; if (b.issue !== "retraite") res.mursTenue += b.murs;
+      res.vague1 += b.vague1; res.tues += b.stats.tues; res.pertes += b.stats.pertes; res.sorties += b.stats.sorties || 0;
+      res.iaTours += b.ia.tours; res.iaGardes += b.ia.gardes; res.iaRenforts += b.ia.renforts; res.iaRappels += b.ia.rappels;
+    }
+  });
+  return res;
+}
+
 const pc = (a, n) => n ? Math.round(100 * a / n) : null;
 const r2 = (a, n) => n ? Math.round(100 * a / n) / 100 : null;
 const t0 = Date.now();
 const sortie = { graines: GRAINES, perte: PERTE, moteur: path.relative(RACINE, MOTEUR), resultats: {}, strategies: {} };
-if (!JSON_SORTIE) console.log("Moteur : " + sortie.moteur + " · or perdu par erreur : " + PERTE + " · " + GRAINES + " graines par province (deux fronts), " + 2 * GRAINES + " défenses par niveau" +
+if (ROUTE) sortie.route = { vagues: ROUTE.vagues, pvRival: ROUTE.pvRival, mode: ROUTE.mode, carte: ROUTE.carte, arsenal: ROUTE.arsenal === null ? null : (ROUTE.arsenalRelatif ? (ROUTE.arsenal >= 0 ? "+" : "") + ROUTE.arsenal : ROUTE.arsenal), sansChampion: ROUTE.sansChampion };
+const descRoute = ROUTE ? "bataille de route : " + ROUTE.mode + ", " + ROUTE.vagues + " vague" + (ROUTE.vagues > 1 ? "s" : "") + ", camp de " + ROUTE.pvRival +
+  ", carte " + (ROUTE.carte || (ROUTE.mode === "defense" ? "domaine" : "de la province du niveau, deux fronts")) +
+  (ROUTE.arsenal !== null ? ", arsenal " + (ROUTE.arsenalRelatif ? "du niveau " + (ROUTE.arsenal >= 0 ? "+ " : "− ") + Math.abs(ROUTE.arsenal) : "de la rangée " + ROUTE.arsenal) : "") + (ROUTE.sansChampion ? ", sans champion" : "") : "";
+if (!JSON_SORTIE && ROUTE) console.log("Moteur : " + sortie.moteur + " · or perdu par erreur : " + PERTE + " · " + 2 * GRAINES + " batailles par niveau · " + descRoute +
+  (STRATEGIES.length > 1 || STRATEGIES[0] !== "equilibre" ? " · stratégies : " + STRATEGIES.join(", ") : ""));
+else if (!JSON_SORTIE) console.log("Moteur : " + sortie.moteur + " · or perdu par erreur : " + PERTE + " · " + GRAINES + " graines par province (deux fronts), " + 2 * GRAINES + " défenses par niveau" +
   (STRATEGIES.length > 1 || STRATEGIES[0] !== "equilibre" ? " · stratégies : " + STRATEGIES.join(", ") : ""));
 // avec --seulement, la partie qui n'a pas été jouée s'affiche « — » (et non « null % » ou « NaN »)
 const pct = x => (x === null || x === undefined ? "—" : x + " %"), val = x => (x === null || x === undefined ? "—" : String(x));
+// Mode route : un tableau par stratégie (tenue, éclatante, murs, coups), puis les écarts avec un essai de route comparé.
+function sortieRoute(pJuste, strategie) {
+  const lignes = NIVEAUX.map(niveau => {
+    const a = route(niveau, pJuste, strategie);
+    return {
+      niveau: niveau, arsenal: rangArsenal(niveau), carte: a.cartes.join("/"), tenue: pc(a.victoire + a.tenu, a.n), eclatante: pc(a.victoire, a.n), tenu: pc(a.tenu, a.n), retraite: pc(a.retraite, a.n),
+      degats: r2(a.degats, a.n), vague1: r2(a.vague1, a.n), murs: pc(a.murs, a.n), mursTenue: pc(a.mursTenue, a.victoire + a.tenu),
+      tues: a.n ? Math.round(10 * a.tues / a.n) / 10 : null, pertes: a.n ? Math.round(10 * a.pertes / a.n) / 10 : null, sorties: r2(a.sorties, a.n),
+      iaTours: r2(a.iaTours, a.n), iaGardes: r2(a.iaGardes, a.n), iaRenforts: r2(a.iaRenforts, a.n), iaRappels: r2(a.iaRappels, a.n), n: a.n
+    };
+  });
+  if (strategie === "equilibre") sortie.resultats[pJuste] = lignes;
+  (sortie.strategies[strategie] = sortie.strategies[strategie] || {})[pJuste] = lignes;
+  if (JSON_SORTIE) return;
+  console.log("\np = " + pJuste + " (réponses justes)" + (STRATEGIES.length > 1 || strategie !== "equilibre" ? " · stratégie " + strategie : "") + " · " + descRoute);
+  console.log("niv | carte          | tenue (éclatante) | tenu  retraite | murs restants (quand elle tient) | coups portés (1re vague) | ennemis tués / tes pertes | sorties · rival : tours, gardes, rappelés, renforts");
+  lignes.forEach(l => console.log(
+    " " + l.niveau + "  | " + l.carte.padEnd(14) + " | " + pct(l.tenue).padStart(6) + " (" + pct(l.eclatante).padStart(5) + ")   | " + pct(l.tenu).padStart(5) + " " + pct(l.retraite).padStart(6) + "   | " +
+    (pct(l.murs) + " (" + pct(l.mursTenue) + ")").padStart(32) + " | " + (val(l.degats) + " (" + val(l.vague1) + ")").padStart(24) + " | " + val(l.tues).padStart(8) + " / " + val(l.pertes).padEnd(6) +
+    " | " + val(l.sorties) + " · " + val(l.iaTours) + ", " + val(l.iaGardes) + ", " + val(l.iaRappels) + ", " + val(l.iaRenforts)));
+  const moy = k => Math.round(10 * lignes.reduce((s, l) => s + (l[k] || 0), 0) / lignes.length) / 10;
+  console.log("moy |                | " + (moy("tenue") + " %").padStart(6) + " (" + (moy("eclatante") + " %").padStart(5) + ")   |                | " + (moy("murs") + " %").padStart(32) + " | " + String(moy("degats")).padStart(24));
+  const ref = strategie === "equilibre" && COMPARER && COMPARER.route && COMPARER.resultats[pJuste];
+  if (!ref) return;
+  const pts = (x, y) => (x == null || y == null ? "—" : (y >= x ? "+" : "−") + Math.abs(y - x) + " pt");
+  const ecart = (x, y) => x && y != null ? (y >= x ? "+" : "−") + Math.abs(Math.round(100 * (y / x - 1))) + " %" : "—";
+  console.log("écarts avec " + option("comparer") + " (" + [COMPARER.route.mode, COMPARER.route.vagues + " vague(s)", "camp " + COMPARER.route.pvRival, COMPARER.route.carte || "carte par défaut", COMPARER.route.sansChampion ? "sans champion" : "avec champion"].join(", ") + ") : tenue ; éclatante ; coups portés ; murs restants");
+  lignes.forEach(l => {
+    const r = ref.find(x => x.niveau === l.niveau);
+    if (r) console.log(" " + l.niveau + "  | " + pct(r.tenue) + " → " + pct(l.tenue) + " (" + pts(r.tenue, l.tenue) + ") ; " + pct(r.eclatante) + " → " + pct(l.eclatante) + " (" + pts(r.eclatante, l.eclatante) + ") ; " +
+      val(r.degats) + " → " + val(l.degats) + " (" + ecart(r.degats, l.degats) + ") ; " + pct(r.murs) + " → " + pct(l.murs) + " (" + pts(r.murs, l.murs) + ")");
+  });
+}
 PS.forEach(pJuste => {
+  if (ROUTE) {
+    STRATEGIES.forEach(strategie => sortieRoute(pJuste, strategie));
+    if (JSON_SORTIE || STRATEGIES.length < 2) return;
+    console.log("\np = " + pJuste + " · comparaison des stratégies, par niveau : tenue (éclatante) ; coups portés ; murs restants");
+    NIVEAUX.forEach((niveau, i) => console.log(" " + niveau + "  | " + STRATEGIES.map(s => { const l = sortie.strategies[s][pJuste][i]; return s + " " + pct(l.tenue) + " (" + pct(l.eclatante) + ") ; " + val(l.degats) + " ; " + pct(l.murs); }).join(" | ")));
+    return;
+  }
   STRATEGIES.forEach(strategie => {
     const lignes = [];
     NIVEAUX.forEach(niveau => {
@@ -335,5 +458,6 @@ PS.forEach(pJuste => {
     }).join(" | "));
   });
 });
+if (SORTIE_FICHIER) fs.writeFileSync(SORTIE_FICHIER, JSON.stringify(sortie));
 if (JSON_SORTIE) console.log(JSON.stringify(sortie));
 else console.log("\n(" + Math.round((Date.now() - t0) / 1000) + " s)");

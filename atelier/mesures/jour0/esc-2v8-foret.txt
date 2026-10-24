@@ -1,0 +1,10 @@
+Moteur : jeu/js/bataille-moteur.js · or perdu par erreur : 6 · 160 batailles par niveau · bataille de route : attaque, 2 vagues, camp de 8, carte foret
+
+p = 0.6 (réponses justes) · bataille de route : attaque, 2 vagues, camp de 8, carte foret
+niv | carte          | tenue (éclatante) | tenu  retraite | murs restants (quand elle tient) | coups portés (1re vague) | ennemis tués / tes pertes | sorties · rival : tours, gardes, rappelés, renforts
+ 0  | foret          |  100 % (  4 %)   |  96 %    0 %   |                    102 % (102 %) |              3.41 (1.64) |     16.3 / 1.6    | 1.31 · 1, 0, 0, 0
+ 1  | foret          |  100 % ( 25 %)   |  75 %    0 %   |                    101 % (101 %) |              4.59 (2.86) |     15.9 / 1.6    | 1.25 · 1, 0, 0, 0
+ 2  | foret          |  100 % ( 38 %)   |  62 %    0 %   |                    101 % (101 %) |              4.14 (2.71) |     13.5 / 2.4    | 1.46 · 0.73, 0, 0, 0
+ 3  | foret          |  100 % ( 39 %)   |  61 %    0 %   |                    101 % (101 %) |              5.89 (3.89) |     14.1 / 2.4    | 1.5 · 0.79, 0, 0, 0
+ 4  | foret          |  100 % ( 26 %)   |  74 %    0 %   |                    101 % (101 %) |              4.85 (2.29) |     13.9 / 4      | 1.24 · 1, 0, 0, 0
+moy |                |  100 % (26.4 %)   |                |                          101.2 % |                      4.6
