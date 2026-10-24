@@ -391,6 +391,13 @@
     });
   }
 
+  // La ligne « Expéditions » du cartouche des rivaux (JEU.expedition.resume()).
+  function ligneExpeditions(rx) {
+    if (!rx.frontiere) return "Expéditions : " + JEU.expedition.TEXTES.depart.attente;
+    var relais = rx.relais.length ? rx.relais[rx.relais.length - 1] : 1;
+    return "Expéditions : " + rx.accomplies + " accomplie" + (rx.accomplies > 1 ? "s" : "") + ", relais ouverts jusqu'à la semaine " + relais + ", renommée " + rx.renomTotal + " (" + rx.renom + " à dépenser).";
+  }
+
   // Missives en attente, montrées en arrivant sur la carte (jamais pendant une partie, jamais par-dessus une autre
   // fenêtre : elles attendent alors la visite suivante).
   function afficherMissives(annonce) {
@@ -449,6 +456,11 @@
     });
     if (!C.prochaineProvince()) options.push({ titre: "Les deux fronts sont tenus", texte: "Toutes les provinces sont à toi. Défends ton domaine et tiens ton conseil.", icone: "couronne", action: function () { JEU.ui.toast("Toutes les provinces sont prises !"); } });
     options.push({ titre: "Conseil du royaume", texte: "Tes conseillers t'apportent leurs affaires. Juge juste et le royaume grandit.", icone: "conseil", action: function () { JEU.conseil.lancer(); } });
+    // expéditions (24/10/2026) : la route des semaines, un mode à part (jeu/js/expedition.js, écran jeu/js/ecran-expedition.js)
+    var rx = JEU.expedition && JEU.ui.ecrans.expedition ? JEU.expedition.resume() : null;
+    if (rx && rx.enCours) options.push({ titre: "Reprendre l'expédition · semaine " + rx.semaine + ", " + (rx.halte === 1 ? "1re" : rx.halte + "e") + " halte", texte: "La compagnie t'attend sur la route des semaines. Vivres " + rx.vivres + " sur " + rx.vivresMax + ", or de route " + rx.or + ".", icone: "relais", action: function () { JEU.ui.afficher("expedition"); } });
+    else if (rx && rx.frontiere) options.push({ titre: "Partir en expédition", texte: "La route des semaines : trois semaines du programme à traverser, des faveurs à gagner, un gardien par semaine. Renommée : " + rx.renom + ".", icone: "relais", action: function () { JEU.ui.afficher("expedition"); } });
+    else if (rx) options.push({ titre: "Partir en expédition", texte: JEU.expedition.TEXTES.depart.attente, icone: "relais", action: function () { JEU.ui.toast(JEU.expedition.TEXTES.depart.attente); } });
     options.push({ titre: "Arsenal", texte: "Débloque et améliore tes tours, tes troupes et tes remparts avec tes ressources.", icone: "caserne", action: ouvrirArsenal });
     if (ev) options.push({ titre: ev.titre, texte: ev.texte, icone: ev.icone, action: function () { JEU.campagne.jouerEvenement(); }, evenement: true });
 
@@ -473,6 +485,7 @@
         el("h3", { html: JEU.icones.icone("defi", 20) + " Les fronts et tes rivaux" }),
         el("div", { class: "lignes-rivaux" }, lignesRivaux(c)),
         el("p", { texte: c.rival.defaites + " attaque" + (c.rival.defaites > 1 ? "s" : "") + " repoussée" + (c.rival.defaites > 1 ? "s" : "") + "." }),
+        rx ? el("p", { class: "note ligne-expeditions", texte: ligneExpeditions(rx) }) : null,
         el("div", { class: "menace" }, [el("span", { texte: "Menace" }), el("span", { class: "jr-barre" }, [el("span", { style: "width:" + Math.min(100, c.rival.attaque ? 100 : c.rival.menace * 50) + "%" })])]),
         c.chronique.length ? el("ul", { class: "chronique" }, c.chronique.slice(0, 5).map(function (x) { return el("li", { texte: x.texte }); })) : el("p", { class: "note", texte: "La chronique des campagnes est encore vierge." })
       ])

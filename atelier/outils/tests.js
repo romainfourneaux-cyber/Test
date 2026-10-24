@@ -2298,5 +2298,114 @@ verifier("Bataillons : le rendu ne touche pas au moteur (aucune écriture de la 
 })();
 
 
+
+// ---------- expéditions : l'écran (jeu/js/ecran-expedition.js ; conception 14 et 16.2 point 4) ----------
+// Sans navigateur : les fonctions pures (disposition du parchemin de route, états des haltes et des chemins, SVG de la carte et du
+// parchemin de l'année, journal de route, textes de fin), le branchement (index.html, CSS, carte de la campagne), les textes de
+// l'écran passés au contrôle 10, et le compte des réponses pendant une halte. Le parcours complet se joue dans Chromium par
+// atelier/outils/essai-expedition.js (captures dans atelier/captures/).
+(() => {
+  const CTRL = require("./controles.js");
+  const ctxV = contexte(), JV = ctxV.JEU, XV = JV.expedition, CV = JV.campagne;
+  const TAILLESV = { "histoire-s01-1": 22, "geographie-s01-1": 22, "svt-s02-1": 23, "physique-s03-1": 8, "svt-s06-1": 14, "histoire-s07-1": 13, "physique-s08-1": 12 };
+  Object.keys(TAILLESV).forEach(id => { JV.donnees.cours[id] = coursEssai(id, TAILLESV[id]); });
+  JV.donnees.cours["langue-conj10"] = coursEssai("langue-conj10", 4, { matiere: "langue", titre: "Essai", badge: "cuivre", ordre: 1 });
+  vm.runInContext(fs.readFileSync(path.join(RACINE, "jeu", "data", "personnages.js"), "utf8"), ctxV);
+  JV.questions.vider(); JV.progression.oublier(); JV.sauvegarde.charger();
+  JV.ui = { ecrans: {}, el() { return { appendChild() {}, querySelectorAll() { return []; }, querySelector() { return null; } }; }, toast() {}, afficher() {}, clavier: null, focusAuClavier() { return false; } };
+  JV.sons = { jouer() {} }; JV.mentor = { feliciter() {} };
+  ["icones", "ecran-campagne", "ecran-expedition"].forEach(m => vm.runInContext(fs.readFileSync(path.join(RACINE, "jeu", "js", m + ".js"), "utf8"), ctxV, { filename: m + ".js" }));
+  const EV = JV.ecranExpedition, platV = a => a.couches.reduce((t, c) => t.concat(c), []);
+  const srcHtml = fs.readFileSync(path.join(RACINE, "jeu", "index.html"), "utf8"), srcCss = fs.readFileSync(path.join(RACINE, "jeu", "css", "jeu.css"), "utf8"), srcCamp = fs.readFileSync(path.join(RACINE, "jeu", "js", "ecran-campagne.js"), "utf8");
+  verifier("Écran des expéditions : branché (section #ecran-expedition, script après ecran-campagne.js, JEU.ui.ecrans.expedition, styles de la route, des cartes de faveurs, du parchemin de l'année et des fenêtres)",
+    /<section id="ecran-expedition" class="ecran" hidden><\/section>/.test(srcHtml) && srcHtml.indexOf('js/ecran-expedition.js') > srcHtml.indexOf('js/ecran-campagne.js') && srcHtml.indexOf('js/ecran-expedition.js') > srcHtml.indexOf('js/expedition.js') &&
+    typeof JV.ui.ecrans.expedition === "function" && [".route-svg", ".carte-faveur", ".parchemin-annee", ".exp-fenetre", ".faveur-med", ".page-semaine", ".ill-relais", ".bilan-exp"].every(c => srcCss.indexOf(c) >= 0));
+  verifier("Carte de la campagne : la carte « Partir en expédition » / « Reprendre l'expédition · semaine N, Ne halte » (JEU.expedition.resume) et la ligne « Expéditions » du cartouche des rivaux",
+    /Partir en expédition/.test(srcCamp) && /Reprendre l'expédition · semaine/.test(srcCamp) && /JEU\.expedition\.resume\(\)/.test(srcCamp) && /function ligneExpeditions/.test(srcCamp) && /ligne-expeditions/.test(srcCamp) && /JEU\.ui\.afficher\("expedition"\)/.test(srcCamp));
+  // textes de l'écran : jeu seulement
+  const nomsV = JV.donnees.personnages.personnages.map(p => p.nom), textesV = [];
+  (function collecter(o) { if (typeof o === "string") textesV.push(o); else if (o && typeof o === "object") Object.keys(o).forEach(k => collecter(o[k])); })(EV.TEXTES);
+  const fautifsV = textesV.filter(t => CTRL.MOTS_INTERDITS.test(t) || /\d/.test(t) || nomsV.some(n => t.indexOf(n) >= 0));
+  verifier("Écran des expéditions : " + textesV.length + " textes de jeu (départ, parchemin de l'année, route, compagnie, pages de semaine, porte, bivouac, marchand, Armorial, fins de bataille, bilan, événements rejoués) sans chiffre, sans mot interdit, sans nom de personnage", textesV.length > 100 && fautifsV.length === 0, fautifsV);
+  verifier("Écran des expéditions : le plan du clavier couvre chaque écran (départ, route, porte, bivouac, marchand, Armorial, bilan) ; sur la route 1, 2, 3, les flèches, Entrée, F et Échap", ["depart", "route", "porte", "bivouac", "marchand", "armorial", "bilan"].every(k => EV.CLAVIER[k]) && ["1 2 3", "← → ↑ ↓", "Entrée", "F", "Échap"].every(k => EV.CLAVIER.route[k]));
+  // disposition : 200 routes de trois semaines, et des routes plus courtes
+  const famsV = ["histoire", "geographie", "svt", "physique", "francais"], fenV = { 6: XV.fenetre(6), 7: XV.fenetre(7), 8: XV.fenetre(8) };
+  const pV = { depart: 6, semaines: [6, 7, 8], frontiere: 8, front: "angleterre", fenetres: fenV, famillesChargees: famsV, famillesARevoir: [], carteGrand: "gue", sautees: [], config: XV.reglages() };
+  const eDe = (route, semaine) => ({ graine: route.graine, route: route, semaine: semaine || route.actes[0].semaine, depart: route.depart, faits: {}, position: null, front: "angleterre" });
+  const M = EV.MESURES;
+  let geomOk = true, detailGeom = null;
+  for (let g = 1; g <= 200 && geomOk; g++) {
+    const d = EV.disposition(eDe(XV.generer(g * 7919 + 13, pV)));
+    const n = d.noeuds;
+    if (d.bandes.length !== 3 || d.bandes.some(b => b.etat !== "courante" && b.etat !== "avenir")) { geomOk = false; detailGeom = d.bandes; break; }
+    for (let i = 0; i < n.length && geomOk; i++) {
+      const a = n[i];
+      if (a.x - a.r < 0 || a.x + a.r > M.L || a.y - a.r < 56 || a.y + a.r + 16 > M.H) { geomOk = false; detailGeom = a; }
+      for (let j = i + 1; j < n.length && geomOk; j++) { const b = n[j]; if (Math.hypot(a.x - b.x, a.y - b.y) < a.r + b.r + 4) { geomOk = false; detailGeom = [a.id, b.id]; } }
+    }
+    if (geomOk && !d.chemins.every(c => d.parId[c.a] && (c.de === "depart" || d.parId[c.de]))) { geomOk = false; detailGeom = "chemins"; }
+  }
+  verifier("Disposition : sur 200 routes, trois bandes de semaine, chaque médaillon entier dans le parchemin et jamais deux qui se touchent (4 unités au moins entre eux), chaque chemin relie deux nœuds connus", geomOk, detailGeom);
+  const dCourte = EV.disposition(eDe(XV.generer(99, Object.assign({}, pV, { depart: 8, semaines: [8] }))));
+  const dDeux = EV.disposition(eDe(XV.generer(99, Object.assign({}, pV, { depart: 7, semaines: [7, 8] }))));
+  const dSix = EV.disposition(eDe(XV.generer(99, Object.assign({}, pV, { depart: 3, semaines: [3, 6, 7] })), 6));
+  verifier("Disposition : une expédition d'une semaine à la frontière (S8) montre S9 et S10 dans la brume ; de deux semaines (S7, S8), la S9 dans la brume ; une semaine passée est « passee », la suivante « courante », la dernière « avenir »",
+    dCourte.bandes.map(b => b.semaine + ":" + b.etat).join() === "8:courante,9:brume,10:brume" && dDeux.bandes.map(b => b.semaine + ":" + b.etat).join() === "7:courante,8:avenir,9:brume" && dSix.bandes.map(b => b.etat).join() === "passee,courante,avenir",
+    { c: dCourte.bandes, d: dDeux.bandes, s: dSix.bandes });
+  verifier("Disposition : même graine, même parchemin (gigue à la graine, jamais Math.random) ; le gardien est le nœud le plus à droite de sa bande ; les haltes d'une même couche partagent leur colonne",
+    JSON.stringify(EV.disposition(eDe(XV.generer(4242, pV)))) === JSON.stringify(EV.disposition(eDe(XV.generer(4242, pV)))) && !/Math\.random/.test(String(EV.disposition)) &&
+    (() => { const d = EV.disposition(eDe(XV.generer(4242, pV))); return d.bandes.every(b => { const ns = d.noeuds.filter(x => x.semaine === b.semaine); const g = ns.filter(x => x.type === "gardien" || x.type === "grand")[0]; return ns.every(x => x.x <= g.x); }) &&
+      d.noeuds.filter(x => x.semaine === 6 && x.couche === 1).every((x, i, t) => x.x === t[0].x); })());
+  // états des haltes et des chemins sur une vraie expédition
+  JV.sauvegarde.remplacer(JV.sauvegarde.nouvelle()); JV.progression.oublier(); JV.recit.oublierHistorique();
+  const eV = XV.commencer(6, "angleterre"), dV = EV.disposition(eV), etV = EV.etatsNoeuds(eV, dV), attV = XV.atteignables();
+  const compte = v => Object.keys(etV).filter(k => etV[k] === v).length;
+  verifier("États des haltes au départ : la 1re couche atteignable (2 ou 3), le reste de la semaine 6 « avenir » (le gardien compris), les semaines 7 et 8 dans la brume, aucune halte jouée",
+    compte("atteignable") === attV.length && attV.length >= 2 && attV.every(h => etV[h.id] === "atteignable") && dV.noeuds.filter(n => n.semaine !== 6).every(n => etV[n.id] === "brume") && etV[dV.parId[eV.route.actes[0].gardien.id].id] === "avenir" && compte("jouee reussie") === 0,
+    { att: attV.map(h => h.id), etats: etV });
+  const svgV = EV.carteSVG(eV, dV, etV);
+  verifier("Carte SVG : un groupe par halte avec son infobulle et son aria-label (« Semaine 6, 1re couche : …, récompense : … »), tabindex 0 et numéro de touche sur les seules haltes atteignables, deux bandes de brume, la bannière « Cette semaine » sur la semaine du calendrier, aucune marque {…} oubliée",
+    (svgV.match(/class='halte /g) || []).length === dV.noeuds.length && (svgV.match(/tabindex='0'/g) || []).length === attV.length && (svgV.match(/class='touche-halte'/g) || []).length === attV.length &&
+    /aria-label='Semaine 6, 1re couche : /.test(svgV) && (svgV.match(/class='brume-bande'/g) || []).length === 2 && /\{[A-Za-z]+\}/.test(svgV) === false && (svgV.match(/Cette semaine/g) || []).length === (dV.bandes.some(b => b.semaine === JV.calendrier.semaine(new Date()).numero) ? 1 : 0),
+    { haltes: (svgV.match(/class='halte /g) || []).length, tab: (svgV.match(/tabindex='0'/g) || []).length });
+  const h1V = attV[0]; XV.entrer(h1V.id);
+  const resV = XV.apresBataille(h1V, { issue: "tenu", degatsRival: 2, bonnes: 2, total: 3, entamee: true });
+  if (!resV.franchie && h1V.type !== "escarmouche" && h1V.type !== "embuscade") XV.terminerHalte(h1V.id);
+  const et2 = EV.etatsNoeuds(XV.enCours(), dV), ch2 = EV.etatsChemins(XV.enCours(), dV, et2), chemins2 = dV.chemins.map((c, i) => Object.assign({ etat: ch2[i] }, c));
+  verifier("États après une halte : la halte jouée porte un sceau (« jouee reussie »), ses suivantes sont atteignables, le chemin du départ à la halte est « pris », ceux vers les suivantes « possible », les haltes hors chemin estompées",
+    /jouee/.test(et2[h1V.id]) && XV.atteignables().every(h => et2[h.id] === "atteignable") && chemins2.some(c => c.de === "depart" && c.a === h1V.id && c.etat === "pris") &&
+    chemins2.filter(c => c.de === h1V.id).every(c => c.etat === "possible") && Object.keys(et2).some(k => et2[k] === "hors"),
+    { etat: et2[h1V.id], chemins: chemins2.filter(c => c.de === "depart" || c.de === h1V.id).map(c => c.de + ">" + c.a + ":" + c.etat) });
+  const svg2 = EV.carteSVG(XV.enCours(), dV, et2);
+  verifier("Carte SVG après une halte : un sceau de cire sur la halte jouée, l'aria-label le dit (« réussie » ou « murs cédés »), le journal de route a une ligne « Semaine 6 · … »",
+    (svg2.match(/class='sceau-halte/g) || []).length === 1 && /(réussie|victoire éclatante|murs cédés)'/.test(svg2) && EV.journalDeRoute(XV.enCours()).length === 1 && /^Semaine 6 · /.test(EV.journalDeRoute(XV.enCours())[0]));
+  // parchemin de l'année
+  const xV = XV.etat(); xV.franchies = [1, 2];
+  const anneeV = EV.parcheminAnnee(xV, 8, [1, 3, 6], 6, [6, 7, 8], 8);
+  verifier("Parchemin de l'année : trente-quatre cases, les semaines franchies scellées, les relais ouverts cerclés d'or et le relais choisi marqué, la frontière et la bannière « Cette semaine », la brume au-delà",
+    (anneeV.match(/class='case/g) || []).length === 34 && (anneeV.match(/class='sceau-halte/g) || []).length === 2 && (anneeV.match(/ relais/g) || []).length === 3 && (anneeV.match(/ choisi/g) || []).length === 1 &&
+    /Frontière/.test(anneeV) && /Cette semaine/.test(anneeV) && (anneeV.match(/class='case brume/g) || []).length === 26);
+  xV.franchies = [];
+  // textes de fin de bataille et nom des portes
+  const tCede = EV.textesFin({ cede: true, vivres: 2, type: "gardien", or: 0, renom: 2, nomPorte: "Faveur du chroniqueur (rare)" }, { semaine: 6 });
+  const tGard = EV.textesFin({ cede: false, type: "gardien", franchie: 6, or: 25, renom: 33, nomPorte: "Faveur du chroniqueur (rare)", porte: { genre: "faveur" } }, { semaine: 6 });
+  const tEcl = EV.textesFin({ cede: false, type: "escarmouche", eclatante: true, or: 60, renom: 10, nomPorte: "Bourse" }, { semaine: 6 });
+  verifier("Fins de bataille de route : murs cédés (vivres restants, le gardien se retente, la porte n'est pas offerte), semaine franchie (or, renommée, porte), éclatante (porte doublée) ; bouton « Continuer la route »",
+    tCede.titre === "Les murs ont cédé" && /Il en reste 2\./.test(tCede.texte) && /retenter/.test(tCede.texte) && !/porte/.test(tCede.butin) && tGard.titre === "Semaine 6 franchie" && /\+25 or de route, \+33 renommée, porte : Faveur du chroniqueur/.test(tGard.butin) &&
+    /doublée/.test(tEcl.titre) && /\+60 or de route/.test(tEcl.butin) && [tCede, tGard, tEcl].every(t => /Continuer la route/.test(t.bouton)), { tCede, tGard, tEcl });
+  verifier("Nom d'une porte de faveur : l'article se contracte ou s'élide (« Faveur du ménestrel », « de la cartographe », « de l'herboriste (rare) »)",
+    XV.nomPorte({ genre: "faveur", conseiller: "francais" }) === "Faveur du ménestrel" && XV.nomPorte({ genre: "faveur", conseiller: "geographie" }) === "Faveur de la cartographe" && XV.nomPorte({ genre: "faveur", conseiller: "svt", rare: true }) === "Faveur de l'herboriste (rare)" && XV.nomPorte({ genre: "bourse" }) === "Bourse");
+  // les réponses d'une halte comptent pour l'expédition, pas celles d'une partie de campagne jouée pendant qu'elle attend
+  const qV = JV.questions.questionsDuCours("svt-s06-1")[0], avantQ = XV.enCours().compte.questions;
+  EV.etat.enHalte = false; JV.questions.enregistrerReponse(qV, true);
+  const horsHalte = XV.enCours().compte.questions;
+  EV.etat.enHalte = true; JV.questions.enregistrerReponse(qV, true); JV.questions.enregistrerReponse(qV, false);
+  const enHalte = XV.enCours().compte.questions; EV.etat.enHalte = false;
+  verifier("Réponses : pendant une halte, chaque réponse enregistrée compte pour l'expédition (compte, +1 renommée si juste, fiche à relire si fausse) ; hors halte, rien",
+    horsHalte === avantQ && enHalte === avantQ + 2 && XV.enCours().compte.fiches.indexOf(qV.fiche) >= 0 && JV.sauvegarde.etat().stats.total >= 3);
+  verifier("Événements rejoués sur la route : chaque événement du jour et les archives ont un titre, une icône, un texte de route et un nombre de questions ; les noms courts de la carte existent pour chacun",
+    ["marchands", "defi", "mercenaires", "incendie", "espion", "archives"].every(id => { const ev = EV.evenementDe(id); return ev && ev.titre && ev.icone && ev.texte && typeof ev.questions === "number" && EV.nomCourt({ type: "evenement", ev: id }).length <= 11; }));
+})();
+
 console.log("\n" + ok + " réussis, " + ko + " en échec.");
 process.exit(ko ? 1 : 0);

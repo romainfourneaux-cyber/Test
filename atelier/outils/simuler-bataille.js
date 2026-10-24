@@ -59,6 +59,35 @@
 //              moteur n'est pas touché) : mesure de ce que coûte le champion dans une escarmouche à une vague ;
 //   --comparer route.json : en mode route, écarts de tenue, d'éclatante, de coups et de murs avec un essai de route
 //              enregistré par --json (par exemple avec et sans champion).
+// Mode expédition (MVP du 24/10/2026, cahier 17.2 et 17.3 ; réglage dans atelier/conception/expeditions-mesures.md,
+// « Réglage du MVP »). jeu/js/expedition.js est chargé après campagne.js (toujours, même hors de ce mode : --comparer
+// atelier/mesures/avant-expedition.json prouve que les batailles de campagne n'en bougent pas) :
+//   --expedition : joue les quatre nœuds de la route (escarmouche, embuscade, gardien, Grand Gardien) avec les options
+//              exactes de JEU.expedition.optionsBataille (ligne de la semaine, mode, vagues, solidité, config.expedition.
+//              difficulte, Armorial, faveurs, plafonds), l'arsenal et les jauges de PROGRESSION[ligne de la semaine], sur la
+//              carte de la semaine (gue, foret, moulin, col, chateau en tournant) et, pour le Grand Gardien, sur la carte de
+//              la prochaine province du front (gue vers l'ouest, col vers le sud) ; 160 batailles par case (graines de la
+//              défense du domaine : une case se compare aux fichiers du jour 0, atelier/mesures/jour0/*.json). Un gardien
+//              dont les murs cèdent est retenté avec les coups déjà portés (--tentatives 5 au plus), comme dans le jeu.
+//              Puis la réussite d'une expédition entière, par le calcul du cahier (17.3 : une halte jouée par couche, parts
+//              55 / 35 / 25 % d'escarmouche et 0 / 25 / 0 % d'embuscade, gardiens retentés au taux de la 1re tentative,
+//              aucun vivre regagné sauf --repos), pour --expeditions et --vivres ;
+//   --semaines 1,3,6,8,13 : les semaines mesurées (défaut) ; les semaines que la convolution demande et que --semaines ne
+//              nomme pas sont mesurées aussi (avec le défaut : 2 et 7) ;
+//   --expeditions 1-3,6-8 : les tronçons de la convolution (défaut ; « aucune » pour s'en passer) ; --vivres 3,4,5 ;
+//              --repos 0 (chance qu'un bivouac de 3e couche rende un vivre, par semaine) ;
+//   --noeuds escarmouche,embuscade,gardien,grand : les nœuds joués (défaut : les quatre) ;
+//   --front angleterre|omeyyades (carte du Grand Gardien : gue ou col) ; --carteGrand gue : la carte du Grand Gardien ;
+//   --difficulte n : config.expedition.difficulte pour l'essai (sans toucher au fichier) ; --arsenal n ou --arsenal -1 :
+//              une autre rangée de PROGRESSION que celle de la ligne de la semaine (absolue, ou écart signé) ;
+//   --armorial complet | aucun | vivres:1,bourse:2 : les quartiers de l'Armorial tenus ; --faveurs annales:2,engrenages:1 :
+//              les faveurs tenues (identifiant:rang) ;
+//   --essai "X.EXP.HALTES.grand.vagues = 4; X.EXP.LIGNE_SEMAINE[2][1] = 3" : essai d'un réglage de jeu/js/expedition.js
+//              (X = JEU.expedition, ses constantes EXP), sans toucher au fichier, comme --regle pour le moteur ;
+//   --depuis a.json,b.json : reprend les cases déjà mesurées dans ces essais (mêmes options), ne joue que les autres
+//              (pour mesurer les semaines en parallèle, un processus par semaine, puis faire la convolution en une fois) ;
+//   --comparer essai.json : en mode expédition, écarts de tenue, d'éclatante, de coups et de murs, nœud par nœud ;
+//   --json, --sortie, --graines, --p, --strategies, --trace, --perte, --regle marchent comme ailleurs.
 "use strict";
 const fs = require("fs");
 const path = require("path");
@@ -77,8 +106,58 @@ STRATEGIES.forEach(s => { if (["equilibre", "rush", "tortue", "attente"].indexOf
 // (un fichier écrit par « > » dans Windows PowerShell est en UTF-16 : il est lu aussi)
 function lireJSON(f) { const o = fs.readFileSync(f); return JSON.parse(o[0] === 0xFF && o[1] === 0xFE ? o.toString("utf16le", 2) : o.toString("utf8").replace(/^\uFEFF/, "")); }
 const COMPARER = option("comparer", null) ? lireJSON(option("comparer")) : null;
+// Mode expédition (--expedition) : les quatre nœuds de la route avec les options exactes de JEU.expedition.optionsBataille.
+const NOEUDS_ROUTE = ["escarmouche", "embuscade", "gardien", "grand"];
+const EXPEDITION = (function () {
+  if (args.indexOf("--expedition") < 0) return null;
+  const nombres = s => s.split(",").map(x => x.trim()).filter(Boolean).map(Number);
+  const tron = option("expeditions", "1-3,6-8");
+  const expeditions = tron === "aucune" ? [] : tron.split(",").map(x => {
+    const m = /^(\d+)(?:-(\d+))?$/.exec(x.trim());
+    if (!m) { console.error("--expeditions : des tronçons de semaines « 1-3,6-8 », ou aucune"); process.exit(1); }
+    const a = +m[1], b = m[2] ? +m[2] : a, w = [];
+    for (let s = a; s <= b; s++) w.push(s);
+    return w;
+  });
+  const semaines = nombres(option("semaines", "1,3,6,8,13")), ajoutees = [];
+  expeditions.forEach(w => w.forEach(s => { if (semaines.indexOf(s) < 0 && ajoutees.indexOf(s) < 0) ajoutees.push(s); }));
+  const noeuds = option("noeuds", NOEUDS_ROUTE.join(",")).split(",").map(s => s.trim()).filter(Boolean);
+  noeuds.forEach(n => { if (NOEUDS_ROUTE.indexOf(n) < 0) { console.error("Nœud inconnu : " + n + " (" + NOEUDS_ROUTE.join(", ") + ")"); process.exit(1); } });
+  const front = option("front", "angleterre");
+  if (front !== "angleterre" && front !== "omeyyades") { console.error("--front : angleterre ou omeyyades"); process.exit(1); }
+  // Armorial : complet, aucun, ou quartier:rang,…
+  const RANGS_ARMORIAL = { vivres: 2, bourse: 3, murs: 2, ouverture: 1, banniere: 2 };
+  const armorial = {};
+  const a = option("armorial", "aucun");
+  if (a === "complet") Object.keys(RANGS_ARMORIAL).forEach(k => { armorial[k] = RANGS_ARMORIAL[k]; });
+  else if (a !== "aucun") a.split(",").forEach(x => {
+    const m = /^([a-z]+):(\d+)$/.exec(x.trim());
+    if (!m || !(m[1] in RANGS_ARMORIAL)) { console.error("--armorial : complet, aucun ou quartier:rang (" + Object.keys(RANGS_ARMORIAL).join(", ") + ")"); process.exit(1); }
+    armorial[m[1]] = Math.min(RANGS_ARMORIAL[m[1]], +m[2]);
+  });
+  const faveurs = [];
+  const f = option("faveurs", "aucune");
+  if (f !== "aucune") f.split(",").forEach(x => {
+    const m = /^([a-z]+):([12])$/.exec(x.trim());
+    if (!m) { console.error("--faveurs : identifiant:rang, par exemple annales:2,engrenages:1"); process.exit(1); }
+    faveurs.push({ id: m[1], rang: +m[2] });
+  });
+  const arsenalOpt = option("arsenal", null);
+  const r = {
+    semaines: semaines.concat(ajoutees).sort((x, y) => x - y), ajoutees: ajoutees.sort((x, y) => x - y), expeditions: expeditions, noeuds: noeuds,
+    front: front, carteGrand: option("carteGrand", null),
+    difficulte: option("difficulte", null) === null ? null : parseInt(option("difficulte"), 10),
+    arsenal: arsenalOpt === null ? null : parseInt(arsenalOpt, 10), arsenalRelatif: /^[+-]/.test(arsenalOpt || ""),
+    armorial: armorial, faveurs: faveurs, vivres: nombres(option("vivres", "3,4,5")), repos: Number(option("repos", "0")),
+    tentatives: Math.max(1, parseInt(option("tentatives", "5"), 10)), depuis: option("depuis", null) ? option("depuis").split(",").map(s => s.trim()).filter(Boolean) : []
+  };
+  if (!r.semaines.length || r.semaines.some(s => !(s >= 1))) { console.error("--semaines : des numéros de semaine à partir de 1"); process.exit(1); }
+  if (r.arsenal !== null && !r.arsenalRelatif && !(r.arsenal >= 0 && r.arsenal <= 4)) { console.error("--arsenal : une rangée de PROGRESSION, de 0 à 4, ou un écart signé"); process.exit(1); }
+  return r;
+})();
 // Mode route (batailles d'expédition) : seulement si une de ces options est donnée ; sinon ROUTE est null et rien ne change.
 const ROUTE = (function () {
+  if (EXPEDITION) return null;
   if (!["vagues", "pvRival", "mode", "carte", "arsenal", "sansChampion"].some(k => args.indexOf("--" + k) >= 0)) return null;
   const carte = option("carte", null);
   const mode = option("mode", carte === "domaine" ? "defense" : "attaque");
@@ -112,7 +191,8 @@ function charger() {
   const fenetre = { console, localStorage: { getItem: k => (k in stock ? stock[k] : null), setItem: (k, v) => { stock[k] = String(v); }, removeItem: k => { delete stock[k]; } } };
   const math = Object.create(Math);
   math.random = () => tirage();
-  ["noyau", "sauvegarde", "bataille-moteur", "cartes-bataille", "campagne"].forEach(m => {
+  // expedition.js (sans DOM) vient après campagne.js, comme dans jeu/index.html ; il ne touche pas aux batailles de campagne
+  ["noyau", "sauvegarde", "bataille-moteur", "cartes-bataille", "campagne", "expedition"].forEach(m => {
     const f = m === "bataille-moteur" ? MOTEUR : path.join(RACINE, "jeu", "js", m + ".js");
     new Function("window", "globalThis", "Math", fs.readFileSync(f, "utf8"))(fenetre, fenetre, math);
   });
@@ -120,8 +200,13 @@ function charger() {
   return fenetre.JEU;
 }
 const J = charger();
-const M = J.batailleMoteur, C = J.campagne, CB = J.cartesBataille;
+const M = J.batailleMoteur, C = J.campagne, CB = J.cartesBataille, X = J.expedition;
 if (option("regle", null)) new Function("M", option("regle"))(M);
+if (EXPEDITION && option("essai", null)) new Function("X", option("essai"))(X); // un réglage de la route essayé en mémoire
+// --difficulte : le cran de config.expedition.difficulte pour cet essai seulement (le fichier n'est pas touché)
+if (EXPEDITION && EXPEDITION.difficulte !== null) J.donnees.config.expedition = Object.assign({}, J.donnees.config.expedition || {}, { difficulte: EXPEDITION.difficulte });
+if (EXPEDITION && EXPEDITION.carteGrand && !CB.LIEUX[EXPEDITION.carteGrand]) { console.error("Carte inconnue : " + EXPEDITION.carteGrand + " (" + Object.keys(CB.LIEUX).join(", ") + ")"); process.exit(1); }
+if (EXPEDITION) EXPEDITION.faveurs.forEach(f => { if (!X.EXP.FAVEURS[f.id]) { console.error("Faveur inconnue : " + f.id + " (" + Object.keys(X.EXP.FAVEURS).join(", ") + ")"); process.exit(1); } });
 if (ROUTE && ROUTE.carte && !CB.LIEUX[ROUTE.carte]) { console.error("Carte inconnue : " + ROUTE.carte + " (" + Object.keys(CB.LIEUX).join(", ") + ")"); process.exit(1); }
 const CONFIG = J.donnees.config || {};
 const PERTE = option("perte", null) !== null ? Number(option("perte")) : typeof CONFIG.orPerduErreur === "number" ? CONFIG.orPerduErreur : (M.OR_PERDU || 0);
@@ -349,6 +434,110 @@ function route(niveau, pJuste, strategie) {
   return res;
 }
 
+// ---------- mode expédition : les nœuds de la route avec les options exactes du jeu ----------
+// Rangée de PROGRESSION d'une semaine : la ligne du rival de la semaine (cahier 7.1), sauf --arsenal.
+function rangExpedition(S) {
+  const ligne = X.ligneSemaine(S);
+  if (EXPEDITION.arsenal === null) return ligne;
+  return EXPEDITION.arsenalRelatif ? Math.max(0, Math.min(4, ligne + EXPEDITION.arsenal)) : EXPEDITION.arsenal;
+}
+// La carte d'un nœud : celle de la semaine (les cinq tracés tournent), le Grand Gardien sur la carte de la prochaine
+// province du front (ce que fait expedition.js par carteGrand), sauf --carteGrand.
+function carteExpedition(S, type) {
+  if (type !== "grand") return X.EXP.CARTES[(S - 1) % X.EXP.CARTES.length];
+  if (EXPEDITION.carteGrand) return EXPEDITION.carteGrand;
+  const pp = C.prochaineProvince(EXPEDITION.front);
+  return pp ? pp.province.carte : "chateau";
+}
+// Une sauvegarde neuve avec l'arsenal et les jauges de la rangée, l'Armorial et les faveurs de l'essai, et une expédition
+// en cours réduite à une semaine : une halte (escarmouche ou embuscade) qui mène au gardien de la semaine (ou au Grand
+// Gardien). Les options viennent alors de JEU.expedition.optionsBataille, telles que le jeu les passe au moteur
+// (places : la solidité restante d'un gardien déjà attaqué, comme enCours.places).
+function optionsExpedition(S, type, places) {
+  J.sauvegarde.remplacer(J.sauvegarde.nouvelle());
+  const c = C.etat(), pr = PROGRESSION[rangExpedition(S)];
+  c.arsenal.tours = Object.assign({}, pr.tours); c.arsenal.troupes = Object.assign({}, pr.troupes); c.arsenal.remparts = pr.remparts;
+  ["tresor", "peuple", "garde", "savoir"].forEach(k => { c.royaume[k] = pr.jauges; });
+  const x = X.etat();
+  Object.keys(EXPEDITION.armorial).forEach(k => { x.armorial[k] = EXPEDITION.armorial[k]; });
+  const H = X.EXP.HALTES, typeGardien = type === "grand" ? "grand" : "gardien";
+  const gardien = { id: "s" + S + "g", type: typeGardien, semaine: S, place: H[typeGardien].place, vagues: H[typeGardien].vagues, suivants: [],
+    carte: carteExpedition(S, typeGardien), porte: { genre: "faveur", conseiller: "histoire", rare: true } };
+  const halte = { id: "s" + S + "c1h1", couche: 1, rang: 1, type: type === "embuscade" ? "embuscade" : "escarmouche", suivants: [gardien.id] };
+  x.enCours = {
+    graine: 1, front: EXPEDITION.front, depart: S, semaines: [S], ardeur: 0, difficulte: X.reglages().difficulte, vitesse: 1,
+    route: { version: X.VERSION_ROUTE, graine: 1, front: EXPEDITION.front, depart: S, sautees: [],
+      actes: [{ semaine: S, semaines: [S], quota: 2, fiches: 12, cas: "pleine", carte: X.EXP.CARTES[(S - 1) % X.EXP.CARTES.length], couches: [[halte]], gardien: gardien }] },
+    position: halte.id, semaine: S, faits: {}, entamee: null, vivres: 3, vivresMax: 3, or: 0, plan: 0, espion: false, monture: false,
+    faveurs: EXPEDITION.faveurs.map(f => ({ id: f.id, rang: f.rang })), places: Object.assign({}, places || {}), offre: null, etal: {}, compte: null
+  };
+  const o = X.optionsBataille(type === "gardien" || type === "grand" ? gardien : halte);
+  if (option("perte", null) !== null) o.orPerduErreur = PERTE; // sinon : celui de config.js moins la Ballade, comme dans le jeu
+  return o;
+}
+// Un nœud d'une semaine : 2 × GRAINES batailles (graines de la défense du domaine, comme une mesure --carte du jour 0 :
+// la même case se compare aux fichiers de atelier/mesures/jour0/). Un gardien cédé est retenté, les coups portés gardés.
+function noeudExpedition(S, type, pJuste, strategie) {
+  const res = { victoire: 0, tenu: 0, retraite: 0, degats: 0, n: 0, murs: 0, mursTenue: 0, vague1: 0, tues: 0, pertes: 0,
+    sorties: 0, iaTours: 0, iaGardes: 0, iaRenforts: 0, iaRappels: 0, vaincuEn: {}, tentatives: 0, vaincus: 0, jamais: 0, carte: null, niveau: null, arsenal: rangExpedition(S), options: null };
+  const retente = type === "gardien" || type === "grand", idGardien = "s" + S + "g";
+  for (let g = 0; g < 2 * GRAINES; g++) {
+    let places = {}, n = 0, b;
+    do {
+      const o = optionsExpedition(S, type, places);
+      if (!res.options) { res.options = JSON.parse(JSON.stringify(o)); res.carte = carteExpedition(S, type); res.niveau = o.niveau; }
+      const tr = TRACE && g === 0 && n === 0 ? [] : null;
+      b = jouerBataille(res.carte, o, pJuste, 5000 * g + 13 * o.niveau + 3 + 7 * n, strategie, tr);
+      if (tr) console.log(" " + strategie + ", p = " + pJuste + ", semaine " + S + ", " + type + " sur " + res.carte + " (ligne " + o.niveau + ", arsenal " + res.arsenal + "), graine 0 : " + b.issue + ", " + b.degats + " coups\n" + tr.join("\n"));
+      if (n === 0) {
+        res[b.issue]++; res.degats += b.degats; res.n++; res.murs += b.murs; if (b.issue !== "retraite") res.mursTenue += b.murs;
+        res.vague1 += b.vague1; res.tues += b.stats.tues; res.pertes += b.stats.pertes; res.sorties += b.stats.sorties || 0;
+        res.iaTours += b.ia.tours; res.iaGardes += b.ia.gardes; res.iaRenforts += b.ia.renforts; res.iaRappels += b.ia.rappels;
+      }
+      n++;
+      if (b.issue === "retraite") places[idGardien] = Math.max(1, (places[idGardien] || o.pvRivalMax) - b.degats);
+    } while (retente && b.issue === "retraite" && n < EXPEDITION.tentatives);
+    if (retente) {
+      if (b.issue !== "retraite") { res.vaincus++; res.tentatives += n; res.vaincuEn[n] = (res.vaincuEn[n] || 0) + 1; }
+      else res.jamais++;
+    }
+  }
+  return res;
+}
+// Cases déjà mesurées (--depuis) : clé p|semaine|nœud → ligne de résultat.
+const DEPUIS = {};
+(EXPEDITION ? EXPEDITION.depuis : []).forEach(f => {
+  const e = lireJSON(f);
+  if (!e.expedition || !e.resultats) { console.error(f + " : pas un essai --expedition --json"); process.exit(1); }
+  Object.keys(e.resultats).forEach(p => e.resultats[p].forEach(l => { DEPUIS[p + "|" + l.semaine + "|" + l.noeud] = Object.assign({ source: path.relative(RACINE, f) }, l); }));
+});
+// Réussite d'une expédition entière (cahier 17.3, même calcul que atelier/mesures/convolution-expedition.js) à partir des
+// taux de tenue mesurés (lignes : la table de cette justesse, par semaine et nœud) : distribution des vivres, nœud après nœud.
+const COUCHES_CONVOLUTION = [{ esc: 0.55, emb: 0 }, { esc: 0.35, emb: 0.25 }, { esc: 0.25, emb: 0 }];
+function convolution(semaines, lignes, vivres) {
+  const VMAX = X.EXP.VIVRES_MAX, taux = (S, noeud) => { const l = lignes.find(x => x.semaine === S && x.noeud === noeud); return l && l.tenue !== null ? l.tenue / 100 : null; };
+  for (let i = 0; i < semaines.length; i++) {
+    const S = semaines[i];
+    if (taux(S, "escarmouche") === null || taux(S, "embuscade") === null || taux(S, i === semaines.length - 1 ? "grand" : "gardien") === null) return null;
+  }
+  let d = new Array(VMAX + 1).fill(0); d[Math.min(VMAX, vivres)] = 1;
+  const couche = perte => { const n = new Array(VMAX + 1).fill(0); for (let v = 1; v <= VMAX; v++) { n[v - 1] += d[v] * perte; n[v] += d[v] * (1 - perte); } n[0] += d[0]; d = n; };
+  const gardien = t => {
+    const n = new Array(VMAX + 1).fill(0);
+    for (let v = 1; v <= VMAX; v++) { let reste = d[v]; for (let k = 0; k < v; k++) { const q = d[v] * Math.pow(1 - t, k) * t; n[v - k] += q; reste -= q; } n[0] += Math.max(0, reste); }
+    n[0] += d[0]; d = n;
+  };
+  const repos = () => { if (!EXPEDITION.repos) return; const n = new Array(VMAX + 1).fill(0); for (let v = 1; v <= VMAX; v++) { n[Math.min(VMAX, v + 1)] += d[v] * EXPEDITION.repos; n[v] += d[v] * (1 - EXPEDITION.repos); } n[0] += d[0]; d = n; };
+  let premierGardien = null;
+  semaines.forEach((S, i) => {
+    const esc = taux(S, "escarmouche"), emb = taux(S, "embuscade");
+    COUCHES_CONVOLUTION.forEach((c, j) => { couche(c.esc * (1 - esc) + c.emb * (1 - emb)); if (j === 2) repos(); });
+    gardien(taux(S, i === semaines.length - 1 ? "grand" : "gardien"));
+    if (i === 0) premierGardien = 1 - d[0];
+  });
+  return { reussite: 1 - d[0], premierGardien: premierGardien, vivresMoyens: d.reduce((s, x, v) => s + x * v, 0) };
+}
+
 const pc = (a, n) => n ? Math.round(100 * a / n) : null;
 const r2 = (a, n) => n ? Math.round(100 * a / n) / 100 : null;
 const t0 = Date.now();
@@ -357,12 +546,87 @@ if (ROUTE) sortie.route = { vagues: ROUTE.vagues, pvRival: ROUTE.pvRival, mode: 
 const descRoute = ROUTE ? "bataille de route : " + ROUTE.mode + ", " + ROUTE.vagues + " vague" + (ROUTE.vagues > 1 ? "s" : "") + ", camp de " + ROUTE.pvRival +
   ", carte " + (ROUTE.carte || (ROUTE.mode === "defense" ? "domaine" : "de la province du niveau, deux fronts")) +
   (ROUTE.arsenal !== null ? ", arsenal " + (ROUTE.arsenalRelatif ? "du niveau " + (ROUTE.arsenal >= 0 ? "+ " : "− ") + Math.abs(ROUTE.arsenal) : "de la rangée " + ROUTE.arsenal) : "") + (ROUTE.sansChampion ? ", sans champion" : "") : "";
-if (!JSON_SORTIE && ROUTE) console.log("Moteur : " + sortie.moteur + " · or perdu par erreur : " + PERTE + " · " + 2 * GRAINES + " batailles par niveau · " + descRoute +
+if (EXPEDITION) {
+  const H = X.EXP.HALTES;
+  sortie.expedition = { semaines: EXPEDITION.semaines, ajoutees: EXPEDITION.ajoutees, noeuds: EXPEDITION.noeuds, expeditions: EXPEDITION.expeditions, front: EXPEDITION.front,
+    carteGrand: EXPEDITION.carteGrand, difficulte: X.reglages().difficulte, arsenal: EXPEDITION.arsenal === null ? null : (EXPEDITION.arsenalRelatif ? (EXPEDITION.arsenal >= 0 ? "+" : "") + EXPEDITION.arsenal : EXPEDITION.arsenal),
+    armorial: EXPEDITION.armorial, faveurs: EXPEDITION.faveurs, vivres: EXPEDITION.vivres, repos: EXPEDITION.repos, tentatives: EXPEDITION.tentatives, essai: option("essai", null),
+    haltes: NOEUDS_ROUTE.map(t => t + " : " + H[t].mode + ", " + H[t].vagues + " vague" + (H[t].vagues > 1 ? "s" : "") + ", camp de " + H[t].place + ", ligne + " + H[t].ligne).join(" ; "),
+    ligneSemaine: JSON.stringify(X.EXP.LIGNE_SEMAINE) };
+}
+const descExpedition = EXPEDITION ? "batailles de route (options de JEU.expedition.optionsBataille) · " + sortie.expedition.haltes + " · lignes par semaine " + sortie.expedition.ligneSemaine +
+  " · difficulté " + sortie.expedition.difficulte + (sortie.expedition.essai ? " · essai « " + sortie.expedition.essai + " »" : "") + " · front " + EXPEDITION.front + (EXPEDITION.carteGrand ? " · Grand Gardien sur " + EXPEDITION.carteGrand : "") +
+  (sortie.expedition.arsenal !== null ? " · arsenal " + (EXPEDITION.arsenalRelatif ? "de la ligne " + (EXPEDITION.arsenal >= 0 ? "+ " : "− ") + Math.abs(EXPEDITION.arsenal) : "de la rangée " + EXPEDITION.arsenal) : "") +
+  " · Armorial : " + (Object.keys(EXPEDITION.armorial).length ? Object.keys(EXPEDITION.armorial).map(k => k + " " + EXPEDITION.armorial[k]).join(", ") : "aucun") +
+  " · faveurs : " + (EXPEDITION.faveurs.length ? EXPEDITION.faveurs.map(f => f.id + " " + f.rang).join(", ") : "aucune") : "";
+if (!JSON_SORTIE && EXPEDITION) console.log("Moteur : " + sortie.moteur + " · or perdu par erreur : " + (option("perte", null) !== null ? PERTE : "celui du jeu") + " · " + 2 * GRAINES + " batailles par case · " + descExpedition +
+  " · semaines " + EXPEDITION.semaines.join(", ") + (EXPEDITION.ajoutees.length ? " (" + EXPEDITION.ajoutees.join(", ") + " ajoutée" + (EXPEDITION.ajoutees.length > 1 ? "s" : "") + " pour la convolution)" : "") +
+  (EXPEDITION.depuis.length ? " · cases reprises de " + EXPEDITION.depuis.join(", ") : "") + (STRATEGIES.length > 1 || STRATEGIES[0] !== "equilibre" ? " · stratégies : " + STRATEGIES.join(", ") : ""));
+else if (!JSON_SORTIE && ROUTE) console.log("Moteur : " + sortie.moteur + " · or perdu par erreur : " + PERTE + " · " + 2 * GRAINES + " batailles par niveau · " + descRoute +
   (STRATEGIES.length > 1 || STRATEGIES[0] !== "equilibre" ? " · stratégies : " + STRATEGIES.join(", ") : ""));
 else if (!JSON_SORTIE) console.log("Moteur : " + sortie.moteur + " · or perdu par erreur : " + PERTE + " · " + GRAINES + " graines par province (deux fronts), " + 2 * GRAINES + " défenses par niveau" +
   (STRATEGIES.length > 1 || STRATEGIES[0] !== "equilibre" ? " · stratégies : " + STRATEGIES.join(", ") : ""));
 // avec --seulement, la partie qui n'a pas été jouée s'affiche « — » (et non « null % » ou « NaN »)
 const pct = x => (x === null || x === undefined ? "—" : x + " %"), val = x => (x === null || x === undefined ? "—" : String(x));
+// Mode expédition : un tableau par justesse (semaine, nœud, carte, ligne du rival, tenue, éclatante, murs, coups, tentatives
+// des gardiens), les écarts avec un essai comparé, puis la convolution après la dernière justesse.
+function sortieExpedition(pJuste, strategie) {
+  const NOMS = { escarmouche: "escarmouche", embuscade: "embuscade", gardien: "gardien", grand: "Grand Gardien" };
+  const lignes = [];
+  EXPEDITION.semaines.forEach(S => EXPEDITION.noeuds.forEach(type => {
+    const reprise = strategie === "equilibre" ? DEPUIS[pJuste + "|" + S + "|" + type] : null;
+    if (reprise) { lignes.push(reprise); return; }
+    const a = noeudExpedition(S, type, pJuste, strategie);
+    const vaincu = k => (a.vaincus + a.jamais ? pc(Object.keys(a.vaincuEn).reduce((s, n) => s + (+n <= k ? a.vaincuEn[n] : 0), 0), a.vaincus + a.jamais) : null);
+    lignes.push({
+      semaine: S, noeud: type, ligne: X.ligneSemaine(S), arsenal: a.arsenal, niveau: a.niveau, carte: a.carte, vagues: a.options.vagues, place: a.options.pvRivalMax, defense: a.options.defense,
+      tenue: pc(a.victoire + a.tenu, a.n), eclatante: pc(a.victoire, a.n), tenu: pc(a.tenu, a.n), retraite: pc(a.retraite, a.n),
+      degats: r2(a.degats, a.n), vague1: r2(a.vague1, a.n), murs: pc(a.murs, a.n), mursTenue: pc(a.mursTenue, a.victoire + a.tenu),
+      tues: a.n ? Math.round(10 * a.tues / a.n) / 10 : null, pertes: a.n ? Math.round(10 * a.pertes / a.n) / 10 : null, sorties: r2(a.sorties, a.n),
+      iaTours: r2(a.iaTours, a.n), iaGardes: r2(a.iaGardes, a.n), iaRenforts: r2(a.iaRenforts, a.n), iaRappels: r2(a.iaRappels, a.n),
+      vaincu1: vaincu(1), vaincu2: vaincu(2), vaincu3: vaincu(3), tentatives: a.vaincus ? Math.round(100 * a.tentatives / a.vaincus) / 100 : null, jamais: a.vaincus + a.jamais ? pc(a.jamais, a.vaincus + a.jamais) : null, n: a.n
+    });
+  }));
+  if (strategie === "equilibre") sortie.resultats[pJuste] = lignes;
+  (sortie.strategies[strategie] = sortie.strategies[strategie] || {})[pJuste] = lignes;
+  if (JSON_SORTIE) return;
+  console.log("\np = " + pJuste + " (réponses justes)" + (STRATEGIES.length > 1 || strategie !== "equilibre" ? " · stratégie " + strategie : "") + " · " + 2 * GRAINES + " batailles par case" + (EXPEDITION.depuis.length ? " (* : case reprise d'un essai --depuis)" : ""));
+  console.log("sem | nœud          | carte   | rival | arsenal | vag. camp | tenue (éclatante) | tenu  retraite | murs restants (quand elle tient) | coups portés (1re vague) | gardien vaincu en 1 / 2 / 3 tentatives · tentatives moy. · jamais en " + EXPEDITION.tentatives);
+  lignes.forEach(l => console.log(
+    " " + String(l.semaine).padStart(2) + " | " + NOMS[l.noeud].padEnd(13) + " | " + String(l.carte).padEnd(7) + " |   " + l.niveau + "   |    " + l.arsenal + "    | " + l.vagues + "  " + String(l.place).padStart(2) + "   | " +
+    pct(l.tenue).padStart(6) + " (" + pct(l.eclatante).padStart(5) + ")   | " + pct(l.tenu).padStart(5) + " " + pct(l.retraite).padStart(6) + "   | " + (pct(l.murs) + " (" + pct(l.mursTenue) + ")").padStart(32) + " | " +
+    (val(l.degats) + " (" + val(l.vague1) + ")").padStart(24) + " | " + (l.vaincu1 === null ? "—" : pct(l.vaincu1) + " / " + pct(l.vaincu2) + " / " + pct(l.vaincu3) + " · " + val(l.tentatives) + " · " + pct(l.jamais)) + (l.source ? " *" : "")));
+  const ref = strategie === "equilibre" && COMPARER && COMPARER.expedition && COMPARER.resultats[pJuste];
+  if (!ref) return;
+  const pts = (x, y) => (x == null || y == null ? "—" : (y >= x ? "+" : "−") + Math.abs(y - x) + " pt");
+  const ecart = (x, y) => x && y != null ? (y >= x ? "+" : "−") + Math.abs(Math.round(100 * (y / x - 1))) + " %" : "—";
+  console.log("écarts avec " + option("comparer") + " (" + COMPARER.expedition.haltes + " ; difficulté " + COMPARER.expedition.difficulte + ") : tenue ; éclatante ; coups portés ; murs restants");
+  lignes.forEach(l => {
+    const r = ref.find(x => x.semaine === l.semaine && x.noeud === l.noeud);
+    if (r) console.log(" " + String(l.semaine).padStart(2) + " | " + NOMS[l.noeud].padEnd(13) + " | " + pct(r.tenue) + " → " + pct(l.tenue) + " (" + pts(r.tenue, l.tenue) + ") ; " + pct(r.eclatante) + " → " + pct(l.eclatante) + " (" + pts(r.eclatante, l.eclatante) + ") ; " +
+      val(r.degats) + " → " + val(l.degats) + " (" + ecart(r.degats, l.degats) + ") ; " + pct(r.murs) + " → " + pct(l.murs) + " (" + pts(r.murs, l.murs) + ")");
+  });
+}
+// La convolution du cahier (17.3) sur les taux de la stratégie équilibrée, pour chaque tronçon et chaque justesse.
+function sortieConvolution() {
+  if (!EXPEDITION.expeditions.length || !sortie.resultats[PS[0]]) return;
+  const pcx = x => (x === null ? "—" : Math.round(100 * x) + " %");
+  sortie.convolution = [];
+  const lignes = [];
+  EXPEDITION.expeditions.forEach(w => PS.forEach(pJuste => {
+    const R = sortie.resultats[pJuste] || [];
+    const r = EXPEDITION.vivres.map(v => convolution(w, R, v)), premier = convolution(w, R, 3);
+    const nom = "S" + w[0] + (w.length > 1 ? " → S" + w[w.length - 1] : "");
+    sortie.convolution.push({ expedition: nom, semaines: w, p: pJuste, vivres: EXPEDITION.vivres.map((v, i) => ({ vivres: v, reussite: r[i] ? Math.round(1000 * r[i].reussite) / 10 : null })), premierGardien: premier ? Math.round(1000 * premier.premierGardien) / 10 : null });
+    lignes.push("| " + nom + " | " + pJuste + " | " + r.map(x => (x ? pcx(x.reussite) : "—")).join(" | ") + " | " + (premier ? pcx(premier.premierGardien) : "—") + " |");
+  }));
+  if (JSON_SORTIE) return;
+  console.log("\nRéussite d'une expédition entière (calcul du cahier 17.3 : une halte jouée par couche, escarmouche 55 / 35 / 25 % et embuscade 0 / 25 / 0 % selon la couche, une bataille cédée coûte un vivre, gardiens retentés au taux de la 1re tentative" +
+    (EXPEDITION.repos ? ", un vivre rendu au bivouac de 3e couche avec la chance " + EXPEDITION.repos : ", aucun vivre regagné") + ") ; « — » : un nœud du tronçon n'a pas été mesuré :");
+  console.log("| Expédition | p | " + EXPEDITION.vivres.map(v => v + " vivres").join(" | ") + " | premier gardien franchi (3 vivres) |");
+  console.log("|---|---|" + EXPEDITION.vivres.map(() => "---").join("|") + "|---|");
+  lignes.forEach(l => console.log(l));
+}
 // Mode route : un tableau par stratégie (tenue, éclatante, murs, coups), puis les écarts avec un essai de route comparé.
 function sortieRoute(pJuste, strategie) {
   const lignes = NIVEAUX.map(niveau => {
@@ -397,6 +661,13 @@ function sortieRoute(pJuste, strategie) {
   });
 }
 PS.forEach(pJuste => {
+  if (EXPEDITION) {
+    STRATEGIES.forEach(strategie => sortieExpedition(pJuste, strategie));
+    if (JSON_SORTIE || STRATEGIES.length < 2) return;
+    console.log("\np = " + pJuste + " · comparaison des stratégies, par semaine et nœud : tenue (éclatante) ; coups portés ; murs restants");
+    sortie.strategies[STRATEGIES[0]][pJuste].forEach((l0, i) => console.log(" " + l0.semaine + " " + l0.noeud.padEnd(11) + " | " + STRATEGIES.map(s => { const l = sortie.strategies[s][pJuste][i]; return s + " " + pct(l.tenue) + " (" + pct(l.eclatante) + ") ; " + val(l.degats) + " ; " + pct(l.murs); }).join(" | ")));
+    return;
+  }
   if (ROUTE) {
     STRATEGIES.forEach(strategie => sortieRoute(pJuste, strategie));
     if (JSON_SORTIE || STRATEGIES.length < 2) return;
@@ -458,6 +729,7 @@ PS.forEach(pJuste => {
     }).join(" | "));
   });
 });
+if (EXPEDITION) sortieConvolution();
 if (SORTIE_FICHIER) fs.writeFileSync(SORTIE_FICHIER, JSON.stringify(sortie));
 if (JSON_SORTIE) console.log(JSON.stringify(sortie));
 else console.log("\n(" + Math.round((Date.now() - t0) / 1000) + " s)");

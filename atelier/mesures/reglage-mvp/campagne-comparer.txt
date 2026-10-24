@@ -1,0 +1,1 @@
+Moteur : jeu/js/bataille-moteur.js · or perdu par erreur : 6 · 80 graines par province (deux fronts), 160 défenses par niveau

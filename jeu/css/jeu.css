@@ -857,3 +857,163 @@ button.cour-chip:hover { background: rgba(255,250,236,.55); box-shadow: 0 0 0 1p
 /* en bataille : le mot du rival (sa décision entre deux vagues, p.ia.journal), son médaillon à la place de l'icône du récit */
 .recit-rival .recit-portrait { background: none; box-shadow: none; }
 .recit-rival .recit-portrait .medaillon-perso { display: block; }
+
+/* ---------- expéditions : la route des semaines (24/10/2026 ; jeu/js/ecran-expedition.js) ---------- */
+/* Parchemin d'itinéraire à la manière de la Table de Peutinger : lettrines rubriquées, médaillons à l'encre et à l'or,
+   sceaux de cire sur les haltes jouées, nappes de brume sur les semaines suivantes. Rien ne repose sur la couleur seule
+   (sceau + mot dans le journal de route et l'infobulle) ; textes de la carte à 14 px au moins. */
+.exp-sous { text-align: center; font-family: var(--titre); font-size: .95rem; color: #6a5536; margin: -.3rem 0 .6rem; }
+.exp-souverain { text-align: center; font-style: italic; font-size: 1.12rem; margin: .3rem auto .7rem; max-width: 780px; }
+.exp-actions { margin: .5rem 0 .4rem; justify-content: center; }
+.route-carte { margin: .2rem auto .4rem; border: 3px solid var(--encre); border-radius: 4px; overflow: hidden; box-shadow: 0 0 0 2px var(--or), 0 10px 20px rgba(0,0,0,.4); background: #e8dbb8; }
+.route-svg { display: block; width: 100%; height: auto; }
+.route-svg .lettrine { font-family: var(--titre); font-weight: 700; font-size: 32px; fill: #8c2f39; paint-order: stroke; stroke: #f6eedb; stroke-width: 3px; }
+.route-svg .lettrine.brume { fill: #8a8273; }
+.route-svg .dates-semaine { font-family: var(--texte); font-size: 15px; fill: #5b4a36; }
+.route-svg .dates-semaine.brume { fill: #7d7669; font-style: italic; }
+.route-svg .halte-nom { font-family: var(--texte); font-weight: 700; font-size: 15px; fill: var(--encre); text-anchor: middle; paint-order: stroke; stroke: #f6eedb; stroke-width: 3px; }
+.route-svg .txt-touche { font-family: var(--titre); font-weight: 700; font-size: 15px; fill: #f6e7bf; text-anchor: middle; }
+.route-svg .txt-banniere { font-family: var(--titre); font-weight: 700; font-size: 15px; fill: #fff3d0; letter-spacing: .02em; }
+.route-svg .halte { outline: none; }
+.route-svg .halte.atteignable { cursor: pointer; }
+.route-svg .halte.atteignable:hover .corps, .route-svg .halte.atteignable:focus .corps { filter: brightness(1.12); }
+.route-svg .halte.atteignable .halo { transform-box: fill-box; transform-origin: center; animation: halo-carte 1.6s ease-in-out infinite; }
+.route-svg .halte:focus-visible .halo { animation: none; transform: none; opacity: 1; }
+.route-svg .halte:focus-visible .halo .halo-or { stroke: #fff3d0; stroke-width: 7px; }
+.route-svg .halte.hors, .route-svg .halte.passee { opacity: .35; }
+.route-svg .halte.avenir { opacity: .88; }
+.route-svg .halte.brume .corps { opacity: .55; }
+.route-svg .sceau-halte { transform-box: fill-box; transform-origin: center; transform: rotate(-12deg); filter: drop-shadow(1px 2px 2px rgba(0,0,0,.45)); animation: sceau-pose .32s ease-out; }
+@keyframes sceau-pose { from { opacity: 0; transform: rotate(-12deg) scale(1.6); } to { opacity: 1; transform: rotate(-12deg) scale(1); } }
+.route-svg .brume-bande image, .route-svg .brume-bande ellipse { pointer-events: none; }
+.route-svg .chemin.possible { stroke: #7a5c1e; stroke-width: 3.2px; }
+.route-svg .porte-ecusson.rare path:first-child { filter: drop-shadow(0 0 2px #e2c272); }
+/* sous la carte : « Ta compagnie » et le journal de route, dans le style de « Ton royaume » */
+.exp-bas { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: 1rem; margin-top: .3rem; }
+.exp-bas .cartouche { margin: .2rem 0; min-width: 0; }
+.cp-ligne { display: flex; align-items: center; gap: .7rem; flex-wrap: wrap; margin: .2rem 0; }
+.cp-sacs { display: inline-flex; gap: .15rem; }
+.cp-sacs .sac { filter: drop-shadow(0 1px 1px rgba(0,0,0,.35)); }
+.cp-or { display: inline-flex; align-items: center; gap: .3rem; margin-left: auto; font-family: var(--titre); font-size: .9rem; }
+.cp-or .gi { color: var(--or-sombre); }
+.cp-renom { margin: .2rem 0; font-family: var(--titre); font-size: .9rem; }
+.cp-faveurs { display: flex; align-items: center; gap: .35rem; flex-wrap: wrap; margin: .25rem 0; }
+.cp-titre { font-family: var(--titre); font-size: .8rem; font-weight: 700; color: #6a5536; letter-spacing: .06em; text-transform: uppercase; margin: .4rem 0 .1rem; }
+.cp-notes { margin: .2rem 0 0; }
+.journal-route .chronique { margin-top: .2rem; font-size: .95rem; }
+/* médaillon d'une faveur : l'icône du conseiller à la teinte de sa matière, cerclé de bronze (commune) ou d'argent (rare) */
+.faveur-med { --t: 34px; --cercle: #a86f3b; display: inline-flex; align-items: center; justify-content: center; width: var(--t); height: var(--t); border-radius: 50%; color: #fff8e4; flex: none;
+  background: radial-gradient(circle at 35% 30%, color-mix(in srgb, var(--teinte) 55%, #fff), var(--teinte) 60%, color-mix(in srgb, var(--teinte) 60%, #000));
+  box-shadow: 0 0 0 2.5px var(--cercle), 0 0 0 3.5px #000, 0 2px 4px rgba(0,0,0,.5); }
+.faveur-med.rang-2 { --cercle: #c9ccd2; }
+.faveur-med.rang-3 { --cercle: var(--or-clair); }
+/* fenêtres des haltes : page de semaine, porte, bivouac, marchand, Armorial, bilan (famille des missives) */
+.exp-fenetre { position: relative; max-width: 860px; margin: .3rem auto; padding: 1rem 1.3rem 1.1rem; border: 2px solid var(--encre); border-radius: 4px;
+  background: radial-gradient(ellipse at 50% 35%, rgba(255,250,235,.6), rgba(150,105,50,.22)), var(--parchemin);
+  box-shadow: 0 0 0 2px var(--or), 0 0 0 4px var(--encre), 0 0 0 7px var(--or-sombre), 0 14px 30px rgba(0,0,0,.45); animation: apparition .22s ease-out; }
+.exp-fenetre h2 { margin: .1rem 0 .2rem; }
+.fen-tete { --teinte: var(--or); display: flex; align-items: center; gap: .8rem; margin-bottom: .6rem; padding-bottom: .5rem; border-bottom: 1px dashed rgba(46,36,25,.35); }
+.fen-tete > div { min-width: 0; }
+.fen-tete p { margin: 0; }
+.fen-portrait { flex: none; width: 54px; height: 54px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; color: #fff8e4;
+  background: radial-gradient(circle at 35% 30%, color-mix(in srgb, var(--teinte) 60%, #fff), var(--teinte)); box-shadow: 0 0 0 2px var(--or), 0 0 0 3px #000; }
+.zone-question { margin-top: .4rem; }
+/* page de semaine : lettrine d'enluminure, dates, titres des cours (les cours pas encore déposés dans la brume) */
+.page-semaine .ps-tete { display: flex; align-items: center; gap: 1rem; }
+.lettrine-html { flex: none; display: inline-flex; align-items: center; justify-content: center; width: 74px; height: 74px; font-family: var(--titre); font-weight: 700; font-size: 1.9rem; color: #8c2f39;
+  background: linear-gradient(#fbf3dc, #ecd9a6); border: 2px solid var(--encre); box-shadow: 0 0 0 2px var(--or), inset 0 0 0 3px #f8edcf, inset 0 0 0 4px var(--or); }
+.ps-dates { margin: 0; font-style: italic; color: #5b4a36; }
+.ps-fenetre { font-size: 1.08rem; margin: .6rem 0 .3rem; padding: .4rem .7rem; background: rgba(241,226,184,.8); border-left: 4px solid var(--or); border-radius: 3px; }
+.page-semaine h3 { margin: .7rem 0 .2rem; font-size: .85rem; color: #6a5536; text-transform: uppercase; letter-spacing: .1em; }
+.liste-cours-semaine { margin: .2rem 0; padding-left: 0; list-style: none; columns: 2; column-gap: 1.4rem; font-size: .98rem; }
+.liste-cours-semaine li { break-inside: avoid; padding: .15rem 0; border-bottom: 1px dotted rgba(46,36,25,.3); }
+.liste-cours-semaine li.brume { color: #6a6256; }
+.ps-gardien { display: flex; align-items: center; gap: .9rem; margin-top: .7rem; padding-top: .5rem; border-top: 1px dashed rgba(46,36,25,.35); }
+.ps-gardien p { margin: 0; font-size: 1.05rem; font-style: italic; }
+/* cartes de faveurs, côte à côte : portrait du conseiller en médaillon, nom en Cinzel, ruban de rang, effet en une phrase */
+.cartes-faveur { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: .9rem; margin: .5rem 0 .2rem; justify-items: stretch; }
+.carte-faveur { position: relative; display: flex; flex-direction: column; align-items: center; text-align: center; gap: .3rem; padding: 1.1rem .8rem .9rem; min-height: 230px;
+  border: 2px solid var(--encre); border-radius: 5px; background: linear-gradient(rgba(255,250,236,.7), rgba(226,206,160,.7)), var(--parchemin); color: var(--encre); font-family: var(--texte);
+  box-shadow: 0 0 0 3px #a86f3b, 0 0 0 5px var(--encre), 0 8px 16px rgba(0,0,0,.35); transition: transform .15s ease, box-shadow .15s ease; cursor: pointer; }
+.carte-faveur.rang-2 { box-shadow: 0 0 0 3px #c9ccd2, 0 0 0 5px var(--encre), 0 8px 16px rgba(0,0,0,.35); }
+.carte-faveur.rang-3 { box-shadow: 0 0 0 3px var(--or-clair), 0 0 0 5px var(--encre), 0 8px 16px rgba(0,0,0,.35); }
+button.carte-faveur:hover, button.carte-faveur:focus-visible { transform: translateY(-4px); background: linear-gradient(rgba(255,252,242,.85), rgba(236,217,170,.8)), var(--parchemin); }
+.carte-faveur.tenue { cursor: default; min-height: 0; }
+.carte-faveur .touche { position: absolute; top: .5rem; left: .5rem; margin: 0; }
+.cf-medaillon { display: block; margin-top: .2rem; }
+.cf-nom { font-family: var(--titre); font-size: 1.05rem; line-height: 1.15; }
+.cf-rang { font-family: var(--titre); font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; padding: .08rem .7rem; border-radius: .8em; background: #a86f3b; color: #fff8e4; box-shadow: 0 0 0 1px var(--encre); }
+.cf-rang.rang-2 { background: #8b8f99; }
+.cf-rang.rang-3 { background: var(--or); color: var(--encre); }
+.cf-conseiller { font-size: .85rem; font-style: italic; color: #5b4a36; }
+.cf-texte { margin: .2rem 0 0; font-size: 1rem; line-height: 1.3; }
+.cf-affine { font-size: .85rem; color: var(--or-sombre); }
+/* bivouac : deux choix ; marchand : l'étal ; Armorial : l'écu et ses quartiers */
+.choix-bivouac { align-items: flex-start; min-height: 0; }
+.choix-bivouac > span:last-child { display: block; }
+.choix-bivouac b { font-family: var(--titre); }
+.choix-bivouac p { margin: .1rem 0 0; }
+.etal { display: flex; flex-direction: column; gap: .45rem; margin: .4rem 0; }
+.ligne-etal { display: flex; align-items: center; gap: .6rem; text-align: left; width: 100%; padding: .55rem .9rem; font-size: 1.05rem; font-family: var(--texte); color: var(--encre);
+  background: linear-gradient(#fbf5e4, #efe2c2); border: 2px solid #9d8a68; border-radius: 3px; box-shadow: 0 2px 0 #b9a47c; }
+.ligne-etal:hover:not(:disabled) { border-color: var(--encre); box-shadow: 0 2px 0 var(--or), 0 0 0 3px rgba(226,194,114,.45); }
+.ligne-etal.epuise { opacity: .55; }
+.ligne-etal .le-texte { flex: 1; }
+.ligne-etal .le-prix { font-family: var(--titre); white-space: nowrap; }
+.exp-fenetre.armorial { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 1.2rem; align-items: start; }
+.armorial-ecu svg { display: block; filter: drop-shadow(0 4px 6px rgba(0,0,0,.4)); }
+.ligne-armorial { display: grid; grid-template-columns: auto 1fr auto; gap: .7rem; align-items: center; padding: .45rem 0; border-bottom: 1px dashed rgba(46,36,25,.35); border-left: 6px solid var(--teinte); padding-left: .6rem; margin: .2rem 0; }
+.ligne-armorial b { font-family: var(--titre); font-size: .95rem; }
+.ligne-armorial p { margin: .1rem 0 0; }
+.ligne-armorial.tenu { background: rgba(255,248,220,.55); }
+.liste-faveurs .cartes-faveur { grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); }
+/* l'écran de départ : le parchemin de l'année, puis le relais, le front et la compagnie en trois colonnes */
+.parchemin-annee { margin: .2rem auto .1rem; border: 2px solid var(--encre); border-radius: 4px; overflow: hidden; box-shadow: 0 0 0 2px var(--or), 0 6px 14px rgba(0,0,0,.35); background: #e8dbb8; }
+.annee-svg { display: block; width: 100%; height: auto; }
+.annee-svg .txt-case { font-family: var(--titre); font-weight: 700; font-size: 15px; fill: var(--encre); text-anchor: middle; }
+.annee-svg .txt-case.brume { fill: #7d7669; font-weight: 400; }
+.annee-svg .txt-case.sur-sceau { fill: #fff3d0; paint-order: stroke; stroke: #14284f; stroke-width: 2.5px; }
+.annee-svg .txt-legende { font-family: var(--titre); font-weight: 700; font-size: 15px; fill: #8c2f39; }
+.annee-svg .txt-banniere { font-family: var(--titre); font-weight: 700; font-size: 15px; fill: #fff3d0; }
+.annee-svg .case.relais { cursor: pointer; }
+.annee-svg .case.relais:hover rect:first-child { fill: #f3e4b6; }
+.annee-legende { margin: .2rem 0 .3rem; }
+.depart-colonnes { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; align-items: start; }
+.depart-colonnes .cartouche { margin: .3rem 0; min-width: 0; }
+.relais-choix { display: flex; align-items: center; justify-content: center; gap: .8rem; margin: .2rem 0 .4rem; }
+.relais-numero { font-family: var(--titre); font-size: 1.3rem; min-width: 7.5rem; text-align: center; }
+.depart-relais .liste-cours-semaine { columns: 1; font-size: .92rem; max-height: 11rem; overflow-y: auto; scrollbar-width: thin; }
+.choix-front { position: relative; display: flex; align-items: center; gap: .7rem; width: 100%; text-align: left; padding: .5rem .7rem .5rem .6rem; margin: .35rem 0; font-family: var(--texte); color: var(--encre);
+  border: 2px solid #9d8a68; border-radius: 4px; background: linear-gradient(#fbf5e4, #efe2c2); box-shadow: 0 2px 0 #b9a47c; cursor: pointer; }
+.choix-front .touche { margin-right: 0; }
+.choix-front:hover { border-color: var(--encre); }
+.choix-front.choisi { border-color: var(--encre); background: linear-gradient(#f8e7b0, #e9cf84); box-shadow: 0 0 0 3px var(--or), 0 2px 0 var(--or-sombre); }
+.cf-texte-front, .choix-front .cf-texte { margin: 0; }
+.choix-front .cf-texte { display: flex; flex-direction: column; line-height: 1.2; font-size: .92rem; }
+.choix-front .cf-texte b { font-family: var(--titre); font-size: .95rem; }
+.choix-front .cf-texte i { color: #5b4a36; font-size: .85rem; }
+.depart-armorial { display: flex; align-items: center; gap: .8rem; margin-top: .4rem; }
+.chronique-exp .chronique { font-size: .92rem; }
+/* la carte « Partir en expédition » de la grille de la campagne */
+.carte-jeu .ill-relais { background-image: url("../assets/images/oeuvres/chasseur-chateau.jpg"); background-position: 60% 55%; }
+/* le bilan d'une expédition */
+.bilan-exp { text-align: center; }
+.bilan-exp .titre-ecran { margin-bottom: .2rem; }
+.bilan-exp.victoire { box-shadow: 0 0 0 2px var(--or-clair), 0 0 0 4px var(--encre), 0 0 0 7px var(--or-sombre), 0 0 36px rgba(226,194,114,.75), 0 14px 30px rgba(0,0,0,.45); }
+.bx-chroniqueur { font-style: italic; font-size: 1.1rem; margin: .2rem 0 .6rem; }
+.bilan-exp h3 { margin: .8rem 0 .2rem; font-size: .85rem; color: #6a5536; text-transform: uppercase; letter-spacing: .1em; }
+.bilan-exp .liste-simple { display: inline-block; text-align: left; margin: 0; }
+.grille-fiches.a-relire { padding: 0; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); text-align: left; }
+/* fenêtre basse (portable, 768 px) : la carte entière et ses cartouches tiennent dans la hauteur */
+@media (max-height: 820px) {
+  main:has(> #ecran-expedition:not([hidden])) { padding-top: .6rem; }
+  #ecran-expedition.ecran { padding-top: .8rem; }
+  #ecran-expedition > .exp-tete > .titre-ecran, #ecran-expedition > .titre-ecran { font-size: 1.5rem; margin: 0 0 .1rem; padding-bottom: 14px; background-size: 200px 12px; }
+  #ecran-expedition .exp-sous { margin: 0 0 .3rem; font-size: .9rem; }
+  #ecran-expedition .exp-actions { margin: .35rem 0 .2rem; }
+  #ecran-expedition .exp-actions .bouton { padding: .4rem 1rem; font-size: .88rem; }
+  #ecran-expedition .exp-bas .cartouche { padding: .5rem .8rem; }
+  #ecran-expedition .exp-bas h3 { margin-bottom: .2rem; }
+  #ecran-expedition .journal-route .chronique li:nth-child(n+4) { display: none; }
+}
+@media (max-width: 820px) { .exp-bas { grid-template-columns: 1fr; } .exp-fenetre.armorial { grid-template-columns: 1fr; } .liste-cours-semaine { columns: 1; } }
