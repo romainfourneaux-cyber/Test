@@ -265,7 +265,7 @@ module.exports = {
       explication: "Le bois va au château : c'est la corvée du charroi. Le moulin ne reçoit que le grain.", source: SW(1) },
     { id: "histoire-s05-2-q31", fiche: "histoire-s05-2-f4", type: "qcm", niveau: 2,
       enonce: "Qui prélève un boisseau de grain et de la farine quand le vilain fait moudre son grain ?",
-      choix: ["Le meunier du seigneur", "Le seigneur en personne", "Les autres paysans", "Le serf du moulin"],
+      choix: ["Le meunier du seigneur", "Le seigneur en personne", "Les autres paysans", "Un serf de la seigneurie"],
       reponse: "Le meunier du seigneur",
       explication: "Le moulin appartient au seigneur, mais c'est son meunier qui le fait tourner et prélève la part due. C'est une banalité.", source: SW(1) },
     { id: "histoire-s05-2-q32", fiche: "histoire-s05-2-f4", type: "qcm", niveau: 2,

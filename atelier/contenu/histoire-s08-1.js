@@ -49,13 +49,12 @@ module.exports = {
     {
       id: "histoire-s08-1-f1", notion: "Le domaine royal, autour de Paris, et les principaux fiefs",
       titre: "Le domaine royal est autour de Paris",
-      texte: "La séance « L'émergence d'un État royal » fait repérer sur une carte où se trouvent les principaux fiefs du royaume. Elle donne un exemple : le domaine royal, c'est-à-dire les terres du roi lui-même, est autour de Paris. Les autres fiefs, comme les grands duchés et les grands comtés, se situent ailleurs dans le royaume.",
-      pointsCles: ["Le domaine royal : les terres du roi, autour de Paris", "Les principaux fiefs se repèrent sur une carte", "Parmi les fiefs : les grands duchés et les grands comtés"],
+      texte: "La séance « L'émergence d'un État royal » fait repérer sur une carte où se trouvent les principaux fiefs du royaume. Elle donne un exemple : le domaine royal est autour de Paris. Le mot « royal » dit que ce domaine est celui du roi lui-même. La séance précédente, elle, faisait noter de grands duchés et de grands comtés.",
+      pointsCles: ["Le domaine royal, le domaine du roi : autour de Paris", "Les principaux fiefs se repèrent sur une carte du royaume", "Rappel de la séance 9 : de grands duchés et de grands comtés"],
       dates: [],
       lieux: ["Paris"], personnages: [],
       vocabulaire: [
-        { mot: "domaine royal", def: "les terres du roi lui-même, situées autour de Paris" },
-        { mot: "fief", def: "un des grands territoires du royaume que l'on repère sur la carte, comme un duché ou un comté" }
+        { mot: "domaine royal", def: "le domaine du roi lui-même, situé autour de Paris" }
       ],
       schema: null, prerequis: ["histoire-s07-2-f3"], source: S(1)
     },
@@ -121,10 +120,10 @@ module.exports = {
       corrections: [], reponse: { vrai: true, correction: null },
       explication: "Oui : c'est l'exemple que donne la séance pour situer les principaux fiefs. Les terres du roi sont autour de Paris.", source: S(1) },
     { id: "histoire-s08-1-q3", fiche: "histoire-s08-1-f1", type: "qcm", niveau: 2,
-      enonce: "Qu'est-ce que le domaine royal ?",
-      choix: ["Les terres du roi, autour de Paris", "Un grand duché situé tout à l'ouest du royaume", "La forêt où chasse le seigneur de Wismes", "Le territoire gouverné par un comte"],
-      reponse: "Les terres du roi, autour de Paris",
-      explication: "Le domaine royal, ce sont les terres du roi lui-même. Elles se trouvent autour de Paris.", source: S(1) },
+      enonce: "Quel territoire est donné en exemple pour situer les principaux fiefs du royaume ?",
+      choix: ["Le domaine royal, autour de Paris", "La seigneurie de Wismes", "L'Empire carolingien", "Le royaume des Francs de Clovis"],
+      reponse: "Le domaine royal, autour de Paris",
+      explication: "L'exemple donné est le domaine royal, le domaine du roi, autour de Paris. Les autres territoires viennent d'autres cours.", source: S(1) },
     { id: "histoire-s08-1-q4", fiche: "histoire-s08-1-f1", type: "vrai_faux", niveau: 2,
       enonce: "Le domaine royal se trouve autour de Bouvines.",
       corrections: ["Faux : il se trouve autour de Paris ; Bouvines est le lieu d'une bataille de 1214.", "Faux : il se trouve autour de Wismes, dans le nord.", "Faux : il n'y a pas de domaine royal au Moyen Âge."],
@@ -161,7 +160,7 @@ module.exports = {
       corrections: [], reponse: { vrai: true, correction: null },
       explication: "Oui : 1214 se situe entre 1180 et 1223. Philippe Auguste est le roi de Bouvines.", source: S(1) },
     { id: "histoire-s08-1-q11", fiche: "histoire-s08-1-f2", type: "qcm", niveau: 2,
-      enonce: "Qui faut-il situer sur la représentation de la bataille de Bouvines étudiée en séance ?",
+      enonce: "Quel personnage est présent sur la représentation de la bataille de Bouvines étudiée en séance ?",
       choix: ["Le roi", "Le pape", "Un meunier", "Jeanne d'Arc"],
       reponse: "Le roi",
       explication: "La séance demande où se situe le roi sur l'image de la bataille. Le roi est donc présent à Bouvines.", source: S(1) },

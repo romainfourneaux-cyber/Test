@@ -10,13 +10,13 @@ const SW = p => ({ fichier: FW, page: p });
 const S7 = p => ({ fichier: F7, page: p });
 
 // Schéma d'une seigneurie, redessiné et simplifié (aucune image reprise) : réserve, tenures, château, église,
-// moulin, four, pressoir, forêt.
+// moulin à vent (comme sur le plan de Wismes), four, pressoir, forêt.
 function plan() {
   const encre = "#2e2419";
   let s = "<svg viewBox='0 0 540 300' xmlns='http://www.w3.org/2000/svg' font-family='Georgia,serif' font-size='11'>";
   s += "<rect x='0' y='0' width='540' height='300' fill='#efe6d2'/>";
-  // rivière
-  s += "<path d='M0 215 C 120 190, 200 250, 320 225 S 480 200, 540 230' fill='none' stroke='#7fb4d6' stroke-width='14'/>";
+  // chemins
+  s += "<path d='M0 215 C 120 190, 200 250, 320 225 S 480 200, 540 230' fill='none' stroke='#c9b48a' stroke-width='8'/>";
   // forêt
   for (let i = 0; i < 14; i++) {
     const cx = 400 + (i % 5) * 26 + (Math.floor(i / 5) % 2) * 13, cy = 40 + Math.floor(i / 5) * 24;
@@ -47,10 +47,12 @@ function plan() {
   s += "<rect x='30' y='172' width='14' height='10' fill='#c8742a'/><rect x='50' y='170' width='14' height='12' fill='#c8742a'/><rect x='70' y='173' width='14' height='9' fill='#c8742a'/>";
   s += "<rect x='96' y='165' width='16' height='18' fill='#d9d2c0' stroke='" + encre + "'/><rect x='101' y='152' width='6' height='14' fill='#d9d2c0' stroke='" + encre + "'/>";
   s += "<text x='70' y='198' text-anchor='middle' fill='" + encre + "'>Village et église</text>";
-  // moulin sur la rivière
-  s += "<rect x='300' y='196' width='18' height='22' fill='#8c7b6b' stroke='" + encre + "'/>";
-  s += "<circle cx='300' cy='222' r='9' fill='none' stroke='" + encre + "' stroke-width='2'/>";
-  s += "<text x='309' y='250' text-anchor='middle' fill='" + encre + "'>Moulin du seigneur</text>";
+  // moulin à vent sur une butte
+  s += "<ellipse cx='309' cy='230' rx='34' ry='9' fill='#d9c77a' stroke='#8a7a3a'/>";
+  s += "<path d='M300 230 L 303 196 h12 l3 34 z' fill='#8c7b6b' stroke='" + encre + "'/>";
+  s += "<line x1='309' y1='200' x2='325' y2='184' stroke='" + encre + "' stroke-width='2'/><line x1='309' y1='200' x2='293' y2='216' stroke='" + encre + "' stroke-width='2'/>";
+  s += "<line x1='309' y1='200' x2='325' y2='216' stroke='" + encre + "' stroke-width='2'/><line x1='309' y1='200' x2='293' y2='184' stroke='" + encre + "' stroke-width='2'/>";
+  s += "<text x='309' y='254' text-anchor='middle' fill='" + encre + "'>Moulin à vent du seigneur</text>";
   // four et pressoir
   s += "<path d='M120 232 a10 10 0 0 1 20 0 v8 h-20z' fill='#a0522d' stroke='" + encre + "'/>";
   s += "<text x='130' y='256' text-anchor='middle' fill='" + encre + "'>Four</text>";
@@ -102,21 +104,21 @@ module.exports = {
       titre: "Payer pour moudre, cuire et presser",
       texte: "Les banalités sont des taxes que les paysans paient pour se servir du moulin, du four ou du pressoir, qui appartiennent au seigneur. Au moulin, le meunier du seigneur garde un boisseau de grain et de la farine quand il moud le grain d'un vilain. Au four, on paie un droit pour faire cuire son pain.",
       pointsCles: ["Banalités : taxes pour utiliser le moulin, le four ou le pressoir du seigneur", "Au moulin : le meunier prélève un boisseau de grain et de la farine", "Au four : un droit sur la cuisson du pain"],
-      astuce: "Trois B : les Banalités, c'est payer pour moudre le Blé, cuire le pain et presser le raisin.",
+      astuce: "Trois B : les Banalités, c'est payer pour moudre le Blé, cuire le pain et presser les fruits.",
       dates: [],
       lieux: [], personnages: [],
       vocabulaire: [
         { mot: "banalités", def: "les taxes dues au seigneur pour utiliser son moulin, son four ou son pressoir" },
-        { mot: "boisseau", def: "une ancienne mesure de grain, à peu près le contenu d'un seau" },
-        { mot: "pressoir", def: "l'appareil qui écrase le raisin pour en tirer le jus" }
+        { mot: "boisseau", def: "une ancienne mesure pour le grain : un récipient que l'on remplit" },
+        { mot: "pressoir", def: "l'appareil qui presse les fruits, comme le raisin, pour en tirer le jus" }
       ],
       schema: "histoire-s05-1-s1", prerequis: ["histoire-s05-1-f1"], source: SW(1)
     },
     {
       id: "histoire-s05-1-f4", notion: "Le plan de la seigneurie de Wismes (XIVe siècle)",
       titre: "Château, église, moulin, tenures : lire le plan de Wismes",
-      texte: "Le plan de la seigneurie de Wismes, dans le nord de la France, date du XIVe siècle. On y voit le château du seigneur et l'église du village, le moulin du seigneur près de l'eau, la réserve et, à plusieurs endroits, les tenures des paysans. Un gibet rappelle que le seigneur rend la justice.",
-      pointsCles: ["Wismes : une seigneurie du nord de la France", "Un plan du XIVe siècle", "Sur le plan : château, église, moulin du seigneur, réserve, tenures", "Le gibet : signe du droit de justice du seigneur"],
+      texte: "Le plan de la seigneurie de Wismes, dans le nord de la France, date du XIVe siècle. On y voit le château du seigneur et l'église du village, le moulin à vent du seigneur sur une butte, la réserve et, à plusieurs endroits, les tenures des paysans. Un gibet rappelle que le seigneur rend la justice.",
+      pointsCles: ["Wismes : une seigneurie du nord de la France", "Un plan du XIVe siècle", "Sur le plan : château, église, moulin à vent du seigneur, réserve, tenures", "Le gibet : signe du droit de justice du seigneur"],
       dates: [],
       lieux: ["Wismes", "nord de la France"], personnages: [],
       vocabulaire: [
@@ -126,7 +128,7 @@ module.exports = {
     }
   ],
   schemas: [
-    { id: "histoire-s05-1-s1", legende: "Schéma d'une seigneurie, redessiné et simplifié d'après le plan de Wismes : la réserve autour du château, les tenures des paysans, le village et son église, la forêt, le moulin, le four et le pressoir du seigneur.", svg: plan() }
+    { id: "histoire-s05-1-s1", legende: "Schéma d'une seigneurie, redessiné et simplifié d'après le plan de Wismes : la réserve autour du château, les tenures des paysans, le village et son église, la forêt, le moulin à vent, le four et le pressoir du seigneur.", svg: plan() }
   ],
   questions: [
     // f1 : tenures et réserve
@@ -141,7 +143,7 @@ module.exports = {
       explication: "Oui : une tenure est cédée à un paysan. En échange, il paie le cens et fait des corvées.", source: SW(1) },
     { id: "histoire-s05-1-q3", fiche: "histoire-s05-1-f1", type: "qcm", niveau: 2,
       enonce: "Que doit un paysan au seigneur en échange de sa tenure ?",
-      choix: ["Le cens et des corvées", "Un pourceau sur huit seulement", "Rien du tout", "La garde du château"],
+      choix: ["Le cens et des corvées", "Un sceau et un cartulaire", "Rien du tout", "La garde du château"],
       reponse: "Le cens et des corvées",
       explication: "La tenure se paie par une taxe, le cens, et par des corvées. Ces travaux gratuits se font pour le seigneur.", source: SW(1) },
     { id: "histoire-s05-1-q4", fiche: "histoire-s05-1-f1", type: "vrai_faux", niveau: 2,
@@ -237,9 +239,9 @@ module.exports = {
       explication: "Moulin, four et pressoir sont les trois installations des banalités. L'église et le château ne servent pas à transformer les récoltes.", source: SW(1) },
     { id: "histoire-s05-1-q22", fiche: "histoire-s05-1-f3", type: "vrai_faux", niveau: 2,
       enonce: "Le pressoir du seigneur sert à moudre le grain des paysans.",
-      corrections: ["Faux : le pressoir sert à presser le raisin ; c'est le moulin qui moud le grain.", "Faux : le pressoir sert à cuire le pain.", "Faux : le pressoir sert à tondre les moutons."],
-      reponse: { vrai: false, correction: "Faux : le pressoir sert à presser le raisin ; c'est le moulin qui moud le grain." },
-      explication: "Chaque installation a son usage : le moulin moud, le four cuit, le pressoir presse le raisin. Toutes trois sont au seigneur.", source: SW(1) },
+      corrections: ["Faux : le pressoir sert à presser les fruits ; c'est le moulin qui moud le grain.", "Faux : le pressoir sert à cuire le pain.", "Faux : le pressoir sert à tondre les moutons."],
+      reponse: { vrai: false, correction: "Faux : le pressoir sert à presser les fruits ; c'est le moulin qui moud le grain." },
+      explication: "Chaque installation a son usage : le moulin moud, le four cuit, le pressoir presse les fruits. Toutes trois sont au seigneur.", source: SW(1) },
     { id: "histoire-s05-1-q23", fiche: "histoire-s05-1-f3", type: "qcm", niveau: 2,
       enonce: "Comment le meunier du seigneur se fait-il payer quand il moud le grain d'un vilain ?",
       choix: ["Il garde un boisseau de grain et de la farine", "Il reçoit des poules à Noël", "Il prend un porc sur huit", "Il envoie le paysan travailler gratuitement sur la réserve"],
@@ -258,9 +260,9 @@ module.exports = {
     { id: "histoire-s05-1-q26", fiche: "histoire-s05-1-f3", type: "association", niveau: 2,
       enonce: "Relie chaque lieu de la seigneurie à ce qu'on y fait.",
       gauche: ["Moulin", "Four", "Pressoir", "Forêt"],
-      droite: ["Cuire le pain", "Presser le raisin", "Moudre le grain", "Prendre du bois et chasser"],
+      droite: ["Cuire le pain", "Presser les fruits pour en tirer le jus", "Moudre le grain", "Prendre du bois et chasser"],
       reponse: [[0, 2], [1, 0], [2, 1], [3, 3]],
-      explication: "Moulin : le grain ; four : le pain ; pressoir : le raisin. La forêt donne le bois et le gibier au seigneur.", source: SW(1) },
+      explication: "Moulin : le grain ; four : le pain ; pressoir : les fruits. La forêt donne le bois et le gibier au seigneur.", source: SW(1) },
     { id: "histoire-s05-1-q27", fiche: "histoire-s05-1-f3", type: "vrai_faux", niveau: 3,
       enonce: "Les banalités rapportent au seigneur chaque fois qu'un paysan moud, cuit ou presse.",
       corrections: [], reponse: { vrai: true, correction: null },
@@ -291,9 +293,9 @@ module.exports = {
       reponse: { vrai: false, correction: "Faux : le plan marque des tenures à plusieurs endroits, autour du village." },
       explication: "Le mot « tenures » apparaît à plusieurs endroits du plan. Les terres des paysans sont réparties dans la seigneurie.", source: SW(1) },
     { id: "histoire-s05-1-q33", fiche: "histoire-s05-1-f4", type: "qcm", niveau: 2,
-      enonce: "Comment se répartissent les terres sur le plan de Wismes ?",
-      choix: ["Des tenures pour les paysans et une réserve pour le seigneur", "Tout appartient à l'église", "Tout est couvert de forêt", "Une seule grande tenure cultivée par le roi et ses chevaliers"],
-      reponse: "Des tenures pour les paysans et une réserve pour le seigneur",
+      enonce: "Sur le plan de Wismes, on lit « Tenures » et « Réserve ». Comment ces terres se partagent-elles entre le seigneur et les paysans ?",
+      choix: ["Les tenures aux paysans, la réserve au seigneur", "Les tenures au seigneur, la réserve aux paysans", "Les deux sortes de terres à l'église du village", "Les deux sortes de terres au roi"],
+      reponse: "Les tenures aux paysans, la réserve au seigneur",
       explication: "Le plan distingue la réserve, gardée par le seigneur, et les tenures, cédées aux paysans. Ce sont les deux parties de la seigneurie.", source: SW(1) },
     { id: "histoire-s05-1-q34", fiche: "histoire-s05-1-f4", type: "qcm", niveau: 3,
       enonce: "Le plan de Wismes date du XIVe siècle et le cartulaire de 1238. Lequel des deux documents est le plus ancien ?",
@@ -318,7 +320,7 @@ module.exports = {
   nonCouvert: [
     "La leçon à apprendre : le cadre « mots importants » du support est vide ; la leçon est donnée en vidéo.",
     "L'enluminure étudiée en séance 7 (personnages du premier plan, chevaliers, Bernart de Ventadour) n'est pas dans le fichier : seules les questions y figurent.",
-    "Qui est Bernart de Ventadour et ce qu'est un troubadour.",
+    "Qui est Bernart de Ventadour, nommé dans une question de la séance.",
     "Ce qu'est la seigneurie banale : la frise cite seulement l'époque de son développement.",
     "Ce que le seigneur doit à ses paysans en échange de son pouvoir (question 5 de l'étude de cas) : la réponse est donnée en vidéo.",
     "Le plan de Wismes lui-même (seules ses légendes sont reprises) et les enluminures du moulin et du four.",

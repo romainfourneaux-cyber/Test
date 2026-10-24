@@ -68,7 +68,7 @@ module.exports = {
       vocabulaire: [
         { mot: "enluminure", def: "une peinture faite à la main dans un livre manuscrit" },
         { mot: "manuscrit", def: "un livre écrit à la main, avant l'imprimerie" },
-        { mot: "chronique", def: "un récit des événements dans l'ordre du temps ; les Grandes Chroniques de France racontent les rois de France" },
+        { mot: "chronique", def: "un récit des événements dans l'ordre du temps, comme les Grandes Chroniques de France" },
         { mot: "BnF", def: "la Bibliothèque nationale de France, à Paris, où le manuscrit est conservé" }
       ],
       schema: null, prerequis: ["histoire-s01-2-f3"], source: S(2)
@@ -80,9 +80,7 @@ module.exports = {
       pointsCles: ["La scène : un hommage", "Édouard Ier rend hommage à Philippe le Bel (roi de 1285 à 1314)", "Philippe le Bel est assis sur un trône ; Édouard Ier est à genoux devant lui", "Les deux personnages portent une couronne"],
       dates: [],
       lieux: [], personnages: ["Philippe le Bel", "Édouard Ier"],
-      vocabulaire: [
-        { mot: "rendre hommage", def: "ce que fait Édouard Ier, à genoux devant Philippe le Bel, sur l'enluminure" }
-      ],
+      vocabulaire: [],
       schema: "histoire-s08-2-s1", prerequis: ["histoire-s08-1-f3", "histoire-s08-2-f1"], source: S(2)
     },
     {

@@ -38,7 +38,7 @@ JEU.enregistrer("cours", {
     },
     {
      "mot": "chronique",
-     "def": "un récit des événements dans l'ordre du temps ; les Grandes Chroniques de France racontent les rois de France"
+     "def": "un récit des événements dans l'ordre du temps, comme les Grandes Chroniques de France"
     },
     {
      "mot": "BnF",
@@ -71,12 +71,7 @@ JEU.enregistrer("cours", {
     "Philippe le Bel",
     "Édouard Ier"
    ],
-   "vocabulaire": [
-    {
-     "mot": "rendre hommage",
-     "def": "ce que fait Édouard Ier, à genoux devant Philippe le Bel, sur l'enluminure"
-    }
-   ],
+   "vocabulaire": [],
    "schema": "histoire-s08-2-s1",
    "prerequis": [
     "histoire-s08-1-f3",

@@ -7,6 +7,9 @@
 // déposée : voir nonCouvert. La leçon est donnée en vidéo.
 const F = "cours/histoire/Histoire 5e - Moyen Age - Etude de cas 3 Vie et travail des paysans.pdf";
 const S = p => ({ fichier: F, page: p });
+// Le mot « vilain » (paysan libre) vient de la note de l'étude de cas 2 (cours histoire-s05-2, prérequis).
+const FW = "cours/histoire/Histoire 5e - Moyen Age - Etude de cas 2 Seigneurie de Wismes.pdf";
+const SW = p => ({ fichier: FW, page: p });
 
 // Schéma d'une charrue, redessiné et simplifié (aucune image reprise) : coutre, soc, versoir ; en vignette, l'araire.
 function charrue() {
@@ -36,7 +39,7 @@ function charrue() {
   // chaîne vers l'attelage (hors cadre, à droite)
   s += "<path d='M330 120 L 400 130' stroke='" + encre + "' stroke-width='2' stroke-dasharray='4 3'/>";
   s += "<text x='404' y='134' fill='" + encre + "' font-size='10'>vers l'attelage</text>";
-  s += "<text x='404' y='146' fill='" + encre + "' font-size='10'>(bœufs ou chevaux)</text>";
+  s += "<text x='404' y='146' fill='" + encre + "' font-size='10'>(des bœufs)</text>";
   // étiquettes
   s += "<line x1='298' y1='140' x2='360' y2='166' stroke='" + encre + "'/>";
   s += "<text x='364' y='170' fill='" + encre + "'>coutre : lame de fer qui</text>";
@@ -219,11 +222,12 @@ module.exports = {
       enonce: "La charrue et le collier d'épaule sont deux inventions qui rendent le labour plus efficace.",
       corrections: [], reponse: { vrai: true, correction: null },
       explication: "Oui : la charrue retourne la terre en profondeur, et le collier d'épaule permet à l'animal de la tirer sans être étouffé. Les deux vont ensemble.", source: S(1) },
-    { id: "histoire-s06-1-q18", fiche: "histoire-s06-1-f2", type: "ordre", niveau: 2,
-      enonce: "Remets dans l'ordre les étapes du progrès du labour, de la plus ancienne à la plus récente.",
-      elements: ["L'araire à simple soc, tiré par des bœufs", "La charrue à coutre, soc et versoir, au XIIe siècle", "La charrue perfectionnée peu à peu", "Le collier d'épaule, pour tirer des charges plus lourdes"],
-      reponse: [0, 1, 2, 3],
-      explication: "D'abord l'araire, puis la charrue au XIIe siècle. Elle est ensuite perfectionnée, et le collier d'épaule vient compléter l'attelage.", source: S(1) },
+    { id: "histoire-s06-1-q18", fiche: "histoire-s06-1-f2", type: "association", niveau: 2,
+      enonce: "Relie chaque mot à ce qu'il désigne.",
+      gauche: ["Araire", "Charrue", "Collier d'épaule", "Laboureur"],
+      droite: ["Paysan riche, qui possède un attelage et une charrue", "Outil à simple soc, tiré par des bœufs", "Outil à coutre, soc et versoir, du XIIe siècle", "Permet à l'animal de tirer plus lourd sans l'étouffer"],
+      reponse: [[0, 1], [1, 2], [2, 3], [3, 0]],
+      explication: "L'araire est l'ancien outil, la charrue le nouveau. Le collier d'épaule aide l'animal à tirer, et le laboureur est le paysan assez riche pour acheter l'attelage et la charrue.", source: S(1) },
     // f3 : les taxes dues par tous
     { id: "histoire-s06-1-q19", fiche: "histoire-s06-1-f3", type: "qcm", niveau: 1,
       enonce: "Quelle taxe le paysan doit-il pour l'utilisation de sa terre ?",
@@ -316,7 +320,7 @@ module.exports = {
       texte: "Le ___ est un paysan libre ; le ___ ne l'est pas.",
       banque: ["vilain", "serf", "laboureur", "meunier"],
       reponse: [["vilain"], ["serf"]],
-      explication: "Le vilain est libre, le serf ne l'est pas. Le laboureur est un paysan riche, libre ou non.", source: S(1) },
+      explication: "Le vilain est libre, le serf ne l'est pas. Le laboureur est un paysan riche, libre ou non.", source: SW(1) },
     { id: "histoire-s06-1-q37", fiche: "histoire-s06-1-f4", type: "vrai_faux", niveau: 3,
       enonce: "Un serf qui se marie dans sa propre seigneurie doit payer le formariage.",
       corrections: ["Faux : le formariage n'est dû que pour un mariage hors de la seigneurie.", "Faux : le formariage est dû par les vilains, pas par les serfs.", "Faux : le formariage se paie à la mort du serf, par ses héritiers."],

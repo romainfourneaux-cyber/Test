@@ -74,22 +74,22 @@ module.exports = {
     {
       id: "histoire-s07-2-f2", notion: "987 : Hugues Capet élu roi",
       titre: "Un roi élu, en 987",
-      texte: "Le premier repère de la frise est l'élection de Hugues Capet : en 987, il est élu roi. Élire, c'est choisir par un vote. C'est le seul roi de la frise pour lequel on indique une élection, et non des dates de règne. L'année 987 appartient au Xe siècle, un peu avant l'an mil, l'époque où naît le village médiéval.",
-      pointsCles: ["987 : Hugues Capet est élu roi", "Élu : choisi par un vote", "987 : Xe siècle, un peu avant l'an mil", "Seul repère de la frise avant 1180"],
+      texte: "Le premier repère de la frise est l'élection de Hugues Capet : en 987, il est élu roi, c'est-à-dire choisi, par un vote ou un accord. C'est le seul roi de la frise avec une élection et non des dates de règne. L'année 987 appartient au Xe siècle, un peu avant l'an mil, quand naît le village médiéval.",
+      pointsCles: ["987 : Hugues Capet est élu roi", "Élu : choisi, par un vote ou un accord", "987 : Xe siècle, un peu avant l'an mil", "Seul repère de la frise avant 1180"],
       dates: [
         { annee: 987, evenement: "Hugues Capet est élu roi" }
       ],
       lieux: [], personnages: ["Hugues Capet"],
       vocabulaire: [
-        { mot: "élire", def: "choisir quelqu'un par un vote ; Hugues Capet est élu roi en 987" }
+        { mot: "élire", def: "choisir quelqu'un, par un vote ou par l'accord d'une assemblée ; Hugues Capet est élu roi en 987" }
       ],
       schema: "histoire-s07-2-s1", prerequis: ["histoire-s07-2-f1", "histoire-s04-3-f1"], source: S(1)
     },
     {
       id: "histoire-s07-2-f3", notion: "Vassal et seigneur, duchés et comtés",
       titre: "Les mots de la séance : vassal, seigneur, duché, comté",
-      texte: "La séance « Féodaux et seigneurs » fait noter deux grands duchés et deux grands comtés : un duché est le territoire d'un duc, un comté celui d'un comte. Elle fait aussi observer une image où deux personnages se font face, un vassal et son seigneur, dont il faut décrire l'attitude : ce sont les deux personnages principaux de l'image.",
-      pointsCles: ["Duché : le territoire d'un duc ; comté : le territoire d'un comte", "La séance fait noter de grands duchés et de grands comtés", "Sur l'image étudiée : un vassal face à son seigneur, dont on décrit l'attitude"],
+      texte: "La séance « Féodaux et seigneurs » fait noter deux grands duchés et deux grands comtés : un duché est le territoire d'un duc, un comté celui d'un comte. Elle fait aussi observer une image d'un vassal et de son seigneur : il faut décrire l'attitude de chacun, puis repérer et citer les deux personnages principaux de l'image.",
+      pointsCles: ["Duché : le territoire d'un duc ; comté : le territoire d'un comte", "La séance fait noter de grands duchés et de grands comtés", "Sur l'image étudiée : un vassal et son seigneur, dont on décrit l'attitude"],
       dates: [],
       lieux: [], personnages: [],
       vocabulaire: [
@@ -163,9 +163,9 @@ module.exports = {
     // f2 : Hugues Capet élu roi
     { id: "histoire-s07-2-q12", fiche: "histoire-s07-2-f2", type: "qcm", niveau: 1,
       enonce: "Que signifie « élu » dans « Hugues Capet élu roi » ?",
-      choix: ["Choisi par un vote", "Né fils de roi", "Vainqueur d'une bataille", "Couronné par un empereur"],
-      reponse: "Choisi par un vote",
-      explication: "Élire, c'est choisir par un vote. En 987, Hugues Capet est ainsi élu roi.", source: S(1) },
+      choix: ["Choisi, par un vote ou un accord", "Né fils de roi", "Vainqueur d'une bataille", "Couronné par un empereur"],
+      reponse: "Choisi, par un vote ou un accord",
+      explication: "Élire, c'est choisir quelqu'un, par un vote ou un accord. En 987, Hugues Capet est ainsi élu roi.", source: S(1) },
     { id: "histoire-s07-2-q13", fiche: "histoire-s07-2-f2", type: "vrai_faux", niveau: 1,
       enonce: "L'élection de Hugues Capet, en 987, est le premier repère de la frise.",
       corrections: [], reponse: { vrai: true, correction: null },
@@ -216,10 +216,10 @@ module.exports = {
       corrections: [], reponse: { vrai: true, correction: null },
       explication: "Oui : le duché est au duc ce que le comté est au comte. La séance fait noter deux grands duchés et deux grands comtés.", source: S(1) },
     { id: "histoire-s07-2-q22", fiche: "histoire-s07-2-f3", type: "qcm_multiple", niveau: 2,
-      enonce: "Quels territoires la séance « Féodaux et seigneurs » demande-t-elle de noter ? (plusieurs réponses)",
-      choix: ["De grands duchés", "De grands comtés", "Des califats", "Des empires", "Des tenures"],
-      reponse: ["De grands duchés", "De grands comtés"],
-      explication: "La séance fait noter deux grands duchés et deux grands comtés. Califats et empires appartiennent à d'autres cours.", source: S(1) },
+      enonce: "Quels territoires sont tenus par un duc ou par un comte ? (plusieurs réponses)",
+      choix: ["Les duchés", "Les comtés", "Les califats", "Les tenures", "Les royaumes"],
+      reponse: ["Les duchés", "Les comtés"],
+      explication: "Le duc tient un duché et le comte un comté : la séance en fait noter deux de chaque sorte. Un califat ou un royaume a un autre chef, et la tenure est la terre d'un paysan.", source: S(1) },
     { id: "histoire-s07-2-q23", fiche: "histoire-s07-2-f3", type: "vrai_faux", niveau: 2,
       enonce: "Un comté est gouverné par un duc.",
       corrections: ["Faux : un comté est gouverné par un comte ; le duc gouverne un duché.", "Faux : un comté est gouverné par un évêque.", "Faux : le comté est le territoire du roi, et le duché celui du duc."],
@@ -232,9 +232,9 @@ module.exports = {
       reponse: [[0, 2], [1, 3], [2, 0], [3, 1]],
       explication: "Duc et duché, comte et comté, roi et royaume, seigneur et seigneurie : le nom du territoire vient de celui qui le gouverne.", source: S(1) },
     { id: "histoire-s07-2-q25", fiche: "histoire-s07-2-f3", type: "qcm", niveau: 2,
-      enonce: "Comment s'appelle le personnage qui fait face au vassal, sur l'image étudiée en séance ?",
-      choix: ["Le seigneur", "Le serf", "Le laboureur", "Le chroniqueur"],
-      reponse: "Le seigneur",
+      enonce: "Sur l'image étudiée en séance, le vassal est représenté avec un autre personnage. Lequel ?",
+      choix: ["Son seigneur", "Un serf", "Un laboureur", "Un chroniqueur"],
+      reponse: "Son seigneur",
       explication: "L'image montre un vassal et son seigneur. La séance demande de décrire l'attitude de chacun.", source: S(1) },
     { id: "histoire-s07-2-q26", fiche: "histoire-s07-2-f3", type: "qcm", niveau: 3,
       enonce: "Un « grand duché » et un « grand comté » : qu'ont-ils en commun ?",
@@ -248,9 +248,10 @@ module.exports = {
       reponse: [["duché"], ["comté"]],
       explication: "Le duché appartient au duc, le comté au comte. Le royaume, lui, est au roi.", source: S(1) },
     { id: "histoire-s07-2-q28", fiche: "histoire-s07-2-f3", type: "vrai_faux", niveau: 3,
-      enonce: "Dans la séance « Féodaux et seigneurs », le vassal et le seigneur sont les deux personnages principaux de l'image étudiée.",
-      corrections: [], reponse: { vrai: true, correction: null },
-      explication: "Oui : la séance demande de repérer ces deux personnages et de décrire leur attitude. Le vassal et le seigneur se font face.", source: S(1) }
+      enonce: "Un grand comté est un territoire plus petit qu'une tenure.",
+      corrections: ["Faux : un grand comté est un vaste territoire tenu par un comte ; une tenure est une terre cédée à un seul paysan.", "Faux : le comté et la tenure désignent la même chose.", "Faux : la tenure est le territoire du comte, et le comté celui du paysan."],
+      reponse: { vrai: false, correction: "Faux : un grand comté est un vaste territoire tenu par un comte ; une tenure est une terre cédée à un seul paysan." },
+      explication: "Un grand comté est un vaste territoire, tenu par un comte. Une tenure est une simple terre qu'un seigneur cède à un paysan.", source: S(1) }
   ],
   bonus: [
     {

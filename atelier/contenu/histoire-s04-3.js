@@ -15,10 +15,10 @@ const x = a => Math.round((X0 + (a - A0) * (X1 - X0) / (A1 - A0)) * 10) / 10;
 function frise() {
   const encre = "#2e2419";
   let s = "<svg viewBox='0 20 540 200' xmlns='http://www.w3.org/2000/svg' font-family='Georgia,serif' font-size='11'>";
-  s += "<rect x='" + x(1000) + "' y='40' width='" + (x(1050) - x(1000)) + "' height='14' fill='#8f86c2'/>";
-  s += "<text x='" + x(1000) + "' y='36' fill='" + encre + "'>Vers l'an mil : développement de la seigneurie banale</text>";
-  s += "<rect x='" + x(1050) + "' y='74' width='" + (x(1300) - x(1050)) + "' height='18' fill='#9cc58a'/>";
-  s += "<text x='" + ((x(1050) + x(1300)) / 2) + "' y='70' text-anchor='middle' font-size='10' fill='" + encre + "'>XIe-XIIIe siècle : grands défrichements (développement économique et démographique)</text>";
+  s += "<rect x='" + x(950) + "' y='40' width='" + (x(1050) - x(950)) + "' height='14' fill='#8f86c2'/>";
+  s += "<text x='" + x(950) + "' y='36' fill='" + encre + "'>Vers l'an mil : développement de la seigneurie banale</text>";
+  s += "<rect x='" + x(1000) + "' y='74' width='" + (x(1300) - x(1000)) + "' height='18' fill='#9cc58a'/>";
+  s += "<text x='" + ((x(1000) + x(1300)) / 2) + "' y='70' text-anchor='middle' font-size='10' fill='" + encre + "'>XIe-XIIIe siècle : grands défrichements (développement économique et démographique)</text>";
   s += "<line x1='" + x(1348) + "' y1='92' x2='" + x(1348) + "' y2='120' stroke='#b23a3a' stroke-dasharray='3 2'/>";
   s += "<circle cx='" + x(1348) + "' cy='120' r='4' fill='#b23a3a'/>";
   s += "<text x='" + x(1348) + "' y='108' text-anchor='middle' fill='#b23a3a'>1348 : Grande peste</text>";
@@ -28,8 +28,8 @@ function frise() {
     s += "<line x1='" + x(a) + "' y1='116' x2='" + x(a) + "' y2='124' stroke='" + encre + "'/>";
     s += "<text x='" + x(a) + "' y='135' text-anchor='middle' font-size='9' fill='" + encre + "'>" + a + "</text>";
   }
-  s += "<rect x='" + x(1000) + "' y='144' width='" + (x(1100) - x(1000)) + "' height='14' fill='#7fb4d6'/>";
-  s += "<text x='" + x(1000) + "' y='172' fill='" + encre + "'>Vers l'an mil : naissance du village médiéval</text>";
+  s += "<rect x='" + x(950) + "' y='144' width='" + (x(1100) - x(950)) + "' height='14' fill='#7fb4d6'/>";
+  s += "<text x='" + x(950) + "' y='172' fill='" + encre + "'>Vers l'an mil : naissance du village médiéval</text>";
   s += "<line x1='" + x(1033) + "' y1='158' x2='" + x(1033) + "' y2='186' stroke='" + encre + "' stroke-dasharray='3 2'/>";
   s += "<text x='" + x(1033) + "' y='198' fill='" + encre + "'>1033 : famine racontée par Raoul Glaber</text>";
   return s + "</svg>";
@@ -286,7 +286,7 @@ module.exports = {
     "Les causes des grands défrichements et ce qu'ils changent dans le paysage.",
     "Les conséquences de la Grande peste de 1348 sur les campagnes.",
     "Les douze images du Rustican elles-mêmes (seules leurs légendes sont reprises) et le texte de la chronique de Raoul Glaber dans sa version complète.",
-    "Les réponses écrites aux questions de l'étude de cas (saison la plus chargée, définition d'une famine), données pendant la vidéo.",
+    "Les réponses rédigées aux neuf questions de l'étude de cas, données pendant la vidéo : le jeu ne retient que ce que le calendrier des mois et les textes imprimés permettent de déduire.",
     "La charrue, le collier d'épaule et le tableau des redevances de la même étude de cas : ils sont traités au cours 8 (histoire-s06-1)."
   ]
 };
