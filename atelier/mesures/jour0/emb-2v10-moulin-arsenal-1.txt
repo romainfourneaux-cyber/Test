@@ -1,0 +1,9 @@
+Moteur : jeu/js/bataille-moteur.js · or perdu par erreur : 6 · 160 batailles par niveau · bataille de route : defense, 2 vagues, camp de 10, carte moulin, arsenal du niveau − 1
+
+p = 0.6 (réponses justes) · bataille de route : defense, 2 vagues, camp de 10, carte moulin, arsenal du niveau − 1
+niv | carte          | tenue (éclatante) | tenu  retraite | murs restants (quand elle tient) | coups portés (1re vague) | ennemis tués / tes pertes | sorties · rival : tours, gardes, rappelés, renforts
+ 1  | moulin         |   75 % (  3 %)   |  73 %   25 %   |                      69 % (91 %) |              2.13 (1.79) |     13.7 / 3      | 0.83 · 1, 0, 0, 0
+ 2  | moulin         |   91 % (  0 %)   |  91 %    9 %   |                      80 % (87 %) |              2.54 (1.94) |     14.6 / 3.4    | 1.16 · 1, 0, 0, 0
+ 3  | moulin         |   81 % ( 15 %)   |  66 %   19 %   |                      73 % (91 %) |               3.14 (1.6) |     14.3 / 4.2    | 1.19 · 1, 0, 0, 0
+ 4  | moulin         |   99 % (  0 %)   |  99 %    1 %   |                      68 % (69 %) |              3.19 (3.19) |       12 / 4.7    | 0.76 · 1, 0.23, 0, 0
+moy |                | 86.5 % (4.5 %)   |                |                           72.5 % |                      2.8
