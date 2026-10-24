@@ -866,8 +866,9 @@
   }
   // Après chaque réponse sur la route (en plus de JEU.questions.enregistrerReponse, que l'écran appelle comme partout) :
   // +1 renommée par bonne réponse, compte par famille, matière et semaine, fiches ratées pour « À relire ».
-  // Une erreur ne retire jamais rien : ni vivre, ni or de route, ni renommée.
-  function noterReponse(q, juste) {
+  // Une erreur ne retire jamais rien : ni vivre, ni or de route, ni renommée. sansSauver : l'appelant sauvegarde lui-même
+  // (l'écran note la réponse juste avant JEU.questions.enregistrerReponse, qui écrit la sauvegarde).
+  function noterReponse(q, juste, sansSauver) {
     var x = etat(), e = x.enCours;
     if (!e || !q) return null;
     var c = e.compte, fam = JEU.recit.famille(q.matiere), mat = q.matiere || "autre", s = semaineDe(q.cours);
@@ -878,7 +879,7 @@
       var o = p[0][p[1]] || (p[0][p[1]] = { posees: 0, bonnes: 0 });
       o.posees++; if (juste) o.bonnes++;
     });
-    sauver();
+    if (!sansSauver) sauver();
     return c;
   }
 

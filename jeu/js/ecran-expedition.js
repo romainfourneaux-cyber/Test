@@ -95,11 +95,12 @@
   // Chaque réponse donnée pendant une halte compte pour l'expédition (+1 renommée par bonne réponse, compte par famille,
   // fiches ratées pour « À relire »), en plus de tout ce que JEU.questions.enregistrerReponse fait déjà (Leitner, Seconde
   // chance, statistiques). Une partie de campagne jouée pendant qu'une expédition attend ne compte pas (S.enHalte).
+  // Notée avant enregistrerReponse, sans sauvegarder : la sauvegarde qu'enregistrerReponse écrit de toute façon emporte
+  // le compte de l'expédition (une seule écriture par réponse, rien de plus entre une réponse et la question suivante).
   var enregistrerVrai = JEU.questions.enregistrerReponse;
   JEU.questions.enregistrerReponse = function (q, juste) {
-    var r = enregistrerVrai.apply(JEU.questions, arguments);
-    if (S.enHalte && JEU.expedition && JEU.expedition.enCours()) JEU.expedition.noterReponse(q, juste);
-    return r;
+    if (S.enHalte && JEU.expedition && JEU.expedition.enCours()) JEU.expedition.noterReponse(q, juste, true);
+    return enregistrerVrai.apply(JEU.questions, arguments);
   };
 
   function remplir(t, v) { return JEU.expedition.remplir(t, v); }
@@ -362,12 +363,13 @@
       if (b.etat !== "brume" && b.etat !== "avenir") return;
       s += "<g class='brume-bande'><rect x='" + (b.x + 2) + "' y='56' width='" + (BANDE - 12) + "' height='" + (H - 60) + "' fill='" + FOND + "' opacity='.42'/>" + nappes(b.x, b.etat === "brume") + "</g>";
     });
-    // la bannière « Cette semaine » plantée sur la semaine du calendrier
+    // la bannière « Cette semaine » plantée au bord droit de la semaine du calendrier, le drap vers la gauche : la hampe
+    // ne traverse ni la lettrine ni les dates (qui vont de la gauche de la bande jusqu'au milieu)
     d.bandes.forEach(function (b) {
       if (b.semaine !== semCal) return;
-      var bx = b.x + BANDE - 154;
-      s += "<g class='banniere-cette'><path d='M" + bx + " 8v40' stroke='" + ENCRE + "' stroke-width='2'/><path d='M" + (bx + 2) + " 10h134l-8 9 8 9H" + (bx + 2) + "z' fill='" + RUBRIQUE + "' stroke='" + ENCRE + "' stroke-width='1'/>" +
-        texteSVG(bx + 10, 24, "txt-banniere", TEXTES.annee.cette) + "</g>";
+      var bx = b.x + BANDE - 22;
+      s += "<g class='banniere-cette'><path d='M" + bx + " 8v38' stroke='" + ENCRE + "' stroke-width='2'/><path d='M" + (bx - 2) + " 10h-134l8 9-8 9h134z' fill='" + RUBRIQUE + "' stroke='" + ENCRE + "' stroke-width='1'/>" +
+        texteSVG(bx - 126, 24, "txt-banniere", TEXTES.annee.cette) + "</g>";
     });
     return s + "</svg>";
   }
@@ -483,16 +485,18 @@
     if (!X) { s.innerHTML = ""; return; }
     S.enHalte = false;
     if (S.bilan) return rendreBilan(s, S.bilan);
+    // une bataille de route vient de clore l'expédition (Grand Gardien vaincu, dernier vivre perdu) : l'expédition n'est
+    // déjà plus en cours, le bilan rendu par apresBataille ou quitter s'affiche avant tout
+    if (S.suite) {
+      var su = S.suite; S.suite = null;
+      if (su.fini) { S.bilan = su.fini; return rendreBilan(s, su.fini); }
+    }
     var e = X.enCours();
     if (!e) return rendreDepart(s);
     // reprise : une bataille entamée puis le jeu fermé coûte un vivre (une fois) ; plus de vivres → le bilan
     var rep = X.reprendre();
     if (rep && rep.vivrePerdu) S.toast = TEXTES.fin.vivrePerdu;
     if (rep && rep.fini) { S.bilan = rep.fini; return rendreBilan(s, rep.fini); }
-    if (S.suite) {
-      var su = S.suite; S.suite = null;
-      if (su.fini) { S.bilan = su.fini; return rendreBilan(s, su.fini); }
-    }
     e = X.enCours();
     if (!e) return rendreDepart(s);
     if (e.offre && e.offre.cartes.length) return e.offre.question ? rendrePorte(s, e) : rendreCartes(s, e, e.offre, null);
@@ -722,7 +726,9 @@
 
   // ---------- entrer dans une halte ----------
   function entrer(id) {
-    var X = JEU.expedition, t = X.entrer(id);
+    var X = JEU.expedition;
+    if (JEU.partie || (JEU.bataille.enChargement && JEU.bataille.enChargement())) return; // une halte se lance déjà (touche répétée)
+    var t = X.entrer(id);
     if (!t) return;
     var h = t.halte, s = ecranEl(), e = X.enCours();
     S.enHalte = true; S.focus = 0;
@@ -769,8 +775,9 @@
       retour: function () { afficher(); }
     };
     var lancer = function () {
-      JEU.bataille.lancer(halte.id, contexte);
-      if (!JEU.partie) { S.enHalte = false; afficher(); } // pas assez de questions : la halte reste à jouer
+      // lancer charge le terrain avant de commencer (JEU.partie n'existe pas encore) : il renvoie true dès qu'il s'y met ;
+      // sinon (pas assez de questions, bataille déjà en cours), la halte reste à jouer
+      if (!JEU.bataille.lancer(halte.id, contexte) && !JEU.partie) { S.enHalte = false; afficher(); }
     };
     if (grand && JEU.ecranCampagne && JEU.ecranCampagne.defiAvantRoute) {
       // le défi du rival du front (une bataille sur deux, réglage « Messages des rivaux ») : demandé par l'écran de campagne

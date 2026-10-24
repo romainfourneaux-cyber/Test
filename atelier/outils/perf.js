@@ -22,8 +22,13 @@
 // Contrôles d'interface : accords de « verrouillé », un seul sceau à la fois, bonne réponse d'une association montrée
 // une fois, or du bandeau jamais estompé, titre et « Quitter » visibles en 1366 × 768, tribut hors de la carte,
 // lignes sous les noms de la carte d'au moins 14 px à l'écran, noms séparés de 8 px et plus près de leur lieu.
+// Expéditions (24/10/2026, conception 17.6) : départ depuis la carte de jeu, carte-itinéraire entière en 1366 × 768 (textes
+// de 14 px au moins, rien qui se touche), clavier, escarmouche en temps réel (Event Timing, ruban de semaine en relief sur
+// deux questions sur trois, carte de l'éclaireur avant la première question seulement), porte de faveur, retour puis
+// « Reprendre », export puis import, réglages coupés, défaite forcée avec bilan et campagne intacte ; en 1366 × 768 et 1920 × 1080.
 // Usage : node atelier/outils/perf.js   (demande le module playwright ; sinon, faire les vérifications à la main)
-// Variables facultatives : CHROMIUM (chemin du navigateur), DETAIL=1 (affiche toutes les mesures).
+// Variables facultatives : CHROMIUM (chemin du navigateur), DETAIL=1 (affiche toutes les mesures), PARTIE=expedition (ne joue
+// que l'essai des expéditions, pour le mettre au point).
 "use strict";
 const path = require("path");
 let chromium;
@@ -438,8 +443,277 @@ async function essaiToile(navigateur, erreurs) {
   return res;
 }
 
+// Expédition (24/10/2026, conception atelier/conception/expeditions.md, 17.6) : départ depuis la carte de jeu de la campagne,
+// carte-itinéraire entière à l'écran avec ses cartouches (textes de 14 px au moins, aucun nom ni médaillon qui se touche),
+// clavier (flèches, chiffre), escarmouche jouée en temps réel (Event Timing de la touche à la question suivante peinte,
+// JEU.mesure ; ruban de semaine sur chaque question, en relief sur deux sur trois ; la carte de l'éclaireur avant la
+// première question seulement), porte de faveur (question puis choix au clavier), retour à la campagne puis « Reprendre »
+// au même point, export puis import, « Sang » et « Animations » coupés, « Messages des rivaux » coupé (pas de défi), défaite
+// forcée (un vivre, bataille quittée après la première vague) : bilan avec renommée, campagne intacte.
+// Les textes de route et les gains viennent du jeu : l'essai ne fait que jouer.
+async function essaiExpedition(navigateur, w, h, erreurs) {
+  const page = await nouvellePage(navigateur, w, h, erreurs);
+  const res = { taille: w + " × " + h, echecs: [] };
+  const E = m => res.echecs.push(m);
+  await page.evaluate(() => {
+    window.__ev = [];
+    new PerformanceObserver(l => l.getEntries().forEach(e => { if (e.name === "keydown") window.__ev.push(e.duration); }))
+      .observe({ type: "event", durationThreshold: 16, buffered: true });
+  });
+  // ce que l'expédition ne doit jamais toucher dans la campagne (la chronique, elle, note le départ et le retour)
+  const copieCampagne = () => page.evaluate(() => {
+    const c = JEU.campagne.etat(), s = JEU.sauvegarde.etat();
+    return { provinces: c.provinces, conquises: c.conquises, rival: { attaque: c.rival.attaque, menace: c.rival.menace, defaites: c.rival.defaites, rivalite: c.rival.rivalite },
+      arsenal: c.arsenal, royaume: c.royaume, evenement: c.evenement, bonus: c.bonus, ressources: s.ressources };
+  });
+  await page.click("#menu button[data-ecran=jouer]");
+  await page.waitForSelector("#ecran-jouer .grille-jeux");
+  await page.evaluate(() => { JEU.ui.fermerModale(); const c = JEU.campagne.etat(); c.bonus.or = 40; c.bonus.espion = true; JEU.sauvegarde.enregistrer(); }); // le piège des bonus de campagne
+  const avant = await copieCampagne();
+  // 1. la carte de jeu « Partir en expédition »
+  res.carteCampagne = await page.evaluate(() => { const b = [...document.querySelectorAll(".carte-jeu h2")].find(x => /expédition/i.test(x.textContent)); return b ? b.textContent : null; });
+  if (!/Partir en expédition/.test(res.carteCampagne || "")) E("carte de jeu « Partir en expédition » absente de la campagne (" + res.carteCampagne + ")");
+  await page.evaluate(() => { [...document.querySelectorAll(".carte-jeu")].find(x => /expédition/i.test(x.textContent)).click(); });
+  await page.waitForSelector("#ecran-expedition .parchemin-annee");
+  res.depart = await page.evaluate(() => ({ relais: document.querySelector(".relais-numero").textContent, cases: document.querySelectorAll(".annee-svg .case").length,
+    frontiere: /Frontière/.test(document.querySelector(".annee-svg").textContent), banniere: document.querySelectorAll(".annee-svg .banniere-cette").length,
+    duree: (document.querySelector(".depart-compagnie").textContent.match(/Environ \d+ minutes/) || [null])[0], armorial: !!document.querySelector(".depart-armorial svg") }));
+  if (res.depart.cases !== 34 || !res.depart.frontiere || !res.depart.duree || !res.depart.armorial) E("écran de départ incomplet (" + JSON.stringify(res.depart) + ")");
+  // 2. « Partir » (Entrée) jusqu'à une route dont la première couche a une escarmouche à porte de faveur (12 tentatives, en
+  //    levant le camp entre deux : une expédition sur deux convient)
+  let convient = false;
+  for (let n = 0; n < 12 && !convient; n++) {
+    await page.keyboard.press("Enter");
+    await page.waitForSelector("#ecran-expedition .page-semaine");
+    convient = await page.evaluate(() => JEU.expedition.enCours().route.actes[0].couches[0].some(x => x.type === "escarmouche" && x.porte && x.porte.genre === "faveur"));
+    if (!convient) { await page.evaluate(() => { JEU.expedition.finir("abandon"); JEU.ui.afficher("expedition"); }); await page.waitForSelector("#ecran-expedition .parchemin-annee"); }
+    res.tentativesRoute = n + 1;
+  }
+  if (!convient) E("aucune route avec une escarmouche à porte de faveur en première couche en 12 tirages");
+  res.pageSemaine = await page.evaluate(() => ({ titre: document.querySelector(".page-semaine h2").textContent, cours: document.querySelectorAll(".page-semaine .liste-cours-semaine li").length }));
+  if (!/^Semaine \d+$/.test(res.pageSemaine.titre) || !res.pageSemaine.cours) E("page de semaine sans titre ou sans cours (" + JSON.stringify(res.pageSemaine) + ")");
+  await page.keyboard.press("Enter");
+  await page.waitForSelector("#ecran-expedition .route-svg");
+  await attendre(300);
+  // 3. la carte-itinéraire : entière à l'écran avec ses cartouches, textes de 14 px au moins, aucun nom ni médaillon qui se touche
+  const controlerRoute = () => page.evaluate(() => {
+    const svg = document.querySelector(".route-svg"); if (!svg) return null;
+    const k = svg.getBoundingClientRect().width / 1000, EX = JEU.ecranExpedition, e = JEU.expedition.enCours();
+    const d = EX.disposition(e), etats = EX.etatsNoeuds(e, d), visibles = d.noeuds.filter(n => etats[n.id] !== "brume");
+    const noms = [...svg.querySelectorAll(".halte-nom:not(.brume)")].map(t => { const b = t.getBBox(); return { x0: b.x, y0: b.y + 2, x1: b.x + b.width, y1: b.y + b.height - 2, t: t.textContent }; });
+    const chocs = [];
+    const touche = (a, b) => Math.min(a.x1, b.x1) > Math.max(a.x0, b.x0) && Math.min(a.y1, b.y1) > Math.max(a.y0, b.y0);
+    for (let i = 0; i < noms.length; i++) for (let j = i + 1; j < noms.length; j++) if (touche(noms[i], noms[j])) chocs.push("« " + noms[i].t + " » touche « " + noms[j].t + " »");
+    // un nom ne touche le médaillon d'aucune halte (le sien est au-dessus ou au-dessous, les autres plus loin)
+    noms.forEach(n => visibles.forEach(m => { const cx = Math.max(n.x0, Math.min(m.x, n.x1)), cy = Math.max(n.y0, Math.min(m.y, n.y1)); if (Math.hypot(cx - m.x, cy - m.y) < m.r) chocs.push("« " + n.t + " » touche le médaillon " + m.id); }));
+    for (let i = 0; i < visibles.length; i++) for (let j = i + 1; j < visibles.length; j++) { const a = visibles[i], b = visibles[j]; if (Math.hypot(a.x - b.x, a.y - b.y) < a.r + b.r) chocs.push("médaillons " + a.id + " et " + b.id + " se touchent"); }
+    const tailles = [...svg.querySelectorAll("text")].map(t => parseFloat(getComputedStyle(t).fontSize) * k);
+    const r = svg.getBoundingClientRect(), bas = [...document.querySelectorAll("#ecran-expedition .exp-bas .cartouche")].map(c => c.getBoundingClientRect().bottom);
+    return { chocs, texteMin: Math.round(Math.min(...tailles) * 10) / 10, basCarte: Math.round(r.bottom), basCartouches: Math.round(Math.max(...bas)), vue: innerHeight, defilement: Math.round(scrollY),
+      largeurPage: document.documentElement.scrollWidth, fenetre: innerWidth, noeuds: visibles.length, atteignables: document.querySelectorAll(".route-svg .halte.atteignable").length };
+  });
+  res.route = await controlerRoute();
+  if (!res.route) E("carte-itinéraire absente");
+  else {
+    if (res.route.chocs.length) E("carte-itinéraire : " + res.route.chocs.join(" ; "));
+    if (res.route.texteMin < 14) E("carte-itinéraire : texte à " + res.route.texteMin + " px à l'écran (14 au moins)");
+    if (res.route.largeurPage > res.route.fenetre) E("carte-itinéraire : défilement horizontal (" + res.route.largeurPage + " px)");
+    if (res.route.basCarte > res.route.vue + 0.5) E("carte-itinéraire coupée en " + res.taille + " (bas à " + res.route.basCarte + " px pour " + res.route.vue + ")");
+    if (res.route.basCartouches > res.route.vue + 0.5) E("cartouches de la route coupés en " + res.taille + " (bas à " + res.route.basCartouches + " px pour " + res.route.vue + ")");
+    if (res.route.atteignables < 2) E("carte-itinéraire : " + res.route.atteignables + " halte atteignable au départ (2 ou 3 attendues)");
+  }
+  // 4. clavier : les flèches parcourent les haltes atteignables, le chiffre entre
+  const att = await page.evaluate(() => JEU.expedition.atteignables().map(x => ({ id: x.id, type: x.type, porte: x.porte || null })));
+  const focus = () => page.evaluate(() => document.activeElement && document.activeElement.getAttribute("data-id"));
+  res.clavier = { avant: await focus() };
+  await page.keyboard.press("ArrowRight"); await attendre(60); res.clavier.droite = await focus();
+  await page.keyboard.press("ArrowLeft"); await attendre(60); res.clavier.gauche = await focus();
+  if (!res.clavier.avant || res.clavier.droite === res.clavier.avant || res.clavier.gauche !== res.clavier.avant) E("route : les flèches ne parcourent pas les haltes atteignables (" + JSON.stringify(res.clavier) + ")");
+  const iE = att.findIndex(x => x.type === "escarmouche" && x.porte && x.porte.genre === "faveur");
+  const escarmouche = att[iE], acte = await page.evaluate(() => { const a = JEU.expedition.acteCourant(); return { semaine: a.semaine, semaines: a.semaines, quota: a.quota }; });
+  const mesuresAvant = await page.evaluate(() => JEU.mesure.valeurs.length);
+  await page.evaluate(() => JEU.expedition.vitesse(3)); // les vagues en temps réel, à ×3
+  await page.keyboard.press(String(iE + 1));
+  // 5. l'escarmouche : deux vagues, trois questions chacune
+  const eclaireur = await page.evaluate(() => JEU.expedition.TEXTES.eclaireur.map(t => t.replace(/\{S\}.*$/, "")));
+  const questions = [], durees = [];
+  let garde = 0, vagueVue = -1, dansVague = 0, finBataille = null;
+  await page.waitForFunction(() => document.querySelector(".td-question .question"), null, { timeout: 30000 });
+  while (garde++ < 300) {
+    const etat = await page.evaluate(() => ({ partie: !!JEU.partie, phase: JEU.bataille.enCours && JEU.bataille.enCours.phase, vague: JEU.bataille.enCours && JEU.bataille.enCours.vague,
+      question: !!document.querySelector(".td-question .question .enonce") && !document.querySelector(".panneau-erreur"), erreur: !!document.querySelector(".panneau-erreur"),
+      bilan: !!document.querySelector(".td-conseil .bilan"), pret: !!document.querySelector(".td-pret") }));
+    if (!etat.partie) break;
+    if (etat.bilan) {
+      finBataille = await page.evaluate(() => ({ titre: document.querySelector(".td-conseil .bilan h2").textContent, bouton: document.querySelector(".td-conseil .bilan .bouton").textContent }));
+      await attendre(300); await page.keyboard.press("Enter"); await attendre(300); continue;
+    }
+    if (etat.erreur) { await page.keyboard.press("Enter"); await attendre(150); continue; }
+    if (etat.question) {
+      if (etat.vague !== vagueVue) { vagueVue = etat.vague; dansVague = 0; }
+      await attendre(350);
+      const q = await page.evaluate(() => {
+        const r = document.querySelector(".td-question .recit"), ruban = r && r.querySelector(".recit-repere");
+        const cartes = [...document.querySelectorAll(".td-conseil > .recit")].map(c => c.textContent);
+        return { type: JEU.ui.questionCourante.type, nom: r ? r.querySelector(".recit-nom").firstChild.textContent : null, ruban: ruban ? ruban.textContent : null, relief: !!(ruban && ruban.classList.contains("recit-semaine")), cartes: cartes.length, textes: cartes };
+      });
+      q.vague = etat.vague; q.rang = dansVague;
+      questions.push(q);
+      const avantEv = await page.evaluate(() => window.__ev.length);
+      await repondreJuste(page);
+      await attendre(350);
+      if (dansVague < 2 && q.type !== "association" && q.type !== "trou") { const ev = await page.evaluate(a => window.__ev.slice(a), avantEv); durees.push(ev.length ? Math.max(...ev) : 16); }
+      dansVague++;
+      continue;
+    }
+    if (etat.phase === "preparation" && etat.pret) { await attendre(700); await page.keyboard.press("Enter"); await attendre(400); continue; }
+    await attendre(400);
+  }
+  res.escarmouche = { questions: questions.length, vagues: vagueVue + 1, fin: finBataille, mesures: durees.length, mediane: durees.slice().sort((a, b) => a - b)[Math.floor(durees.length / 2)], max: Math.max(...durees), detail: durees,
+    rubans: questions.filter(q => q.ruban).length, reliefs: questions.filter(q => q.relief).length, parVague: [] };
+  for (let v = 0; v <= vagueVue; v++) res.escarmouche.parVague.push(questions.filter(q => q.vague === v).map(q => (q.relief ? "S" : "·") + "(" + q.ruban + ")").join(" "));
+  const mesuresRoute = await page.evaluate(a => JEU.mesure.valeurs.slice(a), mesuresAvant);
+  res.escarmouche.jeuMesure = { n: mesuresRoute.length, max: mesuresRoute.length ? Math.round(Math.max(...mesuresRoute) * 10) / 10 : null };
+  if (questions.length < 6) E("escarmouche : " + questions.length + " questions jouées (6 attendues : deux vagues de trois)");
+  if (!finBataille || !/Continuer la route/.test(finBataille.bouton)) E("escarmouche : écran de fin sans « Continuer la route » (" + JSON.stringify(finBataille) + ")");
+  if (questions.some(q => !q.ruban)) E("escarmouche : une question sans ruban de semaine (" + JSON.stringify(questions.map(q => q.ruban)) + ")");
+  const attendus = Math.min(3, acte.quota); // deux sur trois quand la fenêtre est pleine ; une quand elle est mince ; aucune sans cours
+  for (let v = 0; v <= vagueVue; v++) { const n = questions.filter(q => q.vague === v && q.relief).length; if (n < attendus) E("escarmouche, vague " + (v + 1) + " : " + n + " question(s) de la semaine " + acte.semaine + " en relief sur trois (" + attendus + " attendue(s) ; fenêtre " + JSON.stringify(acte.semaines) + ")"); }
+  if (questions.some(q => !q.nom)) E("escarmouche : une question sans conseiller qui la pose");
+  // la carte de l'éclaireur (la semaine) avant la première question de la première vague, jamais entre deux questions
+  const q0 = questions[0], ditSemaine = q => q && q.textes.some(t => eclaireur.some(p => t.indexOf(p) >= 0) && t.indexOf(String(acte.semaine)) >= 0);
+  if (!ditSemaine(q0)) E("escarmouche : pas de carte de l'éclaireur qui dit la semaine avant la première question (" + JSON.stringify(q0 && q0.textes) + ")");
+  for (let v = 0; v <= vagueVue; v++) { const qv = questions.filter(q => q.vague === v); if (qv.some(q => q.cartes !== qv[0].cartes)) E("escarmouche, vague " + (v + 1) + " : une carte de récit ajoutée entre deux questions (" + qv.map(q => q.cartes).join(", ") + ")"); }
+  if (res.escarmouche.max > 100) E("escarmouche " + res.taille + " : " + res.escarmouche.max + " ms entre une réponse et la question suivante peinte (plus de 100 ms)");
+  if (res.escarmouche.jeuMesure.max !== null && !(res.escarmouche.jeuMesure.max < 100)) E("escarmouche : JEU.mesure à " + res.escarmouche.jeuMesure.max + " ms");
+  // 6. la porte de faveur : la question du conseiller dans son cadre, puis trois cartes, choix au clavier
+  await page.waitForSelector("#ecran-expedition .porte .question .enonce, #ecran-expedition button.carte-faveur", { timeout: 15000 });
+  res.porte = await page.evaluate(() => { const r = document.querySelector("#ecran-expedition .porte .recit"); return { question: !!document.querySelector("#ecran-expedition .porte .question .enonce"), conseiller: r ? r.querySelector(".recit-nom").firstChild.textContent : null, ruban: !!(r && r.querySelector(".recit-repere")), titre: (document.querySelector("#ecran-expedition .porte h2") || {}).textContent }; });
+  if (!res.porte.question || !res.porte.conseiller) E("porte de faveur : la question du conseiller manque (" + JSON.stringify(res.porte) + ")");
+  const famillePorte = escarmouche.porte.conseiller;
+  res.porte.famillePorte = famillePorte;
+  res.porte.matiereQuestion = await page.evaluate(() => JEU.ui.questionCourante.matiere);
+  res.porte.familleQuestion = await page.evaluate(() => JEU.recit.famille(JEU.ui.questionCourante.matiere));
+  res.porte.rappel = await page.evaluate(() => !!JEU.ui.questionCourante.rappel);
+  if (res.porte.familleQuestion !== famillePorte && !res.porte.rappel) E("porte de faveur : question de la famille " + res.porte.familleQuestion + " au lieu de " + famillePorte);
+  await repondreJuste(page);
+  await attendre(250);
+  if (await page.$(".panneau-erreur")) { await page.keyboard.press("Enter"); await attendre(250); }
+  await page.waitForSelector("#ecran-expedition button.carte-faveur");
+  res.porte.cartes = await page.evaluate(() => [...document.querySelectorAll("#ecran-expedition button.carte-faveur")].map(b => ({ nom: b.querySelector(".cf-nom").textContent, rang: b.querySelector(".cf-rang").textContent, conseiller: b.querySelector(".cf-conseiller").textContent, texte: b.querySelector(".cf-texte").textContent })));
+  res.porte.familles = await page.evaluate(() => JEU.expedition.enCours().offre.cartes.map(c => c.famille));
+  if (res.porte.cartes.length < 2 || res.porte.cartes.length > 4) E("porte de faveur : " + res.porte.cartes.length + " cartes (3 attendues après une bonne réponse, 2 après une erreur)");
+  if (!res.porte.familles.some(f => f !== famillePorte)) E("porte de faveur : aucune carte d'une autre famille que celle de la porte (" + res.porte.familles.join(", ") + ")");
+  await page.keyboard.press("ArrowRight"); await attendre(60);
+  res.porte.focusCarte = await page.evaluate(() => document.activeElement && document.activeElement.classList.contains("carte-faveur") ? document.activeElement.querySelector(".cf-nom").textContent : null);
+  await page.keyboard.press("1");
+  await page.waitForSelector("#ecran-expedition .route-svg");
+  await attendre(300);
+  res.apresPorte = await page.evaluate(() => { const e = JEU.expedition.enCours(); return { faveurs: e.faveurs.slice(), medaillons: document.querySelectorAll(".cp-faveurs .faveur-med").length, sceaux: document.querySelectorAll(".route-svg .sceau-halte").length, position: e.position, fait: e.faits[e.position], renom: e.compte.renom, questions: e.compte.questions, or: e.or, vivres: e.vivres }; });
+  if (res.apresPorte.faveurs.length !== 1 || res.apresPorte.medaillons !== 1) E("faveur choisie absente de « Ta compagnie » (" + JSON.stringify(res.apresPorte) + ")");
+  if (res.apresPorte.sceaux !== 1 || !res.apresPorte.fait) E("pas de sceau sur l'escarmouche jouée (" + JSON.stringify(res.apresPorte) + ")");
+  if (res.apresPorte.questions < 7 || res.apresPorte.renom < 1) E("les réponses de la halte ne comptent pas pour l'expédition (" + JSON.stringify(res.apresPorte) + ")");
+  const c2 = await controlerRoute();
+  if (c2 && c2.chocs.length) E("carte-itinéraire après la halte : " + c2.chocs.join(" ; "));
+  // 7. retour à la campagne (Échap), « Reprendre » au même point ; export puis import
+  const avantRetour = await page.evaluate(() => JSON.stringify(JEU.sauvegarde.etat().expedition.enCours));
+  await page.keyboard.press("Escape");
+  await page.waitForFunction(() => JEU.ui.ecranCourant() === "jouer");
+  await attendre(200);
+  res.carteReprise = await page.evaluate(() => { const b = [...document.querySelectorAll(".carte-jeu h2")].find(x => /expédition/i.test(x.textContent)); return b ? b.textContent : null; });
+  if (!/Reprendre l'expédition · semaine \d+, \de halte/.test(res.carteReprise || "")) E("carte de la campagne après le retour : « " + res.carteReprise + " » (« Reprendre l'expédition · semaine N, 2e halte » attendu)");
+  res.evenementDuJour = await page.evaluate(() => { const c = JEU.campagne.etat(); return c.evenement ? { id: c.evenement.id, fait: c.evenement.fait } : null; });
+  await page.evaluate(() => { JEU.ui.fermerModale(); [...document.querySelectorAll(".carte-jeu")].find(x => /Reprendre/.test(x.textContent)).click(); });
+  await page.waitForSelector("#ecran-expedition .route-svg");
+  res.reprise = await page.evaluate(a => JSON.stringify(JEU.sauvegarde.etat().expedition.enCours) === a, avantRetour);
+  if (!res.reprise) E("« Reprendre » ne revient pas au même point (position, vivres, faveurs)");
+  res.importIdentique = await page.evaluate(() => { const t = JEU.sauvegarde.texteExport(), a = JSON.stringify(JEU.sauvegarde.etat().expedition); JEU.sauvegarde.importer(t); JEU.ui.afficher("expedition"); return JSON.stringify(JEU.sauvegarde.etat().expedition) === a && !!JEU.expedition.enCours(); });
+  if (!res.importIdentique) E("export puis import : l'expédition en cours ne revient pas telle quelle");
+  // 8. « Messages des rivaux » coupé : le défi avant le Grand Gardien n'est pas demandé (lancement immédiat, aucune fenêtre)
+  res.sansDefi = await page.evaluate(() => {
+    const r = JEU.sauvegarde.etat().reglages; r.rivaux = false; JEU.sauvegarde.enregistrer();
+    let lances = 0; for (let i = 0; i < 8; i++) JEU.ecranCampagne.defiAvantRoute("gue", () => { lances++; });
+    return { lances, modale: !document.getElementById("modale").hidden };
+  });
+  if (res.sansDefi.lances !== 8 || res.sansDefi.modale) E("« Messages des rivaux » coupé : un défi est encore demandé avant le Grand Gardien (" + JSON.stringify(res.sansDefi) + ")");
+  // 9. « Sang dans les combats » et « Animations » coupés : la route et la page de semaine se dessinent sans erreur ; puis
+  //    la défaite forcée se joue avec ces réglages
+  await page.evaluate(() => { const r = JEU.sauvegarde.etat().reglages; r.sang = false; r.animations = false; JEU.sauvegarde.enregistrer(); JEU.ui.appliquerAnimations(); JEU.ui.afficher("expedition"); });
+  await page.waitForSelector("#ecran-expedition .route-svg");
+  await page.keyboard.press("f"); await attendre(150);
+  res.listeFaveurs = await page.evaluate(() => document.querySelectorAll("#ecran-expedition .liste-faveurs .carte-faveur").length);
+  await page.keyboard.press("Escape"); await attendre(150);
+  if (res.listeFaveurs !== 1) E("liste des faveurs (F) : " + res.listeFaveurs + " carte (1 attendue)");
+  // 10. défaite forcée : un seul vivre (console), on avance jusqu'à une bataille (les haltes sans bataille sont passées par
+  //     l'API), première vague lancée puis « Quitter » : −1 vivre → 0 → le bilan, renommée > 0, campagne intacte
+  const avantDefaite = await page.evaluate(() => { const X = JEU.expedition, e = X.enCours(); e.vivres = 1; JEU.sauvegarde.enregistrer();
+    let n = 0; while (n++ < 6 && !X.atteignables().some(x => JEU.expedition.EXP.BATAILLES.indexOf(x.type) >= 0)) { const h = X.atteignables()[0]; X.entrer(h.id); X.terminerHalte(h.id); }
+    JEU.ui.afficher("expedition");
+    return { vivres: e.vivres, renom: e.compte.renom, haltes: X.haltesJouees(e), bataille: X.atteignables().filter(x => JEU.expedition.EXP.BATAILLES.indexOf(x.type) >= 0).map(x => x.id + ":" + x.type)[0] || null }; });
+  res.defaite = { avant: avantDefaite };
+  if (!avantDefaite.bataille) E("défaite forcée : aucune bataille atteignable");
+  else {
+    await page.waitForSelector("#ecran-expedition .route-svg");
+    const iB = await page.evaluate(() => JEU.expedition.atteignables().findIndex(x => JEU.expedition.EXP.BATAILLES.indexOf(x.type) >= 0));
+    await page.keyboard.press(String(iB + 1));
+    await page.waitForFunction(() => document.querySelector(".td-question .question"), null, { timeout: 30000 });
+    for (let i = 0; i < 3; i++) {
+      await page.waitForFunction(() => document.querySelector(".td-question .question .enonce") || document.querySelector(".panneau-erreur"));
+      if (await page.$(".panneau-erreur")) { await page.keyboard.press("Enter"); await attendre(200); }
+      await attendre(200);
+      if (await page.$(".td-question .question .enonce")) await repondreJuste(page);
+      await attendre(200);
+    }
+    await page.waitForSelector(".td-pret");
+    for (let k = 0; k < 5 && await page.evaluate(() => JEU.bataille.enCours.phase === "preparation"); k++) { await attendre(700); await page.keyboard.press("Enter"); }
+    await page.waitForFunction(() => JEU.bataille.enCours.phase === "vague");
+    res.defaite.entamee = await page.evaluate(() => JEU.expedition.enCours().entamee);
+    await attendre(1500); // la vague tourne (sang et animations coupés)
+    await page.keyboard.press("Escape");
+    await page.waitForSelector(".confirmation");
+    await page.click(".confirmation .bouton.principal");
+    await page.waitForSelector("#ecran-expedition .bilan-exp", { timeout: 10000 }).catch(() => {});
+    res.defaite.bilan = await page.evaluate(() => { const b = document.querySelector("#ecran-expedition .bilan-exp"); if (!b) return null; const m = b.textContent.match(/Renommée gagnée : (\d+)/);
+      return { titre: b.querySelector("h1").textContent, renom: m ? Number(m[1]) : null, relire: !!b.querySelector("h3:nth-of-type(2)"), enCours: !!JEU.expedition.enCours(), historique: JEU.expedition.etat().historique[0] && JEU.expedition.etat().historique[0].issue }; });
+    if (!res.defaite.entamee) E("défaite forcée : la première vague lancée n'est pas notée (entamee)");
+    if (!res.defaite.bilan) E("défaite forcée : pas d'écran de bilan après la bataille quittée au dernier vivre");
+    else if (!(res.defaite.bilan.renom > 0) || res.defaite.bilan.enCours || res.defaite.bilan.historique !== "retour") E("défaite forcée : bilan sans renommée ou expédition encore en cours (" + JSON.stringify(res.defaite.bilan) + ")");
+  }
+  const apres = await copieCampagne();
+  const cles = ["provinces", "conquises", "rival", "arsenal", "royaume", "evenement", "bonus"].filter(k => JSON.stringify(avant[k]) !== JSON.stringify(apres[k]));
+  const ressources = Object.keys(avant.ressources).filter(k => apres.ressources[k] < avant.ressources[k]);
+  res.campagne = { touches: cles, ressourcesEnBaisse: ressources, bonusApres: apres.bonus };
+  if (cles.length || ressources.length) E("campagne touchée par l'expédition : " + cles.concat(ressources.map(r => "ressource " + r)).join(", "));
+  if (apres.bonus.or !== 40 || apres.bonus.espion !== true) E("les bonus de l'événement du jour ont été consommés par la route (" + JSON.stringify(apres.bonus) + ")");
+  await page.keyboard.press("Escape");
+  await page.waitForFunction(() => JEU.ui.ecranCourant() === "jouer");
+  await page.close();
+  return res;
+}
+
+// Ce que l'essai des expéditions doit avoir trouvé (ses propres échecs, et assez de mesures d'Event Timing).
+function echecsExpedition(bilan) {
+  const echecs = [];
+  (bilan.expedition || []).forEach(x => {
+    x.echecs.forEach(m => echecs.push("expédition " + x.taille + " : " + m));
+    if (!(x.escarmouche && x.escarmouche.mesures >= 3)) echecs.push("expédition " + x.taille + " : seulement " + (x.escarmouche ? x.escarmouche.mesures : 0) + " mesures d'Event Timing pendant l'escarmouche");
+  });
+  return echecs;
+}
+
 (async () => {
   const navigateur = await chromium.launch(process.env.CHROMIUM ? { executablePath: process.env.CHROMIUM } : {});
+  if (process.env.PARTIE === "expedition") {
+    const erreurs = [], bilan = { expedition: [] };
+    for (const [w, h] of [[1366, 768], [1920, 1080]]) bilan.expedition.push(await essaiExpedition(navigateur, w, h, erreurs));
+    bilan.erreursJS = erreurs;
+    console.log(JSON.stringify(bilan, null, 1));
+    await navigateur.close();
+    const echecs = echecsExpedition(bilan);
+    if (erreurs.length) echecs.push("erreurs JavaScript dans la page");
+    echecs.forEach(m => console.log("ÉCHEC  " + m));
+    process.exit(echecs.length ? 1 : 0);
+  }
   const page = await navigateur.newPage({ viewport: { width: 1280, height: 900 }, acceptDownloads: true });
   const erreurs = [];
   page.on("pageerror", e => erreurs.push(e.message));
@@ -718,6 +992,9 @@ async function essaiToile(navigateur, erreurs) {
   // 10. grosse mêlée de bataillons en temps réel : images par seconde et durée de la boucle de bataille
   bilan.grosseMelee = [];
   for (const [w, h] of [[1366, 768], [1920, 1080]]) bilan.grosseMelee.push(await grosseMelee(navigateur, w, h, erreurs));
+  // 11. expédition de bout en bout (route des semaines), en 1366 × 768 et en 1920 × 1080
+  bilan.expedition = [];
+  for (const [w, h] of [[1366, 768], [1920, 1080]]) bilan.expedition.push(await essaiExpedition(navigateur, w, h, erreurs));
   bilan.erreursJS = erreurs;
   console.log(JSON.stringify(bilan, null, 1));
   await navigateur.close();
@@ -794,6 +1071,7 @@ async function essaiToile(navigateur, erreurs) {
   if (!T.redimension.length || T.redimension.some(x => !x)) echecs.push("toile réallouée sans être redessinée dans la même tâche (" + JSON.stringify(T.redimension) + ")");
   if (!T.decor3D || T.decor3D.route) echecs.push("terrain 3D : la route est dessinée par-dessus l'image (" + JSON.stringify(T.decor3D) + ")");
   if (!T.repli || !T.repli.route || T.repli.terrain !== "terrain-peint") echecs.push("repli sans terrain 3D : route, ponts et gué non dessinés (" + JSON.stringify(T.repli) + ")");
+  echecsExpedition(bilan).forEach(m => echecs.push(m));
   echecs.forEach(m => console.log("ÉCHEC  " + m));
   process.exit(echecs.length ? 1 : 0);
 })().catch(e => { console.log("ÉCHEC  " + e.message); process.exit(1); });
