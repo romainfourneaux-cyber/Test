@@ -107,26 +107,6 @@ JEU.enregistrer("anglais", {
   },
   {
    "id": "anglais-seq01-v11",
-   "en": "in bed",
-   "fr": "au lit",
-   "exemple": "He was in bed at nine o'clock.",
-   "source": {
-    "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
-    "page": 1
-   }
-  },
-  {
-   "id": "anglais-seq01-v12",
-   "en": "to be sick, to have a temperature",
-   "fr": "être malade, avoir de la fièvre",
-   "exemple": "She was sick, so she stayed at home.",
-   "source": {
-    "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
-    "page": 1
-   }
-  },
-  {
-   "id": "anglais-seq01-v13",
    "en": "the weather",
    "fr": "le temps (qu'il fait)",
    "exemple": "The weather is nice this week.",
@@ -136,7 +116,7 @@ JEU.enregistrer("anglais", {
    }
   },
   {
-   "id": "anglais-seq01-v14",
+   "id": "anglais-seq01-v12",
    "en": "sunny",
    "fr": "ensoleillé",
    "exemple": "It was sunny on Sunday.",
@@ -146,7 +126,7 @@ JEU.enregistrer("anglais", {
    }
   },
   {
-   "id": "anglais-seq01-v15",
+   "id": "anglais-seq01-v13",
    "en": "clean",
    "fr": "propre",
    "exemple": "My hands are clean now.",
@@ -156,17 +136,7 @@ JEU.enregistrer("anglais", {
    }
   },
   {
-   "id": "anglais-seq01-v16",
-   "en": "incredible",
-   "fr": "incroyable",
-   "exemple": "What an incredible goal !",
-   "source": {
-    "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
-    "page": 2
-   }
-  },
-  {
-   "id": "anglais-seq01-v17",
+   "id": "anglais-seq01-v14",
    "en": "a coat",
    "fr": "un manteau",
    "exemple": "Put on your coat, it's cold.",
@@ -176,7 +146,7 @@ JEU.enregistrer("anglais", {
    }
   },
   {
-   "id": "anglais-seq01-v18",
+   "id": "anglais-seq01-v15",
    "en": "a castle",
    "fr": "un château",
    "exemple": "There is a castle on the hill.",
@@ -186,17 +156,17 @@ JEU.enregistrer("anglais", {
    }
   },
   {
-   "id": "anglais-seq01-v19",
+   "id": "anglais-seq01-v16",
    "en": "gardening",
    "fr": "le jardinage",
    "exemple": "My grandmother loves gardening.",
    "source": {
     "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
-    "page": 2
+    "page": 3
    }
   },
   {
-   "id": "anglais-seq01-v20",
+   "id": "anglais-seq01-v17",
    "en": "a suitcase",
    "fr": "une valise",
    "exemple": "His suitcase is very heavy.",
@@ -206,7 +176,7 @@ JEU.enregistrer("anglais", {
    }
   },
   {
-   "id": "anglais-seq01-v21",
+   "id": "anglais-seq01-v18",
    "en": "probably",
    "fr": "probablement, sans doute",
    "exemple": "They are probably at the park.",
@@ -216,7 +186,7 @@ JEU.enregistrer("anglais", {
    }
   },
   {
-   "id": "anglais-seq01-v22",
+   "id": "anglais-seq01-v19",
    "en": "proud",
    "fr": "fier",
    "exemple": "I am proud of my team.",
@@ -226,27 +196,17 @@ JEU.enregistrer("anglais", {
    }
   },
   {
-   "id": "anglais-seq01-v23",
+   "id": "anglais-seq01-v20",
    "en": "a meal",
    "fr": "un repas",
-   "exemple": "Lunch is my favourite meal.",
+   "exemple": "Dinner is a big meal in Spain.",
    "source": {
     "fichier": "cours/anglais/Anglais 5e - Sequence 1 - Exercices supplementaires - Corriges.pdf",
     "page": 1
    }
   },
   {
-   "id": "anglais-seq01-v24",
-   "en": "a movie",
-   "fr": "un film",
-   "exemple": "We saw a funny movie on Saturday.",
-   "source": {
-    "fichier": "cours/anglais/Anglais 5e - Sequence 1 - Exercices supplementaires - Corriges.pdf",
-    "page": 1
-   }
-  },
-  {
-   "id": "anglais-seq01-v25",
+   "id": "anglais-seq01-v21",
    "en": "oysters",
    "fr": "des huîtres",
    "exemple": "My uncle eats oysters in winter.",
@@ -256,17 +216,7 @@ JEU.enregistrer("anglais", {
    }
   },
   {
-   "id": "anglais-seq01-v26",
-   "en": "to go sailing",
-   "fr": "faire de la voile",
-   "exemple": "We go sailing in summer.",
-   "source": {
-    "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
-    "page": 2
-   }
-  },
-  {
-   "id": "anglais-seq01-v27",
+   "id": "anglais-seq01-v22",
    "en": "to carry",
    "fr": "porter (à la main, dans ses bras)",
    "exemple": "Can you carry this box ?",
@@ -1028,7 +978,7 @@ JEU.enregistrer("anglais", {
    "id": "anglais-seq01-q28",
    "fiche": "anglais-seq01-g4",
    "type": "association",
-   "niveau": 2,
+   "niveau": 3,
    "enonce": "Relie chaque phrase à son question tag.",
    "gauche": [
     "He was late,",
@@ -1184,7 +1134,7 @@ JEU.enregistrer("anglais", {
    "id": "anglais-seq01-q36",
    "fiche": "anglais-seq01-g5",
    "type": "association",
-   "niveau": 2,
+   "niveau": 3,
    "enonce": "Relie chaque phrase au présent à sa forme au prétérit.",
    "gauche": [
     "It is late.",
@@ -1428,7 +1378,7 @@ JEU.enregistrer("anglais", {
     "to have (have, has)",
     "will"
    ],
-   "explication": "Au présent simple, l'auxiliaire est to do : Do you like… ? She doesn't play… To be sert pour les formes en -ing.",
+   "explication": "Au présent simple, l'auxiliaire est to do (do, does). To be sert pour les formes en -ing, comme is playing.",
    "source": {
     "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
     "page": 2
@@ -1647,7 +1597,7 @@ JEU.enregistrer("anglais", {
    "id": "anglais-seq01-q60",
    "fiche": "anglais-seq01-g8",
    "type": "association",
-   "niveau": 2,
+   "niveau": 3,
    "enonce": "Relie chaque phrase à son question tag.",
    "gauche": [
     "It is cold,",
@@ -1736,7 +1686,7 @@ JEU.enregistrer("anglais", {
     "Qu'est-ce que le temps ?",
     "Quelle heure est-il ?"
    ],
-   "explication": "What … like ? demande une description. Avec the weather, on demande le temps qu'il fait, pas si on l'aime.",
+   "explication": "La question en like demande une description : ici, celle du temps qu'il fait. On ne demande pas si on aime ce temps.",
    "source": {
     "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
     "page": 2
@@ -1751,7 +1701,7 @@ JEU.enregistrer("anglais", {
    "niveau": 1,
    "enonce": "Pour demander « Comment est ta sœur ? », on dit « What is your sister like ? ».",
    "corrections": [],
-   "explication": "What … like ? sert à demander une description : taille, caractère, aspect. La réponse décrit la personne.",
+   "explication": "La question en like sert à demander une description : taille, caractère, aspect. La réponse décrit la personne.",
    "source": {
     "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
     "page": 2
@@ -1771,7 +1721,7 @@ JEU.enregistrer("anglais", {
     "How does he like ?",
     "Who is he ?"
    ],
-   "explication": "What is he like ? demande comment il est. What does he like ? demanderait ce qu'il aime.",
+   "explication": "What is he like demande comment il est. What does he like demanderait ce qu'il aime.",
    "source": {
     "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
     "page": 2
@@ -1791,7 +1741,7 @@ JEU.enregistrer("anglais", {
     "Where is she like ?",
     "What country does she ?"
    ],
-   "explication": "What nationality is she ? ou What is her nationality ? La réponse serait par exemple She is Spanish.",
+   "explication": "On dit What nationality is she, ou What is her nationality. La réponse serait par exemple She is Spanish.",
    "source": {
     "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
     "page": 2
@@ -1912,7 +1862,7 @@ JEU.enregistrer("anglais", {
    "niveau": 2,
    "enonce": "Pour demander « Avec qui dansait-il ? », on dit « Who was he dancing with ? » : la préposition with reste à la fin.",
    "corrections": [],
-   "explication": "En anglais, la préposition reste à la fin de la question : Who … with ? Who … to ? Le mot interrogatif, lui, reste en tête.",
+   "explication": "En anglais, la préposition reste à la fin de la question, comme with dans Who was he dancing with. Le mot interrogatif, lui, reste en tête.",
    "source": {
     "fichier": "cours/anglais/Anglais 5e - Sequence 1 - Exercices supplementaires - Corriges.pdf",
     "page": 1
@@ -2261,7 +2211,7 @@ JEU.enregistrer("anglais", {
    "id": "anglais-seq01-q91",
    "fiche": "anglais-seq01-v6",
    "type": "qcm",
-   "niveau": 1,
+   "niveau": 2,
    "enonce": "Comment dit-on « plein, complet » (une salle pleine) ?",
    "choix": [
     "full",
@@ -2325,7 +2275,7 @@ JEU.enregistrer("anglais", {
   },
   {
    "id": "anglais-seq01-q94",
-   "fiche": "anglais-seq01-v13",
+   "fiche": "anglais-seq01-v11",
    "type": "trou",
    "niveau": 2,
    "enonce": "Complète avec le mot qui convient.",
@@ -2346,9 +2296,9 @@ JEU.enregistrer("anglais", {
   },
   {
    "id": "anglais-seq01-q95",
-   "fiche": "anglais-seq01-v20",
+   "fiche": "anglais-seq01-v17",
    "type": "qcm",
-   "niveau": 1,
+   "niveau": 2,
    "enonce": "Que veut dire « a suitcase » ?",
    "choix": [
     "une valise",
@@ -2386,7 +2336,7 @@ JEU.enregistrer("anglais", {
   },
   {
    "id": "anglais-seq01-q97",
-   "fiche": "anglais-seq01-v15",
+   "fiche": "anglais-seq01-v13",
    "type": "qcm_multiple",
    "niveau": 3,
    "enonce": "Quels mots sont des adjectifs, qui décrivent un état ou une qualité ? Coche toutes les bonnes réponses.",
@@ -2408,7 +2358,7 @@ JEU.enregistrer("anglais", {
   },
   {
    "id": "anglais-seq01-q98",
-   "fiche": "anglais-seq01-v21",
+   "fiche": "anglais-seq01-v18",
    "type": "qcm",
    "niveau": 2,
    "enonce": "Que veut dire « They are probably at the park » ?",
@@ -2428,9 +2378,9 @@ JEU.enregistrer("anglais", {
   },
   {
    "id": "anglais-seq01-q99",
-   "fiche": "anglais-seq01-v19",
+   "fiche": "anglais-seq01-v16",
    "type": "qcm",
-   "niveau": 1,
+   "niveau": 2,
    "enonce": "Comment dit-on « le jardinage » ?",
    "choix": [
     "gardening",
@@ -2448,7 +2398,7 @@ JEU.enregistrer("anglais", {
   },
   {
    "id": "anglais-seq01-q100",
-   "fiche": "anglais-seq01-v25",
+   "fiche": "anglais-seq01-v21",
    "type": "vrai_faux",
    "niveau": 2,
    "enonce": "« Oysters » veut dire « huîtres ».",
@@ -2463,7 +2413,7 @@ JEU.enregistrer("anglais", {
   },
   {
    "id": "anglais-seq01-q101",
-   "fiche": "anglais-seq01-v27",
+   "fiche": "anglais-seq01-v22",
    "type": "qcm",
    "niveau": 2,
    "enonce": "Que veut dire « He was carrying two bags » ?",
@@ -2483,22 +2433,22 @@ JEU.enregistrer("anglais", {
   },
   {
    "id": "anglais-seq01-q102",
-   "fiche": "anglais-seq01-v12",
+   "fiche": "anglais-seq01-v19",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Que veut dire « I had a temperature » ?",
+   "enonce": "Que veut dire « I am proud of my team » ?",
    "choix": [
-    "J'avais de la fièvre",
-    "J'avais froid",
-    "J'avais un thermomètre",
-    "J'étais en retard"
+    "Je suis fier de mon équipe",
+    "Je suis dans mon équipe",
+    "Je suis fou de mon équipe",
+    "Je suis le chef de mon équipe"
    ],
-   "explication": "To have a temperature, c'est avoir de la fièvre. On le dit quand on est malade (sick).",
+   "explication": "Proud veut dire fier ; proud of, fier de. On peut être proud of someone ou proud of something.",
    "source": {
-    "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
+    "fichier": "cours/anglais/Anglais 5e - Sequence 1 - Exercices supplementaires.pdf",
     "page": 1
    },
-   "r": "=U2FHMR3yCACPNBBjhUAV41BOAxBOhTZ",
+   "r": "=wkCW8AHD4esVtgGck0CLIlGmQ0AV41BaUhRMgTZ",
    "poids": 1
   },
   {
@@ -2545,7 +2495,7 @@ JEU.enregistrer("anglais", {
    "id": "anglais-seq01-q105",
    "fiche": "anglais-seq01-p4",
    "type": "association",
-   "niveau": 2,
+   "niveau": 3,
    "enonce": "Relie chaque phrase anglaise à sa traduction.",
    "gauche": [
     "She wasn't at the party, was she ?",
@@ -2559,7 +2509,7 @@ JEU.enregistrer("anglais", {
     "Elle n'était pas à la fête, n'est-ce pas ?",
     "Il y avait deux chiens dans le jardin."
    ],
-   "explication": "Wasn't… was she ? donne « n'était pas… n'est-ce pas ? ». There were = il y avait, were watching = étions en train de regarder.",
+   "explication": "Le tag was she après wasn't donne le « n'est-ce pas ». There were = il y avait, were watching = étions en train de regarder.",
    "source": {
     "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
     "page": 2
@@ -2615,6 +2565,411 @@ JEU.enregistrer("anglais", {
     "page": 1
    },
    "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "anglais-seq01-q109",
+   "fiche": "anglais-seq01-g2",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Pour poser une question avec to be au prétérit, on place was ou were devant le sujet : Were they late ?",
+   "corrections": [],
+   "explication": "C'est l'inversion : Was he…, Were they… Aucun auxiliaire did n'est nécessaire.",
+   "source": {
+    "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
+    "page": 3
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "anglais-seq01-q110",
+   "fiche": "anglais-seq01-g3",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "« There was » s'emploie devant un pluriel comme « three books ».",
+   "corrections": [
+    "Faux : devant un pluriel, on dit there were : There were three books.",
+    "Faux : devant un pluriel, on dit there is.",
+    "Faux : devant un pluriel, on dit it was."
+   ],
+   "explication": "Three books est un pluriel : there were. There was ne s'emploie que devant un singulier.",
+   "source": {
+    "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
+    "page": 1
+   },
+   "r": "Qd0GeVAAJQQSXICAdERVUsxCYIVDxgUDh1AVPNAFMUwZXcAAdUQSaYgFI1iQFlRQLYAFTUgAnxBAFFwHIghCWgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "anglais-seq01-q111",
+   "fiche": "anglais-seq01-g4",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Après « They were happy », le question tag est « weren't they ? ».",
+   "corrections": [],
+   "explication": "Phrase affirmative avec were et they : tag négatif weren't they. Le sujet et l'auxiliaire sont repris.",
+   "source": {
+    "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "anglais-seq01-q112",
+   "fiche": "anglais-seq01-g5",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Pour mettre « We are at the beach » au prétérit, on écrit « We was at the beach ».",
+   "corrections": [
+    "Faux : are devient were : We were at the beach.",
+    "Faux : are devient did : We did at the beach.",
+    "Faux : are ne change pas au prétérit."
+   ],
+   "explication": "Are devient were au prétérit, et we prend were. Was est réservé à I, he, she et it.",
+   "source": {
+    "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
+    "page": 3
+   },
+   "r": "=A1RbUUDOMABJdxLGUVEUEFDcoQBIZieF9QDL0xARkkBpcBHTARFJtQHTgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "anglais-seq01-q113",
+   "fiche": "anglais-seq01-g7",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Avec he, she ou it, la question au présent simple commence par does.",
+   "corrections": [],
+   "explication": "Does she like…, does it work… Avec les autres sujets, c'est do.",
+   "source": {
+    "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "anglais-seq01-q114",
+   "fiche": "anglais-seq01-g7",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Pourquoi écrit-on « Does he play ? » et non « Does he plays ? » ?",
+   "choix": [
+    "Parce que does porte déjà la marque de la 3e personne : le verbe reste à sa base",
+    "Parce que play est un verbe irrégulier",
+    "Parce que dans une question le verbe prend toujours -ing",
+    "Parce que does est au passé"
+   ],
+   "explication": "C'est l'auxiliaire does qui porte le -s de la 3e personne. Le verbe revient à sa base : play.",
+   "source": {
+    "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "==wVUoxDNIVCw0Qx23wCbUxAbIlIQcAADEFDC8ESIZyQLolXcogFGxQQnNRGFBRFJtgGDohIAVEVB50zlyAwxOiUQExBekhTccxBn0AAAxlTKUAFIISZ",
+   "poids": 1
+  },
+  {
+   "id": "anglais-seq01-q115",
+   "fiche": "anglais-seq01-g8",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Après « You can come », le question tag est « can't you ? ».",
+   "corrections": [],
+   "explication": "La phrase est affirmative avec can : le tag est négatif, can't you. On ne met jamais do avec can.",
+   "source": {
+    "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "anglais-seq01-q116",
+   "fiche": "anglais-seq01-g9",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "« What does she like ? » demande de décrire la personne.",
+   "corrections": [
+    "Faux : avec does, like est le verbe aimer : on demande ce qu'elle aime.",
+    "Faux : la question demande où elle est.",
+    "Faux : la question demande sa nationalité."
+   ],
+   "explication": "What does she like demande ce qu'elle aime. Pour la décrire, on dit What is she like.",
+   "source": {
+    "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "=URYDAAWE9wTDoQBXA2BEUEESk0CLwRCugUAVMUAPxlRbchKbQRRQMxGLkhUN8SDRYESOpQDPUgUrFAEKERUKsQGTgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "anglais-seq01-q117",
+   "fiche": "anglais-seq01-g10",
+   "type": "vrai_faux",
+   "niveau": 1,
+   "enonce": "En anglais, le mot interrogatif se place à la fin de la question.",
+   "corrections": [
+    "Faux : il se place en tête, devant l'auxiliaire : Where do you live ?",
+    "Faux : il se place juste après le sujet.",
+    "Faux : il se place après le verbe."
+   ],
+   "explication": "Where, when, why et who ouvrent la question. Seule la préposition (to, with) peut rester à la fin.",
+   "source": {
+    "fichier": "cours/anglais/Anglais 5e - Sequence 1 - Exercices supplementaires - Corriges.pdf",
+    "page": 1
+   },
+   "r": "==gPPoVFIhhBKYEHd4jUaEQVUsxCHUCS51AAHR0DGowDRcgJVlRRB8BCYogFI9GSR8p7a8ECDk0FkMRGVUFFa40AbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "anglais-seq01-q118",
+   "fiche": "anglais-seq01-g11",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "En anglais, l'adjectif se place avant le nom : a small dog.",
+   "corrections": [],
+   "explication": "Small dog, red car, old man : l'adjectif précède le nom. Il reste invariable.",
+   "source": {
+    "fichier": "cours/anglais/Anglais 5e - Sequence 1 - Exercices supplementaires - Corriges.pdf",
+    "page": 1
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "anglais-seq01-q119",
+   "fiche": "anglais-seq01-g12",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "« These » est le pluriel de « this ».",
+   "corrections": [],
+   "explication": "This book, these books. That désigne ce qui est plus loin.",
+   "source": {
+    "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
+    "page": 3
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "anglais-seq01-q120",
+   "fiche": "anglais-seq01-v4",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Comment dit-on « un policier » ?",
+   "choix": [
+    "a policeman",
+    "a police",
+    "a thief",
+    "a postman"
+   ],
+   "explication": "Un policier se dit a policeman ; au pluriel, policemen. A thief est un voleur.",
+   "source": {
+    "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
+    "page": 1
+   },
+   "r": "==gStwECQ50BDkgFJNRZ",
+   "poids": 1
+  },
+  {
+   "id": "anglais-seq01-q121",
+   "fiche": "anglais-seq01-v5",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "« We had seats in the front row » : où étions-nous assis ?",
+   "choix": [
+    "Au premier rang",
+    "Au dernier rang",
+    "Dans le couloir",
+    "Au balcon"
+   ],
+   "explication": "The front row est le premier rang, tout devant. Front veut dire devant.",
+   "source": {
+    "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "=sUCBMhGj9FAcB0CdYhRcMTZ",
+   "poids": 1
+  },
+  {
+   "id": "anglais-seq01-q122",
+   "fiche": "anglais-seq01-v7",
+   "type": "vrai_faux",
+   "niveau": 1,
+   "enonce": "« Excited » veut dire « épuisé ».",
+   "corrections": [
+    "Faux : excited veut dire tout excité, enthousiaste ; épuisé se dit exhausted.",
+    "Faux : excited veut dire en colère.",
+    "Faux : excited veut dire effrayé."
+   ],
+   "explication": "Excited, c'est être tout excité, plein d'enthousiasme. Épuisé se dit exhausted : deux mots à ne pas confondre.",
+   "source": {
+    "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "=8wVLFBFd0hGTAwOIVUQEpwTDURSbTYAcARBYrqTUJVD34FBc51GA4gEHcxZextpBghCWogUcYjQRUBScYgAG1xBiQQVBARBA0wFXgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "anglais-seq01-q123",
+   "fiche": "anglais-seq01-v10",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Que veut dire « the living-room » ?",
+   "choix": [
+    "le salon",
+    "la cuisine",
+    "la chambre",
+    "la salle de bains"
+   ],
+   "explication": "The living-room est le salon, la pièce où l'on vit en famille. Living vient de to live, vivre.",
+   "source": {
+    "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
+    "page": 1
+   },
+   "r": "==wRbJkAOUhRM4RZ",
+   "poids": 1
+  },
+  {
+   "id": "anglais-seq01-q124",
+   "fiche": "anglais-seq01-v12",
+   "type": "qcm",
+   "niveau": 1,
+   "enonce": "Comment dit-on « ensoleillé » ?",
+   "choix": [
+    "sunny",
+    "rainy",
+    "windy",
+    "foggy"
+   ],
+   "explication": "Sunny veut dire ensoleillé, de sun, le soleil. Rainy, c'est pluvieux.",
+   "source": {
+    "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "==ATWgACcEQZ",
+   "poids": 1
+  },
+  {
+   "id": "anglais-seq01-q125",
+   "fiche": "anglais-seq01-v14",
+   "type": "trou",
+   "niveau": 2,
+   "enonce": "Complète avec le mot qui convient.",
+   "texte": "It's cold, put on your ___ !",
+   "banque": [
+    "coat",
+    "castle",
+    "suitcase",
+    "meal"
+   ],
+   "explication": "A coat est un manteau : on le met quand il fait froid. Castle, suitcase et meal n'ont rien à faire ici.",
+   "source": {
+    "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "==AOo9gGOkQBLlCH",
+   "poids": 1
+  },
+  {
+   "id": "anglais-seq01-q126",
+   "fiche": "anglais-seq01-v15",
+   "type": "qcm",
+   "niveau": 1,
+   "enonce": "Que veut dire « a castle » ?",
+   "choix": [
+    "un château",
+    "une cabane",
+    "une église",
+    "un casque"
+   ],
+   "explication": "A castle est un château, comme ceux des rois et des reines. Au pluriel, castles.",
+   "source": {
+    "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "==gS2wEAB9YrHUgRHcQZ",
+   "poids": 1
+  },
+  {
+   "id": "anglais-seq01-q127",
+   "fiche": "anglais-seq01-v20",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Dans « Dinner is a big meal in Spain », que veut dire meal ?",
+   "choix": [
+    "un repas",
+    "un plat",
+    "une farine",
+    "un marché"
+   ],
+   "explication": "A meal est un repas : breakfast, lunch et dinner sont des meals. Le marché se dit market.",
+   "source": {
+    "fichier": "cours/anglais/Anglais 5e - Sequence 1 - Exercices supplementaires - Corriges.pdf",
+    "page": 1
+   },
+   "r": "==wRGxkHKQhRHcQZ",
+   "poids": 1
+  },
+  {
+   "id": "anglais-seq01-q128",
+   "fiche": "anglais-seq01-p5",
+   "type": "qcm",
+   "niveau": 1,
+   "enonce": "Comment dit-on « Quel temps fait-il à Paris ? » ?",
+   "choix": [
+    "What's the weather like in Paris ?",
+    "How is the weather in Paris like ?",
+    "What does the weather like in Paris ?",
+    "What time is the weather in Paris ?"
+   ],
+   "explication": "What's the weather like, puis le lieu. La question en like demande une description du temps.",
+   "source": {
+    "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "Qd1YexwRM5zTI8QSXwyGZU0BUEgGOcxHjhUDB1QHIJxBBUSZ",
+   "poids": 1
+  },
+  {
+   "id": "anglais-seq01-q129",
+   "fiche": "anglais-seq01-p6",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "« We were watching a movie » veut dire « Nous regarderons un film ».",
+   "corrections": [
+    "Faux : c'est « Nous étions en train de regarder un film » : were watching est au prétérit progressif.",
+    "Faux : c'est « Nous regardons un film ».",
+    "Faux : c'est « Nous avons regardé un film plusieurs fois »."
+   ],
+   "explication": "Were watching, c'est was/were + -ing : une action en train de se faire dans le passé. Nous étions en train de regarder.",
+   "source": {
+    "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
+    "page": 2
+   },
+   "r": "==wGLxVIbYgFQMgDB0hAIdDRXwp7aYcpUkhUyMRVRYAFJlQAbAAIZRgQNsQHDERSIdWy3WEGdAACPxRHj9FAR91DIMAFJdxIStBDUMQHOFwFIBzQKwVWHzqRVwRHJIl3nWVBasASRgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "anglais-seq01-q130",
+   "fiche": "anglais-seq01-g12",
+   "type": "ordre",
+   "niveau": 2,
+   "enonce": "Remets les mots dans l'ordre.",
+   "elements": [
+    "are",
+    "These",
+    "sweet.",
+    "red apples"
+   ],
+   "explication": "These, au pluriel, précède red apples. Puis viennent le verbe are et l'adjectif sweet.",
+   "source": {
+    "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
+    "page": 3
+   },
+   "r": "o9hQfpUVFNEH",
    "poids": 1
   }
  ],
