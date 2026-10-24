@@ -127,7 +127,7 @@ export const PARTITIONS_RDC = [
   { id: 'P4-bain-dressing', x0: 0.34, x1: 2.23, z0: 2.69, z1: 2.76 },
   { id: 'P5-chambre-sas', x0: 6.96, x1: 7.03, z0: 2.256, z1: 3.16 },
   { id: 'P6-wc-porte', x0: 5.20, x1: 5.27, z0: 1.31, z1: 2.186 },          // percée par la porte WC
-  { id: 'P7-wc-escalier', x0: 4.07, x1: 5.27, z0: 1.24, z1: 1.31 },
+  { id: 'P7-wc-escalier', x0: 4.10, x1: 5.27, z0: 1.24, z1: 1.31 },          // bute contre le poteau-noyau acier
 ];
 export const PARTITIONS_ETAGE = [
   { id: 'E1-ch1', x0: 3.13, x1: 3.20, z0: 0.34, z1: 4.91 },               // percée porte ch1

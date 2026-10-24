@@ -7,6 +7,7 @@ import {
 } from './spec.js';
 
 const PL = 0.013;           // épaisseur BA13
+const EPS = 0.0006;         // retrait des couches internes : évite les faces coplanaires (poché net en coupe)
 const op = (id) => OPENINGS.find((o) => o.id === id);
 const hole = (o) => ({ a0: o.a0, a1: o.a1, y0: o.y0, y1: o.y1 });
 
@@ -15,7 +16,7 @@ function doublage({ axis, a0, a1, n0, n1, y0, y1, holes, side }) {
   const g = new THREE.Group();
   const nPl0 = side > 0 ? n1 - PL : n0, nPl1 = side > 0 ? n1 : n0 + PL;
   const nIs0 = side > 0 ? n0 : n0 + PL, nIs1 = side > 0 ? n1 - PL : n1;
-  g.add(wallWithHoles({ axis, a0, a1, n0: nIs0, n1: nIs1, y0, y1, holes, m: 'isolant' }));
+  g.add(wallWithHoles({ axis, a0, a1, n0: nIs0 + EPS, n1: nIs1 - EPS, y0: y0 + EPS, y1: y1 - EPS, holes, m: 'isolant' }));
   g.add(wallWithHoles({ axis, a0, a1, n0: nPl0, n1: nPl1, y0, y1, holes, m: 'placo' }));
   return g;
 }
@@ -26,7 +27,7 @@ function doublagePignon({ x0, x1, side, z0, z1, yBot, yTop, holes = [] }) {
   const xPl0 = side > 0 ? x1 - PL : x0, xPl1 = side > 0 ? x1 : x0 + PL;
   const xIs0 = side > 0 ? x0 : x0 + PL, xIs1 = side > 0 ? x1 - PL : x1;
   const profile = { z0, z1, yBot, yTop, breaks: [ROOF.ridgeZ] };
-  g.add(gableWithHoles({ x0: xIs0, x1: xIs1, profile, holes, m: 'isolant' }));
+  g.add(gableWithHoles({ x0: xIs0 + EPS, x1: xIs1 - EPS, profile, holes, m: 'isolant' }));
   g.add(gableWithHoles({ x0: xPl0, x1: xPl1, profile, holes, m: 'placo' }));
   return g;
 }
@@ -35,7 +36,7 @@ function doublagePignon({ x0, x1, side, z0, z1, yBot, yTop, holes = [] }) {
 function cloison({ axis, a0, a1, n0, n1, y0, y1, holes = [] }) {
   const g = new THREE.Group();
   g.add(wallWithHoles({ axis, a0, a1, n0, n1: n0 + PL, y0, y1, holes, m: 'placo' }));
-  g.add(wallWithHoles({ axis, a0, a1, n0: n0 + PL, n1: n1 - PL, y0, y1, holes, m: 'cloisonAme' }));
+  g.add(wallWithHoles({ axis, a0, a1, n0: n0 + PL + EPS, n1: n1 - PL - EPS, y0: y0 + EPS, y1: y1 - EPS, holes, m: 'cloisonAme' }));
   g.add(wallWithHoles({ axis, a0, a1, n0: n1 - PL, n1, y0, y1, holes, m: 'placo' }));
   return g;
 }
@@ -44,7 +45,7 @@ function cloisonRampante({ x0, x1, z0, z1, y0, holes = [] }) {
   const g = new THREE.Group();
   const profile = { z0, z1, yBot: () => y0, yTop: (z) => rampant(z), breaks: [ROOF.ridgeZ] };
   g.add(gableWithHoles({ x0, x1: x0 + PL, profile, holes, m: 'placo' }));
-  g.add(gableWithHoles({ x0: x0 + PL, x1: x1 - PL, profile, holes, m: 'cloisonAme' }));
+  g.add(gableWithHoles({ x0: x0 + PL + EPS, x1: x1 - PL - EPS, profile, holes, m: 'cloisonAme' }));
   g.add(gableWithHoles({ x0: x1 - PL, x1, profile, holes, m: 'placo' }));
   return g;
 }
@@ -61,7 +62,7 @@ export function buildBuilding() {
     box(0.0, -0.45, 0.0, 7.30, -0.06, 5.25, 'dalle'),                 // dallage extension
     box(0.0, -0.45, 5.25, 7.30, -0.17, 5.75, 'dalle'),                // semelle loggia
     box(7.30, -0.45, 0.0, 8.50, -0.06, 3.50, 'dalle'),                // dallage sas
-    box(0.22, -0.06, 0.22, 8.28, -0.015, 5.03, 'chape'),
+    box(0.22, -0.06 + EPS, 0.22, 8.28, -0.015 - EPS, 5.03, 'chape'),
     // carrelage : SdB, WC, dessous d'escalier, dégagement, sas
     box(0.22, -0.015, 0.22, 8.28, 0.0, 2.221, 'carrelageSol'),
     box(7.03, -0.015, 2.221, 8.28, 0.0, 3.16, 'carrelageSol'),
@@ -149,15 +150,15 @@ export function buildBuilding() {
   const pl = grp('plancher', 'etage', 'structure');
   const T = STAIR.tremie;
   const slabRects = [
-    [0.22, 3.20, 0.22, 5.03],
+    [0.22, 3.187, 0.22, T.landingEdgeZ],
+    [0.22, 3.20, T.landingEdgeZ, 5.03],
     [3.20, T.landingX1, T.landingEdgeZ, 5.03],
     [T.landingX1, 7.08, T.z1, 5.03],
     [T.x1, 7.08, 0.22, T.z1],
-    [3.20, T.x1, 0.22, 0.34],
   ];
   for (const [x0, x1, z0, z1] of slabRects) {
     add(pl, box(x0, LV.rdcCeil, z0, x1, LV.rdcCeil + PL, z1, 'placoPlafond'));
-    add(pl, box(x0, LV.rdcCeil + PL, z0, x1, LV.slabTop - 0.02, z1, 'dalle'));
+    add(pl, box(x0, LV.rdcCeil + PL + EPS, z0, x1, LV.slabTop - 0.02 - EPS, z1, 'dalle'));
   }
   // Sols finis de l'étage : carrelage sur le palier (couloir), parquet dans les chambres
   const solEt = (x0, x1, z0, z1, m) => add(pl, box(x0, LV.slabTop - 0.02, z0, x1, LV.slabTop, z1, m));
@@ -167,12 +168,13 @@ export function buildBuilding() {
   solEt(3.20, T.landingX1, 3.10, 5.03, 'parquet');                  // alcôve chambre 2
   solEt(T.landingX1, 7.08, T.z1, 5.03, 'parquet');                  // chambre 2
   solEt(T.x1, 7.08, 0.22, T.z1, 'parquet');
-  solEt(3.165, T.x1, 0.22, 0.34, 'parquet');
+  // cage d'escalier : le doublage du mur Est est continu entre le plafond RDC et le plancher de l'étage
+  add(pl, doublage({ axis: 'x', a0: 3.187, a1: T.x1, n0: 0.22, n1: 0.34, y0: LV.rdcCeil, y1: LV.slabTop, side: +1 }));
   // habillage placo des rives de trémie
   add(pl,
     box(T.landingX1, LV.rdcCeil, T.z1, T.x1, LV.slabTop - 0.02, T.z1 + PL, 'placo'),
     box(T.x1 - PL, LV.rdcCeil, 0.34, T.x1, LV.slabTop - 0.02, T.z1, 'placo'),
-    box(3.20, LV.rdcCeil, 0.34, 3.20 + PL, LV.slabTop - 0.02, T.landingEdgeZ, 'placo'),
+    box(3.187, LV.rdcCeil, 0.34, 3.20, LV.slabTop - 0.02, T.landingEdgeZ, 'placo'),
   );
   root.add(pl);
   // Plafond du sas (sous toit plat) + toit plat
