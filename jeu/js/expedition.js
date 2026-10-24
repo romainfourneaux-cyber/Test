@@ -258,14 +258,22 @@
   // Semaine d'un cours : celle de son entrée du planning ; null pour un cours de langue, une fiche méthode ou une séquence
   // d'anglais (les « compagnons de route », qui viennent par la troisième question). JEU.progression.semaineDe quand il
   // existe (contrat partagé avec le repère de semaine), sinon le même calcul ici.
+  // Mémorisée par cours (le planning ne change pas en cours de partie) : le filtre du quota l'appelle pour chaque question
+  // candidate à chaque tirage d'un lot, et l'entrée du planning se cherche par un parcours de ses 300 lignes.
+  var semainesMemo = {};
   function semaineDe(coursId) {
-    var P = JEU.progression;
-    if (P && typeof P.semaineDe === "function") return P.semaineDe(coursId);
-    if (!coursId || /^(methode|langue|anglais)-/.test(coursId)) return null;
-    var e = P ? P.entree(coursId) : null;
-    if (e && typeof e.semaine === "number") return e.semaine;
-    var m = /^[a-z]+-s(\d\d)-\d+$/.exec(coursId);
-    return m ? parseInt(m[1], 10) : null;
+    if (!coursId) return null;
+    if (Object.prototype.hasOwnProperty.call(semainesMemo, coursId)) return semainesMemo[coursId];
+    var P = JEU.progression, s;
+    if (P && typeof P.semaineDe === "function") s = P.semaineDe(coursId);
+    else if (/^(methode|langue|anglais)-/.test(coursId)) s = null;
+    else {
+      var e = P ? P.entree(coursId) : null;
+      if (e && typeof e.semaine === "number") s = e.semaine;
+      else { var m = /^[a-z]+-s(\d\d)-\d+$/.exec(coursId); s = m ? parseInt(m[1], 10) : null; }
+    }
+    semainesMemo[coursId] = s;
+    return s;
   }
   function coursOuverts() { return JEU.progression.coursAccessibles(); }
   // Semaines qui ont au moins un cours chargé, dans l'ordre.
@@ -1087,8 +1095,9 @@
     r = Math.min(EXP.RANG_MAX, Math.max(r, avant + 1));
     if (f) f.rang = r; else { f = { id: id, rang: r }; e.faveurs.push(f); }
     if (id === "simples") {
-      if (avant === 0) gagnerVivre(e, EXP.OR_ROUTE.bivouacPlein);
+      // au rang rare, le sac de plus au maximum d'abord : le vivre offert trouve alors sa place au lieu de devenir de l'or
       if (r >= 2 && avant < 2 && e.vivresMax < VIVRES_MAX) e.vivresMax++;
+      if (avant === 0) gagnerVivre(e, EXP.OR_ROUTE.bivouacPlein);
     }
     return f;
   }
