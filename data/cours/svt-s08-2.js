@@ -7,7 +7,7 @@ JEU.enregistrer("cours", {
    "id": "svt-s08-2-f1",
    "notion": "Le sol en coupe",
    "titre": "Litière, humus, couches profondes, roche",
-   "texte": "Vu en coupe, le sol s'organise en couches, du haut vers le bas. Un végétal y plonge ses racines. En surface, la litière : des débris de végétaux. Puis l'humus, la couche vivante, pleine de décomposeurs comme le lombric, où les animaux creusent des terriers. Puis les couches profondes, en plusieurs horizons : un mélange de roche et de matière organique. Tout en bas, la roche : basalte volcanique ou calcaire sédimentaire.",
+   "texte": "Vu en coupe, le sol s'organise en couches. En surface, la litière : des débris végétaux. Dessous, l'humus, couche vivante pleine de décomposeurs comme le lombric, où des animaux creusent leurs terriers. Puis les couches profondes, en plusieurs horizons : un mélange de roche et de matière organique. Tout en bas, la roche : basalte volcanique ou calcaire sédimentaire.",
    "pointsCles": [
     "Litière : débris végétaux en surface",
     "Humus : couche vivante, nombreux décomposeurs (lombric), terriers",
@@ -48,7 +48,7 @@ JEU.enregistrer("cours", {
    "id": "svt-s08-2-f2",
    "notion": "Les ressources naturelles biologiques",
    "titre": "Ce que l'on tire du vivant",
-   "texte": "Beaucoup de ressources naturelles viennent d'êtres vivants : on les dit biologiques. Le bois sert à construire, à fabriquer du papier, des meubles et des instruments de musique, avec du bambou ou du crin de cheval. Le coton, la soie, la laine et le lin habillent. Le saule, la digitale, des champignons et des venins donnent des médicaments ; les algues, des cosmétiques. La ressource la plus précieuse est pourtant minérale : l'eau.",
+   "texte": "Beaucoup de ressources naturelles viennent d'êtres vivants : on les dit biologiques. Le bois sert à construire et à fabriquer papier, meubles et instruments de musique. Coton, soie, laine et lin habillent. Le saule, la digitale, des champignons et des venins donnent des médicaments ; les algues, des cosmétiques. La ressource la plus précieuse est pourtant minérale : l'eau.",
    "pointsCles": [
     "Construction : bois, chanvre ; papier : bois, coton",
     "Habillement : coton, soie, laine, lin",
@@ -86,7 +86,7 @@ JEU.enregistrer("cours", {
    "id": "svt-s08-2-f3",
    "notion": "Laine, liège, chanvre et lin",
    "titre": "D'où viennent-ils vraiment ?",
-   "texte": "Le liège est l'écorce d'un arbre, le chêne-liège : c'est donc une sorte de bois. La laine est du poil d'animal : mouton bien sûr, mais aussi chèvre (cachemire), alpaga, un cousin du lama, lapin (angora) et même certaines races de chien. Un pull tricoté, lui, peut être en fil de coton. Le chanvre et le lin sont des tiges d'herbes hautes, très solides.",
+   "texte": "Le liège est l'écorce d'un arbre, le chêne-liège : une sorte de bois, donc. La laine est du poil d'animal : mouton, mais aussi chèvre (cachemire), alpaga, un cousin du lama, lapin (angora), et même certains chiens. Un pull tricoté, lui, peut être en fil de coton. Chanvre et lin, eux, sont des tiges d'herbes hautes et très solides.",
    "pointsCles": [
     "Liège = écorce du chêne-liège, une sorte de bois",
     "Laine = poil d'animal : mouton, chèvre (cachemire), alpaga, lapin (angora), certains chiens",
@@ -161,7 +161,7 @@ JEU.enregistrer("cours", {
    "id": "svt-s08-2-f5",
    "notion": "Construire un diagramme circulaire",
    "titre": "Des pourcentages aux angles",
-   "texte": "Pour dessiner un diagramme circulaire, on transforme chaque pourcentage en proportion décimale (31 % = 0,31), puis on la multiplie par 360 pour obtenir l'angle de la part : 0,31 × 360 = 111,6°. On vérifie que la somme des angles fait 360. On trace ensuite un cercle, on mesure chaque angle au rapporteur en tournant la feuille, on colorie, et on ajoute la légende et le titre.",
+   "texte": "Pour un diagramme circulaire, on transforme chaque pourcentage en proportion décimale (31 % = 0,31), puis on la multiplie par 360 : l'angle de la part vaut 0,31 × 360 = 111,6°. On vérifie que la somme des angles fait 360. On trace un cercle, on mesure chaque angle au rapporteur, on colorie, puis légende et titre.",
    "pointsCles": [
     "Proportion décimale = pourcentage ÷ 100",
     "Angle = proportion décimale × 360",
@@ -530,10 +530,10 @@ JEU.enregistrer("cours", {
    "choix": [
     "L'écorce du chêne-liège",
     "Une laine très fine",
-    "Une tige d'herbe haute",
+    "Une tige d'herbe haute et solide",
     "Une algue séchée"
    ],
-   "explication": "Le liège est l'écorce d'un arbre particulier, le chêne-liège. C'est donc une sorte de bois.",
+   "explication": "Le liège se récolte sur le chêne-liège : c'est son écorce. On le range donc avec le bois.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 12
@@ -550,7 +550,7 @@ JEU.enregistrer("cours", {
    "choix": [
     "Du poil d'animaux comme le mouton",
     "Des tiges du lin",
-    "Des feuilles du cotonnier",
+    "Des feuilles du cotonnier, une fois séchées",
     "De l'écorce d'un arbre"
    ],
    "explication": "La laine est du poil d'animal. Le mouton n'est pas le seul à en donner.",
@@ -566,9 +566,9 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s08-2-f3",
    "type": "vrai_faux",
    "niveau": 2,
-   "enonce": "Le chanvre et le lin sont des tiges d'herbes hautes, très solides.",
+   "enonce": "Le chanvre et le lin viennent de tiges d'herbes hautes et très solides.",
    "corrections": [],
-   "explication": "Oui : chanvre et lin sont des tiges d'herbes hautes. Leur solidité en fait des fibres pour construire ou s'habiller.",
+   "explication": "Oui : chanvre et lin sont tirés de tiges d'herbes hautes. Leur solidité en fait des fibres pour construire ou s'habiller.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 12
