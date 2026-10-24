@@ -629,7 +629,7 @@
       if (n >= 1 && n <= quartiers.length) { acheterQuartier(s, quartiers[n - 1].id); return true; }
       return false;
     };
-    if (JEU.ui.focusAuClavier()) { var b = boite.querySelector("button:not([disabled])"); (b || fermer).focus(); }
+    if (JEU.ui.focusAuClavier()) { var b = boite.querySelector("button:not([disabled])"); (b || fermer).focus({ preventScroll: true }); window.scrollTo(0, 0); }
   }
   function acheterQuartier(s, id) {
     var X = JEU.expedition;
@@ -1019,7 +1019,7 @@
       return false;
     };
     var premier = lignes.filter(function (b) { return !b.disabled; })[0];
-    (premier || quitter).focus();
+    (premier || quitter).focus({ preventScroll: true }); window.scrollTo(0, 0);
   }
 
   // ---------- le bilan (victoire, retour au domaine, camp levé) ----------
