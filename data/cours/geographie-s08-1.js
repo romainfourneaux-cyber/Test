@@ -106,7 +106,7 @@ JEU.enregistrer("cours", {
     "Espérance de vie : la durée de vie moyenne d'une personne",
     "Taux de mortalité infantile : les enfants morts avant un an, pour mille naissances",
     "2019 : Japon 2 ‰, France 3 ‰, Chine 20 ‰, Algérie 29 ‰, Afghanistan 48 ‰ ; République centrafricaine la plus touchée",
-    "L'espérance de vie entre dans le calcul de l'IDH : les cartes de l'IDH et de l'espérance de vie se ressemblent"
+    "L'espérance de vie est l'un des trois critères de l'IDH"
    ],
    "dates": [],
    "lieux": [
@@ -995,6 +995,7 @@ JEU.enregistrer("cours", {
   "La fiche et la capsule vidéo de l'outil 9 lui-même ne sont pas déposées : seules les pages 2, 5 et 6 du cours 2 sont utilisées.",
   "Le PDF du cours 2 n'est pas encore déposé dans DEPOT/ : les cartes (PIB par habitant en 2017, IDH, espérance de vie) ne sont connues que par leur légende. Les réponses aux questions de la page 6 (régions à IDH très élevé, pays à IDH élevé ou moyen, continent le moins développé, inégalités en Asie et en Amérique du Sud) ne sont pas reprises.",
   "Les corrigés des exercices des pages 5 et 6, imprimés à l'envers, sont illisibles dans le texte extrait.",
+  "La carte de la page 6 range l'IDH avec d'autres seuils (élevé de 0,75 à 0,80, moyen de 0,55 à 0,75) : le jeu retient ceux de la carte de la page 2.",
   "Les valeurs de mortalité infantile de l'Inde, du Congo et de la République centrafricaine sont douteuses dans le texte extrait : seul le rang de la République centrafricaine (le plus élevé) est repris.",
   "Le document 2 de la page 5 (une image) n'est pas décrit."
  ]
