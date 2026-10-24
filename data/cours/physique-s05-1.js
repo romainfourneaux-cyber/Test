@@ -313,8 +313,8 @@ JEU.enregistrer("cours", {
    "enonce": "Dans le ballon, l'eau est à la fois liquide et solide. Que fait sa température ?",
    "choix": [
     "Elle reste la même",
-    "Elle monte vite",
-    "Elle baisse vite",
+    "Elle monte tout de suite",
+    "Elle baisse d'un seul coup",
     "Elle double"
    ],
    "explication": "Tant que les deux états sont présents, la température ne bouge pas. C'est le palier du changement d'état.",
@@ -369,7 +369,7 @@ JEU.enregistrer("cours", {
     "Quand il ne reste plus qu'un seul état",
     "Quand les deux états sont présents",
     "Jamais, elle reste toujours fixe",
-    "Seulement quand on ajoute de l'eau"
+    "Seulement quand on ajoute de l'eau froide"
    ],
    "explication": "Pendant le changement d'état, la température reste fixe. Une fois un seul état présent, elle peut varier à nouveau.",
    "source": {
@@ -645,7 +645,7 @@ JEU.enregistrer("cours", {
    "enonce": "Sur ce graphique, dans quelle unité la température est-elle exprimée ?",
    "choix": [
     "En degrés Celsius",
-    "En minutes",
+    "En minutes et secondes",
     "En grammes",
     "En litres"
    ],
@@ -874,7 +874,7 @@ JEU.enregistrer("cours", {
    "choix": [
     "De l'eau salée",
     "De l'eau pure",
-    "De l'huile",
+    "De l'eau du robinet",
     "Du lait"
    ],
    "explication": "Le graphique montre la solidification de l'eau salée. Sa courbe descend doucement pendant le changement d'état.",
@@ -891,7 +891,7 @@ JEU.enregistrer("cours", {
    "id": "physique-s05-1-b1",
    "fiche": "physique-s05-1-f3",
    "titre": "Le 0 et le 100 du thermomètre",
-   "texte": "L'échelle des degrés Celsius porte le nom d'Anders Celsius, astronome et physicien suédois, qui proposa en 1742 une échelle en cent degrés. Sur son thermomètre, le 0 marquait l'eau bouillante et le 100 la glace fondante ! Après sa mort, ses collègues, Carl von Linné sans doute, retournèrent l'échelle : 0 °C pour la glace fondante, 100 °C pour l'eau bouillante.",
+   "texte": "L'échelle des degrés Celsius porte le nom d'Anders Celsius, astronome et physicien suédois. Sur son thermomètre de 1742, le 0 marquait l'eau bouillante et le 100 la glace fondante ! Après sa mort, ses collègues retournèrent l'échelle, et l'on pense que l'initiative revient surtout au naturaliste suédois Carl von Linné : 0 °C pour la glace fondante, 100 °C pour l'eau bouillante.",
    "source": {
     "titre": "Anders Celsius",
     "editeur": "Wikipédia, l'encyclopédie libre",

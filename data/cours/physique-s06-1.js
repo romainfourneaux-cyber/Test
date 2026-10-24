@@ -369,17 +369,17 @@ JEU.enregistrer("cours", {
    "niveau": 1,
    "enonce": "Sur le schéma des changements d'état de l'eau, à quelle température se font la fusion et la solidification ?",
    "choix": [
-    "0 °C",
-    "100 °C",
-    "40 °C",
-    "50 °C"
+    "À zéro degré",
+    "À cent degrés",
+    "À quarante degrés",
+    "À cinquante degrés"
    ],
-   "explication": "Entre solide et liquide, le passage se fait à 0 °C. Entre liquide et gaz, c'est 100 °C.",
+   "explication": "Entre solide et liquide, le passage se fait à zéro degré. Entre liquide et gaz, c'est à cent degrés.",
    "source": {
     "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
     "page": 8
    },
-   "r": "==ATsYNpJJUZ",
+   "r": "=s0xsCwDmkURa91xsyhRpHbZ",
    "poids": 1
   },
   {
@@ -389,17 +389,17 @@ JEU.enregistrer("cours", {
    "niveau": 1,
    "enonce": "À quelle température l'eau liquide se vaporise-t-elle, d'après le schéma ?",
    "choix": [
-    "100 °C",
-    "0 °C",
-    "10 °C",
-    "357 °C"
+    "À cent degrés",
+    "À zéro degré",
+    "À dix degrés",
+    "À cinquante degrés"
    ],
-   "explication": "Vaporisation et liquéfaction se font à 100 °C pour l'eau. Fusion et solidification à 0 °C.",
+   "explication": "Vaporisation et liquéfaction se font à cent degrés pour l'eau. Fusion et solidification, à zéro degré.",
    "source": {
     "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
     "page": 8
    },
-   "r": "X4m3takVZNUZ",
+   "r": "=sUHGHrGkgUAVkFAKUgRpHbZ",
    "poids": 1
   },
   {
@@ -433,9 +433,9 @@ JEU.enregistrer("cours", {
    "fiche": "physique-s06-1-f2",
    "type": "vrai_faux",
    "niveau": 2,
-   "enonce": "La liquéfaction est le passage de l'état gazeux à l'état liquide, à 100 °C pour l'eau.",
+   "enonce": "La liquéfaction est le passage de l'état gazeux à l'état liquide, à cent degrés pour l'eau.",
    "corrections": [],
-   "explication": "Oui : la vapeur redevient liquide à 100 °C. C'est l'inverse de la vaporisation.",
+   "explication": "Oui : la vapeur redevient liquide à cent degrés. C'est l'inverse de la vaporisation.",
    "source": {
     "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
     "page": 8
@@ -448,18 +448,18 @@ JEU.enregistrer("cours", {
    "fiche": "physique-s06-1-f2",
    "type": "vrai_faux",
    "niveau": 2,
-   "enonce": "La vaporisation de l'eau se fait à 0 °C.",
+   "enonce": "La vaporisation de l'eau se fait à zéro degré.",
    "corrections": [
-    "Faux : elle se fait à 100 °C ; c'est la fusion qui se fait à 0 °C.",
-    "Faux : elle se fait à 50 °C.",
-    "Faux : elle se fait à −38 °C."
+    "Faux : elle se fait à cent degrés ; c'est la fusion qui se fait à zéro degré.",
+    "Faux : elle se fait à cinquante degrés.",
+    "Faux : elle se fait à moins quarante degrés."
    ],
-   "explication": "Sur le schéma, le passage liquide-gaz est à 100 °C. Le passage solide-liquide est à 0 °C.",
+   "explication": "Sur le schéma, le passage liquide-gaz est à cent degrés. Le passage solide-liquide est à zéro degré.",
    "source": {
     "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
     "page": 8
    },
-   "r": "==gPPskddy6TWZUyxemBcQwERxQHPtRHy0wCaRUHaAgRI4xZGYAASJRSV9UMYHYDVVAHO9cpG1xGmQRVAYQUMIwAXgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "r": "==wDlxF3megFMowTdoh6u/RFN26TS8ACUc2FGUEHEghTB0RAwg1AVwkAPJRFMUFJS5URGgtqcgwFMMWWLAlTO9cpG1xGmQRVAYQUMIwAXgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -473,7 +473,7 @@ JEU.enregistrer("cours", {
     "État gazeux",
     "État liquide"
    ],
-   "explication": "La glace fond à 0 °C et donne de l'eau liquide. Celle-ci se vaporise à 100 °C et devient gazeuse.",
+   "explication": "La glace fond d'abord et donne de l'eau liquide. En chauffant encore, l'eau liquide se vaporise et devient gazeuse.",
    "source": {
     "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
     "page": 8
@@ -513,8 +513,8 @@ JEU.enregistrer("cours", {
     "Solide",
     "Liquide et solide"
    ],
-   "explication": "Au-dessus de 100 °C, l'eau pure est à l'état gazeux. Elle est liquide entre 0 °C et 100 °C, solide en dessous de 0 °C.",
-   "indice": "Compare avec 100 °C.",
+   "explication": "Au-dessus de cent degrés, l'eau pure est à l'état gazeux. Elle est liquide entre zéro et cent degrés, solide en dessous de zéro.",
+   "indice": "Compare avec la température de vaporisation de l'eau.",
    "source": {
     "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
     "page": 8
@@ -566,9 +566,9 @@ JEU.enregistrer("cours", {
    "fiche": "physique-s06-1-f3",
    "type": "vrai_faux",
    "niveau": 2,
-   "enonce": "Le mercure est liquide à 20 °C.",
+   "enonce": "Dans une pièce à température ordinaire, vers vingt degrés, le mercure est liquide.",
    "corrections": [],
-   "explication": "Oui : il fond à −38,83 °C et bout à 357 °C. À 20 °C, il est donc entre les deux, à l'état liquide.",
+   "explication": "Oui : il fond à −38,83 °C et bout à 357 °C. Vingt degrés se trouve entre les deux : il est liquide.",
    "source": {
     "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
     "page": 8
@@ -687,16 +687,16 @@ JEU.enregistrer("cours", {
    "choix": [
     "Il fond à −38,83 °C",
     "Il se vaporise à 357 °C",
-    "Il est liquide à 20 °C",
-    "Il est solide à 20 °C",
+    "Il est liquide à vingt degrés",
+    "Il est solide à vingt degrés",
     "Il se vaporise à 0 °C"
    ],
-   "explication": "Le mercure fond à −38,83 °C ; il bout à 357 °C. Entre les deux, à 20 °C, il est liquide.",
+   "explication": "Le mercure fond à −38,83 °C ; il bout à 357 °C. Entre les deux, à vingt degrés, il est liquide.",
    "source": {
     "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
     "page": 8
    },
-   "r": "==wMNFD2B2QVH0gzsa0ANshMDwRCVVgGL8kHhEWAHZXns+UUTplUnHbVAYAGbEwHT4xYIZRFBdSTKRkKCXoUG1VWJpF/nDJSj7eRRNUAJYkCgAFH",
+   "r": "=oBUGwstD4wCLIFHkMEDD1gzsa0ANshMDwRCVVgGL8kHhEWAHZXns+UUTplUnHbVAYAGbEwHT4xYIZRFBdSTKRkKCXoUG1VWJpF/nDJSj7eRRNUAJYkCgAFH",
    "poids": 1
   },
   {
@@ -704,7 +704,7 @@ JEU.enregistrer("cours", {
    "fiche": "physique-s06-1-f4",
    "type": "qcm",
    "niveau": 1,
-   "enonce": "Parmi les métaux de l'exercice, lequel est le moins dense ?",
+   "enonce": "Parmi l'aluminium, le platine, l'acier et le zinc, lequel est le moins dense ?",
    "choix": [
     "L'aluminium",
     "Le platine",
@@ -724,7 +724,7 @@ JEU.enregistrer("cours", {
    "fiche": "physique-s06-1-f4",
    "type": "qcm",
    "niveau": 1,
-   "enonce": "Quel est le métal le plus dense de l'exercice ?",
+   "enonce": "Parmi le platine, l'aluminium, le zinc et l'acier, lequel est le plus dense ?",
    "choix": [
     "Le platine",
     "L'aluminium",

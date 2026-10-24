@@ -7,7 +7,7 @@ JEU.enregistrer("cours", {
    "id": "physique-s04-1-f1",
    "notion": "Mélange homogène, mélange hétérogène",
    "titre": "Le sel disparaît, le sable reste",
-   "texte": "Dans un verre d'eau, on verse du sel ; dans un autre, du sable. Après agitation, l'eau salée est transparente : on ne distingue plus le sel, le mélange est homogène. L'eau et le sable restent troubles : on voit encore deux matières, le mélange est hétérogène. Un mélange homogène a partout le même aspect.",
+   "texte": "Dans un verre d'eau, on verse du sel ; dans un autre, du sable. Après agitation, l'eau salée est transparente : on ne distingue plus le sel, le mélange est homogène. L'eau et le sable restent troubles : on voit encore deux matières, le mélange est hétérogène. Le sel devenu invisible s'est dissous dans l'eau.",
    "pointsCles": [
     "Eau + sel, agité : transparent, homogène",
     "Eau + sable : trouble, hétérogène",
@@ -118,7 +118,7 @@ JEU.enregistrer("cours", {
    "vocabulaire": [
     {
      "mot": "solubilité",
-     "def": "la quantité de soluté au-delà de laquelle il ne se dissout plus dans le solvant"
+     "def": "la quantité de sel que l'eau peut dissoudre au maximum ; au-delà, le mélange devient hétérogène"
     },
     {
      "mot": "palier",
@@ -301,17 +301,17 @@ JEU.enregistrer("cours", {
    "niveau": 3,
    "enonce": "Pourquoi l'eau salée est-elle transparente alors qu'elle contient du sel ?",
    "choix": [
-    "Parce que le sel dissous est réparti dans l'eau, invisible",
+    "Parce que le sel s'est dissous et ne se voit plus",
     "Parce que le sel est tombé au fond du verre et ne gêne plus",
     "Parce que le sel s'est évaporé en même temps que l'eau",
     "Parce que le sel a flotté puis a été enlevé en agitant"
    ],
-   "explication": "Dissous, le sel se répartit dans toute l'eau sans qu'on le distingue. C'est le propre d'un mélange homogène.",
+   "explication": "Le sel s'est dissous dans l'eau : on ne le distingue plus. Le mélange est homogène.",
    "source": {
     "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
     "page": 5
    },
-   "r": "==wSLMAEBADRTsFRON0EHwQVrIlBLQRFJdwGAkwMEa6RNoBHDYkGHgSAGwQERVwCcIVDv0AAAxlTKUAFIISZ",
+   "r": "MxxEKkhUzshGTUFFa4kCcg0NIVkRYFAHV8QDSNTAQIkBRVwCcIVDv0AAAxlTKUAFIISZ",
    "poids": 1
   },
   {
@@ -340,19 +340,19 @@ JEU.enregistrer("cours", {
    "fiche": "physique-s04-1-f1",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Quelle action permet au sel de se dissoudre dans l'eau du verre ?",
+   "enonce": "Dans le TP, qu'a-t-on fait au mélange d'eau et de sel avant de constater qu'il était transparent ?",
    "choix": [
-    "Agiter le mélange",
-    "Chauffer l'eau jusqu'à ébullition",
-    "Laisser le verre au soleil",
-    "Ajouter du sable"
+    "On l'a agité",
+    "On l'a chauffé",
+    "On l'a filtré",
+    "On l'a laissé au soleil"
    ],
    "explication": "On agite le verre pour mélanger. Le sel se dissout et l'eau devient transparente.",
    "source": {
     "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
     "page": 5
    },
-   "r": "=cEEWcwDDs9qu0AAZ1AHKIxDOMTZ",
+   "r": "Nt9q3QkAU1wDIpgRH0TZ",
    "poids": 1
   },
   {
@@ -439,9 +439,9 @@ JEU.enregistrer("cours", {
     "Observer si les liquides sont restés mélangés ou séparés",
     "Verser les deux liquides dans un verre",
     "Laisser reposer le verre, parfois une heure",
-    "Agiter pour mélanger"
+    "Mélanger les deux liquides"
    ],
-   "explication": "On verse, on agite, puis on laisse reposer. On observe enfin si le mélange est resté stable.",
+   "explication": "On verse, on mélange, puis on laisse reposer. On observe enfin si le mélange est resté stable.",
    "source": {
     "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
     "page": 5
@@ -534,18 +534,18 @@ JEU.enregistrer("cours", {
    "fiche": "physique-s04-1-f3",
    "type": "vrai_faux",
    "niveau": 2,
-   "enonce": "Le soluté est le liquide dans lequel on dissout une matière.",
+   "enonce": "Dans un biberon, la poudre de lait est le solvant.",
    "corrections": [
-    "Faux : le liquide qui dissout est le solvant ; le soluté est ce qui est dissous.",
-    "Faux : le soluté est le récipient qui contient le mélange.",
-    "Faux : le soluté est le mélange obtenu après agitation."
+    "Faux : la poudre de lait est le soluté, ce qui est dissous ; le solvant est l'eau.",
+    "Faux : dans un biberon, il n'y a ni solvant ni soluté.",
+    "Faux : la poudre de lait est à la fois le solvant et le soluté."
    ],
-   "explication": "Le solvant dissout, le soluté est dissous. Dans l'eau salée, l'eau est le solvant et le sel le soluté.",
+   "explication": "Le solvant dissout, le soluté est dissous. Dans le biberon, l'eau est le solvant et la poudre de lait le soluté.",
    "source": {
     "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
     "page": 6
    },
-   "r": "6A1WWAgHa0hBWg0NeBQFEthHGNgCSNTAQUE3y2xGD0xGjhUCVYhTbgwBf4BKBUFAZEVHdogUcYjQWYERK80DTghUiYBHQQAGF4kCegUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "r": "=QBUpdAFAIVHJpBHXg0NDRwQBFAHGNQBSxnUGAhGCoxBLIFHwgURch1HPNQBJ5l7xGAEZ4hGOpgHIdjXAURWH4gCGxgFndxBBAgHZ4kDegUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -729,7 +729,7 @@ JEU.enregistrer("cours", {
    "fiche": "physique-s04-1-f4",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Dans le TP, on pèse l'eau plutôt que de mesurer son volume. Pourquoi est-ce possible ?",
+   "enonce": "Dans le TP, l'eau est comptée en grammes alors que c'est un liquide. Pourquoi est-ce possible ?",
    "choix": [
     "Parce qu'un gramme d'eau occupe un millilitre",
     "Parce que l'eau n'a pas de volume",
