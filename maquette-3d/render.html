@@ -1,0 +1,10 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><title>Rendu maquette</title>
+<style>html,body{margin:0;height:100%;background:#fff;overflow:hidden}#v{position:fixed;inset:0}</style>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}</script>
+</head><body><div id="v"></div>
+<script type="module">
+import { createApp, VIEWS } from './src/app.js';
+const app = await createApp(document.getElementById('v'), { interactive: false, quality: 'high' });
+window.__app = app; window.__views = VIEWS; window.__ready = true;
+</script></body></html>
