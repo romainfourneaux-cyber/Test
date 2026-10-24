@@ -159,7 +159,7 @@ JEU.enregistrer("cours", {
    "id": "histoire-s04-1-f5",
    "notion": "Un texte du Coran sur le jeûne du ramadan",
    "titre": "Étude de document : le ramadan dans le Coran",
-   "texte": "Le document étudié est un extrait du Coran : la sourate 2, versets 183 à 185. Il traite du jeûne du mois de ramadan. D'après ce texte, le jeûne est prescrit aux croyants pendant un nombre de jours déterminé ; qui est malade ou en voyage peut jeûner plus tard. Le ramadan y est présenté comme le mois où le Coran a été révélé.",
+   "texte": "Le texte étudié est un extrait du Coran, sourate 2, versets 183 à 185. Il traite du jeûne du mois de ramadan. Le jeûne y est prescrit aux croyants pour un nombre de jours fixé. Qui est malade ou en voyage jeûne plus tard. Le ramadan y est présenté comme le mois où le Coran a été révélé.",
    "pointsCles": [
     "Un extrait du Coran : sourate 2, versets 183-185",
     "Sujet : le jeûne du mois de ramadan",
@@ -780,7 +780,7 @@ JEU.enregistrer("cours", {
     "Une centaine de jours",
     "Un seul jour"
    ],
-   "explication": "365 moins 354 font 11, et 365 moins 355 font 10. L'écart est d'une dizaine de jours.",
+   "explication": "365 moins 354 font onze, et 365 moins 355 font dix. L'écart est donc d'une dizaine de jours.",
    "indice": "Soustrais 354 de 365.",
    "source": {
     "fichier": "cours/histoire/Histoire 5e - Seance 5 - Support et Devoir entrainement.pdf",
