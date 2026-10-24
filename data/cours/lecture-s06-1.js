@@ -7,7 +7,7 @@ JEU.enregistrer("cours", {
    "id": "lecture-s06-1-f1",
    "notion": "Les mots du port",
    "titre": "Estacade, passes et mouillage",
-   "texte": "Au port, le navire accoste le long de l'estacade, la jetée. Pour entrer dans le port ou en sortir, il suit les passes, des passages maritimes. Quand l'équipage fait les préparatifs de mouillage, il prépare l'ancrage du navire. Et l'armement, dans un récit de mer, désigne une préparation, celle du navire par exemple.",
+   "texte": "Au port, le navire accoste le long de l'estacade, la jetée. Pour entrer dans le port ou en sortir, il suit les passes, des passages maritimes. Quand l'équipage fait les préparatifs de mouillage, il prépare l'ancrage du navire. Et l'armement, dans ce vocabulaire, désigne une préparation.",
    "pointsCles": [
     "Estacade : la jetée du port",
     "Passes : les passages maritimes pour entrer dans un port et en sortir",
@@ -33,7 +33,7 @@ JEU.enregistrer("cours", {
     },
     {
      "mot": "armement",
-     "def": "une préparation, par exemple celle d'un navire"
+     "def": "une préparation"
     }
    ],
    "schema": null,
@@ -301,7 +301,7 @@ JEU.enregistrer("cours", {
     "Les voiles du navire",
     "La jetée du port"
    ],
-   "explication": "Dans ce vocabulaire, l'armement est une préparation, par exemple celle d'un navire. La jetée du port, c'est l'estacade.",
+   "explication": "Dans ce vocabulaire, l'armement est une préparation. La jetée du port, c'est l'estacade.",
    "source": {
     "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
     "page": 6
@@ -1029,7 +1029,7 @@ JEU.enregistrer("cours", {
    "type": "trou",
    "niveau": 3,
    "enonce": "Écris les deux mots qui manquent.",
-   "texte": "Pris dans un ___, puissant tourbillon marin, le navire a ensuite été ___ : sa voilure a été retirée.",
+   "texte": "Un ___ est un puissant tourbillon marin ; un navire ___ est un navire dont la voilure a été retirée.",
    "explication": "Le maelström est un puissant tourbillon marin. Un navire démâté est un navire dont la voilure a été retirée.",
    "source": {
     "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
@@ -1044,7 +1044,7 @@ JEU.enregistrer("cours", {
    "id": "lecture-s06-1-b1",
    "fiche": "lecture-s06-1-f5",
    "titre": "La Belgica, prisonnière des glaces",
-   "texte": "En 1897, un navire belge, la Belgica, quitte Anvers pour l'Antarctique sous le commandement d'Adrien de Gerlache. Pris dans la banquise, il dérive pendant treize mois en mer de Bellingshausen : son équipage est le premier à hiverner dans la région antarctique. Le navire finit par se dégager des glaces et rentre en Belgique en 1899.",
+   "texte": "En 1897, un navire belge, la Belgica, quitte Anvers pour l'Antarctique : l'expédition est dirigée par Adrien de Gerlache. Pris dans la banquise, le navire dérive pendant treize mois en mer de Bellingshausen : son équipage est le premier à hiverner officiellement dans la région antarctique. Il finit par se dégager des glaces et rentre en Belgique en 1899.",
    "source": {
     "titre": "Expédition antarctique belge",
     "editeur": "Wikipédia, l'encyclopédie libre",
@@ -1054,7 +1054,8 @@ JEU.enregistrer("cours", {
  ],
  "nonCouvert": [
   "Le contenu des chapitres 9 et 10 (p. 77 à 88 du livre) : le livre n'est pas déposé, et la liste de vocabulaire ne dit pas à quel chapitre appartient chaque mot. Ce cours reprend les mots du port, du commerce, du matériel, de l'aventure et des glaces (pages 3, 6, 7, 8 et 9 de la liste).",
-  "Armement : la liste dit seulement « préparation » ; la fiche l'applique à un navire, à faire vérifier dans le livre.",
+  "Armement : la liste dit seulement « préparation », sans préciser de quoi ; la fiche n'en dit pas plus.",
+  "Obstrué : la liste écrit « qui bouche le conduit » ; la fiche retient le sens courant, bouché.",
   "Démâté : la liste parle de voilure retirée, c'est ce sens qui est repris.",
   "Le pouce (deux valeurs dans la liste), filer grand large et l'eau-de-vie (pages 3, 6 et 8) : non repris.",
   "La corne de brigantine, le galhauban, le faux pont, le plat-bord et la préceinte (pages 6 et 7) : toujours laissés de côté, comme au cours des chapitres 1 et 2."

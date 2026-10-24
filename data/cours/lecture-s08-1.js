@@ -7,7 +7,7 @@ JEU.enregistrer("cours", {
    "id": "lecture-s08-1-f1",
    "notion": "Le nœud en huit et le nœud de chaise",
    "titre": "Bloquer une corde, faire une boucle",
-   "texte": "Le nœud en huit termine un cordage : il bloque la corde au bout. Il est très simple à faire et à défaire, mais il est plus gros qu'un nœud simple. Le nœud de chaise, lui, forme une boucle. C'est le nœud préféré des marins, parce qu'il ne glisse pas : il sert à l'amarrage ou à fixer des voiles.",
+   "texte": "Le nœud en huit termine un cordage : il bloque la corde au bout. Facile à faire comme à défaire, il forme pourtant un nœud plus gros que le nœud simple. Le nœud de chaise forme une boucle qui ne glisse pas : c'est le plus utilisé par les marins, pour l'amarrage ou pour fixer des voiles.",
    "pointsCles": [
     "Nœud en huit : termine un cordage, bloque la corde",
     "Simple à faire et à défaire, mais plus gros que le nœud simple",
@@ -26,10 +26,6 @@ JEU.enregistrer("cours", {
     {
      "mot": "nœud de chaise",
      "def": "un nœud qui forme une boucle et ne glisse pas, utilisé pour l'amarrage ou pour fixer des voiles"
-    },
-    {
-     "mot": "amarrage",
-     "def": "le fait d'attacher un bateau avec des cordes"
     }
    ],
    "schema": null,
@@ -476,7 +472,7 @@ JEU.enregistrer("cours", {
    "fiche": "lecture-s08-1-f2",
    "type": "vrai_faux",
    "niveau": 2,
-   "enonce": "Le nœud de taquet sert à faire une boucle dans laquelle on peut s'asseoir.",
+   "enonce": "Le nœud de taquet sert à faire une boucle qui ne glisse pas.",
    "corrections": [
     "Faux : le nœud de taquet attache un cordage à un objet, pour brider une écoute ou une amarre.",
     "Faux : le nœud de taquet relie deux cordes entre elles.",
@@ -581,7 +577,7 @@ JEU.enregistrer("cours", {
    "fiche": "lecture-s08-1-f2",
    "type": "qcm_multiple",
    "niveau": 3,
-   "enonce": "Lesquels de ces nœuds servent à s'amarrer ou à attacher une corde à quelque chose ?",
+   "enonce": "Lesquels de ces nœuds servent à s'amarrer ou à attacher une corde à un objet ?",
    "choix": [
     "le nœud de cabestan",
     "le nœud de taquet",
@@ -1265,7 +1261,7 @@ JEU.enregistrer("cours", {
  "nonCouvert": [
   "Le contenu des chapitres 13 et 14 (p. 101 à 109 du livre) : le livre n'est pas déposé, et la liste de vocabulaire ne dit pas à quel chapitre appartient chaque mot. Ce cours reprend les cinq nœuds marins (page 10 de la liste) et les mots pour raconter : complots, adverbes, expressions anciennes, mots au sens particulier (pages 6 à 9).",
   "Les photos des nœuds (page 10) : aucune image n'est reprise et aucun schéma n'est redessiné ; le jeu décrit les nœuds avec des mots.",
-  "L'écoute et l'amarre (nœud de taquet) : la liste ne les définit pas.",
+  "L'amarrage, l'écoute et l'amarre (nœuds de chaise et de taquet) : la liste ne les définit pas.",
   "Mots de la liste non repris, faute de place : absoudre, acculer, amonceler, déplorer, osciller, recourir, garroté, éphémère, péremptoire, ichtyophage, présomption sans portée (pages 7 à 9).",
   "Les mots de la religion de la liste (chasuble, étole, habits sacerdotaux, messe basse, Providence, sacristie, sœur de charité, vicaire, pieux) : laissés de côté."
  ]

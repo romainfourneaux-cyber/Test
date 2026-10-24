@@ -7,7 +7,7 @@ JEU.enregistrer("cours", {
    "id": "litterature-s05-2-f1",
    "notion": "L'énumération d'actions",
    "titre": "Une suite d'actions imaginées",
-   "texte": "Une énumération peut aligner des actions, pas seulement des objets. Plusieurs propositions indépendantes se suivent, chacune avec son verbe. Dans L'Île au trésor, le narrateur Jim Hawkins enchaîne ainsi tout ce qu'il fait en imagination sur l'île où il va s'embarquer. Exemple simple : « Je range ma chambre, je ferme la porte, je descends. »",
+   "texte": "Une énumération peut aligner des actions, pas seulement des objets. Plusieurs propositions indépendantes se suivent, chacune avec son verbe. Dans L'Île au trésor, le narrateur Jim Hawkins enchaîne ainsi tout ce qu'il fait en imagination sur l'île vers laquelle il va s'embarquer. Exemple simple : « Je range ma chambre, je ferme la porte, je descends. »",
    "pointsCles": [
     "Une énumération peut être une liste d'actions : une proposition indépendante après l'autre",
     "Chaque action a son propre verbe",
@@ -35,10 +35,10 @@ JEU.enregistrer("cours", {
    "id": "litterature-s05-2-f2",
    "notion": "L'onomatopée",
    "titre": "Un mot qui fait du bruit",
-   "texte": "Une onomatopée est un mot qui imite un bruit. Elle rend une action plus vivante : on entend presque la scène. On peut ainsi décrire un geste d'un personnage, par exemple un pirate qui fait grincer son poignard. Exemples de tous les jours : « Toc toc ! » à la porte, « Plouf ! » dans l'eau.",
+   "texte": "Une onomatopée est un mot qui imite un bruit. On peut décrire l'action d'un personnage au moyen d'une onomatopée : le mot fait entendre le bruit du geste. Par exemple, un pirate menaçant fait « scouic-scouic » avec son poignard. Exemples de tous les jours : « Toc toc ! » à la porte, « Plouf ! » dans l'eau.",
    "pointsCles": [
     "Onomatopée : un mot qui imite un bruit",
-    "Elle sert à décrire une action de façon vivante",
+    "Elle sert à décrire une action par son bruit",
     "Exemples : toc toc, plouf, vroum"
    ],
    "dates": [],
@@ -187,7 +187,7 @@ JEU.enregistrer("cours", {
     "Il décrit un pirate vêtement par vêtement",
     "Il compte un par un les jours qui lui restent avant de partir"
    ],
-   "explication": "Jim rêve à l'île avant même d'y être : il l'explore, il grimpe, il admire, en imagination. La liste des armes des naufragés était l'énumération du cours 1.",
+   "explication": "Jim rêve à l'île avant même d'y être : il l'explore, il grimpe, il admire, en imagination. La liste d'armes, c'était l'énumération d'objets du cours 1.",
    "source": {
     "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
     "page": 3
@@ -289,7 +289,7 @@ JEU.enregistrer("cours", {
     "Une exagération volontaire",
     "Une image qui rapproche deux choses"
    ],
-   "explication": "Une onomatopée imite un bruit, comme « plouf ». Elle rend une action plus vivante.",
+   "explication": "Une onomatopée imite un bruit, comme « plouf ». Elle sert à décrire une action par son bruit.",
    "source": {
     "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
     "page": 3
@@ -317,19 +317,19 @@ JEU.enregistrer("cours", {
    "fiche": "litterature-s05-2-f2",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Comment une onomatopée rend-elle une action plus vivante ?",
+   "enonce": "Comment une onomatopée décrit-elle une action ?",
    "choix": [
-    "Elle fait presque entendre le bruit de la scène",
+    "Elle fait entendre le bruit du geste",
     "Elle donne la liste de tout ce que fait le personnage",
     "Elle exagère la force du personnage",
     "Elle explique les sentiments du personnage"
    ],
-   "explication": "Avec une onomatopée, le lecteur entend presque le geste. La liste des actions, c'est l'énumération ; l'exagération, l'hyperbole.",
+   "explication": "Avec une onomatopée, le lecteur entend le bruit de l'action. La liste des actions, c'est l'énumération ; l'exagération, l'hyperbole.",
    "source": {
     "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
     "page": 3
    },
-   "r": "=00AIEcskEQVEkRUMowTGEgNfdQFIJwTDQRDcIiBbAQVUwxHcchGz0QEcxECPNgCFcTZ",
+   "r": "=wkCGshJKVEQJ50GPMxGQc2FZUEED0AAKYgBm0QEcxECPNgCFcTZ",
    "poids": 1
   },
   {
@@ -361,7 +361,7 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Une onomatopée sert à décrire un paysage avec beaucoup de détails.",
    "corrections": [
-    "Faux : une onomatopée imite un bruit, elle rend une action vivante.",
+    "Faux : une onomatopée imite un bruit et sert à décrire une action.",
     "Faux : une onomatopée est une liste d'actions qui se suivent.",
     "Faux : une onomatopée exagère un propos pour frapper le lecteur."
    ],
@@ -370,7 +370,7 @@ JEU.enregistrer("cours", {
     "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
     "page": 3
    },
-   "r": "=gxFDswGIcwHbEjUboAHFowDPdhB20QAbhEHPNgCFcxZeFADAMwCOFwBIZSWMgFROpwzlmRHzMBGKshHJtQAHgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "r": "Qd0GDFgBSUACSJCHAUEEDAAHMs9qn0Qx23gGdMQFJZgISFADAMwCOFwBIZSWMgFROpwzlmRHzMBGKshHJtQAHgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -419,19 +419,19 @@ JEU.enregistrer("cours", {
    "fiche": "litterature-s05-2-f2",
    "type": "qcm",
    "niveau": 3,
-   "enonce": "Pourquoi un auteur choisit-il une onomatopée plutôt qu'une longue description pour une action brusque ?",
+   "enonce": "Un pirate menaçant fait « scouic-scouic » avec son poignard. Pourquoi ce mot est-il une onomatopée ?",
    "choix": [
-    "Le bruit fait vivre la scène en un seul mot",
-    "Il n'a pas le droit d'utiliser des verbes",
-    "L'onomatopée donne l'avis du narrateur",
-    "L'onomatopée donne l'avis personnel du narrateur sur la scène"
+    "Parce qu'il imite le bruit du poignard",
+    "Parce qu'il exagère la taille du poignard",
+    "Parce qu'il énumère tous les gestes du pirate",
+    "Parce qu'il compare le poignard à un animal"
    ],
-   "explication": "Un seul mot suffit à faire entendre le geste : la scène devient vivante tout de suite. Une onomatopée ne donne pas d'avis et n'allonge rien.",
+   "explication": "« Scouic-scouic » imite le bruit que fait le poignard : c'est une onomatopée qui décrit le geste. Exagérer serait une hyperbole, rapprocher deux choses une comparaison.",
    "source": {
     "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
     "page": 3
    },
-   "r": "==AUz0BGFlBBM0xTc0xYDBQFIBwxlWgGSZiHVBwBHAAGPZQAisURBR0GdQgRM4TZ",
+   "r": "==wUNwhDc8gKCVRFYpwTS8AHAUiUQkQVU0xBCsBSvQkQAxlTKUAFIISZ",
    "poids": 1
   },
   {
@@ -534,19 +534,19 @@ JEU.enregistrer("cours", {
    "fiche": "litterature-s05-2-f3",
    "type": "qcm",
    "niveau": 3,
-   "enonce": "Pourquoi un récit peut-il raconter les projections d'un personnage comme des actions vraiment vécues ?",
+   "enonce": "Jim Hawkins raconte ses rêves de l'île comme des actions qu'il accomplit. Pourquoi ?",
    "choix": [
-    "Parce que le personnage les vit en imagination, avant le départ",
+    "Parce qu'il les vit en imagination, avant même le départ",
     "Parce que le personnage a déjà fait exactement ce voyage l'année d'avant",
     "Parce que le narrateur se trompe de moment",
     "Parce que les projections sont des bruits réels"
    ],
-   "explication": "Le personnage vit ses rêves en imagination, si fort que le récit les raconte comme des actions. C'est ce que fait Jim Hawkins avec l'île.",
+   "explication": "Jim vit ses rêves en imagination, si fort que le récit les raconte comme des actions. Il explore et contemple l'île avant d'y être.",
    "source": {
     "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
     "page": 3
    },
-   "r": "QFwFUEAwtugUN8SDRsFTY4gRKdQHuYAFLwhFIMgBSZgJNEBXb5EHDoQSXAyEbsgGCsxCfIVDv0AAAxlTKUAFIISZ",
+   "r": "MtBAJMDhmGVDLMgRDQA2E+RVRsBEf8wTeZALEFBVDdACHsAASlyFVFBHHkUHK4BSvQkQAxlTKUAFIISZ",
    "poids": 1
   },
   {

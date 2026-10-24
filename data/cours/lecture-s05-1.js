@@ -7,7 +7,7 @@ JEU.enregistrer("cours", {
    "id": "lecture-s05-1-f1",
    "notion": "L'Antarctique et le manchot empereur",
    "titre": "Un continent sans habitants, mais pas sans manchots",
-   "texte": "Personne ne vit en permanence en Antarctique, à la différence de l'Arctique : les humains n'y viennent que pour la recherche. Les animaux, eux, y vivent. Le manchot empereur est un oiseau marin qui ne sait pas voler ; son bec est incurvé. On y croise aussi des albatros, des pétrels, des cormorans et des goélands.",
+   "texte": "Personne ne vit en permanence en Antarctique, à la différence de l'Arctique : les humains y viennent surtout pour la recherche. Les animaux, eux, y vivent. Le manchot empereur est un oiseau marin qui ne sait pas voler ; son bec est incurvé. On y croise aussi des albatros, des pétrels, des cormorans et des goélands.",
    "pointsCles": [
     "Aucun habitant permanent en Antarctique ; les humains y font de la recherche",
     "Manchot empereur : oiseau marin, ne vole pas, bec incurvé",
@@ -47,10 +47,10 @@ JEU.enregistrer("cours", {
    "id": "lecture-s05-1-f2",
    "notion": "Les oiseaux de l'Antarctique",
    "titre": "Sterne, pipit, chionis et labbe",
-   "texte": "Quatre oiseaux de l'Antarctique ont des noms peu connus. La sterne antarctique est un oiseau marin. Le pipit antarctique, lui, est un oiseau rare qui n'est pas marin. Le chionis blanc ressemble à un pigeon et vit parmi les manchots. Le labbe antarctique est un prédateur redoutable : il vole les œufs des manchots et tue leurs petits.",
+   "texte": "Quatre oiseaux de l'Antarctique ont des noms peu connus. La sterne antarctique est un oiseau marin. Le pipit antarctique, lui, fait partie des rares oiseaux qui ne sont pas marins. Le chionis blanc ressemble à un pigeon et vit parmi les manchots. Le labbe antarctique est un prédateur redoutable : il vole les œufs et tue les petits manchots.",
    "pointsCles": [
     "Sterne antarctique : un oiseau marin",
-    "Pipit antarctique : un oiseau rare, non marin",
+    "Pipit antarctique : un des rares oiseaux non marins",
     "Chionis blanc : il ressemble au pigeon, vit au milieu des manchots",
     "Labbe antarctique : prédateur, vole les œufs et tue les petits manchots"
    ],
@@ -64,7 +64,7 @@ JEU.enregistrer("cours", {
     },
     {
      "mot": "pipit antarctique",
-     "def": "un oiseau rare de l'Antarctique, qui n'est pas marin"
+     "def": "un des rares oiseaux non marins de l'Antarctique"
     },
     {
      "mot": "chionis blanc",
@@ -72,7 +72,7 @@ JEU.enregistrer("cours", {
     },
     {
      "mot": "labbe antarctique",
-     "def": "un oiseau prédateur qui vole les œufs des manchots et tue leurs petits"
+     "def": "un oiseau prédateur qui vole les œufs et tue les petits manchots"
     }
    ],
    "schema": null,
@@ -88,7 +88,7 @@ JEU.enregistrer("cours", {
    "id": "lecture-s05-1-f3",
    "notion": "Pinnipèdes et cétacés de l'Antarctique",
    "titre": "Du léopard des mers à la baleine bleue",
-   "texte": "L'Antarctique a ses pinnipèdes : le phoque, et le léopard des mers, dont le corps tacheté explique le nom. Les cétacés sont la famille des baleines. La baleine bleue, 30 mètres de long et 80 à 130 tonnes, est le plus gros animal de la planète. Le petit rorqual est une petite baleine, et le narval, la licorne des mers.",
+   "texte": "L'Antarctique a ses pinnipèdes : le phoque et le léopard des mers, au corps tacheté. Elle a aussi ses cétacés : la baleine bleue, 30 mètres de long et 80 à 130 tonnes, est le plus gros animal de la planète ; le petit rorqual est une petite baleine ; le narval est surnommé la licorne des mers.",
    "pointsCles": [
     "Pinnipèdes de l'Antarctique : phoque, léopard des mers",
     "Le léopard des mers est tacheté, d'où son nom",
@@ -107,7 +107,7 @@ JEU.enregistrer("cours", {
     },
     {
      "mot": "cétacés",
-     "def": "la famille des baleines, dont la baleine bleue, le petit rorqual et le narval"
+     "def": "la famille de la baleine bleue, du petit rorqual et du narval"
     },
     {
      "mot": "baleine bleue",
@@ -135,7 +135,7 @@ JEU.enregistrer("cours", {
    "id": "lecture-s05-1-f4",
    "notion": "Les oiseaux rencontrés par les marins",
    "titre": "Ptarmigan, sarcelle, eider et grue",
-   "texte": "Les marins des mers froides croisent d'autres oiseaux. Le ptarmigan, ou lagopède, est une sorte de perdrix du Grand Nord. La sarcelle est un oiseau aquatique sauvage, proche du canard. L'eider est un canard migrateur de l'hémisphère Nord. La grue, enfin, est un grand oiseau échassier.",
+   "texte": "Les marins rencontrent d'autres oiseaux. Le ptarmigan, ou lagopède, est une sorte de perdrix du Grand Nord. La sarcelle est un oiseau aquatique sauvage, proche du canard. L'eider est un canard migrateur de l'hémisphère Nord. La grue, enfin, est un grand oiseau échassier.",
    "pointsCles": [
     "Ptarmigan = lagopède : une perdrix du Grand Nord",
     "Sarcelle : un oiseau aquatique sauvage, proche du canard",
@@ -161,10 +161,6 @@ JEU.enregistrer("cours", {
     {
      "mot": "grue",
      "def": "un grand oiseau échassier"
-    },
-    {
-     "mot": "échassier",
-     "def": "un oiseau aux longues pattes, comme la grue"
     }
    ],
    "schema": null,
@@ -182,14 +178,14 @@ JEU.enregistrer("cours", {
    "fiche": "lecture-s05-1-f1",
    "type": "qcm",
    "niveau": 1,
-   "enonce": "Pourquoi des humains vivent-ils en Antarctique ?",
+   "enonce": "Pourquoi des humains séjournent-ils en Antarctique ?",
    "choix": [
     "Pour faire de la recherche",
     "Pour chasser les manchots",
     "Pour y élever des bœufs musqués",
     "Pour y passer leurs vacances"
    ],
-   "explication": "Personne n'habite l'Antarctique pour toujours. Les humains y viennent pour la recherche.",
+   "explication": "Personne n'habite l'Antarctique pour toujours. Les humains y viennent surtout pour la recherche.",
    "source": {
     "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
     "page": 5
@@ -285,7 +281,7 @@ JEU.enregistrer("cours", {
     "Les deux régions ont de grandes villes",
     "Les deux régions sont inhabitées"
    ],
-   "explication": "L'Antarctique n'a pas d'habitants permanents, contrairement à l'Arctique. On n'y vient que pour la recherche.",
+   "explication": "L'Antarctique n'a pas d'habitants permanents, contrairement à l'Arctique. On y vient surtout pour la recherche.",
    "source": {
     "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
     "page": 5
@@ -319,14 +315,14 @@ JEU.enregistrer("cours", {
    "type": "trou",
    "niveau": 1,
    "enonce": "Complète la phrase.",
-   "texte": "En Antarctique, la vie humaine est consacrée à la ___ ; le manchot ___ est un oiseau marin qui ne vole pas.",
+   "texte": "En Antarctique, la vie humaine est surtout tournée vers la ___ ; le manchot ___ est un oiseau marin qui ne vole pas.",
    "banque": [
     "recherche",
     "empereur",
     "chasse",
     "arctique"
    ],
-   "explication": "Les humains ne viennent en Antarctique que pour la recherche. Le manchot empereur y vit, sans pouvoir voler.",
+   "explication": "Les humains viennent en Antarctique surtout pour la recherche. Le manchot empereur y vit, sans pouvoir voler.",
    "source": {
     "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
     "page": 5
@@ -361,7 +357,7 @@ JEU.enregistrer("cours", {
    "niveau": 1,
    "enonce": "Le labbe antarctique est un redoutable prédateur.",
    "corrections": [],
-   "explication": "Oui : le labbe antarctique vole les œufs des manchots et tue leurs petits.",
+   "explication": "Oui : le labbe antarctique vole les œufs et tue les petits manchots.",
    "source": {
     "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
     "page": 5
@@ -376,7 +372,7 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Le pipit antarctique est un oiseau marin, comme la sterne.",
    "corrections": [
-    "Faux : le pipit antarctique est un oiseau rare qui n'est pas marin.",
+    "Faux : le pipit antarctique est un des rares oiseaux non marins.",
     "Faux : le pipit antarctique n'est pas un oiseau, c'est un pinnipède.",
     "Faux : le pipit antarctique est un oiseau marin, mais la sterne ne l'est pas."
    ],
@@ -385,7 +381,7 @@ JEU.enregistrer("cours", {
     "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
     "page": 5
    },
-   "r": "==ASPAUAPQBCfcWAUURVFoxCIxBSqgFFVgEHOQhRcMhIBwhCV9BHOtRANMGSQQERawAFH0BHmIVAMUAGZ4kCegUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "r": "==gEEhkGc4CAUgQVfYAAPpQHigkFcJkTcMAFIAwZBARAV9BHOtRANMGSQQERawAFH0BHmIVAMUAGZ4kCegUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -395,17 +391,17 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Comment le labbe antarctique s'attaque-t-il aux manchots ?",
    "choix": [
-    "Il vole leurs œufs et tue les petits",
+    "Il vole les œufs et tue les petits manchots",
     "Il creuse des trous sous leurs nids de glace",
     "Il les pousse un à un dans l'eau glacée",
     "Il leur vole le poisson qu'ils rapportent"
    ],
-   "explication": "Le labbe antarctique vole les œufs des manchots et tue leurs petits. C'est un prédateur redoutable.",
+   "explication": "Le labbe antarctique vole les œufs et tue les petits manchots. C'est un prédateur redoutable.",
    "source": {
     "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
     "page": 5
    },
-   "r": "L1xGbwhJdVkRIJwTDMRHSNzFVZxEEo/qPFgG2gUCVgkAAAhRFsTZ",
+   "r": "==AU0YgGNYxHIMwTBwhKZBQRN0hCKYEDHMjUBAQVC8wG8fLSwgUCVgkAAAhRFsTZ",
    "poids": 1
   },
   {
@@ -442,7 +438,7 @@ JEU.enregistrer("cours", {
    ],
    "droite": [
     "un oiseau rare, qui n'est pas marin",
-    "un prédateur qui vole les œufs des manchots",
+    "un prédateur qui vole les œufs et tue les petits manchots",
     "un oiseau marin",
     "il ressemble à un pigeon et vit parmi les manchots"
    ],
@@ -482,7 +478,7 @@ JEU.enregistrer("cours", {
    "enonce": "Lesquelles de ces affirmations sur les oiseaux de l'Antarctique sont justes ?",
    "choix": [
     "Le chionis blanc vit au milieu des manchots.",
-    "Le labbe antarctique vole les œufs des manchots.",
+    "Le labbe antarctique vole les œufs et tue les petits manchots.",
     "La sterne antarctique est un oiseau marin.",
     "Le pipit antarctique est un oiseau marin.",
     "Le chionis blanc ressemble à un aigle."
@@ -492,7 +488,7 @@ JEU.enregistrer("cours", {
     "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
     "page": 5
    },
-   "r": "==QNhNwCc91DCY0EIcBNboRRbQQSawxFIZCWUwVWN0xBScwEndxGXARBa4kD+o0bPskRZFwBFgACfcWAQEQVC8wG8fLSwgUCVgkAAAhRMcgNbEgBHARHA4gUNEyTEkVDLMCRKtEX0YgGNYxHIMwTB0wJNABUEJgBLYEHTcmBcMRVScwDDABSwQ0CaRkBMY0AlAFH",
+   "r": "7Q0Rc4CAUgQVEgwCcsxBjNEEVkVHKY0AcMgLGYxFUUwBP80FGEDSRYUDPMCRKtEX0YgGNYxHIMwTBwhKZBQRN0hCKYEDHMjUBAQVC8wG8fLSwgUCVgkAAAhRMcgNbEgBHARHA4gUNEyTEkVDLMCRKtEX0YgGNYxHIMwTB0wJNABUEJgBLYEHTcmBcMRVScwDDABSwQ0CaRkBMY0AlAFH",
    "poids": 1
   },
   {
@@ -684,7 +680,7 @@ JEU.enregistrer("cours", {
    "niveau": 1,
    "enonce": "La grue est un grand oiseau échassier.",
    "corrections": [],
-   "explication": "Oui : la grue est un grand échassier, un oiseau aux longues pattes.",
+   "explication": "Oui : la grue est un grand oiseau échassier. L'eider, lui, est un canard migrateur.",
    "source": {
     "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
     "page": 6
@@ -743,7 +739,7 @@ JEU.enregistrer("cours", {
     "Sur l'équateur",
     "Dans les deux hémisphères"
    ],
-   "explication": "L'eider est un canard migrateur de l'hémisphère Nord. Les marins des mers froides le rencontrent.",
+   "explication": "L'eider est un canard migrateur de l'hémisphère Nord. C'est un des oiseaux rencontrés par les marins.",
    "source": {
     "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
     "page": 6
@@ -756,19 +752,19 @@ JEU.enregistrer("cours", {
    "fiche": "lecture-s05-1-f4",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Comment reconnaît-on une sarcelle ?",
+   "enonce": "Comment décrire une sarcelle ?",
    "choix": [
-    "Elle ressemble à un canard sauvage",
-    "Elle ressemble à une perdrix",
-    "Elle a de longues pattes d'échassier",
-    "Elle est blanche aux yeux jaunes"
+    "Un oiseau aquatique proche du canard",
+    "Un canard migrateur de l'hémisphère Nord",
+    "Une sorte de perdrix du Grand Nord",
+    "Un grand oiseau échassier"
    ],
-   "explication": "La sarcelle est un oiseau aquatique sauvage, proche du canard. La perdrix du Grand Nord, c'est le ptarmigan.",
+   "explication": "La sarcelle est un oiseau aquatique sauvage, proche du canard. Le canard migrateur, c'est l'eider, et la perdrix du Grand Nord, le ptarmigan.",
    "source": {
     "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
     "page": 7
    },
-   "r": "==QTX8gIbBBVe50CUcwBTQiUbARVRrqTK4hCugkFGhEHPNgCFcTZ",
+   "r": "=w0CAkQLMZQFYpwTD4gCdUjAVBAAAAgGOcQGi0AEUhUHGkgRHcSZ",
    "poids": 1
   },
   {
@@ -824,7 +820,7 @@ JEU.enregistrer("cours", {
    "id": "lecture-s05-1-b1",
    "fiche": "lecture-s05-1-f1",
    "titre": "Le manchot empereur, champion de plongée",
-   "texte": "Le manchot empereur mesure jusqu'à 122 cm et pèse de 20 à 40 kg. Sous l'eau, il tient jusqu'à 18 minutes et peut descendre à 535 m. En plein hiver, le mâle garde l'œuf sous un repli de sa peau pendant 64 jours, sans manger : il jeûne environ 115 jours au total, alors que l'air peut descendre à −40 °C.",
+   "texte": "Le manchot empereur mesure jusqu'à 122 cm et pèse de 20 à 40 kg. Sous l'eau, il tient jusqu'à 18 minutes et peut descendre à 535 m. En plein hiver, le mâle garde l'œuf sous un repli de sa peau pendant 64 jours : entre son arrivée dans la colonie et l'éclosion, il jeûne environ 115 jours, alors que l'air peut descendre à −40 °C.",
    "source": {
     "titre": "Manchot empereur",
     "editeur": "Wikipédia, l'encyclopédie libre",
