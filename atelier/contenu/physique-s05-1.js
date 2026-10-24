@@ -149,7 +149,7 @@ module.exports = {
     // f2 : le palier
     { id: "physique-s05-1-q8", fiche: "physique-s05-1-f2", type: "qcm", niveau: 1,
       enonce: "Dans le ballon, l'eau est à la fois liquide et solide. Que fait sa température ?",
-      choix: ["Elle reste la même", "Elle monte vite", "Elle baisse vite", "Elle double"],
+      choix: ["Elle reste la même", "Elle monte tout de suite", "Elle baisse d'un seul coup", "Elle double"],
       reponse: "Elle reste la même",
       explication: "Tant que les deux états sont présents, la température ne bouge pas. C'est le palier du changement d'état.", source: P(6) },
     { id: "physique-s05-1-q9", fiche: "physique-s05-1-f2", type: "vrai_faux", niveau: 1,
@@ -163,7 +163,7 @@ module.exports = {
       explication: "Tant que glace et eau liquide coexistent, la température reste constante. Elle remonte quand toute la glace a fondu.", source: P(6) },
     { id: "physique-s05-1-q11", fiche: "physique-s05-1-f2", type: "qcm", niveau: 2,
       enonce: "À quel moment la température de l'eau pure peut-elle à nouveau monter ou baisser ?",
-      choix: ["Quand il ne reste plus qu'un seul état", "Quand les deux états sont présents", "Jamais, elle reste toujours fixe", "Seulement quand on ajoute de l'eau"],
+      choix: ["Quand il ne reste plus qu'un seul état", "Quand les deux états sont présents", "Jamais, elle reste toujours fixe", "Seulement quand on ajoute de l'eau froide"],
       reponse: "Quand il ne reste plus qu'un seul état",
       explication: "Pendant le changement d'état, la température reste fixe. Une fois un seul état présent, elle peut varier à nouveau.", source: P(6) },
     { id: "physique-s05-1-q12", fiche: "physique-s05-1-f2", type: "qcm", niveau: 3,
@@ -235,7 +235,7 @@ module.exports = {
       explication: "Le temps en minutes est en abscisse, sur l'axe horizontal. La température est en ordonnée.", source: P(7) },
     { id: "physique-s05-1-q23", fiche: "physique-s05-1-f4", type: "qcm", niveau: 1,
       enonce: "Sur ce graphique, dans quelle unité la température est-elle exprimée ?",
-      choix: ["En degrés Celsius", "En minutes", "En grammes", "En litres"],
+      choix: ["En degrés Celsius", "En minutes et secondes", "En grammes", "En litres"],
       reponse: "En degrés Celsius",
       explication: "L'axe vertical porte les températures en degrés Celsius. L'axe horizontal porte le temps en minutes.", source: P(7) },
     { id: "physique-s05-1-q24", fiche: "physique-s05-1-f4", type: "ordre", niveau: 2,
@@ -294,7 +294,7 @@ module.exports = {
       explication: "L'eau salée gèle un peu sous 0 °C et sa température continue de descendre doucement pendant la solidification. L'eau pure, elle, a un palier fixe à 0 °C.", source: P(7) },
     { id: "physique-s05-1-q35", fiche: "physique-s05-1-f5", type: "qcm", niveau: 1,
       enonce: "Quel liquide a été refroidi pour tracer le graphique de cette séance ?",
-      choix: ["De l'eau salée", "De l'eau pure", "De l'huile", "Du lait"],
+      choix: ["De l'eau salée", "De l'eau pure", "De l'eau du robinet", "Du lait"],
       reponse: "De l'eau salée",
       explication: "Le graphique montre la solidification de l'eau salée. Sa courbe descend doucement pendant le changement d'état.", source: P(7) }
   ],
@@ -303,7 +303,7 @@ module.exports = {
       id: "physique-s05-1-b1",
       fiche: "physique-s05-1-f3",
       titre: "Le 0 et le 100 du thermomètre",
-      texte: "L'échelle des degrés Celsius porte le nom d'Anders Celsius, astronome et physicien suédois, qui proposa en 1742 une échelle en cent degrés. Sur son thermomètre, le 0 marquait l'eau bouillante et le 100 la glace fondante ! Après sa mort, ses collègues, Carl von Linné sans doute, retournèrent l'échelle : 0 °C pour la glace fondante, 100 °C pour l'eau bouillante.",
+      texte: "L'échelle des degrés Celsius porte le nom d'Anders Celsius, astronome et physicien suédois. Sur son thermomètre de 1742, le 0 marquait l'eau bouillante et le 100 la glace fondante ! Après sa mort, ses collègues retournèrent l'échelle, et l'on pense que l'initiative revient surtout au naturaliste suédois Carl von Linné : 0 °C pour la glace fondante, 100 °C pour l'eau bouillante.",
       source: { titre: "Anders Celsius", editeur: "Wikipédia, l'encyclopédie libre", url: "https://fr.wikipedia.org/wiki/Anders_Celsius" }
     }
   ],

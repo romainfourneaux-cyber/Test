@@ -142,7 +142,7 @@ module.exports = {
       reponse: { vrai: false, correction: "Faux : il redevient mauve, la couleur de départ, car le mélange est neutre." },
       explication: "Une cuillère de vinaigre ramène l'eau à un pH neutre : le papier reprend sa couleur mauve. Le vert apparaît avec la lessive.", source: P(11) },
     { id: "physique-s08-1-q14", fiche: "physique-s08-1-f2", type: "qcm", niveau: 2,
-      enonce: "Pourquoi peut-on obtenir d'autres couleurs que celles de l'exemple en refaisant l'expérience chez soi ?",
+      enonce: "Pourquoi peut-on obtenir d'autres couleurs en refaisant l'expérience du papier pH chez soi ?",
       choix: ["Parce que le pH de l'eau du robinet varie", "Parce que le chou rouge n'est jamais de la même couleur", "Parce que le papier Canson change de couleur en séchant", "Parce que le vinaigre n'est pas toujours acide"],
       reponse: "Parce que le pH de l'eau du robinet varie",
       explication: "Les couleurs dépendent du pH de l'eau du robinet utilisée. Ici, elle était légèrement basique, ce qui donne du bleu.", source: P(11) },
@@ -287,7 +287,7 @@ module.exports = {
       id: "physique-s08-1-b1",
       fiche: "physique-s08-1-f3",
       titre: "Qui a inventé le pH ?",
-      texte: "La notion de pH a été introduite en 1909 par le chimiste danois Søren Sørensen, au laboratoire d'une brasserie de Copenhague, où il étudiait l'effet de certaines particules sur les protéines. Le « p » vient d'un mot allemand qui signifie « puissance », au sens des mathématiques, et le « H » est le symbole de l'hydrogène : pH se lit « potentiel hydrogène ».",
+      texte: "La notion de pH a été introduite en 1909 par le chimiste danois Søren Sørensen, au laboratoire d'une brasserie de Copenhague, où il étudiait l'effet de certaines substances dissoutes, les ions, sur les protéines de la bière. Le « p » vient d'un mot allemand qui signifie « puissance », au sens des mathématiques, et le « H » est le symbole de l'hydrogène : en français, pH se lit « potentiel hydrogène ».",
       source: { titre: "Potentiel hydrogène", editeur: "Wikipédia, l'encyclopédie libre", url: "https://fr.wikipedia.org/wiki/Potentiel_hydrog%C3%A8ne" }
     }
   ],
