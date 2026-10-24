@@ -518,3 +518,245 @@ référence des batailles de campagne = atelier/mesures/avant-expedition.json (0
 2. **Embuscade de S1-S2 : 70 % pour 75 à 85 %**, 49 % pour 58 à 70 % à p 0,6. Limite à p 0,7, manquée à p 0,6. Levier : embuscade à la ligne 0 en S1-S2 (80 % sur le Gué, mais 68 % sur la Forêt : pas mieux). Rien au MVP ; c'est un choix de l'élève, avec un chemin tranquille garanti (G6).
 3. **Gardien de S2 (Forêt) : 68 % pour 75 à 85 %**, 45 % pour 55 à 65 % à p 0,6. Effet de carte (la Forêt est la carte la plus dure à la ligne 0 : 45 / 68 / 96 % contre 62 / 80 / 98 % sur le Gué). Aucun levier au MVP (`difficulte: −1` est plancher à 0). À surveiller sur les premières expéditions réelles : si l'élève bute sur la Forêt, c'est le premier endroit où lever la garnison ou changer la carte de S2.
 4. **Escarmouche de S6 → S8 : 54 à 55 % pour 30 à 50 %** et **Grand Gardien de S3 hors du Gué : 78 à 90 % pour 60 à 70 %**. Limite ou trop facile ; même cause, même levier (étape 2).
+
+## Réglage du MVP (24 octobre 2026, étape 1 du cahier : 17.2, 17.3 et 17.4)
+
+Rôle de cette section : donner aux deux simulateurs leur option `--expedition`, rejouer les quatre nœuds de la route avec **les options exactes que le jeu passe au moteur** (jeu/js/expedition.js, `optionsBataille`), calculer la réussite d'une expédition entière, essayer chaque levier du MVP dans l'ordre du cahier (17.3, dernier paragraphe) et mesurer la part de la semaine dans le tirage (17.4). Fichiers bruts : atelier/mesures/reglage-mvp/ (un `.txt` et un `.json` par mesure, `leviers.cmd` et `leviers-essais.cmd` : les commandes exactes, `campagne-comparer.txt` : la preuve pour la campagne, `tirage-expedition.txt` : la mesure du tirage) ; tableaux Markdown par `node atelier/mesures/tableaux-reglage.js [base|diff+1|…]`. Le moteur (jeu/js/bataille-moteur.js) n'est pas touché ; aucune constante de `EXP` n'a été modifiée (R6).
+
+### R0. En deux mots
+
+- **Réglage retenu : le bloc V7, tel qu'il est codé dans `EXP`**, sans changement : escarmouche attaque 2 vagues camp 6, embuscade défense ligne + 1 camp 10, gardien défense 2 vagues camp 12, Grand Gardien défense 3 vagues camp 16 à la ligne de la semaine, lignes S1-2 : 0, S3-5 : 1, S6-8 : 2, S9-12 : 3, S13+ : 4, `difficulte` 0, 3 vivres (5 au plus). Le simulateur joué avec les options de `optionsBataille` rend **les mêmes chiffres que le jour 0, à l'unité** (R2) : ce que le jeu passe au moteur est bien ce qui a été mesuré.
+- **S1 → S3 tient toutes ses cibles** : 84 % d'expéditions accomplies à 7 sur 10 avec 3 vivres (cible 70 à 85), 48 % à 6 sur 10 (≥ 45), 100 % à 9 sur 10, premier gardien franchi 99 % (≥ 95) ; 93 / 97 % avec 4 et 5 vivres.
+- **S6 → S8 reste trop facile** (99,6 % à 7 sur 10 ; cible révisée 65 à 85 %) et **aucun levier du MVP ne l'y ramène sans casser autre chose** : chaque levier a été mesuré (R3). `difficulte: +1` fait tomber S6 → S8 à 42 % (17 % à 6 sur 10, Grand Gardien de S8 à 20 %) ; `vivres: 2` laisse S6 → S8 à 97 % et casse S1 → S3 (65 %) ; une vague de plus au Grand Gardien le met à 78 % mais l'expédition reste à 99 % (les gardiens de semaine à 100 % ne coûtent jamais de vivre) ; les solidités ne changent pas la tenue ; le gardien à la ligne + 1 donne 87 à 93 % en S6-8 (cible 68 à 80) et 69 à 70 % en S1-2 (cible 75 à 85) ; les semaines 6 à 8 à la ligne 3 mettent le Grand Gardien de S8 à 20 % (expédition 42 %). Levier recommandé : la table fine par semaine de l'étape 2 (gardien de S6 à S8 à la ligne 3, Grand Gardien durci par `garnisonPlus` ou `toursDepartPlus`), pas un réglage du MVP (R6).
+- **Le tirage sur la route** (R5) : 72 à 74 % des questions des lots de semaine viennent de la fenêtre de l'acte (78 à 87 % hors Seconde chance ; cible ≥ 60), aucune question reposée à moins de 60 questions, aucune notion deux fois en 10 questions, réussite 70 à 71 % pour l'élève moyen (82 à 83 % fort, 61 à 62 % en difficulté), notions à revoir à ×1,4 à ×1,5 de leur part attendue dans les lots de semaine depuis S1 (limite basse de la cible 1,5 à 2), ×1,3 à ×1,6 de leur part sur toutes les questions depuis S6. Deux cibles manquées : **l'anglais à 7 à 12 %** (cible 12 à 30 % par famille ; les compagnons de route ne viennent que par la troisième question) et **la durée du tirage avec quota** (7,5 ms en médiane sur cette machine, cible 3 ms : le quota fait deux passes de `candidats()` sur 2 341 questions au lieu d'une ; le tirage a lieu au début d'une vague, jamais entre deux questions, le budget de 100 ms n'est pas touché).
+
+### R1. Les outils
+
+**simuler-bataille.js `--expedition`** (atelier/outils/simuler-bataille.js, en-tête du fichier). jeu/js/expedition.js est chargé après campagne.js dans tous les modes ; sans `--expedition`, rien ne change : `node atelier/outils/simuler-bataille.js --comparer atelier/mesures/avant-expedition.json` rend **+0 % sur les vingt cases** (batailles pour prendre et coups à la 1re bataille, niveaux 0 à 4, p 0,6 à 0,9 ; atelier/mesures/reglage-mvp/campagne-comparer.txt). Avec `--expedition`, pour chaque semaine de `--semaines` (1, 3, 6, 8, 13 par défaut, plus les semaines que la convolution demande : 2 et 7) et chaque nœud, le simulateur prépare une sauvegarde neuve avec l'arsenal et les jauges de `PROGRESSION[ligne de la semaine]`, l'Armorial et les faveurs de l'essai, et une expédition en cours réduite à une semaine (une halte qui mène au gardien) ; les options de la bataille sont alors **celles de `JEU.expedition.optionsBataille`**, sans retouche (ligne de la semaine + `ligne` du nœud + `config.expedition.difficulte`, mode, vagues, solidité, Armorial, faveurs, plafonds, moins `c.bonus.or`, jamais `c.bonus.espion` ; l'or perdu par erreur est celui du jeu, sauf `--perte`). Carte : celle de la semaine (gue, foret, moulin, col, chateau en tournant) ; le Grand Gardien sur la carte de la prochaine province du front (`--front angleterre` : gue ; omeyyades : col ; ou `--carteGrand`). 160 batailles par case, graines de la défense du domaine (`5000 × g + 13 × ligne + 3`) : une case se compare directement aux fichiers de atelier/mesures/jour0/. Un gardien dont les murs cèdent est **retenté** avec les coups déjà portés (`places`, comme `enCours.places`), cinq fois au plus (`--tentatives`) : le tableau donne la part des gardiens vaincus en 1, 2 et 3 tentatives (ce que valent 1, 2 et 3 vivres devant lui), le nombre moyen de tentatives et la part jamais vaincus. Puis la **convolution** du cahier (17.3, même calcul que atelier/mesures/convolution-expedition.js, vérifié : mêmes résultats à l'unité) pour `--expeditions 1-3,6-8` et `--vivres 3,4,5` (`--repos q` : un vivre rendu au bivouac de 3e couche avec la chance q). Essais : `--difficulte n` (config, en mémoire), `--armorial complet | vivres:1,bourse:2`, `--faveurs annales:2,engrenages:1`, `--arsenal n | -1`, `--essai "X.EXP.HALTES.grand.vagues = 4"` (un réglage de `EXP` en mémoire, comme `--regle` pour le moteur), `--noeuds`, `--depuis a.json,b.json` (reprend les cases déjà mesurées : une semaine par processus, puis la convolution en une fois), `--comparer essai.json` (écarts nœud par nœud), `--json`, `--sortie`, `--strategies`, `--trace`.
+
+```
+node atelier/outils/simuler-bataille.js --comparer atelier/mesures/avant-expedition.json
+node atelier/outils/simuler-bataille.js --expedition                                   (défaut : semaines 1 à 3, 6 à 8 et 13, p 0,6 à 0,9, 80 graines, environ 10 min)
+node atelier/outils/simuler-bataille.js --expedition --semaines 6 --expeditions aucune --p 0.6,0.7,0.9 --sortie atelier/mesures/reglage-mvp/base-s6.json
+node atelier/outils/simuler-bataille.js --expedition --semaines 1,2,3,6,7,8,13 --vivres 2,3,4,5 --depuis <les sept base-sN.json>      (convolution seule, 0 s)
+node atelier/outils/simuler-bataille.js --expedition --semaines 6,7,8 --difficulte 1
+node atelier/outils/simuler-bataille.js --expedition --semaines 8 --noeuds grand --essai "X.EXP.HALTES.grand.vagues = 4"
+node atelier/mesures/tableaux-reglage.js base diff+1 --p 0.6,0.7,0.9
+```
+
+(Sous Windows PowerShell : mêmes commandes, guillemets doubles autour de l'essai ; un fichier écrit par `>` est en UTF-16, le simulateur le relit.)
+
+**mesurer-tirage.js `--expedition`** (atelier/outils/mesurer-tirage.js) : des expéditions simulées par les trois élèves du 15/10/2026 (élève moyen, fort, en difficulté : réussite par niveau de question), 8 élèves par profil et par départ (`--graines`), six séances d'environ 100 questions, le jeu rouvert un jour plus tard à chaque séance, **départ S1 puis S6** (`--departs`), avec le vrai déroulé de jeu/js/expedition.js : `commencer`, route à graine, halte choisie au hasard parmi celles qu'on peut atteindre, `tirage` (lots de 3 avec le quota de l'acte, deux vagues en escarmouche et embuscade, deux au gardien, trois au Grand Gardien, question de porte sur la famille du conseiller, événements de route dont les archives, question du marchand, veillée du bivouac sept fois sur dix), `noterReponse`, `apresBataille` (batailles supposées tenues, éclatantes deux fois sur cinq : ici seul le tirage compte), faveurs prises, Grand Gardien vaincu puis nouvelle expédition. Les modules sont chargés **hors bac à sable vm** (`new Function`, comme simuler-bataille.js) pour que les durées de tirage soient celles d'un vrai moteur JavaScript, et **tous les fichiers de jeu/data/cours et jeu/data/anglais sont chargés, indexés ou non**. Sorties par départ et par élève : part des questions de la fenêtre de l'acte selon le quota (avec et hors Seconde chance), part de chaque famille, notions à revoir dans les lots de semaine face à leur part attendue sans coup de pouce (⅔ de leur part dans les semaines de l'expédition + ⅓ de leur part parmi toutes les fiches), questions reposées à moins de 60, même notion deux fois en 10, Seconde chance, réussite, expéditions commencées et accomplies, haltes jouées ; durée d'un tirage avec quota de semaine, des autres lots et du premier tirage d'une séance.
+
+```
+node atelier/outils/mesurer-tirage.js --expedition                      (8 élèves par profil et par départ, 6 séances : environ 2 min 30)
+node atelier/outils/mesurer-tirage.js --expedition --departs 6 --graines 16 --seances 6
+```
+
+### R2. Le réglage de base (le bloc V7 codé dans `EXP`) rejoué avec les options du jeu
+
+`node atelier/outils/simuler-bataille.js --expedition --semaines N --expeditions aucune --sortie atelier/mesures/reglage-mvp/base-sN.json` pour N = 1, 2, 3, 6, 7, 8, 13 (3 processus en parallèle, 3 min 40 en tout), puis la convolution par `--depuis`. Tenue (éclatante), 160 batailles par case, Grand Gardien sur le Gué :
+
+| Semaine | Nœud | Carte | Ligne du rival / arsenal | Vagues / camp | p 0,6 | p 0,7 | p 0,8 | p 0,9 |
+|---|---|---|---|---|---|---|---|---|
+| S1 | escarmouche | gue | 0 / 0 | 2 / 6 | 100 % (20 %) | 100 % (39 %) | 100 % (61 %) | 100 % (86 %) |
+| S1 | embuscade | gue | 1 / 0 | 2 / 10 | 49 % (3 %) | 70 % (8 %) | 85 % (22 %) | 97 % (51 %) |
+| S1 | gardien | gue | 0 / 0 | 2 / 12 | 62 % (4 %) | 80 % (11 %) | 90 % (21 %) | 98 % (48 %) |
+| S1 | Grand Gardien | gue | 0 / 0 | 3 / 16 | 52 % (1 %) | 76 % (6 %) | 88 % (13 %) | 97 % (36 %) |
+| S2 | escarmouche | foret | 0 / 0 | 2 / 6 | 100 % (20 %) | 100 % (39 %) | 100 % (61 %) | 100 % (86 %) |
+| S2 | embuscade | foret | 1 / 0 | 2 / 10 | 49 % (3 %) | 69 % (8 %) | 84 % (22 %) | 97 % (51 %) |
+| S2 | gardien | foret | 0 / 0 | 2 / 12 | 45 % (4 %) | 68 % (11 %) | 79 % (21 %) | 96 % (48 %) |
+| S3 | escarmouche | moulin | 1 / 1 | 2 / 6 | 100 % (50 %) | 100 % (56 %) | 100 % (71 %) | 100 % (88 %) |
+| S3 | embuscade | moulin | 2 / 1 | 2 / 10 | 91 % (0 %) | 96 % (0 %) | 99 % (0 %) | 100 % (0 %) |
+| S3 | gardien | moulin | 1 / 1 | 2 / 12 | 84 % (0 %) | 89 % (0 %) | 96 % (0 %) | 99 % (0 %) |
+| S3 | Grand Gardien | gue | 1 / 1 | 3 / 16 | 51 % (0 %) | 71 % (0 %) | 89 % (0 %) | 96 % (0 %) |
+| S6 | escarmouche | gue | 2 / 2 | 2 / 6 | 100 % (38 %) | 100 % (54 %) | 100 % (74 %) | 100 % (91 %) |
+| S6 | embuscade | gue | 3 / 2 | 2 / 10 | 76 % (3 %) | 87 % (6 %) | 93 % (13 %) | 97 % (17 %) |
+| S6 | gardien | gue | 2 / 2 | 2 / 12 | 99 % (4 %) | 100 % (14 %) | 100 % (26 %) | 100 % (52 %) |
+| S7 | escarmouche | foret | 2 / 2 | 2 / 6 | 100 % (38 %) | 100 % (54 %) | 100 % (74 %) | 100 % (91 %) |
+| S7 | embuscade | foret | 3 / 2 | 2 / 10 | 75 % (18 %) | 88 % (35 %) | 96 % (56 %) | 98 % (73 %) |
+| S7 | gardien | foret | 2 / 2 | 2 / 12 | 99 % (4 %) | 100 % (14 %) | 100 % (26 %) | 100 % (52 %) |
+| S8 | escarmouche | moulin | 2 / 2 | 2 / 6 | 100 % (39 %) | 100 % (55 %) | 100 % (76 %) | 100 % (91 %) |
+| S8 | embuscade | moulin | 3 / 2 | 2 / 10 | 81 % (15 %) | 93 % (34 %) | 96 % (58 %) | 99 % (73 %) |
+| S8 | gardien | moulin | 2 / 2 | 2 / 12 | 99 % (4 %) | 100 % (14 %) | 100 % (26 %) | 100 % (52 %) |
+| S8 | Grand Gardien | gue | 2 / 2 | 3 / 16 | 83 % (4 %) | 87 % (14 %) | 94 % (26 %) | 99 % (52 %) |
+| S13 | escarmouche | moulin | 4 / 4 | 2 / 6 | 100 % (74 %) | 100 % (86 %) | 100 % (96 %) | 100 % (99 %) |
+| S13 | embuscade | moulin | 4 / 4 | 2 / 10 | 100 % (0 %) | 100 % (0 %) | 100 % (0 %) | 100 % (0 %) |
+| S13 | gardien | moulin | 4 / 4 | 2 / 12 | 100 % (0 %) | 100 % (0 %) | 100 % (0 %) | 100 % (0 %) |
+| S13 | Grand Gardien | gue | 4 / 4 | 3 / 16 | 29 % (0 %) | 37 % (0 %) | 49 % (0 %) | 79 % (0 %) |
+
+(Le Grand Gardien ne dépend que de la ligne de la semaine et de la carte : S1, S2 et S3 → S1 à la ligne 0 ; S6, S7 et S8 → S8 à la ligne 2.) **Chaque case est identique, à l'unité, au fichier du jour 0 correspondant** (esc-2v6-\<carte\>, emb-2v10-\<carte\>-arsenal-1, gard-2v12-\<carte\>, grand-3v16-gue, aux niveaux de la ligne jouée) : `optionsBataille` passe bien au moteur ce que le jour 0 a mesuré, et les graines sont les mêmes. Murs restants quand la bataille tient, p 0,7 (gue) : embuscade S1 60 %, gardien S1 57 %, Grand Gardien S1 55 %, S3 50 %, S8 58 %, S13 14 % ; coups portés au camp : 3,7 / 4,1 / 6,4 / 4,3 / 6,8 / 3,8.
+
+Gardiens retentés (part des gardiens vaincus en 1 / 2 / 3 tentatives, tentatives en moyenne, part jamais vaincus en 5 ; une tentative perdue coûte un vivre) :
+
+| Semaine | Nœud | Carte | p 0,6 | p 0,7 | p 0,9 |
+|---|---|---|---|---|---|
+| S1 | gardien | gue | 62 / 90 / 95 % · 1,52 · jamais 1 % | 80 / 94 / 98 % · 1,28 | 98 / 100 / 100 % · 1,03 |
+| S2 | gardien | foret | 45 / 80 / 90 % · 1,83 · jamais 2 % | 68 / 92 / 98 % · 1,43 | 96 / 100 / 100 % · 1,04 |
+| S3 | gardien | moulin | 84 / 99 / 100 % · 1,18 | 89 / 100 / 100 % · 1,11 | 99 / 100 / 100 % · 1,01 |
+| S3 | Grand Gardien | gue | 51 / 83 / 93 % · 1,73 · jamais 1 % | 71 / 93 / 99 % · 1,38 | 96 / 100 / 100 % · 1,04 |
+| S6 à S8 | gardien | gue, foret, moulin | 99 / 100 / 100 % · 1,01 | 100 % · 1 | 100 % · 1 |
+| S8 | Grand Gardien | gue | 83 / 95 / 98 % · 1,24 | 87 / 98 / 99 % · 1,16 | 99 / 100 / 100 % · 1,01 |
+| S13 | Grand Gardien | gue | 29 / 58 / 73 % · 2,27 · jamais 12 % | 37 / 65 / 79 % · 2,16 · jamais 5 % | 79 / 98 / 100 % · 1,24 |
+
+Lecture : retenter avec les coups gardés ne change presque rien à la chance de la tentative suivante (la solidité ne règle pas la tenue en défense, V3) ; ce qui compte, c'est le nombre de vivres devant le gardien. Au Grand Gardien de S3 à 7 sur 10, 3 vivres valent 99 %.
+
+Réussite d'une expédition entière (convolution 17.3 ; `--vivres 2,3,4,5`) :
+
+| Expédition | p | 2 vivres | **3 vivres (départ)** | 4 vivres (Armorial 40) | 5 vivres | premier gardien franchi (3 vivres) | cible 17.3 / V7 (3 vivres) |
+|---|---|---|---|---|---|---|---|
+| S1 → S3 | 0,6 | 29 % | **48 %** | 65 % | 77 % | 93 % | ≥ 45 % : atteinte |
+| S1 → S3 | 0,7 | 65 % | **84 %** | 93 % | 97 % | 99 % | 70 à 85 % : atteinte |
+| S1 → S3 | 0,8 | 88 % | **97 %** | 99 % | 100 % | 100 % | — |
+| S1 → S3 | 0,9 | 99 % | **100 %** | 100 % | 100 % | 100 % | ≥ 95 % : atteinte |
+| S6 → S8 | 0,6 | 94 % | **99 %** | 100 % | 100 % | 100 % | ≥ 35 % : atteinte (plancher) |
+| S6 → S8 | 0,7 | 97 % | **99,6 %** | 100 % | 100 % | 100 % | 65 à 85 % : **non atteinte (trop facile)** |
+| S6 → S8 | 0,8 | 99 % | **100 %** | 100 % | 100 % | 100 % | — |
+| S6 → S8 | 0,9 | 100 % | **100 %** | 100 % | 100 % | 100 % | — |
+
+Avec un repos au bivouac une fois sur deux (`--repos 0.5`) : S1 → S3 : 67 / 93 / 100 % à p 0,6 / 0,7 / 0,9 ; S6 → S8 : 100 %. Mêmes chiffres que la vérification V4 (48,3 / 84,1 / 99,6 %) : la convolution du simulateur et celle du jour 0 disent la même chose.
+
+### R3. Les leviers, dans l'ordre du cahier (17.3)
+
+Tous mesurés avec 160 batailles par case, p 0,6 / 0,7 / 0,9, Grand Gardien sur le Gué ; convolution à 3 vivres sauf mention. « Casse » : une cible de S1 → S3 sort de sa fourchette.
+
+#### R3.1 `config.expedition.difficulte` (−1, +1)
+
+`--difficulte 1` et `--difficulte -1`, semaines 1, 2, 3, 6, 7, 8 (fichiers diff+1-sN, diff-1-sN). Tenue à p 0,7 (p 0,6 ; p 0,9) :
+
+| Nœud | S1 (gue) | S2 (foret) | S3 (moulin) | S6 (gue) | S7 (foret) | S8 (moulin) | Grand Gardien S3 | Grand Gardien S8 |
+|---|---|---|---|---|---|---|---|---|
+| **difficulté + 1** : embuscade | 78 % (72 ; 98) | 68 % (56 ; 98) | 83 % (76 ; 99) | 63 % (48 ; 93) | 70 % (56 ; 94) | 76 % (64 ; 98) | | |
+| gardien | 70 % (49 ; 97) | 69 % (49 ; 97) | 96 % (91 ; 100) | 87 % (76 ; 97) | 88 % (75 ; 98) | 93 % (81 ; 99) | 76 % (59 ; 96) | **20 % (9 ; 60)** |
+| escarmouche éclatante | 23 % | 8 % | 63 % | 49 % | 49 % | 49 % | | |
+| **difficulté − 1** : embuscade | 80 % (62 ; 98) | 68 % (45 ; 96) | 89 % (84 ; 99) | 100 % | 100 % | 100 % | | |
+| gardien | 80 % (62 ; 98) | 68 % (45 ; 96) | 96 % (88 ; 100) | 98 % (88 ; 100) | 98 % (94 ; 100) | 98 % (94 ; 100) | 83 % (70 ; 100) | 92 % (74 ; 100) |
+
+| Expédition, 3 vivres (4 ; 5) | p 0,6 | p 0,7 | p 0,9 | premier gardien |
+|---|---|---|---|---|
+| difficulté + 1, S1 → S3 | 49 % (65 ; 78) | 82 % (92 ; 97) | 100 % | 86 / 97 / 100 % |
+| difficulté + 1, S6 → S8 | **17 % (25 ; 31)** | **42 % (53 ; 63)** | 93 % | 98 / 100 / 100 % |
+| difficulté − 1, S1 → S3 | 58 % (74 ; 84) | 88 % (96 ; 99) | 100 % | 94 / 99 / 100 % |
+| difficulté − 1, S6 → S8 | 97 % | 100 % | 100 % | 100 % |
+
+Verdict : **+ 1 casse S6 → S8 dans l'autre sens** (42 % à 7 sur 10, 17 % à 6 sur 10, Grand Gardien de S8 tenu une fois sur cinq : la ligne 3 à trois vagues avec l'arsenal 2, V8) et n'améliore rien en S1 → S3 (82 %, embuscade de S2 à 68 %, escarmouche éclatante de S2 à 8 %) ; **− 1** adoucit S1 → S3 (88 %, hors de la fourchette par le haut) et met S6 → S8 à 100 %. Le réglage reste **0**. Le cran − 1 garde son sens pour Romain si l'élève bute sur la Forêt de S2 (gardien 68 %) : il n'y change rien (plancher à la ligne 0) ; c'est S3 à S5 qu'il adoucit (gardien du Moulin 89 → 96 %, Grand Gardien de S3 71 → 83 %).
+
+#### R3.2 Vivres (2 à 5)
+
+Convolution ci-dessus (R2) : `vivres: 2` met S1 → S3 à 65 % (cible 70 à 85) et 29 % à 6 sur 10 (≥ 45) : **casse**, pour laisser S6 → S8 à 97 %. `vivres: 4` : S1 → S3 à 93 % (trop doux), S6 → S8 100 %. Le réglage reste **3**, maximum 5. Le premier quartier de l'Armorial (Vivres de route, 40 points) donne 4 vivres : 93 % en S1 → S3 à 7 sur 10, 65 % à 6 sur 10 : c'est bien le levier « remonter un élève à 6 sur 10 » du cahier (17.3).
+
+#### R3.3 La garnison des gardiens, par les vagues (seul réglage de « garnison » que `M.creer` lit au MVP)
+
+`--essai "X.EXP.HALTES.grand.vagues = 4"` (semaines 3, 8, 13, nœud grand), `--essai "X.EXP.HALTES.gardien.vagues = 3"` (6, 7, 8, nœud gardien), `--essai "X.EXP.HALTES.grand.vagues = 2; X.EXP.HALTES.grand.ligne = 1"` (3, 8). Tenue à p 0,6 / 0,7 / 0,9 :
+
+| Essai | S3 | S6 | S7 | S8 | S13 |
+|---|---|---|---|---|---|
+| Grand Gardien à 4 vagues (12 questions) | 56 / 72 / 98 % | | | 63 / 78 / 99 % | 3 / 9 / 33 % |
+| gardien à 3 vagues (9 questions) | | 83 / 87 / 99 % | 93 / 95 / 99 % | 99 / 100 / 100 % | |
+| Grand Gardien à 2 vagues à la ligne + 1 | 89 / 94 / 100 % | | | 76 / 87 / 97 % | |
+
+Expéditions (3 vivres, p 0,6 / 0,7 / 0,9) : Grand Gardien à 4 vagues : S1 → S3 54 / 85 / 100 %, S6 → S8 **93 / 99 / 100 %** ; gardien à 3 vagues et Grand Gardien à 4 vagues : S6 → S8 94 / 97 / 100 % ; Grand Gardien à 2 vagues ligne + 1 : S1 → S3 57 / 91 / 100 %, S6 → S8 98 / 100 / 100 %.
+
+Verdict : une 4e vague ramène le Grand Gardien de S8 de 87 à 78 % (cible 50 à 62 : encore au-dessus) au prix de 3 questions et 1 à 2 minutes de plus, et **l'expédition ne bouge pas** (99 %) : tant que les gardiens de S6 à S8 tiennent à 100 %, le seul moyen de perdre est de céder trois fois au Grand Gardien (0,22³ ≈ 1 %). À S13 la 4e vague l'écrase (9 %). Le gardien à 3 vagues n'inquiète que sur le Gué (87 %) et vaut 9 questions ; à 2 vagues et ligne + 1, le Grand Gardien devient une embuscade. Rien de retenu.
+
+#### R3.4 Les solidités (6, 10, 12, 16)
+
+`--essai "X.EXP.HALTES.gardien.place = 16; X.EXP.HALTES.grand.place = 20"` (S6, S8) : tenue **identique à l'unité** (gardien 99 / 100 / 100 %, Grand Gardien 83 / 87 / 99 %), seule l'éclatante tombe (gardien 14 → 14 % : inchangée à camp 16 ; Grand Gardien 14 → 0 % à camp 20). `--essai "X.EXP.HALTES.escarmouche.place = 8"` (S6 à S8) : éclatante **identique** (38 / 54 / 91 %) : avec l'arsenal 2, le camp de 8 tombe aussi souvent que le camp de 6 (un trébuchet de plus) ; la cible « 30 à 50 % » de l'escarmouche de S6 → S8 (54 à 55 % mesuré) n'a donc pas de levier de solidité. Comme au jour 0 : les solidités ne règlent pas la tenue, seulement l'éclatante, et seulement là où le camp est à portée. Rien de retenu : **6 / 10 / 12 / 16**.
+
+#### R3.5 La ligne par semaine (dernier levier)
+
+`--essai "X.EXP.HALTES.gardien.ligne = 1"` (gardien à la ligne + 1 partout ; semaines 1, 2, 3, 6, 7, 8) : gardien à p 0,6 / 0,7 / 0,9 : S1 49 / 70 / 97 %, S2 49 / 69 / 97 %, S3 91 / 96 / 100 %, S6 76 / 87 / 97 %, S7 75 / 88 / 98 %, S8 81 / 93 / 99 % (les mêmes chiffres que l'embuscade : à ligne égale, la solidité ne compte pas). Expéditions : S1 → S3 **43 / 81 / 100 %**, S6 → S8 90 / 98 / 100 %. Verdict : S1-2 passent sous leur fourchette (70 % pour 75 à 85, 49 % pour 55 à 65 à 6 sur 10, S1 → S3 à 43 % à 6 sur 10 pour ≥ 45), S6-8 restent au-dessus (87 à 93 % pour 68 à 80) et l'expédition S6 → S8 à 98 % : **non retenu**.
+
+`--essai "X.EXP.LIGNE_SEMAINE[2][1] = 3" --arsenal 2` (les semaines 6 à 8 à la ligne 3, l'arsenal restant celui de la rangée 2, comme un élève qui en est là) :
+
+| Semaine | Nœud | Carte | Ligne du rival / arsenal | p 0,6 | p 0,7 | p 0,9 |
+|---|---|---|---|---|---|---|
+| S6 | escarmouche | gue | 3 / 2 | 100 % (33 %) | 100 % (49 %) | 100 % (89 %) |
+| S6 | embuscade | gue | 4 / 2 | 48 % (0 %) | 63 % (0 %) | 93 % (0 %) |
+| S6 | gardien | gue | 3 / 2 | 76 % (2 %) | 87 % (3 %) | 97 % (13 %) |
+| S7 | embuscade | foret | 4 / 2 | 56 % (0 %) | 70 % (0 %) | 94 % (0 %) |
+| S7 | gardien | foret | 3 / 2 | 75 % (6 %) | 88 % (15 %) | 98 % (55 %) |
+| S8 | embuscade | moulin | 4 / 2 | 64 % (0 %) | 76 % (0 %) | 98 % (0 %) |
+| S8 | gardien | moulin | 3 / 2 | 81 % (6 %) | 93 % (15 %) | 99 % (55 %) |
+| S8 | Grand Gardien | gue | 3 / 2 | **9 % (6 %)** | **20 % (15 %)** | 60 % (55 %) |
+
+Expédition S6 → S8 (3 / 4 / 5 vivres) : **17 / 25 / 31 %** à p 0,6, **42 / 53 / 63 %** à p 0,7, 93 / 97 / 99 % à p 0,9 (les mêmes chiffres que `difficulte: +1`, qui est la même chose pour ces trois semaines).
+
+Verdict : les gardiens de semaine approchent leur cible (87 à 93 % pour 68 à 80), l'embuscade passe sous la sienne (63 à 76 % pour 68 à 80, 48 à 64 % à 6 sur 10) et le Grand Gardien de S8 s'effondre (20 % ; 9 % à 6 sur 10) : « la troisième vague vaut une ligne » (jour 0, 7.5) ; l'expédition tombe à 42 % (17 % à 6 sur 10, sous le plancher de 35 %). Un cran de ligne par semaine est trop gros pour régler le gardien sans casser le Grand Gardien : c'est la table fine de l'étape 2 (ligne du gardien et du Grand Gardien réglées séparément, garnison et tours de départ) qu'il faut. **Non retenu** ; la table reste S1-2 : 0, S3-5 : 1, S6-8 : 2, S9-12 : 3, S13+ : 4.
+
+### R4. Les cibles du 17.3 (et V7) avec le réglage retenu
+
+| Cible | Valeur | Mesuré (p 0,7 sauf mention) | Verdict |
+|---|---|---|---|
+| Escarmouche tenue (S1 → S3 ≥ 95, S6 → S8 ≥ 90, p 0,9 ≥ 99, p 0,6 ≥ 85) | | 100 % partout | atteinte |
+| Escarmouche éclatante S1 → S3 | 40 à 60 % | 39 / 39 / 56 % | limite (S1-2 à 1 point) |
+| Escarmouche éclatante S6 → S8 | 30 à 50 % | 54 / 54 / 55 % | limite (4 à 5 points au-dessus) |
+| Escarmouche éclatante p 0,9 / p 0,6 | ≥ 70 / ≥ 20 % | 86 à 91 % / 20 à 50 % | atteinte |
+| Embuscade tenue S1 → S3 | 75 à 85 % | 70 / 69 / 96 % | limite en S1-2, trop facile en S3 |
+| Embuscade tenue S6 → S8 | 68 à 80 % | 87 / 88 / 93 % | **non atteinte** (trop facile) |
+| Embuscade p 0,9 / p 0,6 | ≥ 94 % / 58 à 70 % | 97 à 100 % / 49 / 49 / 91 ; 76 / 75 / 81 % | atteinte / non atteinte |
+| Gardien vaincu S1 → S3 | 75 à 85 % | 80 / 68 / 89 % | S1 atteinte, S2 limite (Forêt), S3 limite |
+| Gardien vaincu S6 → S8 | 68 à 80 % | 100 % | **non atteinte** (trop facile) |
+| Gardien p 0,9 / p 0,6 | ≥ 94 % / 55 à 65 % | 96 à 100 % / 62 / 45 / 84 ; 99 % | atteinte / S1 seule |
+| Grand Gardien S1 → S3 | 60 à 70 % | 71 % | limite (1 point) |
+| Grand Gardien S6 → S8 | 50 à 62 % | 87 % | **non atteinte** (trop facile) |
+| Grand Gardien p 0,9 / p 0,6 | ≥ 88 % / ≥ 40 % | 96 ; 99 % / 51 ; 83 % | atteinte |
+| Expédition S1 → S3, 3 / 4 / 5 vivres | 70 à 85 / ≥ 90 / ≥ 95 % | 84 / 93 / 97 % | atteinte |
+| Expédition S6 → S8, 3 vivres | 65 à 85 % (V7) | 99,6 % | **non atteinte** (trop facile) |
+| Expédition S6 → S8, 4 / 5 vivres | ≥ 80 / ≥ 90 % | 100 % | atteinte |
+| Expédition p 0,6, S1 → S3 / S6 → S8 | ≥ 45 / ≥ 35 % | 48 / 99 % | atteinte |
+| Expédition p 0,9, S1 → S3 | ≥ 95 % | 100 % | atteinte |
+| Premier gardien franchi, p 0,7 | ≥ 95 % | 99 % | atteinte |
+
+Au-delà du cahier : S13 et après (ligne 4 avec l'arsenal 4) : escarmouche éclatante 86 %, embuscade et gardien 100 %, Grand Gardien sur le Gué 37 % (65 % en deux tentatives, 79 % en trois) : la fin d'année sera à régler quand on y sera, avec la table fine.
+
+### R5. Le tirage sur la route (17.4)
+
+`node atelier/outils/mesurer-tirage.js --expedition` (8 élèves par profil et par départ, 6 séances, 29 600 questions en tout, machine au repos ; atelier/mesures/reglage-mvp/tirage-expedition.txt). Avec le contenu du jour (62 cours, 2 341 questions, 418 fiches candidates, 22 fiches à revoir toutes en S1 à S3), **toutes les semaines 1 à 8 sont « pleines »** (12 fiches candidates et plus : S1 44, S2 39, S3 25, S4 34, S5 30, S6 22, S7 14, S8 44) : le quota est 2 sur 3 partout, aucune fenêtre élargie ni demi-quota n'a été exercée par le contenu réel (les cas « élargie », « demi » et « vide » restent couverts par tests.js).
+
+| Départ | Élève | Questions | Fenêtre de l'acte, lots au quota 2 (hors Seconde chance) | Familles | À revoir dans les lots de semaine : posées / attendues sans coup de pouce | À revoir, toutes questions (archives, veillées comprises) | Reposées < 60 (par séance) | Même notion en 10 (par séance) | Seconde chance (par séance) | Réussite | Expéditions commencées / accomplies |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| S1 | élève moyen | 4 920 | 73 % (83 %) | anglais 9,7, français 21,2, géographie 22,2, histoire 15,1, physique-chimie 16,4, SVT 15,4 % | 22,0 % / 15,3 % = ×1,43 | 27,1 % (×5,1 de leur part parmi toutes les fiches) | 0,0 | 0,0 | 29,1 | 71 % | 86 / 79 |
+| S1 | élève fort | 4 916 | 73 % (78 %) | anglais 11,3, français 20,8, géographie 21,9, histoire 14,6, physique-chimie 15,9, SVT 15,5 % | 22,1 % / 15,3 % = ×1,44 | 26,2 % (×5,0) | 0,0 | 0,0 | 17,6 | 83 % | 86 / 79 |
+| S1 | élève en difficulté | 4 923 | 72 % (87 %) | anglais 8,6, français 20,9, géographie 21,5, histoire 15,9, physique-chimie 17,2, SVT 16,0 % | 22,9 % / 15,3 % = ×1,50 | 25,5 % (×4,8) | 0,0 | 0,0 | 40,1 | 61 % | 88 / 80 |
+| S6 | élève moyen | 4 912 | 73 % (83 %) | anglais 9,2, français 21,5, géographie 18,8, histoire 19,5, physique-chimie 16,0, SVT 14,9 % | 2,0 % / 1,8 % = ×1,15 | 7,8 % (×1,5) | 0,0 | 0,0 | 29,7 | 71 % | 88 / 80 |
+| S6 | élève fort | 4 949 | 74 % (78 %) | anglais 10,4, français 21,8, géographie 19,3, histoire 18,3, physique-chimie 15,3, SVT 15,0 % | 2,5 % / 1,8 % = ×1,43 | 8,5 % (×1,6) | 0,0 | 0,0 | 17,9 | 82 % | 87 / 79 |
+| S6 | élève en difficulté | 4 912 | 72 % (87 %) | anglais 8,4, français 22,6, géographie 19,3, histoire 19,3, physique-chimie 15,6, SVT 14,8 % | 1,2 % / 1,8 % = ×0,66 | 6,7 % (×1,3) | 0,0 | 0,0 | 39,2 | 61 % | 86 / 78 |
+
+Haltes jouées par 8 élèves en 6 séances (élève moyen, S1) : 312 escarmouches, 21 embuscades, 164 gardiens, 79 Grands Gardiens, 199 événements, 99 marchands, 112 bivouacs ; une expédition de trois semaines fait environ 57 questions (86 expéditions commencées pour 4 920 questions), ce qui confirme le compte du jour 0 (≈ 60). Durée d'un tirage, modules hors bac à sable (la machine était partagée avec un essai d'un autre agent pendant une partie de la mesure) : lots de semaine avec quota : **médiane 7,5 ms, 99e centile 19,5 ms, maximum 38,7 ms** (8 179 tirages) ; autres lots (porte, archives, veillée, marchand) : médiane 3,1 ms, 99e centile 8,7 ms, maximum 14,1 ms ; premier tirage d'une séance (il prépare toutes les questions) : médiane 9,4 ms, maximum 42 ms.
+
+Lecture, cible par cible :
+
+- **Part de la fenêtre de l'acte** (cible ≥ 60 % quand le quota est 2) : 72 à 74 % pour les six couples départ × élève (4 074 à 4 165 questions chacun) ; hors Seconde chance, 77 à 91 %. Les Seconde chance (une question sur quatre à sur trois, comme en campagne : 25 à 27 par séance de 100 le 15/10) prennent la place d'une question ordinaire du lot, d'où l'écart. **Atteinte.** Le quota 1 et le quota 0 n'ont pas été exercés (toutes les semaines sont pleines).
+- **Familles** (cible 12 à 30 % chacune) : français 20 à 23 %, géographie 20 à 22 %, histoire 15 à 20 %, physique-chimie 15 à 17 %, SVT 14 à 16 % : atteinte ; **anglais 7 à 12 % : non atteinte**. C'est structurel : l'anglais (et la grammaire, les méthodes) n'a pas de semaine, il ne vient que par la troisième question, où l'équilibre des familles le favorise déjà (il y prend près d'une question sur trois) ; sa part sur la route est donc d'un tiers de sa part de campagne. Le cahier l'a voulu ainsi (décision 10 de la section 2). À signaler à Romain (R6).
+- **Notions à revoir** (cible 1,5 à 2 fois leur part) : depuis S1, dans les lots de semaine, ×1,43 / ×1,44 / ×1,50 pour les trois élèves (22 % posées pour 15,3 % attendues) : **à la limite basse** de la cible, à 0,07 près pour deux élèves sur trois ; sur toutes les questions de la route (archives et veillées comprises), 25 à 27 %, cinq fois leur part parmi toutes les fiches. Depuis S6, où aucune fiche de la fenêtre n'est à revoir, la base attendue est minuscule (1,8 %) et le rapport n'a plus de sens (×0,7 à ×1,4 sur 50 à 100 questions) ; sur toutes les questions, 7 à 9 %, soit ×1,3 à ×1,6. Les 22 fiches à revoir sont toutes en S1 à S3 (20 % des fiches de ces semaines, 5 % de toutes) : une expédition S1 → S3 les rencontre par le quota de semaine autant que par le coup de pouce ; depuis S6, elles ne viennent que par la troisième question, les archives (semaines d'avant le relais) et la veillée (100 % de ses questions sont à revoir, tant qu'il en reste à poser).
+- **Répétitions** : 0,0 question reposée à moins de 60 questions hors Seconde chance et 0,0 à 0,1 notion deux fois en 10 questions, par séance de 100 : **atteintes**, même sur la semaine 7 à 14 fiches (le quota se relâche de lui-même quand la fenêtre est épuisée : la part hors Seconde chance y reste à 77 à 91 % parce que les deux autres semaines de l'expédition sont pleines).
+- **Réussite** : 70 à 71 % pour l'élève moyen (73 % en campagne le 15/10), 82 à 83 % pour l'élève fort, 61 à 62 % en difficulté : **inchangée** (les niveaux de bataille 1 à 3 pèsent un peu plus sur la route : six questions par escarmouche).
+- **Durée d'un tirage** avec quota de semaine, hors bac à sable : médiane 7,5 ms, 99e centile 19,5 ms, maximum 38,7 ms sur 8 179 tirages. **Cible (médiane < 3 ms, maximum < 10 ms) non atteinte sur cette machine**, où un lot sans quota coûte déjà 3,1 (lot d'une question) à 2,3 (lot de trois, mesuré à part) ms (le 15/10, 0,25 ms en médiane dans le bac à sable vm avec 1 189 questions : la machine du jour est plus lente et les questions ont doublé). Cause mesurée à part : chaque passe de `tirage()` dans recit.js refait `candidats()` sur les 2 341 questions (1,5 ms ici), et le quota ajoute une passe (deux au lieu d'une : 100 % des lots de semaine en prennent exactement deux). Ce n'est pas un problème de jeu : le tirage se fait au début d'une vague ou d'une halte, jamais entre deux questions (le budget de 100 ms de CLAUDE.md porte sur réponse → question suivante, que perf.js mesure à part), et 8 ms restent invisibles. Si Romain voit une attente, le levier est dans recit.js (étape 2) : une seule passe de `candidats()` partagée par le quota et le reste du lot.
+
+### R6. Décisions
+
+1. **Aucune constante de `EXP` n'est modifiée.** Le bloc V7 est le réglage livré au MVP : escarmouche `{ attaque, 2 vagues, camp 6, ligne + 0 }`, embuscade `{ défense, 2 vagues, camp 10, ligne + 1 }`, gardien `{ défense, 2 vagues, camp 12, ligne + 0 }`, Grand Gardien `{ défense, 3 vagues, camp 16, ligne + 0 }`, `LIGNE_SEMAINE` S1-2 : 0, S3-5 : 1, S6-8 : 2, S9-12 : 3, S13+ : 4, `config.expedition.difficulte` 0, `vivres` 3, maximum 5. Chaque levier du MVP a été mesuré dans l'ordre du cahier (R3) : aucun n'approche S6 → S8 de sa cible sans faire sortir S1 → S3 de la sienne ou sans mettre un gardien sous 50 %.
+2. **Chiffres finals** (p 0,6 / 0,7 / 0,9, 3 vivres) : S1 → S3 **48 / 84 / 100 %**, S6 → S8 **99 / 99,6 / 100 %** ; premier gardien franchi 93 / 99 / 100 % ; avec 4 vivres 65 / 93 / 100 % et 100 % ; part des questions de la fenêtre de l'acte 72 à 74 % (78 à 87 % hors Seconde chance).
+3. **Ce qui manque sa cible, et le levier à proposer à Romain** :
+   - *S6 → S8 trop facile* (embuscade 87 à 93 %, gardien 100 %, Grand Gardien 87 %, expédition 99,6 %). Levier : **la table fine par semaine de l'étape 2** (cahier 7.1 ; options `rivalRegle`, `garnisonPlus`, `toursDepartPlus` du moteur), en commençant par le gardien de S6 à S8 à la ligne 3 (87 à 93 % mesurés à deux vagues, R3.5) et le Grand Gardien durci par la garnison ou une tour de départ plutôt que par la ligne (la ligne 3 à trois vagues donne 20 %, R3.1). En attendant, le dire à l'élève autrement : de S6 à S8 l'expédition se gagne presque toujours, la tension vient des portes doublées, de l'embuscade (87 %) et du Grand Gardien à retenter (13 %). Si Romain veut tout de suite un Grand Gardien plus inquiétant en S6 → S8, la seule option du MVP est **4 vagues** (78 % au lieu de 87 %, 12 questions au lieu de 9, +1 à 2 minutes), à écrire dans `EXP.HALTES.grand.vagues` ; elle ne change pas la réussite de l'expédition (99 %) et écrase S13 (9 %) : à n'envisager qu'avec la table fine.
+   - *Embuscade de S1-S2 à 70 %* (75 à 85 visé) et *gardien de la Forêt (S2) à 68 %* : limite, effet de carte ; aucun levier du MVP (`difficulte: −1` est au plancher). À regarder sur les premières expéditions réelles ; `vivres: 4` par l'Armorial (40 points) est la réponse prévue par le cahier.
+   - *Anglais à 7 à 12 % des questions de route* : structurel (décision 10 du cahier). Si Romain le veut plus présent, deux pistes hors MVP : réserver une troisième question sur deux aux compagnons de route (recit.js, étape 2), ou mettre `questionsSemaine: 1` dans config.js (une question sur trois de la semaine au lieu de deux : la part de la fenêtre tomberait vers 40 à 45 %, sous la cible du cahier ; à ne pas faire sans le vouloir).
+   - *Durée du tirage avec quota* : 7,5 ms en médiane ici pour 3 ms visés, sans effet visible (tirage au début d'une vague, jamais entre deux questions). Levier (étape 2, recit.js) : une seule passe de `candidats()` pour le quota et le reste du lot.
+4. **Méthode à garder** : toute retouche de `EXP` (vagues, place, ligne, `LIGNE_SEMAINE`) ou de `config.expedition` se mesure par `node atelier/outils/simuler-bataille.js --expedition` (une semaine par processus, puis `--depuis` pour la convolution) et se compare au réglage de base par `--comparer atelier/mesures/reglage-mvp/base-sN.json` ; toute retouche du tirage par `node atelier/outils/mesurer-tirage.js --expedition` ; et `--comparer atelier/mesures/avant-expedition.json` doit rendre +0 % sur les vingt cases après chaque changement de simuler-bataille.js.
+
+### Décisions appliquées (chiffres finals du réglage du MVP)
+
+```
+escarmouche = attaque, 2 vagues, camp 6, ligne de la semaine + 0, champion gardé, 6 questions      (inchangé)
+embuscade   = défense, 2 vagues, camp 10, ligne de la semaine + 1 (plafond 4)                      (inchangé)
+gardien     = défense, 2 vagues, camp 12, ligne de la semaine + 0                                   (inchangé)
+grandGardien = défense, 3 vagues, camp 16, ligne de la semaine + 0 (plafond 4)                     (inchangé)
+LIGNE_SEMAINE = S1-S2 : 0 ; S3-S5 : 1 ; S6-S8 : 2 ; S9-S12 : 3 ; S13+ : 4                            (inchangé)
+config.expedition.difficulte = 0 ; config.expedition.vivres = 3 ; vivres.maximum = 5                (inchangé)
+réussite d'une expédition, 3 vivres, p 0,6 / 0,7 / 0,9 : S1 → S3 48 / 84 / 100 % ; S6 → S8 99 / 99,6 / 100 %
+part des questions de la fenêtre de l'acte (quota 2) : 72 à 74 % (78 à 87 % hors Seconde chance)
+cibles non atteintes : S6 → S8 trop facile (levier : table fine de l'étape 2) ; anglais 7 à 12 % des questions de route ;
+                       durée du tirage avec quota 7,5 ms en médiane sur cette machine (3 visés)
+batailles de campagne : --comparer atelier/mesures/avant-expedition.json = +0 % sur les vingt cases (expedition.js chargé)
+```

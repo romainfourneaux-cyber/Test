@@ -36,7 +36,7 @@ async function repondreJuste(page) {
   }
 }
 async function questionAffichee(page) { return page.evaluate(() => !!document.querySelector(".question .enonce") && !document.querySelector(".panneau-erreur")); }
-async function capture(page, nom) { await page.screenshot({ path: path.join(CAPTURES, "expedition-" + nom + ".png"), fullPage: false }); }
+async function capture(page, nom) { await attendre(350); await page.screenshot({ path: path.join(CAPTURES, "expedition-" + nom + ".png"), fullPage: false }); }
 // Recouvrement des noms des haltes entre eux et avec les médaillons voisins, et plus petite taille de texte à l'écran.
 async function controlerCarte(page) {
   return page.evaluate(() => {
