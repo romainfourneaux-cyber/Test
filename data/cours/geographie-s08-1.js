@@ -67,7 +67,7 @@ JEU.enregistrer("cours", {
    "id": "geographie-s08-1-f3",
    "notion": "Lire la carte de l'IDH",
    "titre": "Pays développés, pays en développement",
-   "texte": "La carte de l'IDH range les pays en quatre groupes. Au-dessus de 0,80, l'IDH est très élevé ; entre 0,70 et 0,80, élevé ; entre 0,55 et 0,70, moyen ; sous 0,55, faible. Une ligne sépare pays développés et pays en développement. Parmi ceux-ci, les pays émergents s'enrichissent vite ; les PMA, pays les moins avancés, restent les plus pauvres du monde.",
+   "texte": "La carte de l'IDH range les pays en quatre groupes. Au-dessus de 0,80, l'IDH est très élevé ; entre 0,70 et 0,80, élevé ; entre 0,55 et 0,70, moyen ; sous 0,55, faible. Une ligne sépare pays développés et pays en développement. Parmi ceux-ci, les pays émergents s'enrichissent vite ; les PMA restent les plus pauvres du monde.",
    "pointsCles": [
     "Très élevé au-dessus de 0,80 ; élevé entre 0,70 et 0,80 ; moyen entre 0,55 et 0,70 ; faible sous 0,55",
     "Une limite sépare les pays développés des pays en développement",
@@ -316,13 +316,13 @@ JEU.enregistrer("cours", {
    "id": "geographie-s08-1-q8",
    "fiche": "geographie-s08-1-f1",
    "type": "qcm",
-   "niveau": 2,
+   "niveau": 3,
    "enonce": "Pourquoi compare-t-on les pays avec le PIB par habitant plutôt qu'avec le PIB total ?",
    "choix": [
     "Parce qu'un pays très peuplé produit forcément plus : la moyenne par habitant permet de comparer",
     "Parce que le PIB total est tenu secret",
     "Parce que le PIB par habitant mesure aussi l'éducation",
-    "Parce que le PIB total ne se calcule que pour les pays du Nord"
+    "Parce que le PIB total ne se calcule que pour les pays du Nord, les pays du Sud n'ayant pas de statistiques"
    ],
    "explication": "Un grand pays produit plus qu'un petit sans être plus riche par personne. Ramener la richesse à chaque habitant permet une vraie comparaison.",
    "source": {
@@ -412,11 +412,11 @@ JEU.enregistrer("cours", {
    "id": "geographie-s08-1-q13",
    "fiche": "geographie-s08-1-f2",
    "type": "qcm",
-   "niveau": 2,
+   "niveau": 3,
    "enonce": "Pourquoi l'IDH mesure-t-il mieux le développement que le PIB ?",
    "choix": [
     "Parce qu'il tient compte aussi de la santé et de l'éducation, pas seulement du revenu",
-    "Parce qu'il compte le nombre d'habitants",
+    "Parce qu'il compte le nombre d'habitants, ce qui permet de classer les pays du plus peuplé au moins peuplé",
     "Parce qu'il se calcule chaque mois",
     "Parce qu'il est exprimé en dollars"
    ],
@@ -553,7 +553,7 @@ JEU.enregistrer("cours", {
    "id": "geographie-s08-1-q20",
    "fiche": "geographie-s08-1-f3",
    "type": "vrai_faux",
-   "niveau": 2,
+   "niveau": 3,
    "enonce": "Un pays dont l'IDH est de 0,60 fait partie des pays à IDH moyen.",
    "corrections": [],
    "explication": "Oui : l'IDH moyen va de 0,55 à 0,70. 0,60 est bien dans cette tranche.",
@@ -568,7 +568,7 @@ JEU.enregistrer("cours", {
    "id": "geographie-s08-1-q21",
    "fiche": "geographie-s08-1-f3",
    "type": "vrai_faux",
-   "niveau": 1,
+   "niveau": 2,
    "enonce": "Les PMA sont les pays les plus riches du monde.",
    "corrections": [
     "Faux : PMA veut dire Pays les Moins Avancés : ce sont les plus pauvres.",
@@ -611,7 +611,7 @@ JEU.enregistrer("cours", {
    "enonce": "Un pays a un IDH de 0,52. Dans quel groupe de la carte se trouve-t-il, et que peut-on en déduire ?",
    "choix": [
     "IDH faible : c'est un pays en développement, peut-être un PMA",
-    "IDH moyen : c'est un pays émergent",
+    "IDH moyen : c'est un pays émergent, dont les conditions de vie s'améliorent vite",
     "IDH élevé : c'est un pays développé",
     "IDH très élevé : c'est un pays du Nord"
    ],
@@ -690,7 +690,7 @@ JEU.enregistrer("cours", {
    "id": "geographie-s08-1-q27",
    "fiche": "geographie-s08-1-f4",
    "type": "qcm",
-   "niveau": 1,
+   "niveau": 2,
    "enonce": "Que compte le taux de mortalité infantile ?",
    "choix": [
     "Les enfants morts avant l'âge d'un an",
@@ -725,7 +725,7 @@ JEU.enregistrer("cours", {
    "id": "geographie-s08-1-q29",
    "fiche": "geographie-s08-1-f4",
    "type": "vrai_faux",
-   "niveau": 2,
+   "niveau": 3,
    "enonce": "Un taux de mortalité infantile élevé est le signe d'un pays développé.",
    "corrections": [
     "Faux : c'est le signe d'un pays peu développé, où les soins manquent.",
@@ -808,7 +808,7 @@ JEU.enregistrer("cours", {
    "enonce": "Comment s'exprime le taux de mortalité infantile ?",
    "choix": [
     "En nombre de morts pour mille naissances",
-    "En pourcentage de la population",
+    "En pourcentage de la population totale du pays",
     "En années",
     "En dollars par habitant"
    ],
@@ -922,7 +922,7 @@ JEU.enregistrer("cours", {
    "id": "geographie-s08-1-q39",
    "fiche": "geographie-s08-1-f5",
    "type": "vrai_faux",
-   "niveau": 1,
+   "niveau": 2,
    "enonce": "Le dispensaire de Tsaharasina est un hôpital moderne, avec l'électricité et l'eau courante.",
    "corrections": [
     "Faux : il n'a ni électricité ni eau courante, et les malades sont examinés sur une planche.",
@@ -947,7 +947,7 @@ JEU.enregistrer("cours", {
     "Parce qu'il montre que l'accès aux soins est bien plus difficile dans un pays pauvre",
     "Parce qu'il montre que Madagascar est un pays riche",
     "Parce qu'il parle d'une école",
-    "Parce qu'il montre que les habitants refusent de se soigner"
+    "Parce qu'il montre que les habitants refusent de se soigner, même quand un hôpital moderne existe près de chez eux"
    ],
    "explication": "Se soigner fait partie des ressources immatérielles. Ici, les moyens manquent : c'est une inégalité de développement.",
    "source": {
@@ -965,7 +965,7 @@ JEU.enregistrer("cours", {
    "enonce": "Comment les malades sont-ils examinés dans ce dispensaire ?",
    "choix": [
     "Sur une planche de bois, ou par terre",
-    "Sur un lit d'hôpital",
+    "Sur un lit d'hôpital, dans une salle bien équipée",
     "Dans une ambulance",
     "Debout, dans la rue"
    ],
