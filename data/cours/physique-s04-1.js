@@ -340,7 +340,7 @@ JEU.enregistrer("cours", {
    "fiche": "physique-s04-1-f1",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Dans le TP, qu'a-t-on fait au mélange d'eau et de sel avant de constater qu'il était transparent ?",
+   "enonce": "Que fait-on au mélange d'eau et de sel pour que le sel se dissolve et que l'eau devienne transparente ?",
    "choix": [
     "On l'a agité",
     "On l'a chauffé",
@@ -635,7 +635,7 @@ JEU.enregistrer("cours", {
    "fiche": "physique-s04-1-f4",
    "type": "qcm",
    "niveau": 1,
-   "enonce": "Dans l'expérience de solubilité, on ajoute le sel à l'eau par paliers de combien ?",
+   "enonce": "Pour trouver la solubilité du sel, on ajoute le sel à cent grammes d'eau par paliers de combien ?",
    "choix": [
     "5 g",
     "1 g",
@@ -655,7 +655,7 @@ JEU.enregistrer("cours", {
    "fiche": "physique-s04-1-f4",
    "type": "vrai_faux",
    "niveau": 2,
-   "enonce": "Avec 35 g de sel dans l'eau du TP, le mélange est encore homogène.",
+   "enonce": "Avec 35 g de sel dans cent grammes d'eau, le mélange est encore homogène.",
    "corrections": [],
    "explication": "Oui : jusqu'à 35 g, tout le sel se dissout. C'est à 40 g que le mélange devient hétérogène.",
    "source": {
@@ -670,11 +670,11 @@ JEU.enregistrer("cours", {
    "fiche": "physique-s04-1-f4",
    "type": "vrai_faux",
    "niveau": 2,
-   "enonce": "Avec 40 g de sel dans l'eau du TP, tout le sel se dissout.",
+   "enonce": "Avec 40 g de sel dans cent grammes d'eau, tout le sel se dissout.",
    "corrections": [
     "Faux : à 40 g, le mélange devient hétérogène, du sel ne se dissout plus.",
     "Faux : à 40 g, l'eau devient solide.",
-    "Faux : le sel ne se dissout jamais dans l'eau du TP."
+    "Faux : à 40 g, il reste du sel au fond, mais le mélange est encore homogène."
    ],
    "explication": "À 40 g, le sel ne se dissout plus entièrement. Le mélange est hétérogène.",
    "source": {
@@ -749,14 +749,14 @@ JEU.enregistrer("cours", {
    "fiche": "physique-s04-1-f4",
    "type": "qcm",
    "niveau": 3,
-   "enonce": "On a dissous 30 g de sel dans l'eau du TP et le mélange est homogène. On ajoute encore 5 g. Que se passe-t-il ?",
+   "enonce": "On a dissous 30 g de sel dans cent grammes d'eau et le mélange est homogène. On ajoute encore 5 g. Que se passe-t-il ?",
    "choix": [
     "Il reste homogène",
     "Le mélange devient hétérogène dès 35 g",
     "L'eau devient trouble et le sel flotte",
     "Le sel déjà dissous ressort au fond"
    ],
-   "explication": "Jusqu'à 35 g, tout le sel se dissout dans l'eau du TP. C'est au palier suivant, 40 g, que le mélange devient hétérogène.",
+   "explication": "Jusqu'à 35 g, tout le sel se dissout dans cent grammes d'eau. C'est au palier suivant, 40 g, que le mélange devient hétérogène.",
    "indice": "Jusqu'à quelle quantité le mélange restait-il homogène ?",
    "source": {
     "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",

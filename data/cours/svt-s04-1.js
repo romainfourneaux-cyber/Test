@@ -447,19 +447,19 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s04-1-f2",
    "type": "qcm",
    "niveau": 3,
-   "enonce": "Pourquoi voit-on du violet, après quelques minutes, aux endroits où les tubes se rejoignent ?",
+   "enonce": "Après quelques minutes, où les deux eaux colorées commencent-elles à se mélanger ?",
    "choix": [
-    "Parce que l'eau rouge et l'eau bleue commencent à se mélanger",
-    "Parce que le colorant bleu a changé de couleur en chauffant",
-    "Parce que les glaçons ont fondu dans le tube",
-    "Parce que la lumière traverse le verre"
+    "Aux endroits où les tubes se rejoignent",
+    "Dans le bac d'eau chaude",
+    "Dans le bac de glaçons, sous la glace",
+    "Partout en même temps, dès la première minute"
    ],
-   "explication": "Rouge et bleu donnent du violet. Les eaux se mélangent d'abord là où les courants se croisent.",
+   "explication": "Les eaux se mélangent d'abord là où les tubes se rejoignent, aux endroits où les deux courants se croisent. Au bout d'un quart d'heure, tout est mélangé.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.pdf",
     "page": 4
    },
-   "r": "=c1FQYxBPMw2r6SDAYUDOzqRScwFkwBEIghHK4kCH0wLPVEQMtASKYUHXc2FSAhGDk0GOcxTv0AAAxlTKUAFIISZ",
+   "r": "HFwHMAACbcQKIdRFI1xTVMwCHMjUGAQGRBdrAI1G3QkCHlEAKYkHcMTZ",
    "poids": 1
   },
   {
@@ -590,17 +590,17 @@ JEU.enregistrer("cours", {
     "Tube horizontal du bas"
    ],
    "droite": [
-    "Montre le chemin de l'eau chaude",
-    "Refroidit l'eau d'un côté du circuit",
+    "Passage de l'eau froide ou salée",
     "Simule un courant salé",
-    "Passage de l'eau froide ou salée"
+    "Montre le chemin de l'eau chaude",
+    "Refroidit l'eau d'un côté du circuit"
    ],
    "explication": "Le rouge suit l'eau chaude, les glaçons refroidissent un côté, l'eau salée bleue simule un courant salé. Le froid comme le sel passent par le tube du bas.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.pdf",
     "page": 5
    },
-   "r": "==ANvQnXG5TWsslQdlCRewRSEYnQyYlSZlCH",
+   "r": "==ANvcnXG5TWsglQdlCRe4RSEYnQyQlSZlCH",
    "poids": 1
   },
   {
@@ -785,7 +785,7 @@ JEU.enregistrer("cours", {
    "id": "svt-s04-1-b1",
    "fiche": "svt-s04-1-f1",
    "titre": "Le Gulf Stream, un fleuve dans l'océan",
-   "texte": "Le Gulf Stream est un courant chaud de surface de l'océan Atlantique. Il naît entre la Floride et les Bahamas, longe la côte est des États-Unis, puis se disperse au large de Terre-Neuve. Il emporte vers le nord des eaux tropicales à environ 25 °C et avance à près de 9 km/h. On a longtemps cru qu'il adoucissait les hivers d'Europe ; les scientifiques pensent aujourd'hui que les vents et la géographie comptent davantage.",
+   "texte": "Le Gulf Stream est un courant chaud de surface de l'océan Atlantique. Il naît entre la Floride et les Bahamas, longe la côte est des États-Unis, puis se disperse au large de la Nouvelle-Écosse et de Terre-Neuve. Il emporte vers le nord des eaux tropicales à environ 25 °C et avance à près de 9 km/h. On a longtemps cru qu'il adoucissait les hivers d'Europe ; les scientifiques pensent aujourd'hui que les vents et la géographie comptent davantage.",
    "source": {
     "titre": "Gulf Stream",
     "editeur": "Wikipédia, l'encyclopédie libre",

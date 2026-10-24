@@ -301,17 +301,17 @@ JEU.enregistrer("cours", {
    "niveau": 3,
    "enonce": "Remets dans l'ordre, du plus ancien au plus récent, ces moments du dernier cycle glaciaire.",
    "elements": [
-    "Fin de la période interglaciaire précédente",
-    "Début de la dernière période glaciaire",
-    "Fin de la dernière période glaciaire",
-    "Période interglaciaire actuelle"
+    "Fin de la dernière période glaciaire, il y a dix mille ans",
+    "Nouvelle période interglaciaire, la plus récente",
+    "Période interglaciaire précédente, courte et chaude",
+    "Début de la dernière période glaciaire"
    ],
-   "explication": "Une interglaciaire se termine, une glaciaire commence puis finit, et l'interglaciaire actuelle s'ouvre. Nous vivons dans un pic de réchauffement.",
+   "explication": "Une interglaciaire, puis une glaciaire qui commence et finit il y a dix mille ans, puis une nouvelle interglaciaire. C'est le dernier des quatre cycles du graphique.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 10
    },
-   "r": "o5hQdp0VFJEH",
+   "r": "oxhQfpUVFBEH",
    "poids": 1
   },
   {
@@ -637,17 +637,17 @@ JEU.enregistrer("cours", {
     "Toutes les séries des sept nains"
    ],
    "droite": [
-    "Le travail le plus régulier",
-    "La meilleure progression",
+    "La même moyenne",
     "De très grands écarts",
-    "La même moyenne"
+    "Le travail le plus régulier",
+    "La meilleure progression"
    ],
    "explication": "Régularité, progression, écarts : la moyenne ne distingue rien de tout cela. Les sept séries ont la même moyenne.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 10
    },
-   "r": "==ANvQnXG5TWsslQdlCRewRSEYnQyYlSZlCH",
+   "r": "==ANvcnXG5TWsglQdlCRe4RSEYnQyQlSZlCH",
    "poids": 1
   },
   {

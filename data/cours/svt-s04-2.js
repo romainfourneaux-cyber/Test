@@ -178,7 +178,7 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Sur ce diagramme, l'écart entre le mois le plus sec et le mois le plus arrosé est énorme.",
    "corrections": [],
-   "explication": "Oui : à peine 2 mm pour le mois le plus sec, plusieurs centaines de millimètres pour le plus arrosé. Un tel écart annonce deux saisons très différentes.",
+   "explication": "Oui : à peine 2 mm pour le mois le plus sec, plus de deux cents millimètres pour le plus arrosé. Un tel écart annonce deux saisons très différentes.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 9
@@ -291,7 +291,7 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s04-2-f2",
    "type": "qcm",
    "niveau": 1,
-   "enonce": "Quel climat a un territoire avec une saison sèche et une saison humide ?",
+   "enonce": "Quel climat a un territoire chaud toute l'année, avec une saison sèche et une saison humide ?",
    "choix": [
     "Le climat tropical",
     "Le climat méditerranéen",
@@ -414,17 +414,17 @@ JEU.enregistrer("cours", {
     "Pluies presque nulles de juin à septembre"
    ],
    "droite": [
-    "Deux saisons : humide puis sèche",
-    "Confirme le climat tropical",
     "Hiver austral : hémisphère sud",
-    "La saison sèche"
+    "La saison sèche",
+    "Deux saisons : humide puis sèche",
+    "Confirme le climat tropical"
    ],
    "explication": "Les pluies donnent les saisons, les températures confirment le climat. Les mois les plus frais donnent l'hémisphère.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 9
    },
-   "r": "==ANvQnXG5TWsslQdlCRewRSEYnQyYlSZlCH",
+   "r": "==ANvYnXG5TWsklQdlCRe4RSEYnQyQlSZlCH",
    "poids": 1
   },
   {
