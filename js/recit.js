@@ -64,8 +64,60 @@
       "On a retrouvé de vieux manuscrits au scriptorium. {N} affirme y avoir lu :",
       "Un savant de passage visite ta bibliothèque. {N} lui répond devant toi :",
       "Les enfants du domaine apprennent à lire. {N} leur assure :"
+    ],
+    // La route des semaines (expédition, 24/10/2026) : textes de jeu sans fait de cours ; {S} : la semaine de l'acte,
+    // dite par le conseiller quand on la lui donne (cadre(q, contexte, camp, { semaine })). Jamais « vite » : pas de chrono.
+    route: [ // conseil de guerre d'une escarmouche (attaque d'un camp de route)
+      "{N} marche à tes côtés sur la route de la semaine {S}. « Avant la prochaine halte, seigneur, dis-moi ceci. »",
+      "Les éclaireurs ont trouvé un camp à prendre. {N} te retient par la manche : « Une question, et je paie les hommes. »",
+      "La compagnie souffle au bord du chemin. {N} s'assoit sur une borne : « Réponds, seigneur, et l'or de route suivra. »",
+      "{N} replie la carte de la semaine {S} : « Un camp de route barre le passage. Dis-moi ceci avant qu'on l'attaque. »"
+    ],
+    embuscade: [ // défense des chariots
+      "Des cris dans le bois : on vous tombe dessus ! {N} te tire par la manche : « Réponds, seigneur, et j'arme les chariots. »",
+      "Les chariots forment le cercle. {N} se baisse derrière une roue : « Ils sont nombreux. Dis-moi ceci, et je paie les défenseurs. »",
+      "Une flèche se plante dans le tronc à côté de toi. {N} ne tremble pas : « Nous sommes sur les terres de la semaine {S}. Montre-leur que tu les connais. »",
+      "{N} rassemble les porteurs derrière les chariots : « Une embuscade sur la route de la semaine {S}. Une question, et je tiens la ligne. »"
+    ],
+    gardien: [ // le gardien de la semaine, un seigneur rival, et le Grand Gardien
+      "{N} regarde la tour du gardien se découper sur la colline. « Il garde la semaine {S}. Montre-lui que tu la connais. »",
+      "Un seigneur rival a dressé son camp au bout de la route. {N} serre sa sacoche : « Il ne laisse passer que ceux qui savent. Réponds. »",
+      "Les bannières du gardien claquent au vent. {N} te glisse : « Toute la semaine {S} tient dans cette bataille. Une question, et j'arme les murs. »",
+      "{N} compte les feux du camp adverse : « Il est venu en force. Dis-moi ceci, seigneur, et les défenseurs seront payés. »"
+    ],
+    bivouac: [
+      "Le camp est dressé. {N} déplie ses notes de la semaine {S} à la lueur du feu : « Une question, et je te laisse dormir. »",
+      "Le feu craque, la compagnie se tait. {N} s'assoit près de toi : « Avant la nuit, seigneur, dis-moi ceci. »",
+      "{N} ranime les braises : « Une veillée sans question n'en est pas une. Celle-ci vient de la semaine {S}. »",
+      "Les sentinelles prennent leur tour. {N} te tend une écuelle : « Mange, et réponds-moi : ce point compte. »"
+    ],
+    marchand: [
+      "{N} ouvre son étal sur la place du bourg : « Une bonne réponse, et je fais un prix. »",
+      "Le bourg sent le pain chaud. {N} pèse une pièce dans sa main : « Montre-moi que tu suis la semaine {S}, et je baisse mes prix. »",
+      "{N} étale ses marchandises sur une couverture : « Je ne vends qu'aux seigneurs qui savent. Réponds à ceci. »",
+      "Trois tonneaux et une balance : l'étal est ouvert. {N} te regarde : « Une question de la semaine {S}, et je fais un prix. »"
+    ],
+    archives: [ // les registres des semaines passées
+      "Un vieux scribe ouvre ses registres. {N} lui répond : « Mon seigneur se souvient des semaines passées. Écoute. »",
+      "Les registres du bailli sentent la poussière. {N} souffle sur une page : « Ceci vient d'avant la semaine {S}. T'en souviens-tu ? »",
+      "{N} feuillette un registre à la lueur d'une chandelle : « Les semaines passées ne s'effacent pas. Dis-moi ceci. »",
+      "Le scribe tend une page jaunie. {N} la lit pour toi : « C'est d'avant la semaine {S}. Montre que rien n'est perdu. »"
+    ],
+    porte: [ // la question du conseiller qui offre ses faveurs
+      "{N} t'attend à la sortie du camp, un présent sous le bras : « Ma faveur se mérite. Une question de mon art, seigneur. »",
+      "La bataille est finie. {N} s'avance avec un coffret : « Avant de l'ouvrir, réponds-moi sur ce que je connais le mieux. »",
+      "{N} te rejoint sur le chemin de la semaine {S} : « J'ai quelque chose pour toi. Une question d'abord, c'est la règle. »",
+      "Un présent, mais pas pour rien. {N} sourit : « Montre-moi ce que tu sais de mon art, et tu choisiras. »"
+    ],
+    cache: [ // la halte « trésor » (étape 2 ; « tresor » est déjà le contexte du conseil pour la jauge Trésor)
+      "Un coffre à demi enterré sous une souche. {N} dégage la terre : « Il s'ouvre à ceux qui savent. Dis-moi ceci. »",
+      "{N} tâte la pierre creuse du vieux mur : « Une cache de voyageurs. Réponds, et nous verrons ce qu'elle garde. »",
+      "La cache est là, sous les ronces de la semaine {S}. {N} te tend la lanterne : « Une question, et on soulève le couvercle. »"
     ]
   };
+  // Contextes de la route des semaines : une question ratée y revient avec les phrases de « Seconde chance », comme en
+  // bataille et dans un événement ; une phrase à {S} n'y sort que si la semaine de l'acte est donnée.
+  var CONTEXTES_ROUTE = { route: true, embuscade: true, gardien: true, bivouac: true, marchand: true, archives: true, porte: true, cache: true };
 
   function conseiller(matiere) { return CONSEILLERS[matiere] || CONSEILLERS.histoire; }
 
@@ -102,17 +154,53 @@
     return camp && camp.armee ? camp.armee : "l'armée ennemie";
   }
 
-  // Cadre narratif d'une question : { nom, icone, texte, repere?, etiquette? }. camp (facultatif) : le camp adverse d'une
-  // défense. repere : la semaine et la matière du cours (fonction repere), affiché sur la ligne du conseiller.
-  // Une question ratée qui revient (q.rappel) porte l'étiquette « Seconde chance » ; en bataille et dans un événement,
-  // le conseiller le dit avec ses mots. Au conseil du royaume, l'affaire du jour reste la même (seule l'étiquette change).
-  function cadre(q, contexte, camp) {
+  // Semaine d'un cours pour le ruban de la question (contrat partagé avec l'expédition, 24/10/2026) :
+  // { numero, libelle, titre } : « Semaine 4 » pour un cours du planning (JEU.progression.semaineDe s'il existe, sinon
+  // l'entrée du planning) ; sans semaine (numero null) : le badge Griffon (« Griffon de cuivre ») pour la grammaire,
+  // « Fiche méthode », « Anglais · séquence 2 » ; null pour un cours inconnu. titre : celui du cours, pour l'infobulle.
+  // Mémorisé par cours, comme le repère.
+  var semainesCours = {};
+  function semaineDuCours(coursId) {
+    if (!coursId) return null;
+    if (Object.prototype.hasOwnProperty.call(semainesCours, coursId)) return semainesCours[coursId];
+    var m = U.matiereDe(coursId), c = U.coursCharge(coursId) || {}, P = JEU.progression, e = null, s = null;
+    if (/^methode-/.test(coursId)) s = { numero: null, libelle: "Fiche méthode" };
+    else if (m === "langue") { var rb = P && c.badge ? P.rangBadge(c.badge) : 99; s = { numero: null, libelle: rb < 99 ? JEU.BADGES_GRIFFON[rb].nom : "Grammaire" }; }
+    else if (m === "anglais") { var n = String(c.titre || "").match(/^Séquence\s+(\d+)/); s = { numero: null, libelle: n || c.ordre ? "Anglais · séquence " + (n ? n[1] : c.ordre) : "Anglais" }; }
+    else {
+      e = P ? P.entree(coursId) : null;
+      if (e || c.id) { // un cours connu (planning ou fichier chargé) ; un identifiant inconnu n'a pas de semaine
+        var num = P && P.semaineDe ? P.semaineDe(coursId) : (e && typeof e.semaine === "number" ? e.semaine : null);
+        s = typeof num === "number" ? { numero: num, libelle: "Semaine " + num } : { numero: null, libelle: JEU.MATIERES[m] ? JEU.MATIERES[m].nom : "" };
+      }
+    }
+    if (s) s.titre = (e && e.titre) || c.titre || "";
+    semainesCours[coursId] = s;
+    return s;
+  }
+
+  // Cadre narratif d'une question : { nom, icone, texte, repere?, semaine?, etiquette? }. camp (facultatif) : le camp adverse
+  // d'une défense. repere : la semaine et la matière du cours (fonction repere), affiché sur la ligne du conseiller.
+  // semaine : { numero, libelle, titre, route } (semaineDuCours) ; route vaut true quand la semaine du cours est dans la
+  // fenêtre de l'acte d'une expédition (extra.semaines, ou extra.semaine) : le ruban s'affiche alors en relief (ui.recit).
+  // extra (facultatif, expédition) : { semaine (la semaine de l'acte, dite par {S}), semaines (la fenêtre de l'acte) }.
+  // Une question ratée qui revient (q.rappel) porte l'étiquette « Seconde chance » ; en bataille, dans un événement et
+  // sur la route, le conseiller le dit avec ses mots. Au conseil du royaume, l'affaire du jour reste la même (seule
+  // l'étiquette change). Sans extra et hors des contextes de route, rien ne change.
+  function cadre(q, contexte, camp, extra) {
     var c = conseiller(q.matiere);
-    var rappel = !!q.rappel && (contexte === "preparation" || contexte === "defense" || contexte === "evenement");
+    var surRoute = !!CONTEXTES_ROUTE[contexte];
+    var rappel = !!q.rappel && (contexte === "preparation" || contexte === "defense" || contexte === "evenement" || surRoute);
     var liste = rappel ? PHRASES.rappel : PHRASES[contexte] || PHRASES.evenement;
+    var semaineActe = extra && typeof extra.semaine === "number" ? extra.semaine : null;
+    if (surRoute && !rappel && semaineActe === null) {
+      var sansS = liste.filter(function (t) { return t.indexOf("{S}") < 0; });
+      if (sansS.length) liste = sansS;
+    }
     var texte = U.hasard(liste);
     var nom = c.nom;
     texte = texte.replace("{N}", nom).replace("{n}", nom.charAt(0).toLowerCase() + nom.slice(1));
+    if (semaineActe !== null) texte = texte.replace("{S}", String(semaineActe));
     if (texte.indexOf("{deArmee}") >= 0) {
       var armee = armeeAdverse(camp);
       texte = texte.replace("{deArmee}", JEU.campagne ? JEU.campagne.avecArticle(armee, "de") : "de " + armee);
@@ -120,6 +208,11 @@
     var r = { nom: nom, icone: c.icone, texte: texte };
     var rep = repere(q.cours);
     if (rep) r.repere = rep;
+    var s = semaineDuCours(q.cours);
+    if (s) {
+      var fenetre = extra && Array.isArray(extra.semaines) ? extra.semaines : (semaineActe !== null ? [semaineActe] : []);
+      r.semaine = { numero: s.numero, libelle: s.libelle, titre: s.titre, route: s.numero !== null && fenetre.indexOf(s.numero) >= 0 };
+    }
     if (q.rappel) r.etiquette = JEU.rappels ? JEU.rappels.ETIQUETTE : "Seconde chance";
     return r;
   }
@@ -254,26 +347,48 @@
   // 15 dernières, ou dont une question attend sa « Seconde chance », se repose ; une fiche à revoir réussie deux fois
   // dans la séance perd sa priorité jusqu'à la séance suivante) ; sans le repos des fiches ; sans le
   // filtre (completer) ; enfin sans la fenêtre, comme le tirage d'avant : le tirage ne bloque jamais.
+  // quota (facultatif, expédition, 24/10/2026) : { nombre, filtre } : quota.nombre questions au plus sont d'abord tirées parmi
+  // celles qui passent quota.filtre (et le filtre), aux règles strictes puis sans le repos des fiches ; le reste du lot vient
+  // des essais ordinaires, qui évitent alors les fiches déjà prises. Un seul placement des rappels et un seul eviterTriples
+  // à la fin. Sans quota, le résultat est celui d'aujourd'hui (test de régression).
   function suite(nombre, options) {
     options = options || {};
     var attente = JEU.rappels ? JEU.rappels.enAttente() : [];
     var exclure = (options.exclure || []).concat(attente);
-    var f = options.filtre, essais = [[f, 0], [f, 1]];
+    var f = options.filtre, essais = [];
+    // [quota]
+    var quota = options.quota && options.quota.nombre > 0 && typeof options.quota.filtre === "function" ? options.quota : null;
+    if (quota) {
+      var fq = function (q) { return quota.filtre(q) && (!f || f(q)); };
+      essais.push([fq, 0, quota.nombre], [fq, 1, quota.nombre]);
+    }
+    // [/quota]
+    essais.push([f, 0], [f, 1]);
     if (options.completer) essais.push([null, 1]);
     essais.push([f, 2]);
     if (options.completer) essais.push([null, 2]);
     var qs = [];
-    for (var i = 0; i < essais.length && qs.length < nombre; i++) {
-      var deja = qs.map(function (q) { return q.id; });
-      qs = qs.concat(tirage(nombre - qs.length, essais[i][0], options.types, exclure.concat(deja), attente.concat(deja), qs, essais[i][1]));
+    for (var i = 0; i < essais.length; i++) {
+      var cap = Math.min(nombre, essais[i][2] || nombre);
+      if (qs.length >= cap) continue;
+      var deja = qs.map(function (q) { return q.id; }), filtre = essais[i][0];
+      if (quota && !essais[i][2] && qs.length) filtre = sansFiches(filtre, qs); // le reste du lot ne reprend pas une fiche du quota
+      qs = qs.concat(tirage(cap - qs.length, filtre, options.types, exclure.concat(deja), attente.concat(deja), qs, essais[i][1]));
     }
     if (JEU.rappels) qs = eviterTriples(JEU.rappels.placer(qs, { types: options.types, longueur: nombre }));
     retenir(qs);
     return qs;
   }
 
+  // Filtre qui écarte en plus les fiches des questions déjà dans le lot (quota de l'expédition).
+  function sansFiches(filtre, qs) {
+    var fiches = qs.map(function (q) { return q.fiche; });
+    return function (q) { return fiches.indexOf(q.fiche) < 0 && (!filtre || filtre(q)); };
+  }
+
   JEU.recit = {
-    CONSEILLERS: CONSEILLERS, conseiller: conseiller, cadre: cadre, repere: repere, candidats: candidats, suite: suite, famille: famille,
+    CONSEILLERS: CONSEILLERS, conseiller: conseiller, cadre: cadre, repere: repere, semaineDuCours: semaineDuCours, candidats: candidats, suite: suite, famille: famille,
+    PHRASES: PHRASES, CONTEXTES_ROUTE: CONTEXTES_ROUTE, // lecture seule (tests)
     historique: function () { return historique.slice(); }, oublierHistorique: function () { historique = []; }
   };
 })(typeof window !== "undefined" ? window : globalThis);

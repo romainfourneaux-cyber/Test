@@ -3,7 +3,7 @@
   "use strict";
   var JEU = racine.JEU;
   var CLE = "jeu5e";
-  var SCHEMA = 5;
+  var SCHEMA = 6;
 
   function ressourcesVides() {
     return { sceaux: 0, routes: 0, remedes: 0, alambics: 0, parchemins: 0, alliances: 0 };
@@ -11,6 +11,7 @@
 
   function rappelsVides() { return JEU.rappels ? JEU.rappels.vide() : { compteur: 0, file: [] }; }
   function poseesVides() { return JEU.questions && JEU.questions.poseesVides ? JEU.questions.poseesVides() : { horloge: 0, questions: {} }; }
+  function expeditionVide() { return JEU.expedition ? JEU.expedition.etatVide() : null; }
 
   function nouvelle(maintenant) {
     var t = JEU.util.horodatage(maintenant);
@@ -28,7 +29,9 @@
       // ajout du schéma 4 : les questions ratées qui reviennent un peu plus tard (rappels.js)
       rappels: rappelsVides(),
       // ajout du schéma 5 : quand chaque question a été posée pour la dernière fois (questions.js, anti-répétition)
-      posees: poseesVides()
+      posees: poseesVides(),
+      // ajout du schéma 6 : les expéditions (route des semaines, renommée, Armorial ; expedition.js)
+      expedition: expeditionVide()
     };
   }
 
@@ -64,6 +67,13 @@
     4: function (s) {
       s.posees = JEU.questions && JEU.questions.completerPosees ? JEU.questions.completerPosees(s.posees) : (s.posees || poseesVides());
       s.schema = 5;
+      return s;
+    },
+    // 5 → 6 : le bloc des expéditions arrive, vide (renommée 0, Armorial vide, aucune expédition en cours ; complété par
+    // JEU.expedition.completer) ; rien d'autre ne change.
+    5: function (s) {
+      s.expedition = JEU.expedition ? JEU.expedition.completer(s.expedition) : (s.expedition || expeditionVide());
+      s.schema = 6;
       return s;
     }
   };

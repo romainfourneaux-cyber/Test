@@ -80,8 +80,9 @@
 
   // Rivalité (16/10/2026) : ce qui la fait monter sur un front. Une retraite ne la change pas.
   // province : tu lui prends une province ; victoire : tu repousses son attaque ; tenu : sa place forte tient après
-  // une bataille complète ; attaque : il attaque ton domaine.
-  var GAINS_RIVALITE = { province: 15, victoire: 10, tenu: 4, attaque: 8 };
+  // une bataille complète ; attaque : il attaque ton domaine. Expédition (24/10/2026) : gardien : un gardien de semaine de son
+  // camp vaincu ; grandGardien : le rival du front repoussé au bout de la route.
+  var GAINS_RIVALITE = { province: 15, victoire: 10, tenu: 4, attaque: 8, gardien: 2, grandGardien: 6 };
   // Niveaux de rivalité : ils choisissent les répliques et l'humeur du rival.
   var NIVEAUX_RIVALITE = [{ id: "calme", min: 0, nom: "courtoise" }, { id: "pique", min: 30, nom: "vive" }, { id: "acharne", min: 65, nom: "acharnée" }];
 
@@ -525,13 +526,21 @@
   }
 
   // ---------- événement du jour : une petite suite de questions, dans le récit ----------
-  function jouerEvenement() {
-    var ev = evenementDuJour();
+  // ev (facultatif) : l'événement à jouer (un de EVENEMENTS) à la place de celui du jour. contexte (facultatif, expédition,
+  // 24/10/2026) : l'événement est rejoué sur la route : { tirage(n) : les questions (quota de l'acte) ; cadre(q) (facultatif) :
+  // le cadre de récit ; cloturer(id, bonnes, total) : applique le gain de route et rend la phrase du bilan ; retour() : après
+  // le bilan ou un « Quitter » }. Avec un contexte, l'événement du jour de la campagne n'est ni joué ni marqué fait, et rien
+  // n'est écrit dans c.bonus ni dans les provinces : seuls restent les gains immédiats par bonne réponse (2 ressources des
+  // marchands, +1 Peuple au feu au grenier). Sans paramètre, rien ne change.
+  function jouerEvenement(ev, contexte) {
+    if (!ev || typeof ev.questions !== "number") ev = evenementDuJour();
     if (!ev) return;
+    contexte = contexte || null;
     var el = JEU.ui.el;
-    var qs = JEU.recit.suite(ev.questions);
+    var qs = contexte ? contexte.tirage(ev.questions) : JEU.recit.suite(ev.questions);
     if (!qs.length) { JEU.ui.toast("Pas encore de questions disponibles."); return; }
-    var zone = JEU.ui.commencerPartie(ev.titre, function () { JEU.ui.afficher("jouer"); });
+    var sortir = contexte ? function () { contexte.retour(); } : function () { JEU.ui.afficher("jouer"); };
+    var zone = JEU.ui.commencerPartie(ev.titre, sortir);
     var i = 0, bonnes = 0, texteFin = null;
     var scene = el("div", { class: "scene-evenement" });
     zone.appendChild(el("div", { class: "evenement-tete" }, [el("span", { class: "evenement-icone", html: JEU.icones.icone(ev.icone, 64) }), el("p", { texte: ev.texte })]));
@@ -552,7 +561,7 @@
           JEU.rappels.replacer(qs, i, qs.length); // la question ratée revient un peu plus tard, peut-être dans cet événement
           JEU.ui.panneauErreur(q, scene, function () { JEU.mesure.reponseDonnee(); suivante(); });
         }
-      }, { recit: JEU.recit.cadre(q, "evenement") });
+      }, { recit: contexte && contexte.cadre ? contexte.cadre(q) : JEU.recit.cadre(q, "evenement") });
     }
     // Quitter en route clôt l'événement avec les réponses déjà données : ce qui est gagné reste, mais on ne peut
     // pas le rejouer pour gagner encore. Quitté avant la première réponse, il reste à jouer.
@@ -561,8 +570,10 @@
     function cloturer() {
       if (texteFin !== null) return texteFin;
       var c = etat(), texte;
-      if (c.evenement) c.evenement.fait = true;
-      if (ev.id === "marchands") texte = bonnes ? "Le marché a été bon : " + 2 * bonnes + " ressources de plus." : "Les marchands repartent sans rien vendre. Rien n'est perdu.";
+      if (contexte) texte = contexte.cloturer(ev.id, bonnes, qs.length); // sur la route : le gain de route, rien dans la campagne
+      else if (c.evenement) c.evenement.fait = true;
+      if (contexte) { /* la phrase du bilan vient du contexte */ }
+      else if (ev.id === "marchands") texte = bonnes ? "Le marché a été bon : " + 2 * bonnes + " ressources de plus." : "Les marchands repartent sans rien vendre. Rien n'est perdu.";
       else if (ev.id === "defi") {
         var cible = prochaineProvince(U.hasard(FRONTS).id) || prochaineProvince();
         if (bonnes >= 2 && cible) {
@@ -586,9 +597,9 @@
       scene.innerHTML = "";
       scene.appendChild(el("div", { class: "bilan" + (bonnes ? " reussi" : "") }, [
         el("h2", { texte: ev.titre }), el("p", { class: "grand", texte: bonnes + " / " + qs.length }), el("p", { texte: texte }),
-        el("button", { class: "bouton principal", onclick: function () { JEU.ui.finirPartie(); JEU.ui.afficher("jouer"); }, texte: "Retour à la campagne (Entrée)" })
+        el("button", { class: "bouton principal", onclick: function () { JEU.ui.finirPartie(); sortir(); }, texte: contexte ? "Continuer la route (Entrée)" : "Retour à la campagne (Entrée)" })
       ]));
-      JEU.ui.clavier = function (k) { if (k === "Enter") { JEU.ui.finirPartie(); JEU.ui.afficher("jouer"); return true; } return false; };
+      JEU.ui.clavier = function (k) { if (k === "Enter") { JEU.ui.finirPartie(); sortir(); return true; } return false; };
     }
     suivante();
   }
@@ -598,7 +609,7 @@
     avecArticle: avecArticle, etatVide: etatVide, completer: completer, etat: etat, noter: noter, prochaineProvince: prochaineProvince,
     totalRessources: totalRessources, payer: payer, prixArsenal: prixArsenal, ameliorerArsenal: ameliorerArsenal,
     prixRemparts: prixRemparts, renforcerRemparts: renforcerRemparts, options: options,
-    nouveauJour: nouveauJour, evenementDuJour: evenementDuJour, apresBataille: apresBataille, jouerEvenement: jouerEvenement,
+    nouveauJour: nouveauJour, evenementDuJour: evenementDuJour, apresBataille: apresBataille, jouerEvenement: jouerEvenement, reagir: reagir,
     // personnages, rivalité et missives (16/10/2026)
     GAINS_RIVALITE: GAINS_RIVALITE, NIVEAUX_RIVALITE: NIVEAUX_RIVALITE, SITUATIONS_RIVAL: SITUATIONS_RIVAL,
     coursOuvert: coursOuvert, disponible: disponible, souverain: souverain, rivalDe: rivalDe, faitsVisibles: faitsVisibles,
