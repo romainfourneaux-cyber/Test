@@ -16,12 +16,14 @@
   var U = JEU.util;
 
   // ---------- le parchemin de route : unités logiques (1000 × 300) ----------
-  var L = 1000, H = 300;
-  var DEPART = { x: 36, y: 170 };                 // le bourg de départ (petit bourg de France)
+  var L = 1000, H = 320;
+  var DEPART = { x: 36, y: 182 };                 // le bourg de départ (petit bourg de France)
   var X0 = 70, BANDE = 310, NB_BANDES = 3;        // une semaine = une bande de 310 unités, après le départ
-  var COL0 = 40, COL_FIN = 210, GARDIEN_X = 276;  // colonnes des couches dans la bande ; le gardien à droite (66 unités après la dernière colonne : les médaillons ne se touchent pas)
-  var Y_MILIEU = 170, PAS = 72;                   // les haltes d'une couche s'étalent en hauteur autour du milieu
-  var R_HALTE = 26, R_GARDIEN = 34, R_DEPART = 24;
+  var COL0 = 40, COL_FIN = 196, GARDIEN_X = 276;  // colonnes des couches dans la bande ; le gardien à droite (80 unités après la dernière colonne : ni les médaillons ni les noms ne le touchent)
+  var Y_MILIEU = 182, PAS = 84;                   // les haltes d'une couche s'étalent en hauteur autour du milieu (trois rangs entre le filet de la bande, y = 50, et le bas)
+  var R_HALTE = 24, R_GARDIEN = 34, R_DEPART = 24; // un nom de 15 px fait 19 unités de haut : entre deux médaillons (36 unités libres) il y a deux rangs de noms
+  // Les noms : sous les médaillons dans les colonnes impaires, au-dessus dans les paires. Deux colonnes voisines (78 unités
+  // d'écart, un nom en fait jusqu'à 86) n'ont ainsi jamais deux noms sur la même ligne, quel que soit le nombre de haltes.
   var ENCRE = "#2e2419", OR = "#b08d3a", OR_CLAIR = "#e2c272", OR_SOMBRE = "#7a5c1e", RUBRIQUE = "#8c2f39", PLOMB = "#4a4e57", FOND = "#efe6d2";
   var ICONES = { escarmouche: "assaut", embuscade: "mercenaires", marchand: "marchand", bivouac: "camp", archives: "parchemin-plume", gardien: "defi", grand: "couronne", depart: "lys" };
   var PORTE_ICONES = { bourse: "tresor", parchemin: "parchemins", vivres: "recolte" };
@@ -156,8 +158,8 @@
         var n = c.length, cx = bx + (nb > 1 ? COL0 + (COL_FIN - COL0) * k / (nb - 1) : (COL0 + COL_FIN) / 2);
         c.forEach(function (h, j) {
           var g = X.alea(X.hash(e.graine, "pos", h.id));
-          var y = Y_MILIEU + (j - (n - 1) / 2) * PAS + Math.round((g() - 0.5) * 6); // gigue ±3 unités, à la graine
-          var nd = { id: h.id, x: Math.round(cx), y: y, r: R_HALTE, type: h.type, halte: h, acte: a, semaine: a.semaine, couche: k + 1 };
+          var y = Y_MILIEU + (j - (n - 1) / 2) * PAS + Math.round((g() - 0.5) * 4); // gigue ±2 unités, à la graine
+          var nd = { id: h.id, x: Math.round(cx), y: y, r: R_HALTE, type: h.type, halte: h, acte: a, semaine: a.semaine, couche: k + 1, rang: j, n: n };
           noeuds.push(nd); parId[h.id] = nd;
         });
       });
@@ -348,13 +350,13 @@
           "<circle cx='" + x + "' cy='" + y + "' r='" + (r - 3.5) + "' fill='none' stroke='" + ENCRE + "' stroke-width='1' stroke-dasharray='.1 3' stroke-linecap='round'/>" +
           "<circle cx='" + x + "' cy='" + y + "' r='" + (r - 6) + "' fill='" + (brume ? "#9a927f" : "#f7efdc") + "' stroke='" + ENCRE + "' stroke-width='1.2'/>" +
           (brume ? "" : JEU.icones.dans(iconeHalte(h), x - 14, y - 14, 28, h.type === "embuscade" ? RUBRIQUE : ENCRE)) + "</g>";
-        // le nom : au-dessus du médaillon dans les colonnes impaires, dessous dans les paires (deux voisines n'ont jamais leurs noms
-        // sur la même ligne, et le nom de la dernière colonne reste hors du halo du gardien)
-        if (!brume) etiquettes += texteSVG(x, nd.couche % 2 === 1 ? y - r - 7 : y + r + 15, classeNom, nomCourt(h));
-        if (!brume && h.porte) s += ecussonPorte(h.porte, x + 17, y + 15);
+        // le nom : sous le médaillon (colonnes impaires) ou au-dessus (paires) ; voir les constantes en tête
+        if (!brume) etiquettes += texteSVG(x, nd.couche % 2 === 1 ? y + r + 14 : y - r - 6, classeNom, nomCourt(h));
+        if (!brume && h.porte) s += ecussonPorte(h.porte, x + 16, y + 12);
       }
       if (/jouee/.test(et)) s += sceauHalte(x + (gardien ? 10 : 6), y - (gardien ? 10 : 6), gardien ? 36 : 32, /echouee/.test(et));
-      if (touche) s += "<g class='touche-halte'><circle cx='" + (x - r + 3) + "' cy='" + (y - r + 3) + "' r='11' fill='#8e3424' stroke='#f6e7bf' stroke-width='1.5'/>" + texteSVG(x - r + 3, y - r + 8, "txt-touche", touche) + "</g>";
+      // le numéro de touche : une borne posée au bord gauche du médaillon, là où la route arrive (jamais sur un nom)
+      if (touche) s += "<g class='touche-halte'><circle cx='" + (x - r - 1) + "' cy='" + (y - 9) + "' r='11' fill='#8e3424' stroke='#f6e7bf' stroke-width='1.5'/>" + texteSVG(x - r - 1, y - 4, "txt-touche", touche) + "</g>";
       s += "</g>";
     });
     s += "<g class='etiquettes' aria-hidden='true'>" + etiquettes + "</g>";
@@ -840,6 +842,7 @@
       zone
     ]);
     cadreEcran(s, e, boite, null);
+    JEU.mesure.debut = null; // la question de la porte suit l'écran de fin de la bataille, pas une réponse
     JEU.ui.poserQuestion(q, zone, function (juste) {
       JEU.questions.enregistrerReponse(q, juste);
       var off = X.enCours() && X.enCours().offre;
@@ -938,6 +941,7 @@
       zone
     ]);
     cadreEcran(s, e, boite, null);
+    JEU.mesure.debut = null; // la première question de la veillée suit le choix du bivouac, pas une réponse
     function suivante() {
       if (i >= qs.length) return fin();
       var q = qs[i];
@@ -976,6 +980,7 @@
       zone
     ]);
     cadreEcran(s, e, boite, null);
+    JEU.mesure.debut = null; // la question du marchand suit la carte, pas une réponse
     JEU.ui.poserQuestion(q, zone, function (juste) {
       JEU.questions.enregistrerReponse(q, juste);
       if (juste) { JEU.sons.jouer("coup"); JEU.ui.toast(T.remise); rendreEtal(s, X.enCours(), t, X.ouvrirEtal(h.id, true)); }
