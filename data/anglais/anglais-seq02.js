@@ -287,9 +287,9 @@ JEU.enregistrer("anglais", {
    "id": "anglais-seq02-g3",
    "regle": "Au prétérit simple, question et négation utilisent did : Did + sujet + base verbale ? et didn't + base verbale. Le verbe revient toujours à sa base : She didn't arrive (et non didn't arrived). Short answers : Yes, I did. / No, we didn't.",
    "exemples": [
-    "Did you play tennis ? Yes, I did.",
-    "He didn't call his mother.",
-    "We didn't miss the bus."
+    "Did you play chess ? Yes, I did.",
+    "He didn't call his uncle.",
+    "We didn't miss the plane."
    ],
    "source": {
     "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
@@ -300,7 +300,7 @@ JEU.enregistrer("anglais", {
    "id": "anglais-seq02-g4",
    "regle": "Les verbes irréguliers ne prennent pas -ed. À retenir : be → was/were, begin → began, break → broke, bring → brought, buy → bought, see → saw, eat → ate, go → went, have → had, give → gave, choose → chose, come → came, cost → cost, cut → cut. La question et la négation reprennent la base : Did he buy ? He didn't buy.",
    "exemples": [
-    "She bought a new bag.",
+    "She bought a new coat.",
     "We went to the beach.",
     "Did he break his pencil ? No, he didn't."
    ],
@@ -313,8 +313,8 @@ JEU.enregistrer("anglais", {
    "id": "anglais-seq02-g5",
    "regle": "Question avec un mot interrogatif au prétérit : mot interrogatif + did + sujet + base verbale (What did you eat ?). Avec to be, pas de did : Where was he ? Why were they late ? Pour demander à quoi ressemblait quelqu'un : What did he look like ?",
    "exemples": [
-    "Where did you go last night ?",
-    "What did she buy ?",
+    "Where did you go on Sunday ?",
+    "What did they cook ?",
     "Why was he angry ?"
    ],
    "source": {
@@ -337,7 +337,7 @@ JEU.enregistrer("anglais", {
   },
   {
    "id": "anglais-seq02-g7",
-   "regle": "Les marqueurs du passé qui appellent le prétérit : yesterday, last week / last month / last year / last Monday, two days ago, a month ago, in December, in 2016, on Monday 4th July, when I was young.",
+   "regle": "Les marqueurs du passé qui appellent le prétérit : yesterday, last week / last month / last year / last Monday, two days ago, a month ago, in December, in 2016, on Monday, when I was young.",
    "exemples": [
     "I saw him two days ago.",
     "They moved in 2019.",
@@ -377,7 +377,7 @@ JEU.enregistrer("anglais", {
   },
   {
    "id": "anglais-seq02-g10",
-   "regle": "Les pronoms possessifs remplacent adjectif possessif + nom : mine (le mien), yours, his, hers, ours, theirs. My towel is dry → mine is dry. Ils ne prennent ni -s ni apostrophe.",
+   "regle": "Les pronoms possessifs remplacent adjectif possessif + nom : mine (le mien), yours, his, hers, ours, theirs. My bag is red → mine is red. Ils ne prennent ni -s ni apostrophe.",
    "exemples": [
     "This pen is mine.",
     "Your bike is red, hers is blue.",
@@ -435,8 +435,8 @@ JEU.enregistrer("anglais", {
   },
   {
    "id": "anglais-seq02-p3",
-   "en": "Where did they go last weekend ?",
-   "fr": "Où sont-ils allés le week-end dernier ?",
+   "en": "Where did you go on Saturday ?",
+   "fr": "Où es-tu allé samedi ?",
    "source": {
     "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
     "page": 4
@@ -667,7 +667,7 @@ JEU.enregistrer("anglais", {
     "[d]",
     "[ed]"
    ],
-   "explication": "Après le son [s], sourd, le -ed se prononce [t] : missed, asked. Pas de syllabe en plus.",
+   "explication": "Après un son sourd comme [s] ou [k], le -ed se prononce [t] : missed, asked. Pas de syllabe en plus.",
    "source": {
     "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
     "page": 4
@@ -778,19 +778,19 @@ JEU.enregistrer("anglais", {
    "fiche": "anglais-seq02-g3",
    "type": "qcm",
    "niveau": 1,
-   "enonce": "Comment pose-t-on la question à partir de « They travelled by plane » ?",
+   "enonce": "Comment pose-t-on la question à partir de « They travelled by boat » ?",
    "choix": [
-    "Did they travel by plane ?",
-    "Did they travelled by plane ?",
-    "Do they travelled by plane ?",
-    "Travelled they by plane ?"
+    "Did they travel by boat ?",
+    "Did they travelled by boat ?",
+    "Do they travelled by boat ?",
+    "Travelled they by boat ?"
    ],
    "explication": "Did + sujet + base verbale. Le verbe revient à sa base : travel.",
    "source": {
     "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
     "page": 4
    },
-   "r": "==QTZZEDcYiHFUEDTkkAKQQCxkVRMhkBbYkAAYTZ",
+   "r": "ElVSGYSHXUEDTkkAKQQCxkVRMhkBbYkAAYTZ",
    "poids": 1
   },
   {
@@ -1111,19 +1111,19 @@ JEU.enregistrer("anglais", {
    "fiche": "anglais-seq02-g5",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "On demande le lieu : quelle question correspond à « They went to Scotland last spring » ?",
+   "enonce": "On demande le lieu : quelle question correspond à « They went to Wales in August » ?",
    "choix": [
-    "Where did they go last spring ?",
-    "Where did they went last spring ?",
-    "Where they went last spring ?",
-    "Where do they go last spring ?"
+    "Where did they go in August ?",
+    "Where did they went in August ?",
+    "Where they went in August ?",
+    "Where do they go in August ?"
    ],
    "explication": "Where + did + they + go. Après did, le verbe irrégulier reste à sa base.",
    "source": {
     "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
     "page": 4
    },
-   "r": "PoVFKBgBUYhGSNTAUkQVe4gTWcBA30QAclkTKQxABUSZ",
+   "r": "==wFS40GVMhDHYgUbwQVe4gTWcBA30QAclkTKQxABUSZ",
    "poids": 1
   },
   {
@@ -1389,7 +1389,7 @@ JEU.enregistrer("anglais", {
     "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
     "page": 5
    },
-   "r": "=gDaPchCOIRSGgCHVFAHVskQNtQDrkVRBpAAL8gALlCH",
+   "r": "=QzMNtQDrkVRBpAAL8gALlCH",
    "poids": 1
   },
   {
@@ -1475,7 +1475,7 @@ JEU.enregistrer("anglais", {
     "ago",
     "last",
     "next",
-    "every"
+    "in"
    ],
    "explication": "La durée (three years) est suivie de ago. Devant un jour passé, on emploie last : last Monday.",
    "source": {
@@ -1580,19 +1580,19 @@ JEU.enregistrer("anglais", {
    "fiche": "anglais-seq02-g8",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Mets à la forme interrogative : « The pupils were listening. »",
+   "enonce": "Mets à la forme interrogative : « The students were listening. »",
    "choix": [
-    "Were the pupils listening ?",
-    "Did the pupils listening ?",
-    "Was the pupils listening ?",
-    "Were listening the pupils ?"
+    "Were the students listening ?",
+    "Did the students listening ?",
+    "Was the students listening ?",
+    "Were listening the students ?"
    ],
    "explication": "On place were devant le sujet. Le verbe garde son -ing.",
    "source": {
     "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
     "page": 5
    },
-   "r": "=wEUGFwBbkyFBYBHdkUHDsBG20VRQVkGPNAFMUSZ",
+   "r": "==wFS4ECI8wBXMTAckQVC0BAKYRH34VRQVkGPNAFMUSZ",
    "poids": 1
   },
   {
@@ -1838,7 +1838,7 @@ JEU.enregistrer("anglais", {
    "fiche": "anglais-seq02-g10",
    "type": "qcm",
    "niveau": 1,
-   "enonce": "Remplace les mots en trop : « This is my pen » devient « This pen is ___. »",
+   "enonce": "Complète avec un pronom possessif : « This is my pen » devient « This pen is ___. »",
    "choix": [
     "mine",
     "my",
@@ -2285,19 +2285,19 @@ JEU.enregistrer("anglais", {
    "fiche": "anglais-seq02-v6",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Que veut dire « He jumped out of the window » ?",
+   "enonce": "Que veut dire « The cat jumped out of the window » ?",
    "choix": [
-    "Il a sauté par la fenêtre",
-    "Il a fermé la fenêtre",
-    "Il a regardé par la fenêtre",
-    "Il a cassé la fenêtre"
+    "Le chat a sauté par la fenêtre",
+    "Le chat a fermé la fenêtre",
+    "Le chat a regardé par la fenêtre",
+    "Le chat a cassé la fenêtre"
    ],
    "explication": "To jump, c'est sauter ; out of the window, par la fenêtre. Jumped est au prétérit.",
    "source": {
     "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
     "page": 3
    },
-   "r": "=wkCUIxwxmyFTUEFdkEHOIASq7eEAxUHPdgRFsTZ",
+   "r": "==QYIdRQH2aADAQSTsiUHQQBRBcrbcQCw0ABVk1DHUgRM4TZ",
    "poids": 1
   },
   {
@@ -2367,17 +2367,17 @@ JEU.enregistrer("anglais", {
    "niveau": 2,
    "enonce": "Où achète-t-on un livre : « at the book shop » ou « at the library » ?",
    "choix": [
-    "At the book shop : library est un faux ami, c'est la bibliothèque",
+    "At the book shop : library veut dire bibliothèque",
     "At the library : book shop est la bibliothèque",
     "Les deux mots veulent dire librairie",
     "Aucun des deux : on dit bookery"
    ],
-   "explication": "Library est un faux ami : c'est la bibliothèque, où l'on emprunte. On achète à la book shop.",
+   "explication": "Library ressemble à librairie mais veut dire bibliothèque, où l'on emprunte. On achète à la book shop.",
    "source": {
     "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
     "page": 5
    },
-   "r": "=AlIHQQz2mRHBYgHKoyTFRVQOtRFD4UEn5FHIQRURshDUgULYVUQetwTfQBCAUyGZU0TRlRAHEASoIkCX1wCHIhRdMTZ",
+   "r": "==wDLoxFOrqGz0BHJcBGL4kCAEwJNEBQIhxTfQBCAUyGZU0TRlRAHEASoIkCX1wCHIhRdMTZ",
    "poids": 1
   },
   {
@@ -2606,7 +2606,7 @@ JEU.enregistrer("anglais", {
    ],
    "explication": "The bus stop : le nom bus se place devant stop. Wait at the bus stop !",
    "source": {
-    "fichier": "cours/anglais/Anglais 5e - Sequence 2 - Exercices supplementaires.pdf",
+    "fichier": "cours/anglais/Anglais 5e - Sequence 2 - Exercices supplementaires - Corriges.pdf",
     "page": 2
    },
    "r": "=AFGsklFV41GNY0ABYQZ",
@@ -2733,15 +2733,15 @@ JEU.enregistrer("anglais", {
    "fiche": "anglais-seq02-p3",
    "type": "ordre",
    "niveau": 2,
-   "enonce": "Remets les mots dans l'ordre pour dire « Où sont-ils allés le week-end dernier ? ».",
+   "enonce": "Remets les mots dans l'ordre pour dire « Où es-tu allé samedi ? ».",
    "elements": [
     "go",
-    "last weekend ?",
+    "on Saturday ?",
     "Where",
-    "they",
+    "you",
     "did"
    ],
-   "explication": "Where did they go last weekend : mot interrogatif, did, sujet, verbe, moment.",
+   "explication": "Where did you go on Saturday : mot interrogatif, did, sujet, verbe, moment.",
    "source": {
     "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
     "page": 4
@@ -2827,7 +2827,7 @@ JEU.enregistrer("anglais", {
    "enonce": "Relie chaque phrase à sa traduction.",
    "gauche": [
     "They were walking in the park when it started to rain.",
-    "Where did they go last weekend ?",
+    "Where did you go on Saturday ?",
     "She didn't bring her camera.",
     "Yesterday, we visited an old castle."
    ],
@@ -2835,9 +2835,9 @@ JEU.enregistrer("anglais", {
     "Elle n'a pas apporté son appareil photo.",
     "Hier, nous avons visité un vieux château.",
     "Ils se promenaient dans le parc quand il s'est mis à pleuvoir.",
-    "Où sont-ils allés le week-end dernier ?"
+    "Où es-tu allé samedi ?"
    ],
-   "explication": "Were walking : se promenaient (action en cours) ; started : s'est mis à (action soudaine). Did they go : sont-ils allés.",
+   "explication": "Were walking : se promenaient (action en cours) ; started : s'est mis à (action soudaine). Did you go : es-tu allé.",
    "source": {
     "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
     "page": 5

@@ -79,7 +79,7 @@ JEU.enregistrer("anglais", {
    "id": "anglais-seq01-v8",
    "en": "the traffic",
    "fr": "la circulation",
-   "exemple": "There was a lot of traffic in town.",
+   "exemple": "The traffic was terrible this morning.",
    "source": {
     "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
     "page": 2
@@ -233,7 +233,7 @@ JEU.enregistrer("anglais", {
    "exemples": [
     "I was at home.",
     "She was tired.",
-    "We were in the garden.",
+    "We were in the park.",
     "You were late."
    ],
    "source": {
@@ -286,8 +286,8 @@ JEU.enregistrer("anglais", {
    "id": "anglais-seq01-g5",
    "regle": "Du présent au prétérit : am et is deviennent was, are devient were. Le reste de la phrase ne change pas, qu'elle soit négative, interrogative ou avec un verbe en -ing.",
    "exemples": [
-    "It is Monday. → It was Monday.",
-    "Are you at home ? → Were you at home ?",
+    "It is cold. → It was cold.",
+    "Are you at the pool ? → Were you at the pool ?",
     "He isn't running. → He wasn't running."
    ],
    "source": {
@@ -314,7 +314,7 @@ JEU.enregistrer("anglais", {
    "exemples": [
     "Do you like tea ?",
     "She doesn't play chess.",
-    "Where do they live ?"
+    "Where do they work ?"
    ],
    "source": {
     "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
@@ -400,8 +400,8 @@ JEU.enregistrer("anglais", {
   },
   {
    "id": "anglais-seq01-p2",
-   "en": "Were you at school on Monday ?",
-   "fr": "Étais-tu à l'école lundi ?",
+   "en": "Were you at the library on Monday ?",
+   "fr": "Étais-tu à la bibliothèque lundi ?",
    "source": {
     "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
     "page": 2
@@ -564,19 +564,19 @@ JEU.enregistrer("anglais", {
    "fiche": "anglais-seq01-g1",
    "type": "qcm",
    "niveau": 1,
-   "enonce": "Que veut dire « They were in London » ?",
+   "enonce": "Que veut dire « They were at the zoo » ?",
    "choix": [
-    "Ils étaient à Londres",
-    "Ils sont à Londres",
-    "Ils seront à Londres",
-    "Ils vont à Londres"
+    "Ils étaient au zoo",
+    "Ils sont au zoo",
+    "Ils seront au zoo",
+    "Ils vont au zoo"
    ],
-   "explication": "Were est le prétérit de to be : c'est le passé. Au présent, on dirait They are in London.",
+   "explication": "Were est le prétérit de to be : c'est le passé. Au présent, on dirait They are at the zoo.",
    "source": {
     "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
     "page": 1
    },
-   "r": "==wSBICARsgG9kkzsKFHtgEDUl1xsaUFFsTZ",
+   "r": "XpgGLk0GOIFHtgEDUl1xsaUFFsTZ",
    "poids": 1
   },
   {
@@ -638,19 +638,19 @@ JEU.enregistrer("anglais", {
    "fiche": "anglais-seq01-g2",
    "type": "qcm",
    "niveau": 1,
-   "enonce": "Comment pose-t-on la question à partir de « They were in the garden » ?",
+   "enonce": "Comment pose-t-on la question à partir de « They were in the kitchen » ?",
    "choix": [
-    "Were they in the garden ?",
-    "Did they were in the garden ?",
-    "They were in the garden ?",
-    "Was they in the garden ?"
+    "Were they in the kitchen ?",
+    "Did they were in the kitchen ?",
+    "They were in the kitchen ?",
+    "Was they in the kitchen ?"
    ],
    "explication": "Pour poser la question, on place were devant le sujet. Pas de did avec to be.",
    "source": {
     "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
     "page": 3
    },
-   "r": "ElVScIiFHQgERxgBbIlBq0AHQVkGPNAFMUSZ",
+   "r": "==QTZZ0BX8SEBwgHRxgBbIlBq0AHQVkGPNAFMUSZ",
    "poids": 1
   },
   {
@@ -678,7 +678,7 @@ JEU.enregistrer("anglais", {
    "type": "trou",
    "niveau": 2,
    "enonce": "Complète avec la forme qui convient.",
-   "texte": "We ___ at the cinema, we ___ at the swimming pool.",
+   "texte": "No, we ___ at the cinema, we ___ at the swimming pool.",
    "banque": [
     "weren't",
     "wasn't",
@@ -904,7 +904,7 @@ JEU.enregistrer("anglais", {
    "fiche": "anglais-seq01-g4",
    "type": "qcm",
    "niveau": 1,
-   "enonce": "Complète le question tag : « You were at the concert, ___ ? »",
+   "enonce": "Complète le question tag : « You were at the stadium, ___ ? »",
    "choix": [
     "weren't you",
     "were you",
@@ -1032,7 +1032,7 @@ JEU.enregistrer("anglais", {
     "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
     "page": 1
    },
-   "r": "vUTYIdBUFpxTSkwBSJCAQIxVdt0CdcBA30QESM0CdMQELlCH",
+   "r": "==AKss0CdcBA30QESM0CdMQELlCH",
    "poids": 1
   },
   {
@@ -1196,19 +1196,19 @@ JEU.enregistrer("anglais", {
    "fiche": "anglais-seq01-g5",
    "type": "qcm",
    "niveau": 1,
-   "enonce": "Que devient « He is at work » au prétérit ?",
+   "enonce": "Que devient « My father is at work » au prétérit ?",
    "choix": [
-    "He was at work.",
-    "He were at work.",
-    "He did at work.",
-    "He has at work."
+    "My father was at work.",
+    "My father were at work.",
+    "My father did at work.",
+    "My father has at work."
    ],
    "explication": "Is devient was. At work veut dire « au travail ».",
    "source": {
     "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
     "page": 3
    },
-   "r": "=sEQEAwB00QEU1QHOEhRMoTZ",
+   "r": "QlWGHogAR1xDPFQC00wFQVkGOAgRQ8TZ",
    "poids": 1
   },
   {
@@ -1391,19 +1391,19 @@ JEU.enregistrer("anglais", {
    "fiche": "anglais-seq01-g7",
    "type": "qcm",
    "niveau": 1,
-   "enonce": "Quelle est la forme négative de « They watch TV » ?",
+   "enonce": "Quelle est la forme négative de « They read comics » ?",
    "choix": [
-    "They don't watch TV.",
-    "They doesn't watch TV.",
-    "They not watch TV.",
-    "They aren't watch TV."
+    "They don't read comics.",
+    "They doesn't read comics.",
+    "They not read comics.",
+    "They aren't read comics."
    ],
    "explication": "Avec they, la négation est don't + verbe. Doesn't ne sert qu'avec he, she et it.",
    "source": {
     "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
     "page": 2
    },
-   "r": "==AUbNTIRFQDbMxHjllQbJkCP9xABYSZ",
+   "r": "==wScRTEcggGSkkCOchGjllQbJkCP9xABYSZ",
    "poids": 1
   },
   {
@@ -1509,7 +1509,7 @@ JEU.enregistrer("anglais", {
    "type": "trou",
    "niveau": 3,
    "enonce": "Écris l'auxiliaire qui manque : do, does, don't ou doesn't.",
-   "texte": "My brother ___ eat meat, and ___ you eat fish ?",
+   "texte": "No, my brother ___ eat meat. And ___ you eat fish ?",
    "explication": "My brother est un singulier (he) : doesn't eat. Avec you, la question commence par do.",
    "source": {
     "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
@@ -1543,19 +1543,19 @@ JEU.enregistrer("anglais", {
    "fiche": "anglais-seq01-g8",
    "type": "qcm",
    "niveau": 1,
-   "enonce": "Complète : « You don't like carrots, ___ ? »",
+   "enonce": "Complète : « They don't eat meat, ___ ? »",
    "choix": [
-    "do you",
-    "don't you",
-    "are you",
-    "aren't you"
+    "do they",
+    "don't they",
+    "are they",
+    "aren't they"
    ],
-   "explication": "Phrase négative avec don't : le tag est positif, do you ? Le verbe like réclame l'auxiliaire do.",
+   "explication": "Phrase négative avec don't : le tag est positif, do they ? Le verbe eat réclame l'auxiliaire do.",
    "source": {
     "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
     "page": 2
    },
-   "r": "=8wGA8hRGYRZ",
+   "r": "XQ1CHIhRGYRZ",
    "poids": 1
   },
   {
@@ -1651,7 +1651,7 @@ JEU.enregistrer("anglais", {
     "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
     "page": 2
    },
-   "r": "0MTTB0ALJdkbBMTTD4QSGgCHVZBEe0ATDBVDr0QESMUHKkgALlCH",
+   "r": "==ANvUWAQoQETJjQyAVDr0QESMUHKkgALlCH",
    "poids": 1
   },
   {
@@ -2476,9 +2476,9 @@ JEU.enregistrer("anglais", {
    "fiche": "anglais-seq01-p2",
    "type": "ordre",
    "niveau": 2,
-   "enonce": "Remets les mots dans l'ordre pour dire « Étais-tu à l'école lundi ? ».",
+   "enonce": "Remets les mots dans l'ordre pour dire « Étais-tu à la bibliothèque lundi ? ».",
    "elements": [
-    "at school",
+    "at the library",
     "you",
     "on Monday ?",
     "Were"
@@ -2606,7 +2606,7 @@ JEU.enregistrer("anglais", {
    "fiche": "anglais-seq01-g4",
    "type": "vrai_faux",
    "niveau": 2,
-   "enonce": "Après « They were happy », le question tag est « weren't they ? ».",
+   "enonce": "Après « They were lucky », le question tag est « weren't they ? ».",
    "corrections": [],
    "explication": "Phrase affirmative avec were et they : tag négatif weren't they. Le sujet et l'auxiliaire sont repris.",
    "source": {
