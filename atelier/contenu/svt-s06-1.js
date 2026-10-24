@@ -21,7 +21,7 @@ module.exports = {
       ],
       dates: [
         { annee: 1962, evenement: "Le cyclone Jenny frappe la Réunion" },
-        { annee: 2014, evenement: "Un cyclone touche la Réunion en faisant bien moins de victimes" }
+        { annee: 2014, evenement: "Dernière année du tableau des cyclones : bien moins de morts qu'en 1962" }
       ],
       lieux: ["La Réunion"], personnages: [],
       vocabulaire: [
@@ -32,11 +32,11 @@ module.exports = {
     {
       id: "svt-s06-1-f2", notion: "1962 : le cyclone Jenny",
       titre: "Une alerte arrivée trop tard",
-      texte: "En 1962, le cyclone Jenny frappe la Réunion. Les prévisions annonçaient un phénomène bien moins grave que la réalité, et le bulletin d'alerte diffusé à la radio arrive trop tard : beaucoup de gens sont déjà au travail. Des maisons sont détruites, des barques de pêcheurs surprises en mer, un paquebot rompt ses amarres, des wagons sont emportés.",
+      texte: "En 1962, le cyclone Jenny frappe la Réunion. Les prévisions annonçaient un phénomène bien moins grave que la réalité, et le bulletin d'alerte, passé à la radio, arrive trop tard. Les documents décrivent des personnes déjà au travail, des maisons détruites, des barques de pêcheurs sorties en mer, un paquebot qui rompt ses amarres et des wagons de chemin de fer touchés.",
       pointsCles: [
         "1962 : cyclone Jenny à la Réunion",
-        "Prévisions trop optimistes, bulletin d'alerte à la radio arrivé trop tard",
-        "Beaucoup de personnes déjà au travail, maisons détruites, barques en mer, paquebot, wagons"
+        "Prévisions bien en dessous de la réalité, bulletin d'alerte à la radio arrivé trop tard",
+        "Personnes déjà au travail, maisons détruites, barques en mer, paquebot, wagons"
       ],
       dates: [{ annee: 1962, evenement: "Le cyclone Jenny frappe la Réunion" }],
       lieux: ["La Réunion"], personnages: [],
@@ -137,12 +137,12 @@ module.exports = {
       enonce: "Par quel moyen le bulletin d'alerte a-t-il été diffusé en 1962 ?",
       choix: ["Par la radio", "Par un message sur téléphone portable", "Par Internet", "Par des affiches dans les rues"],
       reponse: "Par la radio",
-      explication: "En 1962, l'alerte passait par les ondes de la radio. Téléphones portables et Internet n'existaient pas.", source: C(11) },
+      explication: "En 1962, le bulletin d'alerte passait par les ondes de la radio. Il est arrivé trop tard.", source: C(11) },
     { id: "svt-s06-1-q12", fiche: "svt-s06-1-f2", type: "qcm_multiple", niveau: 2,
-      enonce: "Quels dégâts le cyclone Jenny a-t-il causés en 1962 ? (plusieurs réponses)",
-      choix: ["Des maisons détruites", "Des barques de pêcheurs surprises en mer", "Un paquebot qui a rompu ses amarres", "Des wagons de chemin de fer emportés", "Un volcan réveillé", "Une sécheresse de trois ans"],
-      reponse: ["Des maisons détruites", "Des barques de pêcheurs surprises en mer", "Un paquebot qui a rompu ses amarres", "Des wagons de chemin de fer emportés"],
-      explication: "Maisons, barques, paquebot, wagons : tous les enjeux ont été touchés. Volcan et sécheresse n'ont rien à voir avec un cyclone.", source: C(11) },
+      enonce: "Que peut provoquer un cyclone à la Réunion ? (plusieurs réponses)",
+      choix: ["Des maisons détruites", "Des barques de pêcheurs surprises en mer", "Un paquebot qui rompt ses amarres", "Des wagons de chemin de fer touchés", "Un volcan réveillé", "Une sécheresse de trois ans"],
+      reponse: ["Des maisons détruites", "Des barques de pêcheurs surprises en mer", "Un paquebot qui rompt ses amarres", "Des wagons de chemin de fer touchés"],
+      explication: "Maisons, barques, paquebot, wagons : tous ces enjeux peuvent être touchés. Volcan et sécheresse n'ont rien à voir avec un cyclone.", source: C(11) },
     { id: "svt-s06-1-q13", fiche: "svt-s06-1-f2", type: "qcm", niveau: 3,
       enonce: "Pourquoi tant de personnes ont-elles été surprises par le cyclone de 1962 ?",
       choix: ["Parce que l'alerte est arrivée trop tard", "Parce que personne n'avait de radio", "Parce que le cyclone est arrivé de nuit", "Parce que l'île n'avait jamais connu de cyclone auparavant"],
@@ -216,8 +216,8 @@ module.exports = {
     { id: "svt-s06-1-q27", fiche: "svt-s06-1-f4", type: "association", niveau: 3,
       enonce: "Relie chaque élément à ce qu'il représente à la Réunion.",
       gauche: ["Les cyclones qui reviennent", "Les habitants, leurs maisons, leurs bateaux", "Les morts et les dégâts", "Bulletins gradués et kits de survie"],
-      droite: ["L'aléa", "Les enjeux", "La vulnérabilité", "Les précautions qui réduisent la vulnérabilité"],
-      reponse: [[0, 0], [1, 1], [2, 2], [3, 3]],
+      droite: ["Les précautions qui réduisent la vulnérabilité", "L'aléa", "Les enjeux", "La vulnérabilité"],
+      reponse: [[0, 1], [1, 2], [2, 3], [3, 0]],
       explication: "Aléa, enjeux, vulnérabilité, précautions : les quatre pièces du raisonnement. Les précautions font baisser le risque.", source: C(11) },
     { id: "svt-s06-1-q28", fiche: "svt-s06-1-f4", type: "qcm", niveau: 2,
       enonce: "Comment résumer l'évolution du risque cyclonique à la Réunion ?",

@@ -224,10 +224,10 @@ module.exports = {
       reponse: "À montrer qu'un écart de température fait circuler l'eau",
       explication: "Le chaud monte, le froid descend : l'écart de température crée un courant. C'est ce qui se passe en grand dans les océans.", source: R(4) },
     { id: "svt-s04-1-q16", fiche: "svt-s04-1-f2", type: "qcm", niveau: 3,
-      enonce: "Pourquoi voit-on du violet, après quelques minutes, aux endroits où les tubes se rejoignent ?",
-      choix: ["Parce que l'eau rouge et l'eau bleue commencent à se mélanger", "Parce que le colorant bleu a changé de couleur en chauffant", "Parce que les glaçons ont fondu dans le tube", "Parce que la lumière traverse le verre"],
-      reponse: "Parce que l'eau rouge et l'eau bleue commencent à se mélanger",
-      explication: "Rouge et bleu donnent du violet. Les eaux se mélangent d'abord là où les courants se croisent.", source: R(4) },
+      enonce: "Après quelques minutes, où les deux eaux colorées commencent-elles à se mélanger ?",
+      choix: ["Aux endroits où les tubes se rejoignent", "Dans le bac d'eau chaude", "Dans le bac de glaçons, sous la glace", "Partout en même temps, dès la première minute"],
+      reponse: "Aux endroits où les tubes se rejoignent",
+      explication: "Les eaux se mélangent d'abord là où les tubes se rejoignent, aux endroits où les deux courants se croisent. Au bout d'un quart d'heure, tout est mélangé.", source: R(4) },
     // f3 : simuler un courant d'eau salée
     { id: "svt-s04-1-q17", fiche: "svt-s04-1-f3", type: "qcm", niveau: 1,
       enonce: "Dans la simulation des courants salés, quelle eau verse-t-on dans un tube vertical ?",
@@ -261,8 +261,8 @@ module.exports = {
     { id: "svt-s04-1-q23", fiche: "svt-s04-1-f3", type: "association", niveau: 2,
       enonce: "Relie chaque élément des montages à son rôle.",
       gauche: ["Colorant rouge", "Bac de glaçons", "Eau très salée colorée en bleu", "Tube horizontal du bas"],
-      droite: ["Montre le chemin de l'eau chaude", "Refroidit l'eau d'un côté du circuit", "Simule un courant salé", "Passage de l'eau froide ou salée"],
-      reponse: [[0, 0], [1, 1], [2, 2], [3, 3]],
+      droite: ["Passage de l'eau froide ou salée", "Simule un courant salé", "Montre le chemin de l'eau chaude", "Refroidit l'eau d'un côté du circuit"],
+      reponse: [[0, 2], [1, 3], [2, 1], [3, 0]],
       explication: "Le rouge suit l'eau chaude, les glaçons refroidissent un côté, l'eau salée bleue simule un courant salé. Le froid comme le sel passent par le tube du bas.", source: R(5) },
     // f4 : le diagramme ombrothermique de Palerme
     { id: "svt-s04-1-q24", fiche: "svt-s04-1-f4", type: "qcm", niveau: 1,
@@ -314,7 +314,7 @@ module.exports = {
     {
       id: "svt-s04-1-b1", fiche: "svt-s04-1-f1",
       titre: "Le Gulf Stream, un fleuve dans l'océan",
-      texte: "Le Gulf Stream est un courant chaud de surface de l'océan Atlantique. Il naît entre la Floride et les Bahamas, longe la côte est des États-Unis, puis se disperse au large de Terre-Neuve. Il emporte vers le nord des eaux tropicales à environ 25 °C et avance à près de 9 km/h. On a longtemps cru qu'il adoucissait les hivers d'Europe ; les scientifiques pensent aujourd'hui que les vents et la géographie comptent davantage.",
+      texte: "Le Gulf Stream est un courant chaud de surface de l'océan Atlantique. Il naît entre la Floride et les Bahamas, longe la côte est des États-Unis, puis se disperse au large de la Nouvelle-Écosse et de Terre-Neuve. Il emporte vers le nord des eaux tropicales à environ 25 °C et avance à près de 9 km/h. On a longtemps cru qu'il adoucissait les hivers d'Europe ; les scientifiques pensent aujourd'hui que les vents et la géographie comptent davantage.",
       source: { titre: "Gulf Stream", editeur: "Wikipédia, l'encyclopédie libre", url: "https://fr.wikipedia.org/wiki/Gulf_Stream" }
     }
   ],

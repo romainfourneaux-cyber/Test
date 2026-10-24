@@ -13,7 +13,7 @@ module.exports = {
     {
       id: "svt-s05-2-f1", notion: "L'aléa",
       titre: "Le phénomène qui menace",
-      texte: "Un aléa est un phénomène naturel qui peut frapper un territoire. À la Réunion, l'aléa est le cyclone : cinq cyclones différents ont touché l'île au fil des années, et l'aléa y est toujours présent. L'aléa ne dit rien, à lui seul, des dégâts : il décrit seulement ce qui peut arriver.",
+      texte: "Un aléa est le phénomène naturel qui peut frapper un territoire. Dans l'exemple étudié, les aléas sont les cyclones : cinq cyclones différents sont cités pour l'île de la Réunion, et l'aléa « cyclone » y est toujours présent. L'aléa ne dit rien, à lui seul, des dégâts : il décrit seulement ce qui peut arriver.",
       pointsCles: [
         "Aléa : le phénomène naturel qui peut frapper (le cyclone, à la Réunion)",
         "Un même aléa peut revenir plusieurs fois sur le même territoire",
@@ -21,8 +21,7 @@ module.exports = {
       ],
       dates: [], lieux: ["La Réunion"], personnages: [],
       vocabulaire: [
-        { mot: "aléa", def: "un phénomène naturel qui peut frapper un territoire, comme un cyclone" },
-        { mot: "cyclone", def: "une énorme tempête tournante, avec des vents très violents et de fortes pluies" }
+        { mot: "aléa", def: "un phénomène naturel qui peut frapper un territoire, comme un cyclone" }
       ],
       schema: null, prerequis: ["svt-s03-1-f4"], source: C(11)
     },
@@ -69,8 +68,8 @@ module.exports = {
         "Réunion : beaucoup moins de morts entre 1962 et 2014, cyclones toujours présents"
       ],
       dates: [
-        { annee: 1962, evenement: "Un cyclone frappe la Réunion et fait de nombreuses victimes" },
-        { annee: 2014, evenement: "Un cyclone touche la Réunion en faisant bien moins de morts" }
+        { annee: 1962, evenement: "Un cyclone frappe la Réunion ; le bilan humain est lourd" },
+        { annee: 2014, evenement: "Dernière année du tableau des cyclones : bien moins de morts qu'en 1962" }
       ],
       lieux: ["La Réunion"], personnages: [],
       vocabulaire: [
@@ -112,10 +111,10 @@ module.exports = {
       reponse: "Parce que des cyclones continuent de frapper l'île au fil des années",
       explication: "Les cyclones reviennent régulièrement sur l'île. L'aléa n'a donc pas disparu, même si les dégâts changent.", source: C(11) },
     { id: "svt-s05-2-q7", fiche: "svt-s05-2-f1", type: "qcm_multiple", niveau: 2,
-      enonce: "Parmi ces exemples, lesquels sont des aléas ? (plusieurs réponses)",
-      choix: ["Un cyclone", "Des pluies très violentes", "Des vents très violents", "Une école", "Un pont", "Une barque de pêcheur"],
-      reponse: ["Un cyclone", "Des pluies très violentes", "Des vents très violents"],
-      explication: "Un aléa est un phénomène naturel : cyclone, pluies ou vents violents. École, pont et barque sont des enjeux.", source: C(11) },
+      enonce: "Que dit l'exemple de la Réunion sur l'aléa « cyclone » ? (plusieurs réponses)",
+      choix: ["Il est toujours présent sur l'île", "Cinq cyclones différents sont cités", "Il a disparu après le cyclone de 1962", "Il ne touche que les bateaux", "C'est un enjeu"],
+      reponse: ["Il est toujours présent sur l'île", "Cinq cyclones différents sont cités"],
+      explication: "Les cyclones reviennent régulièrement sur l'île : cinq sont cités, et l'aléa reste présent. Le cyclone est l'aléa, pas un enjeu.", source: C(11) },
     // f2 : les enjeux
     { id: "svt-s05-2-q8", fiche: "svt-s05-2-f2", type: "qcm", niveau: 1,
       enonce: "Comment appelle-t-on les personnes et les biens qui peuvent être touchés par un aléa ?",
@@ -138,14 +137,14 @@ module.exports = {
       explication: "Le cyclone est le phénomène qui frappe : l'aléa. Les enjeux, ce sont les personnes et les biens exposés.", source: C(11) },
     { id: "svt-s05-2-q12", fiche: "svt-s05-2-f2", type: "qcm", niveau: 2,
       enonce: "Lequel de ces exemples est un enjeu ?",
-      choix: ["Des barques de pêcheurs", "Un cyclone", "Des vents très violents", "Des pluies diluviennes"],
+      choix: ["Des barques de pêcheurs", "Un cyclone", "Les dégâts qu'il provoque", "Le risque"],
       reponse: "Des barques de pêcheurs",
-      explication: "Les barques peuvent être détruites : ce sont des enjeux. Cyclone, vents et pluies sont des aléas.", source: C(11) },
+      explication: "Les barques peuvent être détruites : ce sont des enjeux. Le cyclone est l'aléa, les dégâts traduisent la vulnérabilité, et le risque combine les deux.", source: C(11) },
     { id: "svt-s05-2-q13", fiche: "svt-s05-2-f2", type: "qcm", niveau: 3,
       enonce: "Pourquoi les personnes déjà sur leur lieu de travail au moment d'un cyclone comptent-elles parmi les enjeux ?",
       choix: ["Parce qu'elles peuvent être blessées ou tuées par le cyclone", "Parce qu'elles provoquent le cyclone", "Parce qu'elles mesurent le vent", "Parce qu'elles sont à l'abri dans des bâtiments solides et bien fermés"],
       reponse: "Parce qu'elles peuvent être blessées ou tuées par le cyclone",
-      explication: "Les personnes exposées au cyclone sont les premiers enjeux. Loin de chez elles, elles sont difficiles à mettre à l'abri.", source: C(11) },
+      explication: "Les personnes exposées au cyclone sont les premiers enjeux. Celles qui sont déjà au travail à ce moment-là sont citées en premier dans l'exemple.", source: C(11) },
     { id: "svt-s05-2-q14", fiche: "svt-s05-2-f2", type: "trou", niveau: 1,
       enonce: "Complète la phrase.",
       texte: "Les personnes, les habitations et les bateaux qu'un cyclone peut toucher sont des ___.",
@@ -175,8 +174,8 @@ module.exports = {
     { id: "svt-s05-2-q19", fiche: "svt-s05-2-f3", type: "association", niveau: 2,
       enonce: "Relie chaque exemple à sa catégorie.",
       gauche: ["Un cyclone", "Des maisons et des personnes", "Des dégâts considérables", "Aléa combiné à la vulnérabilité des enjeux"],
-      droite: ["L'aléa", "Les enjeux", "La vulnérabilité", "Le risque"],
-      reponse: [[0, 0], [1, 1], [2, 2], [3, 3]],
+      droite: ["Le risque", "La vulnérabilité", "L'aléa", "Les enjeux"],
+      reponse: [[0, 2], [1, 3], [2, 1], [3, 0]],
       explication: "Le cyclone frappe (aléa), les maisons et les personnes sont touchées (enjeux), les dégâts mesurent la vulnérabilité. Le tout forme le risque.", source: C(11) },
     { id: "svt-s05-2-q20", fiche: "svt-s05-2-f3", type: "qcm", niveau: 3,
       enonce: "Pourquoi le risque est-il différent de l'aléa ?",
@@ -234,7 +233,7 @@ module.exports = {
     {
       id: "svt-s05-2-b1", fiche: "svt-s05-2-f3",
       titre: "Vert, jaune, orange, rouge : la vigilance météo",
-      texte: "En France, Météo-France publie depuis 2001 une carte de vigilance, mise à jour au moins deux fois par jour. Chaque département reçoit une couleur : vert quand il n'y a pas de danger particulier, jaune pour inviter à l'attention, orange pour la grande prudence, rouge pour un danger exceptionnel. Neuf phénomènes sont suivis, dont le vent, la pluie-inondation, les orages, la neige-verglas, la canicule et les vagues-submersion.",
+      texte: "En France, Météo-France publie depuis 2001 une carte de vigilance, mise à jour au moins deux fois par jour. Chaque département reçoit une couleur : vert quand il n'y a pas de vigilance particulière, jaune pour être attentif, orange pour être très vigilant, rouge quand une vigilance absolue s'impose. Neuf phénomènes sont suivis, dont le vent, la pluie-inondation, les orages, la neige-verglas, la canicule et les vagues-submersion.",
       source: { titre: "Vigilance météorologique", editeur: "Wikipédia, l'encyclopédie libre", url: "https://fr.wikipedia.org/wiki/Vigilance_m%C3%A9t%C3%A9orologique" }
     }
   ],

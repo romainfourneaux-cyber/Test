@@ -26,3 +26,14 @@ niv | carte          | tenue (éclatante) | tenu  retraite | murs restants (quan
  3  | foret          |  100 % ( 47 %)   |  53 %    0 %   |                    100 % (100 %) |              4.64 (4.64) |      6.9 / 0.9    | 0.93 · 0, 0, 0, 0
  4  | foret          |  100 % (  0 %)   | 100 %    0 %   |                    100 % (100 %) |                3.3 (3.3) |      5.9 / 2.2    | 0.99 · 0, 0, 0, 0
 moy |                |  100 % ( 23 %)   |                |                            100 % |                      3.5
+
+p = 0.9 (réponses justes) · bataille de route : attaque, 1 vague, camp de 6, carte foret, sans champion
+niv | carte          | tenue (éclatante) | tenu  retraite | murs restants (quand elle tient) | coups portés (1re vague) | ennemis tués / tes pertes | sorties · rival : tours, gardes, rappelés, renforts
+ 0  | foret          |  100 % (  0 %)   | 100 %    0 %   |                    100 % (100 %) |              3.96 (3.96) |        7 / 1      | 0.98 · 0, 0, 0, 0
+ 1  | foret          |  100 % (  3 %)   |  97 %    0 %   |                    100 % (100 %) |              3.63 (3.63) |      6.7 / 0.7    | 0.72 · 0, 0, 0, 0
+ 2  | foret          |  100 % ( 74 %)   |  26 %    0 %   |                    100 % (100 %) |              4.69 (4.69) |        7 / 0.5    | 0.98 · 0, 0, 0, 0
+ 3  | foret          |  100 % ( 71 %)   |  29 %    0 %   |                    100 % (100 %) |              5.28 (5.28) |        7 / 0.5    | 0.96 · 0, 0, 0, 0
+ 4  | foret          |  100 % (  0 %)   | 100 %    0 %   |                    100 % (100 %) |              3.64 (3.64) |        6 / 2.5    | 1 · 0, 0, 0, 0
+moy |                |  100 % (29.6 %)   |                |                            100 % |                      4.2
+
+(15 s)
