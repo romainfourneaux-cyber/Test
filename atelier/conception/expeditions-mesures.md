@@ -34,7 +34,12 @@ node atelier/outils/simuler-bataille.js --comparer atelier/mesures/avant-expedit
 
 Tout écart autre que « +0 % » signale un changement des batailles de campagne. Pour une preuve complète (les quatre stratégies, défense comprise, au centième), régénérer le JSON sous un autre nom et le comparer octet par octet à la référence : dans PowerShell, `Compare-Object (Get-Content a.json) (Get-Content b.json)` ne doit rien rendre ; sous Linux, `cmp a.json b.json`.
 
-Preuve du jour 0 : (à compléter : référence, comparaison)
+Preuve du jour 0 (24/10/2026) :
+
+- Le simulateur d'avant les options de route (commit 7116aec, copie de travail) et le simulateur d'aujourd'hui ont été lancés avec la commande de régénération ci-dessus, mêmes graines : les deux fichiers JSON (33 588 octets, quatre stratégies, p 0,6 à 0,9, niveaux 0 à 4, attaque et défense) sont **identiques octet par octet** (`cmp` muet, même empreinte SHA-256 commençant par 2ecf29ef). Le fichier d'aujourd'hui est la référence installée.
+- La sortie texte par défaut (sans `--json`) a aussi été comparée entre les deux versions sur un essai court (6 graines, niveaux 0 et 3, p 0,7 et 0,9, stratégies equilibre et rush) : identique hors la durée affichée.
+- `--comparer atelier/mesures/avant-expedition.json` lancé ensuite : **+0 % sur les vingt cases** (batailles pour prendre et coups à la 1re bataille, niveaux 0 à 4, p 0,6 à 0,9), sortie gardée dans atelier/mesures/jour0/campagne-comparer.txt. Repères de la référence à 7 sur 10, joueur équilibré : batailles pour prendre 1,69 / 2,7 / 3,1 / 2,56 / 5,16 aux niveaux 0 à 4 ; défense du domaine tenue 79 / 73 / 79 / 83 / 73 %.
+- Au passage : une bataille de route jouée sur `domaine` à 3 vagues et camp de 12 rend exactement la défense du domaine de la campagne (mêmes graines, mêmes chiffres), ce qui vérifie que le mode route emprunte le même chemin du moteur.
 
 ### 2. Les options de mesure du simulateur
 
