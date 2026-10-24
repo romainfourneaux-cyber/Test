@@ -1,0 +1,18 @@
+Moteur : jeu/js/bataille-moteur.js · or perdu par erreur : 6 · 160 batailles par niveau · bataille de route : defense, 2 vagues, camp de 10, carte gue, arsenal du niveau − 1
+
+p = 0.6 (réponses justes) · bataille de route : defense, 2 vagues, camp de 10, carte gue, arsenal du niveau − 1
+niv | carte          | tenue (éclatante) | tenu  retraite | murs restants (quand elle tient) | coups portés (1re vague) | ennemis tués / tes pertes | sorties · rival : tours, gardes, rappelés, renforts
+ 3  | gue            |   76 % (  3 %)   |  73 %   24 %   |                      44 % (58 %) |               1.91 (1.6) |     12.1 / 4.4    | 1.03 · 1, 0, 0, 0
+moy |                |   76 % (  3 %)   |                |                             44 % |                      1.9
+
+p = 0.7 (réponses justes) · bataille de route : defense, 2 vagues, camp de 10, carte gue, arsenal du niveau − 1
+niv | carte          | tenue (éclatante) | tenu  retraite | murs restants (quand elle tient) | coups portés (1re vague) | ennemis tués / tes pertes | sorties · rival : tours, gardes, rappelés, renforts
+ 3  | gue            |   87 % (  6 %)   |  81 %   13 %   |                      61 % (70 %) |              2.44 (1.88) |     13.6 / 5.1    | 1.28 · 1, 0, 0, 0
+moy |                |   87 % (  6 %)   |                |                             61 % |                      2.4
+
+p = 0.9 (réponses justes) · bataille de route : defense, 2 vagues, camp de 10, carte gue, arsenal du niveau − 1
+niv | carte          | tenue (éclatante) | tenu  retraite | murs restants (quand elle tient) | coups portés (1re vague) | ennemis tués / tes pertes | sorties · rival : tours, gardes, rappelés, renforts
+ 3  | gue            |   97 % ( 17 %)   |  80 %    3 %   |                      86 % (89 %) |              5.96 (4.28) |     15.8 / 5      | 1.72 · 1, 0, 0, 0
+moy |                |   97 % ( 17 %)   |                |                             86 % |                        6
+
+(6 s)

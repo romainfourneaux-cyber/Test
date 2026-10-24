@@ -1680,5 +1680,271 @@ verifier("Bataillons : le rendu ne touche pas au moteur (aucune écriture de la 
     /onde\(ctx/.test(sol) && /anneau\(ctx/.test(sol) && /fonduTour\(tr, v\)/.test(sol) && /function fonduTour/.test(srcR) && /var NAISSANCE_TOUR = 0\.7/.test(srcR), { iSol, iVol });
 })();
 
+// ---------- expéditions (24/10/2026) : accroches facultatives dans recit.js, interface.js, campagne.js et bataille.js ----------
+// Sans quota, sans extra, sans contexte, chaque fonction fait ce qu'elle faisait : le tirage est comparé à l'empreinte relevée
+// avant les accroches (RNG à graine sur le Math du bac à sable, cours synthétiques des semaines 1 à 3) et au même source dont
+// le bloc [quota] est retiré ; la bataille de route est jouée pour de vrai (moteur et rendu) sur un DOM factice.
+(() => {
+  const CTRL = require("./controles.js");
+  // bac à sable à tirage reproductible : U.hasard, leitner.tirer et questions.choisirPourFiche tirent sur le Math du contexte
+  function bacTirage(graine, sourceRecit) {
+    const ctx = contexte(), J = ctx.JEU;
+    if (sourceRecit) vm.runInContext(sourceRecit, ctx, { filename: "recit-essai.js" });
+    const Mth = vm.runInContext("Math", ctx);
+    let s = graine >>> 0;
+    Mth.random = () => { s = (s + 0x6D2B79F5) >>> 0; let t = s; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
+    J.sauvegarde.charger();
+    [1, 2, 3].forEach(w => ["histoire", "geographie", "svt", "physique", "litterature"].forEach(m => { const id = m + "-s0" + w + "-1"; J.donnees.cours[id] = coursRiche(id, 10); }));
+    J.donnees.aRetravailler = []; J.donnees.suivi = { cours: {} };
+    J.questions.vider(); J.progression.oublier();
+    J.sauvegarde.remplacer(J.sauvegarde.nouvelle()); seance(J);
+    return ctx;
+  }
+  const empreinte = s => { let h = 2166136261; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619) >>> 0; } return h.toString(16); };
+  const justeDet = q => !!q.rappel || (q.id.length + q.id.charCodeAt(q.id.length - 1) + q.id.charCodeAt(q.id.length - 2)) % 5 !== 0;
+  const jouerRef = J => { const seq = jouerJeu(J, 12, justeDet, false, null); return { n: seq.length, e: empreinte(seq.map(x => x.id + (x.rappel ? "*" : "")).join(",")) }; };
+  const semaineDe = (J, q) => { const s = J.recit.semaineDuCours(q.cours); return s ? s.numero : null; };
+
+  // --- régression : sans quota, le tirage d'aujourd'hui (empreintes relevées le 24/10/2026 avant les accroches, 12 parties) ---
+  const REF = { "1329438721": { n: 105, e: "dee5a7c5" }, "7": { n: 105, e: "4ed67412" } };
+  const apresAccroches = { "1329438721": jouerRef(bacTirage(1329438721).JEU), "7": jouerRef(bacTirage(7).JEU) };
+  verifier("Expédition, tirage sans quota : identique au tirage d'avant les accroches (deux graines, 105 questions chacune, rappels compris)", JSON.stringify(apresAccroches) === JSON.stringify(REF), apresAccroches);
+  const srcRecit = fs.readFileSync(path.join(RACINE, "jeu", "js", "recit.js"), "utf8");
+  const sansQuota = srcRecit.replace(/\/\/ \[quota\][\s\S]*?\/\/ \[\/quota\]/, "var quota = null;");
+  verifier("Expédition, tirage sans quota : le bloc [quota] … [/quota] du source retiré, même tirage encore", sansQuota !== srcRecit && JSON.stringify(jouerRef(bacTirage(7, sansQuota).JEU)) === JSON.stringify(REF["7"]));
+
+  // --- quota de semaine ---
+  const J = bacTirage(42).JEU, R = J.recit, Q = J.questions, sem = q => semaineDe(J, q);
+  const quotaS1 = { nombre: 2, filtre: q => sem(q) === 1 };
+  const lots = []; let posees = [];
+  for (let i = 0; i < 30; i++) {
+    const ids = posees.map(q => q.id), fiches = posees.map(q => q.fiche);
+    const qs = Q.avecNiveaux(Q.NIVEAUX_BATAILLE, () => R.suite(3, { exclure: ids, filtre: q => fiches.indexOf(q.fiche) < 0, completer: true, quota: quotaS1 }));
+    qs.forEach(q => Q.enregistrerReponse(q, true));
+    lots.push(qs); posees = i % 4 === 3 ? [] : posees.concat(qs);
+  }
+  verifier("Quota : suite(3, { quota S1 }) donne 2 questions de la semaine 1 dans chacun de 30 lots de bataille (niveaux 1 à 3), de fiches distinctes, et la troisième vient souvent d'ailleurs",
+    lots.every(l => l.length === 3 && l.filter(q => sem(q) === 1).length >= 2 && new Set(l.map(q => q.fiche)).size === 3 && l.every(q => q.niveau >= 1 && q.niveau <= 3)) && lots.filter(l => l.some(q => sem(q) !== 1)).length >= 12,
+    { semaines: lots.map(l => l.map(sem)), autres: lots.filter(l => l.some(q => sem(q) !== 1)).length });
+  const qs9 = R.suite(3, { quota: { nombre: 2, filtre: q => sem(q) === 9 } });
+  verifier("Quota : 3 questions d'autres semaines quand la fenêtre n'a aucun cours (le tirage ne bloque jamais)", qs9.length === 3 && qs9.every(q => sem(q) !== 9) && new Set(qs9.map(q => q.id)).size === 3, qs9.map(sem));
+  const qs3 = R.suite(3, { quota: { nombre: 3, filtre: q => sem(q) < 2 } });
+  verifier("Quota : nombre 3 et filtre « semaine < 2 » : 3 questions de la semaine 1, de trois fiches", qs3.length === 3 && qs3.every(q => sem(q) === 1) && new Set(qs3.map(q => q.fiche)).size === 3, qs3.map(sem));
+  const qsvt = R.suite(1, { quota: { nombre: 1, filtre: q => R.famille(q.matiere) === "svt" } });
+  verifier("Quota : sur la famille « svt » (question d'un conseiller), une question de SVT", qsvt.length === 1 && qsvt[0].matiere === "svt", qsvt.map(q => q.matiere));
+  const ratee = R.suite(1, { quota: { nombre: 1, filtre: q => sem(q) === 2 } })[0];
+  Q.enregistrerReponse(ratee, false);
+  for (let k = 0; k < 3; k++) R.suite(1, { quota: quotaS1 }).forEach(q => Q.enregistrerReponse(q, true));
+  const avecRappel = R.suite(3, { quota: quotaS1 });
+  verifier("Quota : une « Seconde chance » due est placée une seule fois (en tête du lot), le quota autour d'elle", avecRappel.length === 3 && avecRappel.filter(q => q.rappel).length === 1 && avecRappel[0].id === ratee.id && avecRappel[0].rappel === true &&
+    new Set(avecRappel.map(q => q.id)).size === 3 && avecRappel.slice(1).filter(q => sem(q) === 1).length >= 1, avecRappel.map(q => q.id + (q.rappel ? "*" : "")));
+  verifier("Quota : sans filtre ou avec nombre 0, l'option est ignorée (lot ordinaire de 3)", R.suite(3, { quota: { nombre: 0, filtre: () => false } }).length === 3 && R.suite(3, { quota: { nombre: 2 } }).length === 3);
+  const JW = bacTirage(99).JEU, seqW = [];
+  for (let i = 0; i < 40; i++) JW.recit.suite(3, { quota: { nombre: 2, filtre: q => semaineDe(JW, q) === 1 } }).forEach(q => { seqW.push({ id: q.id, rappel: !!q.rappel }); JW.questions.enregistrerReponse(q, true); });
+  verifier("Quota : sur 40 lots (120 questions, 2 sur 3 de la semaine 1), aucune question reposée parmi les 60 précédentes", seqW.length === 120 && reposees(seqW, () => 60) === 0, reposees(seqW, () => 60));
+
+  // --- cadre de route, {S}, r.semaine ---
+  const ctxC = contexte(), JC = ctxC.JEU;
+  ["histoire-s04-1", "methode-frise", "langue-conj10"].forEach(id => vm.runInContext(fs.readFileSync(path.join(RACINE, "jeu", "data", "cours", id + ".js"), "utf8"), ctxC));
+  vm.runInContext(fs.readFileSync(path.join(RACINE, "jeu", "data", "anglais", "anglais-seq01.js"), "utf8"), ctxC);
+  vm.runInContext(fs.readFileSync(path.join(RACINE, "jeu", "data", "personnages.js"), "utf8"), ctxC);
+  JC.sauvegarde.charger();
+  const qH = JC.questions.questionsDuCours("histoire-s04-1")[0], qM = JC.questions.questionsDuCours("methode-frise")[0], qL = JC.questions.questionsDuCours("langue-conj10")[0], qA = JC.questions.questionsDuCours("anglais-seq01")[0];
+  const cR = JC.recit.cadre(qH, "route", null, { semaine: 4, semaines: [4] });
+  verifier("Cadre de route : r.semaine = { numero 4, libelle « Semaine 4 », route true, titre du cours } pour un cours de la semaine de l'acte ; repère et conseiller gardés",
+    cR.semaine && cR.semaine.numero === 4 && cR.semaine.libelle === "Semaine 4" && cR.semaine.route === true && /Cours 5/.test(cR.semaine.titre) && cR.repere === "Semaine 4 · Histoire · Cours 5" && cR.nom === "Le chroniqueur" && cR.icone === "chroniqueur", cR);
+  const cHors = JC.recit.cadre(qH, "gardien", null, { semaine: 6, semaines: [5, 6] }), cCamp = JC.recit.cadre(qH, "preparation"), cSeul = JC.recit.cadre(qH, "archives", null, { semaine: 4 });
+  verifier("Cadre : route false hors de la fenêtre de l'acte et en campagne (sans extra) ; extra.semaine seule vaut fenêtre ; une question sans cours n'a pas de semaine",
+    cHors.semaine.route === false && cHors.semaine.numero === 4 && cCamp.semaine && cCamp.semaine.route === false && cCamp.semaine.libelle === "Semaine 4" && cSeul.semaine.route === true &&
+    !JC.recit.cadre({ matiere: "histoire" }, "route", null, { semaine: 4 }).semaine && JC.recit.semaineDuCours("inconnu-s99-1") === null, [cHors.semaine, cCamp.semaine]);
+  const libelles = [[qL, "Griffon de cuivre"], [qM, "Fiche méthode"], [qA, "Anglais · séquence 1"]].map(([q, lib]) => { const c = JC.recit.cadre(q, "route", null, { semaine: 1, semaines: [1] }); return { lib, ok: !!c.semaine && c.semaine.numero === null && c.semaine.libelle === lib && c.semaine.route === false, vu: c.semaine }; });
+  verifier("Cadre : cours sans semaine : « Griffon de cuivre » (grammaire), « Fiche méthode », « Anglais · séquence 1 », numero null, jamais en relief", libelles.every(x => x.ok), libelles);
+  let avecS = 0; const textesS = [], sansExtra = [];
+  for (let i = 0; i < 60; i++) { const t = JC.recit.cadre(qH, "route", null, { semaine: 4 }).texte; if (/semaine 4/.test(t)) avecS++; textesS.push(t); sansExtra.push(JC.recit.cadre(qH, "route").texte); }
+  verifier("Cadre de route : avec extra.semaine le conseiller dit « semaine 4 » (une phrase sur deux environ) ; sans extra, jamais de {S}, de « { » ni de chiffre dans la phrase ; l'énoncé ne change pas",
+    avecS >= 12 && avecS <= 48 && textesS.every(t => t.indexOf("{") < 0) && sansExtra.every(t => t.indexOf("{") < 0 && !/\d/.test(t)) && qH.enonce === JC.questions.questionsDuCours("histoire-s04-1")[0].enonce, { avecS });
+  const cRap = JC.recit.cadre(Object.assign({}, qH, { rappel: true }), "embuscade", null, { semaine: 4 });
+  verifier("Cadre de route : une question qui revient garde les phrases et l'étiquette « Seconde chance »", /tout à l'heure|seconde chance/i.test(cRap.texte) && cRap.etiquette === "Seconde chance" && cRap.semaine.route === true, cRap);
+  const contextes = Object.keys(JC.recit.CONTEXTES_ROUTE), noms = (JC.donnees.personnages.personnages || []).filter(p => !p.titreSeul && p.nom).map(p => p.nom), fautes = [];
+  contextes.forEach(c => {
+    const l = JC.recit.PHRASES[c] || [];
+    if (l.length < 3) fautes.push(c + " : " + l.length + " phrases");
+    if (!l.some(t => t.indexOf("{S}") < 0)) fautes.push(c + " : aucune phrase sans {S}");
+    if (!l.some(t => t.indexOf("{S}") >= 0)) fautes.push(c + " : aucune phrase avec {S}");
+    l.forEach(t => {
+      if (t.indexOf("{N}") < 0) fautes.push(c + " : sans {N} : " + t);
+      if (/\d/.test(t)) fautes.push(c + " : chiffre : " + t);
+      const m = CTRL.MOTS_INTERDITS.exec(t); if (m) fautes.push(c + " : mot interdit « " + m[2] + " » : " + t);
+      if (/\bvite\b|chrono|dépêch|pénalité|tu perds/i.test(t)) fautes.push(c + " : hâte ou perte : " + t);
+      (t.match(/\{[^}]*\}/g) || []).forEach(x => { if (x !== "{N}" && x !== "{S}") fautes.push(c + " : marque " + x); });
+      noms.forEach(n => { if (t.indexOf(n) >= 0) fautes.push(c + " : nomme " + n); });
+    });
+  });
+  verifier("Phrases de route (" + contextes.join(", ") + ") : {N} partout, trois phrases au moins par contexte, avec et sans {S}, ni chiffre, ni mot interdit du contrôle 10, ni hâte, ni nom d'un personnage",
+    contextes.length === 8 && ["route", "embuscade", "gardien", "bivouac", "marchand", "archives", "porte", "cache"].every(c => JC.recit.CONTEXTES_ROUTE[c]) && JC.recit.PHRASES.tresor.length === 3 && fautes.length === 0, fautes);
+  const srcI = fs.readFileSync(path.join(RACINE, "jeu", "js", "interface.js"), "utf8"), cssR = fs.readFileSync(path.join(RACINE, "jeu", "css", "jeu.css"), "utf8");
+  verifier("Interface : ui.recit pose le titre du cours en infobulle et la classe recit-semaine (relief) quand r.semaine.route est vrai ; panneauErreur(q, zone, suite, options) sans « Voir la fiche » avec options.sansFiche ; règle CSS",
+    /if \(r\.semaine\.route\) ruban\.classList\.add\("recit-semaine"\)/.test(srcI) && /ruban\.title = r\.semaine\.titre/.test(srcI) && /ui\.panneauErreur = function \(q, zone, suite, options\)/.test(srcI) && /f && !options\.sansFiche \? el\("button"/.test(srcI) && /\.recit-repere\.recit-semaine \{/.test(cssR));
+
+  // --- DOM et interface factices : de quoi jouer un événement et une bataille sous Node ---
+  function noeud(tag) {
+    const e = { tag, enfants: [], attrs: {}, style: {}, classes: new Set(), textContent: "", innerHTML: "", isConnected: true, width: 0, height: 0, scrollTop: 0, scrollHeight: 0, clientHeight: 0, hidden: false,
+      appendChild(c) { e.enfants.push(c); return c; }, insertBefore(c) { e.enfants.unshift(c); return c; }, removeChild(c) { e.enfants = e.enfants.filter(x => x !== c); return c; }, remove() {}, replaceChildren() { e.enfants = []; },
+      setAttribute(k, v) { e.attrs[k] = v; }, getAttribute(k) { return k in e.attrs ? e.attrs[k] : null; }, removeAttribute(k) { delete e.attrs[k]; }, hasAttribute(k) { return k in e.attrs; },
+      addEventListener() {}, removeEventListener() {}, dispatchEvent() { return true; }, focus() {}, blur() {}, click() {}, closest() { return null; }, matches() { return false; }, contains() { return false; },
+      querySelector() { return noeud("div"); }, querySelectorAll() { return []; }, getBoundingClientRect() { return { top: 0, left: 0, width: 0, height: 0, bottom: 0, right: 0 }; },
+      getContext() { return ctx2d(); }, toDataURL() { return ""; },
+      classList: { add(...c) { c.forEach(x => e.classes.add(x)); }, remove(...c) { c.forEach(x => e.classes.delete(x)); }, toggle(c, f) { const on = f === undefined ? !e.classes.has(c) : !!f; if (on) e.classes.add(c); else e.classes.delete(c); return on; }, contains(c) { return e.classes.has(c); } } };
+    Object.defineProperty(e, "className", { get: () => [...e.classes].join(" "), set: v => { e.classes = new Set(String(v).split(/\s+/).filter(Boolean)); } });
+    return e;
+  }
+  function ctx2d() { const g = { addColorStop() {}, width: 10 }; return new Proxy({}, { get: (t, k) => (k in t ? t[k] : () => g), set: (t, k, v) => { t[k] = v; return true; } }); }
+  // Interface factice : poserQuestion garde la réponse à donner (ui.repondre), panneauErreur garde la suite (ui.continuerErreur) ;
+  // le journal note les questions, les cadres, les panneaux et l'ordre des cartes de récit (R) et des questions (Q).
+  function uiFactice(ctx) {
+    const J = ctx.JEU, journal = { questions: [], panneaux: [], recits: [], parties: [], toasts: [], ordre: "", ecrans: [] };
+    let fini = null;
+    const ui = {
+      el(tag, attrs, enfants) {
+        const e = noeud(tag);
+        if (attrs) Object.keys(attrs).forEach(k => { const v = attrs[k]; if (v == null || v === false) return; if (k === "class") e.className = v; else if (k === "html") e.innerHTML = v; else if (k === "texte") e.textContent = v; else if (k.slice(0, 2) === "on") e["_" + k] = v; else e.attrs[k] = v; });
+        (enfants || []).forEach(c => { if (c == null || c === false) return; e.appendChild(typeof c === "string" ? { nodeType: 3, textContent: c } : c); });
+        return e;
+      },
+      commencerPartie(titre, quitter) { J.partie = { enCours: true, titre, quitter, derniere: null }; journal.parties.push(titre); return (ui.zone = noeud("div")); },
+      proposerQuitter() { if (!J.partie) return; const q = J.partie.quitter; if (J.partie.surQuitter) J.partie.surQuitter(); ui.finirPartie(); if (q) q(); },
+      finirPartie() { J.partie = null; ui.clavier = null; },
+      poserQuestion(q, zone, f, options) { journal.questions.push({ q, recit: options && options.recit }); journal.ordre += "Q"; fini = f; ui.questionCourante = q; },
+      enAttente() { return !!fini; },
+      repondre(juste) { const f = fini; fini = null; if (!f) throw new Error("aucune question posée"); f(juste, null); },
+      panneauErreur(q, zone, suite, options) { journal.panneaux.push({ q, options }); ui.continuerErreur = () => { ui.continuerErreur = null; suite(); }; },
+      recit(r) { journal.recits.push(r); journal.ordre += "R"; const e = noeud("div"); e.recit = r; return e; },
+      toast(t) { journal.toasts.push(t); }, tampon() {}, majRessources() {}, noterDerniere(q) { if (J.partie) J.partie.derniere = q; }, afficher(nom) { journal.ecrans.push(nom); }, focusAuClavier() { return false; },
+      confirmer(t, b, f) { f(); }, clavier: null, continuerErreur: null
+    };
+    J.ui = ui;
+    J.anim = { actif: () => false, apresImage: f => f(), centre: () => ({ x: 0, y: 0 }), eclat() {}, sang() {}, gain() {} };
+    J.sons = { jouer() {} }; J.musique = { humeur() {} }; J.mentor = { feliciter() {}, dire() {} }; J.icones = { icone: () => "" };
+    J.mesure = { debut: null, questionAffichee() {}, reponseDonnee() {} }; J.codex = { ouvrirFiche() {} }; J.signalement = { ouvrir() {} };
+    ctx.document = { createElement: noeud, createTextNode: t => ({ nodeType: 3, textContent: t }), getElementById: () => null, querySelector: () => null, body: noeud("body"), activeElement: null };
+    ctx.requestAnimationFrame = cb => { ctx.__image = cb; return 1; }; ctx.devicePixelRatio = 1; ctx.addEventListener = () => {}; ctx.removeEventListener = () => {};
+    ctx.setTimeout = () => 0; ctx.clearTimeout = () => {};
+    ctx.Image = function () { const im = this; Object.defineProperty(im, "src", { set(v) { im._src = v; if (im.onerror) im.onerror(); }, get() { return im._src; } }); };
+    const Dt = vm.runInContext("Date", ctx), vrai = Dt.now; ctx.__decal = 0; Dt.now = () => vrai() + ctx.__decal;
+    return journal;
+  }
+  // Répond à toutes les questions du conseil de guerre (juste(q) décide), continue après chaque panneau d'erreur, puis lance la vague.
+  function conseilDeGuerre(ctx, juste) {
+    const ui = ctx.JEU.ui, p = ctx.JEU.bataille.enCours;
+    for (let garde = 0; ui.enAttente() && garde < 40; garde++) { ui.repondre(juste(ui.questionCourante)); if (ui.continuerErreur) ui.continuerErreur(); }
+    ctx.__decal += 2000; // la garde de 700 ms sur l'Entrée qui finit la dernière question
+    if (ui.clavier) ui.clavier("Enter");
+    if (ui.clavier && p.phase === "preparation") ui.clavier("Enter"); // « il te reste de l'or » : une seconde fois
+    return p.phase === "vague";
+  }
+  // Joue la bataille jusqu'au bout par la boucle d'animation du rendu (images de 50 ms), conseil de guerre compris.
+  function jouerBataille(ctx, juste, maxImages) {
+    const p = ctx.JEU.bataille.enCours; let t = 0, images = 0;
+    while (p.phase !== "fin" && images < maxImages) {
+      if (p.phase === "preparation" && !conseilDeGuerre(ctx, juste)) throw new Error("la vague n'a pas été lancée (phase " + p.phase + ")");
+      t += 50; images++; ctx.__image(t);
+    }
+    return images;
+  }
+
+  // --- campagne : gains de rivalité, reagir exporté, jouerEvenement(ev, contexte) ---
+  const ctxE = bacTirage(11), JE = ctxE.JEU, CE = JE.campagne, journalE = uiFactice(ctxE);
+  verifier("Campagne : GAINS_RIVALITE.gardien = 2 et grandGardien = 6, les autres gains inchangés, reagir exporté",
+    CE.GAINS_RIVALITE.gardien === 2 && CE.GAINS_RIVALITE.grandGardien === 6 && CE.GAINS_RIVALITE.province === 15 && CE.GAINS_RIVALITE.victoire === 10 && CE.GAINS_RIVALITE.tenu === 4 && CE.GAINS_RIVALITE.attaque === 8 && typeof CE.reagir === "function", CE.GAINS_RIVALITE);
+  CE.etat().evenement = { id: "defi", jour: JE.util.jour(), fait: false };
+  const campagneAvant = JSON.stringify(CE.etat()), traces = [];
+  const ctxRouteEv = { tirage: n => { traces.push("tirage " + n); return JE.recit.suite(n, { quota: { nombre: 2, filtre: q => semaineDe(JE, q) === 2 } }); },
+    cadre: q => Object.assign(JE.recit.cadre(q, "route", null, { semaine: 2, semaines: [2] }), { marque: "route" }),
+    cloturer: (id, bonnes, total) => { traces.push("cloturer " + id + " " + bonnes + "/" + total); return "Les mercenaires suivent la compagnie."; }, retour: () => traces.push("retour") };
+  CE.jouerEvenement(CE.EVENEMENTS.filter(e => e.id === "mercenaires")[0], ctxRouteEv);
+  journalE.ui = JE.ui;
+  JE.ui.repondre(true); JE.ui.repondre(false); JE.ui.continuerErreur();
+  const bilanEv = JE.ui.zone.enfants[1] && JE.ui.zone.enfants[1].enfants[0];
+  const texteBilan = bilanEv ? bilanEv.enfants.map(e => e.textContent).join(" | ") : "";
+  JE.ui.clavier("Enter");
+  verifier("Événement rejoué sur la route : questions du contexte (quota), cadre du contexte, cloturer(id, bonnes, total) donne la phrase du bilan, « Continuer la route », retour() ; ni c.bonus ni l'événement du jour ne bougent",
+    traces.join(";") === "tirage 2;cloturer mercenaires 1/2;retour" && journalE.questions.length === 2 && journalE.questions.every(x => x.recit && x.recit.marque === "route" && x.recit.semaine && x.recit.semaine.route === (x.recit.semaine.numero === 2)) &&
+    journalE.panneaux.length === 1 && /Les mercenaires suivent la compagnie\./.test(texteBilan) && /Continuer la route \(Entrée\)/.test(texteBilan) && JSON.stringify(CE.etat()) === campagneAvant &&
+    CE.etat().bonus.or === undefined && CE.etat().evenement.fait === false && JE.partie === null && journalE.parties[0] === "Des mercenaires", { traces, texteBilan, bonus: CE.etat().bonus });
+  // sans paramètre : l'événement du jour de la campagne, comme avant
+  CE.jouerEvenement();
+  JE.ui.repondre(true); JE.ui.repondre(true); JE.ui.repondre(true);
+  verifier("Événement du jour sans paramètre : inchangé (le défi du champion joué, marqué fait, « Retour à la campagne »)",
+    journalE.parties[1] === "Le défi du champion" && CE.etat().evenement.fait === true && journalE.questions.length === 5 && journalE.questions.slice(2).every(x => x.recit && !x.recit.marque) &&
+    /Retour à la campagne \(Entrée\)/.test(JE.ui.zone.enfants[1].enfants[0].enfants.map(e => e.textContent).join(" | ")), journalE.parties);
+  JE.ui.clavier("Enter");
+
+  // --- bataille de route : lancer(lieu, contexte) sur le vrai moteur et le vrai rendu (DOM factice) ---
+  const ctxB = bacTirage(2026), JB2 = ctxB.JEU, CB = JB2.campagne, journalB = uiFactice(ctxB);
+  vm.runInContext(fs.readFileSync(path.join(RACINE, "jeu", "js", "bataille.js"), "utf8"), ctxB, { filename: "bataille.js" });
+  const apresVrai = CB.apresBataille, appelsApres = [];
+  CB.apresBataille = function (b) { appelsApres.push(b); return apresVrai(b); };
+  CB.etat().bonus = { or: 40, espion: true }; // les bonus de l'événement du jour : la route ne les consomme pas
+  const optionsRoute = Object.assign(CB.options(2), { orDepart: 77, orPerduErreur: 4, orParReponse: 14, espion: false });
+  const jr = { tirages: [], niveauxMax: [], vitesses: [], vagues: [], quitte: [], retours: 0, fin: null };
+  const contexteRoute = { carte: "gue", titre: "Gardien de la semaine 3", front: "angleterre", niveau: 2, vagues: 2, defense: true, pvRival: 12, pvRivalMax: 12, options: optionsRoute, semaine: 3,
+    sansFiche: true, vitesse: 3, nomRival: "Un seigneur rival", eclaireur: "Phrase de l'éclaireur pour l'essai.", eclaireurs: 2,
+    tirage: (n, posees) => { jr.tirages.push(n); jr.niveauxMax.push(JB2.questions.niveauMax()); const ids = posees.map(q => q.id), fiches = posees.map(q => q.fiche);
+      return JB2.recit.suite(n, { exclure: ids, filtre: q => fiches.indexOf(q.fiche) < 0, completer: true, quota: { nombre: 2, filtre: q => semaineDe(JB2, q) === 3 } }); },
+    cadre: q => Object.assign(JB2.recit.cadre(q, "gardien", null, { semaine: 3, semaines: [3] }), { marque: "route" }),
+    surVitesse: n => jr.vitesses.push(n), surVague: n => jr.vagues.push(n), surQuitter: e => jr.quitte.push(e), retour: () => { jr.retours++; },
+    surFin: b => { jr.fin = b; return { titre: "Semaine franchie", texte: "Le gardien recule.", butin: "+25 or de route", bouton: "Reprendre la route (Entrée)" }; } };
+  const campagneAvantB = JSON.stringify(CB.etat()), partiesAvant = JB2.sauvegarde.etat().stats.parties;
+  let erreur = null, images = 0, p1 = null;
+  try {
+    JB2.bataille.lancer("s3g", contexteRoute);
+    p1 = JB2.bataille.enCours;
+    images = jouerBataille(ctxB, q => !/q(7|13)$/.test(q.id), 6000);
+  } catch (e) { erreur = e && e.stack || String(e); }
+  verifier("Bataille de route : lancée et jouée jusqu'au bilan sur le moteur et le rendu (DOM factice), sans erreur", !erreur && p1 && p1.phase === "fin" && images > 0 && images < 6000, erreur || { images, phase: p1 && p1.phase });
+  verifier("Bataille de route : les options viennent du contexte (or de départ 77 sans les +40 de la campagne, erreur −4, réponse +14, niveau 2, carte du Gué, défense, 2 vagues, camp de 12)",
+    p1 && p1.or !== undefined && optionsRoute.orDepart === 77 && p1.orPerduErreur === 4 && p1.orParReponse === 14 && p1.niveau === 2 && p1.carte.id === "gue" && p1.defense === true && p1.vagues === 2 && p1.rival.max === 12 && p1.stats && journalB.parties[0] === "Gardien de la semaine 3",
+    p1 && { or: p1.or, perdu: p1.orPerduErreur, rep: p1.orParReponse, niveau: p1.niveau, carte: p1.carte.id, defense: p1.defense, vagues: p1.vagues, rival: p1.rival.max });
+  const bilanB = journalB.ui = JB2.ui;
+  const conseilB = JB2.ui.zone.enfants[1] && JB2.ui.zone.enfants[1].enfants[0];
+  const texteFinB = conseilB ? conseilB.enfants.map(e => e.enfants.map(x => x.textContent).join(" | ")).join(" | ") : "";
+  verifier("Bataille de route : surFin(bilan) reçoit le bilan (issue, vagues, murs, solidité du camp, réponses) à la place de C.apresBataille ; ses textes habillent l'écran de fin ; stats.parties compte la halte",
+    jr.fin && ["tenu", "victoire", "retraite"].indexOf(jr.fin.issue) >= 0 && jr.fin.lieu === "s3g" && jr.fin.front === "angleterre" && typeof jr.fin.murs === "number" && typeof jr.fin.pvRival === "number" && jr.fin.pvRivalMax === 12 && jr.fin.total === 6 && jr.fin.bonnes >= 3 &&
+    appelsApres.length === 0 && /Semaine franchie/.test(texteFinB) && /Le gardien recule\./.test(texteFinB) && /\+25 or de route/.test(texteFinB) && /Reprendre la route \(Entrée\)/.test(texteFinB) && JB2.sauvegarde.etat().stats.parties === partiesAvant + 1,
+    { fin: jr.fin, apres: appelsApres.length, texteFinB });
+  verifier("Bataille de route : la campagne n'a pas bougé (provinces, rival, bonus de l'événement du jour gardés : or 40, espion)", JSON.stringify(CB.etat()) === campagneAvantB && CB.etat().bonus.or === 40 && CB.etat().bonus.espion === true, CB.etat().bonus);
+  verifier("Bataille de route : tirage(n, posees) du contexte pour chaque vague, aux niveaux 1 à 3 ; cadre(q) du contexte sur chaque question (ruban de la semaine 3 en relief pour 2 sur 3) ; panneau d'erreur avec { sansFiche: true }",
+    jr.tirages.join() === "3,3" && jr.niveauxMax.every(n => n === 3) && journalB.questions.length === 6 && journalB.questions.every(x => x.recit && x.recit.marque === "route") &&
+    journalB.questions.filter(x => x.recit.semaine && x.recit.semaine.route).length >= 4 && journalB.panneaux.length >= 1 && journalB.panneaux.every(x => x.options && x.options.sansFiche === true),
+    { tirages: jr.tirages, niveaux: jr.niveauxMax, relief: journalB.questions.map(x => x.recit.semaine && x.recit.semaine.route), panneaux: journalB.panneaux.map(x => x.options) });
+  const iEclaireur = journalB.recits.findIndex(r => r.texte === "Phrase de l'éclaireur pour l'essai.");
+  verifier("Bataille de route : la phrase de l'éclaireur est une carte de récit avant la première question de la 1re vague, jamais entre deux questions ; surVague(0) puis surVague(1) ; le rival parle sous son titre",
+    /^R+Q+(R+Q+)*R*$/.test(journalB.ordre) && iEclaireur >= 0 && journalB.ordre.indexOf("Q") > 0 && journalB.recits.slice(0, journalB.ordre.indexOf("Q")).some(r => r.texte === "Phrase de l'éclaireur pour l'essai.") &&
+    jr.vagues.join() === "0,1" && journalB.recits.some(r => r.nom === "Un seigneur rival") && journalB.recits.filter(r => r.nom === "Un éclaireur" && r.texte === "Phrase de l'éclaireur pour l'essai.").length === 1,
+    { ordre: journalB.ordre, iEclaireur, vagues: jr.vagues });
+  JB2.ui.clavier("Enter");
+  verifier("Bataille de route : « Entrée » au bilan appelle contexte.retour() (pas la carte de campagne), la partie est finie", jr.retours === 1 && JB2.partie === null && journalB.ecrans.length === 0, { retours: jr.retours, ecrans: journalB.ecrans });
+  // quitter avant la première vague : surQuitter(false) ; après : surQuitter(true) ; jamais C.apresBataille
+  JB2.bataille.lancer("s3g", contexteRoute);
+  JB2.ui.proposerQuitter();
+  JB2.bataille.lancer("s3g", contexteRoute);
+  const lancee = conseilDeGuerre(ctxB, () => true);
+  JB2.ui.proposerQuitter();
+  verifier("Bataille de route : quitter avant la première vague donne surQuitter(false), après surQuitter(true) ; retour() à chaque fois ; C.apresBataille jamais appelée ; vitesse ×3 retenue du contexte",
+    lancee && jr.quitte.join() === "false,true" && jr.retours === 3 && appelsApres.length === 0 && JB2.partie === null && jr.vagues.join() === "0,1,0", { quitte: jr.quitte, retours: jr.retours, lancee });
+  // sans contexte : la bataille de campagne d'aujourd'hui (province du Gué), qui passe par C.apresBataille
+  JB2.bataille.lancer("gue");
+  const p2 = JB2.bataille.enCours;
+  JB2.ui.proposerQuitter();
+  verifier("Bataille de campagne sans contexte : inchangée (4 vagues, attaque, or de départ avec les +40 de l'événement, C.apresBataille à la retraite avec entamee false, retour à la carte)",
+    p2 && p2.vagues === 4 && p2.defense === false && p2.carte.id === "gue" && p2.or === CB.options(1).orDepart && appelsApres.length === 1 && appelsApres[0].lieu === "gue" && appelsApres[0].issue === "retraite" && appelsApres[0].entamee === false &&
+    journalB.ecrans.slice(-1)[0] === "jouer" && journalB.parties.slice(-1)[0] === "Bataille : Le Gué", { or: p2 && p2.or, attendu: CB.options(1).orDepart, apres: appelsApres });
+  // le source : tout ce qui touche la campagne reste sous « sans contexte »
+  const srcB = fs.readFileSync(path.join(RACINE, "jeu", "js", "bataille.js"), "utf8");
+  verifier("Bataille : dans le source, C.apresBataille n'est appelée que dans les branches sans contexte (deux appels), et bataille-moteur.js n'est pas touché par l'expédition",
+    (srcB.match(/C\.apresBataille\(/g) || []).length === 2 && /else C\.apresBataille\(\{ lieu: lieu, front: frontId, issue: "retraite"/.test(srcB) && /\} else gains = C\.apresBataille\(b\);/.test(srcB) &&
+    !/contexte|expedition|quota/i.test(fs.readFileSync(path.join(RACINE, "jeu", "js", "bataille-moteur.js"), "utf8")));
+})();
+
 console.log("\n" + ok + " réussis, " + ko + " en échec.");
 process.exit(ko ? 1 : 0);

@@ -1640,23 +1640,39 @@
   }
 
   // lieu : "domaine" (un camp adverse attaque) ou l'identifiant d'une province.
-  function lancer(lieu) {
+  // contexte (facultatif, expédition, 24/10/2026) : une bataille de route, qui ne touche jamais la campagne. Tout ce qui
+  // venait de la province ou du domaine vient de lui : { carte, titre, front, camp (nom du camp dans les images, sinon celui
+  // du front), niveau, vagues, defense, pvRival, pvRivalMax, options (celles de JEU.expedition.optionsBataille, à la place de
+  // C.options(niveau) ; vagues, defense et solidités de la halte sont posés par-dessus), semaine (l'éclaireur la dit une vague
+  // sur deux), tirage(n, posees) (à la place de tirerQuestions, aux niveaux de la bataille), cadre(q) (à la place de
+  // JEU.recit.cadre), nomRival, rivalPerso (médaillon ; sinon « un seigneur rival » au tortil du camp), eclaireur (phrase dite
+  // avant la première question de la 1re vague, jamais entre deux), eclaireurs (rang de la faveur : 2 repose l'espion à la
+  // 2e vague), sansFiche (panneau d'erreur sans « Voir la fiche »), vitesse, surVitesse(n), surVague(numero) (la vague est
+  // lancée : la halte est entamée), surFin(bilan) (à la place de C.apresBataille ; peut rendre { titre, texte, butin,
+  // bouton } pour l'écran de fin), surQuitter(entamee) (à la place de C.apresBataille), retour() (à la place de la carte de
+  // campagne) }. lieu n'est alors qu'un identifiant rendu dans le bilan. Sans contexte, rien ne change.
+  function lancer(lieu, contexte) {
     if (enChargement || JEU.partie) return; // double clic ou touche pressée deux fois : une seule bataille
     var el = JEU.ui.el;
     var C = JEU.campagne;
-    var defense = lieu === "domaine";
-    var prov = defense ? null : C.province(lieu);
-    var frontId = defense ? (C.etat().rival.attaque || "angleterre") : prov.front;
+    contexte = contexte || null;
+    var defense = contexte ? !!contexte.defense : lieu === "domaine";
+    var prov = contexte || defense ? null : C.province(lieu);
+    var frontId = contexte ? contexte.front : defense ? (C.etat().rival.attaque || "angleterre") : prov.front;
     var adv = C.campDe(frontId), Adv = function (t) { return C.maj1(t); };
-    var niveau = defense ? Math.min(4, Math.floor(C.etat().conquises.length / 2)) : prov.niveau;
-    var vagues = defense ? 3 : 4;
-    var questions = tirerQuestions(QUESTIONS_PAR_VAGUE, []);
+    var niveau = contexte ? contexte.niveau : defense ? Math.min(4, Math.floor(C.etat().conquises.length / 2)) : prov.niveau;
+    var vagues = contexte ? contexte.vagues : defense ? 3 : 4;
+    // le lot d'une vague : sur la route, le tirage du contexte (quota de la semaine), aux niveaux de la bataille
+    function tirer(n, posees) { return contexte ? enBataille(function () { return contexte.tirage(n, posees); }) : tirerQuestions(n, posees); }
+    var questions = tirer(QUESTIONS_PAR_VAGUE, []);
     if (questions.length < QUESTIONS_PAR_VAGUE) { JEU.ui.toast("Pas encore assez de questions pour une bataille."); return; }
-    var carteId = defense ? "domaine" : prov.carte;
-    var campAdv = (C.front(frontId) || {}).camp || "angleterre"; // nom du camp dans les images (angleterre, omeyyades)
+    var carteId = contexte ? contexte.carte : defense ? "domaine" : prov.carte;
+    var campAdv = (contexte && contexte.camp) || (C.front(frontId) || {}).camp || "angleterre"; // nom du camp dans les images (angleterre, omeyyades)
     // Terrain : sur le front du sud, la variante sèche du même tracé (herbe jaunie, oliviers, cyprès), si elle existe ;
-    // sinon le terrain vert ; sinon l'ancien fond peint. La défense du domaine garde le terrain du domaine.
-    var terrains = (campAdv === "omeyyades" && !defense ? ["terrain-" + carteId + "-sud"] : []).concat(["terrain-" + carteId, "terrain-peint"])
+    // sinon le terrain vert ; sinon l'ancien fond peint. La défense du domaine garde le terrain du domaine ; sur la route,
+    // la variante suit le camp, quel que soit le mode.
+    var sec = campAdv === "omeyyades" && (contexte ? carteId !== "domaine" : !defense);
+    var terrains = (sec ? ["terrain-" + carteId + "-sud"] : []).concat(["terrain-" + carteId, "terrain-peint"])
       .filter(function (n) { return descr(n); });
     var terrain = terrains[0];
     enChargement = true;
@@ -1679,12 +1695,22 @@
 
     function demarrer() {
       var carte = JEU.cartesBataille.carte(carteId);
-      var o = C.options(niveau);
-      o.vagues = vagues;
-      var cfg = JEU.donnees.config || {};
-      if (typeof cfg.orPerduErreur === "number") o.orPerduErreur = cfg.orPerduErreur; // or perdu par réponse fausse
-      if (defense) { o.pvRival = 12; o.pvRivalMax = 12; }
-      else { o.pvRival = C.etat().provinces[lieu].pv; o.pvRivalMax = prov.pv; }
+      var o;
+      if (contexte) {
+        // bataille de route : les options du contexte (faveurs, Armorial, sans les bonus de la campagne, or perdu par erreur
+        // déjà réglé), puis les vagues, le mode et les solidités de la halte
+        o = Object.assign({}, contexte.options || C.options(niveau));
+        o.vagues = vagues; o.defense = defense;
+        if (typeof contexte.pvRival === "number") o.pvRival = contexte.pvRival;
+        if (typeof contexte.pvRivalMax === "number") o.pvRivalMax = contexte.pvRivalMax;
+      } else {
+        o = C.options(niveau);
+        o.vagues = vagues;
+        var cfg = JEU.donnees.config || {};
+        if (typeof cfg.orPerduErreur === "number") o.orPerduErreur = cfg.orPerduErreur; // or perdu par réponse fausse
+        if (defense) { o.pvRival = 12; o.pvRivalMax = 12; }
+        else { o.pvRival = C.etat().provinces[lieu].pv; o.pvRivalMax = prov.pv; }
+      }
       var p = M.creer(carte, o);
       // netteté : la toile est dessinée à la taille où elle s'affiche (× la densité de l'écran), recalculée plus bas
       // dès que le champ est dans la page, puis à chaque changement de taille de la fenêtre
@@ -1703,18 +1729,21 @@
         piedDepart: { x: depart.x, y: depart.y + FACADE }, piedArrivee: { x: arrivee.x, y: arrivee.y + FACADE },
         placeDepart: placerJauge(depart, carte, p.route, false, !!prete(nomPlace("france", p.chateau))),
         placeArrivee: placerJauge(arrivee, carte, p.route, true, !!prete(nomPlace(campAdv, p.rival))),
-        horloge: 0, survol: -1, curseur: -1, choix: "archers", choixTour: -1, vitesse: 1, envoyesVague: 0, gardeEntree: 0,
+        horloge: 0, survol: -1, curseur: -1, choix: "archers", choixTour: -1, vitesse: contexte && contexte.vitesse > 0 ? contexte.vitesse : 1, envoyesVague: 0, gardeEntree: 0,
         survolRivale: -1, porteesRivales: false, retrait: null, hud: null, hudDiscret: false, repos: 0,
         // bataillons : figurines couchées, troupes vues à l'image d'avant, troupes tombées depuis peu (decalEffet), heure
         // de la partie au dernier dessin, et compteurs de la dernière image (bataillons, figurines debout, figurines
         // couchées, bannières : essais)
         corps: [], vus: [], morts: [], tempsRendu: 0, rendu: { bataillons: 0, figures: 0, corps: 0, bannieres: 0 },
         naissance: null }; // tours rivales neuves en fondu (effet « tourRivale ») : emplacement → âge, calculé à chaque image
-      var titre = defense ? "Défense du domaine contre " + adv.armee : "Bataille : " + prov.nom;
+      var titre = contexte ? (contexte.titre || "Bataille de route") : defense ? "Défense du domaine contre " + adv.armee : "Bataille : " + prov.nom;
       // Le rival du front, à son titre seul (jeu/data/personnages.js ; sinon « un seigneur rival ») : ses décisions du
       // moteur (p.ia.journal) se lisent dans la colonne de droite, sous son médaillon, en tête du conseil de guerre de
-      // chaque vague et au départ d'une vague. Jamais entre deux questions.
-      var rivalPerso = C.rivalDe ? C.rivalDe(frontId) : null, nomRival = rivalPerso ? rivalPerso.nom : "Un seigneur rival";
+      // chaque vague et au départ d'une vague. Jamais entre deux questions. Sur la route, le contexte dit qui il est ;
+      // sans personnage, un seigneur rival au tortil du camp (gardien de semaine).
+      var rivalPerso = contexte ? (contexte.rivalPerso || null) : C.rivalDe ? C.rivalDe(frontId) : null;
+      var nomRival = contexte && contexte.nomRival ? contexte.nomRival : rivalPerso ? rivalPerso.nom : "Un seigneur rival";
+      if (contexte && !rivalPerso) rivalPerso = { camp: campAdv, generique: true, nom: nomRival };
       function motDuRival(alerte) {
         var t = phraseRival(p.ia && p.ia.journal, p.vague, alerte, nomRival);
         if (!t) return null;
@@ -1726,7 +1755,7 @@
         }
         return carte;
       }
-      var zone = JEU.ui.commencerPartie(titre, function () { JEU.ui.afficher("jouer"); });
+      var zone = JEU.ui.commencerPartie(titre, function () { if (contexte) contexte.retour(); else JEU.ui.afficher("jouer"); });
       JEU.musique.humeur("guerre");
       var actif = true, iQ = 0, poseesVague = 0, bonnes = 0, total = 0, finie = false;
 
@@ -1861,7 +1890,7 @@
           ]));
         } else if (p.phase === "vague") {
           var vit = el("div", { class: "td-vitesse" }, [1, 2, 3].map(function (n) {
-            return el("button", { class: "bouton petit" + (v.vitesse === n ? " principal" : ""), "data-cle": "vitesse-" + n, onclick: function () { v.vitesse = n; majOrdres(); }, texte: "×" + n });
+            return el("button", { class: "bouton petit" + (v.vitesse === n ? " principal" : ""), "data-cle": "vitesse-" + n, onclick: function () { v.vitesse = n; majOrdres(); if (contexte && contexte.surVitesse) contexte.surVitesse(n); }, texte: "×" + n });
           }));
           ordres.appendChild(el("p", { texte: "Regarde tes tours tenir la route." + (v.envoyesVague ? " Tes troupes marchent sur " + adv.chateau + " : quand elles croisent des soldats adverses, elles se battent au corps à corps." : "") }));
           ordres.appendChild(vit);
@@ -1924,6 +1953,12 @@
 
       // --- conseil de guerre : les questions de la préparation ---
       function nouvellesDuFront() {
+        if (contexte) {
+          // route : la phrase de l'éclaireur du contexte avant la première question de la 1re vague ; sinon la semaine de
+          // l'acte, une vague sur deux (toujours en tête du conseil, jamais entre deux questions)
+          if (p.vague === 0 && contexte.eclaireur) return contexte.eclaireur;
+          if (typeof contexte.semaine === "number" && Math.random() < 0.5) return "Nous traversons les terres de la semaine " + contexte.semaine + " : ses cours sont en tête.";
+        }
         if (p.vague === 0 || Math.random() > 0.45) return null;
         var n = U.hasard([
           { k: "brouillard", t: "Un brouillard épais couvre la plaine : " + adv.tours + " voient moins loin pendant cette vague." },
@@ -1942,7 +1977,7 @@
       function preparation() {
         poseesVague = iQ;
         // les questions de cette vague sont tirées maintenant : leur niveau suit les réponses déjà données
-        if (p.vague > 0) questions = questions.concat(tirerQuestions(QUESTIONS_PAR_VAGUE, questions));
+        if (p.vague > 0) questions = questions.concat(tirer(QUESTIONS_PAR_VAGUE, questions));
         JEU.mesure.debut = null; // la première question suit une vague, pas une réponse
         v.curseur = -1;
         conseil.innerHTML = "";
@@ -1987,7 +2022,7 @@
           } else {
             // la question ratée reviendra un peu plus tard : si c'est dans cette vague, elle prend sa place dans le lot
             enBataille(function () { JEU.rappels.replacer(questions, iQ, poseesVague + QUESTIONS_PAR_VAGUE); });
-            JEU.ui.panneauErreur(q, scene, function () { v.repos = v.horloge + REPOS_APRES_REPONSE; JEU.mesure.reponseDonnee(); questionSuivante(scene); majTout(); });
+            JEU.ui.panneauErreur(q, scene, function () { v.repos = v.horloge + REPOS_APRES_REPONSE; JEU.mesure.reponseDonnee(); questionSuivante(scene); majTout(); }, contexte ? { sansFiche: !!contexte.sansFiche } : undefined);
             montrer(scene, "proche"); // le panneau d'erreur, vu depuis son titre
             // l'or perdu se voit tout de suite, sans rien retarder : sceau « −6 or » et or du bandeau, une image plus tard
             // (le son d'erreur du panneau suffit)
@@ -1997,7 +2032,7 @@
               if (JEU.anim && JEU.anim.apresImage) JEU.anim.apresImage(perteApres); else perteApres();
             }
           }
-        }, { recit: JEU.recit.cadre(q, defense ? "defense" : "preparation", adv) });
+        }, { recit: contexte && contexte.cadre ? contexte.cadre(q) : JEU.recit.cadre(q, defense ? "defense" : "preparation", adv) });
         // la colonne de droite défile à part : la question suivante est montrée depuis son énoncé, jamais coupée par le haut
         if (conseilEnCours()) montrer(scene, "proche");
       }
@@ -2053,7 +2088,9 @@
         if (p.phase !== "preparation" || conseilEnCours()) return;
         JEU.ui.clavier = null;
         v.choixTour = -1; v.curseur = -1;
+        if (contexte && contexte.eclaireurs >= 2 && p.vague === 1) p.modificateurs.espion = true; // Éclaireurs au rang 2 : la 2e vague adverse aussi perd un homme
         M.lancerVague(p);
+        if (contexte && contexte.surVague) contexte.surVague(p.vague); // la halte est entamée : fermer le jeu vaut une retraite
         v.envoyesVague = p.fileAmie.length;
         JEU.sons.jouer("construction");
         conseil.innerHTML = "";
@@ -2217,7 +2254,11 @@
       }
       JEU.partie.surQuitter = function () {
         arreter();
-        if (!finie) { finie = true; C.apresBataille({ lieu: lieu, front: frontId, issue: "retraite", degatsRival: p.stats.degatsRival, entamee: p.vague > 0 || p.phase !== "preparation" }); }
+        if (finie) return;
+        finie = true;
+        var entamee = p.vague > 0 || p.phase !== "preparation";
+        if (contexte) { if (contexte.surQuitter) contexte.surQuitter(entamee); } // la route décide (un vivre après la 1re vague), la campagne ne bouge pas
+        else C.apresBataille({ lieu: lieu, front: frontId, issue: "retraite", degatsRival: p.stats.degatsRival, entamee: entamee });
       };
 
       function bilan() {
@@ -2225,14 +2266,25 @@
         finie = true;
         var issue = p.fin;
         var b = { lieu: lieu, front: frontId, issue: issue, degatsRival: p.stats.degatsRival, bonnes: bonnes, total: total };
-        var gains = C.apresBataille(b);
+        var gains = {}, route = null;
+        if (contexte) {
+          // bataille de route : le bilan va au contexte (vivres, porte, or de route, renommée), jamais à la campagne ; il
+          // peut rendre les textes de l'écran de fin { titre, texte, butin, bouton }
+          b.vagues = p.vague; b.murs = p.chateau.pv; b.mursMax = p.chateau.max; b.pvRival = p.rival.pv; b.pvRivalMax = p.rival.max; b.or = Math.floor(p.or);
+          route = (contexte.surFin ? contexte.surFin(b) : null) || {};
+        } else gains = C.apresBataille(b);
         var etat = JEU.sauvegarde.etat();
         etat.stats.parties++;
         JEU.sauvegarde.enregistrer();
         JEU.ui.majRessources();
         majTout();
         var titreB, texte;
-        if (defense) {
+        if (contexte) {
+          var camp = "le camp adverse";
+          titreB = route.titre || (issue === "retraite" ? "Les murs ont cédé" : issue === "victoire" ? "Le camp adverse est tombé !" : defense ? "La compagnie tient !" : "Le camp tient encore");
+          texte = route.texte || (issue === "retraite" ? "Tes gens se replient en bon ordre. La route continue." : issue === "victoire" ? "Une victoire éclatante : " + camp + " est pris." :
+            defense ? Adv(adv.armee) + " renonce et s'éloigne de la route." : (p.stats.degatsRival > 0 ? "Ton armée a porté " + pluriel(p.stats.degatsRival, "coup") + " à " + camp + "." : "Aucun de tes soldats n'a atteint " + camp + ".") + " La route continue.");
+        } else if (defense) {
           titreB = issue === "retraite" ? "Les murs ont cédé" : "Le domaine tient !";
           texte = issue === "retraite" ? "Tes gens se sont réfugiés dans le donjon. " + Adv(adv.armee) + " campe encore devant tes murs, mais n'a rien pris." : Adv(adv.armee) + " bat en retraite.";
         } else if (b.conquise) {
@@ -2245,12 +2297,13 @@
             " Il lui reste " + pluriel(C.etat().provinces[lieu].pv, "point") + " de solidité : la prochaine bataille reprendra là.";
         }
         var liste = Object.keys(gains).map(function (r) { return "+" + gains[r] + " " + JEU.RESSOURCES[r].nom.toLowerCase(); }).join(", ");
+        if (route && route.butin) liste = route.butin;
         conseil.innerHTML = "";
         conseil.appendChild(el("div", { class: "bilan" + (issue !== "retraite" ? " reussi" : "") }, [
           el("h2", { texte: titreB }), el("p", { texte: texte }),
           el("p", { class: "grand", texte: bonnes + " / " + total + " bonnes réponses au conseil de guerre" }),
           el("p", { texte: liste ? "Butin : " + liste + "." : "Rien de perdu : tout ce que tu as gagné reste à toi." }),
-          el("button", { class: "bouton principal", onclick: retour, texte: "Retour à la campagne (Entrée)" })
+          el("button", { class: "bouton principal", onclick: retour, texte: contexte ? (route.bouton || "Continuer la route (Entrée)") : "Retour à la campagne (Entrée)" })
         ]));
         if (issue !== "retraite") {
           JEU.sons.jouer("validation"); JEU.mentor.feliciter();
@@ -2259,7 +2312,7 @@
         JEU.ui.clavier = function (k) { if (k === "Enter") { retour(); return true; } return false; };
         montrer(conseil, "proche");
       }
-      function retour() { arreter(); JEU.ui.finirPartie(); JEU.ui.afficher("jouer"); }
+      function retour() { arreter(); JEU.ui.finirPartie(); if (contexte) contexte.retour(); else JEU.ui.afficher("jouer"); }
 
       majTout();
       preparation();

@@ -12,7 +12,7 @@ Sections du cahier de conception concernées : 7.2 (table des haltes), 16.1 (jou
 - **Le champion reste** (le MVP ne peut pas le retirer). À deux vagues et camp de 6, il coûte 9 à 11 points d'éclatante aux niveaux 1 à 3 (rien au niveau 0, 21 points au niveau 4 sur la Forteresse) et les cibles tiennent avec lui. À une vague il tue l'escarmouche du niveau 4 (0 % au lieu de 69 à 97 %).
 - **Solidités 6 / 10 / 12 / 16 confirmées.** En défense, la solidité du camp ne change pas la tenue des murs : elle ne règle que la part d'éclatante.
 - **Ligne du rival par semaine confirmée** (S1-2 : 0, S3-5 : 1, S6-8 : 2, S9-12 : 3, S13+ : 4). Embuscade à la ligne + 1 confirmée. **Grand Gardien à la ligne de la semaine, pas + 1** : à 3 vagues, la ligne 3 jouée avec l'arsenal de la ligne 2 ne tient que 20 % du temps sur le Gué (S6 à S8), 15 % à la ligne 4 avec l'arsenal 3.
-- **Expédition entière, 3 vivres, 7 sur 10 : S1 → S3 84 %** (cible 70 à 85 %), premier gardien 99 %. **S6 → S8 : 100 %** avec le réglage retenu, 48 % avec le Grand Gardien à la ligne + 1 : la cible 55 à 70 % n'est atteignable avec aucun levier du MVP, et elle contredit les cibles par nœud du même tableau (un Grand Gardien vaincu une fois sur deux, retenté avec 3 vivres, donne déjà 88 % de réussite). Cible révisée proposée : ≥ 85 %.
+- **Expédition entière, 3 vivres, 7 sur 10 : S1 → S3 84 %** (cible 70 à 85 %), premier gardien 99 %. **S6 → S8 : 100 %** avec le réglage retenu, 48 % avec le Grand Gardien à la ligne + 1 : la cible 55 à 70 % n'est atteignable avec aucun levier du MVP, et elle contredit les cibles par nœud du même tableau (un Grand Gardien vaincu une fois sur deux, retenté avec 3 vivres, donne déjà 88 % de réussite). Cible révisée proposée : ≥ 85 % (amendée à la vérification : 65 à 85 %, non atteinte ; voir « Vérification »).
 
 ### 1. Référence des batailles de campagne
 
@@ -163,7 +163,7 @@ La carte ne compte qu'au niveau 4 (deux tours rivales de départ à tirs × 1,62
 
 #### 4.6 Décision
 
-**Escarmouche : attaque, 2 vagues, camp de 6, ligne de la semaine, champion gardé.** À 7 sur 10 : 38 à 39 % (S1, S2), 54 à 61 % (S3), 54 à 55 % (S6 à S8) ; à 9 sur 10 : 84 à 91 % ; à 6 sur 10 : 20 à 56 %. Cibles 17.3 : 40 à 60 % (S1 → S3), 30 à 50 % (S6 → S8), ≥ 70 % à p 0,9, ≥ 20 % à p 0,6 : tenues à 5 points près (S1 et S2 à 38 %, S6 à S8 à 54 %). Conséquence à reporter dans le cahier (5.1, annexe A) : 6 questions par escarmouche au lieu de 3, 4 à 4,5 minutes au lieu de 2,5 à 3, soit 4 à 6 minutes de plus par expédition de trois semaines.
+**Escarmouche : attaque, 2 vagues, camp de 6, ligne de la semaine, champion gardé.** À 7 sur 10 : 39 % (S1, S2), 56 % (S3, sur le Moulin ; 54 à 61 % selon la carte), 54 à 55 % (S6 à S8) ; à 9 sur 10 : 86 à 91 % ; à 6 sur 10 : 20 à 50 % (précisé à la vérification). Cibles 17.3 : 40 à 60 % (S1 → S3), 30 à 50 % (S6 → S8), ≥ 70 % à p 0,9, ≥ 20 % à p 0,6 : tenues à 5 points près (S1 et S2 à 38 %, S6 à S8 à 54 %). Conséquence à reporter dans le cahier (5.1, annexe A) : 6 questions par escarmouche au lieu de 3, 4 à 4,5 minutes au lieu de 2,5 à 3, soit 4 à 6 minutes de plus par expédition de trois semaines.
 
 ### 5. Embuscade (défense, 2 vagues, camp de 10)
 
@@ -192,7 +192,7 @@ Les niveaux 0 et 1 sont les seuls à inquiéter : la ligne 0 a les troupes d'ass
 | 3, arsenal 2 (S6 à S8) | 76 / 87 / 93 / 97 % | 75 / 88 / 96 / 98 % | 81 / 93 / 96 / 99 % |
 | 4, arsenal 3 (S9 à S12) | 97 / 100 / 100 / 100 % | 99 / 100 / 100 / 100 % | 99 / 100 / 100 / 100 % |
 
-Murs restants quand elle tient (gue, p 0,7) : 42 / 77 / 61 / 61 % ; coups portés au camp : 3,7 / 3,3 / 2,4 / 1,9.
+Murs restants en moyenne sur toutes les batailles, 0 quand ils cèdent (gue, p 0,7) : 42 / 77 / 61 / 61 % ; quand elle tient : 60 / 82 / 70 / 61 % (corrigé à la vérification) ; coups portés au camp : 3,7 / 3,3 / 2,4 / 1,9.
 
 #### 5.3 La solidité du camp ne change pas la tenue
 
@@ -208,7 +208,7 @@ Murs restants quand elle tient (gue, p 0,7) : 42 / 77 / 61 / 61 % ; coups porté
 
 `gard-2v12-<carte>` : à solidité différente, la tenue est **la même que l'embuscade** à la même ligne (5.1), au point près : gue 80 / 82 / 100 / 100 / 100 % à p 0,7 (niveaux 0 à 4), foret 68 / 91 / 100 / 100 / 100 %, moulin 88 / 89 / 100 / 100 / 100 %, col 81 / 89 / 100 / 100 / 100 %, chateau 88 / 100 / 100 / 100 / 100 %, domaine 81 / 81 / 100 / 100 / 100 %. À p 0,6 : gue 62 / 72 / 99 / 100 / 98 %, foret 45 / 86 / 99 / 100 / 100 %, moulin 72 / 84 / 99 / 100 / 100 %. À p 0,9 : 96 à 100 % partout.
 
-Murs restants quand il tient (gue, p 0,7) : 45 / 64 / 91 / 82 / 69 % ; coups portés : 4,1 / 3,5 / 6,6 / 8,2 / 0.
+Murs restants en moyenne, 0 quand ils cèdent (gue, p 0,7) : 45 / 64 / 91 / 82 / 69 % ; quand il tient : 57 / 79 / 91 / 82 / 69 % (corrigé à la vérification) ; coups portés : 4,1 / 3,5 / 6,6 / 8,2 / 0.
 
 #### 6.2 Solidité 10, 12, 14, 16
 
@@ -216,7 +216,7 @@ Murs restants quand il tient (gue, p 0,7) : 45 / 64 / 91 / 82 / 69 % ; coups por
 
 #### 6.3 Une ligne au-dessus, deux lignes au-dessus (levier `difficulte`)
 
-Gardien joué une ligne au-dessus de l'arsenal (lecture de `emb-2v10-gue-arsenal-1`, même tenue) : 70 / 94 / 87 / 100 % aux lignes 1 à 4, p 0,7. Deux lignes au-dessus (`gard-2v12-gue-arsenal-2`, lignes 2 à 4 avec l'arsenal 0 à 2) : 72 / 61 / 48 % à p 0,6, 78 / 66 / 63 % à p 0,7, 98 / 84 / 93 % à p 0,9, murs 39 / 31 / 40 %.
+Gardien joué une ligne au-dessus de l'arsenal (lecture de `emb-2v10-gue-arsenal-1`, même tenue) : 70 / 94 / 87 / 100 % aux lignes 1 à 4, p 0,7. Deux lignes au-dessus (`gard-2v12-gue-arsenal-2`, lignes 2 à 4 avec l'arsenal 0 à 2) : 72 / 61 / 48 % à p 0,6, 78 / 66 / 63 % à p 0,7, 98 / 84 / 93 % à p 0,9, murs en moyenne 39 / 31 / 40 % (50 / 47 / 64 % quand il tient, corrigé à la vérification).
 
 #### 6.4 Décision
 
@@ -235,7 +235,7 @@ Gardien joué une ligne au-dessus de l'arsenal (lecture de `emb-2v10-gue-arsenal
 | 3, arsenal 2 (S6 à S8) | **9 / 20 / 38 / 60 %** | 28 / 39 / 53 / 74 % | 53 / 63 / 79 / 93 % | 43 / 57 / 73 / 87 % |
 | 4, arsenal 3 (S9 à S12) | **6 / 15 / 23 / 20 %** | 8 / 21 / 28 / 26 % | 51 / 69 / 84 / 93 % | 20 / 37 / 61 / 90 % |
 
-Murs restants quand il tient (gue, p 0,7) : 36 / 37 / 16 / 1 %. La troisième vague fait la différence : à deux vagues, la ligne 3 avec l'arsenal 2 tient 87 % (5.2) ; à trois vagues, 20 %. Le passage de la ligne 2 à la ligne 3 (garde × 1,3, points de vie × 0,9, assaut 3,5) puis à la ligne 4 (tirs × 1,62, points de vie × 1,2, coups × 1) coûte une vague entière.
+Murs restants en moyenne, 0 quand ils cèdent (gue, p 0,7) : 36 / 37 / 16 / 1 % ; quand il tient : 54 / 49 / 80 / 10 % (corrigé à la vérification). La troisième vague fait la différence : à deux vagues, la ligne 3 avec l'arsenal 2 tient 87 % (5.2) ; à trois vagues, 20 %. Le passage de la ligne 2 à la ligne 3 (garde × 1,3, points de vie × 0,9, assaut 3,5) puis à la ligne 4 (tirs × 1,62, points de vie × 1,2, coups × 1) coûte une vague entière.
 
 #### 7.2 À la ligne de la semaine
 
@@ -249,7 +249,7 @@ Murs restants quand il tient (gue, p 0,7) : 36 / 37 / 16 / 1 %. La troisième va
 | 3 (S9 à S12) | 64 / 76 / 97 % | 82 / 88 / 99 % | 96 / 97 / 100 % | 89 / 94 / 99 % | 80 / 83 / 99 % |
 | 4 (S13+) | 29 / 37 / 79 % | 33 / 49 / 89 % | 93 / 98 / 100 % | 59 / 74 / 96 % | 49 / 60 / 86 % |
 
-Murs restants quand il tient (gue, p 0,7) : 42 / 36 / 50 / 31 / 5 % ; éclatante (gue) : 6 / 0 / 14 / 12 / 0 %.
+Murs restants en moyenne, 0 quand ils cèdent (gue, p 0,7) : 42 / 36 / 50 / 31 / 5 % ; quand il tient : 55 / 50 / 58 / 41 / 14 % (corrigé à la vérification) ; éclatante (gue) : 6 / 0 / 14 / 12 / 0 %.
 
 #### 7.3 Quatre vagues à la ligne de la semaine (essai de levier)
 
@@ -306,7 +306,7 @@ Ce que le calcul montre : la réussite d'une expédition tient presque entièrem
 | Mesure | cible S1 → S3 (p 0,7) | mesuré S1 / S2 / S3 | cible S6 → S8 (p 0,7) | mesuré S6 / S7 / S8 | cible p 0,9 | mesuré S1-S3 ; S6-S8 | cible p 0,6 | mesuré S1-S3 ; S6-S8 |
 |---|---|---|---|---|---|---|---|---|
 | Escarmouche tenue | ≥ 95 % | 100 % | ≥ 90 % | 100 % | ≥ 99 % | 100 % | ≥ 85 % | 100 % |
-| Escarmouche éclatante | 40 à 60 % | 39 / 39 / 56 % | 30 à 50 % | 54 / 54 / 55 % | ≥ 70 % | 86 / 84 / 88 ; 91 / 91 / 91 % | ≥ 20 % | 20 / 20 / 50 ; 38 / 38 / 39 % |
+| Escarmouche éclatante | 40 à 60 % | 39 / 39 / 56 % | 30 à 50 % | 54 / 54 / 55 % | ≥ 70 % | 86 / 86 / 88 ; 91 / 91 / 91 % | ≥ 20 % | 20 / 20 / 50 ; 38 / 38 / 39 % |
 | Embuscade tenue (ligne + 1) | 75 à 85 % | 70 / 69 / 96 % | 68 à 80 % | 87 / 88 / 93 % | ≥ 94 % | 97 / 97 / 100 ; 97 / 98 / 99 % | 58 à 70 % | 49 / 49 / 91 ; 76 / 75 / 81 % |
 | Gardien vaincu, 1re tentative | 75 à 85 % | 80 / 68 / 89 % | 68 à 80 % | 100 / 100 / 100 % | ≥ 94 % | 98 / 96 / 99 ; 100 % | 55 à 65 % | 62 / 45 / 84 ; 99 % |
 | Grand Gardien, 1re tentative | 60 à 70 % | 71 % | 50 à 62 % | 87 % | ≥ 88 % | 96 ; 99 % | ≥ 40 % | 51 ; 83 % |
@@ -324,7 +324,7 @@ S1 → S3 : tout est tenu ou à 5 points près (escarmouche 39 %, embuscade 69 �
 3. **Solidités 6 / 10 / 12 / 16 confirmées.** En défense, elles ne changent pas la tenue des murs (identique à l'unité près de 8 à 16), seulement l'éclatante ; 10 pour l'embuscade et 12 pour le gardien laissent 8 à 35 % d'éclatante aux niveaux 0, 2 et 3 ; 16 pour le Grand Gardien l'éteint presque (0 à 15 %), ce qui le distingue.
 4. **Ligne par semaine confirmée** (S1-2 : 0, S3-5 : 1, S6-8 : 2, S9-12 : 3, S13+ : 4). Embuscade à la ligne + 1 (plafond 4) confirmée. Gardien à la ligne. **Grand Gardien à la ligne de la semaine et non + 1** (7.5). Avec ces règles, S1 → S3 tient toutes ses cibles ; S6 → S8 est trop facile partout sauf avec le Grand Gardien à + 1, qui est alors beaucoup trop dur : le réglage retenu est le plus proche qui ne casse rien.
 5. **`config.expedition.difficulte` : 0.** Le lever à + 1 est à éviter de S6 à S12 tant que la table fine n'existe pas : il met le Grand Gardien de S8 à la ligne 3 avec l'arsenal 2 (20 % sur le Gué). À − 1, il ramène S3 → S5 à la ligne 0, mesurée seulement avec l'arsenal 0 ; sans effet sur S1-S2 (plancher).
-6. **Cible d'expédition S6 → S8 à réviser dans le cahier (17.3)** : ≥ 85 % à p 0,7 avec 3 vivres (mesuré 100 %), ≥ 60 % à p 0,6 (99 %) ; les cibles par nœud restent la référence. Le levier « trop facile » reste `vivres: 2` (97 % en S6 → S8, 65 % en S1 → S3) puis les Serments (étape 3).
+6. **Cible d'expédition S6 → S8 à réviser dans le cahier (17.3)** : ≥ 85 % à p 0,7 avec 3 vivres (mesuré 100 %), ≥ 60 % à p 0,6 (99 %) (amendé à la vérification : 65 à 85 % à p 0,7, déduit des cibles par nœud, non atteinte ; ≥ 35 % gardé à p 0,6) ; les cibles par nœud restent la référence. Le levier « trop facile » reste `vivres: 2` (97 % en S6 → S8, 65 % en S1 → S3) puis les Serments (étape 3).
 7. **Vivres : 3 au départ, 5 au plus, confirmés.** À 2, S1 → S3 tombe à 65 % à p 0,7 et 29 % à p 0,6.
 8. **Étape 2, premiers candidats de la table fine** (cahier 7.1) : gardien de S6 à S8 à la ligne 3 (87 à 93 % à deux vagues) ; Grand Gardien durci par `garnisonPlus` ou `toursDepartPlus` plutôt que par la ligne ; embuscade de S1-S2 à la ligne 0 si Romain la trouve trop dure (80 / 68 % au lieu de 70 / 69 %).
 9. **Comptes à reporter dans le cahier** : escarmouche 6 questions, 4 à 4,5 minutes ; expédition de trois semaines ≈ 60 questions (au lieu de ≈ 50) et 34 à 46 minutes à vitesse × 1 ; annexe A « Modes et vagues : escarmouche : attaque, 2 ».
@@ -358,3 +358,163 @@ cible 17.3 expédition S6 → S8, p 0,7, 3 vivres = ≥ 85 % (au lieu de 55 à 7
 cible 17.3 expédition S6 → S8, p 0,6, 3 vivres = ≥ 60 % (au lieu de ≥ 35 %)
 référence des batailles de campagne = atelier/mesures/avant-expedition.json (0 écart exigé)
 ```
+
+Bloc relu, amendé et confirmé par la vérification : voir « Vérification », V7, à la fin de ce document.
+
+## Vérification (24 octobre 2026, second regard)
+
+Rôle de cette section : refaire les mesures du jour 0 sans les croire sur parole, chercher les erreurs de recopie, recalculer la réussite d'une expédition avec une autre méthode, confronter le bloc de décisions aux cibles du 17.3 et chercher le piège des paliers de flèches. Fichiers bruts : atelier/mesures/verification/ (20 mesures relancées, un .txt et un .json chacune ; 17 essais de fragilité `fragilite-*.txt` ; `campagne-comparer.txt` ; `campagne-regen.json`). Scripts de travail hors dépôt. Le simulateur n'a pas été modifié : ses options de route font ce qu'elles disent.
+
+### V1. Les batailles de campagne n'ont pas bougé
+
+- `node atelier/outils/simuler-bataille.js --comparer atelier/mesures/avant-expedition.json` : **+0 % sur les vingt cases** (batailles pour prendre et coups à la 1re bataille, niveaux 0 à 4, p 0,6 à 0,9), sortie dans atelier/mesures/verification/campagne-comparer.txt.
+- Régénération complète de la référence avec le simulateur d'aujourd'hui (quatre stratégies, `--json`, 80 graines) : REGEN_RESULTAT
+- Simulateur d'avant les options de route (commit 7116aec, copie de travail avec sa racine ajustée) contre le simulateur d'aujourd'hui, essai court en `--json` (6 graines, niveaux 0 et 3, p 0,7 et 0,9, stratégies equilibre et rush) : **fichiers identiques** (`cmp` muet).
+- Les fichiers que le simulateur charge (jeu/js/noyau.js, sauvegarde.js, bataille-moteur.js, cartes-bataille.js, campagne.js, jeu/data/config.js) n'ont pas changé depuis 7116aec (`git diff 7116aec HEAD` sur ces fichiers : vide). `git status` pendant la vérification : rien de la vérification dans jeu/ ; en revanche les agents du MVP ont modifié en même temps jeu/js/recit.js, bataille.js, interface.js, campagne.js et jeu/css/jeu.css (vers 16 h 50). Dans campagne.js, le diff touche `GAINS_RIVALITE` (deux clés ajoutées), `jouerEvenement` (un contexte de route, DOM seulement) et l'export de `reagir` ; `options(niveau)` est intact. Pour en être sûr, `--comparer` a été relancé sur l'arbre de travail tel quel après ces modifications : **+0 % sur les vingt cases** (atelier/mesures/verification/campagne-comparer-apres-edits.txt).
+- `--niveaux 0 --p 0.7` en mode campagne : marche (tableau à une ligne). `--comparer` en mode route : marche (+0 pt sur tenue, éclatante, coups et murs contre atelier/mesures/jour0/gard-2v12-gue.json). `--regle` en mode route : marche (assaut 20 → 0 % de tenue ; tours × 3 → 100 %).
+- `node atelier/outils/tests.js` : **234 réussis, 0 en échec**. `node atelier/outils/valider.js` : **0 erreur, 5 alertes** (sources de géographie citées mais absentes de DEPOT/, sans rapport avec les mesures) ; 62 cours, 291 fiches, 2 341 questions.
+
+### V2. Relances (80 graines, p 0,6 / 0,7 / 0,9, mêmes commandes)
+
+Relancées : esc-2v6 (gue, foret, moulin, cartes du niveau, sans champion), esc-1v6, emb-2v10-arsenal-1 (gue, foret, moulin), gard-2v12 (gue, foret, moulin), grand-3v16 (gue aux niveaux 0 à 4, gue-arsenal-1, foret, moulin). Résultat : **toutes identiques, à l'unité, aux fichiers de atelier/mesures/jour0/** (tenue, éclatante, coups, murs). C'est attendu : le simulateur tire ses graines d'une suite fixe, une même commande rend les mêmes batailles. La relance prouve donc que les fichiers bruts se reproduisent ; la vérification a porté ensuite sur la **recopie** des fichiers bruts vers les tableaux de ce document : chaque chiffre de tenue et d'éclatante des sections 4 à 9 a été comparé à son fichier .json (tableaux régénérés par atelier/mesures/tableaux-jour0.js). Aucun chiffre de tenue ou d'éclatante n'est faux de plus de 2 points ; les erreurs trouvées sont en V3.
+
+Bruit de mesure, mesuré en rejouant les 40 premières graines (80 batailles au lieu de 160), tenue à p 0,6 / 0,7 / 0,9 :
+
+| Mesure, niveau | 160 batailles | 80 batailles | écart |
+|---|---|---|---|
+| gard-2v12-gue, 0 | 62 / 80 / 98 % | 56 / 76 / 98 % | −6 / −4 / 0 |
+| gard-2v12-foret, 0 | 45 / 68 / 96 % | 41 / 61 / 95 % | −4 / −7 / −1 |
+| grand-3v16-gue, 1 | 51 / 71 / 96 % | 48 / 73 / 98 % | −3 / +2 / +2 |
+| grand-3v16-gue, 2 | 83 / 87 / 99 % | 81 / 86 / 99 % | −2 / −1 / 0 |
+| grand-3v16-gue, 3 | 64 / 76 / 97 % | 69 / 79 / 96 % | +5 / +3 / −1 |
+| esc-2v6-gue, éclatante p 0,7, niveaux 0 / 2 | 39 / 54 % | 35 / 48 % | −4 / −6 |
+
+Lecture : à 160 batailles, un taux voisin de 70 % se connaît à **± 7 points** près. Une cible manquée de moins de 7 points est « à la limite », pas tranchée.
+
+### V3. Corrections apportées au texte du jour 0
+
+1. **« Murs restants quand elle tient » : mauvaise colonne, cinq endroits (5.2, 6.1, 6.3, 7.1, 7.2).** Les chiffres donnés étaient la moyenne sur toutes les batailles, murs comptés à 0 quand ils cèdent (colonne « murs » du simulateur), pas la moyenne des batailles tenues. Vraies valeurs quand la bataille est tenue (gue, p 0,7) : embuscade ligne + 1 : 60 / 82 / 70 / 61 % (au lieu de 42 / 77 / 61 / 61) ; gardien : 57 / 79 / 91 / 82 / 69 % (au lieu de 45 / 64 / 91 / 82 / 69) ; gardien deux lignes au-dessus : 50 / 47 / 64 % (au lieu de 39 / 31 / 40) ; Grand Gardien à la ligne + 1 : 54 / 49 / 80 / 10 % (au lieu de 36 / 37 / 16 / 1) ; Grand Gardien à la ligne : 55 / 50 / 58 / 41 / 14 % (au lieu de 42 / 36 / 50 / 31 / 5). Corrigé en place, les deux valeurs sont maintenant données. Aucune décision n'en dépendait.
+2. **Section 9, escarmouche éclatante à p 0,9, S2 : 84 % → 86 %** (la Forêt à la ligne 0 ; 84 % est la ligne 1). Corrigé.
+3. **Section 4.6, fourchettes de l'escarmouche** : 56 % en S3 (Moulin), pas « 54 à 61 % » ; à 9 sur 10, 86 à 91 % (pas 84) ; à 6 sur 10, 20 à 50 % sur les semaines jouées (56 % est le Gué à la ligne 1, qu'aucune semaine de S1 → S3 ni de S6 → S8 ne joue). Précisé.
+4. **« S6 → S8 : 100 % »** (sections 0, 8, 9) vaut 99,6 % avant arrondi. Rien à changer, mais il faut le savoir : ce n'est pas une certitude, c'est 0,13³ plus des miettes.
+5. **« Les cibles par nœud sont incompatibles avec la cible d'expédition de 55 à 70 % »** (sections 0 et 8) : trop fort. En mettant chaque nœud de S6 → S8 exactement sur sa cible (escarmouche 100 %), le calcul de la section 8 donne **65 à 85 %** d'expéditions réussies à p 0,7 (bas des fourchettes : embuscade 68, gardien 68, Grand Gardien 50 → 65 % ; haut : 80, 80, 62 → 85 %). La fourchette du cahier (55 à 70 %) recouvre donc la fourchette déduite entre 65 et 70 % : les cibles sont compatibles seulement si chaque nœud est au plus dur de sa fourchette. **La cible révisée « ≥ 85 % » du jour 0 n'est pas déduite des cibles par nœud, elle est calée sur la mesure (99,6 %)** : une cible qu'on ne peut pas manquer ne sert plus à régler. Cible retenue ici : **65 à 85 %** (déduite), **non atteinte** (99,6 %, trop facile). À p 0,6, la cible du cahier (≥ 35 %) est un plancher cohérent avec les cibles par nœud (elles donnent 43 à 69 %) : gardée, le « ≥ 60 % » du jour 0 est retiré. Même raisonnement pour S1 → S3 : les cibles par nœud donnent 79 à 92 %, le cahier dit 70 à 85 % ; le 84 % mesuré est dans les deux.
+
+Pas d'erreur de plus de 5 points. Les options `--vagues`, `--pvRival`, `--mode`, `--carte`, `--arsenal`, `--sansChampion`, `--sortie` du simulateur font ce que la section 2 dit ; rien n'y a été changé.
+
+### V4. La convolution recalculée à part
+
+Deux méthodes écrites sans regarder atelier/mesures/convolution-expedition.js, nourries des mêmes fichiers .json.
+
+Formule. Une semaine = trois couches puis un gardien. À chaque couche, la halte jouée coûte un vivre avec la chance `perte = part_esc × (1 − tenue_esc) + part_emb × (1 − tenue_emb)` (parts 55 / 35 / 25 % pour l'escarmouche, 0 / 25 / 0 % pour l'embuscade ; l'escarmouche tient toujours, donc seule l'embuscade de la 2e couche compte). Si `d(v)` est la chance d'avoir `v` vivres, une couche donne `d'(v − 1) += d(v) × perte` et `d'(v) += d(v) × (1 − perte)`. Un gardien tenu avec la chance `t` à chaque tentative, retenté tant qu'il reste des vivres : `d'(v − k) += d(v) × (1 − t)^k × t` pour `k` de 0 à `v − 1`, et le reste, `d(v) × (1 − t)^v`, va dans `d'(0)`. La réussite est `1 − d(0)` après le Grand Gardien ; « premier gardien franchi » est `1 − d(0)` après le gardien de la première semaine.
+
+À la main, S1 → S3 à p 0,7 en négligeant les embuscades : quatre places retentées (gardiens 0,80 ; 0,68 ; 0,89 ; Grand Gardien 0,71), l'expédition réussit si elles coûtent au plus 2 échecs en tout. Avec `q = 1 − t` (0,20 ; 0,32 ; 0,11 ; 0,29) et `P0 = 0,80 × 0,68 × 0,89 × 0,71 = 0,344` : réussite = `P0 × (1 + Σq + Σ_{i ≤ j} q_i q_j) = 0,344 × (1 + 0,92 + 0,5425) = 84,6 %` ; les embuscades (0,25 × 30 % de chance de perdre un vivre en S1 et S2) enlèvent le demi-point qui reste.
+
+| Expédition | p | vivres | convolution refaite | tirage Monte-Carlo (200 000) | script du jour 0 | premier gardien (refaite / MC / jour 0) |
+|---|---|---|---|---|---|---|
+| S1 → S3 | 0,6 | 3 / 4 / 5 | 48,3 / 64,7 / 76,9 % | 48,2 / 64,7 / 76,9 % | 48 / 65 / 77 % | 93,4 / 93,4 / 93 % |
+| S1 → S3 | 0,7 | 3 / 4 / 5 | 84,1 / 93,4 / 97,4 % | 84,1 / 93,4 / 97,5 % | 84 / 93 / 97 % | 99,0 / 98,9 / 99 % |
+| S1 → S3 | 0,9 | 3 / 4 / 5 | 100 / 100 / 100 % | 99,9 / 100 / 100 % | 100 % | 100 % |
+| S6 → S8 | 0,6 | 3 / 4 / 5 | 98,9 / 99,8 / 100 % | 98,9 / 99,8 / 100 % | 99 / 100 / 100 % | 100 % |
+| S6 → S8 | 0,7 | 3 / 4 / 5 | 99,6 / 100 / 100 % | 99,6 / 100 / 100 % | 100 % | 100 % |
+| S6 → S8 | 0,9 | 3 / 4 / 5 | 100 % | 100 % | 100 % | 100 % |
+| S6 → S8, Grand Gardien à la ligne + 1 (règle du cahier) | 0,7 | 3 / 4 / 5 | 47,8 / 58,2 / 66,6 % | 47,8 / 58,3 / 66,7 % | 48 / 58 / 67 % | 100 % |
+
+**L'arithmétique du jour 0 est juste.** Ses hypothèses tiennent aussi : une halte par couche (cahier 3.4 : 3 haltes jouées puis le gardien), parts de la table 4.3, escarmouche et embuscade cédées non rejouées, gardiens retentés au taux de la première tentative, aucun vivre regagné (prudent : le bivouac de 3e couche est garanti, cahier G2).
+
+### V5. Les cibles du 17.3, nœud par nœud (réglage retenu, p 0,7 sauf mention, Grand Gardien sur le Gué)
+
+« Atteinte » : dans la fourchette. « Limite » : à moins de 7 points (le bruit de mesure). « Non atteinte » : au-delà.
+
+| Cible | Valeur du cahier | Mesuré | Verdict |
+|---|---|---|---|
+| Escarmouche tenue S1 → S3 | ≥ 95 % | 100 / 100 / 100 % | atteinte |
+| Escarmouche tenue S6 → S8 | ≥ 90 % | 100 % | atteinte |
+| Escarmouche tenue p 0,9 / p 0,6 | ≥ 99 % / ≥ 85 % | 100 % / 100 % | atteinte |
+| Escarmouche éclatante S1 → S3 | 40 à 60 % | 39 / 39 / 56 % | limite (S1, S2 à 1 point sous) |
+| Escarmouche éclatante S6 → S8 | 30 à 50 % | 54 / 54 / 55 % | limite (4 à 5 points au-dessus : un peu trop facile) |
+| Escarmouche éclatante p 0,9 / p 0,6 | ≥ 70 % / ≥ 20 % | 86 à 91 % / 20 à 50 % | atteinte (p 0,6 : S1 et S2 pile à 20 %) |
+| Embuscade tenue S1 → S3 | 75 à 85 % | 70 / 69 / 96 % | limite en S1-S2 (5 à 6 points sous) ; **non atteinte en S3** (11 points au-dessus) |
+| Embuscade tenue S6 → S8 | 68 à 80 % | 87 / 88 / 93 % | **non atteinte** (7 à 13 points au-dessus) |
+| Embuscade tenue p 0,9 | ≥ 94 % | 97 à 100 % | atteinte |
+| Embuscade tenue p 0,6 | 58 à 70 % | 49 / 49 / 91 % ; 76 / 75 / 81 % | **non atteinte** (S1-S2 9 points sous, S3 et S6 → S8 au-dessus) |
+| Gardien vaincu S1 → S3 | 75 à 85 % | 80 / 68 / 89 % | S1 atteinte ; S2 (Forêt) **limite** (7 points sous, 61 % sur les 40 premières graines) ; S3 limite (4 au-dessus) |
+| Gardien vaincu S6 → S8 | 68 à 80 % | 100 / 100 / 100 % | **non atteinte** (20 points au-dessus) |
+| Gardien p 0,9 | ≥ 94 % | 96 à 100 % | atteinte |
+| Gardien p 0,6 | 55 à 65 % | 62 / 45 / 84 % ; 99 % | S1 atteinte ; S2 **non atteinte** (10 sous) ; S3 et S6 → S8 **non atteintes** (trop facile) |
+| Grand Gardien S1 → S3 | 60 à 70 % | 71 % (Gué ; 78 à 90 % sur les autres cartes) | limite sur le Gué (1 point) ; non atteinte ailleurs (trop facile) |
+| Grand Gardien S6 → S8 | 50 à 62 % | 87 % (Gué ; 94 à 100 % ailleurs) | **non atteinte** (25 points au-dessus) |
+| Grand Gardien p 0,9 / p 0,6 | ≥ 88 % / ≥ 40 % | 96 ; 99 % / 51 ; 83 % | atteinte |
+| Expédition S1 → S3, 3 / 4 / 5 vivres | 70 à 85 / ≥ 90 / ≥ 95 % | 84 / 93 / 97 % | atteinte |
+| Expédition S6 → S8, 3 vivres | 55 à 70 % (cahier) ; 65 à 85 % (déduite, V3) | 99,6 % | **non atteinte** (trop facile) |
+| Expédition S6 → S8, 4 / 5 vivres | ≥ 80 / ≥ 90 % | 100 % | atteinte (planchers) |
+| Expédition p 0,6, S1 → S3 / S6 → S8 | ≥ 45 / ≥ 35 % | 48 / 99 % | atteinte (S1 → S3 à 3 points du plancher) |
+| Expédition p 0,9, S1 → S3 | ≥ 95 % | 100 % | atteinte |
+| Premier gardien franchi | ≥ 95 % | 99 % | atteinte |
+
+Bilan : S1 → S3 tient, à la limite près (embuscade de S1-S2, gardien de la Forêt, escarmouche à 39 %). **Tout S6 → S8 est trop facile** : embuscade, gardien, Grand Gardien et expédition dépassent leur fourchette de 7 à 25 points. Le jour 0 l'avait vu et l'a écrit ; ce qu'il n'a pas dit assez clairement, c'est que c'est une cible manquée, pas une cible à déplacer.
+
+### V6. Le piège des paliers de flèches
+
+Rappel du mécanisme (journal du 16/10/2026, moteur ligne 60 et suivantes) : une troupe tombe quand ses points de vie passent sous 0,001 ; le nombre de coups nécessaires est un entier, et tout quotient points de vie / dégâts proche d'un entier peut sauter d'un cran pour un changement minuscule. Les seuils 1,534 et 1,725 du journal sont ceux de `RIVAL[4].tirs` (fantassin et cavalier de l'arsenal 2 : 9,2 / 6 = 1,533 ; 13,8 / 8 = 1,725). **Aucune décision du bloc ne touche à « tirs », ni à aucune valeur de la table RIVAL** : la route combine seulement des lignes existantes avec des rangées d'arsenal existantes. Les combinaisons neuves sont celles de la ligne + 1 (embuscade : ligne 1 avec l'arsenal 0, ligne 2 avec l'arsenal 1, ligne 3 avec l'arsenal 2, ligne 4 avec l'arsenal 3).
+
+Quotients calculés depuis le moteur (dégâts d'une tour = base × (1 + 0,6 × (niveau − 1)) × bonus d'arsenal × (1 + 0,025 × jauge Garde) ; points de vie d'une troupe d'assaut = base × (pv + 0,07 × vague) × assaut), ceux qui sont à moins de 4 % d'un entier et qui comptent dans les premières vagues :
+
+- **Ligne 0 (gardien de S1-S2)** : archers de niveau 1 (1,3) contre la piétaille (10,4 pv) : **8,000 exactement** ; archers de niveau 2 (2,08) : 5,000 / 8,000 / 16,000 / 34,000 contre piétaille, cavaliers, hommes d'armes, champion. Pile sur le palier : la moindre hausse de `RIVAL[0].assaut` (5,2) ajouterait un coup à chaque troupe. Baisse possible jusqu'à 4,55 sans changement. À ne jamais monter d'un centième sans remesurer.
+- **Ligne 1 avec l'arsenal 0 (embuscade de S1-S2)** : archers de niveau 1 contre cavaliers à la 2e vague 14,991 → 15 coups ; contre hommes d'armes 29,982 → 30. Juste sous l'entier : une hausse de 0,1 % des points de vie adverses coûterait un coup de plus.
+- **Ligne 2 avec l'arsenal 2 (gardien de S6-S8, Grand Gardien de S8)** : baliste de niveau 1 (6,05) contre cavaliers à la 2e vague 2,991 → 3 ; contre hommes d'armes 5,982 → 6 ; à la 3e vague, piétaille 2,020 → 3 et, baliste de niveau 2, hommes d'armes 4,040 → 5. Des deux côtés du palier.
+- **Ligne 3 avec l'arsenal 2 (embuscade de S6-S8)** : archers de niveau 1 (1,43) contre la piétaille 11,014 → 12 (à 0,13 % de 11) ; contre cavaliers à la 2e vague 18,993 → 19 ; baliste contre hommes d'armes à la 2e vague 8,979 → 9. Le réglage le plus exposé.
+- Attaque (escarmouche) : mêmes couples ligne / arsenal que la campagne, mêmes paliers qu'elle (fantassins en 12 flèches aux lignes 1 à 3, 6 à la ligne 4).
+
+Essais au simulateur (80 graines, p 0,6 / 0,7 / 0,9 ; `--regle` sur le moteur chargé, moteur sur disque intact) : dégâts de toutes tes tours × 0,975 et × 1,025, soit **un cran de la jauge Garde en moins ou en plus** par rapport à la rangée PROGRESSION supposée ; points de vie d'assaut du rival + 1 % ; tirs 0,72 au lieu de 0,7.
+
+| Nœud | Tenue mesurée | Tours × 0,975 | Tours × 1,025 | Autre |
+|---|---|---|---|---|
+| Gardien S1-S2, ligne 0, Gué | 62 / 80 / 98 % | 62 / 80 / 98 % | 62 / 80 / 98 % | assaut 5,25 : 62 / 80 / 98 % |
+| Gardien S1-S2, ligne 0, Forêt | 45 / 68 / 96 % | 45 / 68 / 96 % | 45 / 68 / 96 % | |
+| Embuscade S1-S2, ligne 1, arsenal 0, Gué | 49 / 70 / 97 % | 49 / 70 / 97 % | 49 / 70 / 97 % | |
+| Embuscade S6-S8, ligne 3, arsenal 2, Gué | 76 / 87 / 97 % | **73 / 83 / 97 %** | 76 / 87 / 97 % | |
+| Gardien S6-S8, ligne 2, Gué | 99 / 100 / 100 % | 99 / 100 / 100 % | | |
+| Grand Gardien S3, ligne 1, Gué | 51 / 71 / 96 % | 51 / 71 / 96 % | 53 / 73 / 96 % | |
+| Grand Gardien S8, ligne 2, Gué | 83 / 87 / 99 % | 83 / 86 / 99 % | **87 / 92 / 99 %** | assaut 2,63 : 83 / 87 / 99 % |
+| Escarmouche S3 et S9, lignes 1 et 3, Gué (éclatante) | 61 % ; 68 % | | | tirs 0,72 : 61 % ; 68 % |
+
+Verdict : **aucun réglage recommandé ne bascule pour un cran de jauge.** Les paliers exacts de la ligne 0 ne mordent pas (un coup de plus par troupe à assaut 5,25 : tenue inchangée à l'unité, les murs non plus). Deux réglages bougent un peu, dans le bruit : l'**embuscade de S6-S8** perd 3 à 4 points si l'élève a une jauge Garde de 3 au lieu de 4 (cavaliers en 20 coups au lieu de 19, hommes d'armes en 10 au lieu de 9) ; le **Grand Gardien de S8** gagne 5 points avec une jauge de 5 (les troupes de la 3e vague tombent une balistade plus tôt). Les deux vont dans le sens « plus l'élève a bâti, plus c'est facile », qui est voulu. Ce qui reste vrai, et que le jour 0 ne dit pas : la route joue avec **les jauges réelles de l'élève**, pas celles de PROGRESSION ; chaque chiffre de ce document est un point, pas une courbe, et un élève qui a monté sa Garde à 8 en novembre trouvera le gardien de S1 à la ligne 0 plus doux que 80 %. Le levier `difficulte` restera à portée de Romain pour ça. Si l'étape 2 touche à la table RIVAL ou à une table fine par semaine : remesurer à chaque changement d'« assaut », de « pv » ou de « tirs », en commençant par la ligne 0 (8,000) et la ligne 3 avec l'arsenal 2 (11,014).
+
+### V7. Bloc de décisions confirmé (chiffres finals)
+
+Tout le bloc du jour 0 est confirmé, à deux lignes près (les cibles d'expédition S6 → S8, V3 point 5).
+
+```
+escarmouche.mode = attaque
+escarmouche.vagues = 2
+escarmouche.pvRival = 6
+escarmouche.ligne = ligne de la semaine + 0
+escarmouche.champion = gardé (option moteur inchangée)
+escarmouche.questions = 6
+embuscade.mode = defense
+embuscade.vagues = 2
+embuscade.pvRival = 10
+embuscade.ligne = ligne de la semaine + 1, plafond 4
+gardien.mode = defense
+gardien.vagues = 2
+gardien.pvRival = 12
+gardien.ligne = ligne de la semaine + 0
+grandGardien.mode = defense
+grandGardien.vagues = 3
+grandGardien.pvRival = 16
+grandGardien.ligne = ligne de la semaine + 0, plafond 4
+LIGNE_SEMAINE = S1-S2 : 0 ; S3-S5 : 1 ; S6-S8 : 2 ; S9-S12 : 3 ; S13+ : 4
+config.expedition.difficulte = 0
+config.expedition.vivres = 3
+vivres.maximum = 5
+cible 17.3 expédition S6 → S8, p 0,7, 3 vivres = 65 à 85 % (déduite des cibles par nœud ; mesuré 99,6 % : non atteinte au MVP)
+cible 17.3 expédition S6 → S8, p 0,6, 3 vivres = ≥ 35 % (inchangée ; mesuré 99 %)
+référence des batailles de campagne = atelier/mesures/avant-expedition.json (0 écart exigé ; vérifié le 24/10 : +0 % sur 20 cases)
+```
+
+### V8. Cibles non atteintes et levier recommandé
+
+1. **Embuscade, gardien, Grand Gardien et expédition de S6 → S8 : trop faciles** (87 à 93 %, 100 %, 87 %, 99,6 % contre 68 à 80, 68 à 80, 50 à 62, 55 à 70 %). Aucun levier du MVP ne les ramène dans la fourchette sans casser autre chose : `difficulte: +1` met le Grand Gardien de S8 à la ligne 3 avec l'arsenal 2 (20 % sur le Gué) ; `vivres: 2` laisse l'expédition à 97 % ; la solidité des camps ne change pas la tenue. Le seul réglage du MVP qui rapproche le Grand Gardien de sa cible est **4 vagues à la ligne de la semaine** (78 % sur le Gué, 75 % sur le domaine, au lieu de 87 %), au prix de 12 questions au lieu de 9 : à proposer à Romain, pas à décider ici. Levier recommandé pour l'étape 2 : la table fine par semaine (cahier 7.1), d'abord le **gardien de S6 à S8 à la ligne 3** (87 à 93 % à deux vagues, mesuré), puis `garnisonPlus: 1` ou `toursDepartPlus: 1` sur le Grand Gardien de S6 à S12, à mesurer ; l'embuscade de S6-S8 suivra. Livrer le MVP tel quel, en le disant à Romain : de S6 à S8, l'expédition se gagne presque toujours, la tension vient des portes doublées et des gardiens retentés.
+2. **Embuscade de S1-S2 : 70 % pour 75 à 85 %**, 49 % pour 58 à 70 % à p 0,6. Limite à p 0,7, manquée à p 0,6. Levier : embuscade à la ligne 0 en S1-S2 (80 % sur le Gué, mais 68 % sur la Forêt : pas mieux). Rien au MVP ; c'est un choix de l'élève, avec un chemin tranquille garanti (G6).
+3. **Gardien de S2 (Forêt) : 68 % pour 75 à 85 %**, 45 % pour 55 à 65 % à p 0,6. Effet de carte (la Forêt est la carte la plus dure à la ligne 0 : 45 / 68 / 96 % contre 62 / 80 / 98 % sur le Gué). Aucun levier au MVP (`difficulte: −1` est plancher à 0). À surveiller sur les premières expéditions réelles : si l'élève bute sur la Forêt, c'est le premier endroit où lever la garnison ou changer la carte de S2.
+4. **Escarmouche de S6 → S8 : 54 à 55 % pour 30 à 50 %** et **Grand Gardien de S3 hors du Gué : 78 à 90 % pour 60 à 70 %**. Limite ou trop facile ; même cause, même levier (étape 2).

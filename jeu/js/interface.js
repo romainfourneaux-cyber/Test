@@ -280,8 +280,11 @@
   // est déjà prise par l'encadré de l'accueil (rappel d'export), dont la mise en page déformerait le bandeau.
   // repere (facultatif, recit.js) : la semaine et la matière du cours (« Semaine 4 · Histoire · Cours 5 »), sur la ligne
   // du nom pour ne pas ajouter de hauteur au bandeau (la colonne de bataille est juste en 1366 × 768).
+  // semaine (facultatif, recit.js, 24/10/2026) : { numero, libelle, titre, route } ; le titre du cours va en infobulle du
+  // repère, et le repère passe en relief (classe recit-semaine) quand route vaut true : la question vient de la semaine de
+  // l'acte d'une expédition. En campagne, route est faux : le ruban dit la semaine sans relief.
   ui.recit = function (r) {
-    return el("div", { class: "recit" + (r.etiquette ? " seconde-chance" : "") }, [
+    var carte = el("div", { class: "recit" + (r.etiquette ? " seconde-chance" : "") }, [
       el("span", { class: "recit-portrait", html: JEU.icones.icone(r.icone, 34) }),
       el("div", {}, [
         el("b", { class: "recit-nom" }, [r.nom, r.etiquette ? el("span", { class: "etiquette-rappel", texte: r.etiquette }) : null,
@@ -289,6 +292,11 @@
         el("p", { class: "recit-texte", texte: r.texte })
       ])
     ]);
+    if (r.semaine && r.repere) {
+      var ruban = carte.querySelector(".recit-repere");
+      if (ruban) { if (r.semaine.titre) ruban.title = r.semaine.titre; if (r.semaine.route) ruban.classList.add("recit-semaine"); }
+    }
+    return carte;
   };
 
   function boutonChoix(n, texte, action) {
@@ -479,7 +487,10 @@
     return reste.replace(/\s+/g, "").length < 4;
   }
   ui.repeteReponse = repeteReponse; // pour l'essai de bout en bout
-  ui.panneauErreur = function (q, zone, suite) {
+  // options (facultatif, 24/10/2026) : { sansFiche } : pas de bouton « Voir la fiche » (Grand Gardien d'une expédition : les
+  // fiches ratées attendent le bilan, comme pour un boss).
+  ui.panneauErreur = function (q, zone, suite, options) {
+    options = options || {};
     zone.innerHTML = "";
     var f = JEU.questions.fiche(q.fiche);
     var bonne = q.type === "association" && q.reponse && q.reponse.length
@@ -493,7 +504,7 @@
       repeteReponse(q) ? null : el("p", { class: "explication", texte: q.explication || "" }),
       el("div", { class: "actions" }, [
         el("button", { class: "bouton principal", onclick: continuer, texte: "Continuer (Entrée)" }),
-        f ? el("button", { class: "bouton", onclick: function () { JEU.codex.ouvrirFiche(q.fiche); }, texte: "Voir la fiche" }) : null,
+        f && !options.sansFiche ? el("button", { class: "bouton", onclick: function () { JEU.codex.ouvrirFiche(q.fiche); }, texte: "Voir la fiche" }) : null,
         el("button", { class: "lien signaler", onclick: function () { JEU.signalement.ouvrir(q); }, texte: "Signaler une erreur" })
       ])
     ]);

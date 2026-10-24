@@ -1,0 +1,87 @@
+Moteur : jeu/js/bataille-moteur.js · or perdu par erreur : 6 · 80 graines par province (deux fronts), 160 défenses par niveau
+
+p = 0.6 (réponses justes)
+niv | pv     | victoire tenu retraite | coups 1re bataille | batailles pour prendre (max) | ennemis tués / tes pertes | défense tenue (dont victoire), murs restants (quand elle tient)
+ 0  | 16/16  |    17 %  83 %    0 %   |              10.04 |               2.15 (4) prises 98 % |     39.1 / 4.1 | 56 % (4 %), 28 % (50 %)
+ 1  | 20/20  |     0 % 100 %    0 %   |               7.71 |               3.13 (7) |     38.6 / 5.4 | 60 % (11 %), 36 % (60 %)
+ 2  | 24/24  |     0 % 100 %    0 %   |               6.74 |               4.04 (8) prises 98 % |     41.6 / 7.2 | 74 % (4 %), 49 % (67 %)
+ 3  | 30/30  |     1 %  99 %    0 %   |              11.55 |               3.24 (7) |     40.3 / 6.1 | 80 % (17 %), 36 % (46 %)
+ 4  | 32/32  |     0 % 100 %    0 %   |               4.95 |                6.9 (12) prises 98 % |     34.2 / 10 | 58 % (20 %), 22 % (38 %)
+moy |        |   3.6 % 96.4 %    0 %   |                8.2 |                3.9     |                       | 65.6 %, murs 34.2 %
+1re bataille : coups à la 1re vague (part de la solidité ; batailles où elle dépasse un tiers) · sorties de la garnison · le rival en cours de bataille : tours bâties, gardes ajoutés à sa garnison, gardes rappelés par ses guetteurs (toutes vagues), troupes de renfort
+ 0  |  1.86 (12 % ; 0 %) · 3.16 sorties · 2.94 tours, 0.24 gardes, 0 rappelés, 0 renforts
+ 1  |  2.89 (14 % ; 0 %) · 2.74 sorties · 3 tours, 0.26 gardes, 0 rappelés, 0 renforts
+ 2  |  2.81 (12 % ; 24 %) · 3.24 sorties · 2.5 tours, 0.33 gardes, 0 rappelés, 3 renforts
+ 3  |  5.06 (17 % ; 27 %) · 2.77 sorties · 2 tours, 0 gardes, 0 rappelés, 1.5 renforts
+ 4  |  2.25 (7 % ; 0 %) · 2.53 sorties · 3 tours, 0 gardes, 0 rappelés, 0 renforts
+écarts avec atelier/mesures/avant-expedition.json (jeu/js/bataille-moteur.js, or perdu 6) : batailles pour prendre ; coups à la 1re bataille
+ 0  | 2.15 → 2.15 (+0 %) ; 10.04 → 10.04 (+0 %)
+ 1  | 3.13 → 3.13 (+0 %) ; 7.71 → 7.71 (+0 %)
+ 2  | 4.04 → 4.04 (+0 %) ; 6.74 → 6.74 (+0 %)
+ 3  | 3.24 → 3.24 (+0 %) ; 11.55 → 11.55 (+0 %)
+ 4  | 6.9 → 6.9 (+0 %) ; 4.95 → 4.95 (+0 %)
+
+p = 0.7 (réponses justes)
+niv | pv     | victoire tenu retraite | coups 1re bataille | batailles pour prendre (max) | ennemis tués / tes pertes | défense tenue (dont victoire), murs restants (quand elle tient)
+ 0  | 16/16  |    34 %  66 %    0 %   |              12.81 |               1.69 (3) |     39.3 / 4.6 | 79 % (13 %), 47 % (59 %)
+ 1  | 20/20  |     0 % 100 %    0 %   |               8.94 |                2.7 (5) |     38.7 / 5.5 | 73 % (13 %), 52 % (71 %)
+ 2  | 24/24  |     0 % 100 %    0 %   |               9.61 |                3.1 (8) prises 99 % |       42 / 7.6 | 79 % (14 %), 61 % (77 %)
+ 3  | 30/30  |     6 %  94 %    0 %   |              15.44 |               2.56 (5) |     40.7 / 6.1 | 83 % (26 %), 47 % (57 %)
+ 4  | 32/32  |     0 % 100 %    0 %   |               6.86 |               5.16 (9) |     34.4 / 9.7 | 73 % (31 %), 33 % (46 %)
+moy |        |     8 %  92 %    0 %   |               10.7 |                  3     |                       | 77.4 %, murs 48 %
+1re bataille : coups à la 1re vague (part de la solidité ; batailles où elle dépasse un tiers) · sorties de la garnison · le rival en cours de bataille : tours bâties, gardes ajoutés à sa garnison, gardes rappelés par ses guetteurs (toutes vagues), troupes de renfort
+ 0  |  2.62 (16 % ; 0 %) · 3.75 sorties · 2.92 tours, 0.39 gardes, 0 rappelés, 0 renforts
+ 1  |   2.8 (14 % ; 0 %) · 2.99 sorties · 3 tours, 0.34 gardes, 0 rappelés, 0 renforts
+ 2  |  3.68 (15 % ; 35 %) · 4.13 sorties · 2.5 tours, 0.51 gardes, 0 rappelés, 3 renforts
+ 3  |  6.44 (21 % ; 38 %) · 3.1 sorties · 2 tours, 0 gardes, 0 rappelés, 1.5 renforts
+ 4  |  2.64 (8 % ; 0 %) · 2.64 sorties · 3 tours, 0 gardes, 0 rappelés, 0 renforts
+écarts avec atelier/mesures/avant-expedition.json (jeu/js/bataille-moteur.js, or perdu 6) : batailles pour prendre ; coups à la 1re bataille
+ 0  | 1.69 → 1.69 (+0 %) ; 12.81 → 12.81 (+0 %)
+ 1  | 2.7 → 2.7 (+0 %) ; 8.94 → 8.94 (+0 %)
+ 2  | 3.1 → 3.1 (+0 %) ; 9.61 → 9.61 (+0 %)
+ 3  | 2.56 → 2.56 (+0 %) ; 15.44 → 15.44 (+0 %)
+ 4  | 5.16 → 5.16 (+0 %) ; 6.86 → 6.86 (+0 %)
+
+p = 0.8 (réponses justes)
+niv | pv     | victoire tenu retraite | coups 1re bataille | batailles pour prendre (max) | ennemis tués / tes pertes | défense tenue (dont victoire), murs restants (quand elle tient)
+ 0  | 16/16  |    63 %  38 %    0 %   |              15.49 |               1.39 (3) |     38.1 / 4.9 | 90 % (26 %), 61 % (68 %)
+ 1  | 20/20  |     3 %  98 %    0 %   |              11.93 |               2.23 (4) |       39 / 6.1 | 91 % (24 %), 77 % (85 %)
+ 2  | 24/24  |     1 %  99 %    0 %   |              12.81 |               2.39 (5) |     42.5 / 8.2 | 89 % (26 %), 75 % (84 %)
+ 3  | 30/30  |    11 %  89 %    0 %   |              19.89 |               2.09 (3) |     41.1 / 6.1 | 95 % (46 %), 71 % (75 %)
+ 4  | 32/32  |     0 % 100 %    0 %   |               9.32 |               4.11 (9) |     34.7 / 9.2 | 91 % (46 %), 47 % (51 %)
+moy |        |  15.6 % 84.8 %    0 %   |               13.9 |                2.4     |                       | 91.2 %, murs 66.2 %
+1re bataille : coups à la 1re vague (part de la solidité ; batailles où elle dépasse un tiers) · sorties de la garnison · le rival en cours de bataille : tours bâties, gardes ajoutés à sa garnison, gardes rappelés par ses guetteurs (toutes vagues), troupes de renfort
+ 0  |  3.38 (21 % ; 0 %) · 4.21 sorties · 2.79 tours, 0.65 gardes, 0 rappelés, 0 renforts
+ 1  |  3.09 (15 % ; 0 %) · 3.93 sorties · 2.98 tours, 0.51 gardes, 0 rappelés, 0 renforts
+ 2  |  5.36 (22 % ; 56 %) · 5.09 sorties · 2.5 tours, 0.73 gardes, 0 rappelés, 3 renforts
+ 3  |   8.2 (27 % ; 54 %) · 3.39 sorties · 2 tours, 0 gardes, 0 rappelés, 1.5 renforts
+ 4  |  3.19 (10 % ; 0 %) · 2.73 sorties · 3 tours, 0 gardes, 0 rappelés, 0 renforts
+écarts avec atelier/mesures/avant-expedition.json (jeu/js/bataille-moteur.js, or perdu 6) : batailles pour prendre ; coups à la 1re bataille
+ 0  | 1.39 → 1.39 (+0 %) ; 15.49 → 15.49 (+0 %)
+ 1  | 2.23 → 2.23 (+0 %) ; 11.93 → 11.93 (+0 %)
+ 2  | 2.39 → 2.39 (+0 %) ; 12.81 → 12.81 (+0 %)
+ 3  | 2.09 → 2.09 (+0 %) ; 19.89 → 19.89 (+0 %)
+ 4  | 4.11 → 4.11 (+0 %) ; 9.32 → 9.32 (+0 %)
+
+p = 0.9 (réponses justes)
+niv | pv     | victoire tenu retraite | coups 1re bataille | batailles pour prendre (max) | ennemis tués / tes pertes | défense tenue (dont victoire), murs restants (quand elle tient)
+ 0  | 16/16  |    87 %  13 %    0 %   |              17.41 |               1.13 (2) |     36.1 / 5 | 97 % (48 %), 79 % (82 %)
+ 1  | 20/20  |     3 %  97 %    0 %   |              13.99 |               2.01 (3) |     39.3 / 6.7 | 98 % (51 %), 90 % (92 %)
+ 2  | 24/24  |     4 %  96 %    0 %   |              16.71 |               2.08 (3) |     43.2 / 9 | 94 % (52 %), 92 % (98 %)
+ 3  | 30/30  |    43 %  57 %    0 %   |              27.39 |               1.58 (3) |     41.7 / 4.8 | 99 % (66 %), 85 % (86 %)
+ 4  | 32/32  |     0 % 100 %    0 %   |              11.67 |               3.39 (6) |     34.9 / 10.6 | 99 % (70 %), 66 % (67 %)
+moy |        |  27.4 % 72.6 %    0 %   |               17.4 |                  2     |                       | 97.4 %, murs 82.4 %
+1re bataille : coups à la 1re vague (part de la solidité ; batailles où elle dépasse un tiers) · sorties de la garnison · le rival en cours de bataille : tours bâties, gardes ajoutés à sa garnison, gardes rappelés par ses guetteurs (toutes vagues), troupes de renfort
+ 0  |  4.04 (25 % ; 0 %) · 4.52 sorties · 2.61 tours, 0.89 gardes, 0 rappelés, 0 renforts
+ 1  |  3.56 (18 % ; 0 %) · 4.86 sorties · 2.97 tours, 0.69 gardes, 0 rappelés, 0 renforts
+ 2  |  7.19 (30 % ; 78 %) · 6.61 sorties · 2.5 tours, 0.91 gardes, 0 rappelés, 3 renforts
+ 3  | 10.59 (35 % ; 83 %) · 3.79 sorties · 2 tours, 0 gardes, 0 rappelés, 1.5 renforts
+ 4  |  3.52 (11 % ; 0 %) · 2.93 sorties · 3 tours, 0 gardes, 0 rappelés, 0 renforts
+écarts avec atelier/mesures/avant-expedition.json (jeu/js/bataille-moteur.js, or perdu 6) : batailles pour prendre ; coups à la 1re bataille
+ 0  | 1.13 → 1.13 (+0 %) ; 17.41 → 17.41 (+0 %)
+ 1  | 2.01 → 2.01 (+0 %) ; 13.99 → 13.99 (+0 %)
+ 2  | 2.08 → 2.08 (+0 %) ; 16.71 → 16.71 (+0 %)
+ 3  | 1.58 → 1.58 (+0 %) ; 27.39 → 27.39 (+0 %)
+ 4  | 3.39 → 3.39 (+0 %) ; 11.67 → 11.67 (+0 %)
+
+(276 s)

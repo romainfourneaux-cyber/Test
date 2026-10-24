@@ -175,6 +175,17 @@
     return r;
   }
 
+  // Semaine d'un cours : celle de son entrée du planning (sinon le numéro porté par son identifiant) ; null pour un cours
+  // de langue, une fiche méthode ou une séquence d'anglais, qui n'ont pas de semaine. Partagé par le repère de semaine des
+  // questions et par les expéditions (fenêtre et quota de chaque semaine traversée).
+  function semaineDe(coursId) {
+    if (!coursId || /^(methode|langue|anglais)-/.test(coursId)) return null;
+    var e = entree(coursId);
+    if (e && typeof e.semaine === "number") return e.semaine;
+    var m = /^[a-z]+-s(\d\d)-\d+$/.exec(coursId);
+    return m ? parseInt(m[1], 10) : null;
+  }
+
   // Nombre de cours acquis, tous onglets confondus (le même compte que l'écran Cours, onglet par onglet).
   function totalAcquis(etat) {
     return ["methode"].concat(JEU.ORDRE_MATIERES).reduce(function (n, o) { return n + position(o, etat).acquis; }, 0);
@@ -184,6 +195,6 @@
     etatCours: etatCours, coursAccessibles: coursAccessibles, recence: recence, position: position, totalAcquis: totalAcquis,
     estimation: estimation, fichesARevoir: fichesARevoir, oublier: oublier, entree: entree,
     entreesCours: entreesCours, sequencesAnglais: sequencesAnglais, methodes: methodes, fichierPresent: fichierPresent,
-    idsOnglet: idsOnglet, coursLangue: coursLangue, groupesLangue: groupesLangue, rangBadge: rangBadge
+    idsOnglet: idsOnglet, coursLangue: coursLangue, groupesLangue: groupesLangue, rangBadge: rangBadge, semaineDe: semaineDe
   };
 })(typeof window !== "undefined" ? window : globalThis);

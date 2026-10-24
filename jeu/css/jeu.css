@@ -540,6 +540,8 @@ main { max-width: 1060px; margin: 0 auto; padding: 1.4rem 1rem 7rem; }
 .recit-nom .etiquette-rappel { margin-left: 0; }
 .recit-repere { font-family: var(--titre); font-weight: 400; font-size: .68rem; letter-spacing: .04em; text-transform: none; color: #d9c48f; white-space: nowrap; }
 .recit-nom .recit-repere { margin-left: auto; }
+/* expédition (24/10/2026) : la question vient de la semaine de l'acte (r.semaine.route) : le repère passe en relief */
+.recit-repere.recit-semaine { color: #fff6dc; background: rgba(176,141,58,.32); box-shadow: 0 0 0 1px var(--or); border-radius: .8em; padding: .05rem .5rem; font-weight: 700; }
 .carte-conseil .cc-tete .recit-repere { display: block; font-style: normal; margin-top: .15rem; color: var(--or-sombre); white-space: normal; }
 /* question ratée qui revient un peu plus tard : une seconde chance, signalée par un cartouche doré (jamais en brique) */
 .etiquette-rappel { display: inline-block; margin-left: .6rem; padding: .05rem .55rem; border-radius: .8em; vertical-align: .08em;

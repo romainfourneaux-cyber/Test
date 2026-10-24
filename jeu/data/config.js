@@ -12,5 +12,10 @@ JEU.enregistrer("config", {
   reposFicheJuste: 15,          // une notion réussie attend 15 autres questions (et une notion à revoir réussie 2 fois, la séance suivante)
   orPerduErreur: 6,             // bataille : or retiré par réponse fausse (or de la bataille en cours, jamais sous zéro)
   usureBatiments: false,
-  son: true
+  son: true,
+  // Expéditions (la route des semaines, jeu/js/expedition.js) : semaines par expédition, couches par semaine, vivres au
+  // départ (5 au plus), questions de la semaine sur 3, seuils de fiches pour le quota plein et le demi-quota, cran de
+  // difficulté des batailles de route (-1, 0 ou +1 ; +1 à éviter de S6 à S12), vitesse de départ (1, 2 ou 3),
+  // relaisLibres : partir de n'importe quelle semaine ouverte
+  expedition: { semaines: 3, couches: 3, vivres: 3, questionsSemaine: 2, quotaPlein: 12, quotaDemi: 5, difficulte: 0, vitesse: 1, relaisLibres: false }
 });
