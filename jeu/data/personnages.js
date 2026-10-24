@@ -17,7 +17,7 @@ JEU.enregistrer("personnages", {
       faits: [{ texte: "Sur la frise du cours, il est roi des Francs de 481 à 511." }],
       portrait: {
         fichier: "assets/images/personnages/clovis.jpg",
-        oeuvre: "Clovis le grand, carte du « Jeu des Rois de France » (détail)",
+        oeuvre: "Clovis le grand, carte du Jeu des Rois de France (détail)",
         artiste: "Stefano della Bella", date: "1644",
         institution: "The Metropolitan Museum of Art, New York (objet 412341, Bequest of Phyllis Massar, 2011)",
         licence: "domaine public (CC0, Open Access du Met)",
@@ -41,7 +41,7 @@ JEU.enregistrer("personnages", {
       faits: [{ texte: "La carte du cours montre le royaume franc tel qu'il est à sa mort." }],
       portrait: {
         fichier: "assets/images/personnages/pepin-le-bref.jpg",
-        oeuvre: "Pepin le bref, carte du « Jeu des Rois de France » (détail)",
+        oeuvre: "Pepin le bref, carte du Jeu des Rois de France (détail)",
         artiste: "Stefano della Bella", date: "1644",
         institution: "The Metropolitan Museum of Art, New York (objet 412342, Bequest of Phyllis Massar, 2011)",
         licence: "domaine public (CC0, Open Access du Met)",
