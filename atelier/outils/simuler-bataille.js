@@ -29,7 +29,10 @@
 //   --strategies equilibre,rush,tortue : stratégies du joueur scripté (par défaut : equilibre seulement) :
 //              equilibre : le joueur d'avant le 16/10/2026 (tours, puis troupes, puis améliorations, voir depenser) ;
 //              rush : tout l'or en troupes dès la 1re vague (tour de siège comprise), jamais de tour ;
-//              tortue : rien que des tours et des améliorations, jamais de troupe.
+//              tortue : rien que des tours et des améliorations, jamais de troupe ;
+//              attente (thésauriseur, revue du 16/10/2026) : des tours comme le joueur équilibré mais aucune troupe
+//              pendant les premières vagues, l'or mis de côté, puis tout en troupes (tours de siège d'abord) à la
+//              dernière vague. Cible : pas mieux que l'équilibré (avant la revue, 1,6 bataille au lieu de 4 au niveau 4).
 //              Avec plusieurs stratégies, un tableau par stratégie, puis la comparaison (coups à la 1re vague, en part
 //              de la solidité de la place forte, coups à la 1re bataille, batailles pour prendre, défense tenue).
 //              Le seigneur rival réagit à ce que fait le joueur (jeu/js/bataille-moteur.js, rivalReagit et
@@ -51,7 +54,7 @@ const JSON_SORTIE = args.indexOf("--json") >= 0, DETAIL = args.indexOf("--detail
 const NIVEAUX = option("niveaux", "0,1,2,3,4").split(",").map(Number);
 const SEULEMENT = option("seulement", null);
 const STRATEGIES = option("strategies", "equilibre").split(",").map(s => s.trim()).filter(Boolean);
-STRATEGIES.forEach(s => { if (["equilibre", "rush", "tortue"].indexOf(s) < 0) { console.error("Stratégie inconnue : " + s + " (equilibre, rush ou tortue)"); process.exit(1); } });
+STRATEGIES.forEach(s => { if (["equilibre", "rush", "tortue", "attente"].indexOf(s) < 0) { console.error("Stratégie inconnue : " + s + " (equilibre, rush, tortue ou attente)"); process.exit(1); } });
 // (un fichier écrit par « > » dans Windows PowerShell est en UTF-16 : il est lu aussi)
 function lireJSON(f) { const o = fs.readFileSync(f); return JSON.parse(o[0] === 0xFF && o[1] === 0xFE ? o.toString("utf16le", 2) : o.toString("utf8").replace(/^\uFEFF/, "")); }
 const COMPARER = option("comparer", null) ? lireJSON(option("comparer")) : null;
@@ -132,12 +135,9 @@ function acheterTroupes(p, budget, belierDesLeDebut) {
     budget -= M.TROUPES[choix].cout;
   }
 }
-// Avant chaque vague : des tours jusqu'à 2 + numéro de vague (types en alternance, sur l'emplacement qui couvre le plus
-// de route), PART_TROUPES de l'or qui reste en troupes (tour de siège dès la 2e vague, puis cavaliers, puis fantassins),
-// puis des améliorations (la moins chère d'abord), puis le reste en troupes.
-function depenser(p, carteId, carte) {
+// Des tours jusqu'à « cible » (types en alternance, sur l'emplacement libre qui couvre le plus de route).
+function poserTours(p, carteId, carte, cible) {
   const dispo = ORDRE_TOURS.filter(t => M.niveauArsenal(p, "tours", t) > 0);
-  const cible = Math.min(carte.emplacements.length, 2 + p.vague);
   while (p.tours.length < cible) {
     const type = dispo[p.tours.length % dispo.length];
     if (p.or < M.TOURS[type].cout) break;
@@ -146,6 +146,13 @@ function depenser(p, carteId, carte) {
     cov.forEach((n, i) => { if (M.emplacementLibre(p, i) && (meilleur < 0 || n > cov[meilleur])) meilleur = i; });
     if (meilleur < 0 || !M.poserTour(p, type, meilleur)) break;
   }
+}
+// Avant chaque vague : des tours jusqu'à 2 + numéro de vague (types en alternance, sur l'emplacement qui couvre le plus
+// de route), PART_TROUPES de l'or qui reste en troupes (tour de siège dès la 2e vague, puis cavaliers, puis fantassins),
+// puis des améliorations (la moins chère d'abord), puis le reste en troupes.
+function depenser(p, carteId, carte) {
+  const cible = Math.min(carte.emplacements.length, 2 + p.vague);
+  poserTours(p, carteId, carte, cible);
   acheterTroupes(p, Math.floor(p.or * PART_TROUPES));
   if (p.tours.length >= cible) {
     for (;;) {
@@ -174,7 +181,13 @@ function depenserTortue(p, carteId, carte) {
     if (!t || p.or < M.coutAmelioration(t) || !M.ameliorerTour(p, t.emplacement)) break;
   }
 }
-const DEPENSES = { equilibre: depenser, rush: depenserRush, tortue: depenserTortue };
+// Attente (thésauriseur) : les tours du joueur équilibré (2 + numéro de vague), aucune troupe et l'or mis de côté
+// pendant les premières vagues ; à la dernière vague, tout l'or en troupes (tour de siège d'abord).
+function depenserAttente(p, carteId, carte) {
+  if (p.vague < p.vagues - 1) { poserTours(p, carteId, carte, Math.min(carte.emplacements.length, 2 + p.vague)); return; }
+  acheterTroupes(p, Infinity, true);
+}
+const DEPENSES = { equilibre: depenser, rush: depenserRush, tortue: depenserTortue, attente: depenserAttente };
 
 // Or d'une réponse : celui du moteur s'il sait le faire (M.repondre), sinon l'ancienne règle de bataille.js.
 function repondre(p, juste, etat) {

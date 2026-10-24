@@ -1098,6 +1098,40 @@ verifier("IA du rival contre une tortue (que des tours, aucune troupe) : il lèv
   jTortue.posture === "armee" && renfortsTortue.length > 0 && renfortsTortue.every(t => t === "hommes") &&
   pTortue.fileRivale.filter(t => t === "hommes").length === renfortsTortue.length && pTortue.fileRivale.length === MM.VAGUES.base + MM.VAGUES.parVague + RV[1].renfort + renfortsTortue.length,
   { journal: jTortue, renforts: renfortsTortue, file: pTortue.fileRivale });
+// 6 bis. thésauriseur (revue du 16/10/2026) : deux tours à la 1re vague, puis rien pendant trois vagues en gardant son or,
+// puis quatre tours de siège d'un coup à la dernière. Avant la revue, « mefiance » n'achetait qu'un garde, et les guetteurs
+// ne comparaient l'armée qu'aux tours du joueur : la Forteresse anglaise tombait en 1,6 bataille au lieu de 4. Maintenant :
+// à chaque vague d'or gardé, il fortifie sa porte (tour, garde) ; ses guetteurs comptent l'or gardé avec l'armée.
+// garder : l'or s'accumule (60, 120, 180 au départ des vagues 1 à 3) ; sinon le même or n'arrive qu'à la 4e vague.
+function thesauriseur(garder) {
+  const p = MM.creer(JM.cartesBataille.carte("chateau"), { niveau: 4, vagues: 4, pvRival: 32, pvRivalMax: 32, pvChateau: 999, orDepart: 80,
+    arsenal: { tours: { archers: 1, piquiers: 1, baliste: 1, catapulte: 1 }, troupes: { fantassins: 1, cavaliers: 1, belier: 1 } } });
+  MM.poserTour(p, "archers", 0); MM.poserTour(p, "baliste", 1); // 80 or de défenses, et plus rien ensuite
+  const decisions = [];
+  for (let w = 0; w < 3; w++) {
+    p.or = garder ? 60 * (w + 1) : 0;
+    MM.jouerVague(p, 0.05);
+    decisions.push(p.ia.journal[p.ia.journal.length - 1]);
+  }
+  p.or = 180;
+  for (let k = 0; k < 4; k++) MM.envoyer(p, "belier");
+  const toursAvant = p.toursRivales.length;
+  MM.lancerVague(p);
+  const alerte = p.ia.journal[p.ia.journal.length - 1];
+  let n = 0;
+  while (p.phase === "vague" && n++ < 40000) MM.etape(p, 0.05);
+  return { p, decisions, rappel: p.garnison.rappel, alerte: alerte.posture === "alerte" ? alerte : null, toursAvant, coups: p.stats.degatsRival, phase: p.phase };
+}
+const theso = thesauriseur(true), sansTheso = thesauriseur(false);
+const rappelSans = Math.min(GA.rappel, Math.floor((180 - 80 - IAR.alerte) / IAR.parGarde)), rappelAvec = Math.min(GA.rappel, Math.floor((180 + 180 - 80 - IAR.alerte) / IAR.parGarde));
+verifier("IA du rival contre un thésauriseur (or gardé trois vagues, puis quatre tours de siège d'un coup) : à chaque vague d'or gardé il se méfie, fortifie sa porte (tour devant la porte, garde) ; " +
+  "ses guetteurs comptent l'or gardé avec l'armée (plus de gardes rappelés que pour la même armée sans or gardé, " + rappelAvec + " contre " + rappelSans + ") ; la ruée préparée porte au plus un tiers de la solidité",
+  theso.decisions.every(j => j.posture === "mefiance" && j.actions.some(a => a.genre === "tour")) && theso.decisions.slice(0, 2).every(j => j.actions.some(a => a.genre === "garde")) &&
+  theso.p.toursRivales.length >= theso.toursAvant && theso.toursAvant === RV[4].toursDepart + 3 &&
+  theso.alerte && theso.alerte.actions[0].orVu === 180 && theso.rappel === rappelAvec && theso.alerte.actions[0].nombre === rappelAvec &&
+  sansTheso.alerte && sansTheso.alerte.actions[0].orVu === 0 && sansTheso.rappel === rappelSans && rappelAvec > rappelSans &&
+  sansTheso.decisions.every(j => j.posture !== "mefiance") && theso.coups <= 32 / 3 && theso.phase !== "vague",
+  { decisions: theso.decisions.map(j => j.posture + " " + JSON.stringify(j.actions)), rappel: theso.rappel, rappelSans: sansTheso.rappel, alerte: theso.alerte && theso.alerte.actions, coups: theso.coups, coupsSans: sansTheso.coups, phase: theso.phase });
 // 7. tout est sans hasard : la même bataille, jouée avec deux tirages au hasard différents, donne les mêmes décisions
 function batailleScriptee(alea) {
   const ctx = contexte();
@@ -1577,7 +1611,7 @@ verifier("Bataillons : le rendu ne touche pas au moteur (aucune écriture de la 
     dit[1] === "Les guetteurs du roi d'Angleterre ont vu ton armée sortir : il rappelle des gardes à sa porte." &&
     dit[2] === "Les guetteurs de l'émir de Cordoue ont vu ton armée sortir : il rappelle des gardes à sa porte." &&
     dit[3] === "L'émir de Cordoue a vu tes troupes foncer sur sa porte : il la fortifie. Il paie de nouveaux gardes pour remplacer ceux que tu as abattus." &&
-    dit[4] === "Tu gardes de l'or : un seigneur rival se méfie d'une grosse attaque et renforce sa garde." &&
+    dit[4] === "Tu gardes de l'or : un seigneur rival se méfie d'une grosse attaque, fortifie sa porte et renforce sa garde." &&
     PR(journal, 1, true, "Le roi d'Angleterre") === null && PR(journal, 3, false, "x") === null && PR([], 0, false, "x") === null && PR(null, 0, false, "x") === null, dit);
   // une vraie bataille du moteur : une phrase pour la 1re vague (départ) et pour chaque vague suivante (sa décision), jamais vide
   const pJ = JB.batailleMoteur.creer(JB.cartesBataille.carte("gue"), { niveau: 1, vagues: 4, pvRival: 999, pvChateau: 999, orDepart: 40 });

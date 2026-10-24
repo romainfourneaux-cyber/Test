@@ -97,7 +97,11 @@ async function jouerCarteConseil(page) {
   const r = await page.evaluate(() => {
     const t = document.querySelector(".carte-conseil .affirmation").textContent.replace(/^« | »$/g, "");
     const tout = [];
-    Object.keys(JEU.donnees.cours).forEach(c => JEU.questions.questionsDuCours(c).forEach(x => { if (x.enonce === t) tout.push(x); }));
+    // tous les cours chargés : ceux du planning et des méthodes (JEU.donnees.cours) et les séquences d'anglais
+    // (JEU.donnees.anglais, 16/10/2026 : le conseil du royaume en tire aussi des affirmations)
+    Object.keys(JEU.donnees.cours).concat(Object.keys(JEU.donnees.anglais || {}))
+      .forEach(c => JEU.questions.questionsDuCours(c).forEach(x => { if (x.enonce === t) tout.push(x); }));
+    if (!tout.length) throw new Error("affirmation du conseil introuvable parmi les questions : " + t);
     return tout[0].reponse;
   });
   await page.keyboard.press(r.vrai ? "ArrowRight" : "ArrowLeft");
@@ -240,6 +244,21 @@ async function essaiPortable(navigateur, erreurs) {
     await page.waitForFunction(() => document.querySelector(".td-question .question .enonce"));
     await attendre(250);
     res.questions.push(Object.assign({ quoi: "énoncé de la question " + (i + 2) }, await visibilite(page, ".td-question .enonce")));
+    // trois cartes de récit avant la question (le mot du rival, un événement de vague ajouté ici, le conseiller) : la
+    // dernière réponse d'un QCM reste en vue sans faire défiler la colonne (cartes et question serrées en fenêtre
+    // basse, revue du 16/10/2026 ; avant, la 4e réponse passait 95 px sous le bord)
+    if (await page.evaluate(() => JEU.ui.questionCourante.type === "qcm")) {
+      res.questions.push(Object.assign({ quoi: "dernière réponse du QCM avec trois cartes de récit (question " + (i + 2) + ")" }, await page.evaluate(async () => {
+        const conseil = document.querySelector(".td-conseil"), rival = conseil.querySelector(":scope > .recit");
+        const ev = JEU.ui.recit({ nom: "Un éclaireur", icone: "trompe", texte: "Le forgeron a fini des flèches neuves : tes archers frappent plus fort pendant cette vague." });
+        if (rival) rival.after(ev); else conseil.prepend(ev);
+        await new Promise(r => setTimeout(r, 150));
+        const col = document.querySelector(".td-bas").getBoundingClientRect(), choix = document.querySelectorAll(".td-question .choix"), d = choix[choix.length - 1].getBoundingClientRect();
+        const cartes = conseil.querySelectorAll(".recit").length;
+        ev.remove();
+        return { haut: Math.round(d.top), hautVisible: Math.round(col.top), bas: Math.round(d.bottom), basColonne: Math.round(col.bottom), cartes, visible: d.top >= col.top && d.bottom <= col.bottom + 0.5 };
+      })));
+    }
     await repondreJuste(page);
   }
   // deux sceaux coup sur coup : le second remplace le premier
@@ -744,7 +763,11 @@ async function essaiToile(navigateur, erreurs) {
   if (bilan.etiquettes.chocs.length) echecs.push("carte de campagne : des noms se touchent (" + bilan.etiquettes.chocs.join(" ; ") + ")");
   if (bilan.etiquettesRepli.chocs.length) echecs.push("carte de campagne en repli : " + bilan.etiquettesRepli.chocs.join(" ; "));
   bilan.portable.carte.forEach(m => { if (m.bas > m.vue + 0.5) echecs.push("carte de campagne coupée à 1366 × 768 (" + m.cas + " : bas à " + m.bas + " px pour " + m.vue + ")"); });
-  bilan.portable.questions.forEach(m => { if (!m.visible) echecs.push("bataille à 1366 × 768 : " + m.quoi + " coupé par le haut (" + m.haut + " px, haut visible de la colonne à " + m.hautVisible + ")"); });
+  bilan.portable.questions.forEach(m => {
+    if (m.visible) return;
+    if (m.bas !== undefined) echecs.push("bataille à 1366 × 768 : " + m.quoi + " sous le bord de la colonne (bas à " + m.bas + " px, colonne jusqu'à " + m.basColonne + " ; " + m.cartes + " cartes)");
+    else echecs.push("bataille à 1366 × 768 : " + m.quoi + " coupé par le haut (" + m.haut + " px, haut visible de la colonne à " + m.hautVisible + ")");
+  });
   if (bilan.portable.questions.length < 4) echecs.push("bataille à 1366 × 768 : seulement " + bilan.portable.questions.length + " contrôles d'énoncé");
   // les choix des QCM sont mélangés à l'affichage : la bonne réponse ne doit pas être presque toujours la première
   bilan.rangsQcm = { mesures: rangsQcm.length, premiere: rangsQcm.filter(r => r === 1).length };

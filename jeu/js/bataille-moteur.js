@@ -84,9 +84,11 @@
   // zone + marge px ; sans troupe à toi dans la zone, il rentre (il compte de nouveau dans la garnison de cette vague).
   // attente : tant que la garnison tient (un garde dans la place ou dehors), une de tes troupes arrivée à sa porte
   // s'arrête à « attente » px devant et se bat ; elle ne frappe ses murs qu'une fois la garnison vaincue.
-  // taille : gardes au plus dans sa garnison ; rappel : gardes rappelés au plus par ses guetteurs pour une vague ;
+  // taille : gardes au plus dans sa garnison ; rappel : gardes rappelés au plus par ses guetteurs pour une vague (36 depuis
+  // la revue du 16/10/2026 : 24 laissaient passer cinq tours de siège envoyées d'un coup avec l'or de quatre vagues ; la
+  // foule à l'écran reste bornée, il ne sort jamais plus de gardes que tu n'as de troupes près de sa porte) ;
   // contreSiege : un garde frappe la tour de siège « contreSiege » fois plus fort (haches et torches contre le bois).
-  var GARNISON = { type: "hommes", zone: 200, marge: 30, ecart: 0.4, attente: 6, taille: 8, rappel: 24, contreSiege: 3 };
+  var GARNISON = { type: "hommes", zone: 200, marge: 30, ecart: 0.4, attente: 6, taille: 8, rappel: 36, contreSiege: 3 };
   // Décisions du rival. Prix (son or) : une tour d'archers ou une baliste, un garde de plus dans sa garnison, une troupe de
   // renfort dans sa prochaine vague. Seuils : ratio (« surtout des troupes » : l'or des troupes envoyées à une vague vaut
   // au moins ratio fois l'or de tes défenses, tours et améliorations sur le champ de bataille, et au moins seuilTroupes) ;
@@ -106,7 +108,7 @@
     depart: "Ton rival t'attend : des tours gardent sa porte, et sa garnison est prête à sortir.",
     porte: "Ton rival a vu tes troupes foncer sur sa porte : il la fortifie.",
     armee: "Ton rival a compté tes tours : il lève des hommes d'armes pour sa prochaine vague.",
-    mefiance: "Tu gardes de l'or : ton rival se méfie d'une grosse attaque et renforce sa garde.",
+    mefiance: "Tu gardes de l'or : ton rival se méfie d'une grosse attaque, fortifie sa porte et renforce sa garde.",
     equilibre: "Ton rival renforce ses défenses et son armée.",
     alerte: "Les guetteurs du rival ont vu ton armée sortir : il rappelle des gardes à sa porte.",
     releve: "Il paie de nouveaux gardes pour remplacer ceux que tu as abattus."
@@ -320,7 +322,7 @@
   // arrivée à sa porte attend et se bat), vaincue (la garnison de cette vague est tombée : sa porte est ouverte).
   function rivalDepart(p) {
     var r = rival(p), actions = [];
-    p.ia = { or: r.tresor, posture: "depart", renfort: [], journal: [], belierVu: false };
+    p.ia = { or: r.tresor, posture: "depart", renfort: [], journal: [], belierVu: false, orVu: 0 };
     p.garnison = { base: r.garnison, taille: r.garnison, reserve: r.garnison, rappel: 0, tombes: 0, minuterie: 0, tient: r.garnison > 0, vaincue: false };
     for (var k = 0; k < r.toursDepart; k++) {
       var t = rivalBatit(p, "archers", k === 0 ? "porte" : "route", false);
@@ -341,13 +343,18 @@
   //     plus dans sa garnison ;
   //  2. « armee » : tu te retranches (au moins IA.ecartTours tours de plus que lui, et pas plus de IA.seuilTortue or de
   //     troupes envoyées) : des hommes d'armes en renfort dans sa prochaine vague, plus solides que la piétaille ;
-  //  3. « mefiance » : tu as gardé au moins IA.orGarde or : un garde de plus (il craint une grosse attaque), le reste gardé ;
+  //  3. « mefiance » : tu as gardé au moins IA.orGarde or : il craint une grosse attaque payée avec cet or et se prépare
+  //     comme à une ruée (une tour devant sa porte, puis un garde de plus) ; ses guetteurs s'en souviennent (ia.orVu) ;
   //  4. « equilibre » : RIVAL.toursVague tours de plus sur la route à chaque vague (jusqu'à RIVAL.toursDepart +
   //     RIVAL.toursVague × numéro de la vague, s'il en a les moyens), sinon des renforts.
+  // (Revue du 16/10/2026 : « mefiance » n'achetait qu'un garde et ne bâtissait rien, et les guetteurs ne comparaient
+  // l'armée qu'aux tours : un joueur qui bâtissait ses tours sans rien envoyer pendant trois vagues, puis jetait tout
+  // son or en troupes à la dernière, prenait la Forteresse en 1,6 bataille au lieu de 4.)
   function rivalReagit(p) {
     var r = rival(p), ia = p.ia, g = p.garnison, rap = p.rapport || { troupes: 0, tours: 0, defenses: 0, belier: 0, orGarde: 0, degats: 0 };
     ia.or += r.impot;
     ia.renfort = [];
+    ia.orVu = rap.orGarde || 0; // l'or que tu gardais au départ de la vague jouée : ses guetteurs s'en souviennent
     if (rap.belier) ia.belierVu = true;
     var posture, actions = [];
     var perdus = Math.min(Math.max(0, g.tombes - g.rappel), Math.max(0, g.taille - g.base)), rachetes = 0;
@@ -382,9 +389,8 @@
       }
       if (n) actions.push({ genre: "renfort", nombre: n, types: ia.renfort.slice() });
     }
-    if (posture === "porte") { tour("porte"); gardes(IA.gardesPorte); }
+    if (posture === "porte" || posture === "mefiance") { tour("porte"); gardes(IA.gardesPorte); }
     else if (posture === "armee") renforts(["hommes"]);
-    else if (posture === "mefiance") gardes(1);
     else if (p.toursRivales.length < Math.min(r.toursDepart + r.toursVague * p.vague, p.carte.emplacementsRivaux.length)) {
       // (sans assez d'or, il économise)
       for (var k = 0; k < r.toursVague && p.toursRivales.length < r.toursDepart + r.toursVague * p.vague && tour("route"); k++) { /* une tour de plus */ }
@@ -397,15 +403,18 @@
   // Au départ d'une vague, les guetteurs du rival voient ton armée sortir et tes tours : si l'or de tes troupes de cette
   // préparation dépasse IA.ratio fois celui de tes défenses (tours et améliorations) de plus de IA.alerte, il rappelle un
   // garde de plus pour cette vague par tranche de IA.parGarde or au-delà (au plus GARNISON.rappel ; des gens du pays,
-  // qu'il ne paie pas). Une armée grosse face à des défenses maigres, c'est une ruée : sa porte s'y prépare. Les guetteurs
-  // ne voient que ce qui se voit sur le champ de bataille, jamais tes réponses.
+  // qu'il ne paie pas). Une armée grosse face à des défenses maigres, c'est une ruée : sa porte s'y prépare. L'or qu'il
+  // t'avait vu garder à la vague d'avant (ia.orVu, s'il s'en méfiait : IA.orGarde au moins) compte avec l'armée, à
+  // hauteur de ce que tu envoies : une armée payée avec un trésor mis de côté est une ruée préparée, tes tours ne le
+  // rassurent pas. Les guetteurs ne voient que ce qui se voit sur le champ de bataille, jamais tes réponses.
   function rivalGuetteurs(p) {
-    var g = p.garnison, valeur = p.depenses.troupes - IA.ratio * defenses(p), n = 0;
+    var g = p.garnison, troupes = p.depenses.troupes, orVu = p.ia.orVu >= IA.orGarde ? Math.min(p.ia.orVu, troupes) : 0;
+    var valeur = troupes + orVu - IA.ratio * defenses(p), n = 0;
     g.reserve = g.taille; g.tombes = 0; g.vaincue = false;
     while (n < GARNISON.rappel && valeur - IA.alerte >= IA.parGarde * (n + 1)) n++;
     g.rappel = n; g.reserve += n; g.tient = g.reserve > 0;
     if (n) {
-      noter(p, "alerte", [{ genre: "rappel", nombre: n }]);
+      noter(p, "alerte", [{ genre: "rappel", nombre: n, orVu: orVu }]);
       var porte = surRoute(p.route, p.route.longueur, 0);
       effet(p, "alerte", porte.x, porte.y, { nombre: n, duree: 2 });
     }
