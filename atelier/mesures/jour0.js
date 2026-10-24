@@ -40,6 +40,8 @@ CARTES.forEach(c => ajouter("esc-1v6-" + c, ["--vagues", "1", "--pvRival", "6", 
   ajouter("esc-2v" + pv, ["--vagues", "2", "--pvRival", String(pv), "--mode", "attaque"]);
   ["gue", "foret", "moulin"].forEach(c => ajouter("esc-2v" + pv + "-" + c, ["--vagues", "2", "--pvRival", String(pv), "--mode", "attaque", "--carte", c]));
 });
+ajouter("esc-2v6-sans-champion", ["--vagues", "2", "--pvRival", "6", "--mode", "attaque", "--sansChampion"]);
+ajouter("esc-2v6-gue-sans-champion", ["--vagues", "2", "--pvRival", "6", "--mode", "attaque", "--carte", "gue", "--sansChampion"]);
 // Le joueur qui met tout en troupes (ruée) : ce que ferait un élève qui ne bâtit rien à l'escarmouche (tableau « rush » du .txt).
 ["1v6", "2v6", "2v8"].forEach(v => ajouter("esc-" + v + "-rush", ["--vagues", v[0], "--pvRival", v[2], "--mode", "attaque", "--strategies", "equilibre,rush"]));
 // Embuscade : défense, 2 vagues, camp de 10, ligne de la semaine + 1 (donc arsenal du niveau − 1 pour la convolution).
@@ -59,6 +61,10 @@ ajouter("grand-3v16-gue", ["--vagues", "3", "--pvRival", "16", "--mode", "defens
 // Levier de rechange pour le Grand Gardien des semaines 6 à 8 : 4 vagues à la ligne de la semaine (ligne + 1 à 3 vagues y est trop dur).
 ["gue", "domaine"].forEach(c => ajouter("grand-4v16-" + c, ["--vagues", "4", "--pvRival", "16", "--mode", "defense", "--carte", c], "1,2,3,4"));
 ajouter("grand-3v16-gue-niveau0", ["--vagues", "3", "--pvRival", "16", "--mode", "defense", "--carte", "gue"], "0");
+// Grand Gardien à la ligne de la semaine sur les autres cartes de province (la carte change avec les provinces prises).
+["foret", "moulin", "col"].forEach(c => ajouter("grand-3v16-" + c, ["--vagues", "3", "--pvRival", "16", "--mode", "defense", "--carte", c], SANS_ZERO));
+// Gardien deux lignes au-dessus de l'arsenal (levier « difficulte : +1 » cumulé à une ligne de plus) : niveau 4 avec l'arsenal 2, etc.
+ajouter("gard-2v12-gue-arsenal-2", ["--vagues", "2", "--pvRival", "12", "--mode", "defense", "--carte", "gue", "--arsenal", "-2"], "2,3,4");
 
 const aFaire = mesures.filter(m => !SEULEMENT || SEULEMENT.some(s => m.nom === s || m.nom.indexOf(s) === 0));
 if (!aFaire.length) { console.error("Aucune mesure ne correspond à --seulement"); process.exit(1); }

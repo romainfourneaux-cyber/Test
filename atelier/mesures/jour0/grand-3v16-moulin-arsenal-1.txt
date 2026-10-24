@@ -32,4 +32,4 @@ niv | carte          | tenue (éclatante) | tenu  retraite | murs restants (quan
  4  | moulin         |   93 % (  4 %)   |  88 %    8 %   |                      45 % (48 %) |              8.66 (6.59) |     20.8 / 8      | 2.36 · 1.96, 0.74, 0, 0
 moy |                | 96.5 % (14.8 %)   |                |                           80.5 % |                     10.1
 
-(78 s)
+(57 s)

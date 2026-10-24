@@ -23,3 +23,13 @@ niv | carte          | tenue (éclatante) | tenu  retraite | murs restants (quan
  3  | gue            |   78 % ( 34 %)   |  44 %   22 %   |                      46 % (59 %) |             12.16 (6.04) |     31.8 / 8.4    | 2.16 · 1.76, 0, 0, 2.27
  4  | gue            |   18 % (  0 %)   |  18 %   82 %   |                       4 % (21 %) |                  5.5 (0) |     28.5 / 11.6   | 2.07 · 2, 0, 0, 4.93
 moy |                | 69.3 % (18.8 %)   |                |                             47 % |                      8.8
+
+p = 0.9 (réponses justes) · bataille de route : defense, 4 vagues, camp de 16, carte gue
+niv | carte          | tenue (éclatante) | tenu  retraite | murs restants (quand elle tient) | coups portés (1re vague) | ennemis tués / tes pertes | sorties · rival : tours, gardes, rappelés, renforts
+ 1  | gue            |   98 % (  0 %)   |  98 %    3 %   |                      77 % (79 %) |              7.79 (3.63) |     36.6 / 9      | 1.99 · 2.96, 0.08, 0, 0
+ 2  | gue            |   99 % ( 66 %)   |  33 %    1 %   |                      95 % (97 %) |             15.81 (6.69) |       30 / 5.7    | 3.38 · 1.48, 0.91, 0, 2.89
+ 3  | gue            |   94 % ( 59 %)   |  36 %    6 %   |                      75 % (80 %) |             15.25 (7.41) |     26.6 / 6.1    | 2.26 · 1.48, 0, 0, 1.44
+ 4  | gue            |   33 % (  0 %)   |  33 %   68 %   |                       7 % (21 %) |                  7.5 (0) |     30.7 / 13.4   | 2.49 · 2, 0, 0, 5.1
+moy |                |   81 % (31.3 %)   |                |                           63.5 % |                     11.6
+
+(60 s)
