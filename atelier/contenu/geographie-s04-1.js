@@ -97,7 +97,7 @@ module.exports = {
     {
       id: "geographie-s04-1-f6", notion: "Le développement de l'Inde depuis 1950 et ses inégalités",
       titre: "Des progrès, mais de fortes inégalités",
-      texte: "Depuis 1950, la vie des Indiens s'est améliorée : espérance de vie passée de 35 à presque 70 ans, mortalité infantile divisée par plus de cinq, analphabétisme tombé de 82 % à 26 %, PIB par habitant plus que triplé. Mais ses villes sont parmi les plus polluées du monde ; à Mumbai, les pauvres venus des campagnes s'entassent dans des bidonvilles.",
+      texte: "Depuis 1950, la vie des Indiens s'est améliorée. Espérance de vie passée de 35 à presque 70 ans, mortalité infantile divisée par plus de cinq, analphabétisme tombé de 82 % à 26 %, PIB par habitant plus que triplé. Mais ses villes sont parmi les plus polluées du monde. À Mumbai, les pauvres venus des campagnes s'entassent dans des bidonvilles.",
       pointsCles: [
         "Espérance de vie : d'environ 35 ans en 1950 à presque 70 ans en 2020",
         "Mortalité infantile : de 169 à 30 morts pour mille naissances ; analphabétisme : de 82 % à 26 %",

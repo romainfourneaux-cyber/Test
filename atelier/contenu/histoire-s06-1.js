@@ -34,22 +34,22 @@ function charrue() {
   // coutre : lame verticale en fer, devant le soc
   s += "<path d='M296 112 L 300 112 L 298 184 L 290 178 Z' fill='" + fer + "' stroke='" + encre + "'/>";
   // chaîne vers l'attelage (hors cadre, à droite)
-  s += "<path d='M330 120 L 420 110' stroke='" + encre + "' stroke-width='2' stroke-dasharray='4 3'/>";
-  s += "<text x='424' y='108' fill='" + encre + "' font-size='10'>vers l'attelage</text>";
-  s += "<text x='424' y='121' fill='" + encre + "' font-size='10'>(bœufs ou chevaux)</text>";
+  s += "<path d='M330 120 L 400 130' stroke='" + encre + "' stroke-width='2' stroke-dasharray='4 3'/>";
+  s += "<text x='404' y='134' fill='" + encre + "' font-size='10'>vers l'attelage</text>";
+  s += "<text x='404' y='146' fill='" + encre + "' font-size='10'>(bœufs ou chevaux)</text>";
   // étiquettes
-  s += "<line x1='298' y1='140' x2='360' y2='150' stroke='" + encre + "'/>";
-  s += "<text x='364' y='154' fill='" + encre + "'>coutre : lame de fer qui</text>";
-  s += "<text x='364' y='167' fill='" + encre + "'>s'enfonce profondément</text>";
-  s += "<line x1='270' y1='176' x2='340' y2='200' stroke='" + encre + "'/>";
-  s += "<text x='344' y='204' fill='" + encre + "'>soc : trace le sillon</text>";
+  s += "<line x1='298' y1='140' x2='360' y2='166' stroke='" + encre + "'/>";
+  s += "<text x='364' y='170' fill='" + encre + "'>coutre : lame de fer qui</text>";
+  s += "<text x='364' y='183' fill='" + encre + "'>s'enfonce profondément</text>";
+  s += "<line x1='270' y1='178' x2='330' y2='208' stroke='" + encre + "'/>";
+  s += "<text x='334' y='212' fill='" + encre + "'>soc : trace le sillon</text>";
   s += "<line x1='200' y1='150' x2='150' y2='120' stroke='" + encre + "'/>";
   s += "<text x='148' y='116' text-anchor='end' fill='" + encre + "'>versoir : rabat la terre</text>";
   s += "<text x='148' y='129' text-anchor='end' fill='" + encre + "'>sur le côté</text>";
   s += "<text x='140' y='36' text-anchor='end' fill='" + encre + "'>mancherons (poignées)</text>";
   s += "<text x='20' y='20' font-size='13' fill='" + encre + "'>La charrue, mise au point au XIIe siècle</text>";
   // --- vignette : l'araire ---
-  s += "<rect x='392' y='18' width='138' height='74' fill='#fbf6ea' stroke='" + encre + "'/>";
+  s += "<rect x='392' y='18' width='138' height='102' fill='#fbf6ea' stroke='" + encre + "'/>";
   s += "<text x='461' y='32' text-anchor='middle' font-size='10' fill='" + encre + "'>Avant : l'araire</text>";
   s += "<path d='M408 50 L 500 70' stroke='" + bois + "' stroke-width='5' stroke-linecap='round'/>";
   s += "<path d='M455 60 L 455 80' stroke='" + bois + "' stroke-width='5'/>";
@@ -101,7 +101,7 @@ module.exports = {
     {
       id: "histoire-s06-1-f3", notion: "Les taxes dues par tous les paysans : cens, banalités, champart, corvées",
       titre: "Ce que tous les paysans doivent au seigneur",
-      texte: "Tous les paysans doivent des taxes au seigneur. Les unes se paient en argent ou en nature : le cens, pour l'utilisation de la terre, et les banalités, pour se servir du moulin, du pressoir ou du four du seigneur. Les autres se paient en travail ou en nature : le champart, une partie de la récolte, et les corvées, un travail obligatoire sur la réserve.",
+      texte: "Tous les paysans doivent des taxes au seigneur. En argent ou en nature : le cens, pour l'utilisation de la terre, et les banalités, pour se servir du moulin, du pressoir ou du four du seigneur. En travail ou en nature : le champart, une partie de la récolte, et les corvées, un travail obligatoire sur la réserve.",
       pointsCles: ["En argent ou en nature : le cens (pour la terre) et les banalités (moulin, pressoir, four du seigneur)", "En travail ou en nature : le champart (partie de la récolte) et les corvées (travail obligatoire sur la réserve)", "Ces quatre taxes sont dues par tous les paysans, libres ou non"],
       astuce: "Deux colonnes : ce qu'on paie (cens, banalités) et ce qu'on donne ou fait (champart, corvées).",
       dates: [],
@@ -115,7 +115,7 @@ module.exports = {
     {
       id: "histoire-s06-1-f4", notion: "Les taxes propres aux serfs : chevage, formariage, mainmorte",
       titre: "Serfs et vilains : trois taxes de plus pour les paysans non libres",
-      texte: "Il existe deux catégories de paysans : les vilains, qui sont libres, et les serfs, qui ne le sont pas. Les serfs doivent au seigneur trois taxes de plus. Le chevage est une redevance payée en argent. Le formariage se paie quand un serf se marie hors de la seigneurie. La mainmorte est un droit payé par les héritiers d'un serf.",
+      texte: "Il existe deux catégories de paysans : les vilains, libres, et les serfs, non libres. Les serfs doivent au seigneur trois taxes de plus. Le chevage est une redevance en argent. Le formariage se paie quand un serf se marie hors de la seigneurie. La mainmorte est un droit payé par les héritiers d'un serf.",
       pointsCles: ["Vilain : paysan libre ; serf : paysan non libre", "Chevage : une redevance en argent", "Formariage : une taxe quand un serf se marie hors de la seigneurie", "Mainmorte : un droit payé par les héritiers d'un serf"],
       astuce: "CHE-FOR-MAIN : CHEvage (argent), FORmariage (mariage), MAINmorte (héritage).",
       dates: [],

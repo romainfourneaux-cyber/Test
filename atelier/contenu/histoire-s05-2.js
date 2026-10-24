@@ -293,7 +293,7 @@ module.exports = {
       id: "histoire-s05-2-b1",
       fiche: "histoire-s05-2-f3",
       titre: "Le serf ne peut pas quitter la seigneurie",
-      texte: "Un serf ne pouvait pas quitter la seigneurie ni se marier sans l'accord de son seigneur. Il pouvait pourtant devenir libre : en achetant sa liberté, ou par un acte du seigneur appelé manumission. Le servage a reculé dès le Moyen Âge, et en 1779 le roi Louis XVI l'a aboli sur ses propres domaines.",
+      texte: "Un serf ne pouvait pas quitter la seigneurie ni se marier sans l'accord de son seigneur. Il pouvait pourtant devenir libre : en achetant sa liberté, ou par un acte appelé manumission. Le servage a reculé dès le Moyen Âge, et en 1779 le roi Louis XVI l'a aboli sur ses propres domaines.",
       source: { titre: "Servage", editeur: "Wikipédia, l'encyclopédie libre", url: "https://fr.wikipedia.org/wiki/Servage" }
     }
   ],

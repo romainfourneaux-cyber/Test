@@ -311,7 +311,7 @@ module.exports = {
       id: "histoire-s05-1-b1",
       fiche: "histoire-s05-1-f3",
       titre: "Les banalités ont duré jusqu'à la Révolution",
-      texte: "Four, moulin et pressoir banaux n'étaient pas les seuls : il existait aussi des moulins à foulon pour les draps et des marchés banaux. Les habitants devaient s'en servir au prix fixé par le seigneur, qui devait en échange entretenir ces installations. Les banalités ont été abolies dans la nuit du 4 août 1789, puis supprimées sans rachat en 1793.",
+      texte: "Four, moulin et pressoir banaux n'étaient pas les seuls : il existait aussi des moulins à foulon pour les draps et des marchés banaux. Les habitants devaient s'en servir au prix fixé par le seigneur, qui devait en échange entretenir ces installations. Dans la nuit du 4 août 1789, les banalités sont abolies mais déclarées rachetables ; elles sont supprimées sans rachat en 1793.",
       source: { titre: "Banalité (droit seigneurial)", editeur: "Wikipédia, l'encyclopédie libre", url: "https://fr.wikipedia.org/wiki/Banalit%C3%A9_(droit_seigneurial)" }
     }
   ],
