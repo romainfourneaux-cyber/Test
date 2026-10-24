@@ -1,0 +1,50 @@
+[
+ {
+  "view": "int-wc",
+  "text": "Limon mural Est devant le vitrage du WC (joint creux 10 mm)",
+  "pos": [
+   3.65,
+   2.1367112545149327,
+   0.362
+  ],
+  "x": 1034.5,
+  "y": 401.4,
+  "visible": false
+ },
+ {
+  "view": "int-wc",
+  "text": "Sous-face acier en zig-zag (tôle pliée)",
+  "pos": [
+   3.75,
+   2.0700000000000003,
+   0.8
+  ],
+  "x": 1033.7,
+  "y": 335.5,
+  "visible": true
+ },
+ {
+  "view": "int-wc",
+  "text": "Poteau-noyau acier 60×60 — cloison P7 en butée",
+  "pos": [
+   4.04,
+   1.4,
+   1.275
+  ],
+  "x": 1233.7,
+  "y": 791.6,
+  "visible": true
+ },
+ {
+  "view": "int-wc",
+  "text": "Limon Nord : joint creux 10 mm avec la cloison P1 (non porteuse)",
+  "pos": [
+   3.222,
+   2.1,
+   1
+  ],
+  "x": 661,
+  "y": 300.3,
+  "visible": true
+ }
+]

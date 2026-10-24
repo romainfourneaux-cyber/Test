@@ -27,11 +27,11 @@ const PAGES = [
   ['etage', 'Étage meublé', 'Deux chambres sous rampants, palier éclairé par la fenêtre de toit, trémie d\'escalier fermée par cloisons placo.'],
 ];
 
-const img = (f) => 'data:image/png;base64,' + fs.readFileSync(f).toString('base64');
+const img = (f) => { const j = f.replace(/\.png$/, '.jpg'); return fs.existsSync(j) ? 'data:image/jpeg;base64,' + fs.readFileSync(j).toString('base64') : 'data:image/png;base64,' + fs.readFileSync(f).toString('base64'); };
 const FONTS = [['Barlow', 400], ['Barlow', 600], ['Barlow Condensed', 600]]
   .map(([f, w]) => `@font-face{font-family:'${f}';font-weight:${w};src:url(data:font/woff2;base64,${fs.readFileSync(path.join(ROOT, 'tools/fonts', `${f.replace(' ', '')}-${w}.woff2`)).toString('base64')}) format('woff2');}`)
   .join('\n');
-const pages = PAGES.filter(([k]) => fs.existsSync(path.join(DIR, `${k}.png`)));
+const pages = PAGES.filter(([k]) => fs.existsSync(path.join(DIR, `${k}.png`)) || fs.existsSync(path.join(DIR, `${k}.jpg`)));
 const html = `<!doctype html><html lang="fr"><head><meta charset="utf-8">
 <style>
   ${FONTS}

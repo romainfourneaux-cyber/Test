@@ -1,0 +1,38 @@
+[
+ {
+  "view": "int-degagement",
+  "text": "Échiffre placo indépendante, joint 10 mm sous le limon",
+  "pos": [
+   6.4,
+   0.2665248226950352,
+   1.28
+  ],
+  "x": 1162.6,
+  "y": 1232.4,
+  "visible": true
+ },
+ {
+  "view": "int-degagement",
+  "text": "Garde-corps barreaudage acier RAL 7016",
+  "pos": [
+   6.7,
+   1.1421276595744678,
+   1.224
+  ],
+  "x": 1280.6,
+  "y": 818.8,
+  "visible": true
+ },
+ {
+  "view": "int-degagement",
+  "text": "Main courante murale Ø42 sur consoles",
+  "pos": [
+   5.86,
+   1.9584397163120562,
+   0.406
+  ],
+  "x": 1445.1,
+  "y": 358.5,
+  "visible": false
+ }
+]

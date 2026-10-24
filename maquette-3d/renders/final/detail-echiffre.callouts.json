@@ -1,0 +1,74 @@
+[
+ {
+  "view": "detail-echiffre",
+  "text": "Limon côté jour tôle 12 mm",
+  "pos": [
+   6.313,
+   0.731843971631206,
+   1.23
+  ],
+  "x": 990.6,
+  "y": 239.4,
+  "visible": true
+ },
+ {
+  "view": "detail-echiffre",
+  "text": "Bande résiliente + joint 10 mm sous le limon",
+  "pos": [
+   6.313,
+   0.526843971631206,
+   1.234
+  ],
+  "x": 995.6,
+  "y": 539.4,
+  "visible": true
+ },
+ {
+  "view": "detail-echiffre",
+  "text": "Échiffre placo 72/48 sur ossature indépendante (rail haut rampant, montant à 0,52 m)",
+  "pos": [
+   6.313,
+   0.28,
+   1.28
+  ],
+  "x": 1046.6,
+  "y": 877.3,
+  "visible": true
+ },
+ {
+  "view": "detail-echiffre",
+  "text": "Montant acier galvanisé C48",
+  "pos": [
+   6.313,
+   0.18,
+   1.245
+  ],
+  "x": 1007.7,
+  "y": 985,
+  "visible": true
+ },
+ {
+  "view": "detail-echiffre",
+  "text": "Garde-corps : barreaux acier ≤ 11 cm, main courante Ø42 à 0,90 m",
+  "pos": [
+   6.347647058823529,
+   0.86,
+   1.224
+  ],
+  "x": 1014.5,
+  "y": 35.4,
+  "visible": true
+ },
+ {
+  "view": "detail-echiffre",
+  "text": "Dallage béton + chape + carrelage",
+  "pos": [
+   6.313,
+   -0.03,
+   0.75
+  ],
+  "x": 587.9,
+  "y": 1026.7,
+  "visible": true
+ }
+]

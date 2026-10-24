@@ -1,0 +1,182 @@
+[
+ {
+  "view": "detail-raccord",
+  "text": "Bloc béton 20 cm enduit (mur Est)",
+  "pos": [
+   6.313,
+   0.98,
+   0.12
+  ],
+  "x": 553.3,
+  "y": 166.3,
+  "visible": true
+ },
+ {
+  "view": "detail-raccord",
+  "text": "Doublage : isolant 100 mm + BA13",
+  "pos": [
+   6.313,
+   0.98,
+   0.29
+  ],
+  "x": 694.3,
+  "y": 170.3,
+  "visible": true
+ },
+ {
+  "view": "detail-raccord",
+  "text": "Tige filetée M12 + scellement chimique avec tamis (bloc creux), ancrage 12 cm",
+  "pos": [
+   6.313,
+   0.6818439716312057,
+   0.15
+  ],
+  "x": 603.2,
+  "y": 451.1,
+  "visible": true
+ },
+ {
+  "view": "detail-raccord",
+  "text": "Entretoise acier Ø25 traversant le doublage : le limon s'appuie sur la maçonnerie",
+  "pos": [
+   6.313,
+   0.6933439716312056,
+   0.28
+  ],
+  "x": 704.7,
+  "y": 451.2,
+  "visible": true
+ },
+ {
+  "view": "detail-raccord",
+  "text": "Plot résilient néoprène 5 mm + rondelle + écrou borgne",
+  "pos": [
+   6.313,
+   0.6958439716312057,
+   0.37
+  ],
+  "x": 778.8,
+  "y": 456.3,
+  "visible": true
+ },
+ {
+  "view": "detail-raccord",
+  "text": "Perçage du BA13 rebouché au mastic acrylique",
+  "pos": [
+   6.313,
+   0.6648439716312057,
+   0.34
+  ],
+  "x": 755.3,
+  "y": 482.6,
+  "visible": true
+ },
+ {
+  "view": "detail-raccord",
+  "text": "Joint creux 10 mm limon / placo",
+  "pos": [
+   6.313,
+   0.7818439716312057,
+   0.345
+  ],
+  "x": 753.3,
+  "y": 372.4,
+  "visible": true
+ },
+ {
+  "view": "detail-raccord",
+  "text": "Limon mural tôle 12 mm RAL 7016",
+  "pos": [
+   6.313,
+   0.5918439716312057,
+   0.362
+  ],
+  "x": 777.1,
+  "y": 551,
+  "visible": true
+ },
+ {
+  "view": "detail-raccord",
+  "text": "Marche + contremarche en tôle pliée 5 mm (profil Z)",
+  "pos": [
+   6.313,
+   0.6908333333333334,
+   0.8
+  ],
+  "x": 1177.3,
+  "y": 501.5,
+  "visible": true
+ },
+ {
+  "view": "detail-raccord",
+  "text": "Limon côté jour tôle 12 mm",
+  "pos": [
+   6.313,
+   0.731843971631206,
+   1.23
+  ],
+  "x": 1673,
+  "y": 504.5,
+  "visible": true
+ },
+ {
+  "view": "detail-raccord",
+  "text": "Bande résiliente + joint 10 mm sous le limon",
+  "pos": [
+   6.313,
+   0.526843971631206,
+   1.234
+  ],
+  "x": 1643,
+  "y": 728.7,
+  "visible": true
+ },
+ {
+  "view": "detail-raccord",
+  "text": "Échiffre placo 72/48 sur ossature indépendante (rail haut rampant, montant à 0,52 m)",
+  "pos": [
+   6.313,
+   0.28,
+   1.28
+  ],
+  "x": 1657.7,
+  "y": 979.1,
+  "visible": true
+ },
+ {
+  "view": "detail-raccord",
+  "text": "Montant acier galvanisé C48",
+  "pos": [
+   6.313,
+   0.18,
+   1.245
+  ],
+  "x": 1603.3,
+  "y": 1061.2,
+  "visible": true
+ },
+ {
+  "view": "detail-raccord",
+  "text": "Garde-corps : barreaux acier ≤ 11 cm, main courante Ø42 à 0,90 m",
+  "pos": [
+   6.347647058823529,
+   1,
+   1.224
+  ],
+  "x": 1715.4,
+  "y": 169.6,
+  "visible": true
+ },
+ {
+  "view": "detail-raccord",
+  "text": "Dallage béton + chape + carrelage",
+  "pos": [
+   6.313,
+   -0.03,
+   0.75
+  ],
+  "x": 1108.6,
+  "y": 1120.5,
+  "visible": true
+ }
+]

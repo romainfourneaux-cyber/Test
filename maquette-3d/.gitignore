@@ -1,3 +1,4 @@
 node_modules/
 renders/_*/
 renders/final/render.log
+renders/final/*.png

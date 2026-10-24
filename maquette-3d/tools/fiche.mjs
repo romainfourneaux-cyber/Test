@@ -18,8 +18,12 @@ const args = Object.fromEntries(process.argv.slice(2).reduce((acc, a, i, arr) =>
 }, []));
 const DIR = path.resolve(ROOT, args.dir || 'renders/final');
 const OUT = path.resolve(ROOT, args.out || path.join(DIR, 'Fiche-raccord-escalier-placo.pdf'));
-const has = (f) => fs.existsSync(path.join(DIR, f));
-const dataUri = (f, mime = 'image/png') => `data:${mime};base64,${fs.readFileSync(f).toString('base64')}`;
+const has = (f) => fs.existsSync(path.join(DIR, f)) || (f.endsWith('.png') && fs.existsSync(path.join(DIR, f.replace(/\.png$/, '.jpg'))));
+const dataUri = (f, mime = 'image/png') => {
+  const j = f.replace(/\.png$/, '.jpg');
+  if (mime === 'image/png' && fs.existsSync(j)) return `data:image/jpeg;base64,${fs.readFileSync(j).toString('base64')}`;
+  return `data:${mime};base64,${fs.readFileSync(f).toString('base64')}`;
+};
 const data = has('fiche-data.json') ? JSON.parse(fs.readFileSync(path.join(DIR, 'fiche-data.json'), 'utf8')) : {};
 
 const FONTS = [['Barlow', 400], ['Barlow', 500], ['Barlow', 600], ['Barlow Condensed', 500], ['Barlow Condensed', 600]]
@@ -89,13 +93,32 @@ function planSvg() {
 // ---------------------------------------------------------------------------
 function detailFigure(name, { maxH = '120mm' } = {}) {
   if (!has(`${name}.png`)) return `<p class="miss">Rendu « ${name} » à générer.</p>`;
-  const png = fs.readFileSync(path.join(DIR, `${name}.png`));
-  const meta = { w: png.readUInt32BE(16), h: png.readUInt32BE(20) }; // en-tête IHDR
+  const pngPath = path.join(DIR, `${name}.png`);
+  const png = fs.existsSync(pngPath) ? fs.readFileSync(pngPath) : null;
+  const meta = png ? { w: png.readUInt32BE(16), h: png.readUInt32BE(20) } : { w: 2000, h: 1293 }; // en-tête IHDR
   const raw = has(`${name}.callouts.json`) ? JSON.parse(fs.readFileSync(path.join(DIR, `${name}.callouts.json`), 'utf8')) : [];
   const co = raw.filter((c) => c.visible !== false && c.x > meta.w * 0.02 && c.x < meta.w * 0.98 && c.y > meta.h * 0.03 && c.y < meta.h * 0.97);
-  const marks = co.map((c, i) => `<span class="mk" style="left:${(100 * c.x / meta.w).toFixed(2)}%;top:${(100 * c.y / meta.h).toFixed(2)}%">${i + 1}</span>`).join('');
+  // Repères rangés dans les marges gauche/droite de l'image, traits de rappel vers le point visé
+  const W = meta.w, H = meta.h, R = H * 0.026, gap = R * 2.6;
+  const items = co.map((c, i) => ({ ...c, n: i + 1, side: c.x < W * 0.5 ? 'L' : 'R' }));
+  for (const side of ['L', 'R']) {
+    const col = items.filter((c) => c.side === side).sort((p, q) => p.y - q.y);
+    let prev = -Infinity;
+    for (const c of col) { c.ly = Math.max(c.y, prev + gap, R * 1.4); prev = c.ly; }
+    // si la colonne déborde en bas, on la remonte
+    const over = (col.at(-1)?.ly ?? 0) - (H - R * 1.4);
+    if (over > 0) for (const c of col) c.ly -= over;
+    for (const c of col) c.lx = side === 'L' ? R * 1.6 : W - R * 1.6;
+  }
+  const svg = `<svg class="ov" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    ${items.map((c) => `<line x1="${c.lx + (c.side === 'L' ? R : -R)}" y1="${c.ly}" x2="${c.x}" y2="${c.y}" stroke="#c0392b" stroke-width="${H * 0.0028}"/>
+      <circle cx="${c.x}" cy="${c.y}" r="${H * 0.006}" fill="#c0392b" stroke="#fff" stroke-width="${H * 0.002}"/>
+      <circle cx="${c.lx}" cy="${c.ly}" r="${R}" fill="#c0392b" stroke="#fff" stroke-width="${H * 0.003}"/>
+      <text x="${c.lx}" y="${c.ly + R * 0.38}" text-anchor="middle" font-family="Barlow Condensed" font-weight="600" font-size="${R * 1.15}" fill="#fff">${c.n}</text>`).join('')}
+  </svg>`;
   const legend = co.length ? `<ol class="legend">${co.map((c) => `<li>${c.text}</li>`).join('')}</ol>` : '';
-  return `<figure class="det"><div class="frame" style="max-height:${maxH}"><img src="${dataUri(path.join(DIR, `${name}.png`))}">${marks}</div></figure>${legend}`;
+  const wmm = (parseFloat(maxH) * W / H).toFixed(1);
+  return `<figure class="det"><div class="frame" style="width:min(100%, ${wmm}mm)"><img src="${dataUri(path.join(DIR, `${name}.png`))}">${svg}</div></figure>${legend}`;
 }
 
 const img = (f, cls = 'shot') => (has(f) ? `<img class="${cls}" src="${dataUri(path.join(DIR, f))}">` : '');
@@ -127,11 +150,13 @@ th { font: 600 9.5pt 'Barlow Condensed'; letter-spacing: .06em; text-transform: 
 .keys span { display: inline-block; width: 3.4mm; height: 3.4mm; margin-right: 2mm; vertical-align: -0.6mm; }
 .box { border: 0.3mm solid #383e42; padding: 3mm 4mm; background: #f6f4ef; }
 .warn { border-left: 1.4mm solid #c0392b; background: #fbf1ee; padding: 3mm 4mm; }
-.det { margin: 0; } .frame { position: relative; } .frame img { width: 100%; display: block; border: 0.25mm solid #c9c6bf; }
+.det { margin: 0; } .frame { position: relative; margin: 0 auto; } .frame img { width: 100%; display: block; border: 0.25mm solid #c9c6bf; }
+.ov { position: absolute; inset: 0; width: 100%; height: 100%; }
 .mk { position: absolute; transform: translate(-50%,-50%); width: 6mm; height: 6mm; border-radius: 50%; background: #c0392b; color: #fff;
       font: 600 9pt/6mm 'Barlow Condensed'; text-align: center; border: 0.5mm solid #fff; box-shadow: 0 0 0 0.25mm rgba(0,0,0,.25); }
 .legend { columns: 2; column-gap: 8mm; font-size: 9.4pt; padding-left: 6mm; }
 .shot { width: 100%; display: block; border: 0.25mm solid #c9c6bf; }
+.shot.p4 { height: 64mm; object-fit: cover; object-position: 50% 45%; }
 .steps { counter-reset: s; list-style: none; padding: 0; display: grid; gap: 2mm; }
 .steps li { counter-increment: s; display: grid; grid-template-columns: 8mm 1fr; }
 .steps li::before { content: counter(s); font: 600 13pt 'Barlow Condensed'; color: #383e42; }
@@ -165,7 +190,7 @@ footer { margin-top: auto; font-size: 8pt; color: #6b7175; border-top: 0.25mm so
 
 <section class="page">
   ${pageHead(2, 'Détail 1 · limon fixé au mur à travers le doublage', 'Raccord escalier métallique / placo')}
-  ${detailFigure('detail-fixation')}
+  ${detailFigure('detail-fixation', { maxH: '118mm' })}
   <ol class="steps">
     <li><div><b>Avant les doublages</b>, le métallier relève les murs bruts et fixe les positions d'ancrage sur ses plans d'atelier.</div></li>
     <li><div>Perçage du bloc, scellement chimique des tiges M12 <b>avec tamis</b> (bloc creux), en respectant l'évaluation technique de la cheville (profondeur, entraxes, distance aux bords).</div></li>
@@ -185,7 +210,7 @@ footer { margin-top: auto; font-size: 8pt; color: #6b7175; border-top: 0.25mm so
       <h2>Échiffre côté dégagement</h2>
       <ul>
         <li>Cloison 72/48 <b>indépendante</b> qui ferme le dessous d'escalier : rail bas chevillé sur la chape avec bande résiliente.</li>
-        <li>Montants tous les 0,40 m (au lieu de 0,60) : ouvrage bas, exposé aux chocs.</li>
+        <li>Montants rapprochés, 0,40 à 0,50 m au lieu de 0,60 : ouvrage bas, exposé aux chocs.</li>
         <li>Rail haut découpé à la pente, arrêté 10 mm sous le limon sur bande résiliente.</li>
         <li>BA13 haute dureté ou 2 plaques côté circulation, cornière d'angle sur l'arête.</li>
         <li>Le garde-corps se fixe dans le limon, pas dans l'échiffre.</li>
@@ -218,7 +243,7 @@ footer { margin-top: auto; font-size: 8pt; color: #6b7175; border-top: 0.25mm so
       <li><b>C.</b> Limon côté mur en crémaillère sous les marches au lieu d'un limon plat : vitrage plus dégagé, ouverture à vérifier.</li>
     </ul>
   </div>
-  ${img('coupe-escalier.png')}
+  ${img('coupe-escalier.png', 'shot p4')}
   <h2>Phasage</h2>
   <ol class="steps">
     <li><div>Gros œuvre : trémie avec chevêtre, dallage, enduit extérieur.</div></li>
