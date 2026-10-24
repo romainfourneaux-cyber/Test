@@ -1,7 +1,8 @@
 // Rendu headless des vues de la maquette en PNG.
 // Usage : node tools/render.mjs [--views ext-ouest,coupe-escalier] [--w 1800] [--h 1200] [--out renders]
 //         [--cam "px,py,pz,tx,ty,tz,fov"] [--clip "nx,ny,nz,c[;nx,ny,nz,c]"] [--name custom] [--noao]
-//         [--page render-dev.html] [--callouts]
+//         [--page render-dev.html] [--callouts] [--frames 32] [--budget 150]
+//   --frames : nombre d'échantillons accumulés (anticrénelage + pénombre), --budget : temps max par image (s)
 import http from 'node:http';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -58,17 +59,21 @@ if (args.cam) {
 }
 for (const j of jobs) {
   const t0 = Date.now();
-  const data = await page.evaluate(async ({ name, def, W, H }) => {
+  const opts = {};
+  if (args.frames) opts.frames = +args.frames;
+  if (args.budget) opts.budget = +args.budget;
+  const data = await page.evaluate(async ({ name, def, W, H, opts }) => {
     if (def) window.__views[name] = def;
-    return await window.__app.snapshot(name, W, H);
-  }, { name: j.name, def: j.def, W, H });
+    return await window.__app.snapshot(name, W, H, opts);
+  }, { name: j.name, def: j.def, W, H, opts });
   const file = path.join(OUT, `${j.name}.png`);
   fs.writeFileSync(file, Buffer.from(data.split(',')[1], 'base64'));
   if (args.callouts) {
     const pts = await page.evaluate((name) => window.__app.projectCallouts ? window.__app.projectCallouts(name) : [], j.name);
     fs.writeFileSync(path.join(OUT, `${j.name}.callouts.json`), JSON.stringify(pts, null, 1));
   }
-  console.log(`${file}  (${((Date.now() - t0) / 1000).toFixed(1)} s)`);
+  const st = await page.evaluate(() => window.__app.lastSnapshot || null);
+  console.log(`${file}  (${((Date.now() - t0) / 1000).toFixed(1)} s${st ? `, ${st.frames} échantillons` : ''})`);
 }
 if (errors.length) { console.log('--- console ---'); console.log([...new Set(errors)].slice(0, 40).join('\n')); }
 await browser.close();
