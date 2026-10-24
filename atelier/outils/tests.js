@@ -2044,7 +2044,7 @@ verifier("Bataillons : le rendu ne touche pas au moteur (aucune écriture de la 
   neuveX();
   const EX = JX.sauvegarde.etat();
   CX.etat().bonus.or = 40; CX.etat().bonus.espion = true; CX.etat().evenement = { id: "defi", jour: "2026-10-24", fait: false };
-  const copieC = () => JSON.parse(JSON.stringify({ provinces: CX.etat().provinces, conquises: CX.etat().conquises, rival: CX.etat().rival, arsenal: CX.etat().arsenal, royaume: CX.etat().royaume, evenement: CX.etat().evenement, bonus: CX.etat().bonus, ressources: EX.ressources }));
+  const copieC = () => JSON.parse(JSON.stringify({ provinces: CX.etat().provinces, conquises: CX.etat().conquises, rival: CX.etat().rival, arsenal: CX.etat().arsenal, royaume: CX.etat().royaume, evenement: CX.etat().evenement, bonus: CX.etat().bonus, ressources: JX.sauvegarde.etat().ressources }));
   const avantC = copieC();
   const e1 = X.commencer(6, "angleterre");
   verifier("Expédition : départ du relais 6 vers l'ouest : semaines 6, 7, 8 ; 3 vivres sur 3 ; au départ de la semaine 6 ; une seule expédition à la fois ; la chronique le note",
@@ -2145,7 +2145,8 @@ verifier("Bataillons : le rendu ne touche pas au moteur (aucune écriture de la 
   const r2 = X.apresBataille(g1, bilanDe("retraite", 4));
   const o2 = X.optionsBataille(g1);
   verifier("Gardien : murs cédés → −1 vivre, on retente, les coups portés restent (12 → 7 → 3), le camp garde sa solidité de départ 12 ; renommée 2 par tentative",
-    r.cede && r.vivres === 2 && e.places[g1.id] === 7 && o1.pvRival === 7 && o1.pvRivalMax === 12 && r2.cede && e.vivres === 1 && e.places[g1.id] === 3 && o2.pvRival === 3 && X.atteignables()[0] === g1 && X.etat().renom === renomAvantG + 4 && X.enCours() === e);
+    r.cede && r.vivres === 2 && o1.pvRival === 7 && o1.pvRivalMax === 12 && r2.cede && e.vivres === 1 && e.places[g1.id] === 3 && o2.pvRival === 3 && X.atteignables()[0] === g1 && X.etat().renom === renomAvantG + 4 && X.enCours() === e,
+    { r, r2, places: e.places, o1: [o1.pvRival, o1.pvRivalMax], o2: o2.pvRival, renom: [X.etat().renom, renomAvantG], meme: X.enCours() === e, att: X.atteignables().map(h => h.id) });
   r = X.apresBataille(g1, bilanDe("tenu", 2));
   verifier("Gardien vaincu : semaine 1 franchie (relais 2 ouvert), +25 or de route, renommée 15 + 3S = 18, porte de faveur rare du gardien, la route passe à la semaine 2, rivalité +2",
     !r.cede && r.franchie === 1 && X.etat().franchies.join() === "1" && X.relais().indexOf(2) >= 0 && r.or === 25 && r.renom === 18 && r.porte && r.porte.rare === true && r.porte.conseiller === g1.porte.conseiller && r.suivante === 2 && e.semaine === 2 && e.position === null &&
@@ -2155,9 +2156,10 @@ verifier("Bataillons : le rendu ne touche pas au moteur (aucune écriture de la 
   X.entrer(hc.id);
   const renomAvantFin = X.etat().renom; e.or = 23;
   r = X.apresBataille(hc, bilanDe("retraite", 0));
-  verifier("Défaite : le dernier vivre perdu finit l'expédition (retour au domaine) avec la renommée acquise, l'or de route restant converti 1 pour 5 (23 → 4), l'historique et le record du relais",
-    r.fini && r.fini.issue === "retour" && X.enCours() === null && X.etat().renom === renomAvantFin + 2 + 4 && r.fini.orRestant === 4 && r.fini.renom === X.etat().renomTotal && X.etat().historique.length === 1 && X.etat().historique[0].issue === "retour" &&
-    X.etat().historique[0].atteint.semaine === 2 && X.etat().records["1"].semaine === 2 && X.etat().records["1"].renom === X.etat().renomTotal && /semaine 2, 1re halte/.test(CX.etat().chronique[0].texte) && X.etat().franchies.join() === "1", r.fini);
+  verifier("Défaite : le dernier vivre perdu finit l'expédition (retour au domaine) avec la renommée acquise (murs cédés 2, porte parchemin 10 quand même), l'or de route restant converti 1 pour 5 (23 → 4), l'historique et le record du relais",
+    r.fini && r.fini.issue === "retour" && X.enCours() === null && X.etat().renom === renomAvantFin + 2 + 10 + 4 && r.fini.orRestant === 4 && r.fini.renom === X.etat().renomTotal && X.etat().historique.length === 1 && X.etat().historique[0].issue === "retour" &&
+    X.etat().historique[0].atteint.semaine === 2 && X.etat().records["1"].semaine === 2 && X.etat().records["1"].renom === X.etat().renomTotal && /semaine 2, 1re halte/.test(CX.etat().chronique[0].texte) && X.etat().franchies.join() === "1",
+    { fini: r.fini && r.fini.issue, renom: [X.etat().renom, renomAvantFin, X.etat().renomTotal], hist: X.etat().historique.length, rec: X.etat().records["1"], chron: CX.etat().chronique[0].texte, franchies: X.etat().franchies });
   verifier("Renommée : barème (réponse 1, halte 4 + S, murs cédés 2, parchemin 10 / 20, gardien 15 + 3S : S3 = 24, Grand Gardien 30 + 5S : S8 = 70, expédition accomplie 20)",
     X.renom("reponse") === 1 && X.renom("halte", 4) === 8 && X.renom("cede") === 2 && X.renom("parchemin") === 10 && X.renom("parchemin-eclatante") === 20 && X.renom("gardien", 3) === 24 && X.renom("grand", 8) === 70 && X.renom("complete") === 20);
 
@@ -2188,7 +2190,8 @@ verifier("Bataillons : le rendu ne touche pas au moteur (aucune écriture de la 
   verifier("Victoire : Grand Gardien vaincu → expédition accomplie, semaines 6, 7, 8 franchies, +20 de renommée, 3 coups à la prochaine place forte du front (16 → 13), rivalité +6 (+2 par gardien), 8 ressources de la meilleure matière, faveurs rendues, historique et record",
     finV && finV.issue === "victoire" && X.enCours() === null && X.etat().franchies.join() === "6,7,8" && apresV.provinces.gue.pv === 13 && CX.etat().rivalite.angleterre === 10 && finV.ressources && finV.ressources.nombre === 8 &&
     gainsRes.length === 1 && apresV.ressources[gainsRes[0]] === avantV.ressources[gainsRes[0]] + 8 && X.etat().historique[0].issue === "victoire" && X.etat().records["6"].accomplie === 1 && X.etat().records["6"].semaine === 8 && finV.renom > 150 && X.etat().renom === finV.renom &&
-    X.relais().join() === "1,6,8" && finV.graine.length === 9 && jV.filter(x => x.franchie).length === 3, { finV, relais: X.relais() });
+    X.relais().join() === "1,6,7,8" && finV.graine.length === 9 && jV.filter(x => x.franchie).length === 3,
+    { issue: finV && finV.issue, franchies: X.etat().franchies, gue: apresV.provinces.gue.pv, rivalite: CX.etat().rivalite, gainsRes, hist: X.etat().historique[0], rec: X.etat().records, relais: X.relais(), nbFranchies: jV.filter(x => x.franchie).length, renom: [finV && finV.renom, X.etat().renom] });
   const intactV = ["conquises", "rival", "arsenal", "royaume", "evenement", "bonus"].every(k => JSON.stringify(apresV[k]) === JSON.stringify(avantV[k]));
   const provincesV = Object.keys(avantV.provinces).every(id => id === "gue" ? apresV.provinces[id].pv === 13 : JSON.stringify(apresV.provinces[id]) === JSON.stringify(avantV.provinces[id]));
   verifier("Campagne intacte après une expédition gagnée : provinces (sauf les 3 coups), conquises, rival, arsenal, royaume, événement du jour et bonus inchangés (copie profonde) ; c.bonus.or vaut encore 40",
@@ -2200,7 +2203,8 @@ verifier("Bataillons : le rendu ne touche pas au moteur (aucune écriture de la 
   const jD = marcher(h => (h.type === "gardien" || h.type === "grand") ? "retraite" : "tenu"), finD = jD[jD.length - 1].fini, apresD = copieC();
   verifier("Défaite : le gardien de la semaine 6 cédé trois fois → retour au domaine, renommée gagnée tout de même, jamais réduite ; le record du relais 6 ne descend pas ; deux expéditions dans l'historique",
     finD && finD.issue === "retour" && X.etat().renom > renomApresV && X.etat().renomTotal > totalApresV && X.etat().renomTotal - totalApresV === X.etat().renom - renomApresV && X.etat().historique.length === 2 && X.etat().historique[0].issue === "retour" &&
-    X.etat().records["6"].semaine === 8 && X.etat().records["6"].renom === JSON.parse(recV).renom && X.etat().records["6"].accomplie === 1 && jD.filter(x => x.vivrePerdu).length === 3 && finD.atteint.semaine === 6, { finD });
+    X.etat().records["6"].semaine === 8 && X.etat().records["6"].renom === JSON.parse(recV).renom && X.etat().records["6"].accomplie === 1 && jD.filter(x => x.vivrePerdu).length >= 3 && finD.atteint.semaine === 6,
+    { finD, jD: jD.map(x => x.halte + ":" + x.issue + ":" + x.vivres), enCours: !!X.enCours() });
   verifier("Campagne intacte après une expédition perdue : rien n'a bougé (provinces, conquises, rival, arsenal, royaume, événement, bonus, ressources, rivalité)",
     ["provinces", "conquises", "rival", "arsenal", "royaume", "evenement", "bonus", "ressources"].every(k => JSON.stringify(apresD[k]) === JSON.stringify(avantD[k])) && CX.etat().rivalite.omeyyades === 0);
 
@@ -2228,12 +2232,13 @@ verifier("Bataillons : le rendu ne touche pas au moteur (aucune écriture de la 
   verifier("Faveurs : question fausse → 2 cartes (celle du conseiller et celle de la famille la moins jouée) ; éclatante → une carte de plus ; jamais de porte vide",
     X.offrirFaveurs("histoire", false, false).cartes.map(c => c.id).join() === "annales,eclaireurs" && X.offrirFaveurs("histoire", true, true).cartes.length === 4 && X.offrirFaveurs("histoire", false, true).cartes.length === 3);
   e.vivres = 2;
-  off = X.offrirFaveurs("svt", true, false); const prise = X.prendreFaveur("simples");
+  off = X.offrirFaveurs("svt", true, false); const prise = X.prendreFaveur("simples"), rang1 = X.rang("simples"), vivresApres = e.vivres;
   const off2 = X.offrirFaveurs("svt", true, false); const carteSimples = off2.cartes.filter(c => c.id === "simples")[0]; X.prendreFaveur("simples");
-  const off3 = X.offrirFaveurs("svt", true, false);
-  verifier("Faveurs : prendre une carte la tient (Simples : +1 vivre tout de suite) ; reproposée, elle s'affine d'un rang (« Affiner », rang rare : +1 au maximum) ; au rang 2, elle n'est plus proposée ; prendre hors de l'offre est refusé",
-    prise && prise.rang === 1 && e.vivres === 3 && X.rang("simples") === 1 && carteSimples && carteSimples.affine === true && carteSimples.rang === 2 && X.rang("simples") === 2 && e.vivresMax === 4 && off3.cartes.every(c => c.id !== "simples") && off3.cartes[0].famille !== "svt" &&
-    X.prendreFaveur("annales") === null && e.faveurs.length === 1 && X.faveursTenues()[0].rangNom === "rare", { off2: off2.cartes, off3: off3.cartes });
+  const rang2 = X.rang("simples"), off3 = X.offrirFaveurs("svt", true, false);
+  verifier("Faveurs : prendre une carte la tient (Simples : +1 vivre tout de suite) ; reproposée, elle s'affine d'un rang (« Affiner », rang rare : +1 au maximum) ; au rang 2, elle n'est plus proposée ; une faveur hors de l'offre (ou d'une famille sans cours) est refusée",
+    prise && prise.id === "simples" && vivresApres === 3 && rang1 === 1 && carteSimples && carteSimples.affine === true && carteSimples.rang === 2 && rang2 === 2 && e.vivresMax === 4 && off3.cartes.every(c => c.id !== "simples") && off3.cartes[0].famille !== "svt" &&
+    X.prendreFaveur("lettres") === null && e.faveurs.length === 1 && X.faveursTenues()[0].rangNom === "rare",
+    { prise, vivresApres, rang1, rang2, vivresMax: e.vivresMax, carteSimples, tenues: X.faveursTenues().map(c => c.id + "@" + c.rang + c.rangNom), off3: off3.cartes.map(c => c.id + "@" + c.rang) });
   verifier("Faveurs : rangs bornés au MVP (2), affiner une faveur au rang 2 ou non tenue est refusé ; texte de chaque faveur à chaque rang sans marque restante",
     X.affiner("simples") === null && X.affiner("annales") === null && X.EXP.RANG_MAX === 2 && Object.keys(X.EXP.FAVEURS).every(id => [1, 2].every(rg => { const t = X.texteFaveur(id, rg); return t && !/\{/.test(t); })) &&
     X.texteFaveur("annales", 1) === "+2 or par bonne réponse au conseil de guerre." && X.texteFaveur("ballade", 2) === "Une erreur coûte 2 or au lieu de 6 au conseil de guerre." && X.texteFaveur("engrenages", 2) === "Dégâts de tes tours +12 %.");

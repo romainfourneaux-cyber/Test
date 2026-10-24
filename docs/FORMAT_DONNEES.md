@@ -37,9 +37,12 @@ JEU.enregistrer("config", {
   reposFicheJuste: 15,          // une notion réussie attend 15 autres questions (et une notion à revoir réussie 2 fois, la séance suivante)
   orPerduErreur: 6,             // bataille : or retiré par réponse fausse (or de la bataille en cours, jamais sous zéro)
   usureBatiments: false,
-  son: true
+  son: true,
+  expedition: { semaines: 3, couches: 3, vivres: 3, questionsSemaine: 2, quotaPlein: 12, quotaDemi: 5, difficulte: 0, vitesse: 1, relaisLibres: false }
 });
 ```
+
+expedition (depuis le 24/10/2026, facultatif ; lu par jeu/js/expedition.js avec ces valeurs par défaut) : semaines par expédition (3 ; moins si la frontière est plus proche), couches par semaine (3), vivres au départ (3, 5 au plus), questions de la semaine traversée sur 3 (2), seuils de fiches candidates pour le quota plein (12) et pour le demi-quota (5), cran de difficulté des batailles de route (0 ; −1 ou +1 déplace la ligne du rival d'un cran, +1 à éviter de S6 à S12 tant que la table fine de l'étape 2 n'existe pas), vitesse de départ des batailles de route (1, 2 ou 3), relaisLibres (false : relais = S1, la semaine après chaque semaine franchie et frontière − 2 ; true : toutes les semaines ouvertes).
 
 rappelApres (depuis le 15/10/2026) : nombre d'autres questions posées avant qu'une question ratée revienne (jeu/js/rappels.js). Entier, 1 ou plus ; absent ou invalide : 3.
 
@@ -271,11 +274,11 @@ Dans une séquence d'anglais, le champ `fiche` d'une question ou d'un bonus cont
 
 ## Sauvegarde (localStorage, clé jeu5e)
 
-Schéma actuel : 5 (depuis le 15/10/2026). Migrations, testées par atelier/outils/tests.js : 1 → 2 ajoute reglages, stats et questionsVues ; 2 → 3 ajoute campagne (complétée par JEU.campagne.completer) et reglages.musique ; 3 → 4 ajoute rappels, vide (complétée par JEU.rappels.completer) ; 4 → 5 ajoute posees, vide (complétée par JEU.questions.completerPosees). Aucune ne retire rien. Une sauvegarde sans numéro est lue comme un schéma 1 ; une sauvegarde d'un schéma plus récent que le jeu est refusée. Le réglage reglages.sang (15/10/2026) n'a pas demandé de nouveau schéma : absent (sauvegarde plus ancienne), il vaut vrai, comme animations ; une sauvegarde neuve l'écrit à vrai ; la case des Réglages l'écrit à vrai ou faux (testé par tests.js, contrôlé par perf.js).
+Schéma actuel : 6 (depuis le 24/10/2026). Migrations, testées par atelier/outils/tests.js : 1 → 2 ajoute reglages, stats et questionsVues ; 2 → 3 ajoute campagne (complétée par JEU.campagne.completer) et reglages.musique ; 3 → 4 ajoute rappels, vide (complétée par JEU.rappels.completer) ; 4 → 5 ajoute posees, vide (complétée par JEU.questions.completerPosees) ; 5 → 6 ajoute expedition, vide (complétée par JEU.expedition.completer : une valeur absente, nulle ou du mauvais genre reprend sa valeur neuve ; une expédition en cours illisible est close proprement, sa renommée gardée, et la chronique le dit). Aucune ne retire rien. Une sauvegarde sans numéro est lue comme un schéma 1 ; une sauvegarde d'un schéma plus récent que le jeu est refusée. Le réglage reglages.sang (15/10/2026) n'a pas demandé de nouveau schéma : absent (sauvegarde plus ancienne), il vaut vrai, comme animations ; une sauvegarde neuve l'écrit à vrai ; la case des Réglages l'écrit à vrai ou faux (testé par tests.js, contrôlé par perf.js).
 
 ```js
 {
-  schema: 5,
+  schema: 6,
   creeLe: "2026-10-13T18:00:00", majLe: "...",
   cours: { "histoire-s01-1": { etat: "valide", le: "...", score: 0.875 } },  // hérité des épreuves (0.1.0 à 0.4.0), plus écrit
   notions: { "histoire-s01-1-f1": { boite: 1, vue: "...", ok: 3, ko: 1 } },
@@ -325,6 +328,29 @@ Schéma actuel : 5 (depuis le 15/10/2026). Migrations, testées par atelier/outi
   posees: {
     horloge: 57,                                 // réponses données depuis le début, toutes parties confondues
     questions: { "histoire-s07-2-q3": 55 }       // valeur de l'horloge à la dernière fois où la question a été posée
+  },
+  // schéma 6 (24/10/2026) : les expéditions, la route des semaines (jeu/js/expedition.js ; atelier/conception/expeditions.md, section 13)
+  expedition: {
+    renom: 0, renomTotal: 0,                     // renommée disponible ; gagnée depuis le début (jamais réduite)
+    armorial: { vivres: 0, bourse: 0, murs: 0, ouverture: 0, banniere: 0,   // rang de chaque quartier acheté (MVP)
+                saufConduit: 0, memoire: 0, forge: 0, monture: 0 },        // quartiers de l'étape 2, à 0
+    franchies: [6],                              // semaines dont le gardien a été vaincu, pour toujours
+    sermentsOuverts: false, serments: { garde: false, guetteur: false, vivres: false, marchand: false, hate: false, champion: false }, // étape 3
+    titres: [],                                  // étape 2
+    records: { "6": { semaine: 8, halte: 3, renom: 319, ardeur: 0, accomplie: 1 } },  // par relais, jamais en baisse
+    reponsesParFamille: { svt: 12 },             // bonnes réponses sur la route (pour plus tard)
+    historique: [{ le: "2026-10-24", graine: 1860519976, front: "angleterre", depart: 6, semaines: [6, 7, 8],
+                   atteint: { semaine: 8, noeud: "s8g" }, issue: "victoire", renom: 319, ardeur: 0 }],  // vingt au plus, le plus récent d'abord
+    enCours: null                                // ou l'expédition en cours : { graine, front, depart, semaines, ardeur, difficulte, vitesse,
+                                                 //   route: { version: 1, graine, front, depart, sautees, actes: [{ semaine, semaines (fenêtre), quota, fiches, cas,
+                                                 //     carte, couches: [[{ id: "s6c1h1", couche, rang, type, suivants, porte?, ev?, etal? }]], gardien: { id: "s6g",
+                                                 //     type: "gardien" | "grand", place, vagues, carte, porte } }] },
+                                                 //   position (halte en cours ou dernière jouée, null au départ de la semaine), semaine, faits: { "s6c1h1": "reussi" |
+                                                 //   "eclatante" | "echoue" | "fait" }, entamee (bataille dont la 1re vague est lancée), vivres, vivresMax, or (or de
+                                                 //   route), plan, espion, monture, faveurs: [{ id: "annales", rang: 1 }], places: { "s6g": 7 } (solidité restante d'un
+                                                 //   gardien déjà attaqué), offre (cartes de faveur en attente de choix), etal: { "s6c2h2": { remise, lignes, rafraichi,
+                                                 //   achetes } }, compte: { questions, bonnes, serie, meilleureSerie, parFamille, parMatiere, parSemaine, renom,
+                                                 //   renomHaltes, fiches (ratées, pour « À relire ») } }
   }
 }
 ```

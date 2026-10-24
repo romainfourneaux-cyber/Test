@@ -666,7 +666,6 @@
     // position : une halte de la semaine en cours (ou son gardien) ; sinon le départ de la semaine
     if (e.position !== null && !(typeof e.position === "string" && trouverHalte(e.position, e) && trouverHalte(e.position, e).acte.semaine === e.semaine)) e.position = null;
     if (e.entamee && !trouverHalte(e.entamee, e)) e.entamee = null;
-    if (e.vivres === 0) clore(x, "retour", false);
   }
 
   function etat() {
@@ -1004,6 +1003,7 @@
   function reprendre() {
     var e = enCours();
     if (!e) return null;
+    if (e.vivres <= 0) return { vivrePerdu: false, vivres: 0, fini: finir("retour") }; // sauvegarde arrêtée entre la perte et le bilan
     if (!e.entamee) return { vivrePerdu: false, vivres: e.vivres, fini: null };
     return quitter(true);
   }
@@ -1262,7 +1262,9 @@
     var lisible = routeLisible(e.route) && objet(e.compte);
     if (!objet(e.compte)) e.compte = compteVide();
     var S = nombre(e.semaine) ? e.semaine : (nombre(e.depart) ? e.depart : 1);
-    var bilan = { issue: issue, renom: 0, orRestant: 0, banniere: 0, atteint: { semaine: S, noeud: e.position || null, halte: lisible ? haltesJouees(e) : 0 }, meilleures: lisible ? meilleuresMatieres(e) : [], aRelire: (e.compte.fiches || []).slice(),
+    // halte atteinte : le rang de la dernière halte jouée dans la semaine (le gardien compte pour une de plus)
+    var auGardien = lisible && e.position && trouverHalte(e.position, e) && trouverHalte(e.position, e).halte.type !== "evenement" && /g$/.test(e.position);
+    var bilan = { issue: issue, renom: 0, orRestant: 0, banniere: 0, atteint: { semaine: S, noeud: e.position || null, halte: lisible ? haltesJouees(e) + (auGardien ? 1 : 0) : 0 }, meilleures: lisible ? meilleuresMatieres(e) : [], aRelire: (e.compte.fiches || []).slice(),
       graine: hex(nombre(e.graine) ? e.graine : 0), semaines: Array.isArray(e.semaines) ? e.semaines.slice() : [], depart: e.depart, front: e.front, ressources: null, textes: {} };
     var gagneAvant = e.compte.renom || 0;
     if (issue === "victoire" && lisible) {
@@ -1291,7 +1293,7 @@
     x.historique.unshift({ le: U.jour(), graine: nombre(e.graine) ? e.graine : 0, front: e.front, depart: e.depart, semaines: bilan.semaines, atteint: { semaine: S, noeud: bilan.atteint.noeud }, issue: issue, renom: bilan.renom, ardeur: e.ardeur || 0 });
     if (x.historique.length > EXP.HISTORIQUE_MAX) x.historique.length = EXP.HISTORIQUE_MAX;
     var A = bilan.semaines[0] || S, B = bilan.semaines[bilan.semaines.length - 1] || S;
-    var v = { S: S, A: A, B: B, R: bilan.renom, H: ordinal((bilan.atteint.halte || 0) + 1) };
+    var v = { S: S, A: A, B: B, R: bilan.renom, H: ordinal(Math.max(1, bilan.atteint.halte)) };
     noterChronique(remplir(reparee ? TEXTES.chronique.reparee : TEXTES.chronique[issue] || TEXTES.chronique.abandon, v));
     bilan.textes = { titre: TEXTES.bilan[issue] || TEXTES.bilan.abandon, chroniqueur: TEXTES.bilan.chroniqueur,
       renom: remplir(TEXTES.bilan.renom, { R: bilan.renom, T: x.renomTotal, D: x.renom }),
