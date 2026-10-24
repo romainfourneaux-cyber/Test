@@ -1,1 +1,10 @@
 Moteur : jeu/js/bataille-moteur.js · or perdu par erreur : 6 · 160 batailles par niveau · bataille de route : defense, 2 vagues, camp de 10, carte col
+
+p = 0.6 (réponses justes) · bataille de route : defense, 2 vagues, camp de 10, carte col
+niv | carte          | tenue (éclatante) | tenu  retraite | murs restants (quand elle tient) | coups portés (1re vague) | ennemis tués / tes pertes | sorties · rival : tours, gardes, rappelés, renforts
+ 0  | col            |   64 % (  4 %)   |  61 %   36 %   |                      41 % (64 %) |              2.39 (1.64) |     12.1 / 2.6    | 1.21 · 1, 0, 0, 0
+ 1  | col            |   84 % (  1 %)   |  83 %   16 %   |                      57 % (68 %) |              2.49 (1.88) |     13.3 / 2.8    | 1 · 1, 0, 0, 0
+ 2  | col            |   99 % ( 15 %)   |  84 %    1 %   |                      87 % (88 %) |              3.89 (2.16) |     14.7 / 3.6    | 1.12 · 1, 0, 0, 0
+ 3  | col            |  100 % ( 24 %)   |  76 %    0 %   |                      80 % (80 %) |              6.23 (3.86) |     14.6 / 3.6    | 1.19 · 1, 0, 0, 0
+ 4  | col            |   98 % (  0 %)   |  98 %    2 %   |                      69 % (71 %) |              2.29 (2.29) |     12.4 / 4.3    | 0.96 · 1, 0, 0, 0
+moy |                |   89 % (8.8 %)   |                |                           66.8 % |                      3.5
