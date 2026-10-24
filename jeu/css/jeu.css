@@ -880,7 +880,9 @@ button.cour-chip:hover { background: rgba(255,250,236,.55); box-shadow: 0 0 0 1p
 .route-svg .halte.atteignable .halo { transform-box: fill-box; transform-origin: center; animation: halo-carte 1.6s ease-in-out infinite; }
 .route-svg .halte:focus-visible .halo { animation: none; transform: none; opacity: 1; }
 .route-svg .halte:focus-visible .halo .halo-or { stroke: #fff3d0; stroke-width: 7px; }
-.route-svg .halte.hors, .route-svg .halte.passee { opacity: .35; }
+.route-svg .halte.hors, .route-svg .halte.passee, .route-svg .halte-nom.hors, .route-svg .halte-nom.passee { opacity: .35; }
+.route-svg .halte-nom.brume { opacity: .55; }
+.route-svg .etiquettes { pointer-events: none; }
 .route-svg .halte.avenir { opacity: .88; }
 .route-svg .halte.brume .corps { opacity: .55; }
 .route-svg .sceau-halte { transform-box: fill-box; transform-origin: center; transform: rotate(-12deg); filter: drop-shadow(1px 2px 2px rgba(0,0,0,.45)); animation: sceau-pose .32s ease-out; }

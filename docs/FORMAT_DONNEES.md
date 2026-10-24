@@ -348,7 +348,7 @@ Schéma actuel : 6 (depuis le 24/10/2026). Migrations, testées par atelier/outi
                                                  //   position (halte en cours ou dernière jouée, null au départ de la semaine), semaine, faits: { "s6c1h1": "reussi" |
                                                  //   "eclatante" | "echoue" | "fait" }, entamee (bataille dont la 1re vague est lancée), vivres, vivresMax, or (or de
                                                  //   route), plan, espion, monture, faveurs: [{ id: "annales", rang: 1 }], places: { "s6g": 7 } (solidité restante d'un
-                                                 //   gardien déjà attaqué), offre (cartes de faveur en attente de choix), etal: { "s6c2h2": { remise, lignes, rafraichi,
+                                                 //   gardien déjà attaqué), offre (cartes de faveur en attente de choix ; l'écran y ajoute question: true tant que la question du conseiller n'est pas répondue, et eclatante), etal: { "s6c2h2": { remise, lignes, rafraichi,
                                                  //   achetes } }, compte: { questions, bonnes, serie, meilleureSerie, parFamille, parMatiere, parSemaine, renom,
                                                  //   renomHaltes, fiches (ratées, pour « À relire ») } }
   }

@@ -42,7 +42,7 @@ async function controlerCarte(page) {
   return page.evaluate(() => {
     const svg = document.querySelector(".route-svg"); if (!svg) return null;
     const k = svg.getBoundingClientRect().width / 1000;
-    const boites = [...svg.querySelectorAll(".halte:not(.brume) .halte-nom")].map(t => { const b = t.getBBox(); return { x: b.x, y: b.y, w: b.width, h: b.height, t: t.textContent }; });
+    const boites = [...svg.querySelectorAll(".halte-nom:not(.brume)")].map(t => { const b = t.getBBox(); return { x: b.x, y: b.y, w: b.width, h: b.height, t: t.textContent }; });
     const chev = [];
     for (let i = 0; i < boites.length; i++) for (let j = i + 1; j < boites.length; j++) {
       const a = boites[i], b = boites[j];
