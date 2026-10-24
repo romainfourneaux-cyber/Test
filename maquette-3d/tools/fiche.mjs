@@ -75,7 +75,7 @@ function planSvg() {
   <polygon points="${P(3.55, 1.38)} ${P(3.65, 1.22)} ${P(3.75, 1.38)}" fill="#d98b1d" stroke="#fff"/>
   <polygon points="${P(3.12, 0.95)} ${P(3.24, 0.85)} ${P(3.24, 1.05)}" fill="#d98b1d" stroke="#fff"/>
   <text class="lbl" x="${((5.55 - X0) * K)}" y="${((-0.12 - Z0) * K)}">MUR EST — BLOC 20 + DOUBLAGE ISOLANT + BA13</text>
-  <text class="lbl" x="${((3.32 - X0) * K)}" y="${((2.42 - Z0) * K)}" transform="rotate(-90 ${((3.32 - X0) * K)} ${((2.42 - Z0) * K)})">CLOISON SdB / WC</text>
+  <text class="lbl" x="${((3.33 - X0) * K)}" y="${((2.24 - Z0) * K)}" transform="rotate(-90 ${((3.33 - X0) * K)} ${((2.24 - Z0) * K)})">CLOISON SdB / WC</text>
   <text class="sm" x="${((3.6 - X0) * K)}" y="${((1.85 - Z0) * K)}">WC</text>
   <text class="sm" x="${((5.85 - X0) * K)}" y="${((1.80 - Z0) * K)}">Dégagement</text>
   <text class="sm" x="${((7.55 - X0) * K)}" y="${((1.95 - Z0) * K)}">Sas</text>
