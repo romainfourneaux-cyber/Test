@@ -1,5 +1,5 @@
 // Tests de logique (Node) : calendrier, états des cours, Leitner, brouillage, migration et import, campagne, moteur de bataille,
-// règles du validateur pour suivi.js, personnages de la campagne (souverains, rivaux, rivalité, missives).
+// règles du validateur pour suivi.js, personnages de la campagne (souverains, rivaux, rivalité, missives), expéditions (route des semaines).
 // Usage : node atelier/outils/tests.js
 "use strict";
 const fs = require("fs");
@@ -13,7 +13,7 @@ function contexte() {
     localStorage: { getItem: k => (k in stock ? stock[k] : null), setItem: (k, v) => { stock[k] = String(v); }, removeItem: k => { delete stock[k]; } } };
   ctx.window = ctx; ctx.globalThis = ctx;
   vm.createContext(ctx);
-  ["noyau", "brouillage", "calendrier", "sauvegarde", "leitner", "progression", "questions", "rappels", "recit", "bataille-moteur", "cartes-bataille", "campagne"].forEach(m => {
+  ["noyau", "brouillage", "calendrier", "sauvegarde", "leitner", "progression", "questions", "rappels", "recit", "bataille-moteur", "cartes-bataille", "campagne", "expedition"].forEach(m => {
     vm.runInContext(fs.readFileSync(path.join(RACINE, "jeu", "js", m + ".js"), "utf8"), ctx, { filename: m + ".js" });
   });
   ["config", "planning", "devoirs", "suivi"].forEach(f => vm.runInContext(fs.readFileSync(path.join(RACINE, "jeu", "data", f + ".js"), "utf8"), ctx));
@@ -92,12 +92,12 @@ const v1 = {
 };
 const m = J.sauvegarde.migrer(JSON.parse(JSON.stringify(v1)));
 const conserve = ["cours", "notions", "ressources", "batiments", "devoirs", "signalements", "creeLe"].every(k => JSON.stringify(m[k]) === JSON.stringify(v1[k]));
-verifier("Migration 1 → 5 : rien de perdu", conserve && m.schema === 5);
-verifier("Migration 1 → 5 : file des rappels vide", JSON.stringify(m.rappels) === JSON.stringify({ compteur: 0, file: [] }), m.rappels);
-verifier("Migration 1 → 5 : campagne neuve et musique", m.campagne && m.campagne.conquises.length === 0 && m.campagne.arsenal.tours.archers === 1 && m.reglages.musique === true);
+verifier("Migration 1 → 6 : rien de perdu", conserve && m.schema === 6);
+verifier("Migration 1 → 6 : file des rappels vide", JSON.stringify(m.rappels) === JSON.stringify({ compteur: 0, file: [] }), m.rappels);
+verifier("Migration 1 → 6 : campagne neuve et musique", m.campagne && m.campagne.conquises.length === 0 && m.campagne.arsenal.tours.archers === 1 && m.reglages.musique === true);
 verifier("Migration 1 → 2 : nouveaux champs", m.reglages && m.reglages.son === true && m.stats.bonnes === 3 && m.stats.total === 4 && typeof m.questionsVues === "object");
 const sansSchema = J.sauvegarde.migrer({ cours: {}, notions: {} });
-verifier("Sauvegarde sans numéro de schéma traitée comme schéma 1", sansSchema.schema === 5 && sansSchema.ressources.sceaux === 0);
+verifier("Sauvegarde sans numéro de schéma traitée comme schéma 1", sansSchema.schema === 6 && sansSchema.ressources.sceaux === 0);
 
 // export puis import : même partie
 J.sauvegarde.remplacer(m);
@@ -112,15 +112,15 @@ verifier("Import d'un fichier étranger refusé, partie intacte", refuse('{"name
 // migration 2 → 3 → 4 → 5 : la campagne s'ajoute, puis la file des rappels, puis la mémoire des questions posées ; le reste ne bouge pas
 const v2 = JSON.parse(JSON.stringify(m)); delete v2.campagne; delete v2.rappels; v2.schema = 2; delete v2.reglages.musique;
 const m3 = J.sauvegarde.migrer(JSON.parse(JSON.stringify(v2)));
-verifier("Migration 2 → 5 : rien de perdu", ["cours", "notions", "ressources", "batiments", "stats"].every(k => JSON.stringify(m3[k]) === JSON.stringify(v2[k])) && m3.schema === 5 && m3.campagne.provinces.gue.pv === 16 && m3.rappels.file.length === 0);
+verifier("Migration 2 → 6 : rien de perdu", ["cours", "notions", "ressources", "batiments", "stats"].every(k => JSON.stringify(m3[k]) === JSON.stringify(v2[k])) && m3.schema === 6 && m3.campagne.provinces.gue.pv === 16 && m3.rappels.file.length === 0);
 // migration 3 → 5 : seules la file des rappels et la mémoire des questions posées s'ajoutent, tout le reste est identique
 const v3 = JSON.parse(JSON.stringify(m)); delete v3.rappels; delete v3.posees; v3.schema = 3;
 v3.campagne.conquises = ["gue"]; v3.campagne.royaume.savoir = 5; v3.questionsVues = { "methode-frise-q3": 2 };
 const m4 = J.sauvegarde.migrer(JSON.parse(JSON.stringify(v3)));
-verifier("Migration 3 → 5 : rien de perdu, file des rappels et mémoire des questions posées ajoutées",
-  Object.keys(v3).filter(k => k !== "schema").every(k => JSON.stringify(m4[k]) === JSON.stringify(v3[k])) && m4.schema === 5 &&
+verifier("Migration 3 → 6 : rien de perdu, file des rappels et mémoire des questions posées ajoutées",
+  Object.keys(v3).filter(k => k !== "schema").every(k => JSON.stringify(m4[k]) === JSON.stringify(v3[k])) && m4.schema === 6 &&
   JSON.stringify(m4.rappels) === JSON.stringify({ compteur: 0, file: [] }) && JSON.stringify(m4.posees) === JSON.stringify({ horloge: 0, questions: {} }), Object.keys(m4));
-verifier("Sauvegarde d'un schéma plus récent (6) refusée", (() => { try { J.sauvegarde.migrer({ schema: 6, creeLe: "2026-10-15T10:00:00", notions: {}, ressources: {} }); return false; } catch (e) { return true; } })());
+verifier("Sauvegarde d'un schéma plus récent (7) refusée", (() => { try { J.sauvegarde.migrer({ schema: 7, creeLe: "2026-10-15T10:00:00", notions: {}, ressources: {} }); return false; } catch (e) { return true; } })());
 
 // campagne : rien ne se perd, les coups portés restent, une victoire conquiert
 J.sauvegarde.remplacer(J.sauvegarde.nouvelle());
@@ -417,7 +417,7 @@ verifier("Récit : jamais de pénalité ni de chrono dans les phrases de seconde
 })();
 
 // sauvegarde : la file est gardée (export, import) ; à la séance suivante, les rappels en attente passent en tête
-verifier("Sauvegarde neuve : schéma 5, file des rappels vide", JR.sauvegarde.nouvelle().schema === 5 && JSON.stringify(JR.sauvegarde.nouvelle().rappels) === JSON.stringify({ compteur: 0, file: [] }));
+verifier("Sauvegarde neuve : schéma 6, file des rappels vide", JR.sauvegarde.nouvelle().schema === 6 && JSON.stringify(JR.sauvegarde.nouvelle().rappels) === JSON.stringify({ compteur: 0, file: [] }));
 neuve();
 repondre(H(1), false);
 const fileAvant = JSON.stringify(JR.sauvegarde.etat().rappels);
@@ -712,7 +712,7 @@ verifier("Mémoire des questions posées : gardée par l'export puis l'import, e
 const v4 = JSON.parse(JSON.stringify(JA.sauvegarde.etat())); delete v4.posees; v4.schema = 4; v4.questionsVues = { [qa1.id]: 3 };
 const m5 = JA.sauvegarde.migrer(JSON.parse(JSON.stringify(v4)));
 verifier("Migration 4 → 5 : rien de perdu, mémoire des questions posées ajoutée, vide",
-  Object.keys(v4).filter(k => k !== "schema").every(k => JSON.stringify(m5[k]) === JSON.stringify(v4[k])) && m5.schema === 5 && JSON.stringify(m5.posees) === JSON.stringify({ horloge: 0, questions: {} }), Object.keys(m5));
+  Object.keys(v4).filter(k => k !== "schema").every(k => JSON.stringify(m5[k]) === JSON.stringify(v4[k])) && m5.schema === 6 && JSON.stringify(m5.posees) === JSON.stringify({ horloge: 0, questions: {} }), Object.keys(m5));
 verifier("Mémoire des questions posées abîmée : réparée sans planter ni rien perdre de lisible", (() => {
   const r = QA.completerPosees({ horloge: "x", questions: { a: 5, b: "z", c: 2 } }), r2 = QA.completerPosees({ horloge: 4, questions: [1, 2] });
   const vide = JSON.stringify({ horloge: 0, questions: {} });
@@ -1945,6 +1945,353 @@ verifier("Bataillons : le rendu ne touche pas au moteur (aucune écriture de la 
     (srcB.match(/C\.apresBataille\(/g) || []).length === 2 && /else C\.apresBataille\(\{ lieu: lieu, front: frontId, issue: "retraite"/.test(srcB) && /\} else gains = C\.apresBataille\(b\);/.test(srcB) &&
     !/contexte|expedition|quota/i.test(fs.readFileSync(path.join(RACINE, "jeu", "js", "bataille-moteur.js"), "utf8")));
 })();
+
+// ---------- expéditions : la route des semaines (jeu/js/expedition.js ; conception atelier/conception/expeditions.md, 17.1) ----------
+// Contexte neuf : des cours d'essai sur les semaines 1, 2, 3, 6, 7 et 8 (4 et 5 vides : un trou dans les dépôts), aux tailles
+// voulues pour les semaines minces (3.3) : 44 fiches en S1, 23 en S2, 8 en S3, 2 en S6, 3 en S7, 4 en S8 ; un cours de
+// grammaire et une fiche méthode (compagnons de route, sans semaine) ; personnages.js pour la liste des noms interdits.
+(() => {
+  const CTRL = require("./controles.js");
+  const ctxX = contexte(), JX = ctxX.JEU, X = JX.expedition, CX = JX.campagne;
+  const TAILLES = { "histoire-s01-1": 22, "geographie-s01-1": 22, "svt-s02-1": 23, "physique-s03-1": 8, "svt-s06-1": 2, "histoire-s07-1": 3, "physique-s08-1": 4 };
+  Object.keys(TAILLES).forEach(id => { JX.donnees.cours[id] = coursEssai(id, TAILLES[id]); });
+  JX.donnees.cours["langue-conj10"] = coursEssai("langue-conj10", 4, { matiere: "langue", titre: "Essai", badge: "cuivre", ordre: 1 });
+  JX.donnees.cours["methode-frise"] = coursEssai("methode-frise", 2, { matiere: "histoire", titre: "Frise" });
+  vm.runInContext(fs.readFileSync(path.join(RACINE, "jeu", "data", "personnages.js"), "utf8"), ctxX);
+  JX.donnees.aRetravailler = ["physique-s03-1-f1", "physique-s03-1-f2"]; JX.donnees.suivi = { cours: {} };
+  JX.questions.vider(); JX.progression.oublier();
+  JX.sauvegarde.charger();
+  const neuveX = () => { JX.sauvegarde.remplacer(JX.sauvegarde.nouvelle()); JX.progression.oublier(); JX.recit.oublierHistorique(); JX.questions.oublierSeance(); };
+  neuveX();
+  const cfgX = JX.donnees.config;
+  const platX = a => a.couches.reduce((t, c) => t.concat(c), []);
+  const bilanDe = (issue, degats) => ({ issue: issue, degatsRival: degats || 0, bonnes: 2, total: 3, entamee: true });
+  const questionDe = (cours, i) => JX.questions.questionsDuCours(cours)[i || 0];
+
+  verifier("Expédition : module chargé après la campagne (JEU.expedition), sans DOM, réglages lus avec leurs valeurs par défaut quand le bloc manque",
+    typeof X.commencer === "function" && typeof X.generer === "function" && (() => { const sauve = cfgX.expedition; delete cfgX.expedition; const r = X.reglages(); cfgX.expedition = sauve;
+      return r.semaines === 3 && r.couches === 3 && r.vivres === 3 && r.questionsSemaine === 2 && r.quotaPlein === 12 && r.quotaDemi === 5 && r.difficulte === 0 && r.vitesse === 1 && r.relaisLibres === false; })() &&
+    cfgX.expedition && cfgX.expedition.semaines === 3 && cfgX.expedition.vivres === 3 && cfgX.expedition.difficulte === 0);
+
+  // semaine d'un cours, frontière, relais
+  verifier("Expédition : semaine d'un cours (planning) ; null pour la grammaire, une fiche méthode, une séquence d'anglais (JEU.progression.semaineDe partagé)",
+    X.semaineDe("histoire-s03-1") === 3 && X.semaineDe("physique-s08-1") === 8 && X.semaineDe("langue-conj10") === null && X.semaineDe("methode-frise") === null && X.semaineDe("anglais-seq01") === null &&
+    JX.progression.semaineDe("geographie-s01-1") === 1 && JX.progression.semaineDe("histoire-s03-1") === 3 && JX.progression.semaineDe("langue-conj10") === null);
+  verifier("Expédition : frontière = dernière semaine qui a un cours chargé (8) ; semaines ouvertes 1, 2, 3, 6, 7, 8", X.frontiere() === 8 && X.semainesOuvertes().join() === "1,2,3,6,7,8");
+  verifier("Expédition : relais = S1 et frontière − 2 (6) quand rien n'est franchi ; le défaut est le plus élevé", X.relais().join() === "1,6" && X.relaisDefaut() === 6);
+  X.etat().franchies = [1];
+  const relais12 = X.relais().join();
+  X.etat().franchies = [3];
+  const relais3 = X.relais().join();
+  X.etat().franchies = [];
+  verifier("Expédition : une semaine franchie ouvre la suivante (franchies [1] → 1, 2, 6) ; après S3, la semaine 4 sans cours est sautée (→ 1, 6)", relais12 === "1,2,6" && relais3 === "1,6");
+  cfgX.expedition = Object.assign({}, cfgX.expedition, { relaisLibres: true });
+  const relaisLibres = X.relais().join();
+  cfgX.expedition = Object.assign({}, cfgX.expedition, { relaisLibres: false });
+  verifier("Expédition : relaisLibres ouvre toutes les semaines ouvertes (1 à 8, sauf les semaines sans cours)", relaisLibres === "1,2,3,6,7,8" && X.relais().join() === "1,6");
+  verifier("Expédition : partir de la frontière donne une semaine ; partir de S3 saute les semaines 4 et 5 sans cours (3, 6, 7) ; de S1 : 1, 2, 3",
+    X.semainesDepuis(8, 3).join() === "8" && X.semainesDepuis(3, 3).join() === "3,6,7" && X.semainesDepuis(1, 3).join() === "1,2,3" && X.semainesDepuis(7, 3).join() === "7,8");
+  (() => { const J0 = contexte().JEU; J0.sauvegarde.charger(); verifier("Expédition : sans aucun cours chargé, frontière 0, aucun relais, commencer refuse", J0.expedition.frontiere() === 0 && J0.expedition.relais().length === 0 && J0.expedition.commencer(1, "angleterre") === null && J0.expedition.enCours() === null); })();
+
+  // semaines minces : fenêtre de l'acte et quota
+  const f1 = X.fenetre(1), f3 = X.fenetre(3), f8 = X.fenetre(8), f6 = X.fenetre(6);
+  verifier("Semaines minces : 44 fiches → fenêtre [S], quota 2", f1.semaines.join() === "1" && f1.quota === 2 && f1.fiches === 44 && f1.cas === "pleine" && f1.familles.join() === "histoire,geographie", f1);
+  verifier("Semaines minces : 8 fiches avec 23 la semaine d'avant → [S−1, S], quota 2", f3.semaines.join() === "2,3" && f3.quota === 2 && f3.fiches === 31 && f3.cas === "elargie", f3);
+  verifier("Semaines minces : 4 fiches avec 3 et 2 avant → [S−2, S], quota 1", f8.semaines.join() === "6,7,8" && f8.quota === 1 && f8.fiches === 9 && f8.cas === "demi", f8);
+  verifier("Semaines minces : 2 fiches seules → quota 0 (tirage ordinaire, étiquette de semaine quand même)", f6.semaines.length === 0 && f6.quota === 0 && f6.cas === "vide" && X.quotaDe(6) === 0 && X.quotaDe(1) === 2, f6);
+  verifier("Semaines minces : la page de semaine le dit (fenêtre élargie, une question sur trois, tout le royaume, semaine sautée)",
+    /semaine 1/.test(X.texteFenetre(f1)) && /semaine 3/.test(X.texteFenetre(f3)) && /la semaine 2/.test(X.texteFenetre(f3)) && /une question sur trois/.test(X.texteFenetre(f8)) && /tout le royaume/.test(X.texteFenetre(f6)) && /sans halte/.test(X.TEXTES.fenetre.sautee));
+
+  // génération procédurale : 200 graines
+  const famsX = ["histoire", "geographie", "svt", "physique", "francais", "anglais"];
+  const pX = { depart: 6, semaines: [6, 7, 8], frontiere: 8, front: "angleterre", fenetres: { 6: f6, 7: X.fenetre(7), 8: f8 }, famillesChargees: famsX, famillesARevoir: ["physique"], carteGrand: "gue", sautees: [], config: X.reglages() };
+  const MathX = vm.runInContext("Math", ctxX), randomX = MathX.random;
+  let appels = 0; MathX.random = () => { appels++; return randomX(); };
+  const t0g = Date.now(), routes = []; for (let g = 1; g <= 200; g++) routes.push(X.generer(g * 7919 + 13, pX));
+  const dtg = Date.now() - t0g;
+  MathX.random = randomX;
+  const actesX = routes.reduce((a, r) => a.concat(r.actes), []);
+  verifier("Génération : 200 graines en moins de 2 s, 3 couches par semaine, 2 ou 3 haltes par couche, identifiants uniques, version de route",
+    dtg < 2000 && actesX.every(a => a.couches.length === 3 && a.couches.every(c => c.length === 2 || c.length === 3)) && routes.every(r => r.version === 1 && r.actes.length === 3) &&
+    routes.every(r => { const ids = r.actes.reduce((t, a) => t.concat(platX(a).map(h => h.id), [a.gardien.id]), []); return new Set(ids).size === ids.length; }), dtg + " ms");
+  verifier("Génération : garanties G1 à G7 sur chaque semaine (un marchand en 2e ou 3e couche, un bivouac avant le gardien, une embuscade au plus et jamais seule issue, une bataille dans les deux premières couches, un type par couche sauf escarmouches, un chemin tranquille, chemins entrants et sortants sans croisement)",
+    actesX.every(a => X.verifierActe(a)), actesX.filter(a => !X.verifierActe(a)).slice(0, 2).map(a => X.controlerActe(a)));
+  verifier("Génération : par expédition, au moins une halte d'archives (G8) et deux embuscades au plus (G9) ; une embuscade en 2e couche dans une semaine sur quatre au moins",
+    routes.every(r => r.actes.some(a => platX(a).some(h => h.ev === "archives")) && r.actes.reduce((n, a) => n + platX(a).filter(h => h.type === "embuscade").length, 0) <= 2) &&
+    actesX.filter(a => a.couches[1].some(h => h.type === "embuscade")).length / actesX.length > 0.25);
+  verifier("Génération : toute halte est atteignable depuis le départ et mène au gardien", actesX.every(a => {
+    const ids = {}; platX(a).forEach(h => { ids[h.id] = h; });
+    const vus = {}, file = a.couches[0].map(h => h.id);
+    while (file.length) { const id = file.shift(); if (vus[id] || !ids[id]) continue; vus[id] = true; ids[id].suivants.forEach(s => file.push(s)); }
+    const versG = platX(a).every(h => { let f = [h.id], ok = false, garde = 0; const v2 = {}; while (f.length && garde++ < 100) { const x = f.shift(); if (x === a.gardien.id) { ok = true; break; } if (v2[x] || !ids[x]) continue; v2[x] = true; f = f.concat(ids[x].suivants); } return ok; });
+    return platX(a).every(h => vus[h.id]) && versG;
+  }));
+  verifier("Génération : même graine, même route ; deux graines, deux routes ; aucun appel à Math.random ; jamais plus de vingt essais ; la semaine de secours est valide",
+    JSON.stringify(X.generer(4242, pX)) === JSON.stringify(X.generer(4242, pX)) && JSON.stringify(X.generer(4242, pX)) !== JSON.stringify(X.generer(4243, pX)) && appels === 0 && actesX.every(a => a.essais <= 20) &&
+    X.verifierActe(X.acteDeSecours(X.alea(1), 6, 0, pX, { rotation: famsX, rot: 0, embuscades: 2, archives: 0, evenements: ["defi"], ev: 0 }, { dernier: false, archives: true, cfg: X.reglages() })), { appels, essaisMax: Math.max(...actesX.map(a => a.essais)) });
+  verifier("Génération : portes d'escarmouche (faveur environ 55 %, bourse 25 %), embuscade toujours une faveur, gardien une faveur rare ; Grand Gardien (3 vagues, camp de 16) sur la carte de la prochaine province, gardien (2 vagues, camp de 12) ; les cartes tournent avec la semaine", (() => {
+    const portes = actesX.reduce((t, a) => t.concat(platX(a).filter(h => h.porte)), []), esc = portes.filter(h => h.type === "escarmouche"), part = g => esc.filter(h => h.porte.genre === g).length / esc.length;
+    return part("faveur") > 0.45 && part("faveur") < 0.65 && part("bourse") > 0.17 && part("bourse") < 0.33 && portes.filter(h => h.type === "embuscade").every(h => h.porte.genre === "faveur" && h.porte.conseiller) &&
+      actesX.every(a => a.gardien.porte.genre === "faveur" && a.gardien.porte.rare === true && a.gardien.porte.conseiller) &&
+      routes.every(r => r.actes[2].gardien.type === "grand" && r.actes[2].gardien.carte === "gue" && r.actes[2].gardien.place === 16 && r.actes[2].gardien.vagues === 3 && r.actes[0].gardien.type === "gardien" && r.actes[0].gardien.place === 12 && r.actes[0].gardien.vagues === 2 && r.actes[0].carte === "gue" && r.actes[1].carte === "foret" && r.actes[2].carte === "moulin");
+  })());
+  verifier("Génération : dans une semaine, les portes de faveur tournent entre les familles (jamais deux fois la même tant qu'il en reste une) ; les événements tournent sans répétition",
+    actesX.every(a => { const fams = platX(a).filter(h => h.porte && h.porte.genre === "faveur").map(h => h.porte.conseiller).concat([a.gardien.porte.conseiller]); return fams.length > famsX.length || new Set(fams).size === fams.length; }) &&
+    routes.every(r => { const evs = r.actes.reduce((t, a) => t.concat(platX(a).filter(h => h.type === "evenement").map(h => h.ev)), []).filter(e => e !== "archives"); return evs.length > 5 || new Set(evs).size === evs.length; }));
+  verifier("Génération : la route tient dans la sauvegarde (moins de 4 Ko pour trois semaines)", routes.every(r => JSON.stringify(r).length < 4000), Math.max(...routes.map(r => JSON.stringify(r).length)));
+
+  // options de bataille : exactement C.options(niveau) plus vagues, défense, solidités et or perdu par erreur, moins c.bonus.or, sans c.bonus.espion
+  neuveX();
+  const EX = JX.sauvegarde.etat();
+  CX.etat().bonus.or = 40; CX.etat().bonus.espion = true; CX.etat().evenement = { id: "defi", jour: "2026-10-24", fait: false };
+  const copieC = () => JSON.parse(JSON.stringify({ provinces: CX.etat().provinces, conquises: CX.etat().conquises, rival: CX.etat().rival, arsenal: CX.etat().arsenal, royaume: CX.etat().royaume, evenement: CX.etat().evenement, bonus: CX.etat().bonus, ressources: EX.ressources }));
+  const avantC = copieC();
+  const e1 = X.commencer(6, "angleterre");
+  verifier("Expédition : départ du relais 6 vers l'ouest : semaines 6, 7, 8 ; 3 vivres sur 3 ; au départ de la semaine 6 ; une seule expédition à la fois ; la chronique le note",
+    e1 && e1.semaines.join() === "6,7,8" && e1.vivres === 3 && e1.vivresMax === 3 && e1.semaine === 6 && e1.position === null && e1.or === 0 && e1.route.actes.length === 3 && /expédition/.test(CX.etat().chronique[0].texte) && X.commencer(6, "angleterre") === null);
+  const hEsc = { id: "essai-esc", type: "escarmouche" }, hEmb = { id: "essai-emb", type: "embuscade" }, hGard = { id: "s6g", type: "gardien", place: 12, vagues: 2 }, hGrand = { id: "s8g", type: "grand", place: 16, vagues: 3 };
+  const oEsc = X.optionsBataille(hEsc), oRef = CX.options(2);
+  verifier("Options de bataille : sans faveur ni Armorial, celles de C.options(niveau) plus vagues, défense, solidités et or perdu par erreur ; moins c.bonus.or (40) ; sans c.bonus.espion",
+    oEsc.niveau === 2 && oEsc.orDepart === oRef.orDepart - 40 && oEsc.espion === false && oEsc.pvChateau === oRef.pvChateau && oEsc.bonusDegats === oRef.bonusDegats && oEsc.orParReponse === oRef.orParReponse &&
+    JSON.stringify(oEsc.arsenal) === JSON.stringify(oRef.arsenal) && oEsc.vagues === 2 && oEsc.defense === false && oEsc.pvRival === 6 && oEsc.pvRivalMax === 6 && oEsc.orPerduErreur === 6 &&
+    Object.keys(oEsc).sort().join() === Object.keys(oRef).concat(["vagues", "defense", "pvRival", "pvRivalMax", "orPerduErreur"]).sort().join() && CX.etat().bonus.or === 40 && CX.etat().bonus.espion === true, oEsc);
+  const oEmb = X.optionsBataille(hEmb), oGard = X.optionsBataille(hGard);
+  verifier("Options de bataille : embuscade en défense à la ligne + 1 (S6 → 3), 2 vagues, camp de 10 ; gardien en défense à la ligne de la semaine (2), 2 vagues, camp de 12",
+    oEmb.niveau === 3 && oEmb.defense === true && oEmb.vagues === 2 && oEmb.pvRival === 10 && oEmb.pvRivalMax === 10 && oGard.niveau === 2 && oGard.defense === true && oGard.vagues === 2 && oGard.pvRival === 12 && oGard.pvRivalMax === 12);
+  const cfgMoins = Object.assign(X.reglages(), { difficulte: -1 });
+  verifier("Ligne du rival par semaine : S1 = 0, S5 = 1, S8 = 2, S13 = 4 ; Grand Gardien de S8 à la ligne de la semaine (2, jour 0) ; embuscade S8 = 3, plafond 4 ; difficulte −1 ramène S8 à 1 et laisse S1 à 0",
+    X.ligneSemaine(1) === 0 && X.ligneSemaine(2) === 0 && X.ligneSemaine(3) === 1 && X.ligneSemaine(5) === 1 && X.ligneSemaine(6) === 2 && X.ligneSemaine(8) === 2 && X.ligneSemaine(9) === 3 && X.ligneSemaine(12) === 3 && X.ligneSemaine(13) === 4 && X.ligneSemaine(30) === 4 &&
+    X.niveauDe(hGrand, { semaine: 8 }) === 2 && X.niveauDe(hEmb, { semaine: 8 }) === 3 && X.niveauDe(hEmb, { semaine: 13 }) === 4 && X.niveauDe(hGrand, { semaine: 8 }, cfgMoins) === 1 && X.niveauDe(hEsc, { semaine: 1 }, cfgMoins) === 0 && X.niveauDe(hEsc, { semaine: 1 }) === 0 && X.niveauDe(hEsc, { semaine: 5 }) === 1);
+  const x1 = X.etat();
+  const avec = (faveurs, f) => { e1.faveurs = faveurs; const o = X.optionsBataille(hEsc); e1.faveurs = []; return f(o); };
+  const okAnnales = avec([{ id: "annales", rang: 1 }], o => o.orParReponse === oRef.orParReponse + 2) && avec([{ id: "annales", rang: 2 }], o => o.orParReponse === oRef.orParReponse + 3);
+  const okEng = avec([{ id: "engrenages", rang: 1 }], o => Math.abs(o.bonusDegats - (oRef.bonusDegats + 0.08)) < 1e-9) && avec([{ id: "engrenages", rang: 2 }], o => Math.abs(o.bonusDegats - (oRef.bonusDegats + 0.12)) < 1e-9);
+  const okBal = avec([{ id: "ballade", rang: 1 }], o => o.orPerduErreur === 4) && avec([{ id: "ballade", rang: 2 }], o => o.orPerduErreur === 2);
+  const okLet = avec([{ id: "lettres", rang: 1 }], o => o.orDepart === oRef.orDepart - 40 + 15) && avec([{ id: "lettres", rang: 2 }], o => o.orDepart === oRef.orDepart - 40 + 25);
+  const okEcl = avec([{ id: "eclaireurs", rang: 1 }], o => o.espion === true) && X.optionsBataille(hEsc).espion === false;
+  x1.armorial.bourse = 3; x1.armorial.murs = 2;
+  const okArm = avec([], o => o.orDepart === oRef.orDepart - 40 + 30 && o.pvChateau === oRef.pvChateau + 4);
+  CX.etat().royaume.tresor = 12; e1.plan = 100;
+  const okPlaf = avec([{ id: "lettres", rang: 2 }], o => o.orDepart === 180);
+  CX.etat().royaume.garde = 12;
+  const okGarde = avec([{ id: "engrenages", rang: 2 }], o => Math.abs(o.bonusDegats - 0.42) < 1e-9 && o.bonusDegats <= 0.6);
+  CX.etat().royaume.tresor = 0; CX.etat().royaume.garde = 0; x1.armorial.bourse = 0; x1.armorial.murs = 0; e1.plan = 0;
+  verifier("Options de bataille : chaque faveur change la bonne option (Annales +2/+3 or par réponse, Engrenages +8/+12 % de dégâts, Ballade 4 puis 2 or perdus, Lettres +15/+25 or, Éclaireurs = espion) ; Bourse +10 or par rang et Murs +2 ; plafond 180 or de départ",
+    okAnnales && okEng && okBal && okLet && okEcl && okArm && okPlaf && okGarde, { okAnnales, okEng, okBal, okLet, okEcl, okArm, okPlaf, okGarde });
+
+  // tirage : quota de l'acte, niveaux, questions de conseiller
+  const suiteVraie = JX.recit.suite; let capt = null, nivMax = null;
+  JX.recit.suite = (n, opts) => { capt = opts; nivMax = JX.questions.niveauMax(); return suiteVraie(n, opts); };
+  e1.semaine = 8; X.tirage(3, [], hEsc); const q8 = capt.quota, n8 = nivMax, h8 = JX.recit.historique().length;
+  X.tirage(2, [], { id: "ev", type: "evenement", ev: "defi" }); const q8ev = capt.quota, n8ev = nivMax;
+  e1.semaine = 6; X.tirage(3, [], hEsc); const q6 = capt.quota;
+  X.tirage(1, [], { type: "porte", famille: "svt" }); const qPorte = capt.quota;
+  X.tirage(3, [], { id: "ev", type: "evenement", ev: "archives" }); const qArch = capt.quota;
+  X.tirage(3, [], { type: "veillee" }); const qVeil = capt.quota;
+  JX.recit.suite = suiteVraie;
+  const qSvt = questionDe("svt-s02-1"), qPhy = questionDe("physique-s03-1"), qHist = questionDe("histoire-s07-1"), qLangue = questionDe("langue-conj10");
+  verifier("Tirage : le quota de l'acte passe à JEU.recit.suite ({ nombre, filtre }) : 1 sur 3 en semaine 8 (fenêtre 6 à 8), 1 sur 2 dans un événement de 2, rien en semaine 6 (quota 0) ; niveaux 1 à 3 en bataille, 1 et 2 ailleurs",
+    q8 && q8.nombre === 1 && q8.filtre(qPhy) === false && q8.filtre(qHist) === true && q8.filtre(qLangue) === false && n8 === 3 && q8ev && q8ev.nombre === 1 && n8ev === 2 && q6 === undefined && capt.completer === true && JX.recit.historique().length > h8, { q8, q6 });
+  verifier("Tirage : la question d'un conseiller a un quota sur sa famille ; les archives (depuis S6) sur les semaines d'avant le relais ; la veillée sur les notions à revoir",
+    qPorte && qPorte.nombre === 1 && qPorte.filtre(qSvt) === true && qPorte.filtre(qPhy) === false && qArch && qArch.filtre(qSvt) === true && qArch.filtre(qHist) === false && qVeil && qVeil.filtre(qPhy) === true && qVeil.filtre(qSvt) === false);
+  // quota appliqué par le vrai tirage : en semaine 1 (44 fiches), deux questions sur trois viennent de la semaine 1 ; une porte SVT donne une question de SVT
+  (() => {
+    neuveX(); X.commencer(1, "angleterre");
+    const hb = { id: "x", type: "escarmouche" }; let total = 0, deSemaine = 0; const posees = [];
+    for (let v = 0; v < 6; v++) { const lot = X.tirage(3, posees, hb); lot.forEach(q => { posees.push(q); total++; if (X.semaineDe(q.cours) === 1) deSemaine++; }); }
+    const porte = X.tirage(1, [], { type: "porte", famille: "svt" });
+    verifier("Tirage : avec le vrai tirage, 2 questions sur 3 de la semaine traversée (18 questions : au moins 12 de la semaine 1, jamais les mêmes), une question de SVT à la porte de l'herboriste",
+      total === 18 && deSemaine >= 12 && deSemaine < 18 && new Set(posees.map(q => q.id)).size === 18 && porte.length === 1 && porte[0].matiere === "svt", { total, deSemaine });
+  })();
+
+  // vivres : jamais perdus pour une question ; le quitter avant la première vague ne coûte rien ; après, un vivre ; l'expédition entamée reprise
+  neuveX(); X.commencer(1, "angleterre"); let e = X.enCours();
+  const qH = questionDe("histoire-s01-1"), avantVivres = JSON.stringify([e.vivres, e.or, X.etat().renom]);
+  for (let i = 0; i < 50; i++) { JX.questions.enregistrerReponse(qH, false); X.noterReponse(qH, false); }
+  verifier("Vivres : cinquante réponses fausses ne retirent ni vivre, ni or de route, ni renommée (seule la série tombe et la fiche va dans « À relire »)",
+    JSON.stringify([e.vivres, e.or, X.etat().renom]) === avantVivres && e.compte.questions === 50 && e.compte.bonnes === 0 && e.compte.fiches.join() === qH.fiche);
+  X.noterReponse(qH, true);
+  verifier("Renommée : +1 par bonne réponse, créditée tout de suite au disponible et au total", X.etat().renom === 1 && X.etat().renomTotal === 1 && e.compte.renom === 1 && e.compte.bonnes === 1 && e.compte.parFamille.histoire.bonnes === 1);
+  const h1 = X.atteignables()[0];
+  verifier("Route : au départ, les haltes atteignables sont celles de la 1re couche ; entrer dans une halte hors chemin est refusé", X.atteignables().length >= 2 && X.atteignables().every(h => h.couche === 1) && X.entrer("s1c3h1") === null && X.entrer(h1.id).halte === h1 && e.position === h1.id);
+  verifier("Vivres : quitter avant la première vague ne coûte rien, après coûte un vivre ; la halte reste à jouer", X.quitter(false).vivrePerdu === false && e.vivres === 3 && X.quitter(true).vivrePerdu === true && e.vivres === 2 && X.atteignables().length === 1 && X.atteignables()[0].id === h1.id && !e.faits[h1.id]);
+  X.marquerEntamee(h1.id);
+  const rep1 = X.reprendre(), rep2 = X.reprendre();
+  verifier("Vivres : une bataille entamée (première vague lancée) puis le jeu fermé coûte un vivre à la reprise, une fois ; sans première vague, rien", rep1.vivrePerdu === true && e.vivres === 1 && e.entamee === null && rep2.vivrePerdu === false && e.vivres === 1);
+  verifier("Après bataille : quittée avant la première vague (entamee: false), rien ne change", X.apresBataille(h1, { issue: "retraite", entamee: false }).issue === "rien" && e.vivres === 1 && !e.faits[h1.id] && X.etat().renom === 1);
+
+  // après bataille : tenu, éclatante, cédé, portes, plan et espion, gardien retenté, semaine franchie, défaite par les vivres
+  neuveX(); X.commencer(1, "angleterre"); e = X.enCours(); let acte = X.acteCourant();
+  const ha = acte.couches[0][0]; ha.type = "escarmouche"; ha.porte = { genre: "bourse" };
+  X.entrer(ha.id);
+  let r = X.apresBataille(ha, bilanDe("victoire", 6));
+  verifier("Après bataille : escarmouche éclatante → +20 or de route et porte doublée (bourse +40), renommée 4 + S, sceau « eclatante », aucun vivre perdu",
+    r.eclatante && r.or === 60 && e.or === 60 && r.renom === 5 && e.faits[ha.id] === "eclatante" && e.vivres === 3 && X.etat().renom === 5 && r.nomPorte === "Bourse" && r.porte === null, r);
+  const hb2 = X.atteignables()[0]; hb2.type = "embuscade"; hb2.porte = { genre: "faveur", conseiller: "svt", rare: true };
+  X.entrer(hb2.id); e.plan = 25; e.espion = true;
+  const oPlan = X.optionsBataille(hb2);
+  r = X.apresBataille(hb2, bilanDe("retraite", 0));
+  const oApres = X.optionsBataille(hb2);
+  verifier("Après bataille : murs cédés à l'embuscade → −1 vivre, renommée 2 (l'effort compte), la halte est passée, porte de faveur simple quand même (conseiller SVT, rare)",
+    r.cede && r.vivrePerdu && e.vivres === 2 && r.renom === 2 && e.faits[hb2.id] === "echoue" && r.porte && r.porte.conseiller === "svt" && r.porte.rare === true && r.porte.eclatante === false && r.or === 0, r);
+  verifier("Après bataille : le plan de bataille (+25 or) et l'espion de route sont consommés par une seule bataille", oPlan.orDepart === oApres.orDepart + 25 && oPlan.espion === true && oApres.espion === false && e.plan === 0 && e.espion === false);
+  // le gardien : coups gardés entre deux tentatives, semaine franchie une fois pour toutes
+  const derniere = acte.couches[2][0]; e.position = derniere.id; e.faits[derniere.id] = "fait"; e.vivres = 3;
+  const g1 = acte.gardien;
+  verifier("Route : après la 3e couche, seule la bataille du gardien est atteignable", X.atteignables().length === 1 && X.atteignables()[0] === g1 && X.entrer(g1.id).halte === g1);
+  const renomAvantG = X.etat().renom;
+  r = X.apresBataille(g1, bilanDe("retraite", 5));
+  const o1 = X.optionsBataille(g1);
+  const r2 = X.apresBataille(g1, bilanDe("retraite", 4));
+  const o2 = X.optionsBataille(g1);
+  verifier("Gardien : murs cédés → −1 vivre, on retente, les coups portés restent (12 → 7 → 3), le camp garde sa solidité de départ 12 ; renommée 2 par tentative",
+    r.cede && r.vivres === 2 && e.places[g1.id] === 7 && o1.pvRival === 7 && o1.pvRivalMax === 12 && r2.cede && e.vivres === 1 && e.places[g1.id] === 3 && o2.pvRival === 3 && X.atteignables()[0] === g1 && X.etat().renom === renomAvantG + 4 && X.enCours() === e);
+  r = X.apresBataille(g1, bilanDe("tenu", 2));
+  verifier("Gardien vaincu : semaine 1 franchie (relais 2 ouvert), +25 or de route, renommée 15 + 3S = 18, porte de faveur rare du gardien, la route passe à la semaine 2, rivalité +2",
+    !r.cede && r.franchie === 1 && X.etat().franchies.join() === "1" && X.relais().indexOf(2) >= 0 && r.or === 25 && r.renom === 18 && r.porte && r.porte.rare === true && r.porte.conseiller === g1.porte.conseiller && r.suivante === 2 && e.semaine === 2 && e.position === null &&
+    e.faits[g1.id] === "reussi" && e.places[g1.id] === undefined && CX.etat().rivalite.angleterre === 2 && X.atteignables().every(h => h.couche === 1 && /^s2c1/.test(h.id)), r);
+  // défaite par les vivres : l'expédition finit avec la renommée acquise
+  acte = X.acteCourant(); const hc = acte.couches[0][0]; hc.type = "escarmouche"; hc.porte = { genre: "parchemin" };
+  X.entrer(hc.id);
+  const renomAvantFin = X.etat().renom; e.or = 23;
+  r = X.apresBataille(hc, bilanDe("retraite", 0));
+  verifier("Défaite : le dernier vivre perdu finit l'expédition (retour au domaine) avec la renommée acquise, l'or de route restant converti 1 pour 5 (23 → 4), l'historique et le record du relais",
+    r.fini && r.fini.issue === "retour" && X.enCours() === null && X.etat().renom === renomAvantFin + 2 + 4 && r.fini.orRestant === 4 && r.fini.renom === X.etat().renomTotal && X.etat().historique.length === 1 && X.etat().historique[0].issue === "retour" &&
+    X.etat().historique[0].atteint.semaine === 2 && X.etat().records["1"].semaine === 2 && X.etat().records["1"].renom === X.etat().renomTotal && /semaine 2, 1re halte/.test(CX.etat().chronique[0].texte) && X.etat().franchies.join() === "1", r.fini);
+  verifier("Renommée : barème (réponse 1, halte 4 + S, murs cédés 2, parchemin 10 / 20, gardien 15 + 3S : S3 = 24, Grand Gardien 30 + 5S : S8 = 70, expédition accomplie 20)",
+    X.renom("reponse") === 1 && X.renom("halte", 4) === 8 && X.renom("cede") === 2 && X.renom("parchemin") === 10 && X.renom("parchemin-eclatante") === 20 && X.renom("gardien", 3) === 24 && X.renom("grand", 8) === 70 && X.renom("complete") === 20);
+
+  // campagne intacte : une expédition de victoire (depuis S6) puis une de défaite, comparées en copie profonde
+  neuveX(); CX.etat().bonus.or = 40; CX.etat().bonus.espion = true; CX.etat().evenement = { id: "defi", jour: "2026-10-24", fait: false };
+  const avantV = copieC();
+  function jouerSansBataille(h) {
+    if (h.type === "evenement") { X.tirage(3, [], h).forEach(q => X.noterReponse(q, true)); X.cloturerEvenement(h.id, h.ev, 3, 3); }
+    else if (h.type === "marchand") { X.ouvrirEtal(h.id, true); X.acheter("plan"); X.fermerEtal(h.id); }
+    else if (h.type === "bivouac") X.bivouac("repos");
+  }
+  function marcher(decide) {
+    const journal = []; let pas = 0;
+    while (X.enCours() && pas++ < 60) {
+      const h = X.atteignables()[0]; if (!h) break;
+      X.entrer(h.id);
+      if (X.EXP.BATAILLES.indexOf(h.type) >= 0) {
+        X.tirage(3, [], h).forEach((q, i) => X.noterReponse(q, i < 2));
+        const rb = X.apresBataille(h, bilanDe(decide ? decide(h, pas) : "tenu", 4)); journal.push(rb);
+        if (rb.porte) { const off = X.offrirFaveurs(rb.porte, true, rb.eclatante); if (off && off.cartes.length) X.prendreFaveur(off.cartes[0].id); }
+      } else jouerSansBataille(h);
+    }
+    return journal;
+  }
+  X.commencer(6, "angleterre");
+  const jV = marcher(), finV = jV[jV.length - 1].fini, apresV = copieC();
+  const gainsRes = Object.keys(apresV.ressources).filter(k => apresV.ressources[k] !== avantV.ressources[k]);
+  verifier("Victoire : Grand Gardien vaincu → expédition accomplie, semaines 6, 7, 8 franchies, +20 de renommée, 3 coups à la prochaine place forte du front (16 → 13), rivalité +6 (+2 par gardien), 8 ressources de la meilleure matière, faveurs rendues, historique et record",
+    finV && finV.issue === "victoire" && X.enCours() === null && X.etat().franchies.join() === "6,7,8" && apresV.provinces.gue.pv === 13 && CX.etat().rivalite.angleterre === 10 && finV.ressources && finV.ressources.nombre === 8 &&
+    gainsRes.length === 1 && apresV.ressources[gainsRes[0]] === avantV.ressources[gainsRes[0]] + 8 && X.etat().historique[0].issue === "victoire" && X.etat().records["6"].accomplie === 1 && X.etat().records["6"].semaine === 8 && finV.renom > 150 && X.etat().renom === finV.renom &&
+    X.relais().join() === "1,6,8" && finV.graine.length === 9 && jV.filter(x => x.franchie).length === 3, { finV, relais: X.relais() });
+  const intactV = ["conquises", "rival", "arsenal", "royaume", "evenement", "bonus"].every(k => JSON.stringify(apresV[k]) === JSON.stringify(avantV[k]));
+  const provincesV = Object.keys(avantV.provinces).every(id => id === "gue" ? apresV.provinces[id].pv === 13 : JSON.stringify(apresV.provinces[id]) === JSON.stringify(avantV.provinces[id]));
+  verifier("Campagne intacte après une expédition gagnée : provinces (sauf les 3 coups), conquises, rival, arsenal, royaume, événement du jour et bonus inchangés (copie profonde) ; c.bonus.or vaut encore 40",
+    intactV && provincesV && apresV.bonus.or === 40 && apresV.bonus.espion === true, { intactV, provincesV, bonus: apresV.bonus });
+  // la même renommée ne baisse jamais ; le record du relais ne descend pas après une expédition plus courte
+  const renomApresV = X.etat().renom, totalApresV = X.etat().renomTotal, recV = JSON.stringify(X.etat().records["6"]);
+  const avantD = copieC();
+  X.commencer(6, "omeyyades");
+  const jD = marcher(h => (h.type === "gardien" || h.type === "grand") ? "retraite" : "tenu"), finD = jD[jD.length - 1].fini, apresD = copieC();
+  verifier("Défaite : le gardien de la semaine 6 cédé trois fois → retour au domaine, renommée gagnée tout de même, jamais réduite ; le record du relais 6 ne descend pas ; deux expéditions dans l'historique",
+    finD && finD.issue === "retour" && X.etat().renom > renomApresV && X.etat().renomTotal > totalApresV && X.etat().renomTotal - totalApresV === X.etat().renom - renomApresV && X.etat().historique.length === 2 && X.etat().historique[0].issue === "retour" &&
+    X.etat().records["6"].semaine === 8 && X.etat().records["6"].renom === JSON.parse(recV).renom && X.etat().records["6"].accomplie === 1 && jD.filter(x => x.vivrePerdu).length === 3 && finD.atteint.semaine === 6, { finD });
+  verifier("Campagne intacte après une expédition perdue : rien n'a bougé (provinces, conquises, rival, arsenal, royaume, événement, bonus, ressources, rivalité)",
+    ["provinces", "conquises", "rival", "arsenal", "royaume", "evenement", "bonus", "ressources"].every(k => JSON.stringify(apresD[k]) === JSON.stringify(avantD[k])) && CX.etat().rivalite.omeyyades === 0);
+
+  // Armorial et renommée permanente
+  const dispo = X.etat().renom, total = X.etat().renomTotal;
+  const achat1 = X.armorial.acheter("bourse"), achat2 = X.armorial.acheter("vivres"), refus = X.etat().renom < 80 ? !X.armorial.acheter("ouverture") : true;
+  verifier("Armorial : un achat retire du disponible, jamais du total ; refusé sans assez de renommée ; prix suivants 50 et 110 ; cinq quartiers du MVP",
+    achat1 && achat2 && X.etat().renom === dispo - 25 - 40 && X.etat().renomTotal === total && X.etat().armorial.bourse === 1 && X.etat().armorial.vivres === 1 && X.armorial.prix("bourse") === 50 && X.armorial.prix("vivres") === 110 && refus &&
+    X.armorial.quartiers().map(q => q.id).join() === "vivres,bourse,murs,ouverture,banniere" && X.armorial.quartiers().every(q => q.texte && !/\{/.test(q.texte)));
+  X.etat().renom += 200; X.etat().renomTotal += 200;
+  verifier("Armorial : Vivres de route → 4 vivres au départ et au maximum ; Faveur d'ouverture → une commune au choix parmi trois avant la première halte ; Bourse → +10 or au début des batailles de route",
+    X.armorial.acheter("ouverture") && (() => { const ex = X.commencer(1, "angleterre"); const o = X.optionsBataille(hEsc); const ok = ex.vivres === 4 && ex.vivresMax === 4 && ex.offre && ex.offre.halte === "depart" && ex.offre.cartes.length === 3 && ex.offre.cartes.every(c => c.rang === 1) && o.orDepart === CX.options(0).orDepart - 40 + 10;
+      X.prendreFaveur(ex.offre.cartes[0].id); return ok && ex.faveurs.length === 1 && ex.offre === null; })());
+  X.etat().armorial.banniere = 1; X.enCours().compte.renom = 100; X.enCours().or = 0;
+  const finB = X.finir("abandon");
+  verifier("Renommée : la Bannière ajoute 10 % de la renommée de l'expédition au bilan ; lever le camp donne le même bilan (issue abandon) ; la chronique le dit", finB.issue === "abandon" && finB.banniere === 10 && finB.renom === 110 && X.enCours() === null && /levé le camp/.test(CX.etat().chronique[0].texte) && X.etat().historique.length === 3);
+
+  // faveurs : offre, troisième carte, affinage, Simples, rang maximal
+  neuveX(); X.commencer(1, "angleterre"); e = X.enCours();
+  ["histoire", "svt", "physique", "litterature", "anglais"].forEach(m => X.noterReponse({ id: "q-" + m, fiche: "f-" + m, matiere: m, cours: m + "-s01-1" }, true));
+  let off = X.offrirFaveurs({ conseiller: "svt", rare: true, halte: "porte-essai" }, true, false);
+  verifier("Faveurs : question juste → 3 cartes ; la 1re est celle du conseiller de la porte (rare : au rang rare) ; la dernière vient de la famille la moins jouée (géographie), jamais celle de la porte ; l'offre est enregistrée",
+    off.cartes.length === 3 && off.cartes[0].id === "simples" && off.cartes[0].rang === 2 && off.cartes[0].rangNom === "rare" && off.cartes[2].id === "eclaireurs" && off.cartes[2].rang === 1 && off.cartes.filter(c => c.famille === "svt").length === 1 &&
+    JSON.stringify(e.offre) === JSON.stringify(off) && off.cartes.every(c => c.texte && c.conseiller && c.nom), off.cartes.map(c => c.id + "@" + c.rang));
+  verifier("Faveurs : question fausse → 2 cartes (celle du conseiller et celle de la famille la moins jouée) ; éclatante → une carte de plus ; jamais de porte vide",
+    X.offrirFaveurs("histoire", false, false).cartes.map(c => c.id).join() === "annales,eclaireurs" && X.offrirFaveurs("histoire", true, true).cartes.length === 4 && X.offrirFaveurs("histoire", false, true).cartes.length === 3);
+  e.vivres = 2;
+  off = X.offrirFaveurs("svt", true, false); const prise = X.prendreFaveur("simples");
+  const off2 = X.offrirFaveurs("svt", true, false); const carteSimples = off2.cartes.filter(c => c.id === "simples")[0]; X.prendreFaveur("simples");
+  const off3 = X.offrirFaveurs("svt", true, false);
+  verifier("Faveurs : prendre une carte la tient (Simples : +1 vivre tout de suite) ; reproposée, elle s'affine d'un rang (« Affiner », rang rare : +1 au maximum) ; au rang 2, elle n'est plus proposée ; prendre hors de l'offre est refusé",
+    prise && prise.rang === 1 && e.vivres === 3 && X.rang("simples") === 1 && carteSimples && carteSimples.affine === true && carteSimples.rang === 2 && X.rang("simples") === 2 && e.vivresMax === 4 && off3.cartes.every(c => c.id !== "simples") && off3.cartes[0].famille !== "svt" &&
+    X.prendreFaveur("annales") === null && e.faveurs.length === 1 && X.faveursTenues()[0].rangNom === "rare", { off2: off2.cartes, off3: off3.cartes });
+  verifier("Faveurs : rangs bornés au MVP (2), affiner une faveur au rang 2 ou non tenue est refusé ; texte de chaque faveur à chaque rang sans marque restante",
+    X.affiner("simples") === null && X.affiner("annales") === null && X.EXP.RANG_MAX === 2 && Object.keys(X.EXP.FAVEURS).every(id => [1, 2].every(rg => { const t = X.texteFaveur(id, rg); return t && !/\{/.test(t); })) &&
+    X.texteFaveur("annales", 1) === "+2 or par bonne réponse au conseil de guerre." && X.texteFaveur("ballade", 2) === "Une erreur coûte 2 or au lieu de 6 au conseil de guerre." && X.texteFaveur("engrenages", 2) === "Dégâts de tes tours +12 %.");
+  // bivouac, veillée, marchand, événements de route
+  acte = X.acteCourant(); const hBiv = acte.couches[2].filter(h => h.type === "bivouac")[0]; e.position = hBiv.id; e.vivres = e.vivresMax;
+  const biv = X.bivouac("repos");
+  e.faits[hBiv.id] = undefined; delete e.faits[hBiv.id]; const orAvantV = e.or;
+  const veil0 = X.bivouac("veillee"), veil = X.finirVeillee(3, 3);
+  verifier("Bivouac : repos au maximum de vivres → +25 or de route ; veillée de 3 questions : +4 or par bonne réponse, sans faute une faveur à affiner (ou +25 or si aucune) ; la halte compte une renommée de halte (4 + S)",
+    biv.choix === "repos" && biv.or === 25 && biv.renom === 5 && veil0.questions === 3 && veil.or === 12 + 25 && e.or === orAvantV + 37 && veil.affinables.length === 0 && /Sans faute/.test(veil.texte));
+  const hM = platX(acte).filter(h => h.type === "marchand")[0]; e.position = hM.id; e.or = 100; e.vivres = 1;
+  const etal = X.ouvrirEtal(hM.id, true), lignes = etal.lignes.map(l => l.genre);
+  const achatV = X.acheter("vivres"), achatP = X.acheter("plan"), refusP = X.acheter("plan"), refusInconnu = X.acheter("tresor");
+  verifier("Marchand : l'étal du MVP (faveur commune, vivres, plan de bataille, rafraîchir), −20 % quand la question est juste (vivres 32, plan 12) ; un sac de vivres et un plan (+25 or à la prochaine bataille de route) ; une ligne ne se vend qu'une fois ; l'or restant est annoncé",
+    lignes.join() === "faveur,vivres,plan,rafraichir" && etal.lignes[1].prix === 32 && etal.lignes[2].prix === 12 && achatV && e.vivres === 2 && achatP && e.plan === 25 && e.or === 100 - 32 - 12 && refusP === null && refusInconnu === null && /renommée/.test(etal.restant) && X.fermerEtal(hM.id).renom === 5);
+  const gId = acte.gardien.id, placeAvant = e.places[gId];
+  const tDefi = X.cloturerEvenement(platX(acte).filter(h => h.type === "evenement")[0] ? platX(acte).filter(h => h.type === "evenement")[0].id : hBiv.id, "defi", 2, 3);
+  e.espion = false; const hEv2 = { id: platX(acte)[0].id };
+  delete e.faits[hEv2.id];
+  const tEsp = X.cloturerEvenement(hEv2.id, "espion", 1, 2), tMerc = (delete e.faits[hEv2.id], X.cloturerEvenement(hEv2.id, "mercenaires", 1, 2)), tArch = (delete e.faits[hEv2.id], e.or = 0, X.cloturerEvenement(hEv2.id, "archives", 3, 3));
+  verifier("Événements de route : le défi du champion porte 3 coups au gardien de la semaine (12 → 9) ; l'espion affaiblit la prochaine bataille de route ; les mercenaires donnent +40 or à la prochaine bataille de route ; les archives +2 or par bonne réponse et la renommée de halte doublée ; chaque texte vient de TEXTES",
+    placeAvant === undefined && e.places[gId] === 9 && /trois coups/.test(tDefi) && e.espion === true && /première vague/.test(tEsp) && e.plan === 25 + 40 && /\+40 or/.test(tMerc) && e.or === 6 && /renommée doublée/.test(tArch) && e.compte.renomHaltes >= 10, { tDefi, tEsp, tMerc, tArch });
+
+  // sauvegarde : migration, completer, import
+  const m6 = JX.sauvegarde.migrer(JSON.parse(JSON.stringify(v1)));
+  verifier("Sauvegarde : migration 1 → 6, rien de perdu, bloc expedition neuf (renommée 0, Armorial vide, aucune expédition en cours)",
+    m6.schema === 6 && ["cours", "notions", "ressources", "batiments", "devoirs", "signalements", "creeLe"].every(k => JSON.stringify(m6[k]) === JSON.stringify(v1[k])) && JSON.stringify(m6.expedition) === JSON.stringify(X.etatVide()) && JSON.stringify(JX.sauvegarde.nouvelle().expedition) === JSON.stringify(X.etatVide()));
+  const v5 = JSON.parse(JSON.stringify(m6)); delete v5.expedition; v5.schema = 5; v5.campagne.conquises = ["gue"]; v5.posees = { horloge: 7, questions: { "a-q1": 7 } }; v5.rappels = { compteur: 3, file: [] };
+  const m56 = JX.sauvegarde.migrer(JSON.parse(JSON.stringify(v5)));
+  verifier("Sauvegarde : migration 5 → 6, toutes les clés du schéma 5 identiques, seule expedition s'ajoute",
+    Object.keys(v5).filter(k => k !== "schema").every(k => JSON.stringify(m56[k]) === JSON.stringify(v5[k])) && m56.schema === 6 && JSON.stringify(m56.expedition) === JSON.stringify(X.etatVide()) && Object.keys(m56).length === Object.keys(v5).length + 1, Object.keys(m56));
+  verifier("Sauvegarde : une sauvegarde d'un schéma plus récent (7) est refusée", (() => { try { JX.sauvegarde.migrer({ schema: 7, creeLe: "2026-10-24T10:00:00", notions: {}, ressources: {} }); return false; } catch (err) { return true; } })());
+  neuveX(); X.commencer(1, "angleterre"); const sX = JX.sauvegarde.etat();
+  sX.expedition.enCours.position = "inconnue"; sX.expedition.enCours.faveurs = [{ id: "inconnue", rang: 1 }, { id: "annales", rang: 1 }, "x"]; sX.expedition.enCours.vivres = "trois"; sX.expedition.renom = -5; sX.expedition.armorial = { bourse: 1 }; sX.expedition.enCours.places = { s1g: 0, s1c1h1: "x" };
+  let cX = X.completer(sX.expedition);
+  verifier("Sauvegarde : completer répare une expédition en cours abîmée (position inconnue → départ de la semaine, faveur inconnue retirée, vivres non numériques → 3, renommée négative → 0, quartier manquant → 0, place à zéro retirée) sans toucher au reste",
+    cX === sX.expedition && cX.enCours.position === null && JSON.stringify(cX.enCours.faveurs) === JSON.stringify([{ id: "annales", rang: 1 }]) && cX.enCours.vivres === 3 && cX.renom === 0 && cX.armorial.bourse === 1 && cX.armorial.vivres === 0 && Object.keys(cX.enCours.places).length === 0 && cX.enCours.semaine === 1 && cX.enCours.route.actes.length === 3);
+  cX.renom = 30; cX.renomTotal = 30; cX.enCours.compte.renom = 30; sX.expedition.enCours.route = { actes: "cassées" };
+  cX = X.completer(sX.expedition);
+  verifier("Sauvegarde : une expédition en cours illisible est close proprement, sa renommée gardée, l'historique et la chronique le disent",
+    cX.enCours === null && cX.renom === 30 && cX.renomTotal === 30 && cX.historique.length === 1 && cX.historique[0].issue === "retour" && /relue/.test(CX.etat().chronique[0].texte) && X.completer(null).renom === 0 && X.completer("x").enCours === null);
+  neuveX(); X.commencer(6, "omeyyades"); X.entrer(X.atteignables()[0].id);
+  const txtX = JX.sauvegarde.texteExport(), avantImp = JSON.stringify(JX.sauvegarde.etat().expedition);
+  JX.sauvegarde.importer(txtX);
+  verifier("Sauvegarde : export puis import, l'expédition en cours revient au même point (même route, même position, mêmes vivres, même graine)", JSON.stringify(JX.sauvegarde.etat().expedition) === avantImp && X.enCours().front === "omeyyades" && X.enCours().position !== null && X.enCours().semaine === 6);
+
+  // textes de route : jeu seulement
+  const noms = JX.donnees.personnages.personnages.map(p => p.nom);
+  const textes = []; (function collecter(o) { if (typeof o === "string") textes.push(o); else if (Array.isArray(o)) o.forEach(collecter); else if (o && typeof o === "object") Object.keys(o).forEach(k => collecter(o[k])); })(X.TEXTES);
+  const fautifs = textes.filter(t => CTRL.MOTS_INTERDITS.test(t) || /\d/.test(t) || noms.some(n => t.indexOf(n) >= 0));
+  verifier("Textes de route : " + textes.length + " textes de jeu (cadres, faveurs, pages de semaine, événements, bilan, chronique), sans chiffre, sans mot de religion ni insulte (liste du contrôle 10), sans nom de personnage", textes.length > 80 && fautifs.length === 0, fautifs);
+  verifier("Textes de route : chaque phrase de cadre a {N} ; au moins trois par contexte (route, embuscade, gardien, bivouac, marchand, archives, porte) et une au moins dit la semaine par {S} ; aucune ne presse (« vite ») ; la semaine se remplit",
+    ["route", "embuscade", "gardien", "bivouac", "marchand", "archives", "porte"].every(c => X.TEXTES.cadres[c] && X.TEXTES.cadres[c].length >= 3 && X.TEXTES.cadres[c].every(t => /\{[Nn]\}/.test(t) && !/\bvite\b/i.test(t)) && X.TEXTES.cadres[c].some(t => /\{S\}/.test(t))) &&
+    X.remplir(X.TEXTES.cadres.gardien[0], { N: "Le chroniqueur", S: 4 }).indexOf("semaine 4") > 0 && X.remplir(X.TEXTES.eclaireur[0], { S: 7 }) === "Nous traversons les terres de la semaine 7 : ses cours sont en tête.");
+  verifier("Textes de route : le gardien de semaine est « un seigneur rival », les fronts sont l'ouest et le sud, la phrase du souverain est un texte de jeu avec son nom venu de la campagne",
+    /seigneur rival/.test(X.TEXTES.semaine.gardien) && X.TEXTES.fronts.angleterre === "l'ouest" && X.TEXTES.fronts.omeyyades === "le sud" && /te confie la route des semaines 6 à 8/.test(X.phraseDepart(6)) && /semaine 8\./.test(X.phraseDepart(8)) && X.dureeEstimee([6, 7, 8], 1) >= 30 && X.dureeEstimee([6, 7, 8], 2) < X.dureeEstimee([6, 7, 8], 1));
+})();
+
 
 console.log("\n" + ok + " réussis, " + ko + " en échec.");
 process.exit(ko ? 1 : 0);
