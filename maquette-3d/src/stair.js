@@ -417,9 +417,11 @@ export function buildStair() {
   ];
   // les gros plans reprennent les repères du détail : fixation murale d'un côté, échiffre de l'autre
   const det = root.userData.callouts.filter((c) => c.view === 'detail-raccord');
-  const mural = [0, 1, 2, 3, 4, 5, 6, 7, 8, 14], echif = [9, 10, 11, 12, 13, 14];
-  for (const i of mural) root.userData.callouts.push({ ...det[i], view: 'detail-fixation' });
-  for (const i of echif) root.userData.callouts.push({ ...det[i], view: 'detail-echiffre' });
+  // (positions recadrées pour rester dans le champ des gros plans)
+  const mural = { 0: [xd, 0.42, 0.11], 1: [xd, 0.42, 0.275], 2: null, 3: null, 4: null, 5: null, 6: null, 7: null, 8: [xd, 4 * R - 0.0025, 0.52] };
+  const echif = { 9: null, 10: null, 11: null, 12: null, 13: [barX, 0.86, ZJC], 14: null };
+  for (const [i, pos] of Object.entries(mural)) root.userData.callouts.push({ ...det[i], view: 'detail-fixation', ...(pos ? { pos } : {}) });
+  for (const [i, pos] of Object.entries(echif)) root.userData.callouts.push({ ...det[i], view: 'detail-echiffre', ...(pos ? { pos } : {}) });
   return root;
 }
 

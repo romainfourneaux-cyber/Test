@@ -48,7 +48,7 @@ export const VIEWS = {
   },
   'ext-est': {
     label: 'Façade entrée', caption: 'Vue extérieure Est — sas d\'entrée, fenêtre du WC, Velux',
-    pos: [-4.4, 1.55, -8.9], target: [4.3, 2.40, 1.3], fov: 45, bg: 'sky', sun: [10, 13, -9], ev: -0.05,
+    pos: [-5.6, 5.4, -9.8], target: [4.0, 2.2, 1.6], fov: 45, bg: 'sky', sun: [10, 13, -9], ev: -0.05,
   },
   'axo-rdc': {
     label: 'Plan RDC 3D', caption: 'Axonométrie du rez-de-chaussée meublé (coupe à 1,60 m)',

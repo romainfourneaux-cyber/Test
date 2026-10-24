@@ -18,19 +18,23 @@ const OUT = path.resolve(ROOT, args.out || path.join(DIR, 'Maquette-extension-R+
 
 // Ordre et légendes des planches
 const PAGES = [
-  ['ext-ouest', 'Façade jardin (Ouest)', 'Enduit Weber 001 blanc cassé, menuiseries aluminium RAL 7016, garde-corps verre, poteaux et bandeau enduits.'],
+  ['ext-ouest', 'Façade jardin (Ouest)', 'Enduit Weber 001 blanc cassé, menuiseries aluminium RAL 7016, garde-corps verre, poteaux et poutre de rive enduits.'],
   ['ext-est', 'Façade entrée (Est)', 'Sas d\'entrée en toit plat, petite fenêtre du WC sous l\'escalier, fenêtre de toit au-dessus du palier.'],
   ['axo-rdc', 'Rez-de-chaussée meublé', 'Suite parentale (chambre, dressing, salle de bains), WC, dégagement, sas et départ d\'escalier. Coupe à 1,60 m.'],
-  ['coupe-escalier', 'Coupe sur l\'escalier et le WC', 'Escalier quart-tournant 15 marches. Le WC se prolonge en alcôve sous les dernières marches ; dessous d\'escalier fermé en placo.'],
-  ['int-degagement', 'Depuis le sas', 'Départ d\'escalier le long du mur Est, échiffre placo côté dégagement, porte du WC au fond, porte de la chambre à gauche.'],
-  ['int-wc', 'Intérieur du WC', 'Jonction WC / escalier : alcôve sous les marches balancées avec lave-mains et fenêtre 60 x 70.'],
+  ['coupe-escalier', 'Coupe sur l\'escalier et le WC', 'Escalier métallique quart-tournant de 15 marches en tôle pliée RAL 7016. Le WC se prolonge en alcôve sous les dernières marches ; échiffre placo côté dégagement.'],
+  ['int-degagement', 'Depuis le sas', 'Départ d\'escalier le long du mur Est, garde-corps acier sur échiffre placo, porte du WC au fond, porte de la chambre à gauche.'],
+  ['int-wc', 'Intérieur du WC', 'Jonction WC / escalier : alcôve sous les marches balancées, lave-mains, fenêtre 60 x 70 en partie masquée par le limon.'],
   ['etage', 'Étage meublé', 'Deux chambres sous rampants, palier éclairé par la fenêtre de toit, trémie d\'escalier fermée par cloisons placo.'],
 ];
 
 const img = (f) => 'data:image/png;base64,' + fs.readFileSync(f).toString('base64');
+const FONTS = [['Barlow', 400], ['Barlow', 600], ['Barlow Condensed', 600]]
+  .map(([f, w]) => `@font-face{font-family:'${f}';font-weight:${w};src:url(data:font/woff2;base64,${fs.readFileSync(path.join(ROOT, 'tools/fonts', `${f.replace(' ', '')}-${w}.woff2`)).toString('base64')}) format('woff2');}`)
+  .join('\n');
 const pages = PAGES.filter(([k]) => fs.existsSync(path.join(DIR, `${k}.png`)));
 const html = `<!doctype html><html lang="fr"><head><meta charset="utf-8">
 <style>
+  ${FONTS}
   @page { size: A4 landscape; margin: 0; }
   * { box-sizing: border-box; }
   body { margin: 0; font-family: 'Barlow', 'Segoe UI', Helvetica, Arial, sans-serif; color: #22272a; }
@@ -39,7 +43,7 @@ const html = `<!doctype html><html lang="fr"><head><meta charset="utf-8">
   .img { position: absolute; left: 0; top: 0; width: 297mm; height: 192mm; object-fit: cover; }
   .band { position: absolute; left: 0; right: 0; bottom: 0; height: 18mm; display: grid; grid-template-columns: 1fr auto; align-items: center;
           gap: 8mm; padding: 0 10mm; border-top: 0.4mm solid #383e42; background: #f6f4ef; }
-  .t { font-size: 13pt; font-weight: 600; letter-spacing: 0.02em; }
+  .t { font: 600 15pt 'Barlow Condensed', sans-serif; letter-spacing: 0.02em; }
   .c { font-size: 9pt; color: #555b5f; margin-top: 1mm; }
   .r { text-align: right; font-size: 8pt; color: #555b5f; line-height: 1.45; }
   .sw { display: inline-block; width: 3mm; height: 3mm; vertical-align: -0.4mm; margin: 0 1mm 0 3mm; border: 0.2mm solid #999; }
@@ -60,6 +64,7 @@ ${pages.map(([k, t, c], i) => `<section class="page">
 const browser = await chromium.launch();
 const page = await browser.newPage();
 await page.setContent(html, { waitUntil: 'load' });
+await page.evaluate(() => document.fonts.ready);
 await page.pdf({ path: OUT, format: 'A4', landscape: true, printBackground: true, margin: { top: 0, right: 0, bottom: 0, left: 0 } });
 await browser.close();
 console.log(OUT, `(${pages.length} pages)`);

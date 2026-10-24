@@ -16,9 +16,11 @@ node tools/render.mjs --views coupe-escalier,int-wc --w 1400 --h 950 --out rende
 # caméra libre (px,py,pz,tx,ty,tz,fov) + plans de coupe optionnels "nx,ny,nz,c" (on garde n·p + c >= 0)
 node tools/render.mjs --cam "6,3,9,4.5,1.5,0.8,45" --clip "0,0,-1,2.17" --name test --out renders/_moi
 ```
-Vues prédéfinies (src/app.js, `VIEWS`) : `ext-ouest`, `ext-est`, `axo-rdc`, `coupe-escalier`, `etage`,
-`int-degagement`, `int-wc`, `detail-raccord` (coupe x = 6.31 sur une fixation du limon mural).
-`--page render-dev.html` rend une autre page hôte ; `--callouts` écrit les repères projetés (si app.projectCallouts existe). Un rendu prend 10–30 s (WebGL logiciel). Regarder les PNG avec l'outil Read.
+Vues prédéfinies (src/app.js, `VIEWS`) : `ext-ouest`, `ext-est`, `axo-rdc`, `coupe-escalier` (coupe z ≤ 1,235 le long
+du limon côté jour), `etage`, `int-degagement`, `int-wc`, `detail-raccord`, `detail-fixation`, `detail-echiffre`
+(coupes x = 6.31 sur une fixation du limon mural), `visite` (sans coupe, utilisée par le mode visite).
+Options : `--frames N` (échantillons accumulés : anticrénelage + pénombre), `--budget S` (temps max par image),
+`--page autre.html`, `--callouts` (écrit `<vue>.callouts.json` : repères `userData.callouts` projetés en pixels). Un rendu prend 10–30 s (WebGL logiciel). Regarder les PNG avec l'outil Read.
 `--noao` désactive l'occlusion ambiante (plus rapide pour itérer).
 
 ## Repère (voir src/spec.js — source de vérité des cotes)
@@ -57,3 +59,25 @@ Cloisons = 0.07 (placo / âme / placo).
 - Pas de ressource externe (textures en canvas procédural si besoin), pas de réseau.
 - Rester raisonnable en géométrie (≈ < 150 000 triangles par module ; segments de cylindres 12–24).
 - Pas de collision avec murs, cloisons, portes ouvertes, escalier (voir `DOORS`, `STAIR`, `ROOMS`).
+
+## Pipeline de rendu (src/app.js)
+
+Ciel physique (Sky.js) + environnement HDR PMREM aligné sur le soleil de la vue, ombres PCF cadrées sur le bâtiment,
+accumulation progressive (jitter sous-pixel + disque solaire) pour les images fixes et dans la visionneuse au repos,
+GTAO, tone mapping ACES. Réglages par vue : `ev`, `inside`, `lamps`, `ao`, `sunSoft`, `envSat`.
+API : `createApp()` -> `setView, snapshot(name,w,h,{frames,budget}), onFrame(fn), requestRender(), setControlsEnabled(),
+projectCallouts(view,{occlusion})`, `setToggle`, `setPlacoHighlight`, `setAO`. Une lampe `userData.alwaysOn` reste allumée de jour.
+L'atténuation du ciel à l'intérieur utilise une enveloppe (ENV_GLSL) déduite de FOOT/SAS/ROOF : à mettre à jour si l'emprise change.
+
+## Visite 3D (src/walk.js)
+
+`createWalk({ THREE, camera, renderer, scene, model, domElement, controls, autoUpdate:false })` puis `walk.update(dt)` via
+`app.onFrame`. Grille de collision 5 cm calculée à l'entrée (triangles des maillages visibles, sauf kind 'eclairage' et
+`userData.walkIgnore`). Points de visite : `WALK_SPOTS`. Banc d'essai : `node tools/walk-test.mjs [--norender] [--spot ch2]`.
+
+## Livrables
+
+- `node tools/pdf.mjs --dir renders/final` : visuels A4 paysage, une vue par page.
+- `node tools/fiche.mjs --dir renders/final` : fiche technique A4 du raccord escalier métallique / placo
+  (lit `detail-fixation`, `detail-echiffre`, `coupe-escalier` + leurs `.callouts.json`, et `fiche-data.json`).
+- `node tools/ui-shot.mjs` : captures de la page interactive (téléphone / ordinateur).
