@@ -1,0 +1,18 @@
+Moteur : jeu/js/bataille-moteur.js · or perdu par erreur : 6 · 160 batailles par niveau · bataille de route : defense, 2 vagues, camp de 12, carte foret
+
+p = 0.6 (réponses justes) · bataille de route : defense, 2 vagues, camp de 12, carte foret
+niv | carte          | tenue (éclatante) | tenu  retraite | murs restants (quand elle tient) | coups portés (1re vague) | ennemis tués / tes pertes | sorties · rival : tours, gardes, rappelés, renforts
+ 0  | foret          |   45 % (  4 %)   |  41 %   55 %   |                      25 % (56 %) |               2.6 (1.64) |     10.2 / 2.5    | 1.2 · 1, 0, 0, 0
+moy |                |   45 % (  4 %)   |                |                             25 % |                      2.6
+
+p = 0.7 (réponses justes) · bataille de route : defense, 2 vagues, camp de 12, carte foret
+niv | carte          | tenue (éclatante) | tenu  retraite | murs restants (quand elle tient) | coups portés (1re vague) | ennemis tués / tes pertes | sorties · rival : tours, gardes, rappelés, renforts
+ 0  | foret          |   68 % ( 11 %)   |  56 %   33 %   |                      40 % (60 %) |              4.08 (2.35) |     12.6 / 3      | 1.53 · 1, 0, 0, 0
+moy |                |   68 % ( 11 %)   |                |                             40 % |                      4.1
+
+p = 0.9 (réponses justes) · bataille de route : defense, 2 vagues, camp de 12, carte foret
+niv | carte          | tenue (éclatante) | tenu  retraite | murs restants (quand elle tient) | coups portés (1re vague) | ennemis tués / tes pertes | sorties · rival : tours, gardes, rappelés, renforts
+ 0  | foret          |   96 % ( 48 %)   |  49 %    4 %   |                      73 % (76 %) |              7.99 (3.96) |     15.4 / 3.4    | 1.92 · 1, 0, 0, 0
+moy |                |   96 % ( 48 %)   |                |                             73 % |                        8
+
+(9 s)

@@ -1,0 +1,2040 @@
+{
+ "1": [
+  {
+   "jour": "Lundi",
+   "matiere": "litterature",
+   "texte": "Littérature – Livret I – Chapitre I – Témoigner du monde, découvrir, rêver – Cours 1 – Lire les textes p7 et 8 deux fois (à voix haute puis à voix basse) et répondre aux questions de compréhension de lecture"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "svt",
+   "texte": "SVT – Livret 1 – Thème A – Chapitre 1 – Séance 1 – La Terre une planète en mouvement – La Terre dans le système solaire"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "anglais",
+   "texte": "Anglais – Démarrer la Séquence 1 et avancer au rythme de l’élève (arrêter au bout de 45 minutes)"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "histoire",
+   "texte": "Histoire – Cours 1 – Empire bysantin au temps de Justinien"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "svt",
+   "texte": "SVT – Livret 1 – Chapitre 1 – Séance 2 – La Terre une planète en mouvement – Les axes de la Terre"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "anglais",
+   "texte": "Anglais – Faire la suite de la Séquence 1"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "geographie",
+   "texte": "Géo – Présentation du programme et regarder les outils du géographe"
+  },
+  {
+   "jour": "Mercredi",
+   "matiere": "lecture",
+   "texte": "Lecture – Un hivernage dans les glaces – Lire la présentation du livre et parcourir la vie de l’auteur p1 à 27 et prendre des notes en s’appuyant de la fiche sur la plateforme « Méthode de lecture suivie »"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "litterature",
+   "texte": "Littérature – Livret I – Chapitre I – Cours 1 – Lire la leçon littéraire p9 à 11, répondre aux questions p12 puis apprendre par cœur le résumé et outils de la langue"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "physique",
+   "texte": "Physique-Chimie – Livret 1 – Thème A – Chapitre I – Séance 1 – Les états de la matière (1)"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "anglais",
+   "texte": "Anglais – Faire la suite de la Séquence 1"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "histoire",
+   "texte": "Histoire – Cours 2 – Empire carolingien au temps de Charlemagne"
+  },
+  {
+   "jour": "Vendredi",
+   "matiere": "geographie",
+   "texte": "Géo – Thème 1 – Cours 1 – 1ère partie – Croissance et développement de la population"
+  }
+ ],
+ "2": [
+  {
+   "jour": "Lundi",
+   "matiere": "litterature",
+   "texte": "Littérature – Livret I – Chapitre I – Témoigner du monde, découvrir, rêver – Cours 2 – Lire les textes p13 à 17 deux fois (à voix haute puis à voix basse) et répondre aux questions de compréhension de lecture p19"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "svt",
+   "texte": "SVT – Livret 1 – Chapitre 1 – La Terre une planète en mouvement – Séance 3 – Les lignes imaginaires"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "histoire",
+   "texte": "Histoire – Cours 3 – Le christianisme, entre Orient et Occident"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "svt",
+   "texte": "SVT – Livret 1 – Chapitre 1 – La Terre une planète en mouvement – Séance 4 – Les effets de serre"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "geographie",
+   "texte": "Géo – Étude de cas 1 – Le Burkina Faso"
+  },
+  {
+   "jour": "Mercredi",
+   "matiere": "lecture",
+   "texte": "Lecture – Un hivernage dans les glaces – Lire les chapitres 1 et 2 p31 à 44 et prendre des notes puis consulter et apprendre le vocabulaire (sur la plateforme)"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "litterature",
+   "texte": "Littérature – Livret I – Chapitre I – Cours 2 – Lire la leçon littéraire p19 à 22, répondre aux questions p20 puis regarder les cartes mentales p18, apprendre par cœur le résumé et outils de la langue"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "physique",
+   "texte": "Physique-Chimie – Livret 1 – Thème A – Chapitre I – Séance 2 – Le cycle de l’eau"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "histoire",
+   "texte": "Histoire – Devoir d’entraînement"
+  },
+  {
+   "jour": "Vendredi",
+   "matiere": "geographie",
+   "texte": "Géo – Cours 1 – 2ère partie – II Dans les pays du Sud"
+  }
+ ],
+ "3": [
+  {
+   "jour": "Lundi",
+   "matiere": "litterature",
+   "texte": "Littérature – Livret I – Chapitre I – Témoigner du monde, découvrir, rêver – Cours 3 – Lire les textes p23 et 24 deux fois (à voix haute puis à voix basse) et répondre aux questions de compréhension de lecture"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "svt",
+   "texte": "SVT – Livret 1 – Chapitre 2 – Météo et climat – Séance 1 – Distinguer météorologie et climatologie"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "geographie",
+   "texte": "Géo – Cours 1 – 2ère partie – III Dans les pays du Nord"
+  },
+  {
+   "jour": "Mercredi",
+   "matiere": "lecture",
+   "texte": "Lecture – Un hivernage dans les glaces – Lire les chapitres 3 et 4 p45 à 54 et prendre des notes puis consulter et apprendre le vocabulaire"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "litterature",
+   "texte": "Littérature – Livret I – Chapitre I –Cours 3 – Lire la leçon littéraire p24 à 26, répondre aux questions p26, apprendre par cœur le résumé et outils de la langue"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "physique",
+   "texte": "Physique-Chimie – Livret 1 – Thème A – Chapitre I – Séance 3 – La masse et le volume"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "histoire",
+   "texte": "Histoire – Cours 4 – Islam, origines et expansion"
+  }
+ ],
+ "4": [
+  {
+   "jour": "Lundi",
+   "matiere": "litterature",
+   "texte": "Littérature – Lire le dossier Carnets, lettres, journaux, notes de voyage p27 à 31 puis devoir 1 à commencer"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "svt",
+   "texte": "SVT – Livret 1 – Chapitre 2 – Météo et climat – Distinguer météorologie et climatologie – Séance 2 – Les mouvements des vents et des courants"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "histoire",
+   "texte": "Histoire – Cours 5 – Empire abbasside et 2 études de document"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "svt",
+   "texte": "SVT – Livret 1 – Chapitre 2 – Météo et climat – Séance 3 – Climats actuels, climats du passé – Les grands climats aujourd’hui"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "geographie",
+   "texte": "Géo – Étude de cas 2 – La situation démographique de l’Inde"
+  },
+  {
+   "jour": "Mercredi",
+   "matiere": "lecture",
+   "texte": "Lecture – Un hivernage dans les glaces – Lire les chapitres 5 et 6 p55 à 67 et prendre des notes puis consulter et apprendre le vocabulaire"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "litterature",
+   "texte": "Littérature – Devoir I – Terminer le devoir 1"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "physique",
+   "texte": "Physique-Chimie – Livret 1 – Thème A – Chapitre I – Séance 4 – Mélange et dissolution"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "histoire",
+   "texte": "Histoire – Devoir d’entraînement"
+  },
+  {
+   "jour": "Vendredi",
+   "matiere": "histoire",
+   "texte": "Histoire – Cours 6 – La vie dans les campagnes au Moyen Âge"
+  }
+ ],
+ "5": [
+  {
+   "jour": "Lundi",
+   "matiere": "litterature",
+   "texte": "Littérature – Livret I – Chapitre II – Étude d’une œuvre : l’île au trésor – Cours 4 – Lire les textes p35 deux fois (à voix haute puis à voix basse) et répondre aux questions de compréhension de lecture p36"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "svt",
+   "texte": "SVT – Livret 1 – Chapitre 2 – Météo et climat – Séance 4 – Étude des cycles climatiques du quaternaire et prospective"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "histoire",
+   "texte": "Histoire – Cours 7 – La seigneurie"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "svt",
+   "texte": "SVT – Livret 1 – Chapitre 2 – Météo et climat – Séance 5 – Notion de risque météo et climatique"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "geographie",
+   "texte": "Géo – Révisions"
+  },
+  {
+   "jour": "Mercredi",
+   "matiere": "lecture",
+   "texte": "Lecture – Un hivernage dans les glaces – Lire les chapitres 7 et 8 p68 à 76 et prendre des notes puis consulter et apprendre le vocabulaire"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "litterature",
+   "texte": "Littérature – Livret I – Chapitre II – Cours 4 – Lire la leçon littéraire p36 à 38, répondre aux questions p37, apprendre par cœur le résumé et outils de la langue"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "physique",
+   "texte": "Physique-Chimie – Livret 1 – Thème A – Chapitre I – Séance 5 – Caractéristiques des changements d'état"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "geographie",
+   "texte": "Géo – Révisions"
+  },
+  {
+   "jour": "Vendredi",
+   "matiere": "histoire",
+   "texte": "Histoire – Cours 8 – Étude de cas 1 et 2"
+  }
+ ],
+ "6": [
+  {
+   "jour": "Lundi",
+   "matiere": "litterature",
+   "texte": "Littérature – Livret I – Chapitre II – Étude d’une œuvre : l’île au trésor – Cours 5 – Lire les textes p39 et 40 deux fois (à voix haute puis à voix basse) et répondre aux questions de compréhension de lecture p40"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "svt",
+   "texte": "SVT – Livret 1 – Chapitre 2 – Météo et climat – Séance 6 – Les risques climatiques"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "geographie",
+   "texte": "Géo – Devoir n°1 – Commencer le devoir"
+  },
+  {
+   "jour": "Mercredi",
+   "matiere": "lecture",
+   "texte": "Lecture – Un hivernage dans les glaces – Lire les chapitres 9 et 10 p77 à 88 et prendre des notes puis consulter et apprendre le vocabulaire"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "litterature",
+   "texte": "Littérature – Livret I – Chapitre II – Cours 5 – Lire la leçon littéraire p41 à 43, répondre aux questions p43, apprendre par cœur le résumé, outils de la langue"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "physique",
+   "texte": "Physique-Chimie – Livret 1 – Thème A – Chapitre I – Séance 6 – Volume et masse au cours du changement d’état (1) : expériences"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "histoire",
+   "texte": "Histoire – Cours 8 – Étude de cas 3 et 4"
+  },
+  {
+   "jour": "Vendredi",
+   "matiere": "geographie",
+   "texte": "Géo – Devoir n°1 – Terminer le devoir"
+  }
+ ],
+ "7": [
+  {
+   "jour": "Lundi",
+   "matiere": "litterature",
+   "texte": "Littérature – Cours 5 – Faire la carte mentale p44 puis Devoir 2 à commencer le devoir"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "svt",
+   "texte": "SVT – Réviser les cours des semaines 1 à 6"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "histoire",
+   "texte": "Histoire – Test en autocorrection"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "svt",
+   "texte": "SVT – Devoir 1"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "geographie",
+   "texte": "Géo – Cours 2 – 1ère partie – Richesse et pauvreté dans le monde"
+  },
+  {
+   "jour": "Mercredi",
+   "matiere": "lecture",
+   "texte": "Lecture – Un hivernage dans les glaces – Lire les chapitres 11 et 12 p89 à 100 et prendre des notes puis consulter et apprendre le vocabulaire"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "litterature",
+   "texte": "Littérature – Devoir 2 – Terminer le devoir"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "physique",
+   "texte": "Physique-Chimie – Livret 1 – Thème A – Chapitre I – Séance 6 – Volume et masse au cours du changement d’état (2) : Exercices ou révisions"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "histoire",
+   "texte": "Histoire – Cours 9 – Féodaux et seigneurs"
+  }
+ ],
+ "8": [
+  {
+   "jour": "Lundi",
+   "matiere": "litterature",
+   "texte": "Littérature – Livret I – Chapitre III – La dimension poétique du voyage – Cours 6 – Lire les textes p47 et 48 deux fois (à voix haute puis à voix basse) et répondre aux questions de compréhension de lecture p48"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "svt",
+   "texte": "SVT – Livret 1 – Chapitre 3 – L’environnement et l’action humaine – Séance 1 – Environnement, biomes, sol"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "histoire",
+   "texte": "Histoire – Cours 10 – Émergence d’un État royal fort"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "svt",
+   "texte": "SVT – Livret 1 – Chapitre 3 – L’environnement et l’action humaine – Séance 2 – Influence de la nature des sols sur les biomes ; ressources naturelles"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "geographie",
+   "texte": "Géo – Outil 9 – Mesurer la pauvreté et les inégalités"
+  },
+  {
+   "jour": "Mercredi",
+   "matiere": "lecture",
+   "texte": "Lecture – Un hivernage dans les glaces – Lire les chapitres 13 et 14 p101 à 109 et prendre des notes puis consulter et apprendre le vocabulaire"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "litterature",
+   "texte": "Littérature – Livret I – Chapitre III – Cours 6 – Lire la leçon littéraire p49 et 50, répondre aux questions p50, apprendre par cœur le résumé, outils de la langue p51 et faire la carte mentale p52"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "physique",
+   "texte": "Physique-Chimie – Livret 1 – Thème A – Chapitre 2 – Séance 1 – Les acides et les bases"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "histoire",
+   "texte": "Histoire – Cours 11 – Étude de document"
+  },
+  {
+   "jour": "Vendredi",
+   "matiere": "geographie",
+   "texte": "Géo – Étude de cas 3 – L’éducation en Afghanistan et en Finlande"
+  }
+ ],
+ "9": [
+  {
+   "jour": "Lundi",
+   "matiere": "litterature",
+   "texte": "Littérature – Livret I – Chapitre III – La dimension poétique du voyage – Cours 7 – Lire les textes p53 deux fois (à voix haute puis à voix basse) et répondre aux questions de compréhension de lecture p54"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "svt",
+   "texte": "SVT – Livret 1 – Chapitre 3 – L’environnement et l’action humaine – Séance 3 – Les enjeux d’une ressource naturelle"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "histoire",
+   "texte": "Histoire – Cours 11 – Test en autocorrection"
+  },
+  {
+   "jour": "Mercredi",
+   "matiere": "lecture",
+   "texte": "Lecture – Un hivernage dans les glaces – Lire les chapitres 15 et 16 (conclusion) p110 à 122 et prendre des notes puis consulter et apprendre le vocabulaire"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "litterature",
+   "texte": "Littérature – Livret I – Chapitre III – Cours 7 – Lire la leçon littéraire p55 et 56, répondre aux questions p56, apprendre par cœur le résumé, outils de la langue"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "physique",
+   "texte": "Physique-Chimie – Livret 1 – Thème A – Chapitre 2 – Séance 2 – Dangers liés aux acides et aux bases"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "geographie",
+   "texte": "Géo – Cours 2 – 2ème partie Richesse et pauvreté dans le monde"
+  },
+  {
+   "jour": "Vendredi",
+   "matiere": "histoire",
+   "texte": "Histoire – Révisions"
+  }
+ ],
+ "10": [
+  {
+   "jour": "Lundi",
+   "matiere": "litterature",
+   "texte": "Littérature – Devoir 3 – Commencer le devoir"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "svt",
+   "texte": "SVT – Livret 1 – Chapitre 3 – L’environnement et l’action humaine – Séance 4 – Conséquences : une eau à préserver"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "geographie",
+   "texte": "Géo – Révisions"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "svt",
+   "texte": "SVT – Livret 1 – Chapitre 3 – L’environnement et l’action humaine – Séance 5 – Les impacts des actions humaines"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "histoire",
+   "texte": "Histoire – Devoir n°1 à commencer"
+  },
+  {
+   "jour": "Mercredi",
+   "matiere": "lecture",
+   "texte": "Lecture – Un hivernage dans les glaces – Préparer la fiche de lecture 1 en s’aidant du dossier p125 à 155"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "litterature",
+   "texte": "Littérature – Devoir 3 – Terminer le devoir"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "physique",
+   "texte": "Physique-Chimie – Livret 1 – Thème A – Chapitre 2 – Séance 3 – Différencier transformations physiques et transformations chimiques"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "histoire",
+   "texte": "Histoire – Devoir n°1 à terminer"
+  },
+  {
+   "jour": "Vendredi",
+   "matiere": "geographie",
+   "texte": "Géo – Devoir 2 à commencer"
+  }
+ ],
+ "11": [
+  {
+   "jour": "Lundi",
+   "matiere": "litterature",
+   "texte": "Littérature – Livret II – Chapitre I – Témoigner de la famille et de la société – Cours 1 – Lire les textes p7 deux fois (à voix haute puis à voix basse) et répondre aux questions de compréhension de lecture p8"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "svt",
+   "texte": "SVT – Livret 1 – Chapitre 3 – L’environnement et l’action humaine – Séance 6 – Des écosystèmes en danger. Comment les préserver ?"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "geographie",
+   "texte": "Géo – Devoir 2 à terminer"
+  },
+  {
+   "jour": "Mercredi",
+   "matiere": "lecture",
+   "texte": "Lecture – Un hivernage dans les glaces – Faire et envoyer la fiche de lecture 1"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "litterature",
+   "texte": "Littérature – Livret II – Chapitre I – Cours 1 – Lire la leçon littéraire p9 et 10, répondre aux questions p11, apprendre par cœur le résumé, outils de la langue et remplir le tableau p12"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "physique",
+   "texte": "Physique-Chimie – Livret 1 – Révisons du thème A"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "geographie",
+   "texte": "Géo – Thème 2 – Cours 1 1ère partie – L’inégal accès à l’eau – I Une ressource inégalement répartie"
+  }
+ ],
+ "12": [
+  {
+   "jour": "Lundi",
+   "matiere": "litterature",
+   "texte": "Littérature – Livret II – Chapitre I – Témoigner de la famille et de la société – Cours 2 – Lire les textes p13 et 14 deux fois (à voix haute puis à voix basse) et répondre aux questions de compréhension de lecture p14"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "svt",
+   "texte": "SVT – Réviser les cours des semaines 8 à 11"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "histoire",
+   "texte": "Histoire – Cours 12 – La chrétienté médiévale (1)"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "svt",
+   "texte": "SVT – Devoir 2"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "histoire",
+   "texte": "Histoire – Cours 13 – La chrétienté médiévale (2)"
+  },
+  {
+   "jour": "Mercredi",
+   "matiere": "lecture",
+   "texte": "Lecture – Les Fourberies de Scapin – Lire la présentation p4 à 13 puis consulter et apprendre le vocabulaire"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "litterature",
+   "texte": "Littérature – Livret II – Chapitre I – Cours 2 – Lire la leçon littéraire p15 et 16, répondre aux questions p17, apprendre par cœur le résumé, outils de la langue"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "physique",
+   "texte": "Physique-Chimie – Livret 1 – Devoir 1"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "geographie",
+   "texte": "Géo – Étude de cas 1 – L’accès à l’eau en Tunisie"
+  },
+  {
+   "jour": "Vendredi",
+   "matiere": "histoire",
+   "texte": "Histoire – Cours 14 – Étude de document"
+  }
+ ],
+ "13": [
+  {
+   "jour": "Lundi",
+   "matiere": "litterature",
+   "texte": "Littérature – Cours 2 – Faire la carte mentale p18 puis commencer le devoir 4"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "svt",
+   "texte": "SVT – Livret 2 – Thème B – Le vivant et son évolution – Chapitre 1 – Biodiversité et parenté des êtres vivants – Séance 1 – Classer les espèces met en évidence leur parenté"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "geographie",
+   "texte": "Géo – Cours 1 – 2ème partie – II Une ressource convoitée et menacée"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "svt",
+   "texte": "SVT – Livret 2 – Chapitre 1 – Biodiversité et parenté des êtres vivants – Séance 2 – Rappel sur les cellules"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "histoire",
+   "texte": "Histoire – Cours 15 – Révisions"
+  },
+  {
+   "jour": "Mercredi",
+   "matiere": "lecture",
+   "texte": "Lecture – Les Fourberies de Scapin – Lire L’Acte I scènes 1 à 5 p15 à 42 puis écouter les audios 1 et 2 des scènes 1 et 4 puis consulter et apprendre le vocabulaire"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "litterature",
+   "texte": "Littérature – Devoir 4 – Terminer le devoir"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "physique",
+   "texte": "Physique-Chimie – Livret 1 – Thème B – Chapitre I – Séance 1 – Relativité du mouvement II. Trajectoire vitesse"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "geographie",
+   "texte": "Géo – Cours 1 – 2ème partie – III L’eau : une ressource à gérer durablement"
+  }
+ ],
+ "14": [
+  {
+   "jour": "Lundi",
+   "matiere": "litterature",
+   "texte": "Littérature – Livret II – Chapitre II – Étude d’une œuvre : L’Avare – Cours 3 – Lire les textes p21 à 25 deux fois (à voix haute puis à voix basse) et répondre aux questions de compréhension de lecture p26"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "svt",
+   "texte": "SVT – Livret 2 – Chapitre 1 – Biodiversité et parenté des êtres vivants – Séance 3 – Paléontologie et liens de parenté"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "histoire",
+   "texte": "Histoire – Cours 16 – Étude de cas"
+  },
+  {
+   "jour": "Mercredi",
+   "matiere": "lecture",
+   "texte": "Lecture – Les Fourberies de Scapin – Lire l’Acte II scènes 1 à 5 p43 à 67 puis consulter et apprendre le vocabulaire"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "litterature",
+   "texte": "Littérature – Livret II – Chapitre II – Cours 3 – Lire la leçon littéraire p27, répondre aux questions p28, apprendre par cœur le résumé, outils de la langue"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "physique",
+   "texte": "Physique-Chimie –– Livret 1 – Thème B – Chapitre I – Séance 2 – Vitesse"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "geographie",
+   "texte": "Géo – Étude de cas 2 – Les conflits liés à l’eau au Moyen-Orient"
+  },
+  {
+   "jour": "Vendredi",
+   "matiere": "histoire",
+   "texte": "Histoire – Devoir d’entraînement en autocorrection"
+  }
+ ],
+ "15": [
+  {
+   "jour": "Lundi",
+   "matiere": "litterature",
+   "texte": "Littérature – Livret II – Chapitre II – Cours 4 – Lire les textes p29 et 30 deux fois (à voix haute puis à voix basse) et répondre aux questions de compréhension de lecture p31"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "svt",
+   "texte": "SVT – Livret 2 – Chapitre 1 – Biodiversité et parenté des êtres vivants – Séance 4 – Classer les espèces met en évidence leur parenté"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "histoire",
+   "texte": "Histoire – Révisions"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "svt",
+   "texte": "SVT – Livret 2 – Chapitre 1 – Biodiversité et parenté des êtres vivants – Séance 5 – L'évolution des écosystèmes"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "histoire",
+   "texte": "Histoire – Devoir 2 à commencer"
+  },
+  {
+   "jour": "Mercredi",
+   "matiere": "lecture",
+   "texte": "Lecture – Les Fourberies de Scapin – Lire l’Acte II scènes 6 à 8 p68 à 82 puis écouter l’audio 3 en apprenant par cœur la réplique de Scapin p74, versets 26 à 35"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "litterature",
+   "texte": "Littérature – Livret II – Chapitre II – Cours 4 – Lire la leçon littéraire p31, répondre aux questions p32, apprendre par cœur le résumé, outils de la langue"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "physique",
+   "texte": "Physique-Chimie – Livret 1 – Thème B – Chapitre I – Séance 3 – Exercices"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "histoire",
+   "texte": "Histoire – Devoir 2 à terminer"
+  },
+  {
+   "jour": "Vendredi",
+   "matiere": "geographie",
+   "texte": "Géo – Cours 2 – 1ère partie – I Une consommation d’énergie croissante"
+  }
+ ],
+ "16": [
+  {
+   "jour": "Lundi",
+   "matiere": "litterature",
+   "texte": "Littérature – Livret II – Chapitre III – Témoigner de la nature – Cours 5 – Lire les textes p39 et 40 deux fois (à voix haute puis à voix basse) et répondre aux questions de compréhension de lecture p40"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "svt",
+   "texte": "SVT – Livret 2 – Chapitre 1 – Biodiversité et parenté des êtres vivants – Séance 6 – Les niveaux de biodiversité"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "geographie",
+   "texte": "Géo – Cours 2 – 1ère partie – II Le poids des énergies fossiles"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "svt",
+   "texte": "SVT – Réviser les cours des semaines 13 à 16"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "histoire",
+   "texte": "Histoire – Cours 17 – Échanges et expansion économique de l’Occident"
+  },
+  {
+   "jour": "Mercredi",
+   "matiere": "lecture",
+   "texte": "Lecture – Les Fourberies de Scapin – Lire l’Acte III scènes 1 à 3 puis écouter l’audio 4 en apprenant par cœur la réplique de Scapin p91, versets 45 à 51"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "litterature",
+   "texte": "Littérature – Livret II – Chapitre III – Cours 5 – Lire la leçon littéraire p41, répondre aux questions, apprendre par cœur le résumé, outils de la langue p42"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "physique",
+   "texte": "Physique-Chimie – Livret 1 – Thème B – Chapitre 2 – Séance 1 – Actions de contact et actions à distance"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "geographie",
+   "texte": "Géo – Étude de cas 3 – La Russie et ses hydrocarbures"
+  }
+ ],
+ "17": [
+  {
+   "jour": "Lundi",
+   "matiere": "litterature",
+   "texte": "Littérature – Regarder le dossier p33 à 37 et commencer le devoir 5"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "svt",
+   "texte": "SVT – Devoir 3"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "histoire",
+   "texte": "Histoire – Cours 18 – Les croisades, conquête et reconquête (1)"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "svt",
+   "texte": "SVT – Livret 2 – Chapitre 2 – Comment les êtres vivants produisent de la matière et de l'énergie – Séance 1 – Les besoins nutritifs des organismes"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "geographie",
+   "texte": "Géo – Cours 2 – 2ème partie – III Les énergies de demain"
+  },
+  {
+   "jour": "Mercredi",
+   "matiere": "lecture",
+   "texte": "Lecture – Les Fourberies de Scapin – Lire l’Acte III scènes 4 à 13 p102 à 117 puis consulter et apprendre le vocabulaire"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "litterature",
+   "texte": "Littérature – Devoir 5 – Terminer le devoir"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "physique",
+   "texte": "Physique-Chimie – Livret 1 – Thème B – Chapitre 2 – Séance 2 – Les mouvements dans l'Univers et le système solaire"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "histoire",
+   "texte": "Histoire – Cours 19 – Les croisades, conquête et reconquête (2)"
+  },
+  {
+   "jour": "Vendredi",
+   "matiere": "geographie",
+   "texte": "Géo – Étude de cas 4 – La Chine, du charbon aux panneaux solaires"
+  }
+ ],
+ "18": [
+  {
+   "jour": "Lundi",
+   "matiere": "litterature",
+   "texte": "Littérature – Livret II – Chapitre III – Témoigner de la nature – Cours 6 – Lire le texte p43 deux fois (à voix haute puis à voix basse) et répondre aux questions de compréhension de lecture p44"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "svt",
+   "texte": "SVT – Livret 2 – Chapitre 2 – Comment les êtres vivants produisent de la matière et de l'énergie – Séance 2 – Comment les animaux produisent-ils de la matière et de l'énergie ?"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "histoire",
+   "texte": "Histoire – Cours 20 – Étude de document"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "svt",
+   "texte": "SVT – Livret 2 – Chapitre 2 – Comment les êtres vivants produisent de la matière et de l'énergie – Séance 3 – La respiration (1)"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "geographie",
+   "texte": "Géo – Révisions"
+  },
+  {
+   "jour": "Mercredi",
+   "matiere": "lecture",
+   "texte": "Lecture – Les Fourberies de Scapin – Lire « Comprendre le texte » p121 à 137 et puis consulter et apprendre le vocabulaire"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "litterature",
+   "texte": "Littérature – Livret II – Chapitre III – Cours 6 – Lire la leçon littéraire p44 et 45, répondre aux questions p46, apprendre par cœur le résumé, outils de la langue et faire la carte mentale p47"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "physique",
+   "texte": "Physique-Chimie – Livret 1 – Thème B – Chapitre 2 – Séance 3 – L'infiniment grand"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "histoire",
+   "texte": "Histoire – Cours 21 – Du Moyen Âge à l’époque moderne"
+  }
+ ],
+ "19": [
+  {
+   "jour": "Lundi",
+   "matiere": "litterature",
+   "texte": "Littérature – Livret II – Chapitre IV – La dimension poétique de la nature – Cours 7 – Lire les textes p49 deux fois (à voix haute puis à voix basse) et répondre aux questions de compréhension de lecture p50"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "svt",
+   "texte": "SVT – Livret 2 – Chapitre 2 – Comment les êtres vivants produisent de la matière et de l'énergie – Séance 4 – La respiration (2)"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "histoire",
+   "texte": "Histoire – Cours 22 – Étude de cas"
+  },
+  {
+   "jour": "Mercredi",
+   "matiere": "lecture",
+   "texte": "Lecture – Les Fourberies de Scapin – Préparer la fiche de lecture 2 en lisant et en retenant l’essentiel p140 à 149"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "litterature",
+   "texte": "Littérature – Livret II – Chapitre IV – Cours 7 – Lire la leçon littéraire p50 et 51, répondre aux questions, apprendre par cœur le résumé, outils de la langue p52"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "physique",
+   "texte": "Physique-Chimie – Livret 1 – Révisions du thème B"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "geographie",
+   "texte": "Géo – Devoir 3 à commencer"
+  },
+  {
+   "jour": "Vendredi",
+   "matiere": "geographie",
+   "texte": "Géo – Devoir 3 à finir"
+  }
+ ],
+ "20": [
+  {
+   "jour": "Lundi",
+   "matiere": "litterature",
+   "texte": "Littérature – Livret II – Chapitre IV – Cours 7 – Lire p53, faire la carte mentale p54 et commencer le devoir 6"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "svt",
+   "texte": "SVT – Livret 2 – Chapitre 2 – Comment les êtres vivants produisent de la matière et de l'énergie – Séance 5 – Les appareils respiratoires"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "histoire",
+   "texte": "Histoire – Révisions"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "svt",
+   "texte": "SVT – Livret 2 – Chapitre 2 – Comment les êtres vivants produisent de la matière et de l'énergie – Séance 6 – Exercices"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "histoire",
+   "texte": "Histoire – Devoir 3 à commencer"
+  },
+  {
+   "jour": "Mercredi",
+   "matiere": "lecture",
+   "texte": "Lecture – Les Fourberies de Scapin – Faire et envoyer la fiche de lecture 2"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "litterature",
+   "texte": "Littérature – Devoir 6 – Terminer le devoir"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "physique",
+   "texte": "Physique-Chimie – Livret 1 – Devoir 2"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "histoire",
+   "texte": "Histoire – Devoir 3 à terminer"
+  },
+  {
+   "jour": "Vendredi",
+   "matiere": "geographie",
+   "texte": "Géo – Cours 3 – 1ère partie – Nourrir les hommes – I Un accès inégal aux ressources alimentaires"
+  }
+ ],
+ "21": [
+  {
+   "jour": "Lundi",
+   "matiere": "litterature",
+   "texte": "Littérature – Livret III – Chapitre I – Le héros antique, médiéval et moderne – Cours 1 – Lire les textes p7 et 8 deux fois (à voix haute puis à voix basse) et répondre aux questions de compréhension de lecture p8"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "svt",
+   "texte": "SVT – Livret 2 – Chapitre 2 – Comment les êtres vivants produisent de la matière et de l'énergie – Séance 7 – La production de matière organique par les plantes"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "histoire",
+   "texte": "Histoire – Cours 23 – Qu’est-ce que l’humanisme ?"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "svt",
+   "texte": "SVT – Livret 2 – Comment les êtres vivants produisent de la matière et de l'énergie – Séance 8 – Le prélèvement de la matière minérale par la plante"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "geographie",
+   "texte": "Géo – Étude de cas 5 – La situation alimentaire en Éthiopie"
+  },
+  {
+   "jour": "Mercredi",
+   "matiere": "lecture",
+   "texte": "Lecture – Lancelot – Observer la carte p8, lire p9 à 23 et prendre des notes puis consulter et apprendre le vocabulaire"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "litterature",
+   "texte": "Littérature – Livret III – Chapitre I – Cours 1 – Lire la leçon littéraire p9 à 11, répondre aux questions p12, apprendre par cœur le résumé, outils de la langue"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "physique",
+   "texte": "Physique-Chimie – Livret 2 – Thème C – Chapitre I – Séance 1 – L'énergie et le circuit électrique"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "geographie",
+   "texte": "Géo – Cours 3 – 2ème partie – II Comment nourrir les hommes ?"
+  }
+ ],
+ "22": [
+  {
+   "jour": "Lundi",
+   "matiere": "litterature",
+   "texte": "Littérature – Livret III – Chapitre I – Le héros antique, médiéval et moderne – Cours 2 – Lire les textes p13 à 16 deux fois (à voix haute puis à voix basse) et répondre aux questions de compréhension de lecture p17"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "svt",
+   "texte": "SVT – Réviser les cours des semaines 17 à 21"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "svt",
+   "texte": "SVT – Devoir 4"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "geographie",
+   "texte": "Géo – Cours 3 – 2ème partie – III Les défis alimentaires de demain"
+  },
+  {
+   "jour": "Mercredi",
+   "matiere": "lecture",
+   "texte": "Lecture – Lancelot – Lire p24 à 45 et prendre des notes puis consulter et apprendre le vocabulaire"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "litterature",
+   "texte": "Littérature – Livret III – Chapitre I – Cours 2 – Lire la leçon littéraire p18 et 19, répondre aux questions p19, apprendre par cœur le résumé, outils de la langue"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "physique",
+   "texte": "Physique-Chimie – Livret 2 – Thème C – Chapitre I – Séance 2 – Intensité et tension"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "histoire",
+   "texte": "Histoire – Cours 24 – Étude de document"
+  },
+  {
+   "jour": "Vendredi",
+   "matiere": "geographie",
+   "texte": "Géo – Étude de cas 6 – L’Argentine, un géant agricole"
+  }
+ ],
+ "23": [
+  {
+   "jour": "Lundi",
+   "matiere": "litterature",
+   "texte": "Littérature – Faire la carte mentale p20 et commencer le devoir 7"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "svt",
+   "texte": "SVT – Livret 2 – Chapitre 3 – La reproduction des organismes – Séance 1 – La reproduction des végétaux"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "histoire",
+   "texte": "Histoire – Cours 25 – Les arts de la Renaissance"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "svt",
+   "texte": "SVT – Livret 2 – Livret 2 – Chapitre 3 – La reproduction des organismes – Séance 2 – Pollinisation et fécondation des plantes à fleurs"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "geographie",
+   "texte": "Géo – Révisions"
+  },
+  {
+   "jour": "Mercredi",
+   "matiere": "lecture",
+   "texte": "Lecture – Lancelot – Lire p 46 à 60 et prendre des notes puis consulter et apprendre le vocabulaire"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "litterature",
+   "texte": "Littérature – Devoir 7 – Terminer le devoir"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "physique",
+   "texte": "Physique-Chimie – Livret 2 – Thème C – Chapitre I – Séance 3 – Le circuit en série et ses lois"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "geographie",
+   "texte": "Géo – Devoir 4 à commencer"
+  }
+ ],
+ "24": [
+  {
+   "jour": "Lundi",
+   "matiere": "litterature",
+   "texte": "Littérature – Livret III – Chapitre II – Le héros voyageur : pour un monde meilleur – Cours 3 – Lire les textes p23 deux fois (à voix haute puis à voix basse) et répondre aux questions de compréhension de lecture p24"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "svt",
+   "texte": "SVT – Livret 3 – Livret 2 – Chapitre 3 – La reproduction des organismes – Séance 3 – Autres modes de reproduction des plantes"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "geographie",
+   "texte": "Géo – Devoir 4 à finir"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "svt",
+   "texte": "SVT – Livret 3 – Livret 2 – Chapitre 3 – La reproduction des organismes – Séance 4 – La reproduction des animaux – Histoire des sciences"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "geographie",
+   "texte": "Géo – Thème 3 – Cours 1 – Les risques naturels, industriels et technologiques"
+  },
+  {
+   "jour": "Mercredi",
+   "matiere": "lecture",
+   "texte": "Lecture – Lancelot – Arrêt sur lecture 1 – Faire le quiz p61 à 67"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "litterature",
+   "texte": "Littérature – Livret III – Chapitre II – Cours 3 – Lire la leçon littéraire p24 à 28, répondre aux questions, apprendre par cœur le résumé, outils de la langue p26"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "physique",
+   "texte": "Physique-Chimie – Livret 2 – Thème C – Chapitre I – Séance 4 – La dérivation et ses lois, la sécurité en électricité"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "histoire",
+   "texte": "Histoire – Cours 26 – Étude de document"
+  },
+  {
+   "jour": "Vendredi",
+   "matiere": "geographie",
+   "texte": "Géo – Étude de cas 1 – Le cyclone Nargis en Birmanie"
+  }
+ ],
+ "25": [
+  {
+   "jour": "Lundi",
+   "matiere": "svt",
+   "texte": "SVT – Livret 3 – Livret 2 – Chapitre 3 – La reproduction des organismes – Séance 5 – Dynamique des populations"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "histoire",
+   "texte": "Histoire – Cours 27 – Des grandes découvertes aux empires coloniaux (1)"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "svt",
+   "texte": "SVT – Livret 3 – Livret 2 – Chapitre 3 – La reproduction des organismes – Séance 6 – Les cycles de vie des animaux"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "histoire",
+   "texte": "Histoire – Cours 28 – Des grandes découvertes aux empires coloniaux (2)"
+  },
+  {
+   "jour": "Mercredi",
+   "matiere": "lecture",
+   "texte": "Lecture – Lancelot – Lire p68 à 99 et prendre des notes puis consulter et apprendre le vocabulaire"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "litterature",
+   "texte": "Littérature – Livret III – Chapitre II – Cours 3 – Faire la carte mentale p29 et lire le dossier sur la BD p30 à 36"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "physique",
+   "texte": "Physique-Chimie – Livret 2 – Thème C – Chapitre 2 – Séance 1 – Qu'est-ce que l'énergie?"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "geographie",
+   "texte": "Géo – Cours 2 – Le changement global et ses effets"
+  }
+ ],
+ "26": [
+  {
+   "jour": "Lundi",
+   "matiere": "litterature",
+   "texte": "Littérature – Livret III – Chapitre II – Le héros voyageur : pour un monde meilleur – Cours 4 – Lire les textes p37 et 38 deux fois (à voix haute puis à voix basse) et répondre aux questions de compréhension de lecture p38"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "svt",
+   "texte": "SVT – Réviser les cours des semaines 23 à 26"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "svt",
+   "texte": "SVT – Devoir 5"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "histoire",
+   "texte": "Histoire – Révisions"
+  },
+  {
+   "jour": "Mercredi",
+   "matiere": "lecture",
+   "texte": "Lecture – Lancelot – Lire p98 à 120 et prendre des notes puis consulter et apprendre le vocabulaire"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "litterature",
+   "texte": "Littérature – Livret III – Chapitre II – Cours 4 – Lire la leçon littéraire p39, répondre aux questions, apprendre par cœur le résumé, outils de la langue p40"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "physique",
+   "texte": "Physique-Chimie – Livret 2 – Thème C – Chapitre 2 – Séance 2 – Formes et sources d’énergie"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "histoire",
+   "texte": "Histoire – Devoir 4 à commencer"
+  }
+ ],
+ "27": [
+  {
+   "jour": "Lundi",
+   "matiere": "litterature",
+   "texte": "Littérature – Livret III – Chapitre III – Étude d’une œuvre : Tristan et Iseut – Cours 5 – Lire le texte p43 et 44 deux fois (à voix haute puis à voix basse) et répondre aux questions de compréhension de lecture p44"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "svt",
+   "texte": "SVT – Livret 3 – Thème C – Le corps humain – Chapitre 1 – Le fonctionnement de l’organisme lors de l’effort – Séance 1 – De la réception de l’information au mouvement"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "histoire",
+   "texte": "Histoire – Devoir 4 à terminer"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "svt",
+   "texte": "SVT – Livret 3 – Chapitre 1 – Le fonctionnement de l’organisme lors de l’effort – Séance 2 – Les muscles et le mouvement"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "histoire",
+   "texte": "Histoire – Cours 29 – La réforme protestante"
+  },
+  {
+   "jour": "Mercredi",
+   "matiere": "lecture",
+   "texte": "Lecture – Lancelot – Arrêt sur lecture 2 – Faire le quiz p121 à 128"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "litterature",
+   "texte": "Littérature – Livret III – Chapitre III – Cours 5 – Lire la leçon littéraire p45, répondre aux questions p46, apprendre par cœur le résumé, outils de la langue"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "physique",
+   "texte": "Physique-Chimie – Livret 2 – Thème C – Chapitre 2 – Séance 3 – Conversion d'énergie"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "histoire",
+   "texte": "Histoire – Cours 30 – Crises et conflits religieux (1)"
+  },
+  {
+   "jour": "Vendredi",
+   "matiere": "histoire",
+   "texte": "Histoire – Cours 31 – Étude de document"
+  }
+ ],
+ "28": [
+  {
+   "jour": "Lundi",
+   "matiere": "litterature",
+   "texte": "Littérature – Livret III – Chapitre III – Étude d’une œuvre : Tristan et Iseut – Cours 6 – Lire le texte p47 et 48 deux fois (à voix haute puis à voix basse) et répondre aux questions de compréhension de lecture p48"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "svt",
+   "texte": "SVT – Livret 3 – Chapitre 1 – Le fonctionnement de l’organisme lors de l’effort – Séance 3 – Le système nerveux"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "histoire",
+   "texte": "Histoire – Cours 32 – Crises et conflits religieux (2)"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "svt",
+   "texte": "SVT – Livret 3 – Chapitre 1 – Le fonctionnement de l’organisme lors de l’effort – Séance 4 – Besoins énergétiques et capacités"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Mercredi",
+   "matiere": "lecture",
+   "texte": "Lecture – Lancelot – Lire p129 à 148 et prendre des notes puis consulter et apprendre le vocabulaire"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "litterature",
+   "texte": "Littérature – Livret III – Chapitre III – Cours 6 – Lire la leçon littéraire p49, répondre aux questions, apprendre par cœur le résumé, outils de la langue et regarde l’art pictural p51"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "physique",
+   "texte": "Physique-Chimie – Livret 2 – Thème C – Chapitre 2 – Séance 4 – Chaleur ; isolants et conducteurs thermiques"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "histoire",
+   "texte": "Histoire – Cours 33 – La révolution scientifique"
+  }
+ ],
+ "29": [
+  {
+   "jour": "Lundi",
+   "matiere": "litterature",
+   "texte": "Littérature – Livret III – Chapitre III – Cours 6 – Faire la carte mentale p52"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "svt",
+   "texte": "SVT – Livret 3 – Chapitre 1 – Le fonctionnement de l’organisme lors de l’effort – Séance 5 – Du besoin à l’apport"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "histoire",
+   "texte": "Histoire – Cours 34 – Étude de document"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "svt",
+   "texte": "SVT – Livret 3 – Chapitre 1 – Le fonctionnement de l’organisme lors de l’effort – Séance 6 – Effort et individu"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Mercredi",
+   "matiere": "lecture",
+   "texte": "Lecture – Lancelot – Lire p149 à 165 et prendre des notes puis consulter et apprendre le vocabulaire"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "litterature",
+   "texte": "Littérature – Livret III – Teste tes connaissances en répondant aux questions p54"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "physique",
+   "texte": "Physique-Chimie – Livret 2 – Révisions du thème C"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  }
+ ],
+ "30": [
+  {
+   "jour": "Lundi",
+   "matiere": "svt",
+   "texte": "SVT – Livret 3 – Chapitre 1 – Le fonctionnement de l’organisme lors de l’effort – Séance 7 – Effets de l’entraînement et limites de l’effort physique"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "svt",
+   "texte": "SVT – Livret 3 – Chapitre 1 – Le fonctionnement de l’organisme lors de l’effort – Séance 8 – Les douleurs musculaires et les comportements responsables"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "histoire",
+   "texte": "Histoire – Révisions"
+  },
+  {
+   "jour": "Mercredi",
+   "matiere": "lecture",
+   "texte": "Lecture – Lancelot – Lire p166 à 181 et prendre des notes puis consulter et apprendre le vocabulaire"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "physique",
+   "texte": "Physique-Chimie – Livret 2 – Devoir 3"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "histoire",
+   "texte": "Histoire – Devoir 5 à commencer"
+  },
+  {
+   "jour": "Vendredi",
+   "matiere": "histoire",
+   "texte": "Histoire – Devoir 5 à terminer"
+  }
+ ],
+ "31": [
+  {
+   "jour": "Lundi",
+   "matiere": "svt",
+   "texte": "SVT – Réviser les cours des semaines 27 à 30"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "histoire",
+   "texte": "Histoire – Cours 35 – Le modèle du Roi absolu"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "svt",
+   "texte": "SVT – Devoir 6"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "histoire",
+   "texte": "Histoire – Cours 36 – Le château de Versailles"
+  },
+  {
+   "jour": "Mercredi",
+   "matiere": "lecture",
+   "texte": "Lecture – Lancelot – Lire p182 à 207 et prendre des notes puis consulter et apprendre le vocabulaire"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "physique",
+   "texte": "Physique-Chimie – Livret 2 – Thème D – Chapitre I – Séance 1 – La lumière et les sources"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  }
+ ],
+ "32": [
+  {
+   "jour": "Lundi",
+   "matiere": "lecture",
+   "texte": "Lecture – Lancelot – Arrêt sur lecture 3 – Faire le quiz p208 à 214"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "svt",
+   "texte": "SVT – Livret 3 – Chapitre 2 – L’alimentation et la santé – Séance 1 – Les aliments : une source d’énergie"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "histoire",
+   "texte": "Histoire – Cours 37 – Révisions"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "svt",
+   "texte": "SVT – Livret 3 – Chapitre 2 – L’alimentation et la santé – Séance 2 – De l’aliment au nutriment"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "histoire",
+   "texte": "Histoire – Devoir d’entraînement en autocorrection"
+  },
+  {
+   "jour": "Mercredi",
+   "matiere": "lecture",
+   "texte": "Lecture – Lancelot – Lire p215 à 241 pour préparer la fiche de lecture 3"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "lecture",
+   "texte": "Lecture – Lancelot – Lire p242 à 252 pour préparer la fiche de lecture 3"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "physique",
+   "texte": "Physique-Chimie – Livret 2 – Thème D – Chapitre I – Séance 2 – Application astronomique et dangers"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "histoire",
+   "texte": "Histoire – Révisions"
+  }
+ ],
+ "33": [
+  {
+   "jour": "Lundi",
+   "matiere": "lecture",
+   "texte": "Lecture – Lancelot – Commencer la fiche de lecture 3"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "svt",
+   "texte": "SVT – Livret 3 – Chapitre 2 – L’alimentation et la santé – Séance 3 –Le rôle du microbiote"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "histoire",
+   "texte": "Histoire – Devoir 6 à commencer"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "svt",
+   "texte": "SVT – Livret 3 – Chapitre 3 – Le monde microbien et la santé – Séance 1 – Le monde des micro-organismes"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "histoire",
+   "texte": "Histoire – Devoir 6 à terminer"
+  },
+  {
+   "jour": "Mercredi",
+   "matiere": "lecture",
+   "texte": "Lecture – Lancelot – Finir la fiche de lecture 3 et l’envoyer"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "physique",
+   "texte": "Physique-Chimie – Livret 2 – Thème D – Chapitre 2 – Séance 1 – Qu'est-ce que le son ?"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  }
+ ],
+ "34": [
+  {
+   "jour": "Lundi",
+   "matiere": "svt",
+   "texte": "SVT – Livret 3 – Chapitre 3 – Le monde microbien et la santé – Séance 2 – Comment se prémunir des maladies infectieuses"
+  },
+  {
+   "jour": "Lundi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "svt",
+   "texte": "SVT – Livret 3 – Chapitre 3 – Le monde microbien et la santé – Séance 3 – Quizz"
+  },
+  {
+   "jour": "Mardi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "physique",
+   "texte": "Physique-Chimie – Livret 2 – Thème D – Chapitre 2 – Séance 2 – Les dangers du son"
+  },
+  {
+   "jour": "Jeudi",
+   "matiere": "anglais",
+   "texte": "Anglais"
+  }
+ ]
+}

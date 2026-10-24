@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Le domaine · jeu de révision 5e</title>
+<link rel="stylesheet" href="css/jeu.css">
+</head>
+<body class="chargement">
+<header id="bandeau">
+  <div class="bandeau-titre"><span id="blason-bandeau"></span><span id="nom-domaine">Le domaine</span></div>
+  <div id="ressources" aria-label="Ressources"></div>
+  <button id="bouton-musique" class="bouton-rond" aria-pressed="true" title="Couper la musique"></button>
+  <button id="bouton-son" class="bouton-rond" aria-pressed="true" title="Couper les bruitages"></button>
+</header>
+<nav id="menu" aria-label="Navigation">
+  <button data-ecran="accueil">Accueil</button>
+  <button data-ecran="domaine">Domaine</button>
+  <button data-ecran="jouer">Campagne</button>
+  <button data-ecran="cours">Cours</button>
+  <button data-ecran="codex">Codex</button>
+  <button data-ecran="reglages">Réglages</button>
+</nav>
+<main>
+  <p class="attente">Ouverture des archives…</p>
+  <section id="ecran-accueil" class="ecran" hidden></section>
+  <section id="ecran-domaine" class="ecran" hidden></section>
+  <section id="ecran-jouer" class="ecran" hidden></section>
+  <section id="ecran-cours" class="ecran" hidden></section>
+  <section id="ecran-codex" class="ecran" hidden></section>
+  <section id="ecran-reglages" class="ecran" hidden></section>
+  <section id="ecran-expedition" class="ecran" hidden></section>
+  <section id="ecran-partie" class="ecran" hidden></section>
+</main>
+<div id="modale" hidden><div class="modale-boite" role="dialog" aria-modal="true"></div></div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<div id="mentor" class="mentor" aria-live="polite">
+  <span class="mentor-portrait"></span>
+  <p class="mentor-texte"></p>
+</div>
+
+<!-- moteur -->
+<script src="js/noyau.js"></script>
+<script src="assets/icones/game-icons.js"></script>
+<script src="assets/images/td/sprites.js"></script>
+<script src="js/brouillage.js"></script>
+<script src="js/calendrier.js"></script>
+<script src="js/sauvegarde.js"></script>
+<script src="js/leitner.js"></script>
+<script src="js/chargeur.js"></script>
+<script src="js/progression.js"></script>
+<script src="js/questions.js"></script>
+<script src="js/rappels.js"></script>
+<script src="js/icones.js"></script>
+<script src="js/anim.js"></script>
+<script src="js/sons.js"></script>
+<script src="js/musique.js"></script>
+<script src="js/interface.js"></script>
+<script src="js/mentor.js"></script>
+<script src="js/signalement.js"></script>
+<script src="js/codex.js"></script>
+<script src="js/recit.js"></script>
+<script src="js/bataille-moteur.js"></script>
+<script src="js/cartes-bataille.js"></script>
+<script src="js/campagne.js"></script>
+<script src="js/bataille.js"></script>
+<script src="js/expedition.js"></script>
+<script src="js/conseil.js"></script>
+<script src="js/ecran-campagne.js"></script>
+<script src="js/ecran-expedition.js"></script>
+<script src="js/domaine.js"></script>
+<!-- données -->
+<script src="data/config.js"></script>
+<script src="data/planning.js"></script>
+<script src="data/devoirs.js"></script>
+<script src="data/index-cours.js"></script>
+<script src="data/a-retravailler.js"></script>
+<script src="data/suivi.js"></script>
+<script src="data/personnages.js"></script>
+<!-- les cours de index-cours.js sont ajoutés par le chargeur -->
+<script src="js/demarrage.js"></script>
+<script>document.querySelector(".mentor-portrait").innerHTML = JEU.icones.chroniqueur(); JEU.version = "0.8.0";</script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+Moteur : jeu/js/bataille-moteur.js · or perdu par erreur : 6 · 160 batailles par niveau · bataille de route : defense, 4 vagues, camp de 16, carte domaine
+
+p = 0.6 (réponses justes) · bataille de route : defense, 4 vagues, camp de 16, carte domaine
+niv | carte          | tenue (éclatante) | tenu  retraite | murs restants (quand elle tient) | coups portés (1re vague) | ennemis tués / tes pertes | sorties · rival : tours, gardes, rappelés, renforts
+ 1  | domaine        |   54 % (  0 %)   |  54 %   46 %   |                      29 % (53 %) |              4.97 (2.86) |     31.7 / 6      | 1.89 · 2.86, 0.11, 0, 0
+ 2  | domaine        |   64 % (  4 %)   |  59 %   36 %   |                      40 % (63 %) |              4.96 (2.16) |     32.9 / 8.3    | 2.56 · 2.84, 0.11, 0, 0
+ 3  | domaine        |   59 % ( 11 %)   |  49 %   41 %   |                      25 % (42 %) |              7.77 (3.86) |     30.3 / 8      | 2.63 · 1.94, 0.01, 0, 0
+ 4  | domaine        |   10 % (  8 %)   |   3 %   90 %   |                       7 % (69 %) |              5.24 (2.74) |     22.3 / 8.4    | 1.52 · 2.78, 0, 0, 0
+moy |                | 46.8 % (5.8 %)   |                |                           25.3 % |                      5.7
+
+p = 0.7 (réponses justes) · bataille de route : defense, 4 vagues, camp de 16, carte domaine
+niv | carte          | tenue (éclatante) | tenu  retraite | murs restants (quand elle tient) | coups portés (1re vague) | ennemis tués / tes pertes | sorties · rival : tours, gardes, rappelés, renforts
+ 1  | domaine        |   69 % (  0 %)   |  69 %   31 %   |                      43 % (62 %) |               6.13 (2.8) |     33.6 / 6.5    | 2.06 · 2.91, 0.13, 0, 0
+ 2  | domaine        |   75 % ( 19 %)   |  56 %   25 %   |                      56 % (75 %) |              7.66 (2.96) |     32.2 / 8.1    | 2.78 · 2.68, 0.13, 0, 0
+ 3  | domaine        |   74 % ( 22 %)   |  52 %   26 %   |                      39 % (53 %) |             10.31 (4.66) |     30.7 / 8      | 2.76 · 1.88, 0.01, 0, 0
+ 4  | domaine        |   16 % ( 13 %)   |   4 %   84 %   |                      12 % (75 %) |              7.18 (3.49) |     22.8 / 7.8    | 1.59 · 2.69, 0, 0, 0
+moy |                | 58.5 % (13.5 %)   |                |                           37.5 % |                      7.8
+
+p = 0.8 (réponses justes) · bataille de route : defense, 4 vagues, camp de 16, carte domaine
+niv | carte          | tenue (éclatante) | tenu  retraite | murs restants (quand elle tient) | coups portés (1re vague) | ennemis tués / tes pertes | sorties · rival : tours, gardes, rappelés, renforts
+ 1  | domaine        |   86 % (  0 %)   |  86 %   14 %   |                      63 % (73 %) |              7.95 (3.03) |     35.7 / 7.5    | 2.66 · 2.96, 0.24, 0, 0
+ 2  | domaine        |   89 % ( 38 %)   |  51 %   11 %   |                      77 % (87 %) |             10.76 (3.79) |     31.5 / 7.9    | 3.14 · 2.48, 0.18, 0, 0
+ 3  | domaine        |   92 % ( 50 %)   |  42 %    8 %   |                      64 % (69 %) |             14.26 (6.04) |     30.7 / 8.2    | 3.03 · 1.76, 0, 0, 0
+ 4  | domaine        |   30 % ( 26 %)   |   4 %   70 %   |                      24 % (80 %) |              9.41 (4.35) |     22.6 / 6.5    | 1.71 · 2.48, 0, 0, 0
+moy |                | 74.3 % (28.5 %)   |                |                             57 % |                     10.6
+
+p = 0.9 (réponses justes) · bataille de route : defense, 4 vagues, camp de 16, carte domaine
+niv | carte          | tenue (éclatante) | tenu  retraite | murs restants (quand elle tient) | coups portés (1re vague) | ennemis tués / tes pertes | sorties · rival : tours, gardes, rappelés, renforts
+ 1  | domaine        |   97 % (  0 %)   |  97 %    3 %   |                      84 % (86 %) |             10.61 (3.63) |     37.7 / 8.4    | 3.43 · 3, 0.51, 0, 0
+ 2  | domaine        |   96 % ( 66 %)   |  29 %    4 %   |                      95 % (99 %) |             13.67 (4.69) |     26.5 / 6.8    | 3.28 · 1.96, 0.17, 0, 0
+ 3  | domaine        |   97 % ( 83 %)   |  14 %    3 %   |                      80 % (83 %) |             17.82 (7.41) |     25.7 / 5.7    | 2.89 · 1.48, 0, 0, 0
+ 4  | domaine        |   56 % ( 52 %)   |   4 %   44 %   |                      47 % (85 %) |             12.37 (5.12) |     19.6 / 4.4    | 1.91 · 1.95, 0, 0, 0
+moy |                | 86.5 % (50.3 %)   |                |                           76.5 % |                     13.6
+
+(60 s)

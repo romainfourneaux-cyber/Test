@@ -1,0 +1,39 @@
+Moteur : jeu/js/bataille-moteur.js · or perdu par erreur : 6 · 160 batailles par niveau · bataille de route : attaque, 1 vague, camp de 6, carte de la province du niveau, deux fronts, sans champion
+
+p = 0.6 (réponses justes) · bataille de route : attaque, 1 vague, camp de 6, carte de la province du niveau, deux fronts, sans champion
+niv | carte          | tenue (éclatante) | tenu  retraite | murs restants (quand elle tient) | coups portés (1re vague) | ennemis tués / tes pertes | sorties · rival : tours, gardes, rappelés, renforts
+ 0  | gue/col        |  100 % (  0 %)   | 100 %    0 %   |                    100 % (100 %) |              1.86 (1.86) |      6.7 / 0.7    | 0.65 · 0, 0, 0, 0
+ 1  | foret/moulin   |  100 % ( 33 %)   |  67 %    0 %   |                    100 % (100 %) |              2.89 (2.89) |      6.6 / 0.2    | 0.56 · 0, 0, 0, 0
+ 2  | moulin/gue     |  100 % ( 24 %)   |  76 %    0 %   |                    100 % (100 %) |                2.1 (2.1) |      6.7 / 1      | 0.73 · 0, 0, 0, 0
+ 3  | col/foret      |  100 % ( 33 %)   |  67 %    0 %   |                    100 % (100 %) |              3.45 (3.45) |      6.7 / 0.5    | 0.66 · 0, 0, 0, 0
+ 4  | chateau/chateau |  100 % (  0 %)   | 100 %    0 %   |                    100 % (100 %) |              2.25 (2.25) |      5.7 / 1.9    | 0.94 · 0, 0, 0, 0
+moy |                |  100 % ( 18 %)   |                |                            100 % |                      2.5
+
+p = 0.7 (réponses justes) · bataille de route : attaque, 1 vague, camp de 6, carte de la province du niveau, deux fronts, sans champion
+niv | carte          | tenue (éclatante) | tenu  retraite | murs restants (quand elle tient) | coups portés (1re vague) | ennemis tués / tes pertes | sorties · rival : tours, gardes, rappelés, renforts
+ 0  | gue/col        |  100 % (  0 %)   | 100 %    0 %   |                    100 % (100 %) |              2.62 (2.62) |      6.8 / 0.8    | 0.81 · 0, 0, 0, 0
+ 1  | foret/moulin   |  100 % ( 23 %)   |  77 %    0 %   |                    100 % (100 %) |                2.8 (2.8) |      6.5 / 0.3    | 0.54 · 0, 0, 0, 0
+ 2  | moulin/gue     |  100 % ( 35 %)   |  65 %    0 %   |                    100 % (100 %) |              2.63 (2.63) |      6.8 / 0.9    | 0.79 · 0, 0, 0, 0
+ 3  | col/foret      |  100 % ( 41 %)   |  59 %    0 %   |                    100 % (100 %) |              4.19 (4.19) |      6.8 / 0.6    | 0.8 · 0, 0, 0, 0
+ 4  | chateau/chateau |  100 % (  0 %)   | 100 %    0 %   |                    100 % (100 %) |              2.64 (2.64) |      5.8 / 2      | 0.98 · 0, 0, 0, 0
+moy |                |  100 % (19.8 %)   |                |                            100 % |                        3
+
+p = 0.8 (réponses justes) · bataille de route : attaque, 1 vague, camp de 6, carte de la province du niveau, deux fronts, sans champion
+niv | carte          | tenue (éclatante) | tenu  retraite | murs restants (quand elle tient) | coups portés (1re vague) | ennemis tués / tes pertes | sorties · rival : tours, gardes, rappelés, renforts
+ 0  | gue/col        |  100 % (  0 %)   | 100 %    0 %   |                    100 % (100 %) |              3.38 (3.38) |      6.9 / 0.9    | 0.92 · 0, 0, 0, 0
+ 1  | foret/moulin   |  100 % ( 10 %)   |  90 %    0 %   |                    100 % (100 %) |              3.09 (3.09) |      6.6 / 0.5    | 0.61 · 0, 0, 0, 0
+ 2  | moulin/gue     |  100 % ( 56 %)   |  44 %    0 %   |                    100 % (100 %) |              3.69 (3.69) |      6.9 / 0.6    | 0.87 · 0, 0, 0, 0
+ 3  | col/foret      |  100 % ( 55 %)   |  45 %    0 %   |                    100 % (100 %) |              4.94 (4.94) |      6.9 / 0.5    | 0.91 · 0, 0, 0, 0
+ 4  | chateau/chateau |  100 % (  0 %)   | 100 %    0 %   |                    100 % (100 %) |              3.19 (3.19) |      5.9 / 2.2    | 0.99 · 0, 0, 0, 0
+moy |                |  100 % (24.2 %)   |                |                            100 % |                      3.7
+
+p = 0.9 (réponses justes) · bataille de route : attaque, 1 vague, camp de 6, carte de la province du niveau, deux fronts, sans champion
+niv | carte          | tenue (éclatante) | tenu  retraite | murs restants (quand elle tient) | coups portés (1re vague) | ennemis tués / tes pertes | sorties · rival : tours, gardes, rappelés, renforts
+ 0  | gue/col        |  100 % (  0 %)   | 100 %    0 %   |                    100 % (100 %) |              4.04 (4.04) |        7 / 1      | 0.97 · 0, 0, 0, 0
+ 1  | foret/moulin   |  100 % (  3 %)   |  97 %    0 %   |                    100 % (100 %) |              3.56 (3.56) |      6.7 / 0.7    | 0.71 · 0, 0, 0, 0
+ 2  | moulin/gue     |  100 % ( 78 %)   |  22 %    0 %   |                    100 % (100 %) |              4.84 (4.84) |      6.9 / 0.3    | 0.94 · 0, 0, 0, 0
+ 3  | col/foret      |  100 % ( 83 %)   |  18 %    0 %   |                    100 % (100 %) |              5.64 (5.64) |        7 / 0.2    | 0.98 · 0, 0, 0, 0
+ 4  | chateau/chateau |  100 % (  0 %)   | 100 %    0 %   |                    100 % (100 %) |              3.52 (3.52) |      5.9 / 2.5    | 1 · 0, 0, 0, 0
+moy |                |  100 % (32.8 %)   |                |                            100 % |                      4.3
+
+(12 s)
