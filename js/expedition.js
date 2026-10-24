@@ -127,7 +127,7 @@
       sautee: "Semaine {S} traversée sans halte : ses cours ne sont pas encore déposés."
     },
     haltes: { escarmouche: "Escarmouche", embuscade: "Embuscade", evenement: "Événement", marchand: "Marchand", bivouac: "Bivouac", gardien: "Gardien de la semaine", grand: "Grand Gardien" },
-    portes: { faveur: "Faveur de {C}", bourse: "Bourse", parchemin: "Parchemin de renommée", vivres: "Vivres" },
+    portes: { faveur: "Faveur {C}", bourse: "Bourse", parchemin: "Parchemin de renommée", vivres: "Vivres" },
     faveurs: {
       annales: ["+{V} or par bonne réponse au conseil de guerre.", "+{V} or par bonne réponse au conseil de guerre."],
       eclaireurs: ["La première vague adverse perd un homme d'armes.", "Les deux premières vagues adverses perdent un homme d'armes."],
@@ -920,7 +920,9 @@
     if (!porte) return "";
     if (porte.genre === "faveur") {
       var cons = JEU.recit.CONSEILLERS[MATIERE_FAMILLE[porte.conseiller] || "histoire"], nom = cons.nom;
-      return remplir(TEXTES.portes.faveur, { C: nom.charAt(0).toLowerCase() + nom.slice(1) }) + (porte.rare ? " (rare)" : "");
+      // « du ménestrel », « de la cartographe », « de l'herboriste » : l'article se contracte ou s'élide (JEU.campagne.avecArticle)
+      var C = JEU.campagne && JEU.campagne.avecArticle ? JEU.campagne.avecArticle(nom, "de") : "de " + nom.charAt(0).toLowerCase() + nom.slice(1);
+      return remplir(TEXTES.portes.faveur, { C: C }) + (porte.rare ? " (rare)" : "");
     }
     return TEXTES.portes[porte.genre] || "";
   }
