@@ -44,7 +44,7 @@ JEU.enregistrer("cours", {
    "id": "svt-s08-1-f2",
    "notion": "Le triangle de Holdridge",
    "titre": "Climat, humidité, altitude",
-   "texte": "Le triangle de Holdridge range les biomes terrestres selon trois entrées : la zone climatique, le gradient d'humidité et l'altitude. On lit le biome à l'intersection. Ainsi, un climat tropical très aride donne le désert chaud ; les hautes montagnes très humides, la toundra pluvieuse. Le maquis s'étale sur cinq zones climatiques, et le désert polaire existe aussi en très haute montagne.",
+   "texte": "Le triangle de Holdridge range les biomes terrestres selon trois entrées : zone climatique, gradient d'humidité, altitude. Le biome se lit à l'intersection. Un climat tropical très aride donne le désert chaud ; les hautes montagnes très humides, la toundra pluvieuse. Le maquis s'étale sur cinq zones climatiques, et le désert polaire existe aussi en très haute montagne.",
    "pointsCles": [
     "Trois entrées : zone climatique, gradient d'humidité, altitude",
     "Tropical + très aride = désert chaud",
@@ -82,7 +82,7 @@ JEU.enregistrer("cours", {
    "id": "svt-s08-1-f3",
    "notion": "La carte des biomes terrestres",
    "titre": "Où sont le maquis, la forêt tropicale et les déserts",
-   "texte": "Sur la carte, chaque biome a sa couleur, donnée par la légende. Le maquis méditerranéen entoure la Méditerranée et occupe aussi le sud-ouest et le sud de l'Australie. La plus grande forêt tropicale pluvieuse est en Amérique du Sud, surtout au Brésil : l'Amazonie. Les déserts très secs sont en Afrique (le Sahara) et en Asie : Arabie, sud de la Russie, Mongolie.",
+   "texte": "Sur la carte, chaque biome a sa couleur, donnée par la légende. Le maquis méditerranéen entoure la Méditerranée et occupe aussi le sud de l'Australie. La plus grande forêt tropicale pluvieuse est en Amérique du Sud, surtout au Brésil : l'Amazonie. Les déserts très secs sont en Afrique (Sahara) et en Asie : Arabie, sud de la Russie, Mongolie.",
    "pointsCles": [
     "Lire la légende : une couleur par biome",
     "Maquis méditerranéen : pourtour de la Méditerranée, sud de l'Australie",
@@ -125,7 +125,7 @@ JEU.enregistrer("cours", {
    "id": "svt-s08-1-f4",
    "notion": "Les biomes d'eau douce",
    "titre": "Cours d'eau, lacs et terres humides",
-   "texte": "Les biomes d'eau douce, ou dulcicoles, ont une eau à moins de 1 % de sel. Les cours d'eau vont des ruisseaux, peu profonds, à courant fort et parfois à sec, aux grands fleuves, profonds et toujours en eau. Un lac a trois espaces : le littoral, riche en algues et en plantes, la surface, riche en plancton et en poissons, et les profondeurs, sombres et pleines de sédiments. Les terres humides (marais, deltas, tourbières) débordent de biodiversité.",
+   "texte": "Les biomes d'eau douce (dulcicoles) ont moins de 1 % de sel. Cours d'eau : du ruisseau, peu profond, rapide, parfois à sec, au grand fleuve, profond et toujours en eau. Lac : le littoral (algues, plantes), la surface (plancton, poissons), les profondeurs (sombres, sédiments). Terres humides : marais, deltas, tourbières, débordant de biodiversité.",
    "pointsCles": [
     "Dulcicole : eau douce, moins de 1 % de sel",
     "Ruisseaux et rivières : peu profonds, courant fort, peuvent s'assécher ; fleuves : profonds, toujours en eau",
@@ -162,7 +162,7 @@ JEU.enregistrer("cours", {
    "id": "svt-s08-1-f5",
    "notion": "Les biomes marins",
    "titre": "De la côte aux grandes fosses",
-   "texte": "Les biomes marins font 71 % des biomes de la planète, et la plupart des espèces marines vivent près des côtes. Près du rivage : la zone littorale, puis la zone néritique, jusqu'à 200 m, avec les récifs coralliens et les forêts de kelp. En pleine mer, la zone pélagique de surface assure 40 % de la photosynthèse de la planète. En dessous, la zone benthique, sombre et pauvre, cache le biome abyssal et les fumeurs.",
+   "texte": "Les biomes marins font 71 % des biomes de la planète. Au rivage, la zone littorale, puis la zone néritique jusqu'à 200 m, avec récifs coralliens et forêts de kelp. En pleine mer, la zone pélagique de surface assure 40 % de la photosynthèse. Dessous, la zone benthique, sombre et pauvre, abrite le biome abyssal et les fumeurs.",
    "pointsCles": [
     "71 % des biomes de la planète ; la majorité des espèces marines près des côtes",
     "Zone littorale, puis zone néritique (jusqu'à 200 m) : récifs coralliens, forêts de kelp",
@@ -312,7 +312,7 @@ JEU.enregistrer("cours", {
    "enonce": "Quel biome traduit le rôle de l'humanité sur les paysages ?",
    "choix": [
     "Le biome des terres cultivées",
-    "Le biome marin",
+    "Le biome des océans et des mers",
     "La toundra",
     "Le désert polaire"
    ],
@@ -419,7 +419,7 @@ JEU.enregistrer("cours", {
    "choix": [
     "La toundra pluvieuse",
     "Le désert chaud",
-    "La savane",
+    "La savane herbeuse d'Afrique",
     "Le désert polaire"
    ],
    "explication": "Haute altitude et forte humidité donnent la toundra pluvieuse. Le désert polaire, lui, apparaît en très haute montagne.",
@@ -554,7 +554,7 @@ JEU.enregistrer("cours", {
    "enonce": "Comment s'appelle cette immense forêt d'Amérique du Sud ?",
    "choix": [
     "La forêt amazonienne",
-    "La forêt de kelp",
+    "La forêt de kelp des zones tempérées",
     "La forêt noire",
     "La taïga"
    ],
@@ -631,7 +631,7 @@ JEU.enregistrer("cours", {
    "choix": [
     "La forêt tropicale humide",
     "Le désert polaire",
-    "Le maquis",
+    "Le maquis du pourtour méditerranéen",
     "La toundra"
    ],
    "explication": "La forêt tropicale humide abrite la biodiversité maximale. Les déserts et la toundra en ont très peu.",
@@ -717,7 +717,7 @@ JEU.enregistrer("cours", {
    "choix": [
     "Le ruisseau est peu profond, à courant fort, et peut s'assécher",
     "Le ruisseau est plus profond",
-    "Le fleuve a un courant plus fort et s'assèche chaque été",
+    "Le fleuve a un courant plus fort et s'assèche chaque été, au mois d'août",
     "Le ruisseau est toujours en eau"
    ],
    "explication": "Ruisseaux et rivières sont peu profonds, rapides et parfois à sec. Les fleuves sont profonds, plus calmes et toujours en eau.",
