@@ -327,32 +327,36 @@
     if (sp) { var k = 0.62; s += "<image href='" + sp.src + "' x='" + (dx - sp.ax * k) + "' y='" + (dy + 14 - sp.ay * k) + "' width='" + (sp.w * k) + "' height='" + (sp.h * k) + "'/>"; }
     else s += "<circle cx='" + dx + "' cy='" + dy + "' r='" + R_DEPART + "' fill='#24407a' stroke='" + OR + "' stroke-width='3'/>" + JEU.icones.dans("lys", dx - 13, dy - 13, 26, OR_CLAIR);
     s += texteSVG(dx, dy + 44, "halte-nom", TEXTES.route.depart);
-    // les haltes
+    // les haltes ; leurs noms vont dans une couche à part, dessinée après tous les médaillons (le halo d'un gardien ne
+    // couvre jamais le nom d'une voisine ; le nom garde l'estompage de sa halte par sa classe)
+    var etiquettes = "";
     d.noeuds.forEach(function (nd) {
       var et = etats[nd.id], h = nd.halte, gardien = h.type === "gardien" || h.type === "grand", x = nd.x, y = nd.y, r = nd.r;
       var touche = att.indexOf(nd.id) >= 0 ? String(att.indexOf(nd.id) + 1) : null;
-      var brume = et === "brume";
+      var brume = et === "brume", classeNom = "halte-nom " + et.split(" ")[0];
       s += "<g class='halte " + et + (gardien ? " gardien" : "") + "' data-id='" + nd.id + "' data-type='" + h.type + "' tabindex='" + (et === "atteignable" ? 0 : -1) + "'" +
         (et === "atteignable" ? " role='button'" : "") + " aria-label='" + U.echapper(ariaHalte(nd, et, touche)) + "'><title>" + U.echapper(ariaHalte(nd, et, touche)) + "</title>";
       if (et === "atteignable") s += "<g class='halo'><circle cx='" + x + "' cy='" + y + "' r='" + (r + 8) + "' fill='none' stroke='#1c120a' stroke-width='7' opacity='.4'/><circle class='halo-or' cx='" + x + "' cy='" + y + "' r='" + (r + 8) + "' fill='none' stroke='" + OR_CLAIR + "' stroke-width='4'/></g>";
       if (gardien) {
         s += "<g class='corps' filter='url(#ombreR)'>" + medaillonGardien(nd, e) + "</g>";
-        if (h.type === "grand") s += texteSVG(x, y + r + 17, "halte-nom", TEXTES.route.grand.split(" ")[0]) + texteSVG(x, y + r + 33, "halte-nom", TEXTES.route.grand.split(" ").slice(1).join(" "));
-        else s += texteSVG(x, y + r + 17, "halte-nom", TEXTES.route.gardien);
+        if (h.type === "grand") etiquettes += texteSVG(x, y + r + 17, classeNom, TEXTES.route.grand.split(" ")[0]) + texteSVG(x, y + r + 33, classeNom, TEXTES.route.grand.split(" ").slice(1).join(" "));
+        else etiquettes += texteSVG(x, y + r + 17, classeNom, TEXTES.route.gardien);
         if (!brume && h.type === "gardien" && h.porte) s += ecussonPorte(h.porte, x + 24, y + 20);
       } else {
         s += "<g class='corps' filter='url(#ombreR)'><circle cx='" + x + "' cy='" + y + "' r='" + r + "' fill='" + OR + "' stroke='" + ENCRE + "' stroke-width='1.6'/>" +
           "<circle cx='" + x + "' cy='" + y + "' r='" + (r - 3.5) + "' fill='none' stroke='" + ENCRE + "' stroke-width='1' stroke-dasharray='.1 3' stroke-linecap='round'/>" +
           "<circle cx='" + x + "' cy='" + y + "' r='" + (r - 6) + "' fill='" + (brume ? "#9a927f" : "#f7efdc") + "' stroke='" + ENCRE + "' stroke-width='1.2'/>" +
           (brume ? "" : JEU.icones.dans(iconeHalte(h), x - 14, y - 14, 28, h.type === "embuscade" ? RUBRIQUE : ENCRE)) + "</g>";
-        // le nom : sous le médaillon, ou au-dessus dans les colonnes paires (deux voisines n'ont jamais leurs noms sur la même ligne)
-        if (!brume) s += texteSVG(x, nd.couche % 2 === 0 ? y - r - 7 : y + r + 15, "halte-nom", nomCourt(h));
+        // le nom : au-dessus du médaillon dans les colonnes impaires, dessous dans les paires (deux voisines n'ont jamais leurs noms
+        // sur la même ligne, et le nom de la dernière colonne reste hors du halo du gardien)
+        if (!brume) etiquettes += texteSVG(x, nd.couche % 2 === 1 ? y - r - 7 : y + r + 15, classeNom, nomCourt(h));
         if (!brume && h.porte) s += ecussonPorte(h.porte, x + 17, y + 15);
       }
       if (/jouee/.test(et)) s += sceauHalte(x + (gardien ? 10 : 6), y - (gardien ? 10 : 6), gardien ? 36 : 32, /echouee/.test(et));
       if (touche) s += "<g class='touche-halte'><circle cx='" + (x - r + 3) + "' cy='" + (y - r + 3) + "' r='11' fill='#8e3424' stroke='#f6e7bf' stroke-width='1.5'/>" + texteSVG(x - r + 3, y - r + 8, "txt-touche", touche) + "</g>";
       s += "</g>";
     });
+    s += "<g class='etiquettes' aria-hidden='true'>" + etiquettes + "</g>";
     // brume : sur les semaines suivantes de l'expédition et sur tout ce qui dépasse la frontière
     d.bandes.forEach(function (b) {
       if (b.etat !== "brume" && b.etat !== "avenir") return;
