@@ -356,7 +356,7 @@ module.exports = {
       explication: "What + will + the weather + be like : la question en like, au futur. Tomorrow ferme la phrase.", source: L(9) },
     { id: "anglais-seq03-q58", fiche: "anglais-seq03-g7", type: "trou", niveau: 3,
       enonce: "Écris le mot interrogatif qui convient.",
-      texte: "___ will you stay ? For two weeks. ___ are you going to sing ? Because it's my birthday.",
+      texte: "___ will you stay ? For two weeks. ___ are you going to dance ? Because it's my birthday.",
       reponse: [["how long"], ["why"]],
       explication: "For two weeks répond à how long ; because répond à why.", source: L(9) },
     { id: "anglais-seq03-q59", fiche: "anglais-seq03-g7", type: "qcm", niveau: 3,

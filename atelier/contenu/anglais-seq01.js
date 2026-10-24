@@ -531,7 +531,7 @@ module.exports = {
       choix: ["une valise", "un costume", "une boîte", "un sac de sport"], reponse: "une valise",
       explication: "A suitcase est une valise. On y met ses affaires pour voyager.", source: C(2) },
     { id: "anglais-seq01-q96", fiche: "anglais-seq01-v8", type: "qcm", niveau: 2,
-      enonce: "« There was a lot of traffic » : de quoi parle-t-on ?",
+      enonce: "« The traffic was terrible this morning » : de quoi parle-t-on ?",
       choix: ["De la circulation sur la route", "Du bruit dans la salle", "Du monde au concert", "Du mauvais temps"], reponse: "De la circulation sur la route",
       explication: "Traffic désigne la circulation : voitures, bus, camions. A lot of traffic, beaucoup de circulation.", source: L(2) },
     { id: "anglais-seq01-q97", fiche: "anglais-seq01-v13", type: "qcm_multiple", niveau: 3,
