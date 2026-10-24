@@ -7,7 +7,7 @@ JEU.enregistrer("cours", {
    "id": "geographie-s08-2-f1",
    "notion": "La situation scolaire en Afghanistan",
    "titre": "Une école en grande difficulté",
-   "texte": "L'Afghanistan, en guerre depuis plus de quarante ans, a un analphabétisme parmi les plus forts du monde. Près d'un enfant sur deux ne va pas à l'école ; 55 % des garçons et 30 % des jeunes femmes savent lire. La moitié des 12 000 écoles publiques n'ont pas de bâtiment : on fait classe par terre, dehors ou sous une tente.",
+   "texte": "L'Afghanistan, en guerre depuis plus de quarante ans, a un analphabétisme parmi les plus forts du monde. Près d'un enfant sur deux ne va pas à l'école ; 55 % des garçons et 30 % des jeunes femmes savent lire. La moitié des 12 000 écoles publiques n'ont pas de bâtiment : classe par terre, dehors ou sous une tente.",
    "pointsCles": [
     "Un pays en guerre depuis plus de quarante ans",
     "Près de la moitié des enfants de 7 à 17 ans ne vont pas à l'école",
@@ -227,7 +227,7 @@ JEU.enregistrer("cours", {
    "fiche": "geographie-s08-2-f1",
    "type": "qcm",
    "niveau": 1,
-   "enonce": "Depuis combien de temps l'Afghanistan est-il en guerre, d'après l'étude de cas ?",
+   "enonce": "Depuis combien de temps l'Afghanistan est-il en guerre ?",
    "choix": [
     "Plus de quarante ans",
     "Une dizaine d'années",
@@ -346,7 +346,7 @@ JEU.enregistrer("cours", {
    "choix": [
     "Parce que près de la moitié des enfants ne vont pas à l'école, dans un pays en guerre depuis quarante ans",
     "Parce que la langue du pays ne s'écrit pas",
-    "Parce que les écoles y sont payantes et très chères",
+    "Parce que les écoles y sont payantes et très chères, si bien que seules les familles riches peuvent y envoyer leurs enfants",
     "Parce que le pays est trop peuplé"
    ],
    "explication": "Qui ne va pas à l'école n'apprend pas à lire. La guerre, le manque d'écoles et le travail des enfants tiennent la moitié des enfants loin de la classe.",
@@ -383,7 +383,7 @@ JEU.enregistrer("cours", {
    "fiche": "geographie-s08-2-f2",
    "type": "qcm_multiple",
    "niveau": 2,
-   "enonce": "Quels freins à la scolarisation l'étude de cas cite-t-elle pour l'Afghanistan ? (plusieurs réponses)",
+   "enonce": "Quels sont les freins à la scolarisation en Afghanistan ? (plusieurs réponses)",
    "choix": [
     "Les attaques contre les écoles",
     "Le travail des enfants",
@@ -479,7 +479,7 @@ JEU.enregistrer("cours", {
    "fiche": "geographie-s08-2-f2",
    "type": "qcm",
    "niveau": 3,
-   "enonce": "Dans le sud de l'Afghanistan, près de Kandahar, les filles quittent l'école très tôt. Comment l'étude de cas l'explique-t-elle ?",
+   "enonce": "Dans le sud de l'Afghanistan, près de Kandahar, les filles quittent l'école très tôt. Comment l'expliquer ?",
    "choix": [
     "L'éducation des filles y est mal vue et elles sont mariées très jeunes",
     "Il n'y a pas d'écoles dans le sud du pays",
@@ -558,7 +558,7 @@ JEU.enregistrer("cours", {
    "fiche": "geographie-s08-2-f3",
    "type": "qcm_multiple",
    "niveau": 2,
-   "enonce": "Qu'est-ce qui est gratuit pour une élève finlandaise, d'après le texte ? (plusieurs réponses)",
+   "enonce": "Qu'est-ce qui est gratuit pour une élève finlandaise ? (plusieurs réponses)",
    "choix": [
     "La cantine",
     "Les soins du dentiste de l'école",
@@ -614,7 +614,7 @@ JEU.enregistrer("cours", {
    "fiche": "geographie-s08-2-f3",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "À quel âge passe-t-on le baccalauréat en Finlande, d'après le texte ?",
+   "enonce": "À quel âge passe-t-on le baccalauréat en Finlande ?",
    "choix": [
     "À 18 ans",
     "À 16 ans",
@@ -658,7 +658,7 @@ JEU.enregistrer("cours", {
    "choix": [
     "L'école est gratuite jusqu'à l'université, avec repas et soins, et les classes sont petites",
     "Parce que l'école n'est pas obligatoire",
-    "Parce que les élèves travaillent aux champs l'après-midi",
+    "Parce que les élèves travaillent aux champs l'après-midi pour aider leur famille, après avoir étudié le matin",
     "Parce que les classes comptent plus de quarante élèves"
    ],
    "explication": "Tout est gratuit, de la cantine à l'université, et une classe compte 15 élèves. La photo montre une salle bien équipée.",
@@ -694,7 +694,7 @@ JEU.enregistrer("cours", {
    "fiche": "geographie-s08-2-f4",
    "type": "qcm",
    "niveau": 1,
-   "enonce": "Quelle est l'espérance de vie en Finlande, d'après le tableau ?",
+   "enonce": "Quelle est l'espérance de vie en Finlande ?",
    "choix": [
     "81 ans",
     "53 ans",
@@ -794,12 +794,12 @@ JEU.enregistrer("cours", {
    "fiche": "geographie-s08-2-f4",
    "type": "qcm",
    "niveau": 3,
-   "enonce": "Pourquoi le tableau permet-il de dire que la Finlande est un pays développé ?",
+   "enonce": "Pourquoi peut-on dire que la Finlande est un pays développé ?",
    "choix": [
     "Espérance de vie longue, PIB par habitant élevé, presque tout le monde sait lire",
     "Parce que sa population est plus nombreuse",
     "Parce que les familles y ont beaucoup d'enfants",
-    "Parce que les classes y sont plus chargées"
+    "Parce que les classes y sont plus chargées, ce qui prouve que beaucoup d'enfants vont à l'école"
    ],
    "explication": "Richesse, santé et éducation : les trois critères de l'IDH sont excellents en Finlande. C'est la définition d'un pays développé.",
    "source": {
@@ -813,7 +813,7 @@ JEU.enregistrer("cours", {
    "id": "geographie-s08-2-q31",
    "fiche": "geographie-s08-2-f4",
    "type": "qcm",
-   "niveau": 2,
+   "niveau": 3,
    "enonce": "Comment l'espérance de vie des Afghans se compare-t-elle à celle des Finlandais ?",
    "choix": [
     "Elle est plus courte de près de trente ans",
@@ -835,7 +835,7 @@ JEU.enregistrer("cours", {
    "fiche": "geographie-s08-2-f4",
    "type": "qcm_multiple",
    "niveau": 2,
-   "enonce": "Quels indicateurs du tableau montrent que l'Afghanistan est un pays peu développé ? (plusieurs réponses)",
+   "enonce": "Quels indicateurs montrent que l'Afghanistan est un pays peu développé ? (plusieurs réponses)",
    "choix": [
     "Une espérance de vie de 53 ans",
     "Un PIB par habitant de 2 000 dollars",
@@ -960,7 +960,7 @@ JEU.enregistrer("cours", {
    "choix": [
     "Le pays, plus pauvre, consacre moins d'argent à l'école et manque de locaux",
     "Les enfants afghans sont plus nombreux à vouloir aller à l'école",
-    "Les classes finlandaises sont vides car l'école n'y est pas obligatoire",
+    "Les classes finlandaises sont presque vides, car l'école n'y est pas obligatoire et beaucoup d'enfants restent chez eux",
     "Le climat afghan oblige à regrouper les élèves"
    ],
    "explication": "Avec un PIB très faible et une petite part consacrée à l'éducation, l'Afghanistan manque d'écoles et de bâtiments. Les élèves s'entassent donc.",
@@ -976,7 +976,7 @@ JEU.enregistrer("cours", {
    "fiche": "geographie-s08-2-f5",
    "type": "qcm_multiple",
    "niveau": 2,
-   "enonce": "Quels éléments du tableau sont plus favorables à l'école en Finlande ? (plusieurs réponses)",
+   "enonce": "Quels éléments sont plus favorables à l'école en Finlande ? (plusieurs réponses)",
    "choix": [
     "Des classes de 15 élèves",
     "6,4 % du PIB pour l'éducation",
@@ -997,7 +997,7 @@ JEU.enregistrer("cours", {
    "id": "geographie-s08-2-q40",
    "fiche": "geographie-s08-2-f5",
    "type": "qcm",
-   "niveau": 2,
+   "niveau": 3,
    "enonce": "Pourquoi le taux d'alphabétisation de l'Afghanistan n'est-il que de 43 % ?",
    "choix": [
     "Parce que près de la moitié des enfants ne vont pas à l'école",
@@ -1018,7 +1018,7 @@ JEU.enregistrer("cours", {
    "fiche": "geographie-s08-2-f6",
    "type": "qcm",
    "niveau": 1,
-   "enonce": "D'après la carte de 2018, quel continent a les taux d'alphabétisation les plus faibles ?",
+   "enonce": "En 2018, quel continent avait les taux d'alphabétisation les plus faibles ?",
    "choix": [
     "L'Afrique",
     "L'Europe",
@@ -1097,7 +1097,7 @@ JEU.enregistrer("cours", {
     "Les taux les plus bas sont dans les pays pauvres, les plus hauts dans les pays développés",
     "Ils sont identiques partout",
     "Les pays riches ont les taux les plus bas",
-    "Ils dépendent seulement du climat"
+    "Ils dépendent seulement du climat : on apprend moins bien à lire dans les pays chauds que dans les pays froids"
    ],
    "explication": "L'éducation est un des trois critères de l'IDH. Là où le développement est faible, comme en Afghanistan, on sait moins souvent lire.",
    "source": {
@@ -1111,7 +1111,7 @@ JEU.enregistrer("cours", {
    "id": "geographie-s08-2-q46",
    "fiche": "geographie-s08-2-f6",
    "type": "qcm",
-   "niveau": 2,
+   "niveau": 3,
    "enonce": "Dans quelle classe de la carte se situe l'Afghanistan, où 43 % des habitants savent lire ?",
    "choix": [
     "Moins de 50 %",

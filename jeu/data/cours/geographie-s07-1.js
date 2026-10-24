@@ -195,7 +195,7 @@ JEU.enregistrer("cours", {
    "fiche": "geographie-s07-1-f1",
    "type": "qcm",
    "niveau": 1,
-   "enonce": "D'après le cours, qu'est-ce qu'une personne pauvre ?",
+   "enonce": "Qu'est-ce qu'une personne pauvre ?",
    "choix": [
     "Une personne qui manque des ressources nécessaires pour vivre correctement dans son pays",
     "Une personne qui vit à la campagne",
@@ -236,7 +236,7 @@ JEU.enregistrer("cours", {
    "id": "geographie-s07-1-q3",
    "fiche": "geographie-s07-1-f1",
    "type": "vrai_faux",
-   "niveau": 1,
+   "niveau": 2,
    "enonce": "La pauvreté, c'est seulement le fait de manquer de nourriture.",
    "corrections": [
     "Faux : c'est manquer de tout ce qu'il faut pour vivre correctement : nourriture, logement, vêtements, eau potable, mais aussi école, soins et transports.",
@@ -294,7 +294,7 @@ JEU.enregistrer("cours", {
    "enonce": "La définition du cours parle de « vivre correctement dans son pays ». Qu'est-ce que cela montre ?",
    "choix": [
     "Ce qu'il faut pour vivre correctement dépend du pays où l'on vit",
-    "Seuls les pays du Sud comptent des pauvres",
+    "Seuls les pays du Sud comptent des pauvres, puisque les pays du Nord sont riches",
     "La pauvreté se mesure uniquement en kilomètres",
     "On ne peut pas être pauvre quand on voyage"
    ],
@@ -428,12 +428,12 @@ JEU.enregistrer("cours", {
    "id": "geographie-s07-1-q13",
    "fiche": "geographie-s07-1-f2",
    "type": "qcm",
-   "niveau": 2,
+   "niveau": 3,
    "enonce": "Pourquoi le cours distingue-t-il deux sortes de ressources ?",
    "choix": [
     "Parce que la pauvreté, ce n'est pas seulement manquer d'objets : c'est aussi manquer de services comme l'école ou les soins",
     "Parce que seules les ressources matérielles comptent vraiment",
-    "Parce que les ressources immatérielles ne manquent que dans les pays du Nord",
+    "Parce que les ressources immatérielles ne manquent jamais : seules les ressources matérielles peuvent faire défaut aux pauvres",
     "Parce que l'eau potable est une ressource immatérielle"
    ],
    "explication": "Le pauvre manque de choses concrètes, mais aussi de services. Les deux familles de ressources comptent.",
@@ -547,7 +547,7 @@ JEU.enregistrer("cours", {
    "enonce": "Une personne dispose de 3 dollars par jour, une autre de 1,50 dollar. Laquelle est en extrême pauvreté d'après le seuil du cours ?",
    "choix": [
     "Celle qui a 1,50 dollar",
-    "Celle qui a 3 dollars",
+    "Celle qui a 3 dollars par jour",
     "Les deux",
     "Aucune des deux"
    ],
@@ -568,7 +568,7 @@ JEU.enregistrer("cours", {
    "enonce": "À quoi sert le seuil de pauvreté ?",
    "choix": [
     "À décider à partir de quel revenu une personne est considérée comme pauvre",
-    "À savoir quels pays sont dans l'hémisphère Sud",
+    "À savoir quels pays se trouvent dans l'hémisphère Sud et lesquels dans l'hémisphère Nord",
     "À mesurer la croissance de la population",
     "À calculer l'espérance de vie"
    ],
@@ -624,7 +624,7 @@ JEU.enregistrer("cours", {
    "enonce": "Dans un pays du Sud, une famille de cinq personnes gagne 9 dollars par jour. Est-elle en extrême pauvreté d'après le seuil du cours ?",
    "choix": [
     "Oui : 9 dollars pour cinq personnes font 1,80 dollar par personne, sous le seuil",
-    "Non : 9 dollars, c'est plus que 1,90 dollar",
+    "Non : 9 dollars par jour, c'est bien plus que le seuil de 1,90 dollar, quel que soit le nombre de personnes",
     "Non : le seuil ne concerne que les enfants",
     "Oui : toute famille d'un pays du Sud est en extrême pauvreté"
    ],
@@ -681,7 +681,7 @@ JEU.enregistrer("cours", {
    "id": "geographie-s07-1-q26",
    "fiche": "geographie-s07-1-f4",
    "type": "vrai_faux",
-   "niveau": 1,
+   "niveau": 2,
    "enonce": "Depuis 1990, la part des habitants de la planète qui vivent sous le seuil de pauvreté a beaucoup baissé.",
    "corrections": [],
    "explication": "Oui : de 35 % en 1990 à 8,5 % en 2018. La pauvreté recule.",
@@ -759,7 +759,7 @@ JEU.enregistrer("cours", {
    "enonce": "Entre 1990 et 2018, la population mondiale a augmenté, et pourtant le nombre de personnes très pauvres est passé de presque 2 milliards à 700 millions. Que peut-on en conclure ?",
    "choix": [
     "La pauvreté recule vraiment : moins de pauvres, dans un monde plus peuplé",
-    "La pauvreté augmente, puisque la population augmente",
+    "La pauvreté augmente forcément, puisque la population mondiale a augmenté pendant la même période",
     "Le nombre de pauvres n'a pas changé",
     "Le seuil de pauvreté a disparu"
    ],
@@ -775,13 +775,13 @@ JEU.enregistrer("cours", {
    "id": "geographie-s07-1-q31",
    "fiche": "geographie-s07-1-f4",
    "type": "qcm",
-   "niveau": 2,
+   "niveau": 3,
    "enonce": "Comment la part de la population mondiale sous le seuil de pauvreté a-t-elle évolué de 1990 à 2018 ?",
    "choix": [
     "Elle a été divisée par quatre environ",
     "Elle a doublé",
     "Elle est restée stable",
-    "Elle a légèrement augmenté"
+    "Elle a légèrement augmenté, de quelques points"
    ],
    "explication": "De 35 % à 8,5 %, c'est environ quatre fois moins. La population mondiale, elle, s'est enrichie.",
    "indice": "Compare 35 et 8,5.",
@@ -915,7 +915,7 @@ JEU.enregistrer("cours", {
    "enonce": "Pourquoi peut-on dire à la fois que la pauvreté recule et que le monde reste très inégal ?",
    "choix": [
     "Moins de gens sont très pauvres, mais une toute petite minorité garde la moitié des richesses",
-    "Parce que la pauvreté ne recule que dans les pays du Nord",
+    "Parce que la pauvreté ne recule que dans les pays du Nord, tandis qu'elle augmente partout dans les pays du Sud",
     "Parce que la population mondiale diminue",
     "Parce que le seuil de pauvreté a été supprimé"
    ],
