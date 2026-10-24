@@ -165,7 +165,7 @@ export const DOORS = [
   { id: 'porte-chambre', level: 'rdc', wallAxis: 'z', plane: [2.186, 2.256], a0: 6.132, a1: 6.912, hingeAt: 6.912, opensToward: +1, openAngleDeg: 90 },
   { id: 'coulissante-sdb', level: 'rdc', wallAxis: 'z', plane: [2.186, 2.256], a0: 2.30, a1: 3.13, sliding: true, slideSide: +1, panelAt: [2.513, 3.363] },
   { id: 'galandage-dressing', level: 'rdc', wallAxis: 'x', plane: [2.23, 2.30], a0: 4.31, a1: 4.86, pocket: true },
-  { id: 'porte-ch1', level: 'etage', wallAxis: 'x', plane: [3.13, 3.20], a0: 2.213, a1: 3.043, hingeAt: 3.043, opensToward: -1, openAngleDeg: 90 },
+  { id: 'porte-ch1', level: 'etage', wallAxis: 'x', plane: [3.13, 3.20], a0: 2.213, a1: 3.043, hingeAt: 3.043, opensToward: -1, openAngleDeg: 78 },
   { id: 'porte-ch2', level: 'etage', wallAxis: 'x', plane: [4.10, 4.17], a0: 2.213, a1: 3.043, hingeAt: 3.043, opensToward: +1, openAngleDeg: 90 },
 ];
 

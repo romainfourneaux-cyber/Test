@@ -30,7 +30,7 @@ const FONTS = [['Barlow', 400], ['Barlow', 500], ['Barlow', 600], ['Barlow Conde
 // Schéma de principe en plan (SVG) : appuis de l'escalier et joints avec le placo
 // ---------------------------------------------------------------------------
 function planSvg() {
-  const X0 = 2.75, X1 = 8.65, Z0 = -0.35, Z1 = 2.55, K = 112; // mètres -> px
+  const X0 = 2.95, X1 = 8.62, Z0 = -0.26, Z1 = 2.32, K = 118; // mètres -> px
   const W = (X1 - X0) * K, H = (Z1 - Z0) * K;
   const P = (x, z) => `${((x - X0) * K).toFixed(1)},${((z - Z0) * K).toFixed(1)}`;
   const rect = (x0, z0, x1, z1, cls) => `<rect class="${cls}" x="${((x0 - X0) * K).toFixed(1)}" y="${((z0 - Z0) * K).toFixed(1)}" width="${((x1 - x0) * K).toFixed(1)}" height="${((z1 - z0) * K).toFixed(1)}"/>`;
@@ -43,8 +43,7 @@ function planSvg() {
     steps.push(`<polygon class="step" points="${poly.map(([x, z]) => P(x, z)).join(' ')}"/>`);
   }
   const anchorsE = [];
-  for (let x = 7.0; x > 3.4; x -= 0.75) anchorsE.push(x);
-  anchorsE.push(6.31);
+  anchorsE.push(7.07, 6.31, 5.55, 4.78, 4.12, 3.29);   // positions modélisées (stair.js)
   return `<svg viewBox="0 0 ${W.toFixed(0)} ${H.toFixed(0)}" width="100%" xmlns="http://www.w3.org/2000/svg">
   <defs><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="6" stroke="#7d7a74" stroke-width="1.4"/></pattern></defs>
   <style>
@@ -52,7 +51,7 @@ function planSvg() {
     .iso{fill:#efd979;stroke:none}.pla{fill:#fff;stroke:#3c4144;stroke-width:.8}
     .clo{fill:#f6ecbf;stroke:#3c4144;stroke-width:.8}
     .step{fill:#dfe2e4;stroke:#383e42;stroke-width:1.2}
-    .lim{fill:#383e42}.joint{stroke:#c0392b;stroke-width:2.2;stroke-dasharray:5 4;fill:none}
+    .lim{fill:#383e42}.joint{stroke:#c0392b;stroke-width:3;stroke-dasharray:6 4;fill:none}
     .lbl{font:600 13px 'Barlow Condensed',sans-serif;fill:#22272a;letter-spacing:.03em}
     .sm{font:500 11px 'Barlow',sans-serif;fill:#555b5f}
   </style>
@@ -66,8 +65,9 @@ function planSvg() {
   ${steps.join('')}
   ${rect(3.23, 0.35, 7.30, 0.362, 'lim')}${rect(3.21, 0.35, 3.222, 1.29, 'lim')}${rect(4.10, 1.218, 7.30, 1.23, 'lim')}
   ${rect(4.045, 1.215, 4.105, 1.275, 'lim')}
-  <line class="joint" x1="${((3.24 - X0) * K).toFixed(1)}" y1="${((0.345 - Z0) * K).toFixed(1)}" x2="${((7.30 - X0) * K).toFixed(1)}" y2="${((0.345 - Z0) * K).toFixed(1)}"/>
-  <line class="joint" x1="${((3.205 - X0) * K).toFixed(1)}" y1="${((0.36 - Z0) * K).toFixed(1)}" x2="${((3.205 - X0) * K).toFixed(1)}" y2="${((1.29 - Z0) * K).toFixed(1)}"/>
+  <line class="joint" x1="${((3.24 - X0) * K).toFixed(1)}" y1="${((0.385 - Z0) * K).toFixed(1)}" x2="${((7.30 - X0) * K).toFixed(1)}" y2="${((0.385 - Z0) * K).toFixed(1)}"/>
+  <line class="joint" x1="${((3.245 - X0) * K).toFixed(1)}" y1="${((0.40 - Z0) * K).toFixed(1)}" x2="${((3.245 - X0) * K).toFixed(1)}" y2="${((1.29 - Z0) * K).toFixed(1)}"/>
+  <line class="joint" x1="${((5.29 - X0) * K).toFixed(1)}" y1="${((1.195 - Z0) * K).toFixed(1)}" x2="${((7.28 - X0) * K).toFixed(1)}" y2="${((1.195 - Z0) * K).toFixed(1)}"/>
   ${anchorsE.map((x) => `<circle cx="${((x - X0) * K).toFixed(1)}" cy="${((0.17 - Z0) * K).toFixed(1)}" r="5.5" fill="#1f6fb2" stroke="#fff" stroke-width="1.5"/>`).join('')}
   <rect x="${((7.20 - X0) * K).toFixed(1)}" y="${((0.40 - Z0) * K).toFixed(1)}" width="12" height="12" fill="#2e8b57" stroke="#fff"/>
   <rect x="${((7.20 - X0) * K).toFixed(1)}" y="${((1.13 - Z0) * K).toFixed(1)}" width="12" height="12" fill="#2e8b57" stroke="#fff"/>
@@ -87,14 +87,15 @@ function planSvg() {
 // ---------------------------------------------------------------------------
 // Détail légendé (rendu 3D + repères projetés)
 // ---------------------------------------------------------------------------
-function detailFigure() {
-  if (!has('detail-raccord.png')) return '<p class="miss">Rendu du détail à générer (vue « detail-raccord »).</p>';
-  const co = has('detail-raccord.callouts.json') ? JSON.parse(fs.readFileSync(path.join(DIR, 'detail-raccord.callouts.json'), 'utf8')).filter((c) => c.visible !== false) : [];
-  const png = fs.readFileSync(path.join(DIR, 'detail-raccord.png'));
+function detailFigure(name, { maxH = '120mm' } = {}) {
+  if (!has(`${name}.png`)) return `<p class="miss">Rendu « ${name} » à générer.</p>`;
+  const png = fs.readFileSync(path.join(DIR, `${name}.png`));
   const meta = { w: png.readUInt32BE(16), h: png.readUInt32BE(20) }; // en-tête IHDR
+  const raw = has(`${name}.callouts.json`) ? JSON.parse(fs.readFileSync(path.join(DIR, `${name}.callouts.json`), 'utf8')) : [];
+  const co = raw.filter((c) => c.visible !== false && c.x > meta.w * 0.02 && c.x < meta.w * 0.98 && c.y > meta.h * 0.03 && c.y < meta.h * 0.97);
   const marks = co.map((c, i) => `<span class="mk" style="left:${(100 * c.x / meta.w).toFixed(2)}%;top:${(100 * c.y / meta.h).toFixed(2)}%">${i + 1}</span>`).join('');
   const legend = co.length ? `<ol class="legend">${co.map((c) => `<li>${c.text}</li>`).join('')}</ol>` : '';
-  return `<figure class="det"><div class="frame"><img src="${dataUri(path.join(DIR, 'detail-raccord.png'))}">${marks}</div></figure>${legend}`;
+  return `<figure class="det"><div class="frame" style="max-height:${maxH}"><img src="${dataUri(path.join(DIR, `${name}.png`))}">${marks}</div></figure>${legend}`;
 }
 
 const img = (f, cls = 'shot') => (has(f) ? `<img class="${cls}" src="${dataUri(path.join(DIR, f))}">` : '');
@@ -148,7 +149,7 @@ footer { margin-top: auto; font-size: 8pt; color: #6b7175; border-top: 0.25mm so
       <div><span style="background:#1f6fb2;border-radius:50%"></span>Ancrage dans le bloc à travers le doublage</div>
       <div><span style="background:#2e8b57"></span>Platine chevillée sur le dallage (pied, poteau-noyau)</div>
       <div><span style="background:#d98b1d"></span>Platine / cornière en rive de trémie (dalle d'étage)</div>
-      <div><span style="border-top:0.7mm dashed #c0392b;height:0;margin-top:1.5mm"></span>Joint creux 10 mm, aucune fixation dans le placo</div>
+      <div><span style="border-top:0.8mm dashed #c0392b;height:0;margin-top:1.5mm"></span>Joint creux / bande résiliente 10 mm : aucune fixation dans le placo</div>
     </div>
   </div>
   <table>
@@ -164,7 +165,7 @@ footer { margin-top: auto; font-size: 8pt; color: #6b7175; border-top: 0.25mm so
 
 <section class="page">
   ${pageHead(2, 'Détail 1 · limon fixé au mur à travers le doublage', 'Raccord escalier métallique / placo')}
-  ${detailFigure()}
+  ${detailFigure('detail-fixation')}
   <ol class="steps">
     <li><div><b>Avant les doublages</b>, le métallier relève les murs bruts et fixe les positions d'ancrage sur ses plans d'atelier.</div></li>
     <li><div>Perçage du bloc, scellement chimique des tiges M12 <b>avec tamis</b> (bloc creux), en respectant l'évaluation technique de la cheville (profondeur, entraxes, distance aux bords).</div></li>
@@ -178,7 +179,7 @@ footer { margin-top: auto; font-size: 8pt; color: #6b7175; border-top: 0.25mm so
 
 <section class="page">
   ${pageHead(3, 'Détail 2 · échiffre et cloisons autour de l\'escalier', 'Raccord escalier métallique / placo')}
-  ${img('int-degagement.png')}
+  ${detailFigure('detail-echiffre', { maxH: '105mm' })}
   <div class="cols">
     <div>
       <h2>Échiffre côté dégagement</h2>
@@ -209,11 +210,12 @@ footer { margin-top: auto; font-size: 8pt; color: #6b7175; border-top: 0.25mm so
   ${pageHead(4, 'Fenêtre du WC et phasage du chantier', 'Raccord escalier métallique / placo')}
   <div class="warn"><h2>Point d'attention : fenêtre du WC sous l'escalier</h2>
     <p style="margin-top:1.5mm">La fenêtre 0,60 x 0,70 (allège 1,40 m, haut 2,10 m sur la façade Est) se trouve sous les marches balancées
-    et derrière le limon mural. Vitrage dégagé vu de l'intérieur : <b>${vitrage}</b>.${alcove ? ` Hauteur libre dans l'alcôve du WC : <b>${alcove}</b>.` : ''}</p>
+    et derrière le limon mural. Vitrage dégagé vu de l'intérieur : <b>${vitrage}</b>.${alcove ? ` Hauteur libre dans l'alcôve du WC : <b>${alcove}</b>.` : ''}
+    <b>Un vantail ouvrant vers l'intérieur bute contre le limon (environ 1 cm devant le haut du dormant) : il ne peut pas s'ouvrir.</b></p>
     <ul style="margin-top:1.5mm">
-      <li><b>A.</b> Abaisser la fenêtre (par exemple allège 1,10 m, hauteur 0,60 m) : vitrage entièrement dégagé sous le limon.</li>
-      <li><b>B.</b> Limon côté mur en crémaillère, sous les marches, au lieu d'un limon plat : quelques décimètres de vitrage gagnés.</li>
-      <li><b>C.</b> Garder la position actuelle avec un vitrage dépoli et un éclairage d'appoint.</li>
+      <li><b>A.</b> Abaisser la fenêtre (par exemple allège 1,05 m, hauteur 0,60 m, haut à 1,65 m) : entièrement sous le limon, ouvrable.</li>
+      <li><b>B.</b> Garder la position en châssis fixe (le WC est ventilé par la VMC), vitrage dépoli.</li>
+      <li><b>C.</b> Limon côté mur en crémaillère sous les marches au lieu d'un limon plat : vitrage plus dégagé, ouverture à vérifier.</li>
     </ul>
   </div>
   ${img('coupe-escalier.png')}
