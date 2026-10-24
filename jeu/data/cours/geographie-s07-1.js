@@ -529,7 +529,7 @@ JEU.enregistrer("cours", {
    "corrections": [
     "Faux : il se mesure en argent disponible par jour, moins de 1,90 dollar.",
     "Faux : il se mesure en années d'espérance de vie.",
-    "Faux : il se mesure en kilomètres carrés."
+    "Faux : il se mesure en pourcentage de la population mondiale."
    ],
    "explication": "Le seuil de pauvreté est un revenu par jour. Le nombre d'enfants par femme, c'est le taux de fécondité.",
    "source": {
@@ -756,7 +756,7 @@ JEU.enregistrer("cours", {
    "fiche": "geographie-s07-1-f4",
    "type": "qcm",
    "niveau": 3,
-   "enonce": "Entre 1990 et 2018, la population mondiale a augmenté, et pourtant le nombre de personnes très pauvres est passé de presque 2 milliards à 700 millions. Que peut-on en conclure ?",
+   "enonce": "Entre 1990 et 2018, la population mondiale a augmenté, et pourtant le nombre de personnes très pauvres est passé de presque 2 milliards à un peu plus de 700 millions. Que peut-on en conclure ?",
    "choix": [
     "La pauvreté recule vraiment : moins de pauvres, dans un monde plus peuplé",
     "La pauvreté augmente forcément, puisque la population mondiale a augmenté pendant la même période",

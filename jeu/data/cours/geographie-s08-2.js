@@ -44,9 +44,9 @@ JEU.enregistrer("cours", {
    "id": "geographie-s08-2-f2",
    "notion": "Les freins à la scolarisation en Afghanistan",
    "titre": "Pourquoi tant d'enfants restent loin de l'école",
-   "texte": "Les talibans, un mouvement armé, ont dirigé l'Afghanistan de 1996 à 2001 et repris le pouvoir en 2021. Aller à l'école est dangereux : en 2018, 200 écoles ont été attaquées, surtout celles des filles. Au moins 20 % des enfants travaillent pour aider leur famille. Dans le sud, près de Kandahar, les filles, mariées très jeunes, quittent l'école.",
+   "texte": "Les talibans ont dirigé l'Afghanistan de 1996 à 2001 et ont repris le pouvoir en 2021. Aller à l'école est dangereux : en 2018, 200 écoles ont été attaquées, surtout celles des filles. Au moins 20 % des enfants travaillent pour aider leur famille. Dans le sud, près de Kandahar, les filles, mariées très jeunes, quittent l'école.",
    "pointsCles": [
-    "Les talibans : au pouvoir de 1996 à 2001, de retour en 2021 ; ils s'opposent à l'école des filles",
+    "Les talibans : au pouvoir de 1996 à 2001, de retour en 2021 ; ils cherchent à décourager les filles d'aller à l'école",
     "2018 : 200 écoles attaquées dans le pays",
     "Au moins 20 % des enfants travaillent (champs, ateliers), parfois dès 5 ans",
     "Éducation des filles mal vue dans le sud, près de Kandahar ; mariées très jeunes, elles quittent l'école"
@@ -346,7 +346,7 @@ JEU.enregistrer("cours", {
    "choix": [
     "Parce que près de la moitié des enfants ne vont pas à l'école, dans un pays en guerre depuis quarante ans",
     "Parce que la langue du pays ne s'écrit pas",
-    "Parce que les écoles y sont payantes et très chères, si bien que seules les familles riches peuvent y envoyer leurs enfants",
+    "Parce que l'école n'y est pas obligatoire",
     "Parce que le pays est trop peuplé"
    ],
    "explication": "Qui ne va pas à l'école n'apprend pas à lire. La guerre, le manque d'écoles et le travail des enfants tiennent la moitié des enfants loin de la classe.",
@@ -564,10 +564,10 @@ JEU.enregistrer("cours", {
     "Les soins du dentiste de l'école",
     "Le lycée",
     "L'université",
-    "Le piano qu'elle achète",
+    "Ses cours de piano au conservatoire",
     "Sa chambre d'étudiante"
    ],
-   "explication": "Cantine, dentiste scolaire, lycée et université ne coûtent rien. La chambre d'étudiante, elle, est à moitié prix, et le conservatoire presque gratuit.",
+   "explication": "Cantine, dentiste scolaire, lycée et université ne coûtent rien. La chambre d'étudiante est à moitié prix et le conservatoire coûte presque rien : pas tout à fait gratuits.",
    "source": {
     "fichier": "cours/geographie/Geo 5e - Theme 1 - Etude de cas 3.pdf",
     "page": 2
@@ -1002,7 +1002,7 @@ JEU.enregistrer("cours", {
    "choix": [
     "Parce que près de la moitié des enfants ne vont pas à l'école",
     "Parce que les Afghans n'ont pas d'alphabet",
-    "Parce que l'école est payante en Afghanistan",
+    "Parce que l'école n'y est obligatoire que jusqu'à 10 ans",
     "Parce que les classes y sont trop petites"
    ],
    "explication": "Sans école, pas de lecture. Près d'un enfant sur deux n'est pas scolarisé, et les filles encore moins que les garçons.",
@@ -1177,7 +1177,7 @@ JEU.enregistrer("cours", {
  "nonCouvert": [
   "Les réponses attendues aux questions de l'étude de cas ne sont pas fournies dans le dépôt : le jeu s'appuie seulement sur les documents.",
   "La carte du taux d'alphabétisation (2018) est lue à l'œil : seules les grandes zones (plus de 95 %, moins de 50 %) sont reprises, sans valeur par pays.",
-  "Les détails violents du texte sur les attaques contre les écolières ne sont pas repris ; les talibans sont présentés comme un mouvement politique armé, sans qualificatif religieux.",
+  "Les détails violents du texte sur les attaques contre les écolières ne sont pas repris ; les talibans sont seulement nommés comme le pouvoir en place, sans qualificatif.",
   "Le parcours de la jeune Finlandaise est anonymisé : son prénom n'est pas repris.",
   "Les photos (garçon fabriquant des briques, classe par terre, salle de classe finlandaise) et les deux cartes de situation ne sont pas reproduites."
  ]

@@ -2,7 +2,7 @@
 // Compilé (réponses brouillées) par node atelier/outils/compiler-cours.js geographie-s08-2.
 // Seule source : l'étude de cas n° 3 (2 pages : texte sur l'école en Afghanistan, photos, carte du taux
 // d'alphabétisation 2018, texte sur le parcours scolaire d'une jeune Finlandaise, tableau comparatif des deux pays).
-// Ton neutre : les talibans sont présentés comme un mouvement politique armé, sans détail violent.
+// Ton neutre : les talibans sont seulement nommés comme le pouvoir en place, sans qualificatif ni détail violent.
 const F = "cours/geographie/Geo 5e - Theme 1 - Etude de cas 3.pdf";
 const P = (page) => ({ fichier: F, page: page });
 
@@ -54,9 +54,9 @@ module.exports = {
     {
       id: "geographie-s08-2-f2", notion: "Les freins à la scolarisation en Afghanistan",
       titre: "Pourquoi tant d'enfants restent loin de l'école",
-      texte: "Les talibans, un mouvement armé, ont dirigé l'Afghanistan de 1996 à 2001 et repris le pouvoir en 2021. Aller à l'école est dangereux : en 2018, 200 écoles ont été attaquées, surtout celles des filles. Au moins 20 % des enfants travaillent pour aider leur famille. Dans le sud, près de Kandahar, les filles, mariées très jeunes, quittent l'école.",
+      texte: "Les talibans ont dirigé l'Afghanistan de 1996 à 2001 et ont repris le pouvoir en 2021. Aller à l'école est dangereux : en 2018, 200 écoles ont été attaquées, surtout celles des filles. Au moins 20 % des enfants travaillent pour aider leur famille. Dans le sud, près de Kandahar, les filles, mariées très jeunes, quittent l'école.",
       pointsCles: [
-        "Les talibans : au pouvoir de 1996 à 2001, de retour en 2021 ; ils s'opposent à l'école des filles",
+        "Les talibans : au pouvoir de 1996 à 2001, de retour en 2021 ; ils cherchent à décourager les filles d'aller à l'école",
         "2018 : 200 écoles attaquées dans le pays",
         "Au moins 20 % des enfants travaillent (champs, ateliers), parfois dès 5 ans",
         "Éducation des filles mal vue dans le sud, près de Kandahar ; mariées très jeunes, elles quittent l'école"
@@ -169,7 +169,7 @@ module.exports = {
       explication: "Enfants non scolarisés, écoles sans locaux, matériel minimal : trois signes de crise. Le baccalauréat à 18 ans et la cantine gratuite, c'est la Finlande.", source: P(1) },
     { id: "geographie-s08-2-q7", fiche: "geographie-s08-2-f1", type: "qcm", niveau: 3,
       enonce: "Pourquoi l'analphabétisme est-il si élevé en Afghanistan ?",
-      choix: ["Parce que près de la moitié des enfants ne vont pas à l'école, dans un pays en guerre depuis quarante ans", "Parce que la langue du pays ne s'écrit pas", "Parce que les écoles y sont payantes et très chères, si bien que seules les familles riches peuvent y envoyer leurs enfants", "Parce que le pays est trop peuplé"],
+      choix: ["Parce que près de la moitié des enfants ne vont pas à l'école, dans un pays en guerre depuis quarante ans", "Parce que la langue du pays ne s'écrit pas", "Parce que l'école n'y est pas obligatoire", "Parce que le pays est trop peuplé"],
       reponse: "Parce que près de la moitié des enfants ne vont pas à l'école, dans un pays en guerre depuis quarante ans",
       explication: "Qui ne va pas à l'école n'apprend pas à lire. La guerre, le manque d'écoles et le travail des enfants tiennent la moitié des enfants loin de la classe.", source: P(1) },
     { id: "geographie-s08-2-q8", fiche: "geographie-s08-2-f1", type: "trou", niveau: 1,
@@ -228,9 +228,9 @@ module.exports = {
       explication: "En Finlande, l'école est obligatoire de 7 à 16 ans. En Afghanistan, c'est de 7 à 15 ans.", source: P(2) },
     { id: "geographie-s08-2-q18", fiche: "geographie-s08-2-f3", type: "qcm_multiple", niveau: 2,
       enonce: "Qu'est-ce qui est gratuit pour une élève finlandaise ? (plusieurs réponses)",
-      choix: ["La cantine", "Les soins du dentiste de l'école", "Le lycée", "L'université", "Le piano qu'elle achète", "Sa chambre d'étudiante"],
+      choix: ["La cantine", "Les soins du dentiste de l'école", "Le lycée", "L'université", "Ses cours de piano au conservatoire", "Sa chambre d'étudiante"],
       reponse: ["La cantine", "Les soins du dentiste de l'école", "Le lycée", "L'université"],
-      explication: "Cantine, dentiste scolaire, lycée et université ne coûtent rien. La chambre d'étudiante, elle, est à moitié prix, et le conservatoire presque gratuit.", source: P(2) },
+      explication: "Cantine, dentiste scolaire, lycée et université ne coûtent rien. La chambre d'étudiante est à moitié prix et le conservatoire coûte presque rien : pas tout à fait gratuits.", source: P(2) },
     { id: "geographie-s08-2-q19", fiche: "geographie-s08-2-f3", type: "vrai_faux", niveau: 1,
       enonce: "En Finlande, les études à l'université sont gratuites.",
       corrections: [], reponse: { vrai: true, correction: null },
@@ -341,7 +341,7 @@ module.exports = {
       explication: "Petites classes, plus d'argent, école plus longue et alphabétisation complète : la Finlande gagne sur toute la ligne. 38 millions d'habitants et 4,7 enfants par femme sont des données afghanes.", source: P(2) },
     { id: "geographie-s08-2-q40", fiche: "geographie-s08-2-f5", type: "qcm", niveau: 3,
       enonce: "Pourquoi le taux d'alphabétisation de l'Afghanistan n'est-il que de 43 % ?",
-      choix: ["Parce que près de la moitié des enfants ne vont pas à l'école", "Parce que les Afghans n'ont pas d'alphabet", "Parce que l'école est payante en Afghanistan", "Parce que les classes y sont trop petites"],
+      choix: ["Parce que près de la moitié des enfants ne vont pas à l'école", "Parce que les Afghans n'ont pas d'alphabet", "Parce que l'école n'y est obligatoire que jusqu'à 10 ans", "Parce que les classes y sont trop petites"],
       reponse: "Parce que près de la moitié des enfants ne vont pas à l'école",
       explication: "Sans école, pas de lecture. Près d'un enfant sur deux n'est pas scolarisé, et les filles encore moins que les garçons.", source: P(2) },
 
@@ -400,7 +400,7 @@ module.exports = {
   nonCouvert: [
     "Les réponses attendues aux questions de l'étude de cas ne sont pas fournies dans le dépôt : le jeu s'appuie seulement sur les documents.",
     "La carte du taux d'alphabétisation (2018) est lue à l'œil : seules les grandes zones (plus de 95 %, moins de 50 %) sont reprises, sans valeur par pays.",
-    "Les détails violents du texte sur les attaques contre les écolières ne sont pas repris ; les talibans sont présentés comme un mouvement politique armé, sans qualificatif religieux.",
+    "Les détails violents du texte sur les attaques contre les écolières ne sont pas repris ; les talibans sont seulement nommés comme le pouvoir en place, sans qualificatif.",
     "Le parcours de la jeune Finlandaise est anonymisé : son prénom n'est pas repris.",
     "Les photos (garçon fabriquant des briques, classe par terre, salle de classe finlandaise) et les deux cartes de situation ne sont pas reproduites."
   ]

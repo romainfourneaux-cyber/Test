@@ -79,11 +79,11 @@ JEU.enregistrer("cours", {
    "id": "geographie-s04-1-f3",
    "notion": "Les écarts de fécondité entre le nord et le sud de l'Inde",
    "titre": "Fécondité : un Nord et un Sud",
-   "texte": "La carte de la fécondité montre une Inde coupée en deux. Au nord, autour de New Delhi, beaucoup de régions dépassent 3,2 enfants par femme et les familles de plus de quatre enfants restent nombreuses. Au sud, autour de Bangalore, on passe sous 1,8 : le Sud a achevé sa transition démographique, natalité et mortalité y sont faibles.",
+   "texte": "La carte de la fécondité coupe l'Inde en deux. Au nord, autour de New Delhi, beaucoup de régions dépassent 3,2 enfants par femme et les familles de plus de quatre enfants restent nombreuses. Au sud, autour de Mumbai et de Bangalore, on compte entre 1,8 et 2,4 enfants par femme : le Sud a achevé sa transition démographique.",
    "pointsCles": [
     "Taux de fécondité : le nombre moyen d'enfants par femme",
     "Nord : souvent plus de 3,2 enfants par femme, familles de plus de quatre enfants encore fréquentes",
-    "Sud : moins de 1,8 enfant par femme",
+    "Sud : entre 1,8 et 2,4 enfants par femme, autour de Mumbai et de Bangalore",
     "Le Sud a achevé sa transition démographique : natalité et mortalité faibles"
    ],
    "dates": [],
@@ -112,7 +112,7 @@ JEU.enregistrer("cours", {
    "id": "geographie-s04-1-f4",
    "notion": "La Révolution verte en Inde",
    "titre": "La Révolution verte",
-   "texte": "Marquée par de grandes famines, l'Inde a modernisé ses campagnes vers la fin des années 1960 : c'est la Révolution verte. Machines, engrais, pesticides et irrigation ont fait du pays un géant agricole, capable de produire assez de riz, de blé et de légumes pour tous ses habitants. Mais ces produits chimiques abîment l'environnement.",
+   "texte": "Marquée par de grandes famines, l'Inde a modernisé ses campagnes vers la fin des années 1960 : c'est la Révolution verte. Machines, engrais, pesticides et irrigation ont fait du pays un géant agricole, capable de produire assez de riz, de blé et de légumes pour tous ses habitants. Mais elle a aussi des effets négatifs sur l'environnement.",
    "pointsCles": [
     "Fin des années 1960 : la Révolution verte modernise l'agriculture",
     "Moyens : mécanisation, engrais, pesticides, irrigation",
@@ -191,7 +191,7 @@ JEU.enregistrer("cours", {
    "pointsCles": [
     "Espérance de vie : d'environ 35 ans en 1950 à presque 70 ans en 2020",
     "Mortalité infantile : de 169 à 30 morts pour mille naissances ; analphabétisme : de 82 % à 26 %",
-    "Fécondité : de 6 à environ 2 enfants par femme ; PIB par habitant : de 610 à 2 100 dollars",
+    "Fécondité : de 6 à 2,2 enfants par femme ; PIB par habitant : de 610 à 2 100 dollars",
     "Des villes très polluées : gaz toxiques, déchets",
     "Mumbai : 27 000 habitants par km², des bidonvilles (slums) pour les pauvres venus des campagnes"
    ],
@@ -440,7 +440,7 @@ JEU.enregistrer("cours", {
    "enonce": "Dans un pays, la mortalité a chuté mais la natalité reste assez élevée. Que devient sa population ?",
    "choix": [
     "Elle augmente fortement, comme en Inde",
-    "Elle diminue, comme en Europe de l'Est",
+    "Elle diminue peu à peu",
     "Elle reste stable",
     "Elle vieillit très vite"
    ],
@@ -505,7 +505,7 @@ JEU.enregistrer("cours", {
     "Sur toute la côte",
     "Autour de Bangalore"
    ],
-   "explication": "Le nord, autour de New Delhi, dépasse souvent 3,2 enfants par femme. Le sud, autour de Bangalore, est passé sous 1,8.",
+   "explication": "Le nord, autour de New Delhi, dépasse souvent 3,2 enfants par femme. Le sud, autour de Bangalore, reste entre 1,8 et 2,4.",
    "source": {
     "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1 - Etude de cas 2 Inde.pdf",
     "page": 1
@@ -572,14 +572,14 @@ JEU.enregistrer("cours", {
    "fiche": "geographie-s04-1-f3",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Que mesure le taux de fécondité ?",
+   "enonce": "Sur la carte de l'Inde, une région colorée en orange est notée « de 1,8 à 2,4 ». Que compte ce nombre ?",
    "choix": [
     "Le nombre moyen d'enfants par femme",
     "Le nombre de naissances pour mille habitants",
     "Le nombre de décès pour mille habitants",
-    "La durée de vie moyenne"
+    "Le nombre d'habitants par kilomètre carré"
    ],
-   "explication": "La fécondité compte les enfants par femme. Les naissances pour mille habitants, c'est la natalité.",
+   "explication": "La carte donne le taux de fécondité : le nombre moyen d'enfants par femme. Les naissances pour mille habitants, c'est la natalité.",
    "source": {
     "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1 - Etude de cas 2 Inde.pdf",
     "page": 1
@@ -616,19 +616,19 @@ JEU.enregistrer("cours", {
    "fiche": "geographie-s04-1-f3",
    "type": "qcm",
    "niveau": 3,
-   "enonce": "Une région indienne compte en moyenne 1,6 enfant par femme. Où se trouve-t-elle probablement, et que peut-on en dire ?",
+   "enonce": "Sur la carte, une région est colorée en rouge foncé : plus de 3,2 enfants par femme. Où se trouve-t-elle probablement, et que peut-on en dire ?",
    "choix": [
-    "Au sud : elle a terminé sa transition démographique",
-    "Au nord : les familles nombreuses y dominent",
-    "Au nord : sa mortalité est encore très forte",
-    "Au sud : sa population explose"
+    "Au nord, autour de New Delhi : les familles nombreuses y dominent",
+    "Au sud, autour de Bangalore : la transition démographique y est achevée",
+    "Au sud : sa population a cessé d'augmenter",
+    "Au nord : natalité et mortalité y sont toutes les deux faibles"
    ],
-   "explication": "Moins de 1,8 enfant par femme, c'est le niveau du Sud. Là, natalité et mortalité sont basses : la transition est finie.",
+   "explication": "Plus de 3,2 enfants par femme, c'est le niveau des régions du nord, autour de New Delhi. Là, les familles de plus de quatre enfants sont encore nombreuses.",
    "source": {
     "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1 - Etude de cas 2 Inde.pdf",
     "page": 1
    },
-   "r": "==wDAAEXHcgFHsRFo8B3mGRUHEgBGEAMDRwRZ5kDVYEwxmyGYcBEFk0DPdBBvgURP0gCaUhRcMTZ",
+   "r": "==QZGsBAbgBBBsgURMmXAYEWL0BBLYAHnFAEJkBGE8QCSthJBV0DNcwBKMQLSBzF7UEEVkEHa0BH2wURZkEHAggRcMTZ",
    "poids": 1
   },
   {
@@ -714,7 +714,7 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "La Révolution verte n'a eu que des effets positifs.",
    "corrections": [
-    "Faux : les engrais et les pesticides ont abîmé l'environnement.",
+    "Faux : elle a aussi des effets négatifs sur l'environnement.",
     "Faux : elle a fait reculer la production agricole.",
     "Faux : elle a provoqué de nouvelles famines."
    ],
@@ -723,7 +723,7 @@ JEU.enregistrer("cours", {
     "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1 - Etude de cas 2 Inde.pdf",
     "page": 2
    },
-   "r": "=MRTIJxBXoyFbsgGDAAGBcxTv0Az2DEwsSwBJZQKdUlFQUBANYgBbYSXFZESC8kEDkUAuMxBCsBFJ1hCegUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "r": "==AFQlmBbAAGUcAAAAQA1MEASEkTdMRFJFQIbEABSgtqA8UAcYySDAVDdogAGBQA0cAFFRRUMIwAXgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -778,7 +778,7 @@ JEU.enregistrer("cours", {
     "Une hausse de la mortalité",
     "Le retour des famines"
    ],
-   "explication": "Comme en Inde, les engrais et les pesticides font monter les récoltes mais abîment l'environnement. C'est le prix de la Révolution verte.",
+   "explication": "Comme en Inde, cette méthode fait monter les récoltes, mais elle a des effets négatifs sur l'environnement. C'est le revers de la Révolution verte.",
    "source": {
     "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1 - Etude de cas 2 Inde.pdf",
     "page": 2
