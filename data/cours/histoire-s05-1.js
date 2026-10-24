@@ -101,7 +101,7 @@ JEU.enregistrer("cours", {
     "Au moulin : le meunier prélève un boisseau de grain et de la farine",
     "Au four : un droit sur la cuisson du pain"
    ],
-   "astuce": "Trois B : les Banalités, c'est payer pour moudre le Blé, cuire le pain et presser le raisin.",
+   "astuce": "Trois B : les Banalités, c'est payer pour moudre le Blé, cuire le pain et presser les fruits.",
    "dates": [],
    "lieux": [],
    "personnages": [],
@@ -112,11 +112,11 @@ JEU.enregistrer("cours", {
     },
     {
      "mot": "boisseau",
-     "def": "une ancienne mesure de grain, à peu près le contenu d'un seau"
+     "def": "une ancienne mesure pour le grain : un récipient que l'on remplit"
     },
     {
      "mot": "pressoir",
-     "def": "l'appareil qui écrase le raisin pour en tirer le jus"
+     "def": "l'appareil qui presse les fruits, comme le raisin, pour en tirer le jus"
     }
    ],
    "schema": "histoire-s05-1-s1",
@@ -132,11 +132,11 @@ JEU.enregistrer("cours", {
    "id": "histoire-s05-1-f4",
    "notion": "Le plan de la seigneurie de Wismes (XIVe siècle)",
    "titre": "Château, église, moulin, tenures : lire le plan de Wismes",
-   "texte": "Le plan de la seigneurie de Wismes, dans le nord de la France, date du XIVe siècle. On y voit le château du seigneur et l'église du village, le moulin du seigneur près de l'eau, la réserve et, à plusieurs endroits, les tenures des paysans. Un gibet rappelle que le seigneur rend la justice.",
+   "texte": "Le plan de la seigneurie de Wismes, dans le nord de la France, date du XIVe siècle. On y voit le château du seigneur et l'église du village, le moulin à vent du seigneur sur une butte, la réserve et, à plusieurs endroits, les tenures des paysans. Un gibet rappelle que le seigneur rend la justice.",
    "pointsCles": [
     "Wismes : une seigneurie du nord de la France",
     "Un plan du XIVe siècle",
-    "Sur le plan : château, église, moulin du seigneur, réserve, tenures",
+    "Sur le plan : château, église, moulin à vent du seigneur, réserve, tenures",
     "Le gibet : signe du droit de justice du seigneur"
    ],
    "dates": [],
@@ -165,8 +165,8 @@ JEU.enregistrer("cours", {
  "schemas": [
   {
    "id": "histoire-s05-1-s1",
-   "legende": "Schéma d'une seigneurie, redessiné et simplifié d'après le plan de Wismes : la réserve autour du château, les tenures des paysans, le village et son église, la forêt, le moulin, le four et le pressoir du seigneur.",
-   "svg": "<svg viewBox='0 0 540 300' xmlns='http://www.w3.org/2000/svg' font-family='Georgia,serif' font-size='11'><rect x='0' y='0' width='540' height='300' fill='#efe6d2'/><path d='M0 215 C 120 190, 200 250, 320 225 S 480 200, 540 230' fill='none' stroke='#7fb4d6' stroke-width='14'/><circle cx='400' cy='40' r='12' fill='#3f6b3a'/><circle cx='426' cy='40' r='12' fill='#3f6b3a'/><circle cx='452' cy='40' r='12' fill='#3f6b3a'/><circle cx='478' cy='40' r='12' fill='#3f6b3a'/><circle cx='504' cy='40' r='12' fill='#3f6b3a'/><circle cx='413' cy='64' r='12' fill='#3f6b3a'/><circle cx='439' cy='64' r='12' fill='#3f6b3a'/><circle cx='465' cy='64' r='12' fill='#3f6b3a'/><circle cx='491' cy='64' r='12' fill='#3f6b3a'/><circle cx='517' cy='64' r='12' fill='#3f6b3a'/><circle cx='400' cy='88' r='12' fill='#3f6b3a'/><circle cx='426' cy='88' r='12' fill='#3f6b3a'/><circle cx='452' cy='88' r='12' fill='#3f6b3a'/><circle cx='478' cy='88' r='12' fill='#3f6b3a'/><text x='460' y='118' text-anchor='middle' fill='#2e2419'>Forêt du seigneur</text><text x='460' y='131' text-anchor='middle' font-size='9' fill='#2e2419'>(bois, chasse)</text><rect x='150' y='40' width='200' height='110' fill='#d9c77a' stroke='#8a7a3a'/><text x='250' y='58' text-anchor='middle' fill='#2e2419'>Réserve du seigneur</text><rect x='225' y='80' width='50' height='40' fill='#8c7b6b' stroke='#2e2419'/><rect x='220' y='70' width='12' height='18' fill='#8c7b6b' stroke='#2e2419'/><rect x='268' y='70' width='12' height='18' fill='#8c7b6b' stroke='#2e2419'/><text x='250' y='138' text-anchor='middle' fill='#2e2419'>Château</text><rect x='20' y='40' width='26' height='28' fill='#b7c98a' stroke='#7a7a4a'/><rect x='50' y='40' width='26' height='28' fill='#c9b982' stroke='#7a7a4a'/><rect x='80' y='40' width='26' height='28' fill='#a6c27a' stroke='#7a7a4a'/><rect x='110' y='40' width='26' height='28' fill='#d0c48c' stroke='#7a7a4a'/><rect x='20' y='72' width='26' height='28' fill='#b7c98a' stroke='#7a7a4a'/><rect x='50' y='72' width='26' height='28' fill='#c9b982' stroke='#7a7a4a'/><rect x='80' y='72' width='26' height='28' fill='#a6c27a' stroke='#7a7a4a'/><rect x='110' y='72' width='26' height='28' fill='#d0c48c' stroke='#7a7a4a'/><rect x='20' y='104' width='26' height='28' fill='#b7c98a' stroke='#7a7a4a'/><rect x='50' y='104' width='26' height='28' fill='#c9b982' stroke='#7a7a4a'/><rect x='80' y='104' width='26' height='28' fill='#a6c27a' stroke='#7a7a4a'/><rect x='110' y='104' width='26' height='28' fill='#d0c48c' stroke='#7a7a4a'/><text x='78' y='150' text-anchor='middle' fill='#2e2419'>Tenures des paysans</text><rect x='160' y='160' width='26' height='20' fill='#c9b982' stroke='#7a7a4a'/><rect x='190' y='160' width='26' height='20' fill='#a6c27a' stroke='#7a7a4a'/><rect x='220' y='160' width='26' height='20' fill='#d0c48c' stroke='#7a7a4a'/><rect x='250' y='160' width='26' height='20' fill='#b7c98a' stroke='#7a7a4a'/><rect x='160' y='184' width='26' height='20' fill='#c9b982' stroke='#7a7a4a'/><rect x='190' y='184' width='26' height='20' fill='#a6c27a' stroke='#7a7a4a'/><rect x='220' y='184' width='26' height='20' fill='#d0c48c' stroke='#7a7a4a'/><rect x='250' y='184' width='26' height='20' fill='#b7c98a' stroke='#7a7a4a'/><text x='220' y='200' font-size='9' fill='#2e2419'>Tenures</text><rect x='30' y='172' width='14' height='10' fill='#c8742a'/><rect x='50' y='170' width='14' height='12' fill='#c8742a'/><rect x='70' y='173' width='14' height='9' fill='#c8742a'/><rect x='96' y='165' width='16' height='18' fill='#d9d2c0' stroke='#2e2419'/><rect x='101' y='152' width='6' height='14' fill='#d9d2c0' stroke='#2e2419'/><text x='70' y='198' text-anchor='middle' fill='#2e2419'>Village et église</text><rect x='300' y='196' width='18' height='22' fill='#8c7b6b' stroke='#2e2419'/><circle cx='300' cy='222' r='9' fill='none' stroke='#2e2419' stroke-width='2'/><text x='309' y='250' text-anchor='middle' fill='#2e2419'>Moulin du seigneur</text><path d='M120 232 a10 10 0 0 1 20 0 v8 h-20z' fill='#a0522d' stroke='#2e2419'/><text x='130' y='256' text-anchor='middle' fill='#2e2419'>Four</text><rect x='190' y='228' width='22' height='12' fill='#7a5a3a' stroke='#2e2419'/><rect x='198' y='218' width='6' height='10' fill='#7a5a3a'/><text x='201' y='256' text-anchor='middle' fill='#2e2419'>Pressoir</text><rect x='20' y='272' width='12' height='10' fill='#d9c77a' stroke='#8a7a3a'/><text x='38' y='281' fill='#2e2419'>réserve : terres gardées par le seigneur</text><rect x='280' y='272' width='12' height='10' fill='#b7c98a' stroke='#7a7a4a'/><text x='298' y='281' fill='#2e2419'>tenures : terres cédées aux paysans (cens, corvées)</text></svg>"
+   "legende": "Schéma d'une seigneurie, redessiné et simplifié d'après le plan de Wismes : la réserve autour du château, les tenures des paysans, le village et son église, la forêt, le moulin à vent, le four et le pressoir du seigneur.",
+   "svg": "<svg viewBox='0 0 540 300' xmlns='http://www.w3.org/2000/svg' font-family='Georgia,serif' font-size='11'><rect x='0' y='0' width='540' height='300' fill='#efe6d2'/><path d='M0 215 C 120 190, 200 250, 320 225 S 480 200, 540 230' fill='none' stroke='#c9b48a' stroke-width='8'/><circle cx='400' cy='40' r='12' fill='#3f6b3a'/><circle cx='426' cy='40' r='12' fill='#3f6b3a'/><circle cx='452' cy='40' r='12' fill='#3f6b3a'/><circle cx='478' cy='40' r='12' fill='#3f6b3a'/><circle cx='504' cy='40' r='12' fill='#3f6b3a'/><circle cx='413' cy='64' r='12' fill='#3f6b3a'/><circle cx='439' cy='64' r='12' fill='#3f6b3a'/><circle cx='465' cy='64' r='12' fill='#3f6b3a'/><circle cx='491' cy='64' r='12' fill='#3f6b3a'/><circle cx='517' cy='64' r='12' fill='#3f6b3a'/><circle cx='400' cy='88' r='12' fill='#3f6b3a'/><circle cx='426' cy='88' r='12' fill='#3f6b3a'/><circle cx='452' cy='88' r='12' fill='#3f6b3a'/><circle cx='478' cy='88' r='12' fill='#3f6b3a'/><text x='460' y='118' text-anchor='middle' fill='#2e2419'>Forêt du seigneur</text><text x='460' y='131' text-anchor='middle' font-size='9' fill='#2e2419'>(bois, chasse)</text><rect x='150' y='40' width='200' height='110' fill='#d9c77a' stroke='#8a7a3a'/><text x='250' y='58' text-anchor='middle' fill='#2e2419'>Réserve du seigneur</text><rect x='225' y='80' width='50' height='40' fill='#8c7b6b' stroke='#2e2419'/><rect x='220' y='70' width='12' height='18' fill='#8c7b6b' stroke='#2e2419'/><rect x='268' y='70' width='12' height='18' fill='#8c7b6b' stroke='#2e2419'/><text x='250' y='138' text-anchor='middle' fill='#2e2419'>Château</text><rect x='20' y='40' width='26' height='28' fill='#b7c98a' stroke='#7a7a4a'/><rect x='50' y='40' width='26' height='28' fill='#c9b982' stroke='#7a7a4a'/><rect x='80' y='40' width='26' height='28' fill='#a6c27a' stroke='#7a7a4a'/><rect x='110' y='40' width='26' height='28' fill='#d0c48c' stroke='#7a7a4a'/><rect x='20' y='72' width='26' height='28' fill='#b7c98a' stroke='#7a7a4a'/><rect x='50' y='72' width='26' height='28' fill='#c9b982' stroke='#7a7a4a'/><rect x='80' y='72' width='26' height='28' fill='#a6c27a' stroke='#7a7a4a'/><rect x='110' y='72' width='26' height='28' fill='#d0c48c' stroke='#7a7a4a'/><rect x='20' y='104' width='26' height='28' fill='#b7c98a' stroke='#7a7a4a'/><rect x='50' y='104' width='26' height='28' fill='#c9b982' stroke='#7a7a4a'/><rect x='80' y='104' width='26' height='28' fill='#a6c27a' stroke='#7a7a4a'/><rect x='110' y='104' width='26' height='28' fill='#d0c48c' stroke='#7a7a4a'/><text x='78' y='150' text-anchor='middle' fill='#2e2419'>Tenures des paysans</text><rect x='160' y='160' width='26' height='20' fill='#c9b982' stroke='#7a7a4a'/><rect x='190' y='160' width='26' height='20' fill='#a6c27a' stroke='#7a7a4a'/><rect x='220' y='160' width='26' height='20' fill='#d0c48c' stroke='#7a7a4a'/><rect x='250' y='160' width='26' height='20' fill='#b7c98a' stroke='#7a7a4a'/><rect x='160' y='184' width='26' height='20' fill='#c9b982' stroke='#7a7a4a'/><rect x='190' y='184' width='26' height='20' fill='#a6c27a' stroke='#7a7a4a'/><rect x='220' y='184' width='26' height='20' fill='#d0c48c' stroke='#7a7a4a'/><rect x='250' y='184' width='26' height='20' fill='#b7c98a' stroke='#7a7a4a'/><text x='220' y='200' font-size='9' fill='#2e2419'>Tenures</text><rect x='30' y='172' width='14' height='10' fill='#c8742a'/><rect x='50' y='170' width='14' height='12' fill='#c8742a'/><rect x='70' y='173' width='14' height='9' fill='#c8742a'/><rect x='96' y='165' width='16' height='18' fill='#d9d2c0' stroke='#2e2419'/><rect x='101' y='152' width='6' height='14' fill='#d9d2c0' stroke='#2e2419'/><text x='70' y='198' text-anchor='middle' fill='#2e2419'>Village et église</text><ellipse cx='309' cy='230' rx='34' ry='9' fill='#d9c77a' stroke='#8a7a3a'/><path d='M300 230 L 303 196 h12 l3 34 z' fill='#8c7b6b' stroke='#2e2419'/><line x1='309' y1='200' x2='325' y2='184' stroke='#2e2419' stroke-width='2'/><line x1='309' y1='200' x2='293' y2='216' stroke='#2e2419' stroke-width='2'/><line x1='309' y1='200' x2='325' y2='216' stroke='#2e2419' stroke-width='2'/><line x1='309' y1='200' x2='293' y2='184' stroke='#2e2419' stroke-width='2'/><text x='309' y='254' text-anchor='middle' fill='#2e2419'>Moulin à vent du seigneur</text><path d='M120 232 a10 10 0 0 1 20 0 v8 h-20z' fill='#a0522d' stroke='#2e2419'/><text x='130' y='256' text-anchor='middle' fill='#2e2419'>Four</text><rect x='190' y='228' width='22' height='12' fill='#7a5a3a' stroke='#2e2419'/><rect x='198' y='218' width='6' height='10' fill='#7a5a3a'/><text x='201' y='256' text-anchor='middle' fill='#2e2419'>Pressoir</text><rect x='20' y='272' width='12' height='10' fill='#d9c77a' stroke='#8a7a3a'/><text x='38' y='281' fill='#2e2419'>réserve : terres gardées par le seigneur</text><rect x='280' y='272' width='12' height='10' fill='#b7c98a' stroke='#7a7a4a'/><text x='298' y='281' fill='#2e2419'>tenures : terres cédées aux paysans (cens, corvées)</text></svg>"
   }
  ],
  "questions": [
@@ -213,7 +213,7 @@ JEU.enregistrer("cours", {
    "enonce": "Que doit un paysan au seigneur en échange de sa tenure ?",
    "choix": [
     "Le cens et des corvées",
-    "Un pourceau sur huit seulement",
+    "Un sceau et un cartulaire",
     "Rien du tout",
     "La garde du château"
    ],
@@ -587,16 +587,16 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Le pressoir du seigneur sert à moudre le grain des paysans.",
    "corrections": [
-    "Faux : le pressoir sert à presser le raisin ; c'est le moulin qui moud le grain.",
+    "Faux : le pressoir sert à presser les fruits ; c'est le moulin qui moud le grain.",
     "Faux : le pressoir sert à cuire le pain.",
     "Faux : le pressoir sert à tondre les moutons."
    ],
-   "explication": "Chaque installation a son usage : le moulin moud, le four cuit, le pressoir presse le raisin. Toutes trois sont au seigneur.",
+   "explication": "Chaque installation a son usage : le moulin moud, le four cuit, le pressoir presse les fruits. Toutes trois sont au seigneur.",
    "source": {
     "fichier": "cours/histoire/Histoire 5e - Moyen Age - Etude de cas 2 Seigneurie de Wismes.pdf",
     "page": 1
    },
-   "r": "6A1WLwBEbkwTXQwYJBhWA5kBTcRSc4iHAoAGRxgAPZwGmogBVYhTB8QFAMRNSBRCVNADdwxFaMTDFbfDa0xAVkEAu0hBWAxAZ4kCegUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "r": "==wDlx1GMQxAO4kCeg0JYpAWNcgGXY0BbsyBagQVUUgTbEQDk5URO0QHb8wEbQxZBARCVNADdwxFaMTDFbfDa0xAVkEAu0hBWAxAZ4kCegUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -673,11 +673,11 @@ JEU.enregistrer("cours", {
    ],
    "droite": [
     "Cuire le pain",
-    "Presser le raisin",
+    "Presser les fruits pour en tirer le jus",
     "Moudre le grain",
     "Prendre du bois et chasser"
    ],
-   "explication": "Moulin : le grain ; four : le pain ; pressoir : le raisin. La forêt donne le bois et le gibier au seigneur.",
+   "explication": "Moulin : le grain ; four : le pain ; pressoir : les fruits. La forêt donne le bois et le gibier au seigneur.",
    "source": {
     "fichier": "cours/histoire/Histoire 5e - Moyen Age - Etude de cas 2 Seigneurie de Wismes.pdf",
     "page": 1
@@ -800,19 +800,19 @@ JEU.enregistrer("cours", {
    "fiche": "histoire-s05-1-f4",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Comment se répartissent les terres sur le plan de Wismes ?",
+   "enonce": "Sur le plan de Wismes, on lit « Tenures » et « Réserve ». Comment ces terres se partagent-elles entre le seigneur et les paysans ?",
    "choix": [
-    "Des tenures pour les paysans et une réserve pour le seigneur",
-    "Tout appartient à l'église",
-    "Tout est couvert de forêt",
-    "Une seule grande tenure cultivée par le roi et ses chevaliers"
+    "Les tenures aux paysans, la réserve au seigneur",
+    "Les tenures au seigneur, la réserve aux paysans",
+    "Les deux sortes de terres à l'église du village",
+    "Les deux sortes de terres au roi"
    ],
    "explication": "Le plan distingue la réserve, gardée par le seigneur, et les tenures, cédées aux paysans. Ce sont les deux parties de la seigneurie.",
    "source": {
     "fichier": "cours/histoire/Histoire 5e - Moyen Age - Etude de cas 2 Seigneurie de Wismes.pdf",
     "page": 1
    },
-   "r": "XNAHLEQFBYiXFBVQO1xEJkhUiQwBAYA2qyxTXYgNNEBUN0RAHUBETcjUGAQGRtxGAIASwg0FAN0CbYUFMYTZ",
+   "r": "=0EFTwAHgsBEWUFBI4kCEohJexs9f5kDKYURBkyEGwBFBkkFaMBSwg0FAN0CbYUFM4TZ",
    "poids": 1
   },
   {
@@ -873,7 +873,7 @@ JEU.enregistrer("cours", {
  "nonCouvert": [
   "La leçon à apprendre : le cadre « mots importants » du support est vide ; la leçon est donnée en vidéo.",
   "L'enluminure étudiée en séance 7 (personnages du premier plan, chevaliers, Bernart de Ventadour) n'est pas dans le fichier : seules les questions y figurent.",
-  "Qui est Bernart de Ventadour et ce qu'est un troubadour.",
+  "Qui est Bernart de Ventadour, nommé dans une question de la séance.",
   "Ce qu'est la seigneurie banale : la frise cite seulement l'époque de son développement.",
   "Ce que le seigneur doit à ses paysans en échange de son pouvoir (question 5 de l'étude de cas) : la réponse est donnée en vidéo.",
   "Le plan de Wismes lui-même (seules ses légendes sont reprises) et les enluminures du moulin et du four.",

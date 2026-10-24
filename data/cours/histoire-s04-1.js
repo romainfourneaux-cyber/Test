@@ -36,7 +36,7 @@ JEU.enregistrer("cours", {
    "vocabulaire": [
     {
      "mot": "Al Andalus",
-     "def": "la région située tout à l'ouest, dans la péninsule ibérique, qui reste en dehors de l'Empire abbasside sur la carte"
+     "def": "la région écrite tout à l'ouest de la carte, qui reste en dehors de l'Empire abbasside"
     }
    ],
    "schema": "histoire-s04-1-s1",
@@ -92,10 +92,10 @@ JEU.enregistrer("cours", {
    "id": "histoire-s04-1-f3",
    "notion": "Les lieux : La Mecque, Médine, Damas, Jérusalem, le Yarmouk",
    "titre": "Quatre villes et une bataille sur la carte",
-   "texte": "La carte du cours place quatre villes. La Mecque et Médine se trouvent dans la péninsule d'Arabie. Damas et Jérusalem sont plus au nord, au Proche-Orient, proches l'une de l'autre. La bataille du Yarmouk, étudiée comme document, est située juste au sud de Damas, non loin de Jérusalem.",
+   "texte": "La carte du cours place quatre villes. La Mecque et Médine se trouvent dans la péninsule d'Arabie. Damas et Jérusalem sont bien plus au nord, près de la Méditerranée, proches l'une de l'autre. La bataille du Yarmouk, étudiée comme document, est située juste au sud de Damas, non loin de Jérusalem.",
    "pointsCles": [
     "Péninsule d'Arabie : La Mecque et Médine",
-    "Proche-Orient : Damas et Jérusalem, voisines",
+    "Plus au nord, près de la Méditerranée : Damas et Jérusalem, voisines",
     "Bataille du Yarmouk : entre Damas et Jérusalem"
    ],
    "dates": [],
@@ -400,10 +400,10 @@ JEU.enregistrer("cours", {
    "choix": [
     "Al Andalus",
     "La péninsule d'Arabie",
-    "Le Proche-Orient, autour de Damas",
+    "La région de Damas et de Jérusalem",
     "La région de Bagdad"
    ],
-   "explication": "Al Andalus, à l'ouest, est dans l'Empire omeyyade et en dehors de l'Empire abbasside. L'Arabie et le Proche-Orient sont dans les deux.",
+   "explication": "Al Andalus, à l'ouest, est dans l'Empire omeyyade et en dehors de l'Empire abbasside. L'Arabie et la région de Damas sont dans les deux.",
    "source": {
     "fichier": "cours/histoire/Histoire 5e - Seance 5 - Support et Devoir entrainement.pdf",
     "page": 5
@@ -416,15 +416,15 @@ JEU.enregistrer("cours", {
    "fiche": "histoire-s04-1-f2",
    "type": "qcm",
    "niveau": 3,
-   "enonce": "Al Andalus est en dehors de l'Empire abbasside. Quel repère de la frise concerne la péninsule où se trouve Al Andalus ?",
+   "enonce": "Al Andalus, à l'ouest, est en dehors de l'Empire abbasside. Quel repère de la frise se rapporte à cette région de l'ouest ?",
    "choix": [
     "Le début du califat de Cordoue, en 929",
     "L'Hégire, en 622",
     "La fin de la dynastie omeyyade, en 750",
     "La mort de Mohamed, en 632"
    ],
-   "explication": "Cordoue se trouve dans la péninsule ibérique, comme Al Andalus. La frise y marque le début d'un califat en 929.",
-   "indice": "Cordoue était déjà sur la carte de l'Empire carolingien, au sud-ouest.",
+   "explication": "Sur la carte du cours 2, l'émirat de Cordoue était au sud-ouest de l'empire de Charlemagne, là où cette carte écrit Al Andalus. La frise y marque le début d'un califat en 929.",
+   "indice": "Souviens-toi de l'émirat que la carte du cours 2 plaçait au sud-ouest de l'empire de Charlemagne.",
    "source": {
     "fichier": "cours/histoire/Histoire 5e - Seance 5 - Support et Devoir entrainement.pdf",
     "page": 5
@@ -525,7 +525,7 @@ JEU.enregistrer("cours", {
    "enonce": "Où la carte place-t-elle La Mecque et Médine ?",
    "choix": [
     "Dans la péninsule d'Arabie",
-    "Au Proche-Orient, près de Damas",
+    "Plus au nord, près de Damas",
     "En Afrique du Nord",
     "En Al Andalus"
    ],
@@ -542,7 +542,7 @@ JEU.enregistrer("cours", {
    "fiche": "histoire-s04-1-f3",
    "type": "vrai_faux",
    "niveau": 1,
-   "enonce": "Sur la carte, Damas et Jérusalem sont voisines, au Proche-Orient.",
+   "enonce": "Sur la carte, Damas et Jérusalem sont voisines, au nord de la péninsule d'Arabie.",
    "corrections": [],
    "explication": "Oui : les deux villes sont proches l'une de l'autre, au nord de la péninsule d'Arabie. La bataille du Yarmouk est située entre elles.",
    "source": {
@@ -583,7 +583,7 @@ JEU.enregistrer("cours", {
     "Faux : elle est située en Al Andalus, tout à l'ouest.",
     "Faux : elle est située à Bagdad."
    ],
-   "explication": "Le Yarmouk est au Proche-Orient, entre Damas et Jérusalem. La Mecque et Médine sont dans la péninsule d'Arabie, au sud.",
+   "explication": "Le Yarmouk est bien plus au nord, entre Damas et Jérusalem. La Mecque et Médine sont dans la péninsule d'Arabie, au sud.",
    "source": {
     "fichier": "cours/histoire/Histoire 5e - Seance 5 - Support et Devoir entrainement.pdf",
     "page": 5
@@ -604,7 +604,7 @@ JEU.enregistrer("cours", {
     "Jérusalem",
     "Bagdad"
    ],
-   "explication": "Seules La Mecque et Médine sont dans la péninsule d'Arabie. Damas et Jérusalem sont au Proche-Orient, Bagdad plus à l'est.",
+   "explication": "Seules La Mecque et Médine sont dans la péninsule d'Arabie. Damas et Jérusalem sont plus au nord, Bagdad plus à l'est.",
    "source": {
     "fichier": "cours/histoire/Histoire 5e - Seance 5 - Support et Devoir entrainement.pdf",
     "page": 5

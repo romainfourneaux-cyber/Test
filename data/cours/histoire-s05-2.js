@@ -769,7 +769,7 @@ JEU.enregistrer("cours", {
     "Le meunier du seigneur",
     "Le seigneur en personne",
     "Les autres paysans",
-    "Le serf du moulin"
+    "Un serf de la seigneurie"
    ],
    "explication": "Le moulin appartient au seigneur, mais c'est son meunier qui le fait tourner et prélève la part due. C'est une banalité.",
    "source": {

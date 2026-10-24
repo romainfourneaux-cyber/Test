@@ -177,7 +177,7 @@ JEU.enregistrer("cours", {
   {
    "id": "histoire-s06-1-s1",
    "legende": "La charrue du XIIe siècle, redessinée d'après le texte de l'étude de cas : le coutre coupe, le soc trace le sillon, le versoir rabat la terre. En vignette, l'araire à simple soc qu'elle remplace.",
-   "svg": "<svg viewBox='0 0 540 250' xmlns='http://www.w3.org/2000/svg' font-family='Georgia,serif' font-size='11'><rect x='0' y='0' width='540' height='250' fill='#f4ecd8'/><rect x='0' y='170' width='540' height='80' fill='#b08a5a'/><path d='M0 170 Q 60 164 120 170 T 240 170 T 360 170 T 480 170 T 540 170' fill='none' stroke='#7a5a34' stroke-width='2'/><path d='M20 172 L 170 172 L 170 196 L 20 196 Z' fill='#7a5230'/><text x='95' y='214' text-anchor='middle' fill='#fff' font-size='10'>sillon : la terre a été retournée</text><path d='M150 60 L 330 120' stroke='#8a5a2b' stroke-width='10' stroke-linecap='round'/><path d='M165 62 L 125 40' stroke='#8a5a2b' stroke-width='6' stroke-linecap='round'/><path d='M180 68 L 140 50' stroke='#8a5a2b' stroke-width='6' stroke-linecap='round'/><path d='M232 88 L 232 168' stroke='#8a5a2b' stroke-width='9'/><path d='M232 130 C 200 128, 186 150, 190 168 L 232 168 Z' fill='#7f8a94' stroke='#2e2419'/><path d='M186 168 L 262 168 L 290 180 L 200 182 Z' fill='#5b6770' stroke='#2e2419'/><path d='M296 112 L 300 112 L 298 184 L 290 178 Z' fill='#5b6770' stroke='#2e2419'/><path d='M330 120 L 400 130' stroke='#2e2419' stroke-width='2' stroke-dasharray='4 3'/><text x='404' y='134' fill='#2e2419' font-size='10'>vers l'attelage</text><text x='404' y='146' fill='#2e2419' font-size='10'>(bœufs ou chevaux)</text><line x1='298' y1='140' x2='360' y2='166' stroke='#2e2419'/><text x='364' y='170' fill='#2e2419'>coutre : lame de fer qui</text><text x='364' y='183' fill='#2e2419'>s'enfonce profondément</text><line x1='270' y1='178' x2='330' y2='208' stroke='#2e2419'/><text x='334' y='212' fill='#2e2419'>soc : trace le sillon</text><line x1='200' y1='150' x2='150' y2='120' stroke='#2e2419'/><text x='148' y='116' text-anchor='end' fill='#2e2419'>versoir : rabat la terre</text><text x='148' y='129' text-anchor='end' fill='#2e2419'>sur le côté</text><text x='140' y='36' text-anchor='end' fill='#2e2419'>mancherons (poignées)</text><text x='20' y='20' font-size='13' fill='#2e2419'>La charrue, mise au point au XIIe siècle</text><rect x='392' y='18' width='138' height='102' fill='#fbf6ea' stroke='#2e2419'/><text x='461' y='32' text-anchor='middle' font-size='10' fill='#2e2419'>Avant : l'araire</text><path d='M408 50 L 500 70' stroke='#8a5a2b' stroke-width='5' stroke-linecap='round'/><path d='M455 60 L 455 80' stroke='#8a5a2b' stroke-width='5'/><path d='M440 80 L 470 80 L 484 86 L 446 88 Z' fill='#5b6770' stroke='#2e2419'/><text x='461' y='102' text-anchor='middle' font-size='9' fill='#2e2419'>un simple soc, sans versoir :</text><text x='461' y='113' text-anchor='middle' font-size='9' fill='#2e2419'>la terre n'est pas retournée</text><text x='270' y='240' text-anchor='middle' font-size='10' fill='#fff'>Les pièces de fer sont en gris, le bois en brun. Schéma simplifié d'après le texte de l'étude de cas.</text></svg>"
+   "svg": "<svg viewBox='0 0 540 250' xmlns='http://www.w3.org/2000/svg' font-family='Georgia,serif' font-size='11'><rect x='0' y='0' width='540' height='250' fill='#f4ecd8'/><rect x='0' y='170' width='540' height='80' fill='#b08a5a'/><path d='M0 170 Q 60 164 120 170 T 240 170 T 360 170 T 480 170 T 540 170' fill='none' stroke='#7a5a34' stroke-width='2'/><path d='M20 172 L 170 172 L 170 196 L 20 196 Z' fill='#7a5230'/><text x='95' y='214' text-anchor='middle' fill='#fff' font-size='10'>sillon : la terre a été retournée</text><path d='M150 60 L 330 120' stroke='#8a5a2b' stroke-width='10' stroke-linecap='round'/><path d='M165 62 L 125 40' stroke='#8a5a2b' stroke-width='6' stroke-linecap='round'/><path d='M180 68 L 140 50' stroke='#8a5a2b' stroke-width='6' stroke-linecap='round'/><path d='M232 88 L 232 168' stroke='#8a5a2b' stroke-width='9'/><path d='M232 130 C 200 128, 186 150, 190 168 L 232 168 Z' fill='#7f8a94' stroke='#2e2419'/><path d='M186 168 L 262 168 L 290 180 L 200 182 Z' fill='#5b6770' stroke='#2e2419'/><path d='M296 112 L 300 112 L 298 184 L 290 178 Z' fill='#5b6770' stroke='#2e2419'/><path d='M330 120 L 400 130' stroke='#2e2419' stroke-width='2' stroke-dasharray='4 3'/><text x='404' y='134' fill='#2e2419' font-size='10'>vers l'attelage</text><text x='404' y='146' fill='#2e2419' font-size='10'>(des bœufs)</text><line x1='298' y1='140' x2='360' y2='166' stroke='#2e2419'/><text x='364' y='170' fill='#2e2419'>coutre : lame de fer qui</text><text x='364' y='183' fill='#2e2419'>s'enfonce profondément</text><line x1='270' y1='178' x2='330' y2='208' stroke='#2e2419'/><text x='334' y='212' fill='#2e2419'>soc : trace le sillon</text><line x1='200' y1='150' x2='150' y2='120' stroke='#2e2419'/><text x='148' y='116' text-anchor='end' fill='#2e2419'>versoir : rabat la terre</text><text x='148' y='129' text-anchor='end' fill='#2e2419'>sur le côté</text><text x='140' y='36' text-anchor='end' fill='#2e2419'>mancherons (poignées)</text><text x='20' y='20' font-size='13' fill='#2e2419'>La charrue, mise au point au XIIe siècle</text><rect x='392' y='18' width='138' height='102' fill='#fbf6ea' stroke='#2e2419'/><text x='461' y='32' text-anchor='middle' font-size='10' fill='#2e2419'>Avant : l'araire</text><path d='M408 50 L 500 70' stroke='#8a5a2b' stroke-width='5' stroke-linecap='round'/><path d='M455 60 L 455 80' stroke='#8a5a2b' stroke-width='5'/><path d='M440 80 L 470 80 L 484 86 L 446 88 Z' fill='#5b6770' stroke='#2e2419'/><text x='461' y='102' text-anchor='middle' font-size='9' fill='#2e2419'>un simple soc, sans versoir :</text><text x='461' y='113' text-anchor='middle' font-size='9' fill='#2e2419'>la terre n'est pas retournée</text><text x='270' y='240' text-anchor='middle' font-size='10' fill='#fff'>Les pièces de fer sont en gris, le bois en brun. Schéma simplifié d'après le texte de l'étude de cas.</text></svg>"
   }
  ],
  "questions": [
@@ -513,21 +513,27 @@ JEU.enregistrer("cours", {
   {
    "id": "histoire-s06-1-q18",
    "fiche": "histoire-s06-1-f2",
-   "type": "ordre",
+   "type": "association",
    "niveau": 2,
-   "enonce": "Remets dans l'ordre les étapes du progrès du labour, de la plus ancienne à la plus récente.",
-   "elements": [
-    "L'araire à simple soc, tiré par des bœufs",
-    "La charrue à coutre, soc et versoir, au XIIe siècle",
-    "La charrue perfectionnée peu à peu",
-    "Le collier d'épaule, pour tirer des charges plus lourdes"
+   "enonce": "Relie chaque mot à ce qu'il désigne.",
+   "gauche": [
+    "Araire",
+    "Charrue",
+    "Collier d'épaule",
+    "Laboureur"
    ],
-   "explication": "D'abord l'araire, puis la charrue au XIIe siècle. Elle est ensuite perfectionnée, et le collier d'épaule vient compléter l'attelage.",
+   "droite": [
+    "Paysan riche, qui possède un attelage et une charrue",
+    "Outil à simple soc, tiré par des bœufs",
+    "Outil à coutre, soc et versoir, du XIIe siècle",
+    "Permet à l'animal de tirer plus lourd sans l'étouffer"
+   ],
+   "explication": "L'araire est l'ancien outil, la charrue le nouveau. Le collier d'épaule aide l'animal à tirer, et le laboureur est le paysan assez riche pour acheter l'attelage et la charrue.",
    "source": {
     "fichier": "cours/histoire/Histoire 5e - Moyen Age - Etude de cas 3 Vie et travail des paysans.pdf",
     "page": 1
    },
-   "r": "o5hQdp0VFJEH",
+   "r": "==ANvcnXG5TWsolQdlCRe8RSEYnQyclSZlCH",
    "poids": 1
   },
   {
@@ -886,7 +892,7 @@ JEU.enregistrer("cours", {
    ],
    "explication": "Le vilain est libre, le serf ne l'est pas. Le laboureur est un paysan riche, libre ou non.",
    "source": {
-    "fichier": "cours/histoire/Histoire 5e - Moyen Age - Etude de cas 3 Vie et travail des paysans.pdf",
+    "fichier": "cours/histoire/Histoire 5e - Moyen Age - Etude de cas 2 Seigneurie de Wismes.pdf",
     "page": 1
    },
    "r": "ogzVXsxCcA1MvB3RbR0DD8AELlCH",

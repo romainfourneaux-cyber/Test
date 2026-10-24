@@ -75,10 +75,10 @@ JEU.enregistrer("cours", {
    "id": "histoire-s07-2-f2",
    "notion": "987 : Hugues Capet élu roi",
    "titre": "Un roi élu, en 987",
-   "texte": "Le premier repère de la frise est l'élection de Hugues Capet : en 987, il est élu roi. Élire, c'est choisir par un vote. C'est le seul roi de la frise pour lequel on indique une élection, et non des dates de règne. L'année 987 appartient au Xe siècle, un peu avant l'an mil, l'époque où naît le village médiéval.",
+   "texte": "Le premier repère de la frise est l'élection de Hugues Capet : en 987, il est élu roi, c'est-à-dire choisi, par un vote ou un accord. C'est le seul roi de la frise avec une élection et non des dates de règne. L'année 987 appartient au Xe siècle, un peu avant l'an mil, quand naît le village médiéval.",
    "pointsCles": [
     "987 : Hugues Capet est élu roi",
-    "Élu : choisi par un vote",
+    "Élu : choisi, par un vote ou un accord",
     "987 : Xe siècle, un peu avant l'an mil",
     "Seul repère de la frise avant 1180"
    ],
@@ -95,7 +95,7 @@ JEU.enregistrer("cours", {
    "vocabulaire": [
     {
      "mot": "élire",
-     "def": "choisir quelqu'un par un vote ; Hugues Capet est élu roi en 987"
+     "def": "choisir quelqu'un, par un vote ou par l'accord d'une assemblée ; Hugues Capet est élu roi en 987"
     }
    ],
    "schema": "histoire-s07-2-s1",
@@ -112,11 +112,11 @@ JEU.enregistrer("cours", {
    "id": "histoire-s07-2-f3",
    "notion": "Vassal et seigneur, duchés et comtés",
    "titre": "Les mots de la séance : vassal, seigneur, duché, comté",
-   "texte": "La séance « Féodaux et seigneurs » fait noter deux grands duchés et deux grands comtés : un duché est le territoire d'un duc, un comté celui d'un comte. Elle fait aussi observer une image où deux personnages se font face, un vassal et son seigneur, dont il faut décrire l'attitude : ce sont les deux personnages principaux de l'image.",
+   "texte": "La séance « Féodaux et seigneurs » fait noter deux grands duchés et deux grands comtés : un duché est le territoire d'un duc, un comté celui d'un comte. Elle fait aussi observer une image d'un vassal et de son seigneur : il faut décrire l'attitude de chacun, puis repérer et citer les deux personnages principaux de l'image.",
    "pointsCles": [
     "Duché : le territoire d'un duc ; comté : le territoire d'un comte",
     "La séance fait noter de grands duchés et de grands comtés",
-    "Sur l'image étudiée : un vassal face à son seigneur, dont on décrit l'attitude"
+    "Sur l'image étudiée : un vassal et son seigneur, dont on décrit l'attitude"
    ],
    "dates": [],
    "lieux": [],
@@ -380,17 +380,17 @@ JEU.enregistrer("cours", {
    "niveau": 1,
    "enonce": "Que signifie « élu » dans « Hugues Capet élu roi » ?",
    "choix": [
-    "Choisi par un vote",
+    "Choisi, par un vote ou un accord",
     "Né fils de roi",
     "Vainqueur d'une bataille",
     "Couronné par un empereur"
    ],
-   "explication": "Élire, c'est choisir par un vote. En 987, Hugues Capet est ainsi élu roi.",
+   "explication": "Élire, c'est choisir quelqu'un, par un vote ou un accord. En 987, Hugues Capet est ainsi élu roi.",
    "source": {
     "fichier": "cours/histoire/Histoire 5e - Seance 9 - Support.pdf",
     "page": 1
    },
-   "r": "=cEEFYAGPxRHj9FBF1wBc8QCBETZ",
+   "r": "==QYJdhWO1gDGhAHSJTHVBQAe8hTBcASxwUFVEwBc8QCBETZ",
    "poids": 1
   },
   {
@@ -585,20 +585,20 @@ JEU.enregistrer("cours", {
    "fiche": "histoire-s07-2-f3",
    "type": "qcm_multiple",
    "niveau": 2,
-   "enonce": "Quels territoires la séance « Féodaux et seigneurs » demande-t-elle de noter ? (plusieurs réponses)",
+   "enonce": "Quels territoires sont tenus par un duc ou par un comte ? (plusieurs réponses)",
    "choix": [
-    "De grands duchés",
-    "De grands comtés",
-    "Des califats",
-    "Des empires",
-    "Des tenures"
+    "Les duchés",
+    "Les comtés",
+    "Les califats",
+    "Les tenures",
+    "Les royaumes"
    ],
-   "explication": "La séance fait noter deux grands duchés et deux grands comtés. Califats et empires appartiennent à d'autres cours.",
+   "explication": "Le duc tient un duché et le comte un comté : la séance en fait noter deux de chaque sorte. Un califat ou un royaume a un autre chef, et la tenure est la terre d'un paysan.",
    "source": {
     "fichier": "cours/histoire/Histoire 5e - Seance 9 - Support.pdf",
     "page": 1
    },
-   "r": "=gyUacMrGUALOVkRJBgDUEQSXMAUZdkBYrqBMcADj5VAbxEHIY0AtAFH",
+   "r": "=MTTV8sqGoSHWUkBUUCTDB1Gq7eDWhlCPVxAlAFH",
    "poids": 1
   },
   {
@@ -651,19 +651,19 @@ JEU.enregistrer("cours", {
    "fiche": "histoire-s07-2-f3",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Comment s'appelle le personnage qui fait face au vassal, sur l'image étudiée en séance ?",
+   "enonce": "Sur l'image étudiée en séance, le vassal est représenté avec un autre personnage. Lequel ?",
    "choix": [
-    "Le seigneur",
-    "Le serf",
-    "Le laboureur",
-    "Le chroniqueur"
+    "Son seigneur",
+    "Un serf",
+    "Un laboureur",
+    "Un chroniqueur"
    ],
    "explication": "L'image montre un vassal et son seigneur. La séance demande de décrire l'attitude de chacun.",
    "source": {
     "fichier": "cours/histoire/Histoire 5e - Seance 9 - Support.pdf",
     "page": 1
    },
-   "r": "==gSxgFAbp0BKUhRM4TZ",
+   "r": "=AlG2g0CSR0CcYECGESZ",
    "poids": 1
   },
   {
@@ -713,14 +713,18 @@ JEU.enregistrer("cours", {
    "fiche": "histoire-s07-2-f3",
    "type": "vrai_faux",
    "niveau": 3,
-   "enonce": "Dans la séance « Féodaux et seigneurs », le vassal et le seigneur sont les deux personnages principaux de l'image étudiée.",
-   "corrections": [],
-   "explication": "Oui : la séance demande de repérer ces deux personnages et de décrire leur attitude. Le vassal et le seigneur se font face.",
+   "enonce": "Un grand comté est un territoire plus petit qu'une tenure.",
+   "corrections": [
+    "Faux : un grand comté est un vaste territoire tenu par un comte ; une tenure est une terre cédée à un seul paysan.",
+    "Faux : le comté et la tenure désignent la même chose.",
+    "Faux : la tenure est le territoire du comte, et le comté celui du paysan."
+   ],
+   "explication": "Un grand comté est un vaste territoire, tenu par un comte. Une tenure est une simple terre qu'un seigneur cède à un paysan.",
    "source": {
     "fichier": "cours/histoire/Histoire 5e - Seance 9 - Support.pdf",
     "page": 1
    },
-   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "r": "==wENxlBi4FHU1lTDMxAaIVKHUVx2GFDHzqFBDoTFB1XcogEGxAHyIVAWARUMwhGc0wNNAwWY5EVGNQHfgSEVtAARtxDfIVHtgUEVgEHGkgEAAQNXEQRQUgGPkhUGYTDRYESOZcpSQQHkIVELQxAO4UAHgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
   }
  ],
