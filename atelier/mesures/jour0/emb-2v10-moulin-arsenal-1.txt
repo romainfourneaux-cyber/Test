@@ -7,3 +7,11 @@ niv | carte          | tenue (éclatante) | tenu  retraite | murs restants (quan
  3  | moulin         |   81 % ( 15 %)   |  66 %   19 %   |                      73 % (91 %) |               3.14 (1.6) |     14.3 / 4.2    | 1.19 · 1, 0, 0, 0
  4  | moulin         |   99 % (  0 %)   |  99 %    1 %   |                      68 % (69 %) |              3.19 (3.19) |       12 / 4.7    | 0.76 · 1, 0.23, 0, 0
 moy |                | 86.5 % (4.5 %)   |                |                           72.5 % |                      2.8
+
+p = 0.7 (réponses justes) · bataille de route : defense, 2 vagues, camp de 10, carte moulin, arsenal du niveau − 1
+niv | carte          | tenue (éclatante) | tenu  retraite | murs restants (quand elle tient) | coups portés (1re vague) | ennemis tués / tes pertes | sorties · rival : tours, gardes, rappelés, renforts
+ 1  | moulin         |   90 % (  8 %)   |  82 %   10 %   |                      86 % (96 %) |               3.24 (2.5) |     15.2 / 3.8    | 1.14 · 1, 0, 0, 0
+ 2  | moulin         |   96 % (  0 %)   |  96 %    4 %   |                      89 % (93 %) |              3.25 (2.14) |     15.2 / 4      | 1.49 · 1, 0, 0, 0
+ 3  | moulin         |   93 % ( 34 %)   |  59 %    8 %   |                      89 % (96 %) |              5.29 (1.88) |     15.4 / 4.7    | 1.45 · 1, 0, 0, 0
+ 4  | moulin         |  100 % (  0 %)   | 100 %    0 %   |                      78 % (78 %) |              4.19 (4.19) |     12.7 / 5      | 0.88 · 1, 0.35, 0, 0
+moy |                | 94.8 % (10.5 %)   |                |                           85.5 % |                        4
