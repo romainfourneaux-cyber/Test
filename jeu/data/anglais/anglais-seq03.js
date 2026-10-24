@@ -69,7 +69,7 @@ JEU.enregistrer("anglais", {
    "id": "anglais-seq03-v7",
    "en": "to look for",
    "fr": "chercher",
-   "exemple": "She is looking for her glasses.",
+   "exemple": "I am looking for my glasses.",
    "source": {
     "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
     "page": 7
@@ -335,7 +335,7 @@ JEU.enregistrer("anglais", {
   },
   {
    "id": "anglais-seq03-g3",
-   "regle": "Le présent progressif (am / is / are + verbe-ing) sert aussi pour un projet déjà fixé, avec un repère de temps futur : Tomorrow, she is giving a concert. He is coming next Wednesday. Le même temps décrit ce qui se passe maintenant (Look ! They are playing). Pour une habitude (on Mondays, every day, usually), on garde le présent simple.",
+   "regle": "Le présent progressif (am / is / are + verbe-ing) sert aussi pour un projet déjà fixé, avec un repère de temps futur : Tomorrow, she is playing in Paris. He is coming next Wednesday. Le même temps décrit ce qui se passe maintenant (Look ! They are playing). Pour une habitude (on Mondays, every day, usually), on garde le présent simple.",
    "exemples": [
     "I'm having lunch with Tom on Friday.",
     "We are visiting the castle tomorrow.",
@@ -349,10 +349,10 @@ JEU.enregistrer("anglais", {
   },
   {
    "id": "anglais-seq03-g4",
-   "regle": "Pour dire la date : It's + jour + the + nombre ordinal + of + mois : It's Monday, the twenty-first of January. Les ordinaux : first (1st), second (2nd), third (3rd), puis -th : sixth, seventh, tenth, fifteenth ; thirtieth ; twenty-first, thirty-first. Les jours et les mois prennent une majuscule. Dans une phrase : on Wednesday, the sixth of April.",
+   "regle": "Pour dire la date : It's + jour + the + nombre ordinal + of + mois : It's Monday, the twenty-first of January. Les ordinaux : first (1st), second (2nd), third (3rd), puis -th : sixth, seventh, tenth, fifteenth ; thirtieth ; twenty-first, thirty-first. Les jours et les mois prennent une majuscule. Dans une phrase : on Monday, the sixth of March.",
    "exemples": [
-    "It's Friday, the third of June.",
-    "It's Sunday, the thirtieth of May.",
+    "It's Friday, the third of November.",
+    "It's Saturday, the thirtieth of March.",
     "I'm leaving on Tuesday, the first of July."
    ],
    "source": {
@@ -367,7 +367,7 @@ JEU.enregistrer("anglais", {
     "I'm going to buy a new bag.",
     "They aren't going to wait.",
     "Are you going to swim ?",
-    "We're going to go to London."
+    "We're going to go to the beach."
    ],
    "source": {
     "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
@@ -376,11 +376,11 @@ JEU.enregistrer("anglais", {
   },
   {
    "id": "anglais-seq03-g6",
-   "regle": "Will forme le futur : will + base verbale, pareil à toutes les personnes, souvent contracté en 'll : She'll be famous one day. Négation : will not → won't. Question : Will you come ? Shall s'emploie avec I et we, surtout pour proposer quelque chose : Shall we eat ? Shall I help you ?",
+   "regle": "Will forme le futur : will + base verbale, pareil à toutes les personnes, souvent contracté en 'll : She'll be a teacher one day. Négation : will not → won't. Question : Will you come ? Shall s'emploie avec I et we, surtout pour proposer quelque chose : Shall we eat ? Shall I help you ?",
    "exemples": [
     "I'll call you tomorrow.",
     "He won't be late.",
-    "Will they stay for a week ?",
+    "Will they stay for ten days ?",
     "Shall we go to the park ?"
    ],
    "source": {
@@ -390,7 +390,7 @@ JEU.enregistrer("anglais", {
   },
   {
    "id": "anglais-seq03-g7",
-   "regle": "Question avec un mot interrogatif au futur : mot interrogatif + will + sujet + base verbale : What time will you eat ? How long will you stay ? Who will you dance with ? (la préposition reste à la fin). Avec be going to : Why are you going to sing ? What are we going to do ?",
+   "regle": "Question avec un mot interrogatif au futur : mot interrogatif + will + sujet + base verbale : What time will you eat ? How long will you stay ? Who will you dance with ? (la préposition reste à la fin). Avec be going to : Why are you going to cry ? What are we going to do ?",
    "exemples": [
     "Where will she go tonight ?",
     "When will the train leave ?",
@@ -404,7 +404,7 @@ JEU.enregistrer("anglais", {
   },
   {
    "id": "anglais-seq03-g8",
-   "regle": "Question tag au futur : on reprend will : We'll wait, won't we ? Yes, we will. / They won't go, will they ? No, they won't. Avec be going to, on reprend be : You are going to take the train, aren't you ? Après I am, le tag est aren't I ? : I'm going to win, aren't I ?",
+   "regle": "Question tag au futur : on reprend will : We'll wait, won't we ? Yes, we will. / They won't go, will they ? No, they won't. Avec be going to, on reprend be : You are going to take the bus, aren't you ? Après I am, le tag est aren't I ? : I'm going to win, aren't I ?",
    "exemples": [
     "She'll help us, won't she ? Yes, she will.",
     "He won't forget, will he ? No, he won't.",
@@ -421,7 +421,7 @@ JEU.enregistrer("anglais", {
    "exemples": [
     "I'm looking for my keys.",
     "She looks after her little sister.",
-    "We waited for the bus.",
+    "We waited for the taxi.",
     "He got off the train in York."
    ],
    "source": {
@@ -436,7 +436,7 @@ JEU.enregistrer("anglais", {
     "We cooked a cake yesterday.",
     "She usually calls me every day.",
     "Listen ! He is singing.",
-    "I'll go to the market tomorrow."
+    "I'll go to the library tomorrow."
    ],
    "source": {
     "fichier": "cours/anglais/Anglais 5e - Sequence 3 - Exercices supplementaires - Corriges.pdf",
@@ -537,8 +537,8 @@ JEU.enregistrer("anglais", {
   },
   {
    "id": "anglais-seq03-p8",
-   "en": "We'll need a swimsuit and a towel.",
-   "fr": "Il nous faudra un maillot de bain et une serviette.",
+   "en": "You'll need a swimsuit and a towel.",
+   "fr": "Il te faudra un maillot de bain et une serviette.",
    "source": {
     "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
     "page": 10
@@ -861,19 +861,19 @@ JEU.enregistrer("anglais", {
    "fiche": "anglais-seq03-g3",
    "type": "qcm",
    "niveau": 1,
-   "enonce": "Que veut dire « Tomorrow, she is giving a concert » ?",
+   "enonce": "Que veut dire « Tomorrow, she is singing in London » ?",
    "choix": [
-    "Demain, elle donne un concert (c'est prévu)",
-    "Hier, elle a donné un concert",
-    "Elle donne un concert tous les jours",
-    "Elle est en train de donner un concert"
+    "Demain, elle chante à Londres (c'est prévu)",
+    "Hier, elle a chanté à Londres",
+    "Elle chante à Londres tous les jours",
+    "Elle est en train de chanter à Londres"
    ],
    "explication": "Avec tomorrow, le présent progressif annonce un projet déjà fixé. Ce n'est ni une habitude ni une action en cours.",
    "source": {
     "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
     "page": 6
    },
-   "r": "==AUudwAMb7AZ40GB0AZO1UFZxhCFggBRcGHAUEEfcQALIVDvEEAVEAAGcwCMYTZ",
+   "r": "=s0WyQA3meQAJpBHX8EIFUkRIxxCIkQJSdesVBQAfggBMIVDvEEAVEAAGcwCMYTZ",
    "poids": 1
   },
   {
@@ -896,7 +896,7 @@ JEU.enregistrer("anglais", {
    "fiche": "anglais-seq03-g3",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Complète : « She ___ to town on Mondays. »",
+   "enonce": "Complète : « She ___ to the library on Mondays. »",
    "choix": [
     "goes",
     "is going",
@@ -957,14 +957,14 @@ JEU.enregistrer("anglais", {
    "fiche": "anglais-seq03-g3",
    "type": "qcm",
    "niveau": 3,
-   "enonce": "Pourquoi dit-on « I am bringing the cake next Wednesday » plutôt que « I bring the cake next Wednesday » ?",
+   "enonce": "Pourquoi dit-on « We are bringing the cake next Saturday » plutôt que « We bring the cake next Saturday » ?",
    "choix": [
     "Parce qu'un projet fixé à une date future se dit au présent progressif",
     "Parce que bring est irrégulier",
-    "Parce que next Wednesday demande toujours le passé",
-    "Parce que le présent simple n'existe pas avec I"
+    "Parce que next Saturday demande toujours le passé",
+    "Parce que le présent simple n'existe pas avec we"
    ],
-   "explication": "Next Wednesday annonce un projet déjà décidé : présent progressif. Le présent simple servirait pour une habitude.",
+   "explication": "Next Saturday annonce un projet déjà décidé : présent progressif. Le présent simple servirait pour une habitude.",
    "source": {
     "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
     "page": 6
@@ -977,7 +977,7 @@ JEU.enregistrer("anglais", {
    "fiche": "anglais-seq03-g3",
    "type": "vrai_faux",
    "niveau": 2,
-   "enonce": "« He is phoning me tonight » décrit une action en train de se faire en ce moment.",
+   "enonce": "« They are visiting us tonight » décrit une action en train de se faire en ce moment.",
    "corrections": [
     "Faux : avec tonight, c'est un projet pour ce soir, pas une action en cours.",
     "Faux : c'est une habitude de tous les soirs.",
@@ -1021,7 +1021,7 @@ JEU.enregistrer("anglais", {
    "choix": [
     "I'm seeing the dentist on Friday.",
     "We are flying to Dublin tomorrow.",
-    "She is reading a book now.",
+    "She is reading a comic now.",
     "They play tennis every Sunday.",
     "He is staying with us next month."
    ],
@@ -1119,8 +1119,8 @@ JEU.enregistrer("anglais", {
    "fiche": "anglais-seq03-g4",
    "type": "trou",
    "niveau": 2,
-   "enonce": "Écris la date en lettres : jeudi 7 mai.",
-   "texte": "It's Thursday, the ___ of ___.",
+   "enonce": "Écris la date en lettres : lundi 7 mai.",
+   "texte": "It's Monday, the ___ of ___.",
    "banque": [
     "seventh",
     "seven",
@@ -1199,11 +1199,11 @@ JEU.enregistrer("anglais", {
    "elements": [
     "of",
     "It's",
-    "the twenty-third",
+    "the twenty-eighth",
     "October.",
-    "Friday,"
+    "Sunday,"
    ],
-   "explication": "It's, le jour, puis the + ordinal + of + mois. Le vendredi 23 octobre.",
+   "explication": "It's, le jour, puis the + ordinal + of + mois. Le dimanche 28 octobre.",
    "source": {
     "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
     "page": 7
@@ -1312,10 +1312,10 @@ JEU.enregistrer("anglais", {
    "fiche": "anglais-seq03-g5",
    "type": "qcm",
    "niveau": 3,
-   "enonce": "Pourquoi dit-on « I'm going to go to London » avec deux fois go ?",
+   "enonce": "Pourquoi dit-on « I'm going to go to Dublin » avec deux fois go ?",
    "choix": [
     "Parce que going to annonce l'avenir proche et que go est le verbe aller : les deux sont nécessaires",
-    "Parce que Londres est loin",
+    "Parce que Dublin est loin",
     "Parce que go se répète toujours en anglais",
     "Parce que le premier go remplace will"
    ],
@@ -1448,7 +1448,7 @@ JEU.enregistrer("anglais", {
    "fiche": "anglais-seq03-g6",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Que fait-on avec « Shall we go to the beach ? »",
+   "enonce": "Que fait celui qui dit « Shall we go to the beach ? » ?",
    "choix": [
     "On propose d'aller à la plage ensemble",
     "On demande si la plage est ouverte",
@@ -1481,7 +1481,7 @@ JEU.enregistrer("anglais", {
     "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
     "page": 11
    },
-   "r": "=gDKT1RSB0xHhZXSo9gAD8QELlCH",
+   "r": "==gM7QUHVlSHCckLdRDTD4RCr41RZ8gAD8QELlCH",
    "poids": 1
   },
   {
@@ -1509,19 +1509,19 @@ JEU.enregistrer("anglais", {
    "fiche": "anglais-seq03-g6",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Comment pose-t-on la question à partir de « You will stay for a week » ?",
+   "enonce": "Comment pose-t-on la question à partir de « You will stay for two weeks » ?",
    "choix": [
-    "Will you stay for a week ?",
-    "Do you will stay for a week ?",
-    "You will stay for a week ?",
-    "Stay you for a week ?"
+    "Will you stay for two weeks ?",
+    "Do you will stay for two weeks ?",
+    "You will stay for two weeks ?",
+    "Stay you for two weeks ?"
    ],
    "explication": "Will passe devant le sujet : Will you stay. Pas de do avec will.",
    "source": {
     "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
     "page": 9
    },
-   "r": "==QTZZkAXISBVRQVDYACPtQC34VRAJ0FPpgCAUSZ",
+   "r": "==wFS4EHNMADFcWHCERVDYACPtQC34VRAJ0FPpgCAUSZ",
    "poids": 1
   },
   {
@@ -1548,7 +1548,7 @@ JEU.enregistrer("anglais", {
    "choix": [
     "We'll need a map.",
     "He will needs a map.",
-    "Will they be hungry ?",
+    "Will they be late ?",
     "She won't to come.",
     "I shall be ready.",
     "They will to sing."
@@ -1558,7 +1558,7 @@ JEU.enregistrer("anglais", {
     "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
     "page": 11
    },
-   "r": "=gyRbhQDPoAAIZyTFlVQPcQFGBCUrBlSFxwAOAgGagkJPVETIZwGGpQBbABUZd0WBgwAPNBSngEAb1gADE0A+AFH",
+   "r": "oM1RXswENETDAcVDCMwBOohUOAVWHpUUMohDegkJPVETIZwGGpQBbABUZd0WBgwAPNBSngEAb1gADE0A+AFH",
    "poids": 1
   },
   {
@@ -1677,19 +1677,19 @@ JEU.enregistrer("anglais", {
    "fiche": "anglais-seq03-g7",
    "type": "qcm",
    "niveau": 3,
-   "enonce": "Pourquoi « Where will they go ? » est-il juste et « Where will they going ? » faux ?",
+   "enonce": "Pourquoi « When will they leave ? » est-il juste et « When will they leaving ? » faux ?",
    "choix": [
-    "Parce qu'après will, le verbe reste à sa base : go",
-    "Parce que where demande going",
+    "Parce qu'après will, le verbe reste à sa base : leave",
+    "Parce que when demande leaving",
     "Parce que they ne va pas avec will",
-    "Parce qu'il faut dire will goes"
+    "Parce qu'il faut dire will leaves"
    ],
-   "explication": "Will est suivi de la base verbale, jamais de -ing ni de -s. Where will they go.",
+   "explication": "Will est suivi de la base verbale, jamais de -ing ni de -s. When will they leave.",
    "source": {
     "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
     "page": 9
    },
-   "r": "HplSOVlRDoxElIFFWUV0q6kCGshJfVEUPxhCQYEDecmXZkAHGkUHHHrGzwkQAxlTKUAFIISZ",
+   "r": "KZyWEAVQOVlRDoxElIFFWUV0q6kCGshJfVEUPxhCQYEDecmXZkAHGkUHHHrGzwkQAxlTKUAFIISZ",
    "poids": 1
   },
   {
@@ -1752,7 +1752,7 @@ JEU.enregistrer("anglais", {
    "fiche": "anglais-seq03-g8",
    "type": "vrai_faux",
    "niveau": 2,
-   "enonce": "Après « I'm going to tell you a secret », le tag est « aren't I ? ».",
+   "enonce": "Après « I'm going to be late », le tag est « aren't I ? ».",
    "corrections": [],
    "explication": "Après I am, le tag spécial est aren't I. On ne dit pas amn't I.",
    "source": {
@@ -1859,7 +1859,7 @@ JEU.enregistrer("anglais", {
     "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
     "page": 11
    },
-   "r": "=gDaPchCOIRSGgCHVlQGY4BTDBVEmUUEVkVSBkQELlCH",
+   "r": "==wMyAVEmUUEVkVSBkQELlCH",
    "poids": 1
   },
   {
@@ -1913,7 +1913,7 @@ JEU.enregistrer("anglais", {
    "fiche": "anglais-seq03-g9",
    "type": "trou",
    "niveau": 2,
-   "enonce": "Complète avec la préposition qui convient.",
+   "enonce": "Écris la préposition qui manque.",
    "texte": "I can't find my keys : I'm looking ___ them. We waited ___ the train for an hour.",
    "banque": [
     "for",
@@ -2212,9 +2212,9 @@ JEU.enregistrer("anglais", {
    "fiche": "anglais-seq03-g10",
    "type": "vrai_faux",
    "niveau": 1,
-   "enonce": "« A quarter past five » veut dire « cinq heures et quart ».",
+   "enonce": "« A quarter past six » veut dire « six heures et quart ».",
    "corrections": [],
-   "explication": "Past indique les minutes après l'heure : a quarter past five. Half past three, trois heures et demie.",
+   "explication": "Past indique les minutes après l'heure : a quarter past six. Half past three, trois heures et demie.",
    "source": {
     "fichier": "cours/anglais/Anglais 5e - Sequence 3 - Exercices supplementaires - Corriges.pdf",
     "page": 2
@@ -2287,7 +2287,7 @@ JEU.enregistrer("anglais", {
    "fiche": "anglais-seq03-g11",
    "type": "vrai_faux",
    "niveau": 2,
-   "enonce": "Dans « Try the blue one », one remplace un nom déjà connu, par exemple hat.",
+   "enonce": "Dans « Take the blue one », one remplace un nom déjà connu, par exemple hat.",
    "corrections": [],
    "explication": "One évite de répéter le nom : the blue one, le bleu. Au pluriel, ones.",
    "source": {
@@ -2387,14 +2387,14 @@ JEU.enregistrer("anglais", {
    "fiche": "anglais-seq03-g11",
    "type": "qcm",
    "niveau": 3,
-   "enonce": "Pourquoi dit-on « Whose umbrella is it ? » et non « Who's umbrella is it ? » ?",
+   "enonce": "Pourquoi dit-on « Whose bike is it ? » et non « Who's bike is it ? » ?",
    "choix": [
     "Parce que whose demande à qui appartient quelque chose ; who's veut dire who is",
     "Parce que who's est au pluriel",
-    "Parce que whose s'emploie seulement avec umbrella",
+    "Parce que whose s'emploie seulement avec bike",
     "Parce que who's est au passé"
    ],
-   "explication": "Whose interroge sur le possesseur : à qui est ce parapluie. Who's est la contraction de who is.",
+   "explication": "Whose interroge sur le possesseur : à qui est ce vélo. Who's est la contraction de who is.",
    "source": {
     "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
     "page": 6
@@ -2921,19 +2921,19 @@ JEU.enregistrer("anglais", {
    "fiche": "anglais-seq03-v25",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Que veut dire « He is trying on a jumper » ?",
+   "enonce": "Que veut dire « She is trying on a dress » ?",
    "choix": [
-    "Il essaie un pull",
-    "Il lave un pull",
-    "Il achète un pull",
-    "Il tricote un pull"
+    "Elle essaie une robe",
+    "Elle lave une robe",
+    "Elle achète une robe",
+    "Elle tricote une robe"
    ],
-   "explication": "Try on, c'est essayer un vêtement pour voir s'il va. A jumper : un pull.",
+   "explication": "Try on, c'est essayer un vêtement pour voir s'il va. A dress : une robe.",
    "source": {
     "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
     "page": 10
    },
-   "r": "==wVdUwGfIlB20AAcxUHcMgRFsTZ",
+   "r": "==AUQcgGDk0CBcASmQEBG51CPNgCFcTZ",
    "poids": 1
   },
   {
@@ -3262,16 +3262,16 @@ JEU.enregistrer("anglais", {
    "gauche": [
     "How much is this jumper ?",
     "Shall we go to the market ?",
-    "We'll need a swimsuit and a towel.",
+    "You'll need a swimsuit and a towel.",
     "She says she is at the market today."
    ],
    "droite": [
     "Elle dit qu'elle est au marché aujourd'hui.",
-    "Il nous faudra un maillot de bain et une serviette.",
+    "Il te faudra un maillot de bain et une serviette.",
     "Combien coûte ce pull ?",
     "Et si nous allions au marché ?"
    ],
-   "explication": "How much demande le prix, shall we propose, we'll need annonce un besoin futur, she says rapporte des paroles.",
+   "explication": "How much demande le prix, shall we propose, you'll need annonce un besoin futur, she says rapporte des paroles.",
    "source": {
     "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
     "page": 10
@@ -3299,19 +3299,19 @@ JEU.enregistrer("anglais", {
    "fiche": "anglais-seq03-p8",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Comment dit-on « Il nous faudra un maillot de bain et une serviette » ?",
+   "enonce": "Comment dit-on « Il te faudra un maillot de bain et une serviette » ?",
    "choix": [
-    "We'll need a swimsuit and a towel.",
-    "We'll needing a swimsuit and a towel.",
-    "We need will a swimsuit and a towel.",
-    "We'll to need a swimsuit and a towel."
+    "You'll need a swimsuit and a towel.",
+    "You'll needing a swimsuit and a towel.",
+    "You need will a swimsuit and a towel.",
+    "You'll to need a swimsuit and a towel."
    ],
-   "explication": "We'll need : il nous faudra, will + base verbale. A towel : une serviette.",
+   "explication": "You'll need : il te faudra, will + base verbale. A towel : une serviette.",
    "source": {
     "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
     "page": 10
    },
-   "r": "QZ0LIJhWZ5kDGJwBTcmBcAhBcAQGcIVCjlEAQNkTDoQQMUSZ",
+   "r": "==QTcRgJapQQN8wTCgACSNzGAYBGY4RHPNBSngEAb1gADE0EGsSZ",
    "poids": 1
   }
  ],
