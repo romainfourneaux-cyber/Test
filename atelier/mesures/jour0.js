@@ -56,6 +56,9 @@ ajouter("grand-3v16-domaine", ["--vagues", "3", "--pvRival", "16", "--mode", "de
 ajouter("grand-3v16-gue", ["--vagues", "3", "--pvRival", "16", "--mode", "defense", "--carte", "gue"], SANS_ZERO);
 ["gue", "foret", "moulin", "col"].forEach(c => ajouter("grand-3v16-" + c + "-arsenal-1", ["--vagues", "3", "--pvRival", "16", "--mode", "defense", "--carte", c, "--arsenal", "-1"], SANS_ZERO));
 [12, 14, 20].forEach(pv => ajouter("grand-3v" + pv + "-gue-arsenal-1", ["--vagues", "3", "--pvRival", String(pv), "--mode", "defense", "--carte", "gue", "--arsenal", "-1"], SANS_ZERO));
+// Levier de rechange pour le Grand Gardien des semaines 6 à 8 : 4 vagues à la ligne de la semaine (ligne + 1 à 3 vagues y est trop dur).
+["gue", "domaine"].forEach(c => ajouter("grand-4v16-" + c, ["--vagues", "4", "--pvRival", "16", "--mode", "defense", "--carte", c], "1,2,3,4"));
+ajouter("grand-3v16-gue-niveau0", ["--vagues", "3", "--pvRival", "16", "--mode", "defense", "--carte", "gue"], "0");
 
 const aFaire = mesures.filter(m => !SEULEMENT || SEULEMENT.some(s => m.nom === s || m.nom.indexOf(s) === 0));
 if (!aFaire.length) { console.error("Aucune mesure ne correspond à --seulement"); process.exit(1); }

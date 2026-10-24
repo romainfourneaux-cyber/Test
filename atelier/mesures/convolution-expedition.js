@@ -58,7 +58,7 @@ function tenue(nom, niveau, p) {
   return l.tenue / 100;
 }
 // Les quatre nœuds d'une semaine de ligne L (déjà décalée), sur sa carte.
-function noeuds(semaine, L, p) {
+function noeuds(semaine, L, p, avecGrand) {
   const carte = CARTES[(semaine - 1) % 5];
   // un nœud joué à la ligne L + 1 avec l'arsenal de la ligne L se lit dans le fichier « -arsenal-1 » au niveau L + 1
   const decale = (prefixe, c, plus) => (plus && L < 4 ? tenue(prefixe + "-" + c + "-arsenal-1", borne(L + 1), p) : tenue(prefixe + "-" + c, L, p));
@@ -66,7 +66,7 @@ function noeuds(semaine, L, p) {
     esc: tenue("esc-" + ESC + "-" + carte + (SANS_CHAMPION ? "-sans-champion" : ""), L, p),
     emb: decale("emb-" + EMB, carte, EMB_PLUS),
     gard: tenue("gard-" + GARD + "-" + carte, L, p),
-    grand: decale("grand-" + GRAND, CARTE_GRAND, GRAND_PLUS)
+    grand: avecGrand ? decale("grand-" + GRAND, CARTE_GRAND, GRAND_PLUS) : null
   };
 }
 // Convolution : distribution des vivres, nœud après nœud. Rend { reussite, premierGardien, vivresMoyens }.
@@ -94,7 +94,7 @@ function expedition(depart, p, vivres) {
   };
   let premierGardien = null;
   for (let i = 0; i < SEMAINES; i++) {
-    const s = depart + i, L = borne(ligne(s) + DECALAGE), nd = noeuds(s, L, p);
+    const s = depart + i, L = borne(ligne(s) + DECALAGE), nd = noeuds(s, L, p, i === SEMAINES - 1);
     // la halte de la couche est une escarmouche (part esc) ou une embuscade (part emb), jamais les deux : la chance de
     // perdre un vivre est la somme des deux parts fois la chance que les murs cèdent
     COUCHES.forEach((c, j) => { couche(c.esc * (1 - nd.esc) + c.emb * (1 - nd.emb)); if (j === 2) repos(); });
@@ -122,7 +122,7 @@ if (DETAIL) {
   DEPARTS.forEach(dep => {
     for (let i = 0; i < SEMAINES; i++) {
       const s = dep + i, L = borne(ligne(s) + DECALAGE);
-      PS.forEach(p => { const nd = noeuds(s, L, p); console.log("| S" + s + " | " + L + " | " + CARTES[(s - 1) % 5] + " | " + p + " | " + pc(nd.esc) + " | " + pc(nd.emb) + " | " + pc(nd.gard) + " | " + pc(nd.grand) + " |"); });
+      PS.forEach(p => { const nd = noeuds(s, L, p, i === SEMAINES - 1); console.log("| S" + s + " | " + L + " | " + CARTES[(s - 1) % 5] + " | " + p + " | " + pc(nd.esc) + " | " + pc(nd.emb) + " | " + pc(nd.gard) + " | " + (nd.grand === null ? "—" : pc(nd.grand)) + " |"); });
     }
   });
 }
