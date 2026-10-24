@@ -106,7 +106,7 @@ module.exports = {
     { id: "anglais-seq02-q4", fiche: "anglais-seq02-g1", type: "qcm", niveau: 2,
       enonce: "Quel est le prétérit de « to stop » ?",
       choix: ["stopped", "stoped", "stopt", "stopping"], reponse: "stopped",
-      explication: "Le corrigé écrit stopped, avec deux p, comme travelled avec deux l. La terminaison reste -ed.", source: L(3) },
+      explication: "Stopped prend deux p, comme travelled prend deux l. La terminaison reste -ed.", source: L(3) },
     { id: "anglais-seq02-q5", fiche: "anglais-seq02-g1", type: "qcm", niveau: 2,
       enonce: "Comment reconnaît-on qu'un verbe régulier est au prétérit simple ?",
       choix: ["Il se termine par -ed", "Il se termine par -ing", "Il est précédé de will", "Il prend un -s"], reponse: "Il se termine par -ed",
@@ -342,7 +342,7 @@ module.exports = {
       reponse: "Parce que last year situe l'action dans un passé terminé",
       explication: "Last year est un marqueur du passé : l'action est finie, on emploie le prétérit. Au présent simple, on dirait every year.", source: L(5) },
     { id: "anglais-seq02-q55", fiche: "anglais-seq02-g7", type: "vrai_faux", niveau: 2,
-      enonce: "Pour une date passée, on dit « in December » et « on Monday 4th July ».",
+      enonce: "Pour une date passée, on dit « in December » (un mois) et « on Monday » (un jour).",
       corrections: [], reponse: { vrai: true, correction: null },
       explication: "In devant un mois ou une année, on devant un jour daté. Les deux accompagnent un prétérit.", source: L(5) },
 

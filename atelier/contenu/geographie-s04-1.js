@@ -29,7 +29,7 @@ module.exports = {
     {
       id: "geographie-s04-1-f2", notion: "Les causes de la croissance démographique indienne",
       titre: "Pourquoi la population indienne augmente",
-      texte: "Depuis un siècle, la mortalité s'effondre en Inde grâce aux progrès de la médecine, au recul des épidémies et à la fin des famines. La natalité baisse aussi, mais plus lentement. Malgré une politique de limitation des naissances et des moyens de contraception peu chers, le pays n'a pas stabilisé sa population. Elle reste très jeune, sans risque de vieillissement proche.",
+      texte: "La mortalité s'effondre en Inde depuis un siècle : progrès de la médecine, recul des épidémies, fin des famines. La natalité baisse aussi, mais plus lentement. Malgré une politique de limitation des naissances et une contraception peu chère, le pays n'a pas stabilisé sa population. Elle reste très jeune, sans risque de vieillissement proche.",
       pointsCles: [
         "La mortalité recule : progrès de la médecine, recul des épidémies, disparition des famines",
         "La natalité baisse plus lentement, malgré la limitation des naissances et la contraception",
@@ -46,7 +46,7 @@ module.exports = {
     {
       id: "geographie-s04-1-f3", notion: "Les écarts de fécondité entre le nord et le sud de l'Inde",
       titre: "Fécondité : un Nord et un Sud",
-      texte: "La carte du nombre moyen d'enfants par femme montre une Inde coupée en deux. Au nord, autour de New Delhi, beaucoup de régions dépassent 3,2 enfants par femme et les familles de plus de quatre enfants restent nombreuses. Au sud, autour de Bangalore, on passe sous 1,8 : le Sud a terminé sa transition démographique, avec une natalité et une mortalité faibles.",
+      texte: "La carte de la fécondité montre une Inde coupée en deux. Au nord, autour de New Delhi, beaucoup de régions dépassent 3,2 enfants par femme et les familles de plus de quatre enfants restent nombreuses. Au sud, autour de Bangalore, on passe sous 1,8 : le Sud a achevé sa transition démographique, natalité et mortalité y sont faibles.",
       pointsCles: [
         "Taux de fécondité : le nombre moyen d'enfants par femme",
         "Nord : souvent plus de 3,2 enfants par femme, familles de plus de quatre enfants encore fréquentes",
@@ -62,7 +62,7 @@ module.exports = {
     {
       id: "geographie-s04-1-f4", notion: "La Révolution verte en Inde",
       titre: "La Révolution verte",
-      texte: "Marquée par de grandes famines, l'Inde a transformé son agriculture à la fin des années 1960 : c'est la Révolution verte. Machines, engrais, pesticides et irrigation ont fait du pays un géant agricole, capable de produire assez de riz, de blé et de légumes pour tous ses habitants. Mais ces produits chimiques abîment l'environnement.",
+      texte: "Marquée par de grandes famines, l'Inde a modernisé ses campagnes vers la fin des années 1960 : c'est la Révolution verte. Machines, engrais, pesticides et irrigation ont fait du pays un géant agricole, capable de produire assez de riz, de blé et de légumes pour tous ses habitants. Mais ces produits chimiques abîment l'environnement.",
       pointsCles: [
         "Fin des années 1960 : la Révolution verte modernise l'agriculture",
         "Moyens : mécanisation, engrais, pesticides, irrigation",
@@ -97,7 +97,7 @@ module.exports = {
     {
       id: "geographie-s04-1-f6", notion: "Le développement de l'Inde depuis 1950 et ses inégalités",
       titre: "Des progrès, mais de fortes inégalités",
-      texte: "Depuis 1950, la vie des Indiens s'est améliorée : l'espérance de vie est passée d'environ 35 à presque 70 ans, la mortalité infantile a été divisée par plus de cinq, l'analphabétisme a reculé de 82 % à 26 %, le PIB par habitant a plus que triplé. Mais les villes comptent parmi les plus polluées du monde et, à Mumbai, les pauvres venus des campagnes s'entassent dans des bidonvilles.",
+      texte: "Depuis 1950, la vie des Indiens s'est améliorée : espérance de vie passée de 35 à presque 70 ans, mortalité infantile divisée par plus de cinq, analphabétisme tombé de 82 % à 26 %, PIB par habitant plus que triplé. Mais ses villes sont parmi les plus polluées du monde ; à Mumbai, les pauvres venus des campagnes s'entassent dans des bidonvilles.",
       pointsCles: [
         "Espérance de vie : d'environ 35 ans en 1950 à presque 70 ans en 2020",
         "Mortalité infantile : de 169 à 30 morts pour mille naissances ; analphabétisme : de 82 % à 26 %",

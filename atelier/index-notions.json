@@ -1393,5 +1393,1101 @@
   "cours": "svt-s03-1",
   "notion": "Petite histoire de la météorologie en France",
   "prerequis": []
+ },
+ {
+  "id": "anglais-seq01-v1",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq01",
+  "notion": "delighted : ravi, enchanté",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq01-v2",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq01",
+  "notion": "exhausted : épuisé",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq01-v3",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq01",
+  "notion": "a thief : un voleur",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq01-v4",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq01",
+  "notion": "a policeman (pluriel : policemen) : un policier",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq01-v5",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq01",
+  "notion": "the front row : le premier rang",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq01-v6",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq01",
+  "notion": "full : plein, complet",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq01-v7",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq01",
+  "notion": "excited : tout excité, très enthousiaste",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq01-v8",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq01",
+  "notion": "the traffic : la circulation",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq01-v9",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq01",
+  "notion": "at work : au travail",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq01-v10",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq01",
+  "notion": "the living-room : le salon",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq01-v11",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq01",
+  "notion": "the weather : le temps (qu'il fait)",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq01-v12",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq01",
+  "notion": "sunny : ensoleillé",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq01-v13",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq01",
+  "notion": "clean : propre",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq01-v14",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq01",
+  "notion": "a coat : un manteau",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq01-v15",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq01",
+  "notion": "a castle : un château",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq01-v16",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq01",
+  "notion": "gardening : le jardinage",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq01-v17",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq01",
+  "notion": "a suitcase : une valise",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq01-v18",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq01",
+  "notion": "probably : probablement, sans doute",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq01-v19",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq01",
+  "notion": "proud : fier",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq01-v20",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq01",
+  "notion": "a meal : un repas",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq01-v21",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq01",
+  "notion": "oysters : des huîtres",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq01-v22",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq01",
+  "notion": "to carry : porter (à la main, dans ses bras)",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq01-g1",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq01",
+  "notion": "Le prétérit de to be a deux formes : was avec I, he, she et it ; were avec you, we et they.",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq01-g2",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq01",
+  "notion": "Forme négative : was not → wasn't, were not → weren't.",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq01-g3",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq01",
+  "notion": "« Il y avait » se dit there was devant un singulier et there were devant un pluriel.",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq01-g4",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq01",
+  "notion": "Question tag : après une phrase affirmative, le tag est négatif (wasn't it ?) ; après une phrase négative,…",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq01-g5",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq01",
+  "notion": "Du présent au prétérit : am et is deviennent was, are devient were.",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq01-g6",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq01",
+  "notion": "Le prétérit progressif : was / were + verbe-ing.",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq01-g7",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq01",
+  "notion": "En anglais, une question ou une négation a toujours besoin d'un auxiliaire.",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq01-g8",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq01",
+  "notion": "Les question tags au présent : avec be, on reprend be (isn't it ?",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq01-g9",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq01",
+  "notion": "Pour demander une description, on emploie What … like ?",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq01-g10",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq01",
+  "notion": "Les mots interrogatifs : what (quoi), where (où), when (quand), why (pourquoi), who (qui), which one (lequel).",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq01-g11",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq01",
+  "notion": "L'ordre des mots : sujet + verbe + complément.",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq01-g12",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq01",
+  "notion": "This (ce, cette) devant un singulier, these (ces) devant un pluriel : this car, these flowers.",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq01-p1",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq01",
+  "notion": "I was at home last night.",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq01-p2",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq01",
+  "notion": "Were you at school on Monday ?",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq01-p3",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq01",
+  "notion": "There were two dogs in the garden.",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq01-p4",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq01",
+  "notion": "She wasn't at the party, was she ?",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq01-p5",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq01",
+  "notion": "What's the weather like in Paris ?",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq01-p6",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq01",
+  "notion": "We were watching a movie.",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq01-p7",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq01",
+  "notion": "Who is that woman next to him ?",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq01-p8",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq01",
+  "notion": "I often play tennis with my brother.",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq02-v1",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq02",
+  "notion": "to travel (travelled) : voyager",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq02-v2",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq02",
+  "notion": "to arrive : arriver",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq02-v3",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq02",
+  "notion": "to climb : grimper, escalader",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq02-v4",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq02",
+  "notion": "to stop (stopped) : s'arrêter",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq02-v5",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq02",
+  "notion": "to decide : décider",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq02-v6",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq02",
+  "notion": "to jump out of the window : sauter par la fenêtre",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq02-v7",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq02",
+  "notion": "angry : en colère",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq02-v8",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq02",
+  "notion": "the fog : le brouillard",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq02-v9",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq02",
+  "notion": "a mirror : un miroir",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq02-v10",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq02",
+  "notion": "a book shop (attention : a library est une bibliothèque) : une librairie",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq02-v11",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq02",
+  "notion": "bagpipes : la cornemuse",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq02-v12",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq02",
+  "notion": "a towel : une serviette",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq02-v13",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq02",
+  "notion": "dry / wet : sec / mouillé",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq02-v14",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq02",
+  "notion": "boring / interesting : ennuyeux / intéressant",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq02-v15",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq02",
+  "notion": "a soldier : un soldat",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq02-v16",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq02",
+  "notion": "a wife / a husband : une épouse / un mari",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq02-v17",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq02",
+  "notion": "a nephew / a niece : un neveu / une nièce",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq02-v18",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq02",
+  "notion": "a son-in-law / a daughter-in-law : un gendre / une belle-fille",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq02-v19",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq02",
+  "notion": "a grandmother / a grandfather : une grand-mère / un grand-père",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq02-v20",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq02",
+  "notion": "a nurse : une infirmière, un infirmier",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq02-v21",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq02",
+  "notion": "the bus stop : l'arrêt de bus",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq02-v22",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq02",
+  "notion": "a present : un cadeau",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq02-v23",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq02",
+  "notion": "a camera : un appareil photo",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq02-v24",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq02",
+  "notion": "dirty : sale",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq02-v25",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq02",
+  "notion": "an umbrella : un parapluie",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq02-g1",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq02",
+  "notion": "Le prétérit simple des verbes réguliers se forme avec la base verbale + -ed : watch → watched, arrive →…",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq02-g2",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq02",
+  "notion": "Le -ed se prononce de trois façons : [id] après les sons t et d (decided, wanted), [t] après un son sourd…",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq02-g3",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq02",
+  "notion": "Au prétérit simple, question et négation utilisent did : Did + sujet + base verbale ?",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq02-g4",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq02",
+  "notion": "Les verbes irréguliers ne prennent pas -ed.",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq02-g5",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq02",
+  "notion": "Question avec un mot interrogatif au prétérit : mot interrogatif + did + sujet + base verbale (What did…",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq02-g6",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq02",
+  "notion": "Question tag au prétérit simple : didn't he ?",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq02-g7",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq02",
+  "notion": "Les marqueurs du passé qui appellent le prétérit : yesterday, last week / last month / last year / last…",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq02-g8",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq02",
+  "notion": "Le prétérit progressif (was / were + -ing) décrit la scène : ce qui était en train de se passer.",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq02-g9",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq02",
+  "notion": "Les adjectifs possessifs se placent devant un nom : my, your, his (à lui), her (à elle), its (à une chose…",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq02-g10",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq02",
+  "notion": "Les pronoms possessifs remplacent adjectif possessif + nom : mine (le mien), yours, his, hers, ours, theirs.",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq02-g11",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq02",
+  "notion": "Pour dire « le … de quelqu'un », on met le possesseur d'abord, puis 's, puis la chose : the president's…",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq02-g12",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq02",
+  "notion": "Le -s de la 3e personne du présent se prononce [z] après un son sonore (lives, arrives, buys, has) et [s]…",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq02-p1",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq02",
+  "notion": "Yesterday, we visited an old castle.",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq02-p2",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq02",
+  "notion": "Did you see the film ? No, I didn't.",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq02-p3",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq02",
+  "notion": "Where did they go last weekend ?",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq02-p4",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq02",
+  "notion": "She didn't bring her camera.",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq02-p5",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq02",
+  "notion": "This umbrella is mine, that one is yours.",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq02-p6",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq02",
+  "notion": "My brother's room is very small.",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq02-p7",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq02",
+  "notion": "He broke his glasses two days ago.",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq02-p8",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq02",
+  "notion": "They were walking in the park when it started to rain.",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq03-v1",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq03",
+  "notion": "a diary : un agenda",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq03-v2",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq03",
+  "notion": "an interview : une interview, un entretien",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq03-v3",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq03",
+  "notion": "to stay : rester, séjourner",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq03-v4",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq03",
+  "notion": "to cut the grass : tondre la pelouse",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq03-v5",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq03",
+  "notion": "to lay the table : mettre la table",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq03-v6",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq03",
+  "notion": "to look after : s'occuper de, garder",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq03-v7",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq03",
+  "notion": "to look for : chercher",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq03-v8",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq03",
+  "notion": "binoculars : des jumelles",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq03-v9",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq03",
+  "notion": "alone : seul",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq03-v10",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq03",
+  "notion": "to be right : avoir raison",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq03-v11",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq03",
+  "notion": "deaf : sourd",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq03-v12",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq03",
+  "notion": "lovely : adorable, charmant",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq03-v13",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq03",
+  "notion": "delicious : délicieux",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq03-v14",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq03",
+  "notion": "the airport : l'aéroport",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq03-v15",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq03",
+  "notion": "to get on / to get off : monter dans / descendre de (un bus, un train, un avion)",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq03-v16",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq03",
+  "notion": "a ladder : une échelle",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq03-v17",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq03",
+  "notion": "slippers : des pantoufles, des chaussons",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq03-v18",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq03",
+  "notion": "to be in a hurry : être pressé",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq03-v19",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq03",
+  "notion": "a backpack : un sac à dos",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq03-v20",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq03",
+  "notion": "a swimsuit : un maillot de bain",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq03-v21",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq03",
+  "notion": "sweets : des bonbons",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq03-v22",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq03",
+  "notion": "hungry : affamé, qui a faim",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq03-v23",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq03",
+  "notion": "to lend : prêter",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq03-v24",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq03",
+  "notion": "the market : le marché",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq03-v25",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq03",
+  "notion": "to try on : essayer (un vêtement)",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq03-v26",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq03",
+  "notion": "a speech : un discours",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq03-v27",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq03",
+  "notion": "famous : célèbre",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq03-v28",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq03",
+  "notion": "tonight / later / soon : ce soir / plus tard / bientôt",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq03-v29",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq03",
+  "notion": "a jumper : un pull",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq03-v30",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq03",
+  "notion": "a hat : un chapeau",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq03-g1",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq03",
+  "notion": "Pour rapporter ce que quelqu'un dit ou pense, on emploie says (that) ou thinks (that) : He says (that) he…",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq03-g2",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq03",
+  "notion": "Pour répondre en donnant son avis, on dit I think ou I don't think suivi d'une réponse courte : Do you…",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq03-g3",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq03",
+  "notion": "Le présent progressif (am / is / are + verbe-ing) sert aussi pour un projet déjà fixé, avec un repère de…",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq03-g4",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq03",
+  "notion": "Pour dire la date : It's + jour + the + nombre ordinal + of + mois : It's Monday, the twenty-first of January.",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq03-g5",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq03",
+  "notion": "Be going to exprime ce qu'on va faire ou ce qui va arriver : am / is / are + going to + base verbale : She…",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq03-g6",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq03",
+  "notion": "Will forme le futur : will + base verbale, pareil à toutes les personnes, souvent contracté en 'll :…",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq03-g7",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq03",
+  "notion": "Question avec un mot interrogatif au futur : mot interrogatif + will + sujet + base verbale : What time…",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq03-g8",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq03",
+  "notion": "Question tag au futur : on reprend will : We'll wait, won't we ?",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq03-g9",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq03",
+  "notion": "Beaucoup de verbes vont avec une préposition qui fait partie de leur sens : look for (chercher), look…",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq03-g10",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq03",
+  "notion": "Le repère de temps dit quel temps employer.",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq03-g11",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq03",
+  "notion": "Questions utiles : How much is it ?",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq03-g12",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq03",
+  "notion": "Des sons à ne pas confondre : le [ʊ] court de put, foot, good, cook et le [uː] long de food, fruit, blue,…",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq03-p1",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq03",
+  "notion": "She says she is at the market today.",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq03-p2",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq03",
+  "notion": "Tomorrow, we are visiting a castle.",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq03-p3",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq03",
+  "notion": "It's Thursday, the tenth of June.",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq03-p4",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq03",
+  "notion": "I'm going to call my cousin tonight.",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq03-p5",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq03",
+  "notion": "Will you come with us ? Yes, I will.",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq03-p6",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq03",
+  "notion": "How much is this jumper ? It's ten pounds.",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq03-p7",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq03",
+  "notion": "Shall we go to the market ?",
+  "prerequis": []
+ },
+ {
+  "id": "anglais-seq03-p8",
+  "matiere": "anglais",
+  "semaine": 0,
+  "cours": "anglais-seq03",
+  "notion": "We'll need a swimsuit and a towel.",
+  "prerequis": []
  }
 ]
