@@ -249,7 +249,7 @@ module.exports = {
       enonce: "La Révolution verte n'a eu que des effets positifs.",
       corrections: ["Faux : elle a aussi des effets négatifs sur l'environnement.", "Faux : elle a fait reculer la production agricole.", "Faux : elle a provoqué de nouvelles famines."],
       reponse: { vrai: false, correction: "Faux : elle a aussi des effets négatifs sur l'environnement." },
-      explication: "Elle a permis de nourrir une population toujours plus nombreuse. Mais ses produits chimiques ont des effets négatifs sur l'environnement.", source: P(2) },
+      explication: "Grâce à elle, le pays nourrit une population qui ne cesse de grandir. Mais l'environnement en paie le prix : c'est son revers.", source: P(2) },
     { id: "geographie-s04-1-q27", fiche: "geographie-s04-1-f4", type: "qcm", niveau: 2,
       enonce: "Pourquoi l'Inde a-t-elle voulu transformer son agriculture à la fin des années 1960 ?",
       choix: ["Parce qu'elle avait connu de grandes famines", "Parce qu'elle voulait vendre son riz aux pays d'Europe", "Parce que sa population diminuait", "Parce que ses paysans partaient tous vivre en ville"],

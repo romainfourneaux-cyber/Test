@@ -169,7 +169,7 @@ module.exports = {
       explication: "Enfants non scolarisés, écoles sans locaux, matériel minimal : trois signes de crise. Le baccalauréat à 18 ans et la cantine gratuite, c'est la Finlande.", source: P(1) },
     { id: "geographie-s08-2-q7", fiche: "geographie-s08-2-f1", type: "qcm", niveau: 3,
       enonce: "Pourquoi l'analphabétisme est-il si élevé en Afghanistan ?",
-      choix: ["Parce que près de la moitié des enfants ne vont pas à l'école, dans un pays en guerre depuis quarante ans", "Parce que la langue du pays ne s'écrit pas", "Parce que l'école n'y est pas obligatoire", "Parce que le pays est trop peuplé"],
+      choix: ["Parce que près de la moitié des enfants ne vont pas à l'école, dans un pays en guerre depuis quarante ans", "Parce que la langue du pays ne s'écrit pas", "Parce que l'école n'y est pas obligatoire, si bien que les familles n'y envoient leurs enfants que si elles le souhaitent", "Parce que le pays est trop peuplé"],
       reponse: "Parce que près de la moitié des enfants ne vont pas à l'école, dans un pays en guerre depuis quarante ans",
       explication: "Qui ne va pas à l'école n'apprend pas à lire. La guerre, le manque d'écoles et le travail des enfants tiennent la moitié des enfants loin de la classe.", source: P(1) },
     { id: "geographie-s08-2-q8", fiche: "geographie-s08-2-f1", type: "trou", niveau: 1,
