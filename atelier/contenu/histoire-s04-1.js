@@ -93,7 +93,7 @@ module.exports = {
     {
       id: "histoire-s04-1-f5", notion: "Un texte du Coran sur le jeûne du ramadan",
       titre: "Étude de document : le ramadan dans le Coran",
-      texte: "Le document étudié est un extrait du Coran : la sourate 2, versets 183 à 185. Il traite du jeûne du mois de ramadan. D'après ce texte, le jeûne est prescrit aux croyants pendant un nombre de jours déterminé ; qui est malade ou en voyage peut jeûner plus tard. Le ramadan y est présenté comme le mois où le Coran a été révélé.",
+      texte: "Le texte étudié est un extrait du Coran, sourate 2, versets 183 à 185. Il traite du jeûne du mois de ramadan. Le jeûne y est prescrit aux croyants pour un nombre de jours fixé. Qui est malade ou en voyage jeûne plus tard. Le ramadan y est présenté comme le mois où le Coran a été révélé.",
       pointsCles: ["Un extrait du Coran : sourate 2, versets 183-185", "Sujet : le jeûne du mois de ramadan", "Malade ou en voyage : on jeûne plus tard", "Selon le texte, le Coran a été révélé pendant ce mois"],
       dates: [],
       lieux: [], personnages: [],
@@ -260,7 +260,7 @@ module.exports = {
       enonce: "De combien de jours environ une année hégirienne est-elle plus courte qu'une année de 365 jours ?",
       choix: ["Une dizaine de jours", "Un mois entier", "Une centaine de jours", "Un seul jour"],
       reponse: "Une dizaine de jours",
-      explication: "365 moins 354 font 11, et 365 moins 355 font 10. L'écart est d'une dizaine de jours.", indice: "Soustrais 354 de 365.", source: S(3) },
+      explication: "365 moins 354 font onze, et 365 moins 355 font dix. L'écart est donc d'une dizaine de jours.", indice: "Soustrais 354 de 365.", source: S(3) },
     { id: "histoire-s04-1-q31", fiche: "histoire-s04-1-f4", type: "qcm", niveau: 3,
       enonce: "Une année hégirienne a une dizaine de jours de moins que la nôtre. Que se passe-t-il, d'une année à l'autre, pour le début d'un même mois hégirien dans notre calendrier ?",
       choix: ["Il arrive une dizaine de jours plus tôt chaque année", "Il tombe toujours à la même date", "Il arrive une dizaine de jours plus tard chaque année", "Il change seulement tous les cent ans"],

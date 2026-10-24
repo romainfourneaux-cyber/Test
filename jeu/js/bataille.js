@@ -373,8 +373,33 @@
     // --- sol : ombres portées des places fortes et des tours ---
     sprite(ctx, "ombre-" + nomPlace("france", p.chateau), v.depart.x, v.depart.y, 0);
     sprite(ctx, "ombre-" + nomPlace(v.campAdverse, p.rival), v.arrivee.x, v.arrivee.y, 0);
-    for (i = 0; i < p.toursRivales.length; i++) { tr = p.toursRivales[i]; sprite(ctx, "ombre-" + nomTour(tr, v), tr.x, tr.y, 0); }
+    // Tours que le rival vient de bâtir (effet « tourRivale » du moteur, pendant ta préparation) : elles apparaissent en
+    // fondu (NAISSANCE_TOUR s), ombre comprise ; v.naissance : emplacement → âge de l'effet (null sans tour neuve).
+    v.naissance = null;
+    for (i = 0; i < p.effets.length; i++) { e = p.effets[i]; if (e.genre === "tourRivale" && e.age < NAISSANCE_TOUR) (v.naissance || (v.naissance = {}))[e.emplacement] = e.age; }
+    for (i = 0; i < p.toursRivales.length; i++) {
+      tr = p.toursRivales[i];
+      var ft = fonduTour(tr, v);
+      if (ft < 1) ctx.globalAlpha = ft;
+      sprite(ctx, "ombre-" + nomTour(tr, v), tr.x, tr.y, 0);
+      if (ft < 1) ctx.globalAlpha = 1;
+    }
     for (i = 0; i < p.tours.length; i++) { tr = p.tours[i]; sprite(ctx, "ombre-" + nomTour(tr, v), tr.x, tr.y, 0); }
+    // Marques au sol des effets de l'IA rivale (16/10/2026), sous les murs et les troupes : une onde de sa couleur au
+    // pied d'une tour qu'il vient de bâtir et à sa porte quand ses guetteurs rappellent des gardes (départ de la vague,
+    // deux ondes par seconde et demie ; animations coupées : une seule, immobile) ; un anneau doré à sa porte quand sa
+    // garnison est vaincue et que la porte s'ouvre à tes troupes. La poussière de ces effets est dessinée avec les autres.
+    for (i = 0; i < p.effets.length; i++) {
+      e = p.effets[i];
+      if (e.genre === "tourRivale") { if (e.age < 1.2) onde(ctx, e.x, e.y + 2, 14 + e.age * 24, 1 - e.age / 1.2, v.porteeAdverse); }
+      else if (e.genre === "alerte") {
+        if (e.age >= 1.6) continue;
+        if (!anim) onde(ctx, e.x, e.y, 24, 0.6, v.porteeAdverse);
+        else { var ka = (e.age % 0.8) / 0.8; onde(ctx, e.x, e.y, 10 + ka * 28, 0.9 * (1 - ka), v.porteeAdverse); }
+      } else if (e.genre === "porteOuverte") {
+        if (e.age < 1.4) { ctx.globalAlpha = 1 - e.age / 1.4; anneau(ctx, e.x, e.y + 2, 12 + e.age * 20, 2.5); ctx.globalAlpha = 1; }
+      }
+    }
     // bataillons : chaque figurine suit sa troupe ; figurines tombées et flaques : à plat sur le sol, sous les troupes,
     // les tours et les places fortes (la tour de siège abattue, haute, est triée avec les volumes)
     var sang = JEU.anim.sang ? JEU.anim.sang() : true, R = v.rendu;
@@ -525,6 +550,17 @@
         ctx.lineWidth = 5; ctx.lineJoin = "round"; ctx.strokeStyle = "rgba(20,12,6," + a + ")";
         ctx.fillStyle = (e.camp === "rival" ? "rgba(255,215,94," : "rgba(255,122,92,") + a + ")"; // or vif : le château adverse ; rouge clair : le tien
         ctx.strokeText("−" + e.degats, touchee.chiffreX, ty); ctx.fillText("−" + e.degats, touchee.chiffreX, ty);
+      } else if (e.genre === "tourRivale") {
+        // le rival bâtit une tour pendant ta préparation : de la poussière à son pied (la tour apparaît en fondu : tour(),
+        // et son onde est au sol, plus haut)
+        if (e.age < 0.7) sprite(ctx, "effet-poussiere", e.x, e.y + 2, vue(e.age, 0.7, 5), false, 1.1);
+      } else if (e.genre === "sortie" || e.genre === "rentree") {
+        // un garde de la garnison sort par la porte du rival (ou y rentre) : une bouffée de poussière sur le seuil
+        if (e.age < 0.45) sprite(ctx, "effet-poussiere", e.x, e.y + 2, vue(e.age, 0.45, 5), false, e.genre === "sortie" ? 0.55 : 0.4);
+      } else if (e.genre === "porteOuverte") {
+        // la garnison du rival est vaincue, sa porte s'ouvre à tes troupes : poussière et éclats (l'anneau doré est au sol)
+        if (e.age < 0.8) sprite(ctx, "effet-poussiere", e.x, e.y + 4, vue(e.age, 0.8, 5), false, 1.1);
+        if (e.age < 0.32) sprite(ctx, "effet-eclats", e.x, e.y - 8, vue(e.age, 0.32, 4), false, 1.1);
       }
       if (decale) ctx.restore();
     }
@@ -592,6 +628,15 @@
     ctx.beginPath(); ctx.ellipse(x, y, r, r * 0.7, 0, 0, Math.PI * 2);
     ctx.lineWidth = largeur + 2; ctx.strokeStyle = "#2e2419"; ctx.stroke();
     ctx.lineWidth = largeur; ctx.strokeStyle = "#fbe9bd"; ctx.stroke();
+  }
+  // Onde à plat sur le sol, à la couleur d'un camp (sa tour neuve, l'alerte à sa porte), cernée d'encre, qui s'efface (alpha).
+  function onde(ctx, x, y, r, alpha, couleur) {
+    if (alpha <= 0) return;
+    ctx.globalAlpha = Math.min(1, alpha);
+    ctx.beginPath(); ctx.ellipse(x, y, r, r * 0.7, 0, 0, Math.PI * 2);
+    ctx.lineWidth = 4.5; ctx.strokeStyle = "rgba(20,12,6,.5)"; ctx.stroke();
+    ctx.lineWidth = 2.5; ctx.strokeStyle = couleur; ctx.stroke();
+    ctx.globalAlpha = 1;
   }
 
   // Un trait vise le bataillon de sa cible là où il est dessiné (dvx, dvy : décalage du dessin, gardé si la cible tombe).
@@ -748,14 +793,20 @@
       chiffreX: mieux.haut ? mieux.x0 + JAUGE_L / 2 : pt.x, hautLibre: Math.max(96, mieux.haut ? mieux.y0 - 8 : dessus + JAUGE_H - 20) };
   }
 
+  // Une tour que le rival vient de bâtir (effet « tourRivale », v.naissance) apparaît en fondu sur NAISSANCE_TOUR s.
+  var NAISSANCE_TOUR = 0.7;
+  function fonduTour(tr, v) {
+    var n = v.naissance;
+    return tr.rivale && n && n[tr.emplacement] !== undefined ? Math.max(0.05, Math.min(1, n[tr.emplacement] / NAISSANCE_TOUR)) : 1;
+  }
   function tour(ctx, tr, v) {
-    var nom = nomTour(tr, v);
+    var nom = nomTour(tr, v), ft = fonduTour(tr, v);
+    if (ft < 1) ctx.globalAlpha = ft;
     if (sprite(ctx, nom, tr.x, tr.y, 0)) {
       var s = descr(nom);
       if (!tr.rivale) pastilles(ctx, tr.x, tr.y + s.h - s.ay, tr.niveau);
-      return;
-    }
-    tourDessinee(ctx, tr, tr.rivale ? v.adverse.couleurs : v.couleurs);
+    } else tourDessinee(ctx, tr, tr.rivale ? v.adverse.couleurs : v.couleurs);
+    if (ft < 1) ctx.globalAlpha = 1;
   }
   // Niveau de la tour : losanges d'or sur un cartouche sombre, au pied de la tour.
   function pastilles(ctx, x, y, n) {
@@ -1657,7 +1708,8 @@
         // bataillons : figurines couchées, troupes vues à l'image d'avant, troupes tombées depuis peu (decalEffet), heure
         // de la partie au dernier dessin, et compteurs de la dernière image (bataillons, figurines debout, figurines
         // couchées, bannières : essais)
-        corps: [], vus: [], morts: [], tempsRendu: 0, rendu: { bataillons: 0, figures: 0, corps: 0, bannieres: 0 } };
+        corps: [], vus: [], morts: [], tempsRendu: 0, rendu: { bataillons: 0, figures: 0, corps: 0, bannieres: 0 },
+        naissance: null }; // tours rivales neuves en fondu (effet « tourRivale ») : emplacement → âge, calculé à chaque image
       var titre = defense ? "Défense du domaine contre " + adv.armee : "Bataille : " + prov.nom;
       // Le rival du front, à son titre seul (jeu/data/personnages.js ; sinon « un seigneur rival ») : ses décisions du
       // moteur (p.ia.journal) se lisent dans la colonne de droite, sous son médaillon, en tête du conseil de guerre de

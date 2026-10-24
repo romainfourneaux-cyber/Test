@@ -1596,5 +1596,24 @@ verifier("Bataillons : le rendu ne touche pas au moteur (aucune écriture de la 
     !/TEXTES_RIVAL\s*=/.test(src), { iPrep, iQS, iMot, iLancer, iAlerte });
 })();
 
+// ---------- contrat moteur → rendu : chaque effet que le moteur émet est dessiné (revue visuelle du 16/10/2026) ----------
+// Le moteur signale ses événements par p.effets (effet(p, "genre", …)) ; le rendu (bataille.js) les dessine dans
+// dessiner(). Un genre que le rendu ignore passe inaperçu à l'écran : la tour que le rival bâtissait entre deux vagues
+// apparaissait d'un coup, sans poussière ni onde ; rien ne marquait l'alerte de ses guetteurs, une sortie de sa garnison
+// ni sa porte qui s'ouvre. Le test lit les deux sources : tout genre émis doit être traité, et les marques au sol des
+// effets de l'IA rivale (onde, anneau) sont dessinées dans la passe « sol » (sous les murs), la poussière avec les effets.
+(() => {
+  const srcM = fs.readFileSync(path.join(RACINE, "jeu", "js", "bataille-moteur.js"), "utf8");
+  const srcR = fs.readFileSync(path.join(RACINE, "jeu", "js", "bataille.js"), "utf8");
+  const emis = [...new Set([...srcM.matchAll(/effet\(p, "([a-zA-Z]+)"/g)].map(m => m[1]))];
+  const dessine = new Set([...srcR.matchAll(/genre === "([a-zA-Z]+)"/g)].map(m => m[1]));
+  const oublies = emis.filter(g => !dessine.has(g));
+  verifier("Rendu : chaque effet émis par le moteur (" + emis.length + " genres) est dessiné par bataille.js", emis.length >= 12 && oublies.length === 0, { emis, oublies });
+  const iSol = srcR.indexOf("// --- sol :"), iVol = srcR.indexOf("// --- volumes :"), sol = srcR.slice(iSol, iVol);
+  verifier("Rendu : onde de la tour rivale neuve et de l'alerte, anneau de la porte ouverte au sol (sous les murs), et la tour neuve en fondu",
+    iSol > 0 && iVol > iSol && /genre === "tourRivale"/.test(sol) && /genre === "alerte"/.test(sol) && /genre === "porteOuverte"/.test(sol) &&
+    /onde\(ctx/.test(sol) && /anneau\(ctx/.test(sol) && /fonduTour\(tr, v\)/.test(sol) && /function fonduTour/.test(srcR) && /var NAISSANCE_TOUR = 0\.7/.test(srcR), { iSol, iVol });
+})();
+
 console.log("\n" + ok + " réussis, " + ko + " en échec.");
 process.exit(ko ? 1 : 0);

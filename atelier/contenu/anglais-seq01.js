@@ -28,7 +28,7 @@ module.exports = {
     { id: "anglais-seq01-v13", en: "clean", fr: "propre", exemple: "My hands are clean now.", source: L(2) },
     { id: "anglais-seq01-v14", en: "a coat", fr: "un manteau", exemple: "Put on your coat, it's cold.", source: L(2) },
     { id: "anglais-seq01-v15", en: "a castle", fr: "un château", exemple: "There is a castle on the hill.", source: L(2) },
-    { id: "anglais-seq01-v16", en: "gardening", fr: "le jardinage", exemple: "My grandmother loves gardening.", source: L(2) },
+    { id: "anglais-seq01-v16", en: "gardening", fr: "le jardinage", exemple: "My grandmother loves gardening.", source: L(3) },
     { id: "anglais-seq01-v17", en: "a suitcase", fr: "une valise", exemple: "His suitcase is very heavy.", source: C(2) },
     { id: "anglais-seq01-v18", en: "probably", fr: "probablement, sans doute", exemple: "They are probably at the park.", source: C(2) },
     { id: "anglais-seq01-v19", en: "proud", fr: "fier", exemple: "I am proud of my team.", source: X(1) },
@@ -682,7 +682,11 @@ module.exports = {
       enonce: "« We were watching a movie » veut dire « Nous regarderons un film ».",
       corrections: ["Faux : c'est « Nous étions en train de regarder un film » : were watching est au prétérit progressif.", "Faux : c'est « Nous regardons un film ».", "Faux : c'est « Nous avons regardé un film plusieurs fois »."],
       reponse: { vrai: false, correction: "Faux : c'est « Nous étions en train de regarder un film » : were watching est au prétérit progressif." },
-      explication: "Were watching, c'est was/were + -ing : une action en train de se faire dans le passé. Nous étions en train de regarder.", source: L(2) }
+      explication: "Were watching, c'est was/were + -ing : une action en train de se faire dans le passé. Nous étions en train de regarder.", source: L(2) },
+    { id: "anglais-seq01-q130", fiche: "anglais-seq01-g12", type: "ordre", niveau: 2,
+      enonce: "Remets les mots dans l'ordre.",
+      elements: ["are", "These", "sweet.", "red apples"], reponse: [1, 3, 0, 2],
+      explication: "These, au pluriel, précède red apples. Puis viennent le verbe are et l'adjectif sweet.", source: L(3) }
   ],
   bonus: [],
   nonCouvert: [

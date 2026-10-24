@@ -123,12 +123,11 @@ module.exports = {
       corrections: ["Faux : la Grande peste (1348) vient après les grands défrichements du XIe au XIIIe siècle.", "Faux : la Grande peste a lieu en même temps que la naissance du village médiéval.", "Faux : la Grande peste a lieu vers l'an mil."],
       reponse: { vrai: false, correction: "Faux : la Grande peste (1348) vient après les grands défrichements du XIe au XIIIe siècle." },
       explication: "Les grands défrichements se font du XIe au XIIIe siècle. La Grande peste arrive ensuite, en 1348.", source: S6(1) },
-    { id: "histoire-s04-3-q5", fiche: "histoire-s04-3-f1", type: "association", niveau: 2,
-      enonce: "Relie chaque repère de la frise à son époque.",
-      gauche: ["Grande peste", "Grands défrichements", "Naissance du village médiéval", "Développement de la seigneurie banale"],
-      droite: ["Vers l'an mil, pendant un demi-siècle", "1348", "Du XIe au XIIIe siècle", "Vers l'an mil, pendant un siècle"],
-      reponse: [[0, 1], [1, 2], [2, 3], [3, 0]],
-      explication: "Village médiéval (un siècle) et seigneurie banale (un demi-siècle) commencent vers l'an mil. Les défrichements suivent, puis la peste en 1348.", source: S6(1) },
+    { id: "histoire-s04-3-q5", fiche: "histoire-s04-3-f1", type: "qcm_multiple", niveau: 2,
+      enonce: "Quels repères la frise place-t-elle vers l'an mil ? (plusieurs réponses)",
+      choix: ["La naissance du village médiéval", "Le développement de la seigneurie banale", "La Grande peste", "La fin des grands défrichements"],
+      reponse: ["La naissance du village médiéval", "Le développement de la seigneurie banale"],
+      explication: "Village médiéval et seigneurie banale commencent tous deux vers l'an mil. Les grands défrichements s'achèvent vers 1300 et la peste arrive en 1348.", source: S6(1) },
     { id: "histoire-s04-3-q6", fiche: "histoire-s04-3-f1", type: "qcm", niveau: 3,
       enonce: "Un paysan naît en 1340. Quel événement de la frise survient quand il a huit ans ?",
       choix: ["La Grande peste", "La naissance du village médiéval", "Le début des grands défrichements", "La famine racontée par Raoul Glaber"],
@@ -268,8 +267,7 @@ module.exports = {
       explication: "Raoul Glaber situe la famine vers 1033. Sa cause : des pluies qui ne s'arrêtent pas.", source: S3(1) },
     { id: "histoire-s04-3-q33", fiche: "histoire-s04-3-f4", type: "vrai_faux", niveau: 3,
       enonce: "La famine de 1033 et la Grande peste de 1348 ont lieu à plus de trois siècles d'écart.",
-      corrections: ["Faux : 1348 moins 1033 font 315 ans, soit un peu plus de trois siècles... c'est donc vrai.", "Faux : elles ont lieu la même année.", "Faux : elles sont séparées d'une dizaine d'années seulement."],
-      reponse: { vrai: true, correction: null },
+      corrections: [], reponse: { vrai: true, correction: null },
       explication: "Oui : 1348 moins 1033 font 315 ans. Les deux malheurs sont séparés par plus de trois siècles.", source: S3(1) }
   ],
   bonus: [
@@ -277,7 +275,7 @@ module.exports = {
       id: "histoire-s04-3-b1",
       fiche: "histoire-s04-3-f1",
       titre: "La Grande peste de 1348",
-      texte: "La Grande peste, que les historiens appellent aussi peste noire, arrive à Marseille en novembre 1347, à Avignon en janvier 1348 et à Paris en août 1348. Transmise par les puces des rats noirs, elle tue en cinq ou six ans entre 30 et 60 % des habitants de l'Europe.",
+      texte: "La Grande peste, que les historiens appellent aussi peste noire, arrive à Marseille en novembre 1347, à Avignon en janvier 1348 et à Paris en août 1348. Transmise par des puces, que portent notamment les rats noirs, elle tue en cinq ou six ans entre 30 et 60 % des habitants de l'Europe.",
       source: { titre: "Peste noire", editeur: "Wikipédia, l'encyclopédie libre", url: "https://fr.wikipedia.org/wiki/Peste_noire" }
     }
   ],
