@@ -323,6 +323,14 @@
     else JEU.bataille.lancer(lieu);
   }
 
+  // Défi du rival du front avant le Grand Gardien d'une expédition (une bataille sur deux, « Messages des rivaux » actif) :
+  // la missive est demandée et montrée ici, par l'écran de campagne, jamais entre deux questions ; apres() lance la bataille
+  // quand elle se ferme, ou tout de suite s'il n'y a pas de lettre. lieu : la prochaine province du front (sinon rien).
+  function defiAvantRoute(lieu, apres) {
+    var m = lieu && JEU.campagne.missiveAvantBataille ? JEU.campagne.missiveAvantBataille(lieu) : null;
+    if (m) ouvrirMissive(m, apres); else apres();
+  }
+
   // Fiche d'un personnage (Codex et clic sur un médaillon) : titre et dates imprimés dans le cours, faits des cours
   // ouverts avec leur source, crédit du portrait.
   function fichePersonnage(p) {
@@ -558,5 +566,6 @@
   JEU.ecranCampagne = { ouvrirArsenal: ouvrirArsenal, carteSVG: carteSVG,
     // personnages (16/10/2026)
     medaillon: medaillon, medaillonHeraldique: medaillonHeraldique, sceau: sceau, surveillerPortraits: surveillerPortraits,
-    fichePersonnage: fichePersonnage, ouvrirFichePersonnage: ouvrirFichePersonnage, ouvrirMissive: ouvrirMissive, lancerBataille: lancerBataille };
+    fichePersonnage: fichePersonnage, ouvrirFichePersonnage: ouvrirFichePersonnage, ouvrirMissive: ouvrirMissive, lancerBataille: lancerBataille,
+    defiAvantRoute: defiAvantRoute };
 })(typeof window !== "undefined" ? window : globalThis);

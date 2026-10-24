@@ -19,7 +19,7 @@
   var L = 1000, H = 300;
   var DEPART = { x: 36, y: 170 };                 // le bourg de départ (petit bourg de France)
   var X0 = 70, BANDE = 310, NB_BANDES = 3;        // une semaine = une bande de 310 unités, après le départ
-  var COL0 = 40, COL_FIN = 210, GARDIEN_X = 272;  // colonnes des couches dans la bande ; le gardien à droite
+  var COL0 = 40, COL_FIN = 210, GARDIEN_X = 276;  // colonnes des couches dans la bande ; le gardien à droite (66 unités après la dernière colonne : les médaillons ne se touchent pas)
   var Y_MILIEU = 170, PAS = 72;                   // les haltes d'une couche s'étalent en hauteur autour du milieu
   var R_HALTE = 26, R_GARDIEN = 34, R_DEPART = 24;
   var ENCRE = "#2e2419", OR = "#b08d3a", OR_CLAIR = "#e2c272", OR_SOMBRE = "#7a5c1e", RUBRIQUE = "#8c2f39", PLOMB = "#4a4e57", FOND = "#efe6d2";
@@ -768,9 +768,11 @@
       JEU.bataille.lancer(halte.id, contexte);
       if (!JEU.partie) { S.enHalte = false; afficher(); } // pas assez de questions : la halte reste à jouer
     };
-    if (grand) {
-      var pp = C.prochaineProvince(e.front), m = pp && C.missiveAvantBataille ? C.missiveAvantBataille(pp.province.id) : null;
-      if (m && JEU.ecranCampagne && JEU.ecranCampagne.ouvrirMissive) { JEU.ecranCampagne.ouvrirMissive(m, lancer); return; }
+    if (grand && JEU.ecranCampagne && JEU.ecranCampagne.defiAvantRoute) {
+      // le défi du rival du front (une bataille sur deux, réglage « Messages des rivaux ») : demandé par l'écran de campagne
+      var pp = C.prochaineProvince(e.front);
+      JEU.ecranCampagne.defiAvantRoute(pp ? pp.province.id : null, lancer);
+      return;
     }
     lancer();
   }
