@@ -7,7 +7,7 @@ JEU.enregistrer("cours", {
    "id": "svt-s05-2-f1",
    "notion": "L'aléa",
    "titre": "Le phénomène qui menace",
-   "texte": "Un aléa est un phénomène naturel qui peut frapper un territoire. À la Réunion, l'aléa est le cyclone : cinq cyclones différents ont touché l'île au fil des années, et l'aléa y est toujours présent. L'aléa ne dit rien, à lui seul, des dégâts : il décrit seulement ce qui peut arriver.",
+   "texte": "Un aléa est le phénomène naturel qui peut frapper un territoire. Dans l'exemple étudié, les aléas sont les cyclones : cinq cyclones différents sont cités pour l'île de la Réunion, et l'aléa « cyclone » y est toujours présent. L'aléa ne dit rien, à lui seul, des dégâts : il décrit seulement ce qui peut arriver.",
    "pointsCles": [
     "Aléa : le phénomène naturel qui peut frapper (le cyclone, à la Réunion)",
     "Un même aléa peut revenir plusieurs fois sur le même territoire",
@@ -22,10 +22,6 @@ JEU.enregistrer("cours", {
     {
      "mot": "aléa",
      "def": "un phénomène naturel qui peut frapper un territoire, comme un cyclone"
-    },
-    {
-     "mot": "cyclone",
-     "def": "une énorme tempête tournante, avec des vents très violents et de fortes pluies"
     }
    ],
    "schema": null,
@@ -119,11 +115,11 @@ JEU.enregistrer("cours", {
    "dates": [
     {
      "annee": 1962,
-     "evenement": "Un cyclone frappe la Réunion et fait de nombreuses victimes"
+     "evenement": "Un cyclone frappe la Réunion ; le bilan humain est lourd"
     },
     {
      "annee": 2014,
-     "evenement": "Un cyclone touche la Réunion en faisant bien moins de morts"
+     "evenement": "Dernière année du tableau des cyclones : bien moins de morts qu'en 1962"
     }
    ],
    "lieux": [
@@ -267,21 +263,20 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s05-2-f1",
    "type": "qcm_multiple",
    "niveau": 2,
-   "enonce": "Parmi ces exemples, lesquels sont des aléas ? (plusieurs réponses)",
+   "enonce": "Que dit l'exemple de la Réunion sur l'aléa « cyclone » ? (plusieurs réponses)",
    "choix": [
-    "Un cyclone",
-    "Des pluies très violentes",
-    "Des vents très violents",
-    "Une école",
-    "Un pont",
-    "Une barque de pêcheur"
+    "Il est toujours présent sur l'île",
+    "Cinq cyclones différents sont cités",
+    "Il a disparu après le cyclone de 1962",
+    "Il ne touche que les bateaux",
+    "C'est un enjeu"
    ],
-   "explication": "Un aléa est un phénomène naturel : cyclone, pluies ou vents violents. École, pont et barque sont des enjeux.",
+   "explication": "Les cyclones reviennent régulièrement sur l'île : cinq sont cités, et l'aléa reste présent. Le cyclone est l'aléa, pas un enjeu.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 11
    },
-   "r": "==wOLFwMcARCagxHOxh2rGTWFZUWAoAEGpxFDAVWHZAFdAgCecgKbVkRF2aHSYkGX4yBZURVCwgKN5lSmMkCZ50FMYEC8AFH",
+   "r": "==QNh5Fz2n1BMYkEH0BNSZQEbQxGHzKFOoSSFZESAAgCFAREnNwGMYzUFxkCeYMgKkQFftBHGJxBXQz22eRBRpBHa0hA2IUEVkVHKYkCgAFH",
    "poids": 1
   },
   {
@@ -369,10 +364,10 @@ JEU.enregistrer("cours", {
    "choix": [
     "Des barques de pêcheurs",
     "Un cyclone",
-    "Des vents très violents",
-    "Des pluies diluviennes"
+    "Les dégâts qu'il provoque",
+    "Le risque"
    ],
-   "explication": "Les barques peuvent être détruites : ce sont des enjeux. Cyclone, vents et pluies sont des aléas.",
+   "explication": "Les barques peuvent être détruites : ce sont des enjeux. Le cyclone est l'aléa, les dégâts traduisent la vulnérabilité, et le risque combine les deux.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 11
@@ -392,7 +387,7 @@ JEU.enregistrer("cours", {
     "Parce qu'elles mesurent le vent",
     "Parce qu'elles sont à l'abri dans des bâtiments solides et bien fermés"
    ],
-   "explication": "Les personnes exposées au cyclone sont les premiers enjeux. Loin de chez elles, elles sont difficiles à mettre à l'abri.",
+   "explication": "Les personnes exposées au cyclone sont les premiers enjeux. Celles qui sont déjà au travail à ce moment-là sont citées en premier dans l'exemple.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 11
@@ -508,17 +503,17 @@ JEU.enregistrer("cours", {
     "Aléa combiné à la vulnérabilité des enjeux"
    ],
    "droite": [
-    "L'aléa",
-    "Les enjeux",
+    "Le risque",
     "La vulnérabilité",
-    "Le risque"
+    "L'aléa",
+    "Les enjeux"
    ],
    "explication": "Le cyclone frappe (aléa), les maisons et les personnes sont touchées (enjeux), les dégâts mesurent la vulnérabilité. Le tout forme le risque.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 11
    },
-   "r": "==ANvQnXG5TWsslQdlCRewRSEYnQyYlSZlCH",
+   "r": "==ANvcnXG5TWsglQdlCRe4RSEYnQyQlSZlCH",
    "poids": 1
   },
   {
@@ -567,7 +562,7 @@ JEU.enregistrer("cours", {
    "type": "trou",
    "niveau": 1,
    "enonce": "Complète la définition.",
-   "texte": "Le risque est la combinaison d'un ___ avec la ___ des enjeux.",
+   "texte": "Un risque, c'est un ___ combiné à la ___ des enjeux.",
    "banque": [
     "aléa",
     "vulnérabilité",
@@ -723,7 +718,7 @@ JEU.enregistrer("cours", {
    "id": "svt-s05-2-b1",
    "fiche": "svt-s05-2-f3",
    "titre": "Vert, jaune, orange, rouge : la vigilance météo",
-   "texte": "En France, Météo-France publie depuis 2001 une carte de vigilance, mise à jour au moins deux fois par jour. Chaque département reçoit une couleur : vert quand il n'y a pas de danger particulier, jaune pour inviter à l'attention, orange pour la grande prudence, rouge pour un danger exceptionnel. Neuf phénomènes sont suivis, dont le vent, la pluie-inondation, les orages, la neige-verglas, la canicule et les vagues-submersion.",
+   "texte": "En France, Météo-France publie depuis 2001 une carte de vigilance, mise à jour au moins deux fois par jour. Chaque département reçoit une couleur : vert quand il n'y a pas de vigilance particulière, jaune pour être attentif, orange pour être très vigilant, rouge quand une vigilance absolue s'impose. Neuf phénomènes sont suivis, dont le vent, la pluie-inondation, les orages, la neige-verglas, la canicule et les vagues-submersion.",
    "source": {
     "titre": "Vigilance météorologique",
     "editeur": "Wikipédia, l'encyclopédie libre",

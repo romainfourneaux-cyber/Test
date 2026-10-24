@@ -468,17 +468,17 @@ JEU.enregistrer("cours", {
     "Les algues"
    ],
    "droite": [
-    "Un précurseur de l'aspirine",
-    "Des pièces d'instruments de musique",
+    "Les cosmétiques",
     "La construction",
-    "Les cosmétiques"
+    "Un précurseur de l'aspirine",
+    "Des pièces d'instruments de musique"
    ],
    "explication": "Saule pour un médicament, bambou pour les instruments, chanvre pour construire, algues pour les cosmétiques. Chaque être vivant a son usage.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 12
    },
-   "r": "==ANvQnXG5TWsslQdlCRewRSEYnQyYlSZlCH",
+   "r": "==ANvcnXG5TWsglQdlCRe4RSEYnQyQlSZlCH",
    "poids": 1
   },
   {
@@ -630,17 +630,17 @@ JEU.enregistrer("cours", {
     "Le mouton"
    ],
    "droite": [
-    "Laine cachemire",
-    "Laine angora",
     "Laine d'un cousin du lama",
-    "La laine la plus connue"
+    "La laine la plus connue",
+    "Laine cachemire",
+    "Laine angora"
    ],
    "explication": "Cachemire pour la chèvre, angora pour le lapin ; l'alpaga est un cousin du lama. Le mouton reste le fournisseur le plus connu.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 12
    },
-   "r": "==ANvQnXG5TWsslQdlCRewRSEYnQyYlSZlCH",
+   "r": "==ANvYnXG5TWsklQdlCRe4RSEYnQyQlSZlCH",
    "poids": 1
   },
   {
@@ -651,8 +651,8 @@ JEU.enregistrer("cours", {
    "enonce": "Pourquoi le liège est-il considéré comme une sorte de bois ?",
    "choix": [
     "Parce que c'est l'écorce d'un arbre",
-    "Parce qu'il brûle",
-    "Parce qu'il flotte",
+    "Parce qu'il brûle comme une bûche",
+    "Parce qu'il flotte sur l'eau comme un bouchon",
     "Parce qu'il est marron"
    ],
    "explication": "Le liège vient du chêne-liège : c'est son écorce. Une écorce fait partie de l'arbre, donc c'est du bois.",

@@ -551,7 +551,7 @@ JEU.enregistrer("cours", {
    "corrections": [
     "Faux : 8,2 est supérieur à 7, l'océan est légèrement basique.",
     "Faux : 8,2 est exactement neutre.",
-    "Faux : l'océan n'a pas de pH."
+    "Faux : avec 8,2, l'océan est neutre, comme l'eau distillée."
    ],
    "explication": "Un pH de 8,2 dépasse 7 : l'eau de l'océan est un peu basique. Les solutions acides ont un pH inférieur à 7.",
    "source": {

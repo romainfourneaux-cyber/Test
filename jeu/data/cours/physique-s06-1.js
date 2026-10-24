@@ -367,7 +367,7 @@ JEU.enregistrer("cours", {
    "fiche": "physique-s06-1-f2",
    "type": "qcm",
    "niveau": 1,
-   "enonce": "Sur le schéma des changements d'état de l'eau, à quelle température se font la fusion et la solidification ?",
+   "enonce": "À quelle température se font la fusion et la solidification de l'eau ?",
    "choix": [
     "À zéro degré",
     "À cent degrés",
@@ -387,7 +387,7 @@ JEU.enregistrer("cours", {
    "fiche": "physique-s06-1-f2",
    "type": "qcm",
    "niveau": 1,
-   "enonce": "À quelle température l'eau liquide se vaporise-t-elle, d'après le schéma ?",
+   "enonce": "À quelle température l'eau liquide se vaporise-t-elle ?",
    "choix": [
     "À cent degrés",
     "À zéro degré",
@@ -550,7 +550,7 @@ JEU.enregistrer("cours", {
    "enonce": "L'acier est un corps pur.",
    "corrections": [
     "Faux : l'acier est un alliage, il fond dans une fourchette de températures.",
-    "Faux : l'acier est liquide à température ambiante.",
+    "Faux : l'acier est un alliage, car il ne fond jamais.",
     "Faux : l'acier est un corps pur seulement quand il est chaud."
    ],
    "explication": "Un corps pur fond à une température précise. L'acier fond sur une plage de températures : c'est un alliage.",
@@ -762,7 +762,7 @@ JEU.enregistrer("cours", {
    "enonce": "L'aluminium, le zinc et l'acier se distinguent facilement à l'œil, car ils n'ont pas la même couleur.",
    "corrections": [
     "Faux : tous trois sont gris clair et brillants ; on les distingue par la densité ou la température de fusion.",
-    "Faux : l'aluminium est rouge, le zinc est jaune.",
+    "Faux : ils se ressemblent, mais seul le zinc est brillant.",
     "Faux : on les distingue à l'œil par leur masse."
    ],
    "explication": "Ces trois métaux se ressemblent : gris clair et brillants. Il faut comparer leur densité, puis leur température de fusion.",

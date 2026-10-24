@@ -66,7 +66,7 @@ JEU.enregistrer("cours", {
     },
     {
      "mot": "maquis",
-     "def": "un biome de buissons et d'arbustes, présent autour de la Méditerranée"
+     "def": "un biome présent autour de la Méditerranée et dans le sud de l'Australie"
     }
    ],
    "schema": null,
@@ -205,7 +205,7 @@ JEU.enregistrer("cours", {
   {
    "id": "svt-s08-1-s1",
    "legende": "Les biomes marins, de la côte aux grandes fosses (coupe redessinée, profondeurs pas à l'échelle).",
-   "svg": "<svg viewBox='0 0 560 300' xmlns='http://www.w3.org/2000/svg' font-family='Georgia,serif' font-size='11'><rect x='0' y='0' width='560' height='300' fill='#f6f1e7'/><path d='M60 70 H560 V300 H60 Z' fill='#9fd0ea'/><path d='M60 70 L130 70 L200 150 L330 230 L400 262 L470 262 L500 230 L560 150 V300 H60 Z' fill='#4a93c6'/><path d='M300 220 L330 230 L400 262 L470 262 L500 230 L430 200 Z' fill='#2b5f8e'/><path d='M0 20 L55 70 L130 70 L200 150 L330 230 L400 262 L470 262 L500 230 L560 150 V300 H0 Z' fill='#7a6a4f'/><path d='M55 70 L130 70 L200 150 L330 230 L400 262 L470 262 L500 230 L560 150' stroke='#4f412c' stroke-width='3' fill='none'/><path d='M400 262 L420 295 L450 295 L470 262 Z' fill='#1f3b5c'/><path d='M520 250 Q535 200 550 250 Z' fill='#c25a3c'/><g stroke='#2e2419' stroke-dasharray='4 3' stroke-width='1'><line x1='170' y1='112' x2='560' y2='112'/><line x1='300' y1='200' x2='560' y2='200'/></g><g fill='#2e2419' font-size='10'><text x='340' y='124'>− 200 m : limite de la zone néritique</text><text x='305' y='196'>plus de végétaux en dessous</text></g><g fill='#2e2419' font-weight='bold'><text x='60' y='62'>zone littorale</text><text x='150' y='92'>zone néritique</text><text x='186' y='106' font-weight='normal' font-size='10'>récifs coralliens, forêts de kelp</text><text x='330' y='92'>zone pélagique (pleine mer, surface)</text><text x='250' y='180' fill='#fff'>zone benthique (profondeurs)</text><text x='380' y='288' fill='#fff' font-size='10'>fosse : biome abyssal</text><text x='470' y='245' fill='#fff' font-size='10'>fumeurs</text></g><text x='6' y='14' fill='#2e2419' font-size='10'>côte</text></svg>"
+   "svg": "<svg viewBox='0 0 560 300' xmlns='http://www.w3.org/2000/svg' font-family='Georgia,serif' font-size='11'><rect x='0' y='0' width='560' height='300' fill='#f6f1e7'/><path d='M60 70 H560 V300 H60 Z' fill='#9fd0ea'/><path d='M60 70 L130 70 L200 150 L330 230 L400 262 L470 262 L500 230 L560 150 V300 H60 Z' fill='#4a93c6'/><path d='M300 220 L330 230 L400 262 L470 262 L500 230 L430 200 Z' fill='#2b5f8e'/><path d='M0 20 L55 70 L130 70 L200 150 L330 230 L400 262 L470 262 L500 230 L560 150 V300 H0 Z' fill='#7a6a4f'/><path d='M55 70 L130 70 L200 150 L330 230 L400 262 L470 262 L500 230 L560 150' stroke='#4f412c' stroke-width='3' fill='none'/><path d='M400 262 L420 295 L450 295 L470 262 Z' fill='#1f3b5c'/><path d='M520 250 Q535 200 550 250 Z' fill='#c25a3c'/><g stroke='#2e2419' stroke-dasharray='4 3' stroke-width='1'><line x1='170' y1='112' x2='560' y2='112'/><line x1='300' y1='200' x2='560' y2='200'/></g><g fill='#2e2419' font-size='10'><text x='340' y='124'>− 200 m : limite de la zone néritique</text><text x='305' y='196'>− 1 000 m : plus de végétaux en dessous</text></g><g fill='#2e2419' font-weight='bold'><text x='60' y='62'>zone littorale</text><text x='150' y='92'>zone néritique</text><text x='186' y='106' font-weight='normal' font-size='10'>récifs coralliens, forêts de kelp</text><text x='330' y='92'>zone pélagique (pleine mer, surface)</text><text x='250' y='180' fill='#fff'>zone benthique (profondeurs)</text><text x='380' y='288' fill='#fff' font-size='10'>fosse : biome abyssal</text><text x='470' y='245' fill='#fff' font-size='10'>fumeurs</text></g><text x='6' y='14' fill='#2e2419' font-size='10'>côte</text></svg>"
   }
  ],
  "questions": [
@@ -256,7 +256,7 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Les biomes aquatiques comprennent les biomes d'eau douce et les biomes marins.",
    "corrections": [],
-   "explication": "Oui : d'un côté les biomes d'eau douce, de l'autre les biomes marins. Les lacs et les océans n'abritent pas les mêmes espèces.",
+   "explication": "Oui : d'un côté les biomes d'eau douce, dits dulcicoles, de l'autre les biomes marins. Les terres cultivées forment un biome à part.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 12
@@ -357,17 +357,17 @@ JEU.enregistrer("cours", {
     "Champ de blé"
    ],
    "droite": [
-    "Biome terrestre",
-    "Biome d'eau douce",
     "Biome marin",
-    "Biome des terres cultivées"
+    "Biome des terres cultivées",
+    "Biome terrestre",
+    "Biome d'eau douce"
    ],
    "explication": "Forêt sur la terre, lac en eau douce, récif en mer, champ cultivé par l'humain. Quatre familles de biomes.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 12
    },
-   "r": "==ANvQnXG5TWsslQdlCRewRSEYnQyYlSZlCH",
+   "r": "==ANvYnXG5TWsklQdlCRe4RSEYnQyQlSZlCH",
    "poids": 1
   },
   {
@@ -385,7 +385,7 @@ JEU.enregistrer("cours", {
    "explication": "Le triangle croise le climat, l'humidité et l'altitude. Le biome se lit à leur intersection.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 11
+    "page": 12
    },
    "r": "MpgAT0xGz4BFFFAFJdMrGEwJEhAQFl0CGJxBX4iFUchERV0CaMQA3wECcFUDPNACGgSZ",
    "poids": 1
@@ -493,17 +493,17 @@ JEU.enregistrer("cours", {
    "niveau": 3,
    "enonce": "Pourquoi le désert polaire apparaît-il aussi en très haute montagne ?",
    "choix": [
-    "Parce que l'altitude donne un climat aussi froid qu'aux pôles",
+    "Parce que le triangle de Holdridge tient compte aussi de l'altitude",
     "Parce que la neige y est salée",
     "Parce qu'il y pleut beaucoup",
     "Parce que toutes les très hautes montagnes se trouvent près des pôles"
    ],
-   "explication": "L'altitude est une des entrées du triangle de Holdridge. Très haut, le froid est le même qu'en zone polaire.",
+   "explication": "Le triangle a trois entrées : zone climatique, gradient d'humidité et altitude. En très haute montagne, on tombe sur le désert polaire, comme en zone polaire.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 11
    },
-   "r": "==wRGQRBazqAItDWEIBWf8kAPYAAhIFHWYABI40GTUgKBZQFDtxTDgwBdMiUQEAAFAgGDMxTv0AAAxlTKUAFIISZ",
+   "r": "LdxIHEADB0BCJNgUNcSDMYkXb4gRD0hAq0hFFFwHMcwGS1AJJxwRJJAAuYEDWc2FZIwGQAAHbIVDv0AAAxlTKUAFIISZ",
    "poids": 1
   },
   {
@@ -535,7 +535,7 @@ JEU.enregistrer("cours", {
    "choix": [
     "En Amérique du Sud, surtout au Brésil",
     "En Europe",
-    "En Australie, le long de la côte sud",
+    "En Australie, tout le long de la côte sud",
     "Au Sahara"
    ],
    "explication": "La plus grande forêt tropicale pluvieuse est en Amérique du Sud, surtout au Brésil. C'est la forêt amazonienne.",
@@ -655,17 +655,17 @@ JEU.enregistrer("cours", {
     "Toundra"
    ],
    "droite": [
-    "Pourtour de la Méditerranée et sud de l'Australie",
-    "Amazonie, au Brésil",
     "Sahara et Mongolie",
-    "Nord de l'Europe"
+    "Nord de l'Europe",
+    "Pourtour de la Méditerranée et sud de l'Australie",
+    "Amazonie, au Brésil"
    ],
    "explication": "Chaque biome a ses régions : maquis autour de la Méditerranée, forêt pluvieuse en Amazonie, déserts au Sahara et en Mongolie. La toundra, elle, couvre le nord de l'Europe.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 12
    },
-   "r": "==ANvQnXG5TWsslQdlCRewRSEYnQyYlSZlCH",
+   "r": "==ANvYnXG5TWsklQdlCRe4RSEYnQyQlSZlCH",
    "poids": 1
   },
   {
@@ -767,7 +767,7 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s08-1-f4",
    "type": "ordre",
    "niveau": 2,
-   "enonce": "Range les trois espaces d'un lac, du bord vers le fond.",
+   "enonce": "Range les trois espaces d'un lac, de la rive vers le fond.",
    "elements": [
     "Les profondeurs",
     "Le littoral",
@@ -857,7 +857,7 @@ JEU.enregistrer("cours", {
    "explication": "Les biomes marins font 71 % des biomes de la planète. Ils comptent énormément dans la biodiversité de la Terre.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.pdf",
-    "page": 7
+    "page": 6
    },
    "r": "NNkRYVUZ",
    "poids": 1
@@ -1002,7 +1002,7 @@ JEU.enregistrer("cours", {
    "id": "svt-s08-1-b1",
    "fiche": "svt-s08-1-f3",
    "titre": "L'Amazonie en chiffres",
-   "texte": "La forêt amazonienne couvre environ 5,5 millions de km², sur neuf pays ; le Brésil en possède près des deux tiers. Elle abriterait 390 milliards d'arbres de quelque 16 000 espèces, plus de 2 000 espèces de poissons et près de 1 300 espèces d'oiseaux. On l'appelle parfois « poumon de la Terre », mais l'expression est trompeuse : les océans produisent bien plus de dioxygène qu'elle.",
+   "texte": "La forêt amazonienne couvre environ 5,5 millions de km², sur neuf pays ; le Brésil en possède environ 63 %. Elle abriterait 390 milliards d'arbres de quelque 16 000 espèces, environ 2 200 espèces de poissons et près de 1 300 espèces d'oiseaux. On l'appelle parfois « poumon de la Terre », mais l'expression est trompeuse : les océans produisent bien plus de dioxygène qu'elle.",
    "source": {
     "titre": "Forêt amazonienne",
     "editeur": "Wikipédia, l'encyclopédie libre",

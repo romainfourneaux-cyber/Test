@@ -173,7 +173,7 @@ module.exports = {
       explication: "Oui : la lessive (pH 9) ou le déboucheur de canalisations (pH 12) sont basiques.", source: P(12) },
     { id: "physique-s08-1-q20", fiche: "physique-s08-1-f3", type: "vrai_faux", niveau: 2,
       enonce: "L'eau de l'océan, avec un pH de 8,2, est acide.",
-      corrections: ["Faux : 8,2 est supérieur à 7, l'océan est légèrement basique.", "Faux : 8,2 est exactement neutre.", "Faux : l'océan n'a pas de pH."],
+      corrections: ["Faux : 8,2 est supérieur à 7, l'océan est légèrement basique.", "Faux : 8,2 est exactement neutre.", "Faux : avec 8,2, l'océan est neutre, comme l'eau distillée."],
       reponse: { vrai: false, correction: "Faux : 8,2 est supérieur à 7, l'océan est légèrement basique." },
       explication: "Un pH de 8,2 dépasse 7 : l'eau de l'océan est un peu basique. Les solutions acides ont un pH inférieur à 7.", source: P(12) },
     { id: "physique-s08-1-q21", fiche: "physique-s08-1-f3", type: "ordre", niveau: 2,

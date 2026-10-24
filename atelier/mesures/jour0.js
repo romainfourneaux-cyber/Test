@@ -35,6 +35,13 @@ CARTES.forEach(c => ajouter("esc-1v6-" + c, ["--vagues", "1", "--pvRival", "6", 
 });
 // Solidités voisines de l'escarmouche (levier), sur la carte par défaut.
 [4, 5, 8].forEach(pv => ajouter("esc-1v" + pv, ["--vagues", "1", "--pvRival", String(pv), "--mode", "attaque"]));
+// À deux vagues, camp de 6 ou de 7 (le niveau 0 ne tombe presque jamais un camp de 8) ; sur les cartes des semaines 1 à 3.
+[6, 7].forEach(pv => {
+  ajouter("esc-2v" + pv, ["--vagues", "2", "--pvRival", String(pv), "--mode", "attaque"]);
+  ["gue", "foret", "moulin"].forEach(c => ajouter("esc-2v" + pv + "-" + c, ["--vagues", "2", "--pvRival", String(pv), "--mode", "attaque", "--carte", c]));
+});
+// Le joueur qui met tout en troupes (ruée) : ce que ferait un élève qui ne bâtit rien à l'escarmouche (tableau « rush » du .txt).
+["1v6", "2v6", "2v8"].forEach(v => ajouter("esc-" + v + "-rush", ["--vagues", v[0], "--pvRival", v[2], "--mode", "attaque", "--strategies", "equilibre,rush"]));
 // Embuscade : défense, 2 vagues, camp de 10, ligne de la semaine + 1 (donc arsenal du niveau − 1 pour la convolution).
 ajouter("emb-2v10-domaine", ["--vagues", "2", "--pvRival", "10", "--mode", "defense"]);
 CARTES.forEach(c => ajouter("emb-2v10-" + c, ["--vagues", "2", "--pvRival", "10", "--mode", "defense", "--carte", c]));
@@ -47,7 +54,7 @@ CARTES.forEach(c => ajouter("gard-2v12-" + c, ["--vagues", "2", "--pvRival", "12
 // Grand Gardien : défense, 3 vagues, camp de 16, ligne + 1 (plafond 4), sur la carte de la prochaine province (gue au début).
 ajouter("grand-3v16-domaine", ["--vagues", "3", "--pvRival", "16", "--mode", "defense"], SANS_ZERO);
 ajouter("grand-3v16-gue", ["--vagues", "3", "--pvRival", "16", "--mode", "defense", "--carte", "gue"], SANS_ZERO);
-["gue", "foret", "moulin"].forEach(c => ajouter("grand-3v16-" + c + "-arsenal-1", ["--vagues", "3", "--pvRival", "16", "--mode", "defense", "--carte", c, "--arsenal", "-1"], SANS_ZERO));
+["gue", "foret", "moulin", "col"].forEach(c => ajouter("grand-3v16-" + c + "-arsenal-1", ["--vagues", "3", "--pvRival", "16", "--mode", "defense", "--carte", c, "--arsenal", "-1"], SANS_ZERO));
 [12, 14, 20].forEach(pv => ajouter("grand-3v" + pv + "-gue-arsenal-1", ["--vagues", "3", "--pvRival", String(pv), "--mode", "defense", "--carte", "gue", "--arsenal", "-1"], SANS_ZERO));
 
 const aFaire = mesures.filter(m => !SEULEMENT || SEULEMENT.some(s => m.nom === s || m.nom.indexOf(s) === 0));

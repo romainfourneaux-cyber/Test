@@ -120,7 +120,7 @@ module.exports = {
       explication: "Ce sont les pluies qui font les saisons ici : huit mois humides, quatre mois secs. Les températures, elles, changent peu.", source: C(9) },
     // f2 : le climat tropical
     { id: "svt-s04-2-q9", fiche: "svt-s04-2-f2", type: "qcm", niveau: 1,
-      enonce: "Quel climat a un territoire avec une saison sèche et une saison humide ?",
+      enonce: "Quel climat a un territoire chaud toute l'année, avec une saison sèche et une saison humide ?",
       choix: ["Le climat tropical", "Le climat méditerranéen", "Le climat polaire", "Le climat tempéré"],
       reponse: "Le climat tropical",
       explication: "Deux saisons, une sèche et une humide : c'est le climat tropical. Les températures y restent chaudes toute l'année.", source: C(9) },

@@ -26,7 +26,7 @@ function schemaMarin() {
   s += "<path d='M520 250 Q535 200 550 250 Z' fill='#c25a3c'/>";
   // limites de profondeur
   s += "<g stroke='" + encre + "' stroke-dasharray='4 3' stroke-width='1'><line x1='170' y1='112' x2='560' y2='112'/><line x1='300' y1='200' x2='560' y2='200'/></g>";
-  s += "<g fill='" + encre + "' font-size='10'><text x='340' y='124'>− 200 m : limite de la zone néritique</text><text x='305' y='196'>plus de végétaux en dessous</text></g>";
+  s += "<g fill='" + encre + "' font-size='10'><text x='340' y='124'>− 200 m : limite de la zone néritique</text><text x='305' y='196'>− 1 000 m : plus de végétaux en dessous</text></g>";
   // étiquettes
   s += "<g fill='" + encre + "' font-weight='bold'>";
   s += "<text x='60' y='62'>zone littorale</text>";
@@ -214,9 +214,9 @@ module.exports = {
       explication: "Le maquis s'étale sur cinq zones, de la boréale à la tropicale. Seule la zone polaire n'en a pas.", source: C(11) },
     { id: "svt-s08-1-q15", fiche: "svt-s08-1-f2", type: "qcm", niveau: 3,
       enonce: "Pourquoi le désert polaire apparaît-il aussi en très haute montagne ?",
-      choix: ["Parce que l'altitude donne un climat aussi froid qu'aux pôles", "Parce que la neige y est salée", "Parce qu'il y pleut beaucoup", "Parce que toutes les très hautes montagnes se trouvent près des pôles"],
-      reponse: "Parce que l'altitude donne un climat aussi froid qu'aux pôles",
-      explication: "L'altitude est une des entrées du triangle de Holdridge. Très haut, le froid est le même qu'en zone polaire.", source: C(11) },
+      choix: ["Parce que le triangle de Holdridge tient compte aussi de l'altitude", "Parce que la neige y est salée", "Parce qu'il y pleut beaucoup", "Parce que toutes les très hautes montagnes se trouvent près des pôles"],
+      reponse: "Parce que le triangle de Holdridge tient compte aussi de l'altitude",
+      explication: "Le triangle a trois entrées : zone climatique, gradient d'humidité et altitude. En très haute montagne, on tombe sur le désert polaire, comme en zone polaire.", source: C(11) },
     { id: "svt-s08-1-q16", fiche: "svt-s08-1-f2", type: "qcm", niveau: 2,
       enonce: "Comment lit-on le biome d'un lieu sur le triangle de Holdridge ?",
       choix: ["On cherche la case où se croisent sa zone climatique et son humidité", "On lit la première ligne", "On compte les cases", "On regarde la couleur du triangle et on la compare à la carte"],
@@ -225,7 +225,7 @@ module.exports = {
     // f3 : la carte des biomes terrestres
     { id: "svt-s08-1-q17", fiche: "svt-s08-1-f3", type: "qcm", niveau: 1,
       enonce: "Où se trouve la plus grande forêt tropicale pluvieuse du monde ?",
-      choix: ["En Amérique du Sud, surtout au Brésil", "En Europe", "En Australie, le long de la côte sud", "Au Sahara"],
+      choix: ["En Amérique du Sud, surtout au Brésil", "En Europe", "En Australie, tout le long de la côte sud", "Au Sahara"],
       reponse: "En Amérique du Sud, surtout au Brésil",
       explication: "La plus grande forêt tropicale pluvieuse est en Amérique du Sud, surtout au Brésil. C'est la forêt amazonienne.", source: C(12) },
     { id: "svt-s08-1-q18", fiche: "svt-s08-1-f3", type: "qcm", niveau: 1,
@@ -308,7 +308,7 @@ module.exports = {
       enonce: "Quelle part des biomes de la planète les biomes marins représentent-ils ?",
       choix: ["71 %", "7 %", "25 %", "99 %"],
       reponse: "71 %",
-      explication: "Les biomes marins font 71 % des biomes de la planète. Ils comptent énormément dans la biodiversité de la Terre.", source: R(7) },
+      explication: "Les biomes marins font 71 % des biomes de la planète. Ils comptent énormément dans la biodiversité de la Terre.", source: R(6) },
     { id: "svt-s08-1-q34", fiche: "svt-s08-1-f5", type: "qcm", niveau: 1,
       enonce: "Où vit l'immense majorité des espèces marines ?",
       choix: ["Près des côtes", "En pleine mer, en surface", "Dans les fosses abyssales", "Près des fumeurs"],
@@ -348,7 +348,7 @@ module.exports = {
     {
       id: "svt-s08-1-b1", fiche: "svt-s08-1-f3",
       titre: "L'Amazonie en chiffres",
-      texte: "La forêt amazonienne couvre environ 5,5 millions de km², sur neuf pays ; le Brésil en possède près des deux tiers. Elle abriterait 390 milliards d'arbres de quelque 16 000 espèces, plus de 2 000 espèces de poissons et près de 1 300 espèces d'oiseaux. On l'appelle parfois « poumon de la Terre », mais l'expression est trompeuse : les océans produisent bien plus de dioxygène qu'elle.",
+      texte: "La forêt amazonienne couvre environ 5,5 millions de km², sur neuf pays ; le Brésil en possède environ 63 %. Elle abriterait 390 milliards d'arbres de quelque 16 000 espèces, environ 2 200 espèces de poissons et près de 1 300 espèces d'oiseaux. On l'appelle parfois « poumon de la Terre », mais l'expression est trompeuse : les océans produisent bien plus de dioxygène qu'elle.",
       source: { titre: "Forêt amazonienne", editeur: "Wikipédia, l'encyclopédie libre", url: "https://fr.wikipedia.org/wiki/For%C3%AAt_amazonienne" }
     }
   ],

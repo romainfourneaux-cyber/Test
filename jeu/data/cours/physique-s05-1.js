@@ -214,7 +214,7 @@ JEU.enregistrer("cours", {
    "corrections": [
     "Faux : elles correspondent à la vaporisation, la fusion vient dans la deuxième partie.",
     "Faux : elles correspondent à la solidification de l'eau.",
-    "Faux : le tableau ne contient aucune mesure de température."
+    "Faux : elles correspondent à la liquéfaction de la vapeur."
    ],
    "explication": "L'expérience commence par chauffer l'eau jusqu'à l'ébullition : c'est la vaporisation. La fusion de la glace vient ensuite.",
    "source": {
@@ -229,7 +229,7 @@ JEU.enregistrer("cours", {
    "fiche": "physique-s05-1-f1",
    "type": "vrai_faux",
    "niveau": 1,
-   "enonce": "Dans cette séance, on relève la température de l'eau à mesure qu'elle change d'état.",
+   "enonce": "Pendant l'expérience du ballon, on relève la température de l'eau à mesure qu'elle change d'état.",
    "corrections": [],
    "explication": "Oui : les mesures sont notées dans un tableau, ligne après ligne. On peut ensuite en tirer un graphique.",
    "source": {
@@ -505,7 +505,7 @@ JEU.enregistrer("cours", {
    "corrections": [
     "Faux : les deux ont lieu à la même température, 0 °C.",
     "Faux : l'eau gèle à une température plus haute que celle où la glace fond.",
-    "Faux : l'eau pure ne gèle jamais."
+    "Faux : les deux ont lieu à la même température, cent degrés."
    ],
    "explication": "Solidification et fusion sont deux changements inverses. Pour l'eau pure, ils ont lieu tous les deux à 0 °C.",
    "source": {
@@ -774,7 +774,7 @@ JEU.enregistrer("cours", {
    "corrections": [
     "Faux : sa température continue de baisser doucement, un peu en dessous de 0 °C.",
     "Faux : sa température remonte pendant la solidification.",
-    "Faux : l'eau salée ne se solidifie jamais."
+    "Faux : elle a bien un palier, mais nettement au-dessus de 0 °C."
    ],
    "explication": "L'eau pure a un palier à 0 °C. L'eau salée se solidifie un peu en dessous, et sa température continue de descendre pendant ce temps.",
    "source": {
@@ -870,19 +870,19 @@ JEU.enregistrer("cours", {
    "fiche": "physique-s05-1-f5",
    "type": "qcm",
    "niveau": 1,
-   "enonce": "Quel liquide a été refroidi pour tracer le graphique de cette séance ?",
+   "enonce": "Quelle eau se solidifie sans vrai palier, avec une température qui continue de baisser doucement ?",
    "choix": [
-    "De l'eau salée",
-    "De l'eau pure",
-    "De l'eau du robinet",
-    "Du lait"
+    "L'eau salée",
+    "L'eau pure",
+    "Toutes les eaux, salée ou pure",
+    "Aucune : la température reste toujours fixe"
    ],
-   "explication": "Le graphique montre la solidification de l'eau salée. Sa courbe descend doucement pendant le changement d'état.",
+   "explication": "L'eau salée se solidifie un peu sous 0 °C et sa température continue de descendre pendant ce temps. L'eau pure, elle, garde un palier fixe à 0 °C.",
    "source": {
     "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
     "page": 7
    },
-   "r": "=s0CGHLBi4VRAx0CIpgRMYTZ",
+   "r": "=AVDq7eCU5lTacwAO5TZ",
    "poids": 1
   }
  ],

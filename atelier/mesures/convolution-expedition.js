@@ -66,9 +66,9 @@ function noeuds(semaine, L, p) {
 // Convolution : distribution des vivres, nœud après nœud. Rend { reussite, premierGardien, vivresMoyens }.
 function expedition(depart, p, vivres) {
   let d = new Array(VIVRES_MAX + 1).fill(0); d[vivres] = 1;
-  const bataille = (q, t) => { // une halte qui est une bataille avec la chance q, tenue avec la chance t
+  const couche = perte => { // une couche : une seule halte jouée, qui coûte un vivre avec la chance « perte »
     const n = new Array(VIVRES_MAX + 1).fill(0);
-    for (let v = 1; v <= VIVRES_MAX; v++) { n[v - 1] += d[v] * q * (1 - t); n[v] += d[v] * (1 - q * (1 - t)); }
+    for (let v = 1; v <= VIVRES_MAX; v++) { n[v - 1] += d[v] * perte; n[v] += d[v] * (1 - perte); }
     n[0] += d[0]; d = n;
   };
   const gardien = t => { // retenté tant qu'il reste des vivres
@@ -89,7 +89,9 @@ function expedition(depart, p, vivres) {
   let premierGardien = null;
   for (let i = 0; i < SEMAINES; i++) {
     const s = depart + i, L = borne(ligne(s) + DECALAGE), nd = noeuds(s, L, p);
-    COUCHES.forEach((c, j) => { if (c.esc) bataille(c.esc, nd.esc); if (c.emb) bataille(c.emb, nd.emb); if (j === 2) repos(); });
+    // la halte de la couche est une escarmouche (part esc) ou une embuscade (part emb), jamais les deux : la chance de
+    // perdre un vivre est la somme des deux parts fois la chance que les murs cèdent
+    COUCHES.forEach((c, j) => { couche(c.esc * (1 - nd.esc) + c.emb * (1 - nd.emb)); if (j === 2) repos(); });
     gardien(i === SEMAINES - 1 ? nd.grand : nd.gard);
     if (i === 0) premierGardien = 1 - d[0];
   }

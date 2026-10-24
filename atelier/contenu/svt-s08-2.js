@@ -255,7 +255,7 @@ module.exports = {
       explication: "Cachemire pour la chèvre, angora pour le lapin ; l'alpaga est un cousin du lama. Le mouton reste le fournisseur le plus connu.", source: C(12) },
     { id: "svt-s08-2-q23", fiche: "svt-s08-2-f3", type: "qcm", niveau: 3,
       enonce: "Pourquoi le liège est-il considéré comme une sorte de bois ?",
-      choix: ["Parce que c'est l'écorce d'un arbre", "Parce qu'il brûle", "Parce qu'il flotte", "Parce qu'il est marron"],
+      choix: ["Parce que c'est l'écorce d'un arbre", "Parce qu'il brûle comme une bûche", "Parce qu'il flotte sur l'eau comme un bouchon", "Parce qu'il est marron"],
       reponse: "Parce que c'est l'écorce d'un arbre",
       explication: "Le liège vient du chêne-liège : c'est son écorce. Une écorce fait partie de l'arbre, donc c'est du bois.", source: C(12) },
     // f4 : le mix énergétique mondial en 2015

@@ -189,7 +189,7 @@ module.exports = {
       explication: "La vulnérabilité se juge aux dégâts : majeurs, considérables… La vitesse du vent décrit l'aléa, pas la vulnérabilité.", source: C(11) },
     { id: "svt-s05-2-q22", fiche: "svt-s05-2-f3", type: "trou", niveau: 1,
       enonce: "Complète la définition.",
-      texte: "Le risque est la combinaison d'un ___ avec la ___ des enjeux.",
+      texte: "Un risque, c'est un ___ combiné à la ___ des enjeux.",
       banque: ["aléa", "vulnérabilité", "enjeu", "moyenne"],
       reponse: [["aléa"], ["vulnérabilité"]],
       explication: "Un aléa et la vulnérabilité des enjeux : voilà les deux ingrédients du risque. Il faut les deux.", source: C(11) },

@@ -20,7 +20,7 @@ JEU.enregistrer("cours", {
     },
     {
      "annee": 2014,
-     "evenement": "Un cyclone touche la Réunion en faisant bien moins de victimes"
+     "evenement": "Dernière année du tableau des cyclones : bien moins de morts qu'en 1962"
     }
    ],
    "lieux": [
@@ -47,11 +47,11 @@ JEU.enregistrer("cours", {
    "id": "svt-s06-1-f2",
    "notion": "1962 : le cyclone Jenny",
    "titre": "Une alerte arrivée trop tard",
-   "texte": "En 1962, le cyclone Jenny frappe la Réunion. Les prévisions annonçaient un phénomène bien moins grave que la réalité, et le bulletin d'alerte diffusé à la radio arrive trop tard : beaucoup de gens sont déjà au travail. Des maisons sont détruites, des barques de pêcheurs surprises en mer, un paquebot rompt ses amarres, des wagons sont emportés.",
+   "texte": "En 1962, le cyclone Jenny frappe la Réunion. Les prévisions annonçaient un phénomène bien moins grave que la réalité, et le bulletin d'alerte, passé à la radio, arrive trop tard. Le bilan décrit des personnes déjà au travail, des maisons détruites, des barques de pêcheurs en mer, un paquebot qui rompt ses amarres et des wagons touchés.",
    "pointsCles": [
     "1962 : cyclone Jenny à la Réunion",
-    "Prévisions trop optimistes, bulletin d'alerte à la radio arrivé trop tard",
-    "Beaucoup de personnes déjà au travail, maisons détruites, barques en mer, paquebot, wagons"
+    "Prévisions bien en dessous de la réalité, bulletin d'alerte à la radio arrivé trop tard",
+    "Personnes déjà au travail, maisons détruites, barques en mer, paquebot, wagons"
    ],
    "dates": [
     {
@@ -235,14 +235,14 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s06-1-f1",
    "type": "qcm",
    "niveau": 1,
-   "enonce": "Combien de cyclones différents sont cités pour la Réunion ?",
+   "enonce": "Combien de cyclones différents ont frappé la Réunion dans l'exemple étudié ?",
    "choix": [
     "Cinq",
     "Un seul",
     "Deux",
     "Cinquante"
    ],
-   "explication": "Cinq cyclones sont cités, avec leurs dégâts. Ils montrent que l'aléa revient régulièrement.",
+   "explication": "Cinq cyclones différents sont étudiés, chacun avec ses dégâts. Ils montrent que l'aléa revient régulièrement.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 11
@@ -280,9 +280,9 @@ JEU.enregistrer("cours", {
     "Dans les dégâts qu'il a causés",
     "Dans son nom",
     "Dans sa date",
-    "Dans la vitesse de ses vents"
+    "Dans la vitesse de ses vents au moment où il touche l'île"
    ],
-   "explication": "La colonne des dégâts donne la vulnérabilité : majeurs, considérables. La vitesse des vents décrit l'aléa.",
+   "explication": "Les dégâts de chaque cyclone, majeurs ou considérables, traduisent la vulnérabilité des enjeux. La vitesse des vents décrit l'aléa, pas la vulnérabilité.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 11
@@ -317,7 +317,7 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "En 1962, le cyclone a été bien plus grave que ce que les prévisions annonçaient.",
    "corrections": [],
-   "explication": "Oui : la réalité a dépassé de loin les prévisions. La prévision était alors beaucoup moins fiable qu'aujourd'hui.",
+   "explication": "Oui : la réalité a dépassé de loin les prévisions. À l'époque, l'alerte n'était pas systématique comme aujourd'hui.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 11
@@ -356,7 +356,7 @@ JEU.enregistrer("cours", {
     "Par Internet",
     "Par des affiches dans les rues"
    ],
-   "explication": "En 1962, l'alerte passait par les ondes de la radio. Téléphones portables et Internet n'existaient pas.",
+   "explication": "En 1962, le bulletin d'alerte passait par les ondes de la radio. Il est arrivé trop tard.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 11
@@ -369,21 +369,21 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s06-1-f2",
    "type": "qcm_multiple",
    "niveau": 2,
-   "enonce": "Quels dégâts le cyclone Jenny a-t-il causés en 1962 ? (plusieurs réponses)",
+   "enonce": "Que peut provoquer un cyclone à la Réunion ? (plusieurs réponses)",
    "choix": [
     "Des maisons détruites",
     "Des barques de pêcheurs surprises en mer",
-    "Un paquebot qui a rompu ses amarres",
-    "Des wagons de chemin de fer emportés",
+    "Un paquebot qui rompt ses amarres",
+    "Des wagons de chemin de fer touchés",
     "Un volcan réveillé",
     "Une sécheresse de trois ans"
    ],
-   "explication": "Maisons, barques, paquebot, wagons : tous les enjeux ont été touchés. Volcan et sécheresse n'ont rien à voir avec un cyclone.",
+   "explication": "Maisons, barques, paquebot, wagons : tous ces enjeux peuvent être touchés. Volcan et sécheresse n'ont rien à voir avec un cyclone.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 11
    },
-   "r": "==wMNFQwAm1Fa11AKYEFMQxZXERRbgBBLcQEIZSSFZ0QBgwBRkUAiYzVJdlAMwRHTUgINYBUe5kGWsgBAc2EVxAAAkkGAARD2wFBF1AA6QkSLBgIfU1CQElGLwxGaMzXQYUDd0xEDEQEtHbBFBRFJ1hCHkRMMdQFetwKEp0SBIiBcAxBFAcrLI1GtIkFcx0APVxAtAFH",
+   "r": "==QNh5Fz2XUDakgEJBgIUUFARE1BHIwFAASDAEVDdEQCBgQBnFAEhcVXL1hCAohIARQFetAHGJRGfgCAVxAAAkkGAARD2wFBF1AA6QkSLBgIfU1CQElGLwxGaMzXQYUDd0xEDEQEtHbBFBRFJ1hCHkRMMdQFetwKEp0SBIiBcAxBFAcrLI1GtIkFcx0APVxAtAFH",
    "poids": 1
   },
   {
@@ -411,19 +411,19 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s06-1-f2",
    "type": "qcm",
    "niveau": 3,
-   "enonce": "Que montre la différence entre les prévisions de 1962 et la réalité ?",
+   "enonce": "Comment étaient les alertes en 1962, par rapport à aujourd'hui ?",
    "choix": [
-    "Que la prévision était difficile à cette époque",
-    "Que les prévisions météo sont toujours exactes, même à cette époque",
-    "Que le cyclone était faible",
-    "Que les habitants exagéraient"
+    "Exceptionnelles et tardives, pas systématiques",
+    "Déjà graduées avec une échelle de couleurs et des consignes",
+    "Plus précises qu'aujourd'hui",
+    "Envoyées sur les téléphones portables"
    ],
-   "explication": "En 1962, on prévoyait mal la force d'un cyclone. Aujourd'hui, les bulletins gradués sont bien plus fiables.",
+   "explication": "En 1962, le bulletin est arrivé trop tard et l'alerte restait exceptionnelle. Aujourd'hui, Météo-France publie des bulletins systématiques et gradués.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 11
    },
-   "r": "=cBSb4RCWAcsndRARAhEJ5MrS1wLEZAXLhgBCYUHbYiBcbaVfYwBcshHq7+FF1wDDY0AcMSZ",
+   "r": "==ARVwwB2sRAEgB2qqBHLsxYeRQRNIEHDABAWUzEBUUAUkUHK4BBmM0CaRkGfMQBRcTZ",
    "poids": 1
   },
   {
@@ -645,7 +645,7 @@ JEU.enregistrer("cours", {
     "Sur la vulnérabilité des enjeux",
     "Sur l'aléa",
     "Sur le nombre de cyclones",
-    "Sur la température de la mer"
+    "Sur la température de la mer autour de l'île"
    ],
    "explication": "Alertes et kits de survie protègent les personnes : leur vulnérabilité baisse. L'aléa et le nombre de cyclones ne changent pas.",
    "source": {
@@ -668,17 +668,17 @@ JEU.enregistrer("cours", {
     "Bulletins gradués et kits de survie"
    ],
    "droite": [
+    "Les précautions qui réduisent la vulnérabilité",
     "L'aléa",
     "Les enjeux",
-    "La vulnérabilité",
-    "Les précautions qui réduisent la vulnérabilité"
+    "La vulnérabilité"
    ],
    "explication": "Aléa, enjeux, vulnérabilité, précautions : les quatre pièces du raisonnement. Les précautions font baisser le risque.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 11
    },
-   "r": "==ANvQnXG5TWsslQdlCRewRSEYnQyYlSZlCH",
+   "r": "==ANvcnXG5TWsolQdlCRe8RSEYnQyclSZlCH",
    "poids": 1
   },
   {
