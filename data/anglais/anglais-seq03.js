@@ -1663,7 +1663,7 @@ JEU.enregistrer("anglais", {
    "type": "trou",
    "niveau": 3,
    "enonce": "Écris le mot interrogatif qui convient.",
-   "texte": "___ will you stay ? For two weeks. ___ are you going to sing ? Because it's my birthday.",
+   "texte": "___ will you stay ? For two weeks. ___ are you going to dance ? Because it's my birthday.",
    "explication": "For two weeks répond à how long ; because répond à why.",
    "source": {
     "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",

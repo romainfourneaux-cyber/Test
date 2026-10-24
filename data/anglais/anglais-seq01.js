@@ -2319,7 +2319,7 @@ JEU.enregistrer("anglais", {
    "fiche": "anglais-seq01-v8",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "« There was a lot of traffic » : de quoi parle-t-on ?",
+   "enonce": "« The traffic was terrible this morning » : de quoi parle-t-on ?",
    "choix": [
     "De la circulation sur la route",
     "Du bruit dans la salle",
