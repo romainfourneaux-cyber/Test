@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Banc d'essai visite</title>
+<style>
+  html,body{margin:0;height:100%;background:#f3f1ec;overflow:hidden;font-family:system-ui,sans-serif}
+  #v{position:fixed;inset:0;touch-action:none}
+  #v canvas{display:block;width:100%;height:100%}
+  #go{position:fixed;left:16px;bottom:calc(env(safe-area-inset-bottom,0px) + 16px);z-index:5;font:600 15px system-ui;padding:10px 14px;border:1px solid #383e42;background:#383e42;color:#f3f1ec;cursor:pointer}
+  #go[hidden]{display:none}
+</style>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}</script>
+</head><body><div id="v"></div><button id="go" type="button" hidden>Visite 3D</button>
+<script type="module">
+// Banc d'essai de src/walk.js.
+//   walk-test.html            : interactif (bouton "Visite 3D", ZQSD/WASD/flèches, clic = souris verrouillée)
+//   walk-test.html?auto=1     : piloté par tools/walk-test.mjs (boucle de rendu arrêtée, pas de temps fixe)
+//   &proxy=0                  : pas d'escalier de substitution quand src/stair.js n'est pas encore là
+//   &spot=wc                  : point d'entrée
+import { createWalk } from '../src/walk.js';
+import { STAIR } from '../src/spec.js';
+import { prismY, prismZ, box, tube, grp, add } from '../src/core.js';
+
+const qs = new URLSearchParams(location.search);
+const auto = qs.has('auto');
+// ?app=dev : application refondue (src/app.dev.js, crochet onFrame) ; sinon src/app.js
+const { createApp, VIEWS } = await import(qs.get('app') === 'dev' ? '../src/app.dev.js' : '../src/app.js');
+const app = await createApp(document.getElementById('v'), { interactive: true, quality: qs.get('q') || 'auto' });
+
+// Escalier de SUBSTITUTION (banc d'essai uniquement) : marches d'après STAIR.nosings, limon côté jour,
+// échiffre et main courante. Utilisé seulement si src/stair.js n'est pas chargé.
+function proxyStair() {
+  const g = grp('proxy-escalier-banc-essai', 'rdc', 'escalier');
+  const N = STAIR.nosings, R = STAIR.rise;
+  for (let k = 1; k <= 14; k++) {
+    const a = N[k - 1], b = N[k];
+    const poly = k === 13 ? [a[0], a[1], b[1], b[0], STAIR.outerCorner] : [a[0], a[1], b[1], b[0]];
+    add(g, prismY(poly, k * R - 0.045, k * R, 'ral7016'));
+  }
+  // limon côté jour (z 1.21-1.24) : dessus 6 cm au-dessus des nez, hauteur 32 cm
+  const top = [], bot = [];
+  for (let k = 0; k <= 13; k++) {
+    const x = k === 13 ? 4.07 : N[k][1][0];
+    top.push([x, k * R + 0.06]);
+    bot.push([x, Math.max(0, k * R + 0.06 - 0.32)]);
+  }
+  add(g, prismZ([...top, ...bot.reverse()], 1.21, 1.24, 'ral7016'));
+  // échiffre placo sous le limon (x 5.27-7.30)
+  const yb = (x) => ((7.30 - x) / 0.282) * R + 0.06 - 0.32;
+  const x0 = 7.30 - (0.26 / R) * 0.282;
+  add(g, prismZ([[5.27, 0], [x0, 0], [5.27, yb(5.27)]], 1.21, 1.28, 'placo'));
+  // poteau d'angle + main courante côté jour
+  add(g, box(4.07, 0, 1.21, 4.10, 2.60 + 1.0, 1.29, 'ral7016'));
+  add(g, tube([7.30, 0.92, 1.225], [4.10, 12 * R + 0.92, 1.225], 0.02, 'inox'));
+  for (const k of [1, 4, 7, 10]) {
+    const x = N[k][1][0] - 0.14;
+    add(g, tube([x, k * R + 0.03, 1.225], [x, k * R + 0.92, 1.225], 0.012, 'inox'));
+  }
+  return g;
+}
+if (!app.loaded.includes('./stair.js') && qs.get('proxy') !== '0') {
+  app.model.add(proxyStair());
+  window.__proxyStair = true;
+}
+if (auto) app.renderer.setAnimationLoop(null);
+const walkView = VIEWS.visite ? 'visite' : 'int-degagement';   // préréglage d'éclairage intérieur, sans coupe
+app.setView(walkView, { animate: false });
+
+const goBtn = document.getElementById('go');
+const hook = typeof app.onFrame === 'function';
+const walk = createWalk({
+  THREE: app.THREE, camera: app.camera, renderer: app.renderer, scene: app.scene, model: app.model,
+  domElement: app.renderer.domElement, controls: app.controls, autoUpdate: !auto && !hook,
+  onSpot: () => { goBtn.hidden = true; },
+  onExit: () => { goBtn.hidden = false; app.setView(walkView, { animate: !auto }); },
+});
+if (hook && !auto) app.onFrame((dt) => walk.update(dt));
+goBtn.addEventListener('click', () => { goBtn.hidden = true; app.setView(walkView, { animate: false }); walk.enter(qs.get('spot') || 'sas'); });
+goBtn.hidden = false;
+
+// --- outils pour le pilote Playwright --------------------------------------
+window.__app = app;
+window.__walk = walk;
+window.__step = (sec, dt = 1 / 30) => { const n = Math.round(sec / dt); for (let i = 0; i < n; i++) walk.update(dt); return walk.getState(); };
+window.__render = () => { app.renderOnce(); return app.renderer.domElement.toDataURL('image/png'); };
+// Plan des collisions (vue de dessus) : vert = on peut s'y tenir, gris = sol mais corps bloqué, blanc = pas de sol
+window.__map = (yGuess, path = [], px = 4) => {
+  const b = walk.config.bounds, cs = walk.config.cell;
+  const nx = Math.round((b.x1 - b.x0) / cs), nz = Math.round((b.z1 - b.z0) / cs);
+  const c = document.createElement('canvas');
+  c.width = nz * px; c.height = nx * px;       // plan : x vers le bas (nord en haut), z vers la droite (ouest)
+  const g = c.getContext('2d');
+  g.fillStyle = '#fff'; g.fillRect(0, 0, c.width, c.height);
+  for (let i = 0; i < nx; i++) for (let j = 0; j < nz; j++) {
+    const x = b.x0 + (i + 0.5) * cs, z = b.z0 + (j + 0.5) * cs;
+    const p = walk.probe(x, z, yGuess);
+    if (!p || p.floor === null) continue;
+    const dh = Math.min(1, Math.abs(p.floor - yGuess) / 0.5);
+    g.fillStyle = p.free ? `rgb(${Math.round(90 + 120 * dh)},${Math.round(185 - 60 * dh)},${Math.round(110 + 40 * dh)})` : '#9a9a9a';
+    g.fillRect(j * px, i * px, px, px);
+  }
+  g.fillStyle = '#d0302a';
+  for (const s of path) g.fillRect((s.z - b.z0) / cs * px - 1.5, (s.x - b.x0) / cs * px - 1.5, 3, 3);
+  return c.toDataURL('image/png');
+};
+window.__ready = true;
+</script></body></html>

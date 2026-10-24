@@ -67,7 +67,7 @@ function parquetCanvas(seed = 3) {
     let y = -r() * S;
     while (y < S) {
       const len = S * (0.45 + r() * 0.55);
-      const h = 30 + r() * 10, s = 38 + r() * 10, l = 58 + r() * 10;
+      const h = 31 + r() * 4, s = 40 + r() * 5, l = 60 + r() * 4.5;   // chêne clair : faible écart entre lames
       g.fillStyle = `hsl(${h},${s}%,${l}%)`;
       g.fillRect(i * plankW, y, plankW, len);
       // veinage
@@ -254,10 +254,10 @@ export function initMaterials() {
   MAT.alu = cappedMaterial({ color: '#8d9296', roughness: 0.35, metalness: 0.7 }, '#666b6f');
   MAT.chrome = cappedMaterial({ color: '#d7dadd', roughness: 0.12, metalness: 1.0 }, '#9aa0a5');
   MAT.inox = cappedMaterial({ color: '#b9bcbf', roughness: 0.3, metalness: 0.9 }, '#8a8e92');
-  MAT.verre = new THREE.MeshPhysicalMaterial({ color: '#cfe3e6', roughness: 0.04, metalness: 0.0, transparent: true, opacity: 0.22, envMapIntensity: 1.6, side: THREE.DoubleSide, depthWrite: false });
+  MAT.verre = new THREE.MeshPhysicalMaterial({ color: '#cfe3e6', roughness: 0.04, metalness: 0.0, transparent: true, opacity: 0.22, envMapIntensity: 1.0, side: THREE.DoubleSide, depthWrite: false });
   MAT.verreDepoli = new THREE.MeshPhysicalMaterial({ color: '#eef3f3', roughness: 0.6, transparent: true, opacity: 0.55, side: THREE.DoubleSide, depthWrite: false });
-  MAT.verreGardeCorps = new THREE.MeshPhysicalMaterial({ color: '#dcebea', roughness: 0.05, transparent: true, opacity: 0.18, envMapIntensity: 1.4, side: THREE.DoubleSide, depthWrite: false });
-  MAT.miroir = new THREE.MeshStandardMaterial({ color: '#dfe6ea', roughness: 0.02, metalness: 1.0 });
+  MAT.verreGardeCorps = new THREE.MeshPhysicalMaterial({ color: '#dcebea', roughness: 0.05, transparent: true, opacity: 0.14, envMapIntensity: 1.0, side: THREE.DoubleSide, depthWrite: false });
+  MAT.miroir = new THREE.MeshStandardMaterial({ color: '#e6ecef', roughness: 0.03, metalness: 0.9, envMapIntensity: 2.2 });
 
   // --- Bois ---
   const oakC = tex(woodCanvas({ seed: 51, hue: 33, sat: 42, light: 60, boards: 5 }));

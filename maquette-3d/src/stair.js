@@ -415,6 +415,11 @@ export function buildStair() {
     { view: 'int-degagement', text: 'Garde-corps barreaudage acier RAL 7016', pos: [6.70, hrY(6.70) - 0.30, ZJC] },
     { view: 'int-degagement', text: 'Main courante murale Ø42 sur consoles', pos: [5.86, yHand(X_FOOT - 5.86), zH] },
   ];
+  // les gros plans reprennent les repères du détail : fixation murale d'un côté, échiffre de l'autre
+  const det = root.userData.callouts.filter((c) => c.view === 'detail-raccord');
+  const mural = [0, 1, 2, 3, 4, 5, 6, 7, 8, 14], echif = [9, 10, 11, 12, 13, 14];
+  for (const i of mural) root.userData.callouts.push({ ...det[i], view: 'detail-fixation' });
+  for (const i of echif) root.userData.callouts.push({ ...det[i], view: 'detail-echiffre' });
   return root;
 }
 
