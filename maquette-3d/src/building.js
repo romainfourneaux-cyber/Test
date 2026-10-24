@@ -158,8 +158,16 @@ export function buildBuilding() {
   for (const [x0, x1, z0, z1] of slabRects) {
     add(pl, box(x0, LV.rdcCeil, z0, x1, LV.rdcCeil + PL, z1, 'placoPlafond'));
     add(pl, box(x0, LV.rdcCeil + PL, z0, x1, LV.slabTop - 0.02, z1, 'dalle'));
-    add(pl, box(x0, LV.slabTop - 0.02, z0, x1, LV.slabTop, z1, 'parquet'));
   }
+  // Sols finis de l'étage : carrelage sur le palier (couloir), parquet dans les chambres
+  const solEt = (x0, x1, z0, z1, m) => add(pl, box(x0, LV.slabTop - 0.02, z0, x1, LV.slabTop, z1, m));
+  solEt(0.22, 3.165, 0.22, 5.03, 'parquet');                        // chambre 1 (jusqu'à l'axe de la cloison)
+  solEt(3.165, 3.20, 1.29, 5.03, 'parquet');
+  solEt(3.20, T.landingX1, T.landingEdgeZ, 3.10, 'carrelageSol');  // palier
+  solEt(3.20, T.landingX1, 3.10, 5.03, 'parquet');                  // alcôve chambre 2
+  solEt(T.landingX1, 7.08, T.z1, 5.03, 'parquet');                  // chambre 2
+  solEt(T.x1, 7.08, 0.22, T.z1, 'parquet');
+  solEt(3.165, T.x1, 0.22, 0.34, 'parquet');
   // habillage placo des rives de trémie
   add(pl,
     box(T.landingX1, LV.rdcCeil, T.z1, T.x1, LV.slabTop - 0.02, T.z1 + PL, 'placo'),

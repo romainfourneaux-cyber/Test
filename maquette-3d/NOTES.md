@@ -3,7 +3,10 @@
 Visuel d'architecte **non coté** de l'extension à étage (plan PDF du 13 avril 2026, éch. 1/100).
 Enduit **Weber 001 blanc cassé**, menuiseries **RAL 7016 anthracite**, tous les murs **doublés placo**
 (doublage isolant 10 cm + BA13 sur les murs extérieurs, cloisons placo 72/48 à l'intérieur).
-Zone d'attention : **escalier quart-tournant + jonction avec le WC du RDC**.
+Zone d'attention : **escalier quart-tournant MÉTALLIQUE (acier RAL 7016) + jonction avec le WC du RDC et raccord avec les placos**.
+
+Sols (demande client) : carrelage dans les couloirs (dégagement, sas, palier étage), la SdB et le WC ; parquet dans les chambres
+(et le dressing). Déjà fait dans building.js.
 
 ## Lancer un rendu
 
@@ -14,7 +17,8 @@ node tools/render.mjs --views coupe-escalier,int-wc --w 1400 --h 950 --out rende
 node tools/render.mjs --cam "6,3,9,4.5,1.5,0.8,45" --clip "0,0,-1,2.17" --name test --out renders/_moi
 ```
 Vues prédéfinies (src/app.js, `VIEWS`) : `ext-ouest`, `ext-est`, `axo-rdc`, `coupe-escalier`, `etage`,
-`int-degagement`, `int-wc`. Un rendu prend 10–30 s (WebGL logiciel). Regarder les PNG avec l'outil Read.
+`int-degagement`, `int-wc`, `detail-raccord` (coupe x = 6.31 sur une fixation du limon mural).
+`--page render-dev.html` rend une autre page hôte ; `--callouts` écrit les repères projetés (si app.projectCallouts existe). Un rendu prend 10–30 s (WebGL logiciel). Regarder les PNG avec l'outil Read.
 `--noao` désactive l'occlusion ambiante (plus rapide pour itérer).
 
 ## Repère (voir src/spec.js — source de vérité des cotes)

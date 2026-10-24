@@ -51,6 +51,11 @@ export const VIEWS = {
     label: 'Vue du sas', caption: 'Intérieur : depuis le sas vers le dégagement, l\'escalier et la porte du WC',
     pos: [8.05, 1.62, 2.85], target: [4.2, 1.30, 1.05], fov: 68, bg: 'sky', interior: true,
   },
+  'detail-raccord': {
+    label: 'Détail raccord', caption: 'Détail : fixation du limon métallique à travers le doublage placo, échiffre placo sous le limon',
+    pos: [4.95, 1.05, 1.15], target: [6.31, 0.55, 0.62], fov: 45, bg: 'studio', sun: [6, 14, 10],
+    clip: [{ n: [1, 0, 0], c: -6.31 }],
+  },
   'int-wc': {
     label: 'Intérieur WC', caption: 'Intérieur WC : jonction avec l\'escalier, lave-mains sous les marches',
     pos: [5.15, 1.55, 2.05], target: [3.45, 1.45, 0.62], fov: 74, bg: 'sky', interior: true,

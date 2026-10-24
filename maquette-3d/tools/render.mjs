@@ -1,6 +1,7 @@
 // Rendu headless des vues de la maquette en PNG.
 // Usage : node tools/render.mjs [--views ext-ouest,coupe-escalier] [--w 1800] [--h 1200] [--out renders]
 //         [--cam "px,py,pz,tx,ty,tz,fov"] [--clip "nx,ny,nz,c[;nx,ny,nz,c]"] [--name custom] [--noao]
+//         [--page render-dev.html] [--callouts]
 import http from 'node:http';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -39,7 +40,7 @@ await page.route('https://cdn.jsdelivr.net/npm/three@0.170.0/**', (route) => {
   const f = path.join(ROOT, 'node_modules/three', rel);
   route.fulfill({ status: 200, contentType: 'text/javascript', body: fs.readFileSync(f) });
 });
-await page.goto(`http://localhost:${port}/render.html`);
+await page.goto(`http://localhost:${port}/${args.page || 'render.html'}`);
 await page.waitForFunction(() => window.__ready === true, null, { timeout: 180000 });
 const loaded = await page.evaluate(() => window.__app.loaded);
 console.log('modules chargés :', loaded.join(', ') || '(aucun)');
@@ -63,6 +64,10 @@ for (const j of jobs) {
   }, { name: j.name, def: j.def, W, H });
   const file = path.join(OUT, `${j.name}.png`);
   fs.writeFileSync(file, Buffer.from(data.split(',')[1], 'base64'));
+  if (args.callouts) {
+    const pts = await page.evaluate((name) => window.__app.projectCallouts ? window.__app.projectCallouts(name) : [], j.name);
+    fs.writeFileSync(path.join(OUT, `${j.name}.callouts.json`), JSON.stringify(pts, null, 1));
+  }
   console.log(`${file}  (${((Date.now() - t0) / 1000).toFixed(1)} s)`);
 }
 if (errors.length) { console.log('--- console ---'); console.log([...new Set(errors)].slice(0, 40).join('\n')); }
