@@ -691,7 +691,7 @@ function chambre() {
   const k = mats();
   const g = grp('chambre-mobilier', 'rdc', 'mobilier');
   const zw = 2.256;                 // face du mur B côté chambre
-  const bx0 = 3.99, bx1 = 5.69;     // lit 160 x 200 (cadre 170), axe x = 4.84
+  const bx0 = 3.85, bx1 = 5.75;     // lit 180 x 200 (cadre 190), axe x = 4.80
 
   // tête de lit : panneau chêne + 3 coussins capitonnés lin
   add(g, box(bx0, 0, zw + 0.004, bx1, 1.10, zw + 0.034, k.oak));
@@ -701,24 +701,24 @@ function chambre() {
   }
   // sommier / cadre chêne, socle en retrait
   add(g,
-    box(4.12, 0, 2.45, 5.56, 0.10, 4.26, k.gap),
+    box(3.98, 0, 2.45, 5.62, 0.10, 4.26, k.gap),
     box(bx0 + 0.01, 0.10, zw + 0.034, bx1 - 0.01, 0.32, 4.40, k.oak),
-    rbox(4.04, 0.32, 2.37, 5.64, 0.54, 4.37, 0.03, k.sheet, 3),                 // matelas + drap
+    rbox(3.90, 0.32, 2.37, 5.70, 0.54, 4.37, 0.03, k.sheet, 3),                 // matelas 180 + drap
     rbox(bx0, 0.42, 2.95, bx1, 0.585, 4.43, 0.04, k.linenWhite, 3),              // couette
     rbox(bx0 - 0.005, 0.55, 2.95, bx1 + 0.005, 0.605, 3.20, 0.02, k.linen, 3),   // revers
     rbox(bx0 - 0.012, 0.40, 3.86, bx1 + 0.012, 0.612, 4.25, 0.015, k.terra, 2),  // plaid
   );
   // oreillers
   add(g,
-    rbox(4.10, 0.54, 2.38, 4.82, 0.86, 2.53, 0.06, k.linenWhite, 3),
-    rbox(4.86, 0.54, 2.38, 5.58, 0.86, 2.53, 0.06, k.linenWhite, 3),
-    rbox(4.13, 0.54, 2.52, 4.79, 0.72, 2.72, 0.06, k.linen, 3),
-    rbox(4.89, 0.54, 2.52, 5.55, 0.72, 2.72, 0.06, k.linen, 3),
-    rbox(4.60, 0.55, 2.72, 5.08, 0.78, 2.85, 0.05, k.sage, 3),
+    rbox(3.97, 0.54, 2.38, 4.77, 0.86, 2.53, 0.06, k.linenWhite, 3),
+    rbox(4.83, 0.54, 2.38, 5.63, 0.86, 2.53, 0.06, k.linenWhite, 3),
+    rbox(4.00, 0.54, 2.52, 4.74, 0.72, 2.72, 0.06, k.linen, 3),
+    rbox(4.86, 0.54, 2.52, 5.60, 0.72, 2.72, 0.06, k.linen, 3),
+    rbox(4.56, 0.55, 2.72, 5.04, 0.78, 2.85, 0.05, k.sage, 3),
   );
   // chevets chêne sur pieds + lampes
-  const chevet = (x0, z0) => {
-    const x1 = x0 + 0.40, z1 = z0 + 0.38;
+  const chevet = (x0, z0, w = 0.40) => {
+    const x1 = x0 + w, z1 = z0 + 0.38;
     for (const [lx, lz] of [[x0 + 0.03, z0 + 0.03], [x1 - 0.05, z0 + 0.03], [x0 + 0.03, z1 - 0.05], [x1 - 0.05, z1 - 0.05]]) add(g, box(lx, 0, lz, lx + 0.02, 0.20, lz + 0.02, k.oak));
     add(g,
       box(x0, 0.20, z0, x1, 0.50, z1, k.oak),
@@ -727,17 +727,17 @@ function chambre() {
       box(x0 + 0.17, 0.43, z1 + 0.016, x1 - 0.17, 0.44, z1 + 0.026, k.anth),
     );
   };
-  chevet(3.55, 2.32);
-  chevet(5.73, 2.30);
-  add(g, tableLamp(3.73, 0.50, 2.50, k.potWhite), tableLamp(5.95, 0.50, 2.48, M('ceramBleu', { color: '#9eb0b5', roughness: 0.35 })));
+  chevet(3.41, 2.32);              // reste hors du rail de la coulissante SdB (z <= 2.30)
+  chevet(5.79, 2.30, 0.34);        // s'arrête avant la baie de la porte chambre (x 6.13)
+  add(g, tableLamp(3.61, 0.50, 2.50, k.potWhite), tableLamp(5.97, 0.50, 2.48, M('ceramBleu', { color: '#9eb0b5', roughness: 0.35 })));
   add(g,
-    box(3.80, 0.50, 2.38, 3.93, 0.53, 2.58, k.blueGrey),          // livre
-    box(5.76, 0.50, 2.36, 5.86, 0.52, 2.52, k.ochre),
+    box(3.44, 0.50, 2.38, 3.57, 0.53, 2.58, k.blueGrey),          // livre
+    box(5.81, 0.50, 2.36, 5.89, 0.52, 2.52, k.ochre),
   );
   // tableau au-dessus du lit
   add(g,
-    box(4.39, 1.36, zw, 5.29, 1.96, zw + 0.03, k.oak),
-    box(4.415, 1.385, zw + 0.03, 5.265, 1.935, zw + 0.033, M('artLit', { color: '#ffffff', map: artTexture('paysage', 0.85, 0.55), roughness: 0.9 })),
+    box(4.35, 1.36, zw, 5.25, 1.96, zw + 0.03, k.oak),
+    box(4.375, 1.385, zw + 0.03, 5.225, 1.935, zw + 0.033, M('artLit', { color: '#ffffff', map: artTexture('paysage', 0.85, 0.55), roughness: 0.9 })),
   );
   // tapis laine sous les 2/3 du lit
   add(g, box(3.62, 0, 3.05, 6.06, 0.012, 4.72, M('tapisChambre', { color: '#ffffff', map: rugTexture('chambre', 2.44, 1.67), roughness: 1 })));

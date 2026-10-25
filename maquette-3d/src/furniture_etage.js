@@ -212,7 +212,7 @@ function artFrame({ wall, plane, a, yc, w, h, seed, palette }) {
 // Meubles (repère local : largeur selon x centrée sur 0, profondeur selon z, avant vers +z)
 // ---------------------------------------------------------------------------
 
-// Lit 140x200 : tête de lit à z = 0, pied vers +z.
+// Lit (W = largeur du cadre : 1.46 pour 140, 1.86 pour 180) : tête de lit à z = 0, pied vers +z.
 function bed({ W = 1.46, head = 'channel', headMat, headH = 1.06, baseMat = 'chene', throwMat, cushions = [] }) {
   const m = mats();
   const g = new THREE.Group();
@@ -236,7 +236,7 @@ function bed({ W = 1.46, head = 'channel', headMat, headH = 1.06, baseMat = 'che
   g.add(box(-W / 2 + 0.14, Y0, hb + 0.15, W / 2 - 0.14, Y0 + 0.09, zf - 0.15, m.socle));
   g.add(rb(-W / 2, Y0 + 0.09, hb, W / 2, Y0 + 0.29, zf, 0.012, baseMat));
   // matelas + drap
-  g.add(rb(-0.70, Y0 + 0.29, hb + 0.01, 0.70, Y0 + 0.51, hb + 0.01 + 2.0, 0.04, m.drap));
+  g.add(rb(-(W / 2 - 0.03), Y0 + 0.29, hb + 0.01, W / 2 - 0.03, Y0 + 0.51, hb + 0.01 + 2.0, 0.04, m.drap));
   // couette (retombe sur les côtés et au pied), revers de drap
   g.add(rb(-W / 2 - 0.012, Y0 + 0.27, 0.72, W / 2 + 0.012, Y0 + 0.565, zf + 0.015, 0.05, m.drap, 3));
   g.add(rb(-W / 2 - 0.016, Y0 + 0.50, 0.70, W / 2 + 0.016, Y0 + 0.59, 0.98, 0.035, m.drapGris, 3));
@@ -244,7 +244,7 @@ function bed({ W = 1.46, head = 'channel', headMat, headH = 1.06, baseMat = 'che
   if (throwMat) g.add(rb(-W / 2 - 0.022, Y0 + 0.30, zf - 0.50, W / 2 + 0.022, Y0 + 0.582, zf - 0.08, 0.03, throwMat, 2));
   // oreillers 50x70 inclinés contre la tête de lit
   for (const s of [-1, 1]) {
-    g.add(rbc([s * 0.35, Y0 + 0.725, 0.235], [0.66, 0.46, 0.15], 0.065, m.drap, [-0.35, 0, 0], 3));
+    g.add(rbc([s * Math.max(0.35, W / 2 - 0.51), Y0 + 0.725, 0.235], [0.66, 0.46, 0.15], 0.065, m.drap, [-0.35, 0, 0], 3));
   }
   // coussins déco
   cushions.forEach(({ x, w = 0.45, h = 0.45, z = 0.41, y = 0.70, mat: cm, tilt = -0.28 }) => {
@@ -465,32 +465,33 @@ function chambre1() {
   const m = mats();
   const g = new THREE.Group();
   g.name = 'chambre-1';
-  const zc = 2.20;            // axe du lit (tête contre le pignon Nord x = 0.34)
-  // Lit 140x200 (tête de lit capitonnée lin naturel, sommier chêne) : x 0.34 -> 2.47, z 1.45 -> 2.95
-  g.add(orient(0.34, zc, Math.PI / 2, bed({
-    W: 1.46, head: 'channel', headMat: m.lin, headH: 1.06, baseMat: 'chene', throwMat: m.sauge,
-    cushions: [{ x: -0.30, mat: m.terracotta }, { x: 0.29, mat: m.sauge, tilt: -0.24 }, { x: 0, w: 0.52, h: 0.28, z: 0.50, y: 0.64, mat: m.drapGris }],
+  const xc = 1.58;            // axe du lit 180 (tête contre le mur bas Est z = 0.34, sous le rampant)
+  // Lit 180x200 : x 0.63 -> 2.53, z 0.34 -> 2.42 ; hors du débattement de la porte (pivot x 3.13 / z 3.04, vantail 0.83)
+  g.add(orient(xc, 0.34, 0, bed({
+    W: 1.86, head: 'channel', headMat: m.lin, headH: 1.06, baseMat: 'chene', throwMat: m.sauge,
+    cushions: [{ x: -0.36, mat: m.terracotta }, { x: 0.36, mat: m.sauge, tilt: -0.24 }, { x: 0, w: 0.52, h: 0.28, z: 0.50, y: 0.64, mat: m.drapGris }],
   })));
-  // Chevets (façade vers +x) : z 1.00-1.44 et 2.96-3.40
-  for (const z of [1.22, 3.18]) g.add(orient(0.35, z, Math.PI / 2, nightstand({ w: 0.44, d: 0.38, h: 0.50 })));
+  // Chevets dos au mur Est : tablette suspendue étroite côté pignon, chevet sur pieds côté porte
+  g.add(orient(0.48, 0.35, 0, nightstand({ w: 0.26, d: 0.30, h: 0.50, floating: true })));
+  g.add(orient(2.78, 0.35, 0, nightstand({ w: 0.44, d: 0.38, h: 0.50 })));
   // objets sur les chevets
-  g.add(books(0.52, 1.24, Y0 + 0.50, [[0.17, 0.23, 0.025, 0], [0.15, 0.21, 0.02, 4]], 0.3));
-  g.add(lathe(0.62, Y0 + 0.50, 3.28, [[0, 0], [0.035, 0], [0.045, 0.06], [0.03, 0.14], [0.018, 0.16], [0.016, 0.16], [0.026, 0.14], [0.04, 0.06], [0.03, 0.01], [0, 0.01]], m.ceramiqueSauge, 20));
-  g.add(books(0.50, 3.08, Y0 + 0.50, [[0.16, 0.22, 0.03, 2]], -0.2));
+  g.add(books(0.48, 0.50, Y0 + 0.50, [[0.15, 0.20, 0.02, 0]], 0.2));
+  g.add(lathe(2.88, Y0 + 0.50, 0.55, [[0, 0], [0.035, 0], [0.045, 0.06], [0.03, 0.14], [0.018, 0.16], [0.016, 0.16], [0.026, 0.14], [0.04, 0.06], [0.03, 0.01], [0, 0.01]], m.ceramiqueSauge, 20));
+  g.add(books(2.68, 0.52, Y0 + 0.50, [[0.16, 0.22, 0.03, 2]], -0.2));
   // Suspensions de chevet (descendent du rampant)
-  g.add(pendant(0.58, 1.22, Y0 + 1.22), pendant(0.58, 3.18, Y0 + 1.22));
-  // Affiche au-dessus de la tête de lit (sur le pignon Nord)
-  g.add(artFrame({ wall: 'x+', plane: 0.34, a: zc, yc: Y0 + 1.48, w: 0.90, h: 0.62, seed: 3, palette: ['#c99377', '#d8b673', '#a5b09a'] }));
+  g.add(pendant(0.48, 0.58, Y0 + 1.22), pendant(2.78, 0.62, Y0 + 1.22));
+  // Affiche au-dessus de la tête de lit (sur le mur bas Est, sous le rampant)
+  g.add(artFrame({ wall: 'z+', plane: 0.34, a: xc, yc: Y0 + 1.45, w: 0.90, h: 0.50, seed: 3, palette: ['#c99377', '#d8b673', '#a5b09a'] }));
 
-  // Armoire contre le mur Est (z = 0.34) : portes coulissantes chêne, caisson blanc, H 2.12 (rampant à 2.18 au mur)
-  const ax0 = 1.13, ax1 = 3.12, az0 = 0.35, hA = 2.12;
+  // Armoire contre le pignon Nord (x = 0.34), z 2.55-4.25 : portes coulissantes chêne, caisson blanc, H 2.12
+  const az0 = 2.55, az1 = 4.25, ax1 = 0.92, hA = 2.12, azm = (az0 + az1) / 2;
   g.add(
-    box(ax0 + 0.03, Y0, az0 + 0.03, ax1 - 0.03, Y0 + 0.06, 0.89, m.socle),
-    box(ax0, Y0 + 0.06, az0, ax1, Y0 + hA, 0.92, 'blancLaque'),
-    box(ax0 + 0.005, Y0 + 0.065, 0.92, (ax0 + ax1) / 2 + 0.015, Y0 + hA - 0.005, 0.94, 'chene'),
-    box((ax0 + ax1) / 2 - 0.015, Y0 + 0.065, 0.94, ax1 - 0.005, Y0 + hA - 0.005, 0.96, 'chene'),
-    box(ax0 + 0.035, Y0 + 0.80, 0.94, ax0 + 0.047, Y0 + 1.40, 0.952, 'noir'),
-    box(ax1 - 0.047, Y0 + 0.80, 0.96, ax1 - 0.035, Y0 + 1.40, 0.972, 'noir'),
+    box(0.37, Y0, az0 + 0.03, ax1 - 0.03, Y0 + 0.06, az1 - 0.03, m.socle),
+    box(0.35, Y0 + 0.06, az0, ax1, Y0 + hA, az1, 'blancLaque'),
+    box(ax1, Y0 + 0.065, az0 + 0.005, ax1 + 0.02, Y0 + hA - 0.005, azm + 0.015, 'chene'),
+    box(ax1 + 0.02, Y0 + 0.065, azm - 0.015, ax1 + 0.04, Y0 + hA - 0.005, az1 - 0.005, 'chene'),
+    box(ax1 + 0.02, Y0 + 0.80, az0 + 0.035, ax1 + 0.032, Y0 + 1.40, az0 + 0.047, 'noir'),
+    box(ax1 + 0.04, Y0 + 0.80, az1 - 0.047, ax1 + 0.052, Y0 + 1.40, az1 - 0.035, 'noir'),
   );
 
   // Bureau contre la cloison du palier (x = 3.13), chaise, lampe, objets
@@ -502,11 +503,11 @@ function chambre1() {
   g.add(smallPlant(3.00, Y0 + 0.75, 3.50, 1.1, m.terreCuite, 'sansevieria'));
   g.add(artFrame({ wall: 'x-', plane: 3.13, a: 3.95, yc: Y0 + 1.50, w: 0.50, h: 0.62, seed: 4, palette: ['#a7b4bd', '#d9cfbf', '#c69277'] }));
 
-  // Fauteuil de lecture dans l'angle Nord-Ouest, tourné vers la pièce
-  g.add(orient(0.92, 4.20, 3 * Math.PI / 4, armchair(m.laine, m.ocre)));
+  // Fauteuil de lecture près de la baie, entre l'armoire et le bureau
+  g.add(orient(1.62, 4.28, 0.9 * Math.PI, armchair(m.laine, m.ocre)));
 
-  // Tapis sous le lit (hors débattement de la porte : x <= 2.29)
-  g.add(rug(0.92, 0.98, 2.29, 3.42, { base: '#e4ddd0', line: '#c69277', line2: '#b9ad99', seed: 5 }));
+  // Tapis au pied du lit (hors débattement de la porte : x <= 2.25)
+  g.add(rug(0.98, 1.40, 2.25, 3.30, { base: '#e4ddd0', line: '#c69277', line2: '#b9ad99', seed: 5 }));
 
   // Rideaux lin de part et d'autre de la baie (x 0.785-2.585)
   g.add(curtain(0.40, 0.84, 4.855, Y0 + 0.01, Y0 + 2.21), curtain(2.53, 2.96, 4.855, Y0 + 0.01, Y0 + 2.21));
@@ -518,17 +519,16 @@ function chambre2() {
   const m = mats();
   const g = new THREE.Group();
   g.name = 'chambre-2';
-  const xc = 5.85;            // axe du lit (tête contre la cloison de trémie z = 1.31)
-  // Lit 140x200 : x 5.10 -> 6.60, z 1.31 -> 3.44 (tête de lit pleine bleu-gris, sommier lin)
+  const xc = 5.99;            // axe du lit (tête contre la cloison de trémie z = 1.31)
+  // Lit 180x200 : x 5.04 -> 6.94, z 1.31 -> 3.39 ; contre le pignon Sud pour rester hors du débattement de la porte (x <= 5.00)
   g.add(orient(xc, 1.31, 0, bed({
-    W: 1.46, head: 'panel', headMat: m.bleuGris, headH: 1.10, baseMat: m.lin, throwMat: m.ocre,
+    W: 1.86, head: 'panel', headMat: m.bleuGris, headH: 1.10, baseMat: m.lin, throwMat: m.ocre,
     cushions: [{ x: -0.29, mat: m.bleuNuit }, { x: 0.30, mat: m.terracotta, tilt: -0.24 }, { x: 0.0, w: 0.50, h: 0.30, z: 0.50, y: 0.65, mat: m.sauge }],
   })));
-  // Chevet gauche (sur pieds) et chevet droit suspendu (0.33 entre lit et pignon Sud)
-  g.add(orient(4.86, 1.32, 0, nightstand({ w: 0.44, d: 0.38, h: 0.50, front: 'chene' })));
-  g.add(orient(6.785, 1.32, 0, nightstand({ w: 0.33, d: 0.32, h: 0.50, floating: true })));
-  g.add(tableLamp(4.80, Y0 + 0.50, 1.47, m.ceramiqueSauge), tableLamp(6.785, Y0 + 0.50, 1.46, m.ceramiqueMat));
-  g.add(books(4.99, 1.60, Y0 + 0.50, [[0.13, 0.18, 0.02, 5]], 0.1));
+  // Un seul chevet (côté porte) : le lit 180 occupe la largeur jusqu'au pignon Sud
+  g.add(orient(4.79, 1.32, 0, nightstand({ w: 0.42, d: 0.38, h: 0.50, front: 'chene' })));
+  g.add(tableLamp(4.73, Y0 + 0.50, 1.47, m.ceramiqueSauge));
+  g.add(books(4.90, 1.60, Y0 + 0.50, [[0.13, 0.18, 0.02, 5]], 0.1));
   g.add(artFrame({ wall: 'z+', plane: 1.31, a: xc, yc: Y0 + 1.52, w: 0.80, h: 0.56, seed: 1, palette: ['#a7b4bd', '#c9b79c', '#9aa98e'] }));
 
   // Bureau dans l'alcôve, contre la cloison x = 3.20 ; étagère au-dessus
@@ -554,7 +554,7 @@ function chambre2() {
   );
 
   // Tapis au pied du lit (hors débattement de porte et de l'armoire)
-  g.add(rug(4.65, 3.12, 6.30, 4.62, { base: '#dfe1dc', line: '#8fa3b3', line2: '#b9b2a4', seed: 9, cap: '#9aa0a0' }));
+  g.add(rug(4.65, 3.45, 6.30, 4.62, { base: '#dfe1dc', line: '#8fa3b3', line2: '#b9b2a4', seed: 9, cap: '#9aa0a0' }));
   // Olivier en pot devant la partie fixe de la baie
   g.add(oliveTree(4.45, 4.40));
   // Rideaux de la baie (x 4.46-6.26)
