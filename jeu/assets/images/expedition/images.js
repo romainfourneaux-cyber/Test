@@ -6,6 +6,7 @@
 // Une entrée absente = l'écran garde son dessin SVG (règle de la conception, atelier/conception/expeditions-graphismes.md).
 window.JEU = window.JEU || {};
 JEU.imagesExpedition = {
+  "annee-fond": {"f": "assets/images/expedition/annee-fond.jpg", "w": 1000, "h": 104, "ax": 0, "ay": 0},
   "halte-bivouac": {"f": "assets/images/expedition/halte-bivouac.png", "w": 64, "h": 64, "ax": 32, "ay": 32},
   "halte-brume": {"f": "assets/images/expedition/halte-brume.png", "w": 64, "h": 64, "ax": 32, "ay": 32},
   "halte-embuscade": {"f": "assets/images/expedition/halte-embuscade.png", "w": 64, "h": 64, "ax": 32, "ay": 32},
@@ -16,5 +17,6 @@ JEU.imagesExpedition = {
   "halte-ev-incendie": {"f": "assets/images/expedition/halte-ev-incendie.png", "w": 64, "h": 64, "ax": 32, "ay": 32},
   "halte-ev-marchands": {"f": "assets/images/expedition/halte-ev-marchands.png", "w": 64, "h": 64, "ax": 32, "ay": 32},
   "halte-ev-mercenaires": {"f": "assets/images/expedition/halte-ev-mercenaires.png", "w": 64, "h": 64, "ax": 32, "ay": 32},
-  "halte-marchand": {"f": "assets/images/expedition/halte-marchand.png", "w": 64, "h": 64, "ax": 32, "ay": 32}
+  "halte-marchand": {"f": "assets/images/expedition/halte-marchand.png", "w": 64, "h": 64, "ax": 32, "ay": 32},
+  "route-fond": {"f": "assets/images/expedition/route-fond.jpg", "w": 1000, "h": 320, "ax": 0, "ay": 0}
 };
