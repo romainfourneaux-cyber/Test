@@ -1,4 +1,4 @@
-// Validateur complet (Node) : contrôles 1 à 10 de docs/FORMAT_DONNEES.md, notes de suivi.js et personnages.js compris,
+// Validateur complet (Node) : contrôles 1 à 11 de docs/FORMAT_DONNEES.md, notes de suivi.js et personnages.js compris,
 // et même numéro de version dans jeu/VERSION.txt et jeu/index.html.
 // Usage : node atelier/outils/valider.js
 // Sortie : lignes ERREUR et ALERTE ; code de sortie 1 s'il y a au moins une erreur.
@@ -6,7 +6,7 @@
 const fs = require("fs");
 const path = require("path");
 const vm = require("vm");
-const { controler, sourceSuivi } = require("./controles.js");
+const { controler, sourceSuivi, estSourceTheme } = require("./controles.js");
 const { debrouiller } = require("./brouillage.js");
 
 const RACINE = path.join(__dirname, "..", "..");
@@ -255,12 +255,13 @@ function sourcesSuivi(d, E) {
 
 // 5 (suite). Le contenu d'un cours vient des fichiers déposés : chaque source citée (fiche, question, schéma)
 // doit exister dans DEPOT/. ALERTE seulement : le cours reste jouable, mais Romain doit déposer le fichier.
+// Une source de thème ({ theme, titre, editeur, url }, contrôle 11) n'est pas un fichier déposé : rien à chercher.
 function sourcesDeposees(d, A) {
   const tous = Object.assign({}, d.cours, d.anglais);
   Object.keys(tous).sort().forEach(cid => {
     const c = tous[cid], manquants = {};
     ["fiches", "questions", "schemas", "vocabulaire", "structures", "phrases"].forEach(k => (c[k] || []).forEach(x => {
-      const f = x && x.source && x.source.fichier;
+      const f = x && x.source && !estSourceTheme(x.source) && x.source.fichier;
       if (f && !fs.existsSync(path.join(RACINE, "DEPOT", f))) manquants[f] = (manquants[f] || 0) + 1;
     }));
     Object.keys(manquants).forEach(f => A("[5] source absente de DEPOT/ : " + f + " (citée " + manquants[f] + " fois dans " + cid + ")"));
@@ -311,4 +312,4 @@ if (require.main === module) {
     Object.keys(d.cours).length + " cours, " + nbF + " fiches, " + nbQ + " questions · planning " + (d.planning || []).length + " entrées, " + (d.devoirs || []).length + " devoirs.");
   process.exit(res.erreurs.length ? 1 : 0);
 }
-module.exports = { valider, chargerDonnees, motsDe, ngrammes, textesPersonnages };
+module.exports = { valider, chargerDonnees, sourcesDeposees, motsDe, ngrammes, textesPersonnages };

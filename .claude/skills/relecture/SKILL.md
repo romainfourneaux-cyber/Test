@@ -17,6 +17,7 @@ Une page HTML imprimable en A4, lisible sans le jeu :
 - En-tête : date, nombre de lignes, temps estimé.
 - Tableau des fiches, lignes numérotées : matière, cours, notion, l'essentiel en une phrase, la réponse type d'une question, la page du livret, une case « OK » et une case « à corriger ».
 - Les bonus, présentés de la même façon, avec leur source.
+- Les questions de thème (source { theme, titre, editeur, url }, règle du 25/10/2026) ajoutées ou modifiées depuis la dernière relecture : cours, fiche, énoncé, réponse attendue, source (titre, éditeur, adresse), une case « OK » et une case « à corriger », pour que Romain les compare au livret papier. Liste : `node atelier/outils/lister-questions.js <matière> --theme`.
 - Les estimations du chroniqueur (suivi.js) : cours, état (acquis ou à revoir), note telle que l'élève la lit, devoir source, la raison en une ligne, une case « OK » et une case « à corriger ». Puis les fiches à retravailler, de la même façon. Avant d'imprimer, vérifie qu'aucune note ne reprend un élément du devoir (énoncé, exemple, chiffre, réponse, note) ni un nom.
 - Les signalements : la question, la réponse attendue, la remarque de l'élève, et ton avis (il a raison, ou la fiche tient, page à l'appui).
 - Pour information, les cinq notions les plus ratées.

@@ -1,4 +1,4 @@
-// Contrôles 1 à 7 du validateur (docs/FORMAT_DONNEES.md), communs à valider.js (Node)
+// Contrôles 1 à 7, 10 et 11 du validateur (docs/FORMAT_DONNEES.md), communs à valider.js (Node)
 // et à validateur.html (navigateur). Les contrôles 8 et 9 (extractions) sont dans valider.js.
 (function (racine) {
   "use strict";
@@ -43,6 +43,20 @@
 
   // donnees : { config, planning, devoirs, indexCours, aRetravailler, cours: {id: obj}, anglais: {id: obj}, erreursChargement: [] }
   // debrouiller : fonction(texte) -> texte
+  // 11. Questions de thème (25/10/2026, demande de Romain) : une source qui porte un champ « theme » vient d'une source
+  // fiable (encyclopédie, institution, musée), pas d'un fichier déposé : { theme, titre, editeur, url }, sans fichier ni page.
+  var SITES_THEME = ["wikipedia.org", "vikidia.org", "lumni.fr", "larousse.fr", "bnf.fr", "education.fr", "gouv.fr",
+    "louvre.fr", "musee-moyenage.fr", "chateauversailles.fr", "mnhn.fr", "universcience.fr", "cite-sciences.fr", "palais-decouverte.fr",
+    "cnrs.fr", "cnes.fr", "meteofrance.com", "ign.fr", "insee.fr", "ined.fr", "un.org", "unesco.org", "who.int",
+    "metmuseum.org", "britishmuseum.org", "nasa.gov", "esa.int"];
+  function estSourceTheme(src) { return !!(src && typeof src === "object" && src.theme !== undefined); }
+  function hoteDe(url) { var m = /^https?:\/\/([^\/?#]+)/i.exec(String(url || "")); return m ? m[1].toLowerCase() : ""; }
+  function siteConnu(hote) {
+    if (!hote) return false;
+    if (/musee|museum/.test(hote)) return true;
+    return SITES_THEME.some(function (s) { return hote === s || hote.slice(-s.length - 1) === "." + s; });
+  }
+
   function controler(donnees, debrouiller) {
     var erreurs = [], alertes = [];
     function E(m) { erreurs.push(m); }
@@ -139,7 +153,7 @@
       Object.keys(donnees.anglais).forEach(function (k) { r.push(donnees.anglais[k]); });
       return r;
     }
-    var vfParFiche = {}, qParFiche = {}, pourquoiParFiche = {};
+    var vfParFiche = {}, qParFiche = {}, pourquoiParFiche = {}, themeParCours = {};
     tousLesCours().forEach(function (c) {
       (c.questions || []).forEach(function (q) {
         var o = q.id;
@@ -147,7 +161,15 @@
         if (bonusIds[q.fiche]) E("[6] une question s'appuie sur un bonus : " + o);
         else if (!fiches[q.fiche]) E("[4] fiche inexistante : " + o + " → " + q.fiche);
         else if (fiches[q.fiche].cours !== c.id) E("[4] la question vise une fiche d'un autre cours : " + o);
-        if (!q.source || !q.source.fichier || !q.source.page) E("[4] source manquante : " + o);
+        if (estSourceTheme(q.source)) {
+          // 11. question de thème : theme, titre, editeur, url en http(s) ; ni fichier ni page ; site connu, sinon ALERTE
+          var manque = ["theme", "titre", "editeur", "url"].filter(function (k) { return typeof q.source[k] !== "string" || !q.source[k].trim(); });
+          if (manque.length) E("[11] question de thème sans " + manque.join(", ") + " : " + o);
+          else if (!/^https?:\/\//i.test(q.source.url)) E("[11] question de thème avec une adresse qui n'est pas en http(s) : " + o + " (" + q.source.url + ")");
+          else if (!siteConnu(hoteDe(q.source.url))) A("[11] source de thème hors de la liste des sites connus : " + o + " (" + hoteDe(q.source.url) + ") : vérifie que c'est une encyclopédie, une institution ou un musée");
+          if (q.source.fichier !== undefined || q.source.page !== undefined) E("[11] une source de thème ne cite ni fichier ni page : " + o);
+          themeParCours[c.id] = (themeParCours[c.id] || 0) + 1;
+        } else if (!q.source || !q.source.fichier || !q.source.page) E("[4] source manquante : " + o);
         if (!q.explication) E("[4] explication manquante : " + o);
         else if (phrases(q.explication) > 2) E("[4] explication de plus de deux phrases : " + o);
         if (!(q.niveau >= 1 && q.niveau <= 3)) E("[4] niveau absent ou hors de 1 à 3 : " + o);
@@ -199,6 +221,12 @@
         if (q.type === "vrai_faux") vfParFiche[q.fiche] = true;
         if (/\b(pourquoi|comment)\b/i.test(q.enonce)) pourquoiParFiche[q.fiche] = true;
       });
+    });
+    // 11 (suite). Au plus la moitié des questions d'un cours sont des questions de thème (ALERTE avec le compte :
+    // un cours trop mince, dit tel par l'audit, garde son alerte, notée au journal).
+    tousLesCours().forEach(function (c) {
+      var n = themeParCours[c.id] || 0, total = (c.questions || []).length;
+      if (n * 2 > total) A("[11] " + c.id + " : " + n + " questions de thème sur " + total + ", plus de la moitié (règle du 25/10/2026 : la moitié au plus, sauf cours trop mince dit tel par l'audit)");
     });
     Object.keys(donnees.cours).forEach(function (cid) {
       (donnees.cours[cid].fiches || []).forEach(function (f) {
@@ -415,7 +443,7 @@
     });
   }
 
-  var api = { controler: controler, phrases: phrases, mots: mots, sourceSuivi: sourceSuivi, BADGES: BADGES, RX: RX,
+  var api = { controler: controler, phrases: phrases, mots: mots, sourceSuivi: sourceSuivi, estSourceTheme: estSourceTheme, siteConnu: siteConnu, hoteDe: hoteDe, BADGES: BADGES, RX: RX,
     controlerPersonnages: controlerPersonnages, SITUATIONS_RIVAL: SITUATIONS_RIVAL, NIVEAUX_RIVALITE: NIVEAUX_RIVALITE, MOTS_INTERDITS: MOTS_INTERDITS };
   if (typeof module !== "undefined" && module.exports) module.exports = api;
   racine.CONTROLES = api;

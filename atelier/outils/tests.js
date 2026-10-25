@@ -516,6 +516,34 @@ verifier("Validateur : devoir de langue avec une semaine, ou périmètre hors la
 const valSu = controleSuivi({ "langue-conj10": { etat: "acquis", source: "langue-d1", le: "2026-10-15" }, "langue-conj13": { etat: "a-revoir", source: "langue-d1", le: "2026-10-15" } });
 verifier("Validateur : suivi.js accepte un cours de langue, et alerte hors du périmètre du devoir",
   valSu.erreurs.length === 0 && !surSuivi(valSu.alertes).some(x => /langue-conj10/.test(x)) && valSu.alertes.some(x => /langue-conj13 n'est pas dans le périmètre de langue-d1/.test(x)), { e: valSu.erreurs, a: surSuivi(valSu.alertes) });
+// validateur : questions de thème (25/10/2026) : source { theme, titre, editeur, url } acceptée, contrôle 11, part d'un cours
+const SRC_THEME = { theme: "Les modes du verbe", titre: "Mode (grammaire)", editeur: "Vikidia", url: "https://fr.vikidia.org/wiki/Mode_(grammaire)" };
+const SRC_DEPOSEE = { fichier: "cours/histoire/Histoire 5e - Seance 1 - Support.pdf", page: 1 };   // un fichier vraiment déposé
+function coursTheme(id, n, sources) {
+  const c = coursEssai(id, n, { matiere: "langue", titre: "Essai", badge: "cuivre", ordre: 1 });
+  c.fiches.forEach(f => { f.source = SRC_DEPOSEE; });
+  c.questions.forEach((q, i) => { q.source = sources[i] || SRC_DEPOSEE; q.r = brl(JSON.stringify(q.reponse)); delete q.reponse; });
+  return c;
+}
+const valTh = validerAvec({ "langue-conj15": coursTheme("langue-conj15", 2, [SRC_THEME, null, SRC_THEME, null]) });
+const { sourcesDeposees } = require("./valider.js");
+const alertesDepot = [];
+sourcesDeposees({ cours: { "langue-conj15": coursTheme("langue-conj15", 2, [SRC_THEME, null, SRC_THEME, null]) }, anglais: {} }, m => alertesDepot.push(m));
+verifier("Validateur : une question de thème (source { theme, titre, editeur, url }) passe, sans alerte « source absente de DEPOT/ » ni alerte de part tant que le cours reste à la moitié",
+  surId(valTh, "langue-conj15").length === 0 && !valTh.alertes.some(x => /\[11\].*langue-conj15/.test(x)) && alertesDepot.length === 0,
+  { e: surId(valTh, "langue-conj15"), a: valTh.alertes.filter(x => /langue-conj15/.test(x)), depot: alertesDepot });
+const valTh2 = validerAvec({ "langue-conj16": coursTheme("langue-conj16", 2, [
+  Object.assign({}, SRC_THEME, { url: undefined }),                      // sans adresse
+  Object.assign({}, SRC_THEME, { url: "fr.vikidia.org/wiki/Mode" }),     // adresse sans http(s)
+  Object.assign({}, SRC_THEME, { fichier: "essai.pdf", page: 1 }),       // thème et fichier à la fois
+  Object.assign({}, SRC_THEME, { url: "https://exemple.org/page" })      // site hors liste : alerte seulement
+]) });
+const e16 = surId(valTh2, "langue-conj16"), a16 = valTh2.alertes.filter(x => /langue-conj16/.test(x));
+verifier("Validateur : contrôle 11 : question de thème sans url, adresse sans http(s) ou source qui cite aussi un fichier : ERREUR ; site hors liste : ALERTE ; plus de la moitié de questions de thème : ALERTE avec le compte",
+  e16.some(x => /\[11\] question de thème sans url : langue-conj16-q1$/.test(x)) && e16.some(x => /\[11\].*http\(s\) : langue-conj16-q2/.test(x)) &&
+  e16.some(x => /\[11\].*ni fichier ni page : langue-conj16-q3$/.test(x)) && !e16.some(x => /langue-conj16-q4/.test(x)) &&
+  a16.some(x => /\[11\].*langue-conj16-q4 \(exemple\.org\)/.test(x)) && a16.some(x => /\[11\] langue-conj16 : 4 questions de thème sur 4, plus de la moitié/.test(x)),
+  { e: e16, a: a16 });
 const gp = require("./generer-planning.js");
 verifier("Générateur du planning : il garde le devoir langue-d1 à chaque génération", (() => {
   const dv = gp.devoirs(gp.generer()).filter(x => x.id === "langue-d1");
