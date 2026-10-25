@@ -6,5 +6,15 @@
 // Une entrée absente = l'écran garde son dessin SVG (règle de la conception, atelier/conception/expeditions-graphismes.md).
 window.JEU = window.JEU || {};
 JEU.imagesExpedition = {
-  "halte-brume": {"f": "assets/images/expedition/halte-brume.png", "w": 64, "h": 64, "ax": 32, "ay": 32}
+  "halte-bivouac": {"f": "assets/images/expedition/halte-bivouac.png", "w": 64, "h": 64, "ax": 32, "ay": 32},
+  "halte-brume": {"f": "assets/images/expedition/halte-brume.png", "w": 64, "h": 64, "ax": 32, "ay": 32},
+  "halte-embuscade": {"f": "assets/images/expedition/halte-embuscade.png", "w": 64, "h": 64, "ax": 32, "ay": 32},
+  "halte-escarmouche": {"f": "assets/images/expedition/halte-escarmouche.png", "w": 64, "h": 64, "ax": 32, "ay": 32},
+  "halte-ev-archives": {"f": "assets/images/expedition/halte-ev-archives.png", "w": 64, "h": 64, "ax": 32, "ay": 32},
+  "halte-ev-defi": {"f": "assets/images/expedition/halte-ev-defi.png", "w": 64, "h": 64, "ax": 32, "ay": 32},
+  "halte-ev-espion": {"f": "assets/images/expedition/halte-ev-espion.png", "w": 64, "h": 64, "ax": 32, "ay": 32},
+  "halte-ev-incendie": {"f": "assets/images/expedition/halte-ev-incendie.png", "w": 64, "h": 64, "ax": 32, "ay": 32},
+  "halte-ev-marchands": {"f": "assets/images/expedition/halte-ev-marchands.png", "w": 64, "h": 64, "ax": 32, "ay": 32},
+  "halte-ev-mercenaires": {"f": "assets/images/expedition/halte-ev-mercenaires.png", "w": 64, "h": 64, "ax": 32, "ay": 32},
+  "halte-marchand": {"f": "assets/images/expedition/halte-marchand.png", "w": 64, "h": 64, "ax": 32, "ay": 32}
 };
