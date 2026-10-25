@@ -190,33 +190,43 @@ function entryDoor(f, { hinge = 'a1' } = {}) {
   const u0 = F - 0.008, u1 = W - F + 0.008, v0 = y0 + fb + 0.004, v1 = y1 - F + 0.008;
   const w0 = 0.008, w1 = 0.082;
   const latchA0 = hinge === 'a1';
+  const leaf = [];
   // vantail plein RAL 7016 avec bande vitrée verticale (verre dépoli) côté paumelles
   const gw = 0.12;
   const gu0 = latchA0 ? u1 - 0.13 - gw : u0 + 0.13, gu1 = gu0 + gw;
   const gy0 = y0 + 0.28, gy1 = y1 - F - 0.24;
-  out.push(f.B(u0, v0, w0, gu0, v1, w1, AL));
-  out.push(f.B(gu1, v0, w0, u1, v1, w1, AL));
-  out.push(f.B(gu0, v0, w0, gu1, gy0, w1, AL));
-  out.push(f.B(gu0, gy1, w0, gu1, v1, w1, AL));
+  leaf.push(f.B(u0, v0, w0, gu0, v1, w1, AL));
+  leaf.push(f.B(gu1, v0, w0, u1, v1, w1, AL));
+  leaf.push(f.B(gu0, v0, w0, gu1, gy0, w1, AL));
+  leaf.push(f.B(gu0, gy1, w0, gu1, v1, w1, AL));
   // fin cadre inox autour de la bande vitrée (côté extérieur)
-  out.push(...ring(f, gu0 - 0.006, gu1 + 0.006, gy0 - 0.006, gy1 + 0.006, w0 - 0.003, w0 + 0.002, { l: 0.006, r: 0.006, t: 0.006, b: 0.006 }, 'inox'));
-  out.push(pane(f, gu0, gu1, gy0, gy1, 0.032, 0.058, 'verreDepoli'));
+  leaf.push(...ring(f, gu0 - 0.006, gu1 + 0.006, gy0 - 0.006, gy1 + 0.006, w0 - 0.003, w0 + 0.002, { l: 0.006, r: 0.006, t: 0.006, b: 0.006 }, 'inox'));
+  leaf.push(pane(f, gu0, gu1, gy0, gy1, 0.032, 0.058, 'verreDepoli'));
   // barre de tirage inox (extérieur, côté serrure)
   const up = latchA0 ? u0 + 0.11 : u1 - 0.11;
   const wb = -0.062;
-  out.push(tube(f.P3(up, y0 + 0.45, wb), f.P3(up, y0 + 1.75, wb), 0.016, 'inox', 20));
-  for (const yy of [y0 + 0.60, y0 + 1.60]) out.push(tube(f.P3(up, yy, wb), f.P3(up, yy, w0), 0.009, 'inox', 12));
+  leaf.push(tube(f.P3(up, y0 + 0.45, wb), f.P3(up, y0 + 1.75, wb), 0.016, 'inox', 20));
+  for (const yy of [y0 + 0.60, y0 + 1.60]) leaf.push(tube(f.P3(up, yy, wb), f.P3(up, yy, w0), 0.009, 'inox', 12));
   // cylindre de serrure (rosace extérieure)
-  out.push(tube(f.P3(up + (latchA0 ? 0.0 : 0.0), y0 + 1.02, w0), f.P3(up, y0 + 1.02, w0 - 0.008), 0.018, 'inox', 16));
+  leaf.push(tube(f.P3(up, y0 + 1.02, w0), f.P3(up, y0 + 1.02, w0 - 0.008), 0.018, 'inox', 16));
   // béquille intérieure
   const uq = latchA0 ? u0 + 0.065 : u1 - 0.065;
-  out.push(...bequille(f.P3(uq, y0 + 1.05, w1), f.vW, latchA0 ? f.vU : neg(f.vU)));
+  leaf.push(...bequille(f.P3(uq, y0 + 1.05, w1), f.vW, latchA0 ? f.vU : neg(f.vU)));
   // paumelles (porte ouvrant vers l'extérieur)
   const uhg = latchA0 ? u1 - 0.004 : u0 + 0.004;
   for (const yy of [y0 + 0.25, y0 + 1.05, y0 + 1.80]) {
     const [x, , z] = f.P3(uhg, 0, w0 - 0.008);
     out.push(cylinderY(x, z, yy, yy + 0.12, 0.010, AL, 12));
   }
+  // pivot sur l'axe des paumelles ; ouverture vers l'extérieur (côté w négatif)
+  const [hx, , hz] = f.P3(uhg, 0, w0 - 0.008);
+  const [lx, , lz] = f.P3(latchA0 ? u0 : u1, 0, w0 - 0.008);
+  const [ex, , ez] = f.P3(uhg, 0, w0 - 1.008);
+  const phi = wrapAngle(angXZ(ex - hx, ez - hz) - angXZ(lx - hx, lz - hz));
+  const pivot = pivotGroup(leaf, hx, hz);
+  pivot.name = 'vantail-porte-entree';
+  pivot.userData.door = { id: 'porte-entree', kind: 'hinge', closed: 0, open: phi, default: 0 };
+  out.push(pivot);
   return out;
 }
 
@@ -290,6 +300,26 @@ const LEAF = { w: 0.83, h: 2.04, t: 0.04 };
 const CT = 0.012; // épaisseur chambranle
 const LIN = 0.015; // épaisseur huisserie (ébrasement)
 
+// Ouvrants animables (visite guidée) : les pièces mobiles sont regroupées autour de leur axe.
+//   userData.door = { id, kind: 'hinge'|'slide', closed, open, default, dir? }
+//   hinge : rotation Y du pivot (rad) ; slide : décalage (m) le long de dir = [dx, dz]
+const wrapAngle = (a) => Math.atan2(Math.sin(a), Math.cos(a));
+const angXZ = (x, z) => Math.atan2(x, z);
+function pivotGroup(parts, px, pz) {
+  const pivot = new THREE.Group();
+  pivot.position.set(px, 0, pz);
+  const inner = new THREE.Group();
+  inner.position.set(-px, 0, -pz);
+  parts.forEach((m) => inner.add(m));
+  pivot.add(inner);
+  return pivot;
+}
+function slideGroup(parts) {
+  const g = new THREE.Group();
+  parts.forEach((m) => g.add(m));
+  return g;
+}
+
 function doorKit(d) {
   const yb = d.level === 'etage' ? LV.slabTop : LV.rdc;
   const toXZ = (a, n) => (d.wallAxis === 'x' ? [n, a] : [a, n]);
@@ -333,22 +363,32 @@ function hingedDoor(d) {
   const latchA = d.hingeAt === d.a1 ? d.a0 : d.a1;
   const cs = Math.sign(latchA - d.hingeAt);  // direction paumelles -> serrure le long du mur
   const th = (d.openAngleDeg ?? 90) * Math.PI / 180;
-  // en (a, n) : c = (cs, 0) ; nrm = (0, ot)
+  // en (a, n) : c = (cs, 0) ; nrm = (0, ot). Le vantail est construit FERMÉ puis pivoté.
   const H = [d.hingeAt, nf + ot * CT];       // axe de rotation au nu du chambranle
-  const dv = [cs * Math.cos(th), ot * Math.sin(th)];          // direction du vantail ouvert
-  const tv = [cs * Math.sin(th), -ot * Math.cos(th)];         // épaisseur du vantail
+  const dv = [cs, 0];                        // direction du vantail fermé
+  const tv = [0, -ot];                       // épaisseur du vantail (vers la baie)
   const pt = (s, t) => [H[0] + s * dv[0] + t * tv[0], H[1] + s * dv[1] + t * tv[1]];
   const L = LEAF.w, T = LEAF.t;
+  const leaf = [];
   const foot = [pt(0, 0), pt(L, 0), pt(L, T), pt(0, T)].map(([a, n]) => toXZ(a, n));
-  out.push(prismY(foot, yb + 0.005, yb + 0.005 + LEAF.h, 'blancLaque'));
-  // paumelles inox
-  const [hx, hz] = toXZ(...pt(0, -0.004));
-  for (const yy of [0.18, 1.0, 1.82]) out.push(cylinderY(hx, hz, yb + yy, yb + yy + 0.10, 0.0075, 'inox', 12));
+  leaf.push(prismY(foot, yb + 0.005, yb + 0.005 + LEAF.h, 'blancLaque'));
   // béquilles inox des deux côtés, levier vers les paumelles
   const tW = k.vec(tv[0], tv[1]), dW = k.vec(-dv[0], -dv[1]);
   const [qa0, qn0] = pt(L - 0.065, 0), [qa1, qn1] = pt(L - 0.065, T);
-  out.push(...bequille(P3(qa0, yb + 1.05, qn0), neg(tW), dW));
-  out.push(...bequille(P3(qa1, yb + 1.05, qn1), tW, dW));
+  leaf.push(...bequille(P3(qa0, yb + 1.05, qn0), neg(tW), dW));
+  leaf.push(...bequille(P3(qa1, yb + 1.05, qn1), tW, dW));
+  // paumelles inox (fixes, sur l'axe)
+  const [hx, hz] = toXZ(...pt(0, -0.004));
+  for (const yy of [0.18, 1.0, 1.82]) out.push(cylinderY(hx, hz, yb + yy, yb + yy + 0.10, 0.0075, 'inox', 12));
+  // angle monde correspondant à l'ouverture th
+  const [cx, cz] = toXZ(cs, 0), [ox, oz] = toXZ(cs * Math.cos(th), ot * Math.sin(th));
+  const phi = wrapAngle(angXZ(ox, oz) - angXZ(cx, cz));
+  const [px, pz] = toXZ(H[0], H[1]);
+  const pivot = pivotGroup(leaf, px, pz);
+  pivot.name = `vantail-${d.id}`;
+  pivot.rotation.y = phi;
+  pivot.userData.door = { id: d.id, kind: 'hinge', closed: 0, open: phi, default: phi };
+  out.push(pivot);
   return out;
 }
 
@@ -364,24 +404,31 @@ function slidingSdb(d) {
   // ébrasement côté cloison P1 (a1) + linteau ; le côté a0 est la cloison du dressing
   out.push(Bx(d.a1 - LIN, yb, p0, d.a1, yb + 2.04, p1, 'blancLaque'));
   out.push(Bx(d.a0, yb + 2.04 - LIN, p0, d.a1, yb + 2.04, p1, 'blancLaque'));
-  // panneau 0.85 x 2.04
-  out.push(Bx(pa0, yb + 0.008, n0 + 0.002, pa1, yb + 2.048, n1, 'blancLaque'));
+  // panneau 0.85 x 2.04 (+ chariots et poignées) : groupe coulissant
+  const mov = [];
+  mov.push(Bx(pa0, yb + 0.008, n0 + 0.002, pa1, yb + 2.048, n1, 'blancLaque'));
   // rail alu en applique au-dessus de la baie (course = 2 x panneau)
   const r0 = d.a0 + 0.005, r1 = s > 0 ? d.a1 + 0.86 : d.a0 - 0.86;
   out.push(Bx(Math.min(r0, r1), yb + 2.055, n0, Math.max(r0, r1), yb + 2.115, n0 + 0.055, 'alu'));
   out.push(Bx(Math.min(r0, r1), yb + 2.050, n0 + 0.045, Math.max(r0, r1), yb + 2.120, n0 + 0.055, 'alu'));
   // chariots
-  for (const a of [pa0 + 0.10, pa1 - 0.14]) out.push(Bx(a, yb + 2.046, n0 + 0.012, a + 0.04, yb + 2.058, n0 + 0.030, 'noir'));
+  for (const a of [pa0 + 0.10, pa1 - 0.14]) mov.push(Bx(a, yb + 2.046, n0 + 0.012, a + 0.04, yb + 2.058, n0 + 0.030, 'noir'));
   // butées en bout de rail
   for (const a of [Math.min(r0, r1) + 0.01, Math.max(r0, r1) - 0.03]) out.push(Bx(a, yb + 2.035, n0 + 0.01, a + 0.02, yb + 2.055, n0 + 0.04, 'alu'));
   // guide au sol
   out.push(Bx(d.a1 + 0.02, yb, n1 + 0.002, d.a1 + 0.06, yb + 0.012, n1 + 0.018, 'alu'));
   // poignées : barre inox côté chambre, cuvette côté SdB, près du chant libre (côté a0)
   const ap = pa0 + 0.07;
-  out.push(tube(P3(ap, yb + 0.88, n1 + 0.045), P3(ap, yb + 1.22, n1 + 0.045), 0.011, 'inox', 14));
-  for (const yy of [0.93, 1.17]) out.push(tube(P3(ap, yb + yy, n1), P3(ap, yb + yy, n1 + 0.045), 0.007, 'inox', 10));
-  out.push(Bx(pa0 + 0.035, yb + 0.95, n0 + 0.0005, pa0 + 0.06, yb + 1.15, n0 + 0.0025, 'inox'));
-  out.push(Bx(pa0 + 0.04, yb + 0.955, n0 - 0.0005, pa0 + 0.055, yb + 1.145, n0 + 0.0015, 'noir'));
+  mov.push(tube(P3(ap, yb + 0.88, n1 + 0.045), P3(ap, yb + 1.22, n1 + 0.045), 0.011, 'inox', 14));
+  for (const yy of [0.93, 1.17]) mov.push(tube(P3(ap, yb + yy, n1), P3(ap, yb + yy, n1 + 0.045), 0.007, 'inox', 10));
+  mov.push(Bx(pa0 + 0.035, yb + 0.95, n0 + 0.0005, pa0 + 0.06, yb + 1.15, n0 + 0.0025, 'inox'));
+  mov.push(Bx(pa0 + 0.04, yb + 0.955, n0 - 0.0005, pa0 + 0.055, yb + 1.145, n0 + 0.0015, 'noir'));
+  const sg = slideGroup(mov);
+  sg.name = `vantail-${d.id}`;
+  const dirW = k.vec(s, 0);
+  // fermé : panneau devant la baie (a0 - 1,5 cm) ; ouvert : en bout de rail
+  sg.userData.door = { id: d.id, kind: 'slide', dir: [dirW[0], dirW[2]], closed: (d.a0 - 0.015) - pa0, open: (r1 - 0.85) - pa0, default: 0 };
+  out.push(sg);
   return out;
 }
 
@@ -409,10 +456,16 @@ function galandage(d) {
   // panneau escamoté (dépasse de 2,5 cm dans le passage)
   const W = d.a1 - d.a0 + 0.02;
   const e1 = d.a0 + 0.025;
-  out.push(Bx(e1 - W, yb + 0.006, mid - ht, e1, yb + 2.03, mid + ht, 'blancLaque'));
+  const mov = [];
+  mov.push(Bx(e1 - W, yb + 0.006, mid - ht, e1, yb + 2.03, mid + ht, 'blancLaque'));
   // poignée cuvette sur le chant (tirette)
-  out.push(Bx(e1, yb + 0.96, mid - 0.009, e1 + 0.002, yb + 1.12, mid + 0.009, 'inox'));
-  out.push(Bx(e1 + 0.0005, yb + 0.975, mid - 0.005, e1 + 0.0025, yb + 1.105, mid + 0.005, 'noir'));
+  mov.push(Bx(e1, yb + 0.96, mid - 0.009, e1 + 0.002, yb + 1.12, mid + 0.009, 'inox'));
+  mov.push(Bx(e1 + 0.0005, yb + 0.975, mid - 0.005, e1 + 0.0025, yb + 1.105, mid + 0.005, 'noir'));
+  const sg = slideGroup(mov);
+  sg.name = `vantail-${d.id}`;
+  const dirW = k.vec(1, 0);
+  sg.userData.door = { id: d.id, kind: 'slide', dir: [dirW[0], dirW[2]], closed: (d.a1 - 0.005) - e1, open: 0, default: 0 };
+  out.push(sg);
   return out;
 }
 

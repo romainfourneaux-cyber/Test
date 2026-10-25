@@ -39,7 +39,14 @@
   .ui > * { pointer-events: auto; }
   .top { top: 0; padding-block: calc(env(safe-area-inset-top, 0px) + 12px) 0; display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
   .bottom { bottom: 0; padding-block: 0 calc(env(safe-area-inset-bottom, 0px) + 12px); display: grid; gap: 8px; }
-  body.walking .ui, body.walking #marks { display: none; }
+  body.walking .ui, body.walking #marks, body.touring .ui, body.touring #marks { display: none; }
+  .tourbar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 4; display: none; align-items: center; gap: 12px;
+             padding: 0 max(16px, env(safe-area-inset-right, 0px)) calc(env(safe-area-inset-bottom, 0px) + 14px) max(16px, env(safe-area-inset-left, 0px)); }
+  body.touring .tourbar { display: flex; }
+  .tourbar .prog { flex: 1; height: 3px; background: var(--line); overflow: hidden; }
+  .tourbar .prog i { display: block; height: 100%; width: 0%; background: var(--ink); }
+  .tourbar .lbl { font: 600 13px var(--font-display); letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink); }
+  #veil { position: fixed; inset: 0; background: #0e1012; opacity: 0; pointer-events: none; z-index: 3; }
 
   .glass { background: var(--paper-glass); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid var(--line); }
   .cartouche { padding: 10px 14px 11px; max-width: min(460px, 100%); min-width: 0; }
@@ -115,6 +122,13 @@
     <button class="tog glass placo" id="t-placo" aria-pressed="false"><span class="dot"></span>Repérer le placo</button>
     <button class="tog glass" id="t-hd" aria-pressed="false"><span class="dot"></span>Ombres douces</button>
   </div>
+</div>
+
+<div id="veil" aria-hidden="true"></div>
+<div class="tourbar" role="region" aria-label="Visite guidée">
+  <div class="glass" style="padding:8px 12px"><span class="lbl">Visite guidée</span></div>
+  <div class="prog glass" aria-hidden="true"><i id="tourProg"></i></div>
+  <button class="chip glass" id="tourStop">Arrêter</button>
 </div>
 
 <div class="loading" id="loading"><div class="box">Montage de la maquette<div class="bar"><i></i></div></div></div>
@@ -211,8 +225,40 @@
   walkChip.addEventListener('click', () => startWalk());
   rail.prepend(walkChip);
 
+  // ---- Visite guidée automatique (src/tour.js) : la caméra se promène et ouvre les portes ----
+  const { createTour } = await import('./src/tour.js');
+  const tour = createTour({ THREE: app.THREE, app });
+  const veil = $('veil');
+  let tourOff = null;
+  function endTour() {
+    tourOff?.(); tourOff = null;
+    tour.stop();
+    veil.style.opacity = 0;
+    document.body.classList.remove('touring');
+    go(lastView, false);
+  }
+  function startTour() {
+    if (walk.isActive?.()) walk.exit();
+    for (const id of ['t-etage', 't-toit']) if ($(id).getAttribute('aria-pressed') === 'false') $(id).click();
+    document.body.classList.add('touring');
+    marks.innerHTML = '';
+    try { history.replaceState(null, '', '#visite-guidee'); } catch (e) {}
+    tour.play({ ended: endTour });
+    tourOff = app.onFrame(() => {
+      veil.style.opacity = tour.fade(tour.time).toFixed(3);
+      $('tourProg').style.width = `${(100 * tour.time / tour.duration).toFixed(1)}%`;
+    });
+  }
+  $('tourStop').addEventListener('click', endTour);
+  addEventListener('keydown', (e) => { if (e.key === 'Escape' && tour.playing) endTour(); });
+  const tourChip = document.createElement('button');
+  tourChip.className = 'chip glass walk'; tourChip.id = 'v-visite-guidee'; tourChip.textContent = 'Visite guidée';
+  tourChip.addEventListener('click', startTour);
+  walkChip.after(tourChip);
+
   const start = (location.hash || '').slice(1);
   if (start === 'visite') { go('ext-ouest', false); startWalk(); }
+  else if (start === 'visite-guidee') { go('ext-ouest', false); startTour(); }
   else go(VIEWS[start] ? start : 'ext-ouest', false);
   $('loading').classList.add('done');
 </script>

@@ -88,6 +88,14 @@ export const VIEWS = {
     pos: [5.35, 0.85, 1.95], target: [6.31, 0.45, 1.24], fov: 40, bg: 'studio', sun: [6, 14, 10], ev: 0.2, ao: 1.0, sunSoft: 1.0,
     clip: [{ n: [1, 0, 0], c: -6.31 }],
   },
+  'tour-ext': {
+    label: 'Visite guidée', caption: 'Visite guidée : arrivée par l\'allée Est, porte d\'entrée du sas',
+    pos: [8.2, 1.62, -4.4], target: [7.75, 1.4, 0.0], fov: 62, bg: 'sky', sun: [10, 13, -9], ev: -0.05,
+  },
+  'tour-int': {
+    label: 'Visite guidée', caption: 'Visite guidée de l\'extension',
+    pos: [7.75, 1.62, 0.62], target: [5.4, 1.85, 0.9], fov: 64, bg: 'sky', interior: true, lamps: false, ev: 1.25, inside: 0.8, envSat: 0.2, sun: [10, 13, -9],
+  },
   'visite': {
     label: 'Visite', caption: 'Visite libre à hauteur d\'œil (1,60 m) — entrée par le sas',
     pos: [8.15, 1.60, 1.98], target: [5.2, 1.50, 1.45], fov: 62, bg: 'sky', interior: true, sun: [10, 13, -9],
@@ -886,6 +894,16 @@ export async function createApp(container, { interactive = true, quality = 'auto
     return renderer.domElement.toDataURL('image/png');
   }
 
+  // Rendu de la caméra courante, sans changer de vue (images de la vidéo de visite)
+  //   frames : échantillons accumulés (1 = image nette directe), ao : occlusion ambiante sur le 1er échantillon
+  function renderCurrent({ frames = 1, ao = false, dataUrl = false } = {}) {
+    const N = Math.max(1, frames);
+    resetAccum();
+    for (let i = 0; i < N; i++) renderSample(i, { jitter: N > 1, ao: ao && i === 0 });
+    output();
+    return dataUrl ? renderer.domElement.toDataURL('image/jpeg', 0.92) : null;
+  }
+
   // -------------------------------------------------------------------------
   // Repères projetés (légendes HTML posées par la page) : objets avec userData.callouts
   //   [{ view, text, pos:[x,y,z] (repère spec.js, mètres) }]
@@ -937,7 +955,7 @@ export async function createApp(container, { interactive = true, quality = 'auto
 
   Object.assign(app, {
     THREE, scene, camera, renderer, model, controls, loaded, state,
-    setView, resize, renderOnce, snapshot, applyVisibility, setPlacoHighlight,
+    setView, resize, renderOnce, snapshot, renderCurrent, applyVisibility, setPlacoHighlight,
     setAO: (on) => { useAO = !!on; requestRender(); },
     get ao() { return useAO; },
     setToggle: (key, val) => { state[key] = val; applyVisibility(); },
