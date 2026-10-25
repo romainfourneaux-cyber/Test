@@ -78,14 +78,14 @@ def tige(nom, a, b, rayon, mat, segments=10, rayon_bout=None):
 
 def mats_armes():
     return {"lame": C.mat_metal("lame", ACIER, rugosite=0.4), "fer": C.mat_metal("fer", "#7d7a74", rugosite=0.5),
-            "or": E.mat_or_poli("garde_or"), "cuir": E.mat_cuir("poignee"), "bois": E.mat_bois("hampe", "#5a3e22"),
+            "or": E.mat_or_poli("garde_or"), "cuir": E.mat_cuir("poignee", "#8a5a30"), "bois": E.mat_bois("hampe", "#5a3e22"),
             "sombre": C.mat_metal("fer_sombre", FER_SOMBRE, rugosite=0.62, metal=0.8)}
 
 
 def epee(nom, m, loc=(0, 0, 0), penche=0.0, lacet=0.0, longueur=1.05):
     """Épée plantée dans le sol, pointe en bas : lame effilée, garde d'or, poignée de cuir, pommeau. penche : degrés
     autour de Y (le haut part vers +X si positif)."""
-    w = 0.055
+    w = 0.07
     bm = bmesh.new()
     pts = [(0, 0), (-w * 0.35, 0.12), (-w, 0.3), (-w, longueur), (w, longueur), (w, 0.3), (w * 0.35, 0.12)]
     bm.faces.new([bm.verts.new((x, 0.0, z)) for x, z in pts])
@@ -95,8 +95,8 @@ def epee(nom, m, loc=(0, 0, 0), penche=0.0, lacet=0.0, longueur=1.05):
     so.offset = 0.0
     garde = C.boite(nom + "_garde", 0.42, 0.07, 0.06, (0, 0, longueur), m["or"])
     C.biseau(garde, 0.015)
-    poignee = C.cylindre(nom + "_poignee", 0.038, 0.3, (0, 0, longueur + 0.06), m["cuir"], segments=12)
-    pommeau = C.sphere(nom + "_pommeau", 0.07, (0, 0, longueur + 0.06 + 0.3 + 0.045), m["or"], subdiv=2)
+    poignee = C.cylindre(nom + "_poignee", 0.05, 0.3, (0, 0, longueur + 0.06), m["cuir"], segments=12)
+    pommeau = C.sphere(nom + "_pommeau", 0.085, (0, 0, longueur + 0.06 + 0.3 + 0.055), m["or"], subdiv=2)
     objets = [lame, garde, poignee, pommeau]
     p = pivot_rot(nom + "_pivot", objets, (0.0, penche, lacet), loc)
     return objets + [p]
@@ -113,12 +113,12 @@ def bouclier_rond(nom, rayon=0.7, loc=(0, 0, 0), penche=18.0, lacet=0.0, m=None,
     return objets + [p]
 
 
-def lance(nom, m, a, b, rayon=0.035, fer=0.3, fanion=None):
+def lance(nom, m, a, b, rayon=0.045, fer=0.3, fanion=None):
     """Lance de a à b (le fer au bout b) : hampe de bois, fer en feuille (cône aplati)."""
     a, b = Vector(a), Vector(b)
     d = (b - a).normalized()
     hampe = tige(nom + "_hampe", a, b - d * fer, rayon, m["bois"], segments=10, rayon_bout=rayon * 0.85)
-    fe = C.cone(nom + "_fer", 0.06, fer, (0, 0, 0), m["lame"], segments=8)
+    fe = C.cone(nom + "_fer", 0.075, fer, (0, 0, 0), m["lame"], segments=8)
     orienter(fe, d, b - d * fer)
     fe.scale = (1.0, 0.4, 1.0)
     return [hampe, fe]
@@ -128,8 +128,8 @@ def hallebarde(nom, m, a, b):
     """Hallebarde : hampe, pointe, fer de hache biseauté d'un côté, crochet de l'autre."""
     a, b = Vector(a), Vector(b)
     d = (b - a).normalized()
-    objets = lance(nom, m, a, b, rayon=0.035, fer=0.32)
-    hache = C.boite(nom + "_hache", 0.34, 0.025, 0.4, (0, 0, 0), m["lame"], base=False)
+    objets = lance(nom, m, a, b, rayon=0.045, fer=0.32)
+    hache = C.boite(nom + "_hache", 0.42, 0.03, 0.48, (0, 0, 0), m["lame"], base=False)
     C.biseau(hache, 0.012, segments=2)
     orienter(hache, d, b - d * 0.55)
     hache.location = b - d * 0.55 + Vector((0.2, 0, 0))
@@ -303,17 +303,17 @@ def lettre(nom, loc=(0, 0, 0), l=0.9, p=0.62, lacet=18.0, cachet=True):
 
 def dague(nom, m, loc=(0, 0, 0), lacet=-35.0, longueur=0.55):
     """Dague couchée : lame, garde, poignée (le long de +X avant lacet, posée à plat)."""
-    w = 0.045
+    w = 0.06
     bm = bmesh.new()
-    pts = [(longueur, 0), (longueur - 0.1, -w * 0.5), (0.0, -w), (0.0, w), (longueur - 0.1, w * 0.5)]
+    pts = [(longueur, 0), (longueur - 0.12, -w * 0.5), (0.0, -w), (0.0, w), (longueur - 0.12, w * 0.5)]
     bm.faces.new([bm.verts.new((x, y, 0.0)) for x, y in pts])
     lame = C.objet_maillage(nom + "_lame", bm, m["lame"])
     lame.modifiers.new("ep", "SOLIDIFY").thickness = 0.02
-    garde = C.boite(nom + "_garde", 0.04, 0.22, 0.04, (0, 0, 0), m["or"], base=False)
-    poignee = C.cylindre(nom + "_poignee", 0.028, 0.2, (0, 0, 0), m["cuir"], segments=10)
+    garde = C.boite(nom + "_garde", 0.05, 0.3, 0.05, (0, 0, 0), m["or"], base=False)
+    poignee = C.cylindre(nom + "_poignee", 0.038, 0.24, (0, 0, 0), m["cuir"], segments=10)
     poignee.rotation_euler = (0, -math.pi / 2, 0)
     poignee.location = (-0.02, 0, 0)
-    pommeau = C.sphere(nom + "_pommeau", 0.045, (-0.24, 0, 0), m["or"], subdiv=1)
+    pommeau = C.sphere(nom + "_pommeau", 0.055, (-0.28, 0, 0), m["or"], subdiv=1)
     objets = [lame, garde, poignee, pommeau]
     return objets + [pivot_rot(nom + "_pivot", objets, (0, 0, lacet), (loc[0], loc[1], loc[2] + 0.03))]
 
@@ -355,11 +355,11 @@ def grenier(nom, loc=(0, 0, 0), lacet=-30.0):
     chaume = E.mat_toile(nom + "_chaume", CHAUME)
     toit = P.toit_deux_pans(nom + "_toit", -l / 2, l / 2, -p / 2, p / 2, 1.1, 0.7, chaume, debord=0.18)
     objets = [socle, murs, porte, toit]
-    mf, mf2 = E.mat_flamme(nom + "_fl", force=5.0), E.mat_flamme(nom + "_fl2", "#ffd36a", force=7.0, alpha=0.9)
-    for k, (x, y, z, r, kz, m) in enumerate(((-0.25, 0.05, 1.5, 0.27, 2.6, mf), (0.3, -0.1, 1.45, 0.22, 2.2, mf), (0.05, 0.15, 1.6, 0.2, 2.9, mf2), (0.55, 0.0, 1.35, 0.16, 1.8, mf))):
+    mf, mf2 = E.mat_flamme(nom + "_fl", "#ff6a14", force=3.2, alpha=0.95), E.mat_flamme(nom + "_fl2", "#ffb03a", force=4.5, alpha=0.95)
+    for k, (x, y, z, r, kz, m) in enumerate(((-0.3, 0.05, 1.45, 0.3, 2.6, mf), (0.3, -0.1, 1.4, 0.26, 2.3, mf), (0.0, 0.1, 1.55, 0.2, 2.9, mf2), (0.6, 0.05, 1.3, 0.18, 2.0, mf), (-0.6, 0.0, 1.3, 0.16, 1.9, mf), (0.15, -0.35, 1.25, 0.14, 2.0, mf2))):
         objets.append(C.sphere("%s_f%d" % (nom, k), r, (x, y, z), m, subdiv=2, echelle=(1, 1, kz)))
-    mfu = E.mat_fumee(nom + "_fumee")
-    for k, (x, y, z, r) in enumerate(((0.35, 0.3, 2.15, 0.28), (0.65, 0.45, 2.4, 0.22))):
+    mfu = E.mat_fumee(nom + "_fumee", "#6f675c", alpha=0.6)
+    for k, (x, y, z, r) in enumerate(((0.3, 0.3, 2.2, 0.32), (0.62, 0.45, 2.45, 0.26), (-0.2, 0.4, 2.35, 0.22))):
         objets.append(C.sphere("%s_s%d" % (nom, k), r, (x, y, z), mfu, subdiv=2, echelle=(1.3, 1.0, 0.8)))
     return objets + [C.pivot(nom + "_pivot", objets, lacet, loc)]
 
@@ -398,8 +398,8 @@ def halte_escarmouche():
     """Deux épées croisées plantées dans le champ, devant un écu rond de bois posé de biais. Aucune couleur de camp."""
     E.scene_vignette(rayon_sol=1.8)
     m = mats_armes()
-    objets = epee("epee1", m, (-0.42, -0.35, -0.08), penche=30, lacet=8) + epee("epee2", m, (0.42, -0.3, -0.08), penche=-30, lacet=-8)
-    objets += bouclier_rond("ecu", 0.68, (0.1, 0.45, 0), penche=22, lacet=-12, m=m)
+    objets = epee("epee1", m, (-0.37, -0.3, -0.08), penche=38, lacet=6) + epee("epee2", m, (0.37, -0.25, -0.08), penche=-38, lacet=-6)
+    objets += bouclier_rond("ecu", 0.62, (0.05, 0.3, 0), penche=16, lacet=-10, m=m, mat=E.mat_planches("ecu_planches", "#9a7a50"))
     objets = racine(objets, 1.5, -0.15)
     return E.rendre_rondel("halte-escarmouche", objets, echantillons=ECHANTILLONS)
 
@@ -409,9 +409,10 @@ def halte_embuscade():
     E.scene_vignette(rayon_sol=1.8)
     m = mats_armes()
     objets = fourre("fourre", [(-0.6, 0.45, 0.62), (0.4, 0.6, 0.58), (-0.1, 0.95, 0.5)])
-    objets += lance("lance1", m, (-1.05, -0.55, 0.05), (0.95, 0.15, 0.28), rayon=0.03, fer=0.28)
-    objets += lance("lance2", m, (-0.95, 0.05, 0.3), (1.0, -0.6, 0.06), rayon=0.03, fer=0.28)
-    objets += fanion("pennon", (0.85, -0.3, 0), hauteur_mat=1.55, longueur=0.72, hauteur=0.4, cap=-30, dechire=0.32)
+    objets += lance("lance1", m, (-1.1, -0.6, 0.05), (0.9, 0.3, 0.75), rayon=0.045, fer=0.34)
+    objets += lance("lance2", m, (-0.9, 0.25, 0.55), (1.05, -0.65, 0.06), rayon=0.045, fer=0.34)
+    objets += fanion("pennon", (0.9, -0.35, 0), hauteur_mat=1.75, longueur=0.95, hauteur=0.52, cap=-32, dechire=0.3)
+    objets[-1].rotation_euler.y = math.radians(10)
     objets = racine(objets, 1.4, -0.3)
     return E.rendre_rondel("halte-embuscade", objets, echantillons=ECHANTILLONS)
 
@@ -420,12 +421,12 @@ def halte_bivouac():
     """Tente de toile et feu de camp devant à droite, une bûche de réserve."""
     E.scene_vignette(rayon_sol=1.8)
     objets = E.tente("tente", 2.0, 1.75, 1.5, loc=(-0.35, 0.3, 0), lacet=-28)
-    objets += E.feu("feu", loc=(0.75, -0.55, 0), rayon=0.32)
+    objets += E.feu("feu", loc=(0.8, -0.5, 0), rayon=0.38, hauteur=0.7)
     buche = C.cylindre("buche", 0.07, 0.55, (0, 0, 0), E.mat_bois("buche_bois", "#4a3018"), segments=10)
     buche.rotation_euler = (0, math.pi / 2, math.radians(25))
     buche.location = (0.45, -1.0, 0.07)
     objets.append(buche)
-    objets = racine(objets, 1.25, -0.2)
+    objets = racine(objets, 1.2, -0.2, 0.1)
     return E.rendre_rondel("halte-bivouac", objets, echantillons=ECHANTILLONS)
 
 
@@ -440,8 +441,8 @@ def halte_marchand():
 def halte_ev_marchands():
     """Charrette à bras chargée de sacs et d'un coffre ferré."""
     E.scene_vignette(rayon_sol=1.8)
-    objets = charrette("charrette", (0.05, -0.05, 0), lacet=24)
-    objets = racine(objets, 1.3, 0.1)
+    objets = charrette("charrette", (0.05, -0.05, 0), lacet=34)
+    objets = racine(objets, 1.35, 0.1)
     return E.rendre_rondel("halte-ev-marchands", objets, echantillons=ECHANTILLONS)
 
 
@@ -450,13 +451,13 @@ def halte_ev_defi():
     E.scene_vignette(rayon_sol=1.8)
     m = mats_armes()
     objets = [C.cylindre("poteau", 0.09, 1.75, (0, 0.05, 0), E.mat_bois("poteau_bois", "#5a3e22"), segments=12)]
-    objets += heaume("heaume", (0, 0.05, 1.75), 0.22, m)
-    objets += lance("lance1", m, (-0.75, 0.5, 0.0), (0.55, 0.42, 2.25), rayon=0.035, fer=0.3)
-    objets += lance("lance2", m, (0.75, 0.5, 0.0), (-0.55, 0.42, 2.25), rayon=0.035, fer=0.3)
-    objets += bouclier_rond("ecu", 0.42, (0.0, -0.1, 0.55), penche=6, lacet=0, m=m)
+    objets += heaume("heaume", (0, 0.05, 1.75), 0.26, m)
+    objets += lance("lance1", m, (-0.8, 0.5, 0.0), (0.55, 0.42, 2.25), rayon=0.05, fer=0.32)
+    objets += lance("lance2", m, (0.8, 0.5, 0.0), (-0.55, 0.42, 2.25), rayon=0.05, fer=0.32)
+    objets += bouclier_rond("ecu", 0.5, (0.0, -0.12, 0.5), penche=6, lacet=0, m=m, mat=E.mat_planches("ecu_planches", "#9a7a50"))
     for o in objets:
         o.location.y -= 0.35 if o.parent is None else 0.0
-    objets = racine(objets, 1.1, -0.4)
+    objets = racine(objets, 1.12, -0.4)
     return E.rendre_rondel("halte-ev-defi", objets, echantillons=ECHANTILLONS)
 
 
@@ -464,7 +465,7 @@ def halte_ev_mercenaires():
     """Écu rond de bois posé droit, deux hallebardes croisées derrière, bourse de cuir devant."""
     E.scene_vignette(rayon_sol=1.8)
     m = mats_armes()
-    objets = hallebarde("hal1", m, (-0.8, 0.45, 0.0), (0.6, 0.38, 2.3)) + hallebarde("hal2", m, (0.8, 0.45, 0.0), (-0.6, 0.38, 2.3))
+    objets = hallebarde("hal1", m, (-0.85, 0.45, 0.0), (0.6, 0.38, 2.3)) + hallebarde("hal2", m, (0.85, 0.45, 0.0), (-0.6, 0.38, 2.3))
     objets += bouclier_rond("ecu", 0.6, (0.0, -0.05, 0), penche=14, lacet=6, m=m)
     objets += E.sac("bourse", 0.2, 0.36, (0.62, -0.62, 0), mat=E.mat_cuir("bourse_cuir", "#6a4426"), lacet=30)
     for o in objets:
@@ -487,7 +488,7 @@ def halte_ev_espion():
     m = mats_armes()
     objets = lanterne("lanterne", (-0.55, 0.15, 0), hauteur=1.05, rayon=0.27, lacet=20)
     objets += lettre("lettre", (0.5, -0.35, 0), 0.9, 0.62, lacet=16)
-    objets += dague("dague", m, (0.62, -0.42, 0.035), lacet=-38, longueur=0.55)
+    objets += dague("dague", m, (0.66, -0.45, 0.035), lacet=-40, longueur=0.78)
     objets = racine(objets, 1.5, -0.1)
     return E.rendre_rondel("halte-ev-espion", objets, echantillons=ECHANTILLONS)
 
