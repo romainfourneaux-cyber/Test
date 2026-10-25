@@ -24,7 +24,7 @@ const fmt = (w) => `${(w < 0.1 ? w : Math.round(w * 20) / 20).toFixed(2).replace
 
 // Pistes d'amélioration (texte), par point de mesure
 const PISTES = {
-  entree: 'Normal pour une porte d\'entrée de 90 (vantail ouvert).',
+  entree: 'Baie maçonnée de 0,88 m : dormant et vantail ouvert ne laissent ≈ 0,70 m. Pour ≥ 0,80 m, baie de 1,00 m (porte de 90).',
   degagement: 'La console réduit le passage : console de 20 cm de profondeur maxi, ou la supprimer (≈ 0,80 m).',
   wc: 'La porte ouvre vers l\'intérieur et mange l\'espace devant la cuvette : l\'ouvrir vers le dégagement, ou porte coulissante / galandage (≈ 0,85 m).',
   'porte-chambre': 'Normal pour une porte de 83 (passage utile ≈ 0,73 m). Porte de 93 : ≈ 0,83 m.',
