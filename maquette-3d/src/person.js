@@ -55,7 +55,7 @@ export const ROUTE = [
   { p: [3.62, 2.55], level: 'etage', via: 'auto', hold: 0.3, face: [2.4, 2.6], door: { id: 'porte-ch1', lead: 1.3 } },
   { p: [1.75, 3.35], level: 'etage', via: 'auto', hold: 1.2, face: [1.6, 5.0], cam: { az: 0.30, el: 1.0, d: 6.0 } },
   { p: [3.66, 2.62], level: 'etage', via: 'auto', hold: 0.3, face: [5.0, 2.62], door: { id: 'porte-ch2', lead: 1.4 }, cam: { az: -0.35, el: 1.02, d: 5.6 } },
-  // chambre 2 : vantail à 90° → 4 cm entre la porte et le lit, on est bloqué ; on l'ouvre en grand
+  // chambre 2 : vantail à 90° → 3 cm entre la porte et le lit, on est bloqué ; on l'ouvre en grand
   { p: [4.62, 2.70], level: 'etage', via: 'auto', hold: 3.4, face: [4.75, 3.6], doorHold: { id: 'porte-ch2', to: 170 / 90, delay: 1.7 }, block: true },
   { p: [4.85, 4.15], level: 'etage', via: 'auto', map: 'etageB', hold: 0.5, face: [6.2, 3.9], cam: { az: 0.75, el: 0.98, d: 6.0 } },
   { p: [5.55, 4.30], level: 'etage', via: 'auto', map: 'etageB', hold: 2.2, face: [5.55, 6.0] },
@@ -64,11 +64,11 @@ export const ROUTE = [
 // Points de mesure annotés (largeur relevée automatiquement sur la carte, sauf valeur imposée)
 export const SPOTS = [
   { id: 'entree', level: 'rdc', p: [7.73, 0.18], r: 0.12, title: 'Porte d\'entrée', sub: 'passage libre, vantail ouvert' },
-  { id: 'degagement', level: 'rdc', p: [6.30, 1.72], r: 0.45, title: 'Dégagement', sub: 'console / échiffre' },
+  { id: 'degagement', level: 'rdc', p: [5.70, 1.72], r: 0.35, title: 'Dégagement', sub: 'console / échiffre' },
   { id: 'wc', level: 'rdc', p: [4.45, 1.58], r: 0.30, title: 'WC', sub: 'devant la cuvette, porte ouverte' },
   { id: 'porte-chambre', level: 'rdc', p: [6.52, 2.22], r: 0.20, title: 'Porte chambre', sub: 'passage libre' },
   { id: 'pied-lit', level: 'rdc', p: [5.00, 4.72], r: 0.40, title: 'Pied du lit', sub: 'lit 180 / baie : de profil' },
-  { id: 'cote-lit', level: 'rdc', p: [6.45, 3.60], r: 0.35, title: 'Côté lit', sub: 'lit / cloison du sas' },
+  { id: 'cote-lit', level: 'rdc', p: [6.45, 3.60], r: 0.35, title: 'Côté lit', sub: 'lit / banc contre le pignon' },
   { id: 'fauteuil', level: 'rdc', p: [3.62, 3.95], r: 0.25, title: 'Fauteuil / lit', sub: 'côté dressing' },
   { id: 'galandage', level: 'rdc', p: [2.265, 4.60], r: 0.15, title: 'Galandage dressing', sub: 'porte coulissante ouverte' },
   { id: 'sdb', level: 'rdc', p: [2.72, 2.22], r: 0.20, title: 'Porte SdB', sub: 'coulissante ouverte' },
@@ -76,7 +76,7 @@ export const SPOTS = [
   { id: 'palier', level: 'etage', p: [3.65, 2.10], r: 0.30, title: 'Palier', sub: 'arrivée d\'escalier' },
   { id: 'ch1-porte', level: 'etage', p: [2.62, 2.75], r: 0.30, title: 'Entrée ch. 1', sub: 'porte ouverte / lit' },
   { id: 'ch1-ruelle', level: 'etage', p: [2.80, 1.50], r: 0.30, title: 'Ruelle du lit', sub: 'lit / cloison palier' },
-  // vantail à 90° (poignée comprise) : x 4,18 -> 5,01 ; lit 180 : x 5,04 -> 6,94 (furniture_etage.js)
+  // vantail à 90° : chant à x 5,012 ; plaid du lit 180 à x 5,038 (furniture_etage.js) -> 2,6 cm
   { id: 'ch2-porte', level: 'etage', p: [5.02, 3.05], r: 0.10, w: 0.03, title: 'Porte ch. 2 ouverte à 90°', sub: '3 cm entre porte et lit : bloqué', block: true },
 ];
 
