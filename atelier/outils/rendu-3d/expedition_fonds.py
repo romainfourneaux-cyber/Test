@@ -120,12 +120,12 @@ def route_et_annee():
     """route-fond.jpg puis annee-fond.jpg (bande du même rendu)."""
     W, H = (500, 160) if ESSAI else (2000, 640)
     brut = recaler(rendre_feuille_route(W, H, echantillons=24 if ESSAI else 48), ROUTE_CIBLE)
-    route = patine_chaude(brut, force=0.35)
+    route = patine_chaude(brut, force=0.35, bord=0.045)
     C.controle_blancs(route, "route-fond")
     # la bande de l'année : les 208 px du milieu (104 unités), patine plus légère
     hb = H * 208 // 640
     y0 = (H - hb) // 2
-    annee = patine_chaude(brut.crop((0, y0, W, y0 + hb)), force=0.25, graine=9)
+    annee = patine_chaude(brut.crop((0, y0, W, y0 + hb)), force=0.25, graine=9, bord=0.045)
     C.controle_blancs(annee, "annee-fond")
     if ESSAI:
         route.save(os.path.join(C.CACHE, "essai-route-fond.jpg"), quality=86)
@@ -142,7 +142,7 @@ def cadre_objets():
     L = CADRE_M
     objets = [feuille("feuille", L, L, E.mat_parchemin("parchemin_cadre", "#efe3c6", grain=0.3, echelle=5.0),
                       amplitude=0.03, echelle_m=4.0, graine=23)]
-    encre, or_ = E.mat_encre("encre_cadre"), E.mat_or("or_cadre")
+    encre, or_ = E.mat_encre("encre_cadre"), E.mat_or("or_cadre", "#c8942c", rugosite=0.4, metal=0.8)
     r = CADRE_RETRAIT
     # les quatre côtés : (centre, longueur selon x, longueur selon y)
     def ceinture(nom, ecart, ep, h, mat, biseau=0.0):
@@ -215,7 +215,7 @@ def cadre_page():
     img = C._reduire(img, surech).convert("RGB")
     img = img.filter(ImageFilter.UnsharpMask(radius=1.0, percent=35, threshold=1))
     img = recaler_hors_cadre(img, "#f2e8cf")
-    img = patine_uniforme(img, force=0.14, marge_px=52, rampe_px=50)
+    img = patine_uniforme(img, force=0.13, marge_px=34, rampe_px=30)
     coupe = CADRE_COUPE * C.ECHELLE
     centre = tuile_raccordable(img.crop((coupe, coupe, px - coupe, px - coupe)))
     img.paste(centre, (coupe, coupe))
@@ -283,7 +283,7 @@ def mat_pre_route(nom, masque_png):
     L(obj, nz.inputs["Vector"])
     sol = T._mix(nt, C._plage(nt, nz.outputs["Fac"], 0.35, 0.65, 0.0, 1.0), herbe, herbe2)
     sec, _ = photo("withered_grass", 6.0, "#8c875a", 1.2)
-    terre, _ = photo("dirt_aerial_02", 5.0, "#a68f67", 1.25)
+    terre, _ = photo("dirt_aerial_02", 6.0, "#a8906a", 1.0, 0.1)
     sol = T._mix(nt, bord, sol, sec)
     sol = T._mix(nt, route, sol, terre)
     L(sol, p.inputs["Base Color"])
@@ -322,7 +322,7 @@ def borne(nom, loc, hauteur=1.5, rayon=0.34):
     return [socle, fut, tete]
 
 
-def charrette(nom, loc, lacet=0.0):
+def charrette(nom, loc, lacet=0.0, echelle=1.0):
     """Charrette à deux roues, à l'arrêt, brancards posés au sol, deux sacs dedans (longueur selon X avant lacet)."""
     planches, bois = E.mat_planches(nom + "_planches"), E.mat_bois(nom + "_bois")
     fer = C.mat_metal(nom + "_fer", "#4d443a", rugosite=0.65, metal=0.6)
@@ -341,6 +341,7 @@ def charrette(nom, loc, lacet=0.0):
     objets += E.sac(nom + "_sac1", 0.42, 0.8, loc=(0.35, 0.15, 0.72), lacet=20)
     objets += E.sac(nom + "_sac2", 0.38, 0.72, loc=(-0.45, -0.1, 0.72), lacet=-35)
     p = C.pivot(nom + "_pivot", objets, lacet, loc)
+    p.scale = (echelle, echelle, echelle)
     return objets + [p]
 
 
@@ -374,7 +375,7 @@ def carte_expedition():
     borne("borne1", (-3.0, -3.5, 0))
     borne("borne2", (4.6, 18.5, 0), hauteur=1.3)
     C.drapeau("banniere", "france", 5.2, 3.0, 2.0, loc=(-5.6, -1.5, 0), vent=1.0, epi=True, echelle_embleme=0.66)
-    charrette("charrette", (7.0, 2.5, 0), lacet=-58)
+    charrette("charrette", (7.4, 1.0, 0), lacet=-62, echelle=1.3)
     feuillus = K.houppier("houppier", ("#2f4423", "#5c7338"))
     tronc = E.mat_bois("tronc", "#4a3522")
     for nom, loc, r in (("arbre1", (-13.0, 6.5, 0), 3.2), ("arbre2", (12.5, 11.0, 0), 2.8), ("arbre3", (-9.5, 24.0, 0), 2.6),
