@@ -91,7 +91,7 @@ function signatureOf(meshes) {
   return s + ':' + h;
 }
 
-async function buildGrid(THREE, model, cfg, onProgress) {
+export async function buildGrid(THREE, model, cfg, onProgress) {
   const t0 = performance.now();
   const { x0: bx0, z0: bz0, x1: bx1, z1: bz1 } = cfg.bounds;
   const cs = cfg.cell;

@@ -96,6 +96,11 @@ export const VIEWS = {
     label: 'Visite guidée', caption: 'Visite guidée de l\'extension',
     pos: [7.75, 1.62, 0.62], target: [5.4, 1.85, 0.9], fov: 64, bg: 'sky', interior: true, lamps: false, ev: 1.25, inside: 0.8, envSat: 0.2, sun: [10, 13, -9],
   },
+  'tour-perso': {
+    label: 'Visite avec personnage', caption: 'Visite avec personnage : circulations et largeurs de passage (coupe à 1,25 m au-dessus des pieds)',
+    pos: [11.5, 7.5, 5.0], target: [7.7, 0.9, -1.5], fov: 42, bg: 'studio', sun: [6, 14, 10], ev: 0.1, ao: 0.9, sunSoft: 0.8,
+    clip: [{ n: [0, -1, 0], c: 1.25 }],
+  },
   'visite': {
     label: 'Visite', caption: 'Visite libre à hauteur d\'œil (1,60 m) — entrée par le sas',
     pos: [8.15, 1.60, 1.98], target: [5.2, 1.50, 1.45], fov: 62, bg: 'sky', interior: true, sun: [10, 13, -9],
@@ -782,6 +787,7 @@ export async function createApp(container, { interactive = true, quality = 'auto
       const skyVis = sky.visible, catVis = catcher.visible;
       sky.visible = false; catcher.visible = false;
       const hidden = transparentMeshes.filter((m) => m.visible);
+      for (const o of aoExclude) if (o.visible) hidden.push(o);
       hidden.forEach((m) => { m.visible = false; });
       gtao.render(renderer, null, null);
       hidden.forEach((m) => { m.visible = true; });
@@ -813,6 +819,7 @@ export async function createApp(container, { interactive = true, quality = 'auto
   // Boucle interactive : rendu à la demande + affinage progressif au repos
   // -------------------------------------------------------------------------
   const frameCallbacks = new Set();
+  const aoExclude = new Set();        // calques hors maquette (sols colorés...) masqués pendant l'occlusion ambiante
   const lastCam = { m: new THREE.Matrix4(), p: new THREE.Matrix4(), valid: false };
   const loopState = { dirty: true, lastChange: 0, lastT: 0 };
   const ACC_TARGET = hq ? 32 : 16;
@@ -955,11 +962,12 @@ export async function createApp(container, { interactive = true, quality = 'auto
 
   Object.assign(app, {
     THREE, scene, camera, renderer, model, controls, loaded, state,
-    setView, resize, renderOnce, snapshot, renderCurrent, applyVisibility, setPlacoHighlight,
+    setView, resize, renderOnce, snapshot, renderCurrent, applyVisibility, applyClip, setPlacoHighlight,
     setAO: (on) => { useAO = !!on; requestRender(); },
     get ao() { return useAO; },
     setToggle: (key, val) => { state[key] = val; applyVisibility(); },
     onFrame: (fn) => { frameCallbacks.add(fn); return () => frameCallbacks.delete(fn); },
+    excludeFromAO: (o) => { aoExclude.add(o); return () => aoExclude.delete(o); },
     requestRender,
     setControlsEnabled,
     projectCallouts,

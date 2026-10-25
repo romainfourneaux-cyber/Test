@@ -449,7 +449,9 @@ function curtain(xa, xb, zc, y0, y1) {
     const zz = zc + A * Math.sin(2 * Math.PI * (x - xa) / lam);
     front.push([x, zz - th / 2]); back.push([x, zz + th / 2]);
   }
-  return prismY([...front, ...back.reverse()], y0, y1, m.rideau);
+  const mesh = prismY([...front, ...back.reverse()], y0, y1, m.rideau);
+  mesh.userData.noCollide = true;     // tissu souple : ne bloque pas le passage
+  return mesh;
 }
 function curtainRail(xa, xb, z, y) {
   const g = new THREE.Group();

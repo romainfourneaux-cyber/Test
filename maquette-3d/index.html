@@ -47,6 +47,8 @@
   .tourbar .prog i { display: block; height: 100%; width: 0%; background: var(--ink); }
   .tourbar .lbl { font: 600 13px var(--font-display); letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink); }
   #veil { position: fixed; inset: 0; background: #0e1012; opacity: 0; pointer-events: none; z-index: 3; }
+  #ptCanvas { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 3; display: none; }
+  body.touring.perso #ptCanvas { display: block; }
 
   .glass { background: var(--paper-glass); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid var(--line); }
   .cartouche { padding: 10px 14px 11px; max-width: min(460px, 100%); min-width: 0; }
@@ -124,9 +126,10 @@
   </div>
 </div>
 
+<canvas id="ptCanvas" aria-hidden="true"></canvas>
 <div id="veil" aria-hidden="true"></div>
 <div class="tourbar" role="region" aria-label="Visite guidée">
-  <div class="glass" style="padding:8px 12px"><span class="lbl">Visite guidée</span></div>
+  <div class="glass" style="padding:8px 12px"><span class="lbl" id="tourLbl">Visite guidée</span></div>
   <div class="prog glass" aria-hidden="true"><i id="tourProg"></i></div>
   <button class="chip glass" id="tourStop">Arrêter</button>
 </div>
@@ -229,36 +232,70 @@
   const { createTour } = await import('./src/tour.js');
   const tour = createTour({ THREE: app.THREE, app });
   const veil = $('veil');
-  let tourOff = null;
+  let tourOff = null, current = null;
   function endTour() {
     tourOff?.(); tourOff = null;
-    tour.stop();
+    current?.stop(); current = null;
     veil.style.opacity = 0;
-    document.body.classList.remove('touring');
+    document.body.classList.remove('touring', 'perso');
     go(lastView, false);
   }
-  function startTour() {
+  function startTour(t = tour, { label = 'Visite guidée', hash = 'visite-guidee', frame = null } = {}) {
     if (walk.isActive?.()) walk.exit();
-    for (const id of ['t-etage', 't-toit']) if ($(id).getAttribute('aria-pressed') === 'false') $(id).click();
+    if (current) endTour();
+    for (const id of ['t-mobilier', 't-etage', 't-toit']) if ($(id).getAttribute('aria-pressed') === 'false') $(id).click();
     document.body.classList.add('touring');
+    $('tourLbl').textContent = label;
     marks.innerHTML = '';
-    try { history.replaceState(null, '', '#visite-guidee'); } catch (e) {}
-    tour.play({ ended: endTour });
+    try { history.replaceState(null, '', '#' + hash); } catch (e) {}
+    current = t;
+    t.play({ ended: endTour });
     tourOff = app.onFrame(() => {
-      veil.style.opacity = tour.fade(tour.time).toFixed(3);
-      $('tourProg').style.width = `${(100 * tour.time / tour.duration).toFixed(1)}%`;
+      veil.style.opacity = t.fade(t.time).toFixed(3);
+      $('tourProg').style.width = `${(100 * t.time / t.duration).toFixed(1)}%`;
+      frame?.(t.time);
     });
   }
   $('tourStop').addEventListener('click', endTour);
-  addEventListener('keydown', (e) => { if (e.key === 'Escape' && tour.playing) endTour(); });
+  addEventListener('keydown', (e) => { if (e.key === 'Escape' && current?.playing) endTour(); });
   const tourChip = document.createElement('button');
   tourChip.className = 'chip glass walk'; tourChip.id = 'v-visite-guidee'; tourChip.textContent = 'Visite guidée';
-  tourChip.addEventListener('click', startTour);
+  tourChip.addEventListener('click', () => startTour());
   walkChip.after(tourChip);
+
+  // ---- Visite avec personnage (src/person.js) : silhouette, largeurs de passage, cotes ------
+  let person = null;
+  const ptCanvas = $('ptCanvas'), ptCtx = ptCanvas.getContext('2d');
+  async function startPerson() {
+    if (!person) {
+      $('loading').classList.remove('done');
+      const [{ createPersonTour }, { drawPersonOverlay }] = await Promise.all([import('./src/person.js'), import('./src/person-hud.js')]);
+      person = { tour: await createPersonTour({ THREE: app.THREE, app }), draw: drawPersonOverlay };
+      $('loading').classList.add('done');
+    }
+    document.body.classList.add('perso');
+    startTour(person.tour, {
+      label: 'Visite avec personnage', hash: 'visite-personnage',
+      frame: (time) => {
+        const dpr = Math.min(2, devicePixelRatio || 1), w = innerWidth, h = innerHeight;
+        if (ptCanvas.width !== Math.round(w * dpr) || ptCanvas.height !== Math.round(h * dpr)) { ptCanvas.width = Math.round(w * dpr); ptCanvas.height = Math.round(h * dpr); }
+        ptCtx.clearRect(0, 0, ptCanvas.width, ptCanvas.height);
+        person.draw(ptCtx, person.tour.overlay(time), {
+          THREE: app.THREE, camera: app.camera, W: ptCanvas.width, H: ptCanvas.height,
+          scale: dpr * Math.min(1.1, Math.max(0.72, w / 1280)), legendBottom: 64 * dpr,
+        });
+      },
+    });
+  }
+  const personChip = document.createElement('button');
+  personChip.className = 'chip glass walk'; personChip.id = 'v-visite-personnage'; personChip.textContent = 'Visite avec personnage';
+  personChip.addEventListener('click', startPerson);
+  tourChip.after(personChip);
 
   const start = (location.hash || '').slice(1);
   if (start === 'visite') { go('ext-ouest', false); startWalk(); }
   else if (start === 'visite-guidee') { go('ext-ouest', false); startTour(); }
+  else if (start === 'visite-personnage') { go('ext-ouest', false); await startPerson(); }
   else go(VIEWS[start] ? start : 'ext-ouest', false);
   $('loading').classList.add('done');
 </script>

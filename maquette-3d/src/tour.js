@@ -34,7 +34,7 @@ function inPoly([x, z], poly) {
   }
   return c;
 }
-function floorAt(x, z, level) {
+export function floorAt(x, z, level) {
   if (level === 'ext') return LV.ground;
   if (level === 'etage') return LV.slabTop;
   if (level === 'stair') {

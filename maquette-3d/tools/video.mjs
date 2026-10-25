@@ -1,5 +1,6 @@
-// Vidéo de la visite guidée (src/tour.js) : rendu image par image puis encodage MP4 (H.264).
-// Usage : node tools/video.mjs [--w 1280] [--h 720] [--fps 25] [--samples 1] [--lamps 0|1]
+// Vidéo de la visite guidée (src/tour.js) ou de la visite avec personnage (src/person.js) :
+// rendu image par image puis encodage MP4 (H.264).
+// Usage : node tools/video.mjs [--kind guidee|personnage] [--w 1280] [--h 720] [--fps 25] [--samples 1] [--lamps 0|1]
 //                              [--from 0] [--to <durée>] [--out renders/video] [--name visite-guidee] [--part k/n] [--noencode]
 import http from 'node:http';
 import fs from 'node:fs';
@@ -17,11 +18,12 @@ const args = Object.fromEntries(process.argv.slice(2).reduce((acc, a, i, arr) =>
 }, []));
 const W = +(args.w || 1280), H = +(args.h || 720), FPS = +(args.fps || 25), SAMPLES = +(args.samples || 1);
 const OUT = path.resolve(ROOT, args.out || 'renders/video');
-const NAME = args.name || 'visite-guidee';
+const KIND = args.kind || 'guidee';
+const NAME = args.name || (KIND === 'personnage' ? 'visite-personnage' : 'visite-guidee');
 const FRAMES_DIR = path.join(OUT, `${NAME}-images`);
 fs.mkdirSync(FRAMES_DIR, { recursive: true });
 
-const MIME = { '.html': 'text/html', '.js': 'text/javascript' };
+const MIME = { '.html': 'text/html', '.js': 'text/javascript', '.woff2': 'font/woff2' };
 const server = http.createServer((req, res) => {
   const p = path.join(ROOT, decodeURIComponent(req.url.split('?')[0]));
   if (!p.startsWith(ROOT) || !fs.existsSync(p) || fs.statSync(p).isDirectory()) { res.writeHead(404); return res.end(); }
@@ -40,10 +42,21 @@ await page.route('https://cdn.jsdelivr.net/npm/three@0.170.0/**', (route) => {
 });
 await page.goto(`http://localhost:${server.address().port}/render.html`);
 await page.waitForFunction(() => window.__ready === true, null, { timeout: 240000 });
-const info = await page.evaluate(async ({ W, H, lamps }) => {
-  const { createTour } = await import('./src/tour.js');
+const info = await page.evaluate(async ({ W, H, lamps, kind }) => {
   const app = window.__app;
-  window.__tour = createTour({ THREE: app.THREE, app });
+  if (kind === 'personnage') {
+    const { createPersonTour } = await import('./src/person.js');
+    const { drawPersonOverlay } = await import('./src/person-hud.js');
+    for (const [f, w, file] of [['Barlow', 400, 'Barlow-400'], ['Barlow', 600, 'Barlow-600'], ['Barlow Condensed', 600, 'BarlowCondensed-600']]) {
+      const ff = new FontFace(f, `url(./tools/fonts/${file}.woff2)`, { weight: String(w) });
+      document.fonts.add(await ff.load());
+    }
+    window.__tour = await createPersonTour({ THREE: app.THREE, app });
+    window.__draw = drawPersonOverlay;
+  } else {
+    const { createTour } = await import('./src/tour.js');
+    window.__tour = createTour({ THREE: app.THREE, app });
+  }
   app.resize(W, H);
   app.setAO(false);
   window.__lamps = lamps;
@@ -51,7 +64,7 @@ const info = await page.evaluate(async ({ W, H, lamps }) => {
   const c2 = document.createElement('canvas'); c2.width = W; c2.height = H;
   window.__c2 = c2;
   return { duration: window.__tour.duration, doors: window.__tour.doorActions.map((d) => d.id) };
-}, { W, H, lamps: args.lamps === '1' });
+}, { W, H, lamps: args.lamps === '1', kind: KIND });
 const tFrom = +(args.from || 0), tTo = Math.min(+(args.to || info.duration), info.duration);
 const all = [];
 for (let i = Math.round(tFrom * FPS); i <= Math.round(tTo * FPS); i++) all.push(i);
@@ -71,6 +84,7 @@ for (const [n, i] of frames.entries()) {
     app.renderCurrent({ frames: samples });
     const c2 = window.__c2, g = c2.getContext('2d');
     g.drawImage(app.renderer.domElement, 0, 0, c2.width, c2.height);
+    if (window.__draw) window.__draw(g, tour.overlay(t), { THREE: app.THREE, camera: app.camera, W: c2.width, H: c2.height, scale: c2.width / 1280 });
     const a = tour.fade(t);
     if (a > 0) { g.fillStyle = `rgba(14,16,18,${a})`; g.fillRect(0, 0, c2.width, c2.height); }
     return c2.toDataURL('image/jpeg', 0.93);

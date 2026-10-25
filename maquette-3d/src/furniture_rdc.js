@@ -786,7 +786,8 @@ function chambre() {
     }
     return [...front, ...backPts.reverse()];
   };
-  add(g, prismY(curtain(3.96, 4.42), 0.015, 2.31, k.curtain), prismY(curtain(6.33, 6.79), 0.015, 2.31, k.curtain));
+  // tissu souple : ne bloque pas le passage (visite, largeurs de passage)
+  for (const c of [prismY(curtain(3.96, 4.42), 0.015, 2.31, k.curtain), prismY(curtain(6.33, 6.79), 0.015, 2.31, k.curtain)]) { c.userData.noCollide = true; add(g, c); }
   return g;
 }
 

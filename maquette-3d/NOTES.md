@@ -75,9 +75,27 @@ L'atténuation du ciel à l'intérieur utilise une enveloppe (ENV_GLSL) déduite
 `app.onFrame`. Grille de collision 5 cm calculée à l'entrée (triangles des maillages visibles, sauf kind 'eclairage' et
 `userData.walkIgnore`). Points de visite : `WALK_SPOTS`. Banc d'essai : `node tools/walk-test.mjs [--norender] [--spot ch2]`.
 
+## Visites automatiques (src/tour.js, src/person.js)
+
+- `createTour({ THREE, app })` : visite guidée à hauteur d'œil (stations `STATIONS`, portes animées via
+  `userData.door` de joinery.js). `seek(t)` est déterministe (vidéo), `play()/stop()` pour la page.
+- `await createPersonTour({ THREE, app })` : visite avec personnage. Deux grilles d'occupation de 2,5 cm
+  (`buildGrid` de walk.js, portes en position de passage ; B = porte ch2 ouverte à 170°), analysées par
+  `src/clearance.js` : distance aux obstacles, épaisseur locale (sol coloré) et corde libre perpendiculaire au
+  trajet (largeur affichée). Tranche d'obstacles 0,10–1,70 m au-dessus du sol ; `userData.noCollide` (rideaux)
+  ne bloque pas. Trajet : stations `ROUTE`, A* entre stations au milieu des passages (repli jusqu'à 9 cm de
+  marge = "de profil"). Points cotés : `SPOTS` (valeur relevée sur le trajet, sinon épaisseur locale).
+  Caméra plongeante, coupe à `CUT` = 1,25 m au-dessus des pieds (`app.applyClip`), calques exclus de la GTAO
+  (`app.excludeFromAO`). Habillage 2D (étiquettes, bandeau, légende) : `src/person-hud.js`, commun page / vidéo.
+- Vidéos : `node tools/video.mjs [--kind personnage] --w 1280 --h 720 --fps 20 [--part k/3]` (parties en
+  parallèle, puis relancer sans `--part` pour encoder : les images existantes sont sautées).
+
 ## Livrables
 
 - `node tools/pdf.mjs --dir renders/final` : visuels A4 paysage, une vue par page.
 - `node tools/fiche.mjs --dir renders/final` : fiche technique A4 du raccord escalier métallique / placo
   (lit `detail-fixation`, `detail-echiffre`, `coupe-escalier` + leurs `.callouts.json`, et `fiche-data.json`).
 - `node tools/ui-shot.mjs` : captures de la page interactive (téléphone / ordinateur).
+- `node tools/person-plan.mjs --w 2400 --h 1500 --frames 8` puis `node tools/circulations-pdf.mjs` : plans des
+  circulations (RDC, étage) et tableau des passages mesurés, A4 paysage.
+- `node tools/clearance-map.mjs --out <dossier>` : cartes brutes des largeurs (diagnostic).
