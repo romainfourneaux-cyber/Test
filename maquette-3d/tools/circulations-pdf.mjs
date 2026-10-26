@@ -67,10 +67,10 @@ const FONTS = [['Barlow', 400], ['Barlow', 600], ['Barlow Condensed', 600]]
 const LEVEL = { rdc: 'RDC', stair: 'Escalier', etage: 'Étage' };
 const rows = data.spots.map((s) => `<tr>
   <td class="lv">${LEVEL[s.level]}</td>
-  <td><b>${s.title}</b><br><span class="sub">${s.sub}</span></td>
+  <td><b>${s.title}</b> <span class="sub">· ${s.sub}</span></td>
   <td class="w" style="color:${s.cls === 'ok' ? '#22272a' : COLORS[s.cls]}">${fmt(s.w)}</td>
-  <td class="k">${CONTROLE[s.id] ? `<b>${cm(CONTROLE[s.id][0])}</b><br><span class="sub">${CONTROLE[s.id][1]}</span>` : ''}</td>
-  <td><span class="pill" style="background:${COLORS[s.cls]}"></span>${VERDICT[s.cls]}</td>
+  <td class="k">${CONTROLE[s.id] ? `<b>${cm(CONTROLE[s.id][0])}</b> <span class="sub">· ${CONTROLE[s.id][1]}</span>` : ''}</td>
+  <td class="v"><span class="pill" style="background:${COLORS[s.cls]}"></span>${VERDICT[s.cls]}</td>
   <td class="p">${PISTES[s.id] || ''}</td></tr>`).join('\n');
 
 const band = (t, c, n) => `<div class="band"><div><div class="t">${t}</div><div class="c">${c}</div></div>
@@ -96,15 +96,16 @@ const html = `<!doctype html><html lang="fr"><head><meta charset="utf-8"><style>
   .sheet { position: absolute; left: 12mm; right: 12mm; top: 10mm; bottom: 24mm; }
   h2 { font: 600 17pt 'Barlow Condensed', sans-serif; margin: 0 0 1.5mm; letter-spacing: 0.02em; }
   .lead { font-size: 9pt; color: #555b5f; margin: 0 0 3mm; line-height: 1.4; }
-  table { width: 100%; border-collapse: collapse; font-size: 8.4pt; line-height: 1.28; }
+  table { width: 100%; border-collapse: collapse; font-size: 7.9pt; line-height: 1.22; table-layout: fixed; }
   th { text-align: left; font: 600 8pt 'Barlow Condensed', sans-serif; letter-spacing: 0.08em; text-transform: uppercase; color: #555b5f;
        border-bottom: 0.4mm solid #383e42; padding: 1.2mm 2mm; }
-  td { border-bottom: 0.2mm solid #d9d6cf; padding: 1.25mm 2mm; vertical-align: top; }
-  td.lv { color: #555b5f; width: 15mm; }
-  td.w { font: 600 11pt 'Barlow Condensed', sans-serif; white-space: nowrap; width: 18mm; }
+  td { border-bottom: 0.2mm solid #d9d6cf; padding: 0.9mm 1.6mm; vertical-align: top; }
+  td.lv { color: #555b5f; }
+  td.w { font: 600 10.5pt 'Barlow Condensed', sans-serif; white-space: nowrap; }
+  td.v { white-space: nowrap; }
   td.p { color: #3d4246; }
-  td.k { width: 36mm; }
-  .sub { color: #6b7074; font-size: 7.8pt; }
+  col.c1 { width: 14mm; } col.c2 { width: 44mm; } col.c3 { width: 15mm; } col.c4 { width: 58mm; } col.c5 { width: 23mm; }
+  .sub { color: #6b7074; font-size: 7.4pt; }
   .pill { display: inline-block; width: 2.6mm; height: 2.6mm; border-radius: 0.6mm; margin-right: 1.5mm; vertical-align: -0.3mm; }
 </style></head><body>
 <section class="page"><img class="img" src="${img('circulations-rdc.jpg')}">
@@ -116,7 +117,7 @@ ${band('Circulations — étage', 'Porte de la chambre 2 ouverte à 90° : 3 cm 
   <p class="lead">Largeur libre entre obstacles de 0,10 à 1,70 m au-dessus du sol (meubles, poignées et vantails ouverts compris ; rideaux exclus car souples), relevée sur une grille de 2,5 cm :
   précision ≈ ± 3 cm, valeurs arrondies à 5 cm. Contrôle : la même largeur recalculée au centimètre à partir des cotes du modèle, avec les deux éléments
   qui la limitent (écart avec la mesure : 3,5 cm au plus). Repères : une personne de face fait ≈ 0,50 m aux épaules ; 0,90 m est une circulation confortable.</p>
-  <table><thead><tr><th>Niveau</th><th>Lieu</th><th>Mesure</th><th>Contrôle</th><th>Verdict</th><th>Piste</th></tr></thead><tbody>
+  <table><colgroup><col class="c1"><col class="c2"><col class="c3"><col class="c4"><col class="c5"><col></colgroup><thead><tr><th>Niveau</th><th>Lieu</th><th>Mesure</th><th>Contrôle</th><th>Verdict</th><th>Piste</th></tr></thead><tbody>
   ${rows}
   </tbody></table>
 </div>

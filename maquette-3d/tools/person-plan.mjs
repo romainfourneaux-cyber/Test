@@ -1,6 +1,6 @@
 // Plans des circulations (src/person.js) : vue de dessus de chaque niveau, sol coloré selon la largeur
 // de passage, trace du personnage et cotes des passages étroits.
-// Usage : node tools/person-plan.mjs [--w 2400] [--h 1500] [--frames 8] [--out renders/final]
+// Usage : node tools/person-plan.mjs [--w 2400] [--h 1500] [--frames 8] [--out renders/final] [--json-only]
 import http from 'node:http';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -48,7 +48,10 @@ await page.evaluate(async ({ W, H }) => {
   window.__draw = drawPersonOverlay;
   app.resize(W, H);
 }, { W, H });
-for (const level of ['rdc', 'etage']) {
+// cotes relevées (tableau du PDF)
+const spots = await page.evaluate(() => window.__pt.spots.map((s) => ({ id: s.id, level: s.level, title: s.title, sub: s.sub, w: s.w, cls: s.cls })));
+fs.writeFileSync(path.join(OUT, 'circulations.json'), JSON.stringify({ spots, pathMin: await page.evaluate(() => window.__pt.pathMin) }, null, 1));
+for (const level of args['json-only'] ? [] : ['rdc', 'etage']) {
   const data = await page.evaluate(({ level, W, H, frames }) => {
     const app = window.__app, pt = window.__pt, cam = app.camera;
     const ov = pt.planView(level);

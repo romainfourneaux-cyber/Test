@@ -1,0 +1,117 @@
+{
+ "spots": [
+  {
+   "id": "entree",
+   "level": "rdc",
+   "title": "Porte d'entrée",
+   "sub": "passage libre, vantail ouvert",
+   "w": 0.6749999999999997,
+   "cls": "tight"
+  },
+  {
+   "id": "degagement",
+   "level": "rdc",
+   "title": "Dégagement",
+   "sub": "console / échiffre",
+   "w": 0.6499999761581421,
+   "cls": "tight"
+  },
+  {
+   "id": "wc",
+   "level": "rdc",
+   "title": "WC",
+   "sub": "devant la cuvette, porte ouverte",
+   "w": 0.6000000238418579,
+   "cls": "tight"
+  },
+  {
+   "id": "porte-chambre",
+   "level": "rdc",
+   "title": "Porte chambre",
+   "sub": "passage libre",
+   "w": 0.7158910632133484,
+   "cls": "tight"
+  },
+  {
+   "id": "pied-lit",
+   "level": "rdc",
+   "title": "Pied du lit",
+   "sub": "lit 180 / baie : de profil",
+   "w": 0.44999998807907104,
+   "cls": "block"
+  },
+  {
+   "id": "cote-lit",
+   "level": "rdc",
+   "title": "Côté lit",
+   "sub": "lit / banc contre le pignon",
+   "w": 0.8249999999999992,
+   "cls": "tight"
+  },
+  {
+   "id": "fauteuil",
+   "level": "rdc",
+   "title": "Fauteuil / lit",
+   "sub": "côté dressing",
+   "w": 0.4500000000000003,
+   "cls": "block"
+  },
+  {
+   "id": "galandage",
+   "level": "rdc",
+   "title": "Galandage dressing",
+   "sub": "porte coulissante ouverte",
+   "w": 0.5000000000000002,
+   "cls": "block"
+  },
+  {
+   "id": "sdb",
+   "level": "rdc",
+   "title": "Porte SdB",
+   "sub": "coulissante ouverte",
+   "w": 0.800000011920929,
+   "cls": "tight"
+  },
+  {
+   "id": "escalier",
+   "level": "stair",
+   "title": "Escalier",
+   "sub": "entre main courante et garde-corps",
+   "w": 0.75,
+   "cls": "tight"
+  },
+  {
+   "id": "palier",
+   "level": "etage",
+   "title": "Palier",
+   "sub": "arrivée d'escalier",
+   "w": 0.8500000238418579,
+   "cls": "tight"
+  },
+  {
+   "id": "ch1-porte",
+   "level": "etage",
+   "title": "Entrée ch. 1",
+   "sub": "porte ouverte / lit",
+   "w": 0.3500000000000002,
+   "cls": "block"
+  },
+  {
+   "id": "ch1-ruelle",
+   "level": "etage",
+   "title": "Ruelle du lit",
+   "sub": "lit / cloison palier",
+   "w": 0.6000000238418579,
+   "cls": "tight"
+  },
+  {
+   "id": "ch2-porte",
+   "level": "etage",
+   "title": "Porte ch. 2 ouverte à 90°",
+   "sub": "3 cm entre porte et lit : bloqué",
+   "w": 0.03,
+   "cls": "block"
+  }
+ ],
+ "pathMin": 0.3500000000000002
+}
