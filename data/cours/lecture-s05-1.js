@@ -231,7 +231,7 @@ JEU.enregistrer("cours", {
    "id": "lecture-s05-1-q4",
    "fiche": "lecture-s05-1-f1",
    "type": "qcm",
-   "niveau": 2,
+   "niveau": 3,
    "enonce": "Pourquoi un ours polaire ne croise-t-il jamais de manchot empereur dans la nature ?",
    "choix": [
     "Ils vivent chacun à un pôle : le manchot au Sud, l'ours au Nord",
