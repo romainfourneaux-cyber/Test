@@ -868,19 +868,22 @@ JEU.enregistrer("cours", {
    "fiche": "langue-conj10-f5",
    "type": "qcm",
    "niveau": 1,
-   "enonce": "D'où viennent la plupart des fautes d'orthographe ?",
+   "enonce": "Que veut dire « conjuguer un verbe » ?",
    "choix": [
-    "De faiblesses en analyse de texte et en vocabulaire",
-    "De faiblesses en analyse logique et en analyse de texte",
-    "De faiblesses en analyse grammaticale et en conjugaison",
-    "D'un vocabulaire trop pauvre pour trouver le mot juste"
+    "Donner ses formes selon le mode, le temps et la personne",
+    "Chercher dans le dictionnaire la façon d'écrire son infinitif",
+    "Trouver quelle fonction il occupe dans la phrase",
+    "L'accorder en genre et en nombre avec le nom qu'il complète"
    ],
-   "explication": "La plupart des fautes viennent d'un mot mal analysé ou d'un verbe mal conjugué. Travailler la grammaire et la conjugaison en évite beaucoup.",
+   "explication": "Conjuguer, c'est donner les formes d'un verbe selon le mode, le temps et la personne : je chante, nous chantions, qu'il chante. Chercher la fonction d'un mot ou l'orthographe de son infinitif, c'est de l'analyse, pas de la conjugaison.",
+   "indice": "Pense à ce qui change entre je chante, nous chantions et qu'il chante.",
    "source": {
-    "fichier": "cours/langue/Orthographe et expression ecrite.pdf",
-    "page": 1
+    "theme": "Les modes du verbe",
+    "titre": "Conjuguer",
+    "editeur": "Larousse",
+    "url": "https://www.larousse.fr/dictionnaires/francais/conjuguer/18262"
    },
-   "r": "K1iQWwFTJoBDIYQEnxBEFFAFJtwATsgKZRAWA9QHBYEDB4jHUsAFRdwCPFQDw4FAZ90BOAgRMYTZ",
+   "r": "==AUN0yQKY0XL8hRHUgUzcRVWUAHMoxTXQwYBAQUCNwTDoQScgiHQYRVCwwAd0hDj5FAG1AHKgACGYTZ",
    "poids": 1
   },
   {
@@ -961,28 +964,6 @@ JEU.enregistrer("cours", {
     "page": 1
    },
    "r": "==gOQtFAZAhCHsxEF4CTXIVDLwxHKgAHmUVGFFgAMkEDSREMZpAWN0hCKYkUSRDHawQAYoRAf0hGz0gFQlkTBkwDdERKdMRRU0RSaogUNEDWRQ1QO5gCGxwGjcQAMbbUMIwAXgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
-   "id": "langue-conj10-q38",
-   "fiche": "langue-conj10-f5",
-   "type": "qcm_multiple",
-   "niveau": 2,
-   "enonce": "La grammaire et la conjugaison s'étudient en cinq thèmes. Lesquels en font partie ? Coche toutes les bonnes réponses.",
-   "choix": [
-    "L'orthographe d'usage",
-    "Les natures des mots",
-    "La conjugaison",
-    "Les dictées corrigées",
-    "Les fonctions des mots",
-    "L'analyse de texte"
-   ],
-   "explication": "Les cinq thèmes sont les natures des mots, les fonctions des mots, l'analyse logique, la conjugaison et l'analyse de texte. L'orthographe d'usage s'apprend surtout en lisant, et les dictées corrigées viennent en plus des thèmes.",
-   "source": {
-    "fichier": "cours/langue/Orthographe et expression ecrite.pdf",
-    "page": 1
-   },
-   "r": "ocEEFExCbIVDn0AAGRlAOgwBO5TZedlFB4BBOxxFMMmXLoFRawACJ8gU0cROHl1UHEAHbkAJY9wWC1wTHoySeVWABoAGRpxCLI1Gm8FEBxEAPVxAlAFH",
    "poids": 1
   },
   {

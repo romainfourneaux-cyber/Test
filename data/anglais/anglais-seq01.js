@@ -2568,89 +2568,6 @@ JEU.enregistrer("anglais", {
    "poids": 1
   },
   {
-   "id": "anglais-seq01-q109",
-   "fiche": "anglais-seq01-g2",
-   "type": "vrai_faux",
-   "niveau": 2,
-   "enonce": "Pour poser une question avec to be au prétérit, on place was ou were devant le sujet : Were they late ?",
-   "corrections": [],
-   "explication": "C'est l'inversion : Was he…, Were they… Aucun auxiliaire did n'est nécessaire.",
-   "source": {
-    "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
-    "page": 3
-   },
-   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
-   "id": "anglais-seq01-q110",
-   "fiche": "anglais-seq01-g3",
-   "type": "vrai_faux",
-   "niveau": 2,
-   "enonce": "« There was » s'emploie devant un pluriel comme « three books ».",
-   "corrections": [
-    "Faux : devant un pluriel, on dit there were : There were three books.",
-    "Faux : devant un pluriel, on dit there is.",
-    "Faux : devant un pluriel, on dit it was."
-   ],
-   "explication": "Three books est un pluriel : there were. There was ne s'emploie que devant un singulier.",
-   "source": {
-    "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
-    "page": 1
-   },
-   "r": "Qd0GeVAAJQQSXICAdERVUsxCYIVDxgUDh1AVPNAFMUwZXcAAdUQSaYgFI1iQFlRQLYAFTUgAnxBAFFwHIghCWgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
-   "id": "anglais-seq01-q111",
-   "fiche": "anglais-seq01-g4",
-   "type": "vrai_faux",
-   "niveau": 2,
-   "enonce": "Après « They were lucky », le question tag est « weren't they ? ».",
-   "corrections": [],
-   "explication": "Phrase affirmative avec were et they : tag négatif weren't they. Le sujet et l'auxiliaire sont repris.",
-   "source": {
-    "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
-    "page": 2
-   },
-   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
-   "id": "anglais-seq01-q112",
-   "fiche": "anglais-seq01-g5",
-   "type": "vrai_faux",
-   "niveau": 2,
-   "enonce": "Pour mettre « We are at the beach » au prétérit, on écrit « We was at the beach ».",
-   "corrections": [
-    "Faux : are devient were : We were at the beach.",
-    "Faux : are devient did : We did at the beach.",
-    "Faux : are ne change pas au prétérit."
-   ],
-   "explication": "Are devient were au prétérit, et we prend were. Was est réservé à I, he, she et it.",
-   "source": {
-    "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
-    "page": 3
-   },
-   "r": "=A1RbUUDOMABJdxLGUVEUEFDcoQBIZieF9QDL0xARkkBpcBHTARFJtQHTgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
-   "id": "anglais-seq01-q113",
-   "fiche": "anglais-seq01-g7",
-   "type": "vrai_faux",
-   "niveau": 2,
-   "enonce": "Avec he, she ou it, la question au présent simple commence par does.",
-   "corrections": [],
-   "explication": "Does she like…, does it work… Avec les autres sujets, c'est do.",
-   "source": {
-    "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
-    "page": 2
-   },
-   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
    "id": "anglais-seq01-q114",
    "fiche": "anglais-seq01-g7",
    "type": "qcm",
@@ -2671,40 +2588,6 @@ JEU.enregistrer("anglais", {
    "poids": 1
   },
   {
-   "id": "anglais-seq01-q115",
-   "fiche": "anglais-seq01-g8",
-   "type": "vrai_faux",
-   "niveau": 2,
-   "enonce": "Après « You can come », le question tag est « can't you ? ».",
-   "corrections": [],
-   "explication": "La phrase est affirmative avec can : le tag est négatif, can't you. On ne met jamais do avec can.",
-   "source": {
-    "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
-    "page": 2
-   },
-   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
-   "id": "anglais-seq01-q116",
-   "fiche": "anglais-seq01-g9",
-   "type": "vrai_faux",
-   "niveau": 2,
-   "enonce": "« What does she like ? » demande de décrire la personne.",
-   "corrections": [
-    "Faux : avec does, like est le verbe aimer : on demande ce qu'elle aime.",
-    "Faux : la question demande où elle est.",
-    "Faux : la question demande sa nationalité."
-   ],
-   "explication": "What does she like demande ce qu'elle aime. Pour la décrire, on dit What is she like.",
-   "source": {
-    "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
-    "page": 2
-   },
-   "r": "=URYDAAWE9wTDoQBXA2BEUEESk0CLwRCugUAVMUAPxlRbchKbQRRQMxGLkhUN8SDRYESOpQDPUgUrFAEKERUKsQGTgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
    "id": "anglais-seq01-q117",
    "fiche": "anglais-seq01-g10",
    "type": "vrai_faux",
@@ -2721,36 +2604,6 @@ JEU.enregistrer("anglais", {
     "page": 1
    },
    "r": "==gPPoVFIhhBKYEHd4jUaEQVUsxCHUCS51AAHR0DGowDRcgJVlRRB8BCYogFI9GSR8p7a8ECDk0FkMRGVUFFa40AbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
-   "id": "anglais-seq01-q118",
-   "fiche": "anglais-seq01-g11",
-   "type": "vrai_faux",
-   "niveau": 2,
-   "enonce": "En anglais, l'adjectif se place avant le nom : a small dog.",
-   "corrections": [],
-   "explication": "Small dog, red car, old man : l'adjectif précède le nom. Il reste invariable.",
-   "source": {
-    "fichier": "cours/anglais/Anglais 5e - Sequence 1 - Exercices supplementaires - Corriges.pdf",
-    "page": 1
-   },
-   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
-   "id": "anglais-seq01-q119",
-   "fiche": "anglais-seq01-g12",
-   "type": "vrai_faux",
-   "niveau": 2,
-   "enonce": "« These » est le pluriel de « this ».",
-   "corrections": [],
-   "explication": "This book, these books. That désigne ce qui est plus loin.",
-   "source": {
-    "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
-    "page": 3
-   },
-   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
    "poids": 1
   },
   {
