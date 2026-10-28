@@ -1,5 +1,6 @@
 // Liste, pour une matière ou un cours, toutes les questions avec leur contexte : thème du cours (titre du planning), fiche
-// (notion, titre, page), type, niveau, source, énoncé, choix et réponse en clair. Un bloc par question, pour relire vite
+// (notion, titre, genre de sa source : dépôt avec la page, ou programme officiel de 5e avec l'intitulé du sous-thème,
+// règle du 28/10/2026), type, niveau, source, énoncé, choix et réponse en clair. Un bloc par question, pour relire vite
 // (audit des questions bizarres, fiche de relecture). Lit les sources en clair de atelier/contenu/ (réponses non brouillées)
 // et jeu/data/planning.js (titres des cours). Ne modifie rien.
 // Usage : node atelier/outils/lister-questions.js <préfixe> [--theme] [--suspects] > fichier.txt
@@ -25,11 +26,20 @@ function lirePlanning() {
 }
 
 function estTheme(src) { return !!(src && typeof src === "object" && src.theme !== undefined); }
+// fiche de programme (28/10/2026) : histoire et géographie sans cours déposé, source { programme, titre, editeur, url }
+function estProgramme(src) { return !!(src && typeof src === "object" && src.programme !== undefined); }
 
 function texteSource(src) {
   if (!src) return "(aucune)";
   if (estTheme(src)) return "THÈME « " + src.theme + " » · " + [src.titre, src.editeur].filter(Boolean).join(", ") + (src.url ? " · " + src.url : "");
+  if (estProgramme(src)) return "PROGRAMME « " + src.programme + " » · " + [src.titre, src.editeur].filter(Boolean).join(", ") + (src.url ? " · " + src.url : "");
   return String(src.fichier || "?").replace(/^.*\//, "") + (src.page ? ", p. " + src.page : "");
+}
+// genre de la source d'une fiche, pour la ligne « fiche : » : dépôt (fichier déposé, avec la page) ou programme
+function genreFiche(src) {
+  if (estProgramme(src)) return "source programme « " + src.programme + " »";
+  if (src && src.fichier) return "source dépôt" + (src.page ? ", p. " + src.page : "");
+  return "sans source";
 }
 
 // fiches d'un cours : id -> { notion, titre, page } (une séquence d'anglais a des mots, des règles et des phrases)
@@ -134,8 +144,9 @@ fichiers.forEach(id => {
   const fiches = fichesDe(c);
   const qs = c.questions || [];
   const nbTheme = qs.filter(q => estTheme(q.source)).length;
+  const nbProgramme = Object.values(fiches).filter(f => estProgramme(f.source)).length;
   total += qs.length; totalTheme += nbTheme;
-  bilan.push({ id, questions: qs.length, theme: nbTheme, fiches: Object.keys(fiches).length, nonCouvert: (c.nonCouvert || []).length });
+  bilan.push({ id, questions: qs.length, theme: nbTheme, fiches: Object.keys(fiches).length, programme: nbProgramme, nonCouvert: (c.nonCouvert || []).length });
   let enTete = false;
   qs.forEach(q => {
     if (seulementTheme && !estTheme(q.source)) return;
@@ -144,13 +155,13 @@ fichiers.forEach(id => {
     if (!enTete) {
       enTete = true;
       console.log("\n######## " + id + " · " + theme + " · " + qs.length + " questions (" + nbTheme + " de thème), " + Object.keys(fiches).length + " fiches" +
-        ((c.nonCouvert || []).length ? " · non couvert : " + c.nonCouvert.join(" ; ") : ""));
+        (nbProgramme ? " (" + nbProgramme + " de programme)" : "") + ((c.nonCouvert || []).length ? " · non couvert : " + c.nonCouvert.join(" ; ") : ""));
     }
     const f = fiches[q.fiche] || { notion: "(fiche inconnue)", titre: "", source: null };
     listees++;
     console.log("\n=== " + q.id + " · " + q.type + " · niveau " + (q.niveau == null ? "?" : q.niveau) + (estTheme(q.source) ? " · QUESTION DE THÈME" : ""));
     console.log("thème : " + theme);
-    console.log("fiche : " + q.fiche + " · " + (f.notion || "") + (f.titre ? " · « " + f.titre + " »" : "") + (f.source && f.source.page ? " (p. " + f.source.page + ")" : ""));
+    console.log("fiche : " + q.fiche + " · " + (f.notion || "") + (f.titre ? " · « " + f.titre + " »" : "") + " (" + genreFiche(f.source) + ")");
     console.log("source : " + texteSource(q.source));
     if (susp.length) console.log("suspect : " + susp.join(", "));
     console.log("Q : " + (q.enonce || ""));
@@ -161,4 +172,5 @@ fichiers.forEach(id => {
 });
 console.log("\n######## Bilan : " + fichiers.length + " cours, " + total + " questions (" + totalTheme + " de thème), " + listees + " listées" +
   (seulementTheme ? " (filtre --theme)" : "") + (seulementSuspects ? " (filtre --suspects)" : "") + ".");
-bilan.forEach(b => console.log("  " + b.id + " : " + b.questions + " questions, " + b.theme + " de thème (" + (b.questions ? Math.round(100 * b.theme / b.questions) : 0) + " %), " + b.fiches + " fiches, " + b.nonCouvert + " points non couverts"));
+bilan.forEach(b => console.log("  " + b.id + " : " + b.questions + " questions, " + b.theme + " de thème (" + (b.questions ? Math.round(100 * b.theme / b.questions) : 0) + " %), " + b.fiches + " fiches" +
+  (b.programme ? " dont " + b.programme + " de programme" : "") + ", " + b.nonCouvert + " points non couverts"));

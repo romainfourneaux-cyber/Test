@@ -45,16 +45,40 @@
   // debrouiller : fonction(texte) -> texte
   // 11. Questions de thème (25/10/2026, demande de Romain) : une source qui porte un champ « theme » vient d'une source
   // fiable (encyclopédie, institution, musée), pas d'un fichier déposé : { theme, titre, editeur, url }, sans fichier ni page.
+  // 5 (suite). Fiches de programme (28/10/2026, demande de Romain : « J'ai pas les cours d'histoire-géo ») : en histoire et
+  // en géographie, quand le cours n'est pas déposé, une fiche vient du programme officiel de 5e et porte une source
+  // { programme, titre, editeur, url } (programme : l'intitulé du sous-thème officiel), vérifiée sur un site de la même liste.
   var SITES_THEME = ["wikipedia.org", "vikidia.org", "lumni.fr", "larousse.fr", "bnf.fr", "education.fr", "gouv.fr",
     "louvre.fr", "musee-moyenage.fr", "chateauversailles.fr", "mnhn.fr", "universcience.fr", "cite-sciences.fr", "palais-decouverte.fr",
     "cnrs.fr", "cnes.fr", "meteofrance.com", "ign.fr", "insee.fr", "ined.fr", "un.org", "unesco.org", "who.int",
-    "metmuseum.org", "britishmuseum.org", "nasa.gov", "esa.int"];
+    "banquemondiale.org", "worldbank.org", "metmuseum.org", "britishmuseum.org", "nasa.gov", "esa.int"];
+  // Cours sans plafond de questions de thème (28/10/2026) : histoire et géographie, dont les cours ne sont pas déposés.
+  var SANS_PLAFOND_THEME = /^(histoire|geographie)-/;
   function estSourceTheme(src) { return !!(src && typeof src === "object" && src.theme !== undefined); }
+  function estSourceProgramme(src) { return !!(src && typeof src === "object" && src.programme !== undefined); }
+  // Genre d'une source : "programme" (fiche de programme), "theme" (question de thème), "depot" (fichier déposé) ou null.
+  function genreSource(src) {
+    if (estSourceProgramme(src)) return "programme";
+    if (estSourceTheme(src)) return "theme";
+    return src && typeof src === "object" && src.fichier ? "depot" : null;
+  }
   function hoteDe(url) { var m = /^https?:\/\/([^\/?#]+)/i.exec(String(url || "")); return m ? m[1].toLowerCase() : ""; }
   function siteConnu(hote) {
     if (!hote) return false;
     if (/musee|museum/.test(hote)) return true;
     return SITES_THEME.some(function (s) { return hote === s || hote.slice(-s.length - 1) === "." + s; });
+  }
+  // Source fiable d'une question de thème ou d'une fiche de programme : les champs demandés présents et non vides,
+  // url en http(s), ni fichier ni page (ERREUR) ; adresse hors de la liste des sites connus (ALERTE).
+  // num : numéro du contrôle (11 ou 5) ; quoi : « question de thème » ou « fiche de programme » ; genre : « thème » ou
+  // « programme » ; o : l'identifiant signalé.
+  function sourceFiable(src, champs, num, quoi, genre, o, E, A) {
+    var n = "[" + num + "] ";
+    var manque = champs.filter(function (k) { return typeof src[k] !== "string" || !src[k].trim(); });
+    if (manque.length) E(n + quoi + " sans " + manque.join(", ") + " : " + o);
+    else if (!/^https?:\/\//i.test(src.url)) E(n + quoi + " avec une adresse qui n'est pas en http(s) : " + o + " (" + src.url + ")");
+    else if (!siteConnu(hoteDe(src.url))) A(n + "source de " + genre + " hors de la liste des sites connus : " + o + " (" + hoteDe(src.url) + ") : vérifie que c'est une encyclopédie, une institution ou un musée");
+    if (src.fichier !== undefined || src.page !== undefined) E(n + "une source de " + genre + " ne cite ni fichier ni page : " + o);
   }
 
   function controler(donnees, debrouiller) {
@@ -163,13 +187,10 @@
         else if (fiches[q.fiche].cours !== c.id) E("[4] la question vise une fiche d'un autre cours : " + o);
         if (estSourceTheme(q.source)) {
           // 11. question de thème : theme, titre, editeur, url en http(s) ; ni fichier ni page ; site connu, sinon ALERTE
-          var manque = ["theme", "titre", "editeur", "url"].filter(function (k) { return typeof q.source[k] !== "string" || !q.source[k].trim(); });
-          if (manque.length) E("[11] question de thème sans " + manque.join(", ") + " : " + o);
-          else if (!/^https?:\/\//i.test(q.source.url)) E("[11] question de thème avec une adresse qui n'est pas en http(s) : " + o + " (" + q.source.url + ")");
-          else if (!siteConnu(hoteDe(q.source.url))) A("[11] source de thème hors de la liste des sites connus : " + o + " (" + hoteDe(q.source.url) + ") : vérifie que c'est une encyclopédie, une institution ou un musée");
-          if (q.source.fichier !== undefined || q.source.page !== undefined) E("[11] une source de thème ne cite ni fichier ni page : " + o);
+          sourceFiable(q.source, ["theme", "titre", "editeur", "url"], 11, "question de thème", "thème", o, E, A);
           themeParCours[c.id] = (themeParCours[c.id] || 0) + 1;
-        } else if (!q.source || !q.source.fichier || !q.source.page) E("[4] source manquante : " + o);
+        } else if (estSourceProgramme(q.source)) E("[4] une question ne porte pas de source de programme (c'est la fiche qui la porte ; la question prend une source de thème) : " + o);
+        else if (!q.source || !q.source.fichier || !q.source.page) E("[4] source manquante : " + o);
         if (!q.explication) E("[4] explication manquante : " + o);
         else if (phrases(q.explication) > 2) E("[4] explication de plus de deux phrases : " + o);
         if (!(q.niveau >= 1 && q.niveau <= 3)) E("[4] niveau absent ou hors de 1 à 3 : " + o);
@@ -223,10 +244,12 @@
       });
     });
     // 11 (suite). Au plus la moitié des questions d'un cours sont des questions de thème (ALERTE avec le compte :
-    // un cours trop mince, dit tel par l'audit, garde son alerte, notée au journal).
+    // un cours trop mince, dit tel par l'audit, garde son alerte, notée au journal). Plafond levé le 28/10/2026 pour
+    // l'histoire et la géographie, dont les cours ne sont pas déposés (fiches de programme).
     tousLesCours().forEach(function (c) {
+      if (SANS_PLAFOND_THEME.test(c.id)) return;
       var n = themeParCours[c.id] || 0, total = (c.questions || []).length;
-      if (n * 2 > total) A("[11] " + c.id + " : " + n + " questions de thème sur " + total + ", plus de la moitié (règle du 25/10/2026 : la moitié au plus, sauf cours trop mince dit tel par l'audit)");
+      if (n * 2 > total) A("[11] " + c.id + " : " + n + " questions de thème sur " + total + ", plus de la moitié (règle du 25/10/2026 : la moitié au plus, sauf cours trop mince dit tel par l'audit ; plafond levé pour histoire et géographie le 28/10/2026)");
     });
     Object.keys(donnees.cours).forEach(function (cid) {
       (donnees.cours[cid].fiches || []).forEach(function (f) {
@@ -240,7 +263,12 @@
     Object.keys(donnees.cours).forEach(function (cid) {
       var c = donnees.cours[cid];
       (c.fiches || []).forEach(function (f) {
-        if (!f.source || !f.source.fichier || !f.source.page) E("[5] source (fichier et page) manquante : " + f.id);
+        if (estSourceProgramme(f.source)) {
+          // fiche de programme (28/10/2026) : programme, titre, editeur, url en http(s) ; ni fichier ni page ; site connu,
+          // sinon ALERTE ; histoire et géographie seulement (ALERTE ailleurs : la règle ne vaut que pour ces deux matières)
+          sourceFiable(f.source, ["programme", "titre", "editeur", "url"], 5, "fiche de programme", "programme", f.id, E, A);
+          if (!SANS_PLAFOND_THEME.test(cid)) A("[5] fiche de programme hors histoire et géographie (règle du 28/10/2026) : " + f.id);
+        } else if (!f.source || !f.source.fichier || !f.source.page) E("[5] source (fichier et page) manquante : " + f.id);
         if (mots(f.texte) > 60) A("[5] texte de plus de 60 mots (" + mots(f.texte) + ") : " + f.id);
         if (f.schema && !(c.schemas || []).some(function (s) { return s.id === f.schema; })) E("[5] schéma inexistant : " + f.id + " → " + f.schema);
         (f.prerequis || []).forEach(function (p) {
@@ -443,7 +471,7 @@
     });
   }
 
-  var api = { controler: controler, phrases: phrases, mots: mots, sourceSuivi: sourceSuivi, estSourceTheme: estSourceTheme, siteConnu: siteConnu, hoteDe: hoteDe, BADGES: BADGES, RX: RX,
+  var api = { controler: controler, phrases: phrases, mots: mots, sourceSuivi: sourceSuivi, estSourceTheme: estSourceTheme, estSourceProgramme: estSourceProgramme, genreSource: genreSource, siteConnu: siteConnu, hoteDe: hoteDe, BADGES: BADGES, RX: RX,
     controlerPersonnages: controlerPersonnages, SITUATIONS_RIVAL: SITUATIONS_RIVAL, NIVEAUX_RIVALITE: NIVEAUX_RIVALITE, MOTS_INTERDITS: MOTS_INTERDITS };
   if (typeof module !== "undefined" && module.exports) module.exports = api;
   racine.CONTROLES = api;

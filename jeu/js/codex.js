@@ -37,9 +37,12 @@
     }
     if (f.astuce) carte.appendChild(el("p", { class: "astuce" }, [el("b", { texte: "Pour retenir : " }), document.createTextNode(f.astuce)]));
     var src = f.source || {};
+    // fiche de programme (28/10/2026, histoire et géographie sans cours déposé) : source { programme, titre, editeur, url }
     var txtSource = bonus
       ? "Source : " + [src.titre, src.editeur].filter(Boolean).join(", ") + (src.url ? " (" + src.url + ")" : "")
-      : "Source : " + (src.fichier || "?").replace(/^.*\//, "") + (src.page ? ", page " + src.page : "");
+      : src.programme !== undefined
+        ? "Source : Programme officiel de 5e" + (src.editeur ? " · " + src.editeur : "")
+        : "Source : " + (src.fichier || "?").replace(/^.*\//, "") + (src.page ? ", page " + src.page : "");
     carte.appendChild(el("p", { class: "fiche-source", texte: txtSource }));
     return carte;
   }

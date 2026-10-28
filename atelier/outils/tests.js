@@ -544,6 +544,44 @@ verifier("Validateur : contrôle 11 : question de thème sans url, adresse sans 
   e16.some(x => /\[11\].*ni fichier ni page : langue-conj16-q3$/.test(x)) && !e16.some(x => /langue-conj16-q4/.test(x)) &&
   a16.some(x => /\[11\].*langue-conj16-q4 \(exemple\.org\)/.test(x)) && a16.some(x => /\[11\] langue-conj16 : 4 questions de thème sur 4, plus de la moitié/.test(x)),
   { e: e16, a: a16 });
+// validateur : fiches de programme (28/10/2026, demande de Romain : les cours d'histoire-géo ne sont pas déposés) :
+// source { programme, titre, editeur, url } acceptée (contrôle 5), plafond de la moitié de questions de thème levé pour
+// histoire et géographie seulement (contrôle 11). Cours d'essai sur des entrées du planning sans fichier.
+const SRC_PROGRAMME = { programme: "Byzance et l'Europe carolingienne", titre: "Charlemagne", editeur: "Wikipédia", url: "https://fr.wikipedia.org/wiki/Charlemagne" };
+function coursProgramme(id, n, partTheme, srcFiches) {
+  const c = coursEssai(id, n), nbTheme = Math.round(partTheme * c.questions.length);
+  c.fiches.forEach((f, i) => { f.source = Array.isArray(srcFiches) ? srcFiches[i] : srcFiches; });
+  c.questions.forEach((q, i) => { q.source = i < nbTheme ? Object.assign({}, SRC_THEME, { theme: "Essai" }) : SRC_DEPOSEE; q.r = brl(JSON.stringify(q.reponse)); delete q.reponse; });
+  return c;
+}
+const valPr = validerAvec({ "histoire-s12-1": coursProgramme("histoire-s12-1", 5, 0.8, SRC_PROGRAMME) });
+const alertesDepotPr = [];
+sourcesDeposees({ cours: { "histoire-s12-1": coursProgramme("histoire-s12-1", 5, 0.8, SRC_PROGRAMME) }, anglais: {} }, m => alertesDepotPr.push(m));
+verifier("Validateur : une fiche de programme (source { programme, titre, editeur, url }) passe en histoire, sans alerte « source absente de DEPOT/ » ni alerte [5]",
+  surId(valPr, "histoire-s12-1").length === 0 && !valPr.alertes.some(x => /\[5\].*histoire-s12-1/.test(x)) && alertesDepotPr.length === 0,
+  { e: surId(valPr, "histoire-s12-1"), a: valPr.alertes.filter(x => /histoire-s12-1/.test(x)), depot: alertesDepotPr });
+const valPr2 = validerAvec({ "histoire-s12-2": coursProgramme("histoire-s12-2", 5, 0, [
+  Object.assign({}, SRC_PROGRAMME, { url: undefined }),                          // sans adresse
+  Object.assign({}, SRC_PROGRAMME, { url: "fr.wikipedia.org/wiki/Charlemagne" }), // adresse sans http(s)
+  Object.assign({}, SRC_PROGRAMME, { fichier: "essai.pdf", page: 1 }),           // programme et fichier à la fois
+  Object.assign({}, SRC_PROGRAMME, { url: "https://exemple.org/page" }),         // site hors liste : alerte seulement
+  SRC_DEPOSEE                                                                    // fiche d'un fichier déposé : inchangée
+]) });
+const ePr = surId(valPr2, "histoire-s12-2"), aPr = valPr2.alertes.filter(x => /histoire-s12-2/.test(x));
+verifier("Validateur : contrôle 5 : fiche de programme sans url, adresse sans http(s) ou source qui cite aussi un fichier : ERREUR ; site hors liste : ALERTE ; fiche déposée du même cours : rien",
+  ePr.some(x => /\[5\] fiche de programme sans url : histoire-s12-2-f1$/.test(x)) && ePr.some(x => /\[5\].*http\(s\) : histoire-s12-2-f2/.test(x)) &&
+  ePr.some(x => /\[5\].*ni fichier ni page : histoire-s12-2-f3$/.test(x)) && !ePr.some(x => /histoire-s12-2-f[45]/.test(x)) &&
+  aPr.some(x => /\[5\] source de programme hors de la liste des sites connus : histoire-s12-2-f4 \(exemple\.org\)/.test(x)) && !aPr.some(x => /\[5\].*histoire-s12-2-f5/.test(x)),
+  { e: ePr, a: aPr });
+const valPr3 = validerAvec({ "geographie-s09-1": coursProgramme("geographie-s09-1", 5, 0.8, SRC_DEPOSEE) });
+verifier("Validateur : un cours d'histoire ou de géographie à 80 % de questions de thème passe sans alerte de part (plafond levé le 28/10/2026)",
+  !valPr.alertes.some(x => /\[11\].*histoire-s12-1/.test(x)) && surId(valPr3, "geographie-s09-1").length === 0 && !valPr3.alertes.some(x => /\[11\].*geographie-s09-1/.test(x)),
+  valPr.alertes.concat(valPr3.alertes).filter(x => /\[11\]/.test(x)));
+const valPr4 = validerAvec({ "svt-s09-1": coursProgramme("svt-s09-1", 5, 0.8, [SRC_PROGRAMME, SRC_DEPOSEE, SRC_DEPOSEE, SRC_DEPOSEE, SRC_DEPOSEE]) });
+verifier("Validateur : un cours de SVT à 80 % de questions de thème garde l'alerte de part, et une fiche de programme hors histoire-géographie est signalée (ALERTE)",
+  surId(valPr4, "svt-s09-1").length === 0 && valPr4.alertes.some(x => /\[11\] svt-s09-1 : 8 questions de thème sur 10, plus de la moitié/.test(x)) &&
+  valPr4.alertes.some(x => /\[5\] fiche de programme hors histoire et géographie.*svt-s09-1-f1/.test(x)),
+  { e: surId(valPr4, "svt-s09-1"), a: valPr4.alertes.filter(x => /svt-s09-1/.test(x)) });
 const gp = require("./generer-planning.js");
 verifier("Générateur du planning : il garde le devoir langue-d1 à chaque génération", (() => {
   const dv = gp.devoirs(gp.generer()).filter(x => x.id === "langue-d1");
