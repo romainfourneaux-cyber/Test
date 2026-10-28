@@ -1,0 +1,541 @@
+[
+ {
+  "slug": "le-pic-du-midi",
+  "nom": "Le Pic du Midi",
+  "collection": "paysages",
+  "prix": 65,
+  "best": true,
+  "url_actuelle": "https://terregravee.fr/produits/le-pic-du-midi/",
+  "cartel": [
+   "Pic du Midi de Bigorre",
+   "2 877 m"
+  ],
+  "titre_histoire": "Le toit céleste de Bigorre",
+  "histoire": [
+   "Émergeant des nuages comme un vaisseau de pierre, le Pic du Midi de Bigorre défie le ciel depuis des siècles. Cette plaque en métal en capture toute la majesté : silhouette élancée, isolement saisissant, et aura presque mystique. Symbole d’observation, de science et de contemplation, il relie la terre aux étoiles, les hommes à l’infini. Une création puissante, pour celles et ceux qui rêvent en altitude."
+  ],
+  "lien": {
+   "url": "https://www.picdumidi.com/",
+   "label": "Site officiel du Pic du Midi"
+  },
+  "finitions": [
+   {
+    "id": "noir",
+    "photo": true
+   },
+   {
+    "id": "gris",
+    "photo": true
+   },
+   {
+    "id": "dore",
+    "photo": true
+   }
+  ],
+  "decor": "d/le-pic-du-midi-decor-1200.webp",
+  "avis": [
+   {
+    "note": 5,
+    "auteur": "Isa",
+    "date": "2025-09-25",
+    "texte": "Pris en noir rend super bien dans mon salon."
+   },
+   {
+    "note": 5,
+    "auteur": "Romain P.",
+    "date": "2025-09-15",
+    "texte": "Classe et facile à installer grâce au scratch"
+   }
+  ]
+ },
+ {
+  "slug": "le-tourmalet",
+  "nom": "Le Tourmalet",
+  "collection": "paysages",
+  "prix": 65,
+  "best": false,
+  "url_actuelle": "https://terregravee.fr/produits/le-tourmalet/",
+  "cartel": [
+   "Col du Tourmalet",
+   "2 115 m"
+  ],
+  "titre_histoire": "L’âme du cyclisme",
+  "histoire": [
+   "Mythique. Sauvage. Intemporel. Le col du Tourmalet, haut lieu des exploits cyclistes, s’invite chez vous avec cette plaque élégante et racée. Chaque ligne évoque l’ascension, la sueur, la légende. Un clin d’œil discret et puissant à l’histoire du sport et à l’audace humaine. Idéal pour les passionnés de vélo, de défis et d’horizons sans fin."
+  ],
+  "lien": {
+   "url": "https://www.tourmaletpicdumidi.fr/la-destination/les-lieux/le-col-du-tourmalet/",
+   "label": "Office de tourisme Tourmalet Pic du Midi"
+  },
+  "finitions": [
+   {
+    "id": "noir",
+    "photo": true
+   },
+   {
+    "id": "gris",
+    "photo": true
+   },
+   {
+    "id": "dore",
+    "photo": true
+   }
+  ],
+  "decor": "d/le-tourmalet-decor-1200.webp",
+  "avis": [
+   {
+    "note": 5,
+    "auteur": "Jerome D.",
+    "date": "2025-09-02",
+    "texte": "Monté cet été j'ai souffert du coup je me suis fais un cadeau. Pris en gris !"
+   }
+  ]
+ },
+ {
+  "slug": "le-montaigu",
+  "nom": "Le Montaigu",
+  "collection": "paysages",
+  "prix": 65,
+  "best": false,
+  "url_actuelle": "https://terregravee.fr/produits/le-montaigu/",
+  "cartel": [
+   "Pic du Montaigu",
+   "2 339 m"
+  ],
+  "titre_histoire": "La montagne élégante",
+  "histoire": [
+   "Élancé, emblématique, le Montaigu domine la plaine de sa présence tranquille. Notre création en révèle les lignes douces, presque graphiques, dans un design sobre et captivant. Parfaite pour qui cherche à installer chez soi une atmosphère de calme et de verticalité. Pour les amateurs de sommets moins connus, mais tout aussi majestueux."
+  ],
+  "lien": {
+   "url": "https://fr.wikipedia.org/wiki/Pic_du_Montaigu",
+   "label": "Wikipédia"
+  },
+  "finitions": [
+   {
+    "id": "noir",
+    "photo": true
+   },
+   {
+    "id": "gris",
+    "photo": true
+   },
+   {
+    "id": "dore",
+    "photo": true
+   }
+  ],
+  "decor": "d/le-montaigu-decor-1200.webp",
+  "avis": []
+ },
+ {
+  "slug": "le-cirque-de-gavarnie",
+  "nom": "Le Cirque de Gavarnie",
+  "collection": "paysages",
+  "prix": 65,
+  "best": false,
+  "url_actuelle": "https://terregravee.fr/produits/le-cirque-de-gavarnie/",
+  "cartel": [
+   "Gavarnie (65)",
+   "Patrimoine mondial de l’UNESCO"
+  ],
+  "titre_histoire": "Le géant sculpté par le temps",
+  "histoire": [
+   "Offrez à votre intérieur une évasion vertigineuse. Notre plaque “Gavarnie” capture la majesté du cirque le plus emblématique des Pyrénées, là où la nature sculpte la montagne avec grâce et puissance. Découpée avec précision dans du métal brut, cette œuvre est un hommage à l’inaccessible beauté du massif. Un must pour les amoureux de paysages spectaculaires. Une création unique inspirée d’un site classé au patrimoine mondial de l’UNESCO."
+  ],
+  "lien": {
+   "url": "https://www.luz.org/fr/les-incontournables/les-grands-sites/cirque-de-gavarnie/",
+   "label": "Office de tourisme de Luz"
+  },
+  "finitions": [
+   {
+    "id": "noir",
+    "photo": true
+   },
+   {
+    "id": "gris",
+    "photo": true
+   },
+   {
+    "id": "dore",
+    "photo": true
+   }
+  ],
+  "decor": null,
+  "avis": []
+ },
+ {
+  "slug": "le-pont-despagne",
+  "nom": "Le Pont d’Espagne",
+  "collection": "paysages",
+  "prix": 65,
+  "best": false,
+  "url_actuelle": "https://terregravee.fr/produits/le-pont-despagne/",
+  "cartel": [
+   "Cauterets (65)",
+   "Cascades et forêt"
+  ],
+  "titre_histoire": "La magie suspendue",
+  "histoire": [
+   "Torrent, cascade, forêt, et pierre: le Pont d’Espagne est un passage entre les mondes. Notre plaque immortalise cette beauté suspendue, entre le fracas de l’eau et le silence des bois. Une évocation poétique et forte, idéale pour un mur dédié à la nature."
+  ],
+  "lien": {
+   "url": "https://www.cauterets.com/grand-site-pont-despagne/",
+   "label": "Cauterets – Pont d’Espagne"
+  },
+  "finitions": [
+   {
+    "id": "noir",
+    "photo": true
+   },
+   {
+    "id": "gris",
+    "photo": true
+   },
+   {
+    "id": "dore",
+    "photo": true
+   }
+  ],
+  "decor": "d/le-pont-despagne-decor-1200.webp",
+  "avis": []
+ },
+ {
+  "slug": "la-tour-des-jacobins",
+  "nom": "La Tour des Jacobins",
+  "collection": "patrimoine",
+  "prix": 65,
+  "best": false,
+  "url_actuelle": "https://terregravee.fr/produits/la-tour-des-jacobins/",
+  "cartel": [
+   "Bagnères-de-Bigorre (65)",
+   "Monument historique"
+  ],
+  "titre_histoire": "Le gardien de Bagnères",
+  "histoire": [
+   "Élancée, fière et singulière, la Tour des Jacobins domine Bagnères-de-Bigorre comme un témoin de pierre. Seul vestige d’un ancien couvent, elle défie le temps avec élégance, racontant à elle seule l’histoire religieuse et architecturale de la ville thermale. Découpée finement dans le métal, cette plaque révèle toute la verticalité et la sobriété gothique de cette silhouette emblématique. Une création pour les amoureux d’histoire locale et de patrimoine vivant."
+  ],
+  "lien": {
+   "url": "https://pop.culture.gouv.fr/notice/merimee/PA00095340",
+   "label": "Notice Mérimée (Monuments historiques)"
+  },
+  "finitions": [
+   {
+    "id": "noir",
+    "photo": true
+   },
+   {
+    "id": "gris",
+    "photo": true
+   },
+   {
+    "id": "dore",
+    "photo": true
+   }
+  ],
+  "decor": "d/la-tour-des-jacobins-decor-1200.webp",
+  "avis": [
+   {
+    "note": 5,
+    "auteur": "Greg 65",
+    "date": "2025-10-01",
+    "texte": "Superbe plaque détail minutieux merci Romain"
+   }
+  ]
+ },
+ {
+  "slug": "le-chateau-de-mauvezin",
+  "nom": "Le Château de Mauvezin",
+  "collection": "patrimoine",
+  "prix": 65,
+  "best": false,
+  "url_actuelle": "https://terregravee.fr/produits/le-chateau-de-mauvezin/",
+  "cartel": [
+   "Mauvezin (65)",
+   "Château fort"
+  ],
+  "titre_histoire": "Entre ciel et bastion",
+  "histoire": [
+   "Perché et puissant, le château de Mauvezin veille sur la Bigorre depuis des siècles. Cette plaque découpe la pierre dans le métal, donnant à voir l’imposante silhouette de la forteresse dans un jeu d’ombre captivant. Un hommage à l’histoire médiévale, à l’architecture défensive, et à l’âme des baronnies."
+  ],
+  "lien": {
+   "url": "https://fr.wikipedia.org/wiki/Ch%C3%A2teau_de_Mauvezin",
+   "label": "Wikipédia"
+  },
+  "finitions": [
+   {
+    "id": "noir",
+    "photo": true
+   },
+   {
+    "id": "gris",
+    "photo": true
+   },
+   {
+    "id": "dore",
+    "photo": true
+   }
+  ],
+  "decor": "d/le-chateau-de-mauvezin-decor-1200.webp",
+  "avis": [
+   {
+    "note": 5,
+    "auteur": "Sergio",
+    "date": "2025-09-01",
+    "texte": "Habitant à Mauvezin top d'avoir un peu de mon patrimoine chez moi"
+   }
+  ]
+ },
+ {
+  "slug": "labbaye-de-lescaladieu",
+  "nom": "L’Abbaye de l’Escaladieu",
+  "collection": "patrimoine",
+  "prix": 65,
+  "best": false,
+  "url_actuelle": "https://terregravee.fr/produits/labbaye-de-lescaladieu/",
+  "cartel": [
+   "Bonnemazon (65)",
+   "Abbaye cistercienne"
+  ],
+  "titre_histoire": "La lumière du silence",
+  "histoire": [
+   "La silhouette de l’abbaye d’Escaladieu, toute en harmonie, évoque la paix, la contemplation, la beauté médiévale. Cette plaque est un hommage au patrimoine cistercien, à l’élégance sobre, à la spiritualité dans la matière. Idéale pour les amateurs d’histoire, de pierre et de lumière douce."
+  ],
+  "lien": {
+   "url": "https://www.abbaye-escaladieu.com/",
+   "label": "Site officiel de l’abbaye"
+  },
+  "finitions": [
+   {
+    "id": "noir",
+    "photo": true
+   },
+   {
+    "id": "gris",
+    "photo": true
+   },
+   {
+    "id": "dore",
+    "photo": false
+   }
+  ],
+  "decor": "d/labbaye-de-lescaladieu-decor-1200.webp",
+  "avis": []
+ },
+ {
+  "slug": "lisard",
+  "nom": "L’Isard",
+  "collection": "faune",
+  "prix": 65,
+  "best": true,
+  "url_actuelle": "https://terregravee.fr/produits/lisard/",
+  "cartel": [
+   "Faune des Pyrénées",
+   "Rupicapra pyrenaica"
+  ],
+  "titre_histoire": "L’esprit libre des hauteurs",
+  "histoire": [
+   "Dans un bond figé, l’isard traverse le vide. Symbole de liberté et d’équilibre, cette plaque représente l’animal emblématique des Pyrénées dans toute sa noblesse. Sa silhouette ajourée joue avec la lumière et évoque l’altitude, le silence, l’instinct. Une décoration qui parle à ceux qui aiment les sommets et la faune sauvage."
+  ],
+  "lien": {
+   "url": "https://www.pyrenees-parcnational.fr/fr/des-connaissances/le-patrimoine-naturel/faune/isard",
+   "label": "Parc national des Pyrénées"
+  },
+  "finitions": [
+   {
+    "id": "noir",
+    "photo": true
+   },
+   {
+    "id": "gris",
+    "photo": true
+   },
+   {
+    "id": "dore",
+    "photo": true
+   }
+  ],
+  "decor": "d/lisard-decor-1200.webp",
+  "avis": [
+   {
+    "note": 5,
+    "auteur": "Marie",
+    "date": "2025-09-27",
+    "texte": "Mis dans notre maison de vacance à Campan top !"
+   }
+  ]
+ },
+ {
+  "slug": "lours",
+  "nom": "L’Ours",
+  "collection": "faune",
+  "prix": 65,
+  "best": true,
+  "url_actuelle": "https://terregravee.fr/produits/lours/",
+  "cartel": [
+   "Faune des Pyrénées",
+   "Ursus arctos"
+  ],
+  "titre_histoire": "L’instinct sauvage gravé",
+  "histoire": [
+   "Puissant. Rare. Mystérieux. L’ours est plus qu’un animal : c’est un totem, une force ancienne qui hante les forêts pyrénéennes. Cette plaque lui rend hommage avec une découpe brute. Une pièce forte, symbole de résilience et de lien à la nature sauvage."
+  ],
+  "lien": null,
+  "finitions": [
+   {
+    "id": "noir",
+    "photo": true
+   },
+   {
+    "id": "gris",
+    "photo": true
+   },
+   {
+    "id": "dore",
+    "photo": true
+   }
+  ],
+  "decor": "d/lours-decor-1200.webp",
+  "avis": [
+   {
+    "note": 5,
+    "auteur": "Anto 65",
+    "date": "2025-09-04",
+    "texte": "Super plaque vu suite à la visite sur Aquensis"
+   }
+  ]
+ },
+ {
+  "slug": "le-cerf",
+  "nom": "Le Cerf",
+  "collection": "faune",
+  "prix": 65,
+  "best": true,
+  "url_actuelle": "https://terregravee.fr/produits/le-cerf/",
+  "cartel": [
+   "Faune des Pyrénées",
+   "Cervus elaphus"
+  ],
+  "titre_histoire": "Quand la nature s’invite chez vous",
+  "histoire": [
+   "Vous cherchez une décoration qui a du caractère et une histoire ? Découvrez notre plaque « Le Cerf », une création qui capture toute la majesté de cet animal mythique, symbole de force, liberté et élégance.",
+   "Imaginez cette silhouette découpée avec précision dans de l’aluminium exposée sur votre mur, dans votre salon, votre bureau ou votre extérieur… Chaque regard porté sur elle vous rappellera l’esprit des forêts sauvages."
+  ],
+  "lien": {
+   "url": "https://professionnels.ofb.fr/fr/doc-fiches-especes/cerf-elaphe-cervus-elaphus",
+   "label": "Fiche espèce de l’OFB"
+  },
+  "finitions": [
+   {
+    "id": "noir",
+    "photo": false
+   },
+   {
+    "id": "gris",
+    "photo": true
+   },
+   {
+    "id": "dore",
+    "photo": true
+   }
+  ],
+  "decor": null,
+  "avis": [
+   {
+    "note": 4,
+    "auteur": "Gerald",
+    "date": "2025-09-06",
+    "texte": "Cadeau pour un ami pris en gris top. 1 étoile en moins j'ai attendu une semaine pour la livraison !"
+   }
+  ]
+ },
+ {
+  "slug": "la-marmotte",
+  "nom": "La Marmotte",
+  "collection": "faune",
+  "prix": 65,
+  "best": false,
+  "url_actuelle": "https://terregravee.fr/produits/la-marmotte/",
+  "cartel": [
+   "Faune des Pyrénées",
+   "Marmota marmota"
+  ],
+  "titre_histoire": "L’esprit doux des cimes",
+  "histoire": [
+   "Curieuse, paisible et familière, la marmotte est le sourire des montagnes. Cette plaque apporte une touche douce et authentique à votre intérieur, entre souvenir de randonnées et charme rustique. Son découpage met en valeur sa bonhomie légendaire, dans un style naturel et chaleureux. Un clin d’œil à la vie paisible des sommets."
+  ],
+  "lien": {
+   "url": "https://www.pyrenees-parcnational.fr/fr/des-connaissances/le-patrimoine-naturel/faune/marmotte",
+   "label": "Parc national des Pyrénées"
+  },
+  "finitions": [
+   {
+    "id": "noir",
+    "photo": true
+   },
+   {
+    "id": "gris",
+    "photo": true
+   },
+   {
+    "id": "dore",
+    "photo": true
+   }
+  ],
+  "decor": "d/la-marmotte-decor-1200.webp",
+  "avis": [
+   {
+    "note": 5,
+    "auteur": "Sophia P.",
+    "date": "2025-09-26",
+    "texte": "Vu pendant la cure à Bagneres. Merci à Romain de nous les avoir montrés avant l'achat."
+   }
+  ]
+ },
+ {
+  "slug": "led",
+  "nom": "Kit LED",
+  "collection": "accessoires",
+  "prix": 15,
+  "best": true,
+  "url_actuelle": "https://terregravee.fr/produits/led/",
+  "cartel": null,
+  "titre_histoire": null,
+  "histoire": [
+   "Nous vous proposons ce kit LED simple et pratique pour illuminer votre décoration murale. Ce kit n’est pas fabriqué en France, mais il est sélectionné pour vous offrir une solution clé en main et éviter de chercher vous-même un modèle compatible.",
+   "Vous êtes également libre de choisir un modèle équivalent sur les sites comme Amazon, Leroy Merlin, ou autres. Nos plaques sont compatibles avec la plupart des bandes LED disponibles sur le marché.",
+   "RGB multicolore : pour personnaliser les couleurs et créer l’ambiance de votre choix.",
+   "Pilotable soit par télécommande soit bouton soit bluetooth",
+   "Application permettant des programmes horaires / variation de couleur / synchronisation musicale etc….",
+   "1 bande LED autocollante de 2 mètres",
+   "1 télécommande",
+   "1 alimentation USB",
+   "Produit non fabriqué en France",
+   "Alternative libre : vous pouvez utiliser n’importe quelle bande LED de votre choix",
+   "Idéal pour un rétroéclairage facile sans bricolage complexe",
+   "Expédié en même temps que votre plaque (si commandé ensemble)"
+  ],
+  "lien": null,
+  "finitions": [],
+  "decor": null,
+  "avis": []
+ },
+ {
+  "slug": "carte-cadeau",
+  "nom": "Carte cadeau",
+  "collection": "accessoires",
+  "prix": 65,
+  "best": true,
+  "url_actuelle": "https://terregravee.fr/produits/carte-cadeau/",
+  "cartel": null,
+  "titre_histoire": null,
+  "histoire": [
+   "Vous souhaitez offrir une plaque Terres Gravées, mais vous hésitez sur le modèle ? Avec cette carte cadeau spéciale plaque, laissez la personne choisir le design qui lui fera vraiment plaisir.",
+   "Valeur équivalente à une plaque de votre choix Valable sur tous les modèles disponibles sur notre boutique Envoi immédiat par email ou à imprimer chez vous",
+   "Un cadeau personnalisé et sans risque d’erreur, parfait pour toutes les occasions."
+  ],
+  "lien": null,
+  "finitions": [],
+  "decor": null,
+  "avis": []
+ }
+]

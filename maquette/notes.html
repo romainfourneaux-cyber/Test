@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Notes de refonte · Terre Gravée</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Relevé des problèmes du site actuel et des changements proposés par la maquette.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Allerta+Stencil&amp;family=Jost:ital,wght@0,400;0,500;0,600;1,400&amp;family=Marcellus&amp;display=swap">
+<link rel="stylesheet" href="assets/css/site.css">
+
+</head>
+<body>
+<a class="lien-evitement" href="#contenu">Aller au contenu</a>
+<div class="bandeau-maquette"><div class="wrap"><span>Maquette de travail, non publiée. Les paiements sont désactivés.</span><a href="notes.html">Lire les notes de refonte</a></div></div>
+<header class="entete">
+  <div class="wrap">
+    <a class="marque" href="index.html"><svg viewBox="0 0 30 22" aria-hidden="true" focusable="false"><path d="M1.5 20.5 10 9l3.2 3.6L18.6 4.5 28.5 20.5Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M18.6 4.5V1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span class="marque__nom">TERRE GRAVÉE</span></a>
+    <nav class="nav" aria-label="Navigation principale"><a href="collection.html">Collection</a><a href="sur-mesure.html">Sur mesure</a><a href="savoir-faire.html">Savoir-faire</a><a href="installation.html">Installation</a><a href="contact.html">Contact</a></nav>
+    <button type="button" class="bouton-icone" data-ouvrir-panier aria-label="Ouvrir le panier">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8Z M9 8V6a3 3 0 0 1 6 0v2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+      <span class="compteur">0</span>
+    </button>
+    <button type="button" class="bouton-icone bouton-menu" aria-expanded="false" aria-label="Menu">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.5"/></svg>
+    </button>
+  </div>
+</header>
+<main id="contenu">
+
+<div class="wrap">
+  <header class="entete-page">
+    <p class="surtitre">Notes de refonte · relevé du 28 octobre 2026</p>
+    <h1>Ce que change la maquette</h1>
+    <p class="chapo">La maquette reprend le contenu réel de terregravee.fr (textes, photos, prix, avis) dans une nouvelle présentation. Elle ne modifie pas le site en ligne.</p>
+  </header>
+</div>
+<section class="section" style="padding-top:0">
+  <div class="wrap">
+    <div class="entete-section"><p class="surtitre">18 constats</p><h2>À corriger sur le site actuel</h2>
+      <p class="chapo">Classés par urgence. Les quatre premiers se corrigent en quelques minutes depuis WordPress.</p></div>
+    <ol class="notes"><li><h3><span class="niveau niveau--urgent">urgent</span>Les liens Facebook, Instagram et X de la page Contact mènent aux comptes de Hostinger.</h3><p>Ce sont les liens par défaut du thème. À remplacer par vos comptes, ou à retirer.</p></li><li><h3><span class="niveau niveau--urgent">urgent</span>Un produit vide « AUTO-DRAFT » est publié.</h3><p>L’adresse /produits/tr/ apparaît dans le catalogue et peut être indexée par Google. À mettre à la corbeille dans WooCommerce › Produits.</p></li><li><h3><span class="niveau niveau--urgent">urgent</span>Les mentions légales contiennent encore des champs à remplir.</h3><p>La page affiche « SIRET : [à compléter] » et « Téléphone : [optionnel] ». Le numéro de téléphone de l’hébergeur, exigé par la LCEN, manque aussi.</p></li><li><h3><span class="niveau niveau--urgent">urgent</span>Les CGV pointent vers un mauvais domaine.</h3><p>Le lien affiché « www.terregravee.fr » mène en réalité à www.terresgravees.fr, qui ne répond pas. Le lien vers la politique de confidentialité est vide, et le vendeur est nommé « Terres Gravées ».</p></li><li><h3><span class="niveau niveau--important">important</span>Aucun médiateur de la consommation n’est nommé.</h3><p>Les CGV renvoient vers un site générique. Le Code de la consommation (art. L612-1 et L616-1) impose d’indiquer le médiateur auquel vous adhérez : nom, site et adresse.</p></li><li><h3><span class="niveau niveau--important">important</span>Le formulaire type de rétractation manque.</h3><p>Les CGV décrivent bien le délai de 14 jours, mais le modèle de formulaire prévu par le Code de la consommation (art. L221-5) n’est pas fourni.</p></li><li><h3><span class="niveau niveau--important">important</span>Des cookies de suivi sont déposés avant le consentement.</h3><p>Dix cookies (sbjs_* pour l’attribution des commandes WooCommerce, tk_* pour les statistiques Jetpack) arrivent dès l’ouverture de la page. Google Analytics et Google Ads attendent bien le clic sur le bandeau. Deux propriétés Google Analytics sont chargées en double (G-HG9HTJQDV7 et G-E5TQ05HCMQ).</p></li><li><h3><span class="niveau niveau--important">important</span>Un lien de l’accueil est cassé.</h3><p>Le bouton « Voir » du bloc « Montage facile » mène à /infosinstallation/ (erreur 404). La page existe à l’adresse /tuto/.</p></li><li><h3><span class="niveau niveau--important">important</span>Les compteurs de catégories de l’accueil sont faux.</h3><p>L’accueil affiche 24 paysages, 32 animaux, 50 flore et 3 architecture. Le catalogue compte 5, 4, 0 et 4 modèles, et le lien Flore est vide.</p></li><li><h3><span class="niveau niveau--important">important</span>La page boutique s’intitule « prod Archives ».</h3><p>Le titre reprend le nom technique de la catégorie « prod ». La page n’a pas non plus de titre principal (H1).</p></li><li><h3><span class="niveau niveau--important">important</span>Deux finitions sont vendues sans photo.</h3><p>Le Cerf en noir et L’Abbaye de l’Escaladieu en doré. La maquette le signale par un emplacement vide.</p></li><li><h3><span class="niveau niveau--important">important</span>La longueur du ruban LED change selon la page.</h3><p>2 mètres sur la fiche du kit, 1,5 mètre sur la page Infos &amp; installation.</p></li><li><h3><span class="niveau niveau--confort">confort</span>La fiche produit est lourde et le prix arrive tard.</h3><p>225 requêtes et 2,5 Mo de scripts : Stripe, PayPal, Apple Pay, Google Pay et hCaptcha se chargent dès l’affichage d’une plaque. Le prix apparaît sous les boutons de paiement.</p></li><li><h3><span class="niveau niveau--confort">confort</span>Les descriptions Google se répètent.</h3><p>À propos, Contact et la boutique partagent la même description (« Découvrez nos articles… »), qui évoque un blog inexistant. Celle de Créations spéciales dépasse 400 caractères.</p></li><li><h3><span class="niveau niveau--confort">confort</span>Le pied de page liste les variantes du nom.</h3><p>« Terre Gravé, Terregrave, Terres gravees… » ressemble à du bourrage de mots-clés. Ces variantes peuvent passer dans les données structurées (alternateName), comme dans la maquette.</p></li><li><h3><span class="niveau niveau--confort">confort</span>Quelques fautes et accents manquants.</h3><p>« Meilleurs ventes », « Serie limitée », « Retro-eclairage », « Le Chateau de Mauvezin », « Condition general de vente », « A propos », et « Terres Gravées » dans les fiches produit.</p></li><li><h3><span class="niveau niveau--confort">confort</span>Plusieurs images n’ont pas de texte alternatif.</h3><p>Les photos du Pic du Midi et les mises en situation n’ont pas de description. Elle sert à l’accessibilité et à Google Images.</p></li><li><h3><span class="niveau niveau--confort">confort</span>Les avis affichent le nom complet des clients.</h3><p>Le prénom et l’initiale du nom suffisent (« Sophia P. »). La maquette applique cette règle.</p></li></ol>
+  </div>
+</section>
+<section class="section section--clair">
+  <div class="wrap">
+    <div class="entete-section"><p class="surtitre">Avant, après</p><h2>Ce que propose la maquette</h2></div>
+    <div class="tableau-defile"><table class="tableau"><thead><tr><th>Sujet</th><th>Site actuel</th><th>Maquette</th></tr></thead><tbody><tr><td>Accueil</td><td>Une grande photo, six blocs d’icônes, puis deux fois les mêmes produits.</td><td>Un mur d’exposition avec simulation du rétroéclairage, les trois collections, les meilleures ventes et les avis.</td></tr><tr><td>Finitions</td><td>Un menu déroulant sur la fiche produit.</td><td>Des pastilles sur chaque carte et un bouton « Voir en noir, gris ou doré » pour toute la collection.</td></tr><tr><td>Kit LED</td><td>Un produit séparé, proposé en « Vous aimerez peut-être aussi ».</td><td>Une case à cocher sur la fiche de chaque plaque, avec la sortie du câble et le prix mis à jour.</td></tr><tr><td>Fiche produit</td><td>Le prix sous les boutons de paiement ; le format caché dans un onglet.</td><td>Prix en tête, format, matière et fixation visibles, livraison et retours résumés.</td></tr><tr><td>Repères</td><td>Aucun.</td><td>Chaque plaque a son cartel : lieu, altitude ou nom latin de l’animal.</td></tr><tr><td>Sur mesure</td><td>Un texte, puis un renvoi vers le formulaire de contact.</td><td>Les offres détaillées et un formulaire de demande guidé (métal, format, quantité, fichier).</td></tr><tr><td>Mobile</td><td>Bandeau cookies sur un tiers de l’écran, bouton d’achat hors de vue.</td><td>Bouton d’achat fixé en bas d’écran sur la fiche produit.</td></tr><tr><td>Écran sombre</td><td>Non géré.</td><td>La maquette suit le réglage clair ou sombre de l’appareil.</td></tr><tr><td>Poids des pages</td><td>Accueil : 92 requêtes, 2,6 Mo. Fiche produit : 225 requêtes, 3,3 Mo.</td><td>Accueil : 24 requêtes, 0,75 Mo. Fiche produit : 16 requêtes, 0,4 Mo. Mesure faite sans les scripts de paiement et de statistiques, qui ne devraient se charger qu’au panier.</td></tr></tbody></table></div>
+  </div>
+</section>
+<section class="section">
+  <div class="wrap deux-colonnes deux-colonnes--haut">
+    <div class="entete-section"><p class="surtitre">Pour finir la maquette</p><h2>Informations à fournir</h2>
+      <p class="chapo">Les emplacements concernés sont signalés dans les pages par <mark class="todo">à compléter</mark>.</p></div>
+    <ul class="liste-simple"><li>Les adresses de vos comptes Instagram et Facebook.</li><li>Les photos manquantes : Le Cerf en noir, L’Abbaye de l’Escaladieu en doré, une mise en situation du Cirque de Gavarnie et du Cerf.</li><li>La longueur exacte du ruban LED (1,5 m ou 2 m).</li><li>Le nom et les coordonnées de votre médiateur de la consommation.</li><li>Les frais de port, ou au moins un tarif indicatif.</li><li>La fixation conseillée pour une pose en extérieur.</li><li>Votre avis sur le logo : la maquette utilise une signature typographique au pochoir, comme les titres gravés sur vos plaques. Votre emblème actuel peut être conservé, idéalement redessiné en vectoriel.</li></ul>
+  </div>
+</section>
+<section class="section section--clair">
+  <div class="wrap"><div class="encadre" style="max-width:820px"><h3>Et ensuite ?</h3>
+    <p class="attenue">Si cette direction vous plaît, elle peut être appliquée au site WordPress actuel (thème enfant et blocs), sans changer de WooCommerce ni perdre les commandes et les avis. Cette étape demandera un accès administrateur au site.</p></div></div>
+</section>
+</main>
+<footer class="pied">
+  <div class="wrap">
+    <div class="pied__grille">
+      <div>
+        <a class="marque" href="index.html"><svg viewBox="0 0 30 22" aria-hidden="true" focusable="false"><path d="M1.5 20.5 10 9l3.2 3.6L18.6 4.5 28.5 20.5Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M18.6 4.5V1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span class="marque__nom">TERRE GRAVÉE</span></a>
+        <p class="attenue">Plaques murales en aluminium découpé au laser, fabriquées dans le Sud-Ouest.</p>
+        <p style="margin-top:14px">16 rue du Pic du Midi, 65200 Gerde<br>contact@terregravee.fr</p>
+      </div>
+      <div>
+        <h2>Collection</h2>
+        <ul>
+          <li><a href="collection.html#paysages">Paysages</a></li>
+          <li><a href="collection.html#patrimoine">Patrimoine</a></li>
+          <li><a href="collection.html#faune">Faune</a></li>
+          <li><a href="produit-led.html">Kit LED</a></li>
+          <li><a href="produit-carte-cadeau.html">Carte cadeau</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Aide</h2>
+        <ul>
+          <li><a href="installation.html">Installation</a></li>
+          <li><a href="contact.html#faq">Livraison et retours</a></li>
+          <li><a href="https://terregravee.fr/cgv/">Conditions générales de vente</a></li>
+          <li><a href="https://terregravee.fr/politique/">Mentions légales et confidentialité</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Suivre l’atelier</h2>
+        <ul>
+          <li><a href="#">Instagram</a> <mark class="todo">lien</mark></li>
+          <li><a href="#">Facebook</a> <mark class="todo">lien</mark></li>
+          <li><a href="index.html#lettre">Lettre d’information</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="pied__bas">
+      <span>© 2026 Terre Gravée · Micro-entreprise · SIRET 941 234 270 00010</span>
+      <span>Prix TTC, TVA non applicable (art. 293 B du CGI)</span>
+    </div>
+  </div>
+</footer>
+<div class="voile"></div>
+<aside class="tiroir" aria-label="Panier" aria-hidden="true" inert>
+  <div class="tiroir__haut"><h2>Panier</h2><button type="button" class="bouton-icone tiroir__fermer" data-fermer-panier>Fermer</button></div>
+  <ul class="tiroir__liste"></ul>
+  <div class="tiroir__bas">
+    <div class="tiroir__total"><span>Sous-total</span><strong>0 €</strong></div>
+    <button type="button" class="btn btn--plein" disabled>Commander</button>
+    <p>Maquette : la commande est désactivée. Frais de port calculés à l’étape suivante selon le poids et la destination.</p>
+  </div>
+</aside>
+<div class="toast" role="status" aria-live="polite"><span class="toast__texte"></span><button type="button">Voir le panier</button></div>
+<script src="assets/js/site.js"></script>
+</body>
+</html>
