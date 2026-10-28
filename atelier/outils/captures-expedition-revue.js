@@ -84,13 +84,12 @@ async function jouerBataille(page, prefixe, options) {
       if (!capConseil) { await capture(page, prefixe + "-conseil"); capConseil = true; }
       await repondreJuste(page); questions++;
       await attendre(300);
-      if (options.quitterApresVague && questions >= 3) { /* on laisse la préparation finir */ }
       continue;
     }
     if (etat.phase === "preparation" && etat.pret) { await attendre(600); await page.keyboard.press("Enter"); await attendre(400); continue; }
     if (etat.phase === "vague") {
-      if (capVagues <= etat.vague && (etat.engages >= 2 || options.quitterApresVague)) {
-        await attendre(options.quitterApresVague ? 1200 : 400);
+      if (capVagues <= etat.vague) {
+        await attendre(1500);
         await capture(page, prefixe + "-vague" + (etat.vague + 1)); capVagues = etat.vague + 1;
         if (options.quitterApresVague) { await page.keyboard.press("Escape"); await page.waitForSelector(".confirmation"); await capture(page, prefixe + "-quitter"); await page.click(".confirmation .bouton.principal"); return questions; }
       }
@@ -249,7 +248,7 @@ async function parcours(navigateur, w, h) {
   notes["semaine2" + suffixe] = await page.evaluate(() => ({ sceaux: document.querySelectorAll(".route-svg .sceau-halte").length, brume: document.querySelectorAll(".route-svg .halte.brume").length, nappes: document.querySelectorAll(".route-svg .brume-bande image").length }));
   // une halte perdue (murs cédés) : le sceau de plomb
   await page.evaluate(() => { const X = JEU.expedition, e = X.enCours(), a = X.atteignables().find(x => X.EXP.BATAILLES.indexOf(x.type) >= 0 && x.type !== "grand");
-    if (a) { X.entrer(a.id); X.apresBataille(a, { issue: "cede", degatsRival: 0, bonnes: 1, total: 3, entamee: true }); } JEU.ui.afficher("expedition"); });
+    if (a) { X.entrer(a.id); X.apresBataille(a, { issue: "retraite", degatsRival: 0, bonnes: 1, total: 3, entamee: true }); } JEU.ui.afficher("expedition"); });
   await page.waitForSelector("#ecran-expedition .route-svg");
   await capture(page, "27-route-murs-cedes");
   await page.close();
