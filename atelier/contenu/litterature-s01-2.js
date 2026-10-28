@@ -7,6 +7,10 @@
 // (hyperbole, énumération, étymologie), affirmations fausses à un seul détail près, questions q21 à q35 ajoutées.
 // Devoir 1 (litterature-d1) : rien de son texte, de son auteur, ni mer, vagues, soleil ou rochers dans les exemples.
 const S = { fichier: "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf", page: 1 };
+// Audit des questions du 28/10/2026 appliqué : q29 et q33 (doublons) supprimées ; q21 et q16 réécrites depuis la fiche ;
+// q30 devenue question de thème (étymologie d'« hyperbole »), la fiche f3 n'ayant qu'un exemple d'étymologie.
+const THEME = "Cours 1 – Lire la leçon littéraire p9 à 11"; // intitulé du planning, pour les questions de thème (règle du 25/10/2026)
+const T = (titre, page) => ({ theme: THEME, titre, editeur: "Wikipédia", url: "https://fr.wikipedia.org/wiki/" + page });
 
 module.exports = {
   id: "litterature-s01-2",
@@ -104,9 +108,9 @@ module.exports = {
       reponse: { vrai: false, correction: "Faux : elle rend la situation plus effrayante, elle renforce l'effet." },
       explication: "En exagérant, l'hyperbole renforce l'effet de la scène. Le danger paraît plus grand et plus désespéré.", source: S },
     { id: "litterature-s01-2-q21", fiche: "litterature-s01-2-f1", type: "vrai_faux", niveau: 2,
-      enonce: "Montrer un personnage comme réduit à rien alors qu'il est encore vivant, c'est faire une hyperbole.",
+      enonce: "Dire « j'ai pleuré toutes les larmes de mon corps », c'est faire une hyperbole.",
       corrections: [], reponse: { vrai: true, correction: null },
-      explication: "Le personnage n'est pas vraiment réduit à rien : on exagère son état. Cette exagération est une hyperbole.", source: S },
+      explication: "Personne ne pleure vraiment toutes ses larmes : on grossit le chagrin. Cette exagération est une hyperbole.", source: S },
     { id: "litterature-s01-2-q22", fiche: "litterature-s01-2-f1", type: "qcm", niveau: 3,
       enonce: "« Ce devoir m'a pris des siècles. » Quel effet produit cette hyperbole ?",
       choix: ["Elle fait sentir un travail interminable", "Elle donne la durée réelle du travail", "Elle énumère toutes les étapes du travail", "Elle montre que le travail était très facile"],
@@ -196,16 +200,12 @@ module.exports = {
       enonce: "Le mot « cinéma » vient d'un mot grec.",
       corrections: [], reponse: { vrai: true, correction: null },
       explication: "Il vient du grec kinêma. Ce mot veut dire « mouvement ».", source: S },
-    { id: "litterature-s01-2-q29", fiche: "litterature-s01-2-f3", type: "vrai_faux", niveau: 2,
-      enonce: "Le mot « cinéma » vient du grec kinêma, qui veut dire « image ».",
-      corrections: ["Faux : kinêma veut dire « mouvement ».", "Faux : kinêma veut dire « lumière ».", "Faux : « cinéma » vient du latin, pas du grec."],
-      reponse: { vrai: false, correction: "Faux : kinêma veut dire « mouvement »." },
-      explication: "Kinêma, le mot grec d'où vient « cinéma », veut dire « mouvement ». Il ne veut dire ni « image » ni « lumière ».", source: S },
-    { id: "litterature-s01-2-q30", fiche: "litterature-s01-2-f3", type: "qcm", niveau: 3,
-      enonce: "Un élève écrit : « Cinéma vient du grec kinêma, qui veut dire mouvement. » À quelle question répond-il ?",
-      choix: ["Quelle est l'étymologie du mot « cinéma » ?", "Que veut dire le mot « cinéma » aujourd'hui ?", "Relève une hyperbole : qu'apporte-t-elle ?", "Relève une énumération dans le texte."],
-      reponse: "Quelle est l'étymologie du mot « cinéma » ?",
-      explication: "Il donne le mot grec d'où vient « cinéma » et son sens : c'est son étymologie. Il ne dit pas ce que le mot veut dire aujourd'hui.", source: S },
+    { id: "litterature-s01-2-q30", fiche: "litterature-s01-2-f3", type: "qcm", niveau: 2,
+      enonce: "Le mot « hyperbole » vient du grec huperbolê, formé de hyper, « au-delà », et de ballein, « jeter ». Que raconte cette étymologie ?",
+      choix: ["Elle « lance au-delà » : elle dépasse la réalité", "Elle parle à voix basse, sans jamais rien grossir", "Elle range les mots les uns après les autres, en liste", "Elle remonte à l'origine d'un mot et à son ancien sens"],
+      reponse: "Elle « lance au-delà » : elle dépasse la réalité",
+      explication: "Jeter au-delà, c'est aller plus loin que la réalité : l'hyperbole exagère. Son nom grec raconte déjà ce qu'elle fait.",
+      indice: "Au-delà de quoi va une exagération ?", source: T("Hyperbole (rhétorique)", "Hyperbole_(rh%C3%A9torique)") },
     { id: "litterature-s01-2-q31", fiche: "litterature-s01-2-f3", type: "association", niveau: 2,
       enonce: "Relie chaque mot à ce qu'il désigne.",
       gauche: ["étymologie", "kinêma", "hyperbole", "énumération"],
@@ -216,10 +216,10 @@ module.exports = {
     // f4 : relever un procédé et dire ce qu'il apporte
     { id: "litterature-s01-2-q16", fiche: "litterature-s01-2-f4", type: "ordre", niveau: 3,
       enonce: "Range dans l'ordre les étapes d'une bonne réponse à « Relève une hyperbole : qu'apporte-t-elle au récit ? ».",
-      elements: ["Citer le passage entre guillemets", "Dire ce qu'est une hyperbole", "Expliquer ce qu'elle apporte au récit", "Montrer pourquoi le passage exagère"],
-      reponse: [1, 0, 3, 2],
-      explication: "On définit d'abord l'hyperbole, on cite le passage et on prouve qu'il exagère. On finit par l'effet sur le récit.",
-      indice: "Définir, citer, prouver, expliquer.", source: S },
+      elements: ["Expliquer ce qu'elle apporte au récit", "Citer le passage entre guillemets", "Montrer pourquoi le passage exagère"],
+      reponse: [1, 2, 0],
+      explication: "On cite d'abord le passage, puis on prouve qu'il exagère. On finit par l'effet sur le récit.",
+      indice: "Citer, prouver, expliquer.", source: S },
     { id: "litterature-s01-2-q17", fiche: "litterature-s01-2-f4", type: "qcm", niveau: 2,
       enonce: "Comment répondre à la question « qu'apporte-t-elle au récit ? » après avoir relevé une hyperbole ?",
       choix: ["En expliquant l'effet qu'elle produit", "En recopiant la phrase entre guillemets", "En définissant ce qu'est une hyperbole", "En résumant toute l'histoire du livre"],
@@ -244,11 +244,6 @@ module.exports = {
       enonce: "Pour prouver qu'un passage est une hyperbole, on montre qu'il dit les choses plus fort qu'elles ne sont.",
       corrections: [], reponse: { vrai: true, correction: null },
       explication: "Prouver, c'est montrer que le passage exagère : ce qu'il dit n'est pas vrai à la lettre. Ensuite seulement, on explique l'effet.", source: S },
-    { id: "litterature-s01-2-q33", fiche: "litterature-s01-2-f4", type: "vrai_faux", niveau: 1,
-      enonce: "Dans une bonne réponse, on cite le passage, mais sans guillemets.",
-      corrections: ["Faux : on cite le passage entre guillemets.", "Faux : on ne cite jamais le passage, on le résume.", "Faux : on cite seulement le titre du livre."],
-      reponse: { vrai: false, correction: "Faux : on cite le passage entre guillemets." },
-      explication: "Les guillemets montrent qu'on reprend les mots exacts du texte. La citation sert de preuve.", source: S },
     { id: "litterature-s01-2-q34", fiche: "litterature-s01-2-f4", type: "qcm", niveau: 3,
       enonce: "Un élève définit l'hyperbole, cite le passage, puis explique tout de suite son effet. Quelle étape a-t-il sautée ?",
       choix: ["Montrer pourquoi le passage exagère", "Donner l'étymologie du mot « hyperbole »", "Recopier le passage une seconde fois", "Résumer le récit"],

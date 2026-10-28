@@ -313,25 +313,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "lecture-s08-1-q3",
-   "fiche": "lecture-s08-1-f1",
-   "type": "vrai_faux",
-   "niveau": 2,
-   "enonce": "Le nœud en huit est plus petit que le nœud simple.",
-   "corrections": [
-    "Faux : il est plus gros que le nœud simple.",
-    "Faux : il a exactement la même taille que le nœud simple.",
-    "Faux : il est plus petit, mais impossible à défaire."
-   ],
-   "explication": "Le nœud en huit forme un nœud plus gros que le nœud simple. Il reste très simple à faire et à défaire.",
-   "source": {
-    "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
-    "page": 10
-   },
-   "r": "=AFTBNgCZ8hLBUVAAIOrA80FEMGSQQUDdAAFBkUAy4RBFFgAM40AbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
    "id": "lecture-s08-1-q4",
    "fiche": "lecture-s08-1-f1",
    "type": "qcm",
@@ -349,46 +330,6 @@ JEU.enregistrer("cours", {
     "page": 10
    },
    "r": "EVBCCc2FGYBHd4gTKwBSvQkQAxlTKUAFIISZ",
-   "poids": 1
-  },
-  {
-   "id": "lecture-s08-1-q5",
-   "fiche": "lecture-s08-1-f1",
-   "type": "qcm",
-   "niveau": 2,
-   "enonce": "Comment est le nœud en huit à faire et à défaire ?",
-   "choix": [
-    "Très simple",
-    "Très difficile",
-    "Impossible à défaire",
-    "Long à faire"
-   ],
-   "explication": "Le nœud en huit est très simple à faire et à défaire. Son seul défaut : il est plus gros que le nœud simple.",
-   "source": {
-    "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
-    "page": 10
-   },
-   "r": "=AVDv0FCc5lTc4cpbYSZ",
-   "poids": 1
-  },
-  {
-   "id": "lecture-s08-1-q6",
-   "fiche": "lecture-s08-1-f1",
-   "type": "qcm_multiple",
-   "niveau": 2,
-   "enonce": "À quoi sert le nœud de chaise ?",
-   "choix": [
-    "à l'amarrage",
-    "à fixer des voiles",
-    "à terminer un cordage",
-    "à relier deux cordes"
-   ],
-   "explication": "Le nœud de chaise sert à l'amarrage et à fixer des voiles. Terminer un cordage, c'est le rôle du nœud en huit.",
-   "source": {
-    "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
-    "page": 10
-   },
-   "r": "0wEHXQgKCNRFetwCGRBDK4CFVVstTVETKURCx8FBYxUSDYkxqCFH",
    "poids": 1
   },
   {
@@ -433,26 +374,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "lecture-s08-1-q9",
-   "fiche": "lecture-s08-1-f2",
-   "type": "qcm",
-   "niveau": 1,
-   "enonce": "À quoi sert le nœud de cabestan ?",
-   "choix": [
-    "À attacher une corde à un poteau",
-    "À relier les deux bouts d'une même corde",
-    "À bloquer le bout d'un cordage trop court",
-    "À faire une grande boucle qui ne glisse pas"
-   ],
-   "explication": "Le nœud de cabestan attache rapidement une corde à une barre fixe : poteau, mât ou piquet. Il sert à s'amarrer.",
-   "source": {
-    "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
-    "page": 10
-   },
-   "r": "Q1hIIFhWd5UATYUyxe2FRchGSk0CBcASxgUDWxkGbcgRpHbZ",
-   "poids": 1
-  },
-  {
    "id": "lecture-s08-1-q10",
    "fiche": "lecture-s08-1-f2",
    "type": "vrai_faux",
@@ -472,18 +393,18 @@ JEU.enregistrer("cours", {
    "fiche": "lecture-s08-1-f2",
    "type": "vrai_faux",
    "niveau": 2,
-   "enonce": "Le nœud de taquet sert à faire une boucle qui ne glisse pas.",
+   "enonce": "Le nœud de taquet sert à relier deux cordes entre elles.",
    "corrections": [
-    "Faux : le nœud de taquet attache un cordage à un objet, pour brider une écoute ou une amarre.",
-    "Faux : le nœud de taquet relie deux cordes entre elles.",
-    "Faux : le nœud de taquet termine un cordage."
+    "Faux : il attache un cordage à un objet, par exemple un taquet.",
+    "Faux : il bloque le bout d'une corde.",
+    "Faux : il forme une boucle qui ne glisse pas."
    ],
-   "explication": "Le nœud de taquet sert à attacher un cordage à un objet. La boucle, c'est le nœud de chaise.",
+   "explication": "Le nœud de taquet attache un cordage à un objet. Réunir les deux bouts d'une même corde, c'est le rôle du nœud plat.",
    "source": {
     "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
     "page": 10
    },
-   "r": "T0EXNEzXEgFTOpACTk0BoIFERAgHKcMrS1QLYV0RIpgBUQQSAITHFUUWFwABN0BStgVRV6uTKEwBNAAKRU1CAEFDGwwEccDTFFESb4xBSk0FjIVEQYOtH4kCegUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "r": "==gEEhUHXIzAUERVfwhTK4BGugUHQ1AHOYhRFZgIYchCV9BHO9csIZiSEE1XBwgRIwhUiohFEEQBI40AbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -527,26 +448,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "lecture-s08-1-q14",
-   "fiche": "lecture-s08-1-f2",
-   "type": "qcm",
-   "niveau": 2,
-   "enonce": "Que permet de brider le nœud de taquet ?",
-   "choix": [
-    "Une écoute ou une amarre",
-    "Un poteau ou un piquet",
-    "Une voile ou un mât",
-    "Un marin ou un prisonnier"
-   ],
-   "explication": "Le nœud de taquet bride une écoute ou une amarre : il attache un cordage à un objet. Le poteau ou le piquet, c'est pour le nœud de cabestan.",
-   "source": {
-    "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
-    "page": 10
-   },
-   "r": "ENwGAYyHUUEEfwhTa0BSmkFEa50xsa0AHcSZ",
-   "poids": 1
-  },
-  {
    "id": "lecture-s08-1-q15",
    "fiche": "lecture-s08-1-f2",
    "type": "association",
@@ -570,27 +471,6 @@ JEU.enregistrer("cours", {
     "page": 10
    },
    "r": "==ANvYnXG5TWsolQdlCRe0RSEYnQyQlSZlCH",
-   "poids": 1
-  },
-  {
-   "id": "lecture-s08-1-q16",
-   "fiche": "lecture-s08-1-f2",
-   "type": "qcm_multiple",
-   "niveau": 3,
-   "enonce": "Lesquels de ces nœuds servent à s'amarrer ou à attacher une corde à un objet ?",
-   "choix": [
-    "le nœud de cabestan",
-    "le nœud de taquet",
-    "le nœud de chaise",
-    "le nœud plat",
-    "le nœud en huit"
-   ],
-   "explication": "Le cabestan sert à s'amarrer, le taquet attache un cordage à un objet, la chaise sert à l'amarrage. Le plat relie deux bouts d'une même corde et le huit termine un cordage.",
-   "source": {
-    "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
-    "page": 10
-   },
-   "r": "vcFAGgBCGwgUNcSDBAkvrGgRDUAUrBVAAAAAIoxTXwwYJBhpoDwTDowSeVGHUEhBUswDMIVDn0QAA57qBY0AFAFH",
    "poids": 1
   },
   {
@@ -984,46 +864,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "lecture-s08-1-q37",
-   "fiche": "lecture-s08-1-f5",
-   "type": "qcm",
-   "niveau": 2,
-   "enonce": "Que veut dire « des trains », dans ce vocabulaire ?",
-   "choix": [
-    "Des suites",
-    "Des wagons",
-    "Des chaloupes",
-    "Des habitants"
-   ],
-   "explication": "Ici, « des trains » veut dire des suites. Rien à voir avec les wagons.",
-   "source": {
-    "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
-    "page": 9
-   },
-   "r": "h5FABR0GcYUFMYTZ",
-   "poids": 1
-  },
-  {
-   "id": "lecture-s08-1-q38",
-   "fiche": "lecture-s08-1-f5",
-   "type": "qcm",
-   "niveau": 2,
-   "enonce": "Que signifie « au casernement » ?",
-   "choix": [
-    "À l'enfermement",
-    "À la caserne des soldats",
-    "Au départ",
-    "Au port"
-   ],
-   "explication": "« Au casernement » veut dire à l'enfermement. Le mot ressemble à caserne, mais ce n'est pas le sens ici.",
-   "source": {
-    "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
-    "page": 9
-   },
-   "r": "T1BAK8RDu8FATN0CIpgRpHbZ",
-   "poids": 1
-  },
-  {
    "id": "lecture-s08-1-q39",
    "fiche": "lecture-s08-1-f5",
    "type": "qcm",
@@ -1072,21 +912,21 @@ JEU.enregistrer("cours", {
    "gauche": [
     "il vous est loisible de",
     "au comble de ses vœux",
-    "des trains",
-    "au casernement"
+    "une myriade",
+    "donner tout le monde au diable"
    ],
    "droite": [
-    "à l'enfermement",
-    "des suites",
+    "une dizaine de milliers",
+    "repousser tout le monde avec colère",
     "vous pouvez bien",
     "ses désirs réalisés"
    ],
-   "explication": "« Il vous est loisible de » : vous pouvez bien ; au comble de ses vœux : désirs réalisés. Des trains : des suites ; au casernement : à l'enfermement.",
+   "explication": "« Il vous est loisible de » : vous pouvez bien ; au comble de ses vœux : désirs réalisés. Une myriade, c'est une dizaine de milliers ; donner au diable, c'est repousser avec colère.",
    "source": {
     "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
     "page": 9
    },
-   "r": "==ANvcnXG5TWsglQdlCRe4RSEYnQyQlSZlCH",
+   "r": "==ANvYnXG5TWsklQdlCRe4RSEYnQyQlSZlCH",
    "poids": 1
   },
   {

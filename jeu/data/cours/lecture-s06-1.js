@@ -294,19 +294,21 @@ JEU.enregistrer("cours", {
    "fiche": "lecture-s06-1-f1",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Que veut dire le mot armement, dans un récit de mer ?",
+   "enonce": "Dans un récit de mer, que veut dire « armer un navire » ?",
    "choix": [
-    "La préparation",
-    "Les canons du navire",
-    "Les voiles du navire",
-    "La jetée du port"
+    "L'équiper pour prendre la mer : équipage, matériel",
+    "Le charger de canons pour se défendre contre les pirates",
+    "Lui ajouter un mât",
+    "Le repeindre aux couleurs de son pays avant le départ"
    ],
-   "explication": "Dans ce vocabulaire, l'armement est une préparation. La jetée du port, c'est l'estacade.",
+   "explication": "Armer un navire, c'est le préparer à appareiller : embarquer l'équipage et tout le matériel nécessaire. Rien à voir avec des armes.",
    "source": {
-    "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
-    "page": 6
+    "theme": "Un hivernage dans les glaces – Lire les chapitres 9 et 10 p77 à 88",
+    "titre": "Armement (marine)",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Armement_(marine)"
    },
-   "r": "=sEAAsBHi8FBFRYrdYhRI4TZ",
+   "r": "==wDJAFRcYcpSgwHn5FECQRAAshHbv6YXU0RINwTHoQSXUjFbAwBBkEHa0BGj9FAFR0Ge8cpO5TZ",
    "poids": 1
   },
   {
@@ -364,12 +366,12 @@ JEU.enregistrer("cours", {
     "armement"
    ],
    "droite": [
-    "la préparation",
+    "la préparation du navire pour la mer",
     "l'ancrage du navire",
     "la jetée du port",
     "les passages pour entrer dans un port et en sortir"
    ],
-   "explication": "L'estacade est la jetée et les passes les passages du port. Le mouillage est l'ancrage, et l'armement une préparation.",
+   "explication": "L'estacade est la jetée et les passes les passages du port. Le mouillage est l'ancrage, et l'armement la préparation du navire pour la mer.",
    "source": {
     "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
     "page": 6
@@ -395,21 +397,6 @@ JEU.enregistrer("cours", {
     "page": 7
    },
    "r": "=UWAQYhBQkhTccBBjl1CUt1BaUhRHcTZ",
-   "poids": 1
-  },
-  {
-   "id": "lecture-s06-1-q9",
-   "fiche": "lecture-s06-1-f1",
-   "type": "vrai_faux",
-   "niveau": 3,
-   "enonce": "Un équipage qui fait ses préparatifs de mouillage s'apprête à jeter l'ancre.",
-   "corrections": [],
-   "explication": "Oui : le mouillage, c'est l'ancrage du navire. Les préparatifs de mouillage précèdent donc le moment où l'on jette l'ancre.",
-   "source": {
-    "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
-    "page": 8
-   },
-   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -496,7 +483,7 @@ JEU.enregistrer("cours", {
     "Aux enchères",
     "À son armateur",
     "Pièce par pièce",
-    "En secret, la nuit"
+    "À celui qui le réclame le premier"
    ],
    "explication": "Mettre en adjudication, c'est mettre en vente aux enchères. Le bateau va à celui qui offre le plus.",
    "source": {

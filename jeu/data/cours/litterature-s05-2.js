@@ -176,33 +176,13 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "litterature-s05-2-q4",
-   "fiche": "litterature-s05-2-f1",
-   "type": "qcm",
-   "niveau": 2,
-   "enonce": "Dans L'Île au trésor, que fait Jim Hawkins quand il énumère ses actions avant le départ ?",
-   "choix": [
-    "Il raconte ce qu'il fait en imagination sur l'île",
-    "Il fait la liste des armes de l'équipage",
-    "Il décrit un pirate vêtement par vêtement",
-    "Il compte un par un les jours qui lui restent avant de partir"
-   ],
-   "explication": "Jim rêve à l'île avant même d'y être : il l'explore, il grimpe, il admire, en imagination. La liste d'armes, c'était l'énumération d'objets du cours 1.",
-   "source": {
-    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
-    "page": 3
-   },
-   "r": "==wDLMAyl6kHnBAAWU1HGcwGTYgKKRAWE5UADYUHbYCFVlAHWxxHPdxCjhUEbJUDOQhRFsTZ",
-   "poids": 1
-  },
-  {
    "id": "litterature-s05-2-q5",
    "fiche": "litterature-s05-2-f1",
    "type": "vrai_faux",
    "niveau": 2,
-   "enonce": "Dans l'énumération de Jim Hawkins, chaque action a son propre verbe : il explore, il escalade, il contemple.",
+   "enonce": "« Il saute, il court, il crie, il tombe. » Cette phrase est une énumération d'actions.",
    "corrections": [],
-   "explication": "Oui : ce sont des propositions indépendantes, chacune avec son verbe. C'est ce qui fait une énumération d'actions.",
+   "explication": "Quatre actions se suivent, chacune avec son verbe. C'est bien une énumération d'actions.",
    "source": {
     "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
     "page": 3
@@ -536,17 +516,17 @@ JEU.enregistrer("cours", {
    "niveau": 3,
    "enonce": "Jim Hawkins raconte ses rêves de l'île comme des actions qu'il accomplit. Pourquoi ?",
    "choix": [
-    "Parce qu'il les vit en imagination, avant même le départ",
-    "Parce que le personnage a déjà fait exactement ce voyage l'année d'avant",
-    "Parce que le narrateur se trompe de moment",
-    "Parce que les projections sont des bruits réels"
+    "Parce qu'il les vit en imagination, avant le départ",
+    "Parce qu'il raconte un souvenir de l'été passé",
+    "Parce qu'il est déjà arrivé sur l'île",
+    "Parce qu'il décrit l'île qu'il voit depuis le pont du navire"
    ],
    "explication": "Jim vit ses rêves en imagination, si fort que le récit les raconte comme des actions. Il explore et contemple l'île avant d'y être.",
    "source": {
     "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
     "page": 3
    },
-   "r": "MtBAJMDhmGVDLMgRDQA2E+RVRsBEf8wTeZALEFBVDdACHsAASlyFVFBHHkUHK4BSvQkQAxlTKUAFIISZ",
+   "r": "HF0XP8xzl2gUi4RVRsBEf8wTeZALEFBVDdACHsAASlyFVFBHHkUHK4BSvQkQAxlTKUAFIISZ",
    "poids": 1
   },
   {
@@ -575,19 +555,22 @@ JEU.enregistrer("cours", {
    "fiche": "litterature-s05-2-f4",
    "type": "qcm",
    "niveau": 1,
-   "enonce": "Un sujet demande un récit de 10 à 15 lignes. Laquelle de ces longueurs respecte le sujet ?",
+   "enonce": "Dans un récit, comment appelle-t-on l'événement qui vient bouleverser la situation de départ ?",
    "choix": [
-    "12 lignes",
-    "4 lignes",
-    "25 lignes",
-    "Deux pages entières"
+    "L'élément perturbateur",
+    "La situation initiale",
+    "Le dénouement",
+    "La situation finale"
    ],
-   "explication": "Douze lignes, c'est entre dix et quinze : le sujet est respecté. Quatre lignes, c'est trop court ; vingt-cinq ou deux pages, trop long.",
+   "explication": "Au début, tout est calme : c'est la situation initiale. Puis un événement vient tout changer et lance l'histoire : l'élément perturbateur.",
+   "indice": "Il perturbe le calme du début.",
    "source": {
-    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
-    "page": 3
+    "theme": "Cours 4 – Lire la leçon littéraire p36 à 38",
+    "titre": "Schéma narratif",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Sch%C3%A9ma_narratif"
    },
-   "r": "=8gFQNUCGogRbNUZ",
+   "r": "=Q0GHIiBUcwBE0BHKIAS3MEAYRYrD8cpO5TZ",
    "poids": 1
   },
   {
@@ -607,26 +590,6 @@ JEU.enregistrer("cours", {
     "page": 3
    },
    "r": "Qd0GetQAB8QBSJiFVBwBTQQABIVDv0QEQ1wCC4cpBYwZXkRRGghBI80EEMWjmWxXLsRBDkRAiAQVRAAEP40AbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
-   "id": "litterature-s05-2-q26",
-   "fiche": "litterature-s05-2-f4",
-   "type": "qcm",
-   "niveau": 2,
-   "enonce": "Comment vérifier qu'un récit respecte son sujet avant de le rendre ?",
-   "choix": [
-    "Relire pour contrôler le thème et compter les lignes",
-    "Ajouter des lignes jusqu'à la fin de la page",
-    "Remplacer le thème par un autre plus facile",
-    "Recopier le sujet en entier en haut de la première page"
-   ],
-   "explication": "On relit pour vérifier que le thème est traité, et on compte les lignes. Les deux doivent correspondre au sujet.",
-   "source": {
-    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
-    "page": 3
-   },
-   "r": "=EmXAslSHMgRVwgHnBAERUAHG0wTG0wYIhQnubwGGNQBSVzFZEttD0BAAEBSxglCF1wCd8gCMASZ",
    "poids": 1
   },
   {
@@ -653,19 +616,17 @@ JEU.enregistrer("cours", {
    "id": "litterature-s05-2-q28",
    "fiche": "litterature-s05-2-f4",
    "type": "vrai_faux",
-   "niveau": 2,
-   "enonce": "Si le sujet demande un récit de 10 à 15 lignes, on peut en écrire 30 quand l'histoire est belle.",
-   "corrections": [
-    "Faux : la longueur fait partie du sujet, il faut la respecter.",
-    "Faux : un récit demandé doit toujours faire exactement 10 lignes.",
-    "Faux : il n'y a jamais de limite de longueur pour un récit."
-   ],
-   "explication": "La longueur demandée fait partie du sujet. Trente lignes, c'est deux fois trop : le sujet n'est pas respecté.",
+   "niveau": 1,
+   "enonce": "Dans un récit, la situation initiale présente les personnages et le cadre avant que l'action ne commence.",
+   "corrections": [],
+   "explication": "Tout est encore stable : on fait connaissance avec les personnages et le lieu. Ensuite, un élément perturbateur vient tout bouleverser.",
    "source": {
-    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
-    "page": 3
+    "theme": "Cours 4 – Lire la leçon littéraire p36 à 38",
+    "titre": "Schéma narratif",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Sch%C3%A9ma_narratif"
    },
-   "r": "=sxScVzFBYAEBoxCdIVCv0QEAxECPpwDJ51MX8BEGEFHK80FBczXEUUDaYwBAkEAycBACshHF4kDegUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -673,20 +634,22 @@ JEU.enregistrer("cours", {
    "fiche": "litterature-s05-2-f4",
    "type": "qcm_multiple",
    "niveau": 2,
-   "enonce": "Que fixe le sujet d'un court récit à écrire ? (plusieurs réponses)",
+   "enonce": "Quelles étapes font partie du schéma d'un récit ? (plusieurs réponses)",
    "choix": [
-    "Le thème à traiter",
-    "Le nombre de lignes",
-    "La couleur du stylo",
-    "La police d'écriture",
-    "L'heure à laquelle écrire"
+    "La situation initiale",
+    "L'élément perturbateur",
+    "Le dénouement",
+    "La préface",
+    "Le titre du chapitre"
    ],
-   "explication": "Le sujet impose le thème et la longueur du récit. Le stylo, l'écriture ou l'heure n'en font pas partie.",
+   "explication": "Un récit passe par une situation initiale, un élément perturbateur, des péripéties, un dénouement et une situation finale. La préface et le titre d'un chapitre ne racontent rien.",
    "source": {
-    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
-    "page": 3
+    "theme": "Cours 4 – Lire la leçon littéraire p36 à 38",
+    "titre": "Schéma narratif",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Sch%C3%A9ma_narratif"
    },
-   "r": "==wLlFAELIBGF4kCWgkJfdAWCBwTDoySeVGAQEBHQshGPJ9qjhECd6uBbY0AlAFH",
+   "r": "0A1McABCQQgBAYcsMMGSpcRAM1xED0xElAAARcAFZ40Gc0gLEaaWE2KSqQURQJiHUwQAYcwBPxxBqkFBAl1BcY0BlAFH",
    "poids": 1
   },
   {
@@ -694,39 +657,22 @@ JEU.enregistrer("cours", {
    "fiche": "litterature-s05-2-f4",
    "type": "ordre",
    "niveau": 3,
-   "enonce": "Remets dans l'ordre les étapes pour écrire un court récit qui respecte son sujet.",
+   "enonce": "Remets dans l'ordre les étapes d'un récit.",
    "elements": [
-    "Relire et compter les lignes",
-    "Lire le sujet : thème et longueur",
-    "Écrire le récit sur le thème demandé",
-    "Rendre le récit"
+    "Dénouement",
+    "Situation initiale",
+    "Péripéties",
+    "Élément perturbateur"
    ],
-   "explication": "On lit d'abord le sujet, on écrit sur le thème, on relit en comptant les lignes, puis on rend. Vérifier avant de rendre évite le hors sujet.",
+   "explication": "Tout est calme, puis un événement bouleverse la situation et des aventures s'enchaînent. L'histoire se dénoue à la fin.",
+   "indice": "Commence par le moment où tout est encore calme.",
    "source": {
-    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
-    "page": 3
+    "theme": "Cours 4 – Lire la leçon littéraire p36 à 38",
+    "titre": "Schéma narratif",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Sch%C3%A9ma_narratif"
    },
-   "r": "o5hQfpEVFNEH",
-   "poids": 1
-  },
-  {
-   "id": "litterature-s05-2-q31",
-   "fiche": "litterature-s05-2-f4",
-   "type": "qcm",
-   "niveau": 3,
-   "enonce": "Un élève écrit 5 lignes sur les sentiments d'un personnage la veille de son départ, alors que le sujet demandait 10 à 15 lignes. Pourquoi le sujet n'est-il pas respecté ?",
-   "choix": [
-    "Le récit est trop court",
-    "Le thème est hors sujet",
-    "Le récit est trop long",
-    "Il manque une onomatopée"
-   ],
-   "explication": "Le thème est bon, mais cinq lignes, c'est moins que les dix demandées. La longueur fait partie du sujet.",
-   "source": {
-    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
-    "page": 3
-   },
-   "r": "=QUHAITHWUUBeshGPZwGm0QEc50xsShRM4TZ",
+   "r": "o1hQdpUVFNEH",
    "poids": 1
   }
  ],

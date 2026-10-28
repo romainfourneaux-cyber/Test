@@ -9,6 +9,7 @@
 // Audit du 2026-10-15 (difficulté relevée, 7 réussites sur 10) : leurres pris dans les figures déjà vues
 // (hyperbole, énumération, métaphore), affirmations fausses à un seul détail près, questions q18 à q32 ajoutées.
 const S = { fichier: "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf", page: 2 };
+// Audit des questions du 28/10/2026 appliqué : q22, q26, q28 et q32 (doublons d'autres questions du cours) supprimées.
 
 module.exports = {
   id: "litterature-s03-2",
@@ -112,10 +113,6 @@ module.exports = {
       texte: "Rapprocher deux idées opposées, comme le bruit et le silence, c'est faire une ___.",
       reponse: [["antithèse"]],
       explication: "Deux idées contraires côte à côte forment une antithèse. Elle crée un contraste.", source: S },
-    { id: "litterature-s03-2-q22", fiche: "litterature-s03-2-f1", type: "vrai_faux", niveau: 1,
-      enonce: "Opposer le bruit et le silence dans une même phrase crée un contraste.",
-      corrections: [], reponse: { vrai: true, correction: null },
-      explication: "Le bruit et le silence sont des contraires. Les rapprocher fait ressortir l'un et l'autre.", source: S },
     { id: "litterature-s03-2-q23", fiche: "litterature-s03-2-f1", type: "association", niveau: 3,
       enonce: "Relie chaque phrase à la figure qu'elle contient.",
       gauche: ["Il fait chaud dans la maison, glacial dans le jardin.", "J'ai cent mille choses à faire.", "Mon frère est un vrai moulin à paroles.", "J'ai pris un pull, une écharpe, des gants et un bonnet."],
@@ -164,10 +161,6 @@ module.exports = {
       choix: ["froissé", "blessé", "vexé", "assis", "grand", "rapide"],
       reponse: ["froissé", "blessé", "vexé"],
       explication: "Froissé, blessé et vexé disent ce que le personnage éprouve. Assis, grand et rapide décrivent une position, une taille ou une allure.", source: S },
-    { id: "litterature-s03-2-q26", fiche: "litterature-s03-2-f2", type: "vrai_faux", niveau: 1,
-      enonce: "Pour repérer les sentiments d'un personnage, on relève les mots qui disent ce qu'il éprouve.",
-      corrections: [], reponse: { vrai: true, correction: null },
-      explication: "Les mots du texte révèlent les sentiments. On les relève, puis on les nomme.", source: S },
     { id: "litterature-s03-2-q27", fiche: "litterature-s03-2-f2", type: "qcm", niveau: 3,
       enonce: "Un garçon est d'abord « froissé » par une remarque de son chef, puis « blessé » que ce chef ne dise rien du courage qu'il a montré. Comment ses sentiments évoluent-ils ?",
       choix: ["De la vexation à l'injustice", "De la joie à la colère", "De la peur au soulagement", "De la fierté à l'indifférence"],
@@ -205,10 +198,6 @@ module.exports = {
       choix: ["En citant ce que le personnage ressent et pense", "En comptant les personnages du passage", "En résumant le passage avec ses propres mots", "En citant les mots qui décrivent les lieux du passage"],
       reponse: "En citant ce que le personnage ressent et pense",
       explication: "On nomme la focalisation, puis on cite les passages où l'on entend les désirs et les regrets du personnage. La citation sert de preuve.", source: S },
-    { id: "litterature-s03-2-q28", fiche: "litterature-s03-2-f3", type: "vrai_faux", niveau: 1,
-      enonce: "En focalisation interne, les désirs et les regrets d'un personnage sont des indices.",
-      corrections: [], reponse: { vrai: true, correction: null },
-      explication: "Ses désirs et ses regrets montrent qu'on partage son ressenti. On les cite pour prouver la focalisation interne.", source: S },
     { id: "litterature-s03-2-q29", fiche: "litterature-s03-2-f3", type: "trou", niveau: 2,
       enonce: "Écris le mot qui manque.",
       texte: "Quand on suit l'histoire à travers ce que ressent et pense un personnage, on parle de focalisation ___.",
@@ -224,11 +213,6 @@ module.exports = {
       choix: ["On entend ce qu'il souhaite", "On voit une porte, un objet du décor", "On connaît l'heure exacte de la scène", "On lit des faits sans aucun sentiment"],
       reponse: "On entend ce qu'il souhaite",
       explication: "« Pourvu qu'elle ne s'ouvre pas » montre son désir et sa peur : on est dans sa tête. Une porte, à elle seule, ne dit rien de ce qu'il ressent.", source: S },
-    { id: "litterature-s03-2-q32", fiche: "litterature-s03-2-f3", type: "qcm", niveau: 2,
-      enonce: "Pourquoi dit-on qu'on vit l'histoire « de l'intérieur » en focalisation interne ?",
-      choix: ["On partage le ressenti d'un personnage", "L'histoire se passe dans une maison", "Le narrateur ne décrit que les lieux", "On ne connaît que les gestes des personnages"],
-      reponse: "On partage le ressenti d'un personnage",
-      explication: "« De l'intérieur » veut dire : dans la tête d'un personnage. On partage ce qu'il ressent et ce qu'il pense.", source: S }
   ],
   bonus: [
     {

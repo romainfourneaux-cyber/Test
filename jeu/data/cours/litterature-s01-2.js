@@ -220,9 +220,9 @@ JEU.enregistrer("cours", {
    "fiche": "litterature-s01-2-f1",
    "type": "vrai_faux",
    "niveau": 2,
-   "enonce": "Montrer un personnage comme réduit à rien alors qu'il est encore vivant, c'est faire une hyperbole.",
+   "enonce": "Dire « j'ai pleuré toutes les larmes de mon corps », c'est faire une hyperbole.",
    "corrections": [],
-   "explication": "Le personnage n'est pas vraiment réduit à rien : on exagère son état. Cette exagération est une hyperbole.",
+   "explication": "Personne ne pleure vraiment toutes ses larmes : on grossit le chagrin. Cette exagération est une hyperbole.",
    "source": {
     "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
     "page": 1
@@ -547,42 +547,26 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "litterature-s01-2-q29",
-   "fiche": "litterature-s01-2-f3",
-   "type": "vrai_faux",
-   "niveau": 2,
-   "enonce": "Le mot « cinéma » vient du grec kinêma, qui veut dire « image ».",
-   "corrections": [
-    "Faux : kinêma veut dire « mouvement ».",
-    "Faux : kinêma veut dire « lumière ».",
-    "Faux : « cinéma » vient du latin, pas du grec."
-   ],
-   "explication": "Kinêma, le mot grec d'où vient « cinéma », veut dire « mouvement ». Il ne veut dire ni « image » ni « lumière ».",
-   "source": {
-    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
-    "page": 1
-   },
-   "r": "=sBRHlchSFwCQwBDYoRHFMmhnWBScYgAG1xBiQQVEgx2qCgBZgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
    "id": "litterature-s01-2-q30",
    "fiche": "litterature-s01-2-f3",
    "type": "qcm",
-   "niveau": 3,
-   "enonce": "Un élève écrit : « Cinéma vient du grec kinêma, qui veut dire mouvement. » À quelle question répond-il ?",
+   "niveau": 2,
+   "enonce": "Le mot « hyperbole » vient du grec huperbolê, formé de hyper, « au-delà », et de ballein, « jeter ». Que raconte cette étymologie ?",
    "choix": [
-    "Quelle est l'étymologie du mot « cinéma » ?",
-    "Que veut dire le mot « cinéma » aujourd'hui ?",
-    "Relève une hyperbole : qu'apporte-t-elle ?",
-    "Relève une énumération dans le texte."
+    "Elle « lance au-delà » : elle dépasse la réalité",
+    "Elle parle à voix basse, sans jamais rien grossir",
+    "Elle range les mots les uns après les autres, en liste",
+    "Elle remonte à l'origine d'un mot et à son ancien sens"
    ],
-   "explication": "Il donne le mot grec d'où vient « cinéma » et son sens : c'est son étymologie. Il ne dit pas ce que le mot veut dire aujourd'hui.",
+   "explication": "Jeter au-delà, c'est aller plus loin que la réalité : l'hyperbole exagère. Son nom grec raconte déjà ce qu'elle fait.",
+   "indice": "Au-delà de quoi va une exagération ?",
    "source": {
-    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
-    "page": 1
+    "theme": "Cours 1 – Lire la leçon littéraire p9 à 11",
+    "titre": "Hyperbole (rhétorique)",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Hyperbole_(rh%C3%A9torique)"
    },
-   "r": "==ARZlUyFKFFIwtsHcADSNcgNEhWA5kGCYEDbASHZoAGI0xxsWFBjllFQ1wCDowAcMSZ",
+   "r": "=EGhmGERC4wzluhUm4RVAYgAI4hxxywYIlQWI5UVG19qSdesZAQEcxxDPdxCtwUCVYIrPNgCFcTZ",
    "poids": 1
   },
   {
@@ -618,18 +602,17 @@ JEU.enregistrer("cours", {
    "niveau": 3,
    "enonce": "Range dans l'ordre les étapes d'une bonne réponse à « Relève une hyperbole : qu'apporte-t-elle au récit ? ».",
    "elements": [
-    "Citer le passage entre guillemets",
-    "Dire ce qu'est une hyperbole",
     "Expliquer ce qu'elle apporte au récit",
+    "Citer le passage entre guillemets",
     "Montrer pourquoi le passage exagère"
    ],
-   "explication": "On définit d'abord l'hyperbole, on cite le passage et on prouve qu'il exagère. On finit par l'effet sur le récit.",
-   "indice": "Définir, citer, prouver, expliquer.",
+   "explication": "On cite d'abord le passage, puis on prouve qu'il exagère. On finit par l'effet sur le récit.",
+   "indice": "Citer, prouver, expliquer.",
    "source": {
     "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
     "page": 1
    },
-   "r": "o9hQcpkVFNEH",
+   "r": "==wMfpEVFNEH",
    "poids": 1
   },
   {
@@ -724,25 +707,6 @@ JEU.enregistrer("cours", {
     "page": 1
    },
    "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
-   "id": "litterature-s01-2-q33",
-   "fiche": "litterature-s01-2-f4",
-   "type": "vrai_faux",
-   "niveau": 1,
-   "enonce": "Dans une bonne réponse, on cite le passage, mais sans guillemets.",
-   "corrections": [
-    "Faux : on cite le passage entre guillemets.",
-    "Faux : on ne cite jamais le passage, on le résume.",
-    "Faux : on cite seulement le titre du livre."
-   ],
-   "explication": "Les guillemets montrent qu'on reprend les mots exacts du texte. La citation sert de preuve.",
-   "source": {
-    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
-    "page": 1
-   },
-   "r": "==wENhUFdchKXkRCcQgDOpAAc0CSFBlSPwRFHkhUi4RVAEAGK4UAdgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
   },
   {

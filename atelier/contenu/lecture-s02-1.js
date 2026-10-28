@@ -12,6 +12,7 @@
 // (rouf, cambuse, entrepont, pataras, haubans), affirmations fausses à un seul détail près, questions q21 à q36 ajoutées.
 const F = "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf";
 const S = p => ({ fichier: F, page: p });
+// Audit des questions du 28/10/2026 appliqué : q12 (détail technique du pataras) et q33 (doublon de q14) supprimées.
 
 module.exports = {
   id: "lecture-s02-1",
@@ -180,11 +181,6 @@ module.exports = {
       choix: ["Les mâts", "Les câbles", "Les voiles", "Les cordes"],
       reponse: ["Les mâts", "Les câbles"],
       explication: "Le gréement dormant regroupe les parties fixes : mâts et câbles. Voiles et cordes sont mobiles : c'est le gréement courant.", source: S(3) },
-    { id: "lecture-s02-1-q12", fiche: "lecture-s02-1-f3", type: "qcm", niveau: 2,
-      enonce: "Comment le pataras tient-il le mât ?",
-      choix: ["Il le retient vers l'arrière", "Il le pousse vers l'avant", "Il le couche sur le pont", "Il le fait tourner sur lui-même"],
-      reponse: "Il le retient vers l'arrière",
-      explication: "Le pataras sert à retenir le mât vers l'arrière du navire. Pousser vers l'avant, c'est l'inverse de son rôle.", source: S(3) },
     { id: "lecture-s02-1-q27", fiche: "lecture-s02-1-f3", type: "vrai_faux", niveau: 2,
       enonce: "Les câbles font partie du gréement courant.",
       corrections: ["Faux : les câbles sont fixes ; ils font partie du gréement dormant.", "Faux : les câbles ne font partie d'aucun gréement.", "Faux : les câbles font partie de la coque."],
@@ -238,11 +234,6 @@ module.exports = {
       choix: ["À mesurer l'angle entre deux points", "À mesurer la vitesse moyenne du vent", "À mesurer la profondeur de l'eau", "À diriger le gouvernail"],
       reponse: "À mesurer l'angle entre deux points",
       explication: "Le sextant est un instrument de navigation : il mesure la distance angulaire entre deux points. Le gouvernail, lui, se dirige avec la barre.", source: S(7) },
-    { id: "lecture-s02-1-q33", fiche: "lecture-s02-1-f4", type: "qcm", niveau: 2,
-      enonce: "Sur un navire, où se trouve le rouf ?",
-      choix: ["Sur le pont", "Entre le pont et la cale", "Au fond de la cale", "En haut du mât de misaine"],
-      reponse: "Sur le pont",
-      explication: "Le rouf est un abri en bois construit sur le pont. L'étage entre le pont et la cale, c'est l'entrepont.", source: S(7) },
 
     // f5 : se repérer dans le navire
     { id: "lecture-s02-1-q17", fiche: "lecture-s02-1-f5", type: "qcm", niveau: 1,

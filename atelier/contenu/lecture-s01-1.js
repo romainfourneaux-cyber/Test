@@ -10,6 +10,10 @@
 // (pack, brash, iceberg, ice shelf, banquise), affirmations fausses à un seul détail près, questions q18 à q33 ajoutées.
 const F = "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf";
 const S = p => ({ fichier: F, page: p });
+// Audit des questions du 28/10/2026 appliqué : q23 (date de la débâcle en Antarctique, trompeuse pour un roman arctique),
+// q13 et q26 (détails de dictionnaire et de légende) supprimées ; q12 (water sky) devenue question de thème sur l'iceberg.
+const THEME = "Un hivernage dans les glaces – Lire la présentation du livre et parcourir la vie de l’auteur p1 à 27"; // intitulé du planning, pour les questions de thème (règle du 25/10/2026)
+const T = (titre, page) => ({ theme: THEME, titre, editeur: "Wikipédia", url: "https://fr.wikipedia.org/wiki/" + page });
 
 module.exports = {
   id: "lecture-s01-1",
@@ -143,11 +147,6 @@ module.exports = {
       corrections: ["Faux : il faut un air froid pendant plusieurs jours, et une eau à −1,8 °C sur au moins un mètre.", "Faux : il faut un air froid pendant plusieurs mois, sans aucun vent.", "Faux : il suffit que l'eau soit à 0 °C en surface."],
       reponse: { vrai: false, correction: "Faux : il faut un air froid pendant plusieurs jours, et une eau à −1,8 °C sur au moins un mètre." },
       explication: "La banquise ne se forme qu'après plusieurs jours d'air froid. Il faut aussi une eau à −1,8 °C sur au moins un mètre de profondeur.", source: S(1) },
-    { id: "lecture-s01-1-q23", fiche: "lecture-s01-1-f2", type: "qcm", niveau: 3,
-      enonce: "En général, à quel moment de l'année a lieu la débâcle ?",
-      choix: ["Vers novembre ou décembre", "Vers juin ou juillet", "Vers février ou mars", "Vers septembre ou octobre"],
-      reponse: "Vers novembre ou décembre",
-      explication: "La débâcle a lieu en général à la fin de l'hiver austral, vers novembre ou décembre. Elle peut parfois arriver plus tôt, si le temps est exceptionnel.", source: S(1) },
     { id: "lecture-s01-1-q24", fiche: "lecture-s01-1-f2", type: "qcm", niveau: 2,
       enonce: "Comment la banquise se forme-t-elle pendant l'embâcle ?",
       choix: ["L'eau de mer gèle après des jours d'air froid", "Des icebergs se soudent les uns aux autres", "Des glaciers glissent de la terre vers la mer", "Le vent pousse la glace des fleuves vers la mer"],
@@ -176,20 +175,11 @@ module.exports = {
       reponse: [[0, 1], [1, 3], [2, 0], [3, 2]],
       explication: "L'ice shelf est un glacier posé sur l'océan, l'iceberg un bloc qui s'en détache. Le pack réunit des blocs de banquise, le brash de petits débris.", source: S(1) },
     { id: "lecture-s01-1-q12", fiche: "lecture-s01-1-f3", type: "qcm", niveau: 2,
-      enonce: "Comment repère-t-on, en regardant le ciel, qu'il y a de l'eau près de la glace de mer ?",
-      choix: ["Des bandes sombres sous les nuages bas", "Des nuages très blancs au-dessus de la glace", "Des étoiles qui brillent près de l'horizon", "Une brume épaisse sur la banquise"],
-      reponse: "Des bandes sombres sous les nuages bas",
-      explication: "Le water sky, ce sont des bandes sombres sous les nuages bas. Elles signalent de l'eau près de la glace de mer.", source: S(1) },
-    { id: "lecture-s01-1-q13", fiche: "lecture-s01-1-f3", type: "trou", niveau: 3,
-      enonce: "Écris le nom de la langue.",
-      texte: "Le français a emprunté le mot iceberg à l'___, qui l'avait lui-même pris au nordique « isberg ».",
-      reponse: [["anglais"]],
-      explication: "Iceberg est un mot emprunté à l'anglais. L'anglais l'avait pris au mot nordique « isberg ».", source: S(1) },
-    { id: "lecture-s01-1-q26", fiche: "lecture-s01-1-f3", type: "vrai_faux", niveau: 2,
-      enonce: "Le brash est un amas de blocs de glace de plusieurs centaines de mètres.",
-      corrections: ["Faux : le brash est fait de petits débris qui ne dépassent pas 2 m.", "Faux : le brash est un glacier posé sur l'océan.", "Faux : le brash est un bloc d'eau douce qui dérive."],
-      reponse: { vrai: false, correction: "Faux : le brash est fait de petits débris qui ne dépassent pas 2 m." },
-      explication: "Le brash est fait de petits débris de glace, de 2 m au plus. Ils viennent d'autres glaces qui se sont brisées.", source: S(1) },
+      enonce: "Pourquoi un iceberg flotte-t-il au lieu de couler ?",
+      choix: ["Parce que la glace est moins dense que l'eau de mer", "Parce qu'il est creux à l'intérieur", "Parce que le sel de l'eau de mer le porte, comme un bouchon de liège", "Parce que le vent le soulève"],
+      reponse: "Parce que la glace est moins dense que l'eau de mer",
+      explication: "À volume égal, la glace pèse moins que l'eau : elle est moins dense, donc elle flotte. C'est pour cela que les icebergs dérivent sans couler.",
+      indice: "Pense à un glaçon dans un verre d'eau.", source: T("Iceberg", "Iceberg") },
     { id: "lecture-s01-1-q27", fiche: "lecture-s01-1-f3", type: "vrai_faux", niveau: 1,
       enonce: "Un ice shelf est un glacier qui repose sur l'océan au lieu de la terre.",
       corrections: [], reponse: { vrai: true, correction: null },

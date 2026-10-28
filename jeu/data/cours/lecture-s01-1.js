@@ -419,26 +419,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "lecture-s01-1-q23",
-   "fiche": "lecture-s01-1-f2",
-   "type": "qcm",
-   "niveau": 3,
-   "enonce": "En général, à quel moment de l'année a lieu la débâcle ?",
-   "choix": [
-    "Vers novembre ou décembre",
-    "Vers juin ou juillet",
-    "Vers février ou mars",
-    "Vers septembre ou octobre"
-   ],
-   "explication": "La débâcle a lieu en général à la fin de l'hiver austral, vers novembre ou décembre. Elle peut parfois arriver plus tôt, si le temps est exceptionnel.",
-   "source": {
-    "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
-    "page": 1
-   },
-   "r": "==QTDQxCfISEcbaERxRAPdhGhAEADJEAPVBFMQSZ",
-   "poids": 1
-  },
-  {
    "id": "lecture-s01-1-q24",
    "fiche": "lecture-s01-1-f2",
    "type": "qcm",
@@ -543,53 +523,22 @@ JEU.enregistrer("cours", {
    "fiche": "lecture-s01-1-f3",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Comment repère-t-on, en regardant le ciel, qu'il y a de l'eau près de la glace de mer ?",
+   "enonce": "Pourquoi un iceberg flotte-t-il au lieu de couler ?",
    "choix": [
-    "Des bandes sombres sous les nuages bas",
-    "Des nuages très blancs au-dessus de la glace",
-    "Des étoiles qui brillent près de l'horizon",
-    "Une brume épaisse sur la banquise"
+    "Parce que la glace est moins dense que l'eau de mer",
+    "Parce qu'il est creux à l'intérieur",
+    "Parce que le sel de l'eau de mer le porte, comme un bouchon de liège",
+    "Parce que le vent le soulève"
    ],
-   "explication": "Le water sky, ce sont des bandes sombres sous les nuages bas. Elles signalent de l'eau près de la glace de mer.",
+   "explication": "À volume égal, la glace pèse moins que l'eau : elle est moins dense, donc elle flotte. C'est pour cela que les icebergs dérivent sans couler.",
+   "indice": "Pense à un glaçon dans un verre d'eau.",
    "source": {
-    "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
-    "page": 1
+    "theme": "Un hivernage dans les glaces – Lire la présentation du livre et parcourir la vie de l’auteur p1 à 27",
+    "titre": "Iceberg",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Iceberg"
    },
-   "r": "==wUa8QDSthJKRAQD5EHDoQSBITHGUkBUsBDC0xGj5FARN0DNYUFMYTZ",
-   "poids": 1
-  },
-  {
-   "id": "lecture-s01-1-q13",
-   "fiche": "lecture-s01-1-f3",
-   "type": "trou",
-   "niveau": 3,
-   "enonce": "Écris le nom de la langue.",
-   "texte": "Le français a emprunté le mot iceberg à l'___, qui l'avait lui-même pris au nordique « isberg ».",
-   "explication": "Iceberg est un mot emprunté à l'anglais. L'anglais l'avait pris au mot nordique « isberg ».",
-   "source": {
-    "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
-    "page": 1
-   },
-   "r": "==QNe8gFcxkAIgwBLlCH",
-   "poids": 1
-  },
-  {
-   "id": "lecture-s01-1-q26",
-   "fiche": "lecture-s01-1-f3",
-   "type": "vrai_faux",
-   "niveau": 2,
-   "enonce": "Le brash est un amas de blocs de glace de plusieurs centaines de mètres.",
-   "corrections": [
-    "Faux : le brash est fait de petits débris qui ne dépassent pas 2 m.",
-    "Faux : le brash est un glacier posé sur l'océan.",
-    "Faux : le brash est un bloc d'eau douce qui dérive."
-   ],
-   "explication": "Le brash est fait de petits débris de glace, de 2 m au plus. Ils viennent d'autres glaces qui se sont brisées.",
-   "source": {
-    "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
-    "page": 1
-   },
-   "r": "Qd0GA5UXGVBCCcmBbAgBCggHGHLDjh0CVQ0GeYUFAAQJbbbAVJQHHsxFYMGSBURWH4AAG1RAiIVHWQxAL4kCegUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "r": "=cxXLIgRD0gUyMBEClRUMshHS1AMDBQUN0RAPkABSNTAQUEESggAIIVCv0AAAxlTKUAFIISZ",
    "poids": 1
   },
   {

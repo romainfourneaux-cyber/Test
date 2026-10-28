@@ -9,6 +9,10 @@
 // Seconde relecture indépendante le 2026-10-24 : fidélité à la liste, bonus revérifiés en ligne, anti-spoil.
 const F = "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf";
 const S = p => ({ fichier: F, page: p });
+// Audit des questions du 28/10/2026 appliqué : q27 (doublon de q26 et q30) supprimée ; leurres de q5 retouchés ;
+// q11 devenue question de thème (comment les marins ont évité le scorbut), q8 donnant déjà la cause.
+const THEME = "Un hivernage dans les glaces – Lire les chapitres 11 et 12 p89 à 100"; // intitulé du planning, pour les questions de thème (règle du 25/10/2026)
+const T = (titre, page) => ({ theme: THEME, titre, editeur: "Wikipédia", url: "https://fr.wikipedia.org/wiki/" + page });
 
 module.exports = {
   id: "lecture-s07-1",
@@ -130,9 +134,9 @@ module.exports = {
       explication: "Le pemmican est de la viande concentrée et séchée : elle se garde et nourrit. La boisson qui stimule, c'est le cordial.", source: S(7) },
     { id: "lecture-s07-1-q5", fiche: "lecture-s07-1-f1", type: "qcm", niveau: 2,
       enonce: "Que fait un marin qui fait ses ablutions ?",
-      choix: ["Il se lave", "Il mange", "Il dort", "Il chante"],
+      choix: ["Il se lave", "Il se rase", "Il range sa couchette", "Il prend son repas"],
       reponse: "Il se lave",
-      explication: "Faire ses ablutions, c'est se laver. Manger un repas substantiel, c'est autre chose.", source: S(6) },
+      explication: "Faire ses ablutions, c'est se laver. Prendre un repas substantiel, c'est autre chose.", source: S(7) },
     { id: "lecture-s07-1-q6", fiche: "lecture-s07-1-f1", type: "association", niveau: 3,
       enonce: "Relie chaque mot à son sens.",
       gauche: ["pemmican", "cordial", "substantiel", "ablution"],
@@ -162,10 +166,10 @@ module.exports = {
       reponse: { vrai: false, correction: "Faux : c'est une maladie courante sur les bateaux." },
       explication: "Le scorbut est au contraire une maladie courante sur les bateaux. Elle est due à un manque de vitamines.", source: S(7) },
     { id: "lecture-s07-1-q11", fiche: "lecture-s07-1-f2", type: "qcm", niveau: 2,
-      enonce: "Pourquoi les marins attrapaient-ils le scorbut ?",
-      choix: ["Parce qu'ils manquaient de vitamines", "Parce qu'ils avaient trop froid", "Parce qu'ils buvaient de l'eau de mer", "Parce que la lumière des glaces les éblouissait"],
-      reponse: "Parce qu'ils manquaient de vitamines",
-      explication: "Le scorbut vient d'un manque de vitamines. C'était une maladie courante sur les bateaux.", source: S(7) },
+      enonce: "Comment les marins ont-ils appris à éviter le scorbut pendant les longs voyages ?",
+      choix: ["En emportant du jus de citron ou d'orange", "En buvant chaque jour de l'eau de mer bouillie", "En dormant davantage pendant les quarts de nuit", "En restant toujours bien au chaud dans l'entrepont"],
+      reponse: "En emportant du jus de citron ou d'orange",
+      explication: "Le scorbut vient d'un manque de vitamine C, que les agrumes apportent. Les marins qui recevaient chaque jour du jus de citron ne tombaient plus malades.", source: T("Scorbut", "Scorbut") },
     { id: "lecture-s07-1-q12", fiche: "lecture-s07-1-f2", type: "qcm", niveau: 2,
       enonce: "Que veut dire commotion ?",
       choix: ["Un choc", "Un désaccord", "Une fatigue", "Un creux"],
@@ -244,11 +248,6 @@ module.exports = {
       corrections: ["Faux : la mante est un manteau de femme, simple, ample et sans manches.", "Faux : la mante est une chaussure sans lacets.", "Faux : la mante est un bonnet de fourrure."],
       reponse: { vrai: false, correction: "Faux : la mante est un manteau de femme, simple, ample et sans manches." },
       explication: "La mante est un manteau de femme très simple, ample et sans manches. La veste, c'est la casaque.", source: S(7) },
-    { id: "lecture-s07-1-q27", fiche: "lecture-s07-1-f4", type: "qcm", niveau: 2,
-      enonce: "Comment est une mante ?",
-      choix: ["Ample et sans manches", "Courte et serrée à la taille", "Lacée du bas jusqu'au cou", "Épaisse, avec une capuche"],
-      reponse: "Ample et sans manches",
-      explication: "La mante est un manteau de femme ample et sans manches. Elle est très simple.", source: S(7) },
     { id: "lecture-s07-1-q28", fiche: "lecture-s07-1-f4", type: "qcm", niveau: 2,
       enonce: "Que veut dire usuel ?",
       choix: ["Utilisé habituellement", "Utilisé une seule fois", "Usé jusqu'à la corde", "Utile en cas d'urgence"],

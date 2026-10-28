@@ -10,6 +10,10 @@
 // Seconde relecture indépendante le 2026-10-24 : fidélité à la liste, bonus revérifiés en ligne, anti-spoil.
 const F = "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf";
 const S = p => ({ fichier: F, page: p });
+// Audit des questions du 28/10/2026 appliqué : q9 (miroir de q3) supprimée ; q7 et q14 retouchées ; q4 devenue question
+// de thème (armer un navire), la liste ne disant de l'armement que « préparation ».
+const THEME = "Un hivernage dans les glaces – Lire les chapitres 9 et 10 p77 à 88"; // intitulé du planning, pour les questions de thème (règle du 25/10/2026)
+const T = (titre, page) => ({ theme: THEME, titre, editeur: "Wikipédia", url: "https://fr.wikipedia.org/wiki/" + page });
 
 module.exports = {
   id: "lecture-s06-1",
@@ -110,10 +114,10 @@ module.exports = {
       reponse: { vrai: false, correction: "Faux : c'est préparer l'ancrage du navire." },
       explication: "Le mouillage, c'est l'ancrage : on prépare le navire à jeter l'ancre. Prendre la mer, c'est appareiller.", source: S(8) },
     { id: "lecture-s06-1-q4", fiche: "lecture-s06-1-f1", type: "qcm", niveau: 2,
-      enonce: "Que veut dire le mot armement, dans un récit de mer ?",
-      choix: ["La préparation", "Les canons du navire", "Les voiles du navire", "La jetée du port"],
-      reponse: "La préparation",
-      explication: "Dans ce vocabulaire, l'armement est une préparation. La jetée du port, c'est l'estacade.", source: S(6) },
+      enonce: "Dans un récit de mer, que veut dire « armer un navire » ?",
+      choix: ["L'équiper pour prendre la mer : équipage, matériel", "Le charger de canons pour se défendre contre les pirates", "Lui ajouter un mât", "Le repeindre aux couleurs de son pays avant le départ"],
+      reponse: "L'équiper pour prendre la mer : équipage, matériel",
+      explication: "Armer un navire, c'est le préparer à appareiller : embarquer l'équipage et tout le matériel nécessaire. Rien à voir avec des armes.", source: T("Armement (marine)", "Armement_(marine)") },
     { id: "lecture-s06-1-q5", fiche: "lecture-s06-1-f1", type: "trou", niveau: 1,
       enonce: "Complète la phrase.",
       texte: "Pour entrer dans le port, le navire suit les ___ ; il accoste ensuite le long de l'___.",
@@ -128,18 +132,14 @@ module.exports = {
     { id: "lecture-s06-1-q7", fiche: "lecture-s06-1-f1", type: "association", niveau: 3,
       enonce: "Relie chaque mot à son sens.",
       gauche: ["estacade", "passes", "mouillage", "armement"],
-      droite: ["la préparation", "l'ancrage du navire", "la jetée du port", "les passages pour entrer dans un port et en sortir"],
+      droite: ["la préparation du navire pour la mer", "l'ancrage du navire", "la jetée du port", "les passages pour entrer dans un port et en sortir"],
       reponse: [[0, 2], [1, 3], [2, 1], [3, 0]],
-      explication: "L'estacade est la jetée et les passes les passages du port. Le mouillage est l'ancrage, et l'armement une préparation.", source: S(6) },
+      explication: "L'estacade est la jetée et les passes les passages du port. Le mouillage est l'ancrage, et l'armement la préparation du navire pour la mer.", source: S(6) },
     { id: "lecture-s06-1-q8", fiche: "lecture-s06-1-f1", type: "qcm", niveau: 2,
       enonce: "Comment un navire entre-t-il dans un port ou en sort-il ?",
       choix: ["En suivant les passes", "En longeant l'estacade", "En étarquant les voiles", "En préparant son armement"],
       reponse: "En suivant les passes",
       explication: "Les passes sont les passages maritimes qui mènent dans le port et hors du port. L'estacade, elle, est la jetée où l'on accoste.", source: S(7) },
-    { id: "lecture-s06-1-q9", fiche: "lecture-s06-1-f1", type: "vrai_faux", niveau: 3,
-      enonce: "Un équipage qui fait ses préparatifs de mouillage s'apprête à jeter l'ancre.",
-      corrections: [], reponse: { vrai: true, correction: null },
-      explication: "Oui : le mouillage, c'est l'ancrage du navire. Les préparatifs de mouillage précèdent donc le moment où l'on jette l'ancre.", source: S(8) },
 
     // f2 : acheter, gagner, vendre
     { id: "lecture-s06-1-q10", fiche: "lecture-s06-1-f2", type: "qcm", niveau: 1,
@@ -163,7 +163,7 @@ module.exports = {
       explication: "Revendiquer, c'est réclamer une chose sur laquelle on a un droit. Vendre aux enchères, c'est mettre en adjudication.", source: S(8) },
     { id: "lecture-s06-1-q14", fiche: "lecture-s06-1-f2", type: "qcm", niveau: 2,
       enonce: "Comment vend-on un bateau que l'on met en adjudication ?",
-      choix: ["Aux enchères", "À son armateur", "Pièce par pièce", "En secret, la nuit"],
+      choix: ["Aux enchères", "À son armateur", "Pièce par pièce", "À celui qui le réclame le premier"],
       reponse: "Aux enchères",
       explication: "Mettre en adjudication, c'est mettre en vente aux enchères. Le bateau va à celui qui offre le plus.", source: S(8) },
     { id: "lecture-s06-1-q15", fiche: "lecture-s06-1-f2", type: "trou", niveau: 2,

@@ -268,21 +268,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "litterature-s03-2-q22",
-   "fiche": "litterature-s03-2-f1",
-   "type": "vrai_faux",
-   "niveau": 1,
-   "enonce": "Opposer le bruit et le silence dans une même phrase crée un contraste.",
-   "corrections": [],
-   "explication": "Le bruit et le silence sont des contraires. Les rapprocher fait ressortir l'un et l'autre.",
-   "source": {
-    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
-    "page": 2
-   },
-   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
    "id": "litterature-s03-2-q23",
    "fiche": "litterature-s03-2-f1",
    "type": "association",
@@ -468,21 +453,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "litterature-s03-2-q26",
-   "fiche": "litterature-s03-2-f2",
-   "type": "vrai_faux",
-   "niveau": 1,
-   "enonce": "Pour repérer les sentiments d'un personnage, on relève les mots qui disent ce qu'il éprouve.",
-   "corrections": [],
-   "explication": "Les mots du texte révèlent les sentiments. On les relève, puis on les nomme.",
-   "source": {
-    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
-    "page": 2
-   },
-   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
    "id": "litterature-s03-2-q27",
    "fiche": "litterature-s03-2-f2",
    "type": "qcm",
@@ -619,21 +589,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "litterature-s03-2-q28",
-   "fiche": "litterature-s03-2-f3",
-   "type": "vrai_faux",
-   "niveau": 1,
-   "enonce": "En focalisation interne, les désirs et les regrets d'un personnage sont des indices.",
-   "corrections": [],
-   "explication": "Ses désirs et ses regrets montrent qu'on partage son ressenti. On les cite pour prouver la focalisation interne.",
-   "source": {
-    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
-    "page": 2
-   },
-   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
    "id": "litterature-s03-2-q29",
    "fiche": "litterature-s03-2-f3",
    "type": "trou",
@@ -685,26 +640,6 @@ JEU.enregistrer("cours", {
     "page": 2
    },
    "r": "=wkCS8ACaITHGUUGY40GeIVDg0QAbhkGBMgRH0TZ",
-   "poids": 1
-  },
-  {
-   "id": "litterature-s03-2-q32",
-   "fiche": "litterature-s03-2-f3",
-   "type": "qcm",
-   "niveau": 2,
-   "enonce": "Pourquoi dit-on qu'on vit l'histoire « de l'intérieur » en focalisation interne ?",
-   "choix": [
-    "On partage le ressenti d'un personnage",
-    "L'histoire se passe dans une maison",
-    "Le narrateur ne décrit que les lieux",
-    "On ne connaît que les gestes des personnages"
-   ],
-   "explication": "« De l'intérieur » veut dire : dans la tête d'un personnage. On partage ce qu'il ressent et ce qu'il pense.",
-   "source": {
-    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
-    "page": 2
-   },
-   "r": "==wUMkgDcYALedBUd5UATEUDS5iBbAgBCwAHPdBBjhkAUlFHOYhRH0TZ",
    "poids": 1
   }
  ],

@@ -461,25 +461,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "lecture-s03-1-q25",
-   "fiche": "lecture-s03-1-f2",
-   "type": "vrai_faux",
-   "niveau": 2,
-   "enonce": "Quand le vent refuse, il tourne pour aider la marche du navire.",
-   "corrections": [
-    "Faux : il vient plus de l'avant ; c'est quand il adonne qu'il aide la marche.",
-    "Faux : il s'arrête complètement de souffler.",
-    "Faux : il se lève et devient violent."
-   ],
-   "explication": "Le vent refuse quand il souffle plus de l'avant : il gêne la marche. Quand il aide, en venant plus de l'arrière, il adonne.",
-   "source": {
-    "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
-    "page": 8
-   },
-   "r": "=gwUHtwBRohIAVEVB5kCC8ACStyGSBBBRxAAB0BDi0QCc1gCBcwEYI1MBAhQWElUOtBHJUDTClVDLsgRVwhH3IVALABGf40AbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
    "id": "lecture-s03-1-q26",
    "fiche": "lecture-s03-1-f2",
    "type": "vrai_faux",
@@ -629,21 +610,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "lecture-s03-1-q30",
-   "fiche": "lecture-s03-1-f3",
-   "type": "vrai_faux",
-   "niveau": 1,
-   "enonce": "Un navire désemparé est un navire qu'on ne peut plus diriger.",
-   "corrections": [],
-   "explication": "Pour un navire, désemparé veut dire impossible à diriger. On ne peut plus choisir sa route.",
-   "source": {
-    "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
-    "page": 9
-   },
-   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
    "id": "lecture-s03-1-q31",
    "fiche": "lecture-s03-1-f3",
    "type": "association",
@@ -750,25 +716,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "lecture-s03-1-q32",
-   "fiche": "lecture-s03-1-f4",
-   "type": "vrai_faux",
-   "niveau": 2,
-   "enonce": "L'échelle de Beaufort sert à mesurer la hauteur des lames.",
-   "corrections": [
-    "Faux : elle mesure la vitesse moyenne du vent.",
-    "Faux : elle sert à grimper le long du mât.",
-    "Faux : elle mesure la distance entre deux points."
-   ],
-   "explication": "L'échelle de Beaufort mesure la vitesse moyenne du vent, en mer. Ce n'est ni une échelle pour grimper, ni une mesure des vagues.",
-   "source": {
-    "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
-    "page": 6
-   },
-   "r": "==AGXMgGBMAEJdwISBxCbQBEBIgUNAjXAEERY80BKk0F1cgBAgRUMIwAXgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
    "id": "lecture-s03-1-q33",
    "fiche": "lecture-s03-1-f4",
    "type": "vrai_faux",
@@ -849,18 +796,18 @@ JEU.enregistrer("cours", {
    "fiche": "lecture-s03-1-f5",
    "type": "vrai_faux",
    "niveau": 2,
-   "enonce": "Une demi-encablure mesure environ 400 m.",
+   "enonce": "Une encablure mesure environ deux kilomètres.",
    "corrections": [
-    "Faux : une demi-encablure mesure environ 100 m, la moitié d'une encablure.",
-    "Faux : une demi-encablure mesure environ 200 m.",
-    "Faux : une demi-encablure mesure environ 926 m, la moitié d'un mille."
+    "Faux : une encablure mesure environ 200 m.",
+    "Faux : une encablure mesure 1 852 m, comme le mille marin.",
+    "Faux : une encablure mesure environ 32 cm, comme le pied."
    ],
-   "explication": "Demi veut dire moitié : une demi-encablure, c'est la moitié de 200 m. Elle mesure donc environ 100 m.",
+   "explication": "Une encablure vaut environ 200 mètres. Deux kilomètres, c'est plus qu'un mille marin, qui fait 1 852 m.",
    "source": {
     "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
-    "page": 6
+    "page": 3
    },
-   "r": "UwUQXohNBdAVOBgCGNwBHAmFVxstY0xBA8BSiEURZAkTfZ1VJxBKAwxEbQRSL0xBbYCQFB1XbMABHoAHi8FHIARFJtQAHgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "r": "SQESEI1dCdURb4xGHkBHNMGSXAkXLIgRDsxBrABFGsBFJtQAHgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -888,39 +835,21 @@ JEU.enregistrer("cours", {
    "fiche": "lecture-s03-1-f5",
    "type": "qcm",
    "niveau": 3,
-   "enonce": "Un navire est à deux milles marins de la côte. Cela fait combien de mètres ?",
+   "enonce": "Pourquoi les marins mesurent-ils les distances en milles marins plutôt qu'en kilomètres ?",
    "choix": [
-    "3 704 m",
-    "1 852 m",
-    "400 m",
-    "926 m"
+    "Parce qu'un mille vaut une minute de latitude sur le globe",
+    "Parce que le kilomètre n'existait pas encore",
+    "Parce qu'un mille est plus court qu'un kilomètre, donc plus précis",
+    "Parce que les navires vont trop vite pour le kilomètre"
    ],
-   "explication": "Un mille marin vaut 1 852 m. Deux milles font donc 1 852 + 1 852 = 3 704 m.",
+   "explication": "Un mille marin, c'est la longueur d'une minute d'arc de latitude, soit 1 852 m. Les marins s'en servent pour leurs calculs de route sur le globe.",
    "source": {
-    "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
-    "page": 3
+    "theme": "Un hivernage dans les glaces – Lire les chapitres 3 et 4 p45 à 54",
+    "titre": "Mille marin",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Mille_marin"
    },
-   "r": "XAkTbZVUJFUZ",
-   "poids": 1
-  },
-  {
-   "id": "lecture-s03-1-q36",
-   "fiche": "lecture-s03-1-f5",
-   "type": "qcm",
-   "niveau": 3,
-   "enonce": "Un navire jette l'ancre à trois encablures de la côte. À quelle distance de la côte est-il, environ ?",
-   "choix": [
-    "Environ 600 m",
-    "Environ 300 m",
-    "Environ 5 556 m",
-    "Environ 96 cm"
-   ],
-   "explication": "Une encablure vaut environ 200 m. Trois encablures font donc 3 × 200 = 600 m.",
-   "source": {
-    "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
-    "page": 3
-   },
-   "r": "N9BSz1xUVMUAd8AEHcTZ",
+   "r": "MpAEH8iSFBVQO1xEVk0FjcQAMEAEF4kCWgkJZBxWENwTDgAHSNzBUMRVUUgAG8BStglQAxlTKUAFIISZ",
    "poids": 1
   },
   {
@@ -940,26 +869,6 @@ JEU.enregistrer("cours", {
     "page": 3
    },
    "r": "Pc1SYIRScxlUGwyXMM0QL80AUwRAi8RVBABGZ4UAHgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
-   "id": "lecture-s03-1-q38",
-   "fiche": "lecture-s03-1-f5",
-   "type": "qcm_multiple",
-   "niveau": 3,
-   "enonce": "Lesquelles de ces distances valent environ 200 m ?",
-   "choix": [
-    "une encablure",
-    "deux demi-encablures",
-    "un mille marin",
-    "deux pieds"
-   ],
-   "explication": "Une encablure vaut environ 200 m, et deux demi-encablures aussi : 100 + 100. Un mille fait 1 852 m, et deux pieds environ 64 cm.",
-   "source": {
-    "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
-    "page": 3
-   },
-   "r": "==ALL1hCA0xLPRgVDtgQPsADWcmCAAQETVETKAQHv8EBWN0CPNACcAFH",
    "poids": 1
   }
  ],

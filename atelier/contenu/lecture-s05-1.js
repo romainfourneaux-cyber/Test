@@ -9,6 +9,11 @@
 // Seconde relecture indépendante le 2026-10-24 : fidélité à la liste, bonus revérifiés en ligne, anti-spoil.
 const F = "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf";
 const S = p => ({ fichier: F, page: p });
+// Audit des questions du 28/10/2026 appliqué : q9, q13, q21, q24, q29 (détails de légende d'animaux de l'Antarctique,
+// hors sujet pour un roman arctique), q11, q16, q28, q32 (doublons) supprimées ; q7 réécrite ; q4 devenue question de thème
+// (les deux pôles n'ont pas les mêmes animaux). Signalé à Romain : la page de la liste reprise ici décrit l'Antarctique.
+const THEME = "Un hivernage dans les glaces – Lire les chapitres 7 et 8 p68 à 76"; // intitulé du planning, pour les questions de thème (règle du 25/10/2026)
+const T = (titre, page) => ({ theme: THEME, titre, editeur: "Wikipédia", url: "https://fr.wikipedia.org/wiki/" + page });
 
 module.exports = {
   id: "lecture-s05-1",
@@ -90,10 +95,10 @@ module.exports = {
       reponse: { vrai: false, correction: "Faux : le manchot empereur ne sait pas voler." },
       explication: "Le manchot empereur est bien un oiseau marin, mais il ne sait pas voler. Son bec est incurvé.", source: S(5) },
     { id: "lecture-s05-1-q4", fiche: "lecture-s05-1-f1", type: "qcm", niveau: 2,
-      enonce: "Comment est le bec du manchot empereur ?",
-      choix: ["Il est incurvé", "Il est droit et très long", "Il est rouge vif", "Il est plat comme celui du canard"],
-      reponse: "Il est incurvé",
-      explication: "Le bec du manchot empereur est incurvé, c'est-à-dire courbé. Cet oiseau marin ne sait pas voler.", source: S(5) },
+      enonce: "Pourquoi un ours polaire ne croise-t-il jamais de manchot empereur dans la nature ?",
+      choix: ["Ils vivent chacun à un pôle : le manchot au Sud, l'ours au Nord", "Le manchot empereur ne monte au pôle Nord que pendant le court été", "L'ours polaire ne s'approche jamais de la mer ni de la banquise", "Le manchot empereur vit en haute montagne, loin des côtes"],
+      reponse: "Ils vivent chacun à un pôle : le manchot au Sud, l'ours au Nord",
+      explication: "Les manchots empereurs vivent en Antarctique, autour du pôle Sud. L'ours polaire, lui, vit dans l'Arctique : les deux ne se rencontrent jamais.", source: T("Manchot empereur", "Manchot_empereur") },
     { id: "lecture-s05-1-q5", fiche: "lecture-s05-1-f1", type: "qcm_multiple", niveau: 2,
       enonce: "Lesquels de ces oiseaux rencontre-t-on en Antarctique ?",
       choix: ["l'albatros", "le pétrel", "le cormoran", "le goéland", "le harfang des neiges", "le lemming arctique"],
@@ -105,10 +110,10 @@ module.exports = {
       reponse: "Personne ne vit en permanence en Antarctique",
       explication: "L'Antarctique n'a pas d'habitants permanents, contrairement à l'Arctique. On y vient surtout pour la recherche.", source: S(5) },
     { id: "lecture-s05-1-q7", fiche: "lecture-s05-1-f1", type: "qcm", niveau: 3,
-      enonce: "Un oiseau marin au bec incurvé marche sur la glace de l'Antarctique, incapable de voler. Lequel est-ce ?",
-      choix: ["Le manchot empereur", "La sterne antarctique", "Le labbe antarctique", "Le chionis blanc"],
+      enonce: "Un oiseau marin qui ne sait pas voler se dandine sur la glace de l'Antarctique. Lequel est-ce ?",
+      choix: ["Le manchot empereur", "La sterne antarctique", "L'albatros", "Le goéland"],
       reponse: "Le manchot empereur",
-      explication: "Le manchot empereur est l'oiseau marin qui ne sait pas voler et dont le bec est incurvé. La sterne, elle, est un oiseau marin qui vole.", source: S(5) },
+      explication: "Le manchot empereur est l'oiseau marin de l'Antarctique qui ne vole pas. La sterne, l'albatros et le goéland, eux, volent.", source: S(5) },
     { id: "lecture-s05-1-q8", fiche: "lecture-s05-1-f1", type: "trou", niveau: 1,
       enonce: "Complète la phrase.",
       texte: "En Antarctique, la vie humaine est surtout tournée vers la ___ ; le manchot ___ est un oiseau marin qui ne vole pas.",
@@ -117,30 +122,15 @@ module.exports = {
       explication: "Les humains viennent en Antarctique surtout pour la recherche. Le manchot empereur y vit, sans pouvoir voler.", source: S(5) },
 
     // f2 : les oiseaux de l'Antarctique
-    { id: "lecture-s05-1-q9", fiche: "lecture-s05-1-f2", type: "qcm", niveau: 1,
-      enonce: "À quel oiseau le chionis blanc ressemble-t-il ?",
-      choix: ["Au pigeon", "À l'aigle", "Au canard", "À la chouette"],
-      reponse: "Au pigeon",
-      explication: "Le chionis blanc ressemble à un pigeon. Il vit au milieu des manchots.", source: S(5) },
     { id: "lecture-s05-1-q10", fiche: "lecture-s05-1-f2", type: "vrai_faux", niveau: 1,
       enonce: "Le labbe antarctique est un redoutable prédateur.",
       corrections: [], reponse: { vrai: true, correction: null },
       explication: "Oui : le labbe antarctique vole les œufs et tue les petits manchots.", source: S(5) },
-    { id: "lecture-s05-1-q11", fiche: "lecture-s05-1-f2", type: "vrai_faux", niveau: 2,
-      enonce: "Le pipit antarctique est un oiseau marin, comme la sterne.",
-      corrections: ["Faux : le pipit antarctique est un des rares oiseaux non marins.", "Faux : le pipit antarctique n'est pas un oiseau, c'est un pinnipède.", "Faux : le pipit antarctique est un oiseau marin, mais la sterne ne l'est pas."],
-      reponse: { vrai: false, correction: "Faux : le pipit antarctique est un des rares oiseaux non marins." },
-      explication: "Le pipit antarctique fait partie des rares oiseaux non marins de l'Antarctique. La sterne, elle, est bien un oiseau marin.", source: S(5) },
     { id: "lecture-s05-1-q12", fiche: "lecture-s05-1-f2", type: "qcm", niveau: 2,
       enonce: "Comment le labbe antarctique s'attaque-t-il aux manchots ?",
       choix: ["Il vole les œufs et tue les petits manchots", "Il creuse des trous sous leurs nids de glace", "Il les pousse un à un dans l'eau glacée", "Il leur vole le poisson qu'ils rapportent"],
       reponse: "Il vole les œufs et tue les petits manchots",
       explication: "Le labbe antarctique vole les œufs et tue les petits manchots. C'est un prédateur redoutable.", source: S(5) },
-    { id: "lecture-s05-1-q13", fiche: "lecture-s05-1-f2", type: "qcm", niveau: 2,
-      enonce: "Où vit le chionis blanc ?",
-      choix: ["Au milieu des manchots", "Dans la toundra arctique", "Au fond de l'océan", "Dans les terriers des lièvres"],
-      reponse: "Au milieu des manchots",
-      explication: "Le chionis blanc vit parmi les manchots. Il ressemble à un pigeon.", source: S(5) },
     { id: "lecture-s05-1-q14", fiche: "lecture-s05-1-f2", type: "association", niveau: 2,
       enonce: "Relie chaque oiseau de l'Antarctique à ce qui le décrit.",
       gauche: ["sterne antarctique", "pipit antarctique", "chionis blanc", "labbe antarctique"],
@@ -152,11 +142,6 @@ module.exports = {
       choix: ["Le pipit antarctique", "La sterne antarctique", "Le manchot empereur", "L'albatros"],
       reponse: "Le pipit antarctique",
       explication: "Le pipit antarctique est l'un des rares oiseaux non marins de l'Antarctique. La sterne et le manchot empereur sont des oiseaux marins.", source: S(5) },
-    { id: "lecture-s05-1-q16", fiche: "lecture-s05-1-f2", type: "qcm_multiple", niveau: 3,
-      enonce: "Lesquelles de ces affirmations sur les oiseaux de l'Antarctique sont justes ?",
-      choix: ["Le chionis blanc vit au milieu des manchots.", "Le labbe antarctique vole les œufs et tue les petits manchots.", "La sterne antarctique est un oiseau marin.", "Le pipit antarctique est un oiseau marin.", "Le chionis blanc ressemble à un aigle."],
-      reponse: ["Le chionis blanc vit au milieu des manchots.", "Le labbe antarctique vole les œufs et tue les petits manchots.", "La sterne antarctique est un oiseau marin."],
-      explication: "Le chionis vit parmi les manchots et ressemble à un pigeon, le labbe vole les œufs, la sterne est marine. Le pipit, lui, n'est pas un oiseau marin.", source: S(5) },
 
     // f3 : pinnipèdes et cétacés de l'Antarctique
     { id: "lecture-s05-1-q17", fiche: "lecture-s05-1-f3", type: "qcm", niveau: 1,
@@ -178,11 +163,6 @@ module.exports = {
       choix: ["À cause des taches sur son corps", "Parce qu'il court très vite sur la glace", "Parce qu'il grimpe aux rochers", "Parce qu'il chasse en Afrique"],
       reponse: "À cause des taches sur son corps",
       explication: "Son corps est couvert de taches, comme celui du léopard. C'est un pinnipède de l'Antarctique.", source: S(5) },
-    { id: "lecture-s05-1-q21", fiche: "lecture-s05-1-f3", type: "qcm", niveau: 2,
-      enonce: "Combien mesure la baleine bleue ?",
-      choix: ["Environ 30 mètres", "Environ 3 mètres", "Environ 300 mètres", "Environ 90 centimètres"],
-      reponse: "Environ 30 mètres",
-      explication: "La baleine bleue mesure 30 mètres de long. Elle pèse de 80 à 130 tonnes.", source: S(5) },
     { id: "lecture-s05-1-q22", fiche: "lecture-s05-1-f3", type: "qcm_multiple", niveau: 2,
       enonce: "Lesquels de ces animaux sont des cétacés ?",
       choix: ["la baleine bleue", "le petit rorqual de l'Antarctique", "le narval", "le léopard des mers", "le phoque", "le manchot empereur"],
@@ -194,11 +174,6 @@ module.exports = {
       droite: ["une petite baleine", "le plus gros animal de la planète", "un pinnipède tacheté", "la licorne des mers"],
       reponse: [[0, 1], [1, 0], [2, 3], [3, 2]],
       explication: "La baleine bleue est le plus gros animal de la planète et le petit rorqual une petite baleine. Le narval est la licorne des mers, et le léopard des mers un pinnipède tacheté.", source: S(5) },
-    { id: "lecture-s05-1-q24", fiche: "lecture-s05-1-f3", type: "qcm", niveau: 3,
-      enonce: "Quelle masse une baleine bleue peut-elle atteindre ?",
-      choix: ["De 80 à 130 tonnes", "De 8 à 13 tonnes", "De 800 à 1 300 tonnes", "De 300 à 400 kilos"],
-      reponse: "De 80 à 130 tonnes",
-      explication: "Une baleine bleue pèse de 80 à 130 tonnes, pour 30 mètres de long. Aucun animal n'est plus gros.", source: S(5) },
 
     // f4 : les oiseaux rencontrés par les marins
     { id: "lecture-s05-1-q25", fiche: "lecture-s05-1-f4", type: "qcm", niveau: 1,
@@ -215,16 +190,6 @@ module.exports = {
       corrections: ["Faux : le ptarmigan est un lagopède, une sorte de perdrix du Grand Nord ; l'oiseau proche du canard, c'est la sarcelle.", "Faux : le ptarmigan est un grand oiseau échassier.", "Faux : le ptarmigan est un canard migrateur."],
       reponse: { vrai: false, correction: "Faux : le ptarmigan est un lagopède, une sorte de perdrix du Grand Nord ; l'oiseau proche du canard, c'est la sarcelle." },
       explication: "Le ptarmigan, ou lagopède, est une perdrix du Grand Nord. C'est la sarcelle qui est proche du canard.", source: S(7) },
-    { id: "lecture-s05-1-q28", fiche: "lecture-s05-1-f4", type: "qcm", niveau: 2,
-      enonce: "Comment appelle-t-on aussi le ptarmigan ?",
-      choix: ["Un lagopède", "Un eider", "Une sarcelle", "Un pétrel"],
-      reponse: "Un lagopède",
-      explication: "Le ptarmigan est un lagopède, une sorte de perdrix du Grand Nord. L'eider et la sarcelle sont proches du canard.", source: S(7) },
-    { id: "lecture-s05-1-q29", fiche: "lecture-s05-1-f4", type: "qcm", niveau: 2,
-      enonce: "Dans quel hémisphère vit l'eider ?",
-      choix: ["Dans l'hémisphère Nord", "Dans l'hémisphère Sud", "Sur l'équateur", "Dans les deux hémisphères"],
-      reponse: "Dans l'hémisphère Nord",
-      explication: "L'eider est un canard migrateur de l'hémisphère Nord. C'est un des oiseaux rencontrés par les marins.", source: S(6) },
     { id: "lecture-s05-1-q30", fiche: "lecture-s05-1-f4", type: "qcm", niveau: 2,
       enonce: "Comment décrire une sarcelle ?",
       choix: ["Un oiseau aquatique proche du canard", "Un canard migrateur de l'hémisphère Nord", "Une sorte de perdrix du Grand Nord", "Un grand oiseau échassier"],
@@ -236,11 +201,6 @@ module.exports = {
       droite: ["un canard migrateur de l'hémisphère Nord", "un grand oiseau échassier", "une sorte de perdrix du Grand Nord", "un oiseau aquatique proche du canard"],
       reponse: [[0, 2], [1, 3], [2, 0], [3, 1]],
       explication: "Le ptarmigan est une perdrix du Grand Nord et la sarcelle un oiseau proche du canard. L'eider est un canard migrateur, et la grue un échassier.", source: S(7) },
-    { id: "lecture-s05-1-q32", fiche: "lecture-s05-1-f4", type: "qcm_multiple", niveau: 3,
-      enonce: "Lesquels de ces oiseaux sont proches du canard ?",
-      choix: ["la sarcelle", "l'eider", "le ptarmigan", "la grue", "le chionis blanc"],
-      reponse: ["la sarcelle", "l'eider"],
-      explication: "La sarcelle est proche du canard, et l'eider est lui-même un canard migrateur. Le ptarmigan est une perdrix, la grue un échassier et le chionis ressemble au pigeon.", source: S(7) }
   ],
   bonus: [
     {

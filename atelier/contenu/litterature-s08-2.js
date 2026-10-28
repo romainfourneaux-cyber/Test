@@ -7,6 +7,8 @@
 // commentées par le corrigé (des ombres comparées à des lyres, des souliers blessés) sont nommées.
 // Devoir 3 (litterature-d3, cours 6 et 7) : son énoncé n'est pas déposé.
 const S = { fichier: "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf", page: 4 };
+// Audit des questions du 28/10/2026 appliqué : q25 réécrite (reconnaître une comparaison plutôt qu'un détail du poème) ;
+// leurres de q30 retouchés (figures du cours à la place de leurres enfantins).
 
 module.exports = {
   id: "litterature-s08-2",
@@ -214,10 +216,10 @@ module.exports = {
       corrections: [], reponse: { vrai: true, correction: null },
       explication: "Oui : « comme » rapproche le coureur et le lapin. C'est une comparaison.", source: S },
     { id: "litterature-s08-2-q25", fiche: "litterature-s08-2-f4", type: "qcm", niveau: 2,
-      enonce: "Dans « Ma bohème », à quoi les ombres sont-elles comparées ?",
-      choix: ["À des lyres", "À des étoiles", "À des souliers", "À des nuages"],
-      reponse: "À des lyres",
-      explication: "Le poète compare les ombres à des lyres, des instruments dont il tire des sons. Les souliers, eux, servent à une métonymie.", source: S },
+      enonce: "Dans « Ma bohème », le poète écrit « comme des lyres ». Quelle figure de style reconnaît-on ?",
+      choix: ["Une comparaison", "Une métaphore", "Une métonymie", "Une hyperbole"],
+      reponse: "Une comparaison",
+      explication: "Le mot « comme » relie les deux choses rapprochées : c'est une comparaison. Sans ce mot, ce serait une métaphore.", source: S },
     { id: "litterature-s08-2-q26", fiche: "litterature-s08-2-f4", type: "vrai_faux", niveau: 2,
       enonce: "Une métaphore et une comparaison, c'est exactement la même chose.",
       corrections: ["Faux : la comparaison garde un mot comme « comme », la métaphore non.", "Faux : la comparaison exagère, la métaphore non.", "Faux : la comparaison imite un bruit, la métaphore non."],
@@ -241,7 +243,7 @@ module.exports = {
       explication: "« Comme un renard » : comparaison ; le moulin à paroles, sans « comme » : métaphore. Le verre pour son contenu : métonymie ; « mort de fatigue » : hyperbole.", source: S },
     { id: "litterature-s08-2-q30", fiche: "litterature-s08-2-f4", type: "qcm", niveau: 3,
       enonce: "Pourquoi « Mon frère est un vrai moulin à paroles » n'est-il pas une comparaison ?",
-      choix: ["Il manque un mot comme « comme » : c'est une métaphore", "Il manque une exagération volontaire : c'est une hyperbole ratée", "Il manque un bruit : c'est une onomatopée", "Il manque une rime : c'est un alexandrin"],
+      choix: ["Il manque un mot comme « comme » : c'est une métaphore", "Parce que c'est une hyperbole : on exagère", "Parce que c'est une métonymie : le moulin désigne la bouche", "Parce que c'est une antithèse : deux idées opposées"],
       reponse: "Il manque un mot comme « comme » : c'est une métaphore",
       explication: "La phrase fait une image, mais sans mot de liaison : c'est une métaphore. Une comparaison aurait dit « il parle comme un moulin ».", source: S },
     // f5 : la métonymie
