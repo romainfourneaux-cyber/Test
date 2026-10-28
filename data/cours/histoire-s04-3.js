@@ -270,19 +270,19 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Qu'est-ce que la Grande peste de 1348 ?",
    "choix": [
-    "Une épidémie qui tue au moins un Européen sur trois en quelques années",
+    "Une épidémie qui tue environ un Européen sur trois, parfois plus, en quelques années",
     "Une famine due à des pluies qui ne s'arrêtent plus pendant trois ans et empêchent de semer",
     "Une guerre entre les seigneurs et les paysans des villages",
     "Une maladie qui ne touche que les troupeaux de moutons et de porcs"
    ],
-   "explication": "La Grande peste, ou peste noire, arrive en Europe en 1347 et s'y répand jusque vers 1352. Transmise par les puces des rats, elle tue entre 30 et 60 % des habitants selon les régions : les campagnes se vident.",
+   "explication": "La Grande peste, ou peste noire, arrive en Europe en 1347 et s'y répand jusque vers 1352. Transmise par les puces des rats, elle tue entre 30 et 60 % de la population européenne : des villages entiers se vident.",
    "source": {
     "theme": "Cours 6 – La vie dans les campagnes au Moyen Âge",
     "titre": "Peste noire",
     "editeur": "Wikipédia",
     "url": "https://fr.wikipedia.org/wiki/Peste_noire"
    },
-   "r": "==wRGh0xsiACIIFNXAAFZQBHf8EHNMmXMo1Xa8EFTohUpcB3mWgHbshKSZgNNYxWEFgAGNBCSJyBBUEHEghTKsRBq7eAc11xsa0AHcSZ",
+   "r": "QRzFcb6GfggTccRHyEEAAxlTBMgRFFgMeUQRGghBI0xEYMWAWwlQcshRUwRAnxBEMbbAGwhG3gULYV0WCxhBQgADSJyBBUEHEghTKsRBq7eAc11xsa0AHcSZ",
    "poids": 1
   },
   {

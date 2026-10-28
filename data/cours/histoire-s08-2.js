@@ -322,26 +322,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "histoire-s08-2-q12",
-   "fiche": "histoire-s08-2-f2",
-   "type": "qcm",
-   "niveau": 2,
-   "enonce": "Quelle est la position de Philippe le Bel sur l'image ?",
-   "choix": [
-    "Assis sur un trône",
-    "À genoux",
-    "Debout près de la fenêtre",
-    "À cheval"
-   ],
-   "explication": "Philippe le Bel est assis sur un trône doré. C'est Édouard Ier qui est à genoux.",
-   "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 11 - Support.pdf",
-    "page": 1
-   },
-   "r": "XBwGFrKHbIlB20wFA5lTc8QFaMTZ",
-   "poids": 1
-  },
-  {
    "id": "histoire-s08-2-q13",
    "fiche": "histoire-s08-2-f2",
    "type": "vrai_faux",
@@ -372,7 +352,7 @@ JEU.enregistrer("cours", {
     "Parce que Philippe le Bel est aussi roi d'Angleterre",
     "Parce que l'empereur germanique le lui ordonne"
    ],
-   "explication": "Édouard Ier est roi d'Angleterre, mais aussi duc d'Aquitaine, dans le sud-ouest du royaume de France. Pour ces terres, il dépend du roi de France : c'est pourquoi il lui rend hommage, à Paris, en 1286.",
+   "explication": "Édouard Ier est roi d'Angleterre, mais aussi duc d'Aquitaine, dans le sud-ouest du royaume de France. Pour ces terres, il dépend du roi de France : c'est pourquoi il lui rend hommage, en 1286.",
    "source": {
     "theme": "Cours 11 – Étude de document",
     "titre": "Édouard Ier (roi d'Angleterre)",

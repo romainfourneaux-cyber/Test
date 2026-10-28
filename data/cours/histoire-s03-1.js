@@ -189,9 +189,9 @@ JEU.enregistrer("cours", {
    "texte": "Mohamed, que l'on appelle aussi ___, vit de 570 à 632.",
    "banque": [
     "Mahomet",
-    "Justinien",
-    "Clovis",
-    "Constantin"
+    "Hégire",
+    "Omeyyade",
+    "Abbasside"
    ],
    "explication": "On écrit « Mohamed (Mahomet) ». Ce sont deux noms pour la même personne.",
    "source": {
@@ -392,7 +392,7 @@ JEU.enregistrer("cours", {
     "Un grand marchand de Bagdad ou de Damas",
     "Le chef de l'armée byzantine"
    ],
-   "explication": "Le mot arabe « khalifa » veut dire « successeur ». Après la mort de Mohamed, le calife prend la tête de la communauté des musulmans et gouverne l'empire, depuis Damas puis depuis Bagdad.",
+   "explication": "Le mot arabe « khalifa » veut dire « successeur ». Après la mort de Mohamed, le calife dirige la communauté des musulmans et gouverne l'empire : les Omeyyades le font depuis Damas, puis les Abbassides depuis Bagdad.",
    "source": {
     "theme": "Cours 4 – Islam, origines et expansion",
     "titre": "Calife",
@@ -474,7 +474,7 @@ JEU.enregistrer("cours", {
     "Les Abbassides quittent Bagdad et installent leur capitale à Cordoue, en Al-Andalus",
     "Cordoue redevient une ville de l'Empire byzantin"
    ],
-   "explication": "Jusqu'en 929, Cordoue est un émirat : son chef, l'émir, reconnaît en principe le calife de Bagdad. En 929, Abd al-Rahman III se proclame calife à son tour, et Cordoue devient un califat indépendant.",
+   "explication": "Depuis 756, Cordoue est un émirat indépendant, mais son émir reconnaît encore, pour la religion, l'autorité du calife de Bagdad. En 929, l'émir Abd al-Rahman III se proclame calife à son tour : Cordoue ne dépend plus de Bagdad en rien.",
    "source": {
     "theme": "Cours 4 – Islam, origines et expansion",
     "titre": "Califat de Cordoue",

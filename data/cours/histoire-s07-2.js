@@ -302,7 +302,7 @@ JEU.enregistrer("cours", {
     "Le pape et l'empereur germanique",
     "Les Francs et les Lombards"
    ],
-   "explication": "La guerre de Cent Ans oppose le royaume de France, gouverné par les Valois, au royaume d'Angleterre, gouverné par les Plantagenêts. Elle dure de 1337 à 1453, avec de longues trêves.",
+   "explication": "La guerre de Cent Ans oppose le royaume de France, gouverné par les Valois, au royaume d'Angleterre, gouverné par les Plantagenêts. Elle dure de 1337 à 1453, entrecoupée de trêves.",
    "source": {
     "theme": "Cours 9 – Féodaux et seigneurs",
     "titre": "Guerre de Cent Ans",
@@ -601,22 +601,22 @@ JEU.enregistrer("cours", {
    "id": "histoire-s07-2-q26",
    "fiche": "histoire-s07-2-f3",
    "type": "qcm",
-   "niveau": 2,
-   "enonce": "Lequel de ces territoires est un grand comté du royaume de France au Moyen Âge ?",
+   "niveau": 3,
+   "enonce": "Vers l'an mil, quel pouvoir le roi de France a-t-il vraiment sur les grands ducs et les grands comtes du royaume ?",
    "choix": [
-    "La Flandre",
-    "La Normandie",
-    "L'Aquitaine",
-    "La Bourgogne"
+    "Peu de pouvoir : plusieurs d'entre eux sont plus puissants que lui",
+    "Un pouvoir total : il les nomme et les renvoie comme il le veut",
+    "Aucun pouvoir : leurs terres ne font pas partie du royaume de France",
+    "Il les surveille par des envoyés, les missi dominici, comme Charlemagne"
    ],
-   "explication": "La Flandre est un comté, tenu par le comte de Flandre, qui dépend du roi de France. La Normandie, l'Aquitaine et la Bourgogne sont des duchés, tenus par des ducs.",
+   "explication": "Quand Hugues Capet est élu, en 987, ses terres se réduisent à peu près aux régions de Paris et d'Orléans. Le duc de Normandie et le comte d'Anjou ont plus de terres et d'hommes que lui, et le duc d'Aquitaine, loin de Paris, n'en fait qu'à sa tête.",
    "source": {
     "theme": "Cours 9 – Féodaux et seigneurs",
-    "titre": "Comté de Flandre",
+    "titre": "Hugues Capet",
     "editeur": "Wikipédia",
-    "url": "https://fr.wikipedia.org/wiki/Comt%C3%A9_de_Flandre"
+    "url": "https://fr.wikipedia.org/wiki/Hugues_Capet"
    },
-   "r": "hh0FRN0DDAiRI4TZ",
+   "r": "=AlLHkRRQQAGOxhBGIiXWwFWe8UFTUgAnZwGKYQURshCS1QMZtAUKowTVQBHX4SAAkQBRNlTdsxB1glCF1wCLY0EMISZ",
    "poids": 1
   },
   {

@@ -241,7 +241,7 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Pourquoi Bagdad est-elle célèbre au temps des Abbassides ?",
    "choix": [
-    "Une ville immense et riche, où des savants traduisent et étudient les sciences",
+    "C'est une ville immense et riche, où des savants traduisent et étudient les sciences",
     "C'est surtout une forteresse militaire, sans marchands ni savants, bâtie contre les Byzantins",
     "C'est la capitale de l'Empire byzantin, après Constantinople",
     "C'est un petit port de pêcheurs sur la Méditerranée"
@@ -253,7 +253,7 @@ JEU.enregistrer("cours", {
     "editeur": "Wikipédia",
     "url": "https://fr.wikipedia.org/wiki/Bagdad"
    },
-   "r": "==ATccxCtgEDW5lTcMgCJZQKXwRAAUAwt+kBNMWWLAlXHohAHshBnFQALQxBI0xTB0wJNwt9C50QD4gCbUjUBAQVUoBAK8RBq0AAZF0BZY0AHcSZ",
+   "r": "==AUGAgFfwwBMEASwgUCVkFAK8gAcYg7xWVEQEVHAoQABYTSEcUWOxhEIgABmEQVWARFJdNrdg0bI1gVExxTSMQSXQDHQgAGYk0CD4RA10AAbhlTbUxAOFTZ",
    "poids": 1
   },
   {
@@ -605,7 +605,7 @@ JEU.enregistrer("cours", {
     "Elle marque la fin de la dynastie omeyyade et le début des Abbassides",
     "Charlemagne y arrête une armée venue d'Al Andalus"
    ],
-   "explication": "En août 636, près de la rivière Yarmouk, l'armée du califat remporte une victoire décisive sur celle de l'Empire byzantin. Les Byzantins perdent alors pour de bon la Syrie et la Palestine, où se trouvent Damas et Jérusalem.",
+   "explication": "En août 636, près de la rivière Yarmouk, l'armée du califat remporte une victoire décisive sur celle de l'Empire byzantin. Les Byzantins perdent alors la Syrie et la Palestine, où se trouvent Damas et Jérusalem.",
    "source": {
     "theme": "Cours 5 – Empire abbasside et 2 études de document",
     "titre": "Bataille du Yarmouk",
@@ -628,7 +628,7 @@ JEU.enregistrer("cours", {
     "Vers l'est"
    ],
    "explication": "La Mecque est dans la péninsule d'Arabie et Damas bien plus au nord. Le voyageur remonte donc vers le nord.",
-   "indice": "Repère les deux villes sur la carte : laquelle est en haut ?",
+   "indice": "La Mecque est au milieu de la péninsule d'Arabie ; Damas est près de la Méditerranée.",
    "source": {
     "fichier": "cours/histoire/Histoire 5e - Seance 5 - Support et Devoir entrainement.pdf",
     "page": 5
@@ -831,17 +831,21 @@ JEU.enregistrer("cours", {
    "id": "histoire-s04-1-q36",
    "fiche": "histoire-s04-1-f5",
    "type": "vrai_faux",
-   "niveau": 1,
-   "enonce": "Le minaret est la tour d'une mosquée.",
-   "corrections": [],
-   "explication": "Oui : le minaret est une tour qui domine la mosquée et les bâtiments autour. De là-haut, le muezzin lance l'appel à la prière.",
+   "niveau": 2,
+   "enonce": "Le ramadan est le premier mois de l'année du calendrier hégirien.",
+   "corrections": [
+    "Faux : c'est le neuvième mois de l'année hégirienne.",
+    "Faux : c'est le douzième et dernier mois de l'année hégirienne.",
+    "Faux : c'est le sixième mois de l'année hégirienne."
+   ],
+   "explication": "Le ramadan est le neuvième des douze mois de l'année hégirienne. Comme cette année est plus courte que la nôtre, le ramadan commence dix ou onze jours plus tôt chaque année.",
    "source": {
     "theme": "Cours 5 – Empire abbasside et 2 études de document",
-    "titre": "Minaret",
+    "titre": "Ramadan",
     "editeur": "Wikipédia",
-    "url": "https://fr.wikipedia.org/wiki/Minaret"
+    "url": "https://fr.wikipedia.org/wiki/Ramadan"
    },
-   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "r": "==ACTd0CBwRDq8FDSRYrHY0AAHbKcQhQZEFDK8UABwCQFBFQGz6DQwxFpIFEJUVBasASRgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
   },
   {
