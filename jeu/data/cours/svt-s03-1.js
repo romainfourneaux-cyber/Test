@@ -403,59 +403,44 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s03-1-f2",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "La mésosphère va de 50 km à 85 km d'altitude. Quelle est son épaisseur ?",
+   "enonce": "Pourquoi la couche d'ozone de la stratosphère est-elle utile aux êtres vivants ?",
    "choix": [
-    "35 km",
-    "85 km",
-    "135 km",
-    "50 km"
+    "Elle arrête une grande partie des rayons ultraviolets du Soleil",
+    "Elle fabrique le dioxygène que nous respirons à partir de l'eau de mer",
+    "Elle empêche la pluie de tomber trop fort",
+    "Elle réchauffe le sol pendant la nuit"
    ],
-   "explication": "On soustrait la limite basse à la limite haute : 85 − 50 = 35. La mésosphère est épaisse de 35 km.",
+   "explication": "L'ozone de la stratosphère absorbe la plus grande partie des ultraviolets, qui abîment la peau et les yeux. Sans cette couche, la vie à la surface serait bien plus difficile.",
+   "indice": "Pense aux coups de soleil.",
    "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 4
+    "theme": "Séance 1 – Distinguer météorologie et climatologie",
+    "titre": "Couche d'ozone",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Couche_d%27ozone"
    },
-   "r": "==ATC0gRcFUZ",
+   "r": "QlBDQ0hB980BMMmXRAVQBYAEHshBrcQVWshHQ8QHSthJJVEUEpRHHYRSXMCHUchERxAAaIVD3copH91DPNgCFcTZ",
    "poids": 1
   },
   {
    "id": "svt-s03-1-q8",
    "fiche": "svt-s03-1-f2",
    "type": "qcm",
-   "niveau": 2,
-   "enonce": "Comment trouve-t-on l'épaisseur d'une couche de l'atmosphère ?",
+   "niveau": 1,
+   "enonce": "Dans quelle couche de l'atmosphère se forment les nuages, la pluie et le vent ?",
    "choix": [
-    "On soustrait l'altitude du bas de la couche à celle du haut",
-    "On additionne l'altitude du bas de la couche et celle du haut",
-    "On lit seulement l'altitude du haut de la couche",
-    "On soustrait la température du haut à celle du bas"
+    "La troposphère",
+    "La stratosphère",
+    "La mésosphère",
+    "L'exosphère"
    ],
-   "explication": "L'épaisseur, c'est la différence entre le haut et le bas de la couche. Par exemple, la mésosphère fait 85 − 50 = 35 km.",
+   "explication": "La troposphère est la couche la plus basse, celle où nous vivons. Presque toute la vapeur d'eau s'y trouve, donc presque tous les nuages et la pluie.",
    "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 4
+    "theme": "Séance 1 – Distinguer météorologie et climatologie",
+    "titre": "Atmosphère terrestre",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Atmosph%C3%A8re_terrestre"
    },
-   "r": "=MVHb4gGIZTSFBVQCoQBGlcsndRHGAgHK4kDegkJJVkRMxwTTIQSXMyBBwQAdgQSDIFHqw0FB51GAUhRH0TZ",
-   "poids": 1
-  },
-  {
-   "id": "svt-s03-1-q25",
-   "fiche": "svt-s03-1-f2",
-   "type": "qcm",
-   "niveau": 2,
-   "enonce": "Quelle est l'épaisseur de la stratosphère ?",
-   "choix": [
-    "38 km",
-    "50 km",
-    "62 km",
-    "35 km"
-   ],
-   "explication": "La stratosphère va du sommet de la troposphère jusqu'à 50 km : son épaisseur est de 38 km. La mésosphère, juste au-dessus, en fait 35.",
-   "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 4
-   },
-   "r": "==ATC0gRRFUZ",
+   "r": "=s0Cdo9qr0lFa1VAdIhRI4TZ",
    "poids": 1
   },
   {
@@ -482,34 +467,17 @@ JEU.enregistrer("cours", {
    "id": "svt-s03-1-q27",
    "fiche": "svt-s03-1-f2",
    "type": "vrai_faux",
-   "niveau": 1,
-   "enonce": "Vers 50 km d'altitude, la température est d'environ 0 °C.",
+   "niveau": 2,
+   "enonce": "Dans la troposphère, plus on monte, plus il fait froid : environ six degrés de moins tous les mille mètres.",
    "corrections": [],
-   "explication": "À 50 km, à la limite entre stratosphère et mésosphère, il fait environ 0 °C. Plus haut, la température chute fortement.",
+   "explication": "Plus on monte dans la troposphère, plus l'air se refroidit : au sommet des hautes montagnes, il fait bien plus froid qu'en plaine. C'est pour cela que la neige y reste longtemps.",
    "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 4
+    "theme": "Séance 1 – Distinguer météorologie et climatologie",
+    "titre": "Troposphère",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Troposph%C3%A8re"
    },
    "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
-   "id": "svt-s03-1-q28",
-   "fiche": "svt-s03-1-f2",
-   "type": "vrai_faux",
-   "niveau": 3,
-   "enonce": "Sur le graphique de l'atmosphère, on lit les deux limites de l'exosphère, ce qui permet de calculer son épaisseur.",
-   "corrections": [
-    "Faux : seule sa limite basse s'y lit, au sommet de la thermosphère ; son épaisseur ne s'y calcule pas.",
-    "Faux : seule sa limite haute s'y lit, au bord de l'espace.",
-    "Faux : son épaisseur y est la même que celle de la thermosphère."
-   ],
-   "explication": "Pour calculer une épaisseur, il faut l'altitude du haut et celle du bas de la couche. Sur le graphique de l'atmosphère, seule la limite basse de l'exosphère apparaît.",
-   "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 4
-   },
-   "r": "=8QZcZABFEFDCoREEIiTFxkCd80AIkEAychBWwBEZcMrSZALeVkDNsQHOXaACQTHYcBEZ0hTO4BSmkURBh0ACkQFJdgJSlVEc0RSXgUAIZiXWQ1TOpgEPQwGrIFFWUFFFshCBgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -669,21 +637,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "svt-s03-1-q14",
-   "fiche": "svt-s03-1-f4",
-   "type": "vrai_faux",
-   "niveau": 2,
-   "enonce": "Chaque hémisphère compte trois cellules de vents contraires.",
-   "corrections": [],
-   "explication": "Il y en a trois par hémisphère : la cellule de Hadley, la cellule de Ferrel et la cellule polaire. Elles sont liées aux anticyclones et aux dépressions.",
-   "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 6
-   },
-   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
    "id": "svt-s03-1-q15",
    "fiche": "svt-s03-1-f4",
    "type": "qcm_multiple",
@@ -839,26 +792,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "svt-s03-1-q20",
-   "fiche": "svt-s03-1-f5",
-   "type": "ordre",
-   "niveau": 2,
-   "enonce": "Range ces noms du service météorologique français, du plus ancien au plus récent.",
-   "elements": [
-    "Météorologie nationale",
-    "Bureau central météorologique",
-    "Météo-France",
-    "Office national météorologique"
-   ],
-   "explication": "Bureau central en 1878, Office national en 1920, Météorologie nationale en 1945. Météo-France arrive en 1993.",
-   "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 7
-   },
-   "r": "o9hQfpUVFNEH",
-   "poids": 1
-  },
-  {
    "id": "svt-s03-1-q35",
    "fiche": "svt-s03-1-f5",
    "type": "vrai_faux",
@@ -901,26 +834,28 @@ JEU.enregistrer("cours", {
    "id": "svt-s03-1-q37",
    "fiche": "svt-s03-1-f5",
    "type": "association",
-   "niveau": 3,
-   "enonce": "Relie chaque date au nom que prend le service météorologique français.",
+   "niveau": 2,
+   "enonce": "Relie chaque outil de la météo d'aujourd'hui à son rôle.",
    "gauche": [
-    "1878",
-    "1920",
-    "1945",
-    "1993"
+    "Le satellite",
+    "Le radar",
+    "L'ordinateur",
+    "La station au sol"
    ],
    "droite": [
-    "Météo-France",
-    "Bureau central météorologique",
-    "Météorologie nationale",
-    "Office national météorologique"
+    "Calculer les prévisions",
+    "Mesurer le temps sur place",
+    "Voir les nuages depuis l'espace",
+    "Repérer la pluie en direct"
    ],
-   "explication": "Le service devient Bureau central en 1878, puis Office national en 1920 et Météorologie nationale en 1945. Il prend le nom de Météo-France en 1993.",
+   "explication": "Satellites et radars observent les nuages et les pluies, les stations mesurent sur place. Des ordinateurs réunissent toutes ces mesures pour calculer le temps des jours suivants.",
    "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 7
+    "theme": "Séance 1 – Distinguer météorologie et climatologie",
+    "titre": "Météorologie",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/M%C3%A9t%C3%A9orologie"
    },
-   "r": "==ANvcnXG5TWsslQdlCRe4RSEYnQyclSZlCH",
+   "r": "==ANvYnXG5TWsklQdlCRe4RSEYnQyQlSZlCH",
    "poids": 1
   },
   {
@@ -928,19 +863,21 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s03-1-f5",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Combien d'années séparent le début des relevés, en 1855, et la naissance de Météo-France, en 1993 ?",
+   "enonce": "Comment les météorologues préparent-ils les prévisions aujourd'hui ?",
    "choix": [
-    "138 ans",
-    "148 ans",
-    "132 ans",
-    "38 ans"
+    "Des ordinateurs calculent la suite à partir de milliers de mesures",
+    "Ils reprennent le temps qu'il a fait le même jour l'année précédente",
+    "Ils observent le ciel depuis Paris et devinent la suite",
+    "Ils mesurent la température de la mer une fois par mois"
    ],
-   "explication": "On soustrait : 1993 − 1855 = 138. La période couvre donc 138 ans.",
+   "explication": "Les mesures des stations, des ballons et des satellites sont envoyées à de puissants ordinateurs. Ceux-ci calculent comment l'atmosphère va évoluer dans les heures et les jours qui viennent.",
    "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 7
+    "theme": "Séance 1 – Distinguer météorologie et climatologie",
+    "titre": "Prévision numérique du temps",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Pr%C3%A9vision_num%C3%A9rique_du_temps"
    },
-   "r": "X4FAOYkXaNUZ",
+   "r": "LFgIAAgFQwRSLsgUbEDSMkVQHIgRD0gU1sRAXQRAJ5MrS1wNEBhRN8wAGJxBXsyBWkAFSkUHdcQD3w0CclEHAYUFMYTZ",
    "poids": 1
   },
   {
@@ -948,19 +885,21 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s03-1-f5",
    "type": "qcm",
    "niveau": 3,
-   "enonce": "On trace une frise de 1855 à 1993 avec une échelle d'un centimètre pour dix ans. Quelle longueur doit-elle mesurer, environ ?",
+   "enonce": "Pour décrire le climat d'un lieu, sur combien d'années calcule-t-on en général les moyennes de température et de pluie ?",
    "choix": [
-    "Environ 14 cm",
-    "Environ 138 cm",
-    "Environ 1,4 cm",
-    "Environ 7 cm"
+    "Environ trente ans",
+    "Une seule année, la plus récente",
+    "Une semaine",
+    "Mille ans"
    ],
-   "explication": "La période dure 138 ans ; à un centimètre pour dix ans, cela fait environ 14 cm. La frise tient donc sur la largeur d'une page.",
+   "explication": "Le climat d'un lieu se décrit par des moyennes sur une longue durée, pas par le temps d'un jour. Les services météo les calculent sur une trentaine d'années.",
    "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 7
+    "theme": "Séance 1 – Distinguer météorologie et climatologie",
+    "titre": "Normale climatique",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Normale_climatique"
    },
-   "r": "N9xCjlBVVMUAd8AEHcTZ",
+   "r": "=ckBfggTKYgBm8VEVMUAd8AEHcTZ",
    "poids": 1
   }
  ],

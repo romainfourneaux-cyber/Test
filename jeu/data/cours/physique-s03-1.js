@@ -324,26 +324,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "physique-s03-1-q29",
-   "fiche": "physique-s03-1-f1",
-   "type": "qcm",
-   "niveau": 3,
-   "enonce": "Sur une éprouvette, chaque petit trait vaut 2 mL. Un caillou plongé fait monter l'eau de 3 petits traits. Quel est son volume ?",
-   "choix": [
-    "1,5 cm³",
-    "3 cm³",
-    "5 cm³",
-    "6 cm³"
-   ],
-   "explication": "3 petits traits de 2 mL font 6 mL. Comme 1 mL vaut 1 cm³, le caillou mesure 6 cm³.",
-   "source": {
-    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
-    "page": 4
-   },
-   "r": "=8Q3tuQBJRUZ",
-   "poids": 1
-  },
-  {
    "id": "physique-s03-1-q30",
    "fiche": "physique-s03-1-f1",
    "type": "qcm",
@@ -483,21 +463,23 @@ JEU.enregistrer("cours", {
    "id": "physique-s03-1-q32",
    "fiche": "physique-s03-1-f2",
    "type": "qcm",
-   "niveau": 3,
-   "enonce": "Un aquarium mesure 40 cm de long, 25 cm de large et 30 cm de haut. Quel est son volume ?",
+   "niveau": 2,
+   "enonce": "Combien de centimètres cubes y a-t-il dans un litre ?",
    "choix": [
-    "95 cm³",
+    "10 cm³",
+    "500 cm³",
     "1 000 cm³",
-    "30 000 cm³",
-    "300 000 cm³"
+    "10 000 cm³"
    ],
-   "explication": "V = 40 × 25 × 30. Comme 40 × 25 = 1 000, le volume est de 30 000 cm³.",
-   "indice": "Multiplie d'abord 40 par 25.",
+   "explication": "Un litre, c'est un décimètre cube, et un millilitre, c'est un centimètre cube. Comme il y a mille millilitres dans un litre, un litre fait 1 000 cm³.",
+   "indice": "Pense que 1 mL = 1 cm³.",
    "source": {
-    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
-    "page": 4
+    "theme": "Séance 3 – La masse et le volume",
+    "titre": "Litre",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Litre"
    },
-   "r": "==gSw/OCW1gXfZlRZFUZ",
+   "r": "h55pY5kTfZlVJNUZ",
    "poids": 1
   },
   {
@@ -685,18 +667,20 @@ JEU.enregistrer("cours", {
    "fiche": "physique-s03-1-f3",
    "type": "vrai_faux",
    "niveau": 2,
-   "enonce": "Un papillon a une masse d'environ 30 g.",
+   "enonce": "Une tonne vaut cent kilogrammes.",
    "corrections": [
-    "Faux : environ 30 mg ; 30 g, c'est plutôt une mésange.",
-    "Faux : environ 30 kg ; 30 g, c'est plutôt un crayon.",
-    "Faux : environ 30 t ; 30 g, c'est plutôt un cheveu."
+    "Faux : une tonne vaut mille kilogrammes.",
+    "Faux : une tonne vaut dix kilogrammes.",
+    "Faux : une tonne vaut un million de kilogrammes."
    ],
-   "explication": "Un papillon est très léger : environ 30 mg. Les 30 g correspondent à une mésange.",
+   "explication": "Une tonne, c'est mille kilogrammes. C'est l'unité des très grandes masses, comme celle d'un hélicoptère ou d'une baleine bleue.",
    "source": {
-    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
-    "page": 4
+    "theme": "Séance 3 – La masse et le volume",
+    "titre": "Tonne",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Tonne"
    },
-   "r": "=gxVfxQCBMxGq7OCVgEAaYkEdH7MHkRFVVgGLgUEI9mSFVgHORlRBQgU3FUVLoxAAgRAXgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "r": "==wGLxFNXgBCUMgDBMwGDMGSJkFRD8kETgABndxGLoRBJtQAHgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -740,28 +724,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "physique-s03-1-q39",
-   "fiche": "physique-s03-1-f3",
-   "type": "qcm_multiple",
-   "niveau": 2,
-   "enonce": "Pour quels êtres ou objets le gramme est-il l'unité de masse la mieux adaptée ?",
-   "choix": [
-    "Une mésange",
-    "Un hélicoptère",
-    "Un cheveu",
-    "Un papillon",
-    "Un sac d'école",
-    "Un crayon"
-   ],
-   "explication": "Un crayon et une mésange se pèsent en grammes. Le cheveu et le papillon se comptent en milligrammes, le sac en kilogrammes et l'hélicoptère en tonnes.",
-   "source": {
-    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
-    "page": 4
-   },
-   "r": "==gMENgDcYSAcbKGRxAA6AFRhNkCMxEHMYEC8AFH",
-   "poids": 1
-  },
-  {
    "id": "physique-s03-1-q17",
    "fiche": "physique-s03-1-f4",
    "type": "vrai_faux",
@@ -785,7 +747,7 @@ JEU.enregistrer("cours", {
    "fiche": "physique-s03-1-f4",
    "type": "qcm",
    "niveau": 1,
-   "enonce": "D'après la pesée de l'eau, quelle masse a 1 L d'eau ?",
+   "enonce": "Quelle est la masse de 1 L d'eau ?",
    "choix": [
     "1 mg",
     "1 g",
@@ -805,15 +767,15 @@ JEU.enregistrer("cours", {
    "fiche": "physique-s03-1-f4",
    "type": "trou",
    "niveau": 1,
-   "enonce": "Complète le résultat de l'expérience des cylindres.",
-   "texte": "Les premiers cylindres ont tous le même ___, mais pas la même masse. Les seconds ont tous la même ___, mais pas le même volume.",
+   "enonce": "Complète la règle sur la masse et le volume.",
+   "texte": "Deux objets qui ont le même ___ peuvent avoir des masses différentes. Deux objets qui ont la même ___ peuvent avoir des volumes différents.",
    "banque": [
     "volume",
     "masse",
     "couleur",
     "forme"
    ],
-   "explication": "Un même volume peut avoir des masses différentes, et l'inverse. Masse et volume ne se confondent pas.",
+   "explication": "Un même volume peut avoir des masses différentes, et une même masse des volumes différents. Masse et volume ne se confondent pas.",
    "source": {
     "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
     "page": 4
@@ -842,25 +804,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "physique-s03-1-q40",
-   "fiche": "physique-s03-1-f4",
-   "type": "vrai_faux",
-   "niveau": 2,
-   "enonce": "Les cylindres qui avaient tous le même volume, 70 cm³, avaient aussi tous la même masse.",
-   "corrections": [
-    "Faux : ils avaient le même volume, mais aucun n'avait la même masse.",
-    "Faux : ils avaient la même masse, mais pas le même volume.",
-    "Faux : ils avaient la même masse, mais un volume plus petit que 70 cm³."
-   ],
-   "explication": "Même volume ne veut pas dire même masse : chaque cylindre de 70 cm³ avait sa propre masse. Masse et volume sont deux grandeurs différentes.",
-   "source": {
-    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
-    "page": 4
-   },
-   "r": "==gPPsEUe1hDLYEDf0esYUEFdkkGGMhHiowCVM0GMMxBJFgLTgRRZRBBbMQHeMGSI8p7D80AKkkBpcBHEMAEJ1xAbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
    "id": "physique-s03-1-q41",
    "fiche": "physique-s03-1-f4",
    "type": "qcm",
@@ -885,7 +828,7 @@ JEU.enregistrer("cours", {
    "fiche": "physique-s03-1-f4",
    "type": "qcm_multiple",
    "niveau": 3,
-   "enonce": "Quelles conclusions tire-t-on de l'expérience des cylindres ?",
+   "enonce": "On pèse des cylindres de même volume, puis d'autres de même masse. Que montre cette expérience ?",
    "choix": [
     "Deux cylindres de même masse ont le même volume",
     "Un même volume peut avoir des masses différentes",
@@ -1000,21 +943,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "physique-s03-1-q43",
-   "fiche": "physique-s03-1-f5",
-   "type": "vrai_faux",
-   "niveau": 2,
-   "enonce": "À masse égale, le plomb occupe moins de place que l'aluminium.",
-   "corrections": [],
-   "explication": "Oui : le bloc de plomb est plus petit que le bloc d'aluminium de même masse. C'est pour cela que le plomb est plus dense.",
-   "source": {
-    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
-    "page": 5
-   },
-   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
    "id": "physique-s03-1-q44",
    "fiche": "physique-s03-1-f5",
    "type": "qcm",
@@ -1032,26 +960,6 @@ JEU.enregistrer("cours", {
     "page": 5
    },
    "r": "hxWRQFkAGQgRI4TZ",
-   "poids": 1
-  },
-  {
-   "id": "physique-s03-1-q45",
-   "fiche": "physique-s03-1-f5",
-   "type": "qcm",
-   "niveau": 3,
-   "enonce": "Un bloc de plomb et un bloc d'aluminium ont exactement le même volume. Lequel a la plus grande masse ?",
-   "choix": [
-    "Le bloc de plomb",
-    "Le bloc d'aluminium",
-    "Ils ont la même masse",
-    "On ne peut pas comparer deux métaux"
-   ],
-   "explication": "Le plomb est plus dense que l'aluminium. À volume égal, c'est donc le bloc de plomb qui a la plus grande masse.",
-   "source": {
-    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
-    "page": 5
-   },
-   "r": "TtwAA4BGjhUAV4UADQgRM4TZ",
    "poids": 1
   },
   {

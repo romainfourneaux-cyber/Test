@@ -336,26 +336,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "physique-s04-1-q8",
-   "fiche": "physique-s04-1-f1",
-   "type": "qcm",
-   "niveau": 2,
-   "enonce": "Que fait-on au mélange d'eau et de sel pour que le sel se dissolve et que l'eau devienne transparente ?",
-   "choix": [
-    "On l'a agité",
-    "On l'a chauffé",
-    "On l'a filtré",
-    "On l'a laissé au soleil"
-   ],
-   "explication": "On agite le verre pour mélanger. Le sel se dissout et l'eau devient transparente.",
-   "source": {
-    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
-    "page": 5
-   },
-   "r": "Nt9q3QkAU1wDIpgRH0TZ",
-   "poids": 1
-  },
-  {
    "id": "physique-s04-1-q9",
    "fiche": "physique-s04-1-f2",
    "type": "qcm",
@@ -635,19 +615,19 @@ JEU.enregistrer("cours", {
    "fiche": "physique-s04-1-f4",
    "type": "qcm",
    "niveau": 1,
-   "enonce": "Pour trouver la solubilité du sel, on ajoute le sel à cent grammes d'eau par paliers de combien ?",
+   "enonce": "Que se passe-t-il quand on ajoute toujours plus de sel dans la même quantité d'eau ?",
    "choix": [
-    "5 g",
-    "1 g",
-    "10 g",
-    "35 g"
+    "Il se dissout toujours, quelle que soit la quantité qu'on ajoute",
+    "Passé une certaine quantité, il reste au fond sans se dissoudre",
+    "L'eau finit par devenir solide, comme de la glace salée",
+    "Le sel déjà dissous ressort de l'eau et flotte à la surface"
    ],
-   "explication": "Le sel est ajouté 5 g à la fois. On regarde à chaque fois si le mélange reste homogène.",
+   "explication": "L'eau ne peut dissoudre qu'une quantité limitée de sel : c'est sa solubilité. Au-delà, le sel reste visible au fond et le mélange devient hétérogène.",
    "source": {
     "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
     "page": 5
    },
-   "r": "=QUAJdUZ",
+   "r": "==QZXcQAA4hGdYgFIZiXFZ0QPwhRCcQHhIFAEUFFd0hCAg0LEVUGE26GPIxBTIzAVBwGYggGdcxCjh0CA1wxsWRFIISZ",
    "poids": 1
   },
   {
@@ -655,9 +635,28 @@ JEU.enregistrer("cours", {
    "fiche": "physique-s04-1-f4",
    "type": "vrai_faux",
    "niveau": 2,
-   "enonce": "Avec 35 g de sel dans cent grammes d'eau, le mélange est encore homogène.",
+   "enonce": "On peut dissoudre autant de sel qu'on veut dans un verre d'eau.",
+   "corrections": [
+    "Faux : au-delà d'une certaine quantité, le sel ne se dissout plus et le mélange devient hétérogène.",
+    "Faux : le sel se dissout sans limite seulement dans l'eau chaude.",
+    "Faux : le sel ne se dissout jamais dans l'eau, il reste toujours au fond."
+   ],
+   "explication": "La quantité de sel que l'eau peut dissoudre a une limite. Au-delà, le sel reste au fond du verre.",
+   "source": {
+    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
+    "page": 5
+   },
+   "r": "UAVaXsRz2ahBcYcscou7NURWAowDQwgFndhELQRHA3qAS1wLNEBUN0hGKYRSGITHGYBHVk0CcIVDt0QCQ5lTKogRFtNhGwREbABHf80FGoCTRcESN80AIwRVjIV1mmBFNMkGTgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "physique-s04-1-q25",
+   "fiche": "physique-s04-1-f4",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Dans cent grammes d'eau, on peut dissoudre environ 35 g de sel ; au-delà, il en reste au fond.",
    "corrections": [],
-   "explication": "Oui : jusqu'à 35 g, tout le sel se dissout. C'est à 40 g que le mélange devient hétérogène.",
+   "explication": "Oui : jusqu'à 35 g environ, tout le sel disparaît dans cent grammes d'eau. Avec plus de sel, une partie ne se dissout plus et le mélange devient hétérogène.",
    "source": {
     "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
     "page": 5
@@ -666,62 +665,45 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "physique-s04-1-q25",
-   "fiche": "physique-s04-1-f4",
-   "type": "vrai_faux",
-   "niveau": 2,
-   "enonce": "Avec 40 g de sel dans cent grammes d'eau, tout le sel se dissout.",
-   "corrections": [
-    "Faux : à 40 g, le mélange devient hétérogène, du sel ne se dissout plus.",
-    "Faux : à 40 g, l'eau devient solide.",
-    "Faux : à 40 g, il reste du sel au fond, mais le mélange est encore homogène."
-   ],
-   "explication": "À 40 g, le sel ne se dissout plus entièrement. Le mélange est hétérogène.",
-   "source": {
-    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
-    "page": 5
-   },
-   "r": "=gwUH1hGegxYZBhWe1hBCYEDBc2FbUUGUohTaYBSvh0Cd6eCAQxzqag7x2RRB8BDHkxFMMGSCsFTCYcpLk0FrIVWCUVQd50zxiUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
    "id": "physique-s04-1-q26",
    "fiche": "physique-s04-1-f4",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Pourquoi la solubilité trouvée dans cette expérience n'est-elle qu'approximative ?",
+   "enonce": "Pour trouver combien de sel l'eau peut dissoudre, on ajoute le sel 5 g à la fois. Pourquoi le résultat n'est-il qu'approximatif ?",
    "choix": [
-    "Parce qu'on ajoute 5 g à la fois",
-    "Parce que l'eau n'a pas été pesée",
-    "Parce que le verre était trop petit",
-    "Parce qu'on a oublié d'agiter"
+    "Parce que l'eau n'a pas été pesée avec précision avant de commencer l'expérience",
+    "Parce qu'entre deux ajouts, on ne sait pas où le sel cesse de se dissoudre",
+    "Parce qu'une partie du sel s'évapore avec l'eau",
+    "Parce que le verre était trop petit pour tout le sel"
    ],
-   "explication": "Entre 35 g et 40 g, on ne sait pas exactement où le sel cesse de se dissoudre. Il faudrait l'ajouter gramme par gramme.",
+   "explication": "Si tout se dissout à 35 g mais plus à 40 g, la vraie limite est quelque part entre les deux. En ajoutant le sel gramme par gramme, on la trouverait plus précisément.",
    "source": {
     "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
     "page": 5
    },
-   "r": "=oEMEpwUN8wAGZsqSBiUAVEEFwRAFMBStIkQAxlTKUAFIISZ",
+   "r": "=8AAHl0GAURFAYxZXYQRQURSLwRANASDJAlXOpgCGBdsoIlBEUQUdcgDBgkJDV0WC50QVIBHd0yEV1BAU0gTKAAHtgkQAxlTKUAFIISZ",
    "poids": 1
   },
   {
    "id": "physique-s04-1-q27",
    "fiche": "physique-s04-1-f4",
    "type": "qcm",
-   "niveau": 3,
-   "enonce": "Comment obtenir une valeur plus précise de la solubilité du sel ?",
+   "niveau": 2,
+   "enonce": "Comment dissoudre plus de sucre dans un même verre d'eau ?",
    "choix": [
-    "Ajouter le sel gramme par gramme",
-    "Ajouter le sel par paliers de 10 g",
-    "Prendre beaucoup moins d'eau",
-    "Agiter plus longtemps à chaque palier"
+    "En remuant plus vite",
+    "En chauffant l'eau",
+    "En ajoutant du sel",
+    "En mettant le verre au frais"
    ],
-   "explication": "Avec des paliers plus petits, on trouve plus précisément la quantité où le sel cesse de se dissoudre. Le gramme, ou même le décigramme, convient mieux que 5 g.",
+   "explication": "Le sucre est très soluble dans l'eau, et sa solubilité augmente avec la température. Dans l'eau chaude, un même verre en dissout donc davantage.",
    "source": {
-    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
-    "page": 5
+    "theme": "Séance 4 – Mélange et dissolution",
+    "titre": "Saccharose",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Saccharose"
    },
-   "r": "==QYIhAWMxBCGRBCCc2FYgAFD4gTDcxGjhUCV81CbMRCDMTZ",
+   "r": "=cEAQwQSDIFHtw0ATh1DHUgRHcTZ",
    "poids": 1
   },
   {
@@ -729,7 +711,7 @@ JEU.enregistrer("cours", {
    "fiche": "physique-s04-1-f4",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Dans le TP, l'eau est comptée en grammes alors que c'est un liquide. Pourquoi est-ce possible ?",
+   "enonce": "On pèse l'eau en grammes alors que c'est un liquide. Pourquoi est-ce possible ?",
    "choix": [
     "Parce qu'un gramme d'eau occupe un millilitre",
     "Parce que l'eau n'a pas de volume",
@@ -745,44 +727,23 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "physique-s04-1-q29",
-   "fiche": "physique-s04-1-f4",
-   "type": "qcm",
-   "niveau": 3,
-   "enonce": "On a dissous 30 g de sel dans cent grammes d'eau et le mélange est homogène. On ajoute encore 5 g. Que se passe-t-il ?",
-   "choix": [
-    "Il reste homogène",
-    "Le mélange devient hétérogène dès 35 g",
-    "L'eau devient trouble et le sel flotte",
-    "Le sel déjà dissous ressort au fond"
-   ],
-   "explication": "Jusqu'à 35 g, tout le sel se dissout dans cent grammes d'eau. C'est au palier suivant, 40 g, que le mélange devient hétérogène.",
-   "indice": "Jusqu'à quelle quantité le mélange restait-il homogène ?",
-   "source": {
-    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
-    "page": 5
-   },
-   "r": "=cEEfEcrI0RBsUURQlVHKQhRFsTZ",
-   "poids": 1
-  },
-  {
    "id": "physique-s04-1-q30",
    "fiche": "physique-s04-1-f5",
    "type": "qcm",
    "niveau": 1,
-   "enonce": "Pour 30 mL d'eau, combien de mesurettes de poudre de lait faut-il ?",
+   "enonce": "Un biberon se prépare avec une mesurette de poudre pour 30 mL d'eau. Combien de mesurettes pour 60 mL d'eau ?",
    "choix": [
     "1",
     "2",
-    "8",
+    "4",
     "30"
    ],
-   "explication": "La règle du biberon : une mesurette pour 30 mL d'eau. Pour plus d'eau, on multiplie.",
+   "explication": "60 mL, c'est deux fois 30 mL. Il faut donc deux mesurettes : deux fois plus d'eau, deux fois plus de poudre.",
    "source": {
     "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
     "page": 6
    },
-   "r": "LNUZ",
+   "r": "LBUZ",
    "poids": 1
   },
   {
@@ -790,7 +751,7 @@ JEU.enregistrer("cours", {
    "fiche": "physique-s04-1-f5",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Combien de mesurettes pour un biberon de 240 mL d'eau ?",
+   "enonce": "Une mesurette de poudre pour 30 mL d'eau : combien de mesurettes pour un biberon de 240 mL ?",
    "choix": [
     "8",
     "6",
@@ -826,7 +787,7 @@ JEU.enregistrer("cours", {
    "fiche": "physique-s04-1-f5",
    "type": "vrai_faux",
    "niveau": 2,
-   "enonce": "Pour 240 mL d'eau, on calcule 240 × 30 mesurettes.",
+   "enonce": "Une mesurette pour 30 mL d'eau. Pour 240 mL, on calcule 240 × 30 mesurettes.",
    "corrections": [
     "Faux : on divise, 240 ÷ 30 = 8 mesurettes.",
     "Faux : on soustrait, 240 − 30 = 210 mesurettes.",
@@ -841,32 +802,11 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "physique-s04-1-q34",
-   "fiche": "physique-s04-1-f5",
-   "type": "qcm",
-   "niveau": 3,
-   "enonce": "Combien de mesurettes pour 120 mL d'eau ?",
-   "choix": [
-    "4",
-    "2",
-    "8",
-    "12"
-   ],
-   "explication": "120 ÷ 30 = 4. Il faut 4 mesurettes, deux fois moins que pour 240 mL.",
-   "indice": "Divise le volume d'eau par 30.",
-   "source": {
-    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
-    "page": 6
-   },
-   "r": "LZUZ",
-   "poids": 1
-  },
-  {
    "id": "physique-s04-1-q35",
    "fiche": "physique-s04-1-f5",
    "type": "qcm",
    "niveau": 3,
-   "enonce": "Comment trouve-t-on le nombre de mesurettes à partir du volume d'eau ?",
+   "enonce": "Si une mesurette correspond à 30 mL d'eau, comment trouve-t-on le nombre de mesurettes ?",
    "choix": [
     "On divise le volume d'eau par 30 mL",
     "On multiplie le volume d'eau par 30",
@@ -879,26 +819,6 @@ JEU.enregistrer("cours", {
     "page": 6
    },
    "r": "==QT+UwYdYVFf9wHGNBCXAmFVBAGEUQAZIVDv0AAGREGGIgRH0TZ",
-   "poids": 1
-  },
-  {
-   "id": "physique-s04-1-q36",
-   "fiche": "physique-s04-1-f5",
-   "type": "qcm",
-   "niveau": 2,
-   "enonce": "Dans le biberon, quelle quantité est proportionnelle au volume d'eau ?",
-   "choix": [
-    "Le nombre de mesurettes",
-    "La température de l'eau du robinet",
-    "La taille de la mesurette",
-    "La couleur du lait"
-   ],
-   "explication": "Plus il y a d'eau, plus il faut de poudre, dans la même proportion. C'est une situation de proportionnalité.",
-   "source": {
-    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
-    "page": 6
-   },
-   "r": "==wSBIiBBAwBEoxCCIVDn0AAH90AAggRM4TZ",
    "poids": 1
   },
   {
@@ -953,27 +873,6 @@ JEU.enregistrer("cours", {
     "page": 6
    },
    "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
-   "id": "physique-s04-1-q40",
-   "fiche": "physique-s04-1-f6",
-   "type": "qcm",
-   "niveau": 3,
-   "enonce": "On dissout 5 g de sel dans 200 g d'eau. Quelle masse d'eau salée obtient-on ?",
-   "choix": [
-    "205 g",
-    "200 g",
-    "195 g",
-    "500 g"
-   ],
-   "explication": "200 + 5 = 205 g. La masse du soluté s'ajoute à celle du solvant.",
-   "indice": "Additionne les deux masses.",
-   "source": {
-    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
-    "page": 6
-   },
-   "r": "==ATIY0UZBUZ",
    "poids": 1
   },
   {

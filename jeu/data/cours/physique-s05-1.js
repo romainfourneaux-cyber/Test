@@ -170,19 +170,21 @@ JEU.enregistrer("cours", {
    "fiche": "physique-s05-1-f1",
    "type": "qcm",
    "niveau": 1,
-   "enonce": "Dans la première partie de l'expérience, on chauffe l'eau du ballon jusqu'à ce qu'elle bouille. Quel changement d'état observe-t-on ?",
+   "enonce": "Comment appelle-t-on la vaporisation rapide, avec de grosses bulles dans le liquide, quand on chauffe fort de l'eau ?",
    "choix": [
-    "Une vaporisation",
-    "Une fusion",
-    "Une solidification",
-    "Une liquéfaction"
+    "L'évaporation",
+    "L'ébullition",
+    "La liquéfaction",
+    "La fusion"
    ],
-   "explication": "L'eau liquide devient vapeur : c'est une vaporisation. Les premières lignes du tableau de mesures la décrivent.",
+   "explication": "Quand l'eau bout, des bulles de vapeur se forment dans le liquide : c'est l'ébullition, une vaporisation rapide. Pour l'eau, elle a lieu vers cent degrés.",
    "source": {
-    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
-    "page": 6
+    "theme": "Séance 5 – Caractéristiques des changements d'état",
+    "titre": "Ébullition",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/%C3%89bullition"
    },
-   "r": "TdQAGYQCwQ0Fa11DZY0AHcSZ",
+   "r": "NxxBqkFDZF0GN8cpO5TZ",
    "poids": 1
   },
   {
@@ -190,7 +192,7 @@ JEU.enregistrer("cours", {
    "fiche": "physique-s05-1-f1",
    "type": "qcm",
    "niveau": 1,
-   "enonce": "Dans la deuxième partie, de la glace fond dans le ballon. Comment s'appelle ce changement d'état ?",
+   "enonce": "De la glace fond dans un ballon. Comment s'appelle ce changement d'état ?",
    "choix": [
     "Une fusion",
     "Une vaporisation",
@@ -210,18 +212,20 @@ JEU.enregistrer("cours", {
    "fiche": "physique-s05-1-f1",
    "type": "vrai_faux",
    "niveau": 2,
-   "enonce": "Les premières lignes du tableau de mesures correspondent à la fusion de la glace.",
+   "enonce": "L'ébullition est la seule façon pour un liquide de devenir un gaz.",
    "corrections": [
-    "Faux : elles correspondent à la vaporisation, la fusion vient dans la deuxième partie.",
-    "Faux : elles correspondent à la solidification de l'eau.",
-    "Faux : elles correspondent à la liquéfaction de la vapeur."
+    "Faux : l'évaporation, lente et à la surface du liquide, est aussi une vaporisation.",
+    "Faux : la liquéfaction est aussi une façon pour un liquide de devenir un gaz.",
+    "Faux : un liquide ne peut jamais devenir un gaz."
    ],
-   "explication": "L'expérience commence par chauffer l'eau jusqu'à l'ébullition : c'est la vaporisation. La fusion de la glace vient ensuite.",
+   "explication": "La vaporisation, le passage du liquide au gaz, a deux formes : l'évaporation, à la surface, et l'ébullition, avec des bulles dans tout le liquide. Les deux donnent de la vapeur.",
    "source": {
-    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
-    "page": 6
+    "theme": "Séance 5 – Caractéristiques des changements d'état",
+    "titre": "Vaporisation",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Vaporisation"
    },
-   "r": "==AUMF0AP0BAmIQVAgR2qewFH0wJNQQWN0RAHIQSGkyFcMRVfYwBccgDjxUCVEAAA8gEIEgLAoRFUcQSPMgUIDYDRsFSKEQCWoxF1AgGGUlAMIwAXgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "r": "==wGEdEHosRAEYAGbEwHT4xYItAQNcAHVMBCSNTAQUUWU0wBaMQAv0AER1wCMcAAbcANSRRCVFtqOtxFIZSWLAVQONECJAgBmAgGVQxBA3KSegUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -229,12 +233,14 @@ JEU.enregistrer("cours", {
    "fiche": "physique-s05-1-f1",
    "type": "vrai_faux",
    "niveau": 1,
-   "enonce": "Pendant l'expérience du ballon, on relève la température de l'eau à mesure qu'elle change d'état.",
+   "enonce": "L'eau d'une flaque peut disparaître sans jamais bouillir.",
    "corrections": [],
-   "explication": "Oui : les mesures sont notées dans un tableau, ligne après ligne. On peut ensuite en tirer un graphique.",
+   "explication": "Oui : l'eau s'évapore à sa surface, bien en dessous de la température d'ébullition. La flaque sèche peu à peu, sans bulles ni forte chaleur.",
    "source": {
-    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
-    "page": 6
+    "theme": "Séance 5 – Caractéristiques des changements d'état",
+    "titre": "Évaporation",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/%C3%89vaporation"
    },
    "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
    "poids": 1
@@ -243,26 +249,28 @@ JEU.enregistrer("cours", {
    "id": "physique-s05-1-q5",
    "fiche": "physique-s05-1-f1",
    "type": "association",
-   "niveau": 2,
-   "enonce": "Relie chaque élément de l'expérience à ce qui lui correspond.",
+   "niveau": 3,
+   "enonce": "Relie chaque situation au changement d'état qui se produit.",
    "gauche": [
-    "Première partie",
-    "Deuxième partie",
-    "Eau liquide qui bout",
-    "Glace qui fond"
+    "Le linge sèche sur un fil",
+    "L'eau bout dans une casserole",
+    "De la buée se forme sur une vitre froide",
+    "Un glaçon fond dans un verre"
    ],
    "droite": [
+    "Liquéfaction",
     "Fusion",
-    "Vaporisation",
-    "La glace devient liquide",
-    "L'eau liquide devient vapeur"
+    "Évaporation",
+    "Ébullition"
    ],
-   "explication": "Première partie : l'eau bout, c'est la vaporisation. Deuxième partie : la glace fond, c'est la fusion.",
+   "explication": "Évaporation et ébullition sont deux vaporisations : lente à la surface du linge, rapide avec des bulles dans la casserole. La buée est une liquéfaction et le glaçon qui fond, une fusion.",
    "source": {
-    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
-    "page": 6
+    "theme": "Séance 5 – Caractéristiques des changements d'état",
+    "titre": "Changement d'état",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Changement_d%27%C3%A9tat"
    },
-   "r": "==ANvUnXG5TWsolQdlCRe0RSEYnQyclSZlCH",
+   "r": "==ANvYnXG5TWsklQdlCRe4RSEYnQyQlSZlCH",
    "poids": 1
   },
   {
@@ -270,39 +278,21 @@ JEU.enregistrer("cours", {
    "fiche": "physique-s05-1-f1",
    "type": "qcm",
    "niveau": 3,
-   "enonce": "Pourquoi l'expérience se fait-elle en deux parties ?",
+   "enonce": "Pourquoi le linge mouillé sèche-t-il, alors qu'on ne le chauffe jamais jusqu'à l'ébullition ?",
    "choix": [
-    "Pour étudier deux changements d'état",
-    "Pour vérifier que le ballon résiste au froid",
-    "Pour comparer de l'eau pure et de l'eau salée",
-    "Pour mesurer la masse de l'eau avant et après"
+    "Parce que le tissu absorbe l'eau et la garde pour toujours",
+    "Parce que l'eau devient d'abord solide, puis disparaît",
+    "Parce que l'eau s'évapore à sa surface, sans bouillir",
+    "Parce que le vent change l'eau du linge en glace"
    ],
-   "explication": "La première partie fait bouillir l'eau, la seconde fait fondre la glace. On observe ainsi la vaporisation puis la fusion.",
+   "explication": "L'évaporation se fait à la surface du liquide, à une température bien plus basse que l'ébullition. L'eau du linge passe lentement dans l'air sous forme de vapeur.",
    "source": {
-    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
-    "page": 6
+    "theme": "Séance 5 – Caractéristiques des changements d'état",
+    "titre": "Évaporation",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/%C3%89vaporation"
    },
-   "r": "==wUd8wGbvKZJVkRZBgCLMgDcYiGWUUDEwgCPBQDqkEEBRYrPRxEGISZ",
-   "poids": 1
-  },
-  {
-   "id": "physique-s05-1-q7",
-   "fiche": "physique-s05-1-f1",
-   "type": "qcm",
-   "niveau": 2,
-   "enonce": "Comment range-t-on les mesures de température prises pendant l'expérience ?",
-   "choix": [
-    "Dans un tableau",
-    "Dans une liste sans ordre",
-    "Sur une carte",
-    "Dans une frise chronologique"
-   ],
-   "explication": "Les mesures sont notées dans un tableau. Les premières lignes correspondent à la vaporisation.",
-   "source": {
-    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
-    "page": 6
-   },
-   "r": "=s0GOcBBhwUEVM0GPVBCIYTZ",
+   "r": "KFDRJkFRbAABGpBHmEQVJBhEIgQHHsxYMZRFN26TDQhBCYCBcbqUCk0GOcxTv0AAAxlTKUAFIISZ",
    "poids": 1
   },
   {
@@ -315,7 +305,7 @@ JEU.enregistrer("cours", {
     "Elle reste la même",
     "Elle monte tout de suite",
     "Elle baisse d'un seul coup",
-    "Elle double"
+    "Elle monte lentement"
    ],
    "explication": "Tant que les deux états sont présents, la température ne bouge pas. C'est le palier du changement d'état.",
    "source": {
@@ -622,39 +612,41 @@ JEU.enregistrer("cours", {
    "fiche": "physique-s05-1-f4",
    "type": "qcm",
    "niveau": 1,
-   "enonce": "Sur le graphique de solidification de l'eau salée, que représente l'axe horizontal ?",
+   "enonce": "On trace la température d'une eau qui refroidit au fil du temps. Quelle grandeur met-on sur l'axe horizontal ?",
    "choix": [
-    "Le temps en minutes",
-    "La température en degrés Celsius",
-    "La masse en grammes",
-    "Le volume en millilitres"
+    "Le temps, en minutes",
+    "La température, en degrés Celsius",
+    "La masse d'eau, en grammes",
+    "Le volume d'eau, en millilitres"
    ],
-   "explication": "Le temps en minutes est en abscisse, sur l'axe horizontal. La température est en ordonnée.",
+   "explication": "Le temps se met en abscisse, sur l'axe horizontal. La température, mesurée au fil du temps, se met en ordonnée.",
    "source": {
     "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
     "page": 7
    },
-   "r": "XZBEFwBAG8BStgURG11AKIhRM4TZ",
+   "r": "==AUGAQAEcwBCIlBm0QSG11AKIhRM4TZ",
    "poids": 1
   },
   {
    "id": "physique-s05-1-q23",
    "fiche": "physique-s05-1-f4",
    "type": "qcm",
-   "niveau": 1,
-   "enonce": "Sur ce graphique, dans quelle unité la température est-elle exprimée ?",
+   "niveau": 2,
+   "enonce": "Comment appelle-t-on la température à laquelle un corps pur passe de l'état solide à l'état liquide ?",
    "choix": [
-    "En degrés Celsius",
-    "En minutes et secondes",
-    "En grammes",
-    "En litres"
+    "Sa température d'ébullition",
+    "Sa température de fusion",
+    "Sa température ambiante",
+    "Sa densité"
    ],
-   "explication": "L'axe vertical porte les températures en degrés Celsius. L'axe horizontal porte le temps en minutes.",
+   "explication": "La température de fusion est celle où le solide et le liquide d'un corps pur existent ensemble. Chaque corps pur a la sienne.",
    "source": {
-    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
-    "page": 7
+    "theme": "Séance 5 – Caractéristiques des changements d'état",
+    "titre": "Point de fusion",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Point_de_fusion"
    },
-   "r": "=ckBEAQHDcxKj5Fz2/VCKIgRHcTZ",
+   "r": "EhgBbQzBTUEEVk0CdcAHi8Fz231AKIhRIESZ",
    "poids": 1
   },
   {
@@ -699,15 +691,21 @@ JEU.enregistrer("cours", {
    "id": "physique-s05-1-q26",
    "fiche": "physique-s05-1-f4",
    "type": "vrai_faux",
-   "niveau": 1,
-   "enonce": "Au début de l'expérience, l'eau salée est liquide et sa température est d'environ 10 °C.",
-   "corrections": [],
-   "explication": "Oui : la courbe part d'environ 10 °C. L'eau salée est alors liquide et refroidit.",
+   "niveau": 3,
+   "enonce": "Un gros bloc de glace pure fond à une température plus haute qu'un petit glaçon.",
+   "corrections": [
+    "Faux : un corps pur fond toujours à la même température, quelle que soit la quantité.",
+    "Faux : c'est l'inverse, le gros bloc fond à une température plus basse.",
+    "Faux : la température de fusion dépend de la forme du morceau, pas de sa taille."
+   ],
+   "explication": "La température de fusion est une propriété du corps pur lui-même, pas du morceau : glaçon ou bloc, la glace pure fond à la même température. Seule une impureté, comme du sel, la fait changer.",
    "source": {
-    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
-    "page": 7
+    "theme": "Séance 5 – Caractéristiques des changements d'état",
+    "titre": "Point de fusion",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Point_de_fusion"
    },
-   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "r": "=g0DAZcpSAgBpMBAUUFEF40GbcAMNAAQc5kCKoADHYjUZBwBE0xDds9qzAEAB1wCCwcpEIlJeUVx2GlGcoRHCYjQRURSAAAAGtxB3IlBVcgHK4UAHgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -715,19 +713,19 @@ JEU.enregistrer("cours", {
    "fiche": "physique-s05-1-f4",
    "type": "qcm",
    "niveau": 3,
-   "enonce": "Comment sait-on, en lisant le graphique, que l'eau salée est en train de se solidifier ?",
+   "enonce": "Comment sait-on que de l'eau salée est en train de se solidifier ?",
    "choix": [
-    "On est dans la zone « liquide et solide »",
-    "La température remonte brusquement vers 10 °C",
-    "La courbe monte au-dessus de 50 °C",
-    "Le temps s'arrête de s'écouler"
+    "Sa température remonte brusquement de plusieurs degrés",
+    "Liquide et solide y sont présents en même temps",
+    "Elle se met à bouillir",
+    "Elle devient parfaitement transparente"
    ],
-   "explication": "Entre la zone liquide et la zone solide, les deux états coexistent. C'est là que l'eau salée se solidifie.",
+   "explication": "Pendant la solidification, les deux états coexistent : de la glace se forme dans l'eau encore liquide. Sur le graphique, c'est la zone du milieu.",
    "source": {
     "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
     "page": 7
    },
-   "r": "ll8tFBRFAIAABg0NIVEUJdgGX8QBSxOsVBwGeMhTO4BSwMEBR1gGcMgRH0TZ",
+   "r": "MxhFLwgBndBGPbLHJBgCStxNDBgRE2aHWYUHcgSAVxRVU0wBD0xGjlFAVgkCGMxFA4TZ",
    "poids": 1
   },
   {
@@ -735,14 +733,14 @@ JEU.enregistrer("cours", {
    "fiche": "physique-s05-1-f4",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Que fait la température de la glace salée dans la dernière zone du graphique ?",
+   "enonce": "Une fois toute l'eau salée devenue glace, que fait sa température si le froid continue ?",
    "choix": [
     "Elle continue de baisser",
-    "Elle remonte vers 0 °C",
-    "Elle reste à 0 °C",
-    "Elle monte jusqu'à 10 °C"
+    "Elle reste bloquée à zéro degré",
+    "Elle remonte vers zéro degré",
+    "Elle revient à sa valeur de départ"
    ],
-   "explication": "Une fois toute l'eau solidifiée, la glace continue de refroidir. La courbe descend bien en dessous de −10 °C.",
+   "explication": "Quand il ne reste plus qu'un seul état, le solide, la température peut de nouveau varier. La glace salée continue donc de refroidir.",
    "source": {
     "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
     "page": 7
@@ -788,20 +786,22 @@ JEU.enregistrer("cours", {
    "id": "physique-s05-1-q31",
    "fiche": "physique-s05-1-f5",
    "type": "qcm",
-   "niveau": 2,
-   "enonce": "À partir de quelle minute, environ, l'eau salée commence-t-elle à se solidifier sur le graphique ?",
+   "niveau": 3,
+   "enonce": "Pourquoi répand-on du sel sur les routes verglacées en hiver ?",
    "choix": [
-    "Vers la 3e minute",
-    "Dès la 1re minute",
-    "Vers la 8e minute",
-    "Vers la 12e minute"
+    "Le sel chauffe la route en se dissolvant",
+    "Avec du sel, l'eau gèle plus bas : le verglas fond",
+    "Le sel rend la glace plus dure et donc moins glissante",
+    "Le sel absorbe toute l'eau de la route"
    ],
-   "explication": "La zone « liquide et solide » commence vers la 3e minute. Elle se termine vers la 8e.",
+   "explication": "Le sel se dissout dans l'eau et abaisse sa température de solidification. La glace fond alors, même un peu en dessous de zéro degré.",
    "source": {
-    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
-    "page": 7
+    "theme": "Séance 5 – Caractéristiques des changements d'état",
+    "titre": "Sel de déneigement",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Sel_de_d%C3%A9neigement"
    },
-   "r": "==wVU0xGBsRBjhkVVwkAPVBFMQSZ",
+   "r": "=cRSAAAAGpxErUxBAMQUMIwTIhEMMdQFetxAWYEDe8esSUEAQwQSDIFRvgkFVglCPVwAfMTZ",
    "poids": 1
   },
   {

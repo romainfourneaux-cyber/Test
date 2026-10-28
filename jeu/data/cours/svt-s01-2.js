@@ -808,20 +808,20 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Coche ce qui est vrai de l'axe de rotation de la Terre.",
    "choix": [
-    "Il est penché d'environ 23 degrés",
+    "Il est penché d'environ vingt-trois degrés",
     "Il garde la même direction pendant tout le tour autour du Soleil",
     "Son inclinaison explique les saisons",
     "Il se redresse à chaque équinoxe",
     "Il est couché à plat dans le plan de l'écliptique"
    ],
-   "explication": "L'axe de la Terre est incliné d'environ 23 degrés et pointe toujours dans la même direction pendant la révolution. C'est pour cela qu'un hémisphère est tourné vers le Soleil pendant six mois, puis l'autre.",
+   "explication": "L'axe de la Terre est incliné d'environ vingt-trois degrés et pointe toujours dans la même direction pendant la révolution. C'est pour cela qu'un hémisphère est tourné vers le Soleil pendant six mois, puis l'autre.",
    "source": {
     "theme": "Séance 2 – La Terre une planète en mouvement – Les axes de la Terre",
     "titre": "Obliquité",
     "editeur": "Wikipédia",
     "url": "https://fr.wikipedia.org/wiki/Obliquit%C3%A9"
    },
-   "r": "=8iSwMkCGR0DcYUFM4xZXAAFc0RGWogUGwiXMQ1QHMQBIAgUp0hJHl1UFcgCecAENARUNwhGJIBHTcGAAoQARxgAPZQHskVRBN0DLgwAZIVKdwREWQxGHsgUN4yhmiVDPMgRD0AAmURVJwzUFxEHbvaMKBQUN0VXGhgBA4CBbAgUVk0xsqxCtgUFVkVHKYkCgAFH",
+   "r": "=oBUGsgGCAwDcI1GmEURQh1HGogFRcxZcohFcAxBHMQEGoSDLolfMNERKAwFr0hJFBQFJxhGdwhNMV0RYFwGGNQBSNzBaERVFcwDLwRDz0wCaRkGMMAFAYxZXgxz2yRSPMgUNcyXEIVDCYCRKtUAuH7BCARFJ1hBdoxNAEhUDdQGGhgBA4CBbAgUVk0xsqxCtgUFVkVHKYkCgAFH",
    "poids": 1
   },
   {

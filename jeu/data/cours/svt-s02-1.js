@@ -428,14 +428,14 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s02-1-f2",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "À Bourges, en France, combien de temps dure environ le jour au solstice d'été ?",
+   "enonce": "Dans le centre de la France, combien de temps dure environ le jour au solstice d'été ?",
    "choix": [
     "Environ 16 heures",
     "Environ 8 heures",
     "Environ 5 heures",
     "Environ six mois d'affilée"
    ],
-   "explication": "À Bourges, le jour dure environ 16 heures en été et 8 heures en hiver. Cet écart est typique de la zone entre un tropique et le cercle polaire.",
+   "explication": "Dans le centre de la France, le jour dure environ 16 heures en été et 8 heures en hiver. Cet écart est typique de la zone entre un tropique et le cercle polaire.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.pdf",
     "page": 2
@@ -626,19 +626,22 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s02-1-f4",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Dans le TP du globe éclairé, que montre le trait jaune ?",
+   "enonce": "Pourquoi fait-il plus chaud à l'équateur qu'aux pôles ?",
    "choix": [
-    "La zone éclairée par le Soleil",
-    "L'arrivée d'un rayon parallèle à l'équateur",
-    "La ligne de l'équateur",
-    "La zone qui reste dans l'ombre"
+    "Les rayons du Soleil y arrivent presque à la verticale",
+    "L'équateur est beaucoup plus près du Soleil que les pôles",
+    "Le jour y dure plus longtemps qu'ailleurs",
+    "Il n'y a pas d'atmosphère au-dessus des pôles"
    ],
-   "explication": "Le trait jaune entoure la zone éclairée. Le trait noir, lui, marque l'arrivée d'un rayon parallèle à l'équateur.",
+   "explication": "À l'équateur, les rayons tombent presque droit et chauffent une petite surface. Vers les pôles, les mêmes rayons arrivent rasants et s'étalent sur une grande surface, qui chauffe moins.",
+   "indice": "Pense à la forme de la tache de lumière dans le TP du globe éclairé.",
    "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 3
+    "theme": "Séance 3 – Les lignes imaginaires",
+    "titre": "Saison",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Saison"
    },
-   "r": "==QYBxAUBFAPGNQBSVzEFUEEYrKHGMBBgQopVgEAAwhRI4TZ",
+   "r": "KZSQEYFRa0xAQk0ErIV1mWFFc8BHXoxMNExWIhhBUQBCS5jUZwAEdYQPPdADj51CaR1DdYUFM4TZ",
    "poids": 1
   },
   {
@@ -646,9 +649,9 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s02-1-f4",
    "type": "vrai_faux",
    "niveau": 1,
-   "enonce": "Dans le TP, la tache de lumière est ronde au niveau de l'équateur.",
+   "enonce": "Un même faisceau de lumière dessine une petite tache ronde à l'équateur et une tache plus large, étirée, quand on s'approche des pôles.",
    "corrections": [],
-   "explication": "À l'équateur, le rayon dessine une petite tache ronde. Au milieu de l'hémisphère nord, elle s'allonge.",
+   "explication": "À l'équateur, la lumière arrive de face et fait une tache ronde. Plus au nord, elle arrive de biais et s'étale en ovale.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 3
@@ -661,19 +664,19 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s02-1-f4",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Comment change la tache de lumière quand on passe de l'équateur au milieu de l'hémisphère nord ?",
+   "enonce": "Un même faisceau de lumière éclaire le globe à l'équateur, puis au milieu de l'hémisphère nord. Comment la tache éclairée change-t-elle ?",
    "choix": [
-    "Elle s'allonge en ovale",
+    "Elle s'allonge et s'étale sur une plus grande surface",
     "Elle devient plus petite et plus ronde",
-    "Elle disparaît complètement",
-    "Elle reste ronde et de même taille"
+    "Elle garde exactement la même forme et la même taille",
+    "Elle disparaît complètement"
    ],
-   "explication": "La même lumière dessine une tache ronde à l'équateur. Plus au nord, la tache s'étire en ovale.",
+   "explication": "Plus on s'éloigne de l'équateur, plus la lumière arrive de biais. La même quantité de lumière s'étale alors sur une surface plus grande.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 3
    },
-   "r": "==wSXsyEDoQVfwgTKUhBsEUCUpQHPNgCFcTZ",
+   "r": "=EGSGQ1ScoRFGxgFpMxBCUlAcIwHS1QLYV0RY1xTDoACG4esSZRVFwgTKUhBsEUCUpQHPNgCFcTZ",
    "poids": 1
   },
   {
@@ -681,84 +684,44 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s02-1-f4",
    "type": "vrai_faux",
    "niveau": 2,
-   "enonce": "Dans le TP, le trait noir marque l'arrivée d'un rayon parallèle à l'axe de rotation.",
-   "corrections": [
-    "Faux : il marque l'arrivée d'un rayon parallèle à l'équateur.",
-    "Faux : il marque toute la zone éclairée par le Soleil.",
-    "Faux : il marque la ligne des tropiques."
-   ],
-   "explication": "Le trait noir montre où arrive un rayon parallèle à l'équateur. La zone éclairée, elle, est entourée par le trait jaune.",
+   "enonce": "Un même faisceau de lumière chauffe davantage le sol quand il arrive à la verticale que quand il arrive rasant.",
+   "corrections": [],
+   "explication": "Quand la lumière tombe droit, toute son énergie se concentre sur une petite surface. Quand elle arrive rasante, la même énergie s'étale et chauffe moins chaque endroit.",
    "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 3
+    "theme": "Séance 3 – Les lignes imaginaires",
+    "titre": "Saison",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Saison"
    },
-   "r": "=MRTIRBHXMzEAQB3y6kAPJ9qjhUCd6uADcAFIIwZcoBHUMQSAoRVMMGSMb/WH0BFH4kHndBAUcAEE40AbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
-   "id": "svt-s02-1-q36",
-   "fiche": "svt-s02-1-f4",
-   "type": "qcm_multiple",
-   "niveau": 1,
-   "enonce": "Coche les endroits du globe comparés dans le TP.",
-   "choix": [
-    "Au niveau de l'équateur",
-    "Au milieu de l'hémisphère nord",
-    "Au niveau du pôle Nord",
-    "Au niveau du pôle Sud",
-    "Au milieu de l'hémisphère sud"
-   ],
-   "explication": "Le TP éclaire l'équateur, le milieu de l'hémisphère nord, puis le pôle Nord. On compare la lumière reçue en allant vers le nord.",
-   "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 3
-   },
-   "r": "=oBURchG/k0CDY8qz0AER1wGOMAEAwxZHQzRZNVDcAAHIZyXNbfRewxDLAcsvUVGFBRFJthCbQgKAVEQsx0QERBHXMzEAQB3y6kAPdBDjhFBQt1BBY0EoAFH",
-   "poids": 1
-  },
-  {
-   "id": "svt-s02-1-q37",
-   "fiche": "svt-s02-1-f4",
-   "type": "vrai_faux",
-   "niveau": 3,
-   "enonce": "Dans le TP, la tache de lumière est allongée à l'équateur et devient ronde au milieu de l'hémisphère nord.",
-   "corrections": [
-    "Faux : c'est l'inverse, ronde à l'équateur, elle s'allonge plus au nord.",
-    "Faux : elle reste ronde partout.",
-    "Faux : elle disparaît dès qu'on quitte l'équateur."
-   ],
-   "explication": "La tache est ronde à l'équateur. Au milieu de l'hémisphère nord, la même lumière s'étale en ovale.",
-   "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 3
-   },
-   "r": "=MRTcxQMCtQFY9wTVMRBCc2FSsgGdUwDIFASmEUCQ1gQdMxAdMhMDwtpS1RSOzqUNcyQKcUDCpQFUwABpshUJUVBasASRgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
    "poids": 1
   },
   {
    "id": "svt-s02-1-q45",
    "fiche": "svt-s02-1-f4",
    "type": "association",
-   "niveau": 2,
-   "enonce": "Relie chaque observation du TP du globe éclairé à ce qu'elle montre.",
+   "niveau": 3,
+   "enonce": "Relie chaque zone du globe à la façon dont elle reçoit les rayons du Soleil.",
    "gauche": [
-    "Le trait noir",
-    "Le trait jaune",
-    "La tache ronde",
-    "La tache allongée en ovale"
+    "L'équateur",
+    "La zone tempérée, comme la France",
+    "Les pôles",
+    "Un même faisceau de lumière"
    ],
    "droite": [
-    "La lumière reçue au milieu de l'hémisphère nord",
-    "La zone éclairée par le Soleil",
-    "L'arrivée d'un rayon parallèle à l'équateur",
-    "La lumière reçue au niveau de l'équateur"
+    "Rayons inclinés, chaleur moyenne",
+    "S'étale d'autant plus qu'on s'éloigne de l'équateur",
+    "Rayons rasants, grande surface éclairée, peu de chaleur",
+    "Rayons presque verticaux, petite surface éclairée, beaucoup de chaleur"
    ],
-   "explication": "Le trait noir marque l'arrivée d'un rayon parallèle à l'équateur, le trait jaune la zone éclairée. La tache est ronde à l'équateur et s'allonge au milieu de l'hémisphère nord.",
+   "explication": "Plus les rayons arrivent droit, plus ils chauffent. De l'équateur vers les pôles, ils arrivent de plus en plus de biais et s'étalent.",
    "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 3
+    "theme": "Séance 3 – Les lignes imaginaires",
+    "titre": "Saison",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Saison"
    },
-   "r": "==ANvcnXG5TWsolQdlCRewRSEYnQyQlSZlCH",
+   "r": "==ANvYnXG5TWsslQdlCRe0RSEYnQyUlSZlCH",
    "poids": 1
   },
   {
@@ -830,15 +793,15 @@ JEU.enregistrer("cours", {
     "En décembre, dans l'hémisphère sud",
     "En septembre, dans l'hémisphère sud",
     "En janvier, dans l'hémisphère nord",
-    "En Guyane, la saison des pluies"
+    "En Guyane française"
    ],
    "droite": [
-    "De décembre à juillet",
+    "Pas de saison astronomique",
     "Le solstice d'été",
     "L'hiver",
     "L'équinoxe de printemps"
    ],
-   "explication": "Dans l'hémisphère sud, décembre apporte le solstice d'été et septembre l'équinoxe de printemps. En Guyane, la saison des pluies va de décembre à juillet.",
+   "explication": "Dans l'hémisphère sud, décembre apporte le solstice d'été et septembre l'équinoxe de printemps. La Guyane française, près de l'équateur, n'a pas de saison astronomique.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 3
@@ -864,25 +827,6 @@ JEU.enregistrer("cours", {
     "page": 3
    },
    "r": "=c0BEYABPdBDjFEAc5kTBMhRpHbZ",
-   "poids": 1
-  },
-  {
-   "id": "svt-s02-1-q38",
-   "fiche": "svt-s02-1-f5",
-   "type": "vrai_faux",
-   "niveau": 2,
-   "enonce": "En Guyane française, la saison sèche va de décembre à juillet.",
-   "corrections": [
-    "Faux : de décembre à juillet, c'est la saison des pluies ; la saison sèche va de juillet à décembre.",
-    "Faux : la Guyane n'a aucune saison sèche.",
-    "Faux : la saison sèche y dure toute l'année."
-   ],
-   "explication": "En Guyane, il pleut beaucoup de décembre à juillet. La saison sèche occupe le reste de l'année, de juillet à décembre.",
-   "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 3
-   },
-   "r": "UAVaXcwBYQhCHzqFINu7FFESCMwDTMgUiYRVEMQUMYADavKMNsgWedgDVYECecWSVZBEYwhAfI1GmkURbJUHGcQFJNxKSFgFQYlCONkBN8SQMA0RO9cpGxAAl8BEGwtsN4kCWgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -989,19 +933,19 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s02-1-f6",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Pourquoi peut-on dire que la Terre est unique par sa rotation ?",
+   "enonce": "Pourquoi la durée du jour n'est-elle pas la même sur toutes les planètes ?",
    "choix": [
-    "Aucune autre n'a la même durée de rotation qu'elle",
-    "C'est la seule à tourner sur elle-même",
-    "C'est elle qui tourne le plus vite sur elle-même",
-    "C'est elle qui tourne le plus lentement sur elle-même"
+    "Parce que chaque planète tourne sur elle-même à sa propre vitesse",
+    "Parce que seule la Terre tourne sur elle-même",
+    "Parce que le Soleil tourne autour de chaque planète à une vitesse différente",
+    "Parce que la durée du jour dépend seulement de la distance au Soleil"
    ],
-   "explication": "Chaque planète a sa propre durée de rotation, de quelques heures à des centaines de jours. Même Mars, la plus proche de la Terre sur ce point, met environ quarante minutes de plus.",
+   "explication": "Chaque planète a sa propre durée de rotation : moins de dix heures pour Jupiter, 243 jours pour Vénus. Aucune n'a exactement la même que la Terre.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.pdf",
     "page": 3
    },
-   "r": "HBVQCoQQTghUp0BHRQRBGwxTXwwYIxs9ftxCGNABYT4HVRQGRhQSBIVDxkFEU1wCBMRBcMTZ",
+   "r": "==ARMEANXEADDEFDc8RHaMTDEYUDOzqRDQA2E+BWAkRHM4UHHsxYItwRYFwGGNQHaTIHUkQBRxwGeMBAg0AAAxlTKUAFIISZ",
    "poids": 1
   },
   {
@@ -1071,7 +1015,7 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s02-1-f6",
    "type": "association",
    "niveau": 2,
-   "enonce": "Relie chaque astre à sa durée de rotation.",
+   "enonce": "Relie chaque astre à la durée approximative de sa rotation sur lui-même.",
    "gauche": [
     "Vénus",
     "Mercure",
@@ -1079,10 +1023,10 @@ JEU.enregistrer("cours", {
     "Jupiter"
    ],
    "droite": [
-    "9 heures et 55 minutes",
-    "243 jours et 26 minutes",
-    "27 jours et 8 heures",
-    "58 jours et 16 heures"
+    "Environ dix heures",
+    "Environ 243 jours",
+    "Environ 27 jours",
+    "Environ 58 jours"
    ],
    "explication": "Vénus est la plus lente et Jupiter la plus rapide. Entre les deux, Mercure met près de deux mois et la Lune près d'un mois.",
    "source": {

@@ -8,6 +8,8 @@
 // l'inverse de l'usage ; la fiche ne reprend pas ce sens.
 const C = (page) => ({ fichier: "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf", page: page });
 const R = (page) => ({ fichier: "cours/svt/Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.pdf", page: page });
+// Questions de thème (règle du 25/10/2026) : fait vérifié dans une source fiable, notée sans fichier ni page.
+const T = (titre, url) => ({ theme: "Séance 1 – Environnement, biomes, sol", titre, editeur: "Wikipédia", url });
 
 // Coupe des biomes marins, de la côte aux grandes fosses (schéma redessiné, profondeurs pas à l'échelle).
 function schemaMarin() {
@@ -144,7 +146,7 @@ module.exports = {
     // f1 : qu'est-ce qu'un biome
     { id: "svt-s08-1-q1", fiche: "svt-s08-1-f1", type: "qcm", niveau: 1,
       enonce: "Qu'est-ce qu'un biome ?",
-      choix: ["Une vaste zone qui partage un même climat, une flore et une faune semblables", "Un petit jardin cultivé derrière une maison", "Une espèce d'animal", "Un type de nuage"],
+      choix: ["Une vaste zone qui partage un même climat, une flore et une faune semblables", "Un petit jardin cultivé derrière une maison", "Un seul écosystème, comme une mare", "Une région délimitée par des frontières"],
       reponse: "Une vaste zone qui partage un même climat, une flore et une faune semblables",
       explication: "Un biome est une vaste zone géographique au climat, à la flore et à la faune semblables. Une forêt tropicale ou un désert sont des biomes.", source: C(12) },
     { id: "svt-s08-1-q2", fiche: "svt-s08-1-f1", type: "qcm", niveau: 1,
@@ -199,29 +201,27 @@ module.exports = {
       reponse: "La toundra pluvieuse",
       explication: "Haute altitude et forte humidité donnent la toundra pluvieuse. Le désert polaire, lui, apparaît en très haute montagne.", source: C(11) },
     { id: "svt-s08-1-q12", fiche: "svt-s08-1-f2", type: "vrai_faux", niveau: 2,
-      enonce: "Le maquis se trouve dans cinq zones climatiques différentes.",
-      corrections: [], reponse: { vrai: true, correction: null },
-      explication: "Oui : boréale, tempérée froide, tempérée chaude, subtropicale et tropicale. Le maquis est à cheval sur ces cinq zones.", source: C(11) },
+      enonce: "La taïga est une immense forêt de conifères qui couvre le nord du Canada, de l'Europe et de la Russie.",
+      corrections: [],
+      reponse: { vrai: true, correction: null },
+      explication: "La taïga, ou forêt boréale, forme une bande presque continue autour du pôle Nord. C'est la plus grande forêt d'un seul tenant de la planète.",
+      source: T("Taïga", "https://fr.wikipedia.org/wiki/Ta%C3%AFga") },
     { id: "svt-s08-1-q13", fiche: "svt-s08-1-f2", type: "vrai_faux", niveau: 2,
       enonce: "Le désert polaire n'existe qu'autour des pôles.",
       corrections: ["Faux : on le trouve aussi en très haute montagne.", "Faux : on le trouve aussi dans le Sahara.", "Faux : il n'existe qu'au pôle Nord."],
       reponse: { vrai: false, correction: "Faux : on le trouve aussi en très haute montagne." },
       explication: "Le désert polaire existe en zone polaire, mais aussi en très haute montagne. Le froid de l'altitude vaut celui des pôles.", source: C(11) },
     { id: "svt-s08-1-q14", fiche: "svt-s08-1-f2", type: "qcm_multiple", niveau: 3,
-      enonce: "Dans quelles zones climatiques trouve-t-on du maquis ? (plusieurs réponses)",
-      choix: ["Boréale", "Tempérée froide", "Tempérée chaude", "Subtropicale", "Tropicale", "Polaire"],
-      reponse: ["Boréale", "Tempérée froide", "Tempérée chaude", "Subtropicale", "Tropicale"],
-      explication: "Le maquis s'étale sur cinq zones, de la boréale à la tropicale. Seule la zone polaire n'en a pas.", source: C(11) },
+      enonce: "Lesquels sont des biomes terrestres ? (plusieurs réponses)",
+      choix: ["La toundra", "La taïga", "La savane", "Le désert", "Le récif corallien", "Le lac"],
+      reponse: ["La toundra", "La taïga", "La savane", "Le désert"],
+      explication: "Toundra, taïga, savane et désert sont des biomes des continents. Le récif corallien et le lac sont des biomes aquatiques, d'eau de mer pour l'un, d'eau douce pour l'autre.",
+      source: T("Biome", "https://fr.wikipedia.org/wiki/Biome") },
     { id: "svt-s08-1-q15", fiche: "svt-s08-1-f2", type: "qcm", niveau: 3,
       enonce: "Pourquoi le désert polaire apparaît-il aussi en très haute montagne ?",
       choix: ["Parce que le triangle de Holdridge tient compte aussi de l'altitude", "Parce que la neige y est salée", "Parce qu'il y pleut beaucoup", "Parce que toutes les très hautes montagnes se trouvent près des pôles"],
       reponse: "Parce que le triangle de Holdridge tient compte aussi de l'altitude",
       explication: "Le triangle a trois entrées : zone climatique, gradient d'humidité et altitude. En très haute montagne, on tombe sur le désert polaire, comme en zone polaire.", source: C(11) },
-    { id: "svt-s08-1-q16", fiche: "svt-s08-1-f2", type: "qcm", niveau: 2,
-      enonce: "Comment lit-on le biome d'un lieu sur le triangle de Holdridge ?",
-      choix: ["On cherche la case où se croisent sa zone climatique et son humidité", "On lit la première ligne", "On compte les cases", "On regarde la couleur du triangle et on la compare à la carte"],
-      reponse: "On cherche la case où se croisent sa zone climatique et son humidité",
-      explication: "On part de la zone climatique d'un côté, du gradient d'humidité de l'autre. La case où ils se croisent donne le biome.", source: C(11) },
     // f3 : la carte des biomes terrestres
     { id: "svt-s08-1-q17", fiche: "svt-s08-1-f3", type: "qcm", niveau: 1,
       enonce: "Où se trouve la plus grande forêt tropicale pluvieuse du monde ?",
@@ -258,11 +258,6 @@ module.exports = {
       droite: ["Sahara et Mongolie", "Nord de l'Europe", "Pourtour de la Méditerranée et sud de l'Australie", "Amazonie, au Brésil"],
       reponse: [[0, 2], [1, 3], [2, 0], [3, 1]],
       explication: "Chaque biome a ses régions : maquis autour de la Méditerranée, forêt pluvieuse en Amazonie, déserts au Sahara et en Mongolie. La toundra, elle, couvre le nord de l'Europe.", source: C(12) },
-    { id: "svt-s08-1-q24", fiche: "svt-s08-1-f3", type: "qcm", niveau: 3,
-      enonce: "Comment repère-t-on un biome sur la carte ?",
-      choix: ["Grâce à sa couleur, indiquée dans la légende", "Grâce au nom des pays", "Grâce aux lignes de l'équateur et des tropiques", "Grâce à l'échelle"],
-      reponse: "Grâce à sa couleur, indiquée dans la légende",
-      explication: "La légende associe une couleur à chaque biome : violet pour le maquis, marron pour les déserts très secs… On cherche ensuite cette couleur sur la carte.", source: C(12) },
     // f4 : les biomes d'eau douce
     { id: "svt-s08-1-q25", fiche: "svt-s08-1-f4", type: "qcm", niveau: 1,
       enonce: "Comment appelle-t-on les biomes d'eau douce ?",
@@ -283,11 +278,6 @@ module.exports = {
       corrections: ["Faux : les profondeurs reçoivent peu de lumière et sont surtout riches en sédiments.", "Faux : les profondeurs d'un lac sont toujours gelées.", "Faux : les profondeurs sont riches en coraux."],
       reponse: { vrai: false, correction: "Faux : les profondeurs reçoivent peu de lumière et sont surtout riches en sédiments." },
       explication: "Les algues et les plantes aquatiques poussent sur le littoral, bien éclairé. Au fond, la lumière manque et les sédiments s'accumulent.", source: R(6) },
-    { id: "svt-s08-1-q29", fiche: "svt-s08-1-f4", type: "ordre", niveau: 2,
-      enonce: "Range les trois espaces d'un lac, de la rive vers le fond.",
-      elements: ["Les profondeurs", "Le littoral", "La surface"],
-      reponse: [1, 2, 0],
-      explication: "Le littoral fait la jonction avec la terre, la surface reçoit la lumière, les profondeurs restent sombres. Trois espaces, trois peuplements.", source: R(6) },
     { id: "svt-s08-1-q30", fiche: "svt-s08-1-f4", type: "qcm_multiple", niveau: 2,
       enonce: "Lesquels sont des terres humides ? (plusieurs réponses)",
       choix: ["Les marais", "Les deltas", "Les tourbières", "Les ruisseaux", "Les récifs coralliens"],
@@ -300,7 +290,7 @@ module.exports = {
       explication: "Peu profond et rapide d'un côté, profond et calme de l'autre : ces conditions très différentes attirent une flore et une faune différentes. L'eau reste douce dans les deux cas.", source: R(6) },
     { id: "svt-s08-1-q32", fiche: "svt-s08-1-f4", type: "qcm", niveau: 2,
       enonce: "Quelle quantité de sel contient l'eau des biomes dulcicoles ?",
-      choix: ["Moins de 1 %", "Plus de 10 %", "Exactement 5 %", "Aucun sel du tout"],
+      choix: ["Moins de 1 %", "Plus de 10 %", "Environ 3,5 %, comme la mer", "Aucun sel du tout"],
       reponse: "Moins de 1 %",
       explication: "L'eau douce contient moins de 1 % de sel. Ce n'est pas zéro, mais bien moins que la mer.", source: R(6) },
     // f5 : les biomes marins
@@ -340,7 +330,7 @@ module.exports = {
       explication: "Sans lumière, pas de photosynthèse, donc pas de végétaux. En dessous de 1 000 m, il n'y en a plus du tout.", source: R(7) },
     { id: "svt-s08-1-q40", fiche: "svt-s08-1-f5", type: "qcm", niveau: 3,
       enonce: "Qu'est-ce qu'un « fumeur » ?",
-      choix: ["Un volcan sous-marin très chaud, plein de vie", "Un bateau à vapeur", "Un poisson des abysses", "Un nuage de cendres au-dessus de la mer, après une éruption"],
+      choix: ["Un volcan sous-marin très chaud, plein de vie", "Un courant d'eau chaude à la surface de l'océan", "Un poisson des abysses", "Un nuage de cendres au-dessus de la mer, après une éruption"],
       reponse: "Un volcan sous-marin très chaud, plein de vie",
       explication: "Les fumeurs sont des volcans sous-marins des dorsales océaniques. Malgré la chaleur et la pression, des espèces très particulières y vivent en nombre.", source: R(7) }
   ],

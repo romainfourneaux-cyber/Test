@@ -329,26 +329,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "physique-s02-1-q30",
-   "fiche": "physique-s02-1-f1",
-   "type": "qcm",
-   "niveau": 2,
-   "enonce": "Comment savoir si un changement d'état est une fusion ?",
-   "choix": [
-    "On vérifie qu'un liquide devient solide",
-    "On vérifie qu'un liquide devient gazeux",
-    "On vérifie qu'un solide devient liquide",
-    "On vérifie qu'un gaz devient liquide"
-   ],
-   "explication": "La fusion, c'est le passage du solide au liquide, comme la neige qui fond. Le passage inverse est la solidification.",
-   "source": {
-    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
-    "page": 3
-   },
-   "r": "HBRFAshHbQwYZtAUEhhCCYEDW4iHaYRVfwRSaMASmQ0Ac91xsChRH0TZ",
-   "poids": 1
-  },
-  {
    "id": "physique-s02-1-q5",
    "fiche": "physique-s02-1-f2",
    "type": "qcm",
@@ -446,25 +426,6 @@ JEU.enregistrer("cours", {
     "page": 3
    },
    "r": "==wGEdEHosRAEYAGbEwHT4xYMlQFZ1hCBVQSe1zESUEAQk0CLsRHyQUCVglCP1lRMYhLHQADZEFHP8ECJQSDQEVDLgwBVoxE3IFEJUVBasASRgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
-   "id": "physique-s02-1-q31",
-   "fiche": "physique-s02-1-f2",
-   "type": "vrai_faux",
-   "niveau": 2,
-   "enonce": "Le brouillard se forme quand de l'eau liquide devient gazeuse.",
-   "corrections": [
-    "Faux : il se forme quand la vapeur d'eau devient liquide, en gouttelettes.",
-    "Faux : il se forme quand de l'eau solide devient liquide.",
-    "Faux : il se forme quand la vapeur d'eau devient solide."
-   ],
-   "explication": "Le brouillard est fait de gouttelettes d'eau liquide : la vapeur d'eau s'est liquéfiée. Du liquide au gaz, ce serait une vaporisation.",
-   "source": {
-    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
-    "page": 3
-   },
-   "r": "=MRTcthJZFBUBtwGSMhBVcGHQUUWU0wBaMQAv0QEbh0BZMgAJdgJXIVAVNAHL8xEeMGTJURSA4wEXk0FqAgGDUFFa40AbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -670,40 +631,22 @@ JEU.enregistrer("cours", {
    "id": "physique-s02-1-q37",
    "fiche": "physique-s02-1-f3",
    "type": "qcm",
-   "niveau": 3,
-   "enonce": "Parmi la grêle, la pluie, le nuage, la vapeur d'eau et la buée, combien sont de l'eau liquide ?",
-   "choix": [
-    "Une seule",
-    "Deux",
-    "Trois",
-    "Quatre"
-   ],
-   "explication": "La pluie, le nuage et la buée sont liquides : cela fait trois. La grêle est solide et la vapeur d'eau est un gaz.",
-   "source": {
-    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
-    "page": 3
-   },
-   "r": "==ATc8QCbYSZ",
-   "poids": 1
-  },
-  {
-   "id": "physique-s02-1-q38",
-   "fiche": "physique-s02-1-f3",
-   "type": "qcm",
    "niveau": 2,
-   "enonce": "Dans quel état sont à la fois le nuage et le brouillard ?",
+   "enonce": "Comment se forment les nuages ?",
    "choix": [
-    "Tous deux à l'état liquide",
-    "Tous deux à l'état gazeux",
-    "Tous deux à l'état solide",
-    "L'un liquide, l'autre gazeux"
+    "La pluie remonte du sol vers le ciel dès que le soleil chauffe fort",
+    "La vapeur d'eau de l'air se refroidit et forme des gouttelettes",
+    "La neige des montagnes fond et flotte dans l'air en altitude",
+    "Le vent soulève l'eau des lacs et la garde en l'air"
    ],
-   "explication": "Le nuage et le brouillard sont rangés avec l'eau liquide, pas avec le gaz. Seule la vapeur d'eau est gazeuse.",
+   "explication": "L'air humide monte et se refroidit : sa vapeur d'eau se change en minuscules gouttelettes d'eau liquide. Un nuage est donc fait d'eau liquide, comme le brouillard.",
    "source": {
-    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
-    "page": 3
+    "theme": "Séance 2 – Le cycle de l’eau",
+    "titre": "Nuage",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Nuage"
    },
-   "r": "PswCPMBGbsiUBQQAYraSDIFyA2QHAhkCPVxEGYSZ",
+   "r": "=clFQUQHLMwFccDWKIVDdogAGxwH10xEFFAFJphBWEALfNAUf5kCVY0GbYSVZUEEVk0GOcxTn0wFAhkHOAhRI4TZ",
    "poids": 1
   },
   {
@@ -788,21 +731,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "physique-s02-1-q39",
-   "fiche": "physique-s02-1-f4",
-   "type": "vrai_faux",
-   "niveau": 1,
-   "enonce": "Le white-spirit laisse le sulfate de cuivre anhydre tout blanc.",
-   "corrections": [],
-   "explication": "Oui : le white-spirit ne contient pas d'eau. La poudre reste donc blanche.",
-   "source": {
-    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
-    "page": 3
-   },
-   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
    "id": "physique-s02-1-q40",
    "fiche": "physique-s02-1-f4",
    "type": "vrai_faux",
@@ -819,26 +747,6 @@ JEU.enregistrer("cours", {
     "page": 3
    },
    "r": "Qd0GY9gCBJQSXQCHQYB3yuhHPxRDjhEEQFEDPJBCMsRMXERRcQAGOpgGL0CTJcVDL0hATYgAndxGQUVBasASRgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
-   "id": "physique-s02-1-q41",
-   "fiche": "physique-s02-1-f4",
-   "type": "qcm",
-   "niveau": 2,
-   "enonce": "Que devient le sulfate de cuivre anhydre au contact de l'eau écarlate ?",
-   "choix": [
-    "Il reste blanc",
-    "Il devient bleu",
-    "Il devient rouge écarlate",
-    "Il devient bleu, puis blanc"
-   ],
-   "explication": "Malgré son nom, l'eau écarlate ne contient pas d'eau : la poudre reste blanche. Elle se comporte comme le white-spirit et l'alcool ménager.",
-   "source": {
-    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
-    "page": 3
-   },
-   "r": "==ATMwRCv8URQlVHKQhRFsTZ",
    "poids": 1
   },
   {
@@ -859,26 +767,6 @@ JEU.enregistrer("cours", {
     "page": 3
    },
    "r": "==AUAQAEWVgTKYBS3MEAclFAAUgRFsTZ",
-   "poids": 1
-  },
-  {
-   "id": "physique-s02-1-q43",
-   "fiche": "physique-s02-1-f4",
-   "type": "qcm",
-   "niveau": 2,
-   "enonce": "Pourquoi le test au sulfate de cuivre anhydre montre-t-il que tous les liquides ne contiennent pas d'eau ?",
-   "choix": [
-    "Parce que tous les liquides font bleuir la poudre",
-    "Parce que certains liquides laissent la poudre blanche",
-    "Parce que certains liquides font devenir la poudre rouge",
-    "Parce que la poudre bleuit même sans aucun liquide"
-   ],
-   "explication": "Si la poudre reste blanche, le liquide ne contient pas d'eau. C'est le cas du white-spirit, de l'alcool ménager et de l'eau écarlate.",
-   "source": {
-    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
-    "page": 3
-   },
-   "r": "=EGSNY1QPMABGxAAjcgGVUFEF40Gc0AMexAVB5EHDIAAHYzGZUkBfAwDbAQDg0AAAxlTKUAFIISZ",
    "poids": 1
   },
   {
@@ -903,17 +791,17 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Pourquoi ne faut-il surtout pas boire de white-spirit ni d'alcool ménager ?",
    "choix": [
-    "Ce sont des liquides qui contiennent beaucoup trop d'eau",
-    "Ce sont des liquides sans eau, et ce sont des poisons",
-    "Ils font bleuir le sulfate de cuivre anhydre",
-    "Ce sont des gaz, et non de vrais liquides"
+    "Parce qu'ils contiennent de l'eau de mer, non potable",
+    "Parce que ce sont des liquides sans eau, et des poisons",
+    "Parce qu'ils font bleuir le sulfate de cuivre anhydre blanc",
+    "Parce qu'ils sont beaucoup trop sucrés"
    ],
    "explication": "Ils laissent le sulfate de cuivre blanc : ils ne contiennent pas d'eau. Ce sont des poisons.",
    "source": {
     "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
     "page": 3
    },
-   "r": "==wDWslQdYQCWkUAiYRVRshHa4kCRg0NIVUGY9gCGVxBTQjUGAQEYwxHG4BSwgUAVkFAAUhRMETZ",
+   "r": "KBzQKYERB8hRVwgFnZAEFlFBIswTBYgIeVkRIpgBTcBAecWAQEQVFcQAcIVDg0AAAxlTKUAFIISZ",
    "poids": 1
   },
   {
@@ -921,18 +809,20 @@ JEU.enregistrer("cours", {
    "fiche": "physique-s02-1-f5",
    "type": "vrai_faux",
    "niveau": 2,
-   "enonce": "Un liquide qui laisse le sulfate de cuivre anhydre tout blanc peut se boire sans danger.",
+   "enonce": "Un être humain peut vivre plusieurs semaines sans boire.",
    "corrections": [
-    "Faux : il ne contient pas d'eau ; dans l'expérience, ces liquides sont des poisons.",
-    "Faux : il contient trop d'eau pour être bu sans danger.",
-    "Faux : il ne contient pas d'eau, mais on peut en boire un peu."
+    "Faux : sans boire, on ne tient que quelques jours.",
+    "Faux : sans boire, on ne tient que quelques heures.",
+    "Faux : on peut tenir plusieurs mois sans boire si l'on mange assez."
    ],
-   "explication": "La poudre restée blanche montre qu'il n'y a pas d'eau. Il ne faut jamais boire un tel liquide.",
+   "explication": "Le corps perd de l'eau chaque jour, bien plus qu'il n'en produit : sans boire, la mort survient en quelques jours, deux à cinq environ. Sans manger, on tient bien plus longtemps.",
    "source": {
-    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
-    "page": 3
+    "theme": "Séance 2 – Le cycle de l’eau",
+    "titre": "Eau",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Eau"
    },
-   "r": "bsEX0whGWwhHZ4EHXwwYZtgWe5EHDIAAHYzGZUkBUogTDdxCtgEDHRYrf4xAO5xZBsBBRElUOpxENQWSFZETe8kEIwwGzwhGGUFFH40AbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "r": "=8gSt51FAJEBPVxAcMwKXAAFVRBHf8kBGYCRRUBSA8ECJkkXiAAHKcRUaAgDBgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -940,58 +830,43 @@ JEU.enregistrer("cours", {
    "fiche": "physique-s02-1-f5",
    "type": "qcm",
    "niveau": 1,
-   "enonce": "Dans l'expérience du sulfate de cuivre, lequel de ces liquides est un poison ?",
+   "enonce": "Quelle part du corps d'un adulte est faite d'eau, environ ?",
    "choix": [
-    "Le jus de fruits",
-    "Le lait",
-    "Une boisson au cola",
-    "L'alcool ménager"
+    "Environ un dixième seulement",
+    "Un peu moins d'un quart",
+    "Près des deux tiers (65 %)",
+    "Presque la totalité du corps"
    ],
-   "explication": "L'alcool ménager ne contient pas d'eau : c'est un poison. Les trois autres contiennent de l'eau.",
+   "explication": "Le corps d'un adulte contient environ 65 % d'eau, et un bébé encore plus. C'est pour cela qu'il faut en boire chaque jour.",
    "source": {
-    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
-    "page": 3
+    "theme": "Séance 2 – Le cycle de l’eau",
+    "titre": "Eau",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Eau"
    },
-   "r": "==wVDwQCOwRwACURZJUAMowBO5TZ",
-   "poids": 1
-  },
-  {
-   "id": "physique-s02-1-q44",
-   "fiche": "physique-s02-1-f5",
-   "type": "vrai_faux",
-   "niveau": 2,
-   "enonce": "Dans l'expérience du sulfate de cuivre, le jus de fruits fait partie des liquides qui sont des poisons.",
-   "corrections": [
-    "Faux : le jus de fruits contient de l'eau ; les poisons sont les liquides qui laissent la poudre blanche.",
-    "Faux : le jus de fruits ne contient pas d'eau, mais ce n'est pas un poison.",
-    "Faux : le jus de fruits n'est un poison que s'il est très sucré."
-   ],
-   "explication": "Le jus de fruits fait bleuir la poudre : il contient de l'eau. Les poisons de l'expérience sont le white-spirit, l'alcool ménager et l'eau écarlate.",
-   "source": {
-    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
-    "page": 3
-   },
-   "r": "UAVaX0hBbARBM80FacCWKUUDPMgRScwF0EAHEkRUAshHSthJJxAQcdwAGVBDecmBbogBRpBAAEQAs0VRGhkAP1lRcMhIVlRRQURSaEwFBczQKYVDdsxDTsBFndREFZABD4kCegUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "r": "=wkRDZEXE9mUGcBEY0hTXcQDn0gFQlkTc4cpbISZ",
    "poids": 1
   },
   {
    "id": "physique-s02-1-q45",
    "fiche": "physique-s02-1-f5",
    "type": "qcm",
-   "niveau": 3,
-   "enonce": "Pourquoi le test au sulfate de cuivre anhydre est-il utile pour la santé ?",
+   "niveau": 2,
+   "enonce": "Comment notre corps perd-il de l'eau chaque jour ?",
    "choix": [
-    "Il repère les liquides sans eau, à ne pas boire",
-    "Il rend potables les liquides qui le font bleuir",
-    "Il retire l'eau des liquides dangereux",
-    "Il prouve qu'un liquide qui le fait bleuir se boit sans danger"
+    "Seulement quand on pleure ou qu'on saigne",
+    "Par l'urine, la sueur et la respiration",
+    "Seulement en été, quand il fait chaud",
+    "Il n'en perd jamais : il la garde toute"
    ],
-   "explication": "Le corps a besoin d'eau, et un liquide sans eau ne doit pas être bu. Le test repère ces liquides, car la poudre y reste blanche.",
+   "explication": "Chaque jour, le corps rejette de l'eau dans l'urine, la sueur et même l'air qu'on expire. Il faut donc la remplacer en buvant et en mangeant.",
    "source": {
-    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
-    "page": 3
+    "theme": "Séance 2 – Le cycle de l’eau",
+    "titre": "Eau",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Eau"
    },
-   "r": "MpAFPYAEnFAFVUFFH40zxi0bYRAUN0RAHURSBIiFcABBYUgTccBBjh0Fd6uHKQhRFsTZ",
+   "r": "=c1HGcwGTohKdZBUf5kDKYUHXcGAAAAACk0DDIFRmMEDHhVSDYEFIISZ",
    "poids": 1
   },
   {
@@ -999,21 +874,21 @@ JEU.enregistrer("cours", {
    "fiche": "physique-s02-1-f5",
    "type": "qcm_multiple",
    "niveau": 2,
-   "enonce": "Dans l'expérience du sulfate de cuivre, lesquels de ces liquides ne faut-il surtout pas boire ?",
+   "enonce": "D'où vient l'eau dont notre corps a besoin chaque jour ?",
    "choix": [
-    "Le white-spirit",
-    "Le lait",
-    "L'eau écarlate",
-    "Une boisson au cola",
-    "L'alcool ménager",
-    "Le jus de fruits"
+    "Des boissons",
+    "De l'air qu'on respire",
+    "Des aliments, comme les fruits, les légumes ou la soupe",
+    "De la lumière du soleil"
    ],
-   "explication": "Le white-spirit, l'eau écarlate et l'alcool ménager laissent la poudre blanche : sans eau, ce sont des poisons. Le lait, le jus de fruits et le cola, eux, contiennent de l'eau.",
+   "explication": "On boit la plus grande partie de l'eau qu'il nous faut, mais les aliments en apportent aussi. L'air et la lumière, eux, n'en apportent pas.",
    "source": {
-    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
-    "page": 3
+    "theme": "Séance 2 – Le cycle de l’eau",
+    "titre": "Eau",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Eau"
    },
-   "r": "1E2XAIFTAYcpLkkHo0hFJQhVlw0QQ1wNMlwRM1gxlaEHTISV5cUWT1xBdsBGwAAABRkBYY0AlAFH",
+   "r": "o9wCfMRCaIlJeUFEaElGLIwBPou7JUhXLMgRKphBucwBDUlAMIwTXUgLCZQFB0xGIMABbsyEVZBE1skQNFgBs4lFcJEDPVxAtAFH",
    "poids": 1
   },
   {
@@ -1096,58 +971,42 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "physique-s02-1-q46",
-   "fiche": "physique-s02-1-f6",
-   "type": "vrai_faux",
-   "niveau": 1,
-   "enonce": "L'eau douce des cours d'eau sert directement à boire, à cultiver et à fabriquer.",
-   "corrections": [],
-   "explication": "Oui : c'est l'eau douce qu'on utilise directement pour la consommation, l'agriculture et l'industrie. Elle est pourtant très peu abondante.",
-   "source": {
-    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
-    "page": 3
-   },
-   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
    "id": "physique-s02-1-q47",
    "fiche": "physique-s02-1-f6",
    "type": "vrai_faux",
-   "niveau": 2,
-   "enonce": "L'eau douce des cours d'eau représente environ 1 % de toute l'eau de la Terre.",
-   "corrections": [
-    "Faux : elle n'en représente qu'environ 0,01 %.",
-    "Faux : elle en représente environ 10 %.",
-    "Faux : elle en représente environ la moitié."
-   ],
-   "explication": "L'eau douce des cours d'eau ne fait qu'environ 0,01 % de toute l'eau. C'est une part bien plus petite que 1 %.",
+   "niveau": 3,
+   "enonce": "La plus grande partie de l'eau douce de la Terre est stockée sous forme de glace et de neige.",
+   "corrections": [],
+   "explication": "Oui : environ 70 % de l'eau douce est gelée, dans les glaciers et aux pôles. L'eau des cours d'eau, celle qu'on utilise directement, n'en est qu'une toute petite part.",
    "source": {
-    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
-    "page": 3
+    "theme": "Séance 2 – Le cycle de l’eau",
+    "titre": "Eau douce",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Eau_douce"
    },
-   "r": "=A1RbggTeZlSZJVKdcADD8BDJpxAIZSWLAlXHzKFWwAAnxBECtRUMIwAXgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
    "poids": 1
   },
   {
    "id": "physique-s02-1-q48",
    "fiche": "physique-s02-1-f6",
    "type": "qcm",
-   "niveau": 3,
-   "enonce": "Imagine toute l'eau de la Terre partagée en 10 000 seaux égaux. Environ combien de seaux contiendraient l'eau douce des cours d'eau ?",
+   "niveau": 1,
+   "enonce": "Dans le cycle de l'eau, qu'est-ce qui fait passer l'eau des océans dans l'air ?",
    "choix": [
-    "1 seau",
-    "10 seaux",
-    "1 000 seaux",
-    "5 000 seaux"
+    "Le vent, qui l'arrache aux vagues",
+    "Les poissons, qui la rejettent en respirant",
+    "La chaleur du Soleil, qui l'évapore",
+    "Le sel, qui la fait monter dans le ciel"
    ],
-   "explication": "0,01 %, c'est 1 part sur 10 000. Sur 10 000 seaux, l'eau douce des cours d'eau n'en remplirait donc qu'un seul.",
-   "indice": "0,01 % veut dire 1 part sur 10 000.",
+   "explication": "Chauffée par le Soleil, l'eau de surface s'évapore et monte dans l'air sous forme de vapeur. C'est le moteur du cycle de l'eau.",
    "source": {
-    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
-    "page": 3
+    "theme": "Séance 2 – Le cycle de l’eau",
+    "titre": "Cycle de l'eau",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Cycle_de_l%27eau"
    },
-   "r": "=8wGOMQFJNUZ",
+   "r": "=wkCAcwMMNBnun0AG9AHDcmXZwAEdYQPPdADj9FEQF0DHUgRI4TZ",
    "poids": 1
   },
   {

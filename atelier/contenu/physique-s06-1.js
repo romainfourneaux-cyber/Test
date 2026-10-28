@@ -8,6 +8,7 @@
 // la température de début de fusion de la glace salée est donnée comme un fait du cours. Aucun nombre propre à l'énoncé.
 const F = "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf";
 const P = p => ({ fichier: F, page: p });
+// Audit des questions du 28/10/2026 appliqué : q23 et q26 (doublons) et q48 (valeurs du mercure par cœur) supprimées.
 
 // Schéma redessiné (aucune image reprise) : les trois états et les quatre changements d'état de l'eau.
 function cycle() {
@@ -223,33 +224,18 @@ module.exports = {
       choix: ["Gazeux", "Liquide", "Solide", "Solide et liquide"],
       reponse: "Gazeux",
       explication: "Au-dessus de 357 °C, le mercure s'est vaporisé. À 400 °C, il est donc à l'état gazeux.", indice: "Compare 400 °C à sa température de vaporisation.", source: P(8) },
-    { id: "physique-s06-1-q23", fiche: "physique-s06-1-f3", type: "qcm", niveau: 2,
-      enonce: "Près d'une source de chaleur intense, lequel se ramollit en premier ?",
-      choix: ["Le zinc", "L'acier", "Les deux en même temps", "Aucun des deux"],
-      reponse: "Le zinc",
-      explication: "Le zinc se ramollit près d'une chaleur intense. L'acier a une température de fusion beaucoup plus élevée.", source: P(8) },
     { id: "physique-s06-1-q24", fiche: "physique-s06-1-f3", type: "trou", niveau: 1,
       enonce: "Complète avec les mots du cours.",
       texte: "Un corps ___ fond à une température précise. Un ___ comme l'acier fond dans une fourchette de températures.",
       banque: ["pur", "alliage", "liquide", "solvant"],
       reponse: [["pur"], ["alliage"]],
       explication: "Le corps pur a une température de fusion nette. L'alliage, lui, fond sur une plage de températures.", source: P(8) },
-    { id: "physique-s06-1-q48", fiche: "physique-s06-1-f3", type: "qcm_multiple", niveau: 2,
-      enonce: "Quelles affirmations sur le mercure sont justes ? (plusieurs réponses)",
-      choix: ["Il fond à −38,83 °C", "Il se vaporise à 357 °C", "Il est liquide à vingt degrés", "Il est solide à vingt degrés", "Il se vaporise à 0 °C"],
-      reponse: ["Il fond à −38,83 °C", "Il se vaporise à 357 °C", "Il est liquide à vingt degrés"],
-      explication: "Le mercure fond à −38,83 °C ; il bout à 357 °C. Entre les deux, à vingt degrés, il est liquide.", source: P(8) },
     // f4 : densité des métaux
     { id: "physique-s06-1-q25", fiche: "physique-s06-1-f4", type: "qcm", niveau: 1,
       enonce: "Parmi l'aluminium, le platine, l'acier et le zinc, lequel est le moins dense ?",
       choix: ["L'aluminium", "Le platine", "L'acier", "Le zinc"],
       reponse: "L'aluminium",
       explication: "Le moins dense est celui qui a la plus petite masse pour 1 dm³ : l'aluminium. Le plus dense est le platine.", source: P(8) },
-    { id: "physique-s06-1-q26", fiche: "physique-s06-1-f4", type: "qcm", niveau: 1,
-      enonce: "Parmi le platine, l'aluminium, le zinc et l'acier, lequel est le plus dense ?",
-      choix: ["Le platine", "L'aluminium", "Le zinc", "L'acier"],
-      reponse: "Le platine",
-      explication: "Le platine a la plus grande masse pour 1 dm³. C'est le plus dense.", source: P(8) },
     { id: "physique-s06-1-q27", fiche: "physique-s06-1-f4", type: "vrai_faux", niveau: 2,
       enonce: "Le métal le moins dense est celui qui a la plus petite masse pour un même volume.",
       corrections: [], reponse: { vrai: true, correction: null },

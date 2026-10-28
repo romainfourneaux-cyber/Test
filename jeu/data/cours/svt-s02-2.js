@@ -141,38 +141,22 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s02-2-f1",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Vers quand la vapeur d'eau de l'atmosphère a-t-elle chuté très vite ?",
+   "enonce": "Pourquoi la vapeur d'eau de l'atmosphère primitive a-t-elle presque disparu ?",
    "choix": [
-    "Il y a environ 4 milliards d'années",
-    "Il y a environ 2,4 milliards d'années",
-    "Il y a environ 800 millions d'années",
-    "Il y a environ 2 milliards d'années"
+    "Elle s'est condensée en pluie quand la Terre s'est refroidie",
+    "Les vents violents de l'époque l'ont emportée dans l'espace",
+    "Les premières plantes et algues l'ont absorbée pour fabriquer leur matière",
+    "La chaleur du Soleil l'a décomposée petit à petit"
    ],
-   "explication": "Presque au maximum il y a 4,5 milliards d'années, la vapeur d'eau chute très vite vers 4 milliards d'années. Les autres dates concernent le dioxygène et l'ozone.",
+   "explication": "Quand la jeune Terre s'est refroidie, la vapeur d'eau de son atmosphère s'est condensée en nuages, puis en pluies torrentielles. Ces pluies ont formé les océans.",
+   "indice": "Où est passée toute cette eau ?",
    "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 3
+    "theme": "Séance 4 – Les effets de serre",
+    "titre": "Origine de l'eau sur la Terre",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Origine_de_l%27eau_sur_la_Terre"
    },
-   "r": "=wEHXEMgDtAVKowTVIwGT4iHZwAGR1lTB0hGqs1CQ1wDP9hRFsTZ",
-   "poids": 1
-  },
-  {
-   "id": "svt-s02-2-q17",
-   "fiche": "svt-s02-2-f1",
-   "type": "vrai_faux",
-   "niveau": 3,
-   "enonce": "Quand le dioxygène a commencé à apparaître, l'atmosphère contenait encore presque toute la vapeur d'eau possible.",
-   "corrections": [
-    "Faux : la vapeur d'eau avait chuté bien avant, vers 4 milliards d'années.",
-    "Faux : la vapeur d'eau n'est apparue qu'après le dioxygène.",
-    "Faux : le dioxygène et la vapeur d'eau sont apparus en même temps."
-   ],
-   "explication": "La vapeur d'eau chute vers 4 milliards d'années, alors que le dioxygène n'apparaît qu'après 2,4 milliards d'années. À ce moment-là, la vapeur d'eau était déjà basse depuis longtemps.",
-   "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 3
-   },
-   "r": "UwUQB0g6uvwWMl0CGVRDAYyGZkAHckkWPFgGmsVRZkFAOAxBJxhIbcRRcLbHbcQEIdDREMETOpxBD4kFnBAAAUAEf4kDegUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "r": "XRBAKYQHaUCSXURWdoQQVk0F1AAExUFEF40CckgNcVEUEtxAWY0BXc2FcbqBfwgCB0xCjllFQpQHPNgCFcTZ",
    "poids": 1
   },
   {
@@ -215,26 +199,6 @@ JEU.enregistrer("cours", {
     "page": 3
    },
    "r": "ockBYwhHKYBSmE0BUlVHPVhzqCwNSBAAFEVyt+kBbYSDdAETa8ECJoDUrBlBAwtsHAgDVxwYeFwRMdwAK8ABSNnUGcBEHk0CbshHj5Vz2/lGP9cpdcwLRUFBVRRBCoCUEFmXAwp7AEwBB1gU0YxBEwRHFcgAS11bZUEVNcxTK8QSSToHVVstbAcrLIFHqwUEc6uTKogCsAFH",
-   "poids": 1
-  },
-  {
-   "id": "svt-s02-2-q20",
-   "fiche": "svt-s02-2-f1",
-   "type": "qcm",
-   "niveau": 3,
-   "enonce": "Il y a 3 milliards d'années, comment était le taux de vapeur d'eau de l'atmosphère, comparé à aujourd'hui ?",
-   "choix": [
-    "À peu près le même qu'aujourd'hui",
-    "Proche du maximum possible",
-    "Nul : il n'y en avait plus du tout",
-    "Bien plus élevé qu'aujourd'hui"
-   ],
-   "explication": "Depuis sa chute, vers 4 milliards d'années, le taux de vapeur d'eau reste à peu près stable. Il y a 3 milliards d'années, il était donc déjà proche du niveau actuel.",
-   "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 3
-   },
-   "r": "=wkBHAAZJdBQCRgGHEEHDc2FY8stck0CDI1Gr7+FF1wGKYhRpHbZ",
    "poids": 1
   },
   {
@@ -339,67 +303,22 @@ JEU.enregistrer("cours", {
    "id": "svt-s02-2-q22",
    "fiche": "svt-s02-2-f2",
    "type": "qcm",
-   "niveau": 3,
-   "enonce": "Pendant combien de temps environ l'atmosphère est-elle restée sans dioxygène, à partir de 4,5 milliards d'années ?",
-   "choix": [
-    "Environ 2 milliards d'années",
-    "Environ 800 millions d'années",
-    "Environ 4,5 milliards d'années",
-    "Environ 400 millions d'années"
-   ],
-   "explication": "Il n'y a pas de dioxygène de 4,5 à 2,4 milliards d'années. Cela fait environ 2 milliards d'années sans lui.",
-   "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 3
-   },
-   "r": "==wFetgxliwBTAmFVZREDgwBD4RAu0wVVMUAd8AEHcTZ",
-   "poids": 1
-  },
-  {
-   "id": "svt-s02-2-q23",
-   "fiche": "svt-s02-2-f2",
-   "type": "qcm_multiple",
-   "niveau": 3,
-   "enonce": "Il y a 3,5 milliards d'années, coche ce qui était vrai de l'atmosphère.",
-   "choix": [
-    "Elle n'avait pas de dioxygène",
-    "Elle n'avait pas d'ozone",
-    "Sa vapeur d'eau avait déjà chuté",
-    "Elle avait autant de dioxygène qu'aujourd'hui",
-    "Elle avait presque toute la vapeur d'eau possible"
-   ],
-   "explication": "À cette époque, la vapeur d'eau avait déjà chuté, et ni le dioxygène ni l'ozone n'étaient encore là. Le dioxygène n'apparaît qu'après 2,4 milliards d'années.",
-   "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 3
-   },
-   "r": "wdEnurhGOUQSSTIGcbaER1xBOQQCjhFBQpgCPRxEMIgJEUFBmMVRMpAHHkjQCFVDd4gFG1xGmQAFCtRUMIwA3o0bPAwWF2KCf4hBbMiUQEQVCggHPZQAisFBSMkTKogCsAFH",
-   "poids": 1
-  },
-  {
-   "id": "svt-s02-2-q24",
-   "fiche": "svt-s02-2-f2",
-   "type": "association",
    "niveau": 2,
-   "enonce": "Relie chaque moment à ce qui se passe dans l'atmosphère.",
-   "gauche": [
-    "Il y a 4 milliards d'années",
-    "Il y a 2,4 milliards d'années",
-    "Il y a 2 milliards d'années",
-    "Il y a 800 millions d'années"
+   "enonce": "D'où vient le dioxygène de l'atmosphère ?",
+   "choix": [
+    "Des êtres vivants l'ont fabriqué par la photosynthèse",
+    "Les volcans l'ont rejeté en grande quantité",
+    "Il était déjà dans l'atmosphère dès la formation de la Terre",
+    "Il est sorti des glaces des pôles en fondant"
    ],
-   "droite": [
-    "L'ozone apparaît, en faible quantité",
-    "La vapeur d'eau a chuté très vite",
-    "Le taux de dioxygène se stabilise",
-    "Le dioxygène commence à apparaître"
-   ],
-   "explication": "Vers 4 milliards d'années, la vapeur d'eau chute ; après 2,4 milliards, le dioxygène arrive et se stabilise vers 2 milliards. L'ozone ne vient qu'il y a 800 millions d'années.",
+   "explication": "Les premiers à produire du dioxygène ont été des microbes, les cyanobactéries, il y a plus de deux milliards d'années. Les plantes font la même chose aujourd'hui grâce à la photosynthèse.",
    "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 3
+    "theme": "Séance 4 – Les effets de serre",
+    "titre": "Grande Oxydation",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Grande_Oxydation"
    },
-   "r": "==ANvcnXG5TWsslQdlCRe4RSEYnQyclSZlCH",
+   "r": "==AUNAThm2VWAYRFJ0RHvIQVEkRUb8wHSFMgYRBXfxgDAYUHcgSVZUkBFcwDZshHj5FAHlFxsaUFMYTZ",
    "poids": 1
   },
   {
@@ -482,32 +401,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "svt-s02-2-q12",
-   "fiche": "svt-s02-2-f3",
-   "type": "association",
-   "niveau": 2,
-   "enonce": "Relie chaque planète à sa température.",
-   "gauche": [
-    "Mercure",
-    "Vénus",
-    "Mars",
-    "Neptune"
-   ],
-   "droite": [
-    "−230 °C",
-    "167 °C",
-    "477 °C",
-    "−40 °C"
-   ],
-   "explication": "Vénus est la plus chaude, devant Mercure. Mars est sous zéro et Neptune, la plus lointaine, est la plus froide.",
-   "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 4
-   },
-   "r": "==ANvcnXG5TWsolQdlCRe8RSEYnQyclSZlCH",
-   "poids": 1
-  },
-  {
    "id": "svt-s02-2-q25",
    "fiche": "svt-s02-2-f3",
    "type": "qcm_multiple",
@@ -570,32 +463,37 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s02-2-f4",
    "type": "qcm",
    "niveau": 1,
-   "enonce": "Dans le tableau des planètes, que met-on dans la première colonne ?",
+   "enonce": "Qu'est-ce que l'effet de serre ?",
    "choix": [
-    "Le nom des planètes",
-    "La température",
-    "La distance au Soleil",
-    "Le titre du graphique"
+    "Des gaz de l'air retiennent une partie de la chaleur que le sol renvoie",
+    "La lumière du Soleil qui chauffe directement l'air",
+    "Les nuages qui empêchent les rayons du Soleil d'arriver jusqu'au sol",
+    "Un vent chaud qui souffle depuis les déserts"
    ],
-   "explication": "La première colonne donne le nom des planètes. Les deux autres donnent leur distance au Soleil et leur température.",
+   "explication": "Le sol chauffé par le Soleil renvoie de la chaleur vers le ciel. Certains gaz de l'atmosphère en retiennent une partie, ce qui garde la planète plus chaude.",
+   "indice": "Pense à ce qui garde la chaleur près du sol.",
    "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 4
+    "theme": "Séance 4 – Les effets de serre",
+    "titre": "Effet de serre",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Effet_de_serre"
    },
-   "r": "==AUGAQAZrKAO4BGj5FAR1wAAggRM4TZ",
+   "r": "==ATK8QCfwhIAUVCaIQSLMgUNYDXFdEWLMwBOogUm4RVAERUMcwGAkwMNAwWY50GIMwBcIyGBAwBRtxBOUFBjhUAVc1DIYUFMYTZ",
    "poids": 1
   },
   {
    "id": "svt-s02-2-q14",
    "fiche": "svt-s02-2-f4",
    "type": "vrai_faux",
-   "niveau": 1,
-   "enonce": "Sur le graphique des planètes, on lit la température de chaque planète sur l'axe des ordonnées.",
+   "niveau": 2,
+   "enonce": "Sans effet de serre, la température moyenne de la Terre serait d'environ −18 °C au lieu de 15 °C.",
    "corrections": [],
-   "explication": "Ici, l'ordonnée donne la température et l'abscisse la distance. On recopie ces deux valeurs pour chaque planète.",
+   "explication": "Avec son effet de serre naturel, la Terre a une température moyenne d'environ 15 °C. Sans lui, elle serait glacée, autour de −18 °C.",
    "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 4
+    "theme": "Séance 4 – Les effets de serre",
+    "titre": "Effet de serre",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Effet_de_serre"
    },
    "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
    "poids": 1
@@ -604,20 +502,22 @@ JEU.enregistrer("cours", {
    "id": "svt-s02-2-q15",
    "fiche": "svt-s02-2-f4",
    "type": "qcm",
-   "niveau": 2,
-   "enonce": "Huit planètes et une ligne d'en-tête : combien de lignes compte le tableau ?",
+   "niveau": 1,
+   "enonce": "Quel gaz, rejeté quand on brûle du charbon, du pétrole ou du gaz, renforce l'effet de serre ?",
    "choix": [
-    "Neuf",
-    "Huit",
-    "Trois",
-    "Seize"
+    "Le dioxyde de carbone",
+    "Le dioxygène",
+    "Le diazote",
+    "L'hélium"
    ],
-   "explication": "Une ligne par planète, plus la ligne d'en-tête : 8 + 1 = 9. Le tableau a aussi trois colonnes.",
+   "explication": "Brûler du charbon, du pétrole ou du gaz rejette du dioxyde de carbone dans l'air. Ce gaz à effet de serre en plus réchauffe le climat.",
    "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 4
+    "theme": "Séance 4 – Les effets de serre",
+    "titre": "Gaz à effet de serre",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Gaz_%C3%A0_effet_de_serre"
    },
-   "r": "NBwEMwTZ",
+   "r": "=U2FbowFDgQDPdBDjhUAMVVAGIgRM4TZ",
    "poids": 1
   },
   {
@@ -625,19 +525,21 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s02-2-f4",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Sur le graphique des planètes, comment trouver la distance d'une planète au Soleil ?",
+   "enonce": "Comment les activités humaines renforcent-elles l'effet de serre ?",
    "choix": [
-    "On lit l'abscisse de son point",
-    "On lit l'ordonnée de son point",
-    "On compte les points avant lui",
-    "On mesure la taille de son point"
+    "En rejetant beaucoup de dioxyde de carbone et de méthane",
+    "En plantant de nouvelles forêts",
+    "En construisant des serres en verre pour les légumes",
+    "En utilisant l'énergie du vent et du Soleil"
    ],
-   "explication": "Sur le graphique des planètes, l'abscisse donne la distance au Soleil. L'ordonnée donne la température.",
+   "explication": "Usines, voitures, chauffage et élevage rejettent du dioxyde de carbone et du méthane. Ces gaz s'ajoutent à l'effet de serre naturel et réchauffent la planète.",
    "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 4
+    "theme": "Séance 4 – Les effets de serre",
+    "titre": "Réchauffement climatique",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/R%C3%A9chauffement_climatique"
    },
-   "r": "=cUQDdAAWY0BdQjUQEQVUoRHGExGhwkQZ1gGGogRH0TZ",
+   "r": "=00FGISRRwp7D80ACkkBiIFELoxEb8ADS1wJNAQUUZBAPIQSXMiUFAhGSwxDKABS3MEBBhEBKQhRHcTZ",
    "poids": 1
   },
   {
@@ -645,18 +547,20 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s02-2-f4",
    "type": "vrai_faux",
    "niveau": 2,
-   "enonce": "Pour ranger le nom, la distance au Soleil et la température des huit planètes, il faut un tableau de huit colonnes.",
+   "enonce": "L'effet de serre est seulement une pollution créée par les humains.",
    "corrections": [
-    "Faux : il faut trois colonnes, une par information, et une ligne par planète.",
-    "Faux : il faut neuf colonnes, une par planète plus l'en-tête.",
-    "Faux : il faut une seule colonne pour tout écrire."
+    "Faux : c'est d'abord un phénomène naturel, indispensable à la vie sur Terre, que les humains renforcent.",
+    "Faux : c'est un phénomène qui n'existe que sur Vénus.",
+    "Faux : c'est une pollution ancienne qui a disparu aujourd'hui."
    ],
-   "explication": "On fait une colonne par information : planète, distance, température. Les huit planètes occupent, elles, huit lignes sous l'en-tête.",
+   "explication": "Sans effet de serre naturel, la Terre serait bien trop froide pour nous. Le problème vient des gaz en plus que les humains rejettent, qui le renforcent.",
    "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 4
+    "theme": "Séance 4 – Les effets de serre",
+    "titre": "Effet de serre",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Effet_de_serre"
    },
-   "r": "Yc1XMoxxxagIBVRFf9wHGNwBV4iHVBwGEkkGKIFRtIEDBx0AdkAAHsxZAQRFVRxBb8kXbYyQLoVQBwgRVAQH1YQVRAAEP40AbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "r": "=sBRHZQKXYxFacxBL0hUb0CREgFWG8UFDUgUicABFlFFbwhCmgUMYZRFIdQGGdQBSdesVBQGTgQHBcBGwQUAbRkTDpwAbcwMTsRRQ8RwtKQHGou7NUUDAohRCsRHlMhUBUVBasASRgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -664,19 +568,21 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s02-2-f4",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Dans le tableau des planètes, en quelle unité note-t-on la distance au Soleil ?",
+   "enonce": "Quelle est la conséquence principale d'un effet de serre renforcé par les humains ?",
    "choix": [
-    "En millions de kilomètres",
-    "En milliers de kilomètres",
-    "En degrés Celsius",
-    "En milliards d'années"
+    "Le réchauffement du climat de la Terre",
+    "Des hivers plus froids dans tous les pays",
+    "La disparition de l'atmosphère",
+    "Des journées plus longues"
    ],
-   "explication": "Les distances au Soleil sont si grandes qu'on les note en millions de kilomètres. Les températures, elles, sont en degrés Celsius.",
+   "explication": "Plus de gaz à effet de serre, c'est plus de chaleur retenue : la température moyenne de la Terre monte. Elle a déjà gagné plus d'un degré depuis un siècle et demi.",
    "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 4
+    "theme": "Séance 4 – Les effets de serre",
+    "titre": "Réchauffement climatique",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/R%C3%A9chauffement_climatique"
    },
-   "r": "==QTVMwGG8esYoQGYIgTKYBSwMkCcFkAGsgRHcTZ",
+   "r": "=cFFbwhCmgkIBVEUJ50GHsAAeQiUAEQVFcwCCchDlgFBd50xsShRM4TZ",
    "poids": 1
   },
   {
@@ -684,19 +590,21 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s02-2-f4",
    "type": "qcm",
    "niveau": 3,
-   "enonce": "Si on ne gardait que les quatre planètes telluriques, combien de lignes aurait le tableau, ligne d'en-tête comprise ?",
+   "enonce": "Pourquoi parle-t-on d'effet de « serre » ?",
    "choix": [
-    "Cinq",
-    "Quatre",
-    "Huit",
-    "Neuf"
+    "Parce que l'atmosphère garde la chaleur, comme une serre de jardin",
+    "Parce que l'atmosphère est transparente et dure comme la vitre d'une serre",
+    "Parce qu'il protège les plantes des oiseaux et des insectes",
+    "Parce qu'il arrête complètement les rayons du Soleil"
    ],
-   "explication": "Une ligne par planète, plus la ligne d'en-tête : 4 + 1 = 5. Le nombre de colonnes, lui, ne change pas.",
+   "explication": "Dans une serre, la lumière entre et la chaleur reste à l'intérieur. L'atmosphère fait un peu pareil : les gaz à effet de serre gardent une partie de la chaleur près du sol.",
    "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 4
+    "theme": "Séance 4 – Les effets de serre",
+    "titre": "Effet de serre",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Effet_de_serre"
    },
-   "r": "NdBCAETZ",
+   "r": "LxhLWcABfEFDK80FaEDSWUBSAohRDQwHoERVJdABMIgDaswYMlQFIpQHHEQSXUj222QBCYwAbMxTv0AAAxlTKUAFIISZ",
    "poids": 1
   },
   {
@@ -704,19 +612,44 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s02-2-f4",
    "type": "ordre",
    "niveau": 2,
-   "enonce": "Remets dans l'ordre les étapes pour passer du graphique au tableau.",
+   "enonce": "Remets dans l'ordre les étapes de l'effet de serre.",
    "elements": [
-    "Recopier, pour chaque point, son abscisse et son ordonnée",
-    "Tracer un tableau de trois colonnes",
-    "Écrire le nom de chaque planète, une par ligne",
-    "Écrire la ligne d'en-tête"
+    "Le sol renvoie de la chaleur vers le ciel",
+    "La lumière du Soleil traverse l'atmosphère",
+    "Les gaz à effet de serre retiennent une partie de cette chaleur",
+    "Le sol s'échauffe"
    ],
-   "explication": "On prépare d'abord le tableau, son en-tête et le nom des planètes. Ensuite seulement, on lit chaque point pour remplir les cases.",
+   "explication": "La lumière arrive jusqu'au sol et le chauffe. Le sol renvoie alors de la chaleur, dont une partie est retenue par les gaz de l'atmosphère.",
    "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 4
+    "theme": "Séance 4 – Les effets de serre",
+    "titre": "Effet de serre",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Effet_de_serre"
    },
-   "r": "o1hQdpUVFNEH",
+   "r": "o9hQfpUVFNEH",
+   "poids": 1
+  },
+  {
+   "id": "svt-s02-2-q32",
+   "fiche": "svt-s02-2-f3",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Pourquoi Vénus est-elle plus chaude que Mercure, pourtant plus proche du Soleil ?",
+   "choix": [
+    "Son atmosphère épaisse, pleine de dioxyde de carbone, retient la chaleur",
+    "Elle est bien plus grosse que Mercure",
+    "Elle tourne beaucoup plus vite sur elle-même",
+    "Mercure est recouverte d'une épaisse couche de glace qui la garde froide"
+   ],
+   "explication": "L'atmosphère de Vénus est presque entièrement faite de dioxyde de carbone : elle produit l'effet de serre le plus fort du système solaire. Mercure, elle, n'a presque pas d'atmosphère pour garder la chaleur.",
+   "indice": "Compare les atmosphères des deux planètes.",
+   "source": {
+    "theme": "Séance 4 – Les effets de serre",
+    "titre": "Vénus (planète)",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/V%C3%A9nus_(plan%C3%A8te)"
+   },
+   "r": "==wRHh1CDcgDKIlJeUVEbQBAaoAAI9GSLo1Tc4QBGxgFndREc0gHAowTXwwYItAXIJwHGpEDBQzGUUB3ym0Cdo9qr0lFaBkGOYECGESZ",
    "poids": 1
   }
  ],

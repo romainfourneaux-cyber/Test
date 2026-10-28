@@ -136,19 +136,21 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s04-2-f1",
    "type": "qcm",
    "niveau": 1,
-   "enonce": "Sur le diagramme du territoire inconnu, pendant combien de mois les pluies sont-elles très fortes ?",
+   "enonce": "Quel climat trouve-t-on tout près de l'équateur, avec de la chaleur et des pluies abondantes toute l'année ?",
    "choix": [
-    "Huit mois, d'octobre à mai",
-    "Quatre mois, de juin à septembre",
-    "Douze mois",
-    "Deux mois, en janvier et en février"
+    "Le climat équatorial",
+    "Le climat tropical, qui a une saison sèche",
+    "Le climat méditerranéen",
+    "Le climat polaire"
    ],
-   "explication": "Les pluies sont très fortes d'octobre à mai, soit huit mois. Les quatre autres mois sont presque secs.",
+   "explication": "Près de l'équateur, il fait chaud toute l'année et il pleut presque tous les jours : c'est le climat équatorial. Le climat tropical, un peu plus loin de l'équateur, a lui une saison sèche.",
    "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 9
+    "theme": "Séance 3 – Climats actuels, climats du passé – Les grands climats aujourd’hui",
+    "titre": "Climat équatorial",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Climat_%C3%A9quatorial"
    },
-   "r": "=wkBHsQSSToUQcxFe0RDAUFDjFgFcJ0APJxDcoTZ",
+   "r": "=UmHUwwBe0xDaMQwA2QEUB0BDUgRM4TZ",
    "poids": 1
   },
   {
@@ -156,19 +158,21 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s04-2-f1",
    "type": "qcm",
    "niveau": 1,
-   "enonce": "Quels mois sont presque sans pluie sur ce diagramme ?",
+   "enonce": "Quel type de climat trouve-t-on en France métropolitaine ?",
    "choix": [
-    "De juin à septembre",
-    "D'octobre à mai",
-    "De janvier à avril",
-    "Toute l'année"
+    "Des climats tempérés, comme l'océanique ou le méditerranéen",
+    "Un climat tropical, avec une saison sèche",
+    "Un climat équatorial, chaud et très pluvieux pendant toute l'année",
+    "Un climat polaire, froid toute l'année"
    ],
-   "explication": "De juin à septembre, les barres sont presque nulles. C'est la saison sèche.",
+   "explication": "La France métropolitaine est dans la zone tempérée. Selon les régions, son climat est océanique, continental, méditerranéen ou de montagne.",
    "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 9
+    "theme": "Séance 3 – Climats actuels, climats du passé – Les grands climats aujourd’hui",
+    "titre": "Climat de la France",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Climat_de_la_France"
    },
-   "r": "==AUQcxFcwgGfcxGj1opVM0BawgRMYTZ",
+   "r": "QtBAcL7BP0BANcDRBwp7D80AKk0BoIFEQQAGH8gxxuALKkQFINgAJUQSeRz22eB3ymxAKYASwkFBYRkAMYUFMYTZ",
    "poids": 1
   },
   {
@@ -176,12 +180,14 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s04-2-f1",
    "type": "vrai_faux",
    "niveau": 2,
-   "enonce": "Sur ce diagramme, l'écart entre le mois le plus sec et le mois le plus arrosé est énorme.",
+   "enonce": "Les climats se répartissent en grandes zones : chaud près de l'équateur, tempéré entre les tropiques et les cercles polaires, froid vers les pôles.",
    "corrections": [],
-   "explication": "Oui : à peine 2 mm pour le mois le plus sec, plus de deux cents millimètres pour le plus arrosé. Un tel écart annonce deux saisons très différentes.",
+   "explication": "Plus on s'éloigne de l'équateur, moins les rayons du Soleil chauffent, et plus le climat se refroidit. On distingue ainsi une zone chaude, deux zones tempérées et deux zones froides.",
    "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 9
+    "theme": "Séance 3 – Climats actuels, climats du passé – Les grands climats aujourd’hui",
+    "titre": "Zone climatique",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Zone_climatique"
    },
    "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
    "poids": 1
@@ -191,18 +197,18 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s04-2-f1",
    "type": "vrai_faux",
    "niveau": 2,
-   "enonce": "Ce territoire a quatre saisons bien marquées.",
+   "enonce": "En climat tropical, l'année a quatre saisons bien marquées.",
    "corrections": [
-    "Faux : il n'a que deux saisons, une sèche et une humide.",
-    "Faux : il n'a qu'une seule saison, pluvieuse toute l'année.",
-    "Faux : il a trois saisons, dont deux sèches."
+    "Faux : il n'y a que deux saisons, une sèche et une humide.",
+    "Faux : il n'y a qu'une seule saison, pluvieuse toute l'année.",
+    "Faux : il y a trois saisons, dont deux sèches."
    ],
-   "explication": "Huit mois très pluvieux, puis quatre mois presque secs : cela fait deux saisons. Pas quatre.",
+   "explication": "En climat tropical, ce sont les pluies qui font les saisons : une longue période humide, puis une période sèche. Cela fait deux saisons, pas quatre.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 9
    },
-   "r": "Ic0WU0wBCcAAjh0CA1gGKY0ABEx7xaQRQ8BHONUAGwiXMQlXOdxED0gUicABFRhVH40AbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "r": "=oDUbBQEYQwGHIVDtgVRBhkTK4QBBHLNSBxCAEVRdEQHboCTWURVbogAGxwB2IFFFxgVH40AbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -230,7 +236,7 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s04-2-f1",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Qu'est-ce qui permet de compter les saisons sur ce diagramme ?",
+   "enonce": "Qu'est-ce qui permet de compter les saisons sur un diagramme ombrothermique ?",
    "choix": [
     "La répartition des pluies au fil des mois",
     "La hauteur du titre",
@@ -246,39 +252,18 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "svt-s04-2-q7",
-   "fiche": "svt-s04-2-f1",
-   "type": "trou",
-   "niveau": 1,
-   "enonce": "Complète la phrase.",
-   "texte": "Dans ce territoire, les pluies sont très fortes d'octobre à ___ et presque absentes de juin à ___.",
-   "banque": [
-    "mai",
-    "septembre",
-    "janvier",
-    "décembre"
-   ],
-   "explication": "Saison humide d'octobre à mai, saison sèche de juin à septembre. Huit mois de pluie, quatre mois secs.",
-   "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 9
-   },
-   "r": "=oxLXBwBTQwCbIQDw8gPZAHTGcwCLlCH",
-   "poids": 1
-  },
-  {
    "id": "svt-s04-2-q8",
    "fiche": "svt-s04-2-f1",
    "type": "qcm",
    "niveau": 3,
-   "enonce": "Pourquoi dit-on que ce territoire a deux saisons ?",
+   "enonce": "Pourquoi dit-on qu'un climat tropical a deux saisons ?",
    "choix": [
     "Parce qu'une période très pluvieuse alterne avec une période sèche",
-    "Parce que les températures montent en été puis descendent fortement en hiver",
-    "Parce que le diagramme a deux axes",
+    "Parce que les températures montent en été puis chutent fortement en hiver",
+    "Parce qu'il y fait froid six mois par an",
     "Parce que l'année compte deux semestres"
    ],
-   "explication": "Ce sont les pluies qui font les saisons ici : huit mois humides, quatre mois secs. Les températures, elles, changent peu.",
+   "explication": "Ce sont les pluies qui font les saisons ici : plusieurs mois humides, puis des mois secs. Les températures, elles, changent peu.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 9
@@ -326,18 +311,18 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s04-2-f2",
    "type": "vrai_faux",
    "niveau": 2,
-   "enonce": "Dans ce territoire, les températures passent de valeurs négatives en hiver à plus de 30 °C en été.",
+   "enonce": "En climat tropical, les températures passent sous zéro en hiver.",
    "corrections": [
-    "Faux : elles restent entre 21,3 °C et 26,3 °C toute l'année.",
+    "Faux : elles restent chaudes et proches les unes des autres toute l'année.",
     "Faux : elles sont toujours au-dessus de 30 °C.",
-    "Faux : elles descendent sous zéro pendant la saison sèche."
+    "Faux : elles descendent sous zéro pendant la saison sèche seulement."
    ],
-   "explication": "Les moyennes mensuelles varient très peu : entre 21,3 °C et 26,3 °C. Il n'y a jamais de gel.",
+   "explication": "En climat tropical, il fait chaud toute l'année et les moyennes mensuelles changent peu. Il n'y a jamais de gel.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 9
    },
-   "r": "bQ0RX4esbsAFWVgTKYQHskVR21JrPVlSfB0ZGARR2E8qOxlXZFXDAcUWAogRScwFzEAEXUlAMIwAXgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "r": "UwUQXEMgDtAVKIwTDIBHdMjUGAwBFwxDPFQDn0gFQN0GPVxAFIFNX0hBaMQGOtxFIBDSBAETGwgRScwFzEAEXUlAMIwAXgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -345,19 +330,21 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s04-2-f2",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Entre quelles valeurs restent les températures moyennes mensuelles de ce territoire ?",
+   "enonce": "Entre quelles lignes imaginaires se trouve la zone des climats tropicaux ?",
    "choix": [
-    "Entre 21,3 °C et 26,3 °C",
-    "Entre 0 °C et 5 °C",
-    "Entre 30 °C et 45 °C",
-    "Entre −5 °C et 35 °C"
+    "Entre les deux tropiques, autour de l'équateur",
+    "Entre un tropique et le cercle polaire du même hémisphère",
+    "Autour des pôles, au-delà des cercles polaires",
+    "Seulement sur la ligne de l'équateur"
    ],
-   "explication": "La courbe reste entre 21,3 °C et 26,3 °C. Cinq degrés d'écart seulement sur toute l'année.",
+   "explication": "La zone tropicale s'étend du tropique du Cancer, au nord, au tropique du Capricorne, au sud. Entre les deux, le Soleil passe très haut dans le ciel et il fait chaud toute l'année.",
    "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 9
+    "theme": "Séance 3 – Climats actuels, climats du passé – Les grands climats aujourd’hui",
+    "titre": "Climat tropical",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Climat_tropical"
    },
-   "r": "==QTlY9qSRnXDdVVFwgTsIsqj5RSE8hTKQhEHcTZ",
+   "r": "==ARUwxFzMBAUwtsOJwTXwwYfBhWZthDGpkGXIzAcUhGD0hTXcQDn0gFQFkTKQhEHcTZ",
    "poids": 1
   },
   {
@@ -365,7 +352,7 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s04-2-f2",
    "type": "qcm",
    "niveau": 3,
-   "enonce": "Comment les températures confortent-elles l'idée d'un climat tropical ?",
+   "enonce": "Comment les températures confirment-elles un climat tropical ?",
    "choix": [
     "Elles varient très peu d'un mois à l'autre",
     "Elles sont négatives en hiver",
@@ -385,7 +372,7 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s04-2-f2",
    "type": "qcm_multiple",
    "niveau": 2,
-   "enonce": "Quels indices montrent un climat tropical sur ce diagramme ? (plusieurs réponses)",
+   "enonce": "Quels indices montrent un climat tropical sur un diagramme ombrothermique ? (plusieurs réponses)",
    "choix": [
     "Des pluies très fortes pendant une partie de l'année",
     "Une saison presque sans pluie",
@@ -428,26 +415,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "svt-s04-2-q16",
-   "fiche": "svt-s04-2-f3",
-   "type": "qcm",
-   "niveau": 1,
-   "enonce": "Dans ce territoire, quels sont les mois les plus frais ?",
-   "choix": [
-    "Juin, juillet et août",
-    "Décembre, janvier et février",
-    "Mars, avril et mai",
-    "Septembre, octobre et novembre"
-   ],
-   "explication": "La courbe des températures est au plus bas en juin, juillet et août. C'est l'hiver austral.",
-   "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 9
-   },
-   "r": "QNTy2qAFR1xCPZQDvEEDAdkTDhwDcgTZ",
-   "poids": 1
-  },
-  {
    "id": "svt-s04-2-q17",
    "fiche": "svt-s04-2-f3",
    "type": "qcm",
@@ -487,18 +454,18 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s04-2-f3",
    "type": "vrai_faux",
    "niveau": 2,
-   "enonce": "Ce territoire inconnu pourrait être la Bretagne.",
+   "enonce": "Un lieu au climat tropical dont les mois les plus frais sont juin, juillet et août peut se trouver en Bretagne.",
    "corrections": [
-    "Faux : il est en zone tropicale de l'hémisphère sud, comme Mayotte, la Réunion ou la Polynésie française.",
-    "Faux : il est près du pôle Sud.",
+    "Faux : il est dans l'hémisphère sud, comme la Réunion ou Mayotte.",
+    "Faux : il est tout près du pôle Sud.",
     "Faux : il est en zone tropicale de l'hémisphère nord."
    ],
-   "explication": "Climat tropical et hiver en juin-juillet-août : on est dans l'hémisphère sud. Mayotte, la Réunion ou la Polynésie française conviennent, pas la Bretagne.",
+   "explication": "Des mois frais en juin, juillet et août, c'est l'hiver austral : le lieu est dans l'hémisphère sud. La Bretagne, elle, a son hiver en décembre, janvier et février.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 9
    },
-   "r": "=AFTBNQFAMB4xuBBHcRSLYQABD4QcklQ+80BKk0BoI1GKwxHccMrggkIBVUGIpxGJ8BC/c2FYggGSkkQLcwGjh0Fd6uBfUxDEsNhaIVCVRRDOpgHJACRVo1Xa80AIYACnxBEFFgAM40AbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "r": "=gxFDswGSkAETogUAoQVfYwBBcQwA+XRUFkTKswCGExZeFBEGEFDcccsAMjXMgFhteQQKkUApMREFFgAM40AbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -506,7 +473,7 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s04-2-f3",
    "type": "qcm_multiple",
    "niveau": 2,
-   "enonce": "Quels territoires français pourraient correspondre à ce diagramme ? (plusieurs réponses)",
+   "enonce": "Quels territoires français se trouvent en zone tropicale de l'hémisphère sud ? (plusieurs réponses)",
    "choix": [
     "Mayotte",
     "La Réunion",
@@ -514,7 +481,7 @@ JEU.enregistrer("cours", {
     "La Corse",
     "Les Alpes"
    ],
-   "explication": "Ces trois territoires sont en zone tropicale de l'hémisphère sud. La Corse et les Alpes sont dans l'hémisphère nord.",
+   "explication": "Mayotte, la Réunion et la Polynésie française sont en zone tropicale de l'hémisphère sud. La Corse et les Alpes sont dans l'hémisphère nord, en zone tempérée.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 9

@@ -5,6 +5,8 @@
 // La leçon n'est pas déposée : l'influence des sols sur les biomes va dans nonCouvert. La coupe de sol est redessinée
 // en SVG. Doute : la roche du bas est notée « primaire ou secondaire » sur le dessin manuscrit, sans explication.
 const C = (page) => ({ fichier: "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf", page: page });
+// Questions de thème (règle du 25/10/2026) : fait vérifié dans une source fiable, notée sans fichier ni page.
+const T = (titre, url) => ({ theme: "Séance 2 – Influence de la nature des sols sur les biomes; ressources naturelles", titre, editeur: "Wikipédia", url });
 
 // Coupe de sol redessinée d'après le schéma manuscrit du corrigé.
 function schemaSol() {
@@ -265,10 +267,11 @@ module.exports = {
       reponse: "Le charbon",
       explication: "Le charbon arrive en tête avec 31 %. Le pétrole le suit de près avec 29 %.", source: C(13) },
     { id: "svt-s08-2-q25", fiche: "svt-s08-2-f4", type: "qcm", niveau: 1,
-      enonce: "Quelle part du mix énergétique mondial représentait le pétrole en 2015 ?",
-      choix: ["29 %", "6 %", "14 %", "50 %"],
-      reponse: "29 %",
-      explication: "Le pétrole faisait 29 % en 2015. Les 6 % sont le nucléaire et les 14 % les énergies renouvelables.", source: C(13) },
+      enonce: "Qu'est-ce qu'une énergie renouvelable ?",
+      choix: ["Une énergie dont la source se renouvelle sans cesse", "Une énergie qui ne coûte rien", "Une énergie qu'on peut garder très longtemps dans une pile ou une batterie", "Une énergie tirée du charbon recyclé"],
+      reponse: "Une énergie dont la source se renouvelle sans cesse",
+      explication: "Le soleil, le vent, l'eau des rivières ou la chaleur de la Terre ne s'épuisent pas quand on les utilise. Le charbon, le pétrole et le gaz, eux, mettent des millions d'années à se former.",
+      source: T("Énergie renouvelable", "https://fr.wikipedia.org/wiki/%C3%89nergie_renouvelable") },
     { id: "svt-s08-2-q26", fiche: "svt-s08-2-f4", type: "vrai_faux", niveau: 2,
       enonce: "En 2015, le nucléaire était la plus petite part du mix énergétique mondial.",
       corrections: [], reponse: { vrai: true, correction: null },
@@ -283,11 +286,12 @@ module.exports = {
       elements: ["Gaz", "Charbon", "Nucléaire", "Pétrole", "Énergies renouvelables"],
       reponse: [1, 3, 0, 4, 2],
       explication: "Charbon 31 %, pétrole 29 %, gaz 20 %, renouvelables 14 %, nucléaire 6 %. Le total fait 100 %.", source: C(13) },
-    { id: "svt-s08-2-q29", fiche: "svt-s08-2-f4", type: "qcm", niveau: 3,
-      enonce: "Charbon et pétrole réunis, quelle part du mix énergétique de 2015 cela fait-il ?",
-      choix: ["60 %", "31 %", "45 %", "80 %"],
-      reponse: "60 %",
-      explication: "31 % de charbon plus 29 % de pétrole font 60 %. Ces deux sources dominaient l'énergie mondiale.", indice: "Additionne les deux pourcentages.", source: C(13) },
+    { id: "svt-s08-2-q29", fiche: "svt-s08-2-f4", type: "qcm", niveau: 2,
+      enonce: "Laquelle de ces sources d'énergie est renouvelable ?",
+      choix: ["Le vent", "Le charbon extrait des mines", "Le pétrole", "Le gaz naturel du sous-sol"],
+      reponse: "Le vent",
+      explication: "Le vent souffle sans jamais s'épuiser : c'est une énergie renouvelable. Charbon, pétrole et gaz sont des énergies fossiles, qui ne se renouvellent pas à notre échelle.",
+      source: T("Énergie renouvelable", "https://fr.wikipedia.org/wiki/%C3%89nergie_renouvelable") },
     { id: "svt-s08-2-q30", fiche: "svt-s08-2-f4", type: "qcm", niveau: 2,
       enonce: "Comment appelle-t-on la répartition des sources d'énergie utilisées dans le monde ?",
       choix: ["Le mix énergétique", "Le diagramme ombrothermique", "Le cycle de l'eau", "Le réseau trophique"],
@@ -304,11 +308,6 @@ module.exports = {
       choix: ["On multiplie la proportion décimale par 360", "On divise le pourcentage par 360", "On ajoute 360 au pourcentage", "On multiplie le pourcentage par 100"],
       reponse: "On multiplie la proportion décimale par 360",
       explication: "Angle = proportion décimale × 360. Pour 31 %, cela donne 0,31 × 360 = 111,6°.", source: C(13) },
-    { id: "svt-s08-2-q33", fiche: "svt-s08-2-f5", type: "qcm", niveau: 3,
-      enonce: "Une source d'énergie représente 20 %. Quel angle lui donne-t-on sur le diagramme ?",
-      choix: ["72°", "20°", "200°", "36°"],
-      reponse: "72°",
-      explication: "20 % = 0,2 et 0,2 × 360 = 72. La part du gaz, qui fait 20 %, occupe donc 72°.", indice: "Écris 20 % en nombre à virgule, puis multiplie par 360.", source: C(13) },
     { id: "svt-s08-2-q34", fiche: "svt-s08-2-f5", type: "vrai_faux", niveau: 2,
       enonce: "Pour vérifier ses calculs, on additionne tous les angles : on doit trouver 360.",
       corrections: [], reponse: { vrai: true, correction: null },
@@ -318,11 +317,6 @@ module.exports = {
       corrections: ["Faux : ils sont indispensables pour comprendre ce que montre chaque part.", "Faux : seul le titre est utile, pas la légende.", "Faux : la légende remplace le cercle."],
       reponse: { vrai: false, correction: "Faux : ils sont indispensables pour comprendre ce que montre chaque part." },
       explication: "Sans légende, on ne sait pas à quoi correspond chaque couleur ; sans titre, on ne sait pas de quoi parle le diagramme. Les deux sont obligatoires.", source: C(14) },
-    { id: "svt-s08-2-q36", fiche: "svt-s08-2-f5", type: "ordre", niveau: 2,
-      enonce: "Remets dans l'ordre les étapes de construction d'un diagramme circulaire.",
-      elements: ["Mesurer chaque angle au rapporteur, en tournant la feuille", "Calculer l'angle de chaque part et vérifier que la somme fait 360", "Tracer un cercle", "Colorier, puis ajouter la légende et le titre"],
-      reponse: [1, 2, 0, 3],
-      explication: "D'abord les calculs, puis le cercle, les angles au rapporteur, et enfin couleurs, légende et titre. Le titre vient en dernier.", source: C(14) },
     { id: "svt-s08-2-q37", fiche: "svt-s08-2-f5", type: "qcm", niveau: 3,
       enonce: "Pourquoi convertit-on d'abord le pourcentage en proportion décimale ?",
       choix: ["Pour pouvoir le multiplier par 360 et obtenir l'angle", "Pour le rendre plus joli", "Parce que les rapporteurs sont gradués en dixièmes de degré", "Pour obtenir une longueur en centimètres"],

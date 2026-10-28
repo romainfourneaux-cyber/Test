@@ -171,27 +171,6 @@ JEU.enregistrer("cours", {
  "schemas": [],
  "questions": [
   {
-   "id": "physique-s08-1-q1",
-   "fiche": "physique-s08-1-f1",
-   "type": "ordre",
-   "niveau": 2,
-   "enonce": "Remets dans l'ordre les étapes de fabrication du papier pH au chou rouge.",
-   "elements": [
-    "Laisser sécher le papier",
-    "Presser le chou rouge pour obtenir son jus",
-    "Couper un morceau de chou rouge",
-    "Tremper le papier Canson dans le jus",
-    "Couper le papier en bandelettes"
-   ],
-   "explication": "On coupe le chou, on presse son jus, on y trempe le papier, on le laisse sécher. Les bandelettes se découpent à la fin.",
-   "source": {
-    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
-    "page": 10
-   },
-   "r": "=AXUZ0hQcp0VFBEH",
-   "poids": 1
-  },
-  {
    "id": "physique-s08-1-q2",
    "fiche": "physique-s08-1-f1",
    "type": "qcm",
@@ -230,40 +209,39 @@ JEU.enregistrer("cours", {
    "id": "physique-s08-1-q4",
    "fiche": "physique-s08-1-f1",
    "type": "vrai_faux",
-   "niveau": 2,
-   "enonce": "Le papier pH au chou rouge se fabrique en trempant le papier dans du vinaigre.",
-   "corrections": [
-    "Faux : on le trempe dans du jus de chou rouge ; le vinaigre sert ensuite à le tester.",
-    "Faux : on le trempe dans de la lessive.",
-    "Faux : on le trempe dans de l'eau bouillante."
-   ],
-   "explication": "C'est le jus de chou rouge qui imprègne le papier. Le vinaigre, la lessive et la levure chimique sont les produits à tester.",
+   "niveau": 1,
+   "enonce": "Le jus de chou rouge est un indicateur coloré : sa couleur change selon que le liquide est acide ou basique.",
+   "corrections": [],
+   "explication": "Oui : le chou rouge contient des pigments qui changent de couleur avec l'acidité. C'est pour cela que son jus sert à fabriquer un papier pH.",
    "source": {
-    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
-    "page": 10
+    "theme": "Séance 1 – Les acides et les bases",
+    "titre": "Indicateur de pH",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Indicateur_de_pH"
    },
-   "r": "=IBRItxFzEAERUFFF40zxikJZxAQeBgCGJxGXQjUQchEYgAAGQASmEURO0wCIMRCbIlMd0hBVRRDOxxBCMGWBUhXA4gAGxgAqcxBRUFFF4UAdgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
    "poids": 1
   },
   {
    "id": "physique-s08-1-q5",
    "fiche": "physique-s08-1-f1",
-   "type": "qcm_multiple",
+   "type": "qcm",
    "niveau": 2,
-   "enonce": "Quels produits sont prévus pour tester le papier pH ? (plusieurs réponses)",
+   "enonce": "Quel instrument donne directement la valeur du pH d'un liquide, sous forme d'un nombre ?",
    "choix": [
-    "Du vinaigre",
-    "De la lessive",
-    "De la levure chimique",
-    "De l'huile",
-    "Du sable"
+    "Un thermomètre",
+    "Une balance",
+    "Un pH-mètre",
+    "Une éprouvette graduée"
    ],
-   "explication": "Le matériel comprend du vinaigre, de la lessive et de la levure chimique. Chacun colore différemment le papier.",
+   "explication": "Le pH-mètre est un appareil électronique : sa sonde plonge dans le liquide et il affiche le pH en chiffres. Le papier pH, lui, donne seulement une couleur à comparer.",
    "source": {
-    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
-    "page": 10
+    "theme": "Séance 1 – Les acides et les bases",
+    "titre": "pH-mètre",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/PH-m%C3%A8tre"
    },
-   "r": "==AcHBFWfYwCPEQEndxBQMAFF4kDegkJpdUGPsQGPUhGXsiUUkQVU0CTDBVDxoEDUN0BZY0EtAFH",
+   "r": "=AVDxkVz2D0QnYhRHcSZ",
    "poids": 1
   },
   {
@@ -311,19 +289,21 @@ JEU.enregistrer("cours", {
    "fiche": "physique-s08-1-f1",
    "type": "qcm",
    "niveau": 1,
-   "enonce": "Sur quel papier le jus de chou rouge est-il déposé ?",
+   "enonce": "Entre quelles valeurs va l'échelle de pH qu'on utilise d'habitude ?",
    "choix": [
-    "Du papier Canson",
-    "Du papier journal",
-    "Du papier d'aluminium",
-    "Du papier cuisson"
+    "De 0 à 7",
+    "De 1 à 10",
+    "De 0 à 14",
+    "De 0 à 50"
    ],
-   "explication": "Le jus imprègne du papier Canson. Une fois sec, il est coupé en bandelettes.",
+   "explication": "Le pH se situe presque toujours entre 0 et 14. Le milieu, 7, est le neutre : en dessous c'est acide, au-dessus c'est basique.",
    "source": {
-    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
-    "page": 10
+    "theme": "Séance 1 – Les acides et les bases",
+    "titre": "Potentiel hydrogène",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Potentiel_hydrog%C3%A8ne"
    },
-   "r": "TdQAcwRCA0wFQRkHOYhRcYTZ",
+   "r": "hlBVV0YrPZlRMYTZ",
    "poids": 1
   },
   {
@@ -331,19 +311,19 @@ JEU.enregistrer("cours", {
    "fiche": "physique-s08-1-f2",
    "type": "qcm",
    "niveau": 1,
-   "enonce": "Quelle couleur prend le papier au chou rouge dans de l'eau additionnée de 3 cuillères à café de vinaigre ?",
+   "enonce": "Quelle couleur prend le papier au chou rouge dans un liquide acide, comme le vinaigre ?",
    "choix": [
-    "Rose vif",
     "Vert",
-    "Bleu foncé",
-    "Mauve"
+    "Rose",
+    "Bleu clair",
+    "Il reste mauve"
    ],
-   "explication": "Plus il y a de vinaigre, plus le rose est vif. Avec une seule cuillère, le papier reste mauve.",
+   "explication": "Un liquide acide fait virer le papier au rose, d'autant plus vif qu'il est acide. Le bleu et le vert sont les couleurs des liquides basiques.",
    "source": {
     "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
     "page": 11
    },
-   "r": "==wRTREGPNQFGASZ",
+   "r": "NNQFGASZ",
    "poids": 1
   },
   {
@@ -373,23 +353,23 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Relie chaque liquide à la couleur du papier au chou rouge.",
    "gauche": [
-    "Eau + 1 cc de lessive",
-    "Eau + 3 cc de vinaigre",
-    "Eau + 1 cc de levure chimique",
-    "Eau + 1 cc de vinaigre"
+    "Vinaigre",
+    "Lessive",
+    "Levure chimique",
+    "Eau neutre"
    ],
    "droite": [
     "Mauve",
-    "Bleu clair",
     "Vert",
-    "Rose vif"
+    "Bleu clair",
+    "Rose"
    ],
-   "explication": "Vinaigre : du mauve au rose selon la dose. Levure : bleu clair ; lessive : vert.",
+   "explication": "Le vinaigre, acide, donne du rose ; la lessive, basique, du vert, et la levure chimique du bleu clair. Dans une eau neutre, le papier garde son mauve de départ.",
    "source": {
     "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
     "page": 11
    },
-   "r": "==ANvcnXG5TWsglQdlCRe4RSEYnQyQlSZlCH",
+   "r": "==ANvcnXG5TWsslQdlCRewRSEYnQyUlSZlCH",
    "poids": 1
   },
   {
@@ -397,33 +377,14 @@ JEU.enregistrer("cours", {
    "fiche": "physique-s08-1-f2",
    "type": "vrai_faux",
    "niveau": 2,
-   "enonce": "Dans cette expérience, l'eau du robinet seule a coloré le papier en bleu foncé, car elle était légèrement basique.",
+   "enonce": "Avec le jus de chou rouge, un liquide acide donne du rose et un liquide basique du bleu ou du vert.",
    "corrections": [],
-   "explication": "Oui : l'eau utilisée était un peu basique, d'où le bleu. Avec une autre eau du robinet, la couleur peut changer.",
+   "explication": "Oui : rose, c'est acide ; bleu ou vert, c'est basique. Le mauve de départ correspond au neutre.",
    "source": {
     "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
     "page": 11
    },
    "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
-   "id": "physique-s08-1-q13",
-   "fiche": "physique-s08-1-f2",
-   "type": "vrai_faux",
-   "niveau": 2,
-   "enonce": "Avec une cuillère à café de vinaigre dans l'eau du robinet, le papier devient vert.",
-   "corrections": [
-    "Faux : il redevient mauve, la couleur de départ, car le mélange est neutre.",
-    "Faux : il devient bleu foncé.",
-    "Faux : il devient rose vif."
-   ],
-   "explication": "Une cuillère de vinaigre ramène l'eau à un pH neutre : le papier reprend sa couleur mauve. Le vert apparaît avec la lessive.",
-   "source": {
-    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
-    "page": 11
-   },
-   "r": "=gwUHtQHG0hJDVUQetwTDEwBTsy22iQVUUgTdMxCjFQEHxkHGXqAJdxISdAEQ0BHBwgUJ8SDJB1Wb4wCG1BHisxAAEBFb40AbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -477,14 +438,14 @@ JEU.enregistrer("cours", {
     "Eau + levure chimique",
     "Eau + 3 cc de vinaigre",
     "Eau + 2 cc de vinaigre",
-    "L'eau du robinet légèrement basique de l'exemple"
+    "Une eau du robinet légèrement basique"
    ],
-   "explication": "Les liquides basiques donnent du bleu ou du vert : lessive, levure, et l'eau de l'exemple. Le vinaigre donne du rose.",
+   "explication": "Les liquides basiques donnent du bleu ou du vert : lessive, levure, et une eau du robinet un peu basique. Le vinaigre donne du rose.",
    "source": {
     "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
     "page": 11
    },
-   "r": "==gMENQBCoyFNAgUdk0CLIVD2wFDGxEDPJBCM8hIA0tpSgtqC8kBN0CRHo1XOphAGxxEiUVOHl1UMshHbUgKFZQFIxhGQMQBSxmUAQAMTVETKQQAw4FAZ1QRPNxBsAFH",
+   "r": "=QDTKcQGq4FBX1gGBMwCMAw7xKBz22RSaoAHBEiQXUBWK80EHwgUiwBIHl1UMshHbUgKFZQFIxhGQMQBSxmUAQAMTVETKQQAw4FAZ1QRPNxBsAFH",
    "poids": 1
   },
   {
@@ -664,26 +625,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "physique-s08-1-q26",
-   "fiche": "physique-s08-1-f4",
-   "type": "qcm",
-   "niveau": 1,
-   "enonce": "Quel pH a été mesuré pour un cola ?",
-   "choix": [
-    "2",
-    "4",
-    "7",
-    "12"
-   ],
-   "explication": "Le cola a un pH de 2 : il est nettement acide. Le jus de fruits est à 4.",
-   "source": {
-    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
-    "page": 12
-   },
-   "r": "LBUZ",
-   "poids": 1
-  },
-  {
    "id": "physique-s08-1-q27",
    "fiche": "physique-s08-1-f4",
    "type": "vrai_faux",
@@ -722,19 +663,19 @@ JEU.enregistrer("cours", {
    "fiche": "physique-s08-1-f4",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Pourquoi l'eau de Javel testée a-t-elle donné un pH de 6, alors que pure elle est très basique ?",
+   "enonce": "L'eau de Javel pure est très basique, avec un pH vers 11. Pourquoi des pastilles de Javel dissoutes dans beaucoup d'eau donnent-elles un pH proche de 7 ?",
    "choix": [
-    "Parce qu'elle était diluée dans l'eau",
     "Parce que le papier pH était trop vieux",
-    "Parce que l'eau de Javel devient acide à l'air",
-    "Parce qu'on l'a mélangée au vinaigre"
+    "Parce que la Javel est diluée",
+    "Parce que la Javel devient acide à l'air",
+    "Parce que l'eau du robinet est très acide"
    ],
-   "explication": "Pure, l'eau de Javel a un pH d'environ 11. Diluée dans l'eau, sous forme de pastilles, elle a donné un pH de 6, proche du neutre.",
+   "explication": "Diluer un produit basique dans beaucoup d'eau rapproche son pH de 7. C'est pour cela que la Javel des pastilles n'avait plus qu'un pH de 6.",
    "source": {
     "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
     "page": 12
    },
-   "r": "=cFBIsASegEMDRQUNsgxlORBbMiUBwAFFAcrPdBBvgkQAxlTKUAFIISZ",
+   "r": "=cEUE2qGK8QDSNTAQUUGU8xDlIVCv0AAAxlTKUAFIISZ",
    "poids": 1
   },
   {
@@ -786,8 +727,8 @@ JEU.enregistrer("cours", {
    "choix": [
     "En mesurant son pH",
     "En regardant sa couleur",
-    "En la secouant",
-    "En la pesant"
+    "En regardant si elle pétille",
+    "En la chauffant"
    ],
    "explication": "Le papier pH change de couleur selon le liquide. Un pH inférieur à 7 révèle une boisson acide, même sucrée.",
    "source": {
@@ -835,26 +776,6 @@ JEU.enregistrer("cours", {
     "page": 12
    },
    "r": "QtyEBwstck0CDIlGmoEz2nVAdYhRpHbZ",
-   "poids": 1
-  },
-  {
-   "id": "physique-s08-1-q35",
-   "fiche": "physique-s08-1-f5",
-   "type": "qcm",
-   "niveau": 2,
-   "enonce": "Que se passe-t-il là où la pointe a gratté le vernis, quand la plaque passe dans l'acide ?",
-   "choix": [
-    "L'acide ronge le métal",
-    "L'acide colore le vernis",
-    "Rien, l'acide glisse",
-    "Le métal devient plus épais"
-   ],
-   "explication": "Sans vernis, le métal est au contact de l'acide. Une réaction chimique enlève de la matière : le métal est rongé.",
-   "source": {
-    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
-    "page": 12
-   },
-   "r": "==wSeYiBcbKGRxgAPdxDtI0FVgkCGUwBO5TZ",
    "poids": 1
   },
   {

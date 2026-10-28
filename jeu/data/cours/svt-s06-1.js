@@ -161,19 +161,21 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s06-1-f1",
    "type": "qcm",
    "niveau": 1,
-   "enonce": "Quelle île est régulièrement frappée par des cyclones dans l'exemple étudié ?",
+   "enonce": "Qu'est-ce qu'une canicule ?",
    "choix": [
-    "La Réunion",
-    "La Corse",
-    "Mayotte",
-    "L'Islande"
+    "Plusieurs jours de fortes chaleurs, le jour comme la nuit",
+    "Un vent violent venu du désert",
+    "Une semaine entière sans une goutte de pluie",
+    "Un orage très chaud et très violent qui éclate en fin de journée"
    ],
-   "explication": "L'exemple est celui de la Réunion. Cinq cyclones différents y sont cités.",
+   "explication": "Pendant une canicule, il fait très chaud pendant au moins deux ou trois jours, et les nuits restent chaudes elles aussi. Le corps n'a pas le temps de se rafraîchir.",
    "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 11
+    "theme": "Séance 6 – Les risques climatiques",
+    "titre": "Canicule",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Canicule"
    },
-   "r": "==gStIEDbh1xsSjRI4TZ",
+   "r": "=0kBBYzQFRVQOpwCLYQEnBAAK8RUMIwTetRMYBQWMZADGVBDGUTHTUEEVkUHdcwBp0gFHh1CGUxEFISZ",
    "poids": 1
   },
   {
@@ -201,12 +203,14 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s06-1-f1",
    "type": "vrai_faux",
    "niveau": 2,
-   "enonce": "Tous les cyclones cités pour la Réunion ont provoqué des dégâts majeurs, voire considérables.",
+   "enonce": "Un cyclone tropical se forme au-dessus d'une mer chaude, dont l'eau dépasse environ 26 °C.",
    "corrections": [],
-   "explication": "Oui : les cinq cyclones ont fait des dégâts majeurs, et surtout considérables. Cela traduit la vulnérabilité des enjeux.",
+   "explication": "L'eau chaude de la mer est le carburant du cyclone : son évaporation lui donne son énergie. Au-dessus des terres ou d'une mer froide, il faiblit vite.",
    "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 11
+    "theme": "Séance 6 – Les risques climatiques",
+    "titre": "Cyclone tropical",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Cyclone_tropical"
    },
    "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
    "poids": 1
@@ -235,19 +239,21 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s06-1-f1",
    "type": "qcm",
    "niveau": 1,
-   "enonce": "Combien de cyclones différents ont frappé la Réunion dans l'exemple étudié ?",
+   "enonce": "Qu'est-ce qu'une sécheresse ?",
    "choix": [
-    "Cinq",
-    "Un seul",
-    "Deux",
-    "Cinquante"
+    "Un long manque d'eau qui assèche sols, rivières et cultures",
+    "Une seule journée très chaude",
+    "Un vent sec et chaud qui souffle pendant une heure sur les champs",
+    "L'absence de neige en montagne un hiver"
    ],
-   "explication": "Cinq cyclones différents sont étudiés, chacun avec ses dégâts. Ils montrent que l'aléa revient régulièrement.",
+   "explication": "Quand il ne pleut pas assez pendant longtemps, les sols se dessèchent et les rivières baissent. Les cultures manquent alors d'eau.",
    "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 11
+    "theme": "Séance 6 – Les risques climatiques",
+    "titre": "Sécheresse",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/S%C3%A9cheresse"
    },
-   "r": "NdBCAETZ",
+   "r": "XJADcohBEYjTFFESOxxAUEcsuQAHXUVXaIAABgkJFZQnu3BHHYEAHYjUAQAEW1gTKcQGtwECVoEAAogRHcSZ",
    "poids": 1
   },
   {
@@ -295,19 +301,21 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s06-1-f2",
    "type": "qcm",
    "niveau": 1,
-   "enonce": "Comment s'appelle le cyclone qui a frappé la Réunion en 1962 ?",
+   "enonce": "Pourquoi donne-t-on un prénom à chaque cyclone ?",
    "choix": [
-    "Jenny",
-    "Jessy",
-    "Janet",
-    "Jade"
+    "Pour le distinguer facilement des autres cyclones",
+    "Pour lui porter chance",
+    "Parce que c'est le prénom de la première personne qui l'a vu",
+    "Pour savoir dans quel pays il est né"
    ],
-   "explication": "Le cyclone de 1962 s'appelle Jenny. Son bilan a été très lourd.",
+   "explication": "Un nom permet de ne pas confondre un cyclone avec ceux qui l'ont précédé ou avec un autre en cours. Les noms sont choisis à l'avance sur des listes proposées par les pays de chaque région.",
    "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 11
+    "theme": "Séance 6 – Les risques climatiques",
+    "titre": "Cyclone tropical",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Cyclone_tropical"
    },
-   "r": "==ATWgACMgTZ",
+   "r": "MxxAIYgHksgFFZAFbohGTgEMIFQFZBgCLMQBbQyETU0BUwRCBsBHwQUAVgkAPRxEGISZ",
    "poids": 1
   },
   {
@@ -345,26 +353,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "svt-s06-1-q11",
-   "fiche": "svt-s06-1-f2",
-   "type": "qcm",
-   "niveau": 1,
-   "enonce": "Par quel moyen le bulletin d'alerte a-t-il été diffusé en 1962 ?",
-   "choix": [
-    "Par la radio",
-    "Par un message sur téléphone portable",
-    "Par Internet",
-    "Par des affiches dans les rues"
-   ],
-   "explication": "En 1962, le bulletin d'alerte passait par les ondes de la radio. Il est arrivé trop tard.",
-   "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 11
-   },
-   "r": "=A1BqkEBH1wDDYEFIISZ",
-   "poids": 1
-  },
-  {
    "id": "svt-s06-1-q12",
    "fiche": "svt-s06-1-f2",
    "type": "qcm_multiple",
@@ -375,10 +363,10 @@ JEU.enregistrer("cours", {
     "Des barques de pêcheurs surprises en mer",
     "Un paquebot qui rompt ses amarres",
     "Des wagons de chemin de fer touchés",
-    "Un volcan réveillé",
-    "Une sécheresse de trois ans"
+    "Un tremblement de terre",
+    "Une éruption volcanique"
    ],
-   "explication": "Maisons, barques, paquebot, wagons : tous ces enjeux peuvent être touchés. Volcan et sécheresse n'ont rien à voir avec un cyclone.",
+   "explication": "Maisons, barques, paquebot, wagons : tous ces enjeux peuvent être touchés. Tremblement de terre et éruption volcanique n'ont rien à voir avec un cyclone.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 11
@@ -511,9 +499,9 @@ JEU.enregistrer("cours", {
     "Des consignes à suivre pour chaque degré d'alerte",
     "Un kit de survie pour chacun",
     "Une digue autour de l'île",
-    "L'interdiction des cyclones"
+    "Le déménagement de tous les habitants sur le continent"
    ],
-   "explication": "Bulletins gradués, consignes et kit de survie : voilà les précautions citées. On ne peut ni interdire un cyclone ni entourer une île d'une digue.",
+   "explication": "Bulletins gradués, consignes et kit de survie : voilà les précautions citées. On ne peut ni entourer une île d'une digue ni déménager tous ses habitants.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 11
@@ -562,26 +550,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "svt-s06-1-q22",
-   "fiche": "svt-s06-1-f4",
-   "type": "qcm",
-   "niveau": 1,
-   "enonce": "Par combien le nombre de morts par cyclone a-t-il été divisé à la Réunion depuis les années quatre-vingt ?",
-   "choix": [
-    "Par 25",
-    "Par 2",
-    "Par 5",
-    "Par 100"
-   ],
-   "explication": "Le nombre de morts a été divisé par 25. Les alertes graduées et les kits de survie expliquent cette baisse.",
-   "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 11
-   },
-   "r": "=8wWdZEFIISZ",
-   "poids": 1
-  },
-  {
    "id": "svt-s06-1-q23",
    "fiche": "svt-s06-1-f4",
    "type": "vrai_faux",
@@ -613,26 +581,6 @@ JEU.enregistrer("cours", {
     "page": 11
    },
    "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
-   "id": "svt-s06-1-q25",
-   "fiche": "svt-s06-1-f4",
-   "type": "qcm",
-   "niveau": 3,
-   "enonce": "Pourquoi peut-on dire que ce n'est pas la population qui explique la baisse du risque ?",
-   "choix": [
-    "Parce qu'aucune information n'indique un changement de la population",
-    "Parce que la population a doublé entre les deux cyclones les plus récents",
-    "Parce que l'île s'est vidée",
-    "Parce que la population vit sur les bateaux"
-   ],
-   "explication": "Rien n'indique que la population ait changé. La baisse vient donc des précautions, qui réduisent la vulnérabilité.",
-   "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 11
-   },
-   "r": "==ARH0hLGQRCAEgBe80EEMGSBURWAowCD4AHmohFFtBBJtgGDEwJDxgED5UAJ8QHToCAaMwGYk0CBcwC2wkQAxlTKUAFIISZ",
    "poids": 1
   },
   {

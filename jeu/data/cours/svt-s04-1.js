@@ -178,7 +178,7 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s04-1-f1",
    "type": "qcm",
    "niveau": 1,
-   "enonce": "Et au fond des océans, comment est l'eau qui circule ?",
+   "enonce": "Au fond des océans, comment est l'eau qui circule ?",
    "choix": [
     "Froide et très salée",
     "Chaude et peu salée",
@@ -293,7 +293,7 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s04-1-f1",
    "type": "qcm",
    "niveau": 3,
-   "enonce": "Pourquoi le schéma de la circulation thermohaline forme-t-il une boucle fermée ?",
+   "enonce": "Pourquoi dit-on que la circulation thermohaline forme une boucle ?",
    "choix": [
     "L'eau qui a plongé remonte plus loin et repart en surface",
     "Les océans ont une forme ronde",
@@ -313,39 +313,43 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s04-1-f2",
    "type": "qcm",
    "niveau": 1,
-   "enonce": "Dans la simulation des courants chauds et froids, que met-on dans le bac du côté « froid » ?",
+   "enonce": "Qu'est-ce qu'un courant marin ?",
    "choix": [
-    "Des glaçons",
-    "De l'eau salée",
-    "De l'eau chaude",
-    "Du colorant bleu"
+    "Un grand déplacement d'eau de mer, en surface ou en profondeur",
+    "Une vague qui se brise sur la plage",
+    "La marée qui monte et qui descend deux fois par jour sur les côtes",
+    "Un fleuve qui se jette dans la mer"
    ],
-   "explication": "Un bac est rempli de glaçons, l'autre d'eau chaude. Le colorant bleu est ajouté dans l'eau du circuit, du côté froid.",
+   "explication": "Un courant marin est comme une rivière dans l'océan : une grande masse d'eau qui se déplace. Il peut couler en surface, poussé par le vent, ou en profondeur.",
    "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.pdf",
-    "page": 4
+    "theme": "Séance 2 – Les mouvements des vents et des courants",
+    "titre": "Courant marin",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Courant_marin"
    },
-   "r": "=A1GtIkw2zkAIYUFMYTZ",
+   "r": "=c1FAQRDAAAFHETXFtFSOpRCGxQEmQxBQYQUHswTephJAVEUJ5kGHMgTWcmBbAAGUowDDIQwAmURRN0DdEgRHcSZ",
    "poids": 1
   },
   {
    "id": "svt-s04-1-q10",
    "fiche": "svt-s04-1-f2",
    "type": "qcm",
-   "niveau": 1,
-   "enonce": "Quel colorant marque l'eau du côté chaud ?",
+   "niveau": 2,
+   "enonce": "Comment s'appelle le grand courant chaud qui part du golfe du Mexique et remonte l'Atlantique Nord ?",
    "choix": [
-    "Le rouge",
-    "Le bleu",
-    "Le vert",
-    "Le jaune"
+    "Le Gulf Stream",
+    "Le courant du Labrador",
+    "Le courant de Humboldt",
+    "Le courant circumpolaire"
    ],
-   "explication": "Le rouge marque le côté chaud et le bleu le côté froid. On suit ainsi chaque courant à l'œil.",
+   "explication": "Le Gulf Stream naît près de la Floride et longe la côte des États-Unis avant de traverser l'Atlantique. On lui attribue souvent une part de la douceur des hivers de l'ouest de l'Europe.",
    "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.pdf",
-    "page": 4
+    "theme": "Séance 2 – Les mouvements des vents et des courants",
+    "titre": "Gulf Stream",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Gulf_Stream"
    },
-   "r": "==wRQp0GAQhRM4TZ",
+   "r": "==ATCMRDxklNVskAaEiRM4TZ",
    "poids": 1
   },
   {
@@ -353,9 +357,9 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s04-1-f2",
    "type": "vrai_faux",
    "niveau": 2,
-   "enonce": "Dans le circuit de tubes, l'eau chaude colorée passe par le tube du haut et l'eau froide par le tube du bas.",
+   "enonce": "Quand de l'eau chaude et de l'eau froide se rencontrent, l'eau chaude circule au-dessus et l'eau froide en dessous.",
    "corrections": [],
-   "explication": "Oui : le courant chaud monte et circule en haut, le courant froid descend et circule en bas. C'est ce que montrent les flèches rouge et bleue.",
+   "explication": "Le courant chaud monte et circule en haut, le courant froid descend et circule en bas. C'est ce que montre la simulation avec un bac d'eau chaude et un bac de glaçons.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.pdf",
     "page": 4
@@ -364,62 +368,23 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "svt-s04-1-q12",
-   "fiche": "svt-s04-1-f2",
-   "type": "vrai_faux",
-   "niveau": 2,
-   "enonce": "Au bout d'un quart d'heure, l'eau rouge et l'eau bleue restent bien séparées dans le circuit.",
-   "corrections": [
-    "Faux : au bout d'un quart d'heure, les eaux sont mélangées de façon homogène.",
-    "Faux : au bout d'un quart d'heure, toute l'eau est devenue bleue.",
-    "Faux : au bout d'un quart d'heure, l'eau chaude s'est évaporée."
-   ],
-   "explication": "Les deux eaux se mélangent peu à peu. Après environ un quart d'heure, le mélange est homogène.",
-   "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.pdf",
-    "page": 4
-   },
-   "r": "6A1WAsR2qmAAfcwKNsgWK2qDAYEDWcWAQwstWcwDDs9qu0QEbJUHP5xEIcxZBARCV1FDcoxFAQWSFF0XPoxFGdwBgZRVRAgHL4kGTgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
    "id": "svt-s04-1-q13",
    "fiche": "svt-s04-1-f2",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Comment l'eau chaude se comporte-t-elle dans ce montage ?",
+   "enonce": "Que fait l'eau chaude quand elle est au contact d'une eau plus froide ?",
    "choix": [
-    "Elle monte et passe en haut",
-    "Elle descend et circule par le tube du bas",
-    "Elle reste immobile dans son bac",
-    "Elle se transforme en glace"
+    "Elle monte et circule au-dessus",
+    "Elle descend et circule au fond",
+    "Elle reste immobile sans bouger",
+    "Elle se transforme aussitôt en glace"
    ],
-   "explication": "L'eau chaude monte et circule par le tube du haut. C'est l'eau froide qui descend.",
+   "explication": "L'eau chaude monte et circule au-dessus de l'eau froide. L'eau froide, elle, descend.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.pdf",
     "page": 4
    },
-   "r": "=w0GTcQASlyFVBgBCggHPZQDjhUEbJ0APNgCFcTZ",
-   "poids": 1
-  },
-  {
-   "id": "svt-s04-1-q14",
-   "fiche": "svt-s04-1-f2",
-   "type": "ordre",
-   "niveau": 2,
-   "enonce": "Remets les étapes de la simulation dans l'ordre.",
-   "elements": [
-    "Les deux eaux colorées se mélangent de façon homogène",
-    "On remplit le circuit d'eau, avec un bac d'eau chaude et un bac de glaçons",
-    "On ajoute du colorant rouge côté chaud et bleu côté froid",
-    "Le courant rouge monte en haut, le courant bleu descend en bas"
-   ],
-   "explication": "On installe le montage, on colore, on observe les deux courants, puis le mélange. Le tout prend environ un quart d'heure.",
-   "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.pdf",
-    "page": 4
-   },
-   "r": "o1hQcpEVFNEH",
+   "r": "PYBQe1hCCsEHTc2FZAhFDAQDPZQDjhUEbJ0APNgCFcTZ",
    "poids": 1
   },
   {
@@ -427,7 +392,7 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s04-1-f2",
    "type": "qcm",
    "niveau": 3,
-   "enonce": "À quoi sert cette simulation avec un bac chaud et un bac de glaçons ?",
+   "enonce": "À quoi sert une simulation avec un bac d'eau chaude et un bac de glaçons ?",
    "choix": [
     "À montrer qu'un écart de température fait circuler l'eau",
     "À mesurer la température des océans",
@@ -443,43 +408,25 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "svt-s04-1-q16",
-   "fiche": "svt-s04-1-f2",
-   "type": "qcm",
-   "niveau": 3,
-   "enonce": "Après quelques minutes, où les deux eaux colorées commencent-elles à se mélanger ?",
-   "choix": [
-    "Aux endroits où les tubes se rejoignent",
-    "Dans le bac d'eau chaude",
-    "Dans le bac de glaçons, sous la glace",
-    "Partout en même temps, dès la première minute"
-   ],
-   "explication": "Les eaux se mélangent d'abord là où les tubes se rejoignent, aux endroits où les deux courants se croisent. Au bout d'un quart d'heure, tout est mélangé.",
-   "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.pdf",
-    "page": 4
-   },
-   "r": "HFwHMAACbcQKIdRFI1xTVMwCHMjUGAQGRBdrAI1G3QkCHlEAKYkHcMTZ",
-   "poids": 1
-  },
-  {
    "id": "svt-s04-1-q17",
    "fiche": "svt-s04-1-f3",
    "type": "qcm",
-   "niveau": 1,
-   "enonce": "Dans la simulation des courants salés, quelle eau verse-t-on dans un tube vertical ?",
+   "niveau": 2,
+   "enonce": "Où l'eau de surface plonge-t-elle vers les profondeurs pour alimenter la circulation thermohaline ?",
    "choix": [
-    "De l'eau très salée, colorée en bleu",
-    "De l'eau chaude colorée en rouge, avec des glaçons",
-    "De l'eau de pluie",
-    "De l'eau glacée"
+    "Près des pôles, où elle devient froide et très salée",
+    "À l'équateur, là où elle est la plus chaude",
+    "Dans la Méditerranée, une mer presque fermée",
+    "À l'embouchure des grands fleuves, là où l'eau de mer devient douce"
    ],
-   "explication": "On prépare une eau très salée et on la colore en bleu. On peut ainsi la suivre dans les tubes.",
+   "explication": "Dans l'Atlantique Nord, près du Groenland et de la Norvège, l'eau de surface se refroidit et se charge en sel. Devenue plus lourde, elle coule vers le fond et repart vers le sud.",
    "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.pdf",
-    "page": 5
+    "theme": "Séance 2 – Les mouvements des vents et des courants",
+    "titre": "Circulation thermohaline",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Circulation_thermohaline"
    },
-   "r": "=cFBMIQDSZgJNAAnuzBAKkgCSt2FcbaGQohTco9qxkVRAx0CIpgRMYTZ",
+   "r": "=00FBDYQEYUDdccpU0hUzcRVAEBGGwRCSxRLIxwQIpwTDoQBXc2y2qQVdpxCDY8qz0gFQlkTc4cpbISZ",
    "poids": 1
   },
   {
@@ -487,34 +434,16 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s04-1-f3",
    "type": "vrai_faux",
    "niveau": 2,
-   "enonce": "Dans la simulation des courants salés, les bacs restent vides : la température n'entre pas en jeu.",
+   "enonce": "L'eau froide et très salée plonge parce qu'elle est plus dense, donc plus lourde, que l'eau chaude et peu salée.",
    "corrections": [],
-   "explication": "Oui : sans eau chaude ni glaçons, seule la quantité de sel change. On teste une seule chose à la fois.",
+   "explication": "Plus l'eau est froide et salée, plus elle est dense. C'est ce qui la fait couler sous l'eau chaude et peu salée de la surface.",
    "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.pdf",
-    "page": 5
+    "theme": "Séance 2 – Les mouvements des vents et des courants",
+    "titre": "Circulation thermohaline",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Circulation_thermohaline"
    },
    "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
-   "id": "svt-s04-1-q19",
-   "fiche": "svt-s04-1-f3",
-   "type": "qcm",
-   "niveau": 2,
-   "enonce": "Par quel tube l'eau salée passe-t-elle d'un tube vertical à l'autre ?",
-   "choix": [
-    "Par le tube horizontal le plus bas",
-    "Par le tube horizontal le plus haut",
-    "Par les deux tubes en même temps",
-    "Elle ne passe pas d'un tube à l'autre"
-   ],
-   "explication": "L'eau salée descend et emprunte le tube du bas. Elle se comporte comme l'eau froide de l'autre simulation.",
-   "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.pdf",
-    "page": 5
-   },
-   "r": "QthIPVkRYJwHGNQBStyEBsgGLAAHAoBSm8EEB1wCDYEFIISZ",
    "poids": 1
   },
   {
@@ -522,18 +451,18 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s04-1-f3",
    "type": "vrai_faux",
    "niveau": 2,
-   "enonce": "Au bout de quelques minutes, l'eau salée colorée flotte en haut des tubes verticaux.",
+   "enonce": "De l'eau très salée versée dans de l'eau moins salée flotte au-dessus.",
    "corrections": [
-    "Faux : l'eau salée se retrouve dans la partie basse des tubes verticaux.",
-    "Faux : l'eau salée se répartit partout de façon homogène dès la première minute.",
-    "Faux : l'eau salée reste dans le tube où on l'a versée."
+    "Faux : elle descend en dessous, parce qu'elle est plus lourde.",
+    "Faux : elle se mélange tout de suite, sans monter ni descendre.",
+    "Faux : elle reste au milieu, entre la surface et le fond."
    ],
-   "explication": "L'eau salée descend. Après quelques minutes, elle occupe le bas des tubes verticaux.",
+   "explication": "L'eau très salée descend sous l'eau moins salée. C'est ce que montre la simulation avec les tubes : après quelques minutes, elle occupe le bas.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.pdf",
     "page": 5
    },
-   "r": "==gEQZ0OYRgVEpRHDARSBICEAERVCwgCPdxGww0BVg0BbQxBZIlJeUlFbARDOpABdwyXRA1XOpQFGxw2E6BFWUFBIsASegUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "r": "=sxScJiFHAhGdkUHa4BGjllFQ1wCDowAOdgNSBhBHARGONUAdwiXWAVSOFwAG1AHiEhBAERUMIwAXgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -541,19 +470,19 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s04-1-f3",
    "type": "qcm",
    "niveau": 3,
-   "enonce": "Que montre cette simulation sur l'eau salée ?",
+   "enonce": "Que fait de l'eau très salée versée dans de l'eau moins salée ?",
    "choix": [
-    "Qu'elle descend sous l'eau moins salée",
-    "Qu'elle monte au-dessus de l'eau moins salée",
-    "Qu'elle se réchauffe toute seule",
-    "Qu'elle ne se mélange jamais avec l'eau douce"
+    "Elle descend sous l'eau moins salée",
+    "Elle monte au-dessus de l'eau moins salée",
+    "Elle se réchauffe toute seule",
+    "Elle ne se mélange jamais avec l'eau douce"
    ],
    "explication": "L'eau très salée plonge sous l'eau moins salée. C'est pour cela que l'eau du fond des océans est très salée.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.pdf",
     "page": 5
    },
-   "r": "=cFFA36ATsxYetAXCNwTTcADVtiUGAhGCkkCBcxCwgUAVgkADMQQcMSZ",
+   "r": "=wkCbv6LMZRFeBgBJsQSHYyFSlQVCwRAcIFDtgkBGhkCPNgCFcTZ",
    "poids": 1
   },
   {
@@ -561,7 +490,7 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s04-1-f3",
    "type": "qcm_multiple",
    "niveau": 3,
-   "enonce": "Comment les deux simulations expliquent-elles la circulation thermohaline ? (plusieurs réponses)",
+   "enonce": "Comment le froid et le sel font-ils circuler l'eau des océans ? (plusieurs réponses)",
    "choix": [
     "L'eau froide descend",
     "L'eau salée descend",
@@ -575,32 +504,6 @@ JEU.enregistrer("cours", {
     "page": 5
    },
    "r": "=8SZXEwCawRSLswBJsiTFBETLgkKEVEUjwBEGYAFN4kCbv6LMZRFY9gCBpySeVmFbAgFCwgCPdBDqI0FT1wGOMQQlAFH",
-   "poids": 1
-  },
-  {
-   "id": "svt-s04-1-q23",
-   "fiche": "svt-s04-1-f3",
-   "type": "association",
-   "niveau": 2,
-   "enonce": "Relie chaque élément des montages à son rôle.",
-   "gauche": [
-    "Colorant rouge",
-    "Bac de glaçons",
-    "Eau très salée colorée en bleu",
-    "Tube horizontal du bas"
-   ],
-   "droite": [
-    "Passage de l'eau froide ou salée",
-    "Simule un courant salé",
-    "Montre le chemin de l'eau chaude",
-    "Refroidit l'eau d'un côté du circuit"
-   ],
-   "explication": "Le rouge suit l'eau chaude, les glaçons refroidissent un côté, l'eau salée bleue simule un courant salé. Le froid comme le sel passent par le tube du bas.",
-   "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.pdf",
-    "page": 5
-   },
-   "r": "==ANvcnXG5TWsglQdlCRe4RSEYnQyQlSZlCH",
    "poids": 1
   },
   {
@@ -628,19 +531,19 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s04-1-f4",
    "type": "qcm",
    "niveau": 1,
-   "enonce": "Sur ce diagramme, que représentent les barres bleues ?",
+   "enonce": "Sur un diagramme ombrothermique, que représentent les barres ?",
    "choix": [
-    "Les précipitations",
-    "Les températures maximales de chaque mois",
-    "Les températures minimales",
+    "Les précipitations de chaque mois",
+    "Les températures les plus hautes de chaque mois",
+    "Les températures les plus basses",
     "La durée du jour"
    ],
-   "explication": "Les barres bleues donnent les précipitations de chaque mois. Les températures sont dessinées par deux courbes.",
+   "explication": "Les barres donnent les précipitations de chaque mois. Les températures sont dessinées par des courbes.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 8
    },
-   "r": "XZxGeAgGOYQAzQkBc6OHfYUFM4TZ",
+   "r": "QthKChQFIthHH4gCSJiFVZxGeAgGOYQAzQkBc6OHfYUFM4TZ",
    "poids": 1
   },
   {
@@ -675,26 +578,6 @@ JEU.enregistrer("cours", {
     "page": 8
    },
    "r": "Qd0GZVNrJcQScIiUBAQVFwgADsRHp0wCQ1gGBkQFJFgIGAABdElGbMgAIBDSJUhXL0xESgAAuHbBIARBJ1hCegUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
-   "id": "svt-s04-1-q28",
-   "fiche": "svt-s04-1-f4",
-   "type": "qcm",
-   "niveau": 2,
-   "enonce": "Comment les températures sont-elles dessinées sur ce diagramme ?",
-   "choix": [
-    "Par deux courbes : les maximales en rouge et les minimales en bleu",
-    "Par une seule courbe verte",
-    "Par des barres rouges",
-    "Par des points sans courbe"
-   ],
-   "explication": "La courbe rouge donne les températures maximales, la courbe bleue les minimales. Les barres, elles, donnent les précipitations.",
-   "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 8
-   },
-   "r": "=AlMXkxBV9BDOxxFEICQMsFRD8UFDUgUzcRVAIBBGwxTc0wYeBQWMNgBecABSRzFZU0TRpxCNAQHs4URNh1CLYEFIISZ",
    "poids": 1
   },
   {
@@ -738,27 +621,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "svt-s04-1-q31",
-   "fiche": "svt-s04-1-f4",
-   "type": "qcm",
-   "niveau": 3,
-   "enonce": "Vers quelle valeur montent les températures maximales à Palerme en plein été ?",
-   "choix": [
-    "Environ 30 °C",
-    "Environ 15 °C",
-    "Environ 45 °C",
-    "Environ 5 °C"
-   ],
-   "explication": "La courbe rouge approche 30 °C en juillet et en août. Même les minimales de ces mois restent élevées.",
-   "indice": "Regarde le sommet de la courbe rouge.",
-   "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 8
-   },
-   "r": "==ATsIsqj1hVVMUAd8AEHcTZ",
-   "poids": 1
-  },
-  {
    "id": "svt-s04-1-q32",
    "fiche": "svt-s04-1-f4",
    "type": "qcm_multiple",
@@ -777,6 +639,28 @@ JEU.enregistrer("cours", {
     "page": 8
    },
    "r": "=gyUMwxGbwxYIlQFeBgDCYURGYyHckgFRxhCP9xBt0AA59gQNVxDG8xZXAAFUkhCOpgFIBDSXAUWP0xzlmxHiYQVWARPLJUTBEALAVEUY9hDOUQSXMiUGsgGY0xDbsBGq4Ez2/lHPVxAlAFH",
+   "poids": 1
+  },
+  {
+   "id": "svt-s04-1-q33",
+   "fiche": "svt-s04-1-f2",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Pourquoi les courants marins comptent-ils pour le climat ?",
+   "choix": [
+    "Ils transportent de la chaleur vers les régions froides",
+    "Ils font tourner la Terre un peu plus vite",
+    "Ils provoquent les marées sur toutes les côtes",
+    "Ils empêchent la pluie de tomber au-dessus des océans et des côtes"
+   ],
+   "explication": "Les courants chauds emportent vers les pôles la chaleur reçue près de l'équateur. L'océan en transporte autant que l'atmosphère, ce qui adoucit le climat de certaines régions.",
+   "source": {
+    "theme": "Séance 2 – Les mouvements des vents et des courants",
+    "titre": "Courant marin",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Courant_marin"
+   },
+   "r": "==AUbYSSMo1XI8UFIYwGgsttXUlAMIwTBohJbV0RYtwAH4gCSZiHVBQER1BAKYgGs0lFbxEHbYUFFsTZ",
    "poids": 1
   }
  ],

@@ -1,6 +1,6 @@
 # Audit des questions de physique-chimie (28/10/2026)
 
-Demande de Romain du 25/10/2026 : retirer les questions bizarres et, quand le cours déposé est trop mince, poser une question de thème. Grille : atelier/relecture/grille-audit-questions.md. Détail question par question : atelier/relecture/audit-questions-physique.json (77 entrées : tout ce qui n'est pas gardé tel quel, plus onze « garder » avec une retouche de forme). Rien n'a encore été appliqué dans atelier/contenu/.
+Demande de Romain du 25/10/2026 : retirer les questions bizarres et, quand le cours déposé est trop mince, poser une question de thème. Grille : atelier/relecture/grille-audit-questions.md. Détail question par question : atelier/relecture/audit-questions-physique.json (77 entrées : tout ce qui n'est pas gardé tel quel, plus onze « garder » avec une retouche de forme). Appliqué le 28/10/2026 dans atelier/contenu/ (voir la section « Application » en fin de fichier).
 
 ## Résumé
 
@@ -69,3 +69,17 @@ Vikidia (Nuage, Eau, Cycle de l'eau), Wikipédia (Déshydratation, Eau douce, Li
 ## Contrôles au moment de l'audit
 
 node atelier/outils/valider.js : 0 erreur, 5 alertes (les « [5] source absente » connues des PDF de géographie). node atelier/outils/tests.js : 347 réussis, 0 en échec. Aucun fichier de contenu, de jeu ou de documentation n'a été modifié par l'audit.
+
+## Application (28/10/2026)
+
+Tous les verdicts ont été appliqués dans atelier/contenu/physique-*.js et recompilés dans jeu/data/cours/ : 31 suppressions, 14 réécritures, 21 questions de thème, 11 retouches ; 283 questions, dont 21 de thème. Écarts avec les pistes de l’audit, tous dans l’esprit de la grille :
+
+- Sources : Vikidia (Nuage, Eau, Cycle de l’eau) refuse les requêtes depuis le poste de travail ; les pages Wikipédia de même nom ont servi. La page Wikipédia « Déshydratation » n’est qu’une page d’homonymie : les quatre faits sur l’eau et le corps (65 % du corps d’un adulte, deux à cinq jours sans boire, pertes par l’urine, la sueur et la respiration, apports par les boissons et les aliments) viennent de la page « Eau ». La page « Solubilité » ne cite pas le sucre : physique-s04-1-q27 cite « Saccharose » (la solubilité du sucre augmente avec la température).
+- physique-s02-1-q21 : les corrections proposées ont été changées pour qu’une seule soit juste (« plusieurs semaines sans manger, mais pas sans boire » était vraie aussi).
+- physique-s05-1-q3 posée en FAUX (« l’ébullition est la seule façon pour un liquide de devenir un gaz ») plutôt qu’en VRAI, pour qu’elle demande quelque chose ; physique-s03-1-q36 de même (« une tonne vaut cent kilogrammes », FAUX).
+- physique-s05-1-q26 : la page « Point de fusion » définit la température de fusion comme une propriété du corps pur à pression donnée, changée par toute impureté, sans écrire mot pour mot qu’elle ne dépend pas de la quantité ; à comparer au livret.
+- physique-s03-1-q32 : « 1 L = 1 000 cm³ » se déduit de la page « Litre » (litre = décimètre cube, millilitre = centimètre cube).
+- Niveaux des 21 questions de thème : 5 de niveau 1, 11 de niveau 2, 5 de niveau 3 ; types : 12 QCM, 7 vrai/faux, 1 QCM à plusieurs réponses, 1 association.
+- physique-s08-1-q11 (association réécrite) : colonne de droite réordonnée pour que la réponse [1, 2] ne soit plus lue comme le nombre « 1,2 » du devoir 1 par l’anti-spoil du validateur.
+
+Contrôles après application : node atelier/outils/valider.js : 0 erreur, 8 alertes (les 5 « [5] source absente » de géographie et 3 « [9] svt-s01-2-q20 contient 23 », hors physique) ; node atelier/outils/tests.js : 351 réussis, 0 en échec ; node atelier/outils/mesurer-tirage.js --familles : part de la physique entre 14,6 et 16,4 % selon le scénario.

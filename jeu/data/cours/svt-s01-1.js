@@ -422,19 +422,19 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s01-1-f2",
    "type": "qcm",
    "niveau": 3,
-   "enonce": "Pourquoi peut-on dire à la fois que Mars et que Neptune sont « les plus éloignées » du Soleil ?",
+   "enonce": "Pourquoi Mars et Jupiter, pourtant voisines, ne sont-elles pas dans la même famille de planètes ?",
    "choix": [
-    "Mars ferme la famille des telluriques, Neptune celle des gazeuses",
-    "Mars ferme la famille des gazeuses, Neptune celle des telluriques",
-    "Mars et Neptune tournent toutes deux sur la même orbite",
-    "Mars et Neptune sont toutes deux après la ceinture de Kuiper"
+    "Mars est tellurique et Jupiter gazeuse",
+    "Jupiter est tellurique et Mars est gazeuse",
+    "Elles sont en fait dans la même famille, celle des géantes gazeuses",
+    "Mars tourne autour de Jupiter, comme un satellite"
    ],
-   "explication": "Chaque famille a sa planète la plus lointaine. Mars ferme les telluriques, Neptune ferme les gazeuses.",
+   "explication": "Mars est la dernière planète tellurique, Jupiter la première planète gazeuse. Entre elles passe la ceinture principale d'astéroïdes, qui sépare les deux familles.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 1
    },
-   "r": "==QZBAhFAQxEPggUbYSSFBVQCoQBGxAHyYQBAsTUF1hCHkhKfBRWBtwGGVBDWc2FZkAHcgACPNBBjhECHhECPVBFI8TZ",
+   "r": "==wUM0hGXIhIKV0RIphBWMxISNzFVBAAAAAHa4BBmkVRB51CPVBFI8TZ",
    "poids": 1
   },
   {
