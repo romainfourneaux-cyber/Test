@@ -297,7 +297,7 @@
     var ecu = "M" + (x - 11) + " " + (y - 11) + "h22v11c0 7-5 10.5-11 13-6-2.5-11-6-11-13z";
     // l'écusson rendu (porte-<matière>, porte-bourse…) par-dessus ; le liseré d'une porte rare reste au CSS (.porte-ecusson.rare)
     var im = imageExp(porte.genre === "faveur" ? "porte-" + (JEU.expedition.MATIERE_FAMILLE[porte.conseiller] || "histoire") : "porte-" + porte.genre);
-    return "<g class='porte-ecusson" + (porte.rare ? " rare" : "") + "' id='" + k + "'><path d='" + ecu + "' fill='" + teinte + "' stroke='" + (porte.rare ? "#c9ccd2" : ENCRE) + "' stroke-width='" + (porte.rare ? 2 : 1.3) + "'/>" +
+    return "<g class='porte-ecusson" + (porte.rare ? " rare" : "") + "' id='" + k + "'><path d='" + ecu + "' fill='" + teinte + "' stroke='" + (porte.rare ? "#b8bcc4" : ENCRE) + "' stroke-width='" + (porte.rare ? 2 : 1.3) + "'/>" +
       JEU.icones.dans(icone, x - 7, y - 8, 14, "#fff8e4") + (im ? imgSVG(im, x, y) : "") + "</g>";
   }
   // Sceau de cire posé sur une halte jouée : la cire du joueur (bleu de France), ou le plomb quand les murs ont cédé.

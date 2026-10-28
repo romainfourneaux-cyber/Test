@@ -894,7 +894,7 @@ button.cour-chip:hover { background: rgba(255,250,236,.55); box-shadow: 0 0 0 1p
    se pose par-dessus le dessin SVG ou CSS, qui reste émis dessous et réapparaît si l'image manque (ecran-expedition.js, repliImage).
    Fichiers à 2 ×, affichés à leur taille logique entière ; aucun filtre de plus sur les images (l'ombre du groupe corps suffit). */
 .route-svg image.img-exp, .annee-svg image.img-exp, .ecu-armorial image.img-exp { pointer-events: none; image-rendering: auto; }
-.route-svg .porte-ecusson.rare image.img-exp { filter: drop-shadow(0 0 1px #c9ccd2) drop-shadow(0 0 2px #e2c272); }
+.route-svg .porte-ecusson.rare image.img-exp { filter: drop-shadow(0 0 1px #b8bcc4) drop-shadow(0 0 2px #e2c272); }
 .sac-image, .ic-image { display: inline-flex; align-items: flex-end; vertical-align: middle; }
 .sac-image.image > .sac, .ic-image.image > .gi, .faveur-med.image > .gi { display: none; }
 .sac-image > img, .ic-image > img, .faveur-med.image > img { display: block; }
@@ -918,7 +918,7 @@ button.cour-chip:hover { background: rgba(255,250,236,.55); box-shadow: 0 0 0 1p
 .faveur-med { --t: 34px; --cercle: #a86f3b; display: inline-flex; align-items: center; justify-content: center; width: var(--t); height: var(--t); border-radius: 50%; color: #fff8e4; flex: none;
   background: radial-gradient(circle at 35% 30%, color-mix(in srgb, var(--teinte) 55%, #fff), var(--teinte) 60%, color-mix(in srgb, var(--teinte) 60%, #000));
   box-shadow: 0 0 0 2.5px var(--cercle), 0 0 0 3.5px #000, 0 2px 4px rgba(0,0,0,.5); }
-.faveur-med.rang-2 { --cercle: #c9ccd2; }
+.faveur-med.rang-2 { --cercle: #b8bcc4; }
 .faveur-med.rang-3 { --cercle: var(--or-clair); }
 /* fenêtres des haltes : page de semaine, porte, bivouac, marchand, Armorial, bilan (famille des missives) */
 .exp-fenetre { position: relative; max-width: 860px; margin: .3rem auto; padding: 1rem 1.3rem 1.1rem; border: 2px solid var(--encre); border-radius: 4px;
@@ -956,7 +956,7 @@ button.cour-chip:hover { background: rgba(255,250,236,.55); box-shadow: 0 0 0 1p
 .carte-faveur { position: relative; display: flex; flex-direction: column; align-items: center; text-align: center; gap: .3rem; padding: 1.1rem .8rem .9rem; min-height: 230px;
   border: 2px solid var(--encre); border-radius: 5px; background: linear-gradient(rgba(255,250,236,.7), rgba(226,206,160,.7)), var(--parchemin); color: var(--encre); font-family: var(--texte);
   box-shadow: 0 0 0 3px #a86f3b, 0 0 0 5px var(--encre), 0 8px 16px rgba(0,0,0,.35); transition: transform .15s ease, box-shadow .15s ease; cursor: pointer; }
-.carte-faveur.rang-2 { box-shadow: 0 0 0 3px #c9ccd2, 0 0 0 5px var(--encre), 0 8px 16px rgba(0,0,0,.35); }
+.carte-faveur.rang-2 { box-shadow: 0 0 0 3px #b8bcc4, 0 0 0 5px var(--encre), 0 8px 16px rgba(0,0,0,.35); }
 .carte-faveur.rang-3 { box-shadow: 0 0 0 3px var(--or-clair), 0 0 0 5px var(--encre), 0 8px 16px rgba(0,0,0,.35); }
 button.carte-faveur:hover, button.carte-faveur:focus-visible { transform: translateY(-4px); background: linear-gradient(rgba(255,252,242,.85), rgba(236,217,170,.8)), var(--parchemin); }
 .carte-faveur.tenue { cursor: default; min-height: 0; }
