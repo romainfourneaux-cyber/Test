@@ -308,7 +308,7 @@ JEU.enregistrer("cours", {
     "Dans un bus scolaire",
     "Par internet, à la maison"
    ],
-   "explication": "Les élèves s'assoient par terre, dehors, ou sous une tente dans le meilleur des cas. La photo du cours le montre.",
+   "explication": "Les élèves s'assoient par terre, dehors, ou sous une tente dans le meilleur des cas. Une école publique sur deux n'a pas de locaux.",
    "source": {
     "fichier": "cours/geographie/Geo 5e - Theme 1 - Etude de cas 3.pdf",
     "page": 1
@@ -407,7 +407,7 @@ JEU.enregistrer("cours", {
    "niveau": 1,
    "enonce": "En Afghanistan, au moins 20 % des enfants sont contraints de travailler, parfois dès l'âge de 5 ans.",
    "corrections": [],
-   "explication": "Oui : au moins un enfant sur cinq travaille, aux champs ou dans des ateliers. La photo montre un garçon qui fabrique des briques.",
+   "explication": "Oui : au moins un enfant sur cinq travaille, aux champs ou dans des ateliers. Certains fabriquent des briques.",
    "source": {
     "fichier": "cours/geographie/Geo 5e - Theme 1 - Etude de cas 3.pdf",
     "page": 1
@@ -432,26 +432,6 @@ JEU.enregistrer("cours", {
     "page": 1
    },
    "r": "==QFhNgFQh1HOIhEIIFNXkRRHARGOxxFBDoXMMUDdohCWkUAi4RVRshHa4kCRgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
-   "id": "geographie-s08-2-q12",
-   "fiche": "geographie-s08-2-f2",
-   "type": "qcm",
-   "niveau": 2,
-   "enonce": "Combien d'écoles ont été attaquées en Afghanistan en 2018 ?",
-   "choix": [
-    "200",
-    "20",
-    "2 000",
-    "12 000"
-   ],
-   "explication": "200 écoles ont été attaquées en 2018. 12 000, c'est le nombre total d'écoles publiques du pays.",
-   "source": {
-    "fichier": "cours/geographie/Geo 5e - Theme 1 - Etude de cas 3.pdf",
-    "page": 1
-   },
-   "r": "=QkVZBUZ",
    "poids": 1
   },
   {
@@ -591,65 +571,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "geographie-s08-2-q20",
-   "fiche": "geographie-s08-2-f3",
-   "type": "vrai_faux",
-   "niveau": 2,
-   "enonce": "En Finlande, une étudiante paie sa chambre au prix normal, sans aucune aide.",
-   "corrections": [
-    "Faux : grâce à l'aide de l'État, elle paie la moitié du loyer habituel.",
-    "Faux : la chambre est entièrement gratuite.",
-    "Faux : les étudiants finlandais n'ont pas le droit de louer une chambre."
-   ],
-   "explication": "L'État prend en charge la moitié du loyer. La chambre coûte donc moitié prix.",
-   "source": {
-    "fichier": "cours/geographie/Geo 5e - Theme 1 - Etude de cas 3.pdf",
-    "page": 2
-   },
-   "r": "UwUQe0gNZxwVMZwTUMAEdsiUAEQVYr6BbsxBu0ABZ1wCGcgFJdxKeARRZVACaYesP9SDAEVDLswDH4kHnJttFBhEL3aHVgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
-   "id": "geographie-s08-2-q21",
-   "fiche": "geographie-s08-2-f3",
-   "type": "qcm",
-   "niveau": 2,
-   "enonce": "À quel âge passe-t-on le baccalauréat en Finlande ?",
-   "choix": [
-    "À 18 ans",
-    "À 16 ans",
-    "À 20 ans",
-    "À 15 ans"
-   ],
-   "explication": "Le baccalauréat se passe à 18 ans, après le lycée. À 16 ans, c'est la fin de la scolarité obligatoire.",
-   "source": {
-    "fichier": "cours/geographie/Geo 5e - Theme 1 - Etude de cas 3.pdf",
-    "page": 2
-   },
-   "r": "=8gFbxkTXdlRpHbZ",
-   "poids": 1
-  },
-  {
-   "id": "geographie-s08-2-q22",
-   "fiche": "geographie-s08-2-f3",
-   "type": "qcm",
-   "niveau": 2,
-   "enonce": "Quelle part des Finlandaises a une formation universitaire ?",
-   "choix": [
-    "36 %",
-    "6 %",
-    "76 %",
-    "100 %"
-   ],
-   "explication": "36 % des Finlandaises ont fait des études à l'université. Ce sont les femmes les plus éduquées d'Europe.",
-   "source": {
-    "fichier": "cours/geographie/Geo 5e - Theme 1 - Etude de cas 3.pdf",
-    "page": 2
-   },
-   "r": "NNkRfFUZ",
-   "poids": 1
-  },
-  {
    "id": "geographie-s08-2-q23",
    "fiche": "geographie-s08-2-f3",
    "type": "qcm",
@@ -661,7 +582,7 @@ JEU.enregistrer("cours", {
     "Parce que les élèves travaillent aux champs l'après-midi pour aider leur famille, après avoir étudié le matin",
     "Parce que les classes comptent plus de quarante élèves"
    ],
-   "explication": "Tout est gratuit, de la cantine à l'université, et une classe compte 15 élèves. La photo montre une salle bien équipée.",
+   "explication": "Tout est gratuit, de la cantine à l'université, et une classe compte 15 élèves.",
    "source": {
     "fichier": "cours/geographie/Geo 5e - Theme 1 - Etude de cas 3.pdf",
     "page": 2
@@ -687,6 +608,21 @@ JEU.enregistrer("cours", {
     "page": 2
    },
    "r": "o5hQdpkVFNEH",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s08-2-q48",
+   "fiche": "geographie-s08-2-f3",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Les Finlandaises comptent parmi les femmes les plus diplômées d'Europe : plus d'une sur trois a fait des études à l'université.",
+   "corrections": [],
+   "explication": "Plus d'un tiers des Finlandaises ont une formation universitaire. L'université gratuite y est pour beaucoup.",
+   "source": {
+    "fichier": "cours/geographie/Geo 5e - Theme 1 - Etude de cas 3.pdf",
+    "page": 2
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -906,26 +842,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "geographie-s08-2-q36",
-   "fiche": "geographie-s08-2-f5",
-   "type": "qcm",
-   "niveau": 1,
-   "enonce": "Jusqu'à quel âge l'école est-elle obligatoire en Afghanistan ?",
-   "choix": [
-    "15 ans",
-    "16 ans",
-    "18 ans",
-    "12 ans"
-   ],
-   "explication": "De 7 à 15 ans en Afghanistan, de 7 à 16 ans en Finlande. Un an de moins, et beaucoup d'enfants n'y vont pas du tout.",
-   "source": {
-    "fichier": "cours/geographie/Geo 5e - Theme 1 - Etude de cas 3.pdf",
-    "page": 2
-   },
-   "r": "=8QHBcgRcNUZ",
-   "poids": 1
-  },
-  {
    "id": "geographie-s08-2-q37",
    "fiche": "geographie-s08-2-f5",
    "type": "association",
@@ -994,26 +910,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "geographie-s08-2-q40",
-   "fiche": "geographie-s08-2-f5",
-   "type": "qcm",
-   "niveau": 3,
-   "enonce": "Pourquoi le taux d'alphabétisation de l'Afghanistan n'est-il que de 43 % ?",
-   "choix": [
-    "Parce que près de la moitié des enfants ne vont pas à l'école",
-    "Parce que les Afghans n'ont pas d'alphabet",
-    "Parce que l'école n'y est obligatoire que jusqu'à 10 ans",
-    "Parce que les classes y sont trop petites"
-   ],
-   "explication": "Sans école, pas de lecture. Près d'un enfant sur deux n'est pas scolarisé, et les filles encore moins que les garçons.",
-   "source": {
-    "fichier": "cours/geographie/Geo 5e - Theme 1 - Etude de cas 3.pdf",
-    "page": 2
-   },
-   "r": "==QZXkhCWgtqJNgUIDYDWQVXOtBCJ8hUiwRVWEwHIgQAXgEMIFQFE2qBS8gBfc2EZUEEVkUHHHrGz0AAAxlTKUAFIISZ",
-   "poids": 1
-  },
-  {
    "id": "geographie-s08-2-q41",
    "fiche": "geographie-s08-2-f6",
    "type": "qcm",
@@ -1038,9 +934,9 @@ JEU.enregistrer("cours", {
    "fiche": "geographie-s08-2-f6",
    "type": "vrai_faux",
    "niveau": 1,
-   "enonce": "Dans les pays les mieux classés de la carte, plus de 95 % des habitants savent lire et écrire.",
+   "enonce": "En Europe et en Amérique du Nord, plus de 95 % des habitants savent lire et écrire.",
    "corrections": [],
-   "explication": "Oui : la classe la plus haute de la légende est « plus de 95 % ». C'est le cas de l'Europe, de l'Amérique du Nord, de la Russie et de l'Australie.",
+   "explication": "Oui : l'Europe, l'Amérique du Nord, la Russie et l'Australie dépassent 95 %. C'est le niveau le plus élevé relevé en 2018.",
    "source": {
     "fichier": "cours/geographie/Geo 5e - Theme 1 - Etude de cas 3.pdf",
     "page": 1
@@ -1105,26 +1001,6 @@ JEU.enregistrer("cours", {
     "page": 1
    },
    "r": "EVBwxejAakAEHAcrLI1G6wUFV41CDYUFHMxISZQEAARAOxxBEMTDWAVQONUFDsBByMRBFZACI4xTB0wLNYxWMpwTSggBBcWAUcQVCwhAfI1GmEURNh1DbYUFM4TZ",
-   "poids": 1
-  },
-  {
-   "id": "geographie-s08-2-q46",
-   "fiche": "geographie-s08-2-f6",
-   "type": "qcm",
-   "niveau": 3,
-   "enonce": "Dans quelle classe de la carte se situe l'Afghanistan, où 43 % des habitants savent lire ?",
-   "choix": [
-    "Moins de 50 %",
-    "De 50 à 70 %",
-    "De 70 à 85 %",
-    "Plus de 95 %"
-   ],
-   "explication": "43 %, c'est moins de 50 % : la classe la plus basse de la légende. L'Afghanistan est parmi les pays les moins alphabétisés.",
-   "source": {
-    "fichier": "cours/geographie/Geo 5e - Theme 1 - Etude de cas 3.pdf",
-    "page": 1
-   },
-   "r": "NdFSzhRRQlkTcgwDG8TZ",
    "poids": 1
   },
   {

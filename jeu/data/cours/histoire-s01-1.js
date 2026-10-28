@@ -315,21 +315,22 @@ JEU.enregistrer("cours", {
    "id": "histoire-s01-1-q26",
    "fiche": "histoire-s01-1-f1",
    "type": "qcm",
-   "niveau": 3,
-   "enonce": "Combien d'années séparent l'édit de Thessalonique du partage de l'Empire romain ?",
+   "niveau": 2,
+   "enonce": "Qui est Théodose, à la mort duquel l'Empire romain est partagé en 395 ?",
    "choix": [
-    "15 ans",
-    "25 ans",
-    "81 ans",
-    "115 ans"
+    "Le dernier empereur à régner sur tout l'Empire romain",
+    "Le premier empereur de l'Empire byzantin, installé à Constantinople",
+    "Le chef des royaumes germaniques qui prennent Rome en 476",
+    "Le général de Justinien qui reconquiert Ravenne"
    ],
-   "explication": "L'édit date de 380 et le partage de 395. 395 moins 380 font 15 ans.",
-   "indice": "Fais la soustraction entre les deux dates.",
+   "explication": "Théodose est le dernier empereur qui gouverne à la fois l'Orient et l'Occident. À sa mort, en 395, l'empire est partagé entre ses deux fils, et il ne sera plus jamais réuni.",
    "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 1 - Support.pdf",
-    "page": 1
+    "theme": "Cours 1 – Empire byzantin au temps de Justinien",
+    "titre": "Théodose Ier",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Th%C3%A9odose_Ier"
    },
-   "r": "=8QHBcgRcNUZ",
+   "r": "K1CREglQc80AUAgAqcjUJUVBcEwGSphNeV0RIBACPX6GSdesVdBAUsxCf8RDj9FAcNEHKIgRM4TZ",
    "poids": 1
   },
   {
@@ -437,15 +438,15 @@ JEU.enregistrer("cours", {
    "fiche": "histoire-s01-1-f2",
    "type": "qcm",
    "niveau": 3,
-   "enonce": "Combien de temps l'Empire romain d'Orient dure-t-il, de 395 à 1453 ?",
+   "enonce": "Pendant combien de temps environ l'Empire byzantin a-t-il existé ?",
    "choix": [
     "Plus de mille ans",
-    "Environ cent ans",
-    "Environ quatre-vingts ans",
-    "Environ cinq cents ans"
+    "Environ un siècle",
+    "Environ deux siècles",
+    "Environ cinq siècles"
    ],
-   "explication": "De 395 à 1453, il s'écoule 1058 ans. C'est donc plus de mille ans.",
-   "indice": "Fais la soustraction 1453 moins 395.",
+   "explication": "L'Empire romain d'Orient naît au partage de 395 et tombe en 1453, avec la prise de Constantinople. Il a donc duré plus de mille ans, bien plus que l'Occident, disparu dès 476.",
+   "indice": "Compare la date du partage et celle de la prise de Constantinople.",
    "source": {
     "fichier": "cours/histoire/Histoire 5e - Seance 1 - Support.pdf",
     "page": 1
@@ -486,27 +487,6 @@ JEU.enregistrer("cours", {
     "page": 1
    },
    "r": "=clQcplXSZgJKABRetRBGpUHcIyGHoiUVkEAGMRBs8VRQ91BfswIO5TZ",
-   "poids": 1
-  },
-  {
-   "id": "histoire-s01-1-q30",
-   "fiche": "histoire-s01-1-f2",
-   "type": "qcm",
-   "niveau": 3,
-   "enonce": "Combien de temps l'Empire romain d'Occident dure-t-il, du partage de 395 à 476 ?",
-   "choix": [
-    "Environ 80 ans",
-    "Environ 180 ans",
-    "Environ 500 ans",
-    "Plus de mille ans"
-   ],
-   "explication": "476 moins 395 font 81 ans. C'est bien moins qu'un siècle.",
-   "indice": "Fais la soustraction 476 moins 395.",
-   "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 1 - Support.pdf",
-    "page": 1
-   },
-   "r": "==ATcwRCj1RXVMUAd8AEHcTZ",
    "poids": 1
   },
   {
@@ -823,20 +803,21 @@ JEU.enregistrer("cours", {
    "fiche": "histoire-s01-1-f4",
    "type": "qcm",
    "niveau": 3,
-   "enonce": "Combien d'années dure le règne de Justinien ?",
+   "enonce": "En plus de ses conquêtes, que fait rassembler l'empereur Justinien dans un grand recueil ?",
    "choix": [
-    "38 ans",
-    "48 ans",
-    "28 ans",
-    "62 ans"
+    "Les lois romaines : c'est le Code de Justinien",
+    "Les récits de ses batailles contre les royaumes germaniques",
+    "Les noms de tous les habitants de Constantinople",
+    "Les plans des mosaïques de Ravenne"
    ],
-   "explication": "Justinien règne de 527 à 565. 565 moins 527 font 38 ans.",
-   "indice": "Fais la soustraction 565 moins 527.",
+   "explication": "Justinien fait trier et classer les lois romaines dans un grand recueil, le Code de Justinien. Ce travail, confié au juriste Tribonien, a servi de modèle au droit pendant des siècles.",
    "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 1 - Support.pdf",
-    "page": 1
+    "theme": "Cours 1 – Empire byzantin au temps de Justinien",
+    "titre": "Justinien Ier",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Justinien_Ier"
    },
-   "r": "=8QHBcgRRFUZ",
+   "r": "EdwFuwBHRYABj4kCWgkJJpgdNswAGJhGXAWEV9VVCwAAGMRBs8VRGRUADYUFM4TZ",
    "poids": 1
   },
   {

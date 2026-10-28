@@ -291,20 +291,20 @@ JEU.enregistrer("cours", {
    "fiche": "geographie-s07-1-f1",
    "type": "qcm",
    "niveau": 3,
-   "enonce": "La définition du cours parle de « vivre correctement dans son pays ». Qu'est-ce que cela montre ?",
+   "enonce": "Pourquoi dit-on qu'on est pauvre par rapport à son pays ?",
    "choix": [
-    "Ce qu'il faut pour vivre correctement dépend du pays où l'on vit",
-    "Seuls les pays du Sud comptent des pauvres, puisque les pays du Nord sont riches",
-    "La pauvreté se mesure uniquement en kilomètres",
-    "On ne peut pas être pauvre quand on voyage"
+    "Parce que ce qu'il faut pour vivre correctement n'est pas le même partout",
+    "Parce que seuls les pays du Sud comptent des pauvres",
+    "Parce que le seuil de pauvreté est exactement le même dans tous les pays",
+    "Parce qu'on compte les pauvres continent par continent, jamais pays par pays"
    ],
-   "explication": "On juge la pauvreté par rapport au pays où vit la personne. Ce qui est nécessaire pour vivre correctement n'est pas partout le même.",
-   "indice": "Relis bien les derniers mots de la définition.",
+   "explication": "Se loger, se nourrir ou se déplacer ne coûte pas la même chose selon le pays. On juge donc la pauvreté d'une personne par rapport à ce qu'il faut pour vivre correctement là où elle vit.",
+   "indice": "Pense à ce que coûte un logement ici et ailleurs.",
    "source": {
     "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 2.pdf",
     "page": 1
    },
-   "r": "=A1MbMQRb4hTC80yrySDWwETe80ECkkFpcRBMbbFJpRAXUgJZZAUfxBAFYEDAEzGDU0BEYgHPZQHisURZRUSachRMETZ",
+   "r": "==wRBhVAbQxBZIlIf8tpYEFDC8UAJMTDRYESJFgRScwFqcRAGAxAbEADS1QMbxwQNwhGJYRSGIzETUUGY40GeIVDg0AAAxlTKUAFIISZ",
    "poids": 1
   },
   {
@@ -690,26 +690,6 @@ JEU.enregistrer("cours", {
     "page": 1
    },
    "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
-   "id": "geographie-s07-1-q27",
-   "fiche": "geographie-s07-1-f4",
-   "type": "ordre",
-   "niveau": 2,
-   "enonce": "Remets dans l'ordre du temps ces étapes du recul de la pauvreté.",
-   "elements": [
-    "16 % de la population mondiale sous le seuil de pauvreté",
-    "35 % de la population mondiale sous le seuil de pauvreté",
-    "8,5 % de la population mondiale sous le seuil de pauvreté",
-    "10 % de la population mondiale sous le seuil de pauvreté"
-   ],
-   "explication": "La part baisse sans arrêt : 35 % en 1990, 16 % en 2000, 10 % en 2010, 8,5 % en 2018.",
-   "source": {
-    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 2.pdf",
-    "page": 1
-   },
-   "r": "o9hQcpkVFNEH",
    "poids": 1
   },
   {

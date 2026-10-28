@@ -1,6 +1,6 @@
 # Audit des questions d'histoire (25/10/2026)
 
-Relecture des 415 questions des 12 cours d'histoire (atelier/contenu/histoire-*.js), avec la grille atelier/relecture/grille-audit-questions.md. Le détail, question par question, est dans audit-questions-histoire.json (106 entrées : tout ce qui n'est pas gardé tel quel). Rien n'a encore été appliqué dans les fichiers de contenu.
+Relecture des 415 questions des 12 cours d'histoire (atelier/contenu/histoire-*.js), avec la grille atelier/relecture/grille-audit-questions.md. Le détail, question par question, est dans audit-questions-histoire.json (106 entrées : tout ce qui n'est pas gardé tel quel). Appliqué le 28/10/2026 dans les fichiers de contenu et recompilé (376 questions, 42 de thème) ; les écarts avec les pistes sont notés dans docs/JOURNAL.md.
 
 ## Résumé
 

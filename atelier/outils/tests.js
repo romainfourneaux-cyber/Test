@@ -2350,6 +2350,19 @@ verifier("Bataillons : le rendu ne touche pas au moteur (aucune écriture de la 
     typeof JV.ui.ecrans.expedition === "function" && [".route-svg", ".carte-faveur", ".parchemin-annee", ".exp-fenetre", ".faveur-med", ".page-semaine", ".ill-relais", ".bilan-exp"].every(c => srcCss.indexOf(c) >= 0));
   verifier("Carte de la campagne : la carte « Partir en expédition » / « Reprendre l'expédition · semaine N, Ne halte » (JEU.expedition.resume) et la ligne « Expéditions » du cartouche des rivaux",
     /Partir en expédition/.test(srcCamp) && /Reprendre l'expédition · semaine/.test(srcCamp) && /JEU\.expedition\.resume\(\)/.test(srcCamp) && /function ligneExpeditions/.test(srcCamp) && /ligne-expeditions/.test(srcCamp) && /JEU\.ui\.afficher\("expedition"\)/.test(srcCamp));
+  // images rendues en 3D (28/10/2026 ; cahier atelier/conception/expeditions-graphismes.md, section 5) : le manifeste et ses fichiers
+  const manifV = (() => { const c = {}; c.window = c; vm.createContext(c); vm.runInContext(fs.readFileSync(path.join(RACINE, "jeu", "assets", "images", "expedition", "images.js"), "utf8"), c); return c.JEU.imagesExpedition; })();
+  const idsV = Object.keys(manifV), tailleFichier = f => { try { return fs.statSync(f).size; } catch (e) { return -1; } };
+  const dimsImage = f => { const b = fs.readFileSync(f); if (b[0] === 0x89 && b[1] === 0x50) return [b.readUInt32BE(16), b.readUInt32BE(20)];
+    let i = 2; while (i + 9 < b.length) { if (b[i] !== 0xFF) return null; const m = b[i + 1], l = b.readUInt16BE(i + 2); if (m >= 0xC0 && m <= 0xC3) return [b.readUInt16BE(i + 7), b.readUInt16BE(i + 5)]; i += 2 + l; } return null; };
+  const mauvaisV = idsV.filter(id => { const e = manifV[id], f = path.join(RACINE, "jeu", e.f), d = fs.existsSync(f) ? dimsImage(f) : null;
+    return !/^assets\/images\/expedition\/[a-z0-9-]+\.(png|jpg)$/.test(e.f) || !d || d[0] !== e.w * 2 || d[1] !== e.h * 2 || !(e.ax >= 0 && e.ax <= e.w && e.ay >= 0 && e.ay <= e.h) || tailleFichier(f) > 600000; });
+  const poidsV = idsV.reduce((t, id) => t + tailleFichier(path.join(RACINE, "jeu", manifV[id].f)), 0);
+  verifier("Images des expéditions : " + idsV.length + " entrées du manifeste, chacune avec son fichier dans assets/images/expedition/ à 2 × la taille logique, ancre dans l'image, moins de 600 Ko (" + Math.round(poidsV / 1024) + " Ko en tout, moins de 3 Mo) ; index.html charge images.js après sprites.js et avant ecran-expedition.js",
+    idsV.length >= 40 && mauvaisV.length === 0 && poidsV < 3000000 && srcHtml.indexOf('assets/images/expedition/images.js') > srcHtml.indexOf('assets/images/td/sprites.js') && srcHtml.indexOf('assets/images/expedition/images.js') < srcHtml.indexOf('js/ecran-expedition.js'), mauvaisV);
+  verifier("Images des expéditions : styles du repli (cadre de page en pseudo-élément border-image, médaillon de faveur, sac et icônes de la compagnie, liseré d'une porte rare) et carte « Partir en expédition » à deux fonds (image rendue, puis le tableau en repli) qui garde sa clé ill-relais",
+    /\.exp-fenetre\.cadre-image::before \{[^}]*cadre-page\.png/.test(srcCss) && [".faveur-med.image", ".sac-image.image", ".ic-image.image", ".porte-ecusson.rare image.img-exp"].every(c => srcCss.indexOf(c) >= 0) &&
+    /\.carte-jeu \.ill-relais \{[^}]*expedition\/carte-expedition\.jpg[^}]*oeuvres\/chasseur-chateau\.jpg/.test(srcCss) && /icone: "relais"/.test(srcCamp) && /ill-" \+ o\.icone/.test(srcCamp));
   // textes de l'écran : jeu seulement
   const nomsV = JV.donnees.personnages.personnages.map(p => p.nom), textesV = [];
   (function collecter(o) { if (typeof o === "string") textesV.push(o); else if (o && typeof o === "object") Object.keys(o).forEach(k => collecter(o[k])); })(EV.TEXTES);
@@ -2414,6 +2427,27 @@ verifier("Bataillons : le rendu ne touche pas au moteur (aucune écriture de la 
     (anneeV.match(/class='case/g) || []).length === 34 && (anneeV.match(/class='sceau-halte/g) || []).length === 2 && (anneeV.match(/ relais/g) || []).length === 3 && (anneeV.match(/ choisi/g) || []).length === 1 &&
     /Frontière/.test(anneeV) && /Cette semaine/.test(anneeV) && (anneeV.match(/class='case brume/g) || []).length === 26);
   xV.franchies = [];
+  // images rendues : sans manifeste (le contexte d'essai n'a pas chargé images.js), aucune image et aucune erreur ; avec le manifeste,
+  // chaque accroche pose son image par-dessus le dessin, qui reste émis (même nombre de cercles)
+  const favV ={ id: "annales", rang: 1, famille: "histoire", nom: "Annales", rangNom: "commune", texte: "Essai.", icone: "chroniqueur" };
+  const sansImg = (() => { try { const med = EV.medaillonFaveur(favV, 32), sc = EV.sac(true), ecu = EV.ecuArmorial({ bourse: 1 }, 72);
+    return ![svg2, med, sc, ecu, anneeV].some(s => /img-exp|expedition\//.test(s)) && /class='faveur-med rang-1'/.test(med) && /^<svg/.test(sc) && EV.fenetre("porte") === "exp-fenetre porte" && EV.imageExp("route-fond") === null && JV.imagesExpedition === undefined; } catch (e) { return String(e); } })();
+  verifier("Images des expéditions, repli : sans manifeste, la carte, le parchemin de l'année, l'écu, le médaillon de faveur et le sac n'ont aucune image et se dessinent sans erreur ; la fenêtre n'a pas la classe cadre-image", sansImg === true, sansImg);
+  JV.imagesExpedition = manifV;
+  const svgI = EV.carteSVG(XV.enCours(), dV, et2), xI = XV.etat(); xI.franchies = [1, 2]; const anI = EV.parcheminAnnee(xI, 8, [1, 3, 6], 6, [6, 7, 8], 8); xI.franchies = [];
+  const ecuI = EV.ecuArmorial({ bourse: 1, murs: 2 }, 72), medI = EV.medaillonFaveur(favV, 64), medI3 = EV.medaillonFaveur(Object.assign({}, favV, { rang: 3 }), 64), sacI = EV.sac(false);
+  const haltesI = dV.noeuds.filter(n => n.type !== "gardien" && n.type !== "grand"), brumeI = haltesI.filter(n => et2[n.id] === "brume").length;
+  const compter = (s, re) => (s.match(re) || []).length;
+  verifier("Images des expéditions, accroches : fond de route juste après le rect, un médaillon rendu par halte (" + haltesI.length + ", dont " + brumeI + " halte-brume), un écusson rendu par porte, le sceau de cire à l'échelle 32/34, fond du parchemin de l'année en premier et sceaux des semaines franchies, écu de l'Armorial et ses cinq émaux à l'opacité du rang, médaillon de faveur de rang 1 et 2 (jamais 3) à 64 px, sac vide ; même nombre de cercles dessinés qu'avant",
+    compter(svgI, /class='img-exp fond' href='assets\/images\/expedition\/route-fond\.jpg' x='0' y='0' width='1000' height='320' preserveAspectRatio='none'/) === 1 && svgI.indexOf("<rect") < svgI.indexOf("route-fond") && svgI.indexOf("route-fond") < svgI.indexOf("<g class='bande") &&
+    compter(svgI, /href='assets\/images\/expedition\/halte-/g) === haltesI.length && compter(svgI, /halte-brume\.png/g) === brumeI && compter(svgI, /href='assets\/images\/expedition\/porte-/g) === compter(svgI, /class='porte-ecusson/g) && compter(svgI, /porte-ecusson/g) > 0 &&
+    compter(svgI, /href='assets\/images\/expedition\/sceau-(reussie|cedes)\.png' x='[0-9.]+' y='[0-9.]+' width='37\.65' height='37\.65'/g) === 1 && compter(svgI, /<circle/g) === compter(svg2, /<circle/g) && compter(svgI, /<image/g) === compter(svg2, /<image/g) + 1 + haltesI.length + compter(svgI, /porte-ecusson/g) + 1 &&
+    /^<svg[^>]*><image class='img-exp fond' href='assets\/images\/expedition\/annee-fond\.jpg'/.test(anI) && compter(anI, /sceau-reussie\.png/g) === 2 &&
+    compter(ecuI, /href='assets\/images\/expedition\/armorial-/g) === 6 && ecuI.lastIndexOf("<path") < ecuI.indexOf("<image") && /armorial-vivres\.png'[^>]*opacity='0\.08'/.test(ecuI) && /armorial-murs\.png'[^>]*opacity='1'/.test(ecuI) && /armorial-bourse\.png'[^>]*opacity='0\.56/.test(ecuI) &&
+    /class='faveur-med rang-1 image'/.test(medI) && /<svg/.test(medI) && /faveur-annales-1\.png' width='64' height='64'/.test(medI) && !/img-exp/.test(medI3) && /class='faveur-med rang-3'/.test(medI3) &&
+    /^<span class='sac-image image'><svg/.test(sacI) && /compagnie-sac-vide\.png' width='24' height='28'/.test(sacI) && EV.fenetre("porte") === "exp-fenetre porte cadre-image",
+    { images: compter(svgI, /<image/g), haltes: haltesI.length, portes: compter(svgI, /porte-ecusson/g), sceau: compter(svgI, /sceau-(reussie|cedes)\.png/g) });
+  JV.imagesExpedition = undefined;
   // textes de fin de bataille et nom des portes
   const tCede = EV.textesFin({ cede: true, vivres: 2, type: "gardien", or: 0, renom: 2, nomPorte: "Faveur du chroniqueur (rare)" }, { semaine: 6 });
   const tGard = EV.textesFin({ cede: false, type: "gardien", franchie: 6, or: 25, renom: 33, nomPorte: "Faveur du chroniqueur (rare)", porte: { genre: "faveur" } }, { semaine: 6 });

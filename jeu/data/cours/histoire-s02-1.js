@@ -155,28 +155,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "histoire-s02-1-q3",
-   "fiche": "histoire-s02-1-f1",
-   "type": "qcm_multiple",
-   "niveau": 2,
-   "enonce": "Pour comparer la vie des chrétiens d'Orient et d'Occident, quels points examine-t-on ? (plusieurs réponses)",
-   "choix": [
-    "La capitale",
-    "Le chef religieux",
-    "La langue liturgique",
-    "La diffusion du christianisme",
-    "Le nombre d'habitants",
-    "La monnaie"
-   ],
-   "explication": "On compare la capitale, le chef religieux, la langue liturgique, une basilique et la diffusion du christianisme. Le nombre d'habitants et la monnaie n'en font pas partie.",
-   "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 3 - Support et Devoir entrainement.pdf",
-    "page": 1
-   },
-   "r": "vU2FYYBHfgwBbEQAxUkBVglCPhQCAEgMUMBDREFCi0kXKZCWUwlScohEPUgUicgELQRHJ9wIQRUYVBBUElgBKMwGSFyFdYQVUUCTDBVDvwUEc11DMY0BlAFH",
-   "poids": 1
-  },
-  {
    "id": "histoire-s02-1-q4",
    "fiche": "histoire-s02-1-f1",
    "type": "qcm",
@@ -201,19 +179,21 @@ JEU.enregistrer("cours", {
    "fiche": "histoire-s02-1-f1",
    "type": "qcm",
    "niveau": 3,
-   "enonce": "Comment sait-on que l'Empire byzantin et l'Empire carolingien existent en même temps ?",
+   "enonce": "Les deux empires chrétiens n'ont pas la même langue. Pourquoi dit-on que l'Empire byzantin est un empire grec ?",
    "choix": [
-    "Les années 800 à 814 sont comprises entre 395 et 1453",
-    "Ils ont tous les deux pour capitale Constantinople",
-    "Justinien et Charlemagne règnent ensemble, de 527 à 565",
-    "Ils naissent tous les deux en 476, à la chute de l'Occident"
+    "Parce que le grec y a remplacé le latin, même dans les églises",
+    "Parce que sa capitale se trouve à Athènes",
+    "Parce que ses empereurs sont choisis par le pape et parlent grec avec lui",
+    "Parce qu'il est gouverné depuis Rome, en latin"
    ],
-   "explication": "L'Empire byzantin dure de 395 à 1453, et Charlemagne est empereur de 800 à 814. Les deux empires existent donc au même moment.",
+   "explication": "Dans l'Empire byzantin, le grec remplace peu à peu le latin, et le culte s'y fait en grec. En Occident, dans l'Empire carolingien, l'Église garde le latin.",
    "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 2 - Support.pdf",
-    "page": 1
+    "theme": "Cours 3 – Le christianisme, entre Orient et Occident",
+    "titre": "Empire byzantin",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Empire_byzantin"
    },
-   "r": "KBHGRRQDaogRTBVQndxBRsBFJ1hCBEQMdhgWO50GIkgGSN3QNVU1ymkXfpESwgEz2PEAOYUFM4TZ",
+   "r": "==QZBAhFc0hDHzqUbYSQFZ0QPsgRDQA2E+RVJtBGd8wAS1wLNws9O9wAWsADAc2EVxRVSwAHIIVDv0AAAxlTKUAFIISZ",
    "poids": 1
   },
   {
@@ -396,18 +376,16 @@ JEU.enregistrer("cours", {
    "fiche": "histoire-s02-1-f2",
    "type": "vrai_faux",
    "niveau": 2,
-   "enonce": "« Évangélisation » et « christianisation » sont deux mots de sens opposé.",
-   "corrections": [
-    "Faux : ces deux mots ont le même sens.",
-    "Faux : l'évangélisation désigne une rupture dans l'Église.",
-    "Faux : l'évangélisation désigne l'étude de la foi."
-   ],
-   "explication": "Les deux mots désignent la diffusion du christianisme. Ce sont des synonymes.",
+   "enonce": "Après la conquête de la Saxe par Charlemagne, les Saxons sont christianisés.",
+   "corrections": [],
+   "explication": "Oui : les guerres de Saxe durent de 772 à 804, et la Saxe entre dans l'empire de Charlemagne. Les Saxons doivent alors abandonner leurs anciens dieux et se faire baptiser : c'est une christianisation imposée par la conquête.",
    "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 3 - Support et Devoir entrainement.pdf",
-    "page": 1
+    "theme": "Cours 3 – Le christianisme, entre Orient et Occident",
+    "titre": "Guerres saxonnes",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Guerres_saxonnes"
    },
-   "r": "UAVaBsBAGEFDDUcsFMGSJURWAAgRV0RHqIVDQARFJ1hCRgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -506,25 +484,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "histoire-s02-1-q25",
-   "fiche": "histoire-s02-1-f3",
-   "type": "vrai_faux",
-   "niveau": 2,
-   "enonce": "Après un schisme, tous les chrétiens appartiennent encore à une seule et même branche de l'Église.",
-   "corrections": [
-    "Faux : après un schisme, les chrétiens sont répartis en plusieurs branches séparées.",
-    "Faux : après un schisme, les chrétiens cessent d'être chrétiens.",
-    "Faux : après un schisme, l'Église se répand chez de nouveaux peuples."
-   ],
-   "explication": "Un schisme sépare l'Église en plusieurs branches. Les chrétiens restent chrétiens, mais ils ne sont plus unis.",
-   "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 3 - Support et Devoir entrainement.pdf",
-    "page": 1
-   },
-   "r": "=g0DAxxAPrKAmIA3maQUaswBRYgIfdQFexhGD8gGHsiAVtAERpxBbAQCzQopH1gGBkQFJFQKXwREcL7GGwgUbYSQFlBSDwxDOoQAnxBAFZQ2qyxHTgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
    "id": "histoire-s02-1-q26",
    "fiche": "histoire-s02-1-f3",
    "type": "qcm",
@@ -547,22 +506,23 @@ JEU.enregistrer("cours", {
   {
    "id": "histoire-s02-1-q27",
    "fiche": "histoire-s02-1-f3",
-   "type": "qcm_multiple",
+   "type": "qcm",
    "niveau": 2,
-   "enonce": "Quelles phrases décrivent un schisme ? (plusieurs réponses)",
+   "enonce": "En 1054, un schisme sépare les chrétiens d'Orient et d'Occident. Quelles sont les deux Églises qui en sortent ?",
    "choix": [
-    "Une séparation à l'intérieur de l'Église",
-    "Une coupure entre plusieurs branches du christianisme",
-    "Une guerre entre deux empires",
-    "La diffusion du christianisme",
-    "L'étude de la foi"
+    "L'Église catholique (le pape, à Rome) et l'Église orthodoxe (le patriarche, à Constantinople)",
+    "L'Église carolingienne, autour de l'empereur à Aix-la-Chapelle, et l'Église byzantine, autour de Ravenne",
+    "L'Église de Rome et l'Église de Jérusalem, toutes deux dirigées par le pape",
+    "L'Église des Francs et l'Église des Lombards, séparées par Charlemagne"
    ],
-   "explication": "Un schisme sépare l'Église en plusieurs branches du christianisme. Ce n'est ni une guerre, ni une diffusion, ni une étude.",
+   "explication": "En 1054, l'envoyé du pape et le patriarche de Constantinople s'excluent l'un l'autre de l'Église. Depuis, on distingue l'Église catholique, en Occident, et l'Église orthodoxe, en Orient.",
    "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 3 - Support et Devoir entrainement.pdf",
-    "page": 1
+    "theme": "Cours 3 – Le christianisme, entre Orient et Occident",
+    "titre": "Schisme de 1054",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Schisme_de_1054"
    },
-   "r": "=MTTXUAMEtAVEpBHPQRARc2BRUkBUEQDBMhGh0gFHh1CGUxEFIwZXcQEbQRSL0xBYYjQGUBSAoDRKt0F0sRGCwvsOJwTXwwYfBBUExhxlKxBbAmHVVstRdQAGYQCxwUFc6eHPNAC8AFH",
+   "r": "PwEUB5BAI8QHcYiBGsgGykkzsKFRmUkBHx0BdIxBZIlIe0VRQkgBKAgGcEjQFBlXHMQAvraVrIVAAUFWMMAAgg04uXUGI5hDWYEDe8mUQABBYUQAHYQCg0AAGRkAI8epO5TZ",
    "poids": 1
   },
   {
@@ -680,26 +640,6 @@ JEU.enregistrer("cours", {
     "page": 1
    },
    "r": "TxwBI0BBsQopdllTOogRpHbZ",
-   "poids": 1
-  },
-  {
-   "id": "histoire-s02-1-q30",
-   "fiche": "histoire-s02-1-f4",
-   "type": "qcm",
-   "niveau": 3,
-   "enonce": "Pourquoi ne faut-il pas confondre théologie et christianisation ?",
-   "choix": [
-    "La théologie étudie la foi, la christianisation la répand",
-    "La théologie répand la foi, la christianisation l'étudie",
-    "Les deux mots désignent une séparation à l'intérieur de l'Église",
-    "La théologie concerne l'Orient, la christianisation l'Occident"
-   ],
-   "explication": "La théologie cherche à comprendre une religion. La christianisation cherche à répandre le christianisme.",
-   "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 3 - Support et Devoir entrainement.pdf",
-    "page": 1
-   },
-   "r": "=MVDA4gABD4XFRVQOFQCP0xE0sxGEwRBacQHaswYMlQFBcAAAYECec2FcEAAFAcrPdRAkIUCaRYrHIhRI4TZ",
    "poids": 1
   }
  ],

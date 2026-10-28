@@ -4,6 +4,8 @@
 // La leçon est donnée en vidéo et n'est pas déposée : ce qu'elle apporterait est listé dans nonCouvert.
 const F = "cours/histoire/Histoire 5e - Seance 2 - Support.pdf";
 const S = p => ({ fichier: F, page: p });
+// Questions de thème (règle du 25/10/2026) : fait vérifié dans une source fiable, notée sans fichier ni page.
+const T = (titre, url) => ({ theme: "Cours 2 – Empire carolingien au temps de Charlemagne", titre, editeur: "Wikipédia", url });
 
 // Frise redessinée (aucune image reprise) : années -> abscisses.
 const A0 = 460, A1 = 840, X0 = 30, X1 = 510;
@@ -131,11 +133,12 @@ module.exports = {
       choix: ["L'Empire carolingien", "L'Empire byzantin", "L'Empire romain d'Occident", "Les royaumes germaniques"],
       reponse: "L'Empire carolingien",
       explication: "En 800, Charlemagne devient empereur d'Occident : c'est l'Empire carolingien. L'Empire romain d'Occident, lui, a disparu en 476.", source: S(1) },
-    { id: "histoire-s01-2-q5", fiche: "histoire-s01-2-f1", type: "qcm", niveau: 3,
-      enonce: "Charlemagne est empereur de 800 à 814. Pendant combien d'années ?",
-      choix: ["14 ans", "46 ans", "8 ans", "100 ans"],
-      reponse: "14 ans",
-      explication: "814 moins 800 font 14. Il est donc empereur pendant 14 ans.", indice: "Fais la soustraction.", source: S(1) },
+    { id: "histoire-s01-2-q5", fiche: "histoire-s01-2-f1", type: "qcm", niveau: 1,
+      enonce: "Qui est Pépin le Bref pour Charlemagne ?",
+      choix: ["Son père, le premier roi de la famille des Carolingiens", "Son fils, qui lui succède en 814", "Le pape qui le couronne empereur à Rome, le jour de Noël", "Le roi des Lombards qu'il a vaincu"],
+      reponse: "Son père, le premier roi de la famille des Carolingiens",
+      explication: "Pépin le Bref devient roi des Francs en 751 : c'est le premier roi carolingien. Son fils Charlemagne lui succède en 768 et agrandit son royaume.",
+      source: T("Pépin le Bref", "https://fr.wikipedia.org/wiki/P%C3%A9pin_le_Bref") },
     { id: "histoire-s01-2-q24", fiche: "histoire-s01-2-f1", type: "vrai_faux", niveau: 3,
       enonce: "Clovis et Charlemagne sont tous les deux rois des Francs, mais Clovis règne plus de deux siècles avant Charlemagne.",
       corrections: [], reponse: { vrai: true, correction: null },
@@ -145,11 +148,13 @@ module.exports = {
       corrections: ["Faux : en 768, il devient roi des Francs ; il est empereur à partir de 800.", "Faux : il devient empereur en 814, à la fin de son règne.", "Faux : il devient empereur en 481, juste après Clovis."],
       reponse: { vrai: false, correction: "Faux : en 768, il devient roi des Francs ; il est empereur à partir de 800." },
       explication: "En 768, Charlemagne devient roi des Francs. Il n'est couronné empereur qu'en 800.", source: S(1) },
-    { id: "histoire-s01-2-q26", fiche: "histoire-s01-2-f1", type: "qcm", niveau: 3,
-      enonce: "Pendant combien d'années Charlemagne est-il roi des Francs avant de devenir empereur ?",
-      choix: ["32 ans", "14 ans", "46 ans", "22 ans"],
-      reponse: "32 ans",
-      explication: "Il est roi en 768 et empereur en 800. 800 moins 768 font 32 ans.", indice: "Fais la soustraction 800 moins 768.", source: S(1) },
+    { id: "histoire-s01-2-q26", fiche: "histoire-s01-2-f1", type: "qcm", niveau: 2,
+      enonce: "Dans quelle ville Charlemagne fait-il bâtir le palais où il vit à la fin de son règne ?",
+      choix: ["Aix-la-Chapelle", "Rome", "Paris", "Constantinople, en Orient"],
+      reponse: "Aix-la-Chapelle",
+      explication: "Charlemagne fait construire un grand palais à Aix-la-Chapelle, avec une chapelle qui existe encore. Après 806, il ne quitte presque plus cette ville, qui devient le cœur de son empire.",
+      indice: "La ville se trouve dans l'Allemagne actuelle, près de la frontière belge.",
+      source: T("Palais d'Aix-la-Chapelle", "https://fr.wikipedia.org/wiki/Palais_d%27Aix-la-Chapelle") },
     // f2 : les conquêtes
     { id: "histoire-s01-2-q6", fiche: "histoire-s01-2-f2", type: "qcm_multiple", niveau: 2,
       enonce: "Quels territoires sont des conquêtes de Charlemagne ? (plusieurs réponses)",
@@ -232,11 +237,6 @@ module.exports = {
       reponse: "Fouquet peint la scène plus de six siècles après",
       explication: "Le XVe siècle correspond aux années 1401 à 1500, plus de six cents ans après 800. Fouquet n'a donc pas vu la scène qu'il peint.",
       indice: "Le XVe siècle, ce sont les années 1400.", source: S(2) },
-    { id: "histoire-s01-2-q34", fiche: "histoire-s01-2-f3", type: "qcm_multiple", niveau: 2,
-      enonce: "Quels mots désignent Charlemagne dans le récit d'Eginhard ? (plusieurs réponses)",
-      choix: ["le roi", "Charles Auguste", "empereur des Romains", "le pape Léon", "l'apôtre Pierre", "le peuple romain"],
-      reponse: ["le roi", "Charles Auguste", "empereur des Romains"],
-      explication: "Eginhard appelle Charlemagne « le roi », puis le peuple l'acclame « Charles Auguste » et « empereur des Romains ». Le pape Léon, l'apôtre Pierre et le peuple romain sont d'autres noms du texte.", source: S(2) },
     // f4 : gouverner
     { id: "histoire-s01-2-q15", fiche: "histoire-s01-2-f4", type: "qcm", niveau: 1,
       enonce: "Comment s'appellent les envoyés spéciaux qui contrôlent les représentants du souverain carolingien ?",
@@ -316,12 +316,12 @@ module.exports = {
       choix: ["Elle commence sous le règne de Charlemagne", "Elle commence sous Clovis, roi des Francs de 481 à 511", "Elle a lieu dans l'Empire romain d'Orient, sous Justinien", "Elle commence après la mort de Charlemagne, en 814"],
       reponse: "Elle commence sous le règne de Charlemagne",
       explication: "Le mot « carolingien » renvoie à Charlemagne et à son empire. Ce renouveau de la culture commence sous son règne.", source: S(3) },
-    { id: "histoire-s01-2-q41", fiche: "histoire-s01-2-f5", type: "qcm", niveau: 3,
-      enonce: "Laquelle de ces années tombe sous le règne où commence la renaissance carolingienne ?",
-      choix: ["790", "500", "560", "900"],
-      reponse: "790",
-      explication: "La renaissance carolingienne commence sous Charlemagne, roi des Francs de 768 à 814. Seule l'année 790 se trouve dans ce règne.",
-      indice: "Cherche d'abord les dates du règne de Charlemagne.", source: S(3) },
+    { id: "histoire-s01-2-q41", fiche: "histoire-s01-2-f5", type: "qcm_multiple", niveau: 2,
+      enonce: "Qu'est-ce qui se développe grâce à la renaissance carolingienne ? (plusieurs réponses)",
+      choix: ["Des écoles, dans les monastères et auprès des évêques", "La copie de livres par des moines", "Une nouvelle écriture, plus facile à lire", "De nouveaux châteaux forts en pierre", "Le commerce avec Bagdad", "L'élection du roi par les comtes"],
+      reponse: ["Des écoles, dans les monastères et auprès des évêques", "La copie de livres par des moines", "Une nouvelle écriture, plus facile à lire"],
+      explication: "Charlemagne demande en 789 que des écoles ouvrent dans les monastères et les évêchés, et des ateliers de moines copient des milliers de livres. Ils écrivent avec une nouvelle écriture, la minuscule caroline, ronde et lisible.",
+      source: T("Renaissance carolingienne", "https://fr.wikipedia.org/wiki/Renaissance_carolingienne") },
     { id: "histoire-s01-2-q42", fiche: "histoire-s01-2-f5", type: "vrai_faux", niveau: 2,
       enonce: "Le règne de Charlemagne est marqué à la fois par des conquêtes et par un renouveau de la culture.",
       corrections: [], reponse: { vrai: true, correction: null },

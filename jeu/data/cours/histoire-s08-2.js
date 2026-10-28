@@ -168,65 +168,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "histoire-s08-2-q3",
-   "fiche": "histoire-s08-2-f1",
-   "type": "qcm",
-   "niveau": 2,
-   "enonce": "Vers quelles années Jean Fouquet a-t-il enluminé les Grandes Chroniques de France ?",
-   "choix": [
-    "Vers 1455-1460",
-    "Vers 1285-1314",
-    "Vers 1180-1223",
-    "Vers 1337-1453"
-   ],
-   "explication": "Jean Fouquet travaille vers 1455-1460, au XVe siècle. Les autres dates sont des règnes ou une guerre de la frise.",
-   "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 11 - Support.pdf",
-    "page": 2
-   },
-   "r": "==ATfREXyBAUAkxXPVBFMQSZ",
-   "poids": 1
-  },
-  {
-   "id": "histoire-s08-2-q4",
-   "fiche": "histoire-s08-2-f1",
-   "type": "vrai_faux",
-   "niveau": 2,
-   "enonce": "Jean Fouquet a peint cette enluminure à Paris.",
-   "corrections": [
-    "Faux : il l'a peinte à Tours ; c'est à Paris, à la BnF, que le manuscrit est conservé aujourd'hui.",
-    "Faux : il l'a peinte à Bouvines, sur le champ de bataille.",
-    "Faux : il l'a peinte à Rome, pour le pape."
-   ],
-   "explication": "L'enluminure a été peinte à Tours. Paris est la ville où le manuscrit est conservé, à la BnF.",
-   "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 11 - Support.pdf",
-    "page": 2
-   },
-   "r": "Pc1ScQQAJtAAdwyRQQVDHzKEUwQAp0hFFFgAM40GboBIeBxWMNwTDoQSXIzAVl0MfsiTO4BSj7eRZ41BdcgNJJNhSFgFQYlCORlUbEDWKEWDOzqRD0BHucRBFRhVF40AbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
-   "id": "histoire-s08-2-q5",
-   "fiche": "histoire-s08-2-f1",
-   "type": "qcm",
-   "niveau": 2,
-   "enonce": "Où le manuscrit des Grandes Chroniques de France enluminé par Jean Fouquet est-il conservé ?",
-   "choix": [
-    "À Paris, à la BnF",
-    "À Tours, dans l'atelier de Jean Fouquet",
-    "Au musée Condé, à Chantilly",
-    "Au château de Wismes"
-   ],
-   "explication": "Le manuscrit est à la Bibliothèque nationale de France, à Paris, au département des Manuscrits. Le musée Condé conserve le Rustican.",
-   "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 11 - Support.pdf",
-    "page": 2
-   },
-   "r": "XNyGzk0DDIFyA2QSGREHOYjRpHbZ",
-   "poids": 1
-  },
-  {
    "id": "histoire-s08-2-q6",
    "fiche": "histoire-s08-2-f1",
    "type": "qcm",
@@ -306,22 +247,23 @@ JEU.enregistrer("cours", {
   {
    "id": "histoire-s08-2-q30",
    "fiche": "histoire-s08-2-f1",
-   "type": "qcm_multiple",
+   "type": "qcm",
    "niveau": 2,
-   "enonce": "Que sait-on du manuscrit enluminé par Jean Fouquet ? (plusieurs réponses)",
+   "enonce": "Que sont les Grandes Chroniques de France ?",
    "choix": [
-    "Il est conservé à Paris, à la BnF",
-    "Il a été enluminé à Tours",
-    "Il date d'environ 1455-1460",
-    "Il a été peint pendant le règne de Philippe le Bel",
-    "Il est conservé au musée Condé, à Chantilly"
+    "L'histoire des rois de France, écrite en français par les moines de Saint-Denis",
+    "Un recueil des lois de Philippe le Bel, copié par ses légistes pour tout le royaume",
+    "Le journal personnel de Jean Fouquet",
+    "Une chanson sur les paysans de Verson"
    ],
-   "explication": "Le manuscrit, enluminé à Tours vers 1455-1460, est aujourd'hui à la BnF, à Paris. Philippe le Bel règne bien avant, de 1285 à 1314.",
+   "explication": "Les Grandes Chroniques de France racontent l'histoire des rois de France depuis leurs origines, en français et non en latin. Elles sont écrites à l'abbaye de Saint-Denis, à partir du travail du moine Primat au XIIIe siècle, et souvent décorées d'enluminures.",
    "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 11 - Support.pdf",
-    "page": 2
+    "theme": "Cours 11 – Étude de document",
+    "titre": "Grandes Chroniques de France",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Grandes_Chroniques_de_France"
    },
-   "r": "vo0cbEFBAslWSdVScgCAcMxGU4kCPdBHikURZRGTDRUFbcAKmUVx2GFwtGwGFYTQLAVDHzqEPrqUmIVGscVXLhSAwgkIBVUlu70QV8wGTchUVbaVYrKGdcxGtIkBVkVHKYkCgAFH",
+   "r": "=sUHGwRDHAQEbR0D8Y0ANIFNXsBDawRSdogHIFDTVUhXH4QwlewE1QRVLARUMohBAsg6uXUGI1QAHQxLSJiFVZBHeshTccBDjh0FcJkGc8gDO5TZ",
    "poids": 1
   },
   {
@@ -422,20 +364,22 @@ JEU.enregistrer("cours", {
    "id": "histoire-s08-2-q14",
    "fiche": "histoire-s08-2-f2",
    "type": "qcm",
-   "niveau": 2,
-   "enonce": "Comment Édouard Ier se tient-il devant Philippe le Bel ?",
+   "niveau": 3,
+   "enonce": "Pourquoi le roi d'Angleterre Édouard Ier rend-il hommage au roi de France ?",
    "choix": [
-    "À genoux",
-    "Assis sur un second trône",
-    "Debout, l'épée à la main",
-    "Couché"
+    "Parce qu'il tient du roi de France des terres situées en France, l'Aquitaine",
+    "Parce qu'il a perdu la guerre de Cent Ans contre lui et doit accepter sa défaite",
+    "Parce que Philippe le Bel est aussi roi d'Angleterre",
+    "Parce que l'empereur germanique le lui ordonne"
    ],
-   "explication": "Édouard Ier est à genoux devant le roi assis. C'est lui qui rend l'hommage.",
+   "explication": "Édouard Ier est roi d'Angleterre, mais aussi duc d'Aquitaine, dans le sud-ouest du royaume de France. Pour ces terres, il dépend du roi de France : c'est pourquoi il lui rend hommage, à Paris, en 1286.",
    "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 11 - Support.pdf",
-    "page": 1
+    "theme": "Cours 11 – Étude de document",
+    "titre": "Édouard Ier (roi d'Angleterre)",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/%C3%89douard_Ier_(roi_d%27Angleterre)"
    },
-   "r": "=8QHAJEAKEgRpHbZ",
+   "r": "==gSmMEDUl1BacxJO5xZeBhBbAxGo8EHNMmXAwp7bsxDVkUAiAwBAEQUaswCS1AIDRwRr5kCCYEAdUjUAEQVFcwCGYASvQkQAxlTKUAFIISZ",
    "poids": 1
   },
   {
@@ -462,58 +406,23 @@ JEU.enregistrer("cours", {
   {
    "id": "histoire-s08-2-q16",
    "fiche": "histoire-s08-2-f2",
-   "type": "qcm_multiple",
-   "niveau": 2,
-   "enonce": "Quels personnages sont nommés dans la légende de l'enluminure ? (plusieurs réponses)",
-   "choix": [
-    "Édouard Ier",
-    "Philippe le Bel",
-    "Jean Fouquet",
-    "Louis IX",
-    "Jeanne d'Arc"
-   ],
-   "explication": "La légende nomme les deux rois de la scène, Édouard Ier et Philippe le Bel, et le peintre, Jean Fouquet. Louis IX et Jeanne d'Arc sont des repères de la frise.",
-   "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 11 - Support.pdf",
-    "page": 2
-   },
-   "r": "==wOE1xFyMAAKMTUH8gC4o0bPkAUv5kCKYEDCczGZwQHhskQNBQDK0QAHx0GAIw7qCFH",
-   "poids": 1
-  },
-  {
-   "id": "histoire-s08-2-q17",
-   "fiche": "histoire-s08-2-f2",
-   "type": "trou",
+   "type": "qcm",
    "niveau": 1,
-   "enonce": "Complète la légende de l'enluminure.",
-   "texte": "Édouard Ier rend ___ à Philippe le ___.",
-   "banque": [
-    "hommage",
-    "Bel",
-    "justice",
-    "Auguste"
+   "enonce": "Qui est Édouard Ier ?",
+   "choix": [
+    "Le roi d'Angleterre, qui a aussi des terres en France",
+    "Le fils de Philippe le Bel, futur roi de France",
+    "L'empereur germanique, venu rendre visite au roi de France à Paris",
+    "Le peintre de l'enluminure"
    ],
-   "explication": "La scène est l'hommage d'Édouard Ier à Philippe le Bel. Philippe Auguste est un autre roi, celui de Bouvines.",
+   "explication": "Édouard Ier règne sur l'Angleterre de 1272 à 1307. Il est aussi duc d'Aquitaine, dans le sud-ouest de la France, ce qui l'oblige à rendre hommage au roi de France.",
    "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 11 - Support.pdf",
-    "page": 2
+    "theme": "Cours 11 – Étude de document",
+    "titre": "Édouard Ier (roi d'Angleterre)",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/%C3%89douard_Ier_(roi_d%27Angleterre)"
    },
-   "r": "ogzVdwALNlCRe8AASx0ACkgDLlCH",
-   "poids": 1
-  },
-  {
-   "id": "histoire-s08-2-q18",
-   "fiche": "histoire-s08-2-f2",
-   "type": "vrai_faux",
-   "niveau": 3,
-   "enonce": "Philippe le Bel règne de 1285 à 1314 : l'hommage d'Édouard Ier est donc une scène de la fin du XIIIe ou du début du XIVe siècle.",
-   "corrections": [],
-   "explication": "Oui : le règne de Philippe le Bel va de 1285, au XIIIe siècle, à 1314, au XIVe. La scène se place dans ces années-là.",
-   "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 11 - Support.pdf",
-    "page": 2
-   },
-   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "r": "==wDAY1QP0BIGdwFnFAEXcAFd4EHXwwYEZhRY9wTHYEAHYjUZBwBDwgGK4xDtwmQR1wBAQhRM4TZ",
    "poids": 1
   },
   {
@@ -521,34 +430,19 @@ JEU.enregistrer("cours", {
    "fiche": "histoire-s08-2-f3",
    "type": "qcm",
    "niveau": 1,
-   "enonce": "De quelle couleur est le manteau de Philippe le Bel sur l'enluminure ?",
+   "enonce": "Quel emblème des rois de France couvre le manteau de Philippe le Bel sur l'enluminure ?",
    "choix": [
-    "Bleu, semé de fleurs de lys",
-    "Rouge, brodé de fils d'or",
-    "Vert, sans aucun motif",
-    "Blanc, avec un chaperon rouge"
+    "La fleur de lys",
+    "Le lion dressé",
+    "L'aigle à deux têtes",
+    "La croix rouge"
    ],
-   "explication": "Philippe le Bel porte un manteau bleu à fleurs de lys d'or. Le manteau rouge est celui d'Édouard Ier.",
+   "explication": "Le manteau bleu de Philippe le Bel est semé de fleurs de lys d'or, comme les murs de la salle. C'est l'emblème des rois de France.",
    "source": {
     "fichier": "cours/histoire/Histoire 5e - Seance 11 - Support.pdf",
     "page": 1
    },
-   "r": "P0hFKYEDWcWAHABEd8gTKYBSq7OCQ5lTDNxAFATZ",
-   "poids": 1
-  },
-  {
-   "id": "histoire-s08-2-q20",
-   "fiche": "histoire-s08-2-f3",
-   "type": "vrai_faux",
-   "niveau": 1,
-   "enonce": "Édouard Ier porte un grand manteau rouge.",
-   "corrections": [],
-   "explication": "Oui : à genoux, Édouard Ier est enveloppé d'un grand manteau rouge brodé d'or. Il porte aussi une couronne.",
-   "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 11 - Support.pdf",
-    "page": 1
-   },
-   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "r": "=sUHW4BSmkURHh1CDAgRI4TZ",
    "poids": 1
   },
   {
@@ -556,34 +450,21 @@ JEU.enregistrer("cours", {
    "fiche": "histoire-s08-2-f3",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Quel motif décore à la fois le manteau de Philippe le Bel et les murs de la salle ?",
+   "enonce": "Pourquoi voit-on des fleurs de lys sur le manteau du roi de France et sur les murs autour de lui ?",
    "choix": [
-    "Des fleurs de lys dorées",
-    "Des lions rouges",
-    "Des croix noires",
-    "Des étoiles d'argent à cinq branches"
+    "La fleur de lys est l'emblème des rois de France depuis le XIIe siècle",
+    "C'est l'emblème du roi d'Angleterre, venu rendre hommage à Philippe le Bel",
+    "C'est le signe des villes du domaine royal",
+    "C'est une simple mode de décoration du XVe siècle"
    ],
-   "explication": "Les fleurs de lys d'or couvrent le manteau bleu du roi et les murs bleus de la salle. Tout le décor rappelle Philippe le Bel.",
+   "explication": "Depuis le roi Louis VII, au XIIe siècle, les rois de France ont pour armes des fleurs de lys d'or sur fond bleu. Le peintre en couvre le manteau et les murs pour montrer que l'homme assis sur le trône est le roi de France.",
    "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 11 - Support.pdf",
-    "page": 1
+    "theme": "Cours 11 – Étude de document",
+    "titre": "Fleur de lys",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Fleur_de_lys"
    },
-   "r": "EVBDbTIAaEQVCAhAPdBDj51FAhkAJYUFMYTZ",
-   "poids": 1
-  },
-  {
-   "id": "histoire-s08-2-q22",
-   "fiche": "histoire-s08-2-f3",
-   "type": "vrai_faux",
-   "niveau": 2,
-   "enonce": "Sur l'image, un homme tient un livre ouvert entre les deux rois.",
-   "corrections": [],
-   "explication": "Oui : entre le roi assis et le roi à genoux, un homme présente un livre ouvert. Les autres témoins se tiennent debout derrière.",
-   "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 11 - Support.pdf",
-    "page": 1
-   },
-   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "r": "=8wCDUgzquBNSBBL8kSSLMgUboCWVAVSOpQBIgAABIFEBUlAAEQHSthJJVEUAZMrKQABXAmHVFhBUkUHW4BSmkURHh1CDAgRI4TZ",
    "poids": 1
   },
   {
@@ -606,40 +487,20 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "histoire-s08-2-q24",
-   "fiche": "histoire-s08-2-f3",
-   "type": "qcm",
-   "niveau": 2,
-   "enonce": "Comment Édouard Ier est-il vêtu sur l'enluminure ?",
-   "choix": [
-    "D'un grand manteau rouge brodé d'or",
-    "D'un manteau bleu à fleurs de lys",
-    "D'une armure de fer",
-    "D'une robe blanche à chaperon rouge"
-   ],
-   "explication": "Édouard Ier porte un grand manteau rouge brodé d'or. Le manteau bleu à fleurs de lys est celui de Philippe le Bel.",
-   "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 11 - Support.pdf",
-    "page": 1
-   },
-   "r": "=wUHd80JNws9JFQHEYEDVITHHUEAQwgGBMRBjl0CU9VCPhwEOZTZ",
-   "poids": 1
-  },
-  {
    "id": "histoire-s08-2-q25",
    "fiche": "histoire-s08-2-f3",
    "type": "qcm_multiple",
    "niveau": 2,
-   "enonce": "Quels objets et vêtements de Philippe le Bel voit-on sur l'enluminure ? (plusieurs réponses)",
+   "enonce": "Quels objets montrent le pouvoir royal de Philippe le Bel sur l'image ? (plusieurs réponses)",
    "choix": [
     "Une couronne",
     "Un sceptre",
     "Un trône",
     "Un manteau bleu à fleurs de lys",
-    "Une charrue",
-    "Une armure"
+    "Une épée levée",
+    "Un livre ouvert"
    ],
-   "explication": "Couronne, sceptre, trône et manteau bleu à fleurs de lys : voilà Philippe le Bel sur l'image. Ni charrue ni armure dans cette salle.",
+   "explication": "Couronne, sceptre, trône et manteau à fleurs de lys sont les signes du roi de France sur l'image. Le livre ouvert est tenu par un autre homme, et personne ne lève d'épée dans cette salle.",
    "source": {
     "fichier": "cours/histoire/Histoire 5e - Seance 11 - Support.pdf",
     "page": 1
@@ -692,27 +553,6 @@ JEU.enregistrer("cours", {
     "page": 1
    },
    "r": "=wkCcwNgfFRFIJwTUMhGSRzGGYBFRVkAKADSmEURQ1lHGowDBISZ",
-   "poids": 1
-  },
-  {
-   "id": "histoire-s08-2-q28",
-   "fiche": "histoire-s08-2-f3",
-   "type": "trou",
-   "niveau": 1,
-   "enonce": "Complète la description de l'image.",
-   "texte": "Philippe le Bel est assis sur un ___ ; Édouard Ier est à ___ devant lui.",
-   "banque": [
-    "trône",
-    "genoux",
-    "cheval",
-    "table"
-   ],
-   "explication": "Le roi qui reçoit l'hommage est assis sur un trône. Celui qui le rend est à genoux.",
-   "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 11 - Support.pdf",
-    "page": 1
-   },
-   "r": "=oxLX1BAecwCIA1MvB3RQNk2sShELlCH",
    "poids": 1
   },
   {

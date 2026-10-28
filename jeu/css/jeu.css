@@ -890,6 +890,17 @@ button.cour-chip:hover { background: rgba(255,250,236,.55); box-shadow: 0 0 0 1p
 .route-svg .brume-bande image, .route-svg .brume-bande ellipse { pointer-events: none; }
 .route-svg .chemin.possible { stroke: #7a5c1e; stroke-width: 3.2px; }
 .route-svg .porte-ecusson.rare path:first-child { filter: drop-shadow(0 0 2px #e2c272); }
+/* images rendues en 3D (28/10/2026, assets/images/expedition/, cahier atelier/conception/expeditions-graphismes.md) : chaque image
+   se pose par-dessus le dessin SVG ou CSS, qui reste émis dessous et réapparaît si l'image manque (ecran-expedition.js, repliImage).
+   Fichiers à 2 ×, affichés à leur taille logique entière ; aucun filtre de plus sur les images (l'ombre du groupe corps suffit). */
+.route-svg image.img-exp, .annee-svg image.img-exp, .ecu-armorial image.img-exp { pointer-events: none; image-rendering: auto; }
+.route-svg .porte-ecusson.rare image.img-exp { filter: drop-shadow(0 0 1px #c9ccd2) drop-shadow(0 0 2px #e2c272); }
+.sac-image, .ic-image { display: inline-flex; align-items: flex-end; vertical-align: middle; }
+.sac-image.image > .sac, .ic-image.image > .gi, .faveur-med.image > .gi { display: none; }
+.sac-image > img, .ic-image > img, .faveur-med.image > img { display: block; }
+.cp-notes .ic-image { vertical-align: -8px; margin-right: .1rem; }
+.faveur-med.image { background: none; box-shadow: none; }
+.faveur-med.image > img { width: var(--t); height: var(--t); }
 /* sous la carte : « Ta compagnie » et le journal de route, dans le style de « Ton royaume » */
 .exp-bas { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); gap: 1rem; margin-top: .3rem; }
 .exp-bas .cartouche { margin: .2rem 0; min-width: 0; }
@@ -914,6 +925,13 @@ button.cour-chip:hover { background: rgba(255,250,236,.55); box-shadow: 0 0 0 1p
   background: radial-gradient(ellipse at 50% 35%, rgba(255,250,235,.6), rgba(150,105,50,.22)), var(--parchemin);
   box-shadow: 0 0 0 2px var(--or), 0 0 0 4px var(--encre), 0 0 0 7px var(--or-sombre), 0 14px 30px rgba(0,0,0,.45); animation: apparition .22s ease-out; }
 .exp-fenetre h2 { margin: .1rem 0 .2rem; }
+/* cadre de page rendu (cadre-page.png, classe posée par ecran-expedition.js quand l'entrée existe) : un pseudo-élément en
+   border-image couvre la fenêtre et ses filets, bande de 40 px (tranches de 80 px du fichier de 480), 9 px au-delà du bord ;
+   si l'image ne se charge pas, le pseudo-élément reste transparent et la fenêtre garde ses filets dessinés. La fenêtre s'élargit
+   de 40 px pour que les quatre cartes de faveur tiennent toujours sur une ligne (contenu de 816 px). */
+.exp-fenetre.cadre-image { z-index: 0; max-width: 900px; padding: 2.4rem 2.5rem 2.5rem; }
+.exp-fenetre.cadre-image::before { content: ""; position: absolute; inset: -11px; z-index: -1; pointer-events: none; border: 40px solid transparent;
+  border-image: url("../assets/images/expedition/cadre-page.png") 80 fill / 40px round; }
 .fen-tete { --teinte: var(--or); display: flex; align-items: center; gap: .8rem; margin-bottom: .6rem; padding-bottom: .5rem; border-bottom: 1px dashed rgba(46,36,25,.35); }
 .fen-tete > div { min-width: 0; }
 .fen-tete p { margin: 0; }
@@ -997,7 +1015,7 @@ button.carte-faveur:hover, button.carte-faveur:focus-visible { transform: transl
 .depart-armorial { display: flex; align-items: center; gap: .8rem; margin-top: .4rem; }
 .chronique-exp .chronique { font-size: .92rem; }
 /* la carte « Partir en expédition » de la grille de la campagne */
-.carte-jeu .ill-relais { background-image: url("../assets/images/oeuvres/chasseur-chateau.jpg"); background-position: 60% 55%; }
+.carte-jeu .ill-relais { background-image: url("../assets/images/expedition/carte-expedition.jpg"), url("../assets/images/oeuvres/chasseur-chateau.jpg"); background-position: center, 60% 55%; }
 /* le bilan d'une expédition */
 .bilan-exp { text-align: center; }
 .bilan-exp .titre-ecran { margin-bottom: .2rem; }

@@ -303,19 +303,19 @@ JEU.enregistrer("cours", {
    "fiche": "geographie-s04-1-f1",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Comment évolue la courbe de la population indienne sur le graphique, de 1920 à nos jours ?",
+   "enonce": "Comment la population de l'Inde a-t-elle évolué depuis 1920 ?",
    "choix": [
-    "Elle grimpe sans arrêt",
-    "Elle baisse régulièrement",
-    "Elle reste à peu près stable",
-    "Elle monte, puis redescend après 1960"
+    "Elle n'a cessé d'augmenter, de plus en plus vite",
+    "Elle a baissé régulièrement",
+    "Elle est restée à peu près stable",
+    "Elle a d'abord monté, puis elle a baissé après 1960"
    ],
-   "explication": "La courbe de la population ne cesse de monter, de plus en plus vite. Les deux autres courbes, natalité et mortalité, descendent.",
+   "explication": "Depuis 1920, les Indiens sont devenus sept fois plus nombreux. La hausse s'accélère : la mortalité a beaucoup reculé pendant que la natalité baissait plus lentement.",
    "source": {
     "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1 - Etude de cas 2 Inde.pdf",
     "page": 1
    },
-   "r": "==wSG0esHcBFRpBAOEASm0FCc9VCPNgCFcTZ",
+   "r": "MpgEP8hU0cQGVU1HM4EHHQwMNAQUNIUHDIxBXoSFAQgUVk0xsGwGm4URUpAAPNgCFcTZ",
    "poids": 1
   },
   {
@@ -323,19 +323,19 @@ JEU.enregistrer("cours", {
    "fiche": "geographie-s04-1-f1",
    "type": "qcm",
    "niveau": 3,
-   "enonce": "Sur le graphique de l'Inde, deux courbes descendent pendant que la troisième monte. Lesquelles descendent ?",
+   "enonce": "Depuis 1920, en Inde, comment évoluent la natalité et la mortalité ?",
    "choix": [
-    "La natalité et la mortalité",
-    "La population et la natalité",
-    "La population et la mortalité",
-    "Aucune : les trois montent"
+    "Toutes les deux baissent, la mortalité plus tôt et plus vite : la population augmente",
+    "La natalité monte et la mortalité baisse : la population augmente",
+    "Toutes les deux montent en même temps, si bien que la population reste à peu près la même",
+    "Toutes les deux restent stables depuis un siècle, la population aussi"
    ],
-   "explication": "Natalité et mortalité baissent toutes les deux depuis 1920. La population, elle, grimpe sans arrêt.",
+   "explication": "Natalité et mortalité reculent toutes les deux depuis 1920. Comme on meurt beaucoup moins alors qu'on naît encore nombreux, la population grimpe.",
    "source": {
     "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1 - Etude de cas 2 Inde.pdf",
     "page": 1
    },
-   "r": "==wFE26GPoACGUTHYUEFdkkGKIVwAmFDZxkGOggRI4TZ",
+   "r": "=U2FBsAEc4wGOIlBsQUEUF0GfkgFJNxKS9URQUAAY8UAd8SXFFESOth0l2hU0cQGVUF2qqhBekwNfpAWN8wAGpUHcISAGwAFTkkFacBDj5FAZ1QHKIxEGYSZ",
    "poids": 1
   },
   {
@@ -568,26 +568,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "geographie-s04-1-q19",
-   "fiche": "geographie-s04-1-f3",
-   "type": "qcm",
-   "niveau": 2,
-   "enonce": "Sur la carte de l'Inde, une région colorée en orange est notée « de 1,8 à 2,4 ». Que compte ce nombre ?",
-   "choix": [
-    "Le nombre moyen d'enfants par femme",
-    "Le nombre de naissances pour mille habitants",
-    "Le nombre de décès pour mille habitants",
-    "Le nombre d'habitants par kilomètre carré"
-   ],
-   "explication": "La carte donne le taux de fécondité : le nombre moyen d'enfants par femme. Les naissances pour mille habitants, c'est la natalité.",
-   "source": {
-    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1 - Etude de cas 2 Inde.pdf",
-    "page": 1
-   },
-   "r": "==QTXUgLINQFf9wHGVRHcYCFbAgUVkEAKswBu0AAH90AAggRM4TZ",
-   "poids": 1
-  },
-  {
    "id": "geographie-s04-1-q20",
    "fiche": "geographie-s04-1-f3",
    "type": "association",
@@ -616,7 +596,7 @@ JEU.enregistrer("cours", {
    "fiche": "geographie-s04-1-f3",
    "type": "qcm",
    "niveau": 3,
-   "enonce": "Sur la carte, une région est colorée en rouge foncé : plus de 3,2 enfants par femme. Où se trouve-t-elle probablement, et que peut-on en dire ?",
+   "enonce": "Une région de l'Inde compte plus de 3,2 enfants par femme. Où se trouve-t-elle probablement, et que peut-on en dire ?",
    "choix": [
     "Au nord, autour de New Delhi : les familles nombreuses y dominent",
     "Au sud, autour de Bangalore : la transition démographique y est achevée",
@@ -1055,26 +1035,6 @@ JEU.enregistrer("cours", {
     "page": 2
    },
    "r": "=MRTcFgIPhAQg5kCCYkGXsiHcMxGe0wBNI1GmEURQB0AAUgRFZQKXEgFcIwGL8hUbou7RwVQPgwzlewGnFAERcgHP4kCWgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
-   "id": "geographie-s04-1-q44",
-   "fiche": "geographie-s04-1-f6",
-   "type": "qcm",
-   "niveau": 1,
-   "enonce": "Quelle densité la ville de Mumbai atteint-elle en moyenne ?",
-   "choix": [
-    "27 000 habitants par km²",
-    "2 700 habitants par km²",
-    "270 habitants par km²",
-    "270 000 habitants par km²"
-   ],
-   "explication": "Mumbai entasse en moyenne 27 000 habitants sur chaque kilomètre carré. C'est une mégapole marquée par de fortes inégalités.",
-   "source": {
-    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1 - Etude de cas 2 Inde.pdf",
-    "page": 2
-   },
-   "r": "ER9qfwiUHQQBRphGBMBHq8EBd1gXfZlReBUZ",
    "poids": 1
   }
  ],

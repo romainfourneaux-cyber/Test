@@ -5,6 +5,8 @@
 // lieux où vont les redevances. L'étude de cas n°1 n'est pas déposée : voir nonCouvert.
 const FW = "cours/histoire/Histoire 5e - Moyen Age - Etude de cas 2 Seigneurie de Wismes.pdf";
 const SW = p => ({ fichier: FW, page: p });
+// Questions de thème (règle du 25/10/2026) : fait vérifié dans une source fiable, notée sans fichier ni page.
+const T = (titre, url) => ({ theme: "Cours 8 – Étude de cas 1 et 2", titre, editeur: "Wikipédia", url });
 
 // L'année des redevances à Verson, redessinée en ruban (aucune image reprise).
 function annee() {
@@ -144,12 +146,6 @@ module.exports = {
       choix: ["Le seigneur prend sa part : le champart", "Le meunier prend un boisseau", "Il doit d'abord payer le cens au seigneur", "Il doit donner un porc"],
       reponse: "Le seigneur prend sa part : le champart",
       explication: "En août, le seigneur prélève le champart sur la récolte avant tout. Le meunier n'intervient que quand on fait moudre le grain.", indice: "Relis ce qui se passe au mois d'août.", source: SW(1) },
-    { id: "histoire-s05-2-q8", fiche: "histoire-s05-2-f1", type: "trou", niveau: 1,
-      enonce: "Complète le calendrier de Verson.",
-      texte: "À la saint Jean, le 24 ___, les paysans fauchent les prés du seigneur ; à la saint Denis, le 9 ___, ils paient le cens.",
-      banque: ["juin", "octobre", "août", "mars"],
-      reponse: [["juin"], ["octobre"]],
-      explication: "La saint Jean est le 24 juin, la saint Denis le 9 octobre. Août est le mois de la moisson.", source: SW(1) },
     { id: "histoire-s05-2-q9", fiche: "histoire-s05-2-f1", type: "vrai_faux", niveau: 3,
       enonce: "À Verson, le seigneur reçoit du blé deux fois : en août avec le champart, et à la saint Denis avec le cens.",
       corrections: ["Faux : le cens de la saint Denis est une somme d'argent, pas du blé.", "Faux : le seigneur ne reçoit jamais de blé, seulement de l'argent.", "Faux : le champart est payé en porcs."],
@@ -268,11 +264,6 @@ module.exports = {
       choix: ["Le meunier du seigneur", "Le seigneur en personne", "Les autres paysans", "Un serf de la seigneurie"],
       reponse: "Le meunier du seigneur",
       explication: "Le moulin appartient au seigneur, mais c'est son meunier qui le fait tourner et prélève la part due. C'est une banalité.", source: SW(1) },
-    { id: "histoire-s05-2-q32", fiche: "histoire-s05-2-f4", type: "qcm", niveau: 2,
-      enonce: "Comment s'appelle, dans la chanson de Verson, la demeure du seigneur où l'on porte le foin ?",
-      choix: ["Le manoir", "La grange", "Le gibet", "La tenure"],
-      reponse: "Le manoir",
-      explication: "Le manoir est la maison du seigneur. La grange, elle, reçoit le blé.", source: SW(1) },
     { id: "histoire-s05-2-q33", fiche: "histoire-s05-2-f4", type: "qcm", niveau: 3,
       enonce: "Pourquoi le seigneur fait-il porter la moisson à sa grange plutôt que de la laisser aux paysans ?",
       choix: ["Pour garder la part qui lui est due, le champart", "Pour nourrir les porcs du village pendant la glandée", "Pour la vendre au meunier", "Pour la faire cuire au four"],
@@ -280,9 +271,9 @@ module.exports = {
       explication: "La grange du seigneur reçoit la récolte pour qu'il y prélève le champart. Le reste revient ensuite aux paysans.", indice: "Quelle redevance se prend sur la récolte ?", source: SW(1) },
     { id: "histoire-s05-2-q34", fiche: "histoire-s05-2-f4", type: "qcm_multiple", niveau: 2,
       enonce: "Quels lieux de la seigneurie sont cités dans la chanson de Verson ? (plusieurs réponses)",
-      choix: ["Le manoir", "La grange du seigneur", "Le château", "Le moulin", "L'école", "Le port"],
+      choix: ["Le manoir", "La grange du seigneur", "Le château", "Le moulin", "Le gibet", "Le pressoir"],
       reponse: ["Le manoir", "La grange du seigneur", "Le château", "Le moulin"],
-      explication: "Manoir, grange, château et moulin reçoivent les redevances des paysans. Il n'y a ni école ni port dans la chanson.", source: SW(1) },
+      explication: "Manoir, grange, château et moulin reçoivent les redevances des paysans de Verson. Le gibet et le pressoir existent dans d'autres seigneuries, mais la chanson n'en parle pas.", source: SW(1) },
     { id: "histoire-s05-2-q35", fiche: "histoire-s05-2-f4", type: "vrai_faux", niveau: 3,
       enonce: "Le manoir et la grange reçoivent des produits des paysans, tandis que le moulin et le four leur prennent une taxe quand ils s'en servent.",
       corrections: [], reponse: { vrai: true, correction: null },

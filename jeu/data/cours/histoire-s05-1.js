@@ -213,9 +213,9 @@ JEU.enregistrer("cours", {
    "enonce": "Que doit un paysan au seigneur en échange de sa tenure ?",
    "choix": [
     "Le cens et des corvées",
-    "Un sceau et un cartulaire",
-    "Rien du tout",
-    "La garde du château"
+    "Le champart seulement",
+    "Une banalité payée au moulin",
+    "La garde de la forêt"
    ],
    "explication": "La tenure se paie par une taxe, le cens, et par des corvées. Ces travaux gratuits se font pour le seigneur.",
    "source": {
@@ -315,20 +315,22 @@ JEU.enregistrer("cours", {
    "id": "histoire-s05-1-q8",
    "fiche": "histoire-s05-1-f1",
    "type": "qcm",
-   "niveau": 1,
-   "enonce": "À quelle époque la frise du cours place-t-elle le développement de la seigneurie banale ?",
+   "niveau": 3,
+   "enonce": "Vers l'an mil se développe la « seigneurie banale ». Que désigne le « ban » du seigneur ?",
    "choix": [
-    "Vers l'an mil",
-    "En 1348",
-    "Au XVe siècle",
-    "Vers 1450"
+    "Son droit de commander, de juger et de punir les habitants de ses terres",
+    "La taxe que le paysan paie chaque année pour sa tenure",
+    "La part de la récolte qui revient au seigneur",
+    "Le travail gratuit que les paysans doivent faire sur la réserve du seigneur"
    ],
-   "explication": "La frise place la seigneurie banale vers l'an mil, en même temps que la naissance du village médiéval. 1348 est l'année de la Grande peste.",
+   "explication": "Le ban est d'abord le pouvoir du roi de commander ses hommes ; à partir du Xe siècle, les seigneurs s'en emparent. Avec ce pouvoir, le seigneur ordonne, juge et punit, et il oblige les paysans à utiliser son moulin ou son four contre paiement.",
    "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 7 - Support.pdf",
-    "page": 1
+    "theme": "Cours 7 – La seigneurie",
+    "titre": "Ban (Moyen Âge)",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Ban_(Moyen_%C3%82ge)"
    },
-   "r": "N5RAu0wCUpgAPVBFMQSZ",
+   "r": "=8QHKQBFMYwZBAhFVRRDOxhBGISWMcFTG8UFDUgU1sxGQUQUMowTG0wYfBgUYRwTDIQSeVzFRsAFcQQAMIVDn0QEcJEHLYECGESZ",
    "poids": 1
   },
   {
@@ -344,26 +346,6 @@ JEU.enregistrer("cours", {
     "page": 1
    },
    "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
-   "id": "histoire-s05-1-q10",
-   "fiche": "histoire-s05-1-f2",
-   "type": "qcm",
-   "niveau": 1,
-   "enonce": "En quelle année le seigneur de Wismes rappelle-t-il ses droits dans un cartulaire ?",
-   "choix": [
-    "1238",
-    "1348",
-    "1033",
-    "1214"
-   ],
-   "explication": "Le cartulaire de Wismes date de 1238. 1348 est la Grande peste, 1033 la famine racontée par Raoul Glaber.",
-   "source": {
-    "fichier": "cours/histoire/Histoire 5e - Moyen Age - Etude de cas 2 Seigneurie de Wismes.pdf",
-    "page": 1
-   },
-   "r": "N5VVbNUZ",
    "poids": 1
   },
   {
@@ -449,9 +431,9 @@ JEU.enregistrer("cours", {
    "enonce": "Pourquoi le seigneur de Wismes fait-il écrire ses droits dans un cartulaire ?",
    "choix": [
     "Pour rappeler et faire respecter ses droits et coutumes",
-    "Pour offrir sa forêt et son moulin à tous les paysans de la seigneurie",
-    "Pour demander pardon au roi",
-    "Pour vendre son château"
+    "Pour donner ses terres et sa forêt aux paysans de la seigneurie",
+    "Pour payer un impôt au roi",
+    "Pour préparer la vente de sa forêt"
    ],
    "explication": "Le texte commence par « nous rappelons » : il fixe par écrit ce que le seigneur a l'habitude de percevoir. Écrit et scellé, ce droit se discute moins.",
    "source": {
@@ -507,21 +489,22 @@ JEU.enregistrer("cours", {
    "id": "histoire-s05-1-q18",
    "fiche": "histoire-s05-1-f2",
    "type": "qcm",
-   "niveau": 3,
-   "enonce": "Le cartulaire de Wismes est daté de juillet 1238. À quel siècle appartient-il ?",
+   "niveau": 2,
+   "enonce": "Qu'est-ce qu'un cartulaire ?",
    "choix": [
-    "Le XIIIe siècle",
-    "Le XIIe siècle",
-    "Le XIVe siècle",
-    "Le Xe siècle"
+    "Un recueil où un seigneur ou une abbaye fait copier les textes de ses droits",
+    "Un plan dessiné de la seigneurie, avec le château, l'église, le moulin et toutes les tenures",
+    "Un calendrier des travaux des champs, mois par mois",
+    "La liste des paysans qui doivent une corvée au seigneur"
    ],
-   "explication": "Les années 1201 à 1300 forment le XIIIe siècle. 1238 en fait partie.",
-   "indice": "Ajoute 1 au nombre de centaines : 12 centaines, donc XIIIe siècle.",
+   "explication": "Un cartulaire est un livre dans lequel un seigneur, une abbaye ou une ville fait recopier ses propres documents : donations, droits, biens. Ainsi rangés dans un seul volume, ces textes se conservent et se consultent plus facilement.",
    "source": {
-    "fichier": "cours/histoire/Histoire 5e - Moyen Age - Etude de cas 2 Seigneurie de Wismes.pdf",
-    "page": 1
+    "theme": "Cours 7 – La seigneurie",
+    "titre": "Cartulaire",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Cartulaire"
    },
-   "r": "TxgAMo9qq4VRQR2Jm4jRM4TZ",
+   "r": "==gSwkFDa9lCPVxAaIlIWUlFQUQELshUbYSQFdESH8RCFkkBuMxEFBBCIwQDTgkJDBRFYFwTUMBDcAyGQYRVfwhTWH7BjFEDQhVDKQhRHcSZ",
    "poids": 1
   },
   {
@@ -701,36 +684,18 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "histoire-s05-1-q28",
-   "fiche": "histoire-s05-1-f4",
-   "type": "qcm",
-   "niveau": 1,
-   "enonce": "De quel siècle date le plan de la seigneurie de Wismes ?",
-   "choix": [
-    "Le XIVe siècle",
-    "Le XIIe siècle",
-    "Le XVe siècle",
-    "Le Xe siècle"
-   ],
-   "explication": "Le plan de Wismes date du XIVe siècle. Le cartulaire des droits du seigneur, lui, est de 1238.",
-   "source": {
-    "fichier": "cours/histoire/Histoire 5e - Moyen Age - Etude de cas 2 Seigneurie de Wismes.pdf",
-    "page": 1
-   },
-   "r": "=s0CDEBwASkFVgEOm4jRM4TZ",
-   "poids": 1
-  },
-  {
    "id": "histoire-s05-1-q29",
    "fiche": "histoire-s05-1-f4",
    "type": "vrai_faux",
    "niveau": 1,
-   "enonce": "La seigneurie de Wismes se trouve dans le nord de la France.",
+   "enonce": "Une seigneurie, c'est l'ensemble des terres d'un seigneur et des droits qu'il exerce sur les gens qui y vivent.",
    "corrections": [],
-   "explication": "Oui : Wismes est une seigneurie du nord de la France. Le texte de Verson, lui, vient de Normandie.",
+   "explication": "Oui : la seigneurie, c'est à la fois un territoire, avec sa réserve et ses tenures, et un pouvoir sur les habitants, comme la justice ou les banalités. Wismes, dans le nord de la France, en est un exemple.",
    "source": {
-    "fichier": "cours/histoire/Histoire 5e - Moyen Age - Etude de cas 2 Seigneurie de Wismes.pdf",
-    "page": 1
+    "theme": "Cours 7 – La seigneurie",
+    "titre": "Seigneurie",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Seigneurie"
    },
    "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
    "poids": 1
@@ -740,20 +705,20 @@ JEU.enregistrer("cours", {
    "fiche": "histoire-s05-1-f4",
    "type": "qcm_multiple",
    "niveau": 2,
-   "enonce": "Quels bâtiments sont indiqués sur le plan de la seigneurie de Wismes ? (plusieurs réponses)",
+   "enonce": "Quels bâtiments trouve-t-on dans une seigneurie comme Wismes ? (plusieurs réponses)",
    "choix": [
-    "Le château",
-    "L'église",
+    "Le château du seigneur",
+    "L'église du village",
     "Le moulin du seigneur",
     "Une cathédrale",
-    "Un port"
+    "Un hôtel de ville"
    ],
-   "explication": "Le plan marque le château, l'église et le moulin du seigneur. Il n'y a ni cathédrale ni port à Wismes.",
+   "explication": "Le plan de Wismes marque le château, l'église et le moulin du seigneur. Une cathédrale ou un hôtel de ville sont des bâtiments de ville, pas de seigneurie.",
    "source": {
     "fichier": "cours/histoire/Histoire 5e - Moyen Age - Etude de cas 2 Seigneurie de Wismes.pdf",
     "page": 1
    },
-   "r": "z0EFTwAHgsBEWUFBN4UAbQgNChQFIJSTKREDB4iHSwstWVCTDBVHigUEX6uBMY0AlAFH",
+   "r": "=AHTdMxAHUhLXYQRAURSAYgHdwCQFBVYMNERD4wEr4BHTUFBN4kCBEwLKxs9KISTKR0GHICHSwAECk0GLIVHigUEX6uBMY0AlAFH",
    "poids": 1
   },
   {
@@ -781,18 +746,18 @@ JEU.enregistrer("cours", {
    "fiche": "histoire-s05-1-f4",
    "type": "vrai_faux",
    "niveau": 2,
-   "enonce": "Sur le plan, les tenures occupent un seul endroit de la seigneurie.",
+   "enonce": "Dans une seigneurie, les tenures des paysans forment un seul grand champ d'un seul tenant.",
    "corrections": [
-    "Faux : le plan marque des tenures à plusieurs endroits, autour du village.",
-    "Faux : les tenures sont toutes dans la réserve.",
-    "Faux : le plan ne montre aucune tenure."
+    "Faux : elles sont réparties en plusieurs endroits, autour du village.",
+    "Faux : les tenures sont toutes à l'intérieur de la réserve du seigneur.",
+    "Faux : une seigneurie n'a pas de tenures, seulement une réserve."
    ],
-   "explication": "Le mot « tenures » apparaît à plusieurs endroits du plan. Les terres des paysans sont réparties dans la seigneurie.",
+   "explication": "Sur le plan de Wismes, le mot « tenures » apparaît à plusieurs endroits. Les terres des paysans sont dispersées dans la seigneurie, autour du village.",
    "source": {
     "fichier": "cours/histoire/Histoire 5e - Moyen Age - Etude de cas 2 Seigneurie de Wismes.pdf",
     "page": 1
    },
-   "r": "UwUQX8gIBlAXb5kGCY0GHgiBAQQVdphGG0hGnMEAV4FHaMwDacwKCUVx2GlGL0xBGYSWFZESK80ATgBAm8RVLQRHZ4kCegUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "r": "==gPPsEUK9wAK8wHSJjFVdBAe0xGOIFRwkFDa9lCBMgRaAgMXwhFA0RGOFwFIBDSME0XP8xzluhUzwhGWUlAMIwAXgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -800,60 +765,19 @@ JEU.enregistrer("cours", {
    "fiche": "histoire-s05-1-f4",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Sur le plan de Wismes, on lit « Tenures » et « Réserve ». Comment ces terres se partagent-elles entre le seigneur et les paysans ?",
+   "enonce": "Dans une seigneurie, comment les terres se partagent-elles entre le seigneur et les paysans ?",
    "choix": [
     "Les tenures aux paysans, la réserve au seigneur",
     "Les tenures au seigneur, la réserve aux paysans",
     "Les deux sortes de terres à l'église du village",
     "Les deux sortes de terres au roi"
    ],
-   "explication": "Le plan distingue la réserve, gardée par le seigneur, et les tenures, cédées aux paysans. Ce sont les deux parties de la seigneurie.",
+   "explication": "Le plan de Wismes distingue la réserve, gardée par le seigneur, et les tenures, cédées aux paysans. Ce sont les deux parties de la seigneurie.",
    "source": {
     "fichier": "cours/histoire/Histoire 5e - Moyen Age - Etude de cas 2 Seigneurie de Wismes.pdf",
     "page": 1
    },
    "r": "=0EFTwAHgsBEWUFBI4kCEohJexs9f5kDKYURBkyEGwBFBkkFaMBSwg0FAN0CbYUFM4TZ",
-   "poids": 1
-  },
-  {
-   "id": "histoire-s05-1-q34",
-   "fiche": "histoire-s05-1-f4",
-   "type": "qcm",
-   "niveau": 3,
-   "enonce": "Le plan de Wismes date du XIVe siècle et le cartulaire de 1238. Lequel des deux documents est le plus ancien ?",
-   "choix": [
-    "Le cartulaire",
-    "Le plan",
-    "Ils datent de la même année",
-    "On ne peut pas le savoir"
-   ],
-   "explication": "1238 appartient au XIIIe siècle, qui précède le XIVe. Le cartulaire est donc plus ancien que le plan.",
-   "indice": "Trouve d'abord le siècle de 1238.",
-   "source": {
-    "fichier": "cours/histoire/Histoire 5e - Moyen Age - Etude de cas 2 Seigneurie de Wismes.pdf",
-    "page": 1
-   },
-   "r": "NdhGqwUCAlFHOUgRM4TZ",
-   "poids": 1
-  },
-  {
-   "id": "histoire-s05-1-q35",
-   "fiche": "histoire-s05-1-f4",
-   "type": "ordre",
-   "niveau": 2,
-   "enonce": "Remets ces documents du plus ancien au plus récent.",
-   "elements": [
-    "Plan de la seigneurie de Wismes (XIVe siècle)",
-    "Cartulaire de Wismes (1238)",
-    "Chanson des vilains de Verson (XIIe siècle)",
-    "Famine racontée par Raoul Glaber (1033)"
-   ],
-   "explication": "1033 (famine), puis le XIIe siècle (Verson), puis 1238 (cartulaire), enfin le XIVe siècle (plan).",
-   "source": {
-    "fichier": "cours/histoire/Histoire 5e - Moyen Age - Etude de cas 2 Seigneurie de Wismes.pdf",
-    "page": 1
-   },
-   "r": "o1hQepEVFFEH",
    "poids": 1
   }
  ],

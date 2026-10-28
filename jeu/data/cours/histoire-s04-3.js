@@ -174,14 +174,14 @@ JEU.enregistrer("cours", {
    "fiche": "histoire-s04-3-f1",
    "type": "qcm",
    "niveau": 1,
-   "enonce": "En quelle année la frise place-t-elle la Grande peste ?",
+   "enonce": "En quelle année la Grande peste frappe-t-elle l'Europe ?",
    "choix": [
     "1348",
     "1033",
     "1238",
     "1000"
    ],
-   "explication": "La Grande peste est datée de 1348 sur la frise. C'est le dernier repère du cours.",
+   "explication": "La Grande peste frappe en 1348. C'est le dernier repère du cours sur les campagnes.",
    "source": {
     "fichier": "cours/histoire/Histoire 5e - Seance 6 - Support.pdf",
     "page": 1
@@ -194,9 +194,9 @@ JEU.enregistrer("cours", {
    "fiche": "histoire-s04-3-f1",
    "type": "vrai_faux",
    "niveau": 1,
-   "enonce": "D'après la frise, le village médiéval naît vers l'an mil.",
+   "enonce": "Le village médiéval naît vers l'an mil.",
    "corrections": [],
-   "explication": "Oui : la frise place la naissance du village médiéval à partir de l'an mil. La seigneurie banale se développe à la même époque.",
+   "explication": "Oui : le village médiéval naît vers l'an mil. La seigneurie banale se développe à la même époque.",
    "source": {
     "fichier": "cours/histoire/Histoire 5e - Seance 6 - Support.pdf",
     "page": 1
@@ -209,19 +209,19 @@ JEU.enregistrer("cours", {
    "fiche": "histoire-s04-3-f1",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Comment la frise décrit-elle la période des grands défrichements, du XIe au XIIIe siècle ?",
+   "enonce": "Que se passe-t-il dans les campagnes du XIe au XIIIe siècle, au temps des grands défrichements ?",
    "choix": [
-    "Un développement économique et démographique",
-    "Une période de famines et de peste dans les campagnes",
-    "La naissance du village médiéval",
-    "La fin de la seigneurie banale"
+    "La production et la population augmentent",
+    "Les famines et la peste vident les campagnes",
+    "Le village médiéval disparaît",
+    "La seigneurie banale prend fin"
    ],
    "explication": "Les grands défrichements vont avec un développement économique et démographique. Les campagnes produisent plus et la population augmente.",
    "source": {
     "fichier": "cours/histoire/Histoire 5e - Seance 6 - Support.pdf",
     "page": 1
    },
-   "r": "==ARDwxAuoRBEcgFGMgxxywYZBQFIthHPsgBcgSEcbaVFcwCCcBGzIUCQt1xsKgRHcSZ",
+   "r": "==wVRsBFdAgCf8gNMV0WCdwGHoAHCgiAVRQGR1xCPxxBqklBAlUAdYhRI4TZ",
    "poids": 1
   },
   {
@@ -248,7 +248,7 @@ JEU.enregistrer("cours", {
    "fiche": "histoire-s04-3-f1",
    "type": "qcm_multiple",
    "niveau": 2,
-   "enonce": "Quels repères la frise place-t-elle vers l'an mil ? (plusieurs réponses)",
+   "enonce": "Qu'est-ce qui commence vers l'an mil dans les campagnes ? (plusieurs réponses)",
    "choix": [
     "La naissance du village médiéval",
     "Le développement de la seigneurie banale",
@@ -267,21 +267,22 @@ JEU.enregistrer("cours", {
    "id": "histoire-s04-3-q6",
    "fiche": "histoire-s04-3-f1",
    "type": "qcm",
-   "niveau": 3,
-   "enonce": "Un paysan naît en 1340. Quel événement de la frise survient quand il a huit ans ?",
+   "niveau": 2,
+   "enonce": "Qu'est-ce que la Grande peste de 1348 ?",
    "choix": [
-    "La Grande peste",
-    "La naissance du village médiéval",
-    "Le début des grands défrichements",
-    "La famine racontée par Raoul Glaber"
+    "Une épidémie qui tue au moins un Européen sur trois en quelques années",
+    "Une famine due à des pluies qui ne s'arrêtent plus pendant trois ans et empêchent de semer",
+    "Une guerre entre les seigneurs et les paysans des villages",
+    "Une maladie qui ne touche que les troupeaux de moutons et de porcs"
    ],
-   "explication": "1340 plus 8 font 1348 : l'année de la Grande peste. Les autres repères sont bien plus anciens.",
-   "indice": "Ajoute 8 à 1340, puis cherche l'année sur la frise.",
+   "explication": "La Grande peste, ou peste noire, arrive en Europe en 1347 et s'y répand jusque vers 1352. Transmise par les puces des rats, elle tue entre 30 et 60 % des habitants selon les régions : les campagnes se vident.",
    "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 6 - Support.pdf",
-    "page": 1
+    "theme": "Cours 6 – La vie dans les campagnes au Moyen Âge",
+    "titre": "Peste noire",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Peste_noire"
    },
-   "r": "=s0CbEQDz0AARN0DdEiRI4TZ",
+   "r": "==wRGh0xsiACIIFNXAAFZQBHf8EHNMmXMo1Xa8EFTohUpcB3mWgHbshKSZgNNYxWEFgAGNBCSJyBBUEHEghTKsRBq7eAc11xsa0AHcSZ",
    "poids": 1
   },
   {
@@ -441,27 +442,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "histoire-s04-3-q15",
-   "fiche": "histoire-s04-3-f2",
-   "type": "qcm",
-   "niveau": 3,
-   "enonce": "Dans un village de 100 habitants au Moyen Âge, combien sont paysans, d'après le cours ?",
-   "choix": [
-    "Plus de 90",
-    "Environ 50",
-    "Moins de 10",
-    "Exactement 100"
-   ],
-   "explication": "Les paysans sont plus de 90 % de la population. Sur 100 habitants, cela fait plus de 90 paysans.",
-   "indice": "90 % de 100, c'est 90.",
-   "source": {
-    "fichier": "cours/histoire/Histoire 5e - Moyen Age - Etude de cas 3 Vie et travail des paysans.pdf",
-    "page": 1
-   },
-   "r": "h1BXVgkCPVxEFISZ",
-   "poids": 1
-  },
-  {
    "id": "histoire-s04-3-q16",
    "fiche": "histoire-s04-3-f2",
    "type": "vrai_faux",
@@ -535,26 +515,6 @@ JEU.enregistrer("cours", {
     "page": 1
    },
    "r": "==ANvYnXG5TWsklQdlCRe4RSEYnQyQlSZlCH",
-   "poids": 1
-  },
-  {
-   "id": "histoire-s04-3-q20",
-   "fiche": "histoire-s04-3-f3",
-   "type": "qcm",
-   "niveau": 2,
-   "enonce": "Qui chasse au faucon en mai, sur les images du Rustican ?",
-   "choix": [
-    "Le seigneur",
-    "Les paysans",
-    "Le meunier",
-    "Les enfants du village"
-   ],
-   "explication": "En mai, l'image montre le seigneur à la chasse au faucon. Les paysans, eux, travaillent tous les autres mois.",
-   "source": {
-    "fichier": "cours/histoire/Histoire 5e - Moyen Age - Etude de cas 3 Vie et travail des paysans.pdf",
-    "page": 1
-   },
-   "r": "==gSxgFAbp0BKUhRM4TZ",
    "poids": 1
   },
   {
@@ -637,26 +597,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "histoire-s04-3-q25",
-   "fiche": "histoire-s04-3-f3",
-   "type": "qcm",
-   "niveau": 2,
-   "enonce": "D'où viennent les images des travaux des mois ?",
-   "choix": [
-    "Du Rustican, au XVe siècle",
-    "D'un cartulaire de 1238",
-    "D'une chanson de Normandie",
-    "D'une chronique de Raoul Glaber"
-   ],
-   "explication": "Les images viennent du Rustican, de Pietro Crescenzi, un livre du XVe siècle. Il est conservé au musée Condé, à Chantilly.",
-   "source": {
-    "fichier": "cours/histoire/Histoire 5e - Moyen Age - Etude de cas 3 Vie et travail des paysans.pdf",
-    "page": 1
-   },
-   "r": "=wkCKUQwx6SAVBwIpk0GOIFRtwkBclVHaQjRcYTZ",
-   "poids": 1
-  },
-  {
    "id": "histoire-s04-3-q26",
    "fiche": "histoire-s04-3-f4",
    "type": "qcm",
@@ -712,46 +652,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "histoire-s04-3-q29",
-   "fiche": "histoire-s04-3-f4",
-   "type": "qcm_multiple",
-   "niveau": 2,
-   "enonce": "Que mangent les gens pendant la famine, d'après le texte ? (plusieurs réponses)",
-   "choix": [
-    "Des bêtes sauvages et des oiseaux",
-    "Des charognes",
-    "Du pain fait de terre blanche et de son",
-    "Des galettes de blé",
-    "Du raisin"
-   ],
-   "explication": "Faute de céréales, les gens mangent des bêtes sauvages, des oiseaux, des charognes et un pain de terre mêlée de son. Galettes et raisin manquent justement.",
-   "source": {
-    "fichier": "cours/histoire/Histoire 5e - Moyen Age - Etude de cas 3 Vie et travail des paysans.pdf",
-    "page": 1
-   },
-   "r": "wxUAJURSXMiUBAQVUEQDBMBBh0AAH91CbY0ANI1MbQxAV9BAP8hUdcwDJdhXLEQAJsxEvERVWARNLJUTK0hIIZBXC5EHDIQSGIiUGAgEQ8xGOEASwgUEf6ODPVxAtAFH",
-   "poids": 1
-  },
-  {
-   "id": "histoire-s04-3-q30",
-   "fiche": "histoire-s04-3-f4",
-   "type": "vrai_faux",
-   "niveau": 2,
-   "enonce": "Raoul Glaber est un seigneur de Bourgogne.",
-   "corrections": [
-    "Faux : c'est un moine et chroniqueur bourguignon.",
-    "Faux : c'est un paysan de Normandie.",
-    "Faux : c'est un roi de Bourgogne."
-   ],
-   "explication": "Raoul Glaber est un moine de Bourgogne. Il écrit une chronique, un récit des événements de son temps.",
-   "source": {
-    "fichier": "cours/histoire/Histoire 5e - Moyen Age - Etude de cas 3 Vie et travail des paysans.pdf",
-    "page": 1
-   },
-   "r": "==QFhNwCaNUCGMRAbcAKQU1FAQBHfYAHHETRGURWL80AIAQHqI1GQUVBasASRgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
    "id": "histoire-s04-3-q31",
    "fiche": "histoire-s04-3-f4",
    "type": "qcm",
@@ -791,21 +691,6 @@ JEU.enregistrer("cours", {
     "page": 1
    },
    "r": "ogzVCwwBa4BGhZXSo9QXcZ1VLlCH",
-   "poids": 1
-  },
-  {
-   "id": "histoire-s04-3-q33",
-   "fiche": "histoire-s04-3-f4",
-   "type": "vrai_faux",
-   "niveau": 3,
-   "enonce": "La famine de 1033 et la Grande peste de 1348 ont lieu à plus de trois siècles d'écart.",
-   "corrections": [],
-   "explication": "Oui : 1348 moins 1033 font 315 ans. Les deux malheurs sont séparés par plus de trois siècles.",
-   "source": {
-    "fichier": "cours/histoire/Histoire 5e - Moyen Age - Etude de cas 3 Vie et travail des paysans.pdf",
-    "page": 1
-   },
-   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
    "poids": 1
   }
  ],

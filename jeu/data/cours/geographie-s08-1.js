@@ -588,19 +588,19 @@ JEU.enregistrer("cours", {
    "fiche": "geographie-s08-1-f3",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Que sépare la ligne tracée sur la carte de l'IDH ?",
+   "enonce": "Comment appelle-t-on les deux grands groupes de pays que les géographes distinguent sur une carte de l'IDH ?",
    "choix": [
-    "Les pays développés des pays en développement",
-    "L'hémisphère Nord de l'hémisphère Sud",
-    "Les pays peuplés des pays peu peuplés",
-    "Les continents entre eux"
+    "Les pays développés et les pays en développement",
+    "Les pays chauds et les pays froids",
+    "Les pays très peuplés et les pays presque vides d'habitants",
+    "Les pays riches et les pays émergents"
    ],
-   "explication": "La limite partage le monde entre pays développés et pays en développement. Elle ne suit ni l'équateur ni les continents.",
+   "explication": "Une limite sépare les pays développés des pays en développement. Parmi ces derniers, les pays émergents s'enrichissent vite et les PMA restent les plus pauvres.",
    "source": {
     "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 2.pdf",
     "page": 2
    },
-   "r": "=0kEIwwHiIQBKkBFfcMrWgULIVkRU9wHGVBDWcWAcbaBBYgAKQQwAmURGR1DfYUFM4TZ",
+   "r": "=cRWAowCDkhAo4BETwtsN4UAXgEMURQRN0hCKYUHXcWAcbaBBYgAKQQwAmURGR1DfYUFM4TZ",
    "poids": 1
   },
   {
@@ -649,7 +649,7 @@ JEU.enregistrer("cours", {
    "fiche": "geographie-s08-1-f3",
    "type": "trou",
    "niveau": 1,
-   "enonce": "Complète avec les mots de la carte.",
+   "enonce": "Complète avec les mots du cours.",
    "texte": "Un IDH supérieur à 0,80 est ___ ; un IDH inférieur à 0,55 est ___ ; les pays les plus pauvres sont les ___.",
    "banque": [
     "très élevé",
@@ -821,27 +821,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "geographie-s08-1-q34",
-   "fiche": "geographie-s08-1-f4",
-   "type": "qcm_multiple",
-   "niveau": 2,
-   "enonce": "Quels pays avaient un taux de mortalité infantile inférieur à 10 pour mille en 2019 ? (plusieurs réponses)",
-   "choix": [
-    "Le Japon",
-    "La France",
-    "La Chine",
-    "L'Algérie",
-    "L'Afghanistan"
-   ],
-   "explication": "Japon 2 et France 3 pour mille : bien en dessous de 10. Chine 20, Algérie 29 et Afghanistan 48 sont au-dessus.",
-   "source": {
-    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 2.pdf",
-    "page": 5
-   },
-   "r": "vU2FWsAFD8iTO4jSv9wCa11DlY0AlAFH",
-   "poids": 1
-  },
-  {
    "id": "geographie-s08-1-q35",
    "fiche": "geographie-s08-1-f5",
    "type": "qcm",
@@ -865,20 +844,22 @@ JEU.enregistrer("cours", {
    "id": "geographie-s08-1-q36",
    "fiche": "geographie-s08-1-f5",
    "type": "qcm",
-   "niveau": 1,
-   "enonce": "Dans quel pays se trouve le dispensaire de brousse décrit par l'infirmière ?",
+   "niveau": 2,
+   "enonce": "Pourquoi est-il difficile de se soigner dans les campagnes des pays les plus pauvres ?",
    "choix": [
-    "À Madagascar",
-    "En Inde",
-    "Au Bénin",
-    "En Finlande"
+    "Parce que les soignants manquent et que les centres de santé y sont rares et mal équipés",
+    "Parce que les habitants des campagnes refusent presque toujours d'aller voir un médecin ou une infirmière",
+    "Parce que les hôpitaux y sont trop modernes et trop chers pour les paysans",
+    "Parce que les maladies y sont rares et que personne n'a besoin de soins"
    ],
-   "explication": "L'infirmière est en mission à Madagascar, dans le village de Tsaharasina. L'Inde et le Bénin sont d'autres exemples du cours.",
+   "explication": "L'OMS prévoit qu'il manquera onze millions de soignants en 2030, surtout dans les pays pauvres, et les campagnes isolées en attirent encore moins. Loin des villes, le centre de santé est souvent petit, éloigné et peu équipé.",
    "source": {
-    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 2.pdf",
-    "page": 6
+    "theme": "Outil 9 – Mesurer la pauvreté et les inégalités",
+    "titre": "Health workforce",
+    "editeur": "Organisation mondiale de la santé (OMS)",
+    "url": "https://www.who.int/health-topics/health-workforce"
    },
-   "r": "NBQCg4FBSxkCOsiRpHbZ",
+   "r": "EVBwxezGAQB3ymkAO8BS3gURGhEHOQhRdwBKBUFHVhtqaEwEbMGSBUhXL0hEIwQEnFAEJUFFc8xTG0wYZtAUY9RAHsQSBMDHUsgEYYQHPFQDv0AAAxlTKUAFIISZ",
    "poids": 1
   },
   {
@@ -886,21 +867,23 @@ JEU.enregistrer("cours", {
    "fiche": "geographie-s08-1-f5",
    "type": "qcm_multiple",
    "niveau": 2,
-   "enonce": "Que manque-t-il au dispensaire de Tsaharasina ? (plusieurs réponses)",
+   "enonce": "Qu'est-ce qui manque souvent aux centres de santé des pays les plus pauvres ? (plusieurs réponses)",
    "choix": [
-    "L'électricité",
-    "L'eau courante",
-    "Une vraie table d'examen",
-    "Un médecin",
-    "Des vaccins",
-    "Une sage-femme"
+    "Une électricité fiable",
+    "Un réfrigérateur pour garder les vaccins au froid",
+    "Du matériel médical qui fonctionne",
+    "De la lumière pour soigner la nuit",
+    "Des malades : les habitants préfèrent ne pas s'y rendre",
+    "De la place : ils sont presque toujours vides"
    ],
-   "explication": "Il n'y a ni électricité, ni eau courante, et les malades sont examinés sur une planche. Médecin, sage-femme et vaccins, eux, sont là.",
+   "explication": "Près d'un milliard de personnes dépendent de centres de santé sans électricité fiable, surtout en Afrique subsaharienne et en Asie du Sud. Sans courant, ni frigo pour les vaccins, ni matériel, ni lumière pour un accouchement la nuit.",
    "source": {
-    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 2.pdf",
-    "page": 6
+    "theme": "Outil 9 – Mesurer la pauvreté et les inégalités",
+    "titre": "Close to one billion people globally are served by health-care facilities with no electricity access or with unreliable electricity",
+    "editeur": "Organisation mondiale de la santé (OMS)",
+    "url": "https://www.who.int/news/item/14-01-2023-close-to-one-billion-people-globally-are-served-by-health-care-facilities-with-no-electricity-access-or-with-unreliable-electricity"
    },
-   "r": "oM1BLIwEQYiCBUBSC0wBSk0FuMxBTUFFHsTTepkJZtAVftBAFYEHTISV5cUWTBcrbsxCq8VEWhkAGXaQlAFH",
+   "r": "7QUHbIDHVRQGRtxCBURAs4VRHhVAfY0AboNhbgBEZEFCC80FsEWAHB1QAAwDSoAHoQRVMAAAJJgDREwJEaKWNIgCPQBwxOzEYUEA1skQNZRAs81AVg1DPVBCAEBJTMQRGQRBO1xFMEDTCUxXbAgFGtxBiYAFXwtsOcQHUEMgfV0W4x0QENQBQYyGTUE3y2xBMshG34EAZRYrPNAC8AFH",
    "poids": 1
   },
   {
@@ -908,12 +891,14 @@ JEU.enregistrer("cours", {
    "fiche": "geographie-s08-1-f5",
    "type": "vrai_faux",
    "niveau": 2,
-   "enonce": "Au dispensaire de Tsaharasina, les vaccins sont conservés dans un réfrigérateur qui marche au pétrole, faute d'électricité.",
+   "enonce": "Un vaccin qui a eu trop chaud peut perdre son efficacité : il doit rester au froid depuis sa fabrication jusqu'au malade.",
    "corrections": [],
-   "explication": "Oui : sans électricité, le réfrigérateur fonctionne au pétrole. C'est le seul moyen de garder les vaccins au froid.",
+   "explication": "C'est la chaîne du froid : les médicaments sensibles à la température, comme les vaccins, se dégradent quand elle est rompue. Voilà pourquoi un dispensaire sans électricité a besoin d'un réfrigérateur au pétrole.",
    "source": {
-    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 2.pdf",
-    "page": 6
+    "theme": "Outil 9 – Mesurer la pauvreté et les inégalités",
+    "titre": "Chaîne du froid",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Cha%C3%AEne_du_froid"
    },
    "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
    "poids": 1
@@ -923,18 +908,18 @@ JEU.enregistrer("cours", {
    "fiche": "geographie-s08-1-f5",
    "type": "vrai_faux",
    "niveau": 2,
-   "enonce": "Le dispensaire de Tsaharasina est un hôpital moderne, avec l'électricité et l'eau courante.",
+   "enonce": "Dans les campagnes des pays pauvres, les centres de santé sont souvent aussi bien équipés que les hôpitaux des pays riches.",
    "corrections": [
-    "Faux : il n'a ni électricité ni eau courante, et les malades sont examinés sur une planche.",
-    "Faux : il a l'électricité, mais pas de médecin.",
-    "Faux : il est moderne, mais fermé la plupart du temps."
+    "Faux : il leur manque souvent l'électricité, l'eau courante et le matériel.",
+    "Faux : ils ont le matériel, mais aucun médecin.",
+    "Faux : ils sont modernes, mais presque toujours fermés."
    ],
-   "explication": "C'est tout le contraire d'un hôpital moderne. Les moyens sont très réduits.",
+   "explication": "C'est tout le contraire : un dispensaire de brousse soigne avec très peu de moyens. À Madagascar, par exemple, les malades sont examinés sur une planche, sans électricité ni eau courante.",
    "source": {
     "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 2.pdf",
     "page": 6
    },
-   "r": "==wDK1GSNY1QPMgFGxAHyI1BQYQUacMrcEgLM1BUNoRAJURSBIiFUkAFckUHK4BS3gURZgkGBcAFc0BJSBABQEFAA802reDRGw1XawwAKAcsntxGFRhVH40AbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "r": "Yc1XFsgBAEMgZRAWNswAGJBDSJiBbQwBEYQDPdQCmoQCVEwxsKxDKsRNGYBAZgtqJNgUc0CSTAkQd80ATgBHm8RVXAAFF40AbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -942,39 +927,19 @@ JEU.enregistrer("cours", {
    "fiche": "geographie-s08-1-f5",
    "type": "qcm",
    "niveau": 3,
-   "enonce": "Pourquoi ce témoignage illustre-t-il les inégalités de développement ?",
+   "enonce": "Pourquoi l'accès aux soins est-il un signe du niveau de développement d'un pays ?",
    "choix": [
-    "Parce qu'il montre que l'accès aux soins est bien plus difficile dans un pays pauvre",
-    "Parce qu'il montre que Madagascar est un pays riche",
-    "Parce qu'il parle d'une école",
-    "Parce qu'il montre que les habitants refusent de se soigner, même quand un hôpital moderne existe près de chez eux"
+    "Parce que se soigner demande des hôpitaux, des médecins et du matériel, qui coûtent cher",
+    "Parce que les habitants des pays riches, mieux nourris, n'ont presque plus jamais besoin d'aller chez le médecin",
+    "Parce que les soins sont gratuits dans tous les pays du monde",
+    "Parce que la santé ne compte pas dans le calcul de l'IDH"
    ],
-   "explication": "Se soigner fait partie des ressources immatérielles. Ici, les moyens manquent : c'est une inégalité de développement.",
+   "explication": "La santé est l'un des trois critères de l'IDH, avec la richesse et l'éducation. Un pays pauvre a du mal à payer hôpitaux, soignants et matériel : ses habitants se soignent moins bien.",
    "source": {
     "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 2.pdf",
     "page": 6
    },
-   "r": "XBwBHwxDfI1G6wUFVM0GPVBCIYxZXkBDWgxDIYgFIBDWJUUDAowDEkkB0cRVWsBGG0xTK0hINYRnu3ADHEUBSJyBEUEED0BAA8BSvQkQAxlTKUAFIISZ",
-   "poids": 1
-  },
-  {
-   "id": "geographie-s08-1-q41",
-   "fiche": "geographie-s08-1-f5",
-   "type": "qcm",
-   "niveau": 2,
-   "enonce": "Comment les malades sont-ils examinés dans ce dispensaire ?",
-   "choix": [
-    "Sur une planche de bois, ou par terre",
-    "Sur un lit d'hôpital, dans une salle bien équipée",
-    "Dans une ambulance",
-    "Debout, dans la rue"
-   ],
-   "explication": "Faute de matériel, l'examen se fait sur une planche, parfois par terre. Les accouchements se passent de la même façon.",
-   "source": {
-    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 2.pdf",
-    "page": 6
-   },
-   "r": "LtQHA0wNNcBVd5kGJYURB4SHXUEEVk0CHEhBiEUFVgEAaYEFcESZ",
+   "r": "==QTUMQARcmBbAQAKraAMIVA2wVRZE0CGQxzqagJfUFEREVHL8UAGoiTAEFhtKgRVwgFn5VDQQRBA4x2xCwYeBQUNswCIcABXMiUHAwGWAQAcIVDw0AAAxlTKUAFIISZ",
    "poids": 1
   }
  ],
