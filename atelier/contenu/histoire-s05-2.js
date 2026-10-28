@@ -88,8 +88,7 @@ module.exports = {
       dates: [],
       lieux: [], personnages: [],
       vocabulaire: [
-        { mot: "vilain", def: "un paysan libre, à la différence du serf" },
-        { mot: "serf", def: "un paysan qui n'est pas libre" }
+        { mot: "serf", def: "un paysan qui n'est pas libre, à la différence du vilain" }
       ],
       schema: null, prerequis: ["histoire-s05-1-f1", "histoire-s05-1-f3", "histoire-s05-2-f1"], source: SW(1)
     },
