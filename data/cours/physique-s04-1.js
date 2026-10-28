@@ -635,18 +635,18 @@ JEU.enregistrer("cours", {
    "fiche": "physique-s04-1-f4",
    "type": "vrai_faux",
    "niveau": 2,
-   "enonce": "On peut dissoudre autant de sel qu'on veut dans un verre d'eau.",
+   "enonce": "On a mis trop de sel dans un verre d'eau : il en reste au fond. Le mélange est pourtant encore homogène.",
    "corrections": [
-    "Faux : au-delà d'une certaine quantité, le sel ne se dissout plus et le mélange devient hétérogène.",
-    "Faux : le sel se dissout sans limite seulement dans l'eau chaude.",
-    "Faux : le sel ne se dissout jamais dans l'eau, il reste toujours au fond."
+    "Faux : il est hétérogène, puisqu'on distingue le sel au fond de l'eau.",
+    "Faux : il n'y a plus de mélange du tout, seulement de l'eau.",
+    "Faux : il est hétérogène tant qu'on n'a pas agité ; après agitation, tout le sel se dissout."
    ],
-   "explication": "La quantité de sel que l'eau peut dissoudre a une limite. Au-delà, le sel reste au fond du verre.",
+   "explication": "L'eau ne peut dissoudre qu'une quantité limitée de sel. Quand il en reste au fond, on voit deux matières : le mélange est hétérogène.",
    "source": {
     "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
     "page": 5
    },
-   "r": "UAVaXsRz2ahBcYcscou7NURWAowDQwgFndhELQRHA3qAS1wLNEBUN0hGKYRSGITHGYBHVk0CcIVDt0QCQ5lTKogRFtNhGwREbABHf80FGoCTRcESN80AIwRVjIV1mmBFNMkGTgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "r": "==gEQZkNMBgEB5kCCYUDcgCFVBBFRVwCcIVDv0AAApEAGIRFAYxZcohQAAgGHohAI9GSL0p7JAAFPrqBuHbHFFgAM40AbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -696,7 +696,7 @@ JEU.enregistrer("cours", {
     "En ajoutant du sel",
     "En mettant le verre au frais"
    ],
-   "explication": "Le sucre est très soluble dans l'eau, et sa solubilité augmente avec la température. Dans l'eau chaude, un même verre en dissout donc davantage.",
+   "explication": "Le sucre se dissout très bien dans l'eau, et encore mieux quand elle est chaude. Un même verre d'eau chaude en dissout donc davantage qu'un verre d'eau froide.",
    "source": {
     "theme": "Séance 4 – Mélange et dissolution",
     "titre": "Saccharose",

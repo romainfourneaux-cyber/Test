@@ -175,7 +175,7 @@ JEU.enregistrer("cours", {
    "fiche": "physique-s08-1-f1",
    "type": "qcm",
    "niveau": 1,
-   "enonce": "Avec quel légume fabrique-t-on le papier pH de cette séance ?",
+   "enonce": "Avec quel légume peut-on fabriquer un papier pH à la maison ?",
    "choix": [
     "Le chou rouge",
     "La carotte",
@@ -209,17 +209,21 @@ JEU.enregistrer("cours", {
    "id": "physique-s08-1-q4",
    "fiche": "physique-s08-1-f1",
    "type": "vrai_faux",
-   "niveau": 1,
-   "enonce": "Le jus de chou rouge est un indicateur coloré : sa couleur change selon que le liquide est acide ou basique.",
-   "corrections": [],
-   "explication": "Oui : le chou rouge contient des pigments qui changent de couleur avec l'acidité. C'est pour cela que son jus sert à fabriquer un papier pH.",
+   "niveau": 2,
+   "enonce": "Une substance dont la couleur change selon que le liquide est acide ou basique, comme le jus de chou rouge, s'appelle un solvant.",
+   "corrections": [
+    "Faux : elle s'appelle un indicateur coloré.",
+    "Faux : elle s'appelle un soluté.",
+    "Faux : elle s'appelle une base."
+   ],
+   "explication": "Le jus de chou rouge est un indicateur coloré : ses pigments changent de couleur avec l'acidité du liquide. C'est pour cela qu'il sert à fabriquer un papier pH.",
    "source": {
     "theme": "Séance 1 – Les acides et les bases",
     "titre": "Indicateur de pH",
     "editeur": "Wikipédia",
     "url": "https://fr.wikipedia.org/wiki/Indicateur_de_pH"
    },
-   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "r": "=AFTB9cpb0xKdYRRHQADa4QEBcyQMUxQb80AKUwF3IAFCZQUMIwAXgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -331,7 +335,7 @@ JEU.enregistrer("cours", {
    "fiche": "physique-s08-1-f2",
    "type": "qcm",
    "niveau": 1,
-   "enonce": "Quelle couleur prend le papier dans de l'eau additionnée d'une cuillère à café de lessive ?",
+   "enonce": "Quelle couleur prend le papier au chou rouge dans de l'eau additionnée de lessive ?",
    "choix": [
     "Vert",
     "Rose vif",
@@ -399,7 +403,7 @@ JEU.enregistrer("cours", {
     "Parce que le papier Canson change de couleur en séchant",
     "Parce que le vinaigre n'est pas toujours acide"
    ],
-   "explication": "Les couleurs dépendent du pH de l'eau du robinet utilisée. Ici, elle était légèrement basique, ce qui donne du bleu.",
+   "explication": "Les couleurs dépendent du pH de l'eau du robinet utilisée. Dans l'exemple du livret, elle était légèrement basique, ce qui donnait du bleu.",
    "source": {
     "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
     "page": 11

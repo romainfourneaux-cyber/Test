@@ -216,7 +216,7 @@ JEU.enregistrer("cours", {
    "corrections": [
     "Faux : l'évaporation, lente et à la surface du liquide, est aussi une vaporisation.",
     "Faux : la liquéfaction est aussi une façon pour un liquide de devenir un gaz.",
-    "Faux : un liquide ne peut jamais devenir un gaz."
+    "Faux : la fusion est aussi une façon pour un liquide de devenir un gaz."
    ],
    "explication": "La vaporisation, le passage du liquide au gaz, a deux formes : l'évaporation, à la surface, et l'ébullition, avec des bulles dans tout le liquide. Les deux donnent de la vapeur.",
    "source": {
@@ -280,10 +280,10 @@ JEU.enregistrer("cours", {
    "niveau": 3,
    "enonce": "Pourquoi le linge mouillé sèche-t-il, alors qu'on ne le chauffe jamais jusqu'à l'ébullition ?",
    "choix": [
-    "Parce que le tissu absorbe l'eau et la garde pour toujours",
-    "Parce que l'eau devient d'abord solide, puis disparaît",
+    "Parce que l'eau se liquéfie au contact de l'air",
+    "Parce que toute l'eau tombe au sol, goutte après goutte",
     "Parce que l'eau s'évapore à sa surface, sans bouillir",
-    "Parce que le vent change l'eau du linge en glace"
+    "Parce que le tissu transforme l'eau en air"
    ],
    "explication": "L'évaporation se fait à la surface du liquide, à une température bien plus basse que l'ébullition. L'eau du linge passe lentement dans l'air sous forme de vapeur.",
    "source": {
@@ -637,7 +637,7 @@ JEU.enregistrer("cours", {
     "Sa température d'ébullition",
     "Sa température de fusion",
     "Sa température ambiante",
-    "Sa densité"
+    "Sa température de liquéfaction"
    ],
    "explication": "La température de fusion est celle où le solide et le liquide d'un corps pur existent ensemble. Chaque corps pur a la sienne.",
    "source": {
@@ -654,7 +654,7 @@ JEU.enregistrer("cours", {
    "fiche": "physique-s05-1-f4",
    "type": "ordre",
    "niveau": 2,
-   "enonce": "Remets dans l'ordre les trois zones du graphique, de la première à la dernière.",
+   "enonce": "De l'eau salée refroidit jusqu'à geler entièrement. Remets dans l'ordre les trois étapes, de la première à la dernière.",
    "elements": [
     "Eau liquide et solide",
     "Eau solide",
@@ -673,7 +673,7 @@ JEU.enregistrer("cours", {
    "fiche": "physique-s05-1-f4",
    "type": "vrai_faux",
    "niveau": 2,
-   "enonce": "Sur ce graphique, l'eau salée est d'abord solide, puis liquide.",
+   "enonce": "Quand on laisse de l'eau salée refroidir jusqu'à ce qu'elle gèle, elle est d'abord solide, puis liquide.",
    "corrections": [
     "Faux : elle est d'abord liquide, puis elle se solidifie.",
     "Faux : elle reste liquide du début à la fin.",
@@ -797,9 +797,9 @@ JEU.enregistrer("cours", {
    "explication": "Le sel se dissout dans l'eau et abaisse sa température de solidification. La glace fond alors, même un peu en dessous de zéro degré.",
    "source": {
     "theme": "Séance 5 – Caractéristiques des changements d'état",
-    "titre": "Sel de déneigement",
+    "titre": "Fondant routier",
     "editeur": "Wikipédia",
-    "url": "https://fr.wikipedia.org/wiki/Sel_de_d%C3%A9neigement"
+    "url": "https://fr.wikipedia.org/wiki/Fondant_routier"
    },
    "r": "=cRSAAAAGpxErUxBAMQUMIwTIhEMMdQFetxAWYEDe8esSUEAQwQSDIFRvgkFVglCPVwAfMTZ",
    "poids": 1

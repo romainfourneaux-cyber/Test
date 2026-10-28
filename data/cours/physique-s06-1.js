@@ -915,7 +915,7 @@ JEU.enregistrer("cours", {
     "Sa fonte fait un peu baisser le niveau",
     "Sa fonte fait monter le niveau de l'océan",
     "Sa fonte ne change rien du tout",
-    "Sa fonte fait déborder l'océan"
+    "Sa fonte fait monter le niveau autant que celle des glaciers"
    ],
    "explication": "La banquise est dans l'eau, comme les glaçons du verre A. Sa fonte fait baisser le niveau légèrement, elle ne le fait pas monter.",
    "source": {
