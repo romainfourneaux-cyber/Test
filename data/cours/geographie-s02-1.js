@@ -163,7 +163,7 @@ JEU.enregistrer("cours", {
    "id": "geographie-s02-1-f6",
    "notion": "Le Burkina Faso en chiffres",
    "titre": "Un pays de 20 millions d'habitants, très jeune",
-   "texte": "Au recensement de 2019, le Burkina Faso comptait 20,5 millions d'habitants, et sa population grandit de près de 3 % par an. En 2018, on y comptait 37 naissances et 9 décès pour mille habitants. Résultat : un pays jeune : âge médian 17 ans, 44 % de moins de quinze ans. Un habitant sur quatre vit en ville.",
+   "texte": "Au recensement de 2019, le Burkina Faso comptait 20,5 millions d'habitants, et sa population grandit de près de 3 % par an. En 2018, on y comptait 37 naissances et 9 décès pour mille habitants. Résultat, un pays jeune : âge médian 17 ans, 44 % de moins de quinze ans. Un habitant sur quatre vit en ville.",
    "pointsCles": [
     "20,5 millions d'habitants au recensement de 2019 ; + 2,9 % par an entre 2006 et 2019",
     "2018 : 37 naissances et 9 décès pour mille habitants, soit un accroissement naturel de 28 pour mille",
@@ -1011,7 +1011,7 @@ JEU.enregistrer("cours", {
    "fiche": "geographie-s02-1-f6",
    "type": "vrai_faux",
    "niveau": 1,
-   "enonce": "Au Burkina Faso, près d'un habitant sur deux a moins de quinze ans.",
+   "enonce": "Au Burkina Faso, plus de quatre habitants sur dix ont moins de quinze ans.",
    "corrections": [],
    "explication": "Oui : 44 % des Burkinabés ont moins de quinze ans. C'est la marque d'une natalité très forte.",
    "source": {
@@ -1206,7 +1206,7 @@ JEU.enregistrer("cours", {
    "fiche": "geographie-s02-1-f7",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Sur quel continent se trouve la plupart des PMA ?",
+   "enonce": "Sur quel continent se trouvent la plupart des PMA ?",
    "choix": [
     "En Afrique",
     "En Asie",

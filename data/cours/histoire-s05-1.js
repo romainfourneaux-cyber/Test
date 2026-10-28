@@ -168,7 +168,7 @@ JEU.enregistrer("cours", {
    "texte": "Le château fort est la maison du seigneur, sa forteresse et le signe de sa puissance. Vers l'an mil, c'est une tour de bois sur une butte de terre, la motte, entourée d'une palissade et d'un fossé. Du XIe au XIIIe siècle, la pierre remplace le bois : donjon, enceinte flanquée de tours, mâchicoulis.",
    "pointsCles": [
     "Trois rôles : résidence du seigneur, forteresse qui protège, symbole de sa puissance",
-    "Vers l'an mil : la motte castrale, une butte de terre (de 4 à 15 m de haut) portant une tour de bois, avec palissade et fossé",
+    "Vers l'an mil : la motte castrale, une butte de terre portant une tour de bois, avec palissade et fossé",
     "Fin du Xe siècle : premiers grands donjons de pierre, dans la vallée de la Loire (Langeais) ; après 1150, le donjon rond devient la règle",
     "XIIe-XIIIe siècle : enceinte flanquée de tours (à partir de 1160), double enceinte, chemin de ronde, mâchicoulis",
     "Prendre un château : affamer les assiégés, saper ou miner les murs, les battre avec des engins de jet"
@@ -325,19 +325,19 @@ JEU.enregistrer("cours", {
    "fiche": "histoire-s05-1-f1",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Que doit un paysan au seigneur en échange de sa tenure ?",
+   "enonce": "Comment s'appelle la taxe qu'un paysan paie chaque année au seigneur pour sa tenure ?",
    "choix": [
-    "Le cens et des corvées",
-    "Le champart seulement",
-    "Une banalité payée au moulin",
-    "La garde de la forêt"
+    "Le cens",
+    "Le champart",
+    "La banalité",
+    "La corvée"
    ],
-   "explication": "La tenure se paie par une taxe, le cens, et par des corvées. Ces travaux gratuits se font pour le seigneur.",
+   "explication": "Le cens est la taxe due pour la tenure. Le champart est une part de récolte, la banalité se paie au moulin ou au four, et la corvée est un travail.",
    "source": {
     "fichier": "cours/histoire/Histoire 5e - Moyen Age - Etude de cas 2 Seigneurie de Wismes.pdf",
     "page": 1
    },
-   "r": "==wSBIy22OxBeogTccBDjlFAV4FAKUgRM4TZ",
+   "r": "X4FAKUgRM4TZ",
    "poids": 1
   },
   {
@@ -387,22 +387,22 @@ JEU.enregistrer("cours", {
    "enonce": "Relie chaque mot de la seigneurie à sa définition.",
    "gauche": [
     "Tenure",
-    "Réserve",
     "Cens",
-    "Corvée"
+    "Corvée",
+    "Banalité"
    ],
    "droite": [
     "Travail gratuit dû au seigneur",
-    "Terre gardée par le seigneur pour lui",
-    "Taxe payée pour une tenure",
+    "Taxe pour utiliser le moulin, le four ou le pressoir",
+    "Taxe payée chaque année pour une tenure",
     "Terre cédée à un paysan par le seigneur"
    ],
-   "explication": "Tenure : terre du paysan ; réserve : terre du seigneur. Le cens est la taxe, la corvée le travail gratuit.",
+   "explication": "La tenure est la terre du paysan. Le cens, la corvée et la banalité sont trois charges qui pèsent sur lui.",
    "source": {
     "fichier": "cours/histoire/Histoire 5e - Moyen Age - Etude de cas 2 Seigneurie de Wismes.pdf",
     "page": 1
    },
-   "r": "==ANvcnXG5TWsslQdlCRewRSEYnQyUlSZlCH",
+   "r": "==ANvYnXG5TWsklQdlCRe8RSEYnQyUlSZlCH",
    "poids": 1
   },
   {
@@ -880,19 +880,60 @@ JEU.enregistrer("cours", {
    "fiche": "histoire-s05-1-f4",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Dans une seigneurie, comment les terres se partagent-elles entre le seigneur et les paysans ?",
+   "enonce": "Sur le plan de Wismes, le moulin à vent du seigneur est bâti sur une butte. Pourquoi ?",
    "choix": [
-    "Les tenures aux paysans, la réserve au seigneur",
-    "Les tenures au seigneur, la réserve aux paysans",
-    "Les deux sortes de terres à l'église du village",
-    "Les deux sortes de terres au roi"
+    "Pour que ses ailes prennent bien le vent",
+    "Pour que le seigneur y rende la justice",
+    "Pour le cacher aux paysans du village",
+    "Pour y ranger le foin et le blé de la réserve"
    ],
-   "explication": "Le plan de Wismes distingue la réserve, gardée par le seigneur, et les tenures, cédées aux paysans. Ce sont les deux parties de la seigneurie.",
+   "explication": "Un moulin à vent a besoin de vent : sur une butte, ses ailes en reçoivent davantage. Le plan place aussi le château, l'église, la réserve et les tenures.",
    "source": {
     "fichier": "cours/histoire/Histoire 5e - Moyen Age - Etude de cas 2 Seigneurie de Wismes.pdf",
     "page": 1
    },
-   "r": "=0EFTwAHgsBEWUFBI4kCEohJexs9f5kDKYURBkyEGwBFBkkFaMBSwg0FAN0CbYUFM4TZ",
+   "r": "HFwHMgxTXQwYDBAXP50GIMwBcICAFUkBUUwBOI1Gm4VRQh1HPRxEGISZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s05-1-q50",
+   "fiche": "histoire-s05-1-f4",
+   "type": "qcm",
+   "niveau": 1,
+   "enonce": "De quel siècle date le plan de la seigneurie de Wismes ?",
+   "choix": [
+    "Du XIVe siècle",
+    "Du Xe siècle",
+    "Du XVIIIe siècle",
+    "Du XXe siècle"
+   ],
+   "explication": "Le plan de Wismes date du XIVe siècle. Il montre le château, l'église, le moulin, la réserve et les tenures.",
+   "source": {
+    "fichier": "cours/histoire/Histoire 5e - Moyen Age - Etude de cas 2 Seigneurie de Wismes.pdf",
+    "page": 1
+   },
+   "r": "=s0CDEBwASkFVgEOm4jRcYTZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s05-1-q51",
+   "fiche": "histoire-s05-1-f4",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Sur le plan de Wismes, un gibet est dessiné. Un habitant de Wismes vole le blé d'un voisin : qui le jugera ?",
+   "choix": [
+    "Le seigneur de Wismes, qui a le droit de justice",
+    "Le roi de France, depuis Paris",
+    "Le meunier du seigneur",
+    "Les paysans du village, réunis à l'église"
+   ],
+   "explication": "Le gibet rappelle que le seigneur juge et punit dans sa seigneurie. Son cartulaire de 1238 le dit : il rend la justice sur toutes les affaires, même le vol.",
+   "indice": "À quoi sert le gibet sur le plan ?",
+   "source": {
+    "fichier": "cours/histoire/Histoire 5e - Moyen Age - Etude de cas 2 Seigneurie de Wismes.pdf",
+    "page": 1
+   },
+   "r": "=00AFAgB0cwHFBRFJphBdoxJNAQWN8wTPMBGStWAQggBY4jTKYBSxgFAbp0BKUhRM4TZ",
    "poids": 1
   },
   {
@@ -968,7 +1009,7 @@ JEU.enregistrer("cours", {
     "À Constantinople",
     "À Bagdad"
    ],
-   "explication": "Les premiers grands donjons rectangulaires de pierre sont bâtis dans la vallée de la Loire, à Langeais, à la fin du Xe siècle. La Normandie, l'Angleterre et l'Allemagne les adoptent au XIe siècle.",
+   "explication": "Les premiers grands donjons rectangulaires de pierre sont bâtis dans la vallée de la Loire, à Langeais, à la fin du Xe siècle. La pierre remplace peu à peu le bois, qui brûle trop facilement.",
    "source": {
     "theme": "Cours 7 – La seigneurie",
     "titre": "Château fort",
@@ -1007,7 +1048,7 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Au XIIIe siècle, certains châteaux forts reçoivent une double enceinte.",
    "corrections": [],
-   "explication": "Oui : au XIIIe siècle, une seconde muraille entoure la première, et l'espace entre les deux s'appelle la lice. Les fossés deviennent aussi plus larges et plus profonds.",
+   "explication": "Oui : au XIIIe siècle, une seconde muraille entoure la première. Les fossés deviennent aussi plus larges et plus profonds.",
    "source": {
     "theme": "Cours 7 – La seigneurie",
     "titre": "Château fort",
@@ -1080,7 +1121,7 @@ JEU.enregistrer("cours", {
     "Au meunier",
     "Au seigneur de Wismes"
    ],
-   "explication": "Le ban est au départ un pouvoir du roi des Francs : commander les hommes à la guerre, puis ordonner et punir. Charlemagne veut l'exercer sur tout son royaume.",
+   "explication": "Le ban est au départ un pouvoir du roi des Francs : commander les hommes à la guerre, puis ordonner et punir. Les seigneurs s'en empareront à partir du Xe siècle.",
    "source": {
     "theme": "Cours 7 – La seigneurie",
     "titre": "Ban (Moyen Âge)",
@@ -1097,7 +1138,7 @@ JEU.enregistrer("cours", {
    "niveau": 1,
    "enonce": "À partir du Xe siècle, les seigneurs de châteaux s'emparent du ban.",
    "corrections": [],
-   "explication": "Oui : la petite noblesse des châteaux prend pour elle ce pouvoir du roi. On parle alors de ban châtelain.",
+   "explication": "Oui : la petite noblesse des châteaux prend pour elle ce pouvoir du roi. Les historiens parlent alors de seigneurie banale.",
    "source": {
     "theme": "Cours 7 – La seigneurie",
     "titre": "Ban (Moyen Âge)",

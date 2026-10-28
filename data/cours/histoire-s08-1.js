@@ -73,7 +73,7 @@ JEU.enregistrer("cours", {
     "1204 : Château-Gaillard tombe le 6 mars, Rouen le 24 juin ; la Normandie est au roi, puis Poitiers, Loches et Chinon",
     "27 juillet 1214, Bouvines : environ 7 000 hommes du roi contre 9 000 coalisés ; Ferrand de Flandre et Renaud de Boulogne prisonniers, Otton IV s'enfuit",
     "Conséquences : Otton perd sa couronne ; Jean sans Terre accepte la trêve de Chinon, puis doit accorder la Grande Charte à ses barons (1215) ; six jours de fêtes à Paris",
-    "Paris, capitale : rues pavées, les Halles (1183), une muraille de plus de 5 km commencée en 1190, la forteresse du Louvre (1202)",
+    "Paris, capitale : rues pavées, les Halles (1183), une muraille commencée en 1190, la forteresse du Louvre (1202)",
     "Gouverner : les baillis, officiers payés par le roi, rendent des comptes trois fois par an ; en 1204, le roi des Francs devient officiellement « roi de France »"
    ],
    "astuce": "Bouvines, un dimanche : le roi affronte un empereur, deux comtes et l'argent d'un roi, et il gagne.",
@@ -219,7 +219,7 @@ JEU.enregistrer("cours", {
    "texte": "Philippe IV, dit le Bel, règne de 1285 à 1314. Des légistes, juristes comme Nogaret, le conseillent. Il lève des impôts, manipule la monnaie, défie le pape Boniface VIII. Le 10 avril 1302, à Notre-Dame, il réunit clergé, nobles et villes pour l'appuyer : les premiers États généraux. Le vendredi 13 octobre 1307, tous les Templiers sont arrêtés.",
    "pointsCles": [
     "Règne du 5 octobre 1285 au 29 novembre 1314 ; son mariage avec Jeanne de Navarre (1284) lui apporte la Champagne et la Navarre",
-    "Les légistes, conseillers formés au droit (Guillaume de Nogaret, Pierre Flotte), servent le roi plutôt que les seigneurs",
+    "Les légistes, conseillers formés au droit, comme Guillaume de Nogaret, servent le roi plutôt que les seigneurs",
     "Argent : des impôts nouveaux, y compris sur les biens du clergé ; des manipulations de monnaie qui lui valent le surnom de « faux-monnayeur » ; l'agnel d'or (1311)",
     "Conflit avec le pape Boniface VIII : 10 avril 1302, premiers États généraux à Notre-Dame de Paris (clergé, noblesse, villes) ; 7 septembre 1303, le pape est bousculé à Anagni par Nogaret",
     "Vendredi 13 octobre 1307 : arrestation de tous les Templiers, un ordre de chevaliers riche et puissant ; 1312 : Lyon rattachée au royaume (traité de Vienne)",
@@ -253,7 +253,6 @@ JEU.enregistrer("cours", {
    "personnages": [
     "Philippe le Bel",
     "Guillaume de Nogaret",
-    "Pierre Flotte",
     "Boniface VIII",
     "Jeanne de Navarre"
    ],
@@ -372,7 +371,7 @@ JEU.enregistrer("cours", {
    "titre": "La Pucelle d'Orléans : dix jours qui renversent la guerre",
    "texte": "Octobre 1428 : les Anglais assiègent Orléans. Jeanne, jeune fille de Domrémy, arrive à Chinon en février 1429 et convainc Charles VII. Entrée dans Orléans le 29 avril, elle combat ; le 8 mai, les Anglais lèvent le siège. Le 17 juillet, Charles VII est sacré à Reims. Capturée en 1430, elle est brûlée à Rouen le 30 mai 1431.",
    "pointsCles": [
-    "Née vers 1412 à Domrémy ; à Vaucouleurs, le capitaine Robert de Baudricourt lui donne six hommes d'escorte",
+    "Née vers 1412 à Domrémy ; à Vaucouleurs, le capitaine Robert de Baudricourt finit par lui donner une escorte",
     "23 février 1429 : arrivée à Chinon ; Charles VII, que ses ennemis moquent comme « roi de Bourges », la reçoit deux jours plus tard",
     "Orléans, assiégée depuis octobre 1428 : Jeanne y entre le 29 avril avec un convoi de vivres ; forts Saint-Loup (4 mai), des Augustins (6 mai), des Tourelles (7 mai, elle est blessée à l'épaule) ; 8 mai : le siège est levé",
     "18 juin 1429, Patay : la cavalerie française écrase les archers anglais ; la route de Reims est ouverte ; 17 juillet : Charles VII y est sacré, Jeanne à ses côtés",
@@ -488,7 +487,7 @@ JEU.enregistrer("cours", {
     "Il reçoit la Flandre en cadeau de l'empereur",
     "Il conquiert la Lombardie, au-delà des Alpes, comme Charlemagne avant lui"
    ],
-   "explication": "Le roi d'Angleterre tient de grandes terres en France, comme la Normandie. En 1204, Philippe Auguste s'en empare, et il prend aussi Poitiers, Loches et Chinon : le domaine royal devient bien plus grand.",
+   "explication": "Le roi d'Angleterre tient de grandes terres en France, comme la Normandie. En 1204, Philippe Auguste s'en empare, puis prend Poitiers, Loches et Chinon : le domaine royal devient bien plus grand.",
    "source": {
     "theme": "Cours 10 – Émergence d’un État royal fort",
     "titre": "Philippe II Auguste",
@@ -499,42 +498,25 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "histoire-s08-1-q4",
-   "fiche": "histoire-s08-1-f1",
-   "type": "vrai_faux",
-   "niveau": 2,
-   "enonce": "Le domaine royal se trouve autour de Bouvines.",
-   "corrections": [
-    "Faux : il se trouve autour de Paris ; Bouvines est le lieu d'une bataille de 1214.",
-    "Faux : il se trouve autour de Wismes, dans le nord.",
-    "Faux : il n'y a pas de domaine royal au Moyen Âge."
-   ],
-   "explication": "Le domaine royal est autour de Paris. Bouvines est le lieu de la bataille de 1214.",
-   "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 10 - Support.pdf",
-    "page": 1
-   },
-   "r": "==wDlxVQUdEQJtwCS1wLBxAVZ9QDGNwBHAmFVBBEYUgTK4BS34FAV41CB8AEc0RBS5URGgxGP8jUNcSDXAkQaoxBGxABy0xBRUFFa40AbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
    "id": "histoire-s08-1-q5",
    "fiche": "histoire-s08-1-f1",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Pourquoi cite-t-on Paris quand on parle du domaine royal ?",
+   "enonce": "Pourquoi Philippe Auguste peut-il confisquer la Normandie à Jean sans Terre, en 1202 ?",
    "choix": [
-    "Parce que les terres du roi sont autour de cette ville",
-    "Parce que la bataille de Bouvines s'y est déroulée en 1214",
-    "Parce que Hugues Capet y a été élu roi en 987",
-    "Parce que c'est la ville du seigneur de Wismes"
+    "Jean, son vassal pour ce duché, a été condamné par sa cour",
+    "Jean lui a vendu la Normandie contre une grosse somme d'or",
+    "Le pape lui a donné la Normandie",
+    "Les Normands ont élu Philippe Auguste comme duc"
    ],
-   "explication": "Le domaine royal est autour de Paris. Bouvines est ailleurs, et Hugues Capet a été élu à Senlis.",
+   "explication": "Pour ses terres françaises, le roi d'Angleterre est le vassal du roi de France. Condamné comme félon par la cour du roi, il perd ses fiefs : c'est la commise.",
    "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 10 - Support.pdf",
-    "page": 1
+    "theme": "Cours 10 – Émergence d’un État royal fort",
+    "titre": "Domaine royal français",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Domaine_royal_fran%C3%A7ais"
    },
-   "r": "=EGSJkFRY80AS0xFkIFEBU1AcEwGHkwYZtgWe5kBJQRSHMiUGAwBDwgGPFQDv0AAAxlTKUAFIISZ",
+   "r": "==wRHQgBN80EbM2XEUUDHzKCLggFp0hFFxtsdcMrSlwYBws9F1gGCYEDRcGAAoQBRVwDcEQC10wCa5lTDhwBMgTZ",
    "poids": 1
   },
   {
@@ -756,7 +738,7 @@ JEU.enregistrer("cours", {
     "Par des missi dominici envoyés par deux, comme Charlemagne",
     "Par les paysans, élus dans chaque village"
    ],
-   "explication": "Avant de partir en croisade, en 1190, le roi organise son royaume : des baillis, officiers nommés et payés par lui, rendent la justice et lèvent ses revenus. Ils viennent rendre des comptes à Paris trois fois par an.",
+   "explication": "En 1190, avant de partir en croisade, le roi règle le gouvernement du royaume en son absence. Ses baillis, officiers nommés et payés par lui, rendent la justice, lèvent ses revenus et viennent rendre des comptes à Paris trois fois par an.",
    "source": {
     "theme": "Cours 10 – Émergence d’un État royal fort",
     "titre": "Philippe II Auguste",
@@ -802,21 +784,22 @@ JEU.enregistrer("cours", {
    "id": "histoire-s08-1-q23",
    "fiche": "histoire-s08-1-f3",
    "type": "qcm",
-   "niveau": 3,
-   "enonce": "En 1250, quel roi de la frise règne ?",
+   "niveau": 2,
+   "enonce": "Qui gouverne le royaume pendant l'enfance de Louis IX, roi à douze ans ?",
    "choix": [
-    "Louis IX",
-    "Philippe le Bel",
-    "Philippe Auguste",
-    "Hugues Capet"
+    "Sa mère, Blanche de Castille",
+    "Son fidèle compagnon Jean de Joinville",
+    "Le pape",
+    "Philippe le Bel"
    ],
-   "explication": "1250 se situe entre 1226 et 1270 : c'est le règne de Louis IX. Philippe le Bel ne règne qu'à partir de 1285.",
-   "indice": "Cherche le règne qui contient 1250.",
+   "explication": "Louis IX devient roi en 1226, à douze ans. Sa mère Blanche de Castille assure la régence jusqu'à sa majorité.",
    "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 10 - Support.pdf",
-    "page": 1
+    "theme": "Cours 10 – Émergence d’un État royal fort",
+    "titre": "Louis IX",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Louis_IX"
    },
-   "r": "==wRtRmTc8wEG4TZ",
+   "r": "==wFIJwAPIhGTQgUQEQVUEQDBMBBB0QSQ9lxsugRIESZ",
    "poids": 1
   },
   {
@@ -981,19 +964,21 @@ JEU.enregistrer("cours", {
    "fiche": "histoire-s08-1-f5",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Lequel de ces deux rois règne avant l'autre ?",
+   "enonce": "Qui sont les légistes de Philippe le Bel ?",
    "choix": [
-    "Louis IX, avant Philippe le Bel",
-    "Philippe le Bel, avant Louis IX",
-    "Ils règnent en même temps",
-    "Aucun des deux n'est sur la frise"
+    "Des conseillers formés au droit, comme Nogaret",
+    "Des chevaliers chargés de garder le palais du Louvre",
+    "Des moines qui écrivent l'histoire des rois",
+    "Des marchands qui prêtent de l'argent au roi"
    ],
-   "explication": "Louis IX règne de 1226 à 1270, Philippe le Bel de 1285 à 1314. Louis IX vient donc en premier.",
+   "explication": "Les légistes sont des juristes au service du roi. Avec eux, Philippe le Bel renforce son pouvoir face aux seigneurs et au pape.",
    "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 10 - Support.pdf",
-    "page": 1
+    "theme": "Cours 10 – Émergence d’un État royal fort",
+    "titre": "Philippe IV le Bel",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Philippe_IV_le_Bel"
    },
-   "r": "PkAUv5kCKYEDCczGZwQHhkkGBMhHi0QStRmTc8wEG4TZ",
+   "r": "==ARSwAAmUhGrUFFEMAARg0bZxgWfpwTTcQSB4esYchGXkUHdcBBvQEAGNUAMYUFMYTZ",
    "poids": 1
   },
   {
@@ -1251,7 +1236,7 @@ JEU.enregistrer("cours", {
    "enonce": "Que se passe-t-il à Poitiers, le 19 septembre 1356 ?",
    "choix": [
     "Le roi Jean le Bon est fait prisonnier",
-    "Jeanne d'Arc délivre la ville",
+    "Jeanne d'Arc fait lever le siège de la ville",
     "Philippe Auguste bat l'empereur",
     "Les Anglais perdent Calais"
    ],
@@ -1423,7 +1408,7 @@ JEU.enregistrer("cours", {
     "C'est la ville natale de Jeanne d'Arc",
     "Le pape y réside"
    ],
-   "explication": "Si Orléans tombe, les Anglais passent la Loire et menacent les terres de Charles VII, replié dans le Berry. Sa délivrance renverse le cours de la guerre.",
+   "explication": "Si Orléans tombe, les Anglais passent la Loire et menacent les terres du sud, restées fidèles à Charles VII. Sa délivrance renverse le cours de la guerre.",
    "indice": "Regarde où coule la Loire par rapport aux terres de Charles VII.",
    "source": {
     "theme": "Cours 10 – Émergence d’un État royal fort",
@@ -1473,7 +1458,7 @@ JEU.enregistrer("cours", {
    "id": "histoire-s08-1-b2",
    "fiche": "histoire-s08-1-f3",
    "titre": "La Sainte-Chapelle, un écrin bâti en sept ans",
-   "texte": "En 1239, Louis IX achète à l'empereur latin de Constantinople, pour 135 000 livres, une relique célèbre, la couronne d'épines. Pour l'abriter, il fait élever dans son palais de l'île de la Cité la Sainte-Chapelle, commencée vers 1241 et consacrée le 26 avril 1248 : sept ans à peine pour un chef-d'œuvre du gothique rayonnant, célèbre pour ses vitraux.",
+   "texte": "En 1239, Louis IX achète pour 135 000 livres une relique célèbre, la couronne d'épines, que l'empereur latin de Constantinople avait mise en gage. Pour l'abriter, il fait élever dans son palais de l'île de la Cité la Sainte-Chapelle, commencée entre 1241 et 1244 et consacrée le 26 avril 1248 : moins de sept ans pour un chef-d'œuvre du gothique rayonnant, célèbre pour ses vitraux.",
    "source": {
     "titre": "Sainte-Chapelle",
     "editeur": "Wikipédia, l'encyclopédie libre",

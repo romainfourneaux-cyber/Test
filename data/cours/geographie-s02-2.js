@@ -1021,14 +1021,14 @@ JEU.enregistrer("cours", {
    "fiche": "geographie-s02-2-f5",
    "type": "qcm",
    "niveau": 3,
-   "enonce": "Au début des années 2000, la part des citadins du Sud vivant en bidonville a reculé, mais leur nombre a continué d'augmenter. Comment est-ce possible ?",
+   "enonce": "En quinze ans, jusqu'en 2005, la part des citadins des pays du Sud vivant en bidonville est passée de 47 % à 37 %, mais leur nombre a continué d'augmenter. Comment est-ce possible ?",
    "choix": [
     "Parce que les villes ont gagné énormément d'habitants : une part plus petite d'un total bien plus grand",
     "Parce que l'ONU a changé sa définition du bidonville pour y faire entrer davantage de quartiers",
     "Parce que les bidonvilles se sont vidés vers les campagnes",
     "C'est impossible : si la part baisse, le nombre baisse aussi"
    ],
-   "explication": "La part est passée de 47 % à 37 % en quinze ans, mais les villes du Sud ont grossi de centaines de millions d'habitants. Un pourcentage plus petit d'un total bien plus grand peut donner un nombre plus élevé.",
+   "explication": "Pendant ces quinze ans, la population des villes du Sud a beaucoup augmenté. Un pourcentage plus petit d'un total bien plus grand peut donner un nombre plus élevé.",
    "source": {
     "theme": "Cours 1 – 2e partie – II Dans les pays du Sud",
     "titre": "Bidonville",
@@ -1099,7 +1099,7 @@ JEU.enregistrer("cours", {
     "Vers 1931",
     "Il continue encore aujourd'hui"
    ],
-   "explication": "L'exode rural français a nettement ralenti après 1965 et s'est arrêté vers 1975. Les campagnes françaises avaient compté le plus de ruraux vers 1850-1860.",
+   "explication": "D'après l'Insee, l'exode rural français s'est arrêté vers 1975. Les campagnes françaises avaient compté le plus de ruraux vers 1850-1860.",
    "source": {
     "theme": "Cours 1 – 2e partie – II Dans les pays du Sud",
     "titre": "Exode rural",
