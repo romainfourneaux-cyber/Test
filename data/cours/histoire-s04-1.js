@@ -130,7 +130,7 @@ JEU.enregistrer("cours", {
    "id": "histoire-s04-1-f5",
    "notion": "Le Coran, un livre du VIIe siècle",
    "titre": "Étude de document : un extrait du Coran",
-   "texte": "Le texte étudié est un extrait du Coran, le livre sacré de l'islam. Écrit en arabe, son nom signifie « récitation » ; selon la tradition, il est mis par écrit au VIIe siècle. Il compte 114 sourates, découpées en versets : l'extrait vient de la sourate 2. Il parle du mois de ramadan, le neuvième mois du calendrier hégirien.",
+   "texte": "Le cours étudie un extrait du Coran, le livre sacré de l'islam. Écrit en arabe, son nom signifie « récitation » ; selon la tradition, il est mis par écrit au VIIe siècle. Il compte 114 sourates, découpées en versets : l'extrait vient de la sourate 2. Il parle du mois de ramadan, le neuvième mois du calendrier hégirien.",
    "pointsCles": [
     "Le Coran : le livre sacré de l'islam, écrit en arabe ; son nom veut dire « la récitation »",
     "D'après la tradition, il est mis par écrit au VIIe siècle, sous le calife Othman",
@@ -171,7 +171,7 @@ JEU.enregistrer("cours", {
    "id": "histoire-s04-1-f6",
    "notion": "Bagdad, la ville ronde (762)",
    "titre": "762 : al-Mansur trace Bagdad, la ville ronde",
-   "texte": "762. Le calife al-Mansur choisit un site sur le Tigre et trace une ville ronde : Madinat as-Salam, « la cité de la paix », Bagdad. Cent mille ouvriers, quatre ans : 2,5 km de diamètre, quatre portes, le palais et la mosquée au centre. Elle dépasse bientôt le million d'habitants, carrefour du commerce entre l'Inde, la Chine et l'Europe.",
+   "texte": "762. Le calife al-Mansur choisit un site sur le Tigre et trace une ville ronde : Madinat as-Salam, « la cité de la paix », Bagdad. Cent mille ouvriers, quatre ans : 2,5 km de diamètre, quatre portes, le palais et la mosquée au centre. Elle approche bientôt le million d'habitants, carrefour du commerce entre l'Inde, la Chine et l'Europe.",
    "pointsCles": [
     "762 : le calife abbasside al-Mansur fonde Bagdad, « la cité de la paix », sur le Tigre",
     "La ville ronde : environ 2,5 km de diamètre, quatre portes, le palais et la mosquée au centre ; cent mille ouvriers, quatre ans de travaux",
@@ -540,26 +540,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "histoire-s04-1-q11",
-   "fiche": "histoire-s04-1-f2",
-   "type": "qcm",
-   "niveau": 2,
-   "enonce": "Quel territoire appartient à l'Empire omeyyade mais pas à l'Empire abbasside ?",
-   "choix": [
-    "Al Andalus",
-    "La péninsule d'Arabie",
-    "La région de Damas et de Jérusalem",
-    "La région de Bagdad"
-   ],
-   "explication": "Al Andalus, à l'ouest, est dans l'Empire omeyyade et en dehors de l'Empire abbasside. L'Arabie et la région de Damas sont dans les deux.",
-   "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 5 - Support et Devoir entrainement.pdf",
-    "page": 5
-   },
-   "r": "h5FEZxkCBciRFMTZ",
-   "poids": 1
-  },
-  {
    "id": "histoire-s04-1-q12",
    "fiche": "histoire-s04-1-f2",
    "type": "qcm",
@@ -829,14 +809,14 @@ JEU.enregistrer("cours", {
    "fiche": "histoire-s04-1-f5",
    "type": "qcm",
    "niveau": 1,
-   "enonce": "Comment s'appelle le livre de l'islam, dont vient le texte sur le ramadan ?",
+   "enonce": "Comment s'appelle le livre sacré de l'islam, dont le cours étudie un extrait ?",
    "choix": [
     "Le Coran",
-    "Les Annales d'Eginhard",
-    "Une chronique byzantine",
-    "Le Rustican"
+    "Les Mille et Une Nuits",
+    "Le Code de Justinien",
+    "Les Annales d'Eginhard"
    ],
-   "explication": "Le livre de l'islam est le Coran ; le texte étudié en vient. Eginhard a écrit sur Charlemagne, et le Rustican décrit les travaux des paysans.",
+   "explication": "Le livre sacré de l'islam est le Coran, écrit en arabe au VIIe siècle. Les Mille et Une Nuits sont des contes, le Code de Justinien un recueil de lois, et Eginhard a écrit sur Charlemagne.",
    "source": {
     "fichier": "cours/histoire/Histoire 5e - Seance 5 - Support et Devoir entrainement.pdf",
     "page": 2

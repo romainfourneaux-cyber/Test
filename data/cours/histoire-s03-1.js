@@ -133,10 +133,10 @@ JEU.enregistrer("cours", {
    "id": "histoire-s03-1-f4",
    "notion": "Les conquêtes du califat",
    "titre": "Les conquêtes : de l'Indus à l'Espagne en un siècle",
-   "texte": "En un siècle, les armées du califat bâtissent un empire immense. Syrie et Palestine d'abord : Jérusalem tombe en 637 ou 638. Puis l'Égypte (639-641), la Perse (651), l'Afrique du Nord (Carthage, 698), l'Espagne (711), l'Indus. Deux arrêts : Constantinople, qui résiste en 717-718, et la Gaule, où Charles Martel stoppe une expédition près de Poitiers, en 732.",
+   "texte": "En un siècle, les armées du califat bâtissent un empire immense. Syrie et Palestine d'abord : Jérusalem tombe en 637 ou 638. Puis l'Égypte (639-642), la Perse (651), l'Afrique du Nord (Carthage, 698), l'Espagne (711), l'Indus. Deux arrêts : Constantinople, qui résiste en 717-718, et la Gaule, où Charles Martel stoppe une expédition près de Poitiers, en 732.",
    "pointsCles": [
     "Syrie et Palestine : victoire du Yarmouk sur les Byzantins (636), Jérusalem (637-638)",
-    "Égypte (639-641) ; Perse : l'empire sassanide s'effondre en 651",
+    "Égypte (639-642) ; Perse : l'empire sassanide s'effondre en 651",
     "Afrique du Nord : Kairouan fondée en 670, Carthage prise en 698 ; Espagne : en 711, Tariq franchit le détroit de Gibraltar",
     "Limites : échec devant Constantinople (717-718) ; expédition stoppée entre Tours et Poitiers par Charles Martel (732)",
     "Pourquoi si vite : Byzantins et Perses épuisés par leur guerre (602-628), armées arabes mobiles ; les peuples soumis gardent leur religion contre un impôt"
@@ -359,25 +359,6 @@ JEU.enregistrer("cours", {
     "page": 1
    },
    "r": "==QNe8QEQBUAHcwKLlCH",
-   "poids": 1
-  },
-  {
-   "id": "histoire-s03-1-q16",
-   "fiche": "histoire-s03-1-f1",
-   "type": "vrai_faux",
-   "niveau": 2,
-   "enonce": "Mohamed, aussi appelé Mahomet, vit de 570 à 622.",
-   "corrections": [
-    "Faux : il vit de 570 à 632 ; 622 est l'année de l'Hégire.",
-    "Faux : il vit de 622 à 632.",
-    "Faux : il vit de 661 à 750."
-   ],
-   "explication": "Mohamed vit de 570 à 632. L'année 622 est celle de l'Hégire, dix ans avant sa mort.",
-   "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 4 - Support.pdf",
-    "page": 1
-   },
-   "r": "PUGXQcBHWAcrnUFBjhUAVg0xsiACIU1KSFgFQE1WcllUTN2HWNQDOzqRW51RndREFFAGf40AbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -922,7 +903,7 @@ JEU.enregistrer("cours", {
     "Charlemagne est couronné empereur d'Occident",
     "L'armée byzantine bat les Francs"
    ],
-   "explication": "Une expédition partie d'Al-Andalus pille Bordeaux et remonte vers Tours. Entre Poitiers et Tours, en octobre 732, les Francs de Charles Martel et les Aquitains d'Eudes l'arrêtent ; son chef, Abd al-Rahman, est tué.",
+   "explication": "Une expédition partie d'Al-Andalus pille la région de Bordeaux et remonte vers Tours. Entre Poitiers et Tours, en octobre 732 ou 733, les Francs de Charles Martel et les Aquitains d'Eudes l'arrêtent ; son chef, Abd al-Rahman, est tué.",
    "source": {
     "theme": "Cours 4 – Islam, origines et expansion",
     "titre": "Bataille de Poitiers (732)",
@@ -1181,28 +1162,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "histoire-s03-1-q45",
-   "fiche": "histoire-s03-1-f5",
-   "type": "qcm",
-   "niveau": 3,
-   "enonce": "Le titre de calife disparaît-il avec la prise de Bagdad par les Mongols, en 1258 ?",
-   "choix": [
-    "Non : il passe au Caire, puis aux sultans ottomans, jusqu'à son abolition en 1924",
-    "Oui : plus personne au monde ne porte jamais ce titre après 1258, pas même en Égypte",
-    "Non : il passe à l'empereur byzantin",
-    "Non : il passe au roi de France"
-   ],
-   "explication": "Après 1258, un calife abbasside est installé au Caire, puis les sultans ottomans reprennent le titre. Il est aboli en 1924.",
-   "source": {
-    "theme": "Cours 4 – Islam, origines et expansion",
-    "titre": "Calife",
-    "editeur": "Wikipédia",
-    "url": "https://fr.wikipedia.org/wiki/Calife"
-   },
-   "r": "T1FXWNEStgURbJ0Bb8gCGAhJSthCGEVyti0BZADWPURAdEwBLYgBz0RVWsBEdIgGBg0OYRQFedgGWYURXUzGUYSVEggTKEwGi0VRZRkTVZECGwTZ",
-   "poids": 1
-  },
-  {
    "id": "histoire-s03-1-q46",
    "fiche": "histoire-s03-1-f5",
    "type": "trou",
@@ -1242,7 +1201,7 @@ JEU.enregistrer("cours", {
    "id": "histoire-s03-1-b2",
    "fiche": "histoire-s03-1-f2",
    "titre": "Damas : la Grande Mosquée des Omeyyades",
-   "texte": "Entre 706 et 715, le calife omeyyade al-Walid fait bâtir à Damas, sa capitale, une immense mosquée de 157 mètres sur 77, le plus grand bâtiment du monde musulman de l'époque. Ses murs étaient couverts de mosaïques de verre sur fond d'or, à la manière byzantine ; un panneau de 34 mètres de long montre les rives de la rivière Barada. La vieille ville de Damas est inscrite au patrimoine mondial depuis 1979.",
+   "texte": "Entre 706 et 715, le calife omeyyade al-Walid fait bâtir à Damas, sa capitale, une immense mosquée de plus de 150 mètres de long, le plus grand bâtiment du monde musulman de l'époque. Ses murs étaient couverts de mosaïques de verre sur fond d'or, à la manière byzantine ; un panneau de près de 35 mètres de long montre les rives de la rivière Barada. La vieille ville de Damas est inscrite au patrimoine mondial depuis 1979.",
    "source": {
     "titre": "Grande Mosquée des Omeyyades",
     "editeur": "Wikipédia, l'encyclopédie libre",
