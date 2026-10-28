@@ -44,3 +44,13 @@ Après les suppressions, chaque fiche garde au moins cinq questions écrites, au
 ## Sources envisagées pour les questions de thème
 
 Vikidia (Carte géographique, Planisphère, Géographie, Démographie, Énergie fossile, Cyclone tropical), Wikipédia (Échelle (cartographie), Population mondiale, Eau douce, Risque naturel, Risque technologique, Changement global, Chaîne du froid, Pays les moins avancés), Lumni ou eduscol (croquis de géographie), OMS (densité de médecins). Chaque fait est à vérifier sur la page citée au moment de la réécriture ; les adresses sont données dans le JSON.
+
+## Contre-relecture du 28/10/2026
+
+Relecture indépendante du travail appliqué : diff des neuf cours, les 36 questions du cours mince geographie-s01-1 relues une à une, les 19 faits de thème vérifiés sur leur page (Wikipédia et OMS), aucune suite de huit mots commune avec les pages citées, aucun recoupement avec le devoir n° 1.
+
+- Supprimées en plus : geographie-s01-1-q7 et q28 (ordre des parties et des cours du livret : structure sans savoir ; identifiants non réutilisés). Le cours passe à 34 questions, 16 de thème (47 %).
+- Leurres revus : geographie-s01-1-q20 (« sommaire », « préface »), q21 (« rois et reines »), q29 (« payer en dollars »), q32 (« seulement s'il pleut ce jour-là ») ; geographie-s08-1-q36 (« maladies rares ») et q37 (centres « vides »).
+- Sources revues : q3 → « Légende (cartographie) » ; q32 → « Risque majeur » (« Risque technologique » n'est qu'une redirection vers « Risque industriel », qui ne définit pas la notion). q19 reformulée sans l'IGN.
+- Le reste des questions de geographie-s01-1 (titres des thèmes, études de cas rattachées à leur thème, sujets des cours) est gardé : c'est l'objet même d'un cours de présentation du programme.
+- Fiche pour Romain : atelier/relecture/questions-theme-geographie.md.

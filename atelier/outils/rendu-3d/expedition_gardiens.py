@@ -160,13 +160,14 @@ def gardien(camp):
     """Gardien de la semaine : écu contre un poteau, casque au tortil sur le poteau, pennon à droite."""
     E.scene_vignette(E.GARDIEN, rayon_sol=RAYON_SOL)
     m = mats(camp)
-    # le casque dépasse juste du haut de l'écu (comme la tête du médaillon SVG), le pennon à droite, vers la caméra
-    poteau = (-0.3, 0.6)
-    objets = [C.cylindre("poteau", 0.11, 2.15, (poteau[0], poteau[1], 0), m["bois"], segments=16)]
-    objets += casque("casque", camp, (poteau[0], poteau[1], 2.15), m)
-    objets += ecu("ecu", camp, 2.3, pied=(-0.15, -0.45), penche=20)
+    # le casque dépasse juste du haut de l'écu (comme la tête du médaillon SVG) ; le poteau est derrière la moitié droite
+    # de l'écu, vers le centre du champ : le tortil ne mord pas la bande d'or, qui s'incurve vite en haut à gauche
+    poteau, haut = (0.15, 0.6), 2.25 if camp == "omeyyades" else 2.15
+    objets = [C.cylindre("poteau", 0.11, haut, (poteau[0], poteau[1], 0), m["bois"], segments=16)]
+    objets += casque("casque", camp, (poteau[0], poteau[1], haut), m)
+    objets += ecu("ecu", camp, 2.3, pied=(-0.15, -0.45), penche=14)
     objets += hampe("pennon", camp, (1.25, 0.25, 0), 2.2, 1.2, 0.72, -45, m)
-    objets = racine(objets, 1.7, dx=-1.1, dy=-2.8)
+    objets = racine(objets, 1.62, dx=-0.95, dy=-2.5)
     return E.rendre_rondel("gardien-" + camp, objets, taille=E.GARDIEN, rayon_u=E.R_GARDIEN, echantillons=ECHANTILLONS, contour=0.45)
 
 
