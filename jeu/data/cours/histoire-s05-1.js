@@ -160,6 +160,121 @@ JEU.enregistrer("cours", {
     "fichier": "cours/histoire/Histoire 5e - Moyen Age - Etude de cas 2 Seigneurie de Wismes.pdf",
     "page": 1
    }
+  },
+  {
+   "id": "histoire-s05-1-f5",
+   "notion": "Le château fort, cœur de la seigneurie",
+   "titre": "De la motte de bois au donjon de pierre",
+   "texte": "Le château fort est la maison du seigneur, sa forteresse et le signe de sa puissance. Vers l'an mil, c'est une tour de bois sur une butte de terre, la motte, entourée d'une palissade et d'un fossé. Du XIe au XIIIe siècle, la pierre remplace le bois : donjon, enceinte flanquée de tours, mâchicoulis.",
+   "pointsCles": [
+    "Trois rôles : résidence du seigneur, forteresse qui protège, symbole de sa puissance",
+    "Vers l'an mil : la motte castrale, une butte de terre (de 4 à 15 m de haut) portant une tour de bois, avec palissade et fossé",
+    "Fin du Xe siècle : premiers grands donjons de pierre, dans la vallée de la Loire (Langeais) ; après 1150, le donjon rond devient la règle",
+    "XIIe-XIIIe siècle : enceinte flanquée de tours (à partir de 1160), double enceinte, chemin de ronde, mâchicoulis",
+    "Prendre un château : affamer les assiégés, saper ou miner les murs, les battre avec des engins de jet"
+   ],
+   "astuce": "Trois âges du château : la terre et le bois (la motte), puis la pierre (le donjon), puis les tours et les mâchicoulis.",
+   "dates": [
+    {
+     "annee": 1000,
+     "evenement": "Vers l'an mil : les mottes castrales se multiplient entre Loire et Rhin"
+    },
+    {
+     "annee": 1150,
+     "evenement": "Après 1150 : le donjon rond devient la règle"
+    }
+   ],
+   "lieux": [
+    "Langeais"
+   ],
+   "personnages": [],
+   "vocabulaire": [
+    {
+     "mot": "motte castrale",
+     "def": "une butte de terre, naturelle ou artificielle, portant un fort de bois : le premier château du seigneur"
+    },
+    {
+     "mot": "donjon",
+     "def": "la grande tour qui domine le château fort"
+    },
+    {
+     "mot": "enceinte",
+     "def": "le mur qui entoure le château, souvent flanqué de tours"
+    },
+    {
+     "mot": "mâchicoulis",
+     "def": "les ouvertures au sommet des murs, qui remplacent les galeries de bois pour frapper les assaillants d'en haut"
+    },
+    {
+     "mot": "palissade",
+     "def": "une clôture de pieux de bois plantés serrés"
+    }
+   ],
+   "schema": null,
+   "prerequis": [
+    "histoire-s05-1-f1",
+    "histoire-s04-3-f6"
+   ],
+   "source": {
+    "programme": "L'ordre seigneurial : la formation et la domination des campagnes",
+    "titre": "Château fort",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Ch%C3%A2teau_fort"
+   }
+  },
+  {
+   "id": "histoire-s05-1-f6",
+   "notion": "Le ban : commander, juger, punir",
+   "titre": "Le ban, un pouvoir du roi passé aux seigneurs",
+   "texte": "Le ban est d'abord le droit du roi des Francs de commander ses hommes, à la guerre comme en justice. À partir du Xe siècle, les seigneurs de châteaux s'emparent de ce pouvoir sur les habitants de leurs terres. Vers 1050-1100, la seigneurie banale est partout : le seigneur ordonne, juge, punit, et fait payer moulin, four et pressoir.",
+   "pointsCles": [
+    "Le ban : le pouvoir de commander, de contraindre et de punir ; chez les Francs, un pouvoir du roi",
+    "Xe-XIe siècle : les seigneurs de châteaux (châtelains) s'en emparent ; le ban se diffuse dans la seconde moitié du XIe siècle",
+    "Seigneurie foncière : le seigneur possède des terres ; seigneurie banale : il commande les habitants, même sur des terres qui ne sont pas à lui",
+    "Les banalités (moulin, four, pressoir) rapportent plus que le cens, rarement augmenté ; d'où le sens actuel de « banal » : commun à tous",
+    "Convoquer son ban : appeler ses hommes à la guerre"
+   ],
+   "dates": [
+    {
+     "annee": 1075,
+     "evenement": "Seconde moitié du XIe siècle : le ban se diffuse dans tout l'Occident"
+    }
+   ],
+   "lieux": [],
+   "personnages": [],
+   "vocabulaire": [
+    {
+     "mot": "ban",
+     "def": "le pouvoir de commander, de contraindre et de punir les habitants d'un territoire"
+    },
+    {
+     "mot": "châtelain",
+     "def": "le seigneur qui tient un château"
+    },
+    {
+     "mot": "seigneurie banale",
+     "def": "le pouvoir du seigneur sur les habitants de ses terres : ordonner, juger, punir, imposer ses banalités"
+    },
+    {
+     "mot": "seigneurie foncière",
+     "def": "le grand domaine dont le seigneur est le propriétaire"
+    },
+    {
+     "mot": "contraindre",
+     "def": "obliger quelqu'un à faire quelque chose"
+    }
+   ],
+   "schema": null,
+   "prerequis": [
+    "histoire-s05-1-f1",
+    "histoire-s05-1-f3"
+   ],
+   "source": {
+    "programme": "L'ordre seigneurial : la formation et la domination des campagnes",
+    "titre": "Ban (Moyen Âge)",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Ban_(Moyen_%C3%82ge)"
+   }
   }
  ],
  "schemas": [
@@ -313,7 +428,7 @@ JEU.enregistrer("cours", {
   },
   {
    "id": "histoire-s05-1-q8",
-   "fiche": "histoire-s05-1-f1",
+   "fiche": "histoire-s05-1-f6",
    "type": "qcm",
    "niveau": 3,
    "enonce": "Vers l'an mil se développe la « seigneurie banale ». Que désigne le « ban » du seigneur ?",
@@ -779,6 +894,329 @@ JEU.enregistrer("cours", {
    },
    "r": "=0EFTwAHgsBEWUFBI4kCEohJexs9f5kDKYURBkyEGwBFBkkFaMBSwg0FAN0CbYUFM4TZ",
    "poids": 1
+  },
+  {
+   "id": "histoire-s05-1-q34",
+   "fiche": "histoire-s05-1-f5",
+   "type": "qcm",
+   "niveau": 1,
+   "enonce": "Vers l'an mil, de quoi est fait le premier château d'un seigneur ?",
+   "choix": [
+    "Une tour de bois sur une motte",
+    "Un donjon de pierre garni de mâchicoulis et de tours",
+    "Une cathédrale fortifiée",
+    "Une tente de toile"
+   ],
+   "explication": "Le premier château est une motte : une butte de terre portant une tour de bois, avec une palissade et un fossé. La pierre vient ensuite.",
+   "source": {
+    "theme": "Cours 7 – La seigneurie",
+    "titre": "Motte castrale",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Motte_castrale"
+   },
+   "r": "=cEUZpBALYEDcIjUHAhBRpxBAABSmkURHhVAbY0AHcSZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s05-1-q35",
+   "fiche": "histoire-s05-1-f5",
+   "type": "vrai_faux",
+   "niveau": 1,
+   "enonce": "Le château fort sert à la fois de maison au seigneur et de forteresse.",
+   "corrections": [],
+   "explication": "Oui : le seigneur y habite, s'y défend et y montre sa puissance. Le château a ces trois rôles à la fois.",
+   "source": {
+    "theme": "Cours 7 – La seigneurie",
+    "titre": "Château fort",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Ch%C3%A2teau_fort"
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s05-1-q36",
+   "fiche": "histoire-s05-1-f5",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Comment s'appelle la grande tour qui domine le château fort ?",
+   "choix": [
+    "Le donjon",
+    "La motte",
+    "La palissade",
+    "Le gibet"
+   ],
+   "explication": "Le donjon est la tour maîtresse du château. Après 1150, les donjons ronds remplacent peu à peu les donjons rectangulaires.",
+   "source": {
+    "theme": "Cours 7 – La seigneurie",
+    "titre": "Château fort",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Ch%C3%A2teau_fort"
+   },
+   "r": "=8wCadEAAIgRM4TZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s05-1-q37",
+   "fiche": "histoire-s05-1-f5",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Où apparaissent, à la fin du Xe siècle, les premiers grands donjons de pierre ?",
+   "choix": [
+    "Dans la vallée de la Loire, à Langeais",
+    "Dans le duché de Normandie, autour de Rouen",
+    "À Constantinople",
+    "À Bagdad"
+   ],
+   "explication": "Les premiers grands donjons rectangulaires de pierre sont bâtis dans la vallée de la Loire, à Langeais, à la fin du Xe siècle. La Normandie, l'Angleterre et l'Allemagne les adoptent au XIe siècle.",
+   "source": {
+    "theme": "Cours 7 – La seigneurie",
+    "titre": "Château fort",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Ch%C3%A2teau_fort"
+   },
+   "r": "HZAGIsACckwDNUs9NIkCU8gB+c2EZUEEVk0CGHLBvw0EVwkAPVBCIYTZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s05-1-q38",
+   "fiche": "histoire-s05-1-f5",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Comment une armée prend-elle un château fort dont les murs sont trop solides ?",
+   "choix": [
+    "Elle l'entoure et affame les assiégés",
+    "Elle attend que le seigneur meure de vieillesse",
+    "Elle demande au roi de l'ouvrir",
+    "Elle brûle la forêt voisine"
+   ],
+   "explication": "Le siège vise à affamer et à assoiffer les défenseurs, ce qui demande beaucoup d'hommes et de temps. On peut aussi saper ou miner les murs, ou les battre avec des engins de jet.",
+   "source": {
+    "theme": "Cours 7 – La seigneurie",
+    "titre": "Château fort",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Ch%C3%A2teau_fort"
+   },
+   "r": "=clAA3KCbvqKeZBVN0hCKYEDfYCFTQQVFwgTKAQHsk1CQpgAPNgCFcTZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s05-1-q39",
+   "fiche": "histoire-s05-1-f5",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Au XIIIe siècle, certains châteaux forts reçoivent une double enceinte.",
+   "corrections": [],
+   "explication": "Oui : au XIIIe siècle, une seconde muraille entoure la première, et l'espace entre les deux s'appelle la lice. Les fossés deviennent aussi plus larges et plus profonds.",
+   "source": {
+    "theme": "Cours 7 – La seigneurie",
+    "titre": "Château fort",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Ch%C3%A2teau_fort"
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s05-1-q40",
+   "fiche": "histoire-s05-1-f5",
+   "type": "association",
+   "niveau": 2,
+   "enonce": "Relie chaque élément du château fort à ce qu'il est.",
+   "gauche": [
+    "Motte",
+    "Donjon",
+    "Enceinte",
+    "Mâchicoulis"
+   ],
+   "droite": [
+    "La grande tour qui domine le château",
+    "La butte de terre qui porte la tour de bois",
+    "Le mur qui entoure le château, flanqué de tours",
+    "Les ouvertures en haut des murs, pour frapper d'en haut"
+   ],
+   "explication": "La motte porte la tour de bois des débuts ; le donjon est la tour de pierre. L'enceinte entoure tout, et les mâchicoulis couronnent les murs.",
+   "source": {
+    "theme": "Cours 7 – La seigneurie",
+    "titre": "Château fort",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Ch%C3%A2teau_fort"
+   },
+   "r": "==ANvQnXG5TWsslQdlCRe0RSEYnQyclSZlCH",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s05-1-q41",
+   "fiche": "histoire-s05-1-f5",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Un seigneur bâtit sa motte au bord d'une grande route. Pourquoi cet emplacement ?",
+   "choix": [
+    "Pour surveiller les passages et contrôler les échanges",
+    "Parce que la terre y est plus facile à creuser",
+    "Pour vendre du bois aux marchands",
+    "Pour être plus près de l'église"
+   ],
+   "explication": "La tour de guet permet d'observer les environs, et un château placé sur un axe routier contrôle ceux qui passent. C'est aussi un signe de puissance visible de loin.",
+   "indice": "À quoi sert une tour de guet ?",
+   "source": {
+    "theme": "Cours 7 – La seigneurie",
+    "titre": "Motte castrale",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Motte_castrale"
+   },
+   "r": "==AUbYiSLQVRNYcpGpxFrI1BAkRxqyxGccAINEBUN0hCBcgGBYiAVZBEdkEHK4BBqg0EHhVHPRxEGISZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s05-1-q42",
+   "fiche": "histoire-s05-1-f6",
+   "type": "qcm",
+   "niveau": 1,
+   "enonce": "Chez les Francs, à qui appartient d'abord le ban ?",
+   "choix": [
+    "Au roi",
+    "Aux paysans",
+    "Au meunier",
+    "Au seigneur de Wismes"
+   ],
+   "explication": "Le ban est au départ un pouvoir du roi des Francs : commander les hommes à la guerre, puis ordonner et punir. Charlemagne veut l'exercer sur tout son royaume.",
+   "source": {
+    "theme": "Cours 7 – La seigneurie",
+    "titre": "Ban (Moyen Âge)",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Ban_(Moyen_%C3%82ge)"
+   },
+   "r": "=8wBAQhRcMTZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s05-1-q43",
+   "fiche": "histoire-s05-1-f6",
+   "type": "vrai_faux",
+   "niveau": 1,
+   "enonce": "À partir du Xe siècle, les seigneurs de châteaux s'emparent du ban.",
+   "corrections": [],
+   "explication": "Oui : la petite noblesse des châteaux prend pour elle ce pouvoir du roi. On parle alors de ban châtelain.",
+   "source": {
+    "theme": "Cours 7 – La seigneurie",
+    "titre": "Ban (Moyen Âge)",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Ban_(Moyen_%C3%82ge)"
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s05-1-q44",
+   "fiche": "histoire-s05-1-f6",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Pourquoi dit-on aujourd'hui qu'une chose « banale » est ordinaire ?",
+   "choix": [
+    "Le four banal était commun à tous les habitants",
+    "Les seigneurs du ban étaient très ennuyeux",
+    "Le mot vient du nom d'un village",
+    "Parce que le ban était une taxe vraiment toute petite"
+   ],
+   "explication": "Les habitants devaient se servir du moulin, du four ou du pressoir fournis par le seigneur, contre une redevance. Ce qui était « banal » était commun à tous : d'où le sens actuel.",
+   "source": {
+    "theme": "Cours 7 – La seigneurie",
+    "titre": "Ban (Moyen Âge)",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Ban_(Moyen_%C3%82ge)"
+   },
+   "r": "MxhEIggBuABFNUlAMIwTB0BLZVUlu7UATsABdQiUBwAFFAcrP5RCtw0BV81GAAgRM4TZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s05-1-q45",
+   "fiche": "histoire-s05-1-f6",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "La seigneurie foncière et la seigneurie banale : quelle est la différence entre les deux ?",
+   "choix": [
+    "Posséder la terre, ou commander les gens",
+    "Être en ville, ou être à la campagne",
+    "Appartenir au roi, ou appartenir à un moine",
+    "Avoir un château, ou ne pas en avoir"
+   ],
+   "explication": "La seigneurie foncière, c'est un grand domaine dont le seigneur est propriétaire. La seigneurie banale, c'est le pouvoir de commander et de juger les habitants, même sur des terres qui ne sont pas à lui.",
+   "source": {
+    "theme": "Cours 7 – La seigneurie",
+    "titre": "Seigneurie",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Seigneurie"
+   },
+   "r": "==wVWsBFO4EHXQwYfBQUD9gALkgCSJTHVlEEDsxCbIVCv0wFQl0xsWRFGISZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s05-1-q46",
+   "fiche": "histoire-s05-1-f6",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Le ban est une taxe que les paysans paient en argent pour leur tenure.",
+   "corrections": [
+    "Faux : le ban est un pouvoir, celui de commander, de juger et de punir ; la taxe de la tenure est le cens.",
+    "Faux : le ban est le nom de la forêt du seigneur.",
+    "Faux : le ban est une part de la récolte due au seigneur."
+   ],
+   "explication": "Le ban n'est pas une taxe mais un pouvoir : commander, contraindre, punir. La taxe payée pour une tenure s'appelle le cens.",
+   "source": {
+    "theme": "Cours 7 – La seigneurie",
+    "titre": "Ban (Moyen Âge)",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Ban_(Moyen_%C3%82ge)"
+   },
+   "r": "==wGLxFNcAhBVRRBOtRANMGSXA0QLshRHUgUiYRVA0AEd4kDegEeNcBXDtxHGNQDSNzFVdBEWwBBPdBDjFwFQlEAOswCGExZXERRcQQBLwgUEFDRKMEWB8hRIwhUzEAEFtBEL4kCegUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s05-1-q48",
+   "fiche": "histoire-s05-1-f6",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Pourquoi la seigneurie banale rapporte-t-elle plus au seigneur que la seigneurie foncière ?",
+   "choix": [
+    "Les banalités rapportent beaucoup, le cens presque rien",
+    "Les paysans de la seigneurie banale sont bien plus nombreux",
+    "Le roi verse chaque année une pension au seigneur",
+    "La seigneurie foncière ne produit que du bois"
+   ],
+   "explication": "Le cens, fixé une fois pour toutes, perd de sa valeur avec le temps. Les banalités et la justice, elles, rapportent à chaque usage.",
+   "indice": "Lequel des deux revenus est fixé une fois pour toutes ?",
+   "source": {
+    "theme": "Cours 7 – La seigneurie",
+    "titre": "Seigneurie",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Seigneurie"
+   },
+   "r": "==AUGYCRXUBSb4RFDshAnFwGAYRUMIwTehhNCZAQMtQDGJxBXMDAaURBQshTcs9q3QUCUN0DNYUFM4TZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s05-1-q49",
+   "fiche": "histoire-s05-1-f6",
+   "type": "trou",
+   "niveau": 1,
+   "enonce": "Complète avec les mots du pouvoir seigneurial.",
+   "texte": "Le ___ est le pouvoir de commander et de punir ; les taxes pour le moulin, le four et le pressoir sont les ___.",
+   "banque": [
+    "ban",
+    "banalités",
+    "cens",
+    "corvées"
+   ],
+   "explication": "Le ban est le pouvoir du seigneur sur les habitants. Les banalités en découlent : chacun doit utiliser son moulin, son four et son pressoir, et payer.",
+   "source": {
+    "theme": "Cours 7 – La seigneurie",
+    "titre": "Ban (Moyen Âge)",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Ban_(Moyen_%C3%82ge)"
+   },
+   "r": "voBUGwstFAgAOwRCh8gPZAHTBcABLlCH",
+   "poids": 1
   }
  ],
  "bonus": [
@@ -792,16 +1230,26 @@ JEU.enregistrer("cours", {
     "editeur": "Wikipédia, l'encyclopédie libre",
     "url": "https://fr.wikipedia.org/wiki/Banalit%C3%A9_(droit_seigneurial)"
    }
+  },
+  {
+   "id": "histoire-s05-1-b2",
+   "fiche": "histoire-s05-1-f5",
+   "titre": "Bernart de Ventadour, un troubadour à la cour",
+   "texte": "Au château, le soir, on écoute des chansons. Bernart de Ventadour, né vers 1120 à Ventadour (aujourd'hui en Corrèze) de parents modestes, est l'un des troubadours les plus célèbres : il compose en langue d'oc. D'après sa vida, un récit tardif, il aurait fréquenté la cour d'Aliénor d'Aquitaine. Quarante-cinq de ses chansons sont conservées, copiées au moins un siècle après sa mort, vers 1195.",
+   "source": {
+    "titre": "Bernard de Ventadour",
+    "editeur": "Wikipédia, l'encyclopédie libre",
+    "url": "https://fr.wikipedia.org/wiki/Bernard_de_Ventadour"
+   }
   }
  ],
  "nonCouvert": [
-  "La leçon à apprendre : le cadre « mots importants » du support est vide ; la leçon est donnée en vidéo.",
-  "L'enluminure étudiée en séance 7 (personnages du premier plan, chevaliers, Bernart de Ventadour) n'est pas dans le fichier : seules les questions y figurent.",
-  "Qui est Bernart de Ventadour, nommé dans une question de la séance.",
-  "Ce qu'est la seigneurie banale : la frise cite seulement l'époque de son développement.",
+  "L'enluminure étudiée en séance 7 (personnages du premier plan, chevaliers, Bernart de Ventadour) n'est pas dans le fichier : seules les questions y figurent ; Bernart de Ventadour est présenté dans le bonus b2.",
   "Ce que le seigneur doit à ses paysans en échange de son pouvoir (question 5 de l'étude de cas) : la réponse est donnée en vidéo.",
   "Le plan de Wismes lui-même (seules ses légendes sont reprises) et les enluminures du moulin et du four.",
-  "Le calendrier complet des redevances de Verson (saint Jean, moisson, porcs, cens, corvées, poules, moutons) : il est traité au cours 8 (histoire-s05-2).",
-  "Le rôle des chevaliers et du château dans la seigneurie."
+  "Le calendrier complet des redevances de Verson : il est traité au cours 8 (histoire-s05-2).",
+  "Les chevaliers (adoubement, armement, mode de vie) : ils font l'objet du devoir n°1, le jeu n'en parle pas.",
+  "Les moyens du seigneur pour se faire obéir, en liste : question du devoir n°1 ; le jeu enseigne le ban, la justice et le château séparément, sans jamais demander la liste.",
+  "La herse et les autres pièces de la porte du château : le test de la séance 8 les fait nommer sur une image."
  ]
 });

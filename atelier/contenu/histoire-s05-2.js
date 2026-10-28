@@ -286,10 +286,18 @@ module.exports = {
       titre: "Le serf ne peut pas quitter la seigneurie",
       texte: "Un serf ne pouvait pas quitter la seigneurie ni se marier sans l'accord de son seigneur. Il pouvait pourtant devenir libre : en achetant sa liberté, ou par un acte appelé manumission. Le servage a reculé dès le Moyen Âge, et en 1779 le roi Louis XVI l'a aboli sur ses propres domaines.",
       source: { titre: "Servage", editeur: "Wikipédia, l'encyclopédie libre", url: "https://fr.wikipedia.org/wiki/Servage" }
+    },
+    {
+      id: "histoire-s05-2-b2",
+      fiche: "histoire-s05-2-f1",
+      titre: "D'où vient la chanson des vilains de Verson",
+      texte: "Verson est un village du Calvados, au sud-ouest de Caen. Au Moyen Âge, son seigneur est l'abbé du Mont-Saint-Michel. Quand les paysans contestent l'autorité de l'abbaye, un moine du Mont écrit un long poème sur ces « vilains de Verson » et sur tout ce qu'ils doivent : c'est ce texte que l'étude de cas résume. Les historiens discutent de sa date exacte.",
+      source: { titre: "Verson", editeur: "Wikipédia, l'encyclopédie libre", url: "https://fr.wikipedia.org/wiki/Verson" }
     }
   ],
   nonCouvert: [
     "L'étude de cas n°1 annoncée par le planning n'est pas déposée : on ne sait pas de quoi elle traite.",
+    "Ce que le programme attend en plus du dépôt (le ban, le château, les défrichements, les serfs) est couvert par les cours 6, 7 et 8 voisins (histoire-s04-3, s05-1, s06-1) ; ce cours garde ses quatre fiches de l'étude de cas 2.",
     "La leçon à apprendre et les réponses rédigées aux cinq questions de l'étude de cas 2, données en vidéo.",
     "Ce que le seigneur doit à ses paysans en échange de son pouvoir (question 5) : la réponse n'est pas dans le fichier.",
     "Le texte complet de la chanson des vilains de Verson : seul un extrait résumé figure dans l'étude de cas.",

@@ -6,12 +6,16 @@ JEU.enregistrer("cours", {
   {
    "id": "histoire-s03-1-f1",
    "notion": "Mohamed et l'Hégire",
-   "titre": "Aux origines : Mohamed et l'Hégire (622)",
-   "texte": "La frise des origines de l'islam commence avec Mohamed, que l'on appelle aussi Mahomet. Il vit de 570 à 632. La frise met en valeur un événement de 622 : l'Hégire. Elle a donc lieu du vivant de Mohamed, dix ans avant sa mort.",
+   "titre": "622, l'Hégire : de La Mecque à Médine",
+   "texte": "Mohamed (ou Mahomet, 570-632) vit à La Mecque, une ville de marchands d'Arabie. Ses adversaires le menacent : en 622, il part avec ses compagnons pour Yathrib, qui devient Médine. Ce départ, c'est l'Hégire. À Médine, il devient un chef politique. À sa mort, en 632, toute l'Arabie lui obéit. Les musulmans comptent les années depuis 622.",
    "pointsCles": [
-    "Mohamed, aussi appelé Mahomet : de 570 à 632",
-    "622 : l'Hégire, du vivant de Mohamed"
+    "Mohamed (Mahomet) : 570-632, né à La Mecque, en Arabie",
+    "622 : l'Hégire, le départ de La Mecque vers Yathrib, qui devient Médine",
+    "À Médine, Mohamed devient le chef de la communauté",
+    "632 : à sa mort, l'Arabie est unifiée sous son autorité",
+    "Le calendrier musulman commence en 622 : son an 1 est l'année de l'Hégire"
    ],
+   "astuce": "622, c'est le départ : l'an 1 du calendrier musulman. 632, dix ans plus tard, c'est la mort de Mohamed.",
    "dates": [
     {
      "annee": 570,
@@ -19,23 +23,38 @@ JEU.enregistrer("cours", {
     },
     {
      "annee": 622,
-     "evenement": "L'Hégire"
+     "evenement": "L'Hégire : départ pour Médine"
     },
     {
      "annee": 632,
-     "evenement": "Mort de Mohamed (Mahomet)"
+     "evenement": "Mort de Mohamed ; l'Arabie unifiée"
     }
    ],
-   "lieux": [],
+   "lieux": [
+    "La Mecque",
+    "Médine",
+    "Arabie"
+   ],
    "personnages": [
     "Mohamed (Mahomet)"
    ],
-   "vocabulaire": [],
+   "vocabulaire": [
+    {
+     "mot": "Hégire",
+     "def": "le départ de Mohamed de La Mecque pour Médine, en 622 ; le mot arabe veut dire « émigration »"
+    },
+    {
+     "mot": "Médine",
+     "def": "la ville d'Arabie, d'abord appelée Yathrib, où Mohamed s'installe en 622"
+    }
+   ],
    "schema": "histoire-s03-1-s1",
    "prerequis": [],
    "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 4 - Support.pdf",
-    "page": 1
+    "programme": "De la naissance de l'islam à la prise de Bagdad par les Mongols : pouvoirs, sociétés, cultures",
+    "titre": "Hégire",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/H%C3%A9gire"
    }
   },
   {
@@ -108,6 +127,147 @@ JEU.enregistrer("cours", {
    "source": {
     "fichier": "cours/histoire/Histoire 5e - Seance 4 - Support.pdf",
     "page": 1
+   }
+  },
+  {
+   "id": "histoire-s03-1-f4",
+   "notion": "Les conquêtes du califat",
+   "titre": "Les conquêtes : de l'Indus à l'Espagne en un siècle",
+   "texte": "En un siècle, les armées du califat bâtissent un empire immense. Syrie et Palestine d'abord : Jérusalem tombe en 637 ou 638. Puis l'Égypte (639-641), la Perse (651), l'Afrique du Nord (Carthage, 698), l'Espagne (711), l'Indus. Deux arrêts : Constantinople, qui résiste en 717-718, et la Gaule, où Charles Martel stoppe une expédition près de Poitiers, en 732.",
+   "pointsCles": [
+    "Syrie et Palestine : victoire du Yarmouk sur les Byzantins (636), Jérusalem (637-638)",
+    "Égypte (639-641) ; Perse : l'empire sassanide s'effondre en 651",
+    "Afrique du Nord : Kairouan fondée en 670, Carthage prise en 698 ; Espagne : en 711, Tariq franchit le détroit de Gibraltar",
+    "Limites : échec devant Constantinople (717-718) ; expédition stoppée entre Tours et Poitiers par Charles Martel (732)",
+    "Pourquoi si vite : Byzantins et Perses épuisés par leur guerre (602-628), armées arabes mobiles ; les peuples soumis gardent leur religion contre un impôt"
+   ],
+   "astuce": "Un siècle, de 632 à 732 : de Médine jusqu'à l'Indus d'un côté, jusqu'aux Pyrénées de l'autre.",
+   "dates": [
+    {
+     "annee": 636,
+     "evenement": "Bataille du Yarmouk : la Syrie passe au califat"
+    },
+    {
+     "annee": 651,
+     "evenement": "Fin de l'empire perse sassanide"
+    },
+    {
+     "annee": 698,
+     "evenement": "Prise de Carthage"
+    },
+    {
+     "annee": 711,
+     "evenement": "Entrée en Espagne"
+    },
+    {
+     "annee": 718,
+     "evenement": "Échec devant Constantinople"
+    },
+    {
+     "annee": 732,
+     "evenement": "Charles Martel arrête une expédition près de Poitiers"
+    }
+   ],
+   "lieux": [
+    "Jérusalem",
+    "Égypte",
+    "Carthage",
+    "Espagne",
+    "Constantinople",
+    "Poitiers"
+   ],
+   "personnages": [
+    "Charles Martel",
+    "Eudes d'Aquitaine",
+    "Tariq ibn Ziyad"
+   ],
+   "vocabulaire": [
+    {
+     "mot": "califat",
+     "def": "l'empire gouverné par le calife"
+    },
+    {
+     "mot": "expédition",
+     "def": "une armée envoyée au loin pour combattre ou piller"
+    },
+    {
+     "mot": "Charles Martel",
+     "def": "le chef des Francs, grand-père de Charlemagne, vainqueur près de Poitiers en 732"
+    }
+   ],
+   "schema": null,
+   "prerequis": [
+    "histoire-s03-1-f1",
+    "histoire-s03-1-f2"
+   ],
+   "source": {
+    "programme": "De la naissance de l'islam à la prise de Bagdad par les Mongols : pouvoirs, sociétés, cultures",
+    "titre": "Expansion de l'islam",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Expansion_de_l%27islam"
+   }
+  },
+  {
+   "id": "histoire-s03-1-f5",
+   "notion": "Le calife, successeur et chef",
+   "titre": "Le calife : successeur de Mohamed, chef de l'empire",
+   "texte": "Calife vient de l'arabe khalifa, « successeur ». Après la mort de Mohamed, en 632, le calife dirige la communauté des musulmans : il commande l'armée et gouverne l'empire. Quatre premiers califes se succèdent de 632 à 661. Puis le titre devient héréditaire : les Omeyyades règnent à Damas (661-750), les Abbassides à Bagdad (750-1258).",
+   "pointsCles": [
+    "Calife : « successeur » de Mohamed ; il dirige la communauté des musulmans et porte le titre de « commandeur des croyants »",
+    "632-661 : les quatre premiers califes, Abou Bakr, Omar, Othman, Ali",
+    "661-750 : les Omeyyades, à Damas ; 750-1258 : les Abbassides, à Bagdad",
+    "Au Xe siècle, trois califes rivaux : Bagdad, Cordoue (depuis 929) et les Fatimides (depuis 909)"
+   ],
+   "astuce": "Calife = successeur. Basileus à Constantinople, empereur à Aix, calife à Damas puis Bagdad : trois chefs pour trois empires.",
+   "dates": [
+    {
+     "annee": 632,
+     "evenement": "Premier calife après la mort de Mohamed"
+    },
+    {
+     "annee": 661,
+     "evenement": "Les Omeyyades : le califat devient héréditaire"
+    },
+    {
+     "annee": 909,
+     "evenement": "Les Fatimides fondent un califat rival"
+    }
+   ],
+   "lieux": [
+    "Damas",
+    "Bagdad",
+    "Cordoue"
+   ],
+   "personnages": [
+    "Abou Bakr",
+    "Omar",
+    "Othman",
+    "Ali"
+   ],
+   "vocabulaire": [
+    {
+     "mot": "calife",
+     "def": "le successeur de Mohamed, qui dirige les musulmans et gouverne l'empire"
+    },
+    {
+     "mot": "dynastie",
+     "def": "une famille qui garde le pouvoir de père en fils"
+    },
+    {
+     "mot": "héréditaire",
+     "def": "qui passe du père au fils"
+    }
+   ],
+   "schema": null,
+   "prerequis": [
+    "histoire-s03-1-f1",
+    "histoire-s03-1-f2"
+   ],
+   "source": {
+    "programme": "De la naissance de l'islam à la prise de Bagdad par les Mongols : pouvoirs, sociétés, cultures",
+    "titre": "Calife",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Calife"
    }
   }
  ],
@@ -258,6 +418,89 @@ JEU.enregistrer("cours", {
     "page": 1
    },
    "r": "o9hQfp0VFFEH",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s03-1-q26",
+   "fiche": "histoire-s03-1-f1",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Pourquoi Mohamed quitte-t-il La Mecque en 622 ?",
+   "choix": [
+    "Les marchands de la ville s'opposent à lui et le menacent",
+    "La Mecque est prise et détruite par une armée venue de l'Empire byzantin",
+    "Il part fonder la ville de Bagdad",
+    "Il veut créer le califat de Cordoue"
+   ],
+   "explication": "Les grandes familles de marchands de La Mecque lui sont hostiles et font pression sur ses compagnons. Les habitants de Yathrib, la future Médine, acceptent de l'accueillir.",
+   "source": {
+    "theme": "Cours 4 – Islam, origines et expansion",
+    "titre": "Hégire",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/H%C3%A9gire"
+   },
+   "r": "MtBHNACTLAFQOpgCG1xFntBAJUV0q60Gc0AMCVRRClEHGNQBe4CBVRQGRxgCPFADtwUDW91DCYUFM4TZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s03-1-q27",
+   "fiche": "histoire-s03-1-f1",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "La ville de Médine s'appelait Yathrib avant l'arrivée de Mohamed.",
+   "corrections": [],
+   "explication": "Oui : Mohamed s'installe en 622 à Yathrib, qui prend ensuite le nom de Médine. C'est là qu'il devient le chef de la communauté.",
+   "source": {
+    "theme": "Cours 4 – Islam, origines et expansion",
+    "titre": "Hégire",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/H%C3%A9gire"
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s03-1-q28",
+   "fiche": "histoire-s03-1-f1",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Que se passe-t-il en Arabie à la mort de Mohamed, en 632 ?",
+   "choix": [
+    "L'Arabie est unifiée sous son autorité ; un calife lui succède",
+    "L'Arabie redevient aussitôt un ensemble de tribus sans chef, pour trois siècles",
+    "L'Arabie est conquise par l'Empire byzantin",
+    "L'Arabie passe sous l'autorité de l'empereur perse"
+   ],
+   "explication": "À sa mort, en 632, Mohamed a rassemblé toute la péninsule d'Arabie sous son autorité. Ses successeurs, les califes, lancent alors les conquêtes hors d'Arabie.",
+   "source": {
+    "theme": "Cours 4 – Islam, origines et expansion",
+    "titre": "Expansion de l'islam",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Expansion_de_l%27islam"
+   },
+   "r": "==QZXERz2KhCbwhUBYTQFB1SHMwBFkEHyIlTFxtsdcQHdwhNMV0WC1xTVMhBBc2FcbKHXAAAaIFHwgURQREDOQxJO5TZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s03-1-q29",
+   "fiche": "histoire-s03-1-f1",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Comment les musulmans comptent-ils les années ?",
+   "choix": [
+    "À partir de l'Hégire, en 622",
+    "À partir de la naissance de Mohamed, en 570",
+    "À partir de la fondation de Bagdad, en 762",
+    "À partir de la mort de Mohamed, en 632"
+   ],
+   "explication": "L'an 1 du calendrier musulman commence avec l'année de l'Hégire, en 622 : c'est le calife Omar qui a fixé ce point de départ. On parle donc de calendrier hégirien.",
+   "source": {
+    "theme": "Cours 4 – Islam, origines et expansion",
+    "titre": "Hégire",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/H%C3%A9gire"
+   },
+   "r": "=c0Bfg1TIMQSeJCAcIA3yGSSDIVDn0wFclFHOYhRpHbZ",
    "poids": 1
   },
   {
@@ -605,6 +848,382 @@ JEU.enregistrer("cours", {
    },
    "r": "==AcHtFRaEwBcABEndxBMUAHsk0IQRUYJRQUK9QLGNQDSJiFcYhBQsADOIVDqklFUN0FLY0BlAFH",
    "poids": 1
+  },
+  {
+   "id": "histoire-s03-1-q30",
+   "fiche": "histoire-s03-1-f4",
+   "type": "qcm",
+   "niveau": 1,
+   "enonce": "Jusqu'où s'étend l'empire des califes au VIIIe siècle ?",
+   "choix": [
+    "De l'Espagne à l'Indus",
+    "De la Gaule à la Chine",
+    "Seulement en Arabie",
+    "De Rome à Constantinople"
+   ],
+   "explication": "En un siècle, les armées du califat vont de l'Espagne, à l'ouest, jusqu'au fleuve Indus, à l'est. La Gaule et Constantinople, elles, résistent.",
+   "source": {
+    "theme": "Cours 4 – Islam, origines et expansion",
+    "titre": "Expansion de l'islam",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Expansion_de_l%27islam"
+   },
+   "r": "==wSBIjFbwiUdkkzsKVDtoEBF51KIpgRMYTZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s03-1-q31",
+   "fiche": "histoire-s03-1-f4",
+   "type": "vrai_faux",
+   "niveau": 1,
+   "enonce": "En 711, une armée venue d'Afrique du Nord franchit le détroit de Gibraltar et entre en Espagne.",
+   "corrections": [],
+   "explication": "Oui : en 711, Tariq ibn Ziyad franchit le détroit avec son armée. L'Espagne devient Al-Andalus.",
+   "source": {
+    "theme": "Cours 4 – Islam, origines et expansion",
+    "titre": "Expansion de l'islam",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Expansion_de_l%27islam"
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s03-1-q32",
+   "fiche": "histoire-s03-1-f4",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Pourquoi les conquêtes du califat sont-elles si rapides au VIIe siècle ?",
+   "choix": [
+    "Byzantins et Perses sont épuisés par leur guerre ; les armées arabes sont rapides",
+    "Les armées du califat sont dix fois plus nombreuses que toutes celles de leurs adversaires réunis",
+    "Les Byzantins et les Perses se rendent sans combattre",
+    "Les Francs de Charles Martel aident les armées du califat"
+   ],
+   "explication": "L'Empire byzantin et l'Empire perse viennent de se faire la guerre pendant un quart de siècle (602-628). Face à eux, une cavalerie légère et mobile, et des provinces mal attachées à leurs maîtres.",
+   "source": {
+    "theme": "Cours 4 – Islam, origines et expansion",
+    "titre": "Expansion de l'islam",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Expansion_de_l%27islam"
+   },
+   "r": "=ckBU0wBfMhGjl1Ca5lTcMABIAgJSZAAcLLBc4gUbYSQF5QDL0BFDwRFnBAAAkRUb8wHSth6ubBXY5hxlaUHcgSAVZBECsxC/IFHm0gFbRkGBcAHQATZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s03-1-q33",
+   "fiche": "histoire-s03-1-f4",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Que se passe-t-il près de Poitiers en 732 ?",
+   "choix": [
+    "Charles Martel et Eudes d'Aquitaine stoppent une expédition venue d'Espagne",
+    "Les Francs de Charles Martel traversent les Pyrénées et s'emparent de Cordoue",
+    "Charlemagne est couronné empereur d'Occident",
+    "L'armée byzantine bat les Francs"
+   ],
+   "explication": "Une expédition partie d'Al-Andalus pille Bordeaux et remonte vers Tours. Entre Poitiers et Tours, en octobre 732, les Francs de Charles Martel et les Aquitains d'Eudes l'arrêtent ; son chef, Abd al-Rahman, est tué.",
+   "source": {
+    "theme": "Cours 4 – Islam, origines et expansion",
+    "titre": "Bataille de Poitiers (732)",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Bataille_de_Poitiers_(732)"
+   },
+   "r": "hh0CSxkHcMSQNIlIHsBADE1BBYgBBcChmWUVL80AIwhUzwBEVUgHd0xTXYgKMFBXY9hLBJQSBIiFAASVFwgTDcBHxwEKV41CDQxBBETZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s03-1-q34",
+   "fiche": "histoire-s03-1-f4",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "L'armée du califat prend Constantinople en 718.",
+   "corrections": [
+    "Faux : le siège de 717-718 échoue ; Constantinople résiste jusqu'en 1453.",
+    "Faux : elle la prend en 732, après la bataille de Poitiers.",
+    "Faux : elle ne s'approche jamais de Constantinople."
+   ],
+   "explication": "Les armées du califat assiègent deux fois Constantinople, vers 677 puis en 717-718, sans réussir. La ville ne tombe qu'en 1453, devant les Ottomans.",
+   "source": {
+    "theme": "Cours 4 – Islam, origines et expansion",
+    "titre": "Expansion de l'islam",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Expansion_de_l%27islam"
+   },
+   "r": "==ADLBEXHxlcNsAUKshHVMxASJiBGwgBYrKHPdBBzI0CclFAOIRFH0BBS5URQQgBGww2rOWFUJAAZ5VUGxgFndhENbLGa4kCegUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s03-1-q35",
+   "fiche": "histoire-s03-1-f4",
+   "type": "ordre",
+   "niveau": 2,
+   "enonce": "Range ces conquêtes et batailles du plus ancien au plus récent.",
+   "elements": [
+    "Prise de Carthage",
+    "Jérusalem passe sous l'autorité du califat",
+    "Entrée en Espagne",
+    "Bataille près de Poitiers"
+   ],
+   "explication": "Jérusalem en 637 ou 638 ; Carthage en 698 ; l'Espagne en 711 ; Poitiers en 732.",
+   "source": {
+    "theme": "Cours 4 – Islam, origines et expansion",
+    "titre": "Expansion de l'islam",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Expansion_de_l%27islam"
+   },
+   "r": "o5hQdpkVFNEH",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s03-1-q36",
+   "fiche": "histoire-s03-1-f4",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Les historiens discutent de la portée de la bataille de 732. Que disent-ils ?",
+   "choix": [
+    "Pour les uns, un raid de pillage stoppé ; pour d'autres, la fin de l'expansion vers le nord",
+    "Tous s'accordent : elle a sauvé l'Europe entière, et son lieu exact est connu avec certitude",
+    "Tous pensent qu'elle n'a jamais eu lieu",
+    "Ils connaissent le nombre exact de soldats de chaque camp"
+   ],
+   "explication": "On ne connaît ni le lieu exact, ni les effectifs, ni même l'année sûre (732 ou 733). Les raids continuent après, et c'est seulement en 759 que Pépin le Bref reprend Narbonne.",
+   "source": {
+    "theme": "Cours 4 – Islam, origines et expansion",
+    "titre": "Bataille de Poitiers (732)",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Bataille_de_Poitiers_(732)"
+   },
+   "r": "==QTCQhBcc2FZUkBDwAGPxxBq41CU1lFKEkCJdxIStBDTEFCC8kXbYyXRAETJtgRUwRH3IlTFxtsZ4BAGsxYIJAVBJgBWYEDWcmFcQwBRdwGP51GtgVRGhkAPRxEGISZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s03-1-q37",
+   "fiche": "histoire-s03-1-f4",
+   "type": "association",
+   "niveau": 3,
+   "enonce": "Relie chaque bataille ou étape à ce qu'elle a changé.",
+   "gauche": [
+    "Yarmouk, 636",
+    "Carthage, 698",
+    "Gibraltar, 711",
+    "Poitiers, 732"
+   ],
+   "droite": [
+    "Victoire sur l'armée byzantine : la Syrie passe au califat",
+    "L'Afrique du Nord est conquise",
+    "L'entrée en Espagne",
+    "Une expédition stoppée par Charles Martel"
+   ],
+   "explication": "Au Yarmouk, en août 636, l'armée byzantine perd la Syrie. Carthage tombe en 698, l'Espagne est envahie en 711, et l'expédition de 732 est arrêtée près de Poitiers.",
+   "source": {
+    "theme": "Cours 4 – Islam, origines et expansion",
+    "titre": "Bataille du Yarmouk",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Bataille_du_Yarmouk"
+   },
+   "r": "==ANvQnXG5TWsslQdlCRewRSEYnQyYlSZlCH",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s03-1-q38",
+   "fiche": "histoire-s03-1-f4",
+   "type": "trou",
+   "niveau": 1,
+   "enonce": "Complète la phrase.",
+   "texte": "En 732, ___ Martel arrête une expédition venue d'Espagne près de ___.",
+   "banque": [
+    "Charles",
+    "Poitiers",
+    "Pépin",
+    "Paris"
+   ],
+   "explication": "Charles Martel, le grand-père de Charlemagne, arrête l'expédition entre Tours et Poitiers. Pépin le Bref est son fils.",
+   "source": {
+    "theme": "Cours 4 – Islam, origines et expansion",
+    "titre": "Bataille de Poitiers (732)",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Bataille_de_Poitiers_(732)"
+   },
+   "r": "=sDNQRDAQwQAYYgPNlCRe8gFQFEHO4QJLlCH",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s03-1-q39",
+   "fiche": "histoire-s03-1-f5",
+   "type": "qcm",
+   "niveau": 1,
+   "enonce": "Que veut dire le mot « calife » ?",
+   "choix": [
+    "Successeur",
+    "Roi",
+    "Empereur",
+    "Marchand"
+   ],
+   "explication": "Calife vient de l'arabe khalifa, « successeur ». Le calife succède à Mohamed à la tête de la communauté des musulmans.",
+   "source": {
+    "theme": "Cours 4 – Islam, origines et expansion",
+    "titre": "Calife",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Calife"
+   },
+   "r": "h9FEQ5VHKUQBcESZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s03-1-q40",
+   "fiche": "histoire-s03-1-f5",
+   "type": "vrai_faux",
+   "niveau": 1,
+   "enonce": "Le calife dirige la communauté des musulmans après la mort de Mohamed.",
+   "corrections": [],
+   "explication": "Oui : à partir de 632, le calife dirige la communauté et gouverne l'empire. Il porte le titre de « commandeur des croyants ».",
+   "source": {
+    "theme": "Cours 4 – Islam, origines et expansion",
+    "titre": "Calife",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Calife"
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s03-1-q41",
+   "fiche": "histoire-s03-1-f5",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Combien de califes se succèdent de 632 à 661, avant les Omeyyades ?",
+   "choix": [
+    "Quatre",
+    "Deux",
+    "Dix",
+    "Un seul"
+   ],
+   "explication": "Abou Bakr, Omar, Othman et Ali se succèdent de 632 à 661. On les appelle les quatre premiers califes, ou califes « bien guidés ».",
+   "source": {
+    "theme": "Cours 4 – Islam, origines et expansion",
+    "titre": "Calife",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Calife"
+   },
+   "r": "=8wCdIxBcMSZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s03-1-q42",
+   "fiche": "histoire-s03-1-f5",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Pourquoi dit-on que le pouvoir des califes devient héréditaire à partir de 661 ?",
+   "choix": [
+    "Les Omeyyades, puis les Abbassides, se transmettent le titre de père en fils",
+    "Le calife est désormais élu par l'assemblée de tous les musulmans de l'empire",
+    "Le calife est nommé par l'empereur byzantin",
+    "Le titre est tiré au sort chaque année"
+   ],
+   "explication": "En 661, Muawiya fonde la dynastie omeyyade : le titre se transmet dans sa famille. Les Abbassides font de même à partir de 750.",
+   "source": {
+    "theme": "Cours 4 – Islam, origines et expansion",
+    "titre": "Expansion de l'islam",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Expansion_de_l%27islam"
+   },
+   "r": "==gSwEEDT1AAKY0AboNhCUFAREFDcsxGcMGSJURWAogESwwH0wBFXEQUM0xTethJJxgRe9QDEcSSBIiHVZBHEkhTDFQDnwEHMh0AgYUFM4TZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s03-1-q43",
+   "fiche": "histoire-s03-1-f5",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Au Xe siècle, il n'y a qu'un seul calife dans tout le monde musulman, à Bagdad.",
+   "corrections": [
+    "Faux : trois califes rivaux existent, à Bagdad, à Cordoue (depuis 929) et chez les Fatimides (depuis 909).",
+    "Faux : il n'y a plus aucun calife au Xe siècle.",
+    "Faux : le seul calife est à Cordoue, car Bagdad a été détruite."
+   ],
+   "explication": "Les Fatimides fondent un califat rival en 909, et l'émir de Cordoue se proclame calife en 929. Au Xe siècle, trois califes se disputent donc le titre.",
+   "source": {
+    "theme": "Cours 4 – Islam, origines et expansion",
+    "titre": "Calife",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Calife"
+   },
+   "r": "SQESAt0dLVlFcQQGLsgWIBDSBwFQHsxBgkUAi4RVfARGK40GXgkaUcFDN0hBTYBDW8mUQAhGVsRAsIFyA2QSRxkCIcAJJJNhSlVEbQRHdYgCNMWVQQ1WH0hRVwAFu4BFGUlAAEQHGgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s03-1-q44",
+   "fiche": "histoire-s03-1-f5",
+   "type": "association",
+   "niveau": 2,
+   "enonce": "Relie chaque mot à ce qu'il désigne.",
+   "gauche": [
+    "Calife",
+    "Omeyyades",
+    "Abbassides",
+    "Hégire"
+   ],
+   "droite": [
+    "Successeur de Mohamed, chef des musulmans",
+    "Dynastie de Damas (661-750)",
+    "Dynastie de Bagdad (750-1258)",
+    "Le départ pour Médine, en 622"
+   ],
+   "explication": "Le calife succède à Mohamed. Les Omeyyades règnent à Damas, puis les Abbassides à Bagdad ; l'Hégire, en 622, ouvre le calendrier musulman.",
+   "source": {
+    "theme": "Cours 4 – Islam, origines et expansion",
+    "titre": "Calife",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Calife"
+   },
+   "r": "==ANvQnXG5TWsslQdlCRewRSEYnQyYlSZlCH",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s03-1-q45",
+   "fiche": "histoire-s03-1-f5",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Le titre de calife disparaît-il avec la prise de Bagdad par les Mongols, en 1258 ?",
+   "choix": [
+    "Non : il passe au Caire, puis aux sultans ottomans, jusqu'à son abolition en 1924",
+    "Oui : plus personne au monde ne porte jamais ce titre après 1258, pas même en Égypte",
+    "Non : il passe à l'empereur byzantin",
+    "Non : il passe au roi de France"
+   ],
+   "explication": "Après 1258, un calife abbasside est installé au Caire, puis les sultans ottomans reprennent le titre. Il est aboli en 1924.",
+   "source": {
+    "theme": "Cours 4 – Islam, origines et expansion",
+    "titre": "Calife",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Calife"
+   },
+   "r": "T1FXWNEStgURbJ0Bb8gCGAhJSthCGEVyti0BZADWPURAdEwBLYgBz0RVWsBEdIgGBg0OYRQFedgGWYURXUzGUYSVEggTKEwGi0VRZRkTVZECGwTZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s03-1-q46",
+   "fiche": "histoire-s03-1-f5",
+   "type": "trou",
+   "niveau": 1,
+   "enonce": "Complète la phrase.",
+   "texte": "Le ___ est le successeur de Mohamed ; il porte le titre de « commandeur des ___ ».",
+   "banque": [
+    "calife",
+    "croyants",
+    "basileus",
+    "Francs"
+   ],
+   "explication": "Le calife succède à Mohamed et porte le titre de commandeur des croyants. Le basileus, lui, est l'empereur byzantin.",
+   "source": {
+    "theme": "Cours 4 – Islam, origines et expansion",
+    "titre": "Calife",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Calife"
+   },
+   "r": "==ANvUWABsAFIYAHMA1MvB3RQt0BDcQBLlCH",
+   "poids": 1
   }
  ],
  "bonus": [
@@ -618,15 +1237,25 @@ JEU.enregistrer("cours", {
     "editeur": "Wikipédia, l'encyclopédie libre",
     "url": "https://fr.wikipedia.org/wiki/Madinat_Azahra"
    }
+  },
+  {
+   "id": "histoire-s03-1-b2",
+   "fiche": "histoire-s03-1-f2",
+   "titre": "Damas : la Grande Mosquée des Omeyyades",
+   "texte": "Entre 706 et 715, le calife omeyyade al-Walid fait bâtir à Damas, sa capitale, une immense mosquée de 157 mètres sur 77, le plus grand bâtiment du monde musulman de l'époque. Ses murs étaient couverts de mosaïques de verre sur fond d'or, à la manière byzantine ; un panneau de 34 mètres de long montre les rives de la rivière Barada. La vieille ville de Damas est inscrite au patrimoine mondial depuis 1979.",
+   "source": {
+    "titre": "Grande Mosquée des Omeyyades",
+    "editeur": "Wikipédia, l'encyclopédie libre",
+    "url": "https://fr.wikipedia.org/wiki/Grande_Mosqu%C3%A9e_des_Omeyyades"
+   }
   }
  ],
  "nonCouvert": [
   "Les trois images commentées en classe (un personnage avec des ailes, une écriture, une mosquée avec une tour) ne sont pas dans le fichier : seules les questions y figurent, sans réponse.",
-  "Le sens des mots Hégire, calife, califat, émirat et dynastie : le cadre « Mots importants » est vide.",
-  "La vie de Mohamed et les débuts de l'islam : seules les dates sont données.",
-  "Les croyances et les pratiques de l'islam.",
-  "L'expansion de l'islam (territoires, étapes, carte) : le titre l'annonce, le support ne la montre pas.",
-  "Le rôle de Damas et de Bagdad : la frise les cite seulement entre parenthèses.",
+  "Les croyances et les pratiques de l'islam : hors jeu (règle sur la religion) ; le cours s'en tient aux faits politiques, territoriaux et de calendrier.",
+  "L'organisation de l'empire omeyyade (administration, monnaie, arabisation) : une ligne seulement.",
+  "La vie des peuples conquis et le statut des non-musulmans : un point clé seulement.",
+  "Les villes et le commerce du monde musulman avant Bagdad (Damas, Kairouan, Le Caire).",
   "La leçon à apprendre : le cadre est laissé vide dans le support."
  ]
 });

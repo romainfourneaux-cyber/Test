@@ -5,76 +5,158 @@ JEU.enregistrer("cours", {
  "fiches": [
   {
    "id": "histoire-s02-1-f1",
-   "notion": "Deux empires chrétiens : Orient et Occident",
-   "titre": "Être chrétien, entre Orient et Occident",
-   "texte": "Au Moyen Âge, deux empires chrétiens existent en même temps : l'Empire byzantin à l'est, en Orient, et l'Empire carolingien à l'ouest, en Occident. Le cours les compare point par point : leur capitale, leur chef religieux, leur langue liturgique, une de leurs basiliques et la façon dont le christianisme s'y diffuse.",
+   "notion": "Deux empires, deux Églises",
+   "titre": "Rome et Constantinople : deux empires, deux Églises",
+   "texte": "Au IXe siècle, deux empires chrétiens se font face. À l'est, l'Empire byzantin : capitale Constantinople, langue grecque, Église dirigée par le patriarche de Constantinople, qui couronne le basileus. À l'ouest, l'Empire carolingien : Aix-la-Chapelle, latin, Église dirigée par le pape, évêque de Rome, qui couronne Charlemagne en 800. Même religion, deux chefs, deux langues : la rivalité grandit.",
    "pointsCles": [
-    "Orient : l'Empire byzantin",
-    "Occident : l'Empire carolingien",
-    "On compare : capitale, chef religieux, langue liturgique, basilique, diffusion du christianisme",
-    "Déjà vu : Constantinople, capitale byzantine (cours 1) ; le pape, chef de l'Église catholique (cours 2)"
+    "Orient : l'Empire byzantin, Constantinople, le grec, le patriarche de Constantinople",
+    "Occident : l'Empire carolingien, Aix-la-Chapelle, le latin, le pape (l'évêque de Rome)",
+    "Le patriarche couronne le basileus ; le pape couronne Charlemagne (800)",
+    "Une même religion, mais deux chefs et deux langues"
    ],
+   "astuce": "Est = grec + patriarche ; ouest = latin + pape. Deux colonnes, comme dans le tableau du cours.",
    "dates": [],
    "lieux": [
     "Constantinople",
-    "Rome"
+    "Rome",
+    "Aix-la-Chapelle"
    ],
-   "personnages": [],
-   "vocabulaire": [],
+   "personnages": [
+    "Charlemagne"
+   ],
+   "vocabulaire": [
+    {
+     "mot": "patriarche de Constantinople",
+     "def": "le chef de l'Église d'Orient, à Constantinople"
+    },
+    {
+     "mot": "langue liturgique",
+     "def": "la langue employée dans les cérémonies religieuses : le grec à Constantinople, le latin en Occident"
+    }
+   ],
    "schema": null,
    "prerequis": [
-    "histoire-s01-1-f3",
-    "histoire-s01-2-f1",
+    "histoire-s01-1-f6",
     "histoire-s01-2-f3"
    ],
    "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 3 - Support et Devoir entrainement.pdf",
-    "page": 1
+    "programme": "Byzance et l'Europe carolingienne",
+    "titre": "Empire byzantin",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Empire_byzantin"
    }
   },
   {
    "id": "histoire-s02-1-f2",
    "notion": "La christianisation",
-   "titre": "Répandre le christianisme",
-   "texte": "La christianisation, c'est le fait de faire connaître et de répandre le christianisme dans des régions ou chez des peuples qui ne le pratiquent pas encore. On emploie aussi le mot « évangélisation », qui a le même sens. Dans le tableau du cours, c'est la ligne « diffusion du christianisme », pour chacun des deux empires.",
+   "titre": "Répandre le christianisme : Saxons, Slaves, Bulgares",
+   "texte": "Christianiser, c'est répandre le christianisme chez de nouveaux peuples. En Occident, Charlemagne l'impose aux Saxons après trente ans de guerre : leur chef Widukind est baptisé en 785. En Orient, Constantinople envoie des missions. En 863, les frères Cyrille et Méthode partent chez les Slaves de Moravie avec un alphabet nouveau ; en 864, le roi bulgare Boris est baptisé.",
    "pointsCles": [
-    "Christianisation : répandre le christianisme là où il n'est pas encore pratiqué",
-    "Synonyme : évangélisation"
+    "Christianisation (ou évangélisation) : répandre le christianisme chez des peuples non chrétiens",
+    "Occident : les Saxons soumis par Charlemagne (772-804) et contraints au baptême ; Widukind baptisé en 785",
+    "Orient : mission de Cyrille et Méthode chez les Slaves de Moravie (863), alphabet et textes en slave",
+    "864 : le roi des Bulgares, Boris, est baptisé ; son Église est rattachée à Constantinople en 870"
    ],
-   "dates": [],
-   "lieux": [],
-   "personnages": [],
+   "dates": [
+    {
+     "annee": 785,
+     "evenement": "Baptême de Widukind, chef des Saxons"
+    },
+    {
+     "annee": 863,
+     "evenement": "Cyrille et Méthode en Moravie"
+    },
+    {
+     "annee": 864,
+     "evenement": "Baptême de Boris, roi des Bulgares"
+    }
+   ],
+   "lieux": [
+    "Saxe",
+    "Moravie",
+    "Bulgarie",
+    "Thessalonique"
+   ],
+   "personnages": [
+    "Charlemagne",
+    "Widukind",
+    "Cyrille",
+    "Méthode",
+    "Boris Ier"
+   ],
    "vocabulaire": [
     {
      "mot": "christianisation",
      "def": "le fait de répandre la religion chrétienne là où elle n'est pas encore pratiquée"
+    },
+    {
+     "mot": "mission",
+     "def": "l'envoi de religieux chez un peuple pour lui faire connaître le christianisme"
+    },
+    {
+     "mot": "Slaves",
+     "def": "des peuples d'Europe centrale et orientale, comme les Moraves ; Cyrille et Méthode écrivent leur langue"
     }
    ],
    "schema": null,
    "prerequis": [
-    "histoire-s02-1-f1"
+    "histoire-s02-1-f1",
+    "histoire-s01-2-f2"
    ],
    "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 3 - Support et Devoir entrainement.pdf",
-    "page": 1
+    "programme": "Byzance et l'Europe carolingienne",
+    "titre": "Cyrille et Méthode",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Cyrille_et_M%C3%A9thode"
    }
   },
   {
    "id": "histoire-s02-1-f3",
-   "notion": "Le schisme",
-   "titre": "Quand l'Église se divise",
-   "texte": "Un schisme, c'est une rupture au sein de l'Église : le christianisme se coupe alors en plusieurs branches, qui se séparent les unes des autres. Le mot désigne donc une division entre chrétiens, et non une guerre ni une conquête.",
+   "notion": "Le schisme de 1054",
+   "titre": "1054 : Rome et Constantinople se séparent",
+   "texte": "16 juillet 1054, Sainte-Sophie, Constantinople. Le cardinal Humbert, envoyé du pape, pose sur l'autel un acte qui exclut de l'Église le patriarche Michel Cérulaire. Huit jours plus tard, le patriarche riposte et exclut Humbert. Derrière la querelle : qui commande l'Église, le pape ou les patriarches ? On date de là la séparation entre catholiques (Rome) et orthodoxes (Constantinople).",
    "pointsCles": [
-    "Schisme : une rupture au sein de l'Église",
-    "Après un schisme, le christianisme forme plusieurs branches"
+    "16 juillet 1054 : à Sainte-Sophie, le cardinal Humbert, envoyé du pape, excommunie le patriarche Michel Cérulaire",
+    "24 juillet 1054 : le patriarche excommunie Humbert à son tour",
+    "Causes : qui dirige l'Église (le pape seul, ou les cinq patriarches), deux langues, des usages différents, la politique",
+    "On date de là le schisme entre l'Église catholique (Rome) et l'Église orthodoxe (Constantinople) ; la rupture devient définitive après 1204",
+    "Les excommunications sont levées en 1965"
    ],
-   "dates": [],
-   "lieux": [],
-   "personnages": [],
+   "dates": [
+    {
+     "annee": 1054,
+     "evenement": "Schisme entre Rome et Constantinople"
+    },
+    {
+     "annee": 1204,
+     "evenement": "Les croisés pillent Constantinople : rupture durable"
+    },
+    {
+     "annee": 1965,
+     "evenement": "Les excommunications de 1054 sont levées"
+    }
+   ],
+   "lieux": [
+    "Constantinople",
+    "Rome"
+   ],
+   "personnages": [
+    "Humbert de Moyenmoutier",
+    "Michel Cérulaire",
+    "Léon IX"
+   ],
    "vocabulaire": [
     {
      "mot": "schisme",
      "def": "une rupture dans l'Église, qui coupe le christianisme en plusieurs branches"
+    },
+    {
+     "mot": "excommunier",
+     "def": "exclure quelqu'un de l'Église"
+    },
+    {
+     "mot": "orthodoxe",
+     "def": "se dit de l'Église d'Orient, dirigée par le patriarche de Constantinople, après 1054"
     }
    ],
    "schema": null,
@@ -82,34 +164,135 @@ JEU.enregistrer("cours", {
     "histoire-s02-1-f1"
    ],
    "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 3 - Support et Devoir entrainement.pdf",
-    "page": 1
+    "programme": "Byzance et l'Europe carolingienne",
+    "titre": "Schisme de 1054",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Schisme_de_1054"
    }
   },
   {
-   "id": "histoire-s02-1-f4",
-   "notion": "La théologie",
-   "titre": "Réfléchir sur la foi",
-   "texte": "La théologie est un travail de réflexion : on y étudie la foi, la doctrine et les grands principes d'une religion. Il ne faut pas la confondre avec la christianisation : la théologie cherche à comprendre une religion, elle ne sert pas à la répandre.",
+   "id": "histoire-s02-1-f5",
+   "notion": "Le pape et le roi des Francs",
+   "titre": "Le pape fait les rois, les rois protègent le pape",
+   "texte": "En 751, Pépin le Bref veut la couronne des Francs : le pape Zacharie donne son accord. En 754, le pape Étienne II le sacre à Saint-Denis. En retour, Pépin bat les Lombards et donne au pape des terres en Italie : les États de l'Église (756). En 800, le pape Léon III couronne Charlemagne empereur.",
    "pointsCles": [
-    "Théologie : réfléchir à la foi, à la doctrine et aux grands principes d'une religion"
+    "Le pape : l'évêque de Rome, chef de l'Église d'Occident",
+    "751 : Pépin le Bref devient roi des Francs avec l'accord du pape Zacharie ; 754 : le pape Étienne II le sacre à Saint-Denis",
+    "756 : Pépin donne au pape des terres prises aux Lombards, autour de Ravenne et de Rome : les États de l'Église",
+    "800 : le pape Léon III couronne Charlemagne ; l'empereur protège le pape"
    ],
-   "dates": [],
-   "lieux": [],
-   "personnages": [],
+   "astuce": "Le pape sacre, le roi protège : 751, 754, 756, 800.",
+   "dates": [
+    {
+     "annee": 751,
+     "evenement": "Pépin le Bref, roi des Francs avec l'accord du pape"
+    },
+    {
+     "annee": 754,
+     "evenement": "Le pape Étienne II sacre Pépin à Saint-Denis"
+    },
+    {
+     "annee": 756,
+     "evenement": "Donation de Pépin : les États de l'Église"
+    },
+    {
+     "annee": 800,
+     "evenement": "Léon III couronne Charlemagne empereur"
+    }
+   ],
+   "lieux": [
+    "Rome",
+    "Saint-Denis",
+    "Ravenne"
+   ],
+   "personnages": [
+    "Pépin le Bref",
+    "Zacharie",
+    "Étienne II",
+    "Léon III",
+    "Charlemagne"
+   ],
    "vocabulaire": [
     {
-     "mot": "théologie",
-     "def": "le travail de réflexion sur la foi, la doctrine et les principes d'une religion"
+     "mot": "États de l'Église",
+     "def": "les terres d'Italie données au pape par Pépin le Bref en 756, autour de Rome et de Ravenne ; le pape y gouverne comme un souverain"
+    },
+    {
+     "mot": "Lombards",
+     "def": "un peuple germanique installé dans le nord de l'Italie, battu par Pépin le Bref puis par Charlemagne (774)"
     }
    ],
    "schema": null,
    "prerequis": [
+    "histoire-s01-2-f3",
     "histoire-s02-1-f1"
    ],
    "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 3 - Support et Devoir entrainement.pdf",
-    "page": 1
+    "programme": "Byzance et l'Europe carolingienne",
+    "titre": "Donation de Pépin",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Donation_de_P%C3%A9pin"
+   }
+  },
+  {
+   "id": "histoire-s02-1-f6",
+   "notion": "Les moines et les monastères",
+   "titre": "Les moines : prier, travailler, copier",
+   "texte": "Un monastère abrite des moines, dirigés par un abbé. La plupart suivent la règle de Benoît, écrite au Mont-Cassin vers 529 : prière, travail et lecture se partagent la journée. Louis le Pieux l'impose à tout l'empire en 817. Les moines copient aussi les livres dans leurs ateliers. En 910 naît l'abbaye de Cluny, qui n'obéit qu'au pape.",
+   "pointsCles": [
+    "Un monastère : des moines sous la direction d'un abbé",
+    "La règle de saint Benoît (Mont-Cassin, vers 529) : prière, travail manuel, lecture ; 73 chapitres",
+    "817 : Louis le Pieux l'impose à tous les monastères de l'empire",
+    "Les moines copient les livres dans le scriptorium : deux ou trois mois pour un manuscrit",
+    "910 : l'abbaye de Cluny, placée sous la seule autorité du pape ; plus de mille monastères en dépendent au XIIe siècle"
+   ],
+   "dates": [
+    {
+     "annee": 529,
+     "evenement": "Benoît fonde le Mont-Cassin ; sa règle"
+    },
+    {
+     "annee": 817,
+     "evenement": "La règle de saint Benoît imposée dans l'empire"
+    },
+    {
+     "annee": 910,
+     "evenement": "Fondation de l'abbaye de Cluny"
+    }
+   ],
+   "lieux": [
+    "Mont-Cassin",
+    "Cluny",
+    "Aix-la-Chapelle"
+   ],
+   "personnages": [
+    "Benoît de Nursie",
+    "Louis le Pieux",
+    "Guillaume d'Aquitaine"
+   ],
+   "vocabulaire": [
+    {
+     "mot": "monastère",
+     "def": "la maison où vivent des moines, à l'écart du monde"
+    },
+    {
+     "mot": "abbé",
+     "def": "le moine qui dirige un monastère"
+    },
+    {
+     "mot": "scriptorium",
+     "def": "l'atelier d'un monastère où les moines copient les livres"
+    }
+   ],
+   "schema": null,
+   "prerequis": [
+    "histoire-s01-2-f5"
+   ],
+   "source": {
+    "programme": "Byzance et l'Europe carolingienne",
+    "titre": "Règle de saint Benoît",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/R%C3%A8gle_de_saint_Beno%C3%AEt"
    }
   }
  ],
@@ -278,6 +461,56 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
+   "id": "histoire-s02-1-q30",
+   "fiche": "histoire-s02-1-f1",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Qui dirige l'Église en Orient, à Constantinople ?",
+   "choix": [
+    "Le patriarche de Constantinople",
+    "Le pape",
+    "Le basileus en personne",
+    "L'évêque de Ravenne"
+   ],
+   "explication": "L'Église d'Orient a pour chef le patriarche de Constantinople, qui couronne l'empereur. Le pape, lui, est l'évêque de Rome et dirige l'Église d'Occident.",
+   "source": {
+    "theme": "Cours 3 – Le christianisme, entre Orient et Occident",
+    "titre": "Patriarcat œcuménique de Constantinople",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Patriarcat_%C5%93cum%C3%A9nique_de_Constantinople"
+   },
+   "r": "PAQWdFQAPIxBTMTAbogNRxgCPdBAg8FBc9lGOYhRM4TZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s02-1-q31",
+   "fiche": "histoire-s02-1-f1",
+   "type": "association",
+   "niveau": 2,
+   "enonce": "Relie chaque élément à l'empire qui lui correspond.",
+   "gauche": [
+    "Constantinople",
+    "Aix-la-Chapelle",
+    "Le grec",
+    "Le latin"
+   ],
+   "droite": [
+    "Capitale de l'Empire byzantin",
+    "Capitale de l'Empire carolingien",
+    "Langue de l'Église d'Orient",
+    "Langue de l'Église d'Occident"
+   ],
+   "explication": "À l'est, Constantinople et le grec ; à l'ouest, Aix-la-Chapelle et le latin. Chaque empire a aussi son chef religieux : le patriarche ou le pape.",
+   "source": {
+    "theme": "Cours 3 – Le christianisme, entre Orient et Occident",
+    "titre": "Empire byzantin",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Empire_byzantin"
+   },
+   "r": "==ANvQnXG5TWsslQdlCRewRSEYnQyYlSZlCH",
+   "poids": 1
+  },
+  {
    "id": "histoire-s02-1-q6",
    "fiche": "histoire-s02-1-f2",
    "type": "qcm",
@@ -286,7 +519,7 @@ JEU.enregistrer("cours", {
    "choix": [
     "Évangélisation",
     "Schisme",
-    "Théologie",
+    "Excommunication",
     "Christianisme"
    ],
    "explication": "Ces deux mots sont synonymes. Ils désignent la diffusion du christianisme chez des peuples non chrétiens.",
@@ -321,10 +554,10 @@ JEU.enregistrer("cours", {
    "choix": [
     "La diffusion du christianisme chez des peuples non chrétiens",
     "Une rupture qui sépare l'Église en plusieurs branches",
-    "Un travail de réflexion sur la foi et sur la doctrine",
+    "L'exclusion d'une personne hors de l'Église",
     "Un renouveau de la culture qui commence sous le règne de Charlemagne"
    ],
-   "explication": "L'évangélisation a le même sens que la christianisation : répandre le christianisme là où il n'est pas pratiqué. Une rupture dans l'Église est un schisme, la réflexion sur la foi est la théologie.",
+   "explication": "L'évangélisation a le même sens que la christianisation : répandre le christianisme là où il n'est pas pratiqué. Une rupture dans l'Église est un schisme, une exclusion une excommunication.",
    "source": {
     "fichier": "cours/histoire/Histoire 5e - Seance 3 - Support et Devoir entrainement.pdf",
     "page": 1
@@ -340,7 +573,7 @@ JEU.enregistrer("cours", {
    "enonce": "La christianisation désigne la séparation de l'Église en plusieurs branches.",
    "corrections": [
     "Faux : cette séparation est un schisme ; la christianisation est la diffusion du christianisme.",
-    "Faux : cette séparation est la théologie ; la christianisation est l'étude de la foi.",
+    "Faux : cette séparation est une excommunication ; la christianisation est la diffusion du christianisme.",
     "Faux : cette séparation s'appelle l'évangélisation."
    ],
    "explication": "Une séparation dans l'Église s'appelle un schisme. La christianisation, elle, répand le christianisme.",
@@ -359,11 +592,11 @@ JEU.enregistrer("cours", {
    "enonce": "Des chrétiens partent faire connaître leur religion dans une région où personne ne la pratique. Comment appelle-t-on leur action ?",
    "choix": [
     "La christianisation",
-    "La théologie",
+    "L'excommunication",
     "Le schisme",
     "La renaissance carolingienne"
    ],
-   "explication": "Faire connaître le christianisme là où il n'est pas pratiqué, c'est la christianisation. La théologie étudie la foi, elle ne la répand pas.",
+   "explication": "Faire connaître le christianisme là où il n'est pas pratiqué, c'est la christianisation. Un schisme divise l'Église, une excommunication en exclut quelqu'un.",
    "source": {
     "fichier": "cours/histoire/Histoire 5e - Seance 3 - Support et Devoir entrainement.pdf",
     "page": 1
@@ -403,7 +636,7 @@ JEU.enregistrer("cours", {
    "banque": [
     "christianisation",
     "évangélisation",
-    "théologie",
+    "excommunication",
     "séparation"
    ],
    "explication": "On parle de christianisation ou d'évangélisation. Les deux mots ont le même sens.",
@@ -415,6 +648,93 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
+   "id": "histoire-s02-1-q33",
+   "fiche": "histoire-s02-1-f2",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Qui sont Cyrille et Méthode ?",
+   "choix": [
+    "Deux frères de Thessalonique envoyés en 863 chez les Slaves de Moravie",
+    "Les deux architectes de Sainte-Sophie, à Constantinople",
+    "Les deux papes qui couronnent Pépin le Bref à Saint-Denis et Charlemagne à Rome",
+    "Deux comtes chargés par Charlemagne de la Saxe"
+   ],
+   "explication": "Le prince de Moravie demande à Constantinople des religieux qui parlent la langue de son peuple. L'empereur Michel III envoie les deux frères, que l'on surnomme les « apôtres des Slaves ».",
+   "source": {
+    "theme": "Cours 3 – Le christianisme, entre Orient et Occident",
+    "titre": "Cyrille et Méthode",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Cyrille_et_M%C3%A9thode"
+   },
+   "r": "=8wCGAxBb0hCSBRAVJADY4gH7MmXAkVDUogDFkUQxpUVLARUacMrLcQNDBQFIthHPggBeYSAGAQHlk0CLI1Gm8Vz2/FCP5xEMYTZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s02-1-q34",
+   "fiche": "histoire-s02-1-f2",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Les Saxons se convertissent de leur plein gré, sans guerre, dès 772.",
+   "corrections": [
+    "Faux : Charlemagne les soumet par plus de trente ans de guerre et leur impose le baptême.",
+    "Faux : les Saxons ne deviennent jamais chrétiens.",
+    "Faux : ce sont les Saxons qui imposent leur religion aux Francs."
+   ],
+   "explication": "Les guerres de Saxe durent de 772 à 804, avec des révoltes répétées. Le chef saxon Widukind finit par se soumettre et reçoit le baptême en 785.",
+   "source": {
+    "theme": "Cours 3 – Le christianisme, entre Orient et Occident",
+    "titre": "Charlemagne",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Charlemagne"
+   },
+   "r": "YcxALIAzl2hAmARVAkRUM0BACUgKNcBQIJwTSMQSXUDAQAhERxgCPFgBi0AABN0CdIhRMYxZBAQCFE1GP8hUcYCQQolXOxxAKk0FpUBFIARHb8wBxgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s02-1-q35",
+   "fiche": "histoire-s02-1-f2",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Pourquoi Cyrille et Méthode créent-ils un alphabet ?",
+   "choix": [
+    "Pour écrire la langue des Slaves et traduire les textes religieux",
+    "Pour remplacer l'alphabet grec à Constantinople, jugé trop difficile",
+    "Pour cacher leurs messages aux Francs de Charlemagne",
+    "Pour apprendre le latin aux Bulgares"
+   ],
+   "explication": "Les Slaves n'avaient pas d'écriture : les deux frères inventent l'alphabet glagolitique et traduisent les textes en slave. Leurs disciples créent ensuite, en Bulgarie, l'alphabet cyrillique.",
+   "source": {
+    "theme": "Cours 3 – Le christianisme, entre Orient et Occident",
+    "titre": "Cyrille et Méthode",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Cyrille_et_M%C3%A9thode"
+   },
+   "r": "=A1PHABDSgRBL0hUbYSWdAVWOxxAKk0F1sBABQxAd40GXgEMINBVB1zTVMQDSJyBSsAFdk0DDIVDxQ0FWRYrPRxEGISZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s02-1-q36",
+   "fiche": "histoire-s02-1-f2",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Qui est le parrain du roi bulgare Boris à son baptême, en 864, et que montre ce choix ?",
+   "choix": [
+    "L'empereur byzantin Michel III : la Bulgarie se rapproche de Constantinople",
+    "Le pape Nicolas Ier : la Bulgarie se rapproche de Rome",
+    "Charlemagne lui-même : la Bulgarie entre alors dans l'Empire carolingien",
+    "Cyrille : il baptise Boris en Moravie"
+   ],
+   "explication": "Boris est baptisé au début de 864 avec l'empereur Michel III pour parrain, et prend son nom. Il hésite ensuite entre Rome et Constantinople, mais en 870 son Église est rattachée au patriarche de Constantinople.",
+   "source": {
+    "theme": "Cours 3 – Le christianisme, entre Orient et Occident",
+    "titre": "Boris Ier de Bulgarie",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Boris_Ier_de_Bulgarie"
+   },
+   "r": "=8AAZ1VAB8gEHMxMBshC2EFDK80FAAiQXUUXP0hRDohUisxBEIRHcwyTTQwYXUEfkdyTKMQAR4yPVtAHFcwDVsgCj9FEQ91CfswAO5TZ",
+   "poids": 1
+  },
+  {
    "id": "histoire-s02-1-q10",
    "fiche": "histoire-s02-1-f3",
    "type": "qcm",
@@ -423,10 +743,10 @@ JEU.enregistrer("cours", {
    "choix": [
     "Une séparation entre plusieurs branches de l'Église",
     "La diffusion du christianisme chez des peuples qui ne le pratiquent pas",
-    "L'étude réfléchie de la foi, de la doctrine et des principes",
+    "L'exclusion d'une seule personne hors de l'Église",
     "Une guerre entre l'Empire byzantin et l'Empire carolingien"
    ],
-   "explication": "Un schisme coupe l'Église en plusieurs branches. Ce n'est ni une diffusion, ni une étude, ni une guerre.",
+   "explication": "Un schisme coupe l'Église en plusieurs branches. Ce n'est ni une diffusion, ni une exclusion, ni une guerre.",
    "source": {
     "fichier": "cours/histoire/Histoire 5e - Seance 3 - Support et Devoir entrainement.pdf",
     "page": 1
@@ -458,7 +778,7 @@ JEU.enregistrer("cours", {
    "corrections": [
     "Faux : c'est une séparation à l'intérieur de l'Église, entre branches du christianisme.",
     "Faux : c'est la diffusion du christianisme chez de nouveaux peuples.",
-    "Faux : c'est l'étude de la foi et de la doctrine."
+    "Faux : c'est le couronnement d'un empereur par le pape."
    ],
    "explication": "Un schisme n'est pas une guerre. C'est une division de l'Église en plusieurs branches.",
    "source": {
@@ -477,7 +797,7 @@ JEU.enregistrer("cours", {
    "choix": [
     "Parce que l'Église s'est séparée en plusieurs parties",
     "Parce que le christianisme se diffuse chez de nouveaux peuples",
-    "Parce que les chrétiens étudient la foi de plusieurs façons",
+    "Parce que les chrétiens prient dans plusieurs langues",
     "Parce que chaque empire chrétien change de capitale"
    ],
    "explication": "Après un schisme, l'Église n'est plus unie. Elle forme plusieurs branches séparées.",
@@ -498,7 +818,7 @@ JEU.enregistrer("cours", {
     "Le schisme divise l'Église, la christianisation répand le christianisme",
     "Le schisme répand le christianisme, la christianisation divise l'Église",
     "Le schisme et la christianisation divisent tous deux l'Église",
-    "Le schisme étudie la foi, la christianisation divise l'Église"
+    "Le schisme exclut une personne, la christianisation divise l'Église"
    ],
    "explication": "Un schisme est une séparation à l'intérieur de l'Église. La christianisation, elle, fait connaître le christianisme à de nouveaux peuples.",
    "source": {
@@ -531,144 +851,507 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "histoire-s02-1-q14",
-   "fiche": "histoire-s02-1-f4",
+   "id": "histoire-s02-1-q37",
+   "fiche": "histoire-s02-1-f3",
    "type": "qcm",
    "niveau": 1,
-   "enonce": "Comment appelle-t-on l'étude réfléchie de la foi et des principes d'une religion ?",
+   "enonce": "En quelle année a lieu le schisme entre Rome et Constantinople ?",
    "choix": [
-    "La théologie",
-    "La christianisation",
-    "Le schisme",
-    "La renaissance carolingienne"
+    "1054",
+    "800",
+    "1204",
+    "1453"
    ],
-   "explication": "La théologie réfléchit à la foi et à la doctrine. C'est une étude, pas une diffusion.",
+   "explication": "Le schisme date de juillet 1054, à Constantinople. En 1204, les croisés pillent la ville ; en 1453, les Ottomans la prennent.",
    "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 3 - Support et Devoir entrainement.pdf",
-    "page": 1
+    "theme": "Cours 3 – Le christianisme, entre Orient et Occident",
+    "titre": "Schisme de 1054",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Schisme_de_1054"
    },
-   "r": "NdRAkIUCaRYrHIhRI4TZ",
+   "r": "NJ1UZNUZ",
    "poids": 1
   },
   {
-   "id": "histoire-s02-1-q15",
-   "fiche": "histoire-s02-1-f4",
+   "id": "histoire-s02-1-q38",
+   "fiche": "histoire-s02-1-f3",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "En 1054, c'est le pape en personne qui vient à Constantinople excommunier le patriarche.",
+   "corrections": [
+    "Faux : c'est son envoyé, le cardinal Humbert ; le pape Léon IX est même mort en avril 1054.",
+    "Faux : c'est l'empereur byzantin qui excommunie le pape.",
+    "Faux : personne n'est excommunié en 1054 ; la rupture est seulement discutée."
+   ],
+   "explication": "Le pape Léon IX a envoyé le cardinal Humbert à Constantinople, puis il est mort le 19 avril 1054. C'est Humbert qui dépose l'acte sur l'autel de Sainte-Sophie, le 16 juillet.",
+   "source": {
+    "theme": "Cours 3 – Le christianisme, entre Orient et Occident",
+    "titre": "Schisme de 1054",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Schisme_de_1054"
+   },
+   "r": "==wDK1WGQVAHONwDU8xEnxBEFFwAGMwTXUQ6ujQFZ1hCG5DISlSHcbaORxgHOIASmEURO0gGdMABEcwDSlBBbgRDc4QEIZSQFlBhtaRCQcwFnxhGWUVBasASRgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s02-1-q39",
+   "fiche": "histoire-s02-1-f3",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Pourquoi Rome et Constantinople se disputent-elles en 1054 ?",
+   "choix": [
+    "Elles ne sont pas d'accord sur qui dirige l'Église, et leurs usages diffèrent",
+    "Constantinople veut forcer le pape à quitter Rome pour s'installer à Aix-la-Chapelle",
+    "Rome refuse de parler grec avec l'empereur byzantin",
+    "Le pape veut devenir basileus à la place de l'empereur"
+   ],
+   "explication": "Rome veut que le pape commande toute l'Église ; Constantinople veut que les cinq patriarches la gouvernent ensemble. S'y ajoutent deux langues, des usages différents et des rivalités politiques en Italie du Sud.",
+   "source": {
+    "theme": "Cours 3 – Le christianisme, entre Orient et Occident",
+    "titre": "Schisme de 1054",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Schisme_de_1054"
+   },
+   "r": "NZgBm8Vz2vECGIgRacBITYAEVJwGbogHIdDSFlBSdYgCBAesg5RVAIBGbcwCSFgNcV0RY1xTCQhBRQyESFQVCggHPZgBs4VRQNkTcMgCFcTZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s02-1-q40",
+   "fiche": "histoire-s02-1-f3",
+   "type": "ordre",
+   "niveau": 3,
+   "enonce": "Range ces événements du plus ancien au plus récent.",
+   "elements": [
+    "Les croisés pillent Constantinople",
+    "Le cardinal Humbert dépose son acte sur l'autel de Sainte-Sophie",
+    "Le patriarche Michel Cérulaire riposte et excommunie Humbert",
+    "Les excommunications de 1054 sont levées"
+   ],
+   "explication": "16 juillet 1054 : l'acte d'Humbert ; 24 juillet 1054 : la riposte du patriarche ; 1204 : le pillage de Constantinople ; 1965 : les excommunications sont levées.",
+   "source": {
+    "theme": "Cours 3 – Le christianisme, entre Orient et Occident",
+    "titre": "Schisme de 1054",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Schisme_de_1054"
+   },
+   "r": "o5hQfpEVFNEH",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s02-1-q41",
+   "fiche": "histoire-s02-1-f3",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Pourquoi dit-on que la rupture de 1054 n'est devenue définitive qu'après 1204 ?",
+   "choix": [
+    "L'affaire de 1054 est vite oubliée ; le pillage de 1204 par les croisés rend la rupture durable",
+    "Parce que le pape et le patriarche se réconcilient dès 1055, puis se disputent de nouveau en 1204 à propos de Jérusalem",
+    "Parce que l'Église orthodoxe n'est fondée qu'en 1204, à Constantinople",
+    "Parce que les Ottomans prennent Constantinople en 1204"
+   ],
+   "explication": "Sur le moment, à Constantinople, on ne parle même pas de schisme. C'est le détournement de la quatrième croisade et le sac de la ville, en 1204, qui creusent le fossé pour de bon.",
+   "source": {
+    "theme": "Cours 3 – Le christianisme, entre Orient et Occident",
+    "titre": "Schisme de 1054",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Schisme_de_1054"
+   },
+   "r": "PAQWP9QHTIQSXUzBBUBADk0DDIFDtg0FV41xsWxDGAAJSZAAZE1GP8hUcN3HUVBSK80ABggHrsRBFBRHJV1TXEMgElwVYFwTDIBAEcmBGAQVFxlXeJVDn0AAHR0DJAwBO5TZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s02-1-q42",
+   "fiche": "histoire-s02-1-f5",
+   "type": "qcm",
+   "niveau": 1,
+   "enonce": "Qui est le pape ?",
+   "choix": [
+    "L'évêque de Rome, chef de l'Église d'Occident",
+    "Le chef de l'Église de Constantinople, nommé par le basileus",
+    "L'empereur des Romains",
+    "Le roi des Lombards"
+   ],
+   "explication": "Le pape est l'évêque de Rome et dirige l'Église catholique. À Constantinople, le chef de l'Église est le patriarche.",
+   "source": {
+    "fichier": "cours/histoire/Histoire 5e - Seance 2 - Support.pdf",
+    "page": 3
+   },
+   "r": "=0kEIwgFuEhFqIVFJtAHbQAJkaqEB5kCCY0DX8SEVlEEcYAPPdBDjhEEEdYrZ8cpO5TZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s02-1-q43",
+   "fiche": "histoire-s02-1-f5",
    "type": "vrai_faux",
    "niveau": 1,
-   "enonce": "La théologie étudie la foi, la doctrine et les principes d'une religion.",
+   "enonce": "En 751, Pépin le Bref devient roi des Francs avec l'accord du pape.",
    "corrections": [],
-   "explication": "Oui : c'est un travail de réflexion sur une religion. On l'appelle la théologie.",
+   "explication": "Oui : Pépin demande l'avis du pape Zacharie, qui l'approuve. En novembre 751, à Soissons, les évêques et les grands l'acclament roi.",
    "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 3 - Support et Devoir entrainement.pdf",
-    "page": 1
+    "theme": "Cours 3 – Le christianisme, entre Orient et Occident",
+    "titre": "Pépin le Bref",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/P%C3%A9pin_le_Bref"
    },
    "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
    "poids": 1
   },
   {
-   "id": "histoire-s02-1-q16",
-   "fiche": "histoire-s02-1-f4",
+   "id": "histoire-s02-1-q44",
+   "fiche": "histoire-s02-1-f5",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Pourquoi Pépin le Bref demande-t-il l'accord du pape avant de se faire roi, en 751 ?",
+   "choix": [
+    "Il n'est pas de la famille royale : l'accord du pape rend son pouvoir légitime",
+    "Le pape est son père et doit lui laisser sa place",
+    "Le pape commande l'armée des Francs depuis Clovis",
+    "C'est le pape qui choisit tous les rois d'Europe depuis la chute de Rome en 476"
+   ],
+   "explication": "Pépin n'est que le maire du palais, et il écarte le dernier roi mérovingien, Childéric III. Le pape Zacharie répond que celui qui exerce vraiment le pouvoir doit en porter le titre.",
+   "source": {
+    "theme": "Cours 3 – Le christianisme, entre Orient et Occident",
+    "titre": "Pépin le Bref",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/P%C3%A9pin_le_Bref"
+   },
+   "r": "NdRBqkFDSRYrDYEFA0RMHoRFV9hBd8kFGYyXFBVXP8hRT0gUjAgGGYBEOJwTIhkJBRATCxxTDoQBboyETUEFdk0CLI1Gi0VRB51CIhgRFsTZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s02-1-q45",
+   "fiche": "histoire-s02-1-f5",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Que donne Pépin le Bref au pape en 756 ?",
+   "choix": [
+    "Des terres en Italie, prises aux Lombards : les États de l'Église",
+    "La ville d'Aix-la-Chapelle et son palais, pour y installer le pape",
+    "Un éléphant blanc venu de Bagdad",
+    "Le titre d'empereur des Romains"
+   ],
+   "explication": "Après sa victoire sur les Lombards, Pépin remet au pape Ravenne, la Pentapole et le duché de Rome. Le pape devient ainsi un souverain, à la tête des États de l'Église.",
+   "source": {
+    "theme": "Cours 3 – Le christianisme, entre Orient et Occident",
+    "titre": "Donation de Pépin",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Donation_de_P%C3%A9pin"
+   },
+   "r": "LdBNbkhA8LrTC80FMMmXRQVWnzqRVwgHnhUVWExAIwgAdQyYVBBVN0hCV8wGCcmXQwQGQ0xJPxRDj5FAH91CbYUFMYTZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s02-1-q46",
+   "fiche": "histoire-s02-1-f5",
    "type": "vrai_faux",
    "niveau": 2,
-   "enonce": "La théologie, c'est faire connaître le christianisme à de nouveaux peuples.",
-   "corrections": [
-    "Faux : ça, c'est la christianisation ; la théologie est l'étude de la foi.",
-    "Faux : ça, c'est un schisme ; la théologie est une séparation dans l'Église.",
-    "Faux : ça, c'est l'évangélisation ; la théologie est une séparation dans l'Église."
-   ],
-   "explication": "Répandre le christianisme, c'est la christianisation. La théologie est une étude de la foi.",
+   "enonce": "Le pape Étienne II sacre Pépin le Bref à Saint-Denis en 754.",
+   "corrections": [],
+   "explication": "Oui : le 28 juillet 754, à Saint-Denis, le pape Étienne II sacre Pépin et ses deux fils, Charles et Carloman. Le pape a traversé les Alpes pour demander l'aide des Francs contre les Lombards.",
    "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 3 - Support et Devoir entrainement.pdf",
-    "page": 1
+    "theme": "Cours 3 – Le christianisme, entre Orient et Occident",
+    "titre": "Pépin le Bref",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/P%C3%A9pin_le_Bref"
    },
-   "r": "=gwUHdAAUgkIBVEUJ5kCCMRHbTYVZUUACwgTKsxDsEkCc6uBbY0BFIFfSthCcUACdYAHJoSWWw1XGwgRHUgUzEAECZRUF9AyxiUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
    "poids": 1
   },
   {
-   "id": "histoire-s02-1-q17",
-   "fiche": "histoire-s02-1-f4",
-   "type": "association",
-   "niveau": 2,
-   "enonce": "Relie chaque mot à son sens.",
-   "gauche": [
-    "Christianisation",
-    "Schisme",
-    "Théologie"
-   ],
-   "droite": [
-    "Étude de la foi et de la doctrine",
-    "Diffusion du christianisme chez des peuples non chrétiens",
-    "Séparation de l'Église en plusieurs branches"
-   ],
-   "explication": "Christianisation : diffuser ; schisme : se séparer ; théologie : étudier la foi.",
-   "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 3 - Support et Devoir entrainement.pdf",
-    "page": 1
-   },
-   "r": "==AKsklQdlCRe8RSEYnQyclSZlCH",
-   "poids": 1
-  },
-  {
-   "id": "histoire-s02-1-q28",
-   "fiche": "histoire-s02-1-f4",
+   "id": "histoire-s02-1-q47",
+   "fiche": "histoire-s02-1-f5",
    "type": "vrai_faux",
-   "niveau": 2,
-   "enonce": "La théologie est l'étude des empires chrétiens et de leurs conquêtes.",
+   "niveau": 3,
+   "enonce": "En 800, Charlemagne couronne lui-même le pape Léon III.",
    "corrections": [
-    "Faux : elle étudie la foi, la doctrine et les principes d'une religion.",
-    "Faux : elle étudie la diffusion du christianisme chez de nouveaux peuples.",
-    "Faux : elle étudie les séparations à l'intérieur de l'Église."
+    "Faux : c'est le pape Léon III qui couronne Charlemagne empereur, à Rome.",
+    "Faux : Léon III couronne Pépin le Bref, pas Charlemagne.",
+    "Faux : en 800, Charlemagne est couronné par le patriarche de Constantinople."
    ],
-   "explication": "La théologie ne parle pas d'empires ni de conquêtes. Elle réfléchit à la foi, à la doctrine et aux principes d'une religion.",
+   "explication": "Le 25 décembre 800, à Rome, le pape Léon III pose la couronne sur la tête de Charlemagne. L'empereur, en retour, protège le pape et ses États.",
    "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 3 - Support et Devoir entrainement.pdf",
-    "page": 1
+    "theme": "Cours 3 – Le christianisme, entre Orient et Occident",
+    "titre": "Charlemagne",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Charlemagne"
    },
-   "r": "PoUbDpAXKdwADQRSXkyBSFQVCwgHGEhBq8VFV41CDYkEMIlIcwxFBIhBK80EEMWAMo1SO5gCGxwGjcQAMbbUMIwAXgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "r": "=MRTc1gLCdTFN26TKRBHXUzFFgAERxAAIMRBmE0FUVULPNACH0RNHohBVhBHf80OhoQDLoFhtOiRDkxE3IFEJUVBasASRgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
   },
   {
-   "id": "histoire-s02-1-q29",
-   "fiche": "histoire-s02-1-f4",
+   "id": "histoire-s02-1-q48",
+   "fiche": "histoire-s02-1-f5",
+   "type": "ordre",
+   "niveau": 2,
+   "enonce": "Range ces événements du plus ancien au plus récent.",
+   "elements": [
+    "Léon III couronne Charlemagne empereur",
+    "Pépin donne des terres au pape",
+    "Pépin devient roi des Francs",
+    "Étienne II sacre Pépin à Saint-Denis"
+   ],
+   "explication": "751 : Pépin roi ; 754 : sacre à Saint-Denis ; 756 : donation au pape ; 800 : couronnement de Charlemagne.",
+   "source": {
+    "theme": "Cours 3 – Le christianisme, entre Orient et Occident",
+    "titre": "Pépin le Bref",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/P%C3%A9pin_le_Bref"
+   },
+   "r": "o1hQepUVFBEH",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s02-1-q49",
+   "fiche": "histoire-s02-1-f5",
    "type": "qcm",
    "niveau": 3,
-   "enonce": "Un savant passe sa vie à réfléchir aux principes du christianisme et à expliquer sa doctrine. À quoi se consacre-t-il ?",
+   "enonce": "Comment le pape et le roi des Francs s'aident-ils l'un l'autre au VIIIe siècle ?",
    "choix": [
-    "À la théologie",
-    "À la christianisation",
-    "Au schisme",
-    "À l'évangélisation"
+    "Le pape donne au roi sa légitimité ; le roi protège le pape contre les Lombards",
+    "Le roi des Francs nomme le pape ; en échange, le pape paie toute l'armée des Francs",
+    "Le pape prête ses soldats au roi ; le roi lui donne Constantinople",
+    "Ils ne s'aident pas : ils sont en guerre l'un contre l'autre"
    ],
-   "explication": "Réfléchir à la foi, à la doctrine et aux principes d'une religion, c'est la théologie. Il ne cherche pas à répandre le christianisme, mais à le comprendre.",
+   "explication": "Le pape approuve puis sacre Pépin, ce qui fait de lui un vrai roi. Pépin, puis Charlemagne, battent les Lombards qui menaçaient Rome et donnent des terres au pape.",
    "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 3 - Support et Devoir entrainement.pdf",
-    "page": 1
+    "theme": "Cours 3 – Le christianisme, entre Orient et Occident",
+    "titre": "Donation de Pépin",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Donation_de_P%C3%A9pin"
    },
-   "r": "TxwBI0BBsQopdllTOogRpHbZ",
+   "r": "TphCdMhCuIUKV41CDY0AbYQKdYRRQEACe80FEMGSC0p7aAAFWk0GoAQVAkRUS5kxxyhKAxQQElgxlqQSTQjUcowBRxxDPdhBtIUAVgkHOYhRM4TZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s02-1-q50",
+   "fiche": "histoire-s02-1-f6",
+   "type": "qcm",
+   "niveau": 1,
+   "enonce": "Qui dirige un monastère ?",
+   "choix": [
+    "Un abbé",
+    "Un comte",
+    "Le basileus",
+    "Un missus dominicus"
+   ],
+   "explication": "L'abbé est le moine qui dirige le monastère. D'après la règle de saint Benoît, ses frères le choisissent.",
+   "source": {
+    "theme": "Cours 3 – Le christianisme, entre Orient et Occident",
+    "titre": "Règle de saint Benoît",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/R%C3%A8gle_de_saint_Beno%C3%AEt"
+   },
+   "r": "==wRc6ODNcgRHcSZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s02-1-q51",
+   "fiche": "histoire-s02-1-f6",
+   "type": "vrai_faux",
+   "niveau": 1,
+   "enonce": "La règle de saint Benoît partage la journée des moines entre la prière, le travail et la lecture.",
+   "corrections": [],
+   "explication": "Oui : les moines se réunissent sept fois par jour pour prier, travaillent de leurs mains et lisent. La règle compte 73 chapitres.",
+   "source": {
+    "theme": "Cours 3 – Le christianisme, entre Orient et Occident",
+    "titre": "Règle de saint Benoît",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/R%C3%A8gle_de_saint_Beno%C3%AEt"
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s02-1-q52",
+   "fiche": "histoire-s02-1-f6",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Pourquoi les monastères sont-ils importants pour la culture au Moyen Âge ?",
+   "choix": [
+    "Les moines y copient les livres à la main, dans le scriptorium",
+    "Les moines y fabriquent les armes et les armures des chevaliers",
+    "Les moines y élisent le pape de Rome",
+    "Les moines y frappent la monnaie du roi"
+   ],
+   "explication": "Sans imprimerie, chaque livre est copié à la main sur du parchemin, dans l'atelier du monastère. Près de huit mille manuscrits de l'époque carolingienne sont conservés.",
+   "source": {
+    "theme": "Cours 3 – Le christianisme, entre Orient et Occident",
+    "titre": "Renaissance carolingienne",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Renaissance_carolingienne"
+   },
+   "r": "=cFCAgxGBshABEjTWUBSC8UFIggFn51GMQBHJ9wAShMgNYBUfhhBKYkGXsiUBsAEYkRAMIVEj5FAbRUACYUFM4TZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s02-1-q53",
+   "fiche": "histoire-s02-1-f6",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Qu'a de particulier l'abbaye de Cluny, fondée en 910 ?",
+   "choix": [
+    "Elle n'obéit qu'au pape, ni aux seigneurs ni à l'évêque",
+    "Elle est dirigée par l'empereur byzantin",
+    "Elle est la première abbaye jamais fondée en Occident, avant le Mont-Cassin",
+    "Elle refuse la règle de saint Benoît"
+   ],
+   "explication": "Le duc Guillaume d'Aquitaine fonde Cluny en 910 et la place sous la seule autorité du pape. Les moines y suivent la règle de saint Benoît.",
+   "source": {
+    "theme": "Cours 3 – Le christianisme, entre Orient et Occident",
+    "titre": "Abbaye de Cluny",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Abbaye_de_Cluny"
+   },
+   "r": "==wSLoxACD4WMbvCC8kxlm0GpIlBXAAFHkgBXsxYVBBVNcQAGpEDCYiAVBBFWxxHPZQAq7+BapAAPNgCFcTZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s02-1-q54",
+   "fiche": "histoire-s02-1-f6",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "En 817, Louis le Pieux interdit la règle de saint Benoît dans son empire.",
+   "corrections": [
+    "Faux : il l'impose au contraire à tous les monastères de l'empire.",
+    "Faux : c'est Charlemagne qui l'interdit, en 789.",
+    "Faux : la règle de saint Benoît n'existe pas encore en 817."
+   ],
+   "explication": "Conseillé par Benoît d'Aniane, Louis le Pieux impose la règle de saint Benoît à tous les monastères ; le synode d'Aix-la-Chapelle le confirme en 817. La règle elle-même date du VIe siècle.",
+   "source": {
+    "theme": "Cours 3 – Le christianisme, entre Orient et Occident",
+    "titre": "Règle de saint Benoît",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/R%C3%A8gle_de_saint_Beno%C3%AEt"
+   },
+   "r": "=gxFDsQHPYBBXAmHVBQERpxCdo9q34FBbJ0APVxAFIFNHoREVFtqOpAABIyXRslQN80EHk0F00RBIwhVF40AbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s02-1-q55",
+   "fiche": "histoire-s02-1-f6",
+   "type": "association",
+   "niveau": 2,
+   "enonce": "Relie chaque mot à ce qu'il désigne.",
+   "gauche": [
+    "Abbé",
+    "Scriptorium",
+    "Règle",
+    "Cluny"
+   ],
+   "droite": [
+    "Le moine qui dirige le monastère",
+    "L'atelier où l'on copie les livres",
+    "Le texte qui organise la vie des moines",
+    "Abbaye fondée en 910, soumise au pape seul"
+   ],
+   "explication": "L'abbé dirige, la règle organise la journée, le scriptorium sert à copier. Cluny, fondée en 910, ne dépend que du pape.",
+   "source": {
+    "theme": "Cours 3 – Le christianisme, entre Orient et Occident",
+    "titre": "Règle de saint Benoît",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/R%C3%A8gle_de_saint_Beno%C3%AEt"
+   },
+   "r": "==ANvQnXG5TWsslQdlCRewRSEYnQyYlSZlCH",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s02-1-q56",
+   "fiche": "histoire-s02-1-f6",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Combien de temps faut-il à un moine pour copier un manuscrit de taille moyenne ?",
+   "choix": [
+    "Deux ou trois mois",
+    "Une journée",
+    "Une semaine",
+    "Dix ans"
+   ],
+   "explication": "Il faut deux ou trois mois pour copier un manuscrit de taille moyenne, sur un parchemin fait de peaux de veau ou de mouton. Les scriptoria réunissent donc plusieurs copistes.",
+   "source": {
+    "theme": "Cours 3 – Le christianisme, entre Orient et Occident",
+    "titre": "Renaissance carolingienne",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Renaissance_carolingienne"
+   },
+   "r": "=ckBYYwAPFQAs8VEVgVAP5xEMYTZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s02-1-q57",
+   "fiche": "histoire-s02-1-f6",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Comment Cluny devient-elle si puissante aux XIe et XIIe siècles ?",
+   "choix": [
+    "Plus de mille monastères dépendent d'elle, et son église est la plus grande d'Occident",
+    "Elle lève une armée de moines-soldats et conquiert toute la Bourgogne, puis l'Aquitaine",
+    "Elle devient la capitale du royaume de France",
+    "Le pape quitte Rome pour s'installer à Cluny"
+   ],
+   "explication": "À son apogée, l'ordre de Cluny compte environ dix mille moines dans 1 184 monastères. Son église, longue d'environ 187 mètres, reste trois siècles la plus grande d'Occident.",
+   "source": {
+    "theme": "Cours 3 – Le christianisme, entre Orient et Occident",
+    "titre": "Abbaye de Cluny",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Abbaye_de_Cluny"
+   },
+   "r": "==wSGkyFRwgFSYSSLIVDnMEBHpkTcMhCZIlJeUVEGQRSLwxGEQChmWxQBwhRSwgUrdRGJAhVN40Gc0wJDBQRE26CGVBDA8esBYBFfYwAPdBBvQECVgkCPVxEFISZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s02-1-q58",
+   "fiche": "histoire-s02-1-f6",
+   "type": "trou",
+   "niveau": 1,
+   "enonce": "Complète la phrase sur la vie des moines.",
+   "texte": "Dans un monastère, les moines obéissent à l'___ ; ils copient les livres dans le ___.",
+   "banque": [
+    "abbé",
+    "scriptorium",
+    "comte",
+    "palais"
+   ],
+   "explication": "L'abbé dirige le monastère. Le scriptorium est l'atelier où l'on copie les livres.",
+   "source": {
+    "theme": "Cours 3 – Le christianisme, entre Orient et Occident",
+    "titre": "Règle de saint Benoît",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/R%C3%A8gle_de_saint_Beno%C3%AEt"
+   },
+   "r": "7szSfIzGHoQABAAHMEgSYEAOXQYrNQwBLlCH",
    "poids": 1
   }
  ],
  "bonus": [
   {
-   "id": "histoire-s02-1-b1",
-   "fiche": "histoire-s02-1-f4",
-   "titre": "Aux origines de la Sorbonne",
-   "texte": "En 1257, à Paris, un collège est fondé par Robert de Sorbon pour accueillir des étudiants pauvres qui apprennent la théologie. Il prend vite le nom de « collège de Sorbonne ». Plus tard, « la Sorbonne » désigne la faculté de théologie, puis toute l'université de Paris.",
+   "id": "histoire-s02-1-b2",
+   "fiche": "histoire-s02-1-f2",
+   "titre": "L'alphabet cyrillique, un héritage de Cyrille",
+   "texte": "L'alphabet cyrillique est créé vers la fin du IXe siècle dans l'Empire bulgare, par des disciples de Cyrille et Méthode, et il porte le nom de Cyrille. Tiré des lettres grecques, il sert aujourd'hui au russe, à l'ukrainien, au bulgare ou au serbe : environ deux cents millions de personnes. Depuis l'entrée de la Bulgarie dans l'Union européenne, en 2007, c'est le troisième alphabet officiel de l'Union, après le latin et le grec.",
    "source": {
-    "titre": "Collège de Sorbonne",
+    "titre": "Alphabet cyrillique",
     "editeur": "Wikipédia, l'encyclopédie libre",
-    "url": "https://fr.wikipedia.org/wiki/Coll%C3%A8ge_de_Sorbonne"
+    "url": "https://fr.wikipedia.org/wiki/Alphabet_cyrillique"
+   }
+  },
+  {
+   "id": "histoire-s02-1-b3",
+   "fiche": "histoire-s02-1-f6",
+   "titre": "Cluny, une église de 187 mètres",
+   "texte": "La troisième église de Cluny, commencée vers 1080, mesure environ 187 mètres de long : pendant trois siècles, c'est le plus grand édifice religieux d'Occident, jusqu'à la reconstruction de Saint-Pierre de Rome au XVIe siècle. Vendue après la Révolution, elle sert de carrière de pierres ; il en reste aujourd'hui moins d'un dixième.",
+   "source": {
+    "titre": "Abbaye de Cluny",
+    "editeur": "Wikipédia, l'encyclopédie libre",
+    "url": "https://fr.wikipedia.org/wiki/Abbaye_de_Cluny"
    }
   }
  ],
  "nonCouvert": [
-  "Le contenu du tableau comparatif, rempli pendant la vidéo : seules la capitale byzantine (cours 1) et le rôle du pape (cours 2) sont donnés par les supports.",
-  "La capitale de l'Empire carolingien.",
-  "Le chef religieux de l'Église d'Orient.",
-  "Le sens de l'expression « langue liturgique » et la langue de chaque Église.",
-  "Les exemples de basiliques, byzantine et carolingienne, demandés dans le tableau.",
-  "Comment le christianisme se diffuse dans chacun des deux empires.",
-  "Quel schisme sépare les chrétiens d'Orient et d'Occident, et à quelle date.",
+  "Le contenu du tableau comparatif rempli pendant la vidéo : les exemples de basiliques (byzantine et carolingienne) ne sont pas donnés.",
+  "La querelle des images à Byzance (iconoclasme, VIIIe-IXe siècles), facteur de division entre Orient et Occident.",
+  "Le mot « théologie » des mots importants : retiré du jeu (réflexion sur la foi, hors de la règle sur la religion).",
+  "Les missions chrétiennes en Scandinavie et chez les Slaves de l'Ouest (Bohême, Pologne, Xe siècle).",
+  "Le rôle des évêques dans les villes et l'organisation des paroisses dans les campagnes.",
   "La leçon à apprendre : le cadre est laissé vide dans le support.",
   "Le devoir d'entraînement des pages 3 à 5 n'est pas repris : c'est un exercice de révision (histoire-s02-2)."
  ]

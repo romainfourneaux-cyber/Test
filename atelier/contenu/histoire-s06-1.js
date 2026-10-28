@@ -4,9 +4,18 @@
 // (araire, coutre, soc, versoir, collier d'épaule, laboureurs) et le tableau « Ce que les paysans doivent au
 // seigneur » (taxes dues par tous, taxes des serfs : chevage, formariage, mainmorte). Le calendrier des travaux
 // et la famine de 1033 de la même page sont traités au cours 6 (histoire-s04-3). L'étude de cas n°4 n'est pas
-// déposée : voir nonCouvert. La leçon est donnée en vidéo.
+// déposée : voir nonCouvert. La leçon est donnée en vidéo : depuis le 28/10/2026 (demande de Romain), les fiches f5
+// (la Grande Peste) et f6 (les moulins) viennent du programme officiel de 5e (sous-thème « L'ordre seigneurial : la
+// formation et la domination des campagnes »), vérifiées sur les pages citées dans leur source.
 const F = "cours/histoire/Histoire 5e - Moyen Age - Etude de cas 3 Vie et travail des paysans.pdf";
 const S = p => ({ fichier: F, page: p });
+// Questions de thème (règle du 25/10/2026) et fiches de programme (règle du 28/10/2026).
+const T = (titre, url) => ({ theme: "Cours 8 – Étude de cas 3 et 4", titre, editeur: "Wikipédia", url });
+const P = (titre, url) => ({ programme: "L'ordre seigneurial : la formation et la domination des campagnes", titre, editeur: "Wikipédia", url });
+const U_PESTE = "https://fr.wikipedia.org/wiki/Peste_noire";
+const U_MOULIN_EAU = "https://fr.wikipedia.org/wiki/Moulin_%C3%A0_eau";
+const U_MOULIN_VENT = "https://fr.wikipedia.org/wiki/Moulin_%C3%A0_vent";
+const U_SEIGNEURIE = "https://fr.wikipedia.org/wiki/Seigneurie";
 // Le mot « vilain » (paysan libre) vient de la note de l'étude de cas 2 (cours histoire-s05-2, prérequis).
 const FW = "cours/histoire/Histoire 5e - Moyen Age - Etude de cas 2 Seigneurie de Wismes.pdf";
 const SW = p => ({ fichier: FW, page: p });
@@ -130,6 +139,41 @@ module.exports = {
         { mot: "héritier", def: "la personne qui reçoit les biens de quelqu'un à sa mort" }
       ],
       schema: null, prerequis: ["histoire-s06-1-f3", "histoire-s05-2-f3"], source: S(1)
+    },
+    {
+      id: "histoire-s06-1-f5", notion: "1348, la Grande Peste",
+      titre: "Un ennemi invisible : la peste noire (1347-1352)",
+      texte: "La peste vient d'Asie centrale. En 1347, des navires génois partis de Crimée la portent à Constantinople, à Messine, puis à Marseille en novembre. En 1348, elle est à Avignon, puis à Paris. Transmise par les puces des rats noirs, elle tue entre 30 et 60 % des Européens en cinq ou six ans : des villages sont abandonnés.",
+      pointsCles: ["Origine : l'Asie centrale ; 1346 : les Mongols assiègent Caffa, port génois de Crimée", "1347 : Constantinople, Messine (fin septembre), Gênes et Marseille (novembre) ; 1348 : Avignon (janvier), Paris (20 août)", "Le rat noir porte les puces, les puces portent le bacille ; la maladie peut aussi passer par les poumons", "De 1347 à 1352 : entre 30 et 60 % des Européens meurent, environ 25 millions de personnes", "Après : villages abandonnés, récoltes en chute de 30 à 50 %, forêts qui regagnent les champs"],
+      astuce: "La peste suit les bateaux : Crimée, Constantinople, Sicile, Marseille, puis les fleuves vers l'intérieur.",
+      dates: [
+        { annee: 1347, evenement: "Novembre 1347 : la peste débarque à Marseille" },
+        { annee: 1348, evenement: "20 août 1348 : la peste atteint Paris" }
+      ],
+      lieux: ["Caffa", "Messine", "Marseille", "Avignon", "Paris"], personnages: [],
+      vocabulaire: [
+        { mot: "épidémie", def: "une maladie qui touche d'un coup un très grand nombre de personnes" },
+        { mot: "bacille", def: "un microbe en forme de bâtonnet ; celui de la peste passe du rat à l'homme par les puces" },
+        { mot: "Crimée", def: "une presqu'île de la mer Noire, d'où partent les navires génois en 1347" }
+      ],
+      schema: null, prerequis: ["histoire-s04-3-f1"], source: P("Peste noire", U_PESTE)
+    },
+    {
+      id: "histoire-s06-1-f6", notion: "Les moulins : la force de l'eau et du vent",
+      titre: "Le moulin, une machine au service du seigneur",
+      texte: "Le moulin à eau se répand à partir du IXe siècle : une meule peut moudre 150 kg de blé en une heure. L'eau fait aussi tourner les foulons des drapiers et les marteaux des forges. Au XIIe siècle, le moulin à vent arrive par les côtes du Nord. Le moulin est au seigneur : s'en servir se paie.",
+      pointsCles: ["Moulin à eau : il se développe en Europe à partir du IXe siècle ; une meule moud 150 kg de blé à l'heure", "L'eau fait tourner aussi les foulons (pour les draps), les forges et les marteaux ; au XIIIe siècle, des arbres à cames", "Moulin à vent : généralisé vers le XIIe siècle, d'abord sur les côtes de Grande-Bretagne et des Pays-Bas ; première mention en France à Arles, en 1170", "Les seigneurs exigent un « droit de vent » pour bâtir un moulin à vent, et gardent souvent leur moulin à eau, une banalité plus solide", "Moudre au moulin du seigneur est obligatoire et se paie : c'est une banalité"],
+      dates: [
+        { annee: 850, evenement: "IXe siècle : le moulin à eau se répand en Europe" },
+        { annee: 1170, evenement: "Première mention d'un moulin à vent en France, à Arles" }
+      ],
+      lieux: ["Arles"], personnages: [],
+      vocabulaire: [
+        { mot: "meule", def: "une grosse pierre ronde qui écrase le grain pour en faire de la farine" },
+        { mot: "foulon", def: "un moulin qui bat les draps de laine pour les resserrer" },
+        { mot: "arbre à cames", def: "une pièce tournante qui transforme la rotation de la roue en coups de marteau" }
+      ],
+      schema: null, prerequis: ["histoire-s06-1-f1", "histoire-s05-1-f3"], source: P("Moulin à eau", U_MOULIN_EAU)
     }
   ],
   schemas: [
@@ -325,7 +369,105 @@ module.exports = {
       enonce: "Un serf qui se marie dans sa propre seigneurie doit payer le formariage.",
       corrections: ["Faux : le formariage n'est dû que pour un mariage hors de la seigneurie.", "Faux : le formariage est dû par les vilains, pas par les serfs.", "Faux : le formariage se paie à la mort du serf, par ses héritiers."],
       reponse: { vrai: false, correction: "Faux : le formariage n'est dû que pour un mariage hors de la seigneurie." },
-      explication: "Le formariage se paie quand le serf se marie hors de la seigneurie. Un mariage à l'intérieur n'y donne pas lieu.", source: S(1) }
+      explication: "Le formariage se paie quand le serf se marie hors de la seigneurie. Un mariage à l'intérieur n'y donne pas lieu.", source: S(1) },
+    // f5 : la Grande Peste (fiche de programme, questions de thème)
+    { id: "histoire-s06-1-q38", fiche: "histoire-s06-1-f5", type: "qcm", niveau: 1,
+      enonce: "D'où vient la peste qui frappe l'Europe en 1347-1348 ?",
+      choix: ["D'Asie centrale", "D'Angleterre", "De Normandie", "D'Espagne"],
+      reponse: "D'Asie centrale",
+      explication: "La maladie vient d'Asie centrale, sans doute de l'actuel Kirghizistan. Elle gagne la Crimée, puis les ports de la Méditerranée.",
+      source: T("Peste noire", U_PESTE) },
+    { id: "histoire-s06-1-q39", fiche: "histoire-s06-1-f5", type: "vrai_faux", niveau: 1,
+      enonce: "La peste noire arrive en Europe par des navires.",
+      corrections: [], reponse: { vrai: true, correction: null },
+      explication: "Oui : en 1347, des bateaux génois quittent Caffa, en Crimée, et apportent la maladie à Constantinople, à Messine puis à Marseille. Les ports sont touchés les premiers.",
+      source: T("Peste noire", U_PESTE) },
+    { id: "histoire-s06-1-q40", fiche: "histoire-s06-1-f5", type: "qcm", niveau: 2,
+      enonce: "Comment la peste se transmet-elle aux humains ?",
+      choix: ["Par les puces portées par les rats noirs", "Par l'eau des puits et des rivières des villages", "Par le pain moisi", "Par les flèches des archers"],
+      reponse: "Par les puces portées par les rats noirs",
+      explication: "Le rat noir sert de réservoir au bacille, et les puces le transmettent aux humains. La maladie peut aussi passer d'une personne à l'autre par les poumons.",
+      source: T("Peste noire", U_PESTE) },
+    { id: "histoire-s06-1-q41", fiche: "histoire-s06-1-f5", type: "ordre", niveau: 2,
+      enonce: "Remets ces villes dans l'ordre où la peste les atteint.",
+      elements: ["Paris (août 1348)", "Messine (septembre 1347)", "Marseille (novembre 1347)", "Avignon (janvier 1348)"],
+      reponse: [1, 2, 3, 0],
+      explication: "Messine fin septembre 1347, Marseille en novembre, Avignon en janvier 1348, Paris le 20 août 1348. La maladie remonte des ports vers l'intérieur.",
+      source: T("Peste noire", U_PESTE) },
+    { id: "histoire-s06-1-q42", fiche: "histoire-s06-1-f5", type: "vrai_faux", niveau: 2,
+      enonce: "La peste noire tue moins d'un Européen sur dix.",
+      corrections: ["Faux : elle tue entre 30 et 60 % des Européens, soit au moins un sur trois.", "Faux : elle ne fait aucun mort en France.", "Faux : elle tue tous les habitants de l'Europe."],
+      reponse: { vrai: false, correction: "Faux : elle tue entre 30 et 60 % des Européens, soit au moins un sur trois." },
+      explication: "Entre 1347 et 1352, la peste tue entre 30 et 60 % de la population de l'Europe, environ 25 millions de personnes. C'est au moins un habitant sur trois.",
+      source: T("Peste noire", U_PESTE) },
+    { id: "histoire-s06-1-q43", fiche: "histoire-s06-1-f5", type: "qcm", niveau: 2,
+      enonce: "Pourquoi des villages sont-ils abandonnés après 1348 ?",
+      choix: ["Il reste trop peu de bras pour cultiver", "Le roi de France ordonne de quitter les campagnes", "Les seigneurs vendent tous leurs villages aux Anglais", "La forêt a envahi les maisons en une nuit"],
+      reponse: "Il reste trop peu de bras pour cultiver",
+      explication: "Avec tant de morts, les terres les moins fertiles ne sont plus cultivées et retournent en friche. La production de blé chute de 30 à 50 % selon les régions.",
+      source: T("Peste noire", U_PESTE) },
+    { id: "histoire-s06-1-q44", fiche: "histoire-s06-1-f5", type: "qcm", niveau: 3,
+      enonce: "En 1346, les Mongols assiègent Caffa, un port génois de Crimée. Quel lien avec la peste en Europe ?",
+      choix: ["Les navires partis de Caffa répandent la maladie", "Les Mongols envahissent ensuite la France et l'Angleterre", "La ville de Gênes déclare la guerre à Marseille", "Il n'y a aucun lien"],
+      reponse: "Les navires partis de Caffa répandent la maladie",
+      explication: "Les bateaux génois quittent Caffa en 1347 et apportent la peste à Constantinople, puis dans les ports d'Italie et de Provence. De là, elle gagne toute l'Europe.", indice: "Pense à la façon dont la peste voyage.",
+      source: T("Peste noire", U_PESTE) },
+    { id: "histoire-s06-1-q45", fiche: "histoire-s06-1-f5", type: "trou", niveau: 1,
+      enonce: "Complète le trajet de la peste.",
+      texte: "En ___, la peste arrive à Marseille ; en 1348, elle atteint ___.",
+      banque: ["1347", "Paris", "1453", "Bagdad"],
+      reponse: [["1347"], ["Paris"]],
+      explication: "Marseille est touchée en novembre 1347, Paris en août 1348. En deux ans, toute la France est atteinte.",
+      source: T("Peste noire", U_PESTE) },
+    // f6 : les moulins (fiche de programme, questions de thème)
+    { id: "histoire-s06-1-q46", fiche: "histoire-s06-1-f6", type: "qcm", niveau: 1,
+      enonce: "À qui appartient le moulin du village ?",
+      choix: ["Au seigneur", "Au meunier", "Aux paysans, en commun", "Au roi"],
+      reponse: "Au seigneur",
+      explication: "Le moulin fait partie des installations du seigneur, comme le four et le pressoir. Le meunier le fait tourner pour lui, et les paysans paient pour moudre.",
+      source: T("Seigneurie", U_SEIGNEURIE) },
+    { id: "histoire-s06-1-q47", fiche: "histoire-s06-1-f6", type: "vrai_faux", niveau: 1,
+      enonce: "Le moulin à vent apparaît en Europe de l'Ouest vers le XIIe siècle.",
+      corrections: [], reponse: { vrai: true, correction: null },
+      explication: "Oui : il se généralise vers le XIIe siècle, d'abord sur les côtes de Grande-Bretagne et des Pays-Bas. En France, la première mention connue est à Arles, en 1170.",
+      source: T("Moulin à vent", U_MOULIN_VENT) },
+    { id: "histoire-s06-1-q48", fiche: "histoire-s06-1-f6", type: "qcm", niveau: 2,
+      enonce: "Combien de blé une meule de moulin à eau peut-elle moudre en une heure ?",
+      choix: ["Environ 150 kg", "Environ 1 kg", "Environ 15 kg", "Environ 15 tonnes"],
+      reponse: "Environ 150 kg",
+      explication: "Une meule mue par l'eau peut moudre 150 kg de blé à l'heure. C'est bien plus qu'une meule tournée à la main.",
+      source: T("Moulin à eau", U_MOULIN_EAU) },
+    { id: "histoire-s06-1-q49", fiche: "histoire-s06-1-f6", type: "qcm", niveau: 2,
+      enonce: "Pourquoi le moulin à eau est-il un progrès pour les campagnes ?",
+      choix: ["L'eau travaille à la place des bras", "Il fait tomber la pluie sur les champs", "Il permet de labourer la terre plus profond", "Il protège le village contre les attaques"],
+      reponse: "L'eau travaille à la place des bras",
+      explication: "La roue entraînée par la rivière fait tourner la meule sans effort humain. L'eau sert aussi à battre les draps et à frapper le fer dans les forges.",
+      source: T("Moulin à eau", U_MOULIN_EAU) },
+    { id: "histoire-s06-1-q50", fiche: "histoire-s06-1-f6", type: "qcm_multiple", niveau: 2,
+      enonce: "Que fait-on tourner avec la force de l'eau au Moyen Âge ? (plusieurs réponses)",
+      choix: ["Des meules à grain", "Des foulons pour les draps", "Des marteaux de forge", "Des charrues", "Des charrettes"],
+      reponse: ["Des meules à grain", "Des foulons pour les draps", "Des marteaux de forge"],
+      explication: "L'eau moud le grain, foule les draps et frappe le fer. La charrue et la charrette, elles, sont tirées par des animaux.",
+      source: T("Moulin à eau", U_MOULIN_EAU) },
+    { id: "histoire-s06-1-q51", fiche: "histoire-s06-1-f6", type: "vrai_faux", niveau: 2,
+      enonce: "Les seigneurs accueillent toujours avec joie les nouveaux moulins à vent.",
+      corrections: ["Faux : beaucoup hésitent à remplacer leur moulin à eau, une banalité plus solide, et exigent un « droit de vent ».", "Faux : les moulins à vent sont interdits par le roi.", "Faux : les seigneurs n'ont pas le droit de posséder un moulin."],
+      reponse: { vrai: false, correction: "Faux : beaucoup hésitent à remplacer leur moulin à eau, une banalité plus solide, et exigent un « droit de vent »." },
+      explication: "Certains seigneurs rechignent à abandonner leur moulin à eau, plus robuste. En France, ils réclament un droit de vent à qui veut bâtir un moulin à vent.",
+      source: T("Moulin à vent", U_MOULIN_VENT) },
+    { id: "histoire-s06-1-q52", fiche: "histoire-s06-1-f6", type: "qcm", niveau: 3,
+      enonce: "Un village se trouve loin de toute rivière, sur un plateau venteux de Normandie. Quel moulin y bâtit-on au XIIe siècle ?",
+      choix: ["Un moulin à vent", "Un moulin à eau", "Un moulin à bras géant", "Aucun : on moud à la main"],
+      reponse: "Un moulin à vent",
+      explication: "Sans rivière, pas de moulin à eau : le moulin à vent, répandu au XIIe siècle dans le Cotentin et le Pays de Caux, prend le relais. Le vent remplace le courant.", indice: "Que manque-t-il à ce village ?",
+      source: T("Moulin à vent", U_MOULIN_VENT) },
+    { id: "histoire-s06-1-q53", fiche: "histoire-s06-1-f6", type: "association", niveau: 2,
+      enonce: "Relie chaque machine à ce qu'elle fait.",
+      gauche: ["Meule", "Foulon", "Moulin à vent", "Arbre à cames"],
+      droite: ["Bat les draps de laine", "Écrase le grain", "Transforme la rotation en coups de marteau", "Tourne grâce au vent, dès le XIIe siècle"],
+      reponse: [[0, 1], [1, 0], [2, 3], [3, 2]],
+      explication: "La meule écrase, le foulon bat les draps, l'arbre à cames fait frapper les marteaux. Le moulin à vent apporte une force nouvelle au XIIe siècle.",
+      source: T("Moulin à eau", U_MOULIN_EAU) }
   ],
   bonus: [
     {
@@ -334,13 +476,21 @@ module.exports = {
       titre: "Pourquoi la charrue retourne la terre d'un seul côté",
       texte: "Ce qui distingue vraiment la charrue de l'araire, c'est son versoir : il rejette la terre d'un seul côté, si bien que le travail est dissymétrique. Ses pièces principales sont le soc et le versoir, auxquels peuvent s'ajouter un coutre et une rasette. Elle s'est répandue plus largement en Europe pendant la révolution agricole du Moyen Âge, du Xe au XIIIe siècle.",
       source: { titre: "Charrue", editeur: "Wikipédia, l'encyclopédie libre", url: "https://fr.wikipedia.org/wiki/Charrue" }
+    },
+    {
+      id: "histoire-s06-1-b2",
+      fiche: "histoire-s06-1-f1",
+      titre: "Le Rustican, un manuel d'agriculture copié pendant deux siècles",
+      texte: "Pietro de' Crescenzi (vers 1230-1320), magistrat de Bologne, écrit entre 1304 et 1306 un traité d'agriculture en latin. Sur ordre du roi Charles V, il est traduit en français dès 1373 : c'est le Rustican. Des copies enluminées, comme celle du musée Condé peinte vers 1470-1475, montrent les travaux des mois. Le livre est imprimé dès 1471.",
+      source: { titre: "Pietro de' Crescenzi", editeur: "Wikipédia, l'encyclopédie libre", url: "https://fr.wikipedia.org/wiki/Pietro_de%27_Crescenzi" }
     }
   ],
   nonCouvert: [
     "L'étude de cas n°4 annoncée par le planning n'est pas déposée : on ne sait pas de quoi elle traite.",
     "La leçon à apprendre et les réponses rédigées aux neuf questions de l'étude de cas 3, données en vidéo.",
     "L'image de la charrue de l'étude de cas (seul le texte de l'encadré est repris) et les douze images du Rustican.",
-    "Les autres techniques nouvelles des campagnes médiévales : le fichier ne cite que la charrue et le collier d'épaule.",
+    "L'assolement triennal : enseigné nulle part dans le jeu et jamais interrogé, parce que le test de la séance 8 demande de le schématiser.",
+    "La liste des « trois techniques nouvelles » du devoir n°1 : le jeu interroge une technique à la fois (charrue, collier d'épaule, moulin), jamais la liste.",
     "Ce qu'est précisément un fief, un vassal ou un hommage : ces mots viennent des cours suivants, en vidéo.",
     "Le montant des taxes (combien d'argent pour le cens ou le chevage, quelle part pour le champart) : le tableau ne le dit pas.",
     "Le calendrier des travaux des paysans, la famine de 1033 et la part des paysans dans la population : ils sont traités au cours 6 (histoire-s04-3).",

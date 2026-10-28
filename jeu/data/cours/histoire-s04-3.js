@@ -5,13 +5,14 @@ JEU.enregistrer("cours", {
  "fiches": [
   {
    "id": "histoire-s04-3-f1",
-   "notion": "Les campagnes de l'an mil à 1348 : repères",
-   "titre": "Du village médiéval à la Grande peste",
-   "texte": "Vers l'an mil naît le village médiéval. C'est aussi l'époque où se développe la seigneurie banale. Du XIe au XIIIe siècle, les campagnes connaissent un développement économique et démographique : c'est le temps des grands défrichements. Puis, en 1348, survient la Grande peste.",
+   "notion": "De l'an mil à 1348 : essor des campagnes, puis la Peste",
+   "titre": "Trois siècles de conquête de la terre, puis la Peste",
+   "texte": "Vers l'an mil, les paysans se regroupent en villages, autour du château et de l'église. Du XIe au XIIIe siècle, l'Occident gagne des champs sur la forêt : c'est l'âge des grands défrichements, et la population fait plus que doubler. Arrivée à Marseille fin 1347, la Grande Peste ravage la France en 1348 et vide des villages.",
    "pointsCles": [
-    "Vers l'an mil : naissance du village médiéval, développement de la seigneurie banale",
-    "XIe-XIIIe siècle : grands défrichements, développement économique et démographique",
-    "1348 : la Grande peste"
+    "Vers l'an mil : les paysans se regroupent en villages ; la seigneurie banale se développe",
+    "XIe-XIIIe siècle : grands défrichements ; l'Occident passe d'environ 38 millions d'habitants au début du Xe siècle à plus de 75 millions au début du XIVe",
+    "Fin 1347 : la Peste débarque à Messine, puis à Marseille ; 1348 : toute la France est touchée",
+    "Entre 30 et 60 % des Européens meurent en cinq ou six ans ; des villages sont abandonnés"
    ],
    "dates": [
     {
@@ -19,11 +20,17 @@ JEU.enregistrer("cours", {
      "evenement": "Vers l'an mil : naissance du village médiéval"
     },
     {
+     "annee": 1050,
+     "evenement": "Vers 1050 : début de l'ère des grands défrichements"
+    },
+    {
      "annee": 1348,
      "evenement": "La Grande peste"
     }
    ],
-   "lieux": [],
+   "lieux": [
+    "Marseille"
+   ],
    "personnages": [],
    "vocabulaire": [
     {
@@ -33,13 +40,19 @@ JEU.enregistrer("cours", {
     {
      "mot": "démographique",
      "def": "qui concerne la population et son nombre"
+    },
+    {
+     "mot": "peste",
+     "def": "une maladie très contagieuse, transmise par les puces des rats, qui tue en quelques jours"
     }
    ],
    "schema": "histoire-s04-3-s1",
    "prerequis": [],
    "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 6 - Support.pdf",
-    "page": 1
+    "programme": "L'ordre seigneurial : la formation et la domination des campagnes",
+    "titre": "Défrichement",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/D%C3%A9frichement"
    }
   },
   {
@@ -158,6 +171,101 @@ JEU.enregistrer("cours", {
    "source": {
     "fichier": "cours/histoire/Histoire 5e - Moyen Age - Etude de cas 3 Vie et travail des paysans.pdf",
     "page": 1
+   }
+  },
+  {
+   "id": "histoire-s04-3-f5",
+   "notion": "Les grands défrichements : gagner des terres sur la forêt",
+   "titre": "À l'assaut de la forêt : les grands défrichements",
+   "texte": "Vers 1050, l'Occident part à l'assaut de ses forêts et de ses marais. Des paysans grignotent la lisière des bois ; des seigneurs et des moines organisent de grands chantiers et fondent des villages neufs. Les outils de fer, des routes meilleures et la fin des invasions rendent la conquête possible. Les terres gagnées s'appellent des essarts.",
+   "pointsCles": [
+    "Vers 1050 s'ouvre l'« ère des grands défrichements » ; la forêt recule le plus aux XIIIe et XIVe siècles",
+    "Qui défriche : des paysans, des seigneurs (parfois associés à une abbaye ou à une ville), des moines",
+    "Pourquoi : la population augmente, les outils de fer se répandent, les invasions ont cessé, les routes s'améliorent",
+    "Villages neufs du Sud-Ouest : sauvetés, bastides (surtout au XIIIe siècle)",
+    "Un essart : une terre gagnée sur la forêt ; beaucoup de lieux s'appellent encore Les Essarts"
+   ],
+   "astuce": "Trois défricheurs : le paysan (sa hache), le seigneur (ses villages neufs), le moine (son abbaye).",
+   "dates": [
+    {
+     "annee": 1050,
+     "evenement": "Vers 1050 : début de l'ère des grands défrichements"
+    }
+   ],
+   "lieux": [],
+   "personnages": [],
+   "vocabulaire": [
+    {
+     "mot": "essart",
+     "def": "une terre gagnée sur la forêt en arrachant arbres et broussailles"
+    },
+    {
+     "mot": "lisière",
+     "def": "le bord d'une forêt"
+    },
+    {
+     "mot": "bastide",
+     "def": "un village neuf du Sud-Ouest, fondé surtout au XIIIe siècle"
+    },
+    {
+     "mot": "sauveté",
+     "def": "un village neuf fondé au Moyen Âge, sous la protection d'une église ou d'une abbaye"
+    }
+   ],
+   "schema": "histoire-s04-3-s1",
+   "prerequis": [
+    "histoire-s04-3-f1"
+   ],
+   "source": {
+    "programme": "L'ordre seigneurial : la formation et la domination des campagnes",
+    "titre": "Défrichement",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/D%C3%A9frichement"
+   }
+  },
+  {
+   "id": "histoire-s04-3-f6",
+   "notion": "Le village : le château, l'église, les champs",
+   "titre": "Le village naît autour du château et de l'église",
+   "texte": "Entre 950 et 1150, les paysans, jusque-là dispersés, se rassemblent. Leurs maisons se serrent autour de deux pôles : le château du seigneur, qui commande et protège, et l'église avec son cimetière, qui réunit tout le monde. Autour s'étendent les champs, les prés et le bois. Les historiens appellent ce regroupement l'encellulement : le village médiéval est né.",
+   "pointsCles": [
+    "Vers l'an mil (950-1050), les paysans se regroupent ; vers 1150, le mouvement est achevé presque partout",
+    "Deux pôles : le château (commander, protéger) et l'église avec son cimetière (rassembler)",
+    "Pourquoi : après les raids vikings, les villageois se rapprochent des guerriers qui les défendent ; la population augmente",
+    "Autour du village : les champs, les prés, le bois"
+   ],
+   "astuce": "Un village, deux tours : la tour du château et le clocher de l'église.",
+   "dates": [
+    {
+     "annee": 1000,
+     "evenement": "Vers l'an mil : les paysans se regroupent en villages"
+    }
+   ],
+   "lieux": [],
+   "personnages": [],
+   "vocabulaire": [
+    {
+     "mot": "encellulement",
+     "def": "le regroupement des paysans en villages autour du château et de l'église, vers l'an mil"
+    },
+    {
+     "mot": "raid",
+     "def": "une attaque rapide, menée pour piller"
+    },
+    {
+     "mot": "pôle",
+     "def": "un point central autour duquel les choses se rassemblent"
+    }
+   ],
+   "schema": "histoire-s04-3-s1",
+   "prerequis": [
+    "histoire-s04-3-f1"
+   ],
+   "source": {
+    "programme": "L'ordre seigneurial : la formation et la domination des campagnes",
+    "titre": "Encellulement",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Encellulement"
    }
   }
  ],
@@ -324,6 +432,29 @@ JEU.enregistrer("cours", {
     "page": 1
    },
    "r": "=oxLXBQACwgHNlCRe8AASxkAD8AELlCH",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s04-3-q49",
+   "fiche": "histoire-s04-3-f1",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Par où la Grande peste entre-t-elle en France, à la fin de 1347 ?",
+   "choix": [
+    "Par Marseille, apportée par des navires venus de Méditerranée",
+    "Par Paris, apportée par des pèlerins",
+    "Par Bouvines, apportée par l'armée de l'empereur",
+    "Par Calais, apportée par les Anglais"
+   ],
+   "explication": "Des navires partis de Crimée répandent la maladie à Messine, puis à Gênes et à Marseille en novembre 1347. Paris n'est atteinte qu'en août 1348.",
+   "indice": "Pense au grand port de la Méditerranée.",
+   "source": {
+    "theme": "Cours 6 – La vie dans les campagnes au Moyen Âge",
+    "titre": "Peste noire",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Peste_noire"
+   },
+   "r": "QBBz2+BCc0xFcoSSMbPYOpgAGpxBpcxAFZAFbcQGTYwYeBQUNwhDWYEDbToBHoQBBggTDdBBvQEAG91DiYEFIISZ",
    "poids": 1
   },
   {
@@ -692,6 +823,347 @@ JEU.enregistrer("cours", {
    },
    "r": "ogzVCwwBa4BGhZXSo9QXcZ1VLlCH",
    "poids": 1
+  },
+  {
+   "id": "histoire-s04-3-q33",
+   "fiche": "histoire-s04-3-f5",
+   "type": "qcm",
+   "niveau": 1,
+   "enonce": "Vers quelle date s'ouvre l'ère des grands défrichements ?",
+   "choix": [
+    "Vers 1050",
+    "Vers 800",
+    "Vers 1348",
+    "Vers 1500"
+   ],
+   "explication": "Dans la plupart des régions, les grands défrichements commencent vers 1050. La forêt recule le plus aux XIIIe et XIVe siècles.",
+   "source": {
+    "theme": "Cours 6 – La vie dans les campagnes au Moyen Âge",
+    "titre": "Défrichement",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/D%C3%A9frichement"
+   },
+   "r": "=8QVA0xXPVBFMQSZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s04-3-q34",
+   "fiche": "histoire-s04-3-f5",
+   "type": "vrai_faux",
+   "niveau": 1,
+   "enonce": "Un essart est une terre gagnée sur la forêt.",
+   "corrections": [],
+   "explication": "Oui : essarter, c'est arracher les arbres et les broussailles pour faire un champ. Beaucoup de villages s'appellent encore Les Essarts.",
+   "source": {
+    "theme": "Cours 6 – La vie dans les campagnes au Moyen Âge",
+    "titre": "Défrichement",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/D%C3%A9frichement"
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s04-3-q35",
+   "fiche": "histoire-s04-3-f5",
+   "type": "qcm_multiple",
+   "niveau": 2,
+   "enonce": "Qui défriche les forêts du XIe au XIIIe siècle ? (plusieurs réponses)",
+   "choix": [
+    "Des paysans, qui grignotent la lisière des bois",
+    "Des seigneurs, qui fondent des villages neufs",
+    "Des moines, avec leurs abbayes",
+    "Le calife de Bagdad",
+    "L'empereur byzantin"
+   ],
+   "explication": "Paysans, seigneurs et moines défrichent, chacun à sa manière. Les seigneurs y gagnent des terres et des taxes nouvelles, les moines agrandissent les domaines de leurs abbayes.",
+   "source": {
+    "theme": "Cours 6 – La vie dans les campagnes au Moyen Âge",
+    "titre": "Défrichement",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/D%C3%A9frichement"
+   },
+   "r": "==gGQZAAMAxCM4gUbEDWAkVDNoAEHkkX0cxGMoBHJ1hC2o0bPYxUYtQAGVBDVYiHZwwARpxCLIFHtgUAbJECP9wEYI1aBcAEQ8hDHoQAIBDShcRAMxxDJsgU0cREFBxAB3qBBEwLNQQWNoRADIhBcAyGHIQVYwxHP51GtwkFMxkHPVxAtAFH",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s04-3-q36",
+   "fiche": "histoire-s04-3-f5",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Pourquoi gagne-t-on tant de terres sur la forêt à partir du XIe siècle ?",
+   "choix": [
+    "Il faut nourrir une population qui augmente",
+    "La forêt a brûlé pendant les invasions",
+    "Le roi l'ordonne à tous les seigneurs",
+    "Les paysans n'ont plus le droit de chasser"
+   ],
+   "explication": "Entre le début du Xe siècle et le début du XIVe, la population de l'Occident fait plus que doubler. Pour la nourrir, il faut plus de champs, donc moins de forêt.",
+   "source": {
+    "theme": "Cours 6 – La vie dans les campagnes au Moyen Âge",
+    "titre": "Défrichement",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/D%C3%A9frichement"
+   },
+   "r": "ldRALABHOshDSFgNcV0WCdwGHoAHCgiAVBwGEkEHGAgG2I0CVk1GOAgRFsTZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s04-3-q37",
+   "fiche": "histoire-s04-3-f5",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Les outils de fer et la fin des invasions rendent les grands défrichements plus faciles.",
+   "corrections": [],
+   "explication": "Oui : la hache et la bêche de fer se répandent, et les raids ont cessé, ce qui permet de s'installer loin des remparts. De meilleures routes aident aussi.",
+   "source": {
+    "theme": "Cours 6 – La vie dans les campagnes au Moyen Âge",
+    "titre": "Défrichement",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/D%C3%A9frichement"
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s04-3-q38",
+   "fiche": "histoire-s04-3-f5",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Comment s'appellent les villages neufs fondés dans le Sud-Ouest au XIIIe siècle, au temps des défrichements ?",
+   "choix": [
+    "Des bastides",
+    "Des tenures",
+    "Des cartulaires",
+    "Des califats"
+   ],
+   "explication": "Les bastides sont des villages neufs du Sud-Ouest, fondés surtout au XIIIe siècle. On parle aussi de sauvetés, placées sous la protection d'une église ou d'une abbaye.",
+   "source": {
+    "theme": "Cours 6 – La vie dans les campagnes au Moyen Âge",
+    "titre": "Défrichement",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/D%C3%A9frichement"
+   },
+   "r": "=A1GmkEDB51DNYUFMYTZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s04-3-q39",
+   "fiche": "histoire-s04-3-f5",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Au XIVe siècle, la forêt regagne du terrain sur les champs. Pourquoi ?",
+   "choix": [
+    "La Peste et la guerre ont vidé des villages",
+    "Les seigneurs interdisent de cultiver",
+    "Les paysans ont tous quitté les campagnes pour les villes",
+    "Le climat devient trop chaud"
+   ],
+   "explication": "Après la Peste de 1348 et pendant la guerre de Cent Ans, des villages sont abandonnés. Les champs les moins bons retournent à la friche et aux arbres.",
+   "indice": "Pense aux deux grands malheurs du XIVe siècle.",
+   "source": {
+    "theme": "Cours 6 – La vie dans les campagnes au Moyen Âge",
+    "titre": "Défrichement",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/D%C3%A9frichement"
+   },
+   "r": "==AU0chEEkRHAgxTB0wJNws9JdQGGJxBdc2FHcBEE4gTO4BS3gURQlVHKYjRI4TZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s04-3-q40",
+   "fiche": "histoire-s04-3-f5",
+   "type": "trou",
+   "niveau": 1,
+   "enonce": "Complète avec les mots des défrichements.",
+   "texte": "Du XIe au XIIIe siècle, on gagne des champs sur la ___ ; une terre défrichée s'appelle un ___.",
+   "banque": [
+    "forêt",
+    "essart",
+    "mer",
+    "cens"
+   ],
+   "explication": "Les grands défrichements prennent des champs à la forêt et aux marais. La terre ainsi gagnée est un essart.",
+   "source": {
+    "theme": "Cours 6 – La vie dans les campagnes au Moyen Âge",
+    "titre": "Défrichement",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/D%C3%A9frichement"
+   },
+   "r": "=oxLXFxBQoRHKA1MvB3RBdYrdkAALlCH",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s04-3-q41",
+   "fiche": "histoire-s04-3-f6",
+   "type": "qcm",
+   "niveau": 1,
+   "enonce": "Autour de quels deux bâtiments les maisons du village se regroupent-elles vers l'an mil ?",
+   "choix": [
+    "Le château et l'église",
+    "Le moulin et le four",
+    "La grange et le pressoir",
+    "La cathédrale et l'hôtel de ville"
+   ],
+   "explication": "Le château du seigneur et l'église, avec son cimetière, sont les deux pôles du village. Les maisons se serrent autour d'eux.",
+   "source": {
+    "theme": "Cours 6 – La vie dans les campagnes au Moyen Âge",
+    "titre": "Encellulement",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Encellulement"
+   },
+   "r": "=QEDB4iHSwstWVgTbcBS2wEAB9YrHUgRM4TZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s04-3-q42",
+   "fiche": "histoire-s04-3-f6",
+   "type": "vrai_faux",
+   "niveau": 1,
+   "enonce": "Le village médiéval se forme vers l'an mil, entre 950 et 1150 environ.",
+   "corrections": [],
+   "explication": "Oui : les historiens situent le regroupement des paysans entre 950 et 1050, et il est achevé presque partout vers 1150. Avant, les maisons étaient dispersées.",
+   "source": {
+    "theme": "Cours 6 – La vie dans les campagnes au Moyen Âge",
+    "titre": "Encellulement",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Encellulement"
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s04-3-q43",
+   "fiche": "histoire-s04-3-f6",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Pourquoi les paysans viennent-ils se regrouper près du château ?",
+   "choix": [
+    "Les guerriers du château les protègent",
+    "Pour payer moins de taxes",
+    "Parce que le roi de France l'a ordonné à tous",
+    "Parce que la forêt a disparu"
+   ],
+   "explication": "Après les raids vikings, les villageois se rapprochent des guerriers capables de les défendre. Le château commande et protège, l'église rassemble.",
+   "source": {
+    "theme": "Cours 6 – La vie dans les campagnes au Moyen Âge",
+    "titre": "Encellulement",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Encellulement"
+   },
+   "r": "HFwHMkwxxyBLfVRFetwAGNBCXMD022gFRxhCPFgGmQ0FHh0GIYUFM4TZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s04-3-q44",
+   "fiche": "histoire-s04-3-f6",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Au Moyen Âge, chaque seigneurie possède obligatoirement un château.",
+   "corrections": [
+    "Faux : beaucoup de seigneuries n'ont jamais eu de château, mais toutes ont un seigneur.",
+    "Faux : seules les seigneuries du roi ont un château.",
+    "Faux : les châteaux n'apparaissent qu'après la guerre de Cent Ans."
+   ],
+   "explication": "Le château est souvent le centre de la seigneurie, mais beaucoup de seigneuries n'en ont jamais eu. Toutes, en revanche, ont un seigneur qui commande.",
+   "source": {
+    "theme": "Cours 6 – La vie dans les campagnes au Moyen Âge",
+    "titre": "Seigneurie",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Seigneurie"
+   },
+   "r": "==AUMFEFTwAHgsBEWU1Hc40GccwYeBQQYFwGGVBAToiUZBBFU0BzsqxCjhUAVg1CPVxDI8hJYUVEb4hTA8UANoyXQA1QJYwAVk0FjIVBQohEc8gCQgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s04-3-q45",
+   "fiche": "histoire-s04-3-f6",
+   "type": "qcm_multiple",
+   "niveau": 2,
+   "enonce": "Que trouve-t-on dans un village médiéval et autour de lui ? (plusieurs réponses)",
+   "choix": [
+    "L'église et son cimetière",
+    "Le château du seigneur",
+    "Les champs et les prés",
+    "Une université",
+    "Un port de mer"
+   ],
+   "explication": "Église, château, champs et prés forment le village et ses terres. L'université et le port appartiennent aux villes.",
+   "source": {
+    "theme": "Cours 6 – La vie dans les campagnes au Moyen Âge",
+    "titre": "Encellulement",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Encellulement"
+   },
+   "r": "=QDTcs9qx0VRGhkAPJxAJFwNfQRDWElGLMCUEF2XQA1QJYwAVk0BjIFAEARBL36BRgkJhdUGPsQHOXKAGIyHcYQVfYQHPZQDjhkFcFUCGXaQlAFH",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s04-3-q46",
+   "fiche": "histoire-s04-3-f6",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Comment les historiens appellent-ils le regroupement des paysans en villages, vers l'an mil ?",
+   "choix": [
+    "L'encellulement",
+    "Le défrichement",
+    "La banalité",
+    "Le schisme"
+   ],
+   "explication": "Le mot encellulement, proposé par l'historien Robert Fossier, désigne ce regroupement autour du château et de l'église. Le défrichement, lui, est la conquête de terres sur la forêt.",
+   "source": {
+    "theme": "Cours 6 – La vie dans les campagnes au Moyen Âge",
+    "titre": "Encellulement",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Encellulement"
+   },
+   "r": "=skGBcRBmEEEZF0CMgwAO5TZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s04-3-q47",
+   "fiche": "histoire-s04-3-f6",
+   "type": "ordre",
+   "niveau": 2,
+   "enonce": "Remets ces moments de l'histoire des campagnes dans l'ordre du temps.",
+   "elements": [
+    "Les paysans se regroupent en villages (vers l'an mil)",
+    "Les grands défrichements (XIe-XIIIe siècle)",
+    "La Grande peste (1348)",
+    "Les raids vikings (IXe siècle)"
+   ],
+   "explication": "Les raids vikings du IXe siècle précèdent le regroupement des villages vers l'an mil. Puis viennent les défrichements et, en 1348, la Peste.",
+   "source": {
+    "theme": "Cours 6 – La vie dans les campagnes au Moyen Âge",
+    "titre": "Encellulement",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Encellulement"
+   },
+   "r": "o9hQepkVFFEH",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s04-3-q48",
+   "fiche": "histoire-s04-3-f6",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Pourquoi les historiens disent-ils que le village médiéval est une « cellule » de la seigneurie ?",
+   "choix": [
+    "Le seigneur y tient ses habitants rassemblés sous son contrôle",
+    "Parce que chaque maison est minuscule",
+    "Parce que les paysans y sont enfermés la nuit",
+    "Parce que le village est entouré d'un grand mur de pierre"
+   ],
+   "explication": "Rassemblés autour du château et de l'église, les paysans sont plus faciles à commander, à juger et à taxer. C'est pour cela que l'on parle de cellules.",
+   "indice": "Qui commande dans le village ?",
+   "source": {
+    "theme": "Cours 6 – La vie dans les campagnes au Moyen Âge",
+    "titre": "Encellulement",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Encellulement"
+   },
+   "r": "QBRCBL7GaEQHLM2QKYUDdoRCVkUAuHbGHgBFa0hDAgEMZtAVZdQDH4QSBISAVFxGUAgGPtASxgFAbp0BKUhRM4TZ",
+   "poids": 1
   }
  ],
  "bonus": [
@@ -705,16 +1177,26 @@ JEU.enregistrer("cours", {
     "editeur": "Wikipédia, l'encyclopédie libre",
     "url": "https://fr.wikipedia.org/wiki/Peste_noire"
    }
+  },
+  {
+   "id": "histoire-s04-3-b2",
+   "fiche": "histoire-s04-3-f5",
+   "titre": "Des noms de lieux qui racontent les défrichements",
+   "texte": "La carte de France garde la trace des défricheurs. Les Essarts, Les Sarts dans le Nord, Le Thuit en Normandie, Les Artigues dans le Sud-Ouest, Les Rodes ou Le Rœulx et les villages en -rode d'Alsace et de Lorraine : tous ces noms veulent dire « terre gagnée sur la forêt ». Sauveterre rappelle les villages neufs placés sous protection.",
+   "source": {
+    "titre": "Défrichement",
+    "editeur": "Wikipédia, l'encyclopédie libre",
+    "url": "https://fr.wikipedia.org/wiki/D%C3%A9frichement"
+   }
   }
  ],
  "nonCouvert": [
-  "L'image du village et du château étudiée en classe (arrière-plan, place du château par rapport au village) n'est pas dans le fichier : seules les questions y figurent.",
-  "Les mots importants à noter : le cadre est vide ; la leçon est donnée en vidéo.",
-  "Ce qu'est la seigneurie banale : la frise cite seulement l'époque de son développement.",
-  "Les causes des grands défrichements et ce qu'ils changent dans le paysage.",
-  "Les conséquences de la Grande peste de 1348 sur les campagnes.",
-  "Les douze images du Rustican elles-mêmes (seules leurs légendes sont reprises) et le texte de la chronique de Raoul Glaber dans sa version complète.",
-  "Les réponses rédigées aux neuf questions de l'étude de cas, données pendant la vidéo : le jeu ne retient que ce que le calendrier des mois et les textes imprimés permettent de déduire.",
-  "La charrue, le collier d'épaule et le tableau des redevances de la même étude de cas : ils sont traités au cours 8 (histoire-s06-1)."
+  "L'image du village et du château étudiée en classe (arrière-plan, place du château par rapport au village) n'est pas dans le fichier : la fiche f6 la remplace par ce que le programme attend sur la naissance du village.",
+  "Les techniques nouvelles des campagnes (charrue, collier d'épaule, assolement triennal, moulins) : elles sont traitées au cours 8 (histoire-s06-1) ; l'assolement triennal n'est jamais interrogé (test de la séance 8).",
+  "Ce qu'est la seigneurie banale (le ban, les banalités) : traité au cours 7 (histoire-s05-1).",
+  "Les paysages créés par les défrichements (bocage, champs ouverts) et les rendements des terres.",
+  "Le rôle de l'Église dans l'encadrement du village (paroisse, dîme) : seulement nommé, sans question (règle sur la religion).",
+  "Les douze images du Rustican elles-mêmes (seules leurs légendes sont reprises) et le texte complet de la chronique de Raoul Glaber.",
+  "Les réponses rédigées aux neuf questions de l'étude de cas, données pendant la vidéo."
  ]
 });

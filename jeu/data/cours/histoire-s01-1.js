@@ -88,29 +88,48 @@ JEU.enregistrer("cours", {
   },
   {
    "id": "histoire-s01-1-f3",
-   "notion": "Byzance, Constantinople, Istanbul",
-   "titre": "Une ville, trois noms",
-   "texte": "Byzance naît comme colonie grecque au VIe siècle avant J.-C. Au IVe siècle après J.-C., elle devient Constantinople, du nom de l'empereur Constantin, qui la voulait comme une Rome de l'Orient. De 395 à 1453, elle est la capitale de l'Empire romain d'Orient, aussi appelé Empire byzantin. Aujourd'hui, la ville s'appelle Istanbul, en Turquie.",
+   "notion": "Constantinople, la capitale",
+   "titre": "Constantinople : une ville, trois noms",
+   "texte": "Sur le site de Byzance, une vieille colonie grecque, l'empereur Constantin fonde en 330 une « Nouvelle Rome » : Constantinople. Bâtie sur sept collines au bord du Bosphore, c'est la plus grande ville d'Europe pendant neuf siècles. Les croisés la pillent en 1204 ; les Ottomans de Mehmed II la prennent le 29 mai 1453. Aujourd'hui, elle s'appelle Istanbul.",
    "pointsCles": [
-    "Byzance : colonie grecque (VIe siècle av. J.-C.)",
-    "Constantinople : son nom à partir du IVe siècle, d'après l'empereur Constantin",
-    "De 395 à 1453 : capitale de l'Empire romain d'Orient",
+    "330 : Constantin fonde Constantinople, la « Nouvelle Rome », à la place de Byzance",
+    "De 395 à 1453 : capitale de l'Empire romain d'Orient, dit aussi Empire byzantin",
+    "1204 : les croisés pillent la ville ; 29 mai 1453 : les Ottomans de Mehmed II la prennent",
     "Istanbul : son nom aujourd'hui, en Turquie"
    ],
    "astuce": "Trois noms dans l'ordre : Byzance, Constantinople, Istanbul. « Byzantin » vient de Byzance.",
-   "dates": [],
+   "dates": [
+    {
+     "annee": 330,
+     "evenement": "Constantin fonde Constantinople"
+    },
+    {
+     "annee": 1204,
+     "evenement": "Les croisés pillent Constantinople"
+    },
+    {
+     "annee": 1453,
+     "evenement": "Les Ottomans prennent Constantinople"
+    }
+   ],
    "lieux": [
     "Byzance",
     "Constantinople",
-    "Istanbul"
+    "Istanbul",
+    "Bosphore"
    ],
    "personnages": [
-    "Constantin"
+    "Constantin",
+    "Mehmed II"
    ],
    "vocabulaire": [
     {
      "mot": "Empire byzantin",
      "def": "un autre nom de l'Empire romain d'Orient, tiré de Byzance, l'ancien nom de sa capitale"
+    },
+    {
+     "mot": "Ottomans",
+     "def": "les Turcs dont le sultan Mehmed II prend Constantinople en 1453"
     }
    ],
    "schema": null,
@@ -118,8 +137,10 @@ JEU.enregistrer("cours", {
     "histoire-s01-1-f1"
    ],
    "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 1 - Support.pdf",
-    "page": 3
+    "programme": "Byzance et l'Europe carolingienne",
+    "titre": "Constantinople",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Constantinople"
    }
   },
   {
@@ -185,6 +206,163 @@ JEU.enregistrer("cours", {
    "source": {
     "fichier": "cours/histoire/Histoire 5e - Seance 1 - Support.pdf",
     "page": 2
+   }
+  },
+  {
+   "id": "histoire-s01-1-f6",
+   "notion": "Le basileus, empereur byzantin",
+   "titre": "Le basileus : un empereur tout-puissant",
+   "texte": "À Constantinople, l'empereur s'appelle le basileus, « roi » en grec. Il commande l'armée, fait la loi et se présente comme le lieutenant de Dieu sur terre ; c'est le patriarche de Constantinople qui le couronne. Lui seul porte la pourpre, un rouge violet réservé au pouvoir. Jeter à terre une pièce frappée à son image est déjà une offense.",
+   "pointsCles": [
+    "Basileus : « roi » en grec ; Héraclius adopte ce titre en 629",
+    "Il commande l'armée, fait la loi et se dit lieutenant de Dieu",
+    "Il est couronné par le patriarche de Constantinople",
+    "La pourpre : la couleur que lui seul peut porter"
+   ],
+   "astuce": "Basileus, pourpre, patriarche : trois mots pour dire que l'empereur est au-dessus de tous.",
+   "dates": [
+    {
+     "annee": 629,
+     "evenement": "Héraclius prend le titre de basileus"
+    }
+   ],
+   "lieux": [
+    "Constantinople"
+   ],
+   "personnages": [
+    "Héraclius",
+    "Justinien"
+   ],
+   "vocabulaire": [
+    {
+     "mot": "basileus",
+     "def": "« roi » en grec ; le titre de l'empereur byzantin"
+    },
+    {
+     "mot": "pourpre",
+     "def": "une couleur rouge violet réservée à l'empereur byzantin"
+    },
+    {
+     "mot": "patriarche de Constantinople",
+     "def": "le chef de l'Église à Constantinople ; c'est lui qui couronne le basileus"
+    }
+   ],
+   "schema": null,
+   "prerequis": [
+    "histoire-s01-1-f4"
+   ],
+   "source": {
+    "programme": "Byzance et l'Europe carolingienne",
+    "titre": "Basileus",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Basileus"
+   }
+  },
+  {
+   "id": "histoire-s01-1-f7",
+   "notion": "Le Code de Justinien",
+   "titre": "Le Code de Justinien : les lois romaines mises en ordre",
+   "texte": "Les lois romaines s'étaient accumulées pendant des siècles et se contredisaient. Entre 529 et 534, Justinien charge le juriste Tribonien de les trier et de les classer. Le Code de Justinien rassemble les lois des empereurs, les avis des juristes et un manuel pour les étudiants. Redécouvert à Bologne au XIe siècle, il fonde le droit de l'Europe.",
+   "pointsCles": [
+    "529-534 : Justinien fait rassembler et classer les lois romaines",
+    "Le juriste Tribonien dirige le travail",
+    "Trois parties principales : le Code (lois des empereurs), le Digeste (avis des juristes), les Institutes (manuel)",
+    "Redécouvert à Bologne au XIe siècle, il inspire le droit de l'Europe"
+   ],
+   "dates": [
+    {
+     "annee": 529,
+     "evenement": "Première publication du Code de Justinien"
+    },
+    {
+     "annee": 534,
+     "evenement": "Version définitive du Code de Justinien"
+    }
+   ],
+   "lieux": [
+    "Constantinople",
+    "Bologne"
+   ],
+   "personnages": [
+    "Justinien",
+    "Tribonien"
+   ],
+   "vocabulaire": [
+    {
+     "mot": "juriste",
+     "def": "un spécialiste du droit, c'est-à-dire des lois"
+    },
+    {
+     "mot": "Code de Justinien",
+     "def": "le recueil des lois romaines triées et classées sur l'ordre de Justinien, entre 529 et 534"
+    }
+   ],
+   "schema": null,
+   "prerequis": [
+    "histoire-s01-1-f4"
+   ],
+   "source": {
+    "programme": "Byzance et l'Europe carolingienne",
+    "titre": "Corpus juris civilis",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Corpus_juris_civilis"
+   }
+  },
+  {
+   "id": "histoire-s01-1-f8",
+   "notion": "Sainte-Sophie (532-537)",
+   "titre": "Sainte-Sophie, le chantier géant de Justinien",
+   "texte": "Janvier 532 : Constantinople brûle pendant la révolte Nika, la vieille Sainte-Sophie part en fumée. Justinien garde le trône et lance un chantier géant : plus de dix mille ouvriers, les architectes Anthémius de Tralles et Isidore de Milet. Le 27 décembre 537, la nouvelle Sainte-Sophie est inaugurée : sa coupole culmine à 55 mètres.",
+   "pointsCles": [
+    "532 : l'ancienne Sainte-Sophie brûle pendant la révolte Nika",
+    "Architectes : Anthémius de Tralles et Isidore de Milet ; plus de dix mille ouvriers",
+    "27 décembre 537 : inauguration par Justinien ; coupole à 55,6 m",
+    "558 : la coupole s'effondre lors d'un séisme ; elle est rebâtie plus haute",
+    "1453 : mosquée ; 1934 : musée ; 2020 : mosquée"
+   ],
+   "astuce": "Les années 530, c'est la décennie des grands chantiers de Justinien : les lois (529-534), puis Sainte-Sophie (532-537).",
+   "dates": [
+    {
+     "annee": 532,
+     "evenement": "Révolte Nika ; début du chantier de Sainte-Sophie"
+    },
+    {
+     "annee": 537,
+     "evenement": "Inauguration de Sainte-Sophie"
+    },
+    {
+     "annee": 558,
+     "evenement": "La coupole de Sainte-Sophie s'effondre"
+    }
+   ],
+   "lieux": [
+    "Constantinople"
+   ],
+   "personnages": [
+    "Justinien",
+    "Théodora",
+    "Anthémius de Tralles",
+    "Isidore de Milet"
+   ],
+   "vocabulaire": [
+    {
+     "mot": "coupole",
+     "def": "un toit en forme de demi-sphère"
+    },
+    {
+     "mot": "révolte Nika",
+     "def": "la révolte de janvier 532 à Constantinople, partie des courses de l'hippodrome ; « nika » veut dire « sois vainqueur »"
+    }
+   ],
+   "schema": null,
+   "prerequis": [
+    "histoire-s01-1-f6"
+   ],
+   "source": {
+    "programme": "Byzance et l'Europe carolingienne",
+    "titre": "Sainte-Sophie (Constantinople)",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Sainte-Sophie_(Constantinople)"
    }
   }
  ],
@@ -629,7 +807,7 @@ JEU.enregistrer("cours", {
     "Faux : elle prend ce nom en 1453, quand les Turcs s'en emparent.",
     "Faux : elle prend ce nom au VIe siècle après J.-C., sous Justinien."
    ],
-   "explication": "Au VIe siècle avant J.-C., Byzance naît comme colonie grecque. Elle ne devient Constantinople qu'au IVe siècle après J.-C.",
+   "explication": "Au VIe siècle avant Jésus-Christ, Byzance naît comme colonie grecque. Elle ne devient Constantinople qu'au IVe siècle après Jésus-Christ, en 330.",
    "source": {
     "fichier": "cours/histoire/Histoire 5e - Seance 1 - Support.pdf",
     "page": 3
@@ -681,6 +859,94 @@ JEU.enregistrer("cours", {
     "page": 3
    },
    "r": "==ATK4BGsMEDBN0DbUBCGETZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s01-1-q42",
+   "fiche": "histoire-s01-1-f3",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "En quelle année l'empereur Constantin fonde-t-il Constantinople ?",
+   "choix": [
+    "330",
+    "395",
+    "476",
+    "527"
+   ],
+   "explication": "Constantin inaugure sa « Nouvelle Rome » en 330, sur le site de l'ancienne Byzance. Le partage de l'empire ne vient que plus tard, en 395.",
+   "indice": "C'est avant le partage de l'empire.",
+   "source": {
+    "theme": "Cours 1 – Empire byzantin au temps de Justinien",
+    "titre": "Constantinople",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Constantinople"
+   },
+   "r": "=QkVaFUZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s01-1-q43",
+   "fiche": "histoire-s01-1-f3",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "En 1204, ce sont les Ottomans qui prennent et pillent Constantinople.",
+   "corrections": [
+    "Faux : en 1204, ce sont les croisés de la quatrième croisade ; les Ottomans ne la prennent qu'en 1453.",
+    "Faux : en 1204, ce sont les Turcs seldjoukides, qui gardent la ville jusqu'en 1453.",
+    "Faux : personne ne prend la ville avant 1453."
+   ],
+   "explication": "En 1204, la quatrième croisade est détournée vers Constantinople, et les croisés pillent la ville. Les Ottomans de Mehmed II la prennent le 29 mai 1453.",
+   "source": {
+    "theme": "Cours 1 – Empire byzantin au temps de Justinien",
+    "titre": "Constantinople",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Constantinople"
+   },
+   "r": "=8QZcZEUBBUSAoQVdITDRsFSAEwAUkhUm4RVAsRUaAgDfcwNZpSFetwAG1VSXMyEGwgGDogTK8BwAS0FBx0GeY0BFIlIWUlFcLrGHAAALMmXAkVDaEQCVk0FkIVWRV0QY5UAXgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s01-1-q44",
+   "fiche": "histoire-s01-1-f3",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Pourquoi Constantin appelle-t-il sa nouvelle capitale la « Nouvelle Rome » ?",
+   "choix": [
+    "Il veut en faire une seconde Rome, pour gouverner l'est de l'empire",
+    "Parce que tous les habitants de Rome déménagent avec lui à Constantinople",
+    "Parce que la ville est bâtie en Italie, tout près de Rome",
+    "Parce que le pape lui demande de reconstruire la ville de Rome"
+   ],
+   "explication": "Constantin fonde en 330 une capitale à l'est, bâtie comme Rome sur sept collines. Il la nomme « Nouvelle Rome », mais elle prend vite son nom : Constantinople.",
+   "source": {
+    "theme": "Cours 1 – Empire byzantin au temps de Justinien",
+    "titre": "Constantinople",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Constantinople"
+   },
+   "r": "LdRNbUACQYVBOpgFIdjXAIRQO1xAIsxFxcgGCU1AcEwHSRkJApwZNswCIkgCXQjUQsAARxAHGMhDjNEAVk1GKAhRFsTZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s01-1-q45",
+   "fiche": "histoire-s01-1-f3",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Comment la ville de Constantinople se présente-t-elle au Moyen Âge, par rapport aux autres villes d'Europe ?",
+   "choix": [
+    "C'est la plus grande ville d'Europe, du IVe au XIIIe siècle",
+    "C'est une petite ville de pêcheurs sans grande importance",
+    "C'est une ville moins peuplée que Rome et que Ravenne",
+    "C'est une ville sans port, loin de la mer"
+   ],
+   "explication": "Bâtie au bord du Bosphore, sur la Corne d'Or, Constantinople est la plus grande ville d'Europe du IVe au XIIIe siècle. Ses ports en font un carrefour du commerce, au bout de la route de la soie.",
+   "source": {
+    "theme": "Cours 1 – Empire byzantin au temps de Justinien",
+    "titre": "Constantinople",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Constantinople"
+   },
+   "r": "=MFDCwg2rqiXFBFZnYiPGxxEndxIsUFBN40QXgBLfBBcKowTDoQBbEjUQEwGQsRCPFQHv0VRUFkTbUxAOFTZ",
    "poids": 1
   },
   {
@@ -799,28 +1065,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "histoire-s01-1-q37",
-   "fiche": "histoire-s01-1-f4",
-   "type": "qcm",
-   "niveau": 3,
-   "enonce": "En plus de ses conquêtes, que fait rassembler l'empereur Justinien dans un grand recueil ?",
-   "choix": [
-    "Les lois romaines : c'est le Code de Justinien",
-    "Les récits de ses batailles contre les royaumes germaniques",
-    "Les noms de tous les habitants de Constantinople",
-    "Les plans des mosaïques de Ravenne"
-   ],
-   "explication": "Justinien fait trier et classer les lois romaines dans un grand recueil, le Code de Justinien. Ce travail, confié au juriste Tribonien, a servi de modèle au droit pendant des siècles.",
-   "source": {
-    "theme": "Cours 1 – Empire byzantin au temps de Justinien",
-    "titre": "Justinien Ier",
-    "editeur": "Wikipédia",
-    "url": "https://fr.wikipedia.org/wiki/Justinien_Ier"
-   },
-   "r": "EdwFuwBHRYABj4kCWgkJJpgdNswAGJhGXAWEV9VVCwAAGMRBs8VRGRUADYUFM4TZ",
-   "poids": 1
-  },
-  {
    "id": "histoire-s01-1-q38",
    "fiche": "histoire-s01-1-f4",
    "type": "vrai_faux",
@@ -831,6 +1075,46 @@ JEU.enregistrer("cours", {
    "source": {
     "fichier": "cours/histoire/Histoire 5e - Seance 1 - Support.pdf",
     "page": 1
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s01-1-q70",
+   "fiche": "histoire-s01-1-f4",
+   "type": "qcm_multiple",
+   "niveau": 2,
+   "enonce": "Quelles régions les armées de Justinien reprennent-elles à l'ouest ? (plusieurs réponses)",
+   "choix": [
+    "L'Afrique du Nord, autour de Carthage, en 533",
+    "L'Italie, avec Ravenne, prise en 540",
+    "La Gaule des Francs, jusqu'à Paris",
+    "L'Égypte, reprise aux Perses",
+    "La Grande-Bretagne"
+   ],
+   "explication": "Le général Bélisaire entre dans Carthage en 533, puis la guerre d'Italie dure de 535 à 553 ; Ravenne est prise en 540. La Gaule des Francs reste hors de portée, et l'Égypte appartenait déjà à l'empire.",
+   "source": {
+    "theme": "Cours 1 – Empire byzantin au temps de Justinien",
+    "titre": "Justinien Ier",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Justinien_Ier"
+   },
+   "r": "==wLXVVQElEAKIVDwQ0FF1gQKgACMQgJgUlBQcACON0FB8CTRwnCi0kSEpVQyJ1GAUVXMkgDawRMMZSFIpwTUMhBGIzEVlUEDYAIPdADjhEEEREHJcSQlAFH",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s01-1-q71",
+   "fiche": "histoire-s01-1-f4",
+   "type": "vrai_faux",
+   "niveau": 3,
+   "enonce": "Le général Bélisaire entre dans Carthage en 533, au nom de Justinien.",
+   "corrections": [],
+   "explication": "Oui : la flotte quitte Constantinople en juin 533, et Bélisaire entre dans Carthage en septembre. L'Afrique du Nord redevient une terre de l'empire.",
+   "source": {
+    "theme": "Cours 1 – Empire byzantin au temps de Justinien",
+    "titre": "Justinien Ier",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Justinien_Ier"
    },
    "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
    "poids": 1
@@ -967,6 +1251,596 @@ JEU.enregistrer("cours", {
    },
    "r": "7szSXkCHQMBFjsUND9iStgEDbRkGcMBLLlCH",
    "poids": 1
+  },
+  {
+   "id": "histoire-s01-1-q72",
+   "fiche": "histoire-s01-1-f5",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Qui accompagne Justinien sur la mosaïque de Saint-Vital, et que porte l'empereur ?",
+   "choix": [
+    "L'évêque Maximien, le général Bélisaire et des gardes ; il tient un plat d'or",
+    "Le pape et des chevaliers francs ; il tient une épée",
+    "Le patriarche de Constantinople et des sénateurs ; il tient le Code de Justinien",
+    "Sa femme Théodora et ses enfants ; il tient une couronne"
+   ],
+   "explication": "Justinien avance entouré de l'évêque Maximien, de Bélisaire, de gardes et de clercs, et il porte un plat d'or offert en cadeau. En face, une autre mosaïque montre Théodora et ses dames.",
+   "source": {
+    "theme": "Cours 1 – Empire byzantin au temps de Justinien",
+    "titre": "Basilique Saint-Vital de Ravenne",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Basilique_Saint-Vital_de_Ravenne"
+   },
+   "r": "TtRAIZBS3wUCF1AAaYkEHchLGUVCcElUOxxFMEDTCUhXLsgRSwgUiAAHEYAGFcMrwg0LMdBnuDgxlGQSXsiUZtAEYQwBXMRJjhEEEdYrZ8cpO5TZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s01-1-q46",
+   "fiche": "histoire-s01-1-f6",
+   "type": "qcm",
+   "niveau": 1,
+   "enonce": "Comment appelle-t-on l'empereur byzantin ?",
+   "choix": [
+    "Le basileus",
+    "Le calife",
+    "Le pape",
+    "Le comte"
+   ],
+   "explication": "L'empereur byzantin porte le titre de basileus, « roi » en grec. Le calife dirige les musulmans, le pape l'Église d'Occident.",
+   "source": {
+    "theme": "Cours 1 – Empire byzantin au temps de Justinien",
+    "titre": "Basileus",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Basileus"
+   },
+   "r": "==gSwgFAZRUHOQgRM4TZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s01-1-q47",
+   "fiche": "histoire-s01-1-f6",
+   "type": "vrai_faux",
+   "niveau": 1,
+   "enonce": "Le mot basileus veut dire « roi » en grec.",
+   "corrections": [],
+   "explication": "Oui : basileus est le mot grec pour « roi ». Héraclius en fait le titre de l'empereur byzantin en 629.",
+   "source": {
+    "theme": "Cours 1 – Empire byzantin au temps de Justinien",
+    "titre": "Basileus",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Basileus"
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s01-1-q48",
+   "fiche": "histoire-s01-1-f6",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Quelle couleur est réservée au basileus ?",
+   "choix": [
+    "La pourpre",
+    "L'or",
+    "Le bleu",
+    "Le blanc"
+   ],
+   "explication": "La pourpre, un rouge violet, est le symbole le plus important du pouvoir impérial. Lui seul peut porter des vêtements et des chaussures de cette couleur.",
+   "source": {
+    "theme": "Cours 1 – Empire byzantin au temps de Justinien",
+    "titre": "Basileus",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Basileus"
+   },
+   "r": "hh0FF91GAYhRI4TZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s01-1-q49",
+   "fiche": "histoire-s01-1-f6",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Pourquoi dit-on que le basileus a tous les pouvoirs ?",
+   "choix": [
+    "Il commande l'armée, fait la loi et se dit lieutenant de Dieu",
+    "Il est élu par le peuple de Constantinople tous les cinq ans",
+    "Il partage le pouvoir avec le pape de Rome, qui fait la loi",
+    "Il ne gouverne que l'armée, et c'est le patriarche qui fait la loi"
+   ],
+   "explication": "Le basileus est le chef de l'armée et de l'État, et il se présente comme le lieutenant de Dieu sur terre. Personne, à Constantinople, ne partage son pouvoir.",
+   "source": {
+    "theme": "Cours 1 – Empire byzantin au temps de Justinien",
+    "titre": "Basileus",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Basileus"
+   },
+   "r": "==wRAQBAq80FMMWWLQ1QLsxEDAgHnZAHBUFFa40GXgkKClQFMJwTS8ACUcmXQwstcsxDI5BSmk0CUB0AAUgRFsTZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s01-1-q50",
+   "fiche": "histoire-s01-1-f6",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "C'est le pape de Rome qui couronne le basileus à Constantinople.",
+   "corrections": [
+    "Faux : c'est le patriarche de Constantinople qui le couronne.",
+    "Faux : le basileus se couronne lui-même, sans personne.",
+    "Faux : c'est le chef de l'armée qui le couronne."
+   ],
+   "explication": "À Constantinople, l'empereur reçoit la couronne des mains du patriarche de la ville. Le pape, lui, est l'évêque de Rome, en Occident.",
+   "source": {
+    "theme": "Cours 1 – Empire byzantin au temps de Justinien",
+    "titre": "Empire byzantin",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Empire_byzantin"
+   },
+   "r": "==AFQl2FbsgGDwRAMIVDv0ADAxlTKogFGwhLGsBBBIwBBwiUNcSDA0lTc4wDU0xE3IFEJUVBasASRgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s01-1-q51",
+   "fiche": "histoire-s01-1-f6",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "À partir de quel empereur le titre grec de basileus remplace-t-il officiellement le titre latin d'Auguste ?",
+   "choix": [
+    "Héraclius, en 629",
+    "Constantin, en 330",
+    "Justinien, en 527",
+    "Théodose, en 395"
+   ],
+   "explication": "Héraclius adopte le titre de basileus en 629, à la place du latin Augustus. Le grec remplace alors peu à peu le latin dans tout l'empire.",
+   "source": {
+    "theme": "Cours 1 – Empire byzantin au temps de Justinien",
+    "titre": "Basileus",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Basileus"
+   },
+   "r": "=cETD9lTBcBSv5FEcFUDOQxzqqTZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s01-1-q52",
+   "fiche": "histoire-s01-1-f6",
+   "type": "association",
+   "niveau": 2,
+   "enonce": "Relie chaque mot à ce qu'il désigne.",
+   "gauche": [
+    "Basileus",
+    "Pourpre",
+    "Patriarche de Constantinople",
+    "Pape"
+   ],
+   "droite": [
+    "Évêque de Rome, chef de l'Église d'Occident",
+    "Titre grec de l'empereur byzantin",
+    "Couleur réservée à l'empereur",
+    "Il couronne l'empereur byzantin"
+   ],
+   "explication": "Le basileus porte la pourpre et reçoit sa couronne du patriarche de Constantinople. Le pape est l'évêque de Rome, en Occident.",
+   "source": {
+    "theme": "Cours 1 – Empire byzantin au temps de Justinien",
+    "titre": "Basileus",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Basileus"
+   },
+   "r": "==ANvcnXG5TWsolQdlCRe8RSEYnQyclSZlCH",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s01-1-q53",
+   "fiche": "histoire-s01-1-f6",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Un marchand de Constantinople jette avec colère une pièce de monnaie à terre. Pourquoi risque-t-il d'être puni ?",
+   "choix": [
+    "La pièce porte l'image du basileus : la jeter, c'est l'offenser",
+    "La monnaie appartient au patriarche de Constantinople, qui la prête aux marchands",
+    "Les pièces d'or sont interdites aux marchands de la ville",
+    "Il est interdit de se mettre en colère dans les rues de Constantinople"
+   ],
+   "explication": "Les pièces byzantines portent l'image de l'empereur et ont une valeur sacrée. Les jeter à terre, c'est offenser le basileus lui-même.",
+   "source": {
+    "theme": "Cours 1 – Empire byzantin au temps de Justinien",
+    "titre": "Basileus",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Basileus"
+   },
+   "r": "QdAAG8BDIkQHP9SDRYESJxgRKtxFzcxHFRRHJR1TB0hJBxgRMxwTTIQSXAyEYwgUdk0CbAwBz0AAWVYrGYhRI4TZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s01-1-q54",
+   "fiche": "histoire-s01-1-f6",
+   "type": "trou",
+   "niveau": 1,
+   "enonce": "Complète la phrase sur l'empereur byzantin.",
+   "texte": "L'empereur byzantin porte le titre de ___ ; lui seul s'habille de ___.",
+   "banque": [
+    "basileus",
+    "pourpre",
+    "calife",
+    "blanc"
+   ],
+   "explication": "Basileus est le titre grec de l'empereur. La pourpre est la couleur que lui seul peut porter.",
+   "source": {
+    "theme": "Cours 1 – Empire byzantin au temps de Justinien",
+    "titre": "Basileus",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Basileus"
+   },
+   "r": "=sDNQJCAFcBAekBT04VNh5FEQF0BccABLlCH",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s01-1-q37",
+   "fiche": "histoire-s01-1-f7",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "En plus de ses conquêtes, que fait rassembler l'empereur Justinien dans un grand recueil ?",
+   "choix": [
+    "Les lois romaines : c'est le Code de Justinien",
+    "Les récits de ses batailles contre les royaumes germaniques",
+    "Les noms de tous les habitants de Constantinople",
+    "Les plans des mosaïques de Ravenne"
+   ],
+   "explication": "Justinien fait trier et classer les lois romaines dans un grand recueil, le Code de Justinien. Ce travail, confié au juriste Tribonien, a servi de modèle au droit pendant des siècles.",
+   "source": {
+    "theme": "Cours 1 – Empire byzantin au temps de Justinien",
+    "titre": "Justinien Ier",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Justinien_Ier"
+   },
+   "r": "EdwFuwBHRYABj4kCWgkJJpgdNswAGJhGXAWEV9VVCwAAGMRBs8VRGRUADYUFM4TZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s01-1-q55",
+   "fiche": "histoire-s01-1-f7",
+   "type": "qcm",
+   "niveau": 1,
+   "enonce": "Qui dirige le classement des lois romaines sous Justinien ?",
+   "choix": [
+    "Le juriste Tribonien",
+    "Le général Bélisaire",
+    "L'impératrice Théodora",
+    "L'empereur Constantin"
+   ],
+   "explication": "Tribonien est le juriste qui dirige la commission chargée de trier les lois. Bélisaire, lui, commande les armées de Justinien.",
+   "source": {
+    "theme": "Cours 1 – Empire byzantin au temps de Justinien",
+    "titre": "Corpus juris civilis",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Corpus_juris_civilis"
+   },
+   "r": "==AUbAAHfYADGAAPjhUEGREHawgRM4TZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s01-1-q56",
+   "fiche": "histoire-s01-1-f7",
+   "type": "vrai_faux",
+   "niveau": 1,
+   "enonce": "Le Code de Justinien rassemble les lois romaines, triées et classées.",
+   "corrections": [],
+   "explication": "Oui : entre 529 et 534, les lois des empereurs romains sont triées, classées et publiées. C'est le Code de Justinien.",
+   "source": {
+    "theme": "Cours 1 – Empire byzantin au temps de Justinien",
+    "titre": "Corpus juris civilis",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Corpus_juris_civilis"
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s01-1-q57",
+   "fiche": "histoire-s01-1-f7",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Pourquoi Justinien fait-il rassembler les lois romaines dans un recueil ?",
+   "choix": [
+    "Elles s'étaient accumulées pendant des siècles et se contredisaient parfois",
+    "Pour remplacer toutes les lois romaines par de nouvelles lois écrites en grec",
+    "Pour les offrir au pape de Rome, qui les avait perdues",
+    "Pour les faire disparaître et régner sans aucune loi"
+   ],
+   "explication": "Depuis des siècles, les empereurs romains avaient produit des milliers de lois, parfois contradictoires. Justinien veut un recueil clair, en latin, que les juges puissent appliquer.",
+   "source": {
+    "theme": "Cours 1 – Empire byzantin au temps de Justinien",
+    "titre": "Corpus juris civilis",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Corpus_juris_civilis"
+   },
+   "r": "=A1GqI0AHxkHPJBCMshJBwRAQMQHAAQEIZiXFFESOxxAKog2EuhBFZAFN40GckwJDBQRN0hCPXaBHoyBWYAFR1BAKsRC3QopS4lTcMgCFcTZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s01-1-q58",
+   "fiche": "histoire-s01-1-f7",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Quand le Code de Justinien est-il rédigé ?",
+   "choix": [
+    "Entre 529 et 534",
+    "Entre 395 et 476",
+    "Entre 532 et 537",
+    "Entre 1204 et 1453"
+   ],
+   "explication": "Le Code paraît en 529 et sa version définitive en 534. Les années 532 à 537, elles, sont celles du chantier de Sainte-Sophie.",
+   "source": {
+    "theme": "Cours 1 – Empire byzantin au temps de Justinien",
+    "titre": "Corpus juris civilis",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Corpus_juris_civilis"
+   },
+   "r": "T1VXaJFHm0AXHghTKQhEHcTZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s01-1-q59",
+   "fiche": "histoire-s01-1-f7",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Après la chute de l'Empire byzantin, le Code de Justinien est oublié pour toujours.",
+   "corrections": [
+    "Faux : il est redécouvert à Bologne dès le XIe siècle et inspire le droit de l'Europe.",
+    "Faux : il n'a jamais été oublié, car Charlemagne l'appliquait déjà dans tout son empire.",
+    "Faux : il est redécouvert à Paris au XVe siècle, après la prise de Constantinople."
+   ],
+   "explication": "À la fin du XIe siècle, l'université de Bologne redécouvre le Code et le droit romain renaît en Occident. Il devient l'ancêtre du droit civil, en France aussi.",
+   "source": {
+    "theme": "Cours 1 – Empire byzantin au temps de Justinien",
+    "titre": "Corpus juris civilis",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Corpus_juris_civilis"
+   },
+   "r": "YcxAL8RCUwxNg5RVAERUdcAAAwwYIlQFIxhBWUxBbcmBQUEEdogxsuxGjhELt1wCDYUFBH7ISBxCS4RBB0iUIDYDRcESYoRCFAcsjcxBFFgAM40AbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s01-1-q60",
+   "fiche": "histoire-s01-1-f7",
+   "type": "association",
+   "niveau": 2,
+   "enonce": "Relie chaque partie du travail de Justinien à son contenu.",
+   "gauche": [
+    "Code",
+    "Digeste",
+    "Institutes",
+    "Tribonien"
+   ],
+   "droite": [
+    "Les lois des empereurs romains",
+    "Les avis des grands juristes romains",
+    "Un manuel pour les étudiants en droit",
+    "Le juriste qui dirige le travail"
+   ],
+   "explication": "Le Code rassemble les lois des empereurs, le Digeste les écrits des juristes, les Institutes forment un manuel. Tribonien dirige l'ensemble.",
+   "source": {
+    "theme": "Cours 1 – Empire byzantin au temps de Justinien",
+    "titre": "Corpus juris civilis",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Corpus_juris_civilis"
+   },
+   "r": "==ANvQnXG5TWsslQdlCRewRSEYnQyYlSZlCH",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s01-1-q61",
+   "fiche": "histoire-s01-1-f7",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Au XIIe siècle, un étudiant de Bologne apprend le droit dans le Code de Justinien. Que montre cet exemple ?",
+   "choix": [
+    "Les lois rassemblées par Justinien servent encore, des siècles plus tard, en Occident",
+    "Bologne fait encore partie de l'Empire byzantin au XIIe siècle, comme Ravenne",
+    "Justinien est encore vivant au XIIe siècle et enseigne lui-même",
+    "Le Code de Justinien a été écrit en italien pour les étudiants"
+   ],
+   "explication": "Redécouvert à Bologne à la fin du XIe siècle, le Code est étudié dans toute l'Europe à partir du XIIe siècle. Le droit romain, écrit en latin, devient la base du droit civil.",
+   "source": {
+    "theme": "Cours 1 – Empire byzantin au temps de Justinien",
+    "titre": "Corpus juris civilis",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Corpus_juris_civilis"
+   },
+   "r": "=UmBbAQEYoQDgIlBm0QSR91DbYUFc4xNSZAAZIRwtaQAIBDSBURAL0RCFcwFnZwGAMwAM0xTc0gKDxQQetRJGRBCCcWAQwstdswAKEwGi8VRGRUADYUFM4TZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s01-1-q62",
+   "fiche": "histoire-s01-1-f7",
+   "type": "trou",
+   "niveau": 1,
+   "enonce": "Complète la phrase.",
+   "texte": "Entre 529 et 534, le juriste ___ rassemble les lois romaines : c'est le ___ de Justinien.",
+   "banque": [
+    "Tribonien",
+    "Code",
+    "Bélisaire",
+    "Palais"
+   ],
+   "explication": "Tribonien dirige le tri des lois romaines. Le recueil s'appelle le Code de Justinien.",
+   "source": {
+    "theme": "Cours 1 – Empire byzantin au temps de Justinien",
+    "titre": "Corpus juris civilis",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Corpus_juris_civilis"
+   },
+   "r": "voBUQEgGysUND9iStgEDbJEDGQhMLlCH",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s01-1-q63",
+   "fiche": "histoire-s01-1-f8",
+   "type": "qcm",
+   "niveau": 1,
+   "enonce": "Quel monument Justinien fait-il rebâtir à Constantinople entre 532 et 537 ?",
+   "choix": [
+    "Sainte-Sophie",
+    "La basilique Saint-Vital",
+    "La basilique Saint-Pierre de Rome",
+    "La chapelle d'Aix-la-Chapelle"
+   ],
+   "explication": "Sainte-Sophie est rebâtie de 532 à 537 sur l'ordre de Justinien. Saint-Vital, elle, est à Ravenne.",
+   "source": {
+    "theme": "Cours 1 – Empire byzantin au temps de Justinien",
+    "titre": "Sainte-Sophie (Constantinople)",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Sainte-Sophie_(Constantinople)"
+   },
+   "r": "NdRAr0lCmBwCbgwDIESZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s01-1-q64",
+   "fiche": "histoire-s01-1-f8",
+   "type": "vrai_faux",
+   "niveau": 1,
+   "enonce": "Sainte-Sophie est inaugurée le 27 décembre 537.",
+   "corrections": [],
+   "explication": "Oui : Justinien inaugure la nouvelle Sainte-Sophie le 27 décembre 537. Le chantier a duré moins de six ans.",
+   "source": {
+    "theme": "Cours 1 – Empire byzantin au temps de Justinien",
+    "titre": "Sainte-Sophie (Constantinople)",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Sainte-Sophie_(Constantinople)"
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s01-1-q65",
+   "fiche": "histoire-s01-1-f8",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Pourquoi faut-il rebâtir Sainte-Sophie en 532 ?",
+   "choix": [
+    "L'ancienne église a brûlé pendant la révolte Nika",
+    "Un tremblement de terre l'a entièrement renversée au début de 532",
+    "Les Ottomans l'ont détruite en prenant la ville",
+    "Justinien la trouve trop grande et veut une église plus petite"
+   ],
+   "explication": "En janvier 532, la révolte Nika met le feu à Constantinople, et l'ancienne Sainte-Sophie brûle. Justinien décide la reconstruction quelques jours plus tard.",
+   "source": {
+    "theme": "Cours 1 – Empire byzantin au temps de Justinien",
+    "titre": "Sédition Nika",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/S%C3%A9dition_Nika"
+   },
+   "r": "==wDE4FRg80ASUQHxsttXUFEF40GckwJDBQRNcMrK0tqAUiUUUEECAgAIs9qjh0Cbh0BMgwBO5TZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s01-1-q66",
+   "fiche": "histoire-s01-1-f8",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Qui sont Anthémius de Tralles et Isidore de Milet ?",
+   "choix": [
+    "Les deux architectes de Sainte-Sophie",
+    "Les généraux qui reconquièrent l'Afrique et l'Italie",
+    "Les juristes qui rédigent le Code de Justinien",
+    "Les chefs de la révolte Nika"
+   ],
+   "explication": "Anthémius est mathématicien, Isidore est physicien : Justinien leur confie les plans de Sainte-Sophie. Les généraux sont Bélisaire et Narsès, le juriste Tribonien.",
+   "source": {
+    "theme": "Cours 1 – Empire byzantin au temps de Justinien",
+    "titre": "Sainte-Sophie (Constantinople)",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Sainte-Sophie_(Constantinople)"
+   },
+   "r": "LtgBagBL+hEUZBgBHUTSXMiUGAQASwgGGoxCxwURNh1CLYUFM4TZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s01-1-q67",
+   "fiche": "histoire-s01-1-f8",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Depuis 537, la coupole de Sainte-Sophie n'a jamais bougé.",
+   "corrections": [
+    "Faux : elle s'effondre lors d'un séisme en 558 et est rebâtie plus haute.",
+    "Faux : elle s'effondre en 1453, quand les Ottomans prennent la ville.",
+    "Faux : elle est démontée en 1934 pour transformer l'église en musée."
+   ],
+   "explication": "Le 7 mai 558, un tremblement de terre fait tomber la coupole. Isidore le Jeune la rebâtit plus légère et plus haute de six mètres.",
+   "source": {
+    "theme": "Cours 1 – Empire byzantin au temps de Justinien",
+    "titre": "Sainte-Sophie (Constantinople)",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Sainte-Sophie_(Constantinople)"
+   },
+   "r": "UwUQXwhNM1QFetxAWYEDbMD02eAEDkkGccBS3gURNgxWPhwAJdhKBwBz2KQSAoRVMMmXXoVQOpAFCcQHhQBECZQUMIwAXgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s01-1-q68",
+   "fiche": "histoire-s01-1-f8",
+   "type": "ordre",
+   "niveau": 2,
+   "enonce": "Range ces moments de l'histoire de Sainte-Sophie du plus ancien au plus récent.",
+   "elements": [
+    "Sainte-Sophie devient un musée",
+    "La révolte Nika détruit l'ancienne église",
+    "Les Ottomans en font une mosquée",
+    "Justinien inaugure la nouvelle Sainte-Sophie"
+   ],
+   "explication": "532 : l'ancienne église brûle ; 537 : inauguration ; 1453 : mosquée ; 1934 : musée. Depuis 2020, c'est de nouveau une mosquée.",
+   "source": {
+    "theme": "Cours 1 – Empire byzantin au temps de Justinien",
+    "titre": "Sainte-Sophie (Constantinople)",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Sainte-Sophie_(Constantinople)"
+   },
+   "r": "o1hQdpUVFNEH",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s01-1-q69",
+   "fiche": "histoire-s01-1-f8",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Comment Justinien réussit-il à bâtir Sainte-Sophie en moins de six ans ?",
+   "choix": [
+    "Il emploie plus de dix mille ouvriers et fait venir des matériaux de tout l'empire",
+    "Il fait démonter une église de Rome et la remonter à Constantinople",
+    "Il confie le chantier à l'armée de Bélisaire, revenue d'Italie",
+    "Il laisse les habitants de la ville construire chacun un morceau"
+   ],
+   "explication": "Plus de dix mille ouvriers travaillent sous la direction de deux savants, Anthémius et Isidore. Les matériaux arrivent de tout l'empire, et le chantier dure cinq ans et dix mois.",
+   "source": {
+    "theme": "Cours 1 – Empire byzantin au temps de Justinien",
+    "titre": "Sainte-Sophie (Constantinople)",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Sainte-Sophie_(Constantinople)"
+   },
+   "r": "==wVUsxBf8RDkFURBhVAbY0ANI1PHQBDHgtqa4wHIBDSBUxXHEwAQkkBuMxEFFAFJ1RHXEQMbBhWNswAK8ABS9zGRUEEVkUHa4BGjhEDaFkHCMgRFsTZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s01-1-q73",
+   "fiche": "histoire-s01-1-f8",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Qu'est devenue Sainte-Sophie après la prise de Constantinople en 1453 ?",
+   "choix": [
+    "Une mosquée, sur ordre de Mehmed II",
+    "Le palais du sultan ottoman",
+    "Une ruine abandonnée pendant des siècles",
+    "Le siège du patriarche de Constantinople"
+   ],
+   "explication": "Après 1453, Mehmed II transforme Sainte-Sophie en mosquée. Elle devient un musée en 1934, puis de nouveau une mosquée en 2020.",
+   "source": {
+    "theme": "Cours 1 – Empire byzantin au temps de Justinien",
+    "titre": "Sainte-Sophie (Constantinople)",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Sainte-Sophie_(Constantinople)"
+   },
+   "r": "=wkJ7g0JIhQXINyTDIQSXUjFHoQVDwRHP5VDq7OEE5VACY0AHcSZ",
+   "poids": 1
   }
  ],
  "bonus": [
@@ -980,16 +1854,26 @@ JEU.enregistrer("cours", {
     "editeur": "Wikipédia, l'encyclopédie libre",
     "url": "https://fr.wikipedia.org/wiki/Basilique_Saint-Vital_de_Ravenne"
    }
+  },
+  {
+   "id": "histoire-s01-1-b2",
+   "fiche": "histoire-s01-1-f3",
+   "titre": "« Byzantin », un mot de 1857",
+   "texte": "Les habitants de l'empire ne se sont jamais appelés « Byzantins » : ils se disaient Romains, et leur État s'appelait l'Empire des Romains. L'expression « Empire byzantin » est diffusée en 1857 seulement, par l'historien George Finlay, d'après Byzance, l'ancien nom de la capitale.",
+   "source": {
+    "titre": "Empire byzantin",
+    "editeur": "Wikipédia, l'encyclopédie libre",
+    "url": "https://fr.wikipedia.org/wiki/Empire_byzantin"
+   }
   }
  ],
  "nonCouvert": [
   "La leçon à apprendre : le cadre est laissé vide dans le support, la leçon est donnée dans la vidéo du cours.",
-  "Ce qu'est l'édit de Thessalonique : la frise donne seulement son nom et sa date.",
-  "Qui est Théodose : la carte dit seulement que le partage a lieu à sa mort.",
-  "Les personnages et les objets de la mosaïque de Saint-Vital : la légende numérotée est à compléter pendant le cours.",
-  "Le pouvoir de l'empereur byzantin, l'organisation de l'empire et la vie de ses habitants sous Justinien.",
-  "Les raisons et le déroulement des conquêtes de Justinien : la carte en montre seulement l'étendue.",
-  "La place de la religion chrétienne dans l'Empire byzantin : seul le titre de la frise parle d'empires chrétiens.",
-  "Les Turcs et le déroulement de la prise de Constantinople : seule la date de 1453 est donnée."
+  "Ce qu'est l'édit de Thessalonique (380) : la frise donne seulement son nom et sa date.",
+  "Les personnages et les objets de la mosaïque de Saint-Vital : la légende numérotée est à compléter pendant le cours (une seule question de thème les nomme).",
+  "La peste de 541-544 et l'affaiblissement de l'empire après Justinien.",
+  "L'organisation militaire de l'empire (les thèmes) et sa monnaie, le nomisma.",
+  "La querelle des images (iconoclasme, VIIIe-IXe siècles), que le programme range parmi les facteurs de division.",
+  "Les Turcs ottomans et le déroulement du siège de 1453 : seules la date et le nom de Mehmed II sont donnés."
  ]
 });

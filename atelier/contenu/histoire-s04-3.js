@@ -3,13 +3,21 @@
 // Sources : le support de la séance 6 (une page : frise et questions sur une image absente du fichier) et
 // l'étude de cas 3 « La vie et le travail des paysans » (en-tête, calendrier des travaux du Rustican, famine
 // de 1033 d'après Raoul Glaber). La charrue et le tableau des redevances de cette étude de cas sont traités
-// au cours histoire-s06-1. La leçon est donnée en vidéo : voir nonCouvert.
+// au cours histoire-s06-1. La leçon est donnée en vidéo : depuis le 28/10/2026 (demande de Romain), les fiches f1,
+// f5 et f6 viennent du programme officiel de 5e (sous-thème « L'ordre seigneurial : la formation et la domination
+// des campagnes »), vérifiées sur les pages citées dans leur source.
 const F6 = "cours/histoire/Histoire 5e - Seance 6 - Support.pdf";
 const F3 = "cours/histoire/Histoire 5e - Moyen Age - Etude de cas 3 Vie et travail des paysans.pdf";
 const S6 = p => ({ fichier: F6, page: p });
 const S3 = p => ({ fichier: F3, page: p });
 // Questions de thème (règle du 25/10/2026) : fait vérifié dans une source fiable, notée sans fichier ni page.
 const T = (titre, url) => ({ theme: "Cours 6 – La vie dans les campagnes au Moyen Âge", titre, editeur: "Wikipédia", url });
+// Fiches de programme (règle du 28/10/2026) : sous-thème officiel, page où les faits ont été vérifiés.
+const P = (titre, url) => ({ programme: "L'ordre seigneurial : la formation et la domination des campagnes", titre, editeur: "Wikipédia", url });
+const U_DEFRICHEMENT = "https://fr.wikipedia.org/wiki/D%C3%A9frichement";
+const U_PESTE = "https://fr.wikipedia.org/wiki/Peste_noire";
+const U_ENCELLULEMENT = "https://fr.wikipedia.org/wiki/Encellulement";
+const U_SEIGNEURIE = "https://fr.wikipedia.org/wiki/Seigneurie";
 
 // Frise redessinée (aucune image reprise) : années -> abscisses.
 const A0 = 950, A1 = 1450, X0 = 30, X1 = 510;
@@ -41,20 +49,22 @@ module.exports = {
   id: "histoire-s04-3",
   fiches: [
     {
-      id: "histoire-s04-3-f1", notion: "Les campagnes de l'an mil à 1348 : repères",
-      titre: "Du village médiéval à la Grande peste",
-      texte: "Vers l'an mil naît le village médiéval. C'est aussi l'époque où se développe la seigneurie banale. Du XIe au XIIIe siècle, les campagnes connaissent un développement économique et démographique : c'est le temps des grands défrichements. Puis, en 1348, survient la Grande peste.",
-      pointsCles: ["Vers l'an mil : naissance du village médiéval, développement de la seigneurie banale", "XIe-XIIIe siècle : grands défrichements, développement économique et démographique", "1348 : la Grande peste"],
+      id: "histoire-s04-3-f1", notion: "De l'an mil à 1348 : essor des campagnes, puis la Peste",
+      titre: "Trois siècles de conquête de la terre, puis la Peste",
+      texte: "Vers l'an mil, les paysans se regroupent en villages, autour du château et de l'église. Du XIe au XIIIe siècle, l'Occident gagne des champs sur la forêt : c'est l'âge des grands défrichements, et la population fait plus que doubler. Arrivée à Marseille fin 1347, la Grande Peste ravage la France en 1348 et vide des villages.",
+      pointsCles: ["Vers l'an mil : les paysans se regroupent en villages ; la seigneurie banale se développe", "XIe-XIIIe siècle : grands défrichements ; l'Occident passe d'environ 38 millions d'habitants au début du Xe siècle à plus de 75 millions au début du XIVe", "Fin 1347 : la Peste débarque à Messine, puis à Marseille ; 1348 : toute la France est touchée", "Entre 30 et 60 % des Européens meurent en cinq ou six ans ; des villages sont abandonnés"],
       dates: [
         { annee: 1000, evenement: "Vers l'an mil : naissance du village médiéval" },
+        { annee: 1050, evenement: "Vers 1050 : début de l'ère des grands défrichements" },
         { annee: 1348, evenement: "La Grande peste" }
       ],
-      lieux: [], personnages: [],
+      lieux: ["Marseille"], personnages: [],
       vocabulaire: [
         { mot: "défrichement", def: "le fait de couper les arbres et les broussailles d'un terrain pour en faire des champs" },
-        { mot: "démographique", def: "qui concerne la population et son nombre" }
+        { mot: "démographique", def: "qui concerne la population et son nombre" },
+        { mot: "peste", def: "une maladie très contagieuse, transmise par les puces des rats, qui tue en quelques jours" }
       ],
-      schema: "histoire-s04-3-s1", prerequis: [], source: S6(1)
+      schema: "histoire-s04-3-s1", prerequis: [], source: P("Défrichement", U_DEFRICHEMENT)
     },
     {
       id: "histoire-s04-3-f2", notion: "Les paysans, plus de 90 % de la population",
@@ -99,13 +109,48 @@ module.exports = {
         { mot: "chroniqueur", def: "une personne qui écrit le récit des événements de son temps" }
       ],
       schema: "histoire-s04-3-s1", prerequis: ["histoire-s04-3-f2"], source: S3(1)
+    },
+    {
+      id: "histoire-s04-3-f5", notion: "Les grands défrichements : gagner des terres sur la forêt",
+      titre: "À l'assaut de la forêt : les grands défrichements",
+      texte: "Vers 1050, l'Occident part à l'assaut de ses forêts et de ses marais. Des paysans grignotent la lisière des bois ; des seigneurs et des moines organisent de grands chantiers et fondent des villages neufs. Les outils de fer, des routes meilleures et la fin des invasions rendent la conquête possible. Les terres gagnées s'appellent des essarts.",
+      pointsCles: ["Vers 1050 s'ouvre l'« ère des grands défrichements » ; la forêt recule le plus aux XIIIe et XIVe siècles", "Qui défriche : des paysans, des seigneurs (parfois associés à une abbaye ou à une ville), des moines", "Pourquoi : la population augmente, les outils de fer se répandent, les invasions ont cessé, les routes s'améliorent", "Villages neufs du Sud-Ouest : sauvetés, bastides (surtout au XIIIe siècle)", "Un essart : une terre gagnée sur la forêt ; beaucoup de lieux s'appellent encore Les Essarts"],
+      astuce: "Trois défricheurs : le paysan (sa hache), le seigneur (ses villages neufs), le moine (son abbaye).",
+      dates: [
+        { annee: 1050, evenement: "Vers 1050 : début de l'ère des grands défrichements" }
+      ],
+      lieux: [], personnages: [],
+      vocabulaire: [
+        { mot: "essart", def: "une terre gagnée sur la forêt en arrachant arbres et broussailles" },
+        { mot: "lisière", def: "le bord d'une forêt" },
+        { mot: "bastide", def: "un village neuf du Sud-Ouest, fondé surtout au XIIIe siècle" },
+        { mot: "sauveté", def: "un village neuf fondé au Moyen Âge, sous la protection d'une église ou d'une abbaye" }
+      ],
+      schema: "histoire-s04-3-s1", prerequis: ["histoire-s04-3-f1"], source: P("Défrichement", U_DEFRICHEMENT)
+    },
+    {
+      id: "histoire-s04-3-f6", notion: "Le village : le château, l'église, les champs",
+      titre: "Le village naît autour du château et de l'église",
+      texte: "Entre 950 et 1150, les paysans, jusque-là dispersés, se rassemblent. Leurs maisons se serrent autour de deux pôles : le château du seigneur, qui commande et protège, et l'église avec son cimetière, qui réunit tout le monde. Autour s'étendent les champs, les prés et le bois. Les historiens appellent ce regroupement l'encellulement : le village médiéval est né.",
+      pointsCles: ["Vers l'an mil (950-1050), les paysans se regroupent ; vers 1150, le mouvement est achevé presque partout", "Deux pôles : le château (commander, protéger) et l'église avec son cimetière (rassembler)", "Pourquoi : après les raids vikings, les villageois se rapprochent des guerriers qui les défendent ; la population augmente", "Autour du village : les champs, les prés, le bois"],
+      astuce: "Un village, deux tours : la tour du château et le clocher de l'église.",
+      dates: [
+        { annee: 1000, evenement: "Vers l'an mil : les paysans se regroupent en villages" }
+      ],
+      lieux: [], personnages: [],
+      vocabulaire: [
+        { mot: "encellulement", def: "le regroupement des paysans en villages autour du château et de l'église, vers l'an mil" },
+        { mot: "raid", def: "une attaque rapide, menée pour piller" },
+        { mot: "pôle", def: "un point central autour duquel les choses se rassemblent" }
+      ],
+      schema: "histoire-s04-3-s1", prerequis: ["histoire-s04-3-f1"], source: P("Encellulement", U_ENCELLULEMENT)
     }
   ],
   schemas: [
     { id: "histoire-s04-3-s1", legende: "Les campagnes de l'an mil à la Grande peste (frise redessinée d'après le support, complétée par la famine de 1033 de l'étude de cas).", svg: frise() }
   ],
   questions: [
-    // f1 : la frise
+    // f1 : les repères de l'an mil à 1348
     { id: "histoire-s04-3-q1", fiche: "histoire-s04-3-f1", type: "qcm", niveau: 1,
       enonce: "En quelle année la Grande peste frappe-t-elle l'Europe ?",
       choix: ["1348", "1033", "1238", "1000"],
@@ -135,7 +180,7 @@ module.exports = {
       choix: ["Une épidémie qui tue environ un Européen sur trois, parfois plus, en quelques années", "Une famine due à des pluies qui ne s'arrêtent plus pendant trois ans et empêchent de semer", "Une guerre entre les seigneurs et les paysans des villages", "Une maladie qui ne touche que les troupeaux de moutons et de porcs"],
       reponse: "Une épidémie qui tue environ un Européen sur trois, parfois plus, en quelques années",
       explication: "La Grande peste, ou peste noire, arrive en Europe en 1347 et s'y répand jusque vers 1352. Transmise par les puces des rats, elle tue entre 30 et 60 % de la population européenne : des villages entiers se vident.",
-      source: T("Peste noire", "https://fr.wikipedia.org/wiki/Peste_noire") },
+      source: T("Peste noire", U_PESTE) },
     { id: "histoire-s04-3-q7", fiche: "histoire-s04-3-f1", type: "qcm", niveau: 2,
       enonce: "Pourquoi parle-t-on de développement « démographique » du XIe au XIIIe siècle ?",
       choix: ["La population augmente", "Les villages disparaissent", "La peste fait beaucoup de morts", "Le seigneur perd ses droits"],
@@ -147,6 +192,12 @@ module.exports = {
       banque: ["village", "peste", "château", "famine"],
       reponse: [["village"], ["peste"]],
       explication: "La frise commence avec la naissance du village médiéval. Elle se termine par la Grande peste de 1348.", source: S6(1) },
+    { id: "histoire-s04-3-q49", fiche: "histoire-s04-3-f1", type: "qcm", niveau: 3,
+      enonce: "Par où la Grande peste entre-t-elle en France, à la fin de 1347 ?",
+      choix: ["Par Marseille, apportée par des navires venus de Méditerranée", "Par Paris, apportée par des pèlerins", "Par Bouvines, apportée par l'armée de l'empereur", "Par Calais, apportée par les Anglais"],
+      reponse: "Par Marseille, apportée par des navires venus de Méditerranée",
+      explication: "Des navires partis de Crimée répandent la maladie à Messine, puis à Gênes et à Marseille en novembre 1347. Paris n'est atteinte qu'en août 1348.", indice: "Pense au grand port de la Méditerranée.",
+      source: T("Peste noire", U_PESTE) },
     // f2 : les paysans
     { id: "histoire-s04-3-q9", fiche: "histoire-s04-3-f2", type: "qcm", niveau: 1,
       enonce: "Quelle part de la population les paysans représentent-ils au Moyen Âge ?",
@@ -243,6 +294,102 @@ module.exports = {
       banque: ["1033", "pluies", "1348", "loups"],
       reponse: [["1033"], ["pluies"]],
       explication: "Raoul Glaber situe la famine vers 1033. Sa cause : des pluies qui ne s'arrêtent pas.", source: S3(1) },
+    // f5 : les grands défrichements (fiche de programme, questions de thème)
+    { id: "histoire-s04-3-q33", fiche: "histoire-s04-3-f5", type: "qcm", niveau: 1,
+      enonce: "Vers quelle date s'ouvre l'ère des grands défrichements ?",
+      choix: ["Vers 1050", "Vers 800", "Vers 1348", "Vers 1500"],
+      reponse: "Vers 1050",
+      explication: "Dans la plupart des régions, les grands défrichements commencent vers 1050. La forêt recule le plus aux XIIIe et XIVe siècles.",
+      source: T("Défrichement", U_DEFRICHEMENT) },
+    { id: "histoire-s04-3-q34", fiche: "histoire-s04-3-f5", type: "vrai_faux", niveau: 1,
+      enonce: "Un essart est une terre gagnée sur la forêt.",
+      corrections: [], reponse: { vrai: true, correction: null },
+      explication: "Oui : essarter, c'est arracher les arbres et les broussailles pour faire un champ. Beaucoup de villages s'appellent encore Les Essarts.",
+      source: T("Défrichement", U_DEFRICHEMENT) },
+    { id: "histoire-s04-3-q35", fiche: "histoire-s04-3-f5", type: "qcm_multiple", niveau: 2,
+      enonce: "Qui défriche les forêts du XIe au XIIIe siècle ? (plusieurs réponses)",
+      choix: ["Des paysans, qui grignotent la lisière des bois", "Des seigneurs, qui fondent des villages neufs", "Des moines, avec leurs abbayes", "Le calife de Bagdad", "L'empereur byzantin"],
+      reponse: ["Des paysans, qui grignotent la lisière des bois", "Des seigneurs, qui fondent des villages neufs", "Des moines, avec leurs abbayes"],
+      explication: "Paysans, seigneurs et moines défrichent, chacun à sa manière. Les seigneurs y gagnent des terres et des taxes nouvelles, les moines agrandissent les domaines de leurs abbayes.",
+      source: T("Défrichement", U_DEFRICHEMENT) },
+    { id: "histoire-s04-3-q36", fiche: "histoire-s04-3-f5", type: "qcm", niveau: 2,
+      enonce: "Pourquoi gagne-t-on tant de terres sur la forêt à partir du XIe siècle ?",
+      choix: ["Il faut nourrir une population qui augmente", "La forêt a brûlé pendant les invasions", "Le roi l'ordonne à tous les seigneurs", "Les paysans n'ont plus le droit de chasser"],
+      reponse: "Il faut nourrir une population qui augmente",
+      explication: "Entre le début du Xe siècle et le début du XIVe, la population de l'Occident fait plus que doubler. Pour la nourrir, il faut plus de champs, donc moins de forêt.",
+      source: T("Défrichement", U_DEFRICHEMENT) },
+    { id: "histoire-s04-3-q37", fiche: "histoire-s04-3-f5", type: "vrai_faux", niveau: 2,
+      enonce: "Les outils de fer et la fin des invasions rendent les grands défrichements plus faciles.",
+      corrections: [], reponse: { vrai: true, correction: null },
+      explication: "Oui : la hache et la bêche de fer se répandent, et les raids ont cessé, ce qui permet de s'installer loin des remparts. De meilleures routes aident aussi.",
+      source: T("Défrichement", U_DEFRICHEMENT) },
+    { id: "histoire-s04-3-q38", fiche: "histoire-s04-3-f5", type: "qcm", niveau: 2,
+      enonce: "Comment s'appellent les villages neufs fondés dans le Sud-Ouest au XIIIe siècle, au temps des défrichements ?",
+      choix: ["Des bastides", "Des tenures", "Des cartulaires", "Des califats"],
+      reponse: "Des bastides",
+      explication: "Les bastides sont des villages neufs du Sud-Ouest, fondés surtout au XIIIe siècle. On parle aussi de sauvetés, placées sous la protection d'une église ou d'une abbaye.",
+      source: T("Défrichement", U_DEFRICHEMENT) },
+    { id: "histoire-s04-3-q39", fiche: "histoire-s04-3-f5", type: "qcm", niveau: 3,
+      enonce: "Au XIVe siècle, la forêt regagne du terrain sur les champs. Pourquoi ?",
+      choix: ["La Peste et la guerre ont vidé des villages", "Les seigneurs interdisent de cultiver", "Les paysans ont tous quitté les campagnes pour les villes", "Le climat devient trop chaud"],
+      reponse: "La Peste et la guerre ont vidé des villages",
+      explication: "Après la Peste de 1348 et pendant la guerre de Cent Ans, des villages sont abandonnés. Les champs les moins bons retournent à la friche et aux arbres.", indice: "Pense aux deux grands malheurs du XIVe siècle.",
+      source: T("Défrichement", U_DEFRICHEMENT) },
+    { id: "histoire-s04-3-q40", fiche: "histoire-s04-3-f5", type: "trou", niveau: 1,
+      enonce: "Complète avec les mots des défrichements.",
+      texte: "Du XIe au XIIIe siècle, on gagne des champs sur la ___ ; une terre défrichée s'appelle un ___.",
+      banque: ["forêt", "essart", "mer", "cens"],
+      reponse: [["forêt"], ["essart"]],
+      explication: "Les grands défrichements prennent des champs à la forêt et aux marais. La terre ainsi gagnée est un essart.",
+      source: T("Défrichement", U_DEFRICHEMENT) },
+    // f6 : le village (fiche de programme, questions de thème)
+    { id: "histoire-s04-3-q41", fiche: "histoire-s04-3-f6", type: "qcm", niveau: 1,
+      enonce: "Autour de quels deux bâtiments les maisons du village se regroupent-elles vers l'an mil ?",
+      choix: ["Le château et l'église", "Le moulin et le four", "La grange et le pressoir", "La cathédrale et l'hôtel de ville"],
+      reponse: "Le château et l'église",
+      explication: "Le château du seigneur et l'église, avec son cimetière, sont les deux pôles du village. Les maisons se serrent autour d'eux.",
+      source: T("Encellulement", U_ENCELLULEMENT) },
+    { id: "histoire-s04-3-q42", fiche: "histoire-s04-3-f6", type: "vrai_faux", niveau: 1,
+      enonce: "Le village médiéval se forme vers l'an mil, entre 950 et 1150 environ.",
+      corrections: [], reponse: { vrai: true, correction: null },
+      explication: "Oui : les historiens situent le regroupement des paysans entre 950 et 1050, et il est achevé presque partout vers 1150. Avant, les maisons étaient dispersées.",
+      source: T("Encellulement", U_ENCELLULEMENT) },
+    { id: "histoire-s04-3-q43", fiche: "histoire-s04-3-f6", type: "qcm", niveau: 2,
+      enonce: "Pourquoi les paysans viennent-ils se regrouper près du château ?",
+      choix: ["Les guerriers du château les protègent", "Pour payer moins de taxes", "Parce que le roi de France l'a ordonné à tous", "Parce que la forêt a disparu"],
+      reponse: "Les guerriers du château les protègent",
+      explication: "Après les raids vikings, les villageois se rapprochent des guerriers capables de les défendre. Le château commande et protège, l'église rassemble.",
+      source: T("Encellulement", U_ENCELLULEMENT) },
+    { id: "histoire-s04-3-q44", fiche: "histoire-s04-3-f6", type: "vrai_faux", niveau: 2,
+      enonce: "Au Moyen Âge, chaque seigneurie possède obligatoirement un château.",
+      corrections: ["Faux : beaucoup de seigneuries n'ont jamais eu de château, mais toutes ont un seigneur.", "Faux : seules les seigneuries du roi ont un château.", "Faux : les châteaux n'apparaissent qu'après la guerre de Cent Ans."],
+      reponse: { vrai: false, correction: "Faux : beaucoup de seigneuries n'ont jamais eu de château, mais toutes ont un seigneur." },
+      explication: "Le château est souvent le centre de la seigneurie, mais beaucoup de seigneuries n'en ont jamais eu. Toutes, en revanche, ont un seigneur qui commande.",
+      source: T("Seigneurie", U_SEIGNEURIE) },
+    { id: "histoire-s04-3-q45", fiche: "histoire-s04-3-f6", type: "qcm_multiple", niveau: 2,
+      enonce: "Que trouve-t-on dans un village médiéval et autour de lui ? (plusieurs réponses)",
+      choix: ["L'église et son cimetière", "Le château du seigneur", "Les champs et les prés", "Une université", "Un port de mer"],
+      reponse: ["L'église et son cimetière", "Le château du seigneur", "Les champs et les prés"],
+      explication: "Église, château, champs et prés forment le village et ses terres. L'université et le port appartiennent aux villes.",
+      source: T("Encellulement", U_ENCELLULEMENT) },
+    { id: "histoire-s04-3-q46", fiche: "histoire-s04-3-f6", type: "qcm", niveau: 2,
+      enonce: "Comment les historiens appellent-ils le regroupement des paysans en villages, vers l'an mil ?",
+      choix: ["L'encellulement", "Le défrichement", "La banalité", "Le schisme"],
+      reponse: "L'encellulement",
+      explication: "Le mot encellulement, proposé par l'historien Robert Fossier, désigne ce regroupement autour du château et de l'église. Le défrichement, lui, est la conquête de terres sur la forêt.",
+      source: T("Encellulement", U_ENCELLULEMENT) },
+    { id: "histoire-s04-3-q47", fiche: "histoire-s04-3-f6", type: "ordre", niveau: 2,
+      enonce: "Remets ces moments de l'histoire des campagnes dans l'ordre du temps.",
+      elements: ["Les paysans se regroupent en villages (vers l'an mil)", "Les grands défrichements (XIe-XIIIe siècle)", "La Grande peste (1348)", "Les raids vikings (IXe siècle)"],
+      reponse: [3, 0, 1, 2],
+      explication: "Les raids vikings du IXe siècle précèdent le regroupement des villages vers l'an mil. Puis viennent les défrichements et, en 1348, la Peste.",
+      source: T("Encellulement", U_ENCELLULEMENT) },
+    { id: "histoire-s04-3-q48", fiche: "histoire-s04-3-f6", type: "qcm", niveau: 3,
+      enonce: "Pourquoi les historiens disent-ils que le village médiéval est une « cellule » de la seigneurie ?",
+      choix: ["Le seigneur y tient ses habitants rassemblés sous son contrôle", "Parce que chaque maison est minuscule", "Parce que les paysans y sont enfermés la nuit", "Parce que le village est entouré d'un grand mur de pierre"],
+      reponse: "Le seigneur y tient ses habitants rassemblés sous son contrôle",
+      explication: "Rassemblés autour du château et de l'église, les paysans sont plus faciles à commander, à juger et à taxer. C'est pour cela que l'on parle de cellules.", indice: "Qui commande dans le village ?",
+      source: T("Encellulement", U_ENCELLULEMENT) }
   ],
   bonus: [
     {
@@ -250,17 +397,23 @@ module.exports = {
       fiche: "histoire-s04-3-f1",
       titre: "La Grande peste de 1348",
       texte: "La Grande peste, que les historiens appellent aussi peste noire, arrive à Marseille en novembre 1347, à Avignon en janvier 1348 et à Paris en août 1348. Transmise par des puces, que portent notamment les rats noirs, elle tue en cinq ou six ans entre 30 et 60 % des habitants de l'Europe.",
-      source: { titre: "Peste noire", editeur: "Wikipédia, l'encyclopédie libre", url: "https://fr.wikipedia.org/wiki/Peste_noire" }
+      source: { titre: "Peste noire", editeur: "Wikipédia, l'encyclopédie libre", url: U_PESTE }
+    },
+    {
+      id: "histoire-s04-3-b2",
+      fiche: "histoire-s04-3-f5",
+      titre: "Des noms de lieux qui racontent les défrichements",
+      texte: "La carte de France garde la trace des défricheurs. Les Essarts, Les Sarts dans le Nord, Le Thuit en Normandie, Les Artigues dans le Sud-Ouest, Les Rodes ou Le Rœulx et les villages en -rode d'Alsace et de Lorraine : tous ces noms veulent dire « terre gagnée sur la forêt ». Sauveterre rappelle les villages neufs placés sous protection.",
+      source: { titre: "Défrichement", editeur: "Wikipédia, l'encyclopédie libre", url: U_DEFRICHEMENT }
     }
   ],
   nonCouvert: [
-    "L'image du village et du château étudiée en classe (arrière-plan, place du château par rapport au village) n'est pas dans le fichier : seules les questions y figurent.",
-    "Les mots importants à noter : le cadre est vide ; la leçon est donnée en vidéo.",
-    "Ce qu'est la seigneurie banale : la frise cite seulement l'époque de son développement.",
-    "Les causes des grands défrichements et ce qu'ils changent dans le paysage.",
-    "Les conséquences de la Grande peste de 1348 sur les campagnes.",
-    "Les douze images du Rustican elles-mêmes (seules leurs légendes sont reprises) et le texte de la chronique de Raoul Glaber dans sa version complète.",
-    "Les réponses rédigées aux neuf questions de l'étude de cas, données pendant la vidéo : le jeu ne retient que ce que le calendrier des mois et les textes imprimés permettent de déduire.",
-    "La charrue, le collier d'épaule et le tableau des redevances de la même étude de cas : ils sont traités au cours 8 (histoire-s06-1)."
+    "L'image du village et du château étudiée en classe (arrière-plan, place du château par rapport au village) n'est pas dans le fichier : la fiche f6 la remplace par ce que le programme attend sur la naissance du village.",
+    "Les techniques nouvelles des campagnes (charrue, collier d'épaule, assolement triennal, moulins) : elles sont traitées au cours 8 (histoire-s06-1) ; l'assolement triennal n'est jamais interrogé (test de la séance 8).",
+    "Ce qu'est la seigneurie banale (le ban, les banalités) : traité au cours 7 (histoire-s05-1).",
+    "Les paysages créés par les défrichements (bocage, champs ouverts) et les rendements des terres.",
+    "Le rôle de l'Église dans l'encadrement du village (paroisse, dîme) : seulement nommé, sans question (règle sur la religion).",
+    "Les douze images du Rustican elles-mêmes (seules leurs légendes sont reprises) et le texte complet de la chronique de Raoul Glaber.",
+    "Les réponses rédigées aux neuf questions de l'étude de cas, données pendant la vidéo."
   ]
 };
