@@ -98,12 +98,8 @@ JEU.enregistrer("cours", {
    "personnages": [],
    "vocabulaire": [
     {
-     "mot": "vilain",
-     "def": "un paysan libre, à la différence du serf"
-    },
-    {
      "mot": "serf",
-     "def": "un paysan qui n'est pas libre"
+     "def": "un paysan qui n'est pas libre, à la différence du vilain"
     }
    ],
    "schema": null,

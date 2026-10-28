@@ -990,20 +990,20 @@ JEU.enregistrer("cours", {
    "fiche": "histoire-s06-1-f4",
    "type": "trou",
    "niveau": 1,
-   "enonce": "Complète avec les deux catégories de paysans.",
-   "texte": "Le ___ est un paysan libre ; le ___ ne l'est pas.",
+   "enonce": "Complète avec les mots des paysans non libres.",
+   "texte": "Le ___ n'est pas libre : en plus des taxes de tous, il doit le chevage, le formariage et la ___.",
    "banque": [
-    "vilain",
     "serf",
+    "mainmorte",
     "laboureur",
-    "meunier"
+    "banalité"
    ],
-   "explication": "Le vilain est libre, le serf ne l'est pas. Le laboureur est un paysan riche, libre ou non.",
+   "explication": "Le serf est le paysan non libre. Chevage, formariage et mainmorte sont ses trois taxes propres.",
    "source": {
-    "fichier": "cours/histoire/Histoire 5e - Moyen Age - Etude de cas 2 Seigneurie de Wismes.pdf",
+    "fichier": "cours/histoire/Histoire 5e - Moyen Age - Etude de cas 3 Vie et travail des paysans.pdf",
     "page": 1
    },
-   "r": "ogzVXsxCcA1MvB3RbR0DD8AELlCH",
+   "r": "voBUQExBeQAAGMRBhZXSo9ACdMQFLlCH",
    "poids": 1
   },
   {
