@@ -305,7 +305,7 @@ JEU.enregistrer("cours", {
    "choix": [
     "Par terre, en plein air ou sous une tente",
     "Dans un gymnase",
-    "Dans un bus scolaire",
+    "Dans la maison de l'instituteur",
     "Par internet, chacun à la maison devant un ordinateur"
    ],
    "explication": "Les élèves s'assoient par terre, dehors, ou sous une tente dans le meilleur des cas. Une école publique sur deux n'a pas de locaux.",
@@ -345,7 +345,7 @@ JEU.enregistrer("cours", {
    "enonce": "Pourquoi l'analphabétisme est-il si élevé en Afghanistan ?",
    "choix": [
     "Parce que près de la moitié des enfants ne vont pas à l'école, dans un pays en guerre depuis quarante ans",
-    "Parce que la langue du pays ne s'écrit pas",
+    "Parce que l'école y est payante et trop chère pour les familles",
     "Parce que l'école n'y est pas obligatoire, si bien que les familles n'y envoient leurs enfants que si elles le souhaitent",
     "Parce que le pays est trop peuplé"
    ],
@@ -443,7 +443,7 @@ JEU.enregistrer("cours", {
    "choix": [
     "Pour aider financièrement leur famille",
     "Parce que l'école est interdite aux garçons",
-    "Parce qu'ils ont déjà leur diplôme",
+    "Parce que les écoles ferment pendant la saison des récoltes",
     "Parce que les écoles sont trop loin des villes"
    ],
    "explication": "Les familles ont besoin de l'argent que rapportent les enfants. Ils travaillent aux champs ou dans des ateliers.",
@@ -464,7 +464,7 @@ JEU.enregistrer("cours", {
     "L'éducation des filles y est mal vue et elles sont mariées très jeunes",
     "Il n'y a pas d'écoles dans le sud du pays",
     "Les filles préfèrent travailler dans les ateliers",
-    "Le climat y est trop chaud pour étudier"
+    "Les familles n'ont pas les moyens de payer les livres, les cahiers et l'uniforme"
    ],
    "explication": "Par tradition, l'école des filles est mal vue dans le sud. Mariées très jeunes, elles se consacrent à leur foyer.",
    "source": {
@@ -903,7 +903,7 @@ JEU.enregistrer("cours", {
     "Le pays, plus pauvre, consacre moins d'argent à l'école et manque de locaux",
     "Les enfants afghans sont plus nombreux à vouloir aller à l'école",
     "Les classes finlandaises sont presque vides, car l'école n'y est pas obligatoire et beaucoup d'enfants restent chez eux",
-    "Le climat afghan oblige à regrouper les élèves"
+    "L'école y est obligatoire plus longtemps, donc chaque classe reçoit plus d'élèves"
    ],
    "explication": "Avec un PIB très faible et une petite part consacrée à l'éducation, l'Afghanistan manque d'écoles et de bâtiments. Les élèves s'entassent donc.",
    "source": {
@@ -927,7 +927,7 @@ JEU.enregistrer("cours", {
     "38 millions d'habitants",
     "4,7 enfants par femme"
    ],
-   "explication": "Petites classes, plus d'argent, école plus longue et alphabétisation complète : la Finlande gagne sur toute la ligne. 38 millions d'habitants et 4,7 enfants par femme sont des données afghanes.",
+   "explication": "Petites classes, plus d'argent, école plus longue et alphabétisation complète : sur ces quatre points, la Finlande est mieux placée. 38 millions d'habitants et 4,7 enfants par femme sont des données afghanes.",
    "source": {
     "fichier": "cours/geographie/Geo 5e - Theme 1 - Etude de cas 3.pdf",
     "page": 2
@@ -968,7 +968,7 @@ JEU.enregistrer("cours", {
     "L'Amérique du Nord",
     "L'Océanie"
    ],
-   "explication": "Les couleurs les plus claires de la carte, sous 50 %, sont surtout en Afrique. L'Europe et l'Amérique du Nord dépassent 95 %.",
+   "explication": "Plusieurs pays d'Afrique sont sous 50 % d'habitants sachant lire et écrire. L'Europe et l'Amérique du Nord dépassent 95 %.",
    "source": {
     "fichier": "cours/geographie/Geo 5e - Theme 1 - Etude de cas 3.pdf",
     "page": 1
@@ -1040,7 +1040,7 @@ JEU.enregistrer("cours", {
     "Les taux les plus bas sont dans les pays pauvres, les plus hauts dans les pays développés",
     "Ils sont identiques partout",
     "Les pays riches ont les taux les plus bas",
-    "Ils dépendent seulement du climat : on apprend moins bien à lire dans les pays chauds que dans les pays froids"
+    "Ils dépendent seulement de la taille du pays : plus un pays est grand, moins ses habitants savent lire"
    ],
    "explication": "L'éducation est un des trois critères de l'IDH. Là où le développement est faible, comme en Afghanistan, on sait moins souvent lire.",
    "source": {

@@ -180,19 +180,19 @@ JEU.enregistrer("cours", {
    "id": "geographie-s07-1-f6",
    "notion": "Le seuil d'extrême pauvreté de la Banque mondiale",
    "titre": "1,90, puis 2,15, puis 3 dollars par jour",
-   "texte": "La Banque mondiale fixe le seuil mondial d'extrême pauvreté. Il monte avec les prix : 1,90 dollar par jour en 2015 (le chiffre du cours), 2,15 dollars en 2022, 3 dollars depuis 2025. Sous ce seuil vivaient environ 2,3 milliards de personnes en 1990 et environ 840 millions aujourd'hui, de plus en plus souvent en Afrique subsaharienne.",
+   "texte": "La Banque mondiale fixe le seuil d'extrême pauvreté. Il monte avec les prix : 1,90 dollar par jour en 2015 2,15 dollars en 2022, 3 dollars depuis 2025. Avec ce seuil de 3 dollars, on compte environ 2,3 milliards de très pauvres en 1990 et environ 840 millions aujourd'hui, de plus en plus souvent en Afrique subsaharienne.",
    "pointsCles": [
     "Le seuil est relevé quand les prix montent : 1 dollar (1990), 1,90 dollar (2015), 2,15 dollars (2022), 3 dollars (2025)",
-    "Environ 2,3 milliards de personnes sous le seuil en 1990 ; environ 840 millions aujourd'hui",
+    "Avec le seuil de 3 dollars : environ 2,3 milliards de personnes en 1990, environ 840 millions en 2022 (le livret, avec l'ancien seuil de 1,90 dollar, dit presque 2 milliards en 1990 et plus de 700 millions en 2018)",
     "L'extrême pauvreté se concentre de plus en plus en Afrique subsaharienne et dans les pays en guerre",
-    "Depuis une dizaine d'années, le recul ralentit : croissance faible, dettes, Covid, conflits, catastrophes climatiques",
+    "Depuis une dizaine d'années, le recul ralentit : croissance faible, dettes, Covid, conflits, sécheresses et inondations",
     "Le livret garde le seuil de 2015 (1,90 dollar) : les deux chiffres sont justes, chacun à sa date"
    ],
    "astuce": "Trois seuils, trois dates qui montent : 1,90 en 2015, 2,15 en 2022, 3 en 2025.",
    "dates": [
     {
      "annee": 1990,
-     "evenement": "Premier seuil de la Banque mondiale : 1 dollar par jour ; 2,3 milliards de très pauvres"
+     "evenement": "Premier seuil de la Banque mondiale : 1 dollar par jour"
     },
     {
      "annee": 2015,
@@ -239,7 +239,7 @@ JEU.enregistrer("cours", {
    "titre": "Pauvre en France, pauvre au Burkina : deux seuils",
    "texte": "Le seuil de la Banque mondiale est absolu : la même somme pour tous. En France, l'INSEE utilise un seuil relatif : moins de 60 % du niveau de vie médian, celui qui coupe la population en deux moitiés. En 2023, cela fait 1 288 euros par mois pour une personne seule ; 15,4 % des habitants vivent en dessous.",
    "pointsCles": [
-    "Seuil absolu (Banque mondiale) : une somme fixe, 3 dollars par jour, pour comparer tous les pays",
+    "Seuil absolu (Banque mondiale) : une somme fixe, 3 dollars par jour, la même du Burkina Faso à la France",
     "Seuil relatif (France, Europe) : 60 % du niveau de vie médian du pays",
     "Médiane : la valeur qui partage la population en deux moitiés égales (INSEE)",
     "2023 : 1 288 euros par mois pour une personne seule, 1 932 euros pour un couple",
@@ -1106,7 +1106,7 @@ JEU.enregistrer("cours", {
    "enonce": "Pourquoi la Banque mondiale relève-t-elle régulièrement son seuil d'extrême pauvreté ?",
    "choix": [
     "Parce que les prix montent : avec la même somme, on achète moins qu'avant",
-    "Parce qu'elle veut qu'il y ait moins de pauvres dans ses statistiques, ce qui rassure les pays riches",
+    "Parce que la population mondiale augmente et qu'il faut compter plus de monde",
     "Parce que le dollar a été remplacé par l'euro",
     "Parce que les pauvres gagnent plus"
    ],
@@ -1154,7 +1154,7 @@ JEU.enregistrer("cours", {
     "Environ 50 millions",
     "Environ 4 milliards, la moitié de l'humanité"
    ],
-   "explication": "Environ 840 millions de personnes, contre 2,3 milliards en 1990. Le nombre a beaucoup baissé, même si le seuil a été relevé.",
+   "explication": "Environ 840 millions de personnes en 2022, contre 2,3 milliards en 1990, comptées avec le même seuil de 3 dollars. Le nombre a beaucoup baissé, même si le seuil a été relevé.",
    "source": {
     "theme": "Cours 2 – 1re partie – Richesse et pauvreté dans le monde",
     "titre": "Poverty – Overview",
@@ -1237,7 +1237,7 @@ JEU.enregistrer("cours", {
     "Quand elle vit avec moins de 60 % du niveau de vie médian",
     "Quand elle vit avec moins de 3 dollars par jour, comme dans le reste du monde",
     "Quand elle n'a pas de voiture",
-    "Quand elle gagne moins que le président"
+    "Quand elle gagne moins que le salaire minimum, le SMIC"
    ],
    "explication": "La France utilise un seuil relatif : 60 % du niveau de vie médian. En 2023, cela fait 1 288 euros par mois pour une personne seule.",
    "source": {
@@ -1274,7 +1274,7 @@ JEU.enregistrer("cours", {
    "enonce": "Pourquoi le seuil de pauvreté français est-il bien plus élevé que celui de la Banque mondiale ?",
    "choix": [
     "Parce qu'il est relatif : il dépend du niveau de vie en France, où tout coûte plus cher",
-    "Parce que l'INSEE se trompe dans ses calculs et compte beaucoup trop de pauvres chaque année",
+    "Parce qu'il est calculé par mois et non par jour, ce qui gonfle beaucoup le chiffre final",
     "Parce que l'euro vaut cent fois plus que le dollar",
     "Parce que les Français ont plus d'enfants"
    ],
@@ -1422,7 +1422,7 @@ JEU.enregistrer("cours", {
    "id": "geographie-s07-1-b2",
    "fiche": "geographie-s07-1-f5",
    "titre": "Tiers-monde : un mot de 1952",
-   "texte": "En août 1952, le démographe français Alfred Sauvy invente l'expression « tiers-monde » dans un article intitulé « Trois mondes, une planète ». Il pense au tiers état de la Révolution française, qui réclamait sa place. Le mot a désigné les pays pauvres d'Afrique, d'Asie et d'Amérique ; les géographes parlent aujourd'hui plutôt de pays en développement et de PMA.",
+   "texte": "Le 14 août 1952, le démographe français Alfred Sauvy lance l'expression « tiers-monde » dans un article de L'Observateur intitulé « Trois mondes, une planète ». Il pense au tiers état de la Révolution française, qui réclamait sa place. Le mot a désigné les pays pauvres d'Afrique, d'Asie et d'Amérique ; les géographes parlent aujourd'hui plutôt de pays en développement et de PMA.",
    "source": {
     "titre": "Tiers monde",
     "editeur": "Wikipédia, l'encyclopédie libre",
