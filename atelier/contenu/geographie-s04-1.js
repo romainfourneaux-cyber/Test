@@ -8,6 +8,9 @@
 // première en 2023) et f8 (Uttar Pradesh et Bihar), faits relus sur les pages Wikipédia citées le 28/10/2026 ;
 // leurs questions sont des questions de thème. Les fiches f1 à f6 viennent de l'étude de cas déposée ; f1, q1 et q4
 // datent désormais le rang de l'Inde (deuxième en 2020) pour ne pas contredire f7.
+// Relecture sceptique du 28/10/2026 : q9 et f2 datées (la moitié des Indiens avait moins de 25 ans vers 2015, âge médian
+// 28,7 ans en 2023) ; Bihar « environ trois enfants par femme » (3,0 en 2020) ; Uttar Pradesh comparé au Brésil, à la Russie
+// et au Japon (le Pakistan, 247 millions en 2023, rend le « cinquième pays » incertain) ; cinq leurres absurdes remplacés.
 const F = "cours/geographie/Geo 5e - Theme 1 - Cours 1 - Etude de cas 2 Inde.pdf";
 const P = (page) => ({ fichier: F, page: page });
 const THEME = "Étude de cas 2 – La situation démographique de l’Inde";
@@ -18,6 +21,7 @@ const U_INDE = "https://fr.wikipedia.org/wiki/D%C3%A9mographie_de_l%27Inde";
 const U_UP = "https://fr.wikipedia.org/wiki/Uttar_Pradesh";
 const U_BIHAR = "https://fr.wikipedia.org/wiki/Bihar";
 const U_CHINE = "https://fr.wikipedia.org/wiki/D%C3%A9mographie_de_la_Chine";
+const U_POP = "https://fr.wikipedia.org/wiki/Liste_des_pays_par_population";
 
 module.exports = {
   id: "geographie-s04-1",
@@ -46,7 +50,7 @@ module.exports = {
         "La mortalité recule : progrès de la médecine, recul des épidémies, disparition des famines",
         "La natalité baisse plus lentement, malgré la limitation des naissances et la contraception",
         "La population indienne n'est pas encore stabilisée",
-        "Une population jeune : la moitié des Indiens a moins de vingt-cinq ans"
+        "Une population très jeune : vers 2015, la moitié des Indiens avait moins de vingt-cinq ans (âge médian d'environ 29 ans en 2023)"
       ],
       dates: [], lieux: ["Inde"], personnages: [],
       vocabulaire: [
@@ -153,10 +157,10 @@ module.exports = {
     {
       id: "geographie-s04-1-f8", notion: "Uttar Pradesh et Bihar : le Nord qui grandit, le Sud stabilisé",
       titre: "Le Nord grandit encore, le Sud s'est stabilisé",
-      texte: "La croissance de l'Inde vient surtout du Nord, dans la plaine du Gange. L'Uttar Pradesh, l'État le plus peuplé, compte 240 millions d'habitants ; le Bihar, 104 millions, est le seul État où les femmes ont encore plus de trois enfants en moyenne. Les États du Sud, plus riches, ont une population déjà stabilisée, qui baisse même par endroits.",
+      texte: "La croissance de l'Inde vient surtout du Nord, dans la plaine du Gange. L'Uttar Pradesh, l'État le plus peuplé, compte 240 millions d'habitants ; le Bihar, 104 millions, est l'État où les femmes ont le plus d'enfants : environ trois en moyenne. Les États du Sud, plus riches, ont une population déjà stabilisée, qui baisse même par endroits.",
       pointsCles: [
         "Uttar Pradesh : 240 millions d'habitants (2023), l'État le plus peuplé de l'Inde ; capitale Lucknow",
-        "Bihar : 104 millions d'habitants, l'État le plus dense ; le seul au-dessus de trois enfants par femme",
+        "Bihar : 104 millions d'habitants, l'État le plus dense ; environ trois enfants par femme (3,0 en 2020), le niveau le plus élevé du pays",
         "Les deux États s'étendent au nord, dans la plaine du Gange, le long de la frontière du Népal",
         "Au Sud, des États plus riches, à la population stabilisée, parfois en baisse",
         "Résultat : l'Inde grandit encore, mais de moins en moins vite"
@@ -214,13 +218,13 @@ module.exports = {
       reponse: ["Grâce aux progrès de la médecine", "Grâce au recul des épidémies", "Grâce à la disparition des famines"],
       explication: "On se soigne mieux, les épidémies reculent et les famines ont disparu : on meurt beaucoup moins jeune. La natalité, elle, n'explique pas la baisse des décès.", source: P(1) },
     { id: "geographie-s04-1-q9", fiche: "geographie-s04-1-f2", type: "vrai_faux", niveau: 1,
-      enonce: "En Inde, la moitié des habitants a moins de vingt-cinq ans.",
+      enonce: "Il y a une dizaine d'années, la moitié des Indiens avaient moins de vingt-cinq ans : une population très jeune.",
       corrections: [], reponse: { vrai: true, correction: null },
-      explication: "Oui, un Indien sur deux a moins de vingt-cinq ans. C'est une population très jeune.", source: P(1) },
+      explication: "Oui, un Indien sur deux avait alors moins de vingt-cinq ans. Aujourd'hui, l'âge médian est d'environ 29 ans : la population reste très jeune.", source: P(1) },
     { id: "geographie-s04-1-q10", fiche: "geographie-s04-1-f2", type: "qcm", niveau: 2,
       enonce: "Pourquoi l'Inde ne risque-t-elle pas de voir sa population vieillir dans l'immédiat ?",
-      choix: ["Parce que la moitié des Indiens a moins de vingt-cinq ans", "Parce que l'espérance de vie y est très courte", "Parce que ses jeunes partent presque tous vivre à l'étranger", "Parce que la natalité y est déjà très basse"],
-      reponse: "Parce que la moitié des Indiens a moins de vingt-cinq ans",
+      choix: ["Parce que la moitié des Indiens ont moins de trente ans", "Parce que l'espérance de vie y est très courte", "Parce que ses jeunes partent presque tous vivre à l'étranger", "Parce que la natalité y est déjà très basse"],
+      reponse: "Parce que la moitié des Indiens ont moins de trente ans",
       explication: "Avec autant de jeunes, la part des personnes âgées reste faible. Le vieillissement n'est pas un risque immédiat.", source: P(1) },
     { id: "geographie-s04-1-q11", fiche: "geographie-s04-1-f2", type: "vrai_faux", niveau: 2,
       enonce: "Grâce à sa politique de limitation des naissances, l'Inde a stabilisé sa population.",
@@ -369,7 +373,7 @@ module.exports = {
       explication: "Oui : gaz toxiques et déchets étouffent les habitants. La croissance de la population aggrave le problème.", source: P(2) },
     { id: "geographie-s04-1-q40", fiche: "geographie-s04-1-f6", type: "qcm", niveau: 2,
       enonce: "Pourquoi des bidonvilles se forment-ils à Mumbai ?",
-      choix: ["Les pauvres venus des campagnes n'y trouvent pas d'autre logement", "Les riches préfèrent y habiter", "La ville manque d'habitants", "Le gouvernement y loge les fonctionnaires venus de New Delhi"],
+      choix: ["Les pauvres venus des campagnes n'y trouvent pas d'autre logement", "Les riches préfèrent y habiter", "Parce que la ville interdit de construire de nouveaux immeubles en hauteur", "Le gouvernement y loge les fonctionnaires venus de New Delhi"],
       reponse: "Les pauvres venus des campagnes n'y trouvent pas d'autre logement",
       explication: "Des ruraux pauvres arrivent en ville sans argent. Ils sont contraints de s'installer dans des bidonvilles, les slums.", source: P(2) },
     { id: "geographie-s04-1-q41", fiche: "geographie-s04-1-f6", type: "vrai_faux", niveau: 2,
@@ -403,7 +407,7 @@ module.exports = {
       source: T("Démographie de l'Inde", "Wikipédia", U_INDE) },
     { id: "geographie-s04-1-q47", fiche: "geographie-s04-1-f7", type: "qcm", niveau: 2,
       enonce: "Pourquoi l'Inde est-elle passée devant la Chine ?",
-      choix: ["Sa population augmente encore, alors que celle de la Chine baisse depuis 2022", "Parce que des millions de Chinois sont partis vivre en Inde", "Parce que la Chine a cédé une partie de son territoire et de ses habitants à ses voisins", "Parce que l'Inde a fait un grand recensement en 2021 qui a tout changé"],
+      choix: ["Sa population augmente encore, alors que celle de la Chine baisse depuis 2022", "Parce que des millions de Chinois sont partis vivre en Inde", "Parce que la fécondité des Chinoises est remontée bien au-dessus de celle des Indiennes", "Parce que l'Inde a fait un grand recensement en 2021 qui a tout changé"],
       reponse: "Sa population augmente encore, alors que celle de la Chine baisse depuis 2022",
       explication: "L'Inde grandit encore d'un peu moins de 1 % par an. La Chine, elle, a vu sa population baisser en 2022, pour la première fois depuis le début des années 1960.",
       source: T("Démographie de la Chine", "Wikipédia", U_CHINE) },
@@ -421,7 +425,7 @@ module.exports = {
       source: T("Démographie de l'Inde", "Wikipédia", U_INDE) },
     { id: "geographie-s04-1-q50", fiche: "geographie-s04-1-f7", type: "qcm", niveau: 3,
       enonce: "Comment connaît-on le nombre d'habitants de l'Inde, alors qu'aucun recensement n'a eu lieu depuis 2011 ?",
-      choix: ["Par des estimations, calculées à partir du recensement de 2011, des naissances et des décès", "En comptant les cartes d'identité délivrées chaque année", "On ne le connaît pas du tout : le chiffre de 2023 est inventé", "En additionnant chaque année les habitants que chaque village et chaque ville déclarent au gouvernement"],
+      choix: ["Par des estimations, calculées à partir du recensement de 2011, des naissances et des décès", "En comptant les cartes d'identité délivrées chaque année", "On ne le connaît pas du tout : sans recensement, aucun chiffre n'est possible", "En additionnant chaque année les habitants que chaque village et chaque ville déclarent au gouvernement"],
       reponse: "Par des estimations, calculées à partir du recensement de 2011, des naissances et des décès",
       explication: "Le comptage prévu en 2021 a été retardé par la pandémie. Les chiffres de 2023 sont donc des estimations, comme celles de l'ONU.",
       source: T("Démographie de l'Inde", "Wikipédia", U_INDE) },
@@ -447,9 +451,9 @@ module.exports = {
       explication: "L'Uttar Pradesh compte 240 millions d'habitants. Le Bihar, son voisin, en a 104 millions.",
       source: T("Démographie de l'Inde", "Wikipédia", U_INDE) },
     { id: "geographie-s04-1-q54", fiche: "geographie-s04-1-f8", type: "vrai_faux", niveau: 1,
-      enonce: "Le Bihar est l'État de l'Inde où les femmes ont le plus d'enfants : plus de trois en moyenne.",
+      enonce: "Le Bihar est l'État de l'Inde où les femmes ont le plus d'enfants : environ trois en moyenne.",
       corrections: [], reponse: { vrai: true, correction: null },
-      explication: "Oui : c'est le seul État indien à trois enfants par femme ou plus, d'après les derniers chiffres. Dans l'ensemble du pays, on est à environ deux.",
+      explication: "Oui : environ trois enfants par femme d'après les derniers chiffres, le niveau le plus élevé de l'Inde. Dans l'ensemble du pays, on est à environ deux.",
       source: T("Bihar", "Wikipédia", U_BIHAR) },
     { id: "geographie-s04-1-q55", fiche: "geographie-s04-1-f8", type: "qcm", niveau: 2,
       enonce: "Où se trouvent l'Uttar Pradesh et le Bihar ?",
@@ -466,18 +470,18 @@ module.exports = {
     { id: "geographie-s04-1-q57", fiche: "geographie-s04-1-f8", type: "association", niveau: 2,
       enonce: "Relie chaque espace à sa situation.",
       gauche: ["Uttar Pradesh", "Bihar", "États du Sud"],
-      droite: ["240 millions d'habitants, l'État le plus peuplé", "Plus de trois enfants par femme, le seul État au-dessus", "Population stabilisée, parfois en baisse"],
+      droite: ["240 millions d'habitants, l'État le plus peuplé", "Environ trois enfants par femme, le niveau le plus élevé de l'Inde", "Population stabilisée, parfois en baisse"],
       reponse: [[0, 0], [1, 1], [2, 2]],
       explication: "L'Uttar Pradesh est le géant, le Bihar l'État le plus fécond. Le Sud, plus riche, ne grandit presque plus.",
       source: T("Démographie de l'Inde", "Wikipédia", U_INDE) },
     { id: "geographie-s04-1-q58", fiche: "geographie-s04-1-f8", type: "vrai_faux", niveau: 3,
-      enonce: "S'il était un pays indépendant, l'Uttar Pradesh serait parmi les cinq pays les plus peuplés du monde.",
+      enonce: "S'il était un pays indépendant, l'Uttar Pradesh compterait plus d'habitants que le Brésil, la Russie ou le Japon.",
       corrections: [], reponse: { vrai: true, correction: null },
-      explication: "Oui : avec 240 millions d'habitants, il serait cinquième, derrière la Chine, l'Inde, les États-Unis et l'Indonésie. Un seul État indien dépasse ainsi presque tous les pays.",
-      source: T("Uttar Pradesh", "Wikipédia", U_UP) },
+      explication: "Oui : avec environ 240 millions d'habitants, seuls l'Inde, la Chine, les États-Unis, l'Indonésie et le Pakistan feraient mieux. Le Brésil en compte 211 millions, la Russie 145, le Japon 124.",
+      source: T("Liste des pays par population", "Wikipédia", U_POP) },
     { id: "geographie-s04-1-q59", fiche: "geographie-s04-1-f8", type: "qcm", niveau: 3,
       enonce: "Comment expliquer que les États du Sud de l'Inde aient cessé de grandir ?",
-      choix: ["Ils sont plus riches et ont achevé leur transition démographique : peu de naissances, peu de décès", "Leurs habitants partent tous vivre dans le Nord", "Le climat y empêche d'avoir des enfants", "La mortalité y est très élevée, bien plus que dans le Nord du pays, à cause des épidémies"],
+      choix: ["Ils sont plus riches et ont achevé leur transition démographique : peu de naissances, peu de décès", "Leurs habitants partent tous vivre dans le Nord", "Parce que le gouvernement y interdit depuis longtemps d'avoir plus d'un enfant par famille, comme en Chine", "La mortalité y est très élevée, bien plus que dans le Nord du pays, à cause des épidémies"],
       reponse: "Ils sont plus riches et ont achevé leur transition démographique : peu de naissances, peu de décès",
       explication: "Les États du Sud, plus riches, ont une natalité et une mortalité faibles : leur population est stabilisée. Le Nord, plus pauvre, garde des familles nombreuses.",
       source: T("Démographie de l'Inde", "Wikipédia", U_INDE) },
@@ -486,7 +490,7 @@ module.exports = {
       texte: "L'___, avec 240 millions d'habitants, est l'État le plus peuplé de l'Inde ; le ___ est celui où les femmes ont le plus d'enfants.",
       banque: ["Uttar Pradesh", "Bihar", "Kerala", "Pendjab"],
       reponse: [["Uttar Pradesh", "uttar pradesh"], ["Bihar", "bihar"]],
-      explication: "L'Uttar Pradesh est le géant du Nord. Le Bihar, son voisin, est le seul État au-dessus de trois enfants par femme.",
+      explication: "L'Uttar Pradesh est le géant du Nord. Le Bihar, son voisin, est l'État où la fécondité est la plus forte : environ trois enfants par femme.",
       source: T("Démographie de l'Inde", "Wikipédia", U_INDE) }
   ],
   bonus: [
@@ -501,7 +505,7 @@ module.exports = {
       id: "geographie-s04-1-b2",
       fiche: "geographie-s04-1-f8",
       titre: "L'Uttar Pradesh, plus peuplé que presque tous les pays",
-      texte: "Avec environ 240 millions d'habitants, l'Uttar Pradesh, dont la capitale est Lucknow, serait le cinquième pays du monde s'il était indépendant, derrière la Chine, l'Inde, les États-Unis et l'Indonésie. Il s'étend dans la plaine du Gange, au nord de l'Inde, et touche le Népal.",
+      texte: "Avec environ 240 millions d'habitants, l'Uttar Pradesh, dont la capitale est Lucknow, serait l'un des six pays les plus peuplés du monde s'il était indépendant : seuls l'Inde, la Chine, les États-Unis, l'Indonésie et le Pakistan, qui a à peu près autant d'habitants que lui, le dépasseraient. Il s'étend dans la plaine du Gange, au nord de l'Inde, et touche le Népal.",
       source: { titre: "Uttar Pradesh", editeur: "Wikipédia, l'encyclopédie libre", url: U_UP }
     }
   ],

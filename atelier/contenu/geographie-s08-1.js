@@ -12,6 +12,8 @@
 // f5 réécrite (se soigner dans un pays pauvre : OMS) en gardant son identifiant et ses questions (q35, q39, q40 restent
 // sur le témoignage déposé, page 6 ; q36 à q38, q42 et q43 sont des questions de thème) ; f6 nouvelle (l'IDH en chiffres,
 // PNUD). Faits relus le 28/10/2026 sur les pages citées. Devoir n° 2 (semaine 11) non déposé : aucune question « définis ».
+// Relecture sceptique du 28/10/2026 : faits de f5 (OMS, 19/10/2026) et f6 (PNUD 2021, classement 2023) reconfirmés ;
+// q23 ne parle plus de « la carte » ; trois leurres absurdes remplacés (q8, q44, q47).
 const F = "cours/geographie/Geo 5e - Theme 1 - Cours 2.pdf";
 const P = (page) => ({ fichier: F, page: page });
 const THEME = "Outil 9 – Mesurer la pauvreté et les inégalités";
@@ -142,7 +144,7 @@ module.exports = {
         "PNUD (Programme des Nations unies pour le développement) : l'IDH existe depuis 1990, avec un classement à chaque rapport",
         "2021 : Suisse 0,962 (première sur 191 pays), Soudan du Sud 0,385 (dernier), moyenne mondiale 0,732",
         "Trois notes de 0 à 1 combinées en une seule : santé (espérance de vie), éducation (années d'école attendues et moyennes), niveau de vie (revenu par habitant)",
-        "Seuils : très élevé à partir de 0,800 ; élevé de 0,700 à 0,799 ; moyen de 0,555 à 0,699 ; faible en dessous",
+        "Seuils : très élevé à partir de 0,800 ; élevé de 0,700 à 0,799 ; moyen à partir d'environ 0,55 ; faible en dessous",
         "Limite : une moyenne nationale cache les écarts entre les habitants d'un même pays"
       ],
       astuce: "Retiens les deux bouts de l'échelle en 2021 : Suisse 0,962 tout en haut, Soudan du Sud 0,385 tout en bas.",
@@ -201,7 +203,7 @@ module.exports = {
       explication: "Le PIB se calcule sur une année. Divisé par le nombre d'habitants, il donne le PIB par habitant.", source: P(2) },
     { id: "geographie-s08-1-q8", fiche: "geographie-s08-1-f1", type: "qcm", niveau: 3,
       enonce: "Pourquoi compare-t-on les pays avec le PIB par habitant plutôt qu'avec le PIB total ?",
-      choix: ["Parce qu'un pays très peuplé produit forcément plus : la moyenne par habitant permet de comparer", "Parce que le PIB total est tenu secret", "Parce que le PIB par habitant mesure aussi l'éducation", "Parce que le PIB total ne se calcule que pour les pays du Nord, les pays du Sud n'ayant pas de statistiques"],
+      choix: ["Parce qu'un pays très peuplé produit forcément plus : la moyenne par habitant permet de comparer", "Parce que le PIB total ne compte que l'industrie", "Parce que le PIB par habitant mesure aussi l'éducation", "Parce que le PIB total ne se calcule que pour les pays du Nord, les pays du Sud n'ayant pas de statistiques"],
       reponse: "Parce qu'un pays très peuplé produit forcément plus : la moyenne par habitant permet de comparer",
       explication: "Un grand pays produit plus qu'un petit sans être plus riche par personne. Ramener la richesse à chaque habitant permet une vraie comparaison.", source: P(2) },
 
@@ -278,7 +280,7 @@ module.exports = {
       reponse: "Les pays développés et les pays en développement",
       explication: "Une limite sépare les pays développés des pays en développement. Parmi ces derniers, les pays émergents s'enrichissent vite et les PMA restent les plus pauvres.", source: P(2) },
     { id: "geographie-s08-1-q23", fiche: "geographie-s08-1-f3", type: "qcm", niveau: 3,
-      enonce: "Un pays a un IDH de 0,52. Dans quel groupe de la carte se trouve-t-il, et que peut-on en déduire ?",
+      enonce: "Un pays a un IDH de 0,52. Dans quel groupe d'IDH se range-t-il, et que peut-on en déduire ?",
       choix: ["IDH faible : c'est un pays en développement, peut-être un PMA", "IDH moyen : c'est un pays émergent, dont les conditions de vie s'améliorent vite", "IDH élevé : c'est un pays développé", "IDH très élevé : c'est un pays du Nord"],
       reponse: "IDH faible : c'est un pays en développement, peut-être un PMA",
       explication: "0,52 est sous 0,55 : IDH faible. Un tel pays est en développement, et peut faire partie des PMA.", indice: "Le seuil de l'IDH faible est 0,55.", source: P(2) },
@@ -351,7 +353,7 @@ module.exports = {
       enonce: "Qu'est-ce qui manque souvent aux centres de santé des pays les plus pauvres ? (plusieurs réponses)",
       choix: ["Une électricité fiable", "Un réfrigérateur pour garder les vaccins au froid", "Du matériel médical qui fonctionne", "De la lumière pour soigner la nuit", "Des malades à soigner : ces centres sont presque toujours vides", "Du soleil pour alimenter des panneaux solaires"],
       reponse: ["Une électricité fiable", "Un réfrigérateur pour garder les vaccins au froid", "Du matériel médical qui fonctionne", "De la lumière pour soigner la nuit"],
-      explication: "Près d'un milliard de personnes dépendent de centres de santé sans électricité fiable, surtout en Afrique subsaharienne et en Asie du Sud. Sans courant, ni frigo pour les vaccins, ni matériel, ni lumière pour un accouchement la nuit.",
+      explication: "Près d'un milliard de personnes dépendent de centres de santé sans électricité fiable, surtout en Afrique subsaharienne et en Asie du Sud. Sans courant, pas de réfrigérateur pour les vaccins, pas de matériel qui marche, pas de lumière pour un accouchement.",
       source: T("Close to one billion people globally are served by health-care facilities with no electricity access or with unreliable electricity", "Organisation mondiale de la santé (OMS)", "https://www.who.int/news/item/14-01-2023-close-to-one-billion-people-globally-are-served-by-health-care-facilities-with-no-electricity-access-or-with-unreliable-electricity") },
     { id: "geographie-s08-1-q38", fiche: "geographie-s08-1-f5", type: "vrai_faux", niveau: 2,
       enonce: "Un vaccin qui a eu trop chaud peut perdre son efficacité : il doit rester au froid depuis sa fabrication jusqu'au malade.",
@@ -383,7 +385,7 @@ module.exports = {
     // f6 : l'IDH en chiffres (fiche de programme : questions de thème)
     { id: "geographie-s08-1-q44", fiche: "geographie-s08-1-f6", type: "qcm", niveau: 1,
       enonce: "Quel organisme publie l'IDH et le classement des pays ?",
-      choix: ["Le PNUD, un programme des Nations unies", "La Banque mondiale, qui fixe aussi le seuil de pauvreté", "L'INSEE", "Le gouvernement suisse"],
+      choix: ["Le PNUD, un programme des Nations unies", "La Banque mondiale, qui fixe aussi le seuil de pauvreté", "L'INSEE", "L'OMS, l'Organisation mondiale de la santé"],
       reponse: "Le PNUD, un programme des Nations unies",
       explication: "Le PNUD, Programme des Nations unies pour le développement, publie l'IDH depuis 1990. La Banque mondiale, elle, s'occupe du seuil de pauvreté.",
       source: T("Indice de développement humain", "Wikipédia", U_IDH) },
@@ -400,7 +402,7 @@ module.exports = {
       source: T("Indice de développement humain", "Wikipédia", U_IDH) },
     { id: "geographie-s08-1-q47", fiche: "geographie-s08-1-f6", type: "qcm", niveau: 3,
       enonce: "Pourquoi deux pays aussi riches l'un que l'autre peuvent-ils avoir des IDH différents ?",
-      choix: ["Parce que l'IDH compte aussi l'espérance de vie et les années d'école, pas seulement le revenu", "Parce que l'IDH dépend de la taille du pays et du nombre de ses habitants, qui changent tout le calcul", "Parce que l'IDH est tiré au sort chaque année", "Parce que l'IDH ne compte que le revenu"],
+      choix: ["Parce que l'IDH compte aussi l'espérance de vie et les années d'école, pas seulement le revenu", "Parce que l'IDH dépend de la taille du pays et du nombre de ses habitants, qui changent tout le calcul", "Parce que l'IDH dépend de la monnaie dans laquelle on compte le revenu", "Parce que l'IDH ne compte que le revenu"],
       reponse: "Parce que l'IDH compte aussi l'espérance de vie et les années d'école, pas seulement le revenu",
       explication: "Le revenu n'est qu'une des trois notes. Si la santé ou l'école sont moins bonnes, l'IDH baisse malgré la richesse.",
       source: T("Indice de développement humain", "Wikipédia", U_IDH) },
@@ -443,7 +445,7 @@ module.exports = {
       id: "geographie-s08-1-b2",
       fiche: "geographie-s08-1-f4",
       titre: "73 ans : l'espérance de vie dans le monde",
-      texte: "D'après l'ONU, l'espérance de vie à la naissance atteint 73,3 ans dans le monde en 2024, soit 8,4 ans de plus qu'en 1995. Elle devrait approcher 77 ans vers 2054. Cette moyenne cache de grands écarts : le cours compare la Finlande, 81 ans, et l'Afghanistan, 53 ans.",
+      texte: "D'après l'ONU, l'espérance de vie à la naissance atteint 73,3 ans dans le monde en 2024, soit 8,4 ans de plus qu'en 1995. Elle devrait atteindre environ 77 ans en 2054. Cette moyenne cache de grands écarts : le cours compare la Finlande, 81 ans, et l'Afghanistan, 53 ans.",
       source: { titre: "Population (Enjeux mondiaux)", editeur: "Organisation des Nations unies", url: U_ONU_POP }
     }
   ],

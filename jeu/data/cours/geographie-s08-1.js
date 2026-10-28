@@ -186,7 +186,7 @@ JEU.enregistrer("cours", {
     "PNUD (Programme des Nations unies pour le développement) : l'IDH existe depuis 1990, avec un classement à chaque rapport",
     "2021 : Suisse 0,962 (première sur 191 pays), Soudan du Sud 0,385 (dernier), moyenne mondiale 0,732",
     "Trois notes de 0 à 1 combinées en une seule : santé (espérance de vie), éducation (années d'école attendues et moyennes), niveau de vie (revenu par habitant)",
-    "Seuils : très élevé à partir de 0,800 ; élevé de 0,700 à 0,799 ; moyen de 0,555 à 0,699 ; faible en dessous",
+    "Seuils : très élevé à partir de 0,800 ; élevé de 0,700 à 0,799 ; moyen à partir d'environ 0,55 ; faible en dessous",
     "Limite : une moyenne nationale cache les écarts entre les habitants d'un même pays"
    ],
    "astuce": "Retiens les deux bouts de l'échelle en 2021 : Suisse 0,962 tout en haut, Soudan du Sud 0,385 tout en bas.",
@@ -384,7 +384,7 @@ JEU.enregistrer("cours", {
    "enonce": "Pourquoi compare-t-on les pays avec le PIB par habitant plutôt qu'avec le PIB total ?",
    "choix": [
     "Parce qu'un pays très peuplé produit forcément plus : la moyenne par habitant permet de comparer",
-    "Parce que le PIB total est tenu secret",
+    "Parce que le PIB total ne compte que l'industrie",
     "Parce que le PIB par habitant mesure aussi l'éducation",
     "Parce que le PIB total ne se calcule que pour les pays du Nord, les pays du Sud n'ayant pas de statistiques"
    ],
@@ -672,7 +672,7 @@ JEU.enregistrer("cours", {
    "fiche": "geographie-s08-1-f3",
    "type": "qcm",
    "niveau": 3,
-   "enonce": "Un pays a un IDH de 0,52. Dans quel groupe de la carte se trouve-t-il, et que peut-on en déduire ?",
+   "enonce": "Un pays a un IDH de 0,52. Dans quel groupe d'IDH se range-t-il, et que peut-on en déduire ?",
    "choix": [
     "IDH faible : c'est un pays en développement, peut-être un PMA",
     "IDH moyen : c'est un pays émergent, dont les conditions de vie s'améliorent vite",
@@ -940,7 +940,7 @@ JEU.enregistrer("cours", {
     "Des malades à soigner : ces centres sont presque toujours vides",
     "Du soleil pour alimenter des panneaux solaires"
    ],
-   "explication": "Près d'un milliard de personnes dépendent de centres de santé sans électricité fiable, surtout en Afrique subsaharienne et en Asie du Sud. Sans courant, ni frigo pour les vaccins, ni matériel, ni lumière pour un accouchement la nuit.",
+   "explication": "Près d'un milliard de personnes dépendent de centres de santé sans électricité fiable, surtout en Afrique subsaharienne et en Asie du Sud. Sans courant, pas de réfrigérateur pour les vaccins, pas de matériel qui marche, pas de lumière pour un accouchement.",
    "source": {
     "theme": "Outil 9 – Mesurer la pauvreté et les inégalités",
     "titre": "Close to one billion people globally are served by health-care facilities with no electricity access or with unreliable electricity",
@@ -1055,7 +1055,7 @@ JEU.enregistrer("cours", {
     "Le PNUD, un programme des Nations unies",
     "La Banque mondiale, qui fixe aussi le seuil de pauvreté",
     "L'INSEE",
-    "Le gouvernement suisse"
+    "L'OMS, l'Organisation mondiale de la santé"
    ],
    "explication": "Le PNUD, Programme des Nations unies pour le développement, publie l'IDH depuis 1990. La Banque mondiale, elle, s'occupe du seuil de pauvreté.",
    "source": {
@@ -1115,7 +1115,7 @@ JEU.enregistrer("cours", {
    "choix": [
     "Parce que l'IDH compte aussi l'espérance de vie et les années d'école, pas seulement le revenu",
     "Parce que l'IDH dépend de la taille du pays et du nombre de ses habitants, qui changent tout le calcul",
-    "Parce que l'IDH est tiré au sort chaque année",
+    "Parce que l'IDH dépend de la monnaie dans laquelle on compte le revenu",
     "Parce que l'IDH ne compte que le revenu"
    ],
    "explication": "Le revenu n'est qu'une des trois notes. Si la santé ou l'école sont moins bonnes, l'IDH baisse malgré la richesse.",
@@ -1234,7 +1234,7 @@ JEU.enregistrer("cours", {
    "id": "geographie-s08-1-b2",
    "fiche": "geographie-s08-1-f4",
    "titre": "73 ans : l'espérance de vie dans le monde",
-   "texte": "D'après l'ONU, l'espérance de vie à la naissance atteint 73,3 ans dans le monde en 2024, soit 8,4 ans de plus qu'en 1995. Elle devrait approcher 77 ans vers 2054. Cette moyenne cache de grands écarts : le cours compare la Finlande, 81 ans, et l'Afghanistan, 53 ans.",
+   "texte": "D'après l'ONU, l'espérance de vie à la naissance atteint 73,3 ans dans le monde en 2024, soit 8,4 ans de plus qu'en 1995. Elle devrait atteindre environ 77 ans en 2054. Cette moyenne cache de grands écarts : le cours compare la Finlande, 81 ans, et l'Afghanistan, 53 ans.",
    "source": {
     "titre": "Population (Enjeux mondiaux)",
     "editeur": "Organisation des Nations unies",

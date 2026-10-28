@@ -6,6 +6,8 @@
 // 28/10/2026 (programme officiel, sous-thème « Répartition de la richesse et de la pauvreté dans le monde ») : le dépôt
 // couvre le programme, aucune fiche de programme n'est nécessaire ; ajout d'une question à f3, f5 et f6 (q51 est une
 // question de thème, UNESCO) et d'un bonus b3 (lois Jules Ferry). Devoir n° 2 (semaine 11) non déposé : prudence.
+// Relecture sceptique du 28/10/2026 : tableau de la page 2 relu dans le PDF (tous les chiffres de f4 et f5 confirmés) ;
+// cinq leurres absurdes ou enfantins remplacés (q5, q7, q13, q14, q38, q45) ; q41 ne renvoie plus à « la carte ».
 const F = "cours/geographie/Geo 5e - Theme 1 - Etude de cas 3.pdf";
 const P = (page) => ({ fichier: F, page: page });
 const THEME = "Étude de cas 3 – L’éducation en Afghanistan et en Finlande";
@@ -166,7 +168,7 @@ module.exports = {
       explication: "Une école sur deux n'a pas de bâtiment. Le matériel se résume souvent à un tableau noir et des ardoises.", source: P(1) },
     { id: "geographie-s08-2-q5", fiche: "geographie-s08-2-f1", type: "qcm", niveau: 2,
       enonce: "Comment se passe souvent la classe en Afghanistan quand l'école n'a pas de locaux ?",
-      choix: ["Par terre, en plein air ou sous une tente", "Dans un gymnase", "Dans un bus scolaire", "Par internet, chacun à la maison devant un ordinateur"],
+      choix: ["Par terre, en plein air ou sous une tente", "Dans un gymnase", "Dans la maison de l'instituteur", "Par internet, chacun à la maison devant un ordinateur"],
       reponse: "Par terre, en plein air ou sous une tente",
       explication: "Les élèves s'assoient par terre, dehors, ou sous une tente dans le meilleur des cas. Une école publique sur deux n'a pas de locaux.", source: P(1) },
     { id: "geographie-s08-2-q6", fiche: "geographie-s08-2-f1", type: "qcm_multiple", niveau: 2,
@@ -176,7 +178,7 @@ module.exports = {
       explication: "Enfants non scolarisés, écoles sans locaux, matériel minimal : trois signes de crise. Le baccalauréat à 18 ans et la cantine gratuite, c'est la Finlande.", source: P(1) },
     { id: "geographie-s08-2-q7", fiche: "geographie-s08-2-f1", type: "qcm", niveau: 3,
       enonce: "Pourquoi l'analphabétisme est-il si élevé en Afghanistan ?",
-      choix: ["Parce que près de la moitié des enfants ne vont pas à l'école, dans un pays en guerre depuis quarante ans", "Parce que la langue du pays ne s'écrit pas", "Parce que l'école n'y est pas obligatoire, si bien que les familles n'y envoient leurs enfants que si elles le souhaitent", "Parce que le pays est trop peuplé"],
+      choix: ["Parce que près de la moitié des enfants ne vont pas à l'école, dans un pays en guerre depuis quarante ans", "Parce que l'école y est payante et trop chère pour les familles", "Parce que l'école n'y est pas obligatoire, si bien que les familles n'y envoient leurs enfants que si elles le souhaitent", "Parce que le pays est trop peuplé"],
       reponse: "Parce que près de la moitié des enfants ne vont pas à l'école, dans un pays en guerre depuis quarante ans",
       explication: "Qui ne va pas à l'école n'apprend pas à lire. La guerre, le manque d'écoles et le travail des enfants tiennent la moitié des enfants loin de la classe.", source: P(1) },
     { id: "geographie-s08-2-q8", fiche: "geographie-s08-2-f1", type: "trou", niveau: 1,
@@ -203,12 +205,12 @@ module.exports = {
       explication: "Les écoles qui accueillent des filles sont les plus attaquées. Le but est de décourager les filles d'y aller.", source: P(1) },
     { id: "geographie-s08-2-q13", fiche: "geographie-s08-2-f2", type: "qcm", niveau: 2,
       enonce: "Pourquoi beaucoup d'enfants afghans travaillent-ils au lieu d'aller à l'école ?",
-      choix: ["Pour aider financièrement leur famille", "Parce que l'école est interdite aux garçons", "Parce qu'ils ont déjà leur diplôme", "Parce que les écoles sont trop loin des villes"],
+      choix: ["Pour aider financièrement leur famille", "Parce que l'école est interdite aux garçons", "Parce que les écoles ferment pendant la saison des récoltes", "Parce que les écoles sont trop loin des villes"],
       reponse: "Pour aider financièrement leur famille",
       explication: "Les familles ont besoin de l'argent que rapportent les enfants. Ils travaillent aux champs ou dans des ateliers.", source: P(1) },
     { id: "geographie-s08-2-q14", fiche: "geographie-s08-2-f2", type: "qcm", niveau: 3,
       enonce: "Dans le sud de l'Afghanistan, près de Kandahar, les filles quittent l'école très tôt. Comment l'expliquer ?",
-      choix: ["L'éducation des filles y est mal vue et elles sont mariées très jeunes", "Il n'y a pas d'écoles dans le sud du pays", "Les filles préfèrent travailler dans les ateliers", "Le climat y est trop chaud pour étudier"],
+      choix: ["L'éducation des filles y est mal vue et elles sont mariées très jeunes", "Il n'y a pas d'écoles dans le sud du pays", "Les filles préfèrent travailler dans les ateliers", "Les familles n'ont pas les moyens de payer les livres, les cahiers et l'uniforme"],
       reponse: "L'éducation des filles y est mal vue et elles sont mariées très jeunes",
       explication: "Par tradition, l'école des filles est mal vue dans le sud. Mariées très jeunes, elles se consacrent à leur foyer.", source: P(1) },
     { id: "geographie-s08-2-q15", fiche: "geographie-s08-2-f2", type: "qcm", niveau: 2,
@@ -324,14 +326,14 @@ module.exports = {
       explication: "43 élèves et 4,1 % du PIB pour l'Afghanistan ; 15 élèves et 6,4 % du PIB pour la Finlande.", source: P(2) },
     { id: "geographie-s08-2-q38", fiche: "geographie-s08-2-f5", type: "qcm", niveau: 3,
       enonce: "Comment expliquer qu'une classe afghane compte presque trois fois plus d'élèves qu'une classe finlandaise ?",
-      choix: ["Le pays, plus pauvre, consacre moins d'argent à l'école et manque de locaux", "Les enfants afghans sont plus nombreux à vouloir aller à l'école", "Les classes finlandaises sont presque vides, car l'école n'y est pas obligatoire et beaucoup d'enfants restent chez eux", "Le climat afghan oblige à regrouper les élèves"],
+      choix: ["Le pays, plus pauvre, consacre moins d'argent à l'école et manque de locaux", "Les enfants afghans sont plus nombreux à vouloir aller à l'école", "Les classes finlandaises sont presque vides, car l'école n'y est pas obligatoire et beaucoup d'enfants restent chez eux", "L'école y est obligatoire plus longtemps, donc chaque classe reçoit plus d'élèves"],
       reponse: "Le pays, plus pauvre, consacre moins d'argent à l'école et manque de locaux",
       explication: "Avec un PIB très faible et une petite part consacrée à l'éducation, l'Afghanistan manque d'écoles et de bâtiments. Les élèves s'entassent donc.", source: P(2) },
     { id: "geographie-s08-2-q39", fiche: "geographie-s08-2-f5", type: "qcm_multiple", niveau: 2,
       enonce: "Quels éléments sont plus favorables à l'école en Finlande ? (plusieurs réponses)",
       choix: ["Des classes de 15 élèves", "6,4 % du PIB pour l'éducation", "L'école obligatoire jusqu'à 16 ans", "Presque 100 % d'alphabétisés", "38 millions d'habitants", "4,7 enfants par femme"],
       reponse: ["Des classes de 15 élèves", "6,4 % du PIB pour l'éducation", "L'école obligatoire jusqu'à 16 ans", "Presque 100 % d'alphabétisés"],
-      explication: "Petites classes, plus d'argent, école plus longue et alphabétisation complète : la Finlande gagne sur toute la ligne. 38 millions d'habitants et 4,7 enfants par femme sont des données afghanes.", source: P(2) },
+      explication: "Petites classes, plus d'argent, école plus longue et alphabétisation complète : sur ces quatre points, la Finlande est mieux placée. 38 millions d'habitants et 4,7 enfants par femme sont des données afghanes.", source: P(2) },
     { id: "geographie-s08-2-q50", fiche: "geographie-s08-2-f5", type: "trou", niveau: 1,
       enonce: "Complète la phrase.",
       texte: "En Afghanistan, une classe compte en moyenne ___ élèves ; en Finlande, ___.",
@@ -344,7 +346,7 @@ module.exports = {
       enonce: "En 2018, quel continent avait les taux d'alphabétisation les plus faibles ?",
       choix: ["L'Afrique", "L'Europe", "L'Amérique du Nord", "L'Océanie"],
       reponse: "L'Afrique",
-      explication: "Les couleurs les plus claires de la carte, sous 50 %, sont surtout en Afrique. L'Europe et l'Amérique du Nord dépassent 95 %.", source: P(1) },
+      explication: "Plusieurs pays d'Afrique sont sous 50 % d'habitants sachant lire et écrire. L'Europe et l'Amérique du Nord dépassent 95 %.", source: P(1) },
     { id: "geographie-s08-2-q42", fiche: "geographie-s08-2-f6", type: "vrai_faux", niveau: 1,
       enonce: "En Europe et en Amérique du Nord, plus de 95 % des habitants savent lire et écrire.",
       corrections: [], reponse: { vrai: true, correction: null },
@@ -361,7 +363,7 @@ module.exports = {
       explication: "Il compte ceux qui savent lire et écrire. Aller à l'école, c'est la scolarisation : ce n'est pas la même mesure.", source: P(1) },
     { id: "geographie-s08-2-q45", fiche: "geographie-s08-2-f6", type: "qcm", niveau: 3,
       enonce: "Comment les taux d'alphabétisation reflètent-ils les inégalités de développement ?",
-      choix: ["Les taux les plus bas sont dans les pays pauvres, les plus hauts dans les pays développés", "Ils sont identiques partout", "Les pays riches ont les taux les plus bas", "Ils dépendent seulement du climat : on apprend moins bien à lire dans les pays chauds que dans les pays froids"],
+      choix: ["Les taux les plus bas sont dans les pays pauvres, les plus hauts dans les pays développés", "Ils sont identiques partout", "Les pays riches ont les taux les plus bas", "Ils dépendent seulement de la taille du pays : plus un pays est grand, moins ses habitants savent lire"],
       reponse: "Les taux les plus bas sont dans les pays pauvres, les plus hauts dans les pays développés",
       explication: "L'éducation est un des trois critères de l'IDH. Là où le développement est faible, comme en Afghanistan, on sait moins souvent lire.", source: P(1) },
     { id: "geographie-s08-2-q47", fiche: "geographie-s08-2-f6", type: "qcm_multiple", niveau: 2,
