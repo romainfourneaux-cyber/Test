@@ -1,51 +1,107 @@
 # Fiche de relecture : histoire, cours 1 à 5 (fiches de programme du 28/10/2026)
 
-Rédigée le 28 octobre 2026 pour Romain, à la suite de sa demande (« J'ai pas les cours d'histoire-géo : inspire-toi du programme officiel de 5e »). Cinq cours réécrits : histoire-s01-1 (Byzance), histoire-s01-2 (Charlemagne), histoire-s02-1 (christianisme Orient/Occident), histoire-s03-1 (islam, origines et expansion), histoire-s04-1 (Empire abbasside). Fichiers : atelier/contenu/<cours>.js (source en clair) et jeu/data/cours/<cours>.js (compilé).
+Rédigée le 28 octobre 2026 pour Romain, à la suite de sa demande (« J'ai pas les cours d'histoire-géo : inspire-toi du programme officiel de 5e »). Cinq cours réécrits puis relus par un second lecteur : histoire-s01-1 (Byzance), histoire-s01-2 (Charlemagne), histoire-s02-1 (christianisme Orient/Occident), histoire-s03-1 (islam, origines et expansion), histoire-s04-1 (Empire abbasside). Fichiers : atelier/contenu/<cours>.js (source en clair) et jeu/data/cours/<cours>.js (compilé).
 
 Ce que Romain peut vérifier avec le livret papier : les fiches de programme (tableaux ci-dessous) et les questions de thème, dont chaque fait a été relu sur la page Wikipédia citée (Vikidia et eduscol étaient injoignables). Les fiches venues des feuilles déposées (frises, cartes, mémento, mots importants) sont gardées telles quelles.
 
 ## En bref
 
-| Cours | Fiches | dont programme | Questions | dont thème | Bonus | Retirées |
+| Cours | Fiches | dont programme | Questions | dont thème | Bonus | Retirées à la relecture |
 |---|---|---|---|---|---|---|
-| histoire-s01-1 | 8 | 4 (f3 réécrite ; f6, f7, f8 nouvelles) | 72 | 34 | 2 | aucune |
-| histoire-s01-2 | 7 | 2 (f6 Clovis, f7 Verdun 843) | 64 | 26 | 2 | aucune |
-| histoire-s02-1 | 5 | 5 (f1, f2, f3 réécrites ; f5, f6 nouvelles) | 49 | 30 | 2 | f4 « théologie » |
-| histoire-s03-1 | 5 | 3 (f1 réécrite ; f4, f5 nouvelles) | 45 | 25 | 2 | aucune |
-| histoire-s04-1 | 7 | 4 (f5 réécrite ; f6, f7, f8 nouvelles) | 58 | 35 | 2 | f3 « lieux sur la carte » |
+| histoire-s01-1 | 8 | 4 (f3 réécrite ; f6, f7, f8 nouvelles) | 71 | 34 | 2 | 1 (q11) |
+| histoire-s01-2 | 7 | 2 (f6 Clovis, f7 Verdun 843) | 62 | 26 | 2 | 2 (q27, q37) |
+| histoire-s02-1 | 5 | 5 (f1, f2, f3 réécrites ; f5, f6 nouvelles) | 44 | 30 | 2 | 5 (q8, q11, q13, q19, q22) |
+| histoire-s03-1 | 5 | 3 (f1 réécrite ; f4, f5 nouvelles) | 43 | 24 | 2 | 2 (q16, q45) |
+| histoire-s04-1 | 7 | 4 (f5 réécrite ; f6, f7, f8 nouvelles) | 57 | 35 | 2 | 1 (q11) |
 
-Validateur : 0 erreur ; aucune alerte sur la part de questions de thème (plafond levé pour l'histoire et la géographie). Tests : 355 réussis.
+Total : 32 fiches (18 de programme), 277 questions dont 149 de thème, 10 bonus. Validateur : 0 erreur ; aucune alerte sur la part de questions de thème (plafond levé pour l'histoire et la géographie) ; restent les cinq alertes connues sur les PDF de géographie. Tests : 355 réussis.
+
+## Ce que la relecture a fait
+
+1. Faits : les 48 pages citées par les fiches de programme, les questions de thème et les bonus ont été rouvertes le 28/10 (Constantinople, Basileus, Corpus juris civilis, Justinien, Sainte-Sophie, Sédition Nika, Saint-Vital, Empire byzantin, Théodose, Clovis, Vase de Soissons, Baptême de Clovis, Charlemagne, Traité de Verdun, Serments de Strasbourg, Missi dominici, Pépin le Bref, Palais d'Aix, Renaissance carolingienne, Minuscule caroline, Abul-Abbas, Cyrille et Méthode, Boris Ier, Schisme de 1054, Donation de Pépin, Règle de saint Benoît, Cluny, Alphabet cyrillique, Patriarcat de Constantinople, Hégire, Expansion de l'islam, Poitiers 732, Yarmouk, Calife, Califat de Cordoue, Al-Andalus, Madinat Azahra, Grande Mosquée des Omeyyades, Bagdad, Maison de la sagesse, Al-Khwarizmi, Histoire du papier, Califat abbasside, Haroun ar-Rachid, Coran, Ramadan, Cordoue). Chaque date, chiffre et nom a été comparé à la page ; les écarts sont corrigés ci-dessous.
+2. Ton : aucun commentaire militant, aucune leçon de morale, aucun jugement d'aujourd'hui dans les cinq cours. Les chapitres sur l'islam et le christianisme restent sur les faits politiques, territoriaux et culturels (dates, villes, chefs, langues, savants). L'histoire de France (Clovis, Noël 800, Verdun) est racontée avec du rythme, sans détail ni citation inventés : le vase de Soissons est donné « d'après Grégoire de Tours », avec le doute des historiens.
+3. Niveau : vocabulaire de 13 ans, explications en deux phrases au plus (vérifié par script sur les 277 questions), mots nouveaux définis dans les fiches ; le mot « synode » a été remplacé par « assemblée ».
+4. Anti-spoil : aucun devoir déposé ne porte sur ces cinq cours (histoire-d1 couvre les semaines 4 à 8 ; les tests des séances 8 et 11 aussi). Voir le point 1 des points à surveiller pour les devoirs d'entraînement des séances 3 et 5.
+5. Qualité : onze doublons retirés (même fait, même réponse, dans la même fiche ou le même cours), une question hors période retirée, une question « sur le document » réécrite ; identifiants uniques, aucun identifiant réutilisé ; part des QCM où la bonne réponse est la plus longue : 5 à 18 % selon le cours ; au moins un vrai/faux et une question en « pourquoi » ou « comment » par fiche ; niveaux par cours proches de 25/50/25.
+
+## Corrections faites à la relecture
+
+histoire-s01-1 (Byzance)
+- q65 : la reconstruction de Sainte-Sophie n'est pas décidée « quelques jours » après la révolte Nika, mais le 23 février 532, cinq semaines plus tard (page Sainte-Sophie). Explication corrigée.
+- f7 : « il fonde le droit de l'Europe » devient « il inspire le droit de l'Europe » (la page parle d'« ancêtre du droit civil »).
+- q11 retirée : doublon de q44 (Constantin et la « Nouvelle Rome »).
+
+histoire-s01-2 (Charlemagne)
+- f3 (Noël 800) : texte réécrit avec plus de rythme, mêmes faits du support (Rome, Noël, le pape Léon, l'acclamation, Eginhard, Fouquet), plus un repère : plus de trois siècles après la fin de l'Empire romain d'Occident, l'Occident a de nouveau un empereur.
+- f6 (Clovis) : « à vingt ans » ajouté pour Soissons (la page le dit).
+- q47 (Alcuin) : la page ne dit ni « arrive en 782 » ni « dirige l'école du palais d'Aix » ; elle dit : rencontré à Parme en 781, Anglo-Saxon d'York, principal inspirateur de la politique des écoles, Tours en 796. Réponse et explication corrigées.
+- q50 (baptême de Clovis) : « les autres rois germaniques n'ont pas cet appui » était une déduction ; remplacé par « les rois wisigoths et burgondes ne partagent pas la religion des évêques de Gaule » (la page les dit ariens).
+- q52 : « Paris, après Tournai et Soissons » simplifié en « Paris, l'ancienne Lutèce » (Tournai est la ville de son père ; Soissons comme résidence n'est pas sur la page).
+- q59 : la page du traité de Verdun date la mort de Louis le Pieux du 29 juin 840, d'autres pages du 20 juin ; le jour est retiré (« en juin 840 »). « Veut s'imposer comme seul successeur » devient « réclame l'autorité sur tout l'empire », ce que disent les pages de Verdun et des Serments.
+- q27 et q37 retirées : doublons (Marche espagnole ; bénéfice).
+
+histoire-s02-1 (christianisme Orient/Occident)
+- f3 et q40 : le 24 juillet 1054, ce n'est pas le patriarche seul qui riposte, mais une assemblée d'évêques qu'il réunit ; corrigé dans le texte, les points clés et la question d'ordre.
+- f3 et q39 : la différence de langue n'est pas listée par la page parmi les causes du schisme ; retirée de la liste (restent : qui dirige l'Église, les usages, la politique en Italie du Sud).
+- f2, q33 : la mission de Cyrille et Méthode datée « vers 863 » (la page donne l'ambassade de 862 et les traductions de 862-863).
+- f6 : la règle de saint Benoît datée « vers 530 » et non 529 (529 est l'installation au Mont-Cassin).
+- q44 : la réponse du pape Zacharie reformulée au plus près de la page (« il vaut mieux que celui qui exerce vraiment le pouvoir porte aussi le titre de roi »).
+- q45 : « le duché de Rome » retiré de la liste des terres données en 756 (la page nomme Ravenne, la Pentapole et vingt-deux villes d'Italie centrale).
+- q54 : « synode » remplacé par « assemblée réunie à Aix-la-Chapelle ».
+- q8, q11, q13, q19, q22 retirées : six questions définissaient le même mot (christianisation) et cinq le même mot (schisme) ; il en reste trois ou quatre de chaque, de types différents.
+
+histoire-s03-1 (islam, origines et expansion)
+- f4 : conquête de l'Égypte datée 639-642 (et non 639-641), comme la page.
+- q33 : « pille Bordeaux » devient « pille la région de Bordeaux » ; « en octobre 732 » devient « en octobre 732 ou 733 », comme la page.
+- b2 (mosquée de Damas) : la page donne deux dimensions différentes (157 × 77 et 157 × 100) ; le bonus dit « plus de 150 mètres de long » ; le panneau de la Barada mesure 34,5 m : « près de 35 mètres ».
+- q16 retirée (doublon de q2) ; q45 retirée (le titre de calife après 1258 jusqu'en 1924 : hors de la période du programme, comme le rédacteur l'avait signalé).
+
+histoire-s04-1 (Empire abbasside)
+- f6 : « elle dépasse bientôt le million d'habitants » devient « elle approche bientôt le million » : la page attribue ce chiffre à « certains historiens de la démographie » ; q45 le disait déjà.
+- f5 et q33 : la fiche parlait du « texte étudié » comme si le document était sous les yeux ; texte et question réécrits (« le livre sacré de l'islam, dont le cours étudie un extrait »), avec des leurres du même thème (Mille et Une Nuits, Code de Justinien, Annales d'Eginhard) à la place de « chronique byzantine » et « Rustican ».
+- q11 retirée : doublon de q15 (Al Andalus).
 
 ## Points à trancher ou à surveiller
 
-1. histoire-s01-1-f3 (Constantinople) : fiche de programme dont neuf questions gardent la source du mémento déposé (page 3 du support). Les deux genres de sources cohabitent sur une même fiche. Le mémento date Byzance du VIe siècle avant J.-C., Wikipédia du VIIe : le jeu suit le mémento (règle « ne jamais contredire le cours ») et les questions de thème ne datent pas la fondation de Byzance.
-2. histoire-s01-1 compte 8 fiches, au-dessus des 4 à 6 visées : les quatre fiches du support sont courtes. Si Romain préfère, f1 (395) et f2 (476-1453) peuvent être fusionnées.
-3. histoire-s01-2-f6 (Clovis) : la date du baptême est donnée comme discutée (entre 496 et 511) ; le vase de Soissons est raconté « d'après Grégoire de Tours », avec le doute des historiens (q54). Aucun chiffre de guerriers baptisés.
-4. histoire-s01-2-f7 (843) : la lecture « naissance de la France et de l'Allemagne » est présentée comme une lecture faite plus tard (q65), comme la page le précise.
-5. histoire-s02-1 : la fiche f4 « théologie » a été retirée (réflexion sur la foi) avec ses six questions et le bonus « Sorbonne » ; son identifiant n'est pas réutilisé. Les fiches gardées ne parlent que d'institutions, de langues, de dates et de politique. Le mot « sacre » n'est pas mis dans le vocabulaire (le test de la séance 11 demande « qu'est-ce qu'un sacre », et le jeu fabrique des QCM « Que veut dire… ? » à partir du vocabulaire).
-6. histoire-s02-1-f1 : « le patriarche couronne le basileus » vient de la page « Empire byzantin » (Léon Ier) ; la page du patriarcat ne le dit pas.
-7. histoire-s03-1-f4 : Yarmouk 636 vient de la page « Bataille du Yarmouk » (déjà citée au cours 5) ; Jérusalem « 637 ou 638 » parce que la page donne les deux ; Poitiers « 732 ou 733 » et portée discutée, dits en q36.
-8. histoire-s03-1-q45 (le titre de calife après 1258 : Le Caire, Ottomans, 1924) sort de la période du programme : à retirer si Romain le juge inutile.
-9. histoire-s04-1 : f3 retirée (carte sans légende) ; q22 (Yarmouk) déplacée sur f2, q36 (papier) sur f7 ; q34 et q39 réécrites : plus aucune question sur le jeûne, seulement la place du ramadan dans le calendrier. f5 devient une fiche de programme (page « Coran » : langue, date, découpage) ; q33 et q35 gardent la source du document déposé.
-10. histoire-s04-1-f7 : la date de fondation de la Maison de la sagesse diverge selon les pages (832 sur « Bagdad » ; la page « Maison de la sagesse » n'en donne pas et la décrit comme une bibliothèque dont la forme exacte est discutée) : la fiche dit « à son apogée sous al-Ma'mun (813-833) », sans date de fondation.
-11. histoire-s04-1-f8 : « petit-fils de Gengis Khan » n'est pas repris (non vérifié sur la page citée ; la page « Siège de Bagdad (1258) » est introuvable sous ce titre) ; aucun chiffre de victimes.
-12. Anti-spoil : aucun devoir déposé ne porte sur ces cinq cours (histoire-d1 couvre les semaines 4 à 8 : seigneurie, paysans, féodalité) ; les devoirs d'entraînement des séances 3 et 5 (mosaïque de Sainte-Sophie, texte d'Eginhard sur Aix, cinq piliers, « Serviteur ») n'ont fourni aucune question.
+1. Devoirs d'entraînement des séances 3 et 5 : ce ne sont pas des devoirs notés mais des exercices glissés dans les supports de cours, sans corrigé déposé. Trois recoupements de savoir existent avec le jeu, sans reprendre les questions : les cinq dates de l'exercice 1 de la séance 3 (395, 476, 527, 800, 1453), qui sont les repères mêmes des cours 1 et 2 ; « de quel livre est-il question ? » (séance 5) et notre q33 sur le Coran ; la bataille du Yarmouk à placer sur la carte (séance 5) et notre q22 qui demande pourquoi elle compte. Si Romain veut une étanchéité totale, q33 (s04-1) et q22 (s04-1) peuvent être retirées ; les dates, elles, sont le cœur du cours.
+2. histoire-s01-1-f3 (Constantinople) : le mémento déposé date la fondation de Byzance du VIe siècle avant J.-C., la page Wikipédia « Constantinople » ne donne pas de date (d'autres pages disent le VIIe). Le jeu suit le mémento (règle « ne jamais contredire le cours ») dans q12, q32 et q33 ; les questions de thème ne datent pas Byzance.
+3. histoire-s01-1-f6 et histoire-s02-1-f1 : « le patriarche de Constantinople couronne le basileus » vient de la page « Empire byzantin » (Léon Ier, premier empereur couronné par le patriarche) ; les pages « Basileus » et « Patriarcat » ne le disent pas. La fiche f6 dit aussi que le basileus « fait la loi » : la page « Corpus juris civilis » dit que l'empereur devient la seule source du droit, la page « Basileus » rappelle qu'il reste soumis à la loi. Formulation gardée, au niveau d'un manuel de 5e.
+4. histoire-s01-1-q53 (la pièce jetée à terre) : la page « Basileus » confirme que jeter les pièces à terre offense l'empereur, mais ne dit pas qu'elles portent son image (c'est exact, mais pas sur la page). La page porte un bandeau « sources insuffisantes ».
+5. histoire-s01-1 compte 8 fiches et f3 garde 12 questions (quatre du mémento sur les trois noms, quatre de thème) : au-dessus des 7-8 visées. Si Romain préfère, f1 (395) et f2 (476-1453) peuvent être fusionnées.
+6. histoire-s01-2-q45 et f3 : la page « Charlemagne » dit « le 24 ou 25 décembre 800 » ; le jeu garde le 25 décembre, jour de Noël, comme le support.
+7. histoire-s01-2-b1 : « Times New Roman descend directement de la minuscule caroline » est bien ce que dit la page « Minuscule caroline » ; c'est un raccourci (entre les deux, l'écriture des humanistes de la Renaissance).
+8. histoire-s01-2-f6 : la date du baptême est donnée comme discutée (entre 496 et 511) ; aucun chiffre de guerriers baptisés (la page juge les « trois mille » légendaires) ; le vase de Soissons est raconté « d'après Grégoire de Tours », avec le doute des historiens (q54).
+9. histoire-s01-2-f7 : la lecture « naissance de la France et de l'Allemagne » est présentée comme une lecture faite plus tard (q65), comme la page le précise.
+10. histoire-s02-1 : la fiche f4 « théologie » a été retirée par le rédacteur (réflexion sur la foi) ; son identifiant n'est pas réutilisé. Le mot « sacre » n'est pas mis dans le vocabulaire (le test de la séance 11 demande « qu'est-ce qu'un sacre », et le jeu fabrique des QCM « Que veut dire… ? » à partir du vocabulaire). q56 (deux ou trois mois pour copier un manuscrit) est un détail, gardé parce qu'il fait comprendre le travail des copistes : à retirer si Romain le trouve anecdotique.
+11. histoire-s03-1-f4 : Yarmouk 636 vient de la page « Bataille du Yarmouk » ; Jérusalem « 637 ou 638 » parce que la page donne les deux ; Poitiers « 732 ou 733 » et portée discutée (q36). Le point clé « les peuples soumis gardent leur religion contre un impôt » est un fait de société confirmé par la page, sans rien sur les croyances.
+12. histoire-s03-1-f5 : « le calife commande l'armée » n'est pas écrit tel quel sur la page « Calife » (qui dit : il dirige la communauté) ; c'est la définition attendue en 5e (chef politique et militaire). Gardé.
+13. histoire-s04-1-f7 : la date de fondation de la Maison de la sagesse diverge selon les pages (832 sur « Bagdad » ; la page « Maison de la sagesse » n'en donne pas, la décrit comme une bibliothèque de cour et dit que sa forme exacte est discutée) : la fiche dit « à son apogée sous al-Ma'mun (813-833) », sans date de fondation. Talas 751 est présenté comme un fait par la page « Histoire du papier ».
+14. histoire-s04-1-f8 : « petit-fils de Gengis Khan » n'est pas repris ; aucun chiffre de victimes ; « le Tigre noir d'encre » est donné avec « dit-on », comme la page.
+15. histoire-s04-1-q66 : « une armée venue d'Asie » pour les Ottomans « venus d'Anatolie » : exact, mais la comparaison Bagdad 1258 / Constantinople 1453 est un rapprochement du jeu, pas du programme.
+16. Sources mixtes sur une même fiche : f3 de s01-1 (mémento + programme) et f5 de s04-1 (document déposé + page « Coran ») portent une source de programme, et quelques-unes de leurs questions gardent la source du document déposé. C'est voulu (chaque question garde la source de son fait).
 
 ## histoire-s01-1
 
-- 8 fiches (4 de programme, 4 du dépôt), 72 questions dont 34 de thème, 2 bonus.
-- Fiches gardées du dépôt : f1 « 395 : un empire coupé en deux », f2 « L'Occident tombe, l'Orient dure », f4 « Le règne de Justinien (527-565) », f5 « Justinien et sa cour en mosaïque ».
+- 8 fiches (4 de programme, 4 du dépôt), 71 questions dont 34 de thème, 2 bonus.
 
-### Fiches de programme (à comparer au livret)
+### Fiches
 
-| Fiche | Titre | Nouvelle ? | Page vérifiée |
+| Fiche | Titre | Genre | Source |
 |---|---|---|---|
-| f3 | Constantinople : une ville, trois noms | réécrite (même identifiant) | [Constantinople](https://fr.wikipedia.org/wiki/Constantinople) |
-| f6 | Le basileus : un empereur tout-puissant | nouvelle | [Basileus](https://fr.wikipedia.org/wiki/Basileus) |
-| f7 | Le Code de Justinien : les lois romaines mises en ordre | nouvelle | [Corpus juris civilis](https://fr.wikipedia.org/wiki/Corpus_juris_civilis) |
-| f8 | Sainte-Sophie, le chantier géant de Justinien | nouvelle | [Sainte-Sophie (Constantinople)](https://fr.wikipedia.org/wiki/Sainte-Sophie_(Constantinople)) |
+| f1 | 395 : un empire coupé en deux | dépôt (8 q) | Histoire 5e - Seance 1 - Support.pdf, page 1 |
+| f2 | L'Occident tombe, l'Orient dure | dépôt (8 q) | Histoire 5e - Seance 1 - Support.pdf, page 1 |
+| f3 | Constantinople : une ville, trois noms | programme (12 q) | [Constantinople](https://fr.wikipedia.org/wiki/Constantinople) |
+| f4 | Le règne de Justinien (527-565) | dépôt (9 q) | Histoire 5e - Seance 1 - Support.pdf, page 2 |
+| f5 | Justinien et sa cour en mosaïque | dépôt (8 q) | Histoire 5e - Seance 1 - Support.pdf, page 2 |
+| f6 | Le basileus : un empereur tout-puissant | programme (9 q) | [Basileus](https://fr.wikipedia.org/wiki/Basileus) |
+| f7 | Le Code de Justinien : les lois romaines mises en ordre | programme (9 q) | [Corpus juris civilis](https://fr.wikipedia.org/wiki/Corpus_juris_civilis) |
+| f8 | Sainte-Sophie, le chantier géant de Justinien | programme (8 q) | [Sainte-Sophie (Constantinople)](https://fr.wikipedia.org/wiki/Sainte-Sophie_(Constantinople)) |
 
-### Questions de thème
+### Questions retirées à la relecture
+
+- histoire-s01-1-q11 : doublon de q44 (Constantin voulait une « Rome de l'Orient » / « Nouvelle Rome »).
+
+### Questions de thème (à comparer au livret)
 
 - f1 : q26 (qcm, niveau 2) « Qui est Théodose, à la mort duquel l'Empire romain est partagé en 395 ? ».
 - f3 : q42 (qcm, niveau 2) « En quelle année l'empereur Constantin fonde-t-il Constantinople ? » ; q43 (vrai_faux, niveau 2) « En 1204, ce sont les Ottomans qui prennent et pillent Constantinople. » ; q44 (qcm, niveau 3) « Pourquoi Constantin appelle-t-il sa nouvelle capitale la « Nouvelle Rome » ? » ; q45 (qcm, niveau 2) « Comment la ville de Constantinople se présente-t-elle au Moyen Âge, par rapport aux autres villes d'Europe ? ».
@@ -72,17 +128,26 @@ Validateur : 0 erreur ; aucune alerte sur la part de questions de thème (plafon
 
 ## histoire-s01-2
 
-- 7 fiches (2 de programme, 5 du dépôt), 64 questions dont 26 de thème, 2 bonus.
-- Fiches gardées du dépôt : f1 « Clovis, Charlemagne : rois des Francs », f2 « Un royaume franc qui s'agrandit », f3 « Noël 800 : Charlemagne couronné à Rome », f4 « Les hommes du pouvoir carolingien », f5 « Un renouveau de la culture ».
+- 7 fiches (2 de programme, 5 du dépôt), 62 questions dont 26 de thème, 2 bonus.
 
-### Fiches de programme (à comparer au livret)
+### Fiches
 
-| Fiche | Titre | Nouvelle ? | Page vérifiée |
+| Fiche | Titre | Genre | Source |
 |---|---|---|---|
-| f6 | Clovis : Soissons, Reims, Vouillé, Paris | nouvelle | [Clovis Ier](https://fr.wikipedia.org/wiki/Clovis_Ier) |
-| f7 | 843 : trois frères, trois royaumes | nouvelle | [Traité de Verdun](https://fr.wikipedia.org/wiki/Trait%C3%A9_de_Verdun) |
+| f1 | Clovis, Charlemagne : rois des Francs | dépôt (8 q) | Histoire 5e - Seance 2 - Support.pdf, page 1 |
+| f2 | Un royaume franc qui s'agrandit | dépôt (9 q) | Histoire 5e - Seance 2 - Support.pdf, page 1 |
+| f3 | Noël 800 : Charlemagne couronné à Rome | dépôt (9 q) | Histoire 5e - Seance 2 - Support.pdf, page 2 |
+| f4 | Les hommes du pouvoir carolingien | dépôt (9 q) | Histoire 5e - Seance 2 - Support.pdf, page 3 |
+| f5 | Un renouveau de la culture | dépôt (9 q) | Histoire 5e - Seance 2 - Support.pdf, page 3 |
+| f6 | Clovis : Soissons, Reims, Vouillé, Paris | programme (9 q) | [Clovis Ier](https://fr.wikipedia.org/wiki/Clovis_Ier) |
+| f7 | 843 : trois frères, trois royaumes | programme (9 q) | [Traité de Verdun](https://fr.wikipedia.org/wiki/Trait%C3%A9_de_Verdun) |
 
-### Questions de thème
+### Questions retirées à la relecture
+
+- histoire-s01-2-q27 : doublon de q6 (la Marche espagnole, conquête de Charlemagne).
+- histoire-s01-2-q37 : doublon de q16 et q18 (le bénéfice, terre donnée contre service militaire).
+
+### Questions de thème (à comparer au livret)
 
 - f1 : q5 (qcm, niveau 1) « Qui est Pépin le Bref pour Charlemagne ? » ; q26 (qcm, niveau 2) « Dans quelle ville Charlemagne fait-il bâtir le palais où il vit à la fin de son règne ? ».
 - f2 : q43 (qcm, niveau 2) « Combien de temps dure la guerre de Charlemagne contre les Saxons, et comment finit-elle ? » ; q44 (vrai_faux, niveau 3) « En 778, au retour d'une expédition en Espagne, l'armée de Charlemagne subit une défaite à Roncevaux. ».
@@ -110,21 +175,27 @@ Validateur : 0 erreur ; aucune alerte sur la part de questions de thème (plafon
 
 ## histoire-s02-1
 
-- 5 fiches (5 de programme, 0 du dépôt), 49 questions dont 30 de thème, 2 bonus.
-- Fiches gardées du dépôt : .
-- Fiche retirée : f4 « La théologie » (questions q14, q15, q16, q17, q28, q29 et bonus b1 « Aux origines de la Sorbonne » retirés).
+- 5 fiches (5 de programme, 0 du dépôt), 44 questions dont 30 de thème, 2 bonus.
 
-### Fiches de programme (à comparer au livret)
+### Fiches
 
-| Fiche | Titre | Nouvelle ? | Page vérifiée |
+| Fiche | Titre | Genre | Source |
 |---|---|---|---|
-| f1 | Rome et Constantinople : deux empires, deux Églises | réécrite (même identifiant) | [Empire byzantin](https://fr.wikipedia.org/wiki/Empire_byzantin) |
-| f2 | Répandre le christianisme : Saxons, Slaves, Bulgares | réécrite (même identifiant) | [Cyrille et Méthode](https://fr.wikipedia.org/wiki/Cyrille_et_M%C3%A9thode) |
-| f3 | 1054 : Rome et Constantinople se séparent | réécrite (même identifiant) | [Schisme de 1054](https://fr.wikipedia.org/wiki/Schisme_de_1054) |
-| f5 | Le pape fait les rois, les rois protègent le pape | nouvelle | [Donation de Pépin](https://fr.wikipedia.org/wiki/Donation_de_P%C3%A9pin) |
-| f6 | Les moines : prier, travailler, copier | nouvelle | [Règle de saint Benoît](https://fr.wikipedia.org/wiki/R%C3%A8gle_de_saint_Beno%C3%AEt) |
+| f1 | Rome et Constantinople : deux empires, deux Églises | programme (9 q) | [Empire byzantin](https://fr.wikipedia.org/wiki/Empire_byzantin) |
+| f2 | Répandre le christianisme : Saxons, Slaves, Bulgares | programme (9 q) | [Cyrille et Méthode](https://fr.wikipedia.org/wiki/Cyrille_et_M%C3%A9thode) |
+| f3 | 1054 : Rome et Constantinople se séparent | programme (9 q) | [Schisme de 1054](https://fr.wikipedia.org/wiki/Schisme_de_1054) |
+| f5 | Le pape fait les rois, les rois protègent le pape | programme (8 q) | [Donation de Pépin](https://fr.wikipedia.org/wiki/Donation_de_P%C3%A9pin) |
+| f6 | Les moines : prier, travailler, copier | programme (9 q) | [Règle de saint Benoît](https://fr.wikipedia.org/wiki/R%C3%A8gle_de_saint_Beno%C3%AEt) |
 
-### Questions de thème
+### Questions retirées à la relecture
+
+- histoire-s02-1-q8 : doublon de q6 et q24 (évangélisation = christianisation).
+- histoire-s02-1-q22 : doublon de q7 (définition de la christianisation en scénario).
+- histoire-s02-1-q11 : doublon de q10 (définition du schisme).
+- histoire-s02-1-q13 : doublon de q10 (les « branches » après un schisme).
+- histoire-s02-1-q19 : doublon de q42 (le pape, évêque de Rome), déjà posée aussi au cours 2 (q14).
+
+### Questions de thème (à comparer au livret)
 
 - f1 : q5 (qcm, niveau 3) « Les deux empires chrétiens n'ont pas la même langue. Pourquoi dit-on que l'Empire byzantin est un empire grec ? » ; q30 (qcm, niveau 2) « Qui dirige l'Église en Orient, à Constantinople ? » ; q31 (association, niveau 2) « Relie chaque élément à l'empire qui lui correspond. ».
 - f2 : q23 (vrai_faux, niveau 2) « Charlemagne gouverne son empire depuis Rome, comme l'empereur byzantin gouverne le sien depuis Constantinople. » ; q33 (qcm, niveau 2) « Qui sont Cyrille et Méthode ? » ; q34 (vrai_faux, niveau 2) « Les Saxons se convertissent de leur plein gré, sans guerre, dès 772. » ; q35 (qcm, niveau 3) « Pourquoi Cyrille et Méthode créent-ils un alphabet ? » ; q36 (qcm, niveau 3) « Qui est le parrain du roi bulgare Boris à son baptême, en 864, et que montre ce choix ? ».
@@ -149,24 +220,30 @@ Validateur : 0 erreur ; aucune alerte sur la part de questions de thème (plafon
 
 ## histoire-s03-1
 
-- 5 fiches (3 de programme, 2 du dépôt), 45 questions dont 25 de thème, 2 bonus.
-- Fiches gardées du dépôt : f2 « Damas puis Bagdad : deux dynasties », f3 « 929 : le califat de Cordoue ».
+- 5 fiches (3 de programme, 2 du dépôt), 43 questions dont 24 de thème, 2 bonus.
 
-### Fiches de programme (à comparer au livret)
+### Fiches
 
-| Fiche | Titre | Nouvelle ? | Page vérifiée |
+| Fiche | Titre | Genre | Source |
 |---|---|---|---|
-| f1 | 622, l'Hégire : de La Mecque à Médine | réécrite (même identifiant) | [Hégire](https://fr.wikipedia.org/wiki/H%C3%A9gire) |
-| f4 | Les conquêtes : de l'Indus à l'Espagne en un siècle | nouvelle | [Expansion de l'islam](https://fr.wikipedia.org/wiki/Expansion_de_l%27islam) |
-| f5 | Le calife : successeur de Mohamed, chef de l'empire | nouvelle | [Calife](https://fr.wikipedia.org/wiki/Calife) |
+| f1 | 622, l'Hégire : de La Mecque à Médine | programme (10 q) | [Hégire](https://fr.wikipedia.org/wiki/H%C3%A9gire) |
+| f2 | Damas puis Bagdad : deux dynasties | dépôt (8 q) | Histoire 5e - Seance 4 - Support.pdf, page 1 |
+| f3 | 929 : le califat de Cordoue | dépôt (9 q) | Histoire 5e - Seance 4 - Support.pdf, page 1 |
+| f4 | Les conquêtes : de l'Indus à l'Espagne en un siècle | programme (9 q) | [Expansion de l'islam](https://fr.wikipedia.org/wiki/Expansion_de_l%27islam) |
+| f5 | Le calife : successeur de Mohamed, chef de l'empire | programme (7 q) | [Calife](https://fr.wikipedia.org/wiki/Calife) |
 
-### Questions de thème
+### Questions retirées à la relecture
+
+- histoire-s03-1-q16 : doublon de q2 (Mohamed vit jusqu'en 632, 622 est l'Hégire).
+- histoire-s03-1-q45 : hors période du programme (le titre de calife après 1258 : Le Caire, Ottomans, abolition en 1924) ; signalée par le rédacteur comme à trancher.
+
+### Questions de thème (à comparer au livret)
 
 - f1 : q3 (qcm, niveau 2) « Pourquoi l'année 622 compte-t-elle autant dans l'histoire de l'islam ? » ; q26 (qcm, niveau 2) « Pourquoi Mohamed quitte-t-il La Mecque en 622 ? » ; q27 (vrai_faux, niveau 2) « La ville de Médine s'appelait Yathrib avant l'arrivée de Mohamed. » ; q28 (qcm, niveau 3) « Que se passe-t-il en Arabie à la mort de Mohamed, en 632 ? » ; q29 (qcm, niveau 2) « Comment les musulmans comptent-ils les années ? ».
 - f2 : q20 (qcm, niveau 1) « Les Omeyyades et les Abbassides sont des dynasties de califes. Qu'est-ce qu'un calife ? ».
 - f3 : q13 (qcm, niveau 3) « Qu'est-ce qui change à Cordoue en 929 ? » ; q23 (qcm, niveau 2) « Dans quel pays actuel se trouve Cordoue, et comment appelait-on au Moyen Âge la partie de cette région dominée par les musulmans ? ».
 - f4 : q30 (qcm, niveau 1) « Jusqu'où s'étend l'empire des califes au VIIIe siècle ? » ; q31 (vrai_faux, niveau 1) « En 711, une armée venue d'Afrique du Nord franchit le détroit de Gibraltar et entre en Espagne. » ; q32 (qcm, niveau 2) « Pourquoi les conquêtes du califat sont-elles si rapides au VIIe siècle ? » ; q33 (qcm, niveau 2) « Que se passe-t-il près de Poitiers en 732 ? » ; q34 (vrai_faux, niveau 2) « L'armée du califat prend Constantinople en 718. » ; q35 (ordre, niveau 2) « Range ces conquêtes et batailles du plus ancien au plus récent. » ; q36 (qcm, niveau 3) « Les historiens discutent de la portée de la bataille de 732. Que disent-ils ? » ; q37 (association, niveau 3) « Relie chaque bataille ou étape à ce qu'elle a changé. » ; q38 (trou, niveau 1) « Complète la phrase. ».
-- f5 : q39 (qcm, niveau 1) « Que veut dire le mot « calife » ? » ; q40 (vrai_faux, niveau 1) « Le calife dirige la communauté des musulmans après la mort de Mohamed. » ; q41 (qcm, niveau 2) « Combien de califes se succèdent de 632 à 661, avant les Omeyyades ? » ; q42 (qcm, niveau 2) « Pourquoi dit-on que le pouvoir des califes devient héréditaire à partir de 661 ? » ; q43 (vrai_faux, niveau 2) « Au Xe siècle, il n'y a qu'un seul calife dans tout le monde musulman, à Bagdad. » ; q44 (association, niveau 2) « Relie chaque mot à ce qu'il désigne. » ; q45 (qcm, niveau 3) « Le titre de calife disparaît-il avec la prise de Bagdad par les Mongols, en 1258 ? » ; q46 (trou, niveau 1) « Complète la phrase. ».
+- f5 : q39 (qcm, niveau 1) « Que veut dire le mot « calife » ? » ; q40 (vrai_faux, niveau 1) « Le calife dirige la communauté des musulmans après la mort de Mohamed. » ; q41 (qcm, niveau 2) « Combien de califes se succèdent de 632 à 661, avant les Omeyyades ? » ; q42 (qcm, niveau 2) « Pourquoi dit-on que le pouvoir des califes devient héréditaire à partir de 661 ? » ; q43 (vrai_faux, niveau 2) « Au Xe siècle, il n'y a qu'un seul calife dans tout le monde musulman, à Bagdad. » ; q44 (association, niveau 2) « Relie chaque mot à ce qu'il désigne. » ; q46 (trou, niveau 1) « Complète la phrase. ».
 
 ### Bonus
 
@@ -184,20 +261,25 @@ Validateur : 0 erreur ; aucune alerte sur la part de questions de thème (plafon
 
 ## histoire-s04-1
 
-- 7 fiches (4 de programme, 3 du dépôt), 58 questions dont 35 de thème, 2 bonus.
-- Fiches gardées du dépôt : f1 « L'Empire abbasside, gouverné depuis Bagdad », f2 « Deux empires sur la carte : Omeyyades puis Abbassides », f4 « Un calendrier lunaire qui commence en 622 ».
-- Fiche retirée : f3 « Les lieux sur la carte » (questions q17, q18, q19, q20, q23 retirées ; q22 déplacée sur f2, q36 déplacée sur f7).
+- 7 fiches (4 de programme, 3 du dépôt), 57 questions dont 35 de thème, 2 bonus.
 
-### Fiches de programme (à comparer au livret)
+### Fiches
 
-| Fiche | Titre | Nouvelle ? | Page vérifiée |
+| Fiche | Titre | Genre | Source |
 |---|---|---|---|
-| f5 | Étude de document : un extrait du Coran | réécrite (même identifiant) | [Coran](https://fr.wikipedia.org/wiki/Coran) |
-| f6 | 762 : al-Mansur trace Bagdad, la ville ronde | nouvelle | [Bagdad](https://fr.wikipedia.org/wiki/Bagdad) |
-| f7 | La Maison de la sagesse : traduire, calculer, écrire sur papier | nouvelle | [Maison de la sagesse](https://fr.wikipedia.org/wiki/Maison_de_la_sagesse) |
-| f8 | 1258 : la chute de Bagdad | nouvelle | [Bagdad](https://fr.wikipedia.org/wiki/Bagdad) |
+| f1 | L'Empire abbasside, gouverné depuis Bagdad | dépôt (8 q) | Histoire 5e - Seance 5 - Support et Devoir entrainement.pdf, page 5 |
+| f2 | Deux empires sur la carte : Omeyyades puis Abbassides | dépôt (8 q) | Histoire 5e - Seance 5 - Support et Devoir entrainement.pdf, page 5 |
+| f4 | Un calendrier lunaire qui commence en 622 | dépôt (7 q) | Histoire 5e - Seance 5 - Support et Devoir entrainement.pdf, page 3 |
+| f5 | Étude de document : un extrait du Coran | programme (7 q) | [Coran](https://fr.wikipedia.org/wiki/Coran) |
+| f6 | 762 : al-Mansur trace Bagdad, la ville ronde | programme (9 q) | [Bagdad](https://fr.wikipedia.org/wiki/Bagdad) |
+| f7 | La Maison de la sagesse : traduire, calculer, écrire sur papier | programme (9 q) | [Maison de la sagesse](https://fr.wikipedia.org/wiki/Maison_de_la_sagesse) |
+| f8 | 1258 : la chute de Bagdad | programme (9 q) | [Bagdad](https://fr.wikipedia.org/wiki/Bagdad) |
 
-### Questions de thème
+### Questions retirées à la relecture
+
+- histoire-s04-1-q11 : doublon de q15 (Al Andalus, dans l'Empire omeyyade et hors de l'Empire abbasside).
+
+### Questions de thème (à comparer au livret)
 
 - f1 : q3 (qcm, niveau 2) « Pourquoi Bagdad est-elle célèbre au temps des Abbassides ? ».
 - f2 : q12 (qcm, niveau 1) « Quelle ville est la capitale d'Al Andalus, l'Espagne musulmane ? » ; q22 (qcm, niveau 3) « Pourquoi la bataille du Yarmouk, en 636, est-elle importante ? ».

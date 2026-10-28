@@ -262,7 +262,7 @@ JEU.enregistrer("cours", {
    "id": "histoire-s01-1-f7",
    "notion": "Le Code de Justinien",
    "titre": "Le Code de Justinien : les lois romaines mises en ordre",
-   "texte": "Les lois romaines s'étaient accumulées pendant des siècles et se contredisaient. Entre 529 et 534, Justinien charge le juriste Tribonien de les trier et de les classer. Le Code de Justinien rassemble les lois des empereurs, les avis des juristes et un manuel pour les étudiants. Redécouvert à Bologne au XIe siècle, il fonde le droit de l'Europe.",
+   "texte": "Les lois romaines s'étaient accumulées pendant des siècles et se contredisaient. Entre 529 et 534, Justinien charge le juriste Tribonien de les trier et de les classer. Le Code de Justinien rassemble les lois des empereurs, les avis des juristes et un manuel pour les étudiants. Redécouvert à Bologne au XIe siècle, il inspire le droit de l'Europe.",
    "pointsCles": [
     "529-534 : Justinien fait rassembler et classer les lois romaines",
     "Le juriste Tribonien dirige le travail",
@@ -705,26 +705,6 @@ JEU.enregistrer("cours", {
     "page": 3
    },
    "r": "==wMfpEVFNEH",
-   "poids": 1
-  },
-  {
-   "id": "histoire-s01-1-q11",
-   "fiche": "histoire-s01-1-f3",
-   "type": "qcm",
-   "niveau": 2,
-   "enonce": "Au IVe siècle, Byzance prend le nom de Constantinople. Que voulait en faire l'empereur Constantin ?",
-   "choix": [
-    "Une sorte de Rome de l'Orient",
-    "La capitale de l'Empire romain d'Occident",
-    "Une nouvelle colonie grecque",
-    "Une ville des royaumes germaniques"
-   ],
-   "explication": "Le nom de Constantinople rappelle l'empereur Constantin. Il voulait faire de la ville une Rome de l'Orient.",
-   "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 1 - Support.pdf",
-    "page": 3
-   },
-   "r": "==wFZBgCPQhJVtiUQEQVUQQA9IVDn0AAB9VAcY0AHcSZ",
    "poids": 1
   },
   {
@@ -1723,7 +1703,7 @@ JEU.enregistrer("cours", {
     "Les Ottomans l'ont détruite en prenant la ville",
     "Justinien la trouve trop grande et veut une église plus petite"
    ],
-   "explication": "En janvier 532, la révolte Nika met le feu à Constantinople, et l'ancienne Sainte-Sophie brûle. Justinien décide la reconstruction quelques jours plus tard.",
+   "explication": "En janvier 532, la révolte Nika met le feu à Constantinople, et l'ancienne Sainte-Sophie brûle. Justinien décide la reconstruction dès le 23 février 532, cinq semaines plus tard.",
    "source": {
     "theme": "Cours 1 – Empire byzantin au temps de Justinien",
     "titre": "Sédition Nika",

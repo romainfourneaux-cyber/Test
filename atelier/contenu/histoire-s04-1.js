@@ -100,7 +100,7 @@ module.exports = {
     {
       id: "histoire-s04-1-f5", notion: "Le Coran, un livre du VIIe siècle",
       titre: "Étude de document : un extrait du Coran",
-      texte: "Le texte étudié est un extrait du Coran, le livre sacré de l'islam. Écrit en arabe, son nom signifie « récitation » ; selon la tradition, il est mis par écrit au VIIe siècle. Il compte 114 sourates, découpées en versets : l'extrait vient de la sourate 2. Il parle du mois de ramadan, le neuvième mois du calendrier hégirien.",
+      texte: "Le cours étudie un extrait du Coran, le livre sacré de l'islam. Écrit en arabe, son nom signifie « récitation » ; selon la tradition, il est mis par écrit au VIIe siècle. Il compte 114 sourates, découpées en versets : l'extrait vient de la sourate 2. Il parle du mois de ramadan, le neuvième mois du calendrier hégirien.",
       pointsCles: ["Le Coran : le livre sacré de l'islam, écrit en arabe ; son nom veut dire « la récitation »", "D'après la tradition, il est mis par écrit au VIIe siècle, sous le calife Othman", "114 sourates (chapitres), découpées en versets (phrases numérotées) ; l'extrait étudié est dans la sourate 2, versets 183 à 185", "Le ramadan est le neuvième mois du calendrier hégirien ; comme ce calendrier est lunaire, il avance d'une dizaine de jours chaque année dans notre calendrier"],
       dates: [],
       lieux: [], personnages: ["Othman"],
@@ -114,7 +114,7 @@ module.exports = {
     {
       id: "histoire-s04-1-f6", notion: "Bagdad, la ville ronde (762)",
       titre: "762 : al-Mansur trace Bagdad, la ville ronde",
-      texte: "762. Le calife al-Mansur choisit un site sur le Tigre et trace une ville ronde : Madinat as-Salam, « la cité de la paix », Bagdad. Cent mille ouvriers, quatre ans : 2,5 km de diamètre, quatre portes, le palais et la mosquée au centre. Elle dépasse bientôt le million d'habitants, carrefour du commerce entre l'Inde, la Chine et l'Europe.",
+      texte: "762. Le calife al-Mansur choisit un site sur le Tigre et trace une ville ronde : Madinat as-Salam, « la cité de la paix », Bagdad. Cent mille ouvriers, quatre ans : 2,5 km de diamètre, quatre portes, le palais et la mosquée au centre. Elle approche bientôt le million d'habitants, carrefour du commerce entre l'Inde, la Chine et l'Europe.",
       pointsCles: ["762 : le calife abbasside al-Mansur fonde Bagdad, « la cité de la paix », sur le Tigre", "La ville ronde : environ 2,5 km de diamètre, quatre portes, le palais et la mosquée au centre ; cent mille ouvriers, quatre ans de travaux", "Aux VIIIe-IXe siècles, sans doute la première ville du monde à dépasser le million d'habitants", "Carrefour du commerce : ports du golfe Persique vers l'Inde, la Chine et l'Afrique de l'Est ; routes vers Constantinople et l'Europe", "Haroun al-Rachid (786-809) : l'âge d'or de Bagdad"],
       astuce: "762, c'est Bagdad ; 750, c'est la dynastie. Les Abbassides règnent douze ans avant d'avoir leur capitale.",
       dates: [
@@ -220,11 +220,6 @@ module.exports = {
       enonce: "L'Empire omeyyade est plus vaste que l'Empire abbasside.",
       corrections: [], reponse: { vrai: true, correction: null },
       explication: "Oui : l'Empire omeyyade s'étend en plus sur Al Andalus et sur tout l'ouest de l'Afrique du Nord.", source: S(5) },
-    { id: "histoire-s04-1-q11", fiche: "histoire-s04-1-f2", type: "qcm", niveau: 2,
-      enonce: "Quel territoire appartient à l'Empire omeyyade mais pas à l'Empire abbasside ?",
-      choix: ["Al Andalus", "La péninsule d'Arabie", "La région de Damas et de Jérusalem", "La région de Bagdad"],
-      reponse: "Al Andalus",
-      explication: "Al Andalus, à l'ouest, est dans l'Empire omeyyade et en dehors de l'Empire abbasside. L'Arabie et la région de Damas sont dans les deux.", source: S(5) },
     { id: "histoire-s04-1-q12", fiche: "histoire-s04-1-f2", type: "qcm", niveau: 1,
       enonce: "Quelle ville est la capitale d'Al Andalus, l'Espagne musulmane ?",
       choix: ["Cordoue", "Damas", "Bagdad", "Jérusalem"],
@@ -296,10 +291,10 @@ module.exports = {
       explication: "C'est un calendrier lunaire de 12 mois. Chaque mois dure 29 ou 30 jours.", source: S(3) },
     // f5 : le Coran comme document
     { id: "histoire-s04-1-q33", fiche: "histoire-s04-1-f5", type: "qcm", niveau: 1,
-      enonce: "Comment s'appelle le livre de l'islam, dont vient le texte sur le ramadan ?",
-      choix: ["Le Coran", "Les Annales d'Eginhard", "Une chronique byzantine", "Le Rustican"],
+      enonce: "Comment s'appelle le livre sacré de l'islam, dont le cours étudie un extrait ?",
+      choix: ["Le Coran", "Les Mille et Une Nuits", "Le Code de Justinien", "Les Annales d'Eginhard"],
       reponse: "Le Coran",
-      explication: "Le livre de l'islam est le Coran ; le texte étudié en vient. Eginhard a écrit sur Charlemagne, et le Rustican décrit les travaux des paysans.", source: S(2) },
+      explication: "Le livre sacré de l'islam est le Coran, écrit en arabe au VIIe siècle. Les Mille et Une Nuits sont des contes, le Code de Justinien un recueil de lois, et Eginhard a écrit sur Charlemagne.", source: S(2) },
     { id: "histoire-s04-1-q34", fiche: "histoire-s04-1-f5", type: "vrai_faux", niveau: 1,
       enonce: "Le ramadan est le neuvième mois du calendrier hégirien.",
       corrections: [], reponse: { vrai: true, correction: null },

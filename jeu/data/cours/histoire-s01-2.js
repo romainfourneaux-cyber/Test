@@ -88,7 +88,7 @@ JEU.enregistrer("cours", {
    "id": "histoire-s01-2-f3",
    "notion": "Le couronnement de Charlemagne en 800",
    "titre": "Noël 800 : Charlemagne couronné à Rome",
-   "texte": "En 800, à Rome, pendant la messe du jour où l'on fête la naissance du Seigneur, c'est-à-dire Noël, le pape Léon pose une couronne sur la tête de Charlemagne. Le peuple romain l'acclame alors comme empereur des Romains. On connaît cette scène par un texte d'Eginhard ; Jean Fouquet l'a peinte bien plus tard, au XVe siècle.",
+   "texte": "Noël 800, Rome. Pendant la messe, le pape Léon pose une couronne sur la tête de Charlemagne, et le peuple romain l'acclame empereur des Romains. Plus de trois siècles après la fin de l'Empire romain d'Occident, l'Occident a de nouveau un empereur. On connaît la scène par Eginhard ; Jean Fouquet l'a peinte au XVe siècle.",
    "pointsCles": [
     "Où ? À Rome",
     "Quand ? En 800, le jour de Noël",
@@ -189,7 +189,7 @@ JEU.enregistrer("cours", {
    "id": "histoire-s01-2-f6",
    "notion": "Clovis, le roi qui fonde le royaume des Francs",
    "titre": "Clovis : Soissons, Reims, Vouillé, Paris",
-   "texte": "Clovis devient roi des Francs vers 481. En 486, à Soissons, il bat Syagrius : tout le nord de la Gaule est à lui. Baptisé à Reims par l'évêque Remi, un jour de Noël, il gagne l'appui des évêques. En 507, à Vouillé, il bat les Wisigoths. Il fait de Paris sa capitale et meurt en 511.",
+   "texte": "Clovis devient roi des Francs vers 481. En 486, à vingt ans, il bat Syagrius à Soissons : tout le nord de la Gaule est à lui. Baptisé à Reims par l'évêque Remi, un jour de Noël, il gagne l'appui des évêques. En 507, à Vouillé, il bat les Wisigoths. Il fait de Paris sa capitale et meurt en 511.",
    "pointsCles": [
     "Vers 481 : Clovis, roi des Francs, à quinze ans",
     "486 : victoire de Soissons sur Syagrius ; le nord de la Gaule",
@@ -556,21 +556,6 @@ JEU.enregistrer("cours", {
     "page": 1
    },
    "r": "==AUQAhGVsRAsIVDn0QEU91BC8cpO5TZ",
-   "poids": 1
-  },
-  {
-   "id": "histoire-s01-2-q27",
-   "fiche": "histoire-s01-2-f2",
-   "type": "vrai_faux",
-   "niveau": 2,
-   "enonce": "La Marche espagnole fait partie des conquêtes de Charlemagne.",
-   "corrections": [],
-   "explication": "Oui : elle est au sud, du côté de l'émirat de Cordoue. Charlemagne l'ajoute au royaume franc.",
-   "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 2 - Support.pdf",
-    "page": 1
-   },
-   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -990,26 +975,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "histoire-s01-2-q37",
-   "fiche": "histoire-s01-2-f4",
-   "type": "qcm",
-   "niveau": 3,
-   "enonce": "Un représentant du souverain reçoit une terre et, en échange, il le sert à la guerre. Comment s'appelle cette terre ?",
-   "choix": [
-    "Un bénéfice",
-    "Une marche",
-    "Un émirat",
-    "Une province"
-   ],
-   "explication": "Une terre donnée par le souverain contre des services militaires s'appelle un bénéfice. C'est ainsi qu'il s'assure l'aide de ses représentants.",
-   "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 2 - Support.pdf",
-    "page": 3
-   },
-   "r": "NdxCqsEz2P0xsSgRHcSZ",
-   "poids": 1
-  },
-  {
    "id": "histoire-s01-2-q38",
    "fiche": "histoire-s01-2-f4",
    "type": "trou",
@@ -1216,19 +1181,19 @@ JEU.enregistrer("cours", {
    "niveau": 3,
    "enonce": "Qui est Alcuin, et quel rôle joue-t-il auprès de Charlemagne ?",
    "choix": [
-    "Un savant venu d'Angleterre, qui conseille l'empereur et dirige l'école du palais d'Aix",
+    "Un savant venu d'Angleterre, qui conseille Charlemagne et inspire sa politique des écoles",
     "Le pape qui couronne Charlemagne à Rome en 800",
     "Le comte chargé de la Marche espagnole",
     "Le chef des Saxons, baptisé en 785"
    ],
-   "explication": "Alcuin arrive d'Angleterre en 782 et devient l'un des principaux conseillers de Charlemagne. Il anime l'école du palais à Aix-la-Chapelle, puis enseigne à Tours à partir de 796.",
+   "explication": "Alcuin, un savant anglo-saxon venu d'York, rencontre Charlemagne en 781 et devient l'un de ses principaux conseillers. Il inspire la création des écoles, puis enseigne à Tours à partir de 796.",
    "source": {
     "theme": "Cours 2 – Empire carolingien au temps de Charlemagne",
     "titre": "Renaissance carolingienne",
     "editeur": "Wikipédia",
     "url": "https://fr.wikipedia.org/wiki/Renaissance_carolingienne"
    },
-   "r": "Q9zG0IUERpxBO4RCz0AER1wCDkQBAHLYeUFASgxGHsgUcYSDXAEScogFLwQVrIFEJkBGM0RAdswYEBBRNIkCUQBDGIiHSsANW1gTawRD10QEbxEGOUhRHcSZ",
+   "r": "=QkGXsSHWwstRpxCLIVD2wFDBRkAAYhRIEwZXcADFIwBH8kBNMGSLIFTDogCUggGEIFEJkBGM0RAdswYEBBRNIkCUQBDGIiHSsANW1gTawRD10QEbxEGOUhRHcSZ",
    "poids": 1
   },
   {
@@ -1282,7 +1247,7 @@ JEU.enregistrer("cours", {
     "Il reçoit l'Aquitaine en cadeau du pape de Rome",
     "Il peut enfin épouser Clotilde, la princesse burgonde"
    ],
-   "explication": "En se faisant baptiser, Clovis s'allie à l'Église et aux grandes familles gallo-romaines, qui tiennent les villes de Gaule. Les autres rois germaniques, wisigoths et burgondes, n'ont pas cet appui.",
+   "explication": "En se faisant baptiser, Clovis s'allie à l'Église et aux grandes familles gallo-romaines, qui tiennent les villes de Gaule. Les rois wisigoths et burgondes, eux, ne partagent pas la religion des évêques de Gaule.",
    "source": {
     "theme": "Cours 2 – Empire carolingien au temps de Charlemagne",
     "titre": "Baptême de Clovis",
@@ -1321,7 +1286,7 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Clovis choisit Reims comme capitale de son royaume.",
    "corrections": [
-    "Faux : il choisit Paris, après Tournai et Soissons.",
+    "Faux : il choisit Paris, l'ancienne Lutèce.",
     "Faux : il choisit Rome, pour se rapprocher du pape.",
     "Faux : il choisit Aix-la-Chapelle, comme Charlemagne plus tard."
    ],
@@ -1332,7 +1297,7 @@ JEU.enregistrer("cours", {
     "editeur": "Wikipédia",
     "url": "https://fr.wikipedia.org/wiki/Clovis_Ier"
    },
-   "r": "==wENx1GtIkFGRUA8YkEMIlLTsxFA4RPOxh2rGTXEURAdYAFHkjUzshBMoRGK40AbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "r": "=AFTBNQBBH7MHkTRQ8xBLYQEGIiCJURAdYAFHkjUzshBMoRGK40AbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -1470,19 +1435,19 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Pourquoi les petits-fils de Charlemagne se font-ils la guerre après 840 ?",
    "choix": [
-    "Lothaire, l'aîné, veut s'imposer comme seul successeur ; ses frères refusent",
+    "Lothaire, l'aîné, réclame l'autorité sur tout l'empire ; ses frères refusent",
     "Ils veulent rendre l'empire au pape de Rome, qui avait couronné Charlemagne",
     "Ils se disputent la ville de Rome, prise par les Byzantins",
     "Ils veulent remettre un roi mérovingien sur le trône"
    ],
-   "explication": "À la mort de Louis le Pieux, le 29 juin 840, son fils aîné Lothaire veut tout l'empire. Louis le Germanique et Charles le Chauve s'allient contre lui.",
+   "explication": "À la mort de Louis le Pieux, en juin 840, son fils aîné Lothaire réclame l'autorité sur tout l'empire. Louis le Germanique et Charles le Chauve s'allient contre lui.",
    "source": {
     "theme": "Cours 2 – Empire carolingien au temps de Charlemagne",
     "titre": "Traité de Verdun",
     "editeur": "Wikipédia",
     "url": "https://fr.wikipedia.org/wiki/Trait%C3%A9_de_Verdun"
    },
-   "r": "NZgBm4FEThEHPVxAboNhAMRRGQhGORlUaYDSWYESNwwEVkkHychBFBBHEEADSphJepQRAdASVYUHHICBVlE3yeAwsOxTv0QSQ91BO4gEG4TZ",
+   "r": "=skGBcxG2sEAH1QHKQhzqCQISZAAGElUOpAABMDQAIRQOtxEJ0hU1cgBFxtsdcQHdwhNMJUWNsgAHogCbTIAVlE3yeAwsOxTv0QSQ91BO4gEG4TZ",
    "poids": 1
   },
   {

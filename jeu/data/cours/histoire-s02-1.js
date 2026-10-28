@@ -50,11 +50,11 @@ JEU.enregistrer("cours", {
    "id": "histoire-s02-1-f2",
    "notion": "La christianisation",
    "titre": "Répandre le christianisme : Saxons, Slaves, Bulgares",
-   "texte": "Christianiser, c'est répandre le christianisme chez de nouveaux peuples. En Occident, Charlemagne l'impose aux Saxons après trente ans de guerre : leur chef Widukind est baptisé en 785. En Orient, Constantinople envoie des missions. En 863, les frères Cyrille et Méthode partent chez les Slaves de Moravie avec un alphabet nouveau ; en 864, le roi bulgare Boris est baptisé.",
+   "texte": "Christianiser, c'est répandre le christianisme chez de nouveaux peuples. En Occident, Charlemagne l'impose aux Saxons après trente ans de guerre : leur chef Widukind est baptisé en 785. En Orient, Constantinople envoie des missions. Vers 863, les frères Cyrille et Méthode partent chez les Slaves de Moravie avec un alphabet nouveau ; en 864, le roi bulgare Boris est baptisé.",
    "pointsCles": [
     "Christianisation (ou évangélisation) : répandre le christianisme chez des peuples non chrétiens",
     "Occident : les Saxons soumis par Charlemagne (772-804) et contraints au baptême ; Widukind baptisé en 785",
-    "Orient : mission de Cyrille et Méthode chez les Slaves de Moravie (863), alphabet et textes en slave",
+    "Orient : mission de Cyrille et Méthode chez les Slaves de Moravie (vers 863), alphabet et textes en slave",
     "864 : le roi des Bulgares, Boris, est baptisé ; son Église est rattachée à Constantinople en 870"
    ],
    "dates": [
@@ -114,11 +114,11 @@ JEU.enregistrer("cours", {
    "id": "histoire-s02-1-f3",
    "notion": "Le schisme de 1054",
    "titre": "1054 : Rome et Constantinople se séparent",
-   "texte": "16 juillet 1054, Sainte-Sophie, Constantinople. Le cardinal Humbert, envoyé du pape, pose sur l'autel un acte qui exclut de l'Église le patriarche Michel Cérulaire. Huit jours plus tard, le patriarche riposte et exclut Humbert. Derrière la querelle : qui commande l'Église, le pape ou les patriarches ? On date de là la séparation entre catholiques (Rome) et orthodoxes (Constantinople).",
+   "texte": "16 juillet 1054, Sainte-Sophie, Constantinople. Le cardinal Humbert, envoyé du pape, pose sur l'autel un acte qui exclut de l'Église le patriarche Michel Cérulaire. Huit jours plus tard, ses évêques excluent Humbert à leur tour. Derrière la querelle : qui commande l'Église, le pape ou les patriarches ? On date de là la séparation entre catholiques (Rome) et orthodoxes (Constantinople).",
    "pointsCles": [
     "16 juillet 1054 : à Sainte-Sophie, le cardinal Humbert, envoyé du pape, excommunie le patriarche Michel Cérulaire",
-    "24 juillet 1054 : le patriarche excommunie Humbert à son tour",
-    "Causes : qui dirige l'Église (le pape seul, ou les cinq patriarches), deux langues, des usages différents, la politique",
+    "24 juillet 1054 : les évêques réunis par le patriarche excommunient Humbert à leur tour",
+    "Causes : qui dirige l'Église (le pape seul, ou les cinq patriarches ensemble), des usages différents, des rivalités politiques en Italie du Sud",
     "On date de là le schisme entre l'Église catholique (Rome) et l'Église orthodoxe (Constantinople) ; la rupture devient définitive après 1204",
     "Les excommunications sont levées en 1965"
    ],
@@ -238,18 +238,18 @@ JEU.enregistrer("cours", {
    "id": "histoire-s02-1-f6",
    "notion": "Les moines et les monastères",
    "titre": "Les moines : prier, travailler, copier",
-   "texte": "Un monastère abrite des moines, dirigés par un abbé. La plupart suivent la règle de Benoît, écrite au Mont-Cassin vers 529 : prière, travail et lecture se partagent la journée. Louis le Pieux l'impose à tout l'empire en 817. Les moines copient aussi les livres dans leurs ateliers. En 910 naît l'abbaye de Cluny, qui n'obéit qu'au pape.",
+   "texte": "Un monastère abrite des moines, dirigés par un abbé. La plupart suivent la règle de Benoît, écrite au Mont-Cassin vers 530 : prière, travail et lecture se partagent la journée. Louis le Pieux l'impose à tout l'empire en 817. Les moines copient aussi les livres dans leurs ateliers. En 910 naît l'abbaye de Cluny, qui n'obéit qu'au pape.",
    "pointsCles": [
     "Un monastère : des moines sous la direction d'un abbé",
-    "La règle de saint Benoît (Mont-Cassin, vers 529) : prière, travail manuel, lecture ; 73 chapitres",
+    "La règle de saint Benoît (Mont-Cassin, vers 530) : prière, travail manuel, lecture ; 73 chapitres",
     "817 : Louis le Pieux l'impose à tous les monastères de l'empire",
     "Les moines copient les livres dans le scriptorium : deux ou trois mois pour un manuscrit",
     "910 : l'abbaye de Cluny, placée sous la seule autorité du pape ; plus de mille monastères en dépendent au XIIe siècle"
    ],
    "dates": [
     {
-     "annee": 529,
-     "evenement": "Benoît fonde le Mont-Cassin ; sa règle"
+     "annee": 530,
+     "evenement": "La règle de saint Benoît, au Mont-Cassin"
     },
     {
      "annee": 817,
@@ -406,21 +406,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "histoire-s02-1-q19",
-   "fiche": "histoire-s02-1-f1",
-   "type": "vrai_faux",
-   "niveau": 2,
-   "enonce": "Le pape, qui couronne Charlemagne à Rome, est l'évêque de cette ville et le chef de l'Église catholique.",
-   "corrections": [],
-   "explication": "Oui : le pape est l'évêque de Rome et le chef de l'Église catholique. C'est lui qui couronne Charlemagne en 800.",
-   "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 2 - Support.pdf",
-    "page": 3
-   },
-   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
    "id": "histoire-s02-1-q20",
    "fiche": "histoire-s02-1-f1",
    "type": "qcm_multiple",
@@ -546,26 +531,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "histoire-s02-1-q8",
-   "fiche": "histoire-s02-1-f2",
-   "type": "qcm",
-   "niveau": 2,
-   "enonce": "Que désigne le mot « évangélisation » ?",
-   "choix": [
-    "La diffusion du christianisme chez des peuples non chrétiens",
-    "Une rupture qui sépare l'Église en plusieurs branches",
-    "L'exclusion d'une personne hors de l'Église",
-    "Un renouveau de la culture qui commence sous le règne de Charlemagne"
-   ],
-   "explication": "L'évangélisation a le même sens que la christianisation : répandre le christianisme là où il n'est pas pratiqué. Une rupture dans l'Église est un schisme, une exclusion une excommunication.",
-   "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 3 - Support et Devoir entrainement.pdf",
-    "page": 1
-   },
-   "r": "XJwBLYgBBD4XNYVDAAACGpxFrIAAAUQUaswCSJhJFZQFINAHPgACbMTAccRHSk0GLIlBsQkFAtECGIgRI4TZ",
-   "poids": 1
-  },
-  {
    "id": "histoire-s02-1-q9",
    "fiche": "histoire-s02-1-f2",
    "type": "vrai_faux",
@@ -582,26 +547,6 @@ JEU.enregistrer("cours", {
     "page": 1
    },
    "r": "T0EXN4iXMsFTHsRFPshGkIFABU1HGcAHH4QJEFQFMJwTSUBDSlSHcEBFCAAAOsBHwQ0Fd5kTOogRSJlIfYADdIhGOFwBIdjXAUxQBYgEHsxE3sttWUFFdohCRgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
-   "id": "histoire-s02-1-q22",
-   "fiche": "histoire-s02-1-f2",
-   "type": "qcm",
-   "niveau": 3,
-   "enonce": "Des chrétiens partent faire connaître leur religion dans une région où personne ne la pratique. Comment appelle-t-on leur action ?",
-   "choix": [
-    "La christianisation",
-    "L'excommunication",
-    "Le schisme",
-    "La renaissance carolingienne"
-   ],
-   "explication": "Faire connaître le christianisme là où il n'est pas pratiqué, c'est la christianisation. Un schisme divise l'Église, une excommunication en exclut quelqu'un.",
-   "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 3 - Support et Devoir entrainement.pdf",
-    "page": 1
-   },
-   "r": "XtgGY0xDcshBiQUEGREHHUgRI4TZ",
    "poids": 1
   },
   {
@@ -654,7 +599,7 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Qui sont Cyrille et Méthode ?",
    "choix": [
-    "Deux frères de Thessalonique envoyés en 863 chez les Slaves de Moravie",
+    "Deux frères de Thessalonique envoyés vers 863 chez les Slaves de Moravie",
     "Les deux architectes de Sainte-Sophie, à Constantinople",
     "Les deux papes qui couronnent Pépin le Bref à Saint-Denis et Charlemagne à Rome",
     "Deux comtes chargés par Charlemagne de la Saxe"
@@ -666,7 +611,7 @@ JEU.enregistrer("cours", {
     "editeur": "Wikipédia",
     "url": "https://fr.wikipedia.org/wiki/Cyrille_et_M%C3%A9thode"
    },
-   "r": "=8wCGAxBb0hCSBRAVJADY4gH7MmXAkVDUogDFkUQxpUVLARUacMrLcQNDBQFIthHPggBeYSAGAQHlk0CLI1Gm8Vz2/FCP5xEMYTZ",
+   "r": "==wRQREGOQRCkIlIWUlFQcACCwjUbYSQF9ESGwgRV9lSnFwBAMQUacMrLcQNDBQFIthHPggBeYSAGAQHlk0CLI1Gm8Vz2/FCP5xEMYTZ",
    "poids": 1
   },
   {
@@ -755,21 +700,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "histoire-s02-1-q11",
-   "fiche": "histoire-s02-1-f3",
-   "type": "vrai_faux",
-   "niveau": 1,
-   "enonce": "Un schisme est une rupture au sein de l'Église.",
-   "corrections": [],
-   "explication": "Oui : lors d'un schisme, l'Église se coupe en plusieurs branches. Les chrétiens se divisent.",
-   "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 3 - Support et Devoir entrainement.pdf",
-    "page": 1
-   },
-   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
    "id": "histoire-s02-1-q12",
    "fiche": "histoire-s02-1-f3",
    "type": "vrai_faux",
@@ -786,26 +716,6 @@ JEU.enregistrer("cours", {
     "page": 1
    },
    "r": "==AUHtBSDwxDIgwGzEAHX0hEJtxCSthJFZwWMxRDGNwGGkyFVlEECAgAIs/qkFURQlkTdMxAAAg7xGwCcYVBO9csI1iQMEETc4gFPraAndxGQUVBasASRgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
-   "id": "histoire-s02-1-q13",
-   "fiche": "histoire-s02-1-f3",
-   "type": "qcm",
-   "niveau": 2,
-   "enonce": "Pourquoi parle-t-on de « branches » du christianisme après un schisme ?",
-   "choix": [
-    "Parce que l'Église s'est séparée en plusieurs parties",
-    "Parce que le christianisme se diffuse chez de nouveaux peuples",
-    "Parce que les chrétiens prient dans plusieurs langues",
-    "Parce que chaque empire chrétien change de capitale"
-   ],
-   "explication": "Après un schisme, l'Église n'est plus unie. Elle forme plusieurs branches séparées.",
-   "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 3 - Support et Devoir entrainement.pdf",
-    "page": 1
-   },
-   "r": "==AUbYCRRcETe8UFUwxFuEAAJUQUHswTXEMgfRQRE2KHGJhGXAWAVBgBYUQCmH7Tv0AAAxlTKUAFIISZ",
    "poids": 1
   },
   {
@@ -905,7 +815,7 @@ JEU.enregistrer("cours", {
     "Rome refuse de parler grec avec l'empereur byzantin",
     "Le pape veut devenir basileus à la place de l'empereur"
    ],
-   "explication": "Rome veut que le pape commande toute l'Église ; Constantinople veut que les cinq patriarches la gouvernent ensemble. S'y ajoutent deux langues, des usages différents et des rivalités politiques en Italie du Sud.",
+   "explication": "Rome veut que le pape commande toute l'Église ; Constantinople veut que les cinq patriarches la gouvernent ensemble. S'y ajoutent des usages différents et des rivalités politiques en Italie du Sud, où avancent les Normands.",
    "source": {
     "theme": "Cours 3 – Le christianisme, entre Orient et Occident",
     "titre": "Schisme de 1054",
@@ -924,7 +834,7 @@ JEU.enregistrer("cours", {
    "elements": [
     "Les croisés pillent Constantinople",
     "Le cardinal Humbert dépose son acte sur l'autel de Sainte-Sophie",
-    "Le patriarche Michel Cérulaire riposte et excommunie Humbert",
+    "Les évêques du patriarche Michel Cérulaire excommunient Humbert à leur tour",
     "Les excommunications de 1054 sont levées"
    ],
    "explication": "16 juillet 1054 : l'acte d'Humbert ; 24 juillet 1054 : la riposte du patriarche ; 1204 : le pillage de Constantinople ; 1965 : les excommunications sont levées.",
@@ -1008,7 +918,7 @@ JEU.enregistrer("cours", {
     "Le pape commande l'armée des Francs depuis Clovis",
     "C'est le pape qui choisit tous les rois d'Europe depuis la chute de Rome en 476"
    ],
-   "explication": "Pépin n'est que le maire du palais, et il écarte le dernier roi mérovingien, Childéric III. Le pape Zacharie répond que celui qui exerce vraiment le pouvoir doit en porter le titre.",
+   "explication": "Pépin n'est que le maire du palais, et il écarte le dernier roi mérovingien, Childéric III. Le pape Zacharie répond qu'il vaut mieux que celui qui exerce vraiment le pouvoir porte aussi le titre de roi.",
    "source": {
     "theme": "Cours 3 – Le christianisme, entre Orient et Occident",
     "titre": "Pépin le Bref",
@@ -1030,7 +940,7 @@ JEU.enregistrer("cours", {
     "Un éléphant blanc venu de Bagdad",
     "Le titre d'empereur des Romains"
    ],
-   "explication": "Après sa victoire sur les Lombards, Pépin remet au pape Ravenne, la Pentapole et le duché de Rome. Le pape devient ainsi un souverain, à la tête des États de l'Église.",
+   "explication": "Après sa victoire sur les Lombards, Pépin remet au pape Ravenne, la Pentapole et d'autres villes d'Italie centrale. Le pape devient ainsi un souverain, à la tête des États de l'Église.",
    "source": {
     "theme": "Cours 3 – Le christianisme, entre Orient et Occident",
     "titre": "Donation de Pépin",
@@ -1216,7 +1126,7 @@ JEU.enregistrer("cours", {
     "Faux : c'est Charlemagne qui l'interdit, en 789.",
     "Faux : la règle de saint Benoît n'existe pas encore en 817."
    ],
-   "explication": "Conseillé par Benoît d'Aniane, Louis le Pieux impose la règle de saint Benoît à tous les monastères ; le synode d'Aix-la-Chapelle le confirme en 817. La règle elle-même date du VIe siècle.",
+   "explication": "Conseillé par Benoît d'Aniane, Louis le Pieux impose la règle de saint Benoît à tous les monastères ; une assemblée réunie à Aix-la-Chapelle le confirme en 817. La règle elle-même date du VIe siècle.",
    "source": {
     "theme": "Cours 3 – Le christianisme, entre Orient et Occident",
     "titre": "Règle de saint Benoît",
