@@ -432,5 +432,9 @@
   { "id": "histoire-s08-2-q30", "cours": "histoire-s08-2", "fiche": "histoire-s08-2-f1",
     "verdict": "question-theme", "categorie": "trivia",
     "raison": "Récapitule BnF, Tours, 1455-1460 : trois détails de légende ; ce que sont les Grandes Chroniques de France n'est pas dit (non couvert).",
-    "piste": "QCM de thème (même famille) : « Que sont les Grandes Chroniques de France ? » → « Un grand livre d'histoire des rois de France, écrit au Moyen Âge par les moines de Saint-Denis » ; leurres : « Un recueil de lois de Philippe le Bel », « Le journal de Jean Fouquet », « Une chanson sur les paysans de Verson » ; source { theme: « Cours 11 – Étude de document », titre: « Grandes Chroniques de France », editeur: « Wikipédia », url: https://fr.wikipedia.org/wiki/Grandes_Chroniques_de_France }." }
+    "piste": "QCM de thème (même famille) : « Que sont les Grandes Chroniques de France ? » → « Un grand livre d'histoire des rois de France, écrit au Moyen Âge par les moines de Saint-Denis » ; leurres : « Un recueil de lois de Philippe le Bel », « Le journal de Jean Fouquet », « Une chanson sur les paysans de Verson » ; source { theme: « Cours 11 – Étude de document », titre: « Grandes Chroniques de France », editeur: « Wikipédia », url: https://fr.wikipedia.org/wiki/Grandes_Chroniques_de_France }." },
+  { "id": "histoire-s08-2-q12", "cours": "histoire-s08-2", "fiche": "histoire-s08-2-f2",
+    "verdict": "supprimer", "categorie": "doublon",
+    "raison": "Relecture critique du 28/10/2026 : quatrième question sur « Philippe le Bel assis, Édouard Ier à genoux », avec q11, q13 et q27 ; la fiche garde six questions dont deux vrai_faux.",
+    "piste": "" }
 ]

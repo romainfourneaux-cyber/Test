@@ -497,7 +497,7 @@ JEU.enregistrer("cours", {
     "Un calendrier des travaux des champs, mois par mois",
     "La liste des paysans qui doivent une corvée au seigneur"
    ],
-   "explication": "Un cartulaire est un livre dans lequel un seigneur, une abbaye ou une ville fait recopier ses propres documents : donations, droits, biens. Ainsi rangés dans un seul volume, ces textes se conservent et se consultent plus facilement.",
+   "explication": "Un cartulaire est un livre dans lequel un seigneur, une abbaye ou une cathédrale fait recopier ses propres documents : donations, droits, biens. Ainsi rangés dans un seul volume, ces textes se conservent et se consultent plus facilement.",
    "source": {
     "theme": "Cours 7 – La seigneurie",
     "titre": "Cartulaire",

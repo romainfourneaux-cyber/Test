@@ -219,7 +219,7 @@ module.exports = {
       enonce: "Qu'est-ce qu'un cartulaire ?",
       choix: ["Un recueil où un seigneur ou une abbaye fait copier les textes de ses droits", "Un plan dessiné de la seigneurie, avec le château, l'église, le moulin et toutes les tenures", "Un calendrier des travaux des champs, mois par mois", "La liste des paysans qui doivent une corvée au seigneur"],
       reponse: "Un recueil où un seigneur ou une abbaye fait copier les textes de ses droits",
-      explication: "Un cartulaire est un livre dans lequel un seigneur, une abbaye ou une ville fait recopier ses propres documents : donations, droits, biens. Ainsi rangés dans un seul volume, ces textes se conservent et se consultent plus facilement.",
+      explication: "Un cartulaire est un livre dans lequel un seigneur, une abbaye ou une cathédrale fait recopier ses propres documents : donations, droits, biens. Ainsi rangés dans un seul volume, ces textes se conservent et se consultent plus facilement.",
       source: T("Cartulaire", "https://fr.wikipedia.org/wiki/Cartulaire") },
     // f3 : les banalités
     { id: "histoire-s05-1-q19", fiche: "histoire-s05-1-f3", type: "qcm", niveau: 1,

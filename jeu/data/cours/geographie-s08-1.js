@@ -848,9 +848,9 @@ JEU.enregistrer("cours", {
    "enonce": "Pourquoi est-il difficile de se soigner dans les campagnes des pays les plus pauvres ?",
    "choix": [
     "Parce que les soignants manquent et que les centres de santé y sont rares et mal équipés",
-    "Parce que les habitants des campagnes refusent presque toujours d'aller voir un médecin ou une infirmière",
-    "Parce que les hôpitaux y sont trop modernes et trop chers pour les paysans",
-    "Parce que les maladies y sont rares et que personne n'a besoin de soins"
+    "Parce que les habitants des campagnes n'ont pas le droit de se faire soigner dans les hôpitaux des villes",
+    "Parce que les hôpitaux y sont nombreux, mais réservés aux étrangers de passage",
+    "Parce que les campagnes sont trop proches des villes pour avoir besoin de leurs propres centres de santé"
    ],
    "explication": "L'OMS prévoit qu'il manquera onze millions de soignants en 2030, surtout dans les pays pauvres, et les campagnes isolées en attirent encore moins. Loin des villes, le centre de santé est souvent petit, éloigné et peu équipé.",
    "source": {
@@ -873,8 +873,8 @@ JEU.enregistrer("cours", {
     "Un réfrigérateur pour garder les vaccins au froid",
     "Du matériel médical qui fonctionne",
     "De la lumière pour soigner la nuit",
-    "Des malades : les habitants préfèrent ne pas s'y rendre",
-    "De la place : ils sont presque toujours vides"
+    "Des malades à soigner : ces centres sont presque toujours vides",
+    "Du soleil pour alimenter des panneaux solaires"
    ],
    "explication": "Près d'un milliard de personnes dépendent de centres de santé sans électricité fiable, surtout en Afrique subsaharienne et en Asie du Sud. Sans courant, ni frigo pour les vaccins, ni matériel, ni lumière pour un accouchement la nuit.",
    "source": {

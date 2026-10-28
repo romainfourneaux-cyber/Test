@@ -7,6 +7,7 @@
 // dispensaire de Madagascar (page 6). La fiche et la capsule de l'outil 9 lui-même ne sont pas déposées.
 // Fiche f5 (le dispensaire) : le seul document est un témoignage ; trois questions de thème (règle du 25/10/2026,
 // audit du 28/10/2026) portent sur l'accès aux soins dans un pays pauvre, avec une source fiable vérifiée (OMS, Wikipédia).
+// Contre-relecture du 28/10/2026 : leurres de q36 et q37 revus (plus de « maladies rares » ni de centres « vides »).
 const F = "cours/geographie/Geo 5e - Theme 1 - Cours 2.pdf";
 const P = (page) => ({ fichier: F, page: page });
 const THEME = "Outil 9 – Mesurer la pauvreté et les inégalités";
@@ -303,13 +304,13 @@ module.exports = {
       explication: "Un dispensaire est un petit centre de santé, typique des pays pauvres. Celui du cours est à Madagascar.", source: P(6) },
     { id: "geographie-s08-1-q36", fiche: "geographie-s08-1-f5", type: "qcm", niveau: 2,
       enonce: "Pourquoi est-il difficile de se soigner dans les campagnes des pays les plus pauvres ?",
-      choix: ["Parce que les soignants manquent et que les centres de santé y sont rares et mal équipés", "Parce que les habitants des campagnes refusent presque toujours d'aller voir un médecin ou une infirmière", "Parce que les hôpitaux y sont trop modernes et trop chers pour les paysans", "Parce que les maladies y sont rares et que personne n'a besoin de soins"],
+      choix: ["Parce que les soignants manquent et que les centres de santé y sont rares et mal équipés", "Parce que les habitants des campagnes n'ont pas le droit de se faire soigner dans les hôpitaux des villes", "Parce que les hôpitaux y sont nombreux, mais réservés aux étrangers de passage", "Parce que les campagnes sont trop proches des villes pour avoir besoin de leurs propres centres de santé"],
       reponse: "Parce que les soignants manquent et que les centres de santé y sont rares et mal équipés",
       explication: "L'OMS prévoit qu'il manquera onze millions de soignants en 2030, surtout dans les pays pauvres, et les campagnes isolées en attirent encore moins. Loin des villes, le centre de santé est souvent petit, éloigné et peu équipé.",
       source: T("Health workforce", "Organisation mondiale de la santé (OMS)", "https://www.who.int/health-topics/health-workforce") },
     { id: "geographie-s08-1-q37", fiche: "geographie-s08-1-f5", type: "qcm_multiple", niveau: 2,
       enonce: "Qu'est-ce qui manque souvent aux centres de santé des pays les plus pauvres ? (plusieurs réponses)",
-      choix: ["Une électricité fiable", "Un réfrigérateur pour garder les vaccins au froid", "Du matériel médical qui fonctionne", "De la lumière pour soigner la nuit", "Des malades : les habitants préfèrent ne pas s'y rendre", "De la place : ils sont presque toujours vides"],
+      choix: ["Une électricité fiable", "Un réfrigérateur pour garder les vaccins au froid", "Du matériel médical qui fonctionne", "De la lumière pour soigner la nuit", "Des malades à soigner : ces centres sont presque toujours vides", "Du soleil pour alimenter des panneaux solaires"],
       reponse: ["Une électricité fiable", "Un réfrigérateur pour garder les vaccins au froid", "Du matériel médical qui fonctionne", "De la lumière pour soigner la nuit"],
       explication: "Près d'un milliard de personnes dépendent de centres de santé sans électricité fiable, surtout en Afrique subsaharienne et en Asie du Sud. Sans courant, ni frigo pour les vaccins, ni matériel, ni lumière pour un accouchement la nuit.",
       source: T("Close to one billion people globally are served by health-care facilities with no electricity access or with unreliable electricity", "Organisation mondiale de la santé (OMS)", "https://www.who.int/news/item/14-01-2023-close-to-one-billion-people-globally-are-served-by-health-care-facilities-with-no-electricity-access-or-with-unreliable-electricity") },

@@ -167,9 +167,9 @@ JEU.enregistrer("cours", {
    "explication": "Les couleurs, les traits et les figurés d'une carte sont des conventions : la légende les traduit. Les distances, elles, se lisent avec l'échelle.",
    "source": {
     "theme": "Présentation du programme et regarder les outils du géographe",
-    "titre": "Carte géographique",
+    "titre": "Légende (cartographie)",
     "editeur": "Wikipédia",
-    "url": "https://fr.wikipedia.org/wiki/Carte_g%C3%A9ographique"
+    "url": "https://fr.wikipedia.org/wiki/L%C3%A9gende_(cartographie)"
    },
    "r": "=clFQ0hBMIwCbMmXAYUDaogRVsxBi4BAKYRUasAHS1QMEFQFZBgCKMBDEc2FAQRVUogTdcRHyQUCFV1CPRxEGISZ",
    "poids": 1
@@ -214,9 +214,9 @@ JEU.enregistrer("cours", {
    "fiche": "geographie-s01-1-f1",
    "type": "vrai_faux",
    "niveau": 2,
-   "enonce": "Sur une carte classique, comme celles de l'IGN, le haut de la carte correspond au nord.",
+   "enonce": "Sur une carte classique, le haut de la feuille correspond au nord.",
    "corrections": [],
-   "explication": "Sur les cartes traditionnelles, les lignes verticales, les méridiens, pointent vers le nord géographique : le nord est donc en haut. Une carte orientée autrement doit le signaler.",
+   "explication": "Les méridiens, ces lignes verticales tracées sur la carte, vont vers le nord géographique : le haut de la carte est donc le nord. Une carte orientée autrement doit le signaler, par une flèche par exemple.",
    "source": {
     "theme": "Présentation du programme et regarder les outils du géographe",
     "titre": "Nord",
@@ -237,8 +237,8 @@ JEU.enregistrer("cours", {
     "Une légende",
     "Une échelle",
     "L'orientation : où se trouve le nord",
-    "Un sommaire",
-    "Une préface"
+    "Une photo du territoire vu du ciel",
+    "Un texte qui raconte l'histoire du lieu"
    ],
    "explication": "Titre, orientation, légende, échelle : ces quatre repères servent à lire n'importe quelle carte. On y ajoute souvent la source des données.",
    "source": {
@@ -260,7 +260,7 @@ JEU.enregistrer("cours", {
     "La Terre telle qu'elle est aujourd'hui, et la façon dont les humains y vivent",
     "Seulement les roches, les volcans et les tremblements de terre",
     "Seulement les noms des pays, des capitales et des grands fleuves à apprendre par cœur",
-    "La vie des rois et des reines d'autrefois, siècle après siècle"
+    "Les événements du passé, siècle après siècle"
    ],
    "explication": "La géographie décrit la Terre d'aujourd'hui : ses milieux naturels et surtout la manière dont les sociétés humaines s'y organisent. Le passé lointain, c'est l'histoire ; les roches seules, c'est la géologie.",
    "source": {
@@ -338,25 +338,6 @@ JEU.enregistrer("cours", {
     "page": 1
    },
    "r": "==AKsklQdlCRe8RSEYnQyclSZlCH",
-   "poids": 1
-  },
-  {
-   "id": "geographie-s01-1-q7",
-   "fiche": "geographie-s01-1-f2",
-   "type": "ordre",
-   "niveau": 2,
-   "enonce": "Remets dans l'ordre les trois parties du cours 1 du thème 1.",
-   "elements": [
-    "Les pays du Nord et le défi du vieillissement",
-    "Croissance et développement de la population",
-    "Les pays du Sud et leurs besoins toujours plus grands"
-   ],
-   "explication": "On voit d'abord la population mondiale, puis le Sud, puis le Nord.",
-   "source": {
-    "fichier": "cours/geographie/Geo 5e - Tableau de progression.pdf",
-    "page": 1
-   },
-   "r": "==wMfpEVFNEH",
    "poids": 1
   },
   {
@@ -578,25 +559,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "geographie-s01-1-q28",
-   "fiche": "geographie-s01-1-f3",
-   "type": "ordre",
-   "niveau": 2,
-   "enonce": "Remets dans l'ordre les trois cours du thème 2.",
-   "elements": [
-    "Nourrir les hommes",
-    "L'inégal accès à l'eau",
-    "Gérer les ressources énergétiques"
-   ],
-   "explication": "Le thème 2 commence par l'eau, continue avec l'énergie et finit par l'alimentation.",
-   "source": {
-    "fichier": "cours/geographie/Geo 5e - Tableau de progression.pdf",
-    "page": 2
-   },
-   "r": "==wMfpEVFNEH",
-   "poids": 1
-  },
-  {
    "id": "geographie-s01-1-q29",
    "fiche": "geographie-s01-1-f3",
    "type": "qcm",
@@ -605,7 +567,7 @@ JEU.enregistrer("cours", {
    "choix": [
     "Parce qu'ils mettent des millions d'années à se former et qu'on les consomme bien plus vite",
     "Parce qu'ils coûtent très cher à extraire et à transporter jusqu'aux usines et aux villes",
-    "Parce qu'ils viennent presque toujours de pays étrangers, qu'il faut payer en dollars",
+    "Parce qu'ils viennent presque toujours de pays lointains",
     "Parce qu'ils polluent l'air des villes quand on les brûle dans les moteurs et les chaudières"
    ],
    "explication": "Ces énergies fossiles viennent de matière vivante enfouie et transformée pendant des millions d'années. Nos réserves s'épuisent donc bien plus vite qu'elles ne se reforment.",
@@ -746,15 +708,15 @@ JEU.enregistrer("cours", {
    "enonce": "Un accident dans une usine chimique est un risque naturel.",
    "corrections": [
     "Faux : c'est un risque industriel, une forme de risque technologique.",
-    "Faux : c'est un risque naturel seulement s'il pleut ce jour-là.",
+    "Faux : c'est un risque sanitaire, lié aux maladies.",
     "Faux : c'est un risque climatique."
    ],
    "explication": "Un risque naturel vient d'un phénomène de la nature : séisme, cyclone, inondation. Un accident d'usine est un risque industriel, classé parmi les risques technologiques, car il vient d'une activité humaine.",
    "source": {
     "theme": "Présentation du programme et regarder les outils du géographe",
-    "titre": "Risque technologique",
+    "titre": "Risque majeur",
     "editeur": "Wikipédia",
-    "url": "https://fr.wikipedia.org/wiki/Risque_technologique"
+    "url": "https://fr.wikipedia.org/wiki/Risque_majeur"
    },
    "r": "Qd0GIthHPEgBegCHdYAEFk0CaMwGq8VRQlkTKsAFGQxZXsBEV1VBLYAAcADWBsFROpwEXoxG1I1GQUVBasASRgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
