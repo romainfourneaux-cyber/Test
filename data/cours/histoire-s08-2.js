@@ -56,42 +56,79 @@ JEU.enregistrer("cours", {
   },
   {
    "id": "histoire-s08-2-f2",
-   "notion": "La scène : l'hommage d'Édouard Ier à Philippe le Bel",
-   "titre": "Édouard Ier rend hommage à Philippe le Bel",
-   "texte": "La scène représentée est un hommage : Édouard Ier rend hommage à Philippe le Bel, qui règne de 1285 à 1314. Sur l'image, Philippe le Bel est assis sur un trône, tandis qu'Édouard Ier, lui aussi couronné, est à genoux devant lui. L'un, assis, reçoit l'hommage ; l'autre, à genoux, le rend.",
+   "notion": "1286 : le roi d'Angleterre, vassal du roi de France pour la Guyenne",
+   "titre": "Un roi devant un autre roi : l'hommage de 1286",
+   "texte": "En 1286, Édouard Ier, roi d'Angleterre depuis 1272, vient en France et rend hommage au nouveau roi, Philippe le Bel. Pourquoi un roi s'incline-t-il devant un autre ? Parce qu'il tient de lui la Guyenne, dans le Sud-Ouest : pour ce duché, il est son vassal. Nul grand, pas même un roi, n'échappe à l'hommage dû au roi de France.",
    "pointsCles": [
-    "La scène : un hommage",
-    "Édouard Ier rend hommage à Philippe le Bel (roi de 1285 à 1314)",
-    "Philippe le Bel est assis sur un trône ; Édouard Ier est à genoux devant lui",
-    "Les deux personnages portent une couronne"
+    "Édouard Ier : roi d'Angleterre de 1272 à 1307, surnommé « Longues-Jambes » ; il conquiert le pays de Galles (1282-1283) et guerroie en Écosse",
+    "Depuis le traité de Paris (1259), le roi d'Angleterre tient la Guyenne (Limousin, Périgord, Quercy, Agenais, Saintonge du sud…) comme vassal du roi de France",
+    "1286 : au cours d'une mission diplomatique en France, Édouard Ier rend hommage à Philippe IV le Bel, roi depuis octobre 1285",
+    "1294 : Philippe le Bel prononce la saisie du duché d'Aquitaine ; guerre de Guyenne (1294-1297) ; paix en 1299, scellée par le mariage d'Édouard avec Marguerite, demi-sœur de Philippe",
+    "Ce que l'image affirme : dans son royaume, le roi de France est le seigneur de tous"
    ],
-   "dates": [],
-   "lieux": [],
+   "astuce": "1286, l'hommage ; 1294, la saisie ; 1299, la paix et le mariage : huit ans pour passer de l'un à l'autre.",
+   "dates": [
+    {
+     "annee": 1272,
+     "evenement": "Édouard Ier devient roi d'Angleterre"
+    },
+    {
+     "annee": 1286,
+     "evenement": "Édouard Ier rend hommage à Philippe le Bel pour la Guyenne"
+    },
+    {
+     "annee": 1294,
+     "evenement": "Philippe le Bel saisit le duché d'Aquitaine : guerre de Guyenne"
+    }
+   ],
+   "lieux": [
+    "Guyenne",
+    "Paris",
+    "Bordeaux"
+   ],
    "personnages": [
+    "Édouard Ier",
     "Philippe le Bel",
-    "Édouard Ier"
+    "Marguerite de France"
    ],
-   "vocabulaire": [],
+   "vocabulaire": [
+    {
+     "mot": "Guyenne",
+     "def": "le nom donné au duché d'Aquitaine, dans le Sud-Ouest, tenu par le roi d'Angleterre"
+    },
+    {
+     "mot": "mission diplomatique",
+     "def": "un voyage officiel pour négocier avec un autre souverain"
+    },
+    {
+     "mot": "saisie",
+     "def": "la confiscation d'un fief par le seigneur qui l'a donné"
+    }
+   ],
    "schema": "histoire-s08-2-s1",
    "prerequis": [
-    "histoire-s08-1-f3",
+    "histoire-s08-1-f5",
+    "histoire-s07-2-f6",
     "histoire-s08-2-f1"
    ],
    "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 11 - Support.pdf",
-    "page": 2
+    "programme": "L'affirmation de l'État monarchique dans le Royaume des Capétiens et des Valois",
+    "titre": "Édouard Ier (roi d'Angleterre)",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/%C3%89douard_Ier_(roi_d%27Angleterre)"
    }
   },
   {
    "id": "histoire-s08-2-f3",
    "notion": "Lire l'image : trône, couronnes, manteau à fleurs de lys, livre",
    "titre": "Ce que montre l'enluminure",
-   "texte": "Philippe le Bel, assis sur un trône, porte une couronne, un sceptre et un manteau bleu à fleurs de lys d'or ; les murs sont du même bleu à fleurs de lys. Édouard Ier, couronné, est à genoux dans un grand manteau rouge brodé d'or. Entre eux, un homme tient un livre ouvert ; derrière, des hommes debout regardent.",
+   "texte": "Philippe le Bel, assis sur un trône, porte une couronne, un sceptre et un manteau bleu à fleurs de lys ; les murs sont du même bleu. Édouard Ier, couronné, porte un grand manteau rouge brodé d'or. Entre eux, un homme tient un livre ouvert ; derrière, des hommes debout regardent. Les couleurs disent qui est le maître.",
    "pointsCles": [
     "Philippe le Bel : trône, couronne, sceptre, manteau bleu à fleurs de lys",
-    "Les murs de la salle : bleus, à fleurs de lys",
-    "Édouard Ier : couronne, grand manteau rouge brodé d'or, à genoux",
-    "Un homme tient un livre ouvert entre les deux rois ; des témoins debout derrière"
+    "Les murs de la salle : bleus, à fleurs de lys, comme le manteau du roi de France",
+    "Édouard Ier : couronne, grand manteau rouge brodé d'or",
+    "Un homme tient un livre ouvert entre les deux rois ; des témoins debout derrière",
+    "Seul Philippe le Bel a le trône et le sceptre : l'image le place au-dessus"
    ],
    "astuce": "Bleu et fleurs de lys pour celui qui reçoit l'hommage, rouge pour celui qui le rend.",
    "dates": [],
@@ -121,6 +158,127 @@ JEU.enregistrer("cours", {
    "source": {
     "fichier": "cours/histoire/Histoire 5e - Seance 11 - Support.pdf",
     "page": 1
+   }
+  },
+  {
+   "id": "histoire-s08-2-f4",
+   "notion": "Les Grandes Chroniques de France : l'histoire des rois écrite à Saint-Denis",
+   "titre": "Le livre officiel des rois de France",
+   "texte": "Les Grandes Chroniques de France racontent l'histoire des rois de France, en français et non en latin. Vers 1250, le moine Primat, à l'abbaye de Saint-Denis, en écrit le début, jusqu'à Philippe Auguste ; des continuateurs poursuivent au XIVe siècle, puis pour Charles V. Plus de 115 manuscrits subsistent ; celui que Fouquet enlumine vers 1455-1460 compte 51 miniatures.",
+   "pointsCles": [
+    "Une chronique en langue française, et non en latin : l'histoire officielle des rois, de leurs origines jusqu'au roi du moment",
+    "Vers 1250 : Primat, moine de Saint-Denis, écrit le Roman des rois, qui va jusqu'à Philippe Auguste ; l'abbaye y justifie sa place dans le royaume",
+    "XIVe siècle : les moines de Saint-Denis, puis l'entourage de Charles V, continuent le récit ; le manuscrit de Charles V est à la BnF (Français 2813)",
+    "Plus de 115 manuscrits antérieurs à la Renaissance ; celui de Charles VII, enluminé par Jean Fouquet vers 1455-1460, est le Français 6465",
+    "Lire ces images : elles montrent les rois comme le pouvoir royal veut qu'on les voie"
+   ],
+   "astuce": "Saint-Denis écrit, les rois commandent, les peintres illustrent : trois mains pour un même livre.",
+   "dates": [
+    {
+     "annee": 1250,
+     "evenement": "Vers 1250 : le moine Primat écrit le début des Grandes Chroniques, à Saint-Denis"
+    }
+   ],
+   "lieux": [
+    "Saint-Denis",
+    "Tours"
+   ],
+   "personnages": [
+    "Primat",
+    "Charles V",
+    "Charles VII",
+    "Jean Fouquet"
+   ],
+   "vocabulaire": [
+    {
+     "mot": "continuateur",
+     "def": "celui qui poursuit un livre commencé par un autre"
+    },
+    {
+     "mot": "langue vernaculaire",
+     "def": "la langue parlée par les gens du pays, ici le français, par opposition au latin"
+    },
+    {
+     "mot": "miniature",
+     "def": "une petite peinture dans un manuscrit"
+    }
+   ],
+   "schema": null,
+   "prerequis": [
+    "histoire-s08-2-f1"
+   ],
+   "source": {
+    "programme": "L'affirmation de l'État monarchique dans le Royaume des Capétiens et des Valois",
+    "titre": "Grandes Chroniques de France",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Grandes_Chroniques_de_France"
+   }
+  },
+  {
+   "id": "histoire-s08-2-f5",
+   "notion": "La Guyenne, pomme de discorde entre les deux rois",
+   "titre": "Un fief qui vaut une guerre : la Guyenne",
+   "texte": "Le 4 décembre 1259, Henri III d'Angleterre rend hommage à Louis IX : il renonce à la Normandie et à l'Anjou, mais garde la Guyenne comme vassal du roi de France. Un roi vassal d'un roi, cela tourne mal. La Guyenne est saisie en 1294, en 1324, puis en 1337. Édouard III réplique : la guerre de Cent Ans.",
+   "pointsCles": [
+    "La Guyenne (le nom apparaît en 1259) : l'ancien duché d'Aquitaine, autour de Bordeaux, aux mains des Plantagenêts, rois d'Angleterre, jusqu'en 1453",
+    "Traité de Paris : accord du 28 mai 1258, hommage d'Henri III à Louis IX le 4 décembre 1259 ; Henri garde Guyenne, Limousin, Périgord, Quercy, Agenais et Saintonge du sud, et abandonne Normandie, Anjou, Touraine, Maine, Poitou",
+    "1286 : Édouard Ier rend hommage à Philippe le Bel ; 1294 : Philippe le Bel saisit le duché, guerre de Guyenne (1294-1297)",
+    "1323-1324 : l'affaire de la bastide de Saint-Sardos ; Charles IV confisque l'Aquitaine ; le jeune Édouard III rend hommage pour son père (1325)",
+    "1337 : Philippe VI saisit la Guyenne ; en octobre, Édouard III rompt son lien de vassalité et réclame la couronne : la guerre de Cent Ans commence ; la Guyenne redevient française après Castillon (1453)"
+   ],
+   "astuce": "Trois saisies, trois rois de France : Philippe le Bel (1294), Charles IV (1324), Philippe VI (1337).",
+   "dates": [
+    {
+     "annee": 1259,
+     "evenement": "Traité de Paris : Henri III rend hommage à Louis IX pour la Guyenne"
+    },
+    {
+     "annee": 1294,
+     "evenement": "Première saisie de la Guyenne par Philippe le Bel"
+    },
+    {
+     "annee": 1337,
+     "evenement": "Philippe VI saisit la Guyenne : début de la guerre de Cent Ans"
+    }
+   ],
+   "lieux": [
+    "Guyenne",
+    "Bordeaux",
+    "Paris",
+    "Saint-Sardos"
+   ],
+   "personnages": [
+    "Henri III",
+    "Louis IX",
+    "Édouard Ier",
+    "Charles IV",
+    "Édouard III",
+    "Philippe VI"
+   ],
+   "vocabulaire": [
+    {
+     "mot": "Aquitaine",
+     "def": "le grand duché du Sud-Ouest, que l'on appelle Guyenne à partir de 1259"
+    },
+    {
+     "mot": "renoncer",
+     "def": "abandonner un droit ou un bien"
+    },
+    {
+     "mot": "Agenais",
+     "def": "la région d'Agen, entre Bordeaux et Toulouse, disputée entre les deux rois"
+    }
+   ],
+   "schema": null,
+   "prerequis": [
+    "histoire-s08-2-f2",
+    "histoire-s08-1-f4"
+   ],
+   "source": {
+    "programme": "L'affirmation de l'État monarchique dans le Royaume des Capétiens et des Valois",
+    "titre": "Traité de Paris (1259)",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Trait%C3%A9_de_Paris_(1259)"
    }
   }
  ],
@@ -245,28 +403,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "histoire-s08-2-q30",
-   "fiche": "histoire-s08-2-f1",
-   "type": "qcm",
-   "niveau": 2,
-   "enonce": "Que sont les Grandes Chroniques de France ?",
-   "choix": [
-    "L'histoire des rois de France, écrite en français par les moines de Saint-Denis",
-    "Un recueil des lois de Philippe le Bel, copié par ses légistes pour tout le royaume",
-    "Le journal personnel de Jean Fouquet",
-    "Une chanson sur les paysans de Verson"
-   ],
-   "explication": "Les Grandes Chroniques de France racontent l'histoire des rois de France depuis leurs origines, en français et non en latin. Elles sont écrites à l'abbaye de Saint-Denis, à partir du travail du moine Primat au XIIIe siècle, et souvent décorées d'enluminures.",
-   "source": {
-    "theme": "Cours 11 – Étude de document",
-    "titre": "Grandes Chroniques de France",
-    "editeur": "Wikipédia",
-    "url": "https://fr.wikipedia.org/wiki/Grandes_Chroniques_de_France"
-   },
-   "r": "=sUHGwRDHAQEbR0D8Y0ANIFNXsBDawRSdogHIFDTVUhXH4QwlewE1QRVLARUMohBAsg6uXUGI1QAHQxLSJiFVZBHeshTccBDjh0FcJkGc8gDO5TZ",
-   "poids": 1
-  },
-  {
    "id": "histoire-s08-2-q31",
    "fiche": "histoire-s08-2-f1",
    "type": "ordre",
@@ -313,31 +449,12 @@ JEU.enregistrer("cours", {
    "niveau": 1,
    "enonce": "Sur l'enluminure, c'est Édouard Ier qui rend hommage à Philippe le Bel.",
    "corrections": [],
-   "explication": "Oui : Édouard Ier, à genoux, rend hommage. Philippe le Bel, assis sur son trône, le reçoit.",
+   "explication": "Oui : Édouard Ier rend l'hommage, Philippe le Bel le reçoit. Le roi d'Angleterre est le vassal du roi de France pour ses terres du Sud-Ouest.",
    "source": {
     "fichier": "cours/histoire/Histoire 5e - Seance 11 - Support.pdf",
     "page": 2
    },
    "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
-   "id": "histoire-s08-2-q13",
-   "fiche": "histoire-s08-2-f2",
-   "type": "vrai_faux",
-   "niveau": 2,
-   "enonce": "Philippe le Bel est à genoux devant Édouard Ier.",
-   "corrections": [
-    "Faux : c'est Édouard Ier qui est à genoux ; Philippe le Bel est assis sur un trône.",
-    "Faux : les deux rois sont debout, face à face.",
-    "Faux : les deux rois sont assis côte à côte sur le trône."
-   ],
-   "explication": "C'est l'inverse : Édouard Ier est à genoux et rend l'hommage. Philippe le Bel, assis, le reçoit.",
-   "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 11 - Support.pdf",
-    "page": 1
-   },
-   "r": "=IBRIxAHzH7BRU1Hc4UHHsxYexgRe9wTSUBDStyF3UEEdk0CfIQAvQUDl1QVP5xEGwhIVUVx2GVHdogUBYDXFdESn8kAUgwBoYB/mWVBasASRgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -374,7 +491,7 @@ JEU.enregistrer("cours", {
     "Vers 1455-1460",
     "En 987"
    ],
-   "explication": "L'hommage est rendu au roi Philippe le Bel : il a donc lieu pendant son règne. 1455-1460 est la date de la peinture, pas de la scène.",
+   "explication": "L'hommage est rendu au roi Philippe le Bel : il a donc lieu pendant son règne, en 1286. 1455-1460 est la date de la peinture, pas de la scène.",
    "indice": "Un hommage se rend à un roi qui règne.",
    "source": {
     "fichier": "cours/histoire/Histoire 5e - Seance 11 - Support.pdf",
@@ -403,6 +520,71 @@ JEU.enregistrer("cours", {
     "url": "https://fr.wikipedia.org/wiki/%C3%89douard_Ier_(roi_d%27Angleterre)"
    },
    "r": "==wDAY1QP0BIGdwFnFAEXcAFd4EHXwwYEZhRY9wTHYEAHYjUZBwBDwgGK4xDtwmQR1wBAQhRM4TZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s08-2-q32",
+   "fiche": "histoire-s08-2-f2",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Édouard Ier rend hommage à Philippe le Bel pour la Normandie.",
+   "corrections": [
+    "Faux : c'est pour la Guyenne, dans le Sud-Ouest ; la Normandie est au roi de France depuis 1204.",
+    "Faux : c'est pour la couronne d'Angleterre elle-même.",
+    "Faux : c'est pour la ville de Paris."
+   ],
+   "explication": "Le roi d'Angleterre a perdu la Normandie en 1204, prise par Philippe Auguste. En 1286, il ne tient plus en France que la Guyenne, et c'est pour elle qu'il rend hommage.",
+   "source": {
+    "theme": "Cours 11 – Étude de document",
+    "titre": "Édouard Ier (roi d'Angleterre)",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/%C3%89douard_Ier_(roi_d%27Angleterre)"
+   },
+   "r": "T0EXcN3HUVhXHohFD0gUiExGEcwNJtwCSFALfVEQM50GVMQSX4iFbQAGDYAIPNBBjZRRB51CakySNcAFSBRCVJwBPsgUEZyQLAFVbgiRHUgU1cgGVUVBasASRgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s08-2-q33",
+   "fiche": "histoire-s08-2-f2",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Que décide Philippe le Bel en 1294, huit ans après l'hommage ?",
+   "choix": [
+    "Il prononce la saisie du duché d'Aquitaine",
+    "Il donne la Normandie à Édouard Ier",
+    "Il cède sa couronne à Édouard Ier",
+    "Il épouse la fille d'Édouard Ier"
+   ],
+   "explication": "En 1294, Philippe le Bel saisit le duché d'Aquitaine : c'est la guerre de Guyenne, jusqu'en 1297. Le seigneur reprend le fief de son vassal, même si ce vassal est roi.",
+   "source": {
+    "theme": "Cours 11 – Étude de document",
+    "titre": "Édouard Ier (roi d'Angleterre)",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/%C3%89douard_Ier_(roi_d%27Angleterre)"
+   },
+   "r": "ldxGMQRBAshHz80JNws9F1gGCYEHWc2FcYBHQohTO4BSm40CaNUAdYhRFsTZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s08-2-q34",
+   "fiche": "histoire-s08-2-f2",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Comment la querelle de 1294 entre Édouard Ier et Philippe le Bel se termine-t-elle ?",
+   "choix": [
+    "Par une paix en 1299 et un mariage : Édouard épouse Marguerite, demi-sœur de Philippe",
+    "Par la conquête de Londres par Philippe le Bel",
+    "Par la bataille de Bouvines",
+    "Par l'arrivée de Jeanne d'Arc"
+   ],
+   "explication": "Le traité de Montreuil-sur-Mer, en 1299, ramène la paix, et Édouard Ier épouse Marguerite de France. La guerre de Guyenne a coûté cher aux Anglais sans rien leur rapporter.",
+   "source": {
+    "theme": "Cours 11 – Étude de document",
+    "titre": "Édouard Ier (roi d'Angleterre)",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/%C3%89douard_Ier_(roi_d%27Angleterre)"
+   },
+   "r": "QJiAFwQGYEgPPdBDj9FEmieHC9wCMYxZeBREcMADbgAAJ4QDAYEWB8xzlmkF1MBAKEB+q6UVS1AJMxwRMNwTIMRSGIiUMx1RAlEAKIFEqwUFVgEAaYEFIISZ",
    "poids": 1
   },
   {
@@ -503,10 +685,10 @@ JEU.enregistrer("cours", {
    "droite": [
     "Tient un livre ouvert",
     "Debout, ils assistent à la scène",
-    "Assis sur un trône, en manteau bleu",
-    "À genoux, en manteau rouge"
+    "Manteau bleu à fleurs de lys et sceptre",
+    "Grand manteau rouge brodé d'or"
    ],
-   "explication": "Philippe le Bel est assis en bleu, Édouard Ier à genoux en rouge. Entre eux, l'homme au livre ; derrière, les témoins debout.",
+   "explication": "Philippe le Bel porte le bleu à fleurs de lys et le sceptre, Édouard Ier le rouge brodé d'or. Entre eux, l'homme au livre ; derrière, les témoins debout.",
    "source": {
     "fichier": "cours/histoire/Histoire 5e - Seance 11 - Support.pdf",
     "page": 1
@@ -553,6 +735,360 @@ JEU.enregistrer("cours", {
    },
    "r": "=IBRIxAAzIAEGYQUHsxTGYgJEFRFBtQLGNQBSJiAFwQGYEgPP5RHm4VRGR0DCYkSMwRKdcAEaIRSLEwBIdzQAE0XB8hRewxFjIlBAkRUasBAGgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
+  },
+  {
+   "id": "histoire-s08-2-q30",
+   "fiche": "histoire-s08-2-f4",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Que sont les Grandes Chroniques de France ?",
+   "choix": [
+    "L'histoire des rois de France, écrite en français par les moines de Saint-Denis",
+    "Un recueil des lois de Philippe le Bel, copié par ses légistes pour tout le royaume",
+    "Le journal personnel de Jean Fouquet",
+    "Une chanson sur les paysans de Verson"
+   ],
+   "explication": "Les Grandes Chroniques de France racontent l'histoire des rois de France depuis leurs origines, en français et non en latin. Elles sont écrites à l'abbaye de Saint-Denis, à partir du travail du moine Primat au XIIIe siècle, et souvent décorées d'enluminures.",
+   "source": {
+    "theme": "Cours 11 – Étude de document",
+    "titre": "Grandes Chroniques de France",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Grandes_Chroniques_de_France"
+   },
+   "r": "=sUHGwRDHAQEbR0D8Y0ANIFNXsBDawRSdogHIFDTVUhXH4QwlewE1QRVLARUMohBAsg6uXUGI1QAHQxLSJiFVZBHeshTccBDjh0FcJkGc8gDO5TZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s08-2-q35",
+   "fiche": "histoire-s08-2-f4",
+   "type": "qcm",
+   "niveau": 1,
+   "enonce": "Dans quelle abbaye écrit-on les Grandes Chroniques de France ?",
+   "choix": [
+    "Saint-Denis",
+    "Cluny",
+    "Le Mont-Saint-Michel",
+    "Saint-Vital de Ravenne"
+   ],
+   "explication": "L'abbaye de Saint-Denis, près de Paris, écrit l'histoire des rois. Le moine Primat en rédige le début vers 1250.",
+   "source": {
+    "theme": "Cours 11 – Étude de document",
+    "titre": "Grandes Chroniques de France",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Grandes_Chroniques_de_France"
+   },
+   "r": "==gSwQ0CQl2QbgwDIESZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s08-2-q36",
+   "fiche": "histoire-s08-2-f4",
+   "type": "vrai_faux",
+   "niveau": 1,
+   "enonce": "Les Grandes Chroniques de France sont écrites en latin.",
+   "corrections": [
+    "Faux : elles sont écrites en français, la langue du pays, et non en latin.",
+    "Faux : elles sont écrites en grec, comme à Constantinople.",
+    "Faux : elles ne contiennent que des images, sans texte."
+   ],
+   "explication": "Elles sont écrites en langue vernaculaire, le français, ce qui est rare pour une histoire officielle au XIIIe siècle. Le latin reste la langue des savants et de l'Église.",
+   "source": {
+    "theme": "Cours 11 – Étude de document",
+    "titre": "Grandes Chroniques de France",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Grandes_Chroniques_de_France"
+   },
+   "r": "==ADLBUAbwhIBV0WI5UAJgQSGIiUZZBDQkhTaYBSmglAbxkAPdgCJ5FNbQhw2+BCckgUGYSDWAVWH0RBPrqUzwhGWUlAMIwAXgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s08-2-q37",
+   "fiche": "histoire-s08-2-f4",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Qui écrit le début des Grandes Chroniques de France, vers 1250 ?",
+   "choix": [
+    "Primat, un moine de Saint-Denis",
+    "Jean Fouquet, un peintre de Tours",
+    "Raoul Glaber, un moine de Bourgogne",
+    "Guillaume de Nogaret, un légiste du roi"
+   ],
+   "explication": "Le moine Primat écrit vers 1250 le Roman des rois, qui va jusqu'à Philippe Auguste. D'autres moines, puis l'entourage de Charles V, continuent après lui.",
+   "source": {
+    "theme": "Cours 11 – Étude de document",
+    "titre": "Grandes Chroniques de France",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Grandes_Chroniques_de_France"
+   },
+   "r": "PYBXDtwKLJxBbYSIVBQERxAAG0RBjNEEVEgGOswDbISZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s08-2-q38",
+   "fiche": "histoire-s08-2-f4",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Pourquoi l'abbaye de Saint-Denis écrit-elle l'histoire des rois de France ?",
+   "choix": [
+    "Pour montrer son importance dans le royaume",
+    "Parce que le pape le lui ordonne",
+    "Pour vendre les livres aux marchands",
+    "Parce que les rois ne savent pas écrire"
+   ],
+   "explication": "L'abbaye, liée aux rois depuis des siècles, justifie ainsi sa place dans le royaume. Écrire l'histoire des rois, c'est aussi dire comment il faut les voir.",
+   "source": {
+    "theme": "Cours 11 – Étude de document",
+    "titre": "Grandes Chroniques de France",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Grandes_Chroniques_de_France"
+   },
+   "r": "ldBGQQBCGwxTXQwYetAVJ5kCFgACGUTHFgAHRdQAcIlGm8VEbJ0APRxEGISZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s08-2-q39",
+   "fiche": "histoire-s08-2-f4",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Combien de manuscrits des Grandes Chroniques antérieurs à la Renaissance nous sont parvenus ?",
+   "choix": [
+    "Plus de 115",
+    "Un seul",
+    "Une dizaine",
+    "Plus de 10 000"
+   ],
+   "explication": "Plus de 115 manuscrits d'avant la Renaissance subsistent. Celui de Charles V (Français 2813) et celui de Charles VII, enluminé par Fouquet (Français 6465), sont à la BnF.",
+   "source": {
+    "theme": "Cours 11 – Étude de document",
+    "titre": "Grandes Chroniques de France",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Grandes_Chroniques_de_France"
+   },
+   "r": "==gS2xBVVgkCPVxEFISZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s08-2-q40",
+   "fiche": "histoire-s08-2-f4",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Pour quel roi le manuscrit enluminé par Jean Fouquet vers 1455-1460 a-t-il été fait ?",
+   "choix": [
+    "Charles VII",
+    "Philippe le Bel",
+    "Charles V",
+    "Louis IX"
+   ],
+   "explication": "Ce manuscrit est attribué à Charles VII, le roi que Jeanne d'Arc a conduit à Reims. Fouquet y peint 51 miniatures, dont l'hommage d'Édouard Ier.",
+   "indice": "Quel roi règne entre 1455 et 1460 ?",
+   "source": {
+    "theme": "Cours 11 – Étude de document",
+    "titre": "Grandes Chroniques de France",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Grandes_Chroniques_de_France"
+   },
+   "r": "==gSKQ2MV41CDQxBBETZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s08-2-q41",
+   "fiche": "histoire-s08-2-f4",
+   "type": "trou",
+   "niveau": 1,
+   "enonce": "Complète avec le lieu et la langue des Grandes Chroniques.",
+   "texte": "Les Grandes Chroniques de France sont écrites à l'abbaye de ___, en ___.",
+   "banque": [
+    "Saint-Denis",
+    "français",
+    "Cluny",
+    "latin"
+   ],
+   "explication": "Saint-Denis, l'abbaye des rois, écrit leur histoire en français. C'est le livre officiel de la monarchie.",
+   "source": {
+    "theme": "Cours 11 – Étude de document",
+    "titre": "Grandes Chroniques de France",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Grandes_Chroniques_de_France"
+   },
+   "r": "==AawxEHPcgzxmyEHMwVqU0MNFQAtgUIYkFAGcQNLlCH",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s08-2-q42",
+   "fiche": "histoire-s08-2-f5",
+   "type": "qcm",
+   "niveau": 1,
+   "enonce": "Pour quelle terre le roi d'Angleterre est-il le vassal du roi de France, après 1259 ?",
+   "choix": [
+    "La Guyenne, dans le Sud-Ouest",
+    "La Normandie",
+    "L'Île-de-France",
+    "La Flandre"
+   ],
+   "explication": "Par le traité de Paris, Henri III garde la Guyenne, l'ancienne Aquitaine, comme fief tenu du roi de France. Il a dû renoncer à la Normandie.",
+   "source": {
+    "theme": "Cours 11 – Étude de document",
+    "titre": "Traité de Paris (1259)",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Trait%C3%A9_de_Paris_(1259)"
+   },
+   "r": "==wFZ1hCTkCRWITIVBQGRpBAOYBSvh0Cbh0FaEiRI4TZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s08-2-q43",
+   "fiche": "histoire-s08-2-f5",
+   "type": "vrai_faux",
+   "niveau": 1,
+   "enonce": "En 1259, le roi d'Angleterre Henri III renonce à la Normandie.",
+   "corrections": [],
+   "explication": "Oui : Henri III abandonne la Normandie, l'Anjou, la Touraine, le Maine et le Poitou, pris par Philippe Auguste. Il garde la Guyenne et rend hommage à Louis IX le 4 décembre 1259.",
+   "source": {
+    "theme": "Cours 11 – Étude de document",
+    "titre": "Traité de Paris (1259)",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Trait%C3%A9_de_Paris_(1259)"
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s08-2-q44",
+   "fiche": "histoire-s08-2-f5",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Que fait le roi de France Philippe VI en 1337 ?",
+   "choix": [
+    "Il saisit la Guyenne",
+    "Il donne la Guyenne au roi d'Angleterre",
+    "Il épouse la reine d'Angleterre",
+    "Il abandonne Paris"
+   ],
+   "explication": "Philippe VI prononce la saisie de la Guyenne. En octobre 1337, Édouard III rompt son lien de vassalité et réclame la couronne de France : la guerre de Cent Ans commence.",
+   "source": {
+    "theme": "Cours 11 – Étude de document",
+    "titre": "Guyenne",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Guyenne"
+   },
+   "r": "==AUQswGUAxGoIVCv0QEc51BOUhRFsTZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s08-2-q45",
+   "fiche": "histoire-s08-2-f5",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Pourquoi la Guyenne est-elle l'une des causes de la guerre de Cent Ans ?",
+   "choix": [
+    "Le roi de France la confisque plusieurs fois à son vassal anglais",
+    "Jeanne d'Arc y est née",
+    "Le pape y réside",
+    "Les Vikings l'ont conquise en 1337"
+   ],
+   "explication": "Un roi n'aime pas rendre hommage à un autre roi, et le roi de France use de son droit de seigneur : saisies en 1294, en 1324, en 1337. La dernière déclenche la guerre.",
+   "source": {
+    "theme": "Cours 11 – Étude de document",
+    "titre": "Guerre de Cent Ans",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Guerre_de_Cent_Ans"
+   },
+   "r": "=AFNbQRCS8BCONwEbADTTUxQBwhRGrqU0shGDUlAbshCbshNBVRFIthHV8wDcgSEVRQGRxQDBMhGF0AAR1wBAQhRM4TZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s08-2-q46",
+   "fiche": "histoire-s08-2-f5",
+   "type": "ordre",
+   "niveau": 2,
+   "enonce": "Remets dans l'ordre les épisodes de la querelle de la Guyenne.",
+   "elements": [
+    "Affaire de la bastide de Saint-Sardos",
+    "Hommage d'Henri III à Louis IX",
+    "Saisie par Philippe VI et début de la guerre de Cent Ans",
+    "Hommage d'Édouard Ier à Philippe le Bel"
+   ],
+   "explication": "1259 : Henri III ; 1286 : Édouard Ier ; 1323-1324 : Saint-Sardos et la confiscation par Charles IV ; 1337 : Philippe VI. Trois quarts de siècle de disputes.",
+   "source": {
+    "theme": "Cours 11 – Étude de document",
+    "titre": "Guerre de Saint-Sardos",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Guerre_de_Saint-Sardos"
+   },
+   "r": "o9hQfpUVFNEH",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s08-2-q47",
+   "fiche": "histoire-s08-2-f5",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "La Guyenne reste anglaise jusqu'en 1558, comme Calais.",
+   "corrections": [
+    "Faux : elle redevient française en 1453, après la bataille de Castillon ; seule Calais reste anglaise jusqu'en 1558.",
+    "Faux : elle redevient française dès 1294.",
+    "Faux : elle n'a jamais appartenu au roi d'Angleterre."
+   ],
+   "explication": "La Guyenne est réunie au domaine du roi de France après Castillon, en 1453, qui met fin à la guerre de Cent Ans. Calais, elle, reste anglaise un siècle de plus.",
+   "source": {
+    "theme": "Cours 11 – Étude de document",
+    "titre": "Guyenne",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Guyenne"
+   },
+   "r": "==wENxFU2hBVVM0CINxFacQLSBhFcARBJEwEIZSWWA1XOxxDHUwEEIFEJAAFa4EVSZALBlAXZ1hDlYEDWc2FZkAHQ0xDNIVCv0gFd6OHfcgRFFkcGRURbQRSLwxGJQu7LQ1XI8kEIwwGxcREAcQUMIwAXgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s08-2-q48",
+   "fiche": "histoire-s08-2-f5",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Qu'ont en commun les années 1294, 1324 et 1337 ?",
+   "choix": [
+    "Le roi de France saisit la Guyenne à son vassal anglais",
+    "Le roi d'Angleterre est couronné roi de France",
+    "Une bataille a lieu à Bouvines",
+    "Jeanne d'Arc délivre une ville"
+   ],
+   "explication": "Philippe le Bel en 1294, Charles IV en 1324, Philippe VI en 1337 : trois rois de France confisquent le fief du roi d'Angleterre. La troisième fois, la guerre de Cent Ans éclate.",
+   "indice": "Trois rois de France, un même fief.",
+   "source": {
+    "theme": "Cours 11 – Étude de document",
+    "titre": "Guerre de Saint-Sardos",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Guerre_de_Saint-Sardos"
+   },
+   "r": "==AUboCTJI1QP8kCHoRAmQQVLohAJ5MrS1QLDBATYlyTHoQSG4SAcQgBRxQDBMhGF0AAR1wBAQhRM4TZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s08-2-q49",
+   "fiche": "histoire-s08-2-f5",
+   "type": "association",
+   "niveau": 2,
+   "enonce": "Relie chaque roi d'Angleterre à l'hommage ou à la saisie qui le concerne.",
+   "gauche": [
+    "Henri III",
+    "Édouard Ier",
+    "Édouard III",
+    "Charles IV de France"
+   ],
+   "droite": [
+    "Rend hommage à Philippe le Bel en 1286",
+    "Rend hommage à Louis IX en 1259",
+    "Confisque l'Aquitaine en 1324, après Saint-Sardos",
+    "Réclame la couronne de France en 1337"
+   ],
+   "explication": "Henri III en 1259, Édouard Ier en 1286 : deux hommages. Charles IV confisque en 1324 ; Édouard III, lui, réclame la couronne en 1337.",
+   "source": {
+    "theme": "Cours 11 – Étude de document",
+    "titre": "Guerre de Saint-Sardos",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Guerre_de_Saint-Sardos"
+   },
+   "r": "==ANvUnXG5TWsolQdlCRe0RSEYnQyclSZlCH",
+   "poids": 1
   }
  ],
  "bonus": [
@@ -566,15 +1102,25 @@ JEU.enregistrer("cours", {
     "editeur": "Wikipédia, l'encyclopédie libre",
     "url": "https://fr.wikipedia.org/wiki/Grandes_Chroniques_de_France"
    }
+  },
+  {
+   "id": "histoire-s08-2-b2",
+   "fiche": "histoire-s08-2-f1",
+   "titre": "Jean Fouquet, le peintre de Tours",
+   "texte": "Jean Fouquet, né vers 1420 à Tours, est l'un des plus grands peintres de la première Renaissance. Vers 1445, il séjourne en Italie et peint le portrait du pape. Revenu à Tours, il peint Charles VII, enlumine les Heures d'Étienne Chevalier et, vers 1455-1460, les 51 miniatures des Grandes Chroniques de France. En 1475, Louis XI lui donne le titre de peintre du roi. Il meurt entre 1478 et 1481.",
+   "source": {
+    "titre": "Jean Fouquet",
+    "editeur": "Wikipédia, l'encyclopédie libre",
+    "url": "https://fr.wikipedia.org/wiki/Jean_Fouquet"
+   }
   }
  ],
  "nonCouvert": [
   "Les indications du professeur sur le document : le cadre de la page 2 est vide, elles sont données en vidéo.",
-  "Ce qu'est un hommage, comment se déroule la cérémonie et ce que les deux personnages se promettent : le fichier ne donne que le titre de la scène.",
-  "Qui est Édouard Ier, d'où il vient et pourquoi il rend hommage à Philippe le Bel.",
-  "Ce que tient l'homme au livre ouvert, qui sont les témoins et ce que signifie leur présence.",
-  "Les réponses rédigées aux deux questions du support (attitude des personnages, scène représentée), faites pendant la vidéo.",
+  "Le déroulement de la cérémonie de l'hommage (gestes, serment, objet remis) et les définitions de vassal et de fief : devoir n°1 et test de la séance 11 ; le jeu ne les interroge jamais et ne garde qu'une question de posture (q27).",
+  "Ce que tient l'homme au livre ouvert et qui sont les témoins : l'image ne le dit pas, le fichier non plus.",
+  "Le lieu exact de l'hommage de 1286 : la page consultée parle d'une mission diplomatique en France, sans nommer la ville.",
   "Ce que raconte le Livre de Philippe le Bel dans les Grandes Chroniques de France.",
-  "Les dates de règne de Philippe le Bel (1285-1314) viennent de la frise des séances 9 et 10 (histoire-s08-1)."
+  "Le mariage d'Aliénor d'Aquitaine (1152), origine de la présence anglaise dans le Sud-Ouest : aucune page vérifiée, seulement la possession des Plantagenêts de 1188 à 1453."
  ]
 });

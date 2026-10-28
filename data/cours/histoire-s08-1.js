@@ -5,48 +5,86 @@ JEU.enregistrer("cours", {
  "fiches": [
   {
    "id": "histoire-s08-1-f1",
-   "notion": "Le domaine royal, autour de Paris, et les principaux fiefs",
-   "titre": "Le domaine royal est autour de Paris",
-   "texte": "La séance « L'émergence d'un État royal » fait repérer sur une carte où se trouvent les principaux fiefs du royaume. Elle donne un exemple : le domaine royal est autour de Paris. Le mot « royal » dit que ce domaine est celui du roi lui-même. La séance précédente, elle, faisait noter de grands duchés et de grands comtés.",
+   "notion": "Le domaine royal : de Paris-Orléans à un tiers du royaume",
+   "titre": "Les terres du roi : de presque rien au tiers de la France",
+   "texte": "En 987, le roi ne tient que l'Île-de-France et l'Orléanais. Pendant deux siècles, ses successeurs grappillent quelques terres, par mariage, achat ou héritage. Puis Philippe Auguste frappe : en 1202, il confisque la Normandie à Jean sans Terre, puis prend l'Anjou, la Touraine, le Poitou. En 1214, ses terres couvrent un tiers de la France.",
    "pointsCles": [
-    "Le domaine royal, le domaine du roi : autour de Paris",
-    "Les principaux fiefs se repèrent sur une carte du royaume",
-    "Rappel de la séance 9 : de grands duchés et de grands comtés"
+    "987 : les terres du roi, en Île-de-France et dans l'Orléanais, ne dépassent pas un département d'aujourd'hui",
+    "Cinq façons d'agrandir le domaine : confiscation, mariage, achat, héritage, conquête",
+    "1185 (traité de Boves) : Artois, Amiens, Vermandois ; 1202-1205 : Normandie, Anjou, Touraine, Poitou, confisqués à Jean sans Terre, roi d'Angleterre jugé félon",
+    "Philippe Auguste quadruple le domaine ; après 1214, il couvre le tiers de la France",
+    "Plus tard : le comté de Toulouse (1271), la Champagne par le mariage de Philippe le Bel (1284), Lyon (1312)"
    ],
-   "dates": [],
+   "astuce": "Le domaine grandit comme une tache d'huile autour de Paris : Normandie à l'ouest, Loire au sud, Champagne à l'est.",
+   "dates": [
+    {
+     "annee": 1202,
+     "evenement": "Philippe Auguste confisque la Normandie à Jean sans Terre"
+    },
+    {
+     "annee": 1214,
+     "evenement": "Après Bouvines, le domaine royal couvre le tiers de la France"
+    }
+   ],
    "lieux": [
-    "Paris"
+    "Paris",
+    "Orléans",
+    "Normandie",
+    "Anjou",
+    "Touraine",
+    "Poitou"
    ],
-   "personnages": [],
+   "personnages": [
+    "Philippe Auguste",
+    "Jean sans Terre"
+   ],
    "vocabulaire": [
     {
-     "mot": "domaine royal",
-     "def": "le domaine du roi lui-même, situé autour de Paris"
+     "mot": "confisquer",
+     "def": "prendre à quelqu'un ses biens par décision de justice"
+    },
+    {
+     "mot": "Plantagenêt",
+     "def": "la famille des rois d'Angleterre qui tiennent de grandes terres en France, comme Jean sans Terre"
+    },
+    {
+     "mot": "héritage",
+     "def": "les biens que l'on reçoit à la mort d'un parent"
     }
    ],
    "schema": null,
    "prerequis": [
-    "histoire-s07-2-f3"
+    "histoire-s07-2-f5"
    ],
    "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 10 - Support.pdf",
-    "page": 1
+    "programme": "L'affirmation de l'État monarchique dans le Royaume des Capétiens et des Valois",
+    "titre": "Domaine royal français",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Domaine_royal_fran%C3%A7ais"
    }
   },
   {
    "id": "histoire-s08-1-f2",
    "notion": "Philippe Auguste (1180-1223) et la bataille de Bouvines (1214)",
-   "titre": "Philippe Auguste, le roi de Bouvines",
-   "texte": "Philippe Auguste règne de 1180 à 1223. Pendant son règne a lieu la bataille de Bouvines, en 1214. La séance en étudie une représentation sur laquelle il faut situer le roi : le roi est donc présent sur l'image de la bataille. Bouvines est le seul combat daté sur la frise avant la guerre de Cent Ans.",
+   "titre": "Bouvines, dimanche 27 juillet 1214",
+   "texte": "Dimanche 27 juillet 1214, à Bouvines. Face au roi de France : l'empereur Otton IV, le comte de Flandre et le comte de Boulogne, alliés du roi d'Angleterre. Dans la mêlée, des fantassins allemands atteignent le roi ; ses chevaliers le dégagent. Le soir, l'empereur fuit, les deux comtes sont prisonniers. Paris fête son roi six jours durant.",
    "pointsCles": [
-    "1180-1223 : règne de Philippe Auguste",
-    "1214 : bataille de Bouvines, pendant ce règne",
-    "Sur la représentation de la bataille, on repère le roi"
+    "Philippe II, né en 1165, roi de 1180 à 1223 ; le chroniqueur Rigord le surnomme « Auguste », celui qui agrandit",
+    "1204 : Château-Gaillard tombe le 6 mars, Rouen le 24 juin ; la Normandie est au roi, puis Poitiers, Loches et Chinon",
+    "27 juillet 1214, Bouvines : environ 7 000 hommes du roi contre 9 000 coalisés ; Ferrand de Flandre et Renaud de Boulogne prisonniers, Otton IV s'enfuit",
+    "Conséquences : Otton perd sa couronne ; Jean sans Terre accepte la trêve de Chinon, puis doit accorder la Grande Charte à ses barons (1215) ; six jours de fêtes à Paris",
+    "Paris, capitale : rues pavées, les Halles (1183), une muraille de plus de 5 km commencée en 1190, la forteresse du Louvre (1202)",
+    "Gouverner : les baillis, officiers payés par le roi, rendent des comptes trois fois par an ; en 1204, le roi des Francs devient officiellement « roi de France »"
    ],
+   "astuce": "Bouvines, un dimanche : le roi affronte un empereur, deux comtes et l'argent d'un roi, et il gagne.",
    "dates": [
     {
      "annee": 1180,
      "evenement": "Début du règne de Philippe Auguste"
+    },
+    {
+     "annee": 1204,
+     "evenement": "Prise de Château-Gaillard et de Rouen : la Normandie est au roi"
     },
     {
      "annee": 1214,
@@ -58,106 +96,340 @@ JEU.enregistrer("cours", {
     }
    ],
    "lieux": [
-    "Bouvines"
+    "Bouvines",
+    "Château-Gaillard",
+    "Rouen",
+    "Paris"
    ],
    "personnages": [
-    "Philippe Auguste"
+    "Philippe Auguste",
+    "Otton IV",
+    "Ferrand de Flandre",
+    "Renaud de Boulogne",
+    "Jean sans Terre",
+    "Guillaume le Breton"
    ],
    "vocabulaire": [
     {
-     "mot": "représentation",
-     "def": "une image qui montre une scène, ici la bataille de Bouvines"
+     "mot": "coalition",
+     "def": "une alliance de plusieurs puissances contre un ennemi commun"
+    },
+    {
+     "mot": "bailli",
+     "def": "un officier nommé et payé par le roi, qui rend la justice et lève ses revenus dans un bailliage"
+    },
+    {
+     "mot": "mêlée",
+     "def": "le moment de la bataille où les deux armées se mélangent au corps à corps"
+    },
+    {
+     "mot": "chroniqueur",
+     "def": "celui qui écrit le récit des événements de son temps, comme Guillaume le Breton, présent à Bouvines"
     }
    ],
    "schema": "histoire-s08-1-s1",
    "prerequis": [
-    "histoire-s07-2-f1"
+    "histoire-s08-1-f1",
+    "histoire-s07-2-f2"
    ],
    "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 10 - Support.pdf",
-    "page": 1
+    "programme": "L'affirmation de l'État monarchique dans le Royaume des Capétiens et des Valois",
+    "titre": "Bataille de Bouvines",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Bataille_de_Bouvines"
    }
   },
   {
    "id": "histoire-s08-1-f3",
-   "notion": "Louis IX (1226-1270) et Philippe le Bel (1285-1314)",
-   "titre": "Deux rois après Philippe Auguste : Louis IX et Philippe le Bel",
-   "texte": "Après Philippe Auguste, la frise retient deux rois. Louis IX règne de 1226 à 1270 : la séance demande ce qui montre son pouvoir. Philippe le Bel règne de 1285 à 1314 : son règne commence au XIIIe siècle et s'achève au XIVe. Entre les deux règnes, la frise laisse un blanc, de 1270 à 1285.",
+   "notion": "Louis IX, le roi justicier (1226-1270)",
+   "titre": "Saint Louis : la justice du roi au-dessus de celle des seigneurs",
+   "texte": "Roi à douze ans, en 1226, Louis IX laisse d'abord gouverner sa mère, Blanche de Castille. D'après son compagnon Joinville, il rend ensuite lui-même la justice, assis sous un chêne, à Vincennes. En 1247, ses enquêteurs parcourent le royaume pour punir les officiers malhonnêtes. En 1266, il crée le gros tournois, une monnaie d'argent valable dans tout le royaume.",
    "pointsCles": [
-    "1226-1270 : Louis IX ; la séance étudie ce qui montre son pouvoir",
-    "1285-1314 : Philippe le Bel, du XIIIe au XIVe siècle",
-    "Entre 1270 et 1285 : aucun repère sur la frise"
+    "Né à Poissy le 25 avril 1214 ; roi le 8 novembre 1226, à douze ans ; sa mère Blanche de Castille assure la régence",
+    "1247 : les enquêteurs royaux recueillent les plaintes contre baillis, sénéchaux et prévôts ; 1254 : grande ordonnance contre les abus des officiers, qui n'ont plus le droit de recevoir des cadeaux",
+    "La justice du roi monte : sa cour de justice devient le Parlement ; 1245, la quarantaine-le-roi freine les guerres privées ; 1261, l'ordalie est abolie",
+    "Monnaie : 1265, la monnaie du roi circule dans tout le royaume ; 24 juillet 1266, le gros tournois d'argent, très imité en Europe",
+    "Paris : la Sainte-Chapelle consacrée le 26 avril 1248, le collège de Sorbonne (1253), l'hospice des Quinze-Vingts (1260)",
+    "Deux croisades (départ d'Aigues-Mortes le 25 août 1248 ; Tunis en 1270) ; mort près de Tunis le 25 août 1270 ; canonisé le 11 août 1297 : « Saint Louis »"
    ],
-   "astuce": "Louis IX finit en 1270, Philippe le Bel commence en 1285 : quinze ans de blanc entre les deux.",
+   "astuce": "Trois outils du roi justicier : les enquêteurs (1247), le Parlement, la monnaie (1266).",
    "dates": [
     {
      "annee": 1226,
-     "evenement": "Début du règne de Louis IX"
+     "evenement": "Louis IX devient roi, à douze ans"
+    },
+    {
+     "annee": 1247,
+     "evenement": "Les enquêteurs royaux parcourent le royaume"
+    },
+    {
+     "annee": 1266,
+     "evenement": "Création du gros tournois"
     },
     {
      "annee": 1270,
-     "evenement": "Fin du règne de Louis IX"
-    },
-    {
-     "annee": 1285,
-     "evenement": "Début du règne de Philippe le Bel"
-    },
-    {
-     "annee": 1314,
-     "evenement": "Fin du règne de Philippe le Bel"
+     "evenement": "Mort de Louis IX près de Tunis"
     }
    ],
-   "lieux": [],
+   "lieux": [
+    "Poissy",
+    "Vincennes",
+    "Paris",
+    "Aigues-Mortes",
+    "Tunis"
+   ],
    "personnages": [
     "Louis IX",
-    "Philippe le Bel"
+    "Blanche de Castille",
+    "Jean de Joinville"
    ],
-   "vocabulaire": [],
+   "vocabulaire": [
+    {
+     "mot": "enquêteur",
+     "def": "un envoyé du roi qui recueille les plaintes contre ses officiers"
+    },
+    {
+     "mot": "régence",
+     "def": "le gouvernement du royaume par un proche du roi, quand celui-ci est trop jeune"
+    },
+    {
+     "mot": "Parlement",
+     "def": "au Moyen Âge, la cour de justice du roi, à Paris"
+    },
+    {
+     "mot": "ordalie",
+     "def": "une ancienne épreuve, comme le duel, censée désigner le coupable ; Louis IX l'interdit en 1261"
+    }
+   ],
    "schema": "histoire-s08-1-s1",
    "prerequis": [
     "histoire-s08-1-f2"
    ],
    "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 10 - Support.pdf",
-    "page": 1
+    "programme": "L'affirmation de l'État monarchique dans le Royaume des Capétiens et des Valois",
+    "titre": "Louis IX",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Louis_IX"
+   }
+  },
+  {
+   "id": "histoire-s08-1-f5",
+   "notion": "Philippe le Bel : légistes, monnaie, États généraux",
+   "titre": "Philippe le Bel, le roi de fer (1285-1314)",
+   "texte": "Philippe IV, dit le Bel, règne de 1285 à 1314. Des légistes, juristes comme Nogaret, le conseillent. Il lève des impôts, manipule la monnaie, défie le pape Boniface VIII. Le 10 avril 1302, à Notre-Dame, il réunit clergé, nobles et villes pour l'appuyer : les premiers États généraux. Le vendredi 13 octobre 1307, tous les Templiers sont arrêtés.",
+   "pointsCles": [
+    "Règne du 5 octobre 1285 au 29 novembre 1314 ; son mariage avec Jeanne de Navarre (1284) lui apporte la Champagne et la Navarre",
+    "Les légistes, conseillers formés au droit (Guillaume de Nogaret, Pierre Flotte), servent le roi plutôt que les seigneurs",
+    "Argent : des impôts nouveaux, y compris sur les biens du clergé ; des manipulations de monnaie qui lui valent le surnom de « faux-monnayeur » ; l'agnel d'or (1311)",
+    "Conflit avec le pape Boniface VIII : 10 avril 1302, premiers États généraux à Notre-Dame de Paris (clergé, noblesse, villes) ; 7 septembre 1303, le pape est bousculé à Anagni par Nogaret",
+    "Vendredi 13 octobre 1307 : arrestation de tous les Templiers, un ordre de chevaliers riche et puissant ; 1312 : Lyon rattachée au royaume (traité de Vienne)",
+    "Flandre : défaite de Courtrai (1302), revanche à Mons-en-Pévèle (1304)"
+   ],
+   "astuce": "Trois dates en 13 : 1302 (États généraux), 1303 (Anagni), 1307 (Templiers, un vendredi 13).",
+   "dates": [
+    {
+     "annee": 1285,
+     "evenement": "Début du règne de Philippe le Bel"
+    },
+    {
+     "annee": 1302,
+     "evenement": "10 avril : premiers États généraux, à Notre-Dame de Paris"
+    },
+    {
+     "annee": 1307,
+     "evenement": "Vendredi 13 octobre : arrestation des Templiers"
+    },
+    {
+     "annee": 1314,
+     "evenement": "Mort de Philippe le Bel"
+    }
+   ],
+   "lieux": [
+    "Paris",
+    "Anagni",
+    "Lyon",
+    "Courtrai"
+   ],
+   "personnages": [
+    "Philippe le Bel",
+    "Guillaume de Nogaret",
+    "Pierre Flotte",
+    "Boniface VIII",
+    "Jeanne de Navarre"
+   ],
+   "vocabulaire": [
+    {
+     "mot": "légiste",
+     "def": "un conseiller du roi formé au droit, qui défend le pouvoir royal"
+    },
+    {
+     "mot": "États généraux",
+     "def": "une assemblée du clergé, de la noblesse et des villes, réunie par le roi"
+    },
+    {
+     "mot": "Templiers",
+     "def": "un ordre de chevaliers, riche et puissant, que Philippe le Bel fait arrêter en 1307"
+    },
+    {
+     "mot": "manipuler la monnaie",
+     "def": "changer le poids ou la valeur des pièces pour enrichir le trésor du roi"
+    }
+   ],
+   "schema": "histoire-s08-1-s1",
+   "prerequis": [
+    "histoire-s08-1-f3"
+   ],
+   "source": {
+    "programme": "L'affirmation de l'État monarchique dans le Royaume des Capétiens et des Valois",
+    "titre": "Philippe IV le Bel",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Philippe_IV_le_Bel"
    }
   },
   {
    "id": "histoire-s08-1-f4",
-   "notion": "La guerre de Cent Ans (1337-1453) et Jeanne d'Arc (1428)",
-   "titre": "Une guerre de plus de cent ans, et Jeanne d'Arc",
-   "texte": "Le dernier repère de la frise est une longue période : la guerre de Cent Ans, de 1337 à 1453. Malgré son nom, elle dure 116 ans. Un personnage est placé au milieu de cette guerre : Jeanne d'Arc, en 1428. Ces repères viennent après tous les rois de la frise, dont le dernier, Philippe le Bel, règne jusqu'en 1314.",
+   "notion": "La guerre de Cent Ans (1337-1453) : Crécy, Poitiers, Azincourt",
+   "titre": "Cent seize ans de guerre entre Valois et Plantagenêts",
+   "texte": "En 1328, Charles IV meurt sans fils ; la couronne va à son cousin Philippe VI de Valois. Édouard III, roi d'Angleterre, petit-fils de Philippe le Bel, la réclame : 1337, la guerre. Trois désastres face aux archers anglais : Crécy (1346), Poitiers (1356), Azincourt (1415). En 1420, le traité de Troyes promet la couronne au roi anglais.",
    "pointsCles": [
-    "1337-1453 : la guerre de Cent Ans, qui dure en fait 116 ans",
-    "1428 : Jeanne d'Arc, pendant la guerre",
-    "Ces repères viennent après le dernier roi de la frise, Philippe le Bel (1314)"
+    "Causes : la succession de 1328 (Valois contre Plantagenêt) et la Guyenne, fief du roi d'Angleterre en France, saisie par Philippe VI en 1337",
+    "26 août 1346, Crécy : les archers gallois d'Édouard III déciment les charges désordonnées de Philippe VI ; environ 1 500 chevaliers français tués ; Calais tombe le 4 août 1347",
+    "19 septembre 1356, Poitiers : le Prince Noir capture le roi Jean II le Bon et son fils ; rançon de trois millions d'écus (traité de Brétigny, 1360)",
+    "Charles V et Du Guesclin reprennent presque tout (1364-1380) ; puis la guerre civile entre Armagnacs et Bourguignons affaiblit la France",
+    "25 octobre 1415, Azincourt : dans la boue, Henri V écrase l'armée du connétable d'Albret ; 21 mai 1420, traité de Troyes : Henri V héritier de Charles VI",
+    "Fin : Orléans (1429), Formigny (1450), Castillon (17 juillet 1453) ; les Anglais ne gardent que Calais, jusqu'en 1558"
    ],
+   "astuce": "C-P-A dans l'ordre : Crécy 1346, Poitiers 1356, Azincourt 1415. Dix ans entre les deux premières, soixante avant la troisième.",
    "dates": [
     {
      "annee": 1337,
      "evenement": "Début de la guerre de Cent Ans"
     },
     {
-     "annee": 1428,
-     "evenement": "Jeanne d'Arc"
+     "annee": 1346,
+     "evenement": "Défaite de Crécy"
+    },
+    {
+     "annee": 1356,
+     "evenement": "Défaite de Poitiers : le roi Jean le Bon est capturé"
+    },
+    {
+     "annee": 1415,
+     "evenement": "Défaite d'Azincourt"
     },
     {
      "annee": 1453,
-     "evenement": "Fin de la guerre de Cent Ans"
+     "evenement": "Victoire de Castillon : fin de la guerre de Cent Ans"
     }
    ],
-   "lieux": [],
-   "personnages": [
-    "Jeanne d'Arc"
+   "lieux": [
+    "Crécy",
+    "Poitiers",
+    "Azincourt",
+    "Calais",
+    "Castillon"
    ],
-   "vocabulaire": [],
+   "personnages": [
+    "Philippe VI de Valois",
+    "Édouard III",
+    "Jean II le Bon",
+    "Charles V",
+    "Bertrand du Guesclin",
+    "Henri V"
+   ],
+   "vocabulaire": [
+    {
+     "mot": "Valois",
+     "def": "la famille de rois qui succède aux Capétiens directs en 1328"
+    },
+    {
+     "mot": "rançon",
+     "def": "la somme payée pour libérer un prisonnier"
+    },
+    {
+     "mot": "connétable",
+     "def": "le chef des armées du roi de France"
+    },
+    {
+     "mot": "trêve",
+     "def": "un arrêt provisoire des combats"
+    }
+   ],
    "schema": "histoire-s08-1-s1",
    "prerequis": [
-    "histoire-s08-1-f3"
+    "histoire-s08-1-f5"
    ],
    "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 10 - Support.pdf",
-    "page": 1
+    "programme": "L'affirmation de l'État monarchique dans le Royaume des Capétiens et des Valois",
+    "titre": "Guerre de Cent Ans",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Guerre_de_Cent_Ans"
+   }
+  },
+  {
+   "id": "histoire-s08-1-f6",
+   "notion": "Jeanne d'Arc : Orléans 1429, Reims, Rouen 1431",
+   "titre": "La Pucelle d'Orléans : dix jours qui renversent la guerre",
+   "texte": "Octobre 1428 : les Anglais assiègent Orléans. Jeanne, jeune fille de Domrémy, arrive à Chinon en février 1429 et convainc Charles VII. Entrée dans Orléans le 29 avril, elle combat ; le 8 mai, les Anglais lèvent le siège. Le 17 juillet, Charles VII est sacré à Reims. Capturée en 1430, elle est brûlée à Rouen le 30 mai 1431.",
+   "pointsCles": [
+    "Née vers 1412 à Domrémy ; à Vaucouleurs, le capitaine Robert de Baudricourt lui donne six hommes d'escorte",
+    "23 février 1429 : arrivée à Chinon ; Charles VII, que ses ennemis moquent comme « roi de Bourges », la reçoit deux jours plus tard",
+    "Orléans, assiégée depuis octobre 1428 : Jeanne y entre le 29 avril avec un convoi de vivres ; forts Saint-Loup (4 mai), des Augustins (6 mai), des Tourelles (7 mai, elle est blessée à l'épaule) ; 8 mai : le siège est levé",
+    "18 juin 1429, Patay : la cavalerie française écrase les archers anglais ; la route de Reims est ouverte ; 17 juillet : Charles VII y est sacré, Jeanne à ses côtés",
+    "23 mai 1430 : capturée à Compiègne par les Bourguignons, vendue aux Anglais dix mille livres ; procès à Rouen (Pierre Cauchon) ; brûlée place du Vieux-Marché le 30 mai 1431, vers dix-neuf ans",
+    "1456 : un second procès la déclare innocente ; 1920 : elle est canonisée"
+   ],
+   "astuce": "Cinq villes dans l'ordre : Domrémy, Chinon, Orléans, Reims, Rouen.",
+   "dates": [
+    {
+     "annee": 1429,
+     "evenement": "8 mai : levée du siège d'Orléans ; 17 juillet : sacre de Charles VII à Reims"
+    },
+    {
+     "annee": 1431,
+     "evenement": "30 mai : Jeanne d'Arc est brûlée à Rouen"
+    }
+   ],
+   "lieux": [
+    "Domrémy",
+    "Vaucouleurs",
+    "Chinon",
+    "Orléans",
+    "Patay",
+    "Reims",
+    "Compiègne",
+    "Rouen"
+   ],
+   "personnages": [
+    "Jeanne d'Arc",
+    "Charles VII",
+    "Robert de Baudricourt",
+    "Jean d'Orléans, dit Dunois",
+    "Pierre Cauchon"
+   ],
+   "vocabulaire": [
+    {
+     "mot": "siège",
+     "def": "l'encerclement d'une ville pour la forcer à se rendre"
+    },
+    {
+     "mot": "lever le siège",
+     "def": "abandonner l'encerclement d'une ville"
+    },
+    {
+     "mot": "Bourguignons",
+     "def": "le parti du duc de Bourgogne, allié des Anglais pendant la guerre de Cent Ans"
+    }
+   ],
+   "schema": "histoire-s08-1-s1",
+   "prerequis": [
+    "histoire-s08-1-f4"
+   ],
+   "source": {
+    "programme": "L'affirmation de l'État monarchique dans le Royaume des Capétiens et des Valois",
+    "titre": "Jeanne d'Arc",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Jeanne_d%27Arc"
    }
   }
  ],
@@ -257,7 +529,7 @@ JEU.enregistrer("cours", {
     "Parce que Hugues Capet y a été élu roi en 987",
     "Parce que c'est la ville du seigneur de Wismes"
    ],
-   "explication": "Le domaine royal est autour de Paris. Bouvines est ailleurs, et la frise ne dit pas où Hugues Capet est élu.",
+   "explication": "Le domaine royal est autour de Paris. Bouvines est ailleurs, et Hugues Capet a été élu à Senlis.",
    "source": {
     "fichier": "cours/histoire/Histoire 5e - Seance 10 - Support.pdf",
     "page": 1
@@ -306,6 +578,29 @@ JEU.enregistrer("cours", {
     "url": "https://fr.wikipedia.org/wiki/Domaine_royal_fran%C3%A7ais"
    },
    "r": "SQESccxNSVtpVRADe80FcoCWWsFSOtBCDoRAuYxGEcgFIk0ASthKCdRFetwAG1VSBkyEcbaGDYSSLIFHm0gFc91D/Y0ANIVNHoREAARSCtxGcYSXFZUht2hEGpBAo4BFFFgAM40AbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s08-1-q38",
+   "fiche": "histoire-s08-1-f1",
+   "type": "qcm_multiple",
+   "niveau": 2,
+   "enonce": "Par quels moyens les Capétiens agrandissent-ils le domaine royal ? (plusieurs réponses)",
+   "choix": [
+    "Par des mariages avec des héritières de grands fiefs",
+    "Par des achats de terres",
+    "En confisquant les fiefs de vassaux félons",
+    "En vendant Paris à l'empereur",
+    "En rendant la Normandie aux Anglais"
+   ],
+   "explication": "Mariage, achat, confiscation, héritage et conquête : cinq façons de grandir. Philippe le Bel gagne ainsi la Champagne par son mariage, et Philippe Auguste la Normandie par confiscation.",
+   "source": {
+    "theme": "Cours 10 – Émergence d’un État royal fort",
+    "titre": "Domaine royal français",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Domaine_royal_fran%C3%A7ais"
+   },
+   "r": "=gyRG8hBCYcsOMWVQQlXd4AEGxgFnFwEAwxFJ1hCeg0NDRAQc1hBAggBRcGHwcUWTpxCdAQD30AAR1QHbcgDKMxZBARAVNAC+0kXKBzSAw1SOxhAIgAAgIFEBUlAMwxxxGwNEdBnubwTVMQDSRyFDQQVCwQCOshGiAURGhkCPRxB5AFH",
    "poids": 1
   },
   {
@@ -363,25 +658,6 @@ JEU.enregistrer("cours", {
     "url": "https://fr.wikipedia.org/wiki/Bataille_de_Bouvines"
    },
    "r": "NdhGxgUEQFUCBcSQNIlLdcQRQ0RSc4gAIBDWLAVWbAQFGVUAuHLHJkBEJ1hCBg0NIV0Yk5UAJIRH9c2FAQBHfgwAdcxDj9FEQ91CfswAO5TZ",
-   "poids": 1
-  },
-  {
-   "id": "histoire-s08-1-q12",
-   "fiche": "histoire-s08-1-f2",
-   "type": "vrai_faux",
-   "niveau": 2,
-   "enonce": "Philippe Auguste règne de 1226 à 1270.",
-   "corrections": [
-    "Faux : il règne de 1180 à 1223 ; 1226-1270, c'est le règne de Louis IX.",
-    "Faux : il règne de 1285 à 1314.",
-    "Faux : il est élu roi en 987."
-   ],
-   "explication": "Philippe Auguste règne de 1180 à 1223. Les dates 1226-1270 sont celles de Louis IX.",
-   "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 10 - Support.pdf",
-    "page": 1
-   },
-   "r": "=MRTcBjCNYBXYFwIGNQDSJCHS0stDk0CDIFHwgkQW1gQfFFVY9VcAdEVVpUSd1FQZNWjmWRHW51VGxgFndxGC0tsb40AbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -469,23 +745,42 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "histoire-s08-1-q18",
-   "fiche": "histoire-s08-1-f3",
+   "id": "histoire-s08-1-q39",
+   "fiche": "histoire-s08-1-f2",
    "type": "qcm",
-   "niveau": 1,
-   "enonce": "Quel roi règne de 1285 à 1314 ?",
+   "niveau": 2,
+   "enonce": "Comment Philippe Auguste se fait-il obéir dans ses terres, loin de Paris ?",
    "choix": [
-    "Philippe le Bel",
-    "Louis IX",
-    "Philippe Auguste",
-    "Hugues Capet"
+    "Par des baillis, payés par lui, qui lui rendent des comptes",
+    "Par les grands seigneurs, qui gouvernent à sa place",
+    "Par des missi dominici envoyés par deux, comme Charlemagne",
+    "Par les paysans, élus dans chaque village"
    ],
-   "explication": "Philippe le Bel règne de 1285 à 1314. C'est le dernier roi de la frise.",
+   "explication": "Avant de partir en croisade, en 1190, le roi organise son royaume : des baillis, officiers nommés et payés par lui, rendent la justice et lèvent ses revenus. Ils viennent rendre des comptes à Paris trois fois par an.",
    "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 10 - Support.pdf",
-    "page": 1
+    "theme": "Cours 10 – Émergence d’un État royal fort",
+    "titre": "Philippe II Auguste",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Philippe_II_Auguste"
    },
-   "r": "=skAKADSmEURQ1lHGowDBISZ",
+   "r": "=MlGLshAFwiTFZESK8kEIwgFpcxBFxBBF4kBHkxYBwAQB5UHHYRSB4esMQQBRVUHG4BBqw0BV41CLYEFIISZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s08-1-q40",
+   "fiche": "histoire-s08-1-f2",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "En 1204, Philippe Auguste prend la Normandie au roi d'Angleterre Jean sans Terre.",
+   "corrections": [],
+   "explication": "Oui : Château-Gaillard tombe le 6 mars 1204 et Rouen se rend le 24 juin, après quarante jours de siège. La Normandie, anglaise depuis 1066, revient au roi de France.",
+   "source": {
+    "theme": "Cours 10 – Émergence d’un État royal fort",
+    "titre": "Philippe II Auguste",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Philippe_II_Auguste"
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -501,45 +796,6 @@ JEU.enregistrer("cours", {
     "page": 1
    },
    "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
-   "id": "histoire-s08-1-q20",
-   "fiche": "histoire-s08-1-f3",
-   "type": "qcm",
-   "niveau": 2,
-   "enonce": "Lequel de ces deux rois règne avant l'autre ?",
-   "choix": [
-    "Louis IX, avant Philippe le Bel",
-    "Philippe le Bel, avant Louis IX",
-    "Ils règnent en même temps",
-    "Aucun des deux n'est sur la frise"
-   ],
-   "explication": "Louis IX règne de 1226 à 1270, Philippe le Bel de 1285 à 1314. Louis IX vient donc en premier.",
-   "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 10 - Support.pdf",
-    "page": 1
-   },
-   "r": "PkAUv5kCKYEDCczGZwQHhkkGBMhHi0QStRmTc8wEG4TZ",
-   "poids": 1
-  },
-  {
-   "id": "histoire-s08-1-q21",
-   "fiche": "histoire-s08-1-f3",
-   "type": "vrai_faux",
-   "niveau": 2,
-   "enonce": "Philippe le Bel règne entièrement au XIVe siècle.",
-   "corrections": [
-    "Faux : son règne commence en 1285, au XIIIe siècle, et s'achève en 1314, au XIVe.",
-    "Faux : il règne entièrement au XIIIe siècle.",
-    "Faux : il règne au XIIe siècle."
-   ],
-   "explication": "1285 appartient au XIIIe siècle et 1314 au XIVe. Le règne de Philippe le Bel est à cheval sur les deux.",
-   "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 10 - Support.pdf",
-    "page": 1
-   },
-   "r": "bsEXiQCP9UFBI40QGlFccU0WI5kCQ4sqaQyESZRVFwgTDdBBgUopc5lTK8yLgoyZHQRRZRUUc5lUGYSDAY1QLIwCJogUiwhENb7AJBAABgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -590,48 +846,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "histoire-s08-1-q25",
-   "fiche": "histoire-s08-1-f3",
-   "type": "trou",
-   "niveau": 1,
-   "enonce": "Complète avec les dates de la frise.",
-   "texte": "Louis IX règne de 1226 à ___ ; Philippe le Bel règne de ___ à 1314.",
-   "banque": [
-    "1270",
-    "1285",
-    "1223",
-    "1337"
-   ],
-   "explication": "Louis IX règne jusqu'en 1270. Philippe le Bel commence à régner en 1285.",
-   "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 10 - Support.pdf",
-    "page": 1
-   },
-   "r": "==AKss0WXBUWhZXSo9gXYR1VLlCH",
-   "poids": 1
-  },
-  {
-   "id": "histoire-s08-1-q26",
-   "fiche": "histoire-s08-1-f3",
-   "type": "vrai_faux",
-   "niveau": 2,
-   "enonce": "Philippe le Bel est un roi faible, qui laisse les grands seigneurs gouverner le royaume à sa place.",
-   "corrections": [
-    "Faux : il renforce le pouvoir du roi, aidé de conseillers juristes, les légistes.",
-    "Faux : il laisse l'empereur germanique gouverner le royaume à sa place.",
-    "Faux : il abandonne le royaume pour aller vivre en Angleterre."
-   ],
-   "explication": "Philippe le Bel, roi de 1285 à 1314, s'entoure de légistes, des conseillers qui connaissent bien le droit. Avec eux, il renforce beaucoup le pouvoir du roi face aux grands seigneurs.",
-   "source": {
-    "theme": "Cours 10 – Émergence d’un État royal fort",
-    "titre": "Philippe IV le Bel",
-    "editeur": "Wikipédia",
-    "url": "https://fr.wikipedia.org/wiki/Philippe_IV_le_Bel"
-   },
-   "r": "=QBUpFAERYAGOcMregEMIlQFB0hCSUBAAIDGVZxBUUgAGcxGtIkBVgkCP9cpNshJSlFDaMQSbsgUaoiQTAkQe80AKk0FkAgGDsBFb40AbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
    "id": "histoire-s08-1-q27",
    "fiche": "histoire-s08-1-f3",
    "type": "qcm",
@@ -654,6 +868,258 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
+   "id": "histoire-s08-1-q41",
+   "fiche": "histoire-s08-1-f3",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Qu'envoie Louis IX dans tout le royaume en 1247 ?",
+   "choix": [
+    "Des enquêteurs qui écoutent les plaintes",
+    "Des percepteurs qui lèvent un nouvel impôt",
+    "Des chevaliers chargés de reprendre la Normandie",
+    "Des baillis chargés de vendre les forêts du roi"
+   ],
+   "explication": "Les enquêteurs royaux recueillent les plaintes contre les baillis, sénéchaux et prévôts, et réparent les abus. En 1254, une grande ordonnance interdit à ces officiers de recevoir des cadeaux.",
+   "source": {
+    "theme": "Cours 10 – Émergence d’un État royal fort",
+    "titre": "Louis IX",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Louis_IX"
+   },
+   "r": "=AlBAEwHA8wACgEMIlQFZBgCSMhBR4esVxAAAkUHdcQD3copAxFAKYUFMYTZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s08-1-q42",
+   "fiche": "histoire-s08-1-f3",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Le gros tournois, créé par Louis IX en 1266, est une pièce d'or.",
+   "corrections": [
+    "Faux : c'est une pièce d'argent, qui vaut douze deniers, soit un sou.",
+    "Faux : c'est une pièce de cuivre sans valeur.",
+    "Faux : le gros tournois n'est pas une monnaie mais un impôt."
+   ],
+   "explication": "Le gros tournois est frappé en argent, environ quatre grammes, et vaut un sou. Louis IX crée aussi un écu d'or, qui, lui, est un échec.",
+   "source": {
+    "theme": "Cours 10 – Émergence d’un État royal fort",
+    "titre": "Gros tournois",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Gros_tournois"
+   },
+   "r": "==gPPsEQC1xTIMRSG4SHGUUWCsxCGwRDn0AAPhVALYkEcMRMSxBEEEVRaEwFPEDTCFVDLwgzlCgAndxGQUVBasASRgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s08-1-q43",
+   "fiche": "histoire-s08-1-f3",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Pourquoi une monnaie du roi valable dans tout le royaume renforce-t-elle son pouvoir ?",
+   "choix": [
+    "Elle vaut partout, celle des seigneurs seulement chez eux",
+    "Elle est frappée en or massif",
+    "Elle porte le nom de Jeanne d'Arc",
+    "Les seigneurs n'ont plus le droit de garder de l'argent"
+   ],
+   "explication": "En 1265, le roi fait confirmer que sa monnaie a cours dans tout le royaume. Le gros tournois est si bien reçu que seigneurs et abbayes l'imitent : la monnaie du roi devient la référence.",
+   "indice": "Qui peut utiliser la monnaie du roi, et où ?",
+   "source": {
+    "theme": "Cours 10 – Émergence d’un État royal fort",
+    "titre": "Gros tournois",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Gros_tournois"
+   },
+   "r": "=0kCdYSDfAVRN8kEIwwHi4BAAYQUawhGXYAJEBgRN0hCCYEDesyFWUUWFwRAbAQCz0QEAxEGPNgCFcTZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s08-1-q44",
+   "fiche": "histoire-s08-1-f3",
+   "type": "trou",
+   "niveau": 1,
+   "enonce": "Complète avec les repères de Louis IX.",
+   "texte": "Louis IX règne de 1226 à ___ ; d'après Joinville, il rend la justice assis sous un ___, à Vincennes.",
+   "banque": [
+    "1270",
+    "chêne",
+    "1314",
+    "donjon"
+   ],
+   "explication": "Louis IX règne jusqu'à sa mort, près de Tunis, en 1270. Son contemporain Jean de Joinville raconte qu'il rendait la justice assis sous un chêne, à Vincennes.",
+   "source": {
+    "theme": "Cours 10 – Émergence d’un État royal fort",
+    "titre": "Château de Vincennes",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Ch%C3%A2teau_de_Vincennes"
+   },
+   "r": "ogzVUcAxsqxChZXSo9gXYR1VLlCH",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s08-1-q18",
+   "fiche": "histoire-s08-1-f5",
+   "type": "qcm",
+   "niveau": 1,
+   "enonce": "Quel roi règne de 1285 à 1314 ?",
+   "choix": [
+    "Philippe le Bel",
+    "Louis IX",
+    "Philippe Auguste",
+    "Hugues Capet"
+   ],
+   "explication": "Philippe le Bel règne de 1285 à 1314. C'est le dernier roi de la frise.",
+   "source": {
+    "fichier": "cours/histoire/Histoire 5e - Seance 10 - Support.pdf",
+    "page": 1
+   },
+   "r": "=skAKADSmEURQ1lHGowDBISZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s08-1-q20",
+   "fiche": "histoire-s08-1-f5",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Lequel de ces deux rois règne avant l'autre ?",
+   "choix": [
+    "Louis IX, avant Philippe le Bel",
+    "Philippe le Bel, avant Louis IX",
+    "Ils règnent en même temps",
+    "Aucun des deux n'est sur la frise"
+   ],
+   "explication": "Louis IX règne de 1226 à 1270, Philippe le Bel de 1285 à 1314. Louis IX vient donc en premier.",
+   "source": {
+    "fichier": "cours/histoire/Histoire 5e - Seance 10 - Support.pdf",
+    "page": 1
+   },
+   "r": "PkAUv5kCKYEDCczGZwQHhkkGBMhHi0QStRmTc8wEG4TZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s08-1-q21",
+   "fiche": "histoire-s08-1-f5",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Philippe le Bel règne entièrement au XIVe siècle.",
+   "corrections": [
+    "Faux : son règne commence en 1285, au XIIIe siècle, et s'achève en 1314, au XIVe.",
+    "Faux : il règne entièrement au XIIIe siècle.",
+    "Faux : il règne au XIIe siècle."
+   ],
+   "explication": "1285 appartient au XIIIe siècle et 1314 au XIVe. Le règne de Philippe le Bel est à cheval sur les deux.",
+   "source": {
+    "fichier": "cours/histoire/Histoire 5e - Seance 10 - Support.pdf",
+    "page": 1
+   },
+   "r": "bsEXiQCP9UFBI40QGlFccU0WI5kCQ4sqaQyESZRVFwgTDdBBgUopc5lTK8yLgoyZHQRRZRUUc5lUGYSDAY1QLIwCJogUiwhENb7AJBAABgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s08-1-q25",
+   "fiche": "histoire-s08-1-f5",
+   "type": "trou",
+   "niveau": 1,
+   "enonce": "Complète avec les dates de la frise.",
+   "texte": "Louis IX règne de 1226 à ___ ; Philippe le Bel règne de ___ à 1314.",
+   "banque": [
+    "1270",
+    "1285",
+    "1223",
+    "1337"
+   ],
+   "explication": "Louis IX règne jusqu'en 1270. Philippe le Bel commence à régner en 1285.",
+   "source": {
+    "fichier": "cours/histoire/Histoire 5e - Seance 10 - Support.pdf",
+    "page": 1
+   },
+   "r": "==AKss0WXBUWhZXSo9gXYR1VLlCH",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s08-1-q26",
+   "fiche": "histoire-s08-1-f5",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Philippe le Bel est un roi faible, qui laisse les grands seigneurs gouverner le royaume à sa place.",
+   "corrections": [
+    "Faux : il renforce le pouvoir du roi, aidé de conseillers juristes, les légistes.",
+    "Faux : il laisse l'empereur germanique gouverner le royaume à sa place.",
+    "Faux : il abandonne le royaume pour aller vivre en Angleterre."
+   ],
+   "explication": "Philippe le Bel, roi de 1285 à 1314, s'entoure de légistes, des conseillers qui connaissent bien le droit. Avec eux, il renforce beaucoup le pouvoir du roi face aux grands seigneurs.",
+   "source": {
+    "theme": "Cours 10 – Émergence d’un État royal fort",
+    "titre": "Philippe IV le Bel",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Philippe_IV_le_Bel"
+   },
+   "r": "=QBUpFAERYAGOcMregEMIlQFB0hCSUBAAIDGVZxBUUgAGcxGtIkBVgkCP9cpNshJSlFDaMQSbsgUaoiQTAkQe80AKk0FkAgGDsBFb40AbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s08-1-q45",
+   "fiche": "histoire-s08-1-f5",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Que se passe-t-il à Notre-Dame de Paris le 10 avril 1302 ?",
+   "choix": [
+    "Les premiers États généraux du royaume",
+    "Le sacre de Philippe le Bel",
+    "L'arrestation des Templiers",
+    "La signature de la paix avec l'Angleterre"
+   ],
+   "explication": "Philippe le Bel y réunit le clergé, la noblesse et des représentants des villes : c'est la première réunion des États généraux. Les trois ordres lui apportent leur soutien contre le pape.",
+   "source": {
+    "theme": "Cours 10 – Émergence d’un État royal fort",
+    "titre": "États généraux de 1302",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/%C3%89tats_g%C3%A9n%C3%A9raux_de_1302"
+   },
+   "r": "==wVAgBBIcBAAgkNJVUTY9QHPX6BbTYFVZRAQ0x5sK1GxgEDYhEHfYUFM4TZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s08-1-q46",
+   "fiche": "histoire-s08-1-f5",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Pourquoi Philippe le Bel réunit-il clergé, nobles et villes en 1302 ?",
+   "choix": [
+    "Pour qu'ils l'appuient dans son bras de fer avec le pape Boniface VIII",
+    "Pour leur annoncer la fin de la guerre de Cent Ans",
+    "Pour élire un nouveau roi",
+    "Pour partager le domaine royal entre eux"
+   ],
+   "explication": "Le pape affirme que son pouvoir dépasse celui des rois ; Philippe le Bel veut montrer que tout son royaume est derrière lui. Les trois ordres approuvent le roi et écrivent au pape et aux cardinaux.",
+   "indice": "Contre qui le roi cherche-t-il des appuis ?",
+   "source": {
+    "theme": "Cours 10 – Émergence d’un État royal fort",
+    "titre": "États généraux de 1302",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/%C3%89tats_g%C3%A9n%C3%A9raux_de_1302"
+   },
+   "r": "N9yLgQyZXYBBTgxBB0iUNMDTVUBSC8UBD8xEnBAEDUFFN4EHToRINsgWe5EHIcQDSNDHQwAABkxDI5BSwEEDSg1HPRxEGISZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s08-1-q47",
+   "fiche": "histoire-s08-1-f5",
+   "type": "vrai_faux",
+   "niveau": 1,
+   "enonce": "Le vendredi 13 octobre 1307, Philippe le Bel fait arrêter les Templiers dans tout le royaume.",
+   "corrections": [],
+   "explication": "Oui : le même jour, tous les Templiers de France sont arrêtés sur ordre du roi. L'ordre, riche et puissant, est ensuite supprimé, et son dernier maître, Jacques de Molay, meurt sur le bûcher en 1314.",
+   "source": {
+    "theme": "Cours 10 – Émergence d’un État royal fort",
+    "titre": "Philippe IV le Bel",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Philippe_IV_le_Bel"
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
    "id": "histoire-s08-1-q28",
    "fiche": "histoire-s08-1-f4",
    "type": "qcm",
@@ -671,21 +1137,6 @@ JEU.enregistrer("cours", {
     "page": 1
    },
    "r": "NFVVaNUZ",
-   "poids": 1
-  },
-  {
-   "id": "histoire-s08-1-q29",
-   "fiche": "histoire-s08-1-f4",
-   "type": "vrai_faux",
-   "niveau": 1,
-   "enonce": "Jeanne d'Arc intervient en 1428, pendant la guerre de Cent Ans.",
-   "corrections": [],
-   "explication": "Oui : 1428 se situe entre 1337 et 1453. Jeanne d'Arc apparaît pendant la guerre de Cent Ans.",
-   "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 10 - Support.pdf",
-    "page": 1
-   },
-   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -750,49 +1201,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "histoire-s08-1-q33",
-   "fiche": "histoire-s08-1-f4",
-   "type": "qcm",
-   "niveau": 1,
-   "enonce": "Que fait Jeanne d'Arc pendant la guerre de Cent Ans ?",
-   "choix": [
-    "Elle mène l'armée du roi de France et délivre Orléans",
-    "Elle négocie la paix entre le roi de France et le roi d'Angleterre",
-    "Elle gagne la bataille de Bouvines",
-    "Elle devient reine de France"
-   ],
-   "explication": "Jeanne d'Arc conduit les troupes de Charles VII et fait lever le siège d'Orléans, tenu par les Anglais. Capturée par les Bourguignons, alliés des Anglais, elle leur est ensuite vendue.",
-   "source": {
-    "theme": "Cours 10 – Émergence d’un État royal fort",
-    "titre": "Jeanne d'Arc",
-    "editeur": "Wikipédia",
-    "url": "https://fr.wikipedia.org/wiki/Jeanne_d%27Arc"
-   },
-   "r": "=0UAGIChmm1Xh80AU8xGrsttBUVBM4kCRYgIfNSFIpwTPkwGSJjFVBA3ySAHOUFBjh0Cd6+APNgCFcTZ",
-   "poids": 1
-  },
-  {
-   "id": "histoire-s08-1-q34",
-   "fiche": "histoire-s08-1-f4",
-   "type": "qcm_multiple",
-   "niveau": 2,
-   "enonce": "Quels repères de la frise se situent après la fin du règne de Philippe le Bel, en 1314 ? (plusieurs réponses)",
-   "choix": [
-    "Le début de la guerre de Cent Ans",
-    "Jeanne d'Arc",
-    "La fin de la guerre de Cent Ans",
-    "La bataille de Bouvines",
-    "Le règne de Louis IX"
-   ],
-   "explication": "1337, 1428 et 1453 viennent après 1314. Bouvines (1214) et Louis IX (1226-1270) sont plus anciens.",
-   "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 10 - Support.pdf",
-    "page": 1
-   },
-   "r": "ockBfgiTbwRDA0AAR1wCdQxAcUxZTkRRQURSAYAFIJSYHlxDN0xJB1gUiwxGEAxOLJUTBYgANExWI1yTDIQSXUDAQAhERhgAPdBDjlFEXRYrLY0AlAFH",
-   "poids": 1
-  },
-  {
    "id": "histoire-s08-1-q35",
    "fiche": "histoire-s08-1-f4",
    "type": "trou",
@@ -814,8 +1222,110 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "histoire-s08-1-q36",
+   "id": "histoire-s08-1-q48",
    "fiche": "histoire-s08-1-f4",
+   "type": "ordre",
+   "niveau": 2,
+   "enonce": "Remets ces trois défaites françaises dans l'ordre du temps.",
+   "elements": [
+    "Azincourt",
+    "Crécy",
+    "Poitiers",
+    "Traité de Troyes"
+   ],
+   "explication": "Crécy en 1346, Poitiers en 1356, Azincourt en 1415, puis le traité de Troyes en 1420. Trois défaites de la chevalerie française face aux archers anglais.",
+   "source": {
+    "theme": "Cours 10 – Émergence d’un État royal fort",
+    "titre": "Guerre de Cent Ans",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Guerre_de_Cent_Ans"
+   },
+   "r": "o5hQfpEVFNEH",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s08-1-q49",
+   "fiche": "histoire-s08-1-f4",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Que se passe-t-il à Poitiers, le 19 septembre 1356 ?",
+   "choix": [
+    "Le roi Jean le Bon est fait prisonnier",
+    "Jeanne d'Arc délivre la ville",
+    "Philippe Auguste bat l'empereur",
+    "Les Anglais perdent Calais"
+   ],
+   "explication": "Le Prince Noir, fils du roi d'Angleterre, capture Jean II le Bon et son fils Philippe. Le roi n'est libéré qu'en 1360, contre une rançon de trois millions d'écus d'or.",
+   "source": {
+    "theme": "Cours 10 – Émergence d’un État royal fort",
+    "titre": "Bataille de Poitiers (1356)",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Bataille_de_Poitiers_(1356)"
+   },
+   "r": "==wUbsgBcYALexwRd50GPcwDSNTAQU0GesiTK4BStwEA/1wBAQhRM4TZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s08-1-q50",
+   "fiche": "histoire-s08-1-f4",
+   "type": "vrai_faux",
+   "niveau": 3,
+   "enonce": "À Crécy, en 1346, l'armée française l'emporte grâce à ses arbalétriers génois.",
+   "corrections": [
+    "Faux : les Français sont écrasés ; les arbalétriers génois, gênés par la pluie, tirent mal, et les archers anglais fauchent les charges.",
+    "Faux : la bataille de Crécy se termine sans vainqueur.",
+    "Faux : à Crécy, ce sont les Anglais qui ont des arbalétriers génois."
+   ],
+   "explication": "Le 26 août 1346, les archers gallois d'Édouard III déciment les charges désordonnées de la chevalerie française ; environ 1 500 chevaliers meurent. Philippe VI, blessé, quitte le champ de bataille.",
+   "source": {
+    "theme": "Cours 10 – Émergence d’un État royal fort",
+    "titre": "Bataille de Crécy",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Bataille_de_Cr%C3%A9cy"
+   },
+   "r": "=gwUH1hCVohIFZQFetwAGJxBX8SEAQwERpxBO4xDtwURG91CHUAFIIFNXkRRBQRSCNwEFMWWLA1XHshRKxwGy4RBFRRHJxhDCgEMEa6WH2KCGpkGbgCHcbqERpBHKshG3QopZxEDdcgRacxKS5URGgtqd4AALou7FF0QBwhRVAwEgH7GEcwNJ1hCegUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s08-1-q29",
+   "fiche": "histoire-s08-1-f6",
+   "type": "vrai_faux",
+   "niveau": 1,
+   "enonce": "Jeanne d'Arc intervient en 1428, pendant la guerre de Cent Ans.",
+   "corrections": [],
+   "explication": "Oui : 1428 se situe entre 1337 et 1453. Jeanne d'Arc apparaît pendant la guerre de Cent Ans.",
+   "source": {
+    "fichier": "cours/histoire/Histoire 5e - Seance 10 - Support.pdf",
+    "page": 1
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s08-1-q33",
+   "fiche": "histoire-s08-1-f6",
+   "type": "qcm",
+   "niveau": 1,
+   "enonce": "Que fait Jeanne d'Arc pendant la guerre de Cent Ans ?",
+   "choix": [
+    "Elle mène l'armée du roi de France et délivre Orléans",
+    "Elle négocie la paix entre le roi de France et le roi d'Angleterre",
+    "Elle gagne la bataille de Bouvines",
+    "Elle devient reine de France"
+   ],
+   "explication": "Jeanne d'Arc conduit les troupes de Charles VII et fait lever le siège d'Orléans, tenu par les Anglais. Capturée par les Bourguignons, alliés des Anglais, elle leur est ensuite vendue.",
+   "source": {
+    "theme": "Cours 10 – Émergence d’un État royal fort",
+    "titre": "Jeanne d'Arc",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Jeanne_d%27Arc"
+   },
+   "r": "=0UAGIChmm1Xh80AU8xGrsttBUVBM4kCRYgIfNSFIpwTPkwGSJjFVBA3ySAHOUFBjh0Cd6+APNgCFcTZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s08-1-q36",
+   "fiche": "histoire-s08-1-f6",
    "type": "vrai_faux",
    "niveau": 2,
    "enonce": "Pendant la guerre de Cent Ans, Jeanne d'Arc combat du côté du roi d'Angleterre.",
@@ -833,6 +1343,118 @@ JEU.enregistrer("cours", {
    },
    "r": "=8QZcZwCa8hDHoRFaYjQHUhXHz6DKUwEnFwBQARHJphCSthKMlgUD9yTVMQBSJCABsgGSkkQmsjPj5FAZ91DHUiRFdBJcQxFzEFDK80GHETDAkVDcoRCWkkBmABGKYRUMIwAXgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
+  },
+  {
+   "id": "histoire-s08-1-q51",
+   "fiche": "histoire-s08-1-f6",
+   "type": "trou",
+   "niveau": 1,
+   "enonce": "Complète le parcours de Jeanne d'Arc.",
+   "texte": "Jeanne d'Arc fait lever le siège d'___ le 8 mai 1429 ; elle est brûlée à ___ le 30 mai 1431.",
+   "banque": [
+    "Orléans",
+    "Rouen",
+    "Paris",
+    "Reims"
+   ],
+   "explication": "Orléans est délivrée le 8 mai 1429, dix jours après l'arrivée de Jeanne. Deux ans plus tard, elle meurt sur le bûcher à Rouen.",
+   "source": {
+    "theme": "Cours 10 – Émergence d’un État royal fort",
+    "titre": "Jeanne d'Arc",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Jeanne_d%27Arc"
+   },
+   "r": "voBUbAAAesDT04VNh51CURYrDQRKLlCH",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s08-1-q52",
+   "fiche": "histoire-s08-1-f6",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Où Jeanne d'Arc conduit-elle Charles VII après la délivrance d'Orléans ?",
+   "choix": [
+    "À Reims, où il est sacré le 17 juillet 1429",
+    "À Londres, pour signer la paix",
+    "À Rouen, pour juger les Anglais",
+    "À Bouvines, pour une nouvelle bataille"
+   ],
+   "explication": "Après Orléans et la victoire de Patay, le 18 juin, la route de Reims est ouverte. Charles VII y est sacré le 17 juillet 1429, Jeanne à ses côtés.",
+   "source": {
+    "theme": "Cours 10 – Émergence d’un État royal fort",
+    "titre": "Bataille de Patay",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Bataille_de_Patay"
+   },
+   "r": "EBFQzNUVRARHFcgGYgEdcUEUB5kxlShCTQjUBYBERVwBPt8qs0QSGB0BKQjRpHbZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s08-1-q53",
+   "fiche": "histoire-s08-1-f6",
+   "type": "ordre",
+   "niveau": 2,
+   "enonce": "Remets les étapes de Jeanne d'Arc dans l'ordre.",
+   "elements": [
+    "Capture à Compiègne",
+    "Rencontre avec Charles VII à Chinon",
+    "Levée du siège d'Orléans",
+    "Bûcher de Rouen"
+   ],
+   "explication": "Chinon en février 1429, Orléans le 8 mai 1429, Compiègne le 23 mai 1430, Rouen le 30 mai 1431. Deux ans et trois mois entre la première étape et la dernière.",
+   "source": {
+    "theme": "Cours 10 – Émergence d’un État royal fort",
+    "titre": "Jeanne d'Arc",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Jeanne_d%27Arc"
+   },
+   "r": "o5hQfpEVFNEH",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s08-1-q54",
+   "fiche": "histoire-s08-1-f6",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Pourquoi Orléans compte-t-elle autant, en 1428-1429 ?",
+   "choix": [
+    "La ville verrouille la Loire et protège le sud du royaume",
+    "C'est la capitale du roi d'Angleterre",
+    "C'est la ville natale de Jeanne d'Arc",
+    "Le pape y réside"
+   ],
+   "explication": "Si Orléans tombe, les Anglais passent la Loire et menacent les terres de Charles VII, replié dans le Berry. Sa délivrance renverse le cours de la guerre.",
+   "indice": "Regarde où coule la Loire par rapport aux terres de Charles VII.",
+   "source": {
+    "theme": "Cours 10 – Émergence d’un État royal fort",
+    "titre": "Siège d'Orléans (1428-1429)",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Si%C3%A8ge_d%27Orl%C3%A9ans_(1428-1429)"
+   },
+   "r": "MpwHdICVKcUDbsgRCwRAndRGFBhFB36GdoxMNEBUNsQHPkQJSZiHVBQGdAwGAAgGmsVRQFkAGAhRI4TZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s08-1-q55",
+   "fiche": "histoire-s08-1-f6",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Comment finit Jeanne d'Arc ?",
+   "choix": [
+    "Capturée à Compiègne, vendue aux Anglais, brûlée à Rouen en 1431",
+    "Tuée à la bataille de Patay en 1429",
+    "Reine de France après la mort de Charles VII",
+    "Retirée dans son village de Domrémy jusqu'à sa mort"
+   ],
+   "explication": "Le 23 mai 1430, des capitaines bourguignons la capturent devant Compiègne et la vendent aux Anglais dix mille livres. Jugée à Rouen, elle est brûlée le 30 mai 1431, vers dix-neuf ans ; un second procès l'innocente en 1456.",
+   "source": {
+    "theme": "Cours 10 – Émergence d’un État royal fort",
+    "titre": "Jeanne d'Arc",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Jeanne_d%27Arc"
+   },
+   "r": "NdVVdN0ZcARRbQBHB0jUIDYDAwp7CQdpUsgUrFAHEkhFH8yTK0hINAAQJBgCQYURXkSFdbKHBQQAsIFyA2AAc6OHaIhFIETZ",
+   "poids": 1
   }
  ],
  "bonus": [
@@ -846,17 +1468,26 @@ JEU.enregistrer("cours", {
     "editeur": "Wikipédia, l'encyclopédie libre",
     "url": "https://fr.wikipedia.org/wiki/Bataille_de_Bouvines"
    }
+  },
+  {
+   "id": "histoire-s08-1-b2",
+   "fiche": "histoire-s08-1-f3",
+   "titre": "La Sainte-Chapelle, un écrin bâti en sept ans",
+   "texte": "En 1239, Louis IX achète à l'empereur latin de Constantinople, pour 135 000 livres, une relique célèbre, la couronne d'épines. Pour l'abriter, il fait élever dans son palais de l'île de la Cité la Sainte-Chapelle, commencée vers 1241 et consacrée le 26 avril 1248 : sept ans à peine pour un chef-d'œuvre du gothique rayonnant, célèbre pour ses vitraux.",
+   "source": {
+    "titre": "Sainte-Chapelle",
+    "editeur": "Wikipédia, l'encyclopédie libre",
+    "url": "https://fr.wikipedia.org/wiki/Sainte-Chapelle"
+   }
   }
  ],
  "nonCouvert": [
-  "La leçon à apprendre : le cadre « mots importants » du support est vide ; la leçon est donnée en vidéo.",
-  "La carte des principaux fiefs et leurs noms : seule la question, avec l'exemple du domaine royal autour de Paris, figure dans le fichier.",
-  "La définition précise du domaine royal et du fief, et ce qui distingue le domaine royal des grands fiefs.",
-  "La représentation de la bataille de Bouvines (où se trouve le roi, qui combat, qui gagne) : l'image n'est pas dans le fichier.",
-  "Ce qui montre le pouvoir de Louis IX : la question est posée, la réponse est donnée en vidéo.",
-  "Comment l'État royal s'affirme face aux seigneurs : le support n'a que la frise et trois questions.",
-  "Qui sont Philippe Auguste, Louis IX et Philippe le Bel, et ce qu'ils ont fait : la frise ne donne que leurs dates.",
-  "Ce qu'est la guerre de Cent Ans, qui s'y affronte et ce qu'y fait Jeanne d'Arc.",
-  "Hugues Capet, le vassal et le seigneur, les duchés et les comtés : ils sont traités au cours 9 (histoire-s07-2)."
+  "La carte des principaux fiefs et la représentation de la bataille de Bouvines étudiées en séance : absentes du fichier ; les fiches f1 et f2 donnent ce que le programme attend à leur place.",
+  "La définition du domaine royal et du fief : question du devoir n°1, jamais posée ; le jeu demande où se trouve le domaine et avec quel roi il grandit.",
+  "Le sacre des rois (Reims, les gestes de la cérémonie) : test de la séance 11 ; le sacre de Charles VII n'est cité que comme événement du 17 juillet 1429.",
+  "Les chevaliers (équipement, mode de vie), même à propos de Crécy ou d'Azincourt : devoir n°1 ; le jeu parle d'archers et de chevalerie sans plus.",
+  "Le règne de Charles V et la reconquête de Du Guesclin, la guerre civile entre Armagnacs et Bourguignons, le traité d'Arras (1435) et l'armée permanente de Charles VII (1445) : seulement nommés dans les points clés.",
+  "Les villes et le mouvement communal, autre sous-thème du programme : au cours 17 (semaine 16).",
+  "La place de l'Église dans l'État royal (le conflit avec Boniface VIII est raconté comme un conflit de pouvoirs, sans doctrine) : règle sur la religion."
  ]
 });
