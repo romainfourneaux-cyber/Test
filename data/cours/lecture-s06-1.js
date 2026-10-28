@@ -301,7 +301,7 @@ JEU.enregistrer("cours", {
     "Lui ajouter un mât",
     "Le repeindre aux couleurs de son pays avant le départ"
    ],
-   "explication": "Armer un navire, c'est le préparer à appareiller : embarquer l'équipage et tout le matériel nécessaire. Rien à voir avec des armes.",
+   "explication": "Armer un navire, c'est le préparer à appareiller : embarquer l'équipage et tout le matériel nécessaire. Ici, il ne s'agit pas d'armes.",
    "source": {
     "theme": "Un hivernage dans les glaces – Lire les chapitres 9 et 10 p77 à 88",
     "titre": "Armement (marine)",

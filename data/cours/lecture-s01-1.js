@@ -527,7 +527,7 @@ JEU.enregistrer("cours", {
    "choix": [
     "Parce que la glace est moins dense que l'eau de mer",
     "Parce qu'il est creux à l'intérieur",
-    "Parce que le sel de l'eau de mer le porte, comme un bouchon de liège",
+    "Parce que les courants le poussent vers le haut",
     "Parce que le vent le soulève"
    ],
    "explication": "À volume égal, la glace pèse moins que l'eau : elle est moins dense, donc elle flotte. C'est pour cela que les icebergs dérivent sans couler.",

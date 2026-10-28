@@ -838,9 +838,9 @@ JEU.enregistrer("cours", {
    "enonce": "Pourquoi les marins mesurent-ils les distances en milles marins plutôt qu'en kilomètres ?",
    "choix": [
     "Parce qu'un mille vaut une minute de latitude sur le globe",
-    "Parce que le kilomètre n'existait pas encore",
+    "Parce qu'un mille marin vaut tout juste mille mètres",
     "Parce qu'un mille est plus court qu'un kilomètre, donc plus précis",
-    "Parce que les navires vont trop vite pour le kilomètre"
+    "Parce que les distances en mer sont trop grandes pour le kilomètre"
    ],
    "explication": "Un mille marin, c'est la longueur d'une minute d'arc de latitude, soit 1 852 m. Les marins s'en servent pour leurs calculs de route sur le globe.",
    "source": {
