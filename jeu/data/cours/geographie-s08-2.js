@@ -230,7 +230,7 @@ JEU.enregistrer("cours", {
    "enonce": "Depuis combien de temps l'Afghanistan est-il en guerre ?",
    "choix": [
     "Plus de quarante ans",
-    "Une dizaine d'années",
+    "Une dizaine d'années seulement",
     "Cinq ans",
     "Plus d'un siècle"
    ],
@@ -250,7 +250,7 @@ JEU.enregistrer("cours", {
    "enonce": "Quelle part des enfants afghans de 7 à 17 ans ne va pas à l'école ?",
    "choix": [
     "Près de la moitié",
-    "Presque tous",
+    "Presque tous, sauf quelques-uns",
     "Un sur dix",
     "Un sur cent"
    ],
@@ -306,7 +306,7 @@ JEU.enregistrer("cours", {
     "Par terre, en plein air ou sous une tente",
     "Dans un gymnase",
     "Dans un bus scolaire",
-    "Par internet, à la maison"
+    "Par internet, chacun à la maison devant un ordinateur"
    ],
    "explication": "Les élèves s'assoient par terre, dehors, ou sous une tente dans le meilleur des cas. Une école publique sur deux n'a pas de locaux.",
    "source": {

@@ -491,7 +491,7 @@ module.exports = {
       source: T("Seuil de pauvreté", "Wikipédia", U_SEUIL) },
     { id: "geographie-s07-1-q55", fiche: "geographie-s07-1-f7", type: "qcm", niveau: 3,
       enonce: "Un habitant de France vit avec 1 100 euros par mois. Est-il pauvre ?",
-      choix: ["Oui selon le seuil français (moins de 1 288 euros), non selon le seuil de la Banque mondiale (3 dollars par jour)", "Non selon les deux seuils, car 1 100 euros par mois est une somme confortable dans la plupart des pays du monde", "Oui selon les deux seuils", "Non selon le seuil français, oui selon la Banque mondiale"],
+      choix: ["Oui selon le seuil français (moins de 1 288 euros), non selon le seuil de la Banque mondiale (3 dollars par jour)", "Non selon les deux seuils, car 1 100 euros par mois reste une somme confortable dans la plupart des pays du monde aujourd'hui", "Oui selon les deux seuils", "Non selon le seuil français, oui selon la Banque mondiale"],
       reponse: "Oui selon le seuil français (moins de 1 288 euros), non selon le seuil de la Banque mondiale (3 dollars par jour)",
       explication: "1 100 euros, c'est moins que 1 288 : pauvre en France. Mais c'est environ 36 euros par jour, bien plus que 3 dollars : pas en extrême pauvreté au sens mondial.",
       indice: "Compare 1 100 à 1 288, puis divise 1 100 par 30.",

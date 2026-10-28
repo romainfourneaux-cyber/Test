@@ -609,6 +609,28 @@
   ]
  },
  {
+  "id": "geographie-s04-1-f7",
+  "matiere": "geographie",
+  "semaine": 4,
+  "cours": "geographie-s04-1",
+  "notion": "L'Inde, pays le plus peuplé du monde depuis 2023",
+  "prerequis": [
+   "geographie-s04-1-f1",
+   "geographie-s04-1-f2"
+  ]
+ },
+ {
+  "id": "geographie-s04-1-f8",
+  "matiere": "geographie",
+  "semaine": 4,
+  "cours": "geographie-s04-1",
+  "notion": "Uttar Pradesh et Bihar : le Nord qui grandit, le Sud stabilisé",
+  "prerequis": [
+   "geographie-s04-1-f3",
+   "geographie-s04-1-f7"
+  ]
+ },
+ {
   "id": "geographie-s07-1-f1",
   "matiere": "geographie",
   "semaine": 7,
@@ -661,6 +683,28 @@
   ]
  },
  {
+  "id": "geographie-s07-1-f6",
+  "matiere": "geographie",
+  "semaine": 7,
+  "cours": "geographie-s07-1",
+  "notion": "Le seuil d'extrême pauvreté de la Banque mondiale",
+  "prerequis": [
+   "geographie-s07-1-f3",
+   "geographie-s07-1-f4"
+  ]
+ },
+ {
+  "id": "geographie-s07-1-f7",
+  "matiere": "geographie",
+  "semaine": 7,
+  "cours": "geographie-s07-1",
+  "notion": "Pauvre en France : le seuil relatif",
+  "prerequis": [
+   "geographie-s07-1-f3",
+   "geographie-s07-1-f6"
+  ]
+ },
+ {
   "id": "geographie-s08-1-f1",
   "matiere": "geographie",
   "semaine": 8,
@@ -709,9 +753,21 @@
   "matiere": "geographie",
   "semaine": 8,
   "cours": "geographie-s08-1",
-  "notion": "L'accès aux soins dans un pays pauvre : un dispensaire de brousse",
+  "notion": "Se soigner dans un pays pauvre",
   "prerequis": [
-   "geographie-s07-1-f2"
+   "geographie-s07-1-f2",
+   "geographie-s08-1-f4"
+  ]
+ },
+ {
+  "id": "geographie-s08-1-f6",
+  "matiere": "geographie",
+  "semaine": 8,
+  "cours": "geographie-s08-1",
+  "notion": "L'IDH en chiffres : le classement du PNUD",
+  "prerequis": [
+   "geographie-s08-1-f2",
+   "geographie-s08-1-f3"
   ]
  },
  {

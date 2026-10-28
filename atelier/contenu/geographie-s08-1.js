@@ -370,7 +370,7 @@ module.exports = {
       explication: "La santé est l'un des trois critères de l'IDH, avec la richesse et l'éducation. Un pays pauvre a du mal à payer hôpitaux, soignants et matériel : ses habitants se soignent moins bien.", source: P(6) },
     { id: "geographie-s08-1-q42", fiche: "geographie-s08-1-f5", type: "qcm", niveau: 3,
       enonce: "Comment le nombre de médecins par habitant varie-t-il d'un pays à l'autre ?",
-      choix: ["Il suit le revenu du pays : treize fois plus de médecins par habitant en Région Europe qu'en Région Afrique", "Il est à peu près le même partout dans le monde, car les médecins vont là où l'on a besoin d'eux", "Il est plus élevé dans les pays pauvres, où l'on tombe plus souvent malade", "Il dépend du climat"],
+      choix: ["Il suit le revenu du pays : treize fois plus de médecins par habitant en Région Europe qu'en Région Afrique", "Il est à peu près le même partout dans le monde, car les médecins vont toujours s'installer là où l'on a besoin d'eux", "Il est plus élevé dans les pays pauvres, où l'on tombe plus souvent malade", "Il dépend du climat"],
       reponse: "Il suit le revenu du pays : treize fois plus de médecins par habitant en Région Europe qu'en Région Afrique",
       explication: "L'OMS constate que la densité de soignants suit le revenu national. L'Europe compte treize fois plus de médecins par habitant que l'Afrique, et six fois plus d'infirmiers et de sages-femmes.",
       source: T("Un médecin sur quatre approche de la retraite : l'OMS alerte sur la pénurie mondiale de personnels de santé", OMS, U_OMS26) },
