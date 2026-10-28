@@ -154,8 +154,10 @@ async function parcours(navigateur) {
   await grande.waitForSelector("#ecran-expedition .page-semaine");
   await grande.keyboard.press("Enter");
   await grande.waitForSelector("#ecran-expedition .route-svg");
-  await grande.evaluate("(" + avancerJusqua + ")(x => false)"); // joue la première semaine : sceaux, semaine franchie
-  await grande.evaluate(() => { JEU.ecranExpedition.etat.pageVue = JEU.expedition.enCours().semaine; JEU.ui.afficher("expedition"); });
+  // joue la première semaine jusqu'au gardien compris : sceaux, semaine franchie, deuxième semaine courante
+  const idGardien = await grande.evaluate("(" + avancerJusqua + ")(x => x.type === 'gardien')");
+  await grande.evaluate(id => { const X = JEU.expedition, e = X.enCours(); if (id) { const t = X.trouverHalte(id, e); X.entrer(id); X.apresBataille(t.halte, { issue: "tenu", degatsRival: 9, bonnes: 3, total: 3, entamee: true }); }
+    const e2 = X.enCours(); if (e2) JEU.ecranExpedition.etat.pageVue = e2.semaine; JEU.ui.afficher("expedition"); }, idGardien);
   await grande.waitForSelector("#ecran-expedition .route-svg");
   await capture(grande, "14-route-1920");
   notes.route1920 = await bilanImages(grande);
