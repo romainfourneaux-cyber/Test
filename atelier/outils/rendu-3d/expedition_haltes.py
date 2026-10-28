@@ -443,7 +443,7 @@ def halte_escarmouche():
     objets = epee("epee1", m, (-0.5, 0.1, -0.08), penche=27, lacet=3, longueur=1.45, largeur=0.12)
     objets += epee("epee2", m, (0.5, 0.15, -0.08), penche=-27, lacet=-3, longueur=1.45, largeur=0.12)
     objets += bouclier_rond("ecu", 0.55, (0.0, 0.55, 0), penche=20, lacet=-6, m=m, mat=E.mat_planches("ecu_planches", "#6e4f30"))
-    objets = racine(objets, 1.5, -0.55)
+    objets = racine(objets, 1.5, -0.72)
     return E.rendre_rondel("halte-escarmouche", objets, echantillons=ECHANTILLONS, contour=0.5)
 
 
