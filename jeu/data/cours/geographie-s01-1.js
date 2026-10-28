@@ -4,39 +4,23 @@ JEU.enregistrer("cours", {
  "id": "geographie-s01-1",
  "fiches": [
   {
-   "id": "geographie-s01-1-f1",
-   "notion": "L'organisation de l'année de géographie",
-   "titre": "Comment se déroule l'année",
-   "texte": "L'année de géographie est découpée en thèmes. Chaque thème alterne des cours, souvent en deux parties, et des études de cas, qui observent de près un pays ou un événement. Certains cours ont des vidéos en plus du papier. Des devoirs sont à envoyer à la correction. Le tableau de progression sert à cocher ce qui est compris et su.",
-   "pointsCles": [
-    "V : vidéos et support papier ; P : support papier seulement",
-    "Les outils du géographe 1 à 8 ont été vus en 6e : on peut les relire",
-    "Des devoirs à faire, puis à envoyer à la correction",
-    "Le tableau de progression : une case « compris et su » et une case pour noter ce qui reste à revoir"
-   ],
-   "dates": [],
-   "lieux": [],
-   "personnages": [],
-   "vocabulaire": [],
-   "schema": null,
-   "prerequis": [],
-   "source": {
-    "fichier": "cours/geographie/Geo 5e - Tableau de progression.pdf",
-    "page": 1
-   }
-  },
-  {
    "id": "geographie-s01-1-f2",
    "notion": "Le thème 1 : la croissance démographique et l'inégal développement",
-   "titre": "Le thème 1 en un coup d'œil",
-   "texte": "Le thème 1 parle de la croissance démographique et de l'inégal développement. Le cours 1 montre comment la population augmente, avec des besoins qui grandissent au Sud et un vieillissement au Nord. Le cours 2 étudie la richesse et la pauvreté dans le monde. Études de cas : le Burkina Faso, l'Inde, puis l'éducation en Afghanistan et en Finlande.",
+   "titre": "Le thème 1 : la question démographique",
+   "texte": "Le programme officiel l'appelle « La question démographique et l'inégal développement ». La Terre compte 8 milliards d'habitants depuis le 15 novembre 2022 (ONU) ; 9 milliards sont attendus vers 2037. Cette croissance empêche-t-elle les sociétés de se développer ? Deux sous-thèmes : la croissance démographique et ses effets ; richesse et pauvreté dans le monde.",
    "pointsCles": [
+    "Intitulé officiel : « La question démographique et l'inégal développement » ; le livret dit « croissance démographique »",
     "Cours 1 : I. croissance et développement de la population ; II. les pays du Sud ; III. les pays du Nord",
-    "Cours 2 : I. une pauvreté qui recule ; II. des inégalités à différentes échelles",
-    "Outil 9 : mesurer la pauvreté et les inégalités",
-    "Deux devoirs à envoyer à la correction dans ce thème"
+    "Cours 2 : I. une pauvreté qui recule ; II. des inégalités à différentes échelles ; outil 9 : mesurer la pauvreté",
+    "Études de cas : le Burkina Faso, l'Inde, l'éducation en Afghanistan et en Finlande",
+    "8 milliards d'humains depuis le 15 novembre 2022 ; 9 milliards attendus vers 2037 (ONU, 2024)"
    ],
-   "dates": [],
+   "dates": [
+    {
+     "annee": 2022,
+     "evenement": "La population mondiale atteint 8 milliards d'habitants (ONU, 15 novembre)"
+    }
+   ],
    "lieux": [
     "Burkina Faso",
     "Inde",
@@ -44,25 +28,36 @@ JEU.enregistrer("cours", {
     "Finlande"
    ],
    "personnages": [],
-   "vocabulaire": [],
-   "schema": null,
-   "prerequis": [
-    "geographie-s01-1-f1"
+   "vocabulaire": [
+    {
+     "mot": "démographie",
+     "def": "la science qui étudie les populations : naissances, décès, âges, déplacements"
+    },
+    {
+     "mot": "développement",
+     "def": "l'amélioration des conditions de vie d'une population : santé, école, revenus"
+    }
    ],
+   "schema": null,
+   "prerequis": [],
    "source": {
-    "fichier": "cours/geographie/Geo 5e - Tableau de progression.pdf",
-    "page": 1
+    "programme": "La croissance démographique et ses effets",
+    "titre": "Population",
+    "editeur": "Organisation des Nations Unies (ONU)",
+    "url": "https://www.un.org/fr/global-issues/population"
    }
   },
   {
    "id": "geographie-s01-1-f3",
    "notion": "Le thème 2 : des ressources limitées à gérer et à renouveler",
    "titre": "Le thème 2 : eau, énergie, nourriture",
-   "texte": "Le thème 2 porte sur des ressources limitées qu'il faut gérer et renouveler. Trois cours : l'accès à l'eau, les ressources énergétiques, puis la question de nourrir les hommes. Chaque cours a ses études de cas : la Tunisie et le Moyen-Orient pour l'eau, la Russie et la Chine pour l'énergie, l'Éthiopie et l'Argentine pour l'alimentation.",
+   "texte": "Le programme l'appelle « Des ressources limitées, à gérer et à renouveler ». Trois cours : l'eau, l'énergie, nourrir les hommes. L'eau douce ne fait que 2,5 % de l'eau de la planète, et près de 70 % de cette eau douce est gelée dans les glaciers et les neiges. L'agriculture en prélève environ 70 %.",
    "pointsCles": [
+    "Intitulé officiel : « Des ressources limitées, à gérer et à renouveler »",
     "Eau : l'accès en Tunisie ; les conflits liés à l'eau au Moyen-Orient",
     "Énergie : la Russie et ses hydrocarbures ; la Chine, du charbon aux panneaux solaires",
-    "Alimentation : la situation en Éthiopie ; l'Argentine, un géant agricole"
+    "Alimentation : la situation en Éthiopie ; l'Argentine, un géant agricole",
+    "Eau douce : 2,5 % de l'eau de la planète, dont près de 70 % sous forme de glace et de neige"
    ],
    "dates": [],
    "lieux": [
@@ -74,39 +69,146 @@ JEU.enregistrer("cours", {
     "Argentine"
    ],
    "personnages": [],
-   "vocabulaire": [],
-   "schema": null,
-   "prerequis": [
-    "geographie-s01-1-f1"
+   "vocabulaire": [
+    {
+     "mot": "eau douce",
+     "def": "une eau presque sans sel : celle des rivières, des lacs, des glaciers et des nappes souterraines"
+    },
+    {
+     "mot": "ressource renouvelable",
+     "def": "une ressource qui se reforme assez vite pour ne pas s'épuiser, comme le vent ou le soleil"
+    }
    ],
+   "schema": null,
+   "prerequis": [],
    "source": {
-    "fichier": "cours/geographie/Geo 5e - Tableau de progression.pdf",
-    "page": 2
+    "programme": "Des ressources limitées, à gérer et à renouveler",
+    "titre": "Eau douce",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Eau_douce"
    }
   },
   {
    "id": "geographie-s01-1-f4",
    "notion": "Le thème 3 : prévenir les risques, s'adapter au changement global",
    "titre": "Le thème 3 : risques et changement global",
-   "texte": "Le thème 3 apprend à prévenir les risques et à s'adapter au changement global. Le cours 1 traite des risques naturels, industriels et technologiques. Ce thème n'a qu'une seule étude de cas : le cyclone Nargis, en Birmanie, qu'on appelle aussi Myanmar. Le cours 2 porte sur le changement global et ses effets.",
+   "texte": "Le programme l'appelle « Prévenir les risques, s'adapter au changement global ». Un risque, c'est un aléa (séisme, crue, cyclone, accident d'usine) qui menace des enjeux : des habitants, des maisons, des routes. Plus ils sont fragiles, plus la vulnérabilité est grande. On distingue risques naturels et risques technologiques. Le cours 2 porte sur le changement global.",
    "pointsCles": [
-    "Cours 1 : risques naturels, industriels et technologiques",
-    "Une seule étude de cas : le cyclone Nargis en Birmanie (Myanmar)",
-    "Cours 2 : le changement global et ses effets"
+    "Intitulé officiel : « Prévenir les risques, s'adapter au changement global »",
+    "Risque = un aléa (le phénomène) qui menace des enjeux (personnes, biens) plus ou moins vulnérables",
+    "Risques naturels : inondation, séisme, cyclone, éruption, glissement de terrain, feu de forêt",
+    "Risques technologiques : accident industriel ou nucléaire, rupture de barrage, transport de matières dangereuses",
+    "Une seule étude de cas : le cyclone Nargis en Birmanie (Myanmar) ; cours 2 : le changement global"
    ],
    "dates": [],
    "lieux": [
     "Birmanie (Myanmar)"
    ],
    "personnages": [],
-   "vocabulaire": [],
+   "vocabulaire": [
+    {
+     "mot": "aléa",
+     "def": "le phénomène dangereux lui-même : une crue, un séisme, une explosion"
+    },
+    {
+     "mot": "enjeux",
+     "def": "les personnes et les biens que le phénomène menace"
+    },
+    {
+     "mot": "vulnérabilité",
+     "def": "la fragilité des personnes et des biens face au phénomène"
+    }
+   ],
+   "schema": null,
+   "prerequis": [],
+   "source": {
+    "programme": "Prévenir les risques, s'adapter au changement global",
+    "titre": "Risque majeur",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Risque_majeur"
+   }
+  },
+  {
+   "id": "geographie-s01-1-f5",
+   "notion": "Les outils du géographe : lire et faire une carte",
+   "titre": "Lire une carte : titre, légende, échelle, orientation",
+   "texte": "Une carte représente un espace géographique, réduit et mis à plat. Pour la lire : le titre donne le sujet, la légende traduit couleurs et symboles, l'échelle dit de combien la réalité est réduite, l'orientation place le nord, en haut d'habitude. Carte topographique : le terrain ; carte thématique : un seul phénomène ; planisphère : toute la Terre.",
+   "pointsCles": [
+    "Titre, légende, échelle, orientation : les quatre repères pour lire n'importe quelle carte",
+    "Grande échelle : peu de réduction, beaucoup de détails (plan de ville) ; petite échelle : forte réduction (planisphère)",
+    "Au 1/25 000, un centimètre sur la carte vaut 25 000 centimètres, soit 250 mètres, sur le terrain",
+    "Carte topographique : le relief et le terrain ; carte thématique : un seul sujet (population, forêts…)"
+   ],
+   "astuce": "Grande échelle, petite zone : un plan de quartier. Petite échelle, grande zone : un planisphère.",
+   "dates": [],
+   "lieux": [],
+   "personnages": [],
+   "vocabulaire": [
+    {
+     "mot": "légende",
+     "def": "la liste qui explique les couleurs et les symboles d'une carte"
+    },
+    {
+     "mot": "échelle",
+     "def": "le rapport entre une distance sur la carte et la distance réelle"
+    },
+    {
+     "mot": "planisphère",
+     "def": "une carte plane qui représente toute la surface de la Terre"
+    },
+    {
+     "mot": "carte thématique",
+     "def": "une carte qui ne montre qu'un seul phénomène, par exemple la population"
+    }
+   ],
+   "schema": null,
+   "prerequis": [],
+   "source": {
+    "programme": "Se repérer dans l'espace : construire des repères géographiques",
+    "titre": "Carte géographique",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Carte_g%C3%A9ographique"
+   }
+  },
+  {
+   "id": "geographie-s01-1-f6",
+   "notion": "Se repérer sur le planisphère : continents, océans, densités",
+   "titre": "Continents, océans et densités",
+   "texte": "En France, on compte six continents : Afrique, Amérique, Antarctique, Asie, Europe, Océanie. L'Asie est le plus vaste et, de loin, le plus peuplé ; l'Océanie est le plus petit ; l'Antarctique, presque vide. Les océans couvrent près de 71 % de la planète, et le Pacifique est le plus grand. La densité de population compte les habitants par kilomètre carré.",
+   "pointsCles": [
+    "Six continents dans l'usage français ; sept dans les pays anglo-saxons, qui séparent les deux Amériques",
+    "L'Asie : le plus vaste et le plus peuplé ; l'Océanie : le plus petit ; l'Antarctique : presque inhabité",
+    "Cinq océans : Pacifique, Atlantique, Indien, Austral, Arctique ; le Pacifique est le plus grand et le plus profond",
+    "Densité de population = habitants ÷ surface, en habitants par km² ; monde : environ 55 (2023) ; France métropolitaine : 118"
+   ],
+   "dates": [],
+   "lieux": [
+    "Asie",
+    "Afrique",
+    "Océanie",
+    "Antarctique",
+    "Océan Pacifique"
+   ],
+   "personnages": [],
+   "vocabulaire": [
+    {
+     "mot": "densité de population",
+     "def": "le nombre d'habitants pour un kilomètre carré"
+    },
+    {
+     "mot": "continent",
+     "def": "une très grande étendue de terre entourée d'océans, comme l'Afrique ou l'Asie"
+    }
+   ],
    "schema": null,
    "prerequis": [
-    "geographie-s01-1-f1"
+    "geographie-s01-1-f5"
    ],
    "source": {
-    "fichier": "cours/geographie/Geo 5e - Tableau de progression.pdf",
-    "page": 2
+    "programme": "Se repérer dans l'espace : construire des repères géographiques",
+    "titre": "Continent",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Continent"
    }
   }
  ],
@@ -114,7 +216,7 @@ JEU.enregistrer("cours", {
  "questions": [
   {
    "id": "geographie-s01-1-q1",
-   "fiche": "geographie-s01-1-f1",
+   "fiche": "geographie-s01-1-f5",
    "type": "qcm",
    "niveau": 1,
    "enonce": "Qu'indique l'échelle d'une carte ?",
@@ -137,7 +239,7 @@ JEU.enregistrer("cours", {
   },
   {
    "id": "geographie-s01-1-q2",
-   "fiche": "geographie-s01-1-f1",
+   "fiche": "geographie-s01-1-f5",
    "type": "vrai_faux",
    "niveau": 1,
    "enonce": "Un planisphère représente toute la surface de la Terre, mise à plat sur une feuille.",
@@ -154,7 +256,7 @@ JEU.enregistrer("cours", {
   },
   {
    "id": "geographie-s01-1-q3",
-   "fiche": "geographie-s01-1-f1",
+   "fiche": "geographie-s01-1-f5",
    "type": "qcm",
    "niveau": 2,
    "enonce": "Pourquoi une carte a-t-elle une légende ?",
@@ -176,7 +278,7 @@ JEU.enregistrer("cours", {
   },
   {
    "id": "geographie-s01-1-q4",
-   "fiche": "geographie-s01-1-f1",
+   "fiche": "geographie-s01-1-f5",
    "type": "vrai_faux",
    "niveau": 2,
    "enonce": "Une carte thématique représente un seul sujet précis, par exemple la population ou les forêts d'un territoire.",
@@ -193,7 +295,7 @@ JEU.enregistrer("cours", {
   },
   {
    "id": "geographie-s01-1-q18",
-   "fiche": "geographie-s01-1-f1",
+   "fiche": "geographie-s01-1-f5",
    "type": "vrai_faux",
    "niveau": 3,
    "enonce": "Un plan de ville est à plus grande échelle qu'un planisphère, car la réalité y est moins réduite.",
@@ -211,7 +313,7 @@ JEU.enregistrer("cours", {
   },
   {
    "id": "geographie-s01-1-q19",
-   "fiche": "geographie-s01-1-f1",
+   "fiche": "geographie-s01-1-f5",
    "type": "vrai_faux",
    "niveau": 2,
    "enonce": "Sur une carte classique, le haut de la feuille correspond au nord.",
@@ -228,7 +330,7 @@ JEU.enregistrer("cours", {
   },
   {
    "id": "geographie-s01-1-q20",
-   "fiche": "geographie-s01-1-f1",
+   "fiche": "geographie-s01-1-f5",
    "type": "qcm_multiple",
    "niveau": 2,
    "enonce": "Que doit comporter une carte pour qu'on puisse la lire ? (plusieurs réponses)",
@@ -252,7 +354,7 @@ JEU.enregistrer("cours", {
   },
   {
    "id": "geographie-s01-1-q21",
-   "fiche": "geographie-s01-1-f1",
+   "fiche": "geographie-s01-1-f5",
    "type": "qcm",
    "niveau": 1,
    "enonce": "Qu'étudie la géographie ?",
@@ -273,27 +375,26 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "geographie-s01-1-q22",
-   "fiche": "geographie-s01-1-f1",
-   "type": "association",
+   "id": "geographie-s01-1-q37",
+   "fiche": "geographie-s01-1-f5",
+   "type": "qcm",
    "niveau": 3,
-   "enonce": "Relie chaque étude de cas au thème où elle se trouve.",
-   "gauche": [
-    "Le Burkina Faso",
-    "La Tunisie",
-    "Le cyclone Nargis"
+   "enonce": "Sur un plan au 1/10 000, deux rues sont séparées de 5 cm. Quelle distance cela fait-il en réalité ?",
+   "choix": [
+    "500 mètres",
+    "50 mètres",
+    "5 kilomètres",
+    "50 kilomètres"
    ],
-   "droite": [
-    "Le thème 3",
-    "Le thème 1",
-    "Le thème 2"
-   ],
-   "explication": "Le Burkina Faso illustre la croissance démographique du thème 1, la Tunisie l'eau du thème 2. Le cyclone Nargis est la seule étude de cas du thème 3.",
+   "explication": "Au 1/10 000, un centimètre sur le plan vaut 10 000 centimètres, soit 100 mètres, dans la réalité. Cinq centimètres font donc 500 mètres.",
+   "indice": "Convertis d'abord 10 000 centimètres en mètres.",
    "source": {
-    "fichier": "cours/geographie/Geo 5e - Tableau de progression.pdf",
-    "page": 2
+    "theme": "Présentation du programme et regarder les outils du géographe",
+    "titre": "Échelle (proportion)",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/%C3%89chelle_(proportion)"
    },
-   "r": "==AKsklQdlCRe8RSEYnQyclSZlCH",
+   "r": "==gSwg0FBVYrCYkVZdUZ",
    "poids": 1
   },
   {
@@ -622,6 +723,28 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
+   "id": "geographie-s01-1-q38",
+   "fiche": "geographie-s01-1-f3",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Où se trouve la plus grande partie de l'eau douce de la Terre ?",
+   "choix": [
+    "Gelée dans les glaciers et les calottes polaires",
+    "Dans les fleuves, les rivières et les lacs",
+    "Dans les nuages et la vapeur d'eau de l'atmosphère",
+    "Dans les mers fermées et les lagunes"
+   ],
+   "explication": "Près de 70 % de l'eau douce est stockée sous forme de glace ou de neige, et environ 30 % dans les nappes souterraines. Les lacs, les marais et les rivières n'en gardent qu'une toute petite part.",
+   "source": {
+    "theme": "Présentation du programme et regarder les outils du géographe",
+    "titre": "Eau douce",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Eau_douce"
+   },
+   "r": "MxxAUAwEr0RBFZAFdoBAekAINYBUB50GDYkGAIyGWQQGWkUHK4BSwMEBR1wCGXqCMUTZ",
+   "poids": 1
+  },
+  {
    "id": "geographie-s01-1-q13",
    "fiche": "geographie-s01-1-f4",
    "type": "qcm",
@@ -801,12 +924,224 @@ JEU.enregistrer("cours", {
    },
    "r": "==wLKBTWAM1SL8UFDohUzcRVJQxEGIACSxRLIhAUKBgDOUQSXsAUZdEEYcwDCAQAB0wCQ1QHGEAFIwzZXshCZIBEN80FkEWAHZESb4xDBYgHowRHGARBJphCStxLIxwRZ1hGCgAAStWAZAwBE0xDBI1GmgFFGREHPVxAlAFH",
    "poids": 1
+  },
+  {
+   "id": "geographie-s01-1-q39",
+   "fiche": "geographie-s01-1-f4",
+   "type": "association",
+   "niveau": 3,
+   "enonce": "Relie chaque mot du vocabulaire du risque à ce qu'il désigne.",
+   "gauche": [
+    "L'aléa",
+    "Les enjeux",
+    "La vulnérabilité"
+   ],
+   "droite": [
+    "La fragilité des personnes et des biens face au phénomène",
+    "Le phénomène dangereux lui-même, comme une crue",
+    "Les personnes et les biens que le phénomène menace"
+   ],
+   "explication": "L'aléa est l'événement, la crue par exemple ; les enjeux sont ce qu'elle menace sur ses rives. La vulnérabilité mesure à quel point ces enjeux résistent mal.",
+   "source": {
+    "theme": "Présentation du programme et regarder les outils du géographe",
+    "titre": "Risque majeur",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Risque_majeur"
+   },
+   "r": "==AKsklQdlCRe8RSEYnQyclSZlCH",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s01-1-q40",
+   "fiche": "geographie-s01-1-f6",
+   "type": "qcm",
+   "niveau": 1,
+   "enonce": "Combien de continents compte-t-on d'habitude en France ?",
+   "choix": [
+    "Six",
+    "Quatre",
+    "Cinq",
+    "Neuf"
+   ],
+   "explication": "En France, on compte six continents : Afrique, Amérique, Antarctique, Asie, Europe et Océanie. Les pays anglo-saxons en comptent sept, car ils séparent les deux Amériques.",
+   "source": {
+    "theme": "Présentation du programme et regarder les outils du géographe",
+    "titre": "Continent",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Continent"
+   },
+   "r": "=QkHAESZ",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s01-1-q41",
+   "fiche": "geographie-s01-1-f6",
+   "type": "vrai_faux",
+   "niveau": 1,
+   "enonce": "L'Asie est à la fois le continent le plus vaste et le plus peuplé.",
+   "corrections": [],
+   "explication": "Oui : l'Asie dépasse les autres continents par sa surface comme par sa population. Près de six humains sur dix y vivent.",
+   "source": {
+    "theme": "Présentation du programme et regarder les outils du géographe",
+    "titre": "Continent",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Continent"
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s01-1-q42",
+   "fiche": "geographie-s01-1-f6",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Quel océan est le plus grand et le plus profond ?",
+   "choix": [
+    "Le Pacifique",
+    "L'Atlantique",
+    "L'océan Indien",
+    "L'océan Arctique"
+   ],
+   "explication": "Le Pacifique couvre à lui seul près de la moitié de la surface des océans. C'est aussi dans ses eaux que se trouve le point le plus profond, la fosse des Mariannes, à près de onze kilomètres sous la surface.",
+   "source": {
+    "theme": "Présentation du programme et regarder les outils du géographe",
+    "titre": "Océan",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Oc%C3%A9an"
+   },
+   "r": "=AVD2wFDTRUDOYjRM4TZ",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s01-1-q43",
+   "fiche": "geographie-s01-1-f6",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Les océans couvrent environ un tiers de la surface de la Terre.",
+   "corrections": [
+    "Faux : ils en couvrent environ 71 %, plus des deux tiers.",
+    "Faux : ils en couvrent exactement la moitié.",
+    "Faux : ils en couvrent presque 90 %."
+   ],
+   "explication": "Les océans recouvrent 70,8 % de la planète : plus des deux tiers. Les terres émergées n'occupent que le reste.",
+   "source": {
+    "theme": "Présentation du programme et regarder les outils du géographe",
+    "titre": "Océan",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Oc%C3%A9an"
+   },
+   "r": "Ic0WCsxCGYAS7gFAR1QHKIgRacwKCUVSQFFWZ9EHHEDRTsFSOtBCDsBBy0hFFtBFJ1xAbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s01-1-q44",
+   "fiche": "geographie-s01-1-f6",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Un pays compte 10 millions d'habitants pour 100 000 km². Quelle est sa densité de population ?",
+   "choix": [
+    "100 habitants par km²",
+    "10 habitants par km²",
+    "1 000 habitants par km²",
+    "10 000 habitants par km²"
+   ],
+   "explication": "La densité divise le nombre d'habitants par la surface : 10 000 000 ÷ 100 000 = 100. C'est à peu près la densité de la France métropolitaine, 118 habitants par km².",
+   "indice": "Divise les habitants par les kilomètres carrés.",
+   "source": {
+    "theme": "Présentation du programme et regarder les outils du géographe",
+    "titre": "Densité de population",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Densit%C3%A9_de_population"
+   },
+   "r": "QVPsY4QVDggHPFAHtwUEc90DHYkVZNUZ",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s01-1-q45",
+   "fiche": "geographie-s01-1-f6",
+   "type": "association",
+   "niveau": 2,
+   "enonce": "Relie chaque continent à ce qui le distingue.",
+   "gauche": [
+    "L'Asie",
+    "L'Océanie",
+    "L'Antarctique",
+    "L'Afrique"
+   ],
+   "droite": [
+    "Presque personne n'y habite",
+    "Le deuxième continent par la population",
+    "Le plus peuplé de tous",
+    "Le plus petit par la surface"
+   ],
+   "explication": "L'Asie est le plus peuplé, l'Afrique vient en deuxième. L'Océanie est le plus petit par la surface, et l'Antarctique n'a presque pas d'habitants.",
+   "source": {
+    "theme": "Présentation du programme et regarder les outils du géographe",
+    "titre": "Continent",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Continent"
+   },
+   "r": "==ANvYnXG5TWsklQdlCRe4RSEYnQyQlSZlCH",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s01-1-q46",
+   "fiche": "geographie-s01-1-f6",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Pourquoi un planisphère déforme-t-il toujours un peu les continents ?",
+   "choix": [
+    "Parce qu'on met à plat une surface courbe, celle du globe",
+    "Parce que les cartographes connaissent encore mal certaines côtes",
+    "Parce que la Terre change de forme au fil des saisons",
+    "Parce que le papier se déforme en séchant"
+   ],
+   "explication": "La Terre est une sphère : impossible de l'étaler sur une feuille sans étirer ou rétrécir des régions. Chaque projection choisit ce qu'elle garde juste, les angles, les surfaces ou les distances.",
+   "source": {
+    "theme": "Présentation du programme et regarder les outils du géographe",
+    "titre": "Planisphère",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Planisph%C3%A8re"
+   },
+   "r": "MpAEH8iSFBUSOpgCKwQEn5FEHcABG0wTXsgILdBQe5kCIMRSGYiHFUU1ymkGK8BStIkQAxlTKUAFIISZ",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s01-1-q47",
+   "fiche": "geographie-s01-1-f6",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Sur une carte de Mercator, le Groenland paraît aussi grand que l'Afrique, pourtant bien plus étendue.",
+   "corrections": [],
+   "explication": "Oui : la projection de Mercator grossit les régions proches des pôles. En réalité, l'Afrique est environ quatorze fois plus étendue que le Groenland.",
+   "source": {
+    "theme": "Présentation du programme et regarder les outils du géographe",
+    "titre": "Projection de Mercator",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Projection_de_Mercator"
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
   }
  ],
- "bonus": [],
+ "bonus": [
+  {
+   "id": "geographie-s01-1-b1",
+   "fiche": "geographie-s01-1-f5",
+   "titre": "Mercator, 1569 : une carte faite pour les marins",
+   "texte": "En 1569, le géographe flamand Gerardus Mercator publie une projection où toute ligne droite correspond à un cap constant à la boussole : idéale pour tracer une route en mer. Le prix à payer : les surfaces sont faussées près des pôles. La plupart des cartes marines l'utilisent encore aujourd'hui.",
+   "source": {
+    "titre": "Projection de Mercator",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Projection_de_Mercator"
+   }
+  }
+ ],
  "nonCouvert": [
-  "La fiche « Les outils du géographe » (outils 1 à 8, vus en 6e) n'est pas déposée : les questions sur ces outils, comme celles sur la population, les ressources et les risques, sont des questions de thème (sources en ligne vérifiées, règle du 25/10/2026), à comparer au livret papier.",
+  "Les outils du géographe 1 à 8 de 6e (fiche non déposée) : la carte, l'échelle, la légende, l'orientation, le planisphère, les continents, les océans et la densité sont couverts d'après des pages fiables ; le croquis, le graphique, la photographie de paysage et le schéma ne le sont pas.",
+  "Les lignes imaginaires du planisphère (équateur, tropiques, méridien de Greenwich) et les hémisphères : page de vérification injoignable le 28/10/2026, non couverts.",
+  "La problématique officielle de chaque thème n'a pu être lue que sur des documents d'académies (eduscol injoignable) : les fiches f2 à f4 la paraphrasent sans question dessus.",
   "La vidéo de présentation du programme (repère V du tableau) n'est pas déposée.",
-  "Le contenu des cours eux-mêmes (thèmes 2 et 3, cours 2 du thème 1, outil 9) : seuls leurs titres figurent dans le tableau."
+  "Le contenu des cours eux-mêmes (thèmes 2 et 3, cours 2 du thème 1, outil 9) : seuls leurs titres et un ordre de grandeur par thème sont donnés."
  ]
 });
