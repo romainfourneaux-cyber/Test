@@ -184,6 +184,93 @@ JEU.enregistrer("cours", {
     "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
     "page": 7
    }
+  },
+  {
+   "id": "geographie-s01-2-f6",
+   "notion": "Les jalons de la population mondiale (ONU)",
+   "titre": "8 milliards d'humains : les caps de l'ONU",
+   "texte": "L'ONU suit la population mondiale et date ses grands caps. 5 milliards le 11 juillet 1987 ; 8 milliards le 15 novembre 2022. D'après ses prévisions de 2024, le cap des 9 milliards serait franchi vers 2037, puis la population culminerait vers 10,3 milliards au milieu des années 2080, avant de baisser lentement.",
+   "pointsCles": [
+    "11 juillet 1987 : 5 milliards ; 15 novembre 2022 : 8 milliards (ONU)",
+    "Il a fallu une douzaine d'années pour passer de 7 à 8 milliards",
+    "Prévision ONU (2024) : 9 milliards vers 2037, sommet d'environ 10,3 milliards vers 2085, puis lente baisse",
+    "Espérance de vie dans le monde : 73,3 ans en 2024 ; fécondité : 2,25 enfants par femme",
+    "Les dates des caps sont des estimations symboliques : personne ne compte les humains un par un"
+   ],
+   "astuce": "Les prévisions changent à chaque révision de l'ONU : retiens surtout les caps déjà franchis.",
+   "dates": [
+    {
+     "annee": 1987,
+     "evenement": "5 milliards d'habitants sur Terre (11 juillet)"
+    },
+    {
+     "annee": 2022,
+     "evenement": "8 milliards d'habitants sur Terre (15 novembre)"
+    }
+   ],
+   "lieux": [],
+   "personnages": [],
+   "vocabulaire": [
+    {
+     "mot": "ONU",
+     "def": "l'Organisation des Nations unies, qui réunit presque tous les pays du monde et publie les chiffres de population"
+    },
+    {
+     "mot": "projection",
+     "def": "un calcul de ce que pourrait être la population dans l'avenir, si les tendances continuent"
+    }
+   ],
+   "schema": null,
+   "prerequis": [
+    "geographie-s01-2-f1"
+   ],
+   "source": {
+    "programme": "La croissance démographique et ses effets",
+    "titre": "Population",
+    "editeur": "Organisation des Nations Unies (ONU)",
+    "url": "https://www.un.org/fr/global-issues/population"
+   }
+  },
+  {
+   "id": "geographie-s01-2-f7",
+   "notion": "Les continents par population",
+   "titre": "Où vivent les humains ?",
+   "texte": "En 2023, d'après l'ONU, près de six humains sur dix vivent en Asie : 4,8 milliards. L'Afrique vient ensuite avec 1,5 milliard, puis les Amériques (1 milliard), l'Europe (750 millions) et l'Océanie (46 millions). La croissance à venir se concentre en Afrique subsaharienne : sa population devrait augmenter de près de 80 % d'ici 2054, pour atteindre 2,2 milliards.",
+   "pointsCles": [
+    "Asie 59 %, Afrique 18 %, Amériques 13 %, Europe 9 %, Océanie moins de 1 % (ONU, 2023)",
+    "L'Inde et la Chine comptent chacune environ 1,4 milliard d'habitants",
+    "Afrique subsaharienne : + 79 % d'ici 2054, soit 2,2 milliards d'habitants (prévision ONU)",
+    "Neuf pays africains, dont l'Angola, le Niger et la RDC, devraient voir leur population doubler entre 2024 et 2054",
+    "La Chine devrait perdre environ 200 millions d'habitants d'ici 2054"
+   ],
+   "dates": [],
+   "lieux": [
+    "Asie",
+    "Afrique subsaharienne",
+    "Europe",
+    "Amériques",
+    "Océanie",
+    "Inde",
+    "Chine"
+   ],
+   "personnages": [],
+   "vocabulaire": [
+    {
+     "mot": "Afrique subsaharienne",
+     "def": "la partie de l'Afrique située au sud du Sahara"
+    }
+   ],
+   "schema": null,
+   "prerequis": [
+    "geographie-s01-2-f1",
+    "geographie-s01-2-f3"
+   ],
+   "source": {
+    "programme": "La croissance démographique et ses effets",
+    "titre": "Population mondiale",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Population_mondiale"
+   }
   }
  ],
  "schemas": [
@@ -1042,6 +1129,350 @@ JEU.enregistrer("cours", {
    },
    "r": "==wRB8BDa0xEYMGSLUhXHzKFBAwHuHrUBUFFc8xTGYgJbxwRf9wTV8sqAAyGYgAHW1gTccABz0AAAxlTKUAFIISZ",
    "poids": 1
+  },
+  {
+   "id": "geographie-s01-2-q45",
+   "fiche": "geographie-s01-2-f6",
+   "type": "qcm",
+   "niveau": 1,
+   "enonce": "En quelle année la population mondiale a-t-elle atteint 8 milliards d'habitants, d'après l'ONU ?",
+   "choix": [
+    "2022",
+    "2011",
+    "1999",
+    "2037"
+   ],
+   "explication": "L'ONU a daté ce cap de novembre 2022. Les 7 milliards dataient de 2011, et les 9 milliards sont attendus vers 2037.",
+   "source": {
+    "theme": "Thème 1 – Cours 1 – 1re partie – Croissance et développement de la population",
+    "titre": "Population",
+    "editeur": "Organisation des Nations Unies (ONU)",
+    "url": "https://www.un.org/fr/global-issues/population"
+   },
+   "r": "NRFVZBUZ",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s01-2-q46",
+   "fiche": "geographie-s01-2-f6",
+   "type": "vrai_faux",
+   "niveau": 1,
+   "enonce": "D'après l'ONU, la population mondiale devrait continuer d'augmenter jusque vers le milieu des années 2080, puis baisser lentement.",
+   "corrections": [],
+   "explication": "Oui : la prévision de 2024 donne un sommet d'environ 10,3 milliards vers 2085, puis une lente baisse. Ce n'est qu'une projection, qui change à chaque révision.",
+   "source": {
+    "theme": "Thème 1 – Cours 1 – 1re partie – Croissance et développement de la population",
+    "titre": "Population",
+    "editeur": "Organisation des Nations Unies (ONU)",
+    "url": "https://www.un.org/fr/global-issues/population"
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s01-2-q47",
+   "fiche": "geographie-s01-2-f6",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Combien de temps a-t-il fallu pour passer de 7 à 8 milliards d'humains ?",
+   "choix": [
+    "Environ douze ans",
+    "Environ trente ans",
+    "Environ un siècle",
+    "Moins de cinq ans"
+   ],
+   "explication": "Les 7 milliards datent de 2011 et les 8 milliards de 2022 : une douzaine d'années. Passer de 8 à 9 milliards devrait prendre un peu plus longtemps, une quinzaine d'années.",
+   "source": {
+    "theme": "Thème 1 – Cours 1 – 1re partie – Croissance et développement de la population",
+    "titre": "Population",
+    "editeur": "Organisation des Nations Unies (ONU)",
+    "url": "https://www.un.org/fr/global-issues/population"
+   },
+   "r": "==wVCcwDPdhE2IUAVMUAd8AEHcTZ",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s01-2-q48",
+   "fiche": "geographie-s01-2-f6",
+   "type": "ordre",
+   "niveau": 2,
+   "enonce": "Range ces caps de la population mondiale du plus ancien au plus récent.",
+   "elements": [
+    "8 milliards d'habitants",
+    "5 milliards d'habitants",
+    "7 milliards d'habitants",
+    "6 milliards d'habitants"
+   ],
+   "explication": "5 milliards en 1987, 6 milliards en 1999, 7 milliards en 2011, 8 milliards en 2022. Chaque milliard de plus arrive en une douzaine d'années.",
+   "source": {
+    "theme": "Thème 1 – Cours 1 – 1re partie – Croissance et développement de la population",
+    "titre": "Population mondiale",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Population_mondiale"
+   },
+   "r": "o1hQdpUVFNEH",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s01-2-q49",
+   "fiche": "geographie-s01-2-f6",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Pourquoi l'ONU annonce-t-elle un jour précis, comme en novembre 2022, pour le passage des 8 milliards ?",
+   "choix": [
+    "Parce que c'est une date symbolique : la population est estimée, pas comptée un par un",
+    "Parce que tous les pays du monde ont fait un recensement exactement le même jour",
+    "Parce que l'ONU reçoit chaque jour le compte exact des naissances et des décès de tous les pays",
+    "Parce que c'est le jour d'une grande conférence mondiale sur la population"
+   ],
+   "explication": "Personne ne compte les humains un par un : l'ONU estime la population à partir des recensements et des registres. La date d'un cap est donc un repère symbolique, avec une marge d'erreur de plusieurs mois.",
+   "source": {
+    "theme": "Thème 1 – Cours 1 – 1re partie – Croissance et développement de la population",
+    "titre": "Journée mondiale de la population",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Journ%C3%A9e_mondiale_de_la_population"
+   },
+   "r": "QlyBVdBFBkEAaIVDq7eEFBUAMYUFIIwZeBBz2yBAawxFIdjXAUxQBYgEHUwB30RBFRRHJR1TX0hMElgWPNgFVYEDGYiFVBwGEkkGccxTg0AAAxlTKUAFIISZ",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s01-2-q50",
+   "fiche": "geographie-s01-2-f6",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "En 2024, une femme a en moyenne un peu plus de deux enfants dans le monde.",
+   "corrections": [],
+   "explication": "Oui : l'ONU compte 2,25 enfants par femme en 2024. Ce chiffre baisse et devrait passer sous le seuil de renouvellement vers la fin des années 2040.",
+   "source": {
+    "theme": "Thème 1 – Cours 1 – 1re partie – Croissance et développement de la population",
+    "titre": "Population",
+    "editeur": "Organisation des Nations Unies (ONU)",
+    "url": "https://www.un.org/fr/global-issues/population"
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s01-2-q51",
+   "fiche": "geographie-s01-2-f6",
+   "type": "trou",
+   "niveau": 2,
+   "enonce": "Complète les deux dates.",
+   "texte": "La Terre comptait 7 milliards d'habitants en ___ et 8 milliards en ___.",
+   "banque": [
+    "2011",
+    "2022",
+    "1987",
+    "2037"
+   ],
+   "explication": "Le septième milliard date d'octobre 2011 et le huitième de novembre 2022. En 1987, on passait les 5 milliards ; 2037 est la date prévue pour 9 milliards.",
+   "source": {
+    "theme": "Thème 1 – Cours 1 – 1re partie – Croissance et développement de la population",
+    "titre": "Population mondiale",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Population_mondiale"
+   },
+   "r": "==AKssEXdJkWhZXSo9wXeZFVLlCH",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s01-2-q52",
+   "fiche": "geographie-s01-2-f6",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "La population mondiale a été multipliée par huit entre 1800 et 2022. Qu'est-ce qui a surtout rendu cela possible ?",
+   "choix": [
+    "Le recul de la mortalité, grâce aux progrès de l'alimentation, de la médecine et de l'hygiène",
+    "Des femmes qui ont eu, à chaque génération, bien plus d'enfants que leurs mères et leurs grands-mères",
+    "Les grandes migrations d'un continent à l'autre",
+    "Un climat devenu plus doux sur toute la planète"
+   ],
+   "explication": "On meurt beaucoup moins qu'en 1800 : les enfants survivent et les adultes vivent plus vieux. La natalité, elle, n'a pas augmenté ; elle a même fini par baisser presque partout.",
+   "source": {
+    "theme": "Thème 1 – Cours 1 – 1re partie – Croissance et développement de la population",
+    "titre": "Transition démographique",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Transition_d%C3%A9mographique"
+   },
+   "r": "==QYItQnufACf4gTec2FRUUAUk0CBsxCmkEz2DkTOogRMYxZethCcUACaEwFFoSQEIRQOpgAGph2ECgEKcQAJZhGTgkJOds9flwTK9sqG4iHUExBeQgTO4BSmkURZhVDKQhRM4TZ",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s01-2-q53",
+   "fiche": "geographie-s01-2-f7",
+   "type": "qcm",
+   "niveau": 1,
+   "enonce": "Quel continent regroupe près de six humains sur dix ?",
+   "choix": [
+    "L'Asie",
+    "L'Afrique",
+    "L'Europe",
+    "L'Amérique"
+   ],
+   "explication": "L'Asie compte 4,8 milliards d'habitants en 2023, soit 59 % des humains. L'Afrique arrive loin derrière, avec 1,5 milliard.",
+   "source": {
+    "theme": "Thème 1 – Cours 1 – 1re partie – Croissance et développement de la population",
+    "titre": "Population mondiale",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Population_mondiale"
+   },
+   "r": "=8wCGUxJO5TZ",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s01-2-q54",
+   "fiche": "geographie-s01-2-f7",
+   "type": "vrai_faux",
+   "niveau": 1,
+   "enonce": "L'Europe compte plus d'habitants que l'Afrique.",
+   "corrections": [
+    "Faux : l'Afrique en compte environ deux fois plus.",
+    "Faux : les deux continents ont à peu près le même nombre d'habitants.",
+    "Faux : l'Europe est le continent le moins peuplé du monde."
+   ],
+   "explication": "L'Afrique compte 1,5 milliard d'habitants en 2023, l'Europe 750 millions. Et l'écart se creuse, car l'Afrique grandit vite.",
+   "source": {
+    "theme": "Thème 1 – Cours 1 – 1re partie – Croissance et développement de la population",
+    "titre": "Population mondiale",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Population_mondiale"
+   },
+   "r": "=8gSt5FEZ1lTc8QCPI1PHARAV9hBcYABGYSDAEUXDAQBGdwFndBAUwxAP8CSegUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s01-2-q55",
+   "fiche": "geographie-s01-2-f7",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Que prévoit l'ONU pour la population de l'Afrique subsaharienne d'ici 2054 ?",
+   "choix": [
+    "Une hausse de près de 80 %, jusqu'à 2,2 milliards d'habitants",
+    "Une baisse de moitié, comme dans la plupart des pays d'Europe",
+    "Une population qui ne bouge plus, parce que la fécondité y est déjà très basse",
+    "Une hausse de 5 % seulement"
+   ],
+   "explication": "L'ONU attend 2,2 milliards d'habitants en Afrique subsaharienne en 2054, près de 80 % de plus qu'en 2024. C'est là que se concentre la croissance mondiale à venir.",
+   "source": {
+    "theme": "Thème 1 – Cours 1 – 1re partie – Croissance et développement de la population",
+    "titre": "Population",
+    "editeur": "Organisation des Nations Unies (ONU)",
+    "url": "https://www.un.org/fr/global-issues/population"
+   },
+   "r": "=clFB8BCaYAEJsiCBUhXK0xBPUgHu8RVXl1QJ5MrV1hMeBxXNIkSGZVUSJiFVZR3yuhHPdBDjhkFGh1DHY0AHcSZ",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s01-2-q56",
+   "fiche": "geographie-s01-2-f7",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Pourquoi la part de l'Europe dans la population mondiale recule-t-elle ?",
+   "choix": [
+    "Parce que sa population augmente peu, alors que celle d'autres continents grandit vite",
+    "Parce que beaucoup de jeunes Européens partent vivre en Asie ou en Amérique chaque année",
+    "Parce que l'espérance de vie y baisse depuis les années 1970",
+    "Parce que plusieurs de ses pays sont désormais comptés en Asie"
+   ],
+   "explication": "Tous les pays d'Europe ont une fécondité sous le seuil de renouvellement : leur population stagne ou baisse. Pendant ce temps, l'Afrique et l'Asie gagnent des centaines de millions d'habitants.",
+   "source": {
+    "theme": "Thème 1 – Cours 1 – 1re partie – Croissance et développement de la population",
+    "titre": "Population",
+    "editeur": "Organisation des Nations Unies (ONU)",
+    "url": "https://www.un.org/fr/global-issues/population"
+   },
+   "r": "==AUQEBHHkkGGYhBi8lAV4lGBMACAYQKdYRRGQxGaoxEPdSDAkVQLwgRDwxAnFwBKkBEJJkGXgxYIFxWINACTcQScgyGBQQGEkRAfIVCw0AAAxlTKUAFIISZ",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s01-2-q57",
+   "fiche": "geographie-s01-2-f7",
+   "type": "association",
+   "niveau": 2,
+   "enonce": "Relie chaque continent à sa part de la population mondiale en 2023.",
+   "gauche": [
+    "L'Asie",
+    "L'Afrique",
+    "Les Amériques",
+    "L'Europe"
+   ],
+   "droite": [
+    "9 %",
+    "59 %",
+    "13 %",
+    "18 %"
+   ],
+   "explication": "Asie 59 %, Afrique 18 %, Amériques 13 %, Europe 9 %. L'Océanie complète avec moins de 1 %.",
+   "source": {
+    "theme": "Thème 1 – Cours 1 – 1re partie – Croissance et développement de la population",
+    "titre": "Population mondiale",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Population_mondiale"
+   },
+   "r": "==ANvcnXG5TWsslQdlCRe4RSEYnQyclSZlCH",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s01-2-q58",
+   "fiche": "geographie-s01-2-f7",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "L'Océanie est le continent le moins peuplé, avec moins d'un humain sur cent.",
+   "corrections": [],
+   "explication": "Oui : environ 46 millions d'habitants en 2023, soit 0,6 % de l'humanité. À côté, l'Europe en compte 750 millions.",
+   "source": {
+    "theme": "Thème 1 – Cours 1 – 1re partie – Croissance et développement de la population",
+    "titre": "Population mondiale",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Population_mondiale"
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s01-2-q59",
+   "fiche": "geographie-s01-2-f7",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "L'ONU prévoit que la population du Niger ou de la République démocratique du Congo double entre 2024 et 2054. Que montre cet exemple ?",
+   "choix": [
+    "Que la croissance mondiale à venir se concentre en Afrique subsaharienne",
+    "Que l'Afrique a terminé sa transition démographique",
+    "Que ces pays accueillent chaque année des millions d'immigrés venus d'Europe et d'Asie",
+    "Que l'Afrique est déjà le continent le plus peuplé"
+   ],
+   "explication": "Neuf pays africains devraient voir leur population doubler en trente ans. C'est le signe d'une croissance encore très forte, loin de la fin de la transition démographique.",
+   "source": {
+    "theme": "Thème 1 – Cours 1 – 1re partie – Croissance et développement de la population",
+    "titre": "Population",
+    "editeur": "Organisation des Nations Unies (ONU)",
+    "url": "https://www.un.org/fr/global-issues/population"
+   },
+   "r": "XgEABMwDbMxLTYwBAIQSLoxABEzSkUxQL80AU0BHiExGKYRUM0xTAEQLINRFN26TDoACbMCHagQVUoAAOEwGqI0FW1wDDY0AcMSZ",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s01-2-q60",
+   "fiche": "geographie-s01-2-f7",
+   "type": "trou",
+   "niveau": 1,
+   "enonce": "Complète la phrase.",
+   "texte": "Le continent le plus peuplé est l'___ ; le deuxième est l'___.",
+   "banque": [
+    "Asie",
+    "Afrique",
+    "Europe",
+    "Océanie"
+   ],
+   "explication": "L'Asie regroupe près de six humains sur dix, l'Afrique un peu moins d'un sur cinq. L'Europe et l'Océanie viennent loin derrière.",
+   "source": {
+    "theme": "Thème 1 – Cours 1 – 1re partie – Croissance et développement de la population",
+    "titre": "Population mondiale",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Population_mondiale"
+   },
+   "r": "==wLocEEEgxBdQRKhZXSo9wCGUxJLlCH",
+   "poids": 1
   }
  ],
  "bonus": [
@@ -1055,12 +1486,25 @@ JEU.enregistrer("cours", {
     "editeur": "Organisation mondiale de la Santé (OMS)",
     "url": "https://www.who.int/fr/news/item/13-12-2019-who-commemorates-the-40th-anniversary-of-smallpox-eradication"
    }
+  },
+  {
+   "id": "geographie-s01-2-b2",
+   "fiche": "geographie-s01-2-f6",
+   "titre": "Le 11 juillet, Journée mondiale de la population",
+   "texte": "Le 11 juillet 1987, l'ONU a situé le passage des 5 milliards d'humains : ce fut la « Journée des cinq milliards ». Deux ans plus tard, le Programme des Nations unies pour le développement a proposé d'en faire, chaque année, la Journée mondiale de la population. La date reste symbolique : la marge d'erreur du calcul dépassait un an.",
+   "source": {
+    "titre": "Journée mondiale de la population",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Journ%C3%A9e_mondiale_de_la_population"
+   }
   }
  ],
  "nonCouvert": [
   "Les graphiques et la carte du cours (évolution de la population mondiale, croissance dans le monde, fécondité par pays) : seuls leurs titres sont lisibles dans l'extraction, leurs valeurs ne sont pas reprises.",
-  "Page 6 (les pays les plus peuplés du monde) : exercice qui recoupe le devoir n° 1, non repris.",
-  "Page 8 (carte mentale à compléter, texte sur le risque de surpeuplement) et page 9 (la Chine) : exercices, non repris.",
+  "Page 6 (les pays les plus peuplés du monde) : exercice qui recoupe le devoir n° 1, non repris ; les deux pays de plus d'un milliard d'habitants sont nommés dans la fiche f7, sans question.",
+  "Page 8 (carte mentale, texte sur le surpeuplement) : exercices non repris ; page 9 (la Chine) sert au cours geographie-s03-1.",
+  "Attente du programme : la croissance démographique vue à l'échelle d'un pays émergent (Chine) : la Chine n'apparaît qu'en prévision de baisse (f7) ; l'étude de cas 2 (Inde) complète.",
+  "Attente du programme : les effets de la croissance sur l'environnement et les ressources (eau, nourriture) : traités dans la deuxième partie du cours (geographie-s02-2).",
   "Les vidéos du cours (repère V au tableau de progression) ne sont pas déposées."
  ]
 });

@@ -3,8 +3,15 @@
 // Seule source : l'étude de cas n° 3 (2 pages : texte sur l'école en Afghanistan, photos, carte du taux
 // d'alphabétisation 2018, texte sur le parcours scolaire d'une jeune Finlandaise, tableau comparatif des deux pays).
 // Ton neutre : les talibans sont seulement nommés comme le pouvoir en place, sans qualificatif ni détail violent.
+// 28/10/2026 (programme officiel, sous-thème « Répartition de la richesse et de la pauvreté dans le monde ») : le dépôt
+// couvre le programme, aucune fiche de programme n'est nécessaire ; ajout d'une question à f3, f5 et f6 (q51 est une
+// question de thème, UNESCO) et d'un bonus b3 (lois Jules Ferry). Devoir n° 2 (semaine 11) non déposé : prudence.
 const F = "cours/geographie/Geo 5e - Theme 1 - Etude de cas 3.pdf";
 const P = (page) => ({ fichier: F, page: page });
+const THEME = "Étude de cas 3 – L’éducation en Afghanistan et en Finlande";
+const T = (titre, editeur, url) => ({ theme: THEME, titre: titre, editeur: editeur, url: url });
+const U_UNESCO = "https://www.unesco.org/fr/literacy/need-know";
+const U_FERRY = "https://fr.wikipedia.org/wiki/Lois_Jules_Ferry";
 
 // Schéma redessiné : quatre lignes du tableau comparatif, en barres (Afghanistan en rouge, Finlande en bleu).
 function schemaComparaison() {
@@ -245,6 +252,12 @@ module.exports = {
       enonce: "Les Finlandaises comptent parmi les femmes les plus diplômées d'Europe : plus d'une sur trois a fait des études à l'université.",
       corrections: [], reponse: { vrai: true, correction: null },
       explication: "Plus d'un tiers des Finlandaises ont une formation universitaire. L'université gratuite y est pour beaucoup.", source: P(2) },
+    { id: "geographie-s08-2-q49", fiche: "geographie-s08-2-f3", type: "association", niveau: 2,
+      enonce: "Relie chaque étape du parcours d'une élève finlandaise à ce qu'elle lui coûte.",
+      gauche: ["La cantine et le dentiste de l'école", "Le conservatoire", "La chambre d'étudiante", "Le lycée et l'université"],
+      droite: ["Gratuits, tous les jours d'école", "Presque rien", "La moitié du loyer habituel, grâce à l'État", "Gratuits, repas du lycée compris"],
+      reponse: [[0, 0], [1, 1], [2, 2], [3, 3]],
+      explication: "Presque tout est gratuit, de la cantine à l'université. Le conservatoire coûte presque rien et la chambre d'étudiante moitié prix.", source: P(2) },
 
     // f4 : population et richesse
     { id: "geographie-s08-2-q25", fiche: "geographie-s08-2-f4", type: "qcm", niveau: 1,
@@ -319,6 +332,12 @@ module.exports = {
       choix: ["Des classes de 15 élèves", "6,4 % du PIB pour l'éducation", "L'école obligatoire jusqu'à 16 ans", "Presque 100 % d'alphabétisés", "38 millions d'habitants", "4,7 enfants par femme"],
       reponse: ["Des classes de 15 élèves", "6,4 % du PIB pour l'éducation", "L'école obligatoire jusqu'à 16 ans", "Presque 100 % d'alphabétisés"],
       explication: "Petites classes, plus d'argent, école plus longue et alphabétisation complète : la Finlande gagne sur toute la ligne. 38 millions d'habitants et 4,7 enfants par femme sont des données afghanes.", source: P(2) },
+    { id: "geographie-s08-2-q50", fiche: "geographie-s08-2-f5", type: "trou", niveau: 1,
+      enonce: "Complète la phrase.",
+      texte: "En Afghanistan, une classe compte en moyenne ___ élèves ; en Finlande, ___.",
+      banque: ["43", "15", "25", "60"],
+      reponse: [["43"], ["15"]],
+      explication: "43 élèves par classe en Afghanistan, 15 en Finlande. Presque trois fois plus d'un côté que de l'autre.", source: P(2) },
 
     // f6 : l'alphabétisation dans le monde
     { id: "geographie-s08-2-q41", fiche: "geographie-s08-2-f6", type: "qcm", niveau: 1,
@@ -349,7 +368,13 @@ module.exports = {
       enonce: "Où trouve-t-on des taux d'alphabétisation supérieurs à 95 % ? (plusieurs réponses)",
       choix: ["En Europe", "En Amérique du Nord", "En Russie", "En Australie", "Dans plusieurs pays d'Afrique", "En Afghanistan"],
       reponse: ["En Europe", "En Amérique du Nord", "En Russie", "En Australie"],
-      explication: "Europe, Amérique du Nord, Russie et Australie sont dans la classe la plus haute. Plusieurs pays d'Afrique et l'Afghanistan sont sous 50 %.", source: P(1) }
+      explication: "Europe, Amérique du Nord, Russie et Australie sont dans la classe la plus haute. Plusieurs pays d'Afrique et l'Afghanistan sont sous 50 %.", source: P(1) },
+    { id: "geographie-s08-2-q51", fiche: "geographie-s08-2-f6", type: "qcm", niveau: 2,
+      enonce: "Dans le monde, parmi les adultes qui ne savent ni lire ni écrire, qui est le plus nombreux ?",
+      choix: ["Les femmes : deux sur trois", "Les hommes : deux sur trois", "Autant d'hommes que de femmes", "Les enfants de moins de dix ans, qui n'ont pas encore eu le temps d'apprendre"],
+      reponse: "Les femmes : deux sur trois",
+      explication: "D'après l'UNESCO, au moins 739 millions d'adultes ne savent ni lire ni écrire, et deux sur trois sont des femmes. Chez les jeunes, la situation s'améliore : 93 % savaient lire en 2024.",
+      source: T("L'alphabétisation : ce qu'il faut savoir", "UNESCO", U_UNESCO) }
   ],
   bonus: [
     {
@@ -364,7 +389,14 @@ module.exports = {
       fiche: "geographie-s08-2-f6",
       titre: "Combien d'adultes ne savent pas lire ?",
       texte: "D'après l'UNESCO, au moins 739 millions d'adultes dans le monde ne savent toujours ni lire ni écrire, et deux sur trois sont des femmes. Chez les jeunes de 18 à 24 ans, la situation est meilleure : 93 % savaient lire en 2024.",
-      source: { titre: "L'alphabétisation : ce qu'il faut savoir", editeur: "UNESCO", url: "https://www.unesco.org/fr/literacy/need-know" }
+      source: { titre: "L'alphabétisation : ce qu'il faut savoir", editeur: "UNESCO", url: U_UNESCO }
+    },
+    {
+      id: "geographie-s08-2-b3",
+      fiche: "geographie-s08-2-f3",
+      titre: "En France, l'école gratuite et obligatoire depuis 1881-1882",
+      texte: "L'école gratuite a une longue histoire en France. La loi du 16 juin 1881 rend l'école primaire publique gratuite ; celle du 28 mars 1882 rend l'instruction obligatoire de 6 à 13 ans. Elles portent le nom de Jules Ferry, ministre de l'Instruction publique. Obligation d'instruction, pas d'école : une famille pouvait instruire ses enfants à la maison.",
+      source: { titre: "Lois Jules Ferry", editeur: "Wikipédia, l'encyclopédie libre", url: U_FERRY }
     }
   ],
   nonCouvert: [
@@ -372,6 +404,9 @@ module.exports = {
     "La carte du taux d'alphabétisation (2018) est lue à l'œil : seules les grandes zones (plus de 95 %, moins de 50 %) sont reprises, sans valeur par pays.",
     "Les détails violents du texte sur les attaques contre les écolières ne sont pas repris ; les talibans sont seulement nommés comme le pouvoir en place, sans qualificatif.",
     "Le parcours de la jeune Finlandaise est anonymisé : son prénom n'est pas repris.",
-    "Les photos (garçon fabriquant des briques, classe par terre, salle de classe finlandaise) et les deux cartes de situation ne sont pas reproduites."
+    "Les photos (garçon fabriquant des briques, classe par terre, salle de classe finlandaise) et les deux cartes de situation ne sont pas reproduites.",
+    "L'étude de cas s'arrête en 2021 : l'accès des filles afghanes à l'école depuis cette date n'est pas traité, faute de page vérifiée et pour ne pas contredire le livret.",
+    "Les réformes récentes de l'école finlandaise (durée de la scolarité obligatoire) ne sont pas reprises : le jeu suit le livret (de 7 à 16 ans).",
+    "L'IDH des deux pays, que le programme invite à comparer, n'est pas dans le tableau du livret : la comparaison se fait par l'espérance de vie, le PIB par habitant et l'alphabétisation (le classement 2023 est dans geographie-s08-1)."
   ]
 };

@@ -232,22 +232,12 @@
   ]
  },
  {
-  "id": "geographie-s01-1-f1",
-  "matiere": "geographie",
-  "semaine": 1,
-  "cours": "geographie-s01-1",
-  "notion": "L'organisation de l'année de géographie",
-  "prerequis": []
- },
- {
   "id": "geographie-s01-1-f2",
   "matiere": "geographie",
   "semaine": 1,
   "cours": "geographie-s01-1",
   "notion": "Le thème 1 : la croissance démographique et l'inégal développement",
-  "prerequis": [
-   "geographie-s01-1-f1"
-  ]
+  "prerequis": []
  },
  {
   "id": "geographie-s01-1-f3",
@@ -255,9 +245,7 @@
   "semaine": 1,
   "cours": "geographie-s01-1",
   "notion": "Le thème 2 : des ressources limitées à gérer et à renouveler",
-  "prerequis": [
-   "geographie-s01-1-f1"
-  ]
+  "prerequis": []
  },
  {
   "id": "geographie-s01-1-f4",
@@ -265,8 +253,24 @@
   "semaine": 1,
   "cours": "geographie-s01-1",
   "notion": "Le thème 3 : prévenir les risques, s'adapter au changement global",
+  "prerequis": []
+ },
+ {
+  "id": "geographie-s01-1-f5",
+  "matiere": "geographie",
+  "semaine": 1,
+  "cours": "geographie-s01-1",
+  "notion": "Les outils du géographe : lire et faire une carte",
+  "prerequis": []
+ },
+ {
+  "id": "geographie-s01-1-f6",
+  "matiere": "geographie",
+  "semaine": 1,
+  "cours": "geographie-s01-1",
+  "notion": "Se repérer sur le planisphère : continents, océans, densités",
   "prerequis": [
-   "geographie-s01-1-f1"
+   "geographie-s01-1-f5"
   ]
  },
  {
@@ -318,6 +322,27 @@
   ]
  },
  {
+  "id": "geographie-s01-2-f6",
+  "matiere": "geographie",
+  "semaine": 1,
+  "cours": "geographie-s01-2",
+  "notion": "Les jalons de la population mondiale (ONU)",
+  "prerequis": [
+   "geographie-s01-2-f1"
+  ]
+ },
+ {
+  "id": "geographie-s01-2-f7",
+  "matiere": "geographie",
+  "semaine": 1,
+  "cours": "geographie-s01-2",
+  "notion": "Les continents par population",
+  "prerequis": [
+   "geographie-s01-2-f1",
+   "geographie-s01-2-f3"
+  ]
+ },
+ {
   "id": "geographie-s02-1-f1",
   "matiere": "geographie",
   "semaine": 2,
@@ -366,6 +391,28 @@
   ]
  },
  {
+  "id": "geographie-s02-1-f6",
+  "matiere": "geographie",
+  "semaine": 2,
+  "cours": "geographie-s02-1",
+  "notion": "Le Burkina Faso en chiffres",
+  "prerequis": [
+   "geographie-s02-1-f2",
+   "geographie-s01-2-f5"
+  ]
+ },
+ {
+  "id": "geographie-s02-1-f7",
+  "matiere": "geographie",
+  "semaine": 2,
+  "cours": "geographie-s02-1",
+  "notion": "Qu'est-ce qu'un PMA ?",
+  "prerequis": [
+   "geographie-s01-2-f3",
+   "geographie-s02-1-f4"
+  ]
+ },
+ {
   "id": "geographie-s02-2-f1",
   "matiere": "geographie",
   "semaine": 2,
@@ -406,6 +453,27 @@
   ]
  },
  {
+  "id": "geographie-s02-2-f5",
+  "matiere": "geographie",
+  "semaine": 2,
+  "cours": "geographie-s02-2",
+  "notion": "Un milliard d'habitants dans les bidonvilles",
+  "prerequis": [
+   "geographie-s02-2-f3"
+  ]
+ },
+ {
+  "id": "geographie-s02-2-f6",
+  "matiere": "geographie",
+  "semaine": 2,
+  "cours": "geographie-s02-2",
+  "notion": "L'exode rural : quitter la campagne pour la ville",
+  "prerequis": [
+   "geographie-s02-2-f3",
+   "geographie-s02-1-f3"
+  ]
+ },
+ {
   "id": "geographie-s03-1-f1",
   "matiere": "geographie",
   "semaine": 3,
@@ -443,6 +511,39 @@
   "notion": "Les politiques face au vieillissement",
   "prerequis": [
    "geographie-s03-1-f3"
+  ]
+ },
+ {
+  "id": "geographie-s03-1-f5",
+  "matiere": "geographie",
+  "semaine": 3,
+  "cours": "geographie-s03-1",
+  "notion": "La Chine : de l'enfant unique à trois enfants",
+  "prerequis": [
+   "geographie-s03-1-f1",
+   "geographie-s01-2-f3"
+  ]
+ },
+ {
+  "id": "geographie-s03-1-f6",
+  "matiere": "geographie",
+  "semaine": 3,
+  "cours": "geographie-s03-1",
+  "notion": "La France vieillit : un habitant sur cinq a 65 ans ou plus",
+  "prerequis": [
+   "geographie-s03-1-f1",
+   "geographie-s03-1-f3"
+  ]
+ },
+ {
+  "id": "geographie-s03-1-f7",
+  "matiere": "geographie",
+  "semaine": 3,
+  "cours": "geographie-s03-1",
+  "notion": "Le Japon, pays des records d'âge",
+  "prerequis": [
+   "geographie-s03-1-f1",
+   "geographie-s03-1-f6"
   ]
  },
  {

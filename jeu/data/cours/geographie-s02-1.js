@@ -158,6 +158,99 @@ JEU.enregistrer("cours", {
     "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1 - Etude de cas 1 Burkina Faso.pdf",
     "page": 2
    }
+  },
+  {
+   "id": "geographie-s02-1-f6",
+   "notion": "Le Burkina Faso en chiffres",
+   "titre": "Un pays de 20 millions d'habitants, très jeune",
+   "texte": "Au recensement de 2019, le Burkina Faso comptait 20,5 millions d'habitants, et sa population grandit de près de 3 % par an. En 2018, on y comptait 37 naissances et 9 décès pour mille habitants. Résultat : un pays jeune : âge médian 17 ans, 44 % de moins de quinze ans. Un habitant sur quatre vit en ville.",
+   "pointsCles": [
+    "20,5 millions d'habitants au recensement de 2019 ; + 2,9 % par an entre 2006 et 2019",
+    "2018 : 37 naissances et 9 décès pour mille habitants, soit un accroissement naturel de 28 pour mille",
+    "Âge médian : 17 ans ; 44 % des habitants ont moins de quinze ans",
+    "Un habitant sur quatre vit en ville (26 % en 2019, contre 23 % en 2006)"
+   ],
+   "dates": [
+    {
+     "annee": 2019,
+     "evenement": "Recensement : 20,5 millions de Burkinabés"
+    }
+   ],
+   "lieux": [
+    "Burkina Faso"
+   ],
+   "personnages": [],
+   "vocabulaire": [
+    {
+     "mot": "âge médian",
+     "def": "l'âge qui coupe la population en deux moitiés : autant de personnes plus jeunes que de plus âgées"
+    },
+    {
+     "mot": "recensement",
+     "def": "le comptage officiel de tous les habitants d'un pays"
+    }
+   ],
+   "schema": null,
+   "prerequis": [
+    "geographie-s02-1-f2",
+    "geographie-s01-2-f5"
+   ],
+   "source": {
+    "programme": "La croissance démographique et ses effets",
+    "titre": "Démographie du Burkina Faso",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/D%C3%A9mographie_du_Burkina_Faso"
+   }
+  },
+  {
+   "id": "geographie-s02-1-f7",
+   "notion": "Qu'est-ce qu'un PMA ?",
+   "titre": "Les PMA : les pays les moins avancés",
+   "texte": "En 1971, l'ONU a créé la catégorie des pays les moins avancés (PMA), les plus pauvres et les plus fragiles. Trois critères : un revenu par habitant très bas, un retard en santé et en éducation, une économie vulnérable. Fin 2024, on compte 44 PMA, dont 32 en Afrique, Burkina Faso compris.",
+   "pointsCles": [
+    "Catégorie créée par l'ONU en 1971 ; 44 pays fin 2024 : 32 en Afrique, 8 en Asie, 3 en Océanie, 1 en Amérique (Haïti)",
+    "Critère 1 : un revenu par habitant inférieur à 1 088 dollars par an (2024)",
+    "Critère 2 : un retard de développement humain (santé, nutrition, scolarisation) ; critère 3 : une économie vulnérable",
+    "En Afrique : Burkina Faso, Niger, Mali, Tchad, Éthiopie, Madagascar… ; en Asie : Afghanistan, Yémen, Népal…",
+    "On peut en sortir : le Botswana en 1994, le Bhoutan en 2023, Sao Tomé-et-Principe en 2024"
+   ],
+   "dates": [
+    {
+     "annee": 1971,
+     "evenement": "L'ONU crée la catégorie des pays les moins avancés"
+    }
+   ],
+   "lieux": [
+    "Burkina Faso",
+    "Niger",
+    "Mali",
+    "Tchad",
+    "Afghanistan",
+    "Haïti",
+    "Bhoutan"
+   ],
+   "personnages": [],
+   "vocabulaire": [
+    {
+     "mot": "PMA",
+     "def": "les pays les moins avancés, catégorie de l'ONU qui regroupe les pays les plus pauvres et les plus fragiles"
+    },
+    {
+     "mot": "vulnérable",
+     "def": "fragile : qui résiste mal aux coups durs, comme une sécheresse ou une crise"
+    }
+   ],
+   "schema": null,
+   "prerequis": [
+    "geographie-s01-2-f3",
+    "geographie-s02-1-f4"
+   ],
+   "source": {
+    "programme": "La croissance démographique et ses effets",
+    "titre": "Pays les moins avancés",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Pays_les_moins_avanc%C3%A9s"
+   }
   }
  ],
  "schemas": [],
@@ -890,6 +983,362 @@ JEU.enregistrer("cours", {
    },
    "r": "=QBUpthBWAAEJpRAX0BLHVkRIxhBHIxBXoyGZQQVCwgCaYQAhwUDV41CB8wBdAgIRUVEQEFDb4xGAMDTXIlQDYcpCkEHoshBKkRARsASegUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
+  },
+  {
+   "id": "geographie-s02-1-q43",
+   "fiche": "geographie-s02-1-f6",
+   "type": "qcm",
+   "niveau": 1,
+   "enonce": "Combien d'habitants le Burkina Faso comptait-il au recensement de 2019 ?",
+   "choix": [
+    "Environ 20 millions",
+    "Environ 2 millions",
+    "Environ 70 millions",
+    "Environ 200 millions"
+   ],
+   "explication": "Le recensement de 2019 a compté 20,5 millions de Burkinabés. En 1960, ils étaient environ 5 millions.",
+   "source": {
+    "theme": "Étude de cas 1 – Le Burkina Faso",
+    "titre": "Démographie du Burkina Faso",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/D%C3%A9mographie_du_Burkina_Faso"
+   },
+   "r": "XZxGeAgADsRBj1xVVMUAd8AEHcTZ",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s02-1-q44",
+   "fiche": "geographie-s02-1-f6",
+   "type": "vrai_faux",
+   "niveau": 1,
+   "enonce": "Au Burkina Faso, près d'un habitant sur deux a moins de quinze ans.",
+   "corrections": [],
+   "explication": "Oui : 44 % des Burkinabés ont moins de quinze ans. C'est la marque d'une natalité très forte.",
+   "source": {
+    "theme": "Étude de cas 1 – Le Burkina Faso",
+    "titre": "Démographie du Burkina Faso",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/D%C3%A9mographie_du_Burkina_Faso"
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s02-1-q45",
+   "fiche": "geographie-s02-1-f6",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Au Burkina Faso, l'âge médian est de 17 ans. Qu'est-ce que cela veut dire ?",
+   "choix": [
+    "La moitié des Burkinabés ont moins de 17 ans, l'autre moitié plus",
+    "Les Burkinabés vivent en moyenne 17 ans",
+    "Les femmes y ont en moyenne leur premier enfant à 17 ans, l'âge le plus bas du monde",
+    "L'école y est obligatoire jusqu'à 17 ans"
+   ],
+   "explication": "L'âge médian coupe la population en deux moitiés égales. Au Japon, il dépasse 47 ans : le Burkina Faso est un pays bien plus jeune.",
+   "source": {
+    "theme": "Étude de cas 1 – Le Burkina Faso",
+    "titre": "Démographie du Burkina Faso",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/D%C3%A9mographie_du_Burkina_Faso"
+   },
+   "r": "==ARacwKCUFz2iRHHAwHIZyXRAETJNgRKpBHmIlQUVFFN4EHcEALAVUQDFwTV8sqQYCHc4wBEsiTccBDjRopcl1BAsgRI4TZ",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s02-1-q46",
+   "fiche": "geographie-s02-1-f6",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Comment la part des Burkinabés vivant en ville a-t-elle évolué entre 2006 et 2019 ?",
+   "choix": [
+    "Elle a augmenté, d'un peu plus d'un sur cinq à un peu plus d'un sur quatre",
+    "Elle a baissé : beaucoup de citadins sont retournés cultiver la terre dans leur village",
+    "Elle n'a pas bougé : toujours un habitant sur dix",
+    "Elle a dépassé un habitant sur deux"
+   ],
+   "explication": "La part des citadins est passée de 23 % à 26 %. La grande majorité des Burkinabés vit encore à la campagne, mais les villes grossissent vite.",
+   "source": {
+    "theme": "Étude de cas 1 – Le Burkina Faso",
+    "titre": "Démographie du Burkina Faso",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/D%C3%A9mographie_du_Burkina_Faso"
+   },
+   "r": "hh0FBx0GeYEFcEwZcAgQRElGbMgAIZDSVUxQb8kxlm0ApshFFdABa4UAH80JNYBQB5xTTMQGSlyBSFQVdBcrbwRDuoEEU1wDPNgCFcTZ",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s02-1-q47",
+   "fiche": "geographie-s02-1-f6",
+   "type": "trou",
+   "niveau": 2,
+   "enonce": "Complète avec les bons nombres.",
+   "texte": "En 2018, le Burkina Faso comptait environ ___ naissances et ___ décès pour mille habitants.",
+   "banque": [
+    "37",
+    "9",
+    "17",
+    "90"
+   ],
+   "explication": "Trente-sept naissances contre neuf décès : il naît environ quatre fois plus de gens qu'il n'en meurt. C'est pour cela que la population augmente de près de 3 % par an.",
+   "source": {
+    "theme": "Étude de cas 1 – Le Burkina Faso",
+    "titre": "Démographie du Burkina Faso",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/D%C3%A9mographie_du_Burkina_Faso"
+   },
+   "r": "=8SNhRxRuFwMNFVVLlCH",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s02-1-q48",
+   "fiche": "geographie-s02-1-f6",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Au Burkina Faso, la majorité des habitants vit en ville.",
+   "corrections": [
+    "Faux : seul un habitant sur quatre environ vit en ville.",
+    "Faux : presque personne ne vit en ville, à part dans la capitale.",
+    "Faux : exactement la moitié des habitants vit en ville."
+   ],
+   "explication": "En 2019, 26 % des Burkinabés vivaient en ville. Trois sur quatre habitent donc encore à la campagne.",
+   "source": {
+    "theme": "Étude de cas 1 – Le Burkina Faso",
+    "titre": "Démographie du Burkina Faso",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/D%C3%A9mographie_du_Burkina_Faso"
+   },
+   "r": "=gxVfxgADshHjNEAVk1BZYECGAgLEsBAVRxGa4wBZM2XQYUDaEwBSAAEmoRVLAQUFshCBgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s02-1-q49",
+   "fiche": "geographie-s02-1-f6",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Un pays compte 37 naissances et 9 décès pour mille habitants. Quel est son accroissement naturel ?",
+   "choix": [
+    "28 pour mille",
+    "46 pour mille",
+    "9 pour mille",
+    "4 pour mille"
+   ],
+   "explication": "L'accroissement naturel, c'est les naissances moins les décès : 37 − 9 = 28 pour mille. C'est le cas du Burkina Faso en 2018, d'où une croissance proche de 3 % par an.",
+   "indice": "Soustrais les décès aux naissances.",
+   "source": {
+    "theme": "Étude de cas 1 – Le Burkina Faso",
+    "titre": "Démographie du Burkina Faso",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/D%C3%A9mographie_du_Burkina_Faso"
+   },
+   "r": "NdBBvQECV81GAYhRRBUZ",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s02-1-q50",
+   "fiche": "geographie-s02-1-f6",
+   "type": "association",
+   "niveau": 3,
+   "enonce": "Relie chaque indicateur du Burkina Faso à sa valeur.",
+   "gauche": [
+    "Âge médian",
+    "Part des moins de quinze ans",
+    "Part des habitants vivant en ville",
+    "Croissance de la population par an"
+   ],
+   "droite": [
+    "26 %",
+    "Près de 3 %",
+    "17 ans",
+    "44 %"
+   ],
+   "explication": "Un âge médian de 17 ans et 44 % de moins de quinze ans : un pays jeune. Un quart de citadins et près de 3 % de croissance par an : un pays rural qui grandit vite.",
+   "source": {
+    "theme": "Étude de cas 1 – Le Burkina Faso",
+    "titre": "Démographie du Burkina Faso",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/D%C3%A9mographie_du_Burkina_Faso"
+   },
+   "r": "==ANvYnXG5TWsklQdlCRe4RSEYnQyQlSZlCH",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s02-1-q51",
+   "fiche": "geographie-s02-1-f7",
+   "type": "qcm",
+   "niveau": 1,
+   "enonce": "Que veut dire le sigle PMA ?",
+   "choix": [
+    "Pays les moins avancés",
+    "Pays les mieux aménagés",
+    "Puissances mondiales d'Asie",
+    "Pays du Moyen-Orient et d'Afrique"
+   ],
+   "explication": "Les PMA sont les pays les moins avancés : les plus pauvres et les plus fragiles du monde. L'ONU en fixe la liste.",
+   "source": {
+    "theme": "Étude de cas 1 – Le Burkina Faso",
+    "titre": "Pays les moins avancés",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Pays_les_moins_avanc%C3%A9s"
+   },
+   "r": "==wSB4esWsAFHggTcwRAsAURGhkAPVxHIISZ",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s02-1-q52",
+   "fiche": "geographie-s02-1-f7",
+   "type": "vrai_faux",
+   "niveau": 1,
+   "enonce": "La catégorie des PMA a été créée par l'ONU.",
+   "corrections": [],
+   "explication": "Oui, en 1971. L'ONU revoit la liste régulièrement, selon trois critères.",
+   "source": {
+    "theme": "Étude de cas 1 – Le Burkina Faso",
+    "titre": "Pays les moins avancés",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Pays_les_moins_avanc%C3%A9s"
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s02-1-q53",
+   "fiche": "geographie-s02-1-f7",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Sur quel continent se trouve la plupart des PMA ?",
+   "choix": [
+    "En Afrique",
+    "En Asie",
+    "En Amérique du Sud",
+    "En Océanie"
+   ],
+   "explication": "32 des 44 PMA sont africains, dont le Burkina Faso. L'Asie en compte 8, l'Océanie 3, et l'Amérique un seul, Haïti.",
+   "source": {
+    "theme": "Étude de cas 1 – Le Burkina Faso",
+    "titre": "Pays les moins avancés",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Pays_les_moins_avanc%C3%A9s"
+   },
+   "r": "hhEEEREHJciRHcTZ",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s02-1-q54",
+   "fiche": "geographie-s02-1-f7",
+   "type": "qcm_multiple",
+   "niveau": 2,
+   "enonce": "Quels critères l'ONU regarde-t-elle pour classer un pays parmi les PMA ? (plusieurs réponses)",
+   "choix": [
+    "Un revenu par habitant très bas",
+    "Un retard en santé et en éducation",
+    "Une économie fragile face aux coups durs",
+    "Une population de moins d'un million d'habitants",
+    "Un climat désertique",
+    "L'absence d'accès à la mer"
+   ],
+   "explication": "L'ONU mesure le revenu par habitant, le développement humain et la vulnérabilité de l'économie. La taille du pays, son climat ou ses côtes n'entrent pas dans le classement.",
+   "source": {
+    "theme": "Étude de cas 1 – Le Burkina Faso",
+    "titre": "Pays les moins avancés",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Pays_les_moins_avanc%C3%A9s"
+   },
+   "r": "=g2Dd0xECkUA3cgGGUVCc8wTXsgILVEUBdACHQxDSJyGYowGeowxsKVDtg3RZ8AAA8gEIEhMWwtpV9BDOtxFIpu7RsFTd8ECDkkF1MRAAcQUHsTTepEMMdQFeZMrUIRSGkyEBwwFQEgTdMBGjh1CQt1CdYEC8AFH",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s02-1-q55",
+   "fiche": "geographie-s02-1-f7",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Une fois classé PMA, un pays ne peut plus jamais quitter cette catégorie.",
+   "corrections": [
+    "Faux : un pays peut en sortir, comme le Bhoutan en 2023.",
+    "Faux : il en sort automatiquement au bout de dix ans.",
+    "Faux : il en sort dès que sa population dépasse 20 millions d'habitants."
+   ],
+   "explication": "Quand ses résultats s'améliorent durablement, un pays quitte la liste : le Botswana en 1994, le Bhoutan en 2023, Sao Tomé-et-Principe en 2024. Il n'y a ni durée ni taille fixées.",
+   "source": {
+    "theme": "Étude de cas 1 – Le Burkina Faso",
+    "titre": "Pays les moins avancés",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Pays_les_moins_avanc%C3%A9s"
+   },
+   "r": "=gxVfpFXfBEStgURbxkGakgDrIlIeUFAYwhBN8kXaoSWXolXOFwAG1xBiIQVWwAEZ4UAHgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s02-1-q56",
+   "fiche": "geographie-s02-1-f7",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Pourquoi le Burkina Faso est-il classé parmi les PMA ?",
+   "choix": [
+    "Parce que son revenu par habitant est très bas et que santé et éducation y accusent du retard",
+    "Parce qu'il n'a pas d'accès à la mer et qu'il doit tout importer par les pays voisins",
+    "Parce que sa population est trop peu nombreuse pour peser dans les échanges mondiaux",
+    "Parce qu'il l'a demandé pour payer moins d'impôts à l'ONU"
+   ],
+   "explication": "Le Burkina Faso remplit les trois critères : revenu très bas, retard de développement humain, économie vulnérable. L'absence de côtes n'est pas un critère.",
+   "source": {
+    "theme": "Étude de cas 1 – Le Burkina Faso",
+    "titre": "Pays les moins avancés",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Pays_les_moins_avanc%C3%A9s"
+   },
+   "r": "=cUUf9wGDQRSHMiUBsAECwRDMMBS60wCaRkGOUwENsNhSFAAVhtqaEwEbMGSQQUDaogRVgAEnFQ3meQBJpBHXg0NDRQQExgDOY0GTcjUAsAEHwAHPxxBw0AAAxlTKUAFIISZ",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s02-1-q57",
+   "fiche": "geographie-s02-1-f7",
+   "type": "association",
+   "niveau": 3,
+   "enonce": "Relie chaque pays à sa situation dans la liste des PMA.",
+   "gauche": [
+    "Burkina Faso",
+    "Afghanistan",
+    "Haïti",
+    "Bhoutan"
+   ],
+   "droite": [
+    "Sorti de la liste en 2023",
+    "L'un des 32 PMA d'Afrique",
+    "Le seul PMA d'Amérique",
+    "L'un des 8 PMA d'Asie"
+   ],
+   "explication": "Le Burkina Faso est l'un des 32 PMA africains, l'Afghanistan l'un des 8 asiatiques, Haïti le seul des Amériques. Le Bhoutan, lui, a quitté la liste en 2023.",
+   "source": {
+    "theme": "Étude de cas 1 – Le Burkina Faso",
+    "titre": "Pays les moins avancés",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Pays_les_moins_avanc%C3%A9s"
+   },
+   "r": "==ANvcnXG5TWsslQdlCRe4RSEYnQyclSZlCH",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s02-1-q58",
+   "fiche": "geographie-s02-1-f7",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Fin 2024, combien de pays sont classés PMA, et combien d'entre eux sont africains ?",
+   "choix": [
+    "44, dont 32 en Afrique",
+    "44, dont 10 en Afrique",
+    "100, dont 32 en Afrique",
+    "20, tous en Afrique"
+   ],
+   "explication": "Près des trois quarts des PMA sont africains : 32 sur 44. Les autres sont en Asie, en Océanie et dans les Antilles.",
+   "source": {
+    "theme": "Étude de cas 1 – Le Burkina Faso",
+    "titre": "Pays les moins avancés",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Pays_les_moins_avanc%C3%A9s"
+   },
+   "r": "QJyBEwwBXgiTBcBSx5RRBNUALYkSdZUZ",
+   "poids": 1
   }
  ],
  "bonus": [
@@ -903,11 +1352,24 @@ JEU.enregistrer("cours", {
     "editeur": "Wikipédia, l'encyclopédie libre",
     "url": "https://fr.wikipedia.org/wiki/Burkina_Faso"
    }
+  },
+  {
+   "id": "geographie-s02-1-b2",
+   "fiche": "geographie-s02-1-f3",
+   "titre": "Ouaga, « là où on reçoit des honneurs »",
+   "texte": "En mooré, Ouagadougou veut dire « là où on reçoit des honneurs, du respect ». Ses habitants l'appellent Ouaga. À 300 mètres d'altitude, la ville connaît une saison des pluies de la mi-mai à la mi-octobre. Elle accueille le FESPACO, grand festival panafricain du cinéma et de la télévision. Sa population double à peu près tous les dix ans.",
+   "source": {
+    "titre": "Ouagadougou",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Ouagadougou"
+   }
   }
  ],
  "nonCouvert": [
   "La capsule vidéo n° 3 (outil du géographe n° 3), à regarder pour la question sur la transition démographique, n'est pas déposée.",
   "Les valeurs du graphique d'évolution démographique sont lues à l'œil sur le PDF : seules des valeurs arrondies sont reprises.",
-  "Les réponses attendues aux questions de l'étude de cas ne sont pas fournies dans le dépôt."
+  "Les réponses attendues aux questions de l'étude de cas ne sont pas fournies dans le dépôt.",
+  "Attente du programme : la mise en perspective du Burkina Faso à l'échelle de l'Afrique subsaharienne (la croissance la plus forte du monde) : seulement esquissée par la fiche de programme f7 de geographie-s01-2.",
+  "La deuxième ville du pays (Bobo-Dioulasso) et les migrations des Burkinabés vers la Côte d'Ivoire : non couvertes (la Côte d'Ivoire est un document du devoir n° 1)."
  ]
 });

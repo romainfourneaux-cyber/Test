@@ -4,8 +4,25 @@
 // DEPOT/, les pages citées sont celles des repères « === page n === » de l'extraction), partie I.A
 // « Qu'est-ce que la pauvreté ? » (page 1). La partie I.B (mesurer, page 2) nourrit l'outil 9 (geographie-s08-1) ;
 // la partie II (pages 3-4) et les exercices des pages 7-8 attendent la 2e partie du cours (semaine 9).
+// Fiches de programme (règle du 28/10/2026, sous-thème « Répartition de la richesse et de la pauvreté dans le monde ») :
+// f6 (le seuil d'extrême pauvreté de la Banque mondiale, relevé en 2022 et 2025) et f7 (le seuil relatif de la France),
+// faits relus le 28/10/2026 sur les pages de la Banque mondiale, de l'INSEE et de Wikipédia citées ; leurs questions
+// sont des questions de thème. Le livret garde son seuil de 1,90 dollar (celui de 2015) : f6 le date sans le contredire.
+// Devoir n° 2 (semaine 11) non déposé : aucune question « définis » sur le vocabulaire du livret.
 const F = "cours/geographie/Geo 5e - Theme 1 - Cours 2.pdf";
 const P = (page) => ({ fichier: F, page: page });
+const THEME = "Cours 2 – 1re partie – Richesse et pauvreté dans le monde";
+const T = (titre, editeur, url) => ({ theme: THEME, titre: titre, editeur: editeur, url: url });
+const PROG = "Répartition de la richesse et de la pauvreté dans le monde";
+const PR = (titre, editeur, url) => ({ programme: PROG, titre: titre, editeur: editeur, url: url });
+const BM = "Banque mondiale";
+const U_BM = "https://www.worldbank.org/en/topic/poverty/overview";
+const U_BM22 = "https://www.worldbank.org/en/news/factsheet/2022/05/02/fact-sheet-an-adjustment-to-global-poverty-lines";
+const U_BM25 = "https://www.worldbank.org/en/news/factsheet/2025/06/05/june-2025-update-to-global-poverty-lines";
+const U_INSEE = "https://www.insee.fr/fr/statistiques/8600989";
+const U_MEDIANE = "https://www.insee.fr/fr/metadonnees/definition/c1376";
+const U_SEUIL = "https://fr.wikipedia.org/wiki/Seuil_de_pauvret%C3%A9";
+const U_TIERS = "https://fr.wikipedia.org/wiki/Tiers_monde";
 
 // Schéma redessiné : les deux familles de ressources qui manquent aux pauvres.
 function schemaRessources() {
@@ -127,6 +144,53 @@ module.exports = {
         { mot: "développement", def: "l'amélioration des conditions de vie d'une population, qui peut alors satisfaire tous ses besoins essentiels" }
       ],
       schema: null, prerequis: ["geographie-s07-1-f1", "geographie-s01-2-f3"], source: P(1)
+    },
+    {
+      id: "geographie-s07-1-f6", notion: "Le seuil d'extrême pauvreté de la Banque mondiale",
+      titre: "1,90, puis 2,15, puis 3 dollars par jour",
+      texte: "La Banque mondiale fixe le seuil mondial d'extrême pauvreté. Il monte avec les prix : 1,90 dollar par jour en 2015 (le chiffre du cours), 2,15 dollars en 2022, 3 dollars depuis 2025. Sous ce seuil vivaient environ 2,3 milliards de personnes en 1990 et environ 840 millions aujourd'hui, de plus en plus souvent en Afrique subsaharienne.",
+      pointsCles: [
+        "Le seuil est relevé quand les prix montent : 1 dollar (1990), 1,90 dollar (2015), 2,15 dollars (2022), 3 dollars (2025)",
+        "Environ 2,3 milliards de personnes sous le seuil en 1990 ; environ 840 millions aujourd'hui",
+        "L'extrême pauvreté se concentre de plus en plus en Afrique subsaharienne et dans les pays en guerre",
+        "Depuis une dizaine d'années, le recul ralentit : croissance faible, dettes, Covid, conflits, catastrophes climatiques",
+        "Le livret garde le seuil de 2015 (1,90 dollar) : les deux chiffres sont justes, chacun à sa date"
+      ],
+      astuce: "Trois seuils, trois dates qui montent : 1,90 en 2015, 2,15 en 2022, 3 en 2025.",
+      dates: [
+        { annee: 1990, evenement: "Premier seuil de la Banque mondiale : 1 dollar par jour ; 2,3 milliards de très pauvres" },
+        { annee: 2015, evenement: "Seuil d'extrême pauvreté porté à 1,90 dollar par jour" },
+        { annee: 2022, evenement: "Seuil porté à 2,15 dollars par jour" },
+        { annee: 2025, evenement: "Seuil porté à 3 dollars par jour" }
+      ],
+      lieux: ["Afrique subsaharienne"], personnages: [],
+      vocabulaire: [
+        { mot: "Banque mondiale", def: "une institution internationale qui prête de l'argent aux pays pauvres et mesure la pauvreté dans le monde" },
+        { mot: "pouvoir d'achat", def: "ce qu'on peut acheter avec une somme d'argent ; il baisse quand les prix montent" }
+      ],
+      schema: null, prerequis: ["geographie-s07-1-f3", "geographie-s07-1-f4"],
+      source: PR("Poverty – Overview", BM, U_BM)
+    },
+    {
+      id: "geographie-s07-1-f7", notion: "Pauvre en France : le seuil relatif",
+      titre: "Pauvre en France, pauvre au Burkina : deux seuils",
+      texte: "Le seuil de la Banque mondiale est absolu : la même somme pour tous. En France, l'INSEE utilise un seuil relatif : moins de 60 % du niveau de vie médian, celui qui coupe la population en deux moitiés. En 2023, cela fait 1 288 euros par mois pour une personne seule ; 15,4 % des habitants vivent en dessous.",
+      pointsCles: [
+        "Seuil absolu (Banque mondiale) : une somme fixe, 3 dollars par jour, pour comparer tous les pays",
+        "Seuil relatif (France, Europe) : 60 % du niveau de vie médian du pays",
+        "Médiane : la valeur qui partage la population en deux moitiés égales (INSEE)",
+        "2023 : 1 288 euros par mois pour une personne seule, 1 932 euros pour un couple",
+        "15,4 % de pauvres en France en 2023 (14,4 % en 2022), soit 9,8 millions de personnes"
+      ],
+      dates: [{ annee: 2023, evenement: "Seuil de pauvreté français : 1 288 euros par mois pour une personne seule" }],
+      lieux: ["France"], personnages: [],
+      vocabulaire: [
+        { mot: "médiane", def: "la valeur qui partage une population en deux moitiés égales : autant de gens au-dessus qu'en dessous" },
+        { mot: "seuil relatif", def: "un seuil de pauvreté calculé par rapport au niveau de vie du pays, comme 60 % de la médiane en France" },
+        { mot: "INSEE", def: "l'Institut national de la statistique, qui compte les habitants et mesure les revenus en France" }
+      ],
+      schema: null, prerequis: ["geographie-s07-1-f3", "geographie-s07-1-f6"],
+      source: PR("Niveau de vie et pauvreté en 2023 (Insee Première n° 2063)", "INSEE", U_INSEE)
     }
   ],
   schemas: [
@@ -336,15 +400,124 @@ module.exports = {
       texte: "Le ___ est l'amélioration générale des conditions de vie ; une ___ est une différence de richesse entre des personnes ou des territoires.",
       banque: ["développement", "inégalité", "seuil", "revenu"],
       reponse: [["développement", "developpement"], ["inégalité", "inegalite"]],
-      explication: "Le développement améliore les conditions de vie. L'inégalité mesure l'écart de richesse ou de développement.", source: P(1) }
+      explication: "Le développement améliore les conditions de vie. L'inégalité mesure l'écart de richesse ou de développement.", source: P(1) },
+
+    // f6 : le seuil d'extrême pauvreté de la Banque mondiale (fiche de programme : questions de thème)
+    { id: "geographie-s07-1-q41", fiche: "geographie-s07-1-f6", type: "qcm", niveau: 1,
+      enonce: "Quel est aujourd'hui le seuil d'extrême pauvreté fixé par la Banque mondiale ?",
+      choix: ["3 dollars par jour", "1,90 dollar par jour, comme dans le livret", "30 dollars par jour", "3 dollars par mois"],
+      reponse: "3 dollars par jour",
+      explication: "Depuis 2025, le seuil est de 3 dollars par jour. Le livret donne 1,90 dollar : c'était le seuil de 2015.",
+      source: T("June 2025 Update to Global Poverty Lines", BM, U_BM25) },
+    { id: "geographie-s07-1-q42", fiche: "geographie-s07-1-f6", type: "vrai_faux", niveau: 1,
+      enonce: "Le seuil de 1,90 dollar par jour donné par le cours est celui que la Banque mondiale a fixé en 2015.",
+      corrections: [], reponse: { vrai: true, correction: null },
+      explication: "Oui : 1,90 dollar a été le seuil de 2015 à 2022. Il a ensuite été relevé à 2,15 dollars, puis à 3 dollars.",
+      source: T("Fact Sheet: An Adjustment to Global Poverty Lines", BM, U_BM22) },
+    { id: "geographie-s07-1-q43", fiche: "geographie-s07-1-f6", type: "qcm", niveau: 2,
+      enonce: "Pourquoi la Banque mondiale relève-t-elle régulièrement son seuil d'extrême pauvreté ?",
+      choix: ["Parce que les prix montent : avec la même somme, on achète moins qu'avant", "Parce qu'elle veut qu'il y ait moins de pauvres dans ses statistiques, ce qui rassure les pays riches", "Parce que le dollar a été remplacé par l'euro", "Parce que les pauvres gagnent plus"],
+      reponse: "Parce que les prix montent : avec la même somme, on achète moins qu'avant",
+      explication: "Le seuil suit le coût de la nourriture, des vêtements et du logement dans les pays pauvres. Quand ces prix montent, il faut plus de dollars pour le même minimum.",
+      source: T("Fact Sheet: An Adjustment to Global Poverty Lines", BM, U_BM22) },
+    { id: "geographie-s07-1-q44", fiche: "geographie-s07-1-f6", type: "ordre", niveau: 2,
+      enonce: "Range ces seuils de la Banque mondiale du plus ancien au plus récent.",
+      elements: ["2,15 dollars par jour", "1 dollar par jour", "3 dollars par jour", "1,90 dollar par jour"],
+      reponse: [1, 3, 0, 2],
+      explication: "1 dollar en 1990, 1,90 dollar en 2015, 2,15 dollars en 2022, puis 3 dollars à la mise à jour de 2025. Le seuil monte avec les prix.",
+      source: T("Fact Sheet: An Adjustment to Global Poverty Lines", BM, U_BM22) },
+    { id: "geographie-s07-1-q45", fiche: "geographie-s07-1-f6", type: "qcm", niveau: 2,
+      enonce: "Combien de personnes vivent aujourd'hui sous le seuil d'extrême pauvreté, d'après la Banque mondiale ?",
+      choix: ["Environ 840 millions", "Environ 2,3 milliards, comme en 1990", "Environ 50 millions", "Environ 4 milliards, la moitié de l'humanité"],
+      reponse: "Environ 840 millions",
+      explication: "Environ 840 millions de personnes, contre 2,3 milliards en 1990. Le nombre a beaucoup baissé, même si le seuil a été relevé.",
+      source: T("Poverty – Overview", BM, U_BM) },
+    { id: "geographie-s07-1-q46", fiche: "geographie-s07-1-f6", type: "vrai_faux", niveau: 2,
+      enonce: "Les personnes en extrême pauvreté vivent de plus en plus souvent en Afrique subsaharienne.",
+      corrections: [], reponse: { vrai: true, correction: null },
+      explication: "Oui : la Banque mondiale note que l'extrême pauvreté se concentre de plus en plus en Afrique subsaharienne et dans les pays touchés par la guerre. Dans le reste du monde, elle a davantage reculé.",
+      source: T("Poverty – Overview", BM, U_BM) },
+    { id: "geographie-s07-1-q47", fiche: "geographie-s07-1-f6", type: "qcm", niveau: 3,
+      enonce: "En 2025, le seuil passe de 2,15 à 3 dollars par jour. Une personne vit avec 2,50 dollars par jour. Est-elle comptée parmi les très pauvres ?",
+      choix: ["Avant 2025, non ; depuis 2025, oui : elle est passée sous le nouveau seuil", "Oui dans les deux cas, car 2,50 dollars par jour reste de toute façon une très petite somme", "Non dans les deux cas", "Avant 2025, oui ; depuis 2025, non"],
+      reponse: "Avant 2025, non ; depuis 2025, oui : elle est passée sous le nouveau seuil",
+      explication: "2,50 est au-dessus de 2,15 mais en dessous de 3. Relever le seuil fait entrer de nouvelles personnes dans le compte : c'est pourquoi le nombre de très pauvres a été revu à la hausse en 2025.",
+      indice: "Compare 2,50 à chacun des deux seuils.",
+      source: T("June 2025 Update to Global Poverty Lines", BM, U_BM25) },
+    { id: "geographie-s07-1-q48", fiche: "geographie-s07-1-f6", type: "trou", niveau: 1,
+      enonce: "Complète la phrase.",
+      texte: "Depuis 2025, la Banque mondiale fixe le seuil d'extrême pauvreté à ___ dollars par jour ; le livret donne l'ancien seuil de ___ dollar, fixé en 2015.",
+      banque: ["3", "1,90", "30", "19"],
+      reponse: [["3"], ["1,90", "1.90"]],
+      explication: "3 dollars aujourd'hui, 1,90 dollar en 2015. Le seuil monte quand les prix montent.",
+      source: T("June 2025 Update to Global Poverty Lines", BM, U_BM25) },
+
+    // f7 : le seuil relatif de la France (fiche de programme : questions de thème)
+    { id: "geographie-s07-1-q49", fiche: "geographie-s07-1-f7", type: "qcm", niveau: 1,
+      enonce: "En France, à partir de quand une personne est-elle considérée comme pauvre ?",
+      choix: ["Quand elle vit avec moins de 60 % du niveau de vie médian", "Quand elle vit avec moins de 3 dollars par jour, comme dans le reste du monde", "Quand elle n'a pas de voiture", "Quand elle gagne moins que le président"],
+      reponse: "Quand elle vit avec moins de 60 % du niveau de vie médian",
+      explication: "La France utilise un seuil relatif : 60 % du niveau de vie médian. En 2023, cela fait 1 288 euros par mois pour une personne seule.",
+      source: T("Niveau de vie et pauvreté en 2023", "INSEE", U_INSEE) },
+    { id: "geographie-s07-1-q50", fiche: "geographie-s07-1-f7", type: "vrai_faux", niveau: 1,
+      enonce: "En 2023, le seuil de pauvreté en France est d'environ 1 300 euros par mois pour une personne seule.",
+      corrections: [], reponse: { vrai: true, correction: null },
+      explication: "Oui : 1 288 euros par mois, d'après l'INSEE. Pour un couple, le seuil monte à 1 932 euros.",
+      source: T("Niveau de vie et pauvreté en 2023", "INSEE", U_INSEE) },
+    { id: "geographie-s07-1-q51", fiche: "geographie-s07-1-f7", type: "qcm", niveau: 2,
+      enonce: "Pourquoi le seuil de pauvreté français est-il bien plus élevé que celui de la Banque mondiale ?",
+      choix: ["Parce qu'il est relatif : il dépend du niveau de vie en France, où tout coûte plus cher", "Parce que l'INSEE se trompe dans ses calculs et compte beaucoup trop de pauvres chaque année", "Parce que l'euro vaut cent fois plus que le dollar", "Parce que les Français ont plus d'enfants"],
+      reponse: "Parce qu'il est relatif : il dépend du niveau de vie en France, où tout coûte plus cher",
+      explication: "Le seuil français se calcule par rapport aux revenus des Français : il mesure qui est pauvre dans son pays. Le seuil de la Banque mondiale mesure l'extrême pauvreté, avec la même somme partout.",
+      source: T("Seuil de pauvreté", "Wikipédia", U_SEUIL) },
+    { id: "geographie-s07-1-q52", fiche: "geographie-s07-1-f7", type: "qcm", niveau: 2,
+      enonce: "Qu'est-ce que le niveau de vie médian ?",
+      choix: ["Le niveau de vie qui coupe la population en deux moitiés : autant de gens au-dessus qu'en dessous", "Le niveau de vie moyen, obtenu en additionnant tous les revenus et en divisant par le nombre d'habitants", "Le niveau de vie des personnes les plus riches", "Le niveau de vie minimum fixé par la loi"],
+      reponse: "Le niveau de vie qui coupe la population en deux moitiés : autant de gens au-dessus qu'en dessous",
+      explication: "La médiane partage la population en deux parts égales. Ce n'est pas la moyenne, que quelques très gros revenus peuvent tirer vers le haut.",
+      source: T("Médiane (définition)", "INSEE", U_MEDIANE) },
+    { id: "geographie-s07-1-q53", fiche: "geographie-s07-1-f7", type: "vrai_faux", niveau: 2,
+      enonce: "Dans un pays riche comme la France, il n'y a presque plus de pauvres.",
+      corrections: ["Faux : en 2023, 15,4 % des habitants, soit 9,8 millions de personnes, vivaient sous le seuil de pauvreté.", "Faux : la moitié des Français vivent sous le seuil de pauvreté.", "Faux : il n'y a aucun pauvre en France, mais beaucoup au Burkina Faso."],
+      reponse: { vrai: false, correction: "Faux : en 2023, 15,4 % des habitants, soit 9,8 millions de personnes, vivaient sous le seuil de pauvreté." },
+      explication: "Il y a des pauvres dans les pays riches : 9,8 millions en France en 2023, d'après l'INSEE. Le taux était de 14,4 % en 2022.",
+      source: T("Niveau de vie et pauvreté en 2023", "INSEE", U_INSEE) },
+    { id: "geographie-s07-1-q54", fiche: "geographie-s07-1-f7", type: "association", niveau: 2,
+      enonce: "Relie chaque expression à ce qu'elle désigne.",
+      gauche: ["Seuil absolu", "Seuil relatif", "Niveau de vie médian", "Extrême pauvreté"],
+      droite: ["Une somme fixe, la même pour tous les pays", "Un pourcentage du niveau de vie du pays", "La valeur qui coupe la population en deux moitiés", "Vivre sous le seuil de la Banque mondiale"],
+      reponse: [[0, 0], [1, 1], [2, 2], [3, 3]],
+      explication: "Le seuil absolu compare le monde entier avec une même somme ; le relatif compare chacun à son pays. La médiane sert de base au seuil relatif.",
+      source: T("Seuil de pauvreté", "Wikipédia", U_SEUIL) },
+    { id: "geographie-s07-1-q55", fiche: "geographie-s07-1-f7", type: "qcm", niveau: 3,
+      enonce: "Un habitant de France vit avec 1 100 euros par mois. Est-il pauvre ?",
+      choix: ["Oui selon le seuil français (moins de 1 288 euros), non selon le seuil de la Banque mondiale (3 dollars par jour)", "Non selon les deux seuils, car 1 100 euros par mois est une somme confortable dans la plupart des pays du monde", "Oui selon les deux seuils", "Non selon le seuil français, oui selon la Banque mondiale"],
+      reponse: "Oui selon le seuil français (moins de 1 288 euros), non selon le seuil de la Banque mondiale (3 dollars par jour)",
+      explication: "1 100 euros, c'est moins que 1 288 : pauvre en France. Mais c'est environ 36 euros par jour, bien plus que 3 dollars : pas en extrême pauvreté au sens mondial.",
+      indice: "Compare 1 100 à 1 288, puis divise 1 100 par 30.",
+      source: T("Niveau de vie et pauvreté en 2023", "INSEE", U_INSEE) },
+    { id: "geographie-s07-1-q56", fiche: "geographie-s07-1-f7", type: "trou", niveau: 1,
+      enonce: "Complète la phrase.",
+      texte: "En France, est pauvre celui qui vit avec moins de ___ % du niveau de vie ___.",
+      banque: ["60", "médian", "10", "moyen"],
+      reponse: [["60"], ["médian", "median"]],
+      explication: "60 % du niveau de vie médian : c'est le seuil relatif de l'INSEE. En 2023, cela fait 1 288 euros par mois pour une personne seule.",
+      source: T("Niveau de vie et pauvreté en 2023", "INSEE", U_INSEE) }
   ],
   bonus: [
     {
       id: "geographie-s07-1-b1",
-      fiche: "geographie-s07-1-f3",
-      titre: "Un seuil qui bouge avec les prix",
-      texte: "Le seuil de 1,90 dollar du cours a depuis été relevé : la Banque mondiale compte aujourd'hui les très pauvres sous 3 dollars par jour, en prix de 2021. Même avec ce seuil plus haut, leur nombre est passé d'environ 2,3 milliards en 1990 à moins de 840 millions en 2026.",
-      source: { titre: "Poverty – Overview", editeur: "Banque mondiale", url: "https://www.worldbank.org/en/topic/poverty/overview" }
+      fiche: "geographie-s07-1-f6",
+      titre: "Le seuil de 3 dollars vient du Burkina Faso",
+      texte: "Pour fixer son seuil de 2025, la Banque mondiale a rassemblé les seuils de pauvreté nationaux de 23 pays à faible revenu et a pris celui du milieu : 3,04 dollars par jour, le seuil du Burkina Faso en 2022. Arrondi à 3 dollars, il est devenu le seuil d'extrême pauvreté du monde entier.",
+      source: { titre: "June 2025 Update to Global Poverty Lines", editeur: "Banque mondiale", url: U_BM25 }
+    },
+    {
+      id: "geographie-s07-1-b2",
+      fiche: "geographie-s07-1-f5",
+      titre: "Tiers-monde : un mot de 1952",
+      texte: "En août 1952, le démographe français Alfred Sauvy invente l'expression « tiers-monde » dans un article intitulé « Trois mondes, une planète ». Il pense au tiers état de la Révolution française, qui réclamait sa place. Le mot a désigné les pays pauvres d'Afrique, d'Asie et d'Amérique ; les géographes parlent aujourd'hui plutôt de pays en développement et de PMA.",
+      source: { titre: "Tiers monde", editeur: "Wikipédia, l'encyclopédie libre", url: U_TIERS }
     }
   ],
   nonCouvert: [
@@ -352,6 +525,8 @@ module.exports = {
     "La vidéo du cours n'est pas déposée : ce qu'elle ajoute au support n'est pas repris.",
     "La valeur du graphique pour 2030 (projection) n'est pas lisible dans le texte extrait.",
     "La partie I.B « Comment mesurer la richesse et la pauvreté ? » (page 2) est traitée dans l'outil 9 (geographie-s08-1).",
-    "La partie II « Des inégalités à différentes échelles » (pages 3-4), le dossier sur le Bénin (page 7) et la carte à colorier (page 8) attendent la 2e partie du cours (semaine 9)."
+    "La répartition Nords/Suds, les pays émergents, les pays pétroliers et les PMA, attendus par le programme, sont dans la partie II du cours (pages 3-4, semaine 9) : ils ne sont pas repris ici, pas plus que le dossier sur le Bénin (page 7) et la carte à colorier (page 8).",
+    "Les inégalités à l'intérieur des pays et des villes (ségrégation spatiale, pauvreté des campagnes), attendues par le programme, relèvent aussi de la partie II (semaine 9).",
+    "Les seuils intermédiaires de la Banque mondiale (4,20 et 8,30 dollars par jour selon le niveau de revenu du pays) ne sont pas enseignés."
   ]
 };

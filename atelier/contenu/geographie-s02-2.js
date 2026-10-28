@@ -4,8 +4,21 @@
 // ses documents, ses exemples, ses chiffres ni ses réponses attendues (le paragraphe sur les défis des pays du Sud
 // n'est pas posé tel quel). Les définitions de « bidonville » et « front pionnier » viennent du cours (pages 3 et 5),
 // reformulées : le cahier des charges (section 9) autorise les définitions du cours.
+// Fiches de programme (règle du 28/10/2026, demande de Romain : « inspire-toi du programme officiel de 5e ») : f5 (les
+// bidonvilles, définition de l'ONU-Habitat et chiffres) et f6 (l'exode rural), faits vérifiés sur les pages citées ; leurs
+// questions sont des questions de thème (source { theme, titre, editeur, url }). Les fiches f1 à f4 viennent de la page 3
+// du cours déposé et restent inchangées. Anti-spoil : aucune question « définis bidonville / front pionnier », rien sur
+// la Côte d'Ivoire, aucune question-paragraphe sur les défis du Sud.
 const F = "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf";
 const P = (page) => ({ fichier: F, page: page });
+const THEME = "Cours 1 – 2e partie – II Dans les pays du Sud";
+const T = (titre, url) => ({ theme: THEME, titre: titre, editeur: "Wikipédia", url: url });
+// Fiches de programme : sous-thème officiel et page où les faits ont été vérifiés.
+const PR = (titre, url) => ({ programme: "La croissance démographique et ses effets", titre: titre, editeur: "Wikipédia", url: url });
+const U_BIDON = "https://fr.wikipedia.org/wiki/Bidonville";
+const U_EXODE = "https://fr.wikipedia.org/wiki/Exode_rural";
+const U_URBA = "https://fr.wikipedia.org/wiki/Urbanisation";
+const U_DHARAVI = "https://fr.wikipedia.org/wiki/Dharavi";
 
 module.exports = {
   id: "geographie-s02-2",
@@ -73,6 +86,48 @@ module.exports = {
       lieux: ["Maroc", "Ceuta (Espagne)"], personnages: [],
       vocabulaire: [],
       schema: null, prerequis: ["geographie-s02-2-f1"], source: P(3)
+    },
+    {
+      id: "geographie-s02-2-f5", notion: "Un milliard d'habitants dans les bidonvilles",
+      titre: "Les bidonvilles : un milliard d'habitants",
+      texte: "Pour l'ONU-Habitat, un quartier est un bidonville quand ses habitants manquent d'eau potable et d'égouts, vivent dans des logements fragiles et surpeuplés, sans droit reconnu sur leur terrain. En 2008, un milliard de personnes y vivaient ; deux milliards sont prévus pour 2030. Le mot est né à Casablanca, au Maroc, dans les années 1930.",
+      pointsCles: [
+        "ONU-Habitat : pas d'eau potable ni d'assainissement, logements de mauvaise qualité, surpeuplement, pas de titre sur le terrain",
+        "Un milliard d'habitants en 2008 ; deux milliards prévus pour 2030",
+        "Le mot vient d'un quartier de Casablanca (Maroc) des années 1930, aux maisons faites de bidons",
+        "Favela au Brésil, slum en anglais, gecekondu en Turquie ; le township d'Afrique du Sud est un quartier légal, bâti en dur",
+        "Exemples : Dharavi à Mumbai (Inde), Kibera à Nairobi (Kenya)"
+      ],
+      dates: [{ annee: 2008, evenement: "Un milliard d'humains vivent dans des bidonvilles (ONU-Habitat)" }],
+      lieux: ["Casablanca (Maroc)", "Dharavi (Mumbai, Inde)", "Kibera (Nairobi, Kenya)"], personnages: [],
+      vocabulaire: [
+        { mot: "ONU-Habitat", def: "le programme des Nations unies chargé des villes et du logement" },
+        { mot: "assainissement", def: "tout ce qui évacue et traite les eaux sales : toilettes, égouts, stations d'épuration" }
+      ],
+      schema: null, prerequis: ["geographie-s02-2-f3"], source: PR("Bidonville", U_BIDON)
+    },
+    {
+      id: "geographie-s02-2-f6", notion: "L'exode rural : quitter la campagne pour la ville",
+      titre: "L'exode rural",
+      texte: "L'exode rural, c'est le départ durable des habitants des campagnes vers les villes. Causes : trop peu de terres pour des familles nombreuses, des machines qui remplacent les bras, et la ville qui promet du travail, un salaire, une école. Conséquences : les villes débordent et des bidonvilles naissent ; les campagnes se vident et vieillissent.",
+      pointsCles: [
+        "Définition : quitter durablement la campagne pour s'installer en ville",
+        "Causes : manque de terres, mécanisation de l'agriculture, attrait de la ville (travail, salaires, école) ; parfois guerres et famines",
+        "Conséquences en ville : crise du logement, faubourgs, bidonvilles ; à la campagne : départ des jeunes, vieillissement",
+        "France : record de ruraux vers 1850-1860 (26,8 millions), plus de citadins que de ruraux dès 1931, exode terminé vers 1975 (Insee)",
+        "Dans les pays du Sud, l'exode rural continue et nourrit les plus grandes villes du monde"
+      ],
+      dates: [
+        { annee: 1931, evenement: "En France, les citadins deviennent plus nombreux que les ruraux" },
+        { annee: 1975, evenement: "Fin de l'exode rural en France, d'après l'Insee" }
+      ],
+      lieux: ["France"], personnages: [],
+      vocabulaire: [
+        { mot: "rural", def: "qui concerne la campagne ; un rural est un habitant de la campagne" },
+        { mot: "citadin", def: "un habitant de la ville" },
+        { mot: "mécanisation", def: "le remplacement du travail des hommes et des animaux par des machines" }
+      ],
+      schema: null, prerequis: ["geographie-s02-2-f3", "geographie-s02-1-f3"], source: PR("Exode rural", U_EXODE)
     }
   ],
   schemas: [],
@@ -247,7 +302,103 @@ module.exports = {
       enonce: "Un jeune homme quitte son village du Sud pour l'Europe, où il espère une vie meilleure. De quel phénomène fait-il partie ?",
       choix: ["D'un flux migratoire vers les pays du Nord", "De l'exode rural vers une ville de son pays", "D'un front pionnier en bordure de forêt", "De l'hiver démographique de l'Europe"],
       reponse: "D'un flux migratoire vers les pays du Nord",
-      explication: "Il quitte son pays pour un pays du Nord : c'est un flux migratoire. L'exode rural, lui, mène de la campagne à une ville du même pays.", source: P(3) }
+      explication: "Il quitte son pays pour un pays du Nord : c'est un flux migratoire. L'exode rural, lui, mène de la campagne à une ville du même pays.", source: P(3) },
+    // f5 : les bidonvilles (questions de thème)
+    { id: "geographie-s02-2-q37", fiche: "geographie-s02-2-f5", type: "qcm", niveau: 1,
+      enonce: "D'où vient le mot « bidonville » ?",
+      choix: ["D'un quartier de Casablanca, au Maroc, dans les années 1930", "D'un quartier de Rio de Janeiro, au Brésil, dans les années 1950", "D'un mot anglais qui veut dire « taudis »", "D'un quartier de Nairobi, au Kenya, après l'indépendance"],
+      reponse: "D'un quartier de Casablanca, au Maroc, dans les années 1930",
+      explication: "Le mot désignait d'abord un quartier de Casablanca, dont les maisons étaient faites de bidons aplatis. Il s'est ensuite répandu en Afrique du Nord, puis en France.",
+      source: T("Bidonville", U_BIDON) },
+    { id: "geographie-s02-2-q38", fiche: "geographie-s02-2-f5", type: "vrai_faux", niveau: 1,
+      enonce: "Selon l'ONU, environ un milliard de personnes vivaient dans des bidonvilles en 2008.",
+      corrections: [], reponse: { vrai: true, correction: null },
+      explication: "Oui, un milliard en 2008. L'ONU en prévoyait deux milliards pour 2030.",
+      source: T("Bidonville", U_BIDON) },
+    { id: "geographie-s02-2-q39", fiche: "geographie-s02-2-f5", type: "qcm_multiple", niveau: 2,
+      enonce: "D'après l'ONU-Habitat, que manque-t-il aux habitants d'un bidonville ? (plusieurs réponses)",
+      choix: ["L'eau potable", "Des toilettes et des égouts", "Des logements solides et assez grands", "Un droit reconnu sur le terrain qu'ils occupent", "Des champs à cultiver", "Des transports en commun"],
+      reponse: ["L'eau potable", "Des toilettes et des égouts", "Des logements solides et assez grands", "Un droit reconnu sur le terrain qu'ils occupent"],
+      explication: "Les cinq critères de l'ONU-Habitat : eau, assainissement, qualité du logement, surpeuplement, statut du terrain. Les transports et les champs n'en font pas partie.",
+      source: T("Bidonville", U_BIDON) },
+    { id: "geographie-s02-2-q40", fiche: "geographie-s02-2-f5", type: "qcm", niveau: 2,
+      enonce: "Pourquoi les bidonvilles grandissent-ils si vite dans les villes du Sud ?",
+      choix: ["Parce que des ruraux arrivent sans cesse en ville, sans trouver de logement à leur portée", "Parce que les habitants des beaux quartiers déménagent vers les bidonvilles", "Parce que l'État y construit chaque année des logements neufs", "Parce que les villes du Sud perdent des habitants, qui repartent vers les campagnes"],
+      reponse: "Parce que des ruraux arrivent sans cesse en ville, sans trouver de logement à leur portée",
+      explication: "L'exode rural amène en ville des familles pauvres plus vite qu'on ne construit de logements. Elles s'installent où elles peuvent, souvent sur des terrains sans droit.",
+      source: T("Bidonville", U_BIDON) },
+    { id: "geographie-s02-2-q41", fiche: "geographie-s02-2-f5", type: "qcm", niveau: 2,
+      enonce: "Comment appelle-t-on un bidonville au Brésil ?",
+      choix: ["Une favela", "Un township", "Un slum", "Un gecekondu"],
+      reponse: "Une favela",
+      explication: "Favela est le mot brésilien. Slum est le mot anglais, gecekondu le mot turc, et le township d'Afrique du Sud est un quartier légal bâti en dur.",
+      source: T("Bidonville", U_BIDON) },
+    { id: "geographie-s02-2-q42", fiche: "geographie-s02-2-f5", type: "vrai_faux", niveau: 2,
+      enonce: "Dharavi, à Mumbai en Inde, est l'un des bidonvilles les plus connus du monde, avec des centaines de milliers d'habitants.",
+      corrections: [], reponse: { vrai: true, correction: null },
+      explication: "Oui : on y compte entre 600 000 et un million d'habitants selon les estimations, sur à peine plus de deux kilomètres carrés. Kibera, à Nairobi, est l'un des plus grands d'Afrique.",
+      source: T("Dharavi", U_DHARAVI) },
+    { id: "geographie-s02-2-q43", fiche: "geographie-s02-2-f5", type: "qcm", niveau: 3,
+      enonce: "Au début des années 2000, la part des citadins du Sud vivant en bidonville a reculé, mais leur nombre a continué d'augmenter. Comment est-ce possible ?",
+      choix: ["Parce que les villes ont gagné énormément d'habitants : une part plus petite d'un total bien plus grand", "Parce que l'ONU a changé sa définition du bidonville pour y faire entrer davantage de quartiers", "Parce que les bidonvilles se sont vidés vers les campagnes", "C'est impossible : si la part baisse, le nombre baisse aussi"],
+      reponse: "Parce que les villes ont gagné énormément d'habitants : une part plus petite d'un total bien plus grand",
+      explication: "La part est passée de 47 % à 37 % en quinze ans, mais les villes du Sud ont grossi de centaines de millions d'habitants. Un pourcentage plus petit d'un total bien plus grand peut donner un nombre plus élevé.",
+      source: T("Bidonville", U_BIDON) },
+    { id: "geographie-s02-2-q44", fiche: "geographie-s02-2-f5", type: "association", niveau: 2,
+      enonce: "Relie chaque mot au pays où on l'emploie.",
+      gauche: ["Favela", "Township", "Gecekondu", "Slum"],
+      droite: ["Turquie", "Pays de langue anglaise, comme l'Inde", "Brésil", "Afrique du Sud"],
+      reponse: [[0, 2], [1, 3], [2, 0], [3, 1]],
+      explication: "Favela au Brésil, township en Afrique du Sud, gecekondu en Turquie. Slum est le mot anglais, employé en Inde par exemple.",
+      source: T("Bidonville", U_BIDON) },
+    // f6 : l'exode rural (questions de thème)
+    { id: "geographie-s02-2-q45", fiche: "geographie-s02-2-f6", type: "vrai_faux", niveau: 1,
+      enonce: "L'exode rural désigne le départ des citadins qui vont s'installer à la campagne.",
+      corrections: ["Faux : c'est le départ des ruraux vers les villes.", "Faux : c'est le départ des habitants d'un pays vers un autre pays.", "Faux : c'est le départ des jeunes du Sud vers les pays du Nord."],
+      reponse: { vrai: false, correction: "Faux : c'est le départ des ruraux vers les villes." },
+      explication: "L'exode rural va de la campagne vers la ville, pas l'inverse. Le départ vers un autre pays, c'est l'émigration.",
+      source: T("Exode rural", U_EXODE) },
+    { id: "geographie-s02-2-q46", fiche: "geographie-s02-2-f6", type: "qcm", niveau: 2,
+      enonce: "Quand l'exode rural s'est-il arrêté en France, d'après l'Insee ?",
+      choix: ["Vers 1975", "Vers 1850", "Vers 1931", "Il continue encore aujourd'hui"],
+      reponse: "Vers 1975",
+      explication: "L'exode rural français a nettement ralenti après 1965 et s'est arrêté vers 1975. Les campagnes françaises avaient compté le plus de ruraux vers 1850-1860.",
+      source: T("Exode rural", U_EXODE) },
+    { id: "geographie-s02-2-q47", fiche: "geographie-s02-2-f6", type: "qcm_multiple", niveau: 2,
+      enonce: "Qu'est-ce qui pousse des ruraux à partir vers la ville ? (plusieurs réponses)",
+      choix: ["Le manque de terres pour des familles nombreuses", "Les machines qui remplacent les travailleurs agricoles", "L'espoir d'un travail et d'un salaire en ville", "Un accès plus facile à l'école", "La pollution des villes", "Le prix élevé des logements en ville"],
+      reponse: ["Le manque de terres pour des familles nombreuses", "Les machines qui remplacent les travailleurs agricoles", "L'espoir d'un travail et d'un salaire en ville", "Un accès plus facile à l'école"],
+      explication: "Pas assez de terres, moins de travail à cause des machines, et une ville qui attire par ses emplois, ses salaires et ses écoles. La pollution et les loyers, eux, freineraient plutôt les départs.",
+      source: T("Exode rural", U_EXODE) },
+    { id: "geographie-s02-2-q48", fiche: "geographie-s02-2-f6", type: "qcm", niveau: 2,
+      enonce: "Pourquoi les campagnes touchées par l'exode rural vieillissent-elles ?",
+      choix: ["Parce que ce sont surtout les jeunes qui partent", "Parce que les personnes âgées des villes viennent s'y installer en masse", "Parce qu'on y vit beaucoup plus longtemps qu'en ville", "Parce que les écoles y ferment en premier"],
+      reponse: "Parce que ce sont surtout les jeunes qui partent",
+      explication: "Les jeunes partent chercher du travail, les anciens restent. La part des personnes âgées grandit donc dans les villages, qui comptent moins d'actifs que de retraités.",
+      source: T("Exode rural", U_EXODE) },
+    { id: "geographie-s02-2-q49", fiche: "geographie-s02-2-f6", type: "vrai_faux", niveau: 1,
+      enonce: "En France, les villes comptent plus d'habitants que les campagnes depuis 1931.",
+      corrections: [], reponse: { vrai: true, correction: null },
+      explication: "Oui : en 1931, la population urbaine a dépassé la moitié des Français. Depuis, l'écart n'a fait que grandir.",
+      source: T("Exode rural", U_EXODE) },
+    { id: "geographie-s02-2-q50", fiche: "geographie-s02-2-f6", type: "qcm", niveau: 2,
+      enonce: "Depuis quand plus de la moitié des humains vivent-ils en ville ?",
+      choix: ["Depuis 2007", "Depuis 1900", "Depuis 1950", "Pas encore : la majorité vit à la campagne"],
+      reponse: "Depuis 2007",
+      explication: "Le cap des 50 % de citadins a été franchi en 2007 dans le monde. En 1950, les citadins n'étaient que 30 % ; vers le milieu du siècle, ils pourraient approcher 70 %.",
+      source: T("Urbanisation", U_URBA) },
+    { id: "geographie-s02-2-q51", fiche: "geographie-s02-2-f6", type: "ordre", niveau: 3,
+      enonce: "Remets dans l'ordre ce que vit une famille prise dans l'exode rural.",
+      elements: ["Elle s'installe dans un quartier pauvre, en bordure de la ville", "Au village, la terre ne suffit plus à nourrir tout le monde", "Elle part pour la ville, où elle espère trouver du travail", "Le village, lui, perd ses jeunes et vieillit"],
+      reponse: [1, 2, 0, 3],
+      explication: "Tout commence par le manque de terres et de travail au village. La famille part, s'entasse en périphérie de la ville, et le village se vide de ses jeunes.",
+      source: T("Exode rural", U_EXODE) },
+    { id: "geographie-s02-2-q52", fiche: "geographie-s02-2-f6", type: "qcm", niveau: 3,
+      enonce: "Comment l'exode rural et la croissance démographique se renforcent-ils dans les pays du Sud ?",
+      choix: ["Les familles rurales sont nombreuses, la terre manque, et une partie des jeunes part en ville", "Les villes envoient leurs jeunes défricher de nouvelles terres au bord des grandes forêts", "La baisse des naissances vide peu à peu les campagnes", "Les ruraux partent parce que les villes manquent d'habitants"],
+      reponse: "Les familles rurales sont nombreuses, la terre manque, et une partie des jeunes part en ville",
+      explication: "Plus d'enfants à la campagne, c'est plus de bras pour des terres qui ne s'agrandissent pas. Une partie des jeunes n'a d'autre choix que la ville, qui grossit à son tour.",
+      source: T("Exode rural", U_EXODE) }
   ],
   bonus: [
     {
@@ -256,11 +407,21 @@ module.exports = {
       titre: "Une journée pour les migrants",
       texte: "Le 18 décembre est la Journée internationale des migrants, proclamée par l'ONU en 2000. Elle rappelle l'adoption d'une convention qui protège les droits des travailleurs migrants et de leur famille. Dans la définition reprise par l'ONU, un étudiant parti à l'étranger compte aussi comme migrant.",
       source: { titre: "Journée internationale des migrants : Historique", editeur: "Organisation des Nations Unies (ONU)", url: "https://www.un.org/fr/observances/migrants-day/background" }
+    },
+    {
+      id: "geographie-s02-2-b2",
+      fiche: "geographie-s02-2-f5",
+      titre: "Dharavi, un bidonville qui travaille",
+      texte: "Au cœur de Mumbai, en Inde, Dharavi occupe environ 220 hectares d'anciens marécages, pour plus d'un demi-million d'habitants. Né vers 1880, le quartier est devenu l'un des plus grands centres de recyclage de l'Inde : plastique, métal, carton, verre. On y trouve aussi des potiers, des ateliers de cuir et de textile, plus de 10 000 petites entreprises.",
+      source: { titre: "Dharavi", editeur: "Wikipédia", url: U_DHARAVI }
     }
   ],
   nonCouvert: [
-    "Le graphique du nombre d'habitants vivant dans des bidonvilles (ONU-Habitat) : seul son titre est lisible dans l'extraction, ses valeurs ne sont pas reprises.",
+    "Le graphique du nombre d'habitants vivant dans des bidonvilles (ONU-Habitat) : seul son titre est lisible dans l'extraction ; la fiche f5 donne le chiffre de l'ONU (un milliard en 2008) d'après une page fiable.",
     "Les photos du cours (famille rurale en Afghanistan, culture sur brûlis au Congo, frontière de Ceuta) ne sont pas reproduites.",
+    "Attente du programme : la pression sur les ressources (eau, nourriture, énergie) à l'échelle d'un pays du Sud précis : seulement dite en général (f1).",
+    "Attente du programme : les migrations internationales, avec des chiffres et des pays de départ et d'arrivée : le livret ne donne que l'exemple de Ceuta ; aucune fiche de programme ajoutée sur ce point, le ton du livret est conservé.",
+    "La Côte d'Ivoire (déforestation, front pionnier) : document du devoir n° 1, non repris.",
     "Les vidéos du cours (repère V au tableau de progression) ne sont pas déposées."
   ]
 };

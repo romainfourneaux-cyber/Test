@@ -111,7 +111,7 @@ module.exports = {
     {
       id: "geographie-s01-1-f6", notion: "Se repérer sur le planisphère : continents, océans, densités",
       titre: "Continents, océans et densités",
-      texte: "En France, on compte six continents : Afrique, Amérique, Antarctique, Asie, Europe, Océanie. L'Asie est le plus vaste et, de loin, le plus peuplé ; l'Océanie est le plus petit ; l'Antarctique, presque vide. Les océans couvrent près de 71 % de la planète, et le Pacifique est le plus grand. La densité de population compte les habitants par kilomètre carré.",
+      texte: "En France, on compte six continents : Afrique, Amérique, Antarctique, Asie, Europe, Océanie. L'Asie est le plus vaste et, de loin, le plus peuplé ; l'Océanie est le plus petit ; l'Antarctique, presque vide. Les océans couvrent 71 % de la planète, et le Pacifique est le plus grand. La densité de population compte les habitants par kilomètre carré.",
       pointsCles: [
         "Six continents dans l'usage français ; sept dans les pays anglo-saxons, qui séparent les deux Amériques",
         "L'Asie : le plus vaste et le plus peuplé ; l'Océanie : le plus petit ; l'Antarctique : presque inhabité",
