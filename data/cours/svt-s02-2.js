@@ -465,7 +465,7 @@ JEU.enregistrer("cours", {
    "niveau": 1,
    "enonce": "Qu'est-ce que l'effet de serre ?",
    "choix": [
-    "Des gaz de l'air retiennent une partie de la chaleur que le sol renvoie",
+    "Des gaz de l'air retiennent une partie de la chaleur du sol",
     "La lumière du Soleil qui chauffe directement l'air",
     "Les nuages qui empêchent les rayons du Soleil d'arriver jusqu'au sol",
     "Un vent chaud qui souffle depuis les déserts"
@@ -478,7 +478,7 @@ JEU.enregistrer("cours", {
     "editeur": "Wikipédia",
     "url": "https://fr.wikipedia.org/wiki/Effet_de_serre"
    },
-   "r": "==ATK8QCfwhIAUVCaIQSLMgUNYDXFdEWLMwBOogUm4RVAERUMcwGAkwMNAwWY50GIMwBcIyGBAwBRtxBOUFBjhUAVc1DIYUFMYTZ",
+   "r": "==wSCAQAIZTSFdEWLMwBOogUm4RVAERUMcwGAkwMNAwWY50GIMwBcIyGBAwBRtxBOUFBjhUAVc1DIYUFMYTZ",
    "poids": 1
   },
   {
@@ -506,7 +506,7 @@ JEU.enregistrer("cours", {
    "enonce": "Quel gaz, rejeté quand on brûle du charbon, du pétrole ou du gaz, renforce l'effet de serre ?",
    "choix": [
     "Le dioxyde de carbone",
-    "Le dioxygène",
+    "Le dioxygène que nous respirons",
     "Le diazote",
     "L'hélium"
    ],
@@ -527,7 +527,7 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Comment les activités humaines renforcent-elles l'effet de serre ?",
    "choix": [
-    "En rejetant beaucoup de dioxyde de carbone et de méthane",
+    "En rejetant du dioxyde de carbone et du méthane",
     "En plantant de nouvelles forêts",
     "En construisant des serres en verre pour les légumes",
     "En utilisant l'énergie du vent et du Soleil"
@@ -539,7 +539,7 @@ JEU.enregistrer("cours", {
     "editeur": "Wikipédia",
     "url": "https://fr.wikipedia.org/wiki/R%C3%A9chauffement_climatique"
    },
-   "r": "=00FGISRRwp7D80ACkkBiIFELoxEb8ADS1wJNAQUUZBAPIQSXMiUFAhGSwxDKABS3MEBBhEBKQhRHcTZ",
+   "r": "=00AIggGzsttIUFBN40GXgkJDpwVf9ADGNQDSJiFM0hGY0gTaYBS3MEBBhEBKQhRHcTZ",
    "poids": 1
   },
   {
@@ -639,7 +639,7 @@ JEU.enregistrer("cours", {
     "Son atmosphère épaisse, pleine de dioxyde de carbone, retient la chaleur",
     "Elle est bien plus grosse que Mercure",
     "Elle tourne beaucoup plus vite sur elle-même",
-    "Mercure est recouverte d'une épaisse couche de glace qui la garde froide"
+    "Mercure est recouverte d'une épaisse couche de glace qui la garde froide toute l'année"
    ],
    "explication": "L'atmosphère de Vénus est presque entièrement faite de dioxyde de carbone : elle produit l'effet de serre le plus fort du système solaire. Mercure, elle, n'a presque pas d'atmosphère pour garder la chaleur.",
    "indice": "Compare les atmosphères des deux planètes.",
