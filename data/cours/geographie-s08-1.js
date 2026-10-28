@@ -1014,7 +1014,7 @@ JEU.enregistrer("cours", {
    "enonce": "Comment le nombre de médecins par habitant varie-t-il d'un pays à l'autre ?",
    "choix": [
     "Il suit le revenu du pays : treize fois plus de médecins par habitant en Région Europe qu'en Région Afrique",
-    "Il est à peu près le même partout dans le monde, car les médecins vont là où l'on a besoin d'eux",
+    "Il est à peu près le même partout dans le monde, car les médecins vont toujours s'installer là où l'on a besoin d'eux",
     "Il est plus élevé dans les pays pauvres, où l'on tombe plus souvent malade",
     "Il dépend du climat"
    ],

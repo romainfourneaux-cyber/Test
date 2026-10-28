@@ -1367,7 +1367,7 @@ JEU.enregistrer("cours", {
    "enonce": "Un habitant de France vit avec 1 100 euros par mois. Est-il pauvre ?",
    "choix": [
     "Oui selon le seuil français (moins de 1 288 euros), non selon le seuil de la Banque mondiale (3 dollars par jour)",
-    "Non selon les deux seuils, car 1 100 euros par mois est une somme confortable dans la plupart des pays du monde",
+    "Non selon les deux seuils, car 1 100 euros par mois reste une somme confortable dans la plupart des pays du monde aujourd'hui",
     "Oui selon les deux seuils",
     "Non selon le seuil français, oui selon la Banque mondiale"
    ],
