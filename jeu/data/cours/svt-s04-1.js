@@ -335,14 +335,14 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s04-1-f2",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Comment s'appelle le grand courant chaud qui part du golfe du Mexique et remonte l'Atlantique Nord ?",
+   "enonce": "Comment s'appelle le grand courant chaud qui naît près de la Floride et traverse l'Atlantique Nord ?",
    "choix": [
     "Le Gulf Stream",
     "Le courant du Labrador",
     "Le courant de Humboldt",
     "Le courant circumpolaire"
    ],
-   "explication": "Le Gulf Stream naît près de la Floride et longe la côte des États-Unis avant de traverser l'Atlantique. On lui attribue souvent une part de la douceur des hivers de l'ouest de l'Europe.",
+   "explication": "Le Gulf Stream naît entre la Floride et les Bahamas, longe la côte des États-Unis puis part vers l'est à travers l'Atlantique. On a longtemps cru qu'il expliquait à lui seul la douceur des hivers de l'ouest de l'Europe ; les vents y comptent en fait davantage.",
    "source": {
     "theme": "Séance 2 – Les mouvements des vents et des courants",
     "titre": "Gulf Stream",
@@ -416,7 +416,7 @@ JEU.enregistrer("cours", {
    "choix": [
     "Près des pôles, où elle devient froide et très salée",
     "À l'équateur, là où elle est la plus chaude",
-    "Dans la Méditerranée, une mer presque fermée",
+    "Dans les mers chaudes des tropiques, là où l'eau s'évapore le plus",
     "À l'embouchure des grands fleuves, là où l'eau de mer devient douce"
    ],
    "explication": "Dans l'Atlantique Nord, près du Groenland et de la Norvège, l'eau de surface se refroidit et se charge en sel. Devenue plus lourde, elle coule vers le fond et repart vers le sud.",
@@ -631,14 +631,14 @@ JEU.enregistrer("cours", {
     "Les températures de chaque mois",
     "La vitesse du vent",
     "La pression atmosphérique",
-    "Le nom du climat, dans le titre"
+    "La durée du jour"
    ],
-   "explication": "Un diagramme ombrothermique croise pluies et températures mois par mois. Ici, le titre précise aussi le climat.",
+   "explication": "Un diagramme ombrothermique croise pluies et températures mois par mois. Le vent, la pression et la durée du jour n'y figurent pas.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 8
    },
-   "r": "=gyUMwxGbwxYIlQFeBgDCYURGYyHckgFRxhCP9xBt0AA59gQNVxDG8xZXAAFUkhCOpgFIBDSXAUWP0xzlmxHiYQVWARPLJUTBEALAVEUY9hDOUQSXMiUGsgGY0xDbsBGq4Ez2/lHPVxAlAFH",
+   "r": "==wMNVxDG8xZXAAFUkhCOpgFIBDSXAUWP0xzlmxHiYQVWARPLJUTBEALAVEUY9hDOUQSXMiUGsgGY0xDbsBGq4Ez2/lHPVxAlAFH",
    "poids": 1
   },
   {
@@ -653,7 +653,7 @@ JEU.enregistrer("cours", {
     "Ils provoquent les marées sur toutes les côtes",
     "Ils empêchent la pluie de tomber au-dessus des océans et des côtes"
    ],
-   "explication": "Les courants chauds emportent vers les pôles la chaleur reçue près de l'équateur. L'océan en transporte autant que l'atmosphère, ce qui adoucit le climat de certaines régions.",
+   "explication": "Les courants chauds emportent vers les pôles la chaleur reçue près de l'équateur. Avec l'atmosphère, l'océan est l'un des deux grands transporteurs de chaleur de la planète, ce qui adoucit le climat de certaines régions.",
    "source": {
     "theme": "Séance 2 – Les mouvements des vents et des courants",
     "titre": "Courant marin",

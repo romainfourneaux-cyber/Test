@@ -324,12 +324,12 @@ module.exports = {
       explication: "La rotation donne le jour et la nuit, la révolution donne l'année, et l'axe penché donne les saisons. Comme l'orbite est une ellipse, la Terre passe par un point le plus proche du Soleil, le périhélie, et un point le plus éloigné, l'aphélie.",
       source: T("Saison", "https://fr.wikipedia.org/wiki/Saison") },
     { id: "svt-s01-2-q37", fiche: "svt-s01-2-f5", type: "qcm", niveau: 3,
-      enonce: "Pourquoi ajoute-t-on un 29 février tous les quatre ans ?",
-      choix: ["Parce qu'un tour autour du Soleil dure un peu plus de 365 jours", "Parce que février est le mois le plus froid de l'année", "Parce que la Terre tourne un peu moins vite sur elle-même tous les quatre ans", "Parce que la Lune fait un tour de plus cette année-là"],
-      reponse: "Parce qu'un tour autour du Soleil dure un peu plus de 365 jours",
-      explication: "Une révolution dure environ 365 jours et un quart. Tous les quatre ans, ces quarts de jour font un jour entier, qu'on ajoute au calendrier.",
-      indice: "Compte ce que font quatre quarts de jour.",
-      source: T("Année bissextile", "https://fr.wikipedia.org/wiki/Ann%C3%A9e_bissextile") }
+      enonce: "Pourquoi, en été, le Soleil monte-t-il plus haut dans le ciel à midi qu'en hiver ?",
+      choix: ["Parce que notre hémisphère est alors penché vers le Soleil", "Parce que la Terre est plus près du Soleil en été", "Parce que l'axe de la Terre se redresse pendant l'été", "Parce que la Terre tourne plus vite sur elle-même pendant l'été"],
+      reponse: "Parce que notre hémisphère est alors penché vers le Soleil",
+      explication: "En été, notre hémisphère est incliné vers le Soleil : à midi, celui-ci est haut dans le ciel et ses rayons chauffent fort. Six mois plus tard, le même hémisphère est penché à l'opposé, le Soleil reste bas et c'est l'hiver.",
+      indice: "Pense au côté de la Terre qui est penché vers le Soleil.",
+      source: T("Saison", "https://fr.wikipedia.org/wiki/Saison") }
   ],
   bonus: [
     {

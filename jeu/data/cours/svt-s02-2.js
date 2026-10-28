@@ -588,23 +588,24 @@ JEU.enregistrer("cours", {
   {
    "id": "svt-s02-2-q30",
    "fiche": "svt-s02-2-f4",
-   "type": "qcm",
+   "type": "qcm_multiple",
    "niveau": 3,
-   "enonce": "Pourquoi parle-t-on d'effet de « serre » ?",
+   "enonce": "Lesquels de ces gaz sont des gaz à effet de serre ? (plusieurs réponses)",
    "choix": [
-    "Parce que l'atmosphère garde la chaleur, comme une serre de jardin",
-    "Parce que l'atmosphère est transparente et dure comme la vitre d'une serre",
-    "Parce qu'il protège les plantes des oiseaux et des insectes",
-    "Parce qu'il arrête complètement les rayons du Soleil"
+    "La vapeur d'eau",
+    "Le dioxyde de carbone",
+    "Le méthane",
+    "Le dioxygène",
+    "Le diazote"
    ],
-   "explication": "Dans une serre, la lumière entre et la chaleur reste à l'intérieur. L'atmosphère fait un peu pareil : les gaz à effet de serre gardent une partie de la chaleur près du sol.",
+   "explication": "La vapeur d'eau, le dioxyde de carbone et le méthane laissent passer la lumière du Soleil mais retiennent une partie de la chaleur renvoyée par le sol. Le diazote et le dioxygène, qui forment presque tout l'air, n'ont pas cet effet.",
    "source": {
     "theme": "Séance 4 – Les effets de serre",
-    "titre": "Effet de serre",
+    "titre": "Gaz à effet de serre",
     "editeur": "Wikipédia",
-    "url": "https://fr.wikipedia.org/wiki/Effet_de_serre"
+    "url": "https://fr.wikipedia.org/wiki/Gaz_%C3%A0_effet_de_serre"
    },
-   "r": "LxhLWcABfEFDK80FaEDSWUBSAohRDQwHoERVJdABMIgDaswYMlQFIpQHHEQSXUj222QBCYwAbMxTv0AAAxlTKUAFIISZ",
+   "r": "1EGSLQVRaYcpLk0FLAVWHBxHGwQHTswYIFQFIpgFekAAWc2F5cUWTxxDKUFDj9FEQ11DZY0BlAFH",
    "poids": 1
   },
   {
@@ -639,7 +640,7 @@ JEU.enregistrer("cours", {
     "Son atmosphère épaisse, pleine de dioxyde de carbone, retient la chaleur",
     "Elle est bien plus grosse que Mercure",
     "Elle tourne beaucoup plus vite sur elle-même",
-    "Mercure est recouverte d'une épaisse couche de glace qui la garde froide toute l'année"
+    "Mercure tourne très vite sur elle-même et n'a pas le temps de chauffer"
    ],
    "explication": "L'atmosphère de Vénus est presque entièrement faite de dioxyde de carbone : elle produit l'effet de serre le plus fort du système solaire. Mercure, elle, n'a presque pas d'atmosphère pour garder la chaleur.",
    "indice": "Compare les atmosphères des deux planètes.",

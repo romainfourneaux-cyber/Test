@@ -298,7 +298,7 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "En climat tropical, les températures moyennes restent proches les unes des autres toute l'année.",
    "corrections": [],
-   "explication": "Oui : sur le diagramme, toutes les moyennes mensuelles tiennent entre 21,3 °C et 26,3 °C. Cette régularité confirme le climat tropical.",
+   "explication": "Oui : dans l'exemple du cours, toutes les moyennes mensuelles tiennent entre 21 °C et 26 °C environ. Cette régularité confirme le climat tropical.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 9

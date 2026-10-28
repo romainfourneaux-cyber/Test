@@ -128,7 +128,7 @@ module.exports = {
     { id: "svt-s04-2-q10", fiche: "svt-s04-2-f2", type: "vrai_faux", niveau: 2,
       enonce: "En climat tropical, les températures moyennes restent proches les unes des autres toute l'année.",
       corrections: [], reponse: { vrai: true, correction: null },
-      explication: "Oui : sur le diagramme, toutes les moyennes mensuelles tiennent entre 21,3 °C et 26,3 °C. Cette régularité confirme le climat tropical.", source: C(9) },
+      explication: "Oui : dans l'exemple du cours, toutes les moyennes mensuelles tiennent entre 21 °C et 26 °C environ. Cette régularité confirme le climat tropical.", source: C(9) },
     { id: "svt-s04-2-q11", fiche: "svt-s04-2-f2", type: "vrai_faux", niveau: 2,
       enonce: "En climat tropical, les températures passent sous zéro en hiver.",
       corrections: ["Faux : elles restent chaudes et proches les unes des autres toute l'année.", "Faux : elles sont toujours au-dessus de 30 °C.", "Faux : elles descendent sous zéro pendant la saison sèche seulement."],

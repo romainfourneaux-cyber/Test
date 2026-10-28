@@ -917,22 +917,22 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s01-2-f5",
    "type": "qcm",
    "niveau": 3,
-   "enonce": "Pourquoi ajoute-t-on un 29 février tous les quatre ans ?",
+   "enonce": "Pourquoi, en été, le Soleil monte-t-il plus haut dans le ciel à midi qu'en hiver ?",
    "choix": [
-    "Parce qu'un tour autour du Soleil dure un peu plus de 365 jours",
-    "Parce que février est le mois le plus froid de l'année",
-    "Parce que la Terre tourne un peu moins vite sur elle-même tous les quatre ans",
-    "Parce que la Lune fait un tour de plus cette année-là"
+    "Parce que notre hémisphère est alors penché vers le Soleil",
+    "Parce que la Terre est plus près du Soleil en été",
+    "Parce que l'axe de la Terre se redresse pendant l'été",
+    "Parce que la Terre tourne plus vite sur elle-même pendant l'été"
    ],
-   "explication": "Une révolution dure environ 365 jours et un quart. Tous les quatre ans, ces quarts de jour font un jour entier, qu'on ajoute au calendrier.",
-   "indice": "Compte ce que font quatre quarts de jour.",
+   "explication": "En été, notre hémisphère est incliné vers le Soleil : à midi, celui-ci est haut dans le ciel et ses rayons chauffent fort. Six mois plus tard, le même hémisphère est penché à l'opposé, le Soleil reste bas et c'est l'hiver.",
+   "indice": "Pense au côté de la Terre qui est penché vers le Soleil.",
    "source": {
     "theme": "Séance 2 – La Terre une planète en mouvement – Les axes de la Terre",
-    "titre": "Année bissextile",
+    "titre": "Saison",
     "editeur": "Wikipédia",
-    "url": "https://fr.wikipedia.org/wiki/Ann%C3%A9e_bissextile"
+    "url": "https://fr.wikipedia.org/wiki/Saison"
    },
-   "r": "=clFHQgBE80ReBXDAEVDdohCWk0BiIQVLAQUMwhGWg0LEBQWC1zTTIQSAITHBABFRtxGAYAStglQAxlTKUAFIISZ",
+   "r": "X1BALMQH7MGSJUhXcoAEGBcsvExGAUQUawBAekwYZZBUNsQHOXaACQzGYwstZk0CdYwBt0AAAxlTKUAFIISZ",
    "poids": 1
   }
  ],

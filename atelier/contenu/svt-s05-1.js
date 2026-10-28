@@ -177,7 +177,7 @@ module.exports = {
     // f2 : mesurer la durée d'une période glaciaire
     { id: "svt-s05-1-q11", fiche: "svt-s05-1-f2", type: "qcm", niveau: 2,
       enonce: "Comment trouve-t-on la durée d'une période glaciaire quand on connaît la date de son début et celle de sa fin ?",
-      choix: ["On calcule l'écart entre les deux dates", "On compte les pics de réchauffement du cycle", "On lit la température la plus basse", "On additionne les deux dates"],
+      choix: ["On calcule l'écart entre les deux dates", "On compte les pics de réchauffement du cycle", "On lit la température la plus basse", "On divise la durée du cycle entier par deux"],
       reponse: "On calcule l'écart entre les deux dates",
       explication: "La durée, c'est la différence entre la date de la fin et celle du début. On calcule ainsi chaque période glaciaire, puis leur moyenne.", source: C(10) },
     { id: "svt-s05-1-q12", fiche: "svt-s05-1-f2", type: "vrai_faux", niveau: 2,
