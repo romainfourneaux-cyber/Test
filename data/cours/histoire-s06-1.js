@@ -171,6 +171,114 @@ JEU.enregistrer("cours", {
     "fichier": "cours/histoire/Histoire 5e - Moyen Age - Etude de cas 3 Vie et travail des paysans.pdf",
     "page": 1
    }
+  },
+  {
+   "id": "histoire-s06-1-f5",
+   "notion": "1348, la Grande Peste",
+   "titre": "Un ennemi invisible : la peste noire (1347-1352)",
+   "texte": "La peste vient d'Asie centrale. En 1347, des navires génois partis de Crimée la portent à Constantinople, à Messine, puis à Marseille en novembre. En 1348, elle est à Avignon, puis à Paris. Transmise par les puces des rats noirs, elle tue entre 30 et 60 % des Européens en cinq ou six ans : des villages sont abandonnés.",
+   "pointsCles": [
+    "Origine : l'Asie centrale ; 1346 : les Mongols assiègent Caffa, port génois de Crimée",
+    "1347 : Constantinople, Messine (fin septembre), Gênes et Marseille (novembre) ; 1348 : Avignon (janvier), Paris (20 août)",
+    "Le rat noir porte les puces, les puces portent le bacille ; la maladie peut aussi passer par les poumons",
+    "De 1347 à 1352 : entre 30 et 60 % des Européens meurent, environ 25 millions de personnes",
+    "Après : villages abandonnés, récoltes en chute de 30 à 50 %, forêts qui regagnent les champs"
+   ],
+   "astuce": "La peste suit les bateaux : Crimée, Constantinople, Sicile, Marseille, puis les fleuves vers l'intérieur.",
+   "dates": [
+    {
+     "annee": 1347,
+     "evenement": "Novembre 1347 : la peste débarque à Marseille"
+    },
+    {
+     "annee": 1348,
+     "evenement": "20 août 1348 : la peste atteint Paris"
+    }
+   ],
+   "lieux": [
+    "Caffa",
+    "Messine",
+    "Marseille",
+    "Avignon",
+    "Paris"
+   ],
+   "personnages": [],
+   "vocabulaire": [
+    {
+     "mot": "épidémie",
+     "def": "une maladie qui touche d'un coup un très grand nombre de personnes"
+    },
+    {
+     "mot": "bacille",
+     "def": "un microbe en forme de bâtonnet ; celui de la peste passe du rat à l'homme par les puces"
+    },
+    {
+     "mot": "Crimée",
+     "def": "une presqu'île de la mer Noire, d'où partent les navires génois en 1347"
+    }
+   ],
+   "schema": null,
+   "prerequis": [
+    "histoire-s04-3-f1"
+   ],
+   "source": {
+    "programme": "L'ordre seigneurial : la formation et la domination des campagnes",
+    "titre": "Peste noire",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Peste_noire"
+   }
+  },
+  {
+   "id": "histoire-s06-1-f6",
+   "notion": "Les moulins : la force de l'eau et du vent",
+   "titre": "Le moulin, une machine au service du seigneur",
+   "texte": "Le moulin à eau se répand à partir du IXe siècle : une meule peut moudre 150 kg de blé en une heure. L'eau fait aussi tourner les foulons des drapiers et les marteaux des forges. Au XIIe siècle, le moulin à vent arrive par les côtes du Nord. Le moulin est au seigneur : s'en servir se paie.",
+   "pointsCles": [
+    "Moulin à eau : il se développe en Europe à partir du IXe siècle ; une meule moud 150 kg de blé à l'heure",
+    "L'eau fait tourner aussi les foulons (pour les draps), les forges et les marteaux ; au XIIIe siècle, des arbres à cames",
+    "Moulin à vent : généralisé vers le XIIe siècle, d'abord sur les côtes de Grande-Bretagne et des Pays-Bas ; première mention en France à Arles, en 1170",
+    "Les seigneurs exigent un « droit de vent » pour bâtir un moulin à vent, et gardent souvent leur moulin à eau, une banalité plus solide",
+    "Moudre au moulin du seigneur est obligatoire et se paie : c'est une banalité"
+   ],
+   "dates": [
+    {
+     "annee": 850,
+     "evenement": "IXe siècle : le moulin à eau se répand en Europe"
+    },
+    {
+     "annee": 1170,
+     "evenement": "Première mention d'un moulin à vent en France, à Arles"
+    }
+   ],
+   "lieux": [
+    "Arles"
+   ],
+   "personnages": [],
+   "vocabulaire": [
+    {
+     "mot": "meule",
+     "def": "une grosse pierre ronde qui écrase le grain pour en faire de la farine"
+    },
+    {
+     "mot": "foulon",
+     "def": "un moulin qui bat les draps de laine pour les resserrer"
+    },
+    {
+     "mot": "arbre à cames",
+     "def": "une pièce tournante qui transforme la rotation de la roue en coups de marteau"
+    }
+   ],
+   "schema": null,
+   "prerequis": [
+    "histoire-s06-1-f1",
+    "histoire-s05-1-f3"
+   ],
+   "source": {
+    "programme": "L'ordre seigneurial : la formation et la domination des campagnes",
+    "titre": "Moulin à eau",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Moulin_%C3%A0_eau"
+   }
   }
  ],
  "schemas": [
@@ -916,6 +1024,356 @@ JEU.enregistrer("cours", {
    },
    "r": "==gEQZkJEdBQIBACPMgGSZiHVBQERpBHAoBSmoEBc91DCYECcIVNHoRFVRBHf8UyreSDRYESJFgRD4wEuAAFIcgHP4kCegUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
+  },
+  {
+   "id": "histoire-s06-1-q38",
+   "fiche": "histoire-s06-1-f5",
+   "type": "qcm",
+   "niveau": 1,
+   "enonce": "D'où vient la peste qui frappe l'Europe en 1347-1348 ?",
+   "choix": [
+    "D'Asie centrale",
+    "D'Angleterre",
+    "De Normandie",
+    "D'Espagne"
+   ],
+   "explication": "La maladie vient d'Asie centrale, sans doute de l'actuel Kirghizistan. Elle gagne la Crimée, puis les ports de la Méditerranée.",
+   "source": {
+    "theme": "Cours 8 – Étude de cas 3 et 4",
+    "titre": "Peste noire",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Peste_noire"
+   },
+   "r": "=s0CDMhG3MEAW1wCGUxJOZTZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s06-1-q39",
+   "fiche": "histoire-s06-1-f5",
+   "type": "vrai_faux",
+   "niveau": 1,
+   "enonce": "La peste noire arrive en Europe par des navires.",
+   "corrections": [],
+   "explication": "Oui : en 1347, des bateaux génois quittent Caffa, en Crimée, et apportent la maladie à Constantinople, à Messine puis à Marseille. Les ports sont touchés les premiers.",
+   "source": {
+    "theme": "Cours 8 – Étude de cas 3 et 4",
+    "titre": "Peste noire",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Peste_noire"
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s06-1-q40",
+   "fiche": "histoire-s06-1-f5",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Comment la peste se transmet-elle aux humains ?",
+   "choix": [
+    "Par les puces portées par les rats noirs",
+    "Par l'eau des puits et des rivières des villages",
+    "Par le pain moisi",
+    "Par les flèches des archers"
+   ],
+   "explication": "Le rat noir sert de réservoir au bacille, et les puces le transmettent aux humains. La maladie peut aussi passer d'une personne à l'autre par les poumons.",
+   "source": {
+    "theme": "Cours 8 – Étude de cas 3 et 4",
+    "titre": "Peste noire",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Peste_noire"
+   },
+   "r": "==wVWcAGGAwTBwhIfVkRIJwTUcQGSRzFcbaADYgHPFQDggVFV41CDYEFIISZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s06-1-q41",
+   "fiche": "histoire-s06-1-f5",
+   "type": "ordre",
+   "niveau": 2,
+   "enonce": "Remets ces villes dans l'ordre où la peste les atteint.",
+   "elements": [
+    "Paris (août 1348)",
+    "Messine (septembre 1347)",
+    "Marseille (novembre 1347)",
+    "Avignon (janvier 1348)"
+   ],
+   "explication": "Messine fin septembre 1347, Marseille en novembre, Avignon en janvier 1348, Paris le 20 août 1348. La maladie remonte des ports vers l'intérieur.",
+   "source": {
+    "theme": "Cours 8 – Étude de cas 3 et 4",
+    "titre": "Peste noire",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Peste_noire"
+   },
+   "r": "o1hQcpEVFNEH",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s06-1-q42",
+   "fiche": "histoire-s06-1-f5",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "La peste noire tue moins d'un Européen sur dix.",
+   "corrections": [
+    "Faux : elle tue entre 30 et 60 % des Européens, soit au moins un sur trois.",
+    "Faux : elle ne fait aucun mort en France.",
+    "Faux : elle tue tous les habitants de l'Europe."
+   ],
+   "explication": "Entre 1347 et 1352, la peste tue entre 30 et 60 % de la population de l'Europe, environ 25 millions de personnes. C'est au moins un habitant sur trois.",
+   "source": {
+    "theme": "Cours 8 – Étude de cas 3 et 4",
+    "titre": "Peste noire",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Peste_noire"
+   },
+   "r": "==ADLBEHbcQMZV0RY1xTIMRSBkyGagQVEggTbsxBw0QSGN0CGXqFGAgM3UlFQURSL9kQeNWWAURHd90AU0BHiIFEQEQUMIwAXgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s06-1-q43",
+   "fiche": "histoire-s06-1-f5",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Pourquoi des villages sont-ils abandonnés après 1348 ?",
+   "choix": [
+    "Il reste trop peu de bras pour cultiver",
+    "Le roi de France ordonne de quitter les campagnes",
+    "Les seigneurs vendent tous leurs villages aux Anglais",
+    "La forêt a envahi les maisons en une nuit"
+   ],
+   "explication": "Avec tant de morts, les terres les moins fertiles ne sont plus cultivées et retournent en friche. La production de blé chute de 30 à 50 % selon les régions.",
+   "source": {
+    "theme": "Cours 8 – Étude de cas 3 et 4",
+    "titre": "Peste noire",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Peste_noire"
+   },
+   "r": "=c1AMghBGQgNOV0RYFwHGVBCAUiUQEQVEwgHPJwBxkVRQlVHKQhRFsTZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s06-1-q44",
+   "fiche": "histoire-s06-1-f5",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "En 1346, les Mongols assiègent Caffa, un port génois de Crimée. Quel lien avec la peste en Europe ?",
+   "choix": [
+    "Les navires partis de Caffa répandent la maladie",
+    "Les Mongols envahissent ensuite la France et l'Angleterre",
+    "La ville de Gênes déclare la guerre à Marseille",
+    "Il n'y a aucun lien"
+   ],
+   "explication": "Les bateaux génois quittent Caffa en 1347 et apportent la peste à Constantinople, puis dans les ports d'Italie et de Provence. De là, elle gagne toute l'Europe.",
+   "indice": "Pense à la façon dont la peste voyage.",
+   "source": {
+    "theme": "Cours 8 – Étude de cas 3 et 4",
+    "titre": "Peste noire",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Peste_noire"
+   },
+   "r": "MpwDCggHm8RVEkRUdAgCWYgIdxs9f5kDAAACxc2FRUkBY0BHOIASwg0Fct1DBYUFM4TZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s06-1-q45",
+   "fiche": "histoire-s06-1-f5",
+   "type": "trou",
+   "niveau": 1,
+   "enonce": "Complète le trajet de la peste.",
+   "texte": "En ___, la peste arrive à Marseille ; en 1348, elle atteint ___.",
+   "banque": [
+    "1347",
+    "Paris",
+    "1453",
+    "Bagdad"
+   ],
+   "explication": "Marseille est touchée en novembre 1347, Paris en août 1348. En deux ans, toute la France est atteinte.",
+   "source": {
+    "theme": "Cours 8 – Étude de cas 3 et 4",
+    "titre": "Peste noire",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Peste_noire"
+   },
+   "r": "=gDKTpxBdMBOhZXSo9QWbV1VLlCH",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s06-1-q46",
+   "fiche": "histoire-s06-1-f6",
+   "type": "qcm",
+   "niveau": 1,
+   "enonce": "À qui appartient le moulin du village ?",
+   "choix": [
+    "Au seigneur",
+    "Au meunier",
+    "Aux paysans, en commun",
+    "Au roi"
+   ],
+   "explication": "Le moulin fait partie des installations du seigneur, comme le four et le pressoir. Le meunier le fait tourner pour lui, et les paysans paient pour moudre.",
+   "source": {
+    "theme": "Cours 8 – Étude de cas 3 et 4",
+    "titre": "Seigneurie",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Seigneurie"
+   },
+   "r": "==gSxgFAbp0BKUhRcMTZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s06-1-q47",
+   "fiche": "histoire-s06-1-f6",
+   "type": "vrai_faux",
+   "niveau": 1,
+   "enonce": "Le moulin à vent apparaît en Europe de l'Ouest vers le XIIe siècle.",
+   "corrections": [],
+   "explication": "Oui : il se généralise vers le XIIe siècle, d'abord sur les côtes de Grande-Bretagne et des Pays-Bas. En France, la première mention connue est à Arles, en 1170.",
+   "source": {
+    "theme": "Cours 8 – Étude de cas 3 et 4",
+    "titre": "Moulin à vent",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Moulin_%C3%A0_vent"
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s06-1-q48",
+   "fiche": "histoire-s06-1-f6",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Combien de blé une meule de moulin à eau peut-elle moudre en une heure ?",
+   "choix": [
+    "Environ 150 kg",
+    "Environ 1 kg",
+    "Environ 15 kg",
+    "Environ 15 tonnes"
+   ],
+   "explication": "Une meule mue par l'eau peut moudre 150 kg de blé à l'heure. C'est bien plus qu'une meule tournée à la main.",
+   "source": {
+    "theme": "Cours 8 – Étude de cas 3 et 4",
+    "titre": "Moulin à eau",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Moulin_%C3%A0_eau"
+   },
+   "r": "==ATIkBSzhBVVMUAd8AEHcTZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s06-1-q49",
+   "fiche": "histoire-s06-1-f6",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Pourquoi le moulin à eau est-il un progrès pour les campagnes ?",
+   "choix": [
+    "L'eau travaille à la place des bras",
+    "Il fait tomber la pluie sur les champs",
+    "Il permet de labourer la terre plus profond",
+    "Il protège le village contre les attaques"
+   ],
+   "explication": "La roue entraînée par la rivière fait tourner la meule sans effort humain. L'eau sert aussi à battre les draps et à frapper le fer dans les forges.",
+   "source": {
+    "theme": "Cours 8 – Étude de cas 3 et 4",
+    "titre": "Moulin à eau",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Moulin_%C3%A0_eau"
+   },
+   "r": "=wEHToRINYBUJ5kCFcQBCc2EZUU1ym0CD4RAisFBHllTacwAO5TZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s06-1-q50",
+   "fiche": "histoire-s06-1-f6",
+   "type": "qcm_multiple",
+   "niveau": 2,
+   "enonce": "Que fait-on tourner avec la force de l'eau au Moyen Âge ? (plusieurs réponses)",
+   "choix": [
+    "Des meules à grain",
+    "Des foulons pour les draps",
+    "Des marteaux de forge",
+    "Des charrues",
+    "Des charrettes"
+   ],
+   "explication": "L'eau moud le grain, foule les draps et frappe le fer. La charrue et la charrette, elles, sont tirées par des animaux.",
+   "source": {
+    "theme": "Cours 8 – Étude de cas 3 et 4",
+    "titre": "Moulin à eau",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Moulin_%C3%A0_eau"
+   },
+   "r": "==AOXgUCdkAAJdxIS1AEUQRHc4wHIBDShcRAMxhFHshFnFAEJU1AcEwHStRLClAQChwTVMQLQtGUbwAFD4gTPHLSwgUCAh0APVxAtAFH",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s06-1-q51",
+   "fiche": "histoire-s06-1-f6",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Les seigneurs accueillent toujours avec joie les nouveaux moulins à vent.",
+   "corrections": [
+    "Faux : beaucoup hésitent à remplacer leur moulin à eau, une banalité plus solide, et exigent un « droit de vent ».",
+    "Faux : les moulins à vent sont interdits par le roi.",
+    "Faux : les seigneurs n'ont pas le droit de posséder un moulin."
+   ],
+   "explication": "Certains seigneurs rechignent à abandonner leur moulin à eau, plus robuste. En France, ils réclament un droit de vent à qui veut bâtir un moulin à vent.",
+   "source": {
+    "theme": "Cours 8 – Étude de cas 3 et 4",
+    "titre": "Moulin à vent",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Moulin_%C3%A0_vent"
+   },
+   "r": "MsEQUDLS3MEAD1wCLYkEA0RNWUlz3G1Bb8kBGYiSM0ESOtxAGV0FjsRGKYQUasxACgk6uHBXB9QAHQQSXkyBVlEAQwgTPHLStQUCAJ0APRxEM4xZAAhBU0RGDoAAINu7FF0QLsxDVAcsvIVBQohEc8gCQgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s06-1-q52",
+   "fiche": "histoire-s06-1-f6",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Un village se trouve loin de toute rivière, sur un plateau venteux de Normandie. Quel moulin y bâtit-on au XIIe siècle ?",
+   "choix": [
+    "Un moulin à vent",
+    "Un moulin à eau",
+    "Un moulin à bras géant",
+    "Aucun : on moud à la main"
+   ],
+   "explication": "Sans rivière, pas de moulin à eau : le moulin à vent, répandu au XIIe siècle dans le Cotentin et le Pays de Caux, prend le relais. Le vent remplace le courant.",
+   "indice": "Que manque-t-il à ce village ?",
+   "source": {
+    "theme": "Cours 8 – Étude de cas 3 et 4",
+    "titre": "Moulin à vent",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Moulin_%C3%A0_vent"
+   },
+   "r": "==wVFcwCZIFyA2wCcF0GAsgRHcSZ",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s06-1-q53",
+   "fiche": "histoire-s06-1-f6",
+   "type": "association",
+   "niveau": 2,
+   "enonce": "Relie chaque machine à ce qu'elle fait.",
+   "gauche": [
+    "Meule",
+    "Foulon",
+    "Moulin à vent",
+    "Arbre à cames"
+   ],
+   "droite": [
+    "Bat les draps de laine",
+    "Écrase le grain",
+    "Transforme la rotation en coups de marteau",
+    "Tourne grâce au vent, dès le XIIe siècle"
+   ],
+   "explication": "La meule écrase, le foulon bat les draps, l'arbre à cames fait frapper les marteaux. Le moulin à vent apporte une force nouvelle au XIIe siècle.",
+   "source": {
+    "theme": "Cours 8 – Étude de cas 3 et 4",
+    "titre": "Moulin à eau",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Moulin_%C3%A0_eau"
+   },
+   "r": "==ANvUnXG5TWsolQdlCRe0RSEYnQyclSZlCH",
+   "poids": 1
   }
  ],
  "bonus": [
@@ -929,13 +1387,25 @@ JEU.enregistrer("cours", {
     "editeur": "Wikipédia, l'encyclopédie libre",
     "url": "https://fr.wikipedia.org/wiki/Charrue"
    }
+  },
+  {
+   "id": "histoire-s06-1-b2",
+   "fiche": "histoire-s06-1-f1",
+   "titre": "Le Rustican, un manuel d'agriculture copié pendant deux siècles",
+   "texte": "Pietro de' Crescenzi (vers 1230-1320), magistrat de Bologne, écrit entre 1304 et 1306 un traité d'agriculture en latin. Sur ordre du roi Charles V, il est traduit en français dès 1373 : c'est le Rustican. Des copies enluminées, comme celle du musée Condé peinte vers 1470-1475, montrent les travaux des mois. Le livre est imprimé dès 1471.",
+   "source": {
+    "titre": "Pietro de' Crescenzi",
+    "editeur": "Wikipédia, l'encyclopédie libre",
+    "url": "https://fr.wikipedia.org/wiki/Pietro_de%27_Crescenzi"
+   }
   }
  ],
  "nonCouvert": [
   "L'étude de cas n°4 annoncée par le planning n'est pas déposée : on ne sait pas de quoi elle traite.",
   "La leçon à apprendre et les réponses rédigées aux neuf questions de l'étude de cas 3, données en vidéo.",
   "L'image de la charrue de l'étude de cas (seul le texte de l'encadré est repris) et les douze images du Rustican.",
-  "Les autres techniques nouvelles des campagnes médiévales : le fichier ne cite que la charrue et le collier d'épaule.",
+  "L'assolement triennal : enseigné nulle part dans le jeu et jamais interrogé, parce que le test de la séance 8 demande de le schématiser.",
+  "La liste des « trois techniques nouvelles » du devoir n°1 : le jeu interroge une technique à la fois (charrue, collier d'épaule, moulin), jamais la liste.",
   "Ce qu'est précisément un fief, un vassal ou un hommage : ces mots viennent des cours suivants, en vidéo.",
   "Le montant des taxes (combien d'argent pour le cens ou le chevage, quelle part pour le champart) : le tableau ne le dit pas.",
   "Le calendrier des travaux des paysans, la famine de 1033 et la part des paysans dans la population : ils sont traités au cours 6 (histoire-s04-3).",
