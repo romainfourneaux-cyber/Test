@@ -1005,7 +1005,7 @@
   "matiere": "histoire",
   "semaine": 4,
   "cours": "histoire-s04-3",
-  "notion": "Les campagnes de l'an mil à 1348 : repères",
+  "notion": "De l'an mil à 1348 : essor des campagnes, puis la Peste",
   "prerequis": []
  },
  {
@@ -1034,6 +1034,26 @@
   "notion": "La famine de 1033",
   "prerequis": [
    "histoire-s04-3-f2"
+  ]
+ },
+ {
+  "id": "histoire-s04-3-f5",
+  "matiere": "histoire",
+  "semaine": 4,
+  "cours": "histoire-s04-3",
+  "notion": "Les grands défrichements : gagner des terres sur la forêt",
+  "prerequis": [
+   "histoire-s04-3-f1"
+  ]
+ },
+ {
+  "id": "histoire-s04-3-f6",
+  "matiere": "histoire",
+  "semaine": 4,
+  "cours": "histoire-s04-3",
+  "notion": "Le village : le château, l'église, les champs",
+  "prerequis": [
+   "histoire-s04-3-f1"
   ]
  },
  {
@@ -1075,6 +1095,28 @@
   "prerequis": [
    "histoire-s05-1-f1",
    "histoire-s05-1-f2"
+  ]
+ },
+ {
+  "id": "histoire-s05-1-f5",
+  "matiere": "histoire",
+  "semaine": 5,
+  "cours": "histoire-s05-1",
+  "notion": "Le château fort, cœur de la seigneurie",
+  "prerequis": [
+   "histoire-s05-1-f1",
+   "histoire-s04-3-f6"
+  ]
+ },
+ {
+  "id": "histoire-s05-1-f6",
+  "matiere": "histoire",
+  "semaine": 5,
+  "cours": "histoire-s05-1",
+  "notion": "Le ban : commander, juger, punir",
+  "prerequis": [
+   "histoire-s05-1-f1",
+   "histoire-s05-1-f3"
   ]
  },
  {
@@ -1163,13 +1205,34 @@
   ]
  },
  {
-  "id": "histoire-s07-2-f1",
+  "id": "histoire-s06-1-f5",
+  "matiere": "histoire",
+  "semaine": 6,
+  "cours": "histoire-s06-1",
+  "notion": "1348, la Grande Peste",
+  "prerequis": [
+   "histoire-s04-3-f1"
+  ]
+ },
+ {
+  "id": "histoire-s06-1-f6",
+  "matiere": "histoire",
+  "semaine": 6,
+  "cours": "histoire-s06-1",
+  "notion": "Les moulins : la force de l'eau et du vent",
+  "prerequis": [
+   "histoire-s06-1-f1",
+   "histoire-s05-1-f3"
+  ]
+ },
+ {
+  "id": "histoire-s07-2-f4",
   "matiere": "histoire",
   "semaine": 7,
   "cours": "histoire-s07-2",
-  "notion": "La frise de 900 à 1500 : rois, batailles et guerre de Cent Ans",
+  "notion": "Vers l'an mil : un roi faible, des princes puissants",
   "prerequis": [
-   "histoire-s04-3-f1"
+   "histoire-s01-2-f1"
   ]
  },
  {
@@ -1179,18 +1242,38 @@
   "cours": "histoire-s07-2",
   "notion": "987 : Hugues Capet élu roi",
   "prerequis": [
-   "histoire-s07-2-f1",
+   "histoire-s07-2-f4",
    "histoire-s04-3-f1"
   ]
  },
  {
-  "id": "histoire-s07-2-f3",
+  "id": "histoire-s07-2-f5",
   "matiere": "histoire",
   "semaine": 7,
   "cours": "histoire-s07-2",
-  "notion": "Vassal et seigneur, duchés et comtés",
+  "notion": "La carte des grands fiefs : duchés et comtés",
   "prerequis": [
-   "histoire-s01-2-f4"
+   "histoire-s07-2-f4"
+  ]
+ },
+ {
+  "id": "histoire-s07-2-f6",
+  "matiere": "histoire",
+  "semaine": 7,
+  "cours": "histoire-s07-2",
+  "notion": "Fidèle contre protecteur : le lien féodal",
+  "prerequis": [
+   "histoire-s07-2-f4"
+  ]
+ },
+ {
+  "id": "histoire-s07-2-f7",
+  "matiere": "histoire",
+  "semaine": 7,
+  "cours": "histoire-s07-2",
+  "notion": "1066 : Guillaume, duc de Normandie, roi d'Angleterre",
+  "prerequis": [
+   "histoire-s07-2-f6"
   ]
  },
  {
@@ -1198,9 +1281,9 @@
   "matiere": "histoire",
   "semaine": 8,
   "cours": "histoire-s08-1",
-  "notion": "Le domaine royal, autour de Paris, et les principaux fiefs",
+  "notion": "Le domaine royal : de Paris-Orléans à un tiers du royaume",
   "prerequis": [
-   "histoire-s07-2-f3"
+   "histoire-s07-2-f5"
   ]
  },
  {
@@ -1210,7 +1293,8 @@
   "cours": "histoire-s08-1",
   "notion": "Philippe Auguste (1180-1223) et la bataille de Bouvines (1214)",
   "prerequis": [
-   "histoire-s07-2-f1"
+   "histoire-s08-1-f1",
+   "histoire-s07-2-f2"
   ]
  },
  {
@@ -1218,9 +1302,19 @@
   "matiere": "histoire",
   "semaine": 8,
   "cours": "histoire-s08-1",
-  "notion": "Louis IX (1226-1270) et Philippe le Bel (1285-1314)",
+  "notion": "Louis IX, le roi justicier (1226-1270)",
   "prerequis": [
    "histoire-s08-1-f2"
+  ]
+ },
+ {
+  "id": "histoire-s08-1-f5",
+  "matiere": "histoire",
+  "semaine": 8,
+  "cours": "histoire-s08-1",
+  "notion": "Philippe le Bel : légistes, monnaie, États généraux",
+  "prerequis": [
+   "histoire-s08-1-f3"
   ]
  },
  {
@@ -1228,9 +1322,19 @@
   "matiere": "histoire",
   "semaine": 8,
   "cours": "histoire-s08-1",
-  "notion": "La guerre de Cent Ans (1337-1453) et Jeanne d'Arc (1428)",
+  "notion": "La guerre de Cent Ans (1337-1453) : Crécy, Poitiers, Azincourt",
   "prerequis": [
-   "histoire-s08-1-f3"
+   "histoire-s08-1-f5"
+  ]
+ },
+ {
+  "id": "histoire-s08-1-f6",
+  "matiere": "histoire",
+  "semaine": 8,
+  "cours": "histoire-s08-1",
+  "notion": "Jeanne d'Arc : Orléans 1429, Reims, Rouen 1431",
+  "prerequis": [
+   "histoire-s08-1-f4"
   ]
  },
  {
@@ -1248,9 +1352,10 @@
   "matiere": "histoire",
   "semaine": 8,
   "cours": "histoire-s08-2",
-  "notion": "La scène : l'hommage d'Édouard Ier à Philippe le Bel",
+  "notion": "1286 : le roi d'Angleterre, vassal du roi de France pour la Guyenne",
   "prerequis": [
-   "histoire-s08-1-f3",
+   "histoire-s08-1-f5",
+   "histoire-s07-2-f6",
    "histoire-s08-2-f1"
   ]
  },
@@ -1262,6 +1367,27 @@
   "notion": "Lire l'image : trône, couronnes, manteau à fleurs de lys, livre",
   "prerequis": [
    "histoire-s08-2-f2"
+  ]
+ },
+ {
+  "id": "histoire-s08-2-f4",
+  "matiere": "histoire",
+  "semaine": 8,
+  "cours": "histoire-s08-2",
+  "notion": "Les Grandes Chroniques de France : l'histoire des rois écrite à Saint-Denis",
+  "prerequis": [
+   "histoire-s08-2-f1"
+  ]
+ },
+ {
+  "id": "histoire-s08-2-f5",
+  "matiere": "histoire",
+  "semaine": 8,
+  "cours": "histoire-s08-2",
+  "notion": "La Guyenne, pomme de discorde entre les deux rois",
+  "prerequis": [
+   "histoire-s08-2-f2",
+   "histoire-s08-1-f4"
   ]
  },
  {
