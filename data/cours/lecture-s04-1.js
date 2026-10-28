@@ -233,25 +233,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "lecture-s04-1-q3",
-   "fiche": "lecture-s04-1-f1",
-   "type": "vrai_faux",
-   "niveau": 2,
-   "enonce": "Le phoque a des oreilles bien visibles, contrairement à l'otarie.",
-   "corrections": [
-    "Faux : c'est l'inverse, les oreilles de l'otarie se voient, pas celles du phoque.",
-    "Faux : ni le phoque ni l'otarie n'ont d'oreilles visibles.",
-    "Faux : les oreilles du phoque et celles de l'otarie se voient toutes les deux."
-   ],
-   "explication": "On voit les oreilles de l'otarie, mais pas celles du phoque. C'est le moyen de les distinguer.",
-   "source": {
-    "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
-    "page": 4
-   },
-   "r": "6A1WAAAAGYwHS1xJNYBUBJgCFYkGTcjUZFxGUAQAZIVDw0AAc91DbkQQFIlIWUlFQ0RBHoAAHMmXAkVDCpQFUwABpshUJUVBasASRgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
    "id": "lecture-s04-1-q4",
    "fiche": "lecture-s04-1-f1",
    "type": "qcm",
@@ -340,39 +321,18 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "lecture-s04-1-q8",
-   "fiche": "lecture-s04-1-f1",
-   "type": "trou",
-   "niveau": 1,
-   "enonce": "Complète avec le bon animal.",
-   "texte": "Le ___ est un pinnipède dont on ne voit pas les oreilles ; l'___ a des oreilles visibles.",
-   "banque": [
-    "phoque",
-    "otarie",
-    "morse",
-    "ours"
-   ],
-   "explication": "Le phoque n'a pas d'oreilles visibles. L'otarie, au contraire, montre ses oreilles.",
-   "source": {
-    "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
-    "page": 4
-   },
-   "r": "=oxLXBAHDggGAA1MvB3RQh1HA4gFLlCH",
-   "poids": 1
-  },
-  {
    "id": "lecture-s04-1-q9",
    "fiche": "lecture-s04-1-f2",
    "type": "qcm",
    "niveau": 1,
-   "enonce": "Quelle est la différence entre le pingouin et le manchot ?",
+   "enonce": "Comment distingue-t-on le pingouin du manchot ?",
    "choix": [
     "Le pingouin vole, pas le manchot",
     "Le manchot vole, pas le pingouin",
     "Le pingouin vit dans l'eau, pas le manchot",
-    "Le pingouin est plus grand que le manchot"
+    "Le manchot vit dans l'Arctique, pas le pingouin"
    ],
-   "explication": "Le pingouin sait voler, le manchot non. Le pingouin est aussi plus petit que le manchot.",
+   "explication": "Le pingouin sait voler, le manchot non. C'est la différence à retenir entre les deux.",
    "source": {
     "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
     "page": 4
@@ -396,25 +356,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "lecture-s04-1-q11",
-   "fiche": "lecture-s04-1-f2",
-   "type": "vrai_faux",
-   "niveau": 2,
-   "enonce": "Le pingouin est plus grand que le manchot.",
-   "corrections": [
-    "Faux : le pingouin est plus petit que le manchot.",
-    "Faux : le pingouin et le manchot ont la même taille.",
-    "Faux : le pingouin est plus grand, mais il ne sait pas voler."
-   ],
-   "explication": "Le pingouin est plus petit que le manchot. En revanche, lui sait voler.",
-   "source": {
-    "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
-    "page": 4
-   },
-   "r": "==QFhNQEaVUDBcwCJdxKSBBEEEVHHsxFYMmXQkVXOtRFDkEHucgGCsBGZ4kCegUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
    "id": "lecture-s04-1-q12",
    "fiche": "lecture-s04-1-f2",
    "type": "qcm_multiple",
@@ -433,26 +374,6 @@ JEU.enregistrer("cours", {
     "page": 4
    },
    "r": "1EGSQQ0XBgkCEVEUjwBFJsBFGwBKS1xJNsAXY9hCUYEDeUmXXBQHScwDDABSmMEDQF0DNY0BFAFH",
-   "poids": 1
-  },
-  {
-   "id": "lecture-s04-1-q13",
-   "fiche": "lecture-s04-1-f2",
-   "type": "qcm",
-   "niveau": 2,
-   "enonce": "Comment être sûr qu'un oiseau est un pingouin et non un manchot ?",
-   "choix": [
-    "Il sait voler",
-    "Il est plus grand",
-    "Il ne sait pas nager",
-    "Il n'a pas d'ailes"
-   ],
-   "explication": "Seul le pingouin sait voler ; le manchot en est incapable. Le pingouin est aussi le plus petit des deux.",
-   "source": {
-    "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
-    "page": 4
-   },
-   "r": "NBQDvI0EVk1BOUhRFsTZ",
    "poids": 1
   },
   {
@@ -481,34 +402,19 @@ JEU.enregistrer("cours", {
    "type": "trou",
    "niveau": 2,
    "enonce": "Complète la phrase.",
-   "texte": "Le ___ est plus petit que le manchot, et il sait ___.",
+   "texte": "Le ___ sait voler ; le ___, lui, ne vole pas.",
    "banque": [
     "pingouin",
-    "voler",
     "manchot",
-    "nager"
+    "phoque",
+    "morse"
    ],
-   "explication": "Le pingouin est plus petit que le manchot. Et c'est lui qui sait voler.",
+   "explication": "Le pingouin vole ; le manchot en est incapable. C'est ce qui les distingue.",
    "source": {
     "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
     "page": 4
    },
-   "r": "voBUHAQGe8BT04VNhNEDAJUCB8gFLlCH",
-   "poids": 1
-  },
-  {
-   "id": "lecture-s04-1-q16",
-   "fiche": "lecture-s04-1-f2",
-   "type": "vrai_faux",
-   "niveau": 3,
-   "enonce": "L'orque, la baleine blanche et le requin du Groenland vivent tous les trois dans l'océan Arctique.",
-   "corrections": [],
-   "explication": "Oui : ces trois animaux marins se rencontrent dans l'océan Arctique.",
-   "source": {
-    "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
-    "page": 4
-   },
-   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "r": "=sDNQNTHdYwGQQAT04VNhNEDAJUCB8gFLlCH",
    "poids": 1
   },
   {
@@ -590,19 +496,21 @@ JEU.enregistrer("cours", {
    "fiche": "lecture-s04-1-f3",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Comment reconnaît-on un harfang des neiges ?",
+   "enonce": "Pourquoi le harfang des neiges vit-il là où vivent les lemmings ?",
    "choix": [
-    "À ses yeux jaunes",
-    "À son pelage brun en été",
-    "À ses longues oreilles",
-    "À sa laine très épaisse"
+    "Parce que le lemming est sa proie principale",
+    "Parce que les lemmings le protègent du froid de l'hiver",
+    "Parce qu'il pond ses œufs dans leurs terriers",
+    "Parce qu'ils migrent ensemble vers le sud"
    ],
-   "explication": "Le harfang des neiges est un oiseau blanc aux yeux jaunes. Le pelage brun en été, c'est celui du lièvre arctique.",
+   "explication": "Ce rapace blanc de la toundra chasse surtout de jour, et surtout des lemmings. Quand les lemmings manquent, le harfang se fait rare.",
    "source": {
-    "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
-    "page": 4
+    "theme": "Un hivernage dans les glaces – Lire les chapitres 5 et 6 p55 à 67",
+    "titre": "Harfang des neiges",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Harfang_des_neiges"
    },
-   "r": "=ckBUcwGOgBS7gFAM1QHKUhRpHbZ",
+   "r": "==AUi4BFVwhEHcQHCgkJEpwRd5kDVYUHBIiUSsAHcQwCDIVDv0AAAxlTKUAFIISZ",
    "poids": 1
   },
   {
@@ -682,25 +590,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "lecture-s04-1-q26",
-   "fiche": "lecture-s04-1-f4",
-   "type": "vrai_faux",
-   "niveau": 2,
-   "enonce": "Le renard polaire est plus grand que le renard roux.",
-   "corrections": [
-    "Faux : il est plus petit que le renard roux.",
-    "Faux : il a exactement la même taille que le renard roux.",
-    "Faux : il n'est plus grand que le renard roux qu'en hiver."
-   ],
-   "explication": "Le renard polaire est plus petit que le renard roux. Il change de couleur selon la saison.",
-   "source": {
-    "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
-    "page": 4
-   },
-   "r": "=AFTB5xEGAwZWcABbQxGOpgHIZCWUURWHsxAWkUAy4RBFFgAM40AbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
    "id": "lecture-s04-1-q27",
    "fiche": "lecture-s04-1-f4",
    "type": "qcm",
@@ -718,26 +607,6 @@ JEU.enregistrer("cours", {
     "page": 4
    },
    "r": "==wVWARGKEQHSthJBVUQI5kCTkwCSZiHVZxGQ0gTdcBAgwkBVgUHPRxEGISZ",
-   "poids": 1
-  },
-  {
-   "id": "lecture-s04-1-q28",
-   "fiche": "lecture-s04-1-f4",
-   "type": "qcm",
-   "niveau": 2,
-   "enonce": "Où le lièvre arctique creuse-t-il ses terriers ?",
-   "choix": [
-    "Dans la neige et dans le sol",
-    "Dans la glace de la banquise",
-    "Dans les troncs d'arbres",
-    "Dans les roches de la toundra"
-   ],
-   "explication": "Le lièvre arctique creuse ses terriers dans la neige et dans le sol. C'est un animal blanc l'hiver et brun l'été.",
-   "source": {
-    "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
-    "page": 4
-   },
-   "r": "PIAAVYEDecWAbQQER1xCPdxDqg0CVwkAPVBCIYTZ",
    "poids": 1
   },
   {
@@ -836,18 +705,20 @@ JEU.enregistrer("cours", {
    "fiche": "lecture-s04-1-f5",
    "type": "vrai_faux",
    "niveau": 2,
-   "enonce": "Le bœuf musqué fait partie de la famille des bisons.",
+   "enonce": "Le loup arctique chasse toujours seul, même les grosses proies.",
    "corrections": [
-    "Faux : il ressemble au bison, mais il est proche des mouflons et des chèvres.",
-    "Faux : il fait partie de la famille des ours.",
-    "Faux : il fait partie de la famille des chevaux."
+    "Faux : il chasse en meute les grosses proies, comme le bœuf musqué, et seul les petites, comme le lièvre ou le lemming.",
+    "Faux : il ne chasse jamais, il ne mange que des plantes.",
+    "Faux : il chasse seul, mais uniquement la nuit."
    ],
-   "explication": "Le bœuf musqué a l'allure d'un bison, mais il se range du côté des mouflons et des chèvres. Il pèse environ 300 kg.",
+   "explication": "Seul, le loup arctique attrape des lemmings et des lièvres. Pour un bœuf musqué, il chasse en meute.",
    "source": {
-    "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
-    "page": 4
+    "theme": "Un hivernage dans les glaces – Lire les chapitres 5 et 6 p55 à 67",
+    "titre": "Loup arctique",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Loup_arctique"
    },
-   "r": "Yc1XasQHEAMgFZQFetwCGJBDSRDHakwEEYwAPFQDn0AAd5UAdYhRdEgISlBDVJAAPIgUE1iQWw1TOpxBGxgHl8BEWYAFb40AbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "r": "=gxVf5AAG8RBmEURQFkTakgRMAQMabLDZEFDC80FF4iQGURAdogEP0xF3IlBAkRUFshCBg0NIVUGE2qGXUBHfcGFAYPsTk0CDIVDuAkCW1gQcMwDGAwNSZAAGIgBcggUbYSQFBVWbowCGdwFndhBWQRGK40AbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -855,99 +726,43 @@ JEU.enregistrer("cours", {
    "fiche": "lecture-s04-1-f5",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Pourquoi la laine du bœuf musqué protège-t-elle si bien du froid ?",
+   "enonce": "Comment les bœufs musqués se défendent-ils quand des loups les attaquent ?",
    "choix": [
-    "Elle est 8 fois plus chaude que celle du mouton",
-    "Elle est blanche comme la neige",
-    "Elle repousse en une seule nuit",
-    "Elle est 2 fois plus épaisse que celle du bison"
+    "Ils se serrent en cercle, les petits au milieu",
+    "Ils se dispersent chacun de son côté",
+    "Ils plongent dans la mer",
+    "Ils se cachent dans un trou creusé dans la neige"
    ],
-   "explication": "La laine du bœuf musqué est huit fois plus chaude que celle du mouton. C'est une arme précieuse contre le froid de l'Arctique.",
+   "explication": "Les adultes forment un cercle, les petits au centre, et font face aux loups. Le plus fort d'entre eux se charge de repousser l'attaque.",
    "source": {
-    "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
-    "page": 4
+    "theme": "Un hivernage dans les glaces – Lire les chapitres 5 et 6 p55 à 67",
+    "titre": "Bœuf musqué",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/B%C5%93uf_musqu%C3%A9"
    },
-   "r": "==ARIYgBy0BGFBQFJtwAe0AINAAQc5kCCMBCaQiUGARGBkUHG0hDjVRRB51CPNgCFcTZ",
+   "r": "ExxFu4BHIUFBI4EHGEwNIVRFetwAGpEDeQCAQYQVfwgTbwRDx8FAG1wCcYUFFsTZ",
    "poids": 1
   },
   {
    "id": "lecture-s04-1-q36",
    "fiche": "lecture-s04-1-f5",
    "type": "qcm",
-   "niveau": 2,
-   "enonce": "Quelle taille le loup arctique atteint-il au maximum ?",
+   "niveau": 1,
+   "enonce": "Où vivent le loup arctique et le bœuf musqué ?",
    "choix": [
-    "Environ 90 cm",
-    "Environ 3 m",
-    "Environ 30 cm",
-    "Environ 2 m"
+    "Dans le Grand Nord du Canada et au Groenland",
+    "En Antarctique, tout autour du pôle Sud",
+    "Dans les grandes forêts du centre de l'Europe",
+    "Sur la banquise, loin des côtes"
    ],
-   "explication": "Le loup arctique est un petit loup blanc. Il ne dépasse pas 90 cm.",
+   "explication": "Les deux vivent dans la toundra de l'extrême nord du Canada et du Groenland. Là, en hiver, le loup chasse le bœuf musqué.",
    "source": {
-    "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
-    "page": 4
+    "theme": "Un hivernage dans les glaces – Lire les chapitres 5 et 6 p55 à 67",
+    "titre": "Bœuf musqué",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/B%C5%93uf_musqu%C3%A9"
    },
-   "r": "N9xCj1BXVMUAd8AEHcTZ",
-   "poids": 1
-  },
-  {
-   "id": "lecture-s04-1-q37",
-   "fiche": "lecture-s04-1-f5",
-   "type": "qcm",
-   "niveau": 3,
-   "enonce": "Un animal de l'Arctique pèse environ 300 kg et porte une laine très chaude. Lequel est-ce ?",
-   "choix": [
-    "Le bœuf musqué",
-    "Le loup arctique",
-    "Le lièvre arctique",
-    "L'ours polaire"
-   ],
-   "explication": "Le bœuf musqué pèse environ 300 kg et sa laine est huit fois plus chaude que celle du mouton. Le loup arctique, lui, est un petit loup blanc.",
-   "source": {
-    "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
-    "page": 4
-   },
-   "r": "TBcraMwG2AURThV/qSgRM4TZ",
-   "poids": 1
-  },
-  {
-   "id": "lecture-s04-1-q38",
-   "fiche": "lecture-s04-1-f5",
-   "type": "ordre",
-   "niveau": 3,
-   "enonce": "Range ces animaux de l'Arctique du plus petit au plus gros.",
-   "elements": [
-    "le bœuf musqué",
-    "le lemming arctique",
-    "le loup arctique"
-   ],
-   "explication": "Le lemming est le plus petit mammifère de l'Arctique, et le loup arctique un petit loup de 90 cm au plus. Le bœuf musqué pèse environ 300 kg.",
-   "source": {
-    "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
-    "page": 4
-   },
-   "r": "==wMfpEVFNEH",
-   "poids": 1
-  },
-  {
-   "id": "lecture-s04-1-q39",
-   "fiche": "lecture-s04-1-f5",
-   "type": "trou",
-   "niveau": 2,
-   "enonce": "Complète la phrase.",
-   "texte": "Le ___ musqué pèse environ 300 kg ; sa laine est 8 fois plus chaude que celle du ___.",
-   "banque": [
-    "bœuf",
-    "mouton",
-    "bison",
-    "loup"
-   ],
-   "explication": "Le bœuf musqué pèse environ 300 kg. Sa laine est huit fois plus chaude que celle du mouton.",
-   "source": {
-    "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
-    "page": 4
-   },
-   "r": "wNTTIkQHHgyHX5TWssECacxBh8QSXs0G8PKBLlCH",
+   "r": "==AUjwBFJsBFGwBKS1hINEBUN8wCHgACxc2BRUUEDYAIPZhBi8lIVgkAPVBCIYTZ",
    "poids": 1
   }
  ],

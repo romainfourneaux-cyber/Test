@@ -153,7 +153,7 @@ JEU.enregistrer("cours", {
    "fiche": "litterature-s06-2-f1",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Dans ce passage, quel élément joue le rôle d'un accélérateur de temps ?",
+   "enonce": "Dans le passage où Jim rejoint le navire, qu'est-ce qui précipite tout et joue le rôle d'un accélérateur de temps ?",
    "choix": [
     "Le courant, très fort",
     "Le vent dans les voiles",
@@ -192,13 +192,13 @@ JEU.enregistrer("cours", {
    "fiche": "litterature-s06-2-f1",
    "type": "ordre",
    "niveau": 2,
-   "enonce": "Remets dans l'ordre ce que perçoit Jim à mesure qu'il se rapproche du navire.",
+   "enonce": "Un récit veut donner l'impression qu'un navire arrive très vite. Range ce que perçoit le personnage, du plus loin au plus près.",
    "elements": [
     "Il est à côté du navire et l'attrape",
     "Une tache sombre, à peine visible, au loin",
     "Les mâts et la coque se dessinent"
    ],
-   "explication": "D'abord une tache sombre au loin, puis les mâts et la coque prennent forme, et l'instant d'après Jim touche le navire. Le tout en quelques lignes : c'est la vitesse.",
+   "explication": "D'abord une tache sombre au loin, puis les mâts et la coque, et l'instant d'après le navire qu'on touche. Passer de l'un à l'autre en quelques lignes, c'est le procédé de la vitesse.",
    "source": {
     "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
     "page": 3
@@ -211,7 +211,7 @@ JEU.enregistrer("cours", {
    "fiche": "litterature-s06-2-f1",
    "type": "qcm",
    "niveau": 3,
-   "enonce": "Pourquoi peut-on dire que le courant est un « accélérateur de temps » dans ce passage ?",
+   "enonce": "Dans le passage où Jim rejoint le navire, pourquoi peut-on dire que le courant est un « accélérateur de temps » ?",
    "choix": [
     "Il rapproche le navire de Jim bien plus vite que prévu",
     "Il laisse au narrateur le temps de décrire le navire en détail",
@@ -231,7 +231,7 @@ JEU.enregistrer("cours", {
    "fiche": "litterature-s06-2-f1",
    "type": "qcm_multiple",
    "niveau": 3,
-   "enonce": "Quels procédés donnent une impression de vitesse dans ce passage ? (plusieurs réponses)",
+   "enonce": "Dans le passage où Jim rejoint le navire, quels procédés donnent une impression de vitesse ? (plusieurs réponses)",
    "choix": [
     "Le navire passe du lointain au tout proche en un instant",
     "Un courant fort accélère tout",
@@ -252,19 +252,21 @@ JEU.enregistrer("cours", {
    "fiche": "litterature-s06-2-f2",
    "type": "qcm",
    "niveau": 1,
-   "enonce": "À quel temps sont les verbes du passage rapide où Jim rejoint le navire ?",
+   "enonce": "Dans un récit au passé, quel temps sert à raconter les actions qui se suivent, au premier plan ?",
    "choix": [
-    "Au passé simple",
-    "À l'imparfait de l'indicatif",
-    "Au futur",
-    "Au présent"
+    "Le passé simple",
+    "L'imparfait",
+    "Le présent",
+    "Le futur"
    ],
-   "explication": "Le passage est au passé simple. Ce temps montre la conscience troublée de Jim, pris de court par la vitesse.",
+   "explication": "Le passé simple enchaîne les actions achevées, l'une après l'autre : c'est le temps du récit. L'imparfait, lui, sert plutôt au décor et aux descriptions.",
    "source": {
-    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
-    "page": 3
+    "theme": "Cours 5 – Lire la leçon littéraire p41 à 43",
+    "titre": "Passé simple en français",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Pass%C3%A9_simple_en_fran%C3%A7ais"
    },
-   "r": "TxgAf8RAw0Az27VHOYhRcMTZ",
+   "r": "TxgAf8RAw0Az27VHOYhRM4TZ",
    "poids": 1
   },
   {
@@ -272,12 +274,14 @@ JEU.enregistrer("cours", {
    "fiche": "litterature-s06-2-f2",
    "type": "vrai_faux",
    "niveau": 1,
-   "enonce": "Dans ce passage, le passé simple montre un Jim pris de court, la conscience troublée.",
+   "enonce": "Dans un récit au passé, l'imparfait plante le décor en arrière-plan ; le passé simple raconte les actions qui font avancer l'histoire.",
    "corrections": [],
-   "explication": "Oui : tout va si vite que Jim n'est plus sûr de ce qu'il a perçu. Le passé simple fait sentir ce trouble.",
+   "explication": "L'imparfait sert à la toile de fond : décor, habitudes, descriptions. Le passé simple met les actions au premier plan.",
    "source": {
-    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
-    "page": 3
+    "theme": "Cours 5 – Lire la leçon littéraire p41 à 43",
+    "titre": "Passé simple en français",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Pass%C3%A9_simple_en_fran%C3%A7ais"
    },
    "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
    "poids": 1
@@ -287,19 +291,21 @@ JEU.enregistrer("cours", {
    "fiche": "litterature-s06-2-f2",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Comment le passage montre-t-il que Jim est pris de court ?",
+   "enonce": "Comment le passé simple donne-t-il du rythme à un récit ?",
    "choix": [
-    "Il précise que c'est ce qu'il lui a semblé : il doute de ce qu'il a perçu",
-    "Il décrit calmement, détail après détail, chaque partie du navire et de son équipage",
-    "Il compte lentement les secondes qui passent",
-    "Il explique qu'il avait tout prévu depuis longtemps"
+    "Il enchaîne des actions achevées, l'une après l'autre",
+    "Il décrit longuement le décor et les habitudes des personnages",
+    "Il répète la même action tous les jours",
+    "Il annonce ce qui arrivera plus tard"
    ],
-   "explication": "Jim doute de ce qu'il a perçu, et il le dit en racontant. Tout est allé trop vite pour lui.",
+   "explication": "Chaque verbe au passé simple pose une action finie, et la suivante arrive aussitôt. Le récit avance par à-coups, comme Jim pris de court par le courant.",
    "source": {
-    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
-    "page": 3
+    "theme": "Cours 5 – Lire la leçon littéraire p41 à 43",
+    "titre": "Passé simple en français",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Pass%C3%A9_simple_en_fran%C3%A7ais"
    },
-   "r": "hhlw2/1CfY0BJ5hLVBAFVRhCOpgFIZSWQoVSONwDGNlUuHbGHgBFa4kDSFgNBVUWElkGXYEDRcmBGAgUSk0CaMASm4FDWRYrdYhRFsTZ",
+   "r": "==AUNETWQQlCC8UFOrKA3MRVAsBBOJwTethJEa6QIZADHYkGcgyGBYAFRpxCLIVDtMopUVUDBMgRFsTZ",
    "poids": 1
   },
   {
@@ -327,7 +333,7 @@ JEU.enregistrer("cours", {
    "fiche": "litterature-s06-2-f2",
    "type": "vrai_faux",
    "niveau": 2,
-   "enonce": "Le passé simple, dans ce passage, montre un personnage calme qui a tout prévu.",
+   "enonce": "Dans le passage où Jim rejoint le navire, le passé simple montre un personnage calme qui a tout prévu.",
    "corrections": [
     "Faux : il montre un personnage pris de court, dépassé par la vitesse des événements.",
     "Faux : il montre un personnage qui se souvient de son enfance.",
@@ -388,19 +394,21 @@ JEU.enregistrer("cours", {
    "type": "trou",
    "niveau": 1,
    "enonce": "Complète la phrase.",
-   "texte": "Dans le passage rapide, les verbes sont au passé ___ ; Jim, surpris, est pris de ___.",
+   "texte": "Dans un récit au passé, les actions de premier plan sont au passé ___ ; le décor et les descriptions sont à l'___.",
    "banque": [
     "simple",
-    "court",
+    "imparfait",
     "composé",
-    "longue"
+    "futur"
    ],
-   "explication": "Les verbes du passage sont au passé simple. Jim, dépassé par la vitesse, est pris de court.",
+   "explication": "Le passé simple raconte les actions qui se suivent. L'imparfait installe le décor, en arrière-plan.",
    "source": {
-    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
-    "page": 3
+    "theme": "Cours 5 – Lire la leçon littéraire p41 à 43",
+    "titre": "Passé simple en français",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Pass%C3%A9_simple_en_fran%C3%A7ais"
    },
-   "r": "==wLocUADwRAMA1MvB3RQFkHC8QFLlCH",
+   "r": "=sDNQNzGUMwBQkxAGA1MvB3RQFkHC8QFLlCH",
    "poids": 1
   },
   {
@@ -482,19 +490,21 @@ JEU.enregistrer("cours", {
    "fiche": "litterature-s06-2-f3",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Le sujet impose le capitaine Smollett comme narrateur et un récit de 5 à 10 lignes. Quel texte respecte le sujet ?",
+   "enonce": "Quelle différence y a-t-il entre l'auteur d'un roman et son narrateur ?",
    "choix": [
-    "Sept lignes où le capitaine raconte la scène en disant « je »",
-    "Sept lignes où Jim raconte la scène en disant « je »",
-    "Vingt lignes où le capitaine raconte la scène en disant « je »",
-    "Deux lignes où le capitaine se présente"
+    "L'auteur écrit le livre ; le narrateur raconte dans le livre",
+    "C'est toujours la même personne",
+    "Le narrateur écrit le livre, l'auteur le raconte",
+    "L'auteur est forcément un des personnages qui vivent l'histoire"
    ],
-   "explication": "Le narrateur imposé est le capitaine et sept lignes tiennent entre cinq et dix. Avec Jim, le narrateur est faux ; vingt lignes, c'est trop ; deux, pas assez.",
+   "explication": "Dans L'Île au trésor, Jim Hawkins raconte et dit « je », mais ce n'est pas lui qui a écrit le roman. Le narrateur est une voix inventée par l'auteur.",
    "source": {
-    "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
-    "page": 3
+    "theme": "Cours 5 – Lire la leçon littéraire p41 à 43",
+    "titre": "Narrateur",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Narrateur"
    },
-   "r": "==QZJfbRQsRSF3qUc0CTWwVSOFwAGxAHvHrFWUFEF4kCGYALORwRNsQAPcQHbczEWUEEdk01s2BSwg0CSRkAPJhFMESZ",
+   "r": "XRxGYYgHIZSQFZ0QPsgRD0BHoEBFXU1AcswGToRMMtQFIJwTdZEDAEzGZUEEdkkGGAwCq7eRHh1CbMxBO5TZ",
    "poids": 1
   },
   {
@@ -506,16 +516,16 @@ JEU.enregistrer("cours", {
    "choix": [
     "Faire dire « je » au nouveau narrateur",
     "Raconter ce que ce personnage voit et pense",
-    "Respecter le nombre de lignes demandé",
+    "Garder les mêmes événements",
     "Garder le même narrateur qu'avant",
     "Changer l'histoire du tout au tout"
    ],
-   "explication": "Le nouveau narrateur dit « je » et livre sa façon de voir ; on respecte aussi la longueur du sujet. La scène reste la même, racontée autrement.",
+   "explication": "Le nouveau narrateur dit « je » et livre sa façon de voir la scène. Les événements restent les mêmes, racontés autrement.",
    "source": {
     "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
     "page": 3
    },
-   "r": "=gyRcLbDA4wHNcSDWA1QJYgCGxgFndxBHghHH4kCegUMIFhVI5BHDQzSeV2FGsAEBkkGKIFHqI0EVgUCOgACGEQNXUQRQIRSLoxAIZiTFdESaEQCFgAIl51VXAAFd8QHAkQLNABVIhhGJgQSHYiUOfaVUMgTEDLSm8FDR1wCd8wBvAFH",
+   "r": "1EmXRsFSDoACPrKBuHbVWABHD3qASthJBV0RIpQHHEySeV2FGsAEBkkGKIFHqI0EVgUCOgACGEQNXUQRQIRSLoxAIZiTFdESaEQCFgAIl51VXAAFd8QHAkQLNABVIhhGJgQSHYiUOfaVUMgTEDLSm8FDR1wCd8wBvAFH",
    "poids": 1
   },
   {
@@ -527,21 +537,19 @@ JEU.enregistrer("cours", {
    "gauche": [
     "Narrateur",
     "Changer de narrateur",
-    "Sujet du récit",
     "Focalisation interne"
    ],
    "droite": [
+    "Un autre personnage prend la parole et dit « je »",
     "Suivre l'histoire à travers ce qu'un personnage ressent",
-    "Celui qui raconte et dit « je »",
-    "Ce qui impose le narrateur et la longueur",
-    "Un autre personnage prend la parole et dit « je »"
+    "Celui qui raconte et dit « je »"
    ],
-   "explication": "Le narrateur raconte ; en changer, c'est donner « je » à un autre personnage. Le sujet fixe les consignes, et la focalisation interne suit ce qu'un personnage ressent.",
+   "explication": "Le narrateur raconte ; en changer, c'est donner « je » à un autre personnage. La focalisation interne suit ce qu'un personnage ressent.",
    "source": {
     "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
     "page": 3
    },
-   "r": "==ANvcnXG5TWsslQdlCRe4RSEYnQyclSZlCH",
+   "r": "==AKsglQdlCRe0RSEYnQyQlSZlCH",
    "poids": 1
   },
   {

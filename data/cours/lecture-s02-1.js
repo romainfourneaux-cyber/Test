@@ -541,26 +541,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "lecture-s02-1-q12",
-   "fiche": "lecture-s02-1-f3",
-   "type": "qcm",
-   "niveau": 2,
-   "enonce": "Comment le pataras tient-il le mât ?",
-   "choix": [
-    "Il le retient vers l'arrière",
-    "Il le pousse vers l'avant",
-    "Il le couche sur le pont",
-    "Il le fait tourner sur lui-même"
-   ],
-   "explication": "Le pataras sert à retenir le mât vers l'arrière du navire. Pousser vers l'avant, c'est l'inverse de son rôle.",
-   "source": {
-    "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
-    "page": 3
-   },
-   "r": "==wFIxxxl+wGAYSVZUkBDwAGPZgBmQUEQ9lTKogRFsTZ",
-   "poids": 1
-  },
-  {
    "id": "lecture-s02-1-q27",
    "fiche": "lecture-s02-1-f3",
    "type": "vrai_faux",
@@ -757,26 +737,6 @@ JEU.enregistrer("cours", {
     "page": 7
    },
    "r": "=wEHGYgKCVRFVthCCYEDAMDHQUEEd4AAOUFBj9FAHhVHKsgRpHbZ",
-   "poids": 1
-  },
-  {
-   "id": "lecture-s02-1-q33",
-   "fiche": "lecture-s02-1-f4",
-   "type": "qcm",
-   "niveau": 2,
-   "enonce": "Sur un navire, où se trouve le rouf ?",
-   "choix": [
-    "Sur le pont",
-    "Entre le pont et la cale",
-    "Au fond de la cale",
-    "En haut du mât de misaine"
-   ],
-   "explication": "Le rouf est un abri en bois construit sur le pont. L'étage entre le pont et la cale, c'est l'entrepont.",
-   "source": {
-    "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
-    "page": 7
-   },
-   "r": "==gS3MkCF1wCDYEFcESZ",
    "poids": 1
   },
   {

@@ -625,19 +625,19 @@ JEU.enregistrer("cours", {
    "fiche": "litterature-s08-2-f4",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Dans « Ma bohème », à quoi les ombres sont-elles comparées ?",
+   "enonce": "Dans « Ma bohème », le poète écrit « comme des lyres ». Quelle figure de style reconnaît-on ?",
    "choix": [
-    "À des lyres",
-    "À des étoiles",
-    "À des souliers",
-    "À des nuages"
+    "Une comparaison",
+    "Une métaphore",
+    "Une métonymie",
+    "Une hyperbole"
    ],
-   "explication": "Le poète compare les ombres à des lyres, des instruments dont il tire des sons. Les souliers, eux, servent à une métonymie.",
+   "explication": "Le mot « comme » relie les deux choses rapprochées : c'est une comparaison. Sans ce mot, ce serait une métaphore.",
    "source": {
     "fichier": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
     "page": 4
    },
-   "r": "=A1Gm8FHZ1QHKIgRpHbZ",
+   "r": "=sEAAEQAi8FBFBUAMY0AHcSZ",
    "poids": 1
   },
   {
@@ -734,9 +734,9 @@ JEU.enregistrer("cours", {
    "enonce": "Pourquoi « Mon frère est un vrai moulin à paroles » n'est-il pas une comparaison ?",
    "choix": [
     "Il manque un mot comme « comme » : c'est une métaphore",
-    "Il manque une exagération volontaire : c'est une hyperbole ratée",
-    "Il manque un bruit : c'est une onomatopée",
-    "Il manque une rime : c'est un alexandrin"
+    "Parce que c'est une hyperbole : on exagère",
+    "Parce que c'est une métonymie : le moulin désigne la bouche",
+    "Parce que c'est une antithèse : deux idées opposées"
    ],
    "explication": "La phrase fait une image, mais sans mot de liaison : c'est une métaphore. Une comparaison aurait dit « il parle comme un moulin ».",
    "source": {

@@ -356,14 +356,14 @@ JEU.enregistrer("cours", {
    "enonce": "Que fait un marin qui fait ses ablutions ?",
    "choix": [
     "Il se lave",
-    "Il mange",
-    "Il dort",
-    "Il chante"
+    "Il se rase",
+    "Il range sa couchette",
+    "Il prend son repas"
    ],
-   "explication": "Faire ses ablutions, c'est se laver. Manger un repas substantiel, c'est autre chose.",
+   "explication": "Faire ses ablutions, c'est se laver. Prendre un repas substantiel, c'est autre chose.",
    "source": {
     "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
-    "page": 6
+    "page": 7
    },
    "r": "hh0EUFkTKUhRFsTZ",
    "poids": 1
@@ -474,19 +474,21 @@ JEU.enregistrer("cours", {
    "fiche": "lecture-s07-1-f2",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Pourquoi les marins attrapaient-ils le scorbut ?",
+   "enonce": "Comment les marins ont-ils appris à éviter le scorbut pendant les longs voyages ?",
    "choix": [
-    "Parce qu'ils manquaient de vitamines",
-    "Parce qu'ils avaient trop froid",
-    "Parce qu'ils buvaient de l'eau de mer",
-    "Parce que la lumière des glaces les éblouissait"
+    "En emportant du jus de citron ou d'orange",
+    "En buvant chaque jour de l'eau de mer bouillie",
+    "En dormant davantage pendant les quarts de nuit",
+    "En restant toujours bien au chaud dans l'entrepont"
    ],
-   "explication": "Le scorbut vient d'un manque de vitamines. C'était une maladie courante sur les bateaux.",
+   "explication": "Le scorbut vient d'un manque de vitamine C, que les agrumes apportent. Les marins qui recevaient chaque jour du jus de citron ne tombaient plus malades.",
    "source": {
-    "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
-    "page": 7
+    "theme": "Un hivernage dans les glaces – Lire les chapitres 11 et 12 p89 à 100",
+    "titre": "Scorbut",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Scorbut"
    },
-   "r": "=wEHXYgKARQQEhxTDIQSGkyFcQAAAcwDCI1GvQkQAxlTKUAFIISZ",
+   "r": "==wVAIxHIwBAVxwYYpQFDFQHS8gCSJiFVZBAbk0GLIFHtwUEHJkHCMgRHcTZ",
    "poids": 1
   },
   {
@@ -779,26 +781,6 @@ JEU.enregistrer("cours", {
     "page": 7
    },
    "r": "=URYDYBUF1QAHsQSBkyEGUUAUk0CDIQBi0QSQFkHC8QFJ5lIfgBATEFDK80BJYSWLQFQOFwEG1RAiIFERsBEE4kDegUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
-   "id": "lecture-s07-1-q27",
-   "fiche": "lecture-s07-1-f4",
-   "type": "qcm",
-   "niveau": 2,
-   "enonce": "Comment est une mante ?",
-   "choix": [
-    "Ample et sans manches",
-    "Courte et serrée à la taille",
-    "Lacée du bas jusqu'au cou",
-    "Épaisse, avec une capuche"
-   ],
-   "explication": "La mante est un manteau de femme ample et sans manches. Elle est très simple.",
-   "source": {
-    "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
-    "page": 7
-   },
-   "r": "=UWAQ0gFfgwAPFgBi4VRBhkTKogFEMTZ",
    "poids": 1
   },
   {
