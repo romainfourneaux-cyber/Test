@@ -93,7 +93,7 @@
   { "id": "svt-s02-2-q3", "cours": "svt-s02-2", "fiche": "svt-s02-2-f1",
     "verdict": "question-theme", "categorie": "trivia",
     "raison": "« Vers quand la vapeur d'eau a-t-elle chuté ? » demande une date lue sur un graphique (4 milliards d'années). Le corrigé ne dit pas pourquoi elle a chuté (non couvert) ; c'est le pourquoi qui compte.",
-    "piste": "QCM : « Pourquoi la vapeur d'eau de l'atmosphère primitive a-t-elle presque disparu ? » → en se refroidissant, la Terre a laissé cette vapeur se condenser en pluie, ce qui a formé les océans ; leurres : le vent l'a emportée dans l'espace ; les premières plantes l'ont absorbée ; le Soleil l'a brûlée. Source : Wikipédia, « Histoire de l'atmosphère terrestre », https://fr.wikipedia.org/wiki/Histoire_de_l'atmosphère_terrestre." },
+    "piste": "QCM : « Pourquoi la vapeur d'eau de l'atmosphère primitive a-t-elle presque disparu ? » → en se refroidissant, la Terre a laissé cette vapeur se condenser en pluie, ce qui a formé les océans ; leurres : le vent l'a emportée dans l'espace ; les premières plantes l'ont absorbée ; le Soleil l'a brûlée. Source : Wikipédia, « Atmosphère terrestre » (partie sur l'évolution de l'atmosphère), https://fr.wikipedia.org/wiki/Atmosphère_terrestre ; en appui, Wikipédia, « Origine de l'eau sur la Terre », https://fr.wikipedia.org/wiki/Origine_de_l'eau_sur_la_Terre." },
   { "id": "svt-s02-2-q17", "cours": "svt-s02-2", "fiche": "svt-s02-2-f1",
     "verdict": "supprimer", "categorie": "comparaison",
     "raison": "Croisement artificiel de deux courbes du graphique (vapeur d'eau au moment où le dioxygène apparaît) ; q6 de la fiche f2 porte déjà l'enchaînement. La fiche garde q1, q2, q18, q19 et une question de thème (q3), dont un vrai/faux et un comment.",
