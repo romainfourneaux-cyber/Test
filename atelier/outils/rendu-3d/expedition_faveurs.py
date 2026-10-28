@@ -458,15 +458,15 @@ def rouleau_deroule(nom, loc=(0, 0, 0), lacet=0.0, l=1.1, p=0.7):
 
 def lettre_scellee(nom, loc=(0, 0, 0), lacet=0.0, l=1.0, p=0.7):
     """Lettre pliée au cachet de cire sarcelle, ruban de la même teinte noué autour."""
-    mp = E.mat_parchemin(nom + "_p", "#e4d6b0", grain=0.3)
-    corps = C.boite(nom, l, p, 0.04, (0, 0, 0), mp)
+    mp = E.mat_parchemin(nom + "_p", "#d9c494", grain=0.35)
+    corps = C.boite(nom, l, p, 0.045, (0, 0, 0), mp)
     C.biseau(corps, 0.01)
-    pli = C.boite(nom + "_pli", l * 0.96, 0.014, 0.008, (0, 0, 0.04), E.mat_encre(nom + "_e", "#8a7a5c"))
+    pli = C.boite(nom + "_pli", l * 0.96, 0.016, 0.008, (0, 0, 0.045), E.mat_encre(nom + "_e", "#7a6a4c"))
     mr = E.mat_toile(nom + "_ruban", E.MATIERES["anglais"])
-    ruban = C.boite(nom + "_ruban", 0.085, p + 0.06, 0.014, (0.12, 0, 0.04), mr)
-    ruban2 = C.boite(nom + "_ruban2", l + 0.06, 0.085, 0.014, (0, 0.05, 0.04), mr)
+    ruban = C.boite(nom + "_ruban", 0.13, p + 0.06, 0.016, (0.12, 0, 0.045), mr)
+    ruban2 = C.boite(nom + "_ruban2", l + 0.06, 0.13, 0.016, (0, 0.05, 0.045), mr)
     objets = [corps, pli, ruban, ruban2]
-    objets += E.sceau_cire(nom + "_cachet", rayon=0.17, epaisseur=0.045, teintes=CIRE_SARCELLE, icone=None, loc=(0.12, 0.05, 0.054), anneau=True, graine=3)
+    objets += E.sceau_cire(nom + "_cachet", rayon=0.24, epaisseur=0.06, teintes=CIRE_SARCELLE, icone=None, loc=(0.12, 0.05, 0.061), anneau=True, graine=3)
     return objets + [C.pivot(nom + "_pivot", objets, lacet, loc)]
 
 
@@ -540,11 +540,11 @@ def faveur_ballade():
 def faveur_lettres():
     """Lettres de crédit (interprète, anglais) : lettre scellée de cire sarcelle, ruban, pile de pièces d'or et pièces éparses."""
     E.scene_vignette(rayon_sol=1.8)
-    objets = lettre_scellee("lettre", (-0.25, 0.05, 0), lacet=14, l=1.1, p=0.76)
-    objets += E.pile_pieces("pile", 7, 0.17, 0.035, loc=(0.78, -0.3, 0), graine=5)
-    objets += E.pile_pieces("eparses", 1, 0.17, 0.035, loc=(0.5, -0.72, 0), graine=2)
-    objets += E.pile_pieces("eparses2", 2, 0.17, 0.035, loc=(1.05, -0.68, 0), graine=8)
-    return racine(objets, 1.3, -0.2, 0.0)
+    objets = lettre_scellee("lettre", (-0.3, 0.1, 0), lacet=14, l=1.2, p=0.84)
+    objets += E.pile_pieces("pile", 7, 0.19, 0.04, loc=(0.78, -0.3, 0), graine=5)
+    objets += E.pile_pieces("eparses", 1, 0.19, 0.04, loc=(0.45, -0.78, 0), graine=2)
+    objets += E.pile_pieces("eparses2", 2, 0.19, 0.04, loc=(1.1, -0.7, 0), graine=8)
+    return racine(objets, 1.4, -0.25, 0.0)
 
 
 FAVEURS = {"annales": faveur_annales, "eclaireurs": faveur_eclaireurs, "simples": faveur_simples,
