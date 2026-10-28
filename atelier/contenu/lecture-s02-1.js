@@ -12,7 +12,8 @@
 // (rouf, cambuse, entrepont, pataras, haubans), affirmations fausses à un seul détail près, questions q21 à q36 ajoutées.
 const F = "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf";
 const S = p => ({ fichier: F, page: p });
-// Audit des questions du 28/10/2026 appliqué : q12 (détail technique du pataras) et q33 (doublon de q14) supprimées.
+// Audit des questions du 28/10/2026 appliqué : q12 (détail technique du pataras) et q33 (doublon de q14) supprimées ;
+// q37 ajoutée depuis la fiche (pourquoi « courant »), pour que la fiche f3 garde une question en « pourquoi ».
 
 module.exports = {
   id: "lecture-s02-1",
@@ -197,6 +198,11 @@ module.exports = {
       banque: ["dormant", "courant", "flottant", "volant"],
       reponse: [["dormant"], ["courant"]],
       explication: "Dormant, comme quelqu'un qui dort : les mâts et les câbles ne bougent pas. Courant : les voiles et les cordes bougent, on les règle.", source: S(3) },
+    { id: "lecture-s02-1-q37", fiche: "lecture-s02-1-f3", type: "qcm", niveau: 2,
+      enonce: "Pourquoi les voiles et les cordes qu'on règle font-elles partie du gréement « courant » ?",
+      choix: ["Parce qu'elles bougent : ce sont les parties mobiles du voilier", "Parce qu'elles sont fixes, comme les mâts et les câbles", "Parce qu'elles se trouvent tout en bas du navire, juste au-dessus de l'eau", "Parce qu'elles sont les pièces les plus anciennes du navire"],
+      reponse: "Parce qu'elles bougent : ce sont les parties mobiles du voilier",
+      explication: "Courant veut dire ici mobile : on règle les voiles et les cordes pendant la manœuvre. Les mâts et les câbles, fixes, forment le gréement dormant.", source: S(3) },
 
     // f4 : les parties du navire et le sextant
     { id: "lecture-s02-1-q13", fiche: "lecture-s02-1-f4", type: "qcm", niveau: 1,

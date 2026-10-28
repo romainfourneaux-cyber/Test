@@ -94,7 +94,7 @@ module.exports = {
       corrections: ["Faux : le manchot empereur ne sait pas voler.", "Faux : le manchot empereur n'est pas un oiseau, c'est un pinnipède.", "Faux : le manchot empereur vole, mais seulement au ras de l'eau."],
       reponse: { vrai: false, correction: "Faux : le manchot empereur ne sait pas voler." },
       explication: "Le manchot empereur est bien un oiseau marin, mais il ne sait pas voler. Son bec est incurvé.", source: S(5) },
-    { id: "lecture-s05-1-q4", fiche: "lecture-s05-1-f1", type: "qcm", niveau: 2,
+    { id: "lecture-s05-1-q4", fiche: "lecture-s05-1-f1", type: "qcm", niveau: 3,
       enonce: "Pourquoi un ours polaire ne croise-t-il jamais de manchot empereur dans la nature ?",
       choix: ["Ils vivent chacun à un pôle : le manchot au Sud, l'ours au Nord", "Le manchot empereur ne monte au pôle Nord que pendant le court été", "L'ours polaire ne s'approche jamais de la mer ni de la banquise", "Le manchot empereur vit en haute montagne, loin des côtes"],
       reponse: "Ils vivent chacun à un pôle : le manchot au Sud, l'ours au Nord",

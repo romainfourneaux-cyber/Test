@@ -115,7 +115,7 @@ module.exports = {
       enonce: "Dans un récit au passé, l'imparfait plante le décor en arrière-plan ; le passé simple raconte les actions qui font avancer l'histoire.",
       corrections: [], reponse: { vrai: true, correction: null },
       explication: "L'imparfait sert à la toile de fond : décor, habitudes, descriptions. Le passé simple met les actions au premier plan.", source: T("Passé simple en français", "Pass%C3%A9_simple_en_fran%C3%A7ais") },
-    { id: "litterature-s06-2-q11", fiche: "litterature-s06-2-f2", type: "qcm", niveau: 2,
+    { id: "litterature-s06-2-q11", fiche: "litterature-s06-2-f2", type: "qcm", niveau: 3,
       enonce: "Comment le passé simple donne-t-il du rythme à un récit ?",
       choix: ["Il enchaîne des actions achevées, l'une après l'autre", "Il décrit longuement le décor et les habitudes des personnages", "Il répète la même action tous les jours", "Il annonce ce qui arrivera plus tard"],
       reponse: "Il enchaîne des actions achevées, l'une après l'autre",

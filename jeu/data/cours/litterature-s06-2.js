@@ -290,7 +290,7 @@ JEU.enregistrer("cours", {
    "id": "litterature-s06-2-q11",
    "fiche": "litterature-s06-2-f2",
    "type": "qcm",
-   "niveau": 2,
+   "niveau": 3,
    "enonce": "Comment le passé simple donne-t-il du rythme à un récit ?",
    "choix": [
     "Il enchaîne des actions achevées, l'une après l'autre",

@@ -704,7 +704,7 @@ JEU.enregistrer("cours", {
    "id": "lecture-s04-1-q34",
    "fiche": "lecture-s04-1-f5",
    "type": "vrai_faux",
-   "niveau": 2,
+   "niveau": 3,
    "enonce": "Le loup arctique chasse toujours seul, même les grosses proies.",
    "corrections": [
     "Faux : il chasse en meute les grosses proies, comme le bœuf musqué, et seul les petites, comme le lièvre ou le lemming.",

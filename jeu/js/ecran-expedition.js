@@ -22,6 +22,7 @@
   var COL0 = 40, COL_FIN = 196, GARDIEN_X = 276;  // colonnes des couches dans la bande ; le gardien à droite (80 unités après la dernière colonne : ni les médaillons ni les noms ne le touchent)
   var Y_MILIEU = 182, PAS = 84;                   // les haltes d'une couche s'étalent en hauteur autour du milieu (trois rangs entre le filet de la bande, y = 50, et le bas)
   var R_HALTE = 24, R_GARDIEN = 34, R_DEPART = 24; // un nom de 15 px fait 19 unités de haut : entre deux médaillons (36 unités libres) il y a deux rangs de noms
+  // (nom à 13 unités sous le médaillon ou 5 au-dessus, gigue ±1 : deux noms de 86 unités de large dans des colonnes voisines, l'un dessous, l'autre dessus, gardent 1 unité d'écart ; revue du 28/10/2026)
   // Les noms : sous les médaillons dans les colonnes impaires, au-dessus dans les paires. Deux colonnes voisines (78 unités
   // d'écart, un nom en fait jusqu'à 86) n'ont ainsi jamais deux noms sur la même ligne, quel que soit le nombre de haltes.
   var ENCRE = "#2e2419", OR = "#b08d3a", OR_CLAIR = "#e2c272", OR_SOMBRE = "#7a5c1e", RUBRIQUE = "#8c2f39", PLOMB = "#4a4e57", FOND = "#efe6d2";
@@ -158,7 +159,7 @@
         var n = c.length, cx = bx + (nb > 1 ? COL0 + (COL_FIN - COL0) * k / (nb - 1) : (COL0 + COL_FIN) / 2);
         c.forEach(function (h, j) {
           var g = X.alea(X.hash(e.graine, "pos", h.id));
-          var y = Y_MILIEU + (j - (n - 1) / 2) * PAS + Math.round((g() - 0.5) * 4); // gigue ±2 unités, à la graine
+          var y = Y_MILIEU + (j - (n - 1) / 2) * PAS + Math.round((g() - 0.5) * 2); // gigue ±1 unité, à la graine (±2 faisait se toucher deux noms longs voisins)
           var nd = { id: h.id, x: Math.round(cx), y: y, r: R_HALTE, type: h.type, halte: h, acte: a, semaine: a.semaine, couche: k + 1, rang: j, n: n };
           noeuds.push(nd); parId[h.id] = nd;
         });
@@ -397,7 +398,7 @@
           "<circle cx='" + x + "' cy='" + y + "' r='" + (r - 6) + "' fill='" + (brume ? "#9a927f" : "#f7efdc") + "' stroke='" + ENCRE + "' stroke-width='1.2'/>" +
           (brume ? "" : JEU.icones.dans(iconeHalte(h), x - 14, y - 14, 28, h.type === "embuscade" ? RUBRIQUE : ENCRE)) + (imH ? imgSVG(imH, x, y) : "") + "</g>";
         // le nom : sous le médaillon (colonnes impaires) ou au-dessus (paires) ; voir les constantes en tête
-        if (!brume) etiquettes += texteSVG(x, nd.couche % 2 === 1 ? y + r + 14 : y - r - 6, classeNom, nomCourt(h));
+        if (!brume) etiquettes += texteSVG(x, nd.couche % 2 === 1 ? y + r + 13 : y - r - 5, classeNom, nomCourt(h));
         if (!brume && h.porte) s += ecussonPorte(h.porte, x + 16, y + 12);
       }
       if (/jouee/.test(et)) s += sceauHalte(x + (gardien ? 10 : 6), y - (gardien ? 10 : 6), gardien ? 36 : 32, /echouee/.test(et));

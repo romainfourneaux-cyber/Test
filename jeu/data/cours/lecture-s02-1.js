@@ -601,6 +601,26 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
+   "id": "lecture-s02-1-q37",
+   "fiche": "lecture-s02-1-f3",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Pourquoi les voiles et les cordes qu'on règle font-elles partie du gréement « courant » ?",
+   "choix": [
+    "Parce qu'elles bougent : ce sont les parties mobiles du voilier",
+    "Parce qu'elles sont fixes, comme les mâts et les câbles",
+    "Parce qu'elles se trouvent tout en bas du navire, juste au-dessus de l'eau",
+    "Parce qu'elles sont les pièces les plus anciennes du navire"
+   ],
+   "explication": "Courant veut dire ici mobile : on règle les voiles et les cordes pendant la manœuvre. Les mâts et les câbles, fixes, forment le gréement dormant.",
+   "source": {
+    "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
+    "page": 3
+   },
+   "r": "=c1FQgRBHAABIZTSFZESCYABJQgU0cBHRcAEZ4EHXQwYZtgWe5kCFY0USNDHQIAAesgTccBBvgkQAxlTKUAFIISZ",
+   "poids": 1
+  },
+  {
    "id": "lecture-s02-1-q13",
    "fiche": "lecture-s02-1-f4",
    "type": "qcm",

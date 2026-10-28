@@ -227,7 +227,7 @@ module.exports = {
       enonce: "Le loup arctique est un petit loup blanc.",
       corrections: [], reponse: { vrai: true, correction: null },
       explication: "Oui : le loup arctique est un petit loup blanc. Il ne dépasse pas 90 cm.", source: S(4) },
-    { id: "lecture-s04-1-q34", fiche: "lecture-s04-1-f5", type: "vrai_faux", niveau: 2,
+    { id: "lecture-s04-1-q34", fiche: "lecture-s04-1-f5", type: "vrai_faux", niveau: 3,
       enonce: "Le loup arctique chasse toujours seul, même les grosses proies.",
       corrections: ["Faux : il chasse en meute les grosses proies, comme le bœuf musqué, et seul les petites, comme le lièvre ou le lemming.", "Faux : il ne chasse jamais, il ne mange que des plantes.", "Faux : il chasse seul, mais uniquement la nuit."],
       reponse: { vrai: false, correction: "Faux : il chasse en meute les grosses proies, comme le bœuf musqué, et seul les petites, comme le lièvre ou le lemming." },
