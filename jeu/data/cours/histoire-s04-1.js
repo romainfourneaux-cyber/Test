@@ -832,20 +832,21 @@ JEU.enregistrer("cours", {
    "fiche": "histoire-s04-1-f5",
    "type": "vrai_faux",
    "niveau": 2,
-   "enonce": "Le ramadan est le premier mois de l'année du calendrier hégirien.",
+   "enonce": "Au temps des Abbassides, il n'y a pas de papier à Bagdad : la Chine garde le secret de sa fabrication.",
    "corrections": [
-    "Faux : c'est le neuvième mois de l'année hégirienne.",
-    "Faux : c'est le douzième et dernier mois de l'année hégirienne.",
-    "Faux : c'est le sixième mois de l'année hégirienne."
+    "Faux : les Arabes apprennent à fabriquer le papier au VIIIe siècle, et on en trouve à Bagdad dès 793.",
+    "Faux : le papier est une invention de Bagdad, que la Chine copie ensuite.",
+    "Faux : le papier n'arrive à Bagdad qu'au XIIIe siècle, en même temps qu'en Europe."
    ],
-   "explication": "Le ramadan est le neuvième des douze mois de l'année hégirienne. Comme cette année est plus courte que la nôtre, le ramadan commence dix ou onze jours plus tôt chaque année.",
+   "explication": "Après la bataille de Talas, en 751, les Arabes apprennent à fabriquer le papier auprès de prisonniers chinois, et Samarcande est la première ville du monde musulman à en produire. Le papier est à Bagdad dès 793, au temps des premiers califes abbassides.",
+   "indice": "Les marchands de l'empire vont jusqu'en Chine, et ils n'en rapportent pas que de la soie.",
    "source": {
     "theme": "Cours 5 – Empire abbasside et 2 études de document",
-    "titre": "Ramadan",
+    "titre": "Histoire du papier",
     "editeur": "Wikipédia",
-    "url": "https://fr.wikipedia.org/wiki/Ramadan"
+    "url": "https://fr.wikipedia.org/wiki/Histoire_du_papier"
    },
-   "r": "==ACTd0CBwRDq8FDSRYrHY0AAHbKcQhQZEFDK8UABwCQFBFQGz6DQwxFpIFEJUVBasASRgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "r": "UAVaBxkUVJQwtugUMISSCQ1bO9cpGxABy0xBRU1HM4UAdg0NIVUGIJADOXKABc2F8wCPnk0GOIlGmQUFU1lTKogRbchMDwxFXAxDO9csIdzQAs1QL0hFWggU0cxFEcAMJ1hCegUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
   },
   {

@@ -376,16 +376,21 @@ JEU.enregistrer("cours", {
    "fiche": "histoire-s02-1-f2",
    "type": "vrai_faux",
    "niveau": 2,
-   "enonce": "Après la conquête de la Saxe par Charlemagne, les Saxons sont christianisés.",
-   "corrections": [],
-   "explication": "Oui : les guerres de Saxe durent de 772 à 804, et la Saxe entre dans l'empire de Charlemagne. Les Saxons doivent alors abandonner leurs anciens dieux et se faire baptiser : c'est une christianisation imposée par la conquête.",
+   "enonce": "Charlemagne gouverne son empire depuis Rome, comme l'empereur byzantin gouverne le sien depuis Constantinople.",
+   "corrections": [
+    "Faux : Charlemagne s'installe à Aix-la-Chapelle, au cœur de ses terres, et en fait le siège de son pouvoir.",
+    "Faux : Charlemagne gouverne depuis Paris, la ville de Clovis.",
+    "Faux : Charlemagne gouverne depuis Constantinople, qu'il partage avec l'empereur byzantin."
+   ],
+   "explication": "L'empereur byzantin gouverne depuis Constantinople, à l'est. Charlemagne, lui, fait bâtir un palais à Aix-la-Chapelle, dans l'ouest de l'Allemagne actuelle, et ne quitte presque plus cette ville après 806 : c'est le centre de son empire.",
+   "indice": "Cherche la ville où Charlemagne a fait construire son palais.",
    "source": {
     "theme": "Cours 3 – Le christianisme, entre Orient et Occident",
-    "titre": "Guerres saxonnes",
+    "titre": "Palais d'Aix-la-Chapelle",
     "editeur": "Wikipédia",
-    "url": "https://fr.wikipedia.org/wiki/Guerres_saxonnes"
+    "url": "https://fr.wikipedia.org/wiki/Palais_d%27Aix-la-Chapelle"
    },
-   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "r": "=AFTBRxDGQgMdUQRb4hGOpgFIZiSNbPRd80AKkkBuMxEFtBFJphCSREMIdxRIpxTVMgGSJiFVdBAizaDPdQCjFAAZF0CfcgDq8lJegVHcATSOzqUN8SQEEkXAYQQVk0FpUBFIARHb8wBxgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
   },
   {
