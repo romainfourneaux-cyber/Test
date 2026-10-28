@@ -294,42 +294,22 @@ JEU.enregistrer("cours", {
    "id": "histoire-s07-2-q8",
    "fiche": "histoire-s07-2-f1",
    "type": "qcm",
-   "niveau": 3,
-   "enonce": "Pendant combien d'années Louis IX règne-t-il ?",
+   "niveau": 1,
+   "enonce": "Qui s'affronte pendant la guerre de Cent Ans (1337-1453) ?",
    "choix": [
-    "44 ans",
-    "34 ans",
-    "54 ans",
-    "24 ans"
+    "Le roi de France et le roi d'Angleterre",
+    "Le roi de France et l'empereur byzantin de Constantinople",
+    "Le pape et l'empereur germanique",
+    "Les Francs et les Lombards"
    ],
-   "explication": "Louis IX règne de 1226 à 1270. 1270 moins 1226 font 44 ans.",
-   "indice": "Fais la soustraction 1270 moins 1226.",
+   "explication": "La guerre de Cent Ans oppose le royaume de France, gouverné par les Valois, au royaume d'Angleterre, gouverné par les Plantagenêts. Elle dure de 1337 à 1453, avec de longues trêves.",
    "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 9 - Support.pdf",
-    "page": 1
+    "theme": "Cours 9 – Féodaux et seigneurs",
+    "titre": "Guerre de Cent Ans",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Guerre_de_Cent_Ans"
    },
-   "r": "=8QHBcgRdZUZ",
-   "poids": 1
-  },
-  {
-   "id": "histoire-s07-2-q9",
-   "fiche": "histoire-s07-2-f1",
-   "type": "qcm_multiple",
-   "niveau": 2,
-   "enonce": "Quels repères de la frise sont des événements datés d'une seule année, et non des règnes ? (plusieurs réponses)",
-   "choix": [
-    "La bataille de Bouvines",
-    "Jeanne d'Arc",
-    "L'élection de Hugues Capet",
-    "Louis IX",
-    "Philippe le Bel"
-   ],
-   "explication": "Bouvines (1214), Jeanne d'Arc (1428) et l'élection de Hugues Capet (987) ont une seule date. Louis IX et Philippe le Bel ont des dates de règne.",
-   "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 9 - Support.pdf",
-    "page": 1
-   },
-   "r": "yQkEMIgJxUlFQQgDbciUNcSDLoFRawwAKAcsg5zVJdlEb8CSWgkJDtAVIRSTKRkGXkyGDAhGzk0CLIVDvEEDUl1DNY0BlAFH",
+   "r": "=cFFbwhCG0wLKtAdKowTPkwGSJiHVFBERxQDBMhGF0AAR1wBAQhRM4TZ",
    "poids": 1
   },
   {
@@ -337,19 +317,21 @@ JEU.enregistrer("cours", {
    "fiche": "histoire-s07-2-f1",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Comment la frise présente-t-elle la guerre de Cent Ans ?",
+   "enonce": "Comment la guerre de Cent Ans se termine-t-elle, en 1453 ?",
    "choix": [
-    "Comme une période, de 1337 à 1453",
-    "Comme un seul événement, daté de 1428",
-    "Comme un règne, de 1285 à 1314",
-    "Comme une bataille, en 1214"
+    "Le roi de France l'emporte : les Anglais ne gardent que Calais",
+    "Le roi d'Angleterre devient aussi roi de France",
+    "Les deux royaumes n'en forment plus qu'un seul",
+    "Elle s'arrête sans vainqueur, chacun gardant la moitié du royaume"
    ],
-   "explication": "La guerre de Cent Ans occupe une longue bande sur la frise, de 1337 à 1453. Jeanne d'Arc, en 1428, est placée pendant cette guerre.",
+   "explication": "En 1453, les Anglais sont chassés de presque tout le royaume de France ; il ne leur reste que la ville de Calais. Le roi de France sort renforcé de cette longue guerre.",
    "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 9 - Support.pdf",
-    "page": 1
+    "theme": "Cours 9 – Féodaux et seigneurs",
+    "titre": "Guerre de Cent Ans",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Guerre_de_Cent_Ans"
    },
-   "r": "==QTB11dcUUlu7EWVVFWSJiFVlEEVYwBds9qz0AAbhlTKswCGETZ",
+   "r": "==wRGgBCC4QMIZCWUURWAogAUgQFndxGFZAGIIACckyYeBQWNQ1TDIxGdczHQIUGRxQDBMhGF0AAR1wBAQhRM4TZ",
    "poids": 1
   },
   {
@@ -391,21 +373,6 @@ JEU.enregistrer("cours", {
     "page": 1
    },
    "r": "==QYJdhWO1gDGhAHSJTHVBQAe8hTBcASxwUFVEwBc8QCBETZ",
-   "poids": 1
-  },
-  {
-   "id": "histoire-s07-2-q13",
-   "fiche": "histoire-s07-2-f2",
-   "type": "vrai_faux",
-   "niveau": 1,
-   "enonce": "L'élection de Hugues Capet, en 987, est le premier repère de la frise.",
-   "corrections": [],
-   "explication": "Oui : la frise commence en 900 et son premier repère est 987. Le suivant, le règne de Philippe Auguste, ne commence qu'en 1180.",
-   "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 9 - Support.pdf",
-    "page": 1
-   },
-   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -452,61 +419,43 @@ JEU.enregistrer("cours", {
    "fiche": "histoire-s07-2-f2",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Pourquoi peut-on dire que Hugues Capet est élu « un peu avant l'an mil » ?",
+   "enonce": "Pourquoi dit-on que Hugues Capet fonde une dynastie ?",
    "choix": [
-    "Parce que 987 est treize ans avant 1000",
-    "Parce que 987 est treize ans après 1000",
-    "Parce que 987 est un siècle avant 1000",
-    "Parce que 987 et l'an mil sont la même année"
+    "Ses descendants, les Capétiens, règnent après lui pendant des siècles",
+    "Parce qu'il est le premier roi des Francs, avant Clovis",
+    "Parce qu'il gagne la bataille de Bouvines contre l'empereur et le roi d'Angleterre",
+    "Parce qu'il est couronné empereur à Rome par le pape"
    ],
-   "explication": "1000 moins 987 font 13. L'élection a lieu treize ans avant l'an mil.",
+   "explication": "Une dynastie est une suite de rois de la même famille. Après Hugues Capet, élu en 987, son fils Robert lui succède, puis ses descendants gardent la couronne de France pendant des siècles : ce sont les Capétiens.",
    "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 9 - Support.pdf",
-    "page": 1
+    "theme": "Cours 9 – Féodaux et seigneurs",
+    "titre": "Hugues Capet",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Hugues_Capet"
    },
-   "r": "=cVQZ5lXSxRLMNBVN0RAHYEDI4yFHERVFoxCPVEU61AAAxlTKUAFIISZ",
+   "r": "X41CDUgzquBNSZAAREVHA4gFGYSXFxFWC8UFOrKA3MRVRsBFHkwxxqxYBYxWIdwGPXaGTQgUGAQGRVUHbwRCnMEAW51CLYUFMESZ",
    "poids": 1
   },
   {
    "id": "histoire-s07-2-q17",
    "fiche": "histoire-s07-2-f2",
    "type": "qcm",
-   "niveau": 3,
-   "enonce": "Combien de temps sépare l'élection de Hugues Capet (987) du début du règne de Philippe Auguste (1180) ?",
+   "niveau": 2,
+   "enonce": "Qui choisit Hugues Capet comme roi, en 987 ?",
    "choix": [
-    "Près de deux siècles",
-    "Une dizaine d'années",
-    "Près de cinq siècles",
-    "Un demi-siècle"
+    "Les grands seigneurs du royaume, réunis en assemblée",
+    "Le pape, venu de Rome",
+    "L'empereur byzantin",
+    "Les paysans du domaine royal, par un vote organisé dans chaque village"
    ],
-   "explication": "1180 moins 987 font 193 ans. C'est presque deux siècles sans aucun repère sur la frise.",
-   "indice": "Fais la soustraction, puis compte les centaines.",
+   "explication": "En 987, les grands du royaume se réunissent à Senlis et choisissent Hugues Capet, poussés par l'archevêque de Reims. Le roi n'est donc pas encore désigné par la seule naissance : il est élu par les plus puissants seigneurs.",
    "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 9 - Support.pdf",
-    "page": 1
+    "theme": "Cours 9 – Féodaux et seigneurs",
+    "titre": "Hugues Capet",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Hugues_Capet"
    },
-   "r": "QRzFZYQ3yCQHPpQHmkURQlkTc4cpbISZ",
-   "poids": 1
-  },
-  {
-   "id": "histoire-s07-2-q18",
-   "fiche": "histoire-s07-2-f2",
-   "type": "trou",
-   "niveau": 1,
-   "enonce": "Complète la phrase.",
-   "texte": "En ___, Hugues Capet est ___ roi.",
-   "banque": [
-    "987",
-    "élu",
-    "1214",
-    "battu"
-   ],
-   "explication": "Hugues Capet est élu roi en 987. C'est le premier repère de la frise.",
-   "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 9 - Support.pdf",
-    "page": 1
-   },
-   "r": "sQDTa4RwA+gPZAHTY51XLlCH",
+   "r": "=EGSMbfQMIwAVoxEnxBEFZAGHshxxqxYBAAWY9gFJQRSHMiUGcBAUcQCGcxGj5VAbxEHIYUFM4TZ",
    "poids": 1
   },
   {
@@ -514,12 +463,14 @@ JEU.enregistrer("cours", {
    "fiche": "histoire-s07-2-f2",
    "type": "vrai_faux",
    "niveau": 3,
-   "enonce": "Entre l'élection de Hugues Capet et la fin de la guerre de Cent Ans, il s'écoule plus de quatre siècles.",
+   "enonce": "Pour être sûr que la couronne reste dans sa famille, Hugues Capet fait couronner son fils Robert roi de son vivant.",
    "corrections": [],
-   "explication": "Oui : 1453 moins 987 font 466 ans. Cela fait plus de quatre siècles et demi.",
+   "explication": "Oui : dès Noël 987, Hugues Capet fait couronner son fils Robert, qui lui succède à sa mort, en 996. La couronne reste ainsi dans la famille des Capétiens.",
    "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 9 - Support.pdf",
-    "page": 1
+    "theme": "Cours 9 – Féodaux et seigneurs",
+    "titre": "Hugues Capet",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Hugues_Capet"
    },
    "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
    "poids": 1
@@ -532,17 +483,17 @@ JEU.enregistrer("cours", {
    "enonce": "Que peut-on dire de l'élection de Hugues Capet ? (plusieurs réponses)",
    "choix": [
     "Elle a lieu en 987",
-    "C'est le premier repère de la frise",
+    "Elle a lieu un peu avant l'an mil",
     "Elle se place au Xe siècle",
     "Elle a lieu après la bataille de Bouvines",
     "Elle marque le début de la guerre de Cent Ans"
    ],
-   "explication": "Hugues Capet est élu en 987, au Xe siècle : c'est le premier repère de la frise. Bouvines (1214) et la guerre de Cent Ans (1337) viennent bien après.",
+   "explication": "Hugues Capet est élu en 987, au Xe siècle, treize ans avant l'an mil. Bouvines (1214) et la guerre de Cent Ans (1337) viennent bien après.",
    "source": {
     "fichier": "cours/histoire/Histoire 5e - Seance 9 - Support.pdf",
     "page": 1
    },
-   "r": "==ANQJiHW0stYohTKoCS2wURQ50DDYhRMEwZXkRCwMVRMpQABEzSFRVQOpgAGxAAvHbBAcQUbsgBf0QMdVEUB50GVMgTxUmXXJVTIlEAKIVHmQUCVwkTKogCsAFH",
+   "r": "==wLXBQGSEcrGEASmUXRAxkTKUwBFIwZXYQRQ0RBr0kXK9CRIUxQPgkCG1BHmQAFFBAFZ4UAHgkNIxQWN8wTDoQB3UmXXJVTIlEAKIVHmQUCVwkTKogCsAFH",
    "poids": 1
   },
   {
@@ -647,44 +598,25 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "histoire-s07-2-q25",
-   "fiche": "histoire-s07-2-f3",
-   "type": "qcm",
-   "niveau": 2,
-   "enonce": "Sur l'image étudiée en séance, le vassal est représenté avec un autre personnage. Lequel ?",
-   "choix": [
-    "Son seigneur",
-    "Un serf",
-    "Un laboureur",
-    "Un chroniqueur"
-   ],
-   "explication": "L'image montre un vassal et son seigneur. La séance demande de décrire l'attitude de chacun.",
-   "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 9 - Support.pdf",
-    "page": 1
-   },
-   "r": "=AlG2g0CSR0CcYECGESZ",
-   "poids": 1
-  },
-  {
    "id": "histoire-s07-2-q26",
    "fiche": "histoire-s07-2-f3",
    "type": "qcm",
-   "niveau": 3,
-   "enonce": "Un « grand duché » et un « grand comté » : qu'ont-ils en commun ?",
+   "niveau": 2,
+   "enonce": "Lequel de ces territoires est un grand comté du royaume de France au Moyen Âge ?",
    "choix": [
-    "Ce sont de vastes territoires, l'un d'un duc, l'autre d'un comte",
-    "Ce sont deux villes du domaine royal",
-    "Ce sont deux batailles de la frise",
-    "Ce sont deux rois élus"
+    "La Flandre",
+    "La Normandie",
+    "L'Aquitaine",
+    "La Bourgogne"
    ],
-   "explication": "Un duché et un comté sont des territoires. Le mot « grand » dit qu'ils sont vastes, et la séance en fait noter deux de chaque sorte.",
-   "indice": "Pars du sens des mots duché et comté.",
+   "explication": "La Flandre est un comté, tenu par le comte de Flandre, qui dépend du roi de France. La Normandie, l'Aquitaine et la Bourgogne sont des duchés, tenus par des ducs.",
    "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 9 - Support.pdf",
-    "page": 1
+    "theme": "Cours 9 – Féodaux et seigneurs",
+    "titre": "Comté de Flandre",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Comt%C3%A9_de_Flandre"
    },
-   "r": "QBREY4hCOFwBPdSDAcUWb4QQKkkXkcQEFtBBOpwTc0BZBVUGetQHPkQHbUDAQERVCwgGcMhHjhUAVkFAAUhRMETZ",
+   "r": "hh0FRN0DDAiRI4TZ",
    "poids": 1
   },
   {
@@ -712,19 +644,45 @@ JEU.enregistrer("cours", {
    "id": "histoire-s07-2-q28",
    "fiche": "histoire-s07-2-f3",
    "type": "vrai_faux",
-   "niveau": 3,
-   "enonce": "Un grand comté est un territoire plus petit qu'une tenure.",
-   "corrections": [
-    "Faux : un grand comté est un vaste territoire tenu par un comte ; une tenure est une terre cédée à un seul paysan.",
-    "Faux : le comté et la tenure désignent la même chose.",
-    "Faux : la tenure est le territoire du comte, et le comté celui du paysan."
-   ],
-   "explication": "Un grand comté est un vaste territoire, tenu par un comte. Une tenure est une simple terre qu'un seigneur cède à un paysan.",
+   "niveau": 2,
+   "enonce": "En 1066, Guillaume, duc de Normandie, conquiert l'Angleterre et en devient le roi.",
+   "corrections": [],
+   "explication": "Oui : Guillaume bat le roi anglais Harold à Hastings, le 14 octobre 1066, et il est couronné roi d'Angleterre à Noël. Il reste pourtant duc de Normandie, un duché du royaume de France.",
    "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 9 - Support.pdf",
-    "page": 1
+    "theme": "Cours 9 – Féodaux et seigneurs",
+    "titre": "Guillaume le Conquérant",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Guillaume_le_Conqu%C3%A9rant"
    },
-   "r": "==wENxlBi4FHU1lTDMxAaIVKHUVx2GFDHzqFBDoTFB1XcogEGxAHyIVAWARUMwhGc0wNNAwWY5EVGNQHfgSEVtAARtxDfIVHtgUEVgEHGkgEAAQNXEQRQUgGPkhUGYTDRYESOZcpSQQHkIVELQxAO4UAHgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "histoire-s07-2-q30",
+   "fiche": "histoire-s07-2-f3",
+   "type": "association",
+   "niveau": 2,
+   "enonce": "Voici quatre grands territoires du royaume de France au Moyen Âge. Relie chacun à ce qu'il est.",
+   "gauche": [
+    "Normandie",
+    "Flandre",
+    "Aquitaine",
+    "Champagne"
+   ],
+   "droite": [
+    "Un comté, dans le nord",
+    "Un duché, dans le sud-ouest",
+    "Un comté, à l'est de Paris",
+    "Un duché, dans le nord-ouest"
+   ],
+   "explication": "La Normandie et l'Aquitaine sont des duchés, gouvernés par un duc ; la Flandre et la Champagne sont des comtés, gouvernés par un comte. Leurs ducs et leurs comtes sont les plus puissants seigneurs du royaume.",
+   "source": {
+    "theme": "Cours 9 – Féodaux et seigneurs",
+    "titre": "Pairie de France (Ancien Régime)",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Pairie_de_France_(Ancien_R%C3%A9gime)"
+   },
+   "r": "==ANvUnXG5TWsglQdlCRe0RSEYnQyUlSZlCH",
    "poids": 1
   }
  ],

@@ -357,19 +357,19 @@ JEU.enregistrer("cours", {
    "fiche": "geographie-s03-1-f2",
    "type": "qcm",
    "niveau": 3,
-   "enonce": "Une année récente, l'Europe a eu environ 4,2 millions de naissances. Combien a-t-elle compté de décès ?",
+   "enonce": "Une année récente, l'Europe a compté environ 4,2 millions de naissances et 4,7 millions de décès. Que montre cet écart ?",
    "choix": [
-    "Environ 4,7 millions",
-    "Environ 3,7 millions",
-    "Environ 4,2 millions",
-    "Environ 8,4 millions"
+    "Il y a plus de décès que de naissances : la population ne se renouvelle plus par les naissances",
+    "La natalité européenne remonte fortement, si bien que les jeunes y sont de plus en plus nombreux",
+    "La population de l'Europe rajeunit d'année en année",
+    "L'Europe commence tout juste sa transition démographique"
    ],
-   "explication": "Il y a eu environ 4,7 millions de décès, soit plus que de naissances. C'est le signe de l'hiver démographique.",
+   "explication": "Quand les décès dépassent les naissances, la population baisse si personne n'arrive de l'étranger. C'est l'hiver démographique, installé en Europe depuis 2012.",
    "source": {
     "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
     "page": 10
    },
-   "r": "==AUGsgGYUgAG8BS0FQUVMUAd8AEHcTZ",
+   "r": "PYBUOBgDVUBATkiUGAQGRtxDfI1G2EUFVgkADMAEc0RKXcQRQIQSLEgUGwCRRQVQb8RCWk0ErI1TFZAFKAgDBshKMtQFIpwTDMBGSRj22aA3y2gTKYBSwgVCF1wDP9hRFsTZ",
    "poids": 1
   },
   {
@@ -391,25 +391,6 @@ JEU.enregistrer("cours", {
     "page": 10
    },
    "r": "=gDKTtxCZsBAhZXSo9gXY91VLlCH",
-   "poids": 1
-  },
-  {
-   "id": "geographie-s03-1-q23",
-   "fiche": "geographie-s03-1-f2",
-   "type": "vrai_faux",
-   "niveau": 2,
-   "enonce": "Depuis les années 1970, la fécondité européenne suffit tout juste à remplacer les générations.",
-   "corrections": [
-    "Faux : elle est trop faible pour remplacer les générations.",
-    "Faux : elle est bien plus forte que dans les PMA.",
-    "Faux : elle ne remplace les générations que depuis 2012."
-   ],
-   "explication": "Depuis les années 1970, les Européennes ont trop peu d'enfants pour que les générations se remplacent. C'est le début de l'hiver démographique.",
-   "source": {
-    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
-    "page": 10
-   },
-   "r": "==AFQlWAboAHFgAHGHrBq7uAV41CDYEFMEhJeUACQMQScoRHYMGSJcFRPkgRWYAAzIVAWARUMIwAXgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -527,26 +508,6 @@ JEU.enregistrer("cours", {
     "page": 4
    },
    "r": "=0EAN8SQMQ1WP0hEGxgFndhEHbbUHswTB0QLYBwXNswCGNBDCcmAacRAR1BAAI1GvQkQAxlTKUAFIISZ",
-   "poids": 1
-  },
-  {
-   "id": "geographie-s03-1-q12",
-   "fiche": "geographie-s03-1-f3",
-   "type": "qcm",
-   "niveau": 1,
-   "enonce": "Combien de personnes âgées vivent en maison de retraite ou en EHPAD en France ?",
-   "choix": [
-    "Plus de 600 000",
-    "Environ 6 000",
-    "Plus de 6 millions",
-    "Environ 600"
-   ],
-   "explication": "Plus de 600 000 personnes âgées vivent dans ces établissements. Cela montre l'importance des besoins.",
-   "source": {
-    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
-    "page": 4
-   },
-   "r": "=skXfJESz1xUVgkCPVxEFISZ",
    "poids": 1
   },
   {

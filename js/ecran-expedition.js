@@ -232,6 +232,42 @@
   // ---------- la carte-itinéraire en SVG ----------
   var nSvg = 0;
   function image(nom) { var s = JEU.SPRITES && JEU.SPRITES[nom]; return s && s.src ? s : null; }
+  // Images rendues en 3D du mode Expéditions (jeu/assets/images/expedition/images.js → JEU.imagesExpedition ; cahier :
+  // atelier/conception/expeditions-graphismes.md, section 5). Règle : le dessin SVG ou CSS est toujours émis, l'image se pose
+  // par-dessus quand l'entrée existe. Manifeste absent, entrée absente ou fichier qui ne se charge pas (repliImage) : le dessin reste.
+  // Les fichiers font 2 × la taille logique ; ils sont affichés à leur taille logique entière (pas de flou d'échelle).
+  function imageExp(id) { var m = JEU.imagesExpedition, e = m && m[id]; return e && e.f ? e : null; }
+  function n2(v) { return Math.round(v * 100) / 100; }
+  function imgSVG(e, cx, cy, k, extra, classe) {
+    k = k || 1;
+    return "<image class='img-exp" + (classe ? " " + classe : "") + "' href='" + U.echapper(e.f) + "' x='" + n2(cx - e.ax * k) + "' y='" + n2(cy - e.ay * k) + "' width='" + n2(e.w * k) + "' height='" + n2(e.h * k) + "'" + (extra || "") + "/>";
+  }
+  function imgHTML(e, w, h) { return "<img class='img-exp' src='" + U.echapper(e.f) + "' width='" + (w || e.w) + "' height='" + (h || e.h) + "' alt='' draggable='false'>"; }
+  // Un dessin HTML (icône, petit SVG) et son image par-dessus : la classe « image » cache le dessin tant que l'image tient.
+  function avecRepli(e, w, h, repli, classe) { return e ? "<span class='" + classe + " image'>" + repli + imgHTML(e, w, h) + "</span>" : repli; }
+  // Classes d'une fenêtre : le cadre de page rendu (border-image, CSS .cadre-image) quand son entrée existe.
+  function fenetre(classes) { return "exp-fenetre " + classes + (imageExp("cadre-page") ? " cadre-image" : ""); }
+  // Une image qui ne se charge pas est retirée : le dessin reposé dessous réapparaît (dans un SVG, il est déjà là ; en HTML, la
+  // classe « image » de l'enveloppe tombe). Un seul écouteur, posé en phase de capture sur l'écran (error ne remonte pas).
+  var surveille = false;
+  function repliImage(t) {
+    var p = t.parentNode;
+    if (t.remove) t.remove(); else if (p) p.removeChild(t);
+    if (p && p.classList && p.classList.contains("image")) p.classList.remove("image");
+  }
+  function surveillerSection(s) {
+    if (surveille || !s || !s.addEventListener) return;
+    surveille = true;
+    s.addEventListener("error", function (ev) { var t = ev.target; if (t && t.classList && t.classList.contains("img-exp")) repliImage(t); }, true);
+  }
+  // Préchauffage : à la première entrée sur l'écran, chaque image du manifeste est demandée une fois (cache du navigateur) ;
+  // rien n'est décodé pendant une bataille (l'écran de la route n'est pas affiché pendant une partie).
+  var chaudes = null;
+  function prechauffer() {
+    var m = JEU.imagesExpedition;
+    if (chaudes || !m || typeof Image === "undefined") return;
+    chaudes = Object.keys(m).map(function (id) { var im = new Image(); im.src = m[id].f; return im; });
+  }
   function courbe(c) {
     var mx = (c.x1 + c.x2) / 2;
     return "M" + c.x1 + " " + c.y1 + " C" + mx + " " + c.y1 + " " + mx + " " + c.y2 + " " + c.x2 + " " + c.y2;
@@ -258,8 +294,10 @@
     if (porte.genre === "faveur") { teinte = couleurFamille(porte.conseiller); icone = conseillerDe(porte.conseiller).icone; }
     else { teinte = porte.genre === "vivres" ? "#4f6b32" : porte.genre === "parchemin" ? "#6b2d5c" : OR_SOMBRE; icone = PORTE_ICONES[porte.genre] || "tresor"; }
     var ecu = "M" + (x - 11) + " " + (y - 11) + "h22v11c0 7-5 10.5-11 13-6-2.5-11-6-11-13z";
+    // l'écusson rendu (porte-<matière>, porte-bourse…) par-dessus ; le liseré d'une porte rare reste au CSS (.porte-ecusson.rare)
+    var im = imageExp(porte.genre === "faveur" ? "porte-" + (JEU.expedition.MATIERE_FAMILLE[porte.conseiller] || "histoire") : "porte-" + porte.genre);
     return "<g class='porte-ecusson" + (porte.rare ? " rare" : "") + "' id='" + k + "'><path d='" + ecu + "' fill='" + teinte + "' stroke='" + (porte.rare ? "#c9ccd2" : ENCRE) + "' stroke-width='" + (porte.rare ? 2 : 1.3) + "'/>" +
-      JEU.icones.dans(icone, x - 7, y - 8, 14, "#fff8e4") + "</g>";
+      JEU.icones.dans(icone, x - 7, y - 8, 14, "#fff8e4") + (im ? imgSVG(im, x, y) : "") + "</g>";
   }
   // Sceau de cire posé sur une halte jouée : la cire du joueur (bleu de France), ou le plomb quand les murs ont cédé.
   function sceauHalte(x, y, taille, echoue) {
@@ -268,10 +306,11 @@
       var a = i / 28 * 2 * Math.PI, r = r0 * (0.86 + 0.06 * Math.sin(i * 2.6) + 0.04 * Math.cos(i * 1.7));
       pts.push((x + r * Math.cos(a)).toFixed(1) + " " + (y + r * Math.sin(a)).toFixed(1));
     }
+    var im = imageExp(echoue ? "sceau-cedes" : "sceau-reussie"); // la cire rendue (34 unités de diamètre) à l'échelle du sceau
     return "<g class='sceau-halte" + (echoue ? " plomb" : "") + "'><defs><radialGradient id='" + k + "' cx='.38' cy='.32' r='.75'><stop offset='0' stop-color='" + c[2] + "'/><stop offset='.45' stop-color='" + c[0] + "'/><stop offset='1' stop-color='" + c[1] + "'/></radialGradient></defs>" +
       "<path d='M" + pts.join(" L") + "Z' fill='url(#" + k + ")' stroke='" + c[1] + "' stroke-width='1'/>" +
       "<circle cx='" + x + "' cy='" + y + "' r='" + (r0 * 0.56) + "' fill='none' stroke='" + c[1] + "' stroke-width='1.6' opacity='.75'/>" +
-      JEU.icones.dans(echoue ? "ecu-brise" : "lys", x - r0 * 0.4, y - r0 * 0.4, r0 * 0.8, c[2]) + "</g>";
+      JEU.icones.dans(echoue ? "ecu-brise" : "lys", x - r0 * 0.4, y - r0 * 0.4, r0 * 0.8, c[2]) + (im ? imgSVG(im, x, y, taille / 34) : "") + "</g>";
   }
   // Médaillon nésté (SVG dans le SVG) d'un gardien : le seigneur rival au tortil, ou le rival du front (portrait s'il en a un).
   function medaillonGardien(nd, e) {
@@ -285,7 +324,8 @@
         "<circle cx='" + nd.x + "' cy='" + nd.y + "' r='" + (nd.r - 4) + "' fill='none' stroke='" + ENCRE + "' stroke-width='1.2'/>";
     }
     var svg = EC && EC.medaillonHeraldique ? EC.medaillonHeraldique(camp, nd.type !== "grand") : "";
-    return svg.replace("<svg viewBox='0 0 100 100'", "<svg x='" + x + "' y='" + y + "' width='" + t + "' height='" + t + "' viewBox='0 0 100 100'");
+    var im = imageExp((nd.type === "grand" ? "grand-" : "gardien-") + camp); // médaillon rendu du gardien, s'il existe
+    return svg.replace("<svg viewBox='0 0 100 100'", "<svg x='" + x + "' y='" + y + "' width='" + t + "' height='" + t + "' viewBox='0 0 100 100'") + (im ? imgSVG(im, nd.x, nd.y) : "");
   }
   function libelleEtat(etat) {
     if (/reussie/.test(etat)) return TEXTES.etats.reussi;
@@ -307,6 +347,9 @@
       "<defs><radialGradient id='parchR' cx='.5' cy='.5' r='.75'><stop offset='0' stop-color='#f6eedb'/><stop offset='1' stop-color='#e2d3ad'/></radialGradient>" +
       "<filter id='ombreR'><feDropShadow dx='1' dy='2' stdDeviation='1.5' flood-color='#000' flood-opacity='.45'/></filter></defs>" +
       "<rect width='" + L + "' height='" + H + "' fill='url(#parchR)'/>";
+    // le parchemin rendu (route-fond) par-dessus le dégradé, qui reste le repli
+    var fondR = imageExp("route-fond");
+    if (fondR) s += imgSVG(fondR, 0, 0, 1, " preserveAspectRatio='none'", "fond");
     // bandes : lettrine rubriquée, dates, filets, brume
     d.bandes.forEach(function (b, i) {
       var bx = b.x, brume = b.etat === "brume" || b.etat === "avenir";
@@ -346,10 +389,13 @@
         else etiquettes += texteSVG(x, y + r + 17, classeNom, TEXTES.route.gardien);
         if (!brume && h.type === "gardien" && h.porte) s += ecussonPorte(h.porte, x + 24, y + 20);
       } else {
+        // le médaillon rendu (halte-<type>, halte-ev-<événement>, halte-brume) couvre exactement le cercle dessiné ; les états
+        // (hors, passée, brume) estompent le groupe, donc l'image aussi
+        var imH = imageExp(brume ? "halte-brume" : h.type === "evenement" ? "halte-ev-" + h.ev : "halte-" + h.type);
         s += "<g class='corps' filter='url(#ombreR)'><circle cx='" + x + "' cy='" + y + "' r='" + r + "' fill='" + OR + "' stroke='" + ENCRE + "' stroke-width='1.6'/>" +
           "<circle cx='" + x + "' cy='" + y + "' r='" + (r - 3.5) + "' fill='none' stroke='" + ENCRE + "' stroke-width='1' stroke-dasharray='.1 3' stroke-linecap='round'/>" +
           "<circle cx='" + x + "' cy='" + y + "' r='" + (r - 6) + "' fill='" + (brume ? "#9a927f" : "#f7efdc") + "' stroke='" + ENCRE + "' stroke-width='1.2'/>" +
-          (brume ? "" : JEU.icones.dans(iconeHalte(h), x - 14, y - 14, 28, h.type === "embuscade" ? RUBRIQUE : ENCRE)) + "</g>";
+          (brume ? "" : JEU.icones.dans(iconeHalte(h), x - 14, y - 14, 28, h.type === "embuscade" ? RUBRIQUE : ENCRE)) + (imH ? imgSVG(imH, x, y) : "") + "</g>";
         // le nom : sous le médaillon (colonnes impaires) ou au-dessus (paires) ; voir les constantes en tête
         if (!brume) etiquettes += texteSVG(x, nd.couche % 2 === 1 ? y + r + 14 : y - r - 6, classeNom, nomCourt(h));
         if (!brume && h.porte) s += ecussonPorte(h.porte, x + 16, y + 12);
@@ -384,6 +430,8 @@
   function parcheminAnnee(x, frontiere, ouverts, relais, semaines, semCal) {
     var X = JEU.expedition, derniere = JEU.calendrier ? JEU.calendrier.DERNIERE : 34, w = 27, gap = 1, x0 = 16, y0 = 40, h = 34, ouvertes = X.semainesOuvertes();
     var s = "<svg viewBox='0 0 1000 104' class='annee-svg' role='group' aria-label='" + U.echapper(TEXTES.annee.titre) + "'>";
+    var fondA = imageExp("annee-fond"); // le parchemin rendu sous les cases (le fond CSS #e8dbb8 reste le repli)
+    if (fondA) s += imgSVG(fondA, 0, 0, 1, " preserveAspectRatio='none'", "fond");
     for (var i = 1; i <= derniere; i++) {
       var cx = x0 + (i - 1) * (w + gap) + (i > frontiere ? 6 : 0), brume = i > frontiere, franchie = x.franchies.indexOf(i) >= 0, ouvert = ouverts.indexOf(i) >= 0, dans = semaines.indexOf(i) >= 0, trou = !brume && ouvertes.indexOf(i) < 0;
       s += "<g class='case" + (brume ? " brume" : "") + (ouvert ? " relais" : "") + (i === relais ? " choisi" : "") + (franchie ? " franchie" : "") + "' data-semaine='" + i + "'" + (ouvert ? " tabindex='-1' role='button'" : "") + ">";
@@ -417,19 +465,34 @@
   function ecuArmorial(arm, taille) {
     var s = "<svg viewBox='0 0 100 110' width='" + (taille || 120) + "' height='" + Math.round((taille || 120) * 1.1) + "' class='ecu-armorial' aria-hidden='true'>" +
       "<path d='M6 6h88v48c0 30-22 48-44 56C28 102 6 84 6 54z' fill='#f7efdc' stroke='" + ENCRE + "' stroke-width='2.5'/>";
+    var opacites = {};
     Object.keys(QUARTIERS_ECU).forEach(function (q) {
       var r = arm[q] || 0, max = JEU.expedition.EXP.ARMORIAL[q] ? JEU.expedition.EXP.ARMORIAL[q].prix.length : 1;
-      s += "<path d='" + QUARTIERS_ECU[q] + "' fill='" + TEINTES_ECU[q] + "' fill-opacity='" + (r ? 0.35 + 0.65 * r / max : 0.08) + "' stroke='" + ENCRE + "' stroke-width='1'/>";
+      opacites[q] = r ? 0.35 + 0.65 * r / max : 0.08;
+      s += "<path d='" + QUARTIERS_ECU[q] + "' fill='" + TEINTES_ECU[q] + "' fill-opacity='" + opacites[q] + "' stroke='" + ENCRE + "' stroke-width='1'/>";
     });
-    return s + "<path d='M6 6h88v48c0 30-22 48-44 56C28 102 6 84 6 54z' fill='none' stroke='" + OR + "' stroke-width='1.5' transform='translate(50 55) scale(.9) translate(-50 -55)'/></svg>";
+    s += "<path d='M6 6h88v48c0 30-22 48-44 56C28 102 6 84 6 54z' fill='none' stroke='" + OR + "' stroke-width='1.5' transform='translate(50 55) scale(.9) translate(-50 -55)'/>";
+    // l'écu rendu, puis ses cinq émaux (même caméra) avec l'opacité du rang, par-dessus le dessin
+    var ecuIm = imageExp("armorial-ecu");
+    if (ecuIm) {
+      s += imgSVG(ecuIm, 0, 0);
+      Object.keys(QUARTIERS_ECU).forEach(function (q) { var im = imageExp("armorial-" + q); if (im) s += imgSVG(im, 0, 0, 1, " opacity='" + opacites[q] + "'"); });
+    }
+    return s + "</svg>";
   }
 
   // ---------- cartouche « Ta compagnie » et journal de route ----------
   function sac(plein) {
-    return "<svg viewBox='0 0 20 24' width='18' height='22' class='sac" + (plein ? " plein" : "") + "' aria-hidden='true'><path d='M6 5h8l2 4c3 3 3 9 1 13H3C1 17 1 11 4 9z' fill='" + (plein ? "#c9a14a" : "#efe6d2") + "' stroke='" + ENCRE + "' stroke-width='1.6'/><path d='M7 5c1-2.4 5-2.4 6 0' fill='none' stroke='" + ENCRE + "' stroke-width='1.6'/></svg>";
+    var svg = "<svg viewBox='0 0 20 24' width='18' height='22' class='sac" + (plein ? " plein" : "") + "' aria-hidden='true'><path d='M6 5h8l2 4c3 3 3 9 1 13H3C1 17 1 11 4 9z' fill='" + (plein ? "#c9a14a" : "#efe6d2") + "' stroke='" + ENCRE + "' stroke-width='1.6'/><path d='M7 5c1-2.4 5-2.4 6 0' fill='none' stroke='" + ENCRE + "' stroke-width='1.6'/></svg>";
+    var im = imageExp(plein ? "compagnie-sac-plein" : "compagnie-sac-vide"); // le sac rendu (24 × 28) ; le dessin reste dessous
+    return avecRepli(im, im && im.w, im && im.h, svg, "sac-image");
   }
+  // Médaillon d'une faveur : le médaillon rendu de son rang (bronze, argent) quand il existe ; sinon (et pour le rang 3), le
+  // médaillon CSS à la teinte de la matière. Tailles entières : 32 px dans la compagnie, 64 px sur une carte (fichiers à 2 ×).
   function medaillonFaveur(c, taille) {
-    return "<span class='faveur-med rang-" + (c.rang || 1) + "' style='--teinte:" + couleurFamille(c.famille) + ";--t:" + (taille || 34) + "px' title='" + U.echapper(c.nom + " (" + c.rangNom + ") : " + c.texte) + "'>" + JEU.icones.icone(c.icone, Math.round((taille || 34) * 0.58)) + "</span>";
+    var t = taille || 32, im = (c.rang || 1) <= 2 ? imageExp("faveur-" + c.id + "-" + (c.rang || 1)) : null;
+    return "<span class='faveur-med rang-" + (c.rang || 1) + (im ? " image" : "") + "' style='--teinte:" + couleurFamille(c.famille) + ";--t:" + t + "px' title='" + U.echapper(c.nom + " (" + c.rangNom + ") : " + c.texte) + "'>" +
+      JEU.icones.icone(c.icone, Math.round(t * 0.58)) + (im ? imgHTML(im, t, t) : "") + "</span>";
   }
   function journalDeRoute(e) {
     var X = JEU.expedition, lignes = [];
@@ -445,17 +508,19 @@
     var X = JEU.expedition, el = JEU.ui.el, T = TEXTES.compagnie, sacs = "";
     for (var i = 0; i < e.vivresMax; i++) sacs += sac(i < e.vivres);
     var tenues = X.faveursTenues();
+    // or de route, plan de bataille, espion : les petites icônes rendues de la compagnie (24 px), l'icône dessinée en repli
+    var icone = function (nom, id) { return avecRepli(imageExp(id), 24, 24, JEU.icones.icone(nom, 20), "ic-image"); };
     var notes = [];
-    if (e.plan) notes.push(remplir(T.plan, { V: e.plan }));
-    if (e.espion) notes.push(T.espion);
-    notes.push(remplir(T.vitesse, { V: e.vitesse }) + " · " + remplir(T.graine, { G: X.hex(e.graine) }));
+    if (e.plan) notes.push(icone("parchemins", "compagnie-plan") + " " + U.echapper(remplir(T.plan, { V: e.plan })));
+    if (e.espion) notes.push(icone("espion", "compagnie-espion") + " " + U.echapper(T.espion));
+    notes.push(U.echapper(remplir(T.vitesse, { V: e.vitesse }) + " · " + remplir(T.graine, { G: X.hex(e.graine) })));
     return el("div", { class: "cartouche compagnie" }, [
       el("h3", { html: JEU.icones.icone("camp", 20) + " " + U.echapper(T.titre) }),
       el("div", { class: "cp-ligne" }, [el("span", { class: "cp-sacs", html: sacs, "aria-hidden": "true" }), el("b", { texte: T.vivres + " " + e.vivres + " / " + e.vivresMax }),
-        el("span", { class: "cp-or", html: JEU.icones.icone("tresor", 20) + " <b>" + e.or + "</b> " + U.echapper(T.or) })]),
+        el("span", { class: "cp-or", html: icone("tresor", "compagnie-or") + " <b>" + e.or + "</b> " + U.echapper(T.or) })]),
       el("p", { class: "cp-renom", html: U.echapper(T.renom) + " <b>" + e.compte.renom + "</b> <span class='note'>(" + x.renomTotal + " " + U.echapper(T.total) + ")</span>" }),
-      el("div", { class: "cp-faveurs" }, [el("span", { class: "cp-titre", texte: T.faveurs + " : " })].concat(tenues.length ? tenues.map(function (c) { return el("span", { html: medaillonFaveur(c, 34) }); }) : [el("i", { texte: T.aucuneFaveur })])),
-      el("p", { class: "note cp-notes", texte: notes.join(" ") })
+      el("div", { class: "cp-faveurs" }, [el("span", { class: "cp-titre", texte: T.faveurs + " : " })].concat(tenues.length ? tenues.map(function (c) { return el("span", { html: medaillonFaveur(c, 32) }); }) : [el("i", { texte: T.aucuneFaveur })])),
+      el("p", { class: "note cp-notes", html: notes.join(" ") })
     ]);
   }
   function cartoucheJournal(e) {
@@ -485,6 +550,8 @@
   JEU.ui.ecrans.expedition = function (s) {
     var X = JEU.expedition;
     if (!X) { s.innerHTML = ""; return; }
+    surveillerSection(s);
+    prechauffer();
     S.enHalte = false;
     if (S.bilan) return rendreBilan(s, S.bilan);
     // une bataille de route vient de clore l'expédition (Grand Gardien vaincu, dernier vivre perdu) : l'expédition n'est
@@ -610,7 +677,7 @@
     s.innerHTML = "";
     s.appendChild(el("h1", { class: "titre-ecran", texte: T.titre }));
     s.appendChild(el("p", { class: "exp-sous", texte: T.sous }));
-    var boite = el("div", { class: "exp-fenetre armorial" }, [
+    var boite = el("div", { class: fenetre("armorial") }, [
       el("div", { class: "armorial-ecu", html: ecuArmorial(x.armorial, 150) }),
       el("div", { class: "armorial-lignes" }, [el("p", { class: "grand", texte: remplir(T.renom, { R: x.renom }) })].concat(quartiers.map(function (q, i) {
         return el("div", { class: "ligne-armorial" + (q.rang ? " tenu" : ""), style: "--teinte:" + TEINTES_ECU[q.id] }, [
@@ -648,7 +715,7 @@
     var i = indexActe(e, e.semaine), precedente = i > 0 ? e.route.actes[i - 1].semaine : e.depart - 1, sautees = [];
     for (var w = precedente + 1; w < e.semaine; w++) sautees.push(w);
     var grand = acte.gardien.type === "grand", rival = grand && C.rivalDe ? C.rivalDe(e.front) : null;
-    var page = el("div", { class: "exp-fenetre page-semaine" }, [
+    var page = el("div", { class: fenetre("page-semaine") }, [
       el("div", { class: "ps-tete" }, [el("span", { class: "lettrine-html", texte: "S" + e.semaine }), el("div", {}, [
         el("h2", { texte: remplir(X.TEXTES.semaine.titre, { S: e.semaine }) }), el("p", { class: "ps-dates", texte: datesSemaine(e.semaine) })])]),
       el("p", { class: "ps-fenetre", texte: X.texteFenetre(acte) }),
@@ -716,7 +783,7 @@
   // La liste des faveurs tenues (touche F), avec leur effet.
   function rendreFaveurs(s, e) {
     var X = JEU.expedition, el = JEU.ui.el, tenues = X.faveursTenues();
-    var boite = el("div", { class: "exp-fenetre liste-faveurs" }, [
+    var boite = el("div", { class: fenetre("liste-faveurs") }, [
       el("h2", { texte: TEXTES.compagnie.faveurs }),
       tenues.length ? el("div", { class: "cartes-faveur" }, tenues.map(function (c) { return carteFaveurEl(c, null, null); })) : el("p", { class: "note", texte: TEXTES.compagnie.aucuneFaveur })
     ]);
@@ -836,7 +903,7 @@
     if (!q) { offre.question = false; JEU.sauvegarde.enregistrer(); return rendreCartes(s, e, offre, null); }
     var nomP = t && t.halte.porte ? X.nomPorte(t.halte.porte) : X.nomPorte({ genre: "faveur", conseiller: famille });
     var zone = el("div", { class: "zone-question" });
-    var boite = el("div", { class: "exp-fenetre porte" }, [
+    var boite = el("div", { class: fenetre("porte") }, [
       el("div", { class: "fen-tete", style: "--teinte:" + couleurFamille(famille) }, [el("span", { class: "fen-portrait", html: JEU.icones.icone(cons.icone, 34) }),
         el("div", {}, [el("h2", { texte: remplir(T.titre, { P: nomP }) }), el("p", { class: "note", texte: remplir(T.sous, { N: cons.nom }) })])]),
       zone
@@ -862,7 +929,7 @@
   function carteFaveurEl(c, n, action) {
     var el = JEU.ui.el, X = JEU.expedition, contenu = [
       n ? el("span", { class: "touche", texte: String(n) }) : null,
-      el("span", { class: "cf-medaillon", html: medaillonFaveur(c, 56) }),
+      el("span", { class: "cf-medaillon", html: medaillonFaveur(c, 64) }),
       el("b", { class: "cf-nom", texte: c.nom }),
       el("span", { class: "cf-rang rang-" + c.rang, texte: c.rangNom }),
       el("span", { class: "cf-conseiller", texte: c.conseiller }),
@@ -889,7 +956,7 @@
       boutons.push(b);
       return b;
     }));
-    var boite = el("div", { class: "exp-fenetre cartes" }, [el("h2", { texte: titre }), sous ? el("p", { class: "note", texte: sous }) : null, cartes]);
+    var boite = el("div", { class: fenetre("cartes") }, [el("h2", { texte: titre }), sous ? el("p", { class: "note", texte: sous }) : null, cartes]);
     cadreEcran(s, e, boite, null);
     var focus = 0;
     JEU.ui.clavier = function (k) {
@@ -909,7 +976,7 @@
     var X = JEU.expedition, el = JEU.ui.el, T = TEXTES.bivouac;
     var repos = el("button", { class: "choix choix-bivouac", onclick: function () { choixRepos(); } }, [el("span", { class: "touche", texte: "1" }), el("span", {}, [el("b", { texte: T.repos }), el("p", { class: "note", texte: T.reposTexte })])]);
     var veillee = el("button", { class: "choix choix-bivouac", onclick: function () { choixVeillee(); } }, [el("span", { class: "touche", texte: "2" }), el("span", {}, [el("b", { texte: T.veillee }), el("p", { class: "note", texte: T.veilleeTexte })])]);
-    var boite = el("div", { class: "exp-fenetre bivouac" }, [
+    var boite = el("div", { class: fenetre("bivouac") }, [
       el("div", { class: "fen-tete" }, [el("span", { class: "fen-portrait", html: JEU.icones.icone("camp", 34) }), el("div", {}, [el("h2", { texte: T.titre }), el("p", { class: "note", texte: T.sous })])]),
       el("div", { class: "reponses" }, [repos, veillee])
     ]);
@@ -936,7 +1003,7 @@
   function rendreVeillee(s, e, t, qs) {
     var X = JEU.expedition, el = JEU.ui.el, T = TEXTES.bivouac, i = 0, bonnes = 0, extra = extraDe(t.acte);
     var compteur = el("p", { class: "compteur" }), zone = el("div", { class: "zone-question" });
-    var boite = el("div", { class: "exp-fenetre bivouac" }, [
+    var boite = el("div", { class: fenetre("bivouac") }, [
       el("div", { class: "fen-tete" }, [el("span", { class: "fen-portrait", html: JEU.icones.icone("camp", 34) }), el("div", {}, [el("h2", { texte: T.titre + " · " + T.veillee }), compteur])]),
       zone
     ]);
@@ -975,7 +1042,7 @@
     var q = X.tirage(1, [], { type: "marchand" })[0];
     if (!q) return rendreEtal(s, e, t, X.ouvrirEtal(h.id, false));
     var zone = el("div", { class: "zone-question" });
-    var boite = el("div", { class: "exp-fenetre marchand" }, [
+    var boite = el("div", { class: fenetre("marchand") }, [
       el("div", { class: "fen-tete", style: "--teinte:" + couleurFamille("physique") }, [el("span", { class: "fen-portrait", html: JEU.icones.icone(cons.icone, 34) }), el("div", {}, [el("h2", { texte: T.titre }), el("p", { class: "note", texte: T.sous })])]),
       zone
     ]);
@@ -998,7 +1065,7 @@
       ]);
     });
     var quitter = el("button", { class: "bouton principal", onclick: fermer, texte: T.quitter + " (Échap)" });
-    var boite = el("div", { class: "exp-fenetre marchand" }, [
+    var boite = el("div", { class: fenetre("marchand") }, [
       el("div", { class: "fen-tete", style: "--teinte:" + couleurFamille("physique") }, [el("span", { class: "fen-portrait", html: JEU.icones.icone("marchand", 34) }), el("div", {}, [el("h2", { texte: T.titre }), el("p", { class: "grand", texte: remplir(T.or, { O: vue.or }) + (vue.remise ? " · " + T.remise : "") })])]),
       el("div", { class: "etal" }, lignes),
       el("p", { class: "note", texte: vue.restant })
@@ -1027,7 +1094,7 @@
     var X = JEU.expedition, el = JEU.ui.el, T = TEXTES.bilan, x = X.etat();
     s.innerHTML = "";
     var fiches = (b.aRelire || []).map(function (id) { var f = JEU.questions.fiche(id); return { id: id, titre: f && f.fiche ? (f.fiche.titre || f.fiche.notion || id) : id }; });
-    var boite = el("div", { class: "exp-fenetre bilan-exp" + (b.issue === "victoire" ? " victoire" : "") }, [
+    var boite = el("div", { class: fenetre("bilan-exp" + (b.issue === "victoire" ? " victoire" : "")) }, [
       el("h1", { class: "titre-ecran", texte: b.textes.titre }),
       el("p", { class: "bx-chroniqueur", texte: b.textes.chroniqueur }),
       el("p", { class: "grand", texte: b.textes.renom }),
@@ -1055,6 +1122,7 @@
   JEU.ecranExpedition = {
     TEXTES: TEXTES, disposition: disposition, etatsNoeuds: etatsNoeuds, etatsChemins: etatsChemins, carteSVG: carteSVG, parcheminAnnee: parcheminAnnee,
     ecuArmorial: ecuArmorial, journalDeRoute: journalDeRoute, textesFin: textesFin, nomHalte: nomHalte, nomCourt: nomCourt, evenementDe: evenementDe,
+    imageExp: imageExp, medaillonFaveur: medaillonFaveur, sac: sac, fenetre: fenetre, // images rendues (essais)
     MESURES: { L: L, H: H, BANDE: BANDE, X0: X0, R_HALTE: R_HALTE, R_GARDIEN: R_GARDIEN },
     CLAVIER: {
       depart: { "Entrée": "partir", "← →": "relais", "1 2": "front", "A": "Armorial", "Échap": "retour à la campagne" },

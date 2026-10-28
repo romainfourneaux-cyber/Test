@@ -238,21 +238,22 @@ JEU.enregistrer("cours", {
    "id": "histoire-s04-1-q3",
    "fiche": "histoire-s04-1-f1",
    "type": "qcm",
-   "niveau": 3,
-   "enonce": "Pendant combien de temps environ la dynastie abbasside règne-t-elle ?",
+   "niveau": 2,
+   "enonce": "Pourquoi Bagdad est-elle célèbre au temps des Abbassides ?",
    "choix": [
-    "Un peu plus de cinq siècles",
-    "Moins d'un siècle",
-    "Environ deux siècles",
-    "Près de dix siècles"
+    "Une ville immense et riche, où des savants traduisent et étudient les sciences",
+    "C'est surtout une forteresse militaire, sans marchands ni savants, bâtie contre les Byzantins",
+    "C'est la capitale de l'Empire byzantin, après Constantinople",
+    "C'est un petit port de pêcheurs sur la Méditerranée"
    ],
-   "explication": "De 750 à 1258, cela fait 508 ans. C'est un peu plus de cinq siècles.",
-   "indice": "Fais la soustraction 1258 moins 750.",
+   "explication": "Fondée en 762 par le calife Al-Mansur, Bagdad devient la capitale des Abbassides et compte peut-être un million d'habitants. Ses marchands commercent jusqu'en Inde et en Chine, et sa Maison de la sagesse traduit les livres des savants grecs.",
    "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 5 - Support et Devoir entrainement.pdf",
-    "page": 1
+    "theme": "Cours 5 – Empire abbasside et 2 études de document",
+    "titre": "Bagdad",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Bagdad"
    },
-   "r": "P0hCKUQwx6SAVRxGYogTKYBSwgVCF1wGKYhRHcSZ",
+   "r": "==ATccxCtgEDW5lTcMgCJZQKXwRAAUAwt+kBNMWWLAlXHohAHshBnFQALQxBI0xTB0wJNwt9C50QD4gCbUjUBAQVUoBAK8RBq0AAZF0BZY0AHcSZ",
    "poids": 1
   },
   {
@@ -260,7 +261,7 @@ JEU.enregistrer("cours", {
    "fiche": "histoire-s04-1-f1",
    "type": "qcm_multiple",
    "niveau": 2,
-   "enonce": "Quelles villes se trouvent à l'intérieur de l'Empire abbasside sur la carte ? (plusieurs réponses)",
+   "enonce": "Quelles villes font partie de l'Empire abbasside ? (plusieurs réponses)",
    "choix": [
     "Damas",
     "Jérusalem",
@@ -282,13 +283,13 @@ JEU.enregistrer("cours", {
    "fiche": "histoire-s04-1-f1",
    "type": "vrai_faux",
    "niveau": 2,
-   "enonce": "Sur la carte, Al Andalus fait partie de l'Empire abbasside.",
+   "enonce": "Al Andalus, tout à l'ouest, fait partie de l'Empire abbasside.",
    "corrections": [
     "Faux : Al Andalus, tout à l'ouest, reste en dehors de l'Empire abbasside.",
     "Faux : Al Andalus est la capitale de l'Empire abbasside.",
     "Faux : Al Andalus se trouve dans la péninsule d'Arabie, au cœur de l'empire."
    ],
-   "explication": "Al Andalus est écrit en dehors de la zone de l'empire, tout à l'ouest. L'Empire abbasside ne l'englobe pas.",
+   "explication": "Al Andalus est tout à l'ouest, au-delà des terres des Abbassides. L'Empire abbasside ne l'englobe pas : en 929, un califat rival y commence même, à Cordoue.",
    "source": {
     "fichier": "cours/histoire/Histoire 5e - Seance 5 - Support et Devoir entrainement.pdf",
     "page": 5
@@ -301,10 +302,10 @@ JEU.enregistrer("cours", {
    "fiche": "histoire-s04-1-f1",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Comment l'Empire abbasside se présente-t-il sur la carte ?",
+   "enonce": "Quelle est l'étendue de l'Empire abbasside ?",
    "choix": [
-    "Un vaste empire, de l'Afrique du Nord vers l'est",
-    "Un petit territoire qui entoure seulement la ville de Bagdad",
+    "Un vaste empire, de l'Afrique du Nord jusque loin vers l'est",
+    "Un petit territoire qui entoure seulement la ville de Bagdad et ses environs",
     "Un empire limité à la péninsule d'Arabie",
     "Un empire qui couvre l'Europe de l'Ouest"
    ],
@@ -313,7 +314,7 @@ JEU.enregistrer("cours", {
     "fichier": "cours/histoire/Histoire 5e - Seance 5 - Support et Devoir entrainement.pdf",
     "page": 5
    },
-   "r": "=0kEVwQVrIlBXAxBJpQHdYyYYFQFIthHPQxDzAmHVBQERV0CdsBGugURQlVHOAhRHcSZ",
+   "r": "=MVHdoQVEMmXXA1WOFwDJUgUicABWAwGJpQHdYyYYFQFIthHPQxDzAmHVBQERV0CdsBGugURQlVHOAhRHcSZ",
    "poids": 1
   },
   {
@@ -381,7 +382,7 @@ JEU.enregistrer("cours", {
    "fiche": "histoire-s04-1-f2",
    "type": "vrai_faux",
    "niveau": 1,
-   "enonce": "Sur les cartes du cours, l'Empire omeyyade est plus vaste que l'Empire abbasside.",
+   "enonce": "L'Empire omeyyade est plus vaste que l'Empire abbasside.",
    "corrections": [],
    "explication": "Oui : l'Empire omeyyade s'étend en plus sur Al Andalus et sur tout l'ouest de l'Afrique du Nord.",
    "source": {
@@ -415,21 +416,22 @@ JEU.enregistrer("cours", {
    "id": "histoire-s04-1-q12",
    "fiche": "histoire-s04-1-f2",
    "type": "qcm",
-   "niveau": 3,
-   "enonce": "Al Andalus, à l'ouest, est en dehors de l'Empire abbasside. Quel repère de la frise se rapporte à cette région de l'ouest ?",
+   "niveau": 1,
+   "enonce": "Quelle ville est la capitale d'Al Andalus, l'Espagne musulmane ?",
    "choix": [
-    "Le début du califat de Cordoue, en 929",
-    "L'Hégire, en 622",
-    "La fin de la dynastie omeyyade, en 750",
-    "La mort de Mohamed, en 632"
+    "Cordoue",
+    "Damas",
+    "Bagdad",
+    "Jérusalem"
    ],
-   "explication": "Sur la carte du cours 2, l'émirat de Cordoue était au sud-ouest de l'empire de Charlemagne, là où cette carte écrit Al Andalus. La frise y marque le début d'un califat en 929.",
-   "indice": "Souviens-toi de l'émirat que la carte du cours 2 plaçait au sud-ouest de l'empire de Charlemagne.",
+   "explication": "Cordoue est la capitale de l'émirat d'Al Andalus à partir de 756, puis du califat de Cordoue à partir de 929. Damas et Bagdad sont les capitales des Omeyyades puis des Abbassides, bien plus à l'est.",
    "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 5 - Support et Devoir entrainement.pdf",
-    "page": 5
+    "theme": "Cours 5 – Empire abbasside et 2 études de document",
+    "titre": "Cordoue",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Cordoue"
    },
-   "r": "=cFSbd1Tc0wYBAAQCpQHJUSSXMiUBQwEYUwDMIVHn0QEA90xsKgRM4TZ",
+   "r": "Xg0GAIAFGETZ",
    "poids": 1
   },
   {
@@ -522,7 +524,7 @@ JEU.enregistrer("cours", {
    "fiche": "histoire-s04-1-f3",
    "type": "qcm",
    "niveau": 1,
-   "enonce": "Où la carte place-t-elle La Mecque et Médine ?",
+   "enonce": "Où se trouvent La Mecque et Médine ?",
    "choix": [
     "Dans la péninsule d'Arabie",
     "Plus au nord, près de Damas",
@@ -542,9 +544,9 @@ JEU.enregistrer("cours", {
    "fiche": "histoire-s04-1-f3",
    "type": "vrai_faux",
    "niveau": 1,
-   "enonce": "Sur la carte, Damas et Jérusalem sont voisines, au nord de la péninsule d'Arabie.",
+   "enonce": "Damas et Jérusalem sont deux villes voisines, au nord de la péninsule d'Arabie.",
    "corrections": [],
-   "explication": "Oui : les deux villes sont proches l'une de l'autre, au nord de la péninsule d'Arabie. La bataille du Yarmouk est située entre elles.",
+   "explication": "Oui : les deux villes sont proches l'une de l'autre, près de la Méditerranée. La bataille du Yarmouk a lieu entre elles.",
    "source": {
     "fichier": "cours/histoire/Histoire 5e - Seance 5 - Support et Devoir entrainement.pdf",
     "page": 5
@@ -592,44 +594,25 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "histoire-s04-1-q21",
-   "fiche": "histoire-s04-1-f3",
-   "type": "qcm_multiple",
-   "niveau": 2,
-   "enonce": "Quelles villes la carte place-t-elle dans la péninsule d'Arabie ? (plusieurs réponses)",
-   "choix": [
-    "La Mecque",
-    "Médine",
-    "Damas",
-    "Jérusalem",
-    "Bagdad"
-   ],
-   "explication": "Seules La Mecque et Médine sont dans la péninsule d'Arabie. Damas et Jérusalem sont plus au nord, Bagdad plus à l'est.",
-   "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 5 - Support et Devoir entrainement.pdf",
-    "page": 5
-   },
-   "r": "=oBUQsAHVAcriAFRhhEEE50CiY0BlAFH",
-   "poids": 1
-  },
-  {
    "id": "histoire-s04-1-q22",
    "fiche": "histoire-s04-1-f3",
    "type": "qcm",
-   "niveau": 2,
-   "enonce": "Comment peut-on situer la bataille du Yarmouk par rapport à Damas ?",
+   "niveau": 3,
+   "enonce": "Pourquoi la bataille du Yarmouk, en 636, est-elle importante ?",
    "choix": [
-    "Juste au sud de Damas",
-    "Loin à l'est, près de Bagdad",
-    "Au milieu de la péninsule d'Arabie",
-    "À l'ouest, en Al Andalus"
+    "L'armée du califat y bat les Byzantins : la Syrie passe sous domination musulmane",
+    "L'Empire byzantin y reprend Damas et Jérusalem et chasse les armées du califat de toute la Syrie",
+    "Elle marque la fin de la dynastie omeyyade et le début des Abbassides",
+    "Charlemagne y arrête une armée venue d'Al Andalus"
    ],
-   "explication": "Sur la carte, la bataille du Yarmouk est écrite juste au sud de Damas, en direction de Jérusalem.",
+   "explication": "En août 636, près de la rivière Yarmouk, l'armée du califat remporte une victoire décisive sur celle de l'Empire byzantin. Les Byzantins perdent alors pour de bon la Syrie et la Palestine, où se trouvent Damas et Jérusalem.",
    "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 5 - Support et Devoir entrainement.pdf",
-    "page": 5
+    "theme": "Cours 5 – Empire abbasside et 2 études de document",
+    "titre": "Bataille du Yarmouk",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Bataille_du_Yarmouk"
    },
-   "r": "=UWAUgAF1k0CLIFD24VRAxkTKIRFcgTZ",
+   "r": "TxAAO8BB24FEY1AAA8gEIwhLfoRAVJAHBwhUNAjXEUUDLYAFfojUm4RVfVlAHcwGckQOUdSFetwAGJBCQc2CVFBFXAgAOEBS2kURQRYrCQxBO5TZ",
    "poids": 1
   },
   {
@@ -651,27 +634,6 @@ JEU.enregistrer("cours", {
     "page": 5
    },
    "r": "=AFDxI0CVgkAPVBFMQSZ",
-   "poids": 1
-  },
-  {
-   "id": "histoire-s04-1-q24",
-   "fiche": "histoire-s04-1-f3",
-   "type": "trou",
-   "niveau": 1,
-   "enonce": "Complète avec les noms de la carte.",
-   "texte": "La bataille du ___ est située entre ___ et Jérusalem.",
-   "banque": [
-    "Yarmouk",
-    "Damas",
-    "Médine",
-    "Cordoue"
-   ],
-   "explication": "La bataille du Yarmouk est placée entre Damas et Jérusalem. Médine et Cordoue sont ailleurs.",
-   "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 5 - Support et Devoir entrainement.pdf",
-    "page": 5
-   },
-   "r": "=oxLXZBFcggKNlCRe8gDAJ0AdcwPLlCH",
    "poids": 1
   },
   {
@@ -769,27 +731,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "histoire-s04-1-q30",
-   "fiche": "histoire-s04-1-f4",
-   "type": "qcm",
-   "niveau": 3,
-   "enonce": "De combien de jours environ une année hégirienne est-elle plus courte qu'une année de 365 jours ?",
-   "choix": [
-    "Une dizaine de jours",
-    "Un mois entier",
-    "Une centaine de jours",
-    "Un seul jour"
-   ],
-   "explication": "365 moins 354 font onze, et 365 moins 355 font dix. L'écart est donc d'une dizaine de jours.",
-   "indice": "Soustrais 354 de 365.",
-   "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 5 - Support et Devoir entrainement.pdf",
-    "page": 3
-   },
-   "r": "==AUGcBAeMgTKYBSmMEDUd1BLY0AHcSZ",
-   "poids": 1
-  },
-  {
    "id": "histoire-s04-1-q31",
    "fiche": "histoire-s04-1-f4",
    "type": "qcm",
@@ -836,19 +777,19 @@ JEU.enregistrer("cours", {
    "fiche": "histoire-s04-1-f5",
    "type": "qcm",
    "niveau": 1,
-   "enonce": "De quel livre est tiré le texte étudié sur le ramadan ?",
+   "enonce": "Comment s'appelle le livre de l'islam, dont vient le texte sur le ramadan ?",
    "choix": [
-    "Du Coran",
-    "D'un récit d'Eginhard",
-    "D'une chronique byzantine",
-    "D'un livre de calendrier"
+    "Le Coran",
+    "Les Annales d'Eginhard",
+    "Une chronique byzantine",
+    "Le Rustican"
    ],
-   "explication": "Le texte vient du Coran : c'est la sourate 2, versets 183 à 185. Eginhard, lui, a écrit sur Charlemagne.",
+   "explication": "Le livre de l'islam est le Coran ; le texte étudié en vient. Eginhard a écrit sur Charlemagne, et le Rustican décrit les travaux des paysans.",
    "source": {
     "fichier": "cours/histoire/Histoire 5e - Seance 5 - Support et Devoir entrainement.pdf",
     "page": 2
    },
-   "r": "==wRbxEHAUiRcYTZ",
+   "r": "==wRbxEHAUiRM4TZ",
    "poids": 1
   },
   {
@@ -856,9 +797,9 @@ JEU.enregistrer("cours", {
    "fiche": "histoire-s04-1-f5",
    "type": "vrai_faux",
    "niveau": 1,
-   "enonce": "Le texte étudié parle du jeûne du mois de ramadan.",
+   "enonce": "Le ramadan est un mois du calendrier musulman pendant lequel les musulmans jeûnent le jour.",
    "corrections": [],
-   "explication": "Oui : le document s'intitule « Le ramadan » et il traite du jeûne.",
+   "explication": "Oui : le ramadan est un mois du calendrier hégirien, et le texte étudié parle du jeûne de ce mois. Jeûner, c'est se priver de nourriture pendant un temps donné.",
    "source": {
     "fichier": "cours/histoire/Histoire 5e - Seance 5 - Support et Devoir entrainement.pdf",
     "page": 2
@@ -871,14 +812,14 @@ JEU.enregistrer("cours", {
    "fiche": "histoire-s04-1-f5",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Comment appelle-t-on la grande partie numérotée du Coran d'où vient le texte étudié ?",
+   "enonce": "Comment appelle-t-on une grande partie numérotée du Coran ?",
    "choix": [
     "Une sourate",
     "Un verset",
     "Un chapitre des Annales",
     "Une chronique"
    ],
-   "explication": "Le texte vient de la sourate 2. Les versets sont les phrases numérotées à l'intérieur de la sourate, ici 183 à 185.",
+   "explication": "Le Coran est divisé en sourates : le texte sur le ramadan vient de la sourate 2. Les versets sont les phrases numérotées à l'intérieur d'une sourate.",
    "source": {
     "fichier": "cours/histoire/Histoire 5e - Seance 5 - Support et Devoir entrainement.pdf",
     "page": 2
@@ -890,13 +831,15 @@ JEU.enregistrer("cours", {
    "id": "histoire-s04-1-q36",
    "fiche": "histoire-s04-1-f5",
    "type": "vrai_faux",
-   "niveau": 2,
-   "enonce": "D'après le texte, une personne malade ou en voyage peut faire son jeûne plus tard.",
+   "niveau": 1,
+   "enonce": "Le minaret est la tour d'une mosquée.",
    "corrections": [],
-   "explication": "Oui : le texte prévoit que le malade ou le voyageur jeûne plus tard, autant de jours qu'il en a manqué.",
+   "explication": "Oui : le minaret est une tour qui domine la mosquée et les bâtiments autour. De là-haut, le muezzin lance l'appel à la prière.",
    "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 5 - Support et Devoir entrainement.pdf",
-    "page": 2
+    "theme": "Cours 5 – Empire abbasside et 2 études de document",
+    "titre": "Minaret",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Minaret"
    },
    "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
    "poids": 1
@@ -906,38 +849,21 @@ JEU.enregistrer("cours", {
    "fiche": "histoire-s04-1-f5",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "D'après le texte, pourquoi le mois de ramadan est-il important ?",
+   "enonce": "En quelle langue le Coran est-il écrit ?",
    "choix": [
-    "Selon le texte, le Coran y a été révélé",
-    "C'est le mois où a eu lieu l'Hégire, en 622",
-    "C'est le premier mois de la dynastie abbasside",
-    "C'est le mois de la bataille du Yarmouk"
+    "En arabe",
+    "En grec",
+    "En latin",
+    "En persan"
    ],
-   "explication": "Le texte présente le ramadan comme le mois où le Coran a été révélé. C'est pour cela que le jeûne y est prescrit.",
+   "explication": "Le Coran, le livre de l'islam, est écrit en arabe : son nom veut dire « la récitation ». Le grec est la langue de l'Empire byzantin et le latin celle de l'Église d'Occident.",
    "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 5 - Support et Devoir entrainement.pdf",
-    "page": 2
+    "theme": "Cours 5 – Empire abbasside et 2 études de document",
+    "titre": "Coran",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Coran"
    },
-   "r": "==AUuHbGMb7BA3aHSFMgZxs9N8wTfY0BTUTH2UEEdkkQKYAEmkVRQFkTBkgCMESZ",
-   "poids": 1
-  },
-  {
-   "id": "histoire-s04-1-q38",
-   "fiche": "histoire-s04-1-f5",
-   "type": "vrai_faux",
-   "niveau": 2,
-   "enonce": "Le mot manquant du texte, le nom du mois du jeûne, est « Hégire ».",
-   "corrections": [
-    "Faux : le mot manquant est « ramadan », le mois du jeûne.",
-    "Faux : le mot manquant est « Bagdad ».",
-    "Faux : le mot manquant est « sourate »."
-   ],
-   "explication": "Le document s'intitule « Le ramadan » : c'est le nom du mois à retrouver. L'Hégire est un événement de 622.",
-   "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 5 - Support et Devoir entrainement.pdf",
-    "page": 2
-   },
-   "r": "PUGXQsgzyyABPdADj5FDaBkTKogRFlchStBBRABBP0hUDHYDRYESOtBCHwxApMBGFFgHE4kCegUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "r": "==wRQ90DdcgRHcTZ",
    "poids": 1
   },
   {
@@ -945,40 +871,19 @@ JEU.enregistrer("cours", {
    "fiche": "histoire-s04-1-f5",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Que signifie « jeûner », d'après le sens du texte ?",
+   "enonce": "Que signifie « jeûner » ?",
    "choix": [
     "Se priver de nourriture pendant un temps donné",
     "Voyager pendant tout un mois",
     "Donner de la nourriture à un pauvre",
     "Lire le Coran chaque jour"
    ],
-   "explication": "Jeûner, c'est se priver de nourriture. Le texte prévoit d'ailleurs de nourrir un pauvre pour chaque jour de jeûne non observé.",
+   "explication": "Jeûner, c'est se priver de nourriture pendant un temps donné. Le texte étudié parle du jeûne du mois de ramadan.",
    "source": {
     "fichier": "cours/histoire/Histoire 5e - Seance 5 - Support et Devoir entrainement.pdf",
     "page": 2
    },
    "r": "==ARPrKHp0REFZQAEswGSZgNNExWMpQADYRSXUzBBwwBDwRABIVDn0wFQt1BdYhRMESZ",
-   "poids": 1
-  },
-  {
-   "id": "histoire-s04-1-q40",
-   "fiche": "histoire-s04-1-f5",
-   "type": "qcm_multiple",
-   "niveau": 3,
-   "enonce": "Quelles affirmations correspondent bien au texte étudié ? (plusieurs réponses)",
-   "choix": [
-    "Il vient de la sourate 2 du Coran",
-    "Il parle du jeûne du ramadan",
-    "Il raconte la bataille du Yarmouk",
-    "Il autorise le malade à jeûner plus tard",
-    "Il explique le calendrier lunaire"
-   ],
-   "explication": "Le texte est un extrait de la sourate 2 sur le jeûne du ramadan, avec une permission pour le malade ou le voyageur. La bataille et le calendrier sont d'autres pages du cours.",
-   "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 5 - Support et Devoir entrainement.pdf",
-    "page": 2
-   },
-   "r": "7skF1MRAFZABF4xTA0QLWaKUH50zlaEDWYiHUgQVUUgTKEQAxIUEAxkTD8CRFBVKTEBBYAxGOphFIZyQebPSE80ECk0FrAAFVUVHgw0QQZgIfpgdNsxCGRVSXMzEHAhGCk0DDIVDn0QEbh0BZYkCgAFH",
    "poids": 1
   }
  ],

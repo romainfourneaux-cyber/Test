@@ -299,27 +299,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "histoire-s05-2-q8",
-   "fiche": "histoire-s05-2-f1",
-   "type": "trou",
-   "niveau": 1,
-   "enonce": "Complète le calendrier de Verson.",
-   "texte": "À la saint Jean, le 24 ___, les paysans fauchent les prés du seigneur ; à la saint Denis, le 9 ___, ils paient le cens.",
-   "banque": [
-    "juin",
-    "octobre",
-    "août",
-    "mars"
-   ],
-   "explication": "La saint Jean est le 24 juin, la saint Denis le 9 octobre. Août est le mois de la moisson.",
-   "source": {
-    "fichier": "cours/histoire/Histoire 5e - Moyen Age - Etude de cas 2 Seigneurie de Wismes.pdf",
-    "page": 1
-   },
-   "r": "==wLocEEDsQAbExBhZXSo9AAGMBDLlCH",
-   "poids": 1
-  },
-  {
    "id": "histoire-s05-2-q9",
    "fiche": "histoire-s05-2-f1",
    "type": "vrai_faux",
@@ -780,26 +759,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "histoire-s05-2-q32",
-   "fiche": "histoire-s05-2-f4",
-   "type": "qcm",
-   "niveau": 2,
-   "enonce": "Comment s'appelle, dans la chanson de Verson, la demeure du seigneur où l'on porte le foin ?",
-   "choix": [
-    "Le manoir",
-    "La grange",
-    "Le gibet",
-    "La tenure"
-   ],
-   "explication": "Le manoir est la maison du seigneur. La grange, elle, reçoit le blé.",
-   "source": {
-    "fichier": "cours/histoire/Histoire 5e - Moyen Age - Etude de cas 2 Seigneurie de Wismes.pdf",
-    "page": 1
-   },
-   "r": "=8wFcJEAOsgRM4TZ",
-   "poids": 1
-  },
-  {
    "id": "histoire-s05-2-q33",
    "fiche": "histoire-s05-2-f4",
    "type": "qcm",
@@ -831,10 +790,10 @@ JEU.enregistrer("cours", {
     "La grange du seigneur",
     "Le château",
     "Le moulin",
-    "L'école",
-    "Le port"
+    "Le gibet",
+    "Le pressoir"
    ],
-   "explication": "Manoir, grange, château et moulin reçoivent les redevances des paysans. Il n'y a ni école ni port dans la chanson.",
+   "explication": "Manoir, grange, château et moulin reçoivent les redevances des paysans de Verson. Le gibet et le pressoir existent dans d'autres seigneuries, mais la chanson n'en parle pas.",
    "source": {
     "fichier": "cours/histoire/Histoire 5e - Moyen Age - Etude de cas 2 Seigneurie de Wismes.pdf",
     "page": 1

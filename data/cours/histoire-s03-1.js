@@ -163,19 +163,21 @@ JEU.enregistrer("cours", {
    "fiche": "histoire-s03-1-f1",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Comment voit-on que l'Hégire a lieu du vivant de Mohamed ?",
+   "enonce": "Pourquoi l'année 622 compte-t-elle autant dans l'histoire de l'islam ?",
    "choix": [
-    "L'année 622 se situe entre 570 et 632",
-    "L'année 622 vient après 632",
-    "L'Hégire et la dynastie omeyyade commencent la même année",
-    "L'année 622 se situe avant 570"
+    "C'est l'Hégire : Mohamed quitte La Mecque pour Médine",
+    "C'est l'année de la fondation de Bagdad, la capitale des Abbassides",
+    "C'est le début de la dynastie omeyyade, à Damas",
+    "C'est l'année où l'armée du califat prend Jérusalem"
    ],
-   "explication": "Mohamed vit de 570 à 632. L'année 622 se trouve entre ces deux dates.",
+   "explication": "En 622, Mohamed et ses compagnons quittent La Mecque pour s'installer à Médine : c'est l'Hégire. Les musulmans comptent les années à partir de ce départ, qui ouvre leur calendrier.",
    "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 4 - Support.pdf",
-    "page": 1
+    "theme": "Cours 4 – Islam, origines et expansion",
+    "titre": "Hégire",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/H%C3%A9gire"
    },
-   "r": "==wUb1VWSxhJNUlAY4kCUIxBXc2FAEBHCk0CcIlWxtRRQRYrBgwBO5TZ",
+   "r": "KZyQMEFhtKiRUwRH3IFEQQgEMMyTTQyYIFRQEthHGJADfYiGagSVLl0CdsxDq7eLSEkTbUxAOFTZ",
    "poids": 1
   },
   {
@@ -197,27 +199,6 @@ JEU.enregistrer("cours", {
     "page": 1
    },
    "r": "==QNe8QEQBUAHcwKLlCH",
-   "poids": 1
-  },
-  {
-   "id": "histoire-s03-1-q5",
-   "fiche": "histoire-s03-1-f1",
-   "type": "qcm",
-   "niveau": 3,
-   "enonce": "Combien d'années séparent l'Hégire de la mort de Mohamed ?",
-   "choix": [
-    "10 ans",
-    "52 ans",
-    "62 ans",
-    "128 ans"
-   ],
-   "explication": "632 moins 622 font 10. L'Hégire a lieu dix ans avant la mort de Mohamed.",
-   "indice": "Fais la soustraction 632 moins 622.",
-   "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 4 - Support.pdf",
-    "page": 1
-   },
-   "r": "=8QHBcgRZNUZ",
    "poids": 1
   },
   {
@@ -402,22 +383,23 @@ JEU.enregistrer("cours", {
   {
    "id": "histoire-s03-1-q20",
    "fiche": "histoire-s03-1-f2",
-   "type": "qcm_multiple",
-   "niveau": 3,
-   "enonce": "Quels événements ont lieu pendant la dynastie abbasside (750-1258) ? (plusieurs réponses)",
+   "type": "qcm",
+   "niveau": 1,
+   "enonce": "Les Omeyyades et les Abbassides sont des dynasties de califes. Qu'est-ce qu'un calife ?",
    "choix": [
-    "Charlemagne devient empereur d'Occident",
-    "Le califat de Cordoue commence",
-    "L'Hégire",
-    "Le règne de Justinien",
-    "La prise de Constantinople par les Turcs"
+    "Le successeur de Mohamed, qui dirige les musulmans et gouverne l'empire",
+    "Le gouverneur d'une seule province de l'empire, nommé par l'empereur byzantin",
+    "Un grand marchand de Bagdad ou de Damas",
+    "Le chef de l'armée byzantine"
    ],
-   "explication": "800 et 929 se trouvent entre 750 et 1258. L'Hégire (622) et Justinien (527-565) viennent avant, la prise de Constantinople (1453) après.",
+   "explication": "Le mot arabe « khalifa » veut dire « successeur ». Après la mort de Mohamed, le calife prend la tête de la communauté des musulmans et gouverne l'empire, depuis Damas puis depuis Bagdad.",
    "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 4 - Support.pdf",
-    "page": 1
+    "theme": "Cours 4 – Islam, origines et expansion",
+    "titre": "Calife",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Calife"
    },
-   "r": "==AOXgUDBMwCE0BJSBBEaUxGBwiUNcSDRQ1SHMwBFk0FLAVWHFwHMogBRsADKEQFfthCUMQGfIiUBsAEY8xCLIVDtoEBYhkAdcgDqAFH",
+   "r": "==ATKQxDZ8hIVlRRQ8xGLkxBHQSDRAVDdEwBLUwB0cAGFZAFF4kCVEQMEFQFEthHGpUDXoyEdoAORxgCPBQHm4lFQ5UDaUhRM4TZ",
    "poids": 1
   },
   {
@@ -484,20 +466,22 @@ JEU.enregistrer("cours", {
    "id": "histoire-s03-1-q13",
    "fiche": "histoire-s03-1-f3",
    "type": "qcm",
-   "niveau": 2,
-   "enonce": "En 929, quand commence le califat de Cordoue, quelle dynastie est liée à Bagdad ?",
+   "niveau": 3,
+   "enonce": "Qu'est-ce qui change à Cordoue en 929 ?",
    "choix": [
-    "La dynastie abbasside",
-    "La dynastie omeyyade",
-    "Aucune : la dynastie de Bagdad a disparu",
-    "Aucune : la dynastie de Bagdad n'existe pas encore"
+    "L'émir de Cordoue se proclame calife, sans plus dépendre de Bagdad",
+    "Cordoue est conquise par Charlemagne et rattachée à la Marche espagnole",
+    "Les Abbassides quittent Bagdad et installent leur capitale à Cordoue, en Al-Andalus",
+    "Cordoue redevient une ville de l'Empire byzantin"
    ],
-   "explication": "La dynastie abbasside est liée à Bagdad, de 750 à 1258. L'année 929 se trouve dans cette période.",
+   "explication": "Jusqu'en 929, Cordoue est un émirat : son chef, l'émir, reconnaît en principe le calife de Bagdad. En 929, Abd al-Rahman III se proclame calife à son tour, et Cordoue devient un califat indépendant.",
    "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 4 - Support.pdf",
-    "page": 1
+    "theme": "Cours 4 – Islam, origines et expansion",
+    "titre": "Califat de Cordoue",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Califat_de_Cordoue"
    },
-   "r": "=U2FRwgBCgADNMBSmQUEGxEAWIgRI4TZ",
+   "r": "==ARNMxIVQxJVRRDOpAAM0CSVwp7K8UFTUgAnFwGEYQUFtQCbQgIOVEUA9wAFkwGCc2FGUEEEYgCd0xKjhUAV81BC8cpO5TZ",
    "poids": 1
   },
   {
@@ -563,21 +547,22 @@ JEU.enregistrer("cours", {
    "id": "histoire-s03-1-q23",
    "fiche": "histoire-s03-1-f3",
    "type": "qcm",
-   "niveau": 3,
-   "enonce": "Combien de temps sépare l'Hégire du début du califat de Cordoue ?",
+   "niveau": 2,
+   "enonce": "Dans quel pays actuel se trouve Cordoue, et comment appelait-on au Moyen Âge la partie de cette région dominée par les musulmans ?",
    "choix": [
-    "Environ trois siècles",
-    "Environ un demi-siècle",
-    "Environ six siècles",
-    "Plus de mille ans"
+    "En Espagne ; Al-Andalus",
+    "Au Maroc ; le Maghreb",
+    "En Italie ; la Lombardie",
+    "En Syrie ; le califat de Damas"
    ],
-   "explication": "929 moins 622 font 307 ans. C'est environ trois siècles.",
-   "indice": "Fais la soustraction 929 moins 622.",
+   "explication": "Cordoue est aujourd'hui une ville du sud de l'Espagne, en Andalousie. Au Moyen Âge, les terres de la péninsule Ibérique dominées par les musulmans s'appelaient Al-Andalus, et Cordoue en était la principale ville.",
    "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 4 - Support.pdf",
-    "page": 1
+    "theme": "Cours 4 – Islam, origines et expansion",
+    "titre": "Al-Andalus",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Al-Andalus"
    },
-   "r": "QRzFZYQ3yCQHPFQAs8VEVMUAd8AEHcTZ",
+   "r": "==wSBIjHUEwGwQkAuI1Ujh0CSxkHcMiRHcTZ",
    "poids": 1
   },
   {

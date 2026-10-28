@@ -272,21 +272,22 @@ JEU.enregistrer("cours", {
    "id": "histoire-s01-2-q5",
    "fiche": "histoire-s01-2-f1",
    "type": "qcm",
-   "niveau": 3,
-   "enonce": "Charlemagne est empereur de 800 à 814. Pendant combien d'années ?",
+   "niveau": 1,
+   "enonce": "Qui est Pépin le Bref pour Charlemagne ?",
    "choix": [
-    "14 ans",
-    "46 ans",
-    "8 ans",
-    "100 ans"
+    "Son père, le premier roi de la famille des Carolingiens",
+    "Son fils, qui lui succède en 814",
+    "Le pape qui le couronne empereur à Rome, le jour de Noël",
+    "Le roi des Lombards qu'il a vaincu"
    ],
-   "explication": "814 moins 800 font 14. Il est donc empereur pendant 14 ans.",
-   "indice": "Fais la soustraction.",
+   "explication": "Pépin le Bref devient roi des Francs en 751 : c'est le premier roi carolingien. Son fils Charlemagne lui succède en 768 et agrandit son royaume.",
    "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 2 - Support.pdf",
-    "page": 1
+    "theme": "Cours 2 – Empire carolingien au temps de Charlemagne",
+    "titre": "Pépin le Bref",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/P%C3%A9pin_le_Bref"
    },
-   "r": "=8QHBcgRdNUZ",
+   "r": "==AUb0CSMI1QHMQCUgQMnFAEBUFFFIgBfkQJNQQWNswCG9gBAcGAQwAGUshHPdBBjFAAHVYrfYECGESZ",
    "poids": 1
   },
   {
@@ -327,21 +328,23 @@ JEU.enregistrer("cours", {
    "id": "histoire-s01-2-q26",
    "fiche": "histoire-s01-2-f1",
    "type": "qcm",
-   "niveau": 3,
-   "enonce": "Pendant combien d'années Charlemagne est-il roi des Francs avant de devenir empereur ?",
+   "niveau": 2,
+   "enonce": "Dans quelle ville Charlemagne fait-il bâtir le palais où il vit à la fin de son règne ?",
    "choix": [
-    "32 ans",
-    "14 ans",
-    "46 ans",
-    "22 ans"
+    "Aix-la-Chapelle",
+    "Rome",
+    "Paris",
+    "Constantinople, en Orient"
    ],
-   "explication": "Il est roi en 768 et empereur en 800. 800 moins 768 font 32 ans.",
-   "indice": "Fais la soustraction 800 moins 768.",
+   "explication": "Charlemagne fait construire un grand palais à Aix-la-Chapelle, avec une chapelle qui existe encore. Après 806, il ne quitte presque plus cette ville, qui devient le cœur de son empire.",
+   "indice": "La ville se trouve dans l'Allemagne actuelle, près de la frontière belge.",
    "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 2 - Support.pdf",
-    "page": 1
+    "theme": "Cours 2 – Empire carolingien au temps de Charlemagne",
+    "titre": "Palais d'Aix-la-Chapelle",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Palais_d%27Aix-la-Chapelle"
    },
-   "r": "=8QHBcgRbFUZ",
+   "r": "=s0CD4RDzwUD2BwDDskHAMTZ",
    "poids": 1
   },
   {
@@ -662,28 +665,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "histoire-s01-2-q34",
-   "fiche": "histoire-s01-2-f3",
-   "type": "qcm_multiple",
-   "niveau": 2,
-   "enonce": "Quels mots désignent Charlemagne dans le récit d'Eginhard ? (plusieurs réponses)",
-   "choix": [
-    "le roi",
-    "Charles Auguste",
-    "empereur des Romains",
-    "le pape Léon",
-    "l'apôtre Pierre",
-    "le peuple romain"
-   ],
-   "explication": "Eginhard appelle Charlemagne « le roi », puis le peuple l'acclame « Charles Auguste » et « empereur des Romains ». Le pape Léon, l'apôtre Pierre et le peuple romain sont d'autres noms du texte.",
-   "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 2 - Support.pdf",
-    "page": 2
-   },
-   "r": "z0UFIAwEq0xJFZAFN4UHH0QMIVBWIx0QENQHBITFAQSVCwgAdMBAA8QSXQUAdY0AFAFH",
-   "poids": 1
-  },
-  {
    "id": "histoire-s01-2-q15",
    "fiche": "histoire-s01-2-f4",
    "type": "qcm",
@@ -984,22 +965,25 @@ JEU.enregistrer("cours", {
   {
    "id": "histoire-s01-2-q41",
    "fiche": "histoire-s01-2-f5",
-   "type": "qcm",
-   "niveau": 3,
-   "enonce": "Laquelle de ces années tombe sous le règne où commence la renaissance carolingienne ?",
+   "type": "qcm_multiple",
+   "niveau": 2,
+   "enonce": "Qu'est-ce qui se développe grâce à la renaissance carolingienne ? (plusieurs réponses)",
    "choix": [
-    "790",
-    "500",
-    "560",
-    "900"
+    "Des écoles, dans les monastères et auprès des évêques",
+    "La copie de livres par des moines",
+    "Une nouvelle écriture, plus facile à lire",
+    "De nouveaux châteaux forts en pierre",
+    "Le commerce avec Bagdad",
+    "L'élection du roi par les comtes"
    ],
-   "explication": "La renaissance carolingienne commence sous Charlemagne, roi des Francs de 768 à 814. Seule l'année 790 se trouve dans ce règne.",
-   "indice": "Cherche d'abord les dates du règne de Charlemagne.",
+   "explication": "Charlemagne demande en 789 que des écoles ouvrent dans les monastères et les évêchés, et des ateliers de moines copient des milliers de livres. Ils écrivent avec une nouvelle écriture, la minuscule caroline, ronde et lisible.",
    "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 2 - Support.pdf",
-    "page": 3
+    "theme": "Cours 2 – Empire carolingien au temps de Charlemagne",
+    "titre": "Renaissance carolingienne",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Renaissance_carolingienne"
    },
-   "r": "=QkVQVUZ",
+   "r": "e8AAHRkAPZcpJdxKbYBBTElGbMgAI9GSXAUWH0RBPrqUi4RGAMABGAwTXYgFPk0FetQAPkABSRzFRU0BQkhTcchG1QUCVgkCPNwDZ0BJSRRKX11SdowBZku7Twp7OxxACkUAvH7BVAAEJphCSthJf1s9Z1hDIkABSRzFZUkBfggCP51GmEkCWRYrPVxAtAFH",
    "poids": 1
   },
   {

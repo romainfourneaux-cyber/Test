@@ -593,25 +593,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "geographie-s02-2-q28",
-   "fiche": "geographie-s02-2-f3",
-   "type": "vrai_faux",
-   "niveau": 2,
-   "enonce": "Dans les pays du Sud, ce sont surtout les habitants des villes qui partent s'installer à la campagne.",
-   "corrections": [
-    "Faux : ce sont les ruraux qui partent vers les villes.",
-    "Faux : ce sont surtout des personnes âgées qui partent vers le Nord.",
-    "Faux : personne ne quitte la campagne."
-   ],
-   "explication": "Faute de travail et de ressources, des ruraux quittent la campagne pour la ville. Les villes grossissent alors très vite.",
-   "source": {
-    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
-    "page": 3
-   },
-   "r": "MsEQccBBvQ0EV41CDYUFbcRMSFwCQUwGP8hUBYDXF1EWP0xEUkUAi4RVRshHa4kCRgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
    "id": "geographie-s02-2-q29",
    "fiche": "geographie-s02-2-f3",
    "type": "qcm",
@@ -771,21 +752,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "geographie-s02-2-q33",
-   "fiche": "geographie-s02-2-f4",
-   "type": "vrai_faux",
-   "niveau": 1,
-   "enonce": "Ceuta, que des milliers de migrants africains ont rejointe depuis le Maroc, est une enclave espagnole.",
-   "corrections": [],
-   "explication": "Oui, en mai 2021, plus de 8 000 migrants ont franchi la frontière entre le Maroc et cette enclave espagnole.",
-   "source": {
-    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
-    "page": 3
-   },
-   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
    "id": "geographie-s02-2-q34",
    "fiche": "geographie-s02-2-f4",
    "type": "association",
@@ -807,26 +773,6 @@ JEU.enregistrer("cours", {
     "page": 3
    },
    "r": "==AKsklQdlCRe8RSEYnQyclSZlCH",
-   "poids": 1
-  },
-  {
-   "id": "geographie-s02-2-q35",
-   "fiche": "geographie-s02-2-f4",
-   "type": "qcm",
-   "niveau": 2,
-   "enonce": "Pourquoi le départ de ces migrants affaiblit-il leur pays ?",
-   "choix": [
-    "Parce que ce sont surtout des jeunes, en majorité des hommes",
-    "Parce que ce sont surtout des personnes âgées et malades",
-    "Parce que ce sont surtout des familles riches, avec leurs enfants",
-    "Parce que les migrants reviennent tous au bout d'un an"
-   ],
-   "explication": "Le pays perd surtout des jeunes, en majorité des hommes. Ce départ massif le plonge dans une catastrophe économique.",
-   "source": {
-    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
-    "page": 3
-   },
-   "r": "XJADDIQHAMmXAEVDHzqEPsRHtMBGFtBFJJEHXYgNI9QFetwCGJBHdMDAAYRVFcQAcIVDg0AAAxlTKUAFIISZ",
    "poids": 1
   },
   {

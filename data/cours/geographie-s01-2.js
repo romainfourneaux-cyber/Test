@@ -790,25 +790,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "geographie-s01-2-q36",
-   "fiche": "geographie-s01-2-f4",
-   "type": "vrai_faux",
-   "niveau": 2,
-   "enonce": "En France, la transition démographique s'est terminée dans les années 1920.",
-   "corrections": [
-    "Faux : elle s'est terminée dans les années 1960.",
-    "Faux : elle n'est pas encore terminée.",
-    "Faux : elle s'est terminée à la fin du XVIIIe siècle."
-   ],
-   "explication": "En France, elle a duré de la fin du XVIIIe siècle aux années 1960. Les années 1920 marquent le début de celle de l'Inde.",
-   "source": {
-    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
-    "page": 5
-   },
-   "r": "=8gSt1xUMwhTcMwzqyRKTUlFQ0RSdEwEMMGSMb/QHIAFD0hUzEAECZQUMIwAXgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
    "id": "geographie-s01-2-q37",
    "fiche": "geographie-s01-2-f4",
    "type": "qcm",

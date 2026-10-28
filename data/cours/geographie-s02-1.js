@@ -446,26 +446,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "geographie-s02-1-q29",
-   "fiche": "geographie-s02-1-f2",
-   "type": "qcm",
-   "niveau": 3,
-   "enonce": "Le Burkina Faso comptait environ 5 millions d'habitants en 1960, et plus de 30 millions sont prévus vers 2040. Par combien sa population serait-elle multipliée ?",
-   "choix": [
-    "Par plus de 6",
-    "Par 2 environ",
-    "Par 3 environ",
-    "Par 30 environ"
-   ],
-   "explication": "30 millions, c'est six fois 5 millions. Avec plus de 30 millions, la population serait donc multipliée par plus de 6.",
-   "source": {
-    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1 - Etude de cas 1 Burkina Faso.pdf",
-    "page": 1
-   },
-   "r": "NRESmkURGhlAfYEFIISZ",
-   "poids": 1
-  },
-  {
    "id": "geographie-s02-1-q30",
    "fiche": "geographie-s02-1-f2",
    "type": "qcm_multiple",
@@ -646,7 +626,7 @@ JEU.enregistrer("cours", {
    "fiche": "geographie-s02-1-f4",
    "type": "association",
    "niveau": 3,
-   "enonce": "Relie chaque indicateur à sa valeur au Burkina Faso.",
+   "enonce": "Relie chaque indicateur à sa valeur approximative au Burkina Faso.",
    "gauche": [
     "Nombre d'enfants par femme",
     "Espérance de vie",
@@ -654,10 +634,10 @@ JEU.enregistrer("cours", {
     "Croissance de la population"
    ],
    "droite": [
-    "786 dollars",
-    "5,1",
-    "61 ans",
-    "+ 2,89 % par an"
+    "Moins de 800 dollars",
+    "Un peu plus de 5",
+    "Environ 61 ans",
+    "Près de 3 % par an"
    ],
    "explication": "Plus de cinq enfants par femme, une vie plus courte et peu de richesse par habitant. Ces chiffres montrent un pays pauvre où la population grandit vite.",
    "source": {
@@ -707,26 +687,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "geographie-s02-1-q16",
-   "fiche": "geographie-s02-1-f4",
-   "type": "qcm",
-   "niveau": 1,
-   "enonce": "Dans une école primaire du Burkina Faso, combien d'élèves peut-il y avoir dans une classe ?",
-   "choix": [
-    "Jusqu'à 120",
-    "Une vingtaine au plus",
-    "Une quarantaine au plus",
-    "Toujours moins de 30"
-   ],
-   "explication": "Les classes peuvent compter jusqu'à 120 élèves. Et ces enfants ont de la chance, car beaucoup d'autres travaillent.",
-   "source": {
-    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1 - Etude de cas 1 Burkina Faso.pdf",
-    "page": 2
-   },
-   "r": "=AFWxxRRV6eSacRFcgTZ",
-   "poids": 1
-  },
-  {
    "id": "geographie-s02-1-q17",
    "fiche": "geographie-s02-1-f4",
    "type": "vrai_faux",
@@ -734,6 +694,21 @@ JEU.enregistrer("cours", {
    "enonce": "Au Burkina Faso, plus de la moitié des enfants travaillent.",
    "corrections": [],
    "explication": "Oui, c'est le cas d'un peu plus de la moitié des enfants. Ceux qui vont à l'école sont parmi les plus chanceux.",
+   "source": {
+    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1 - Etude de cas 1 Burkina Faso.pdf",
+    "page": 2
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s02-1-q42",
+   "fiche": "geographie-s02-1-f4",
+   "type": "vrai_faux",
+   "niveau": 1,
+   "enonce": "Au Burkina Faso, les classes d'école primaire sont souvent surchargées, parfois avec plus de cent élèves.",
+   "corrections": [],
+   "explication": "Une classe peut compter jusqu'à cent vingt élèves. Et ces enfants ont de la chance, car beaucoup d'autres travaillent au lieu d'aller à l'école.",
    "source": {
     "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1 - Etude de cas 1 Burkina Faso.pdf",
     "page": 2
@@ -914,50 +889,6 @@ JEU.enregistrer("cours", {
     "page": 2
    },
    "r": "=QBUpthBWAAEJpRAX0BLHVkRIxhBHIxBXoyGZQQVCwgCaYQAhwUDV41CB8wBdAgIRUVEQEFDb4xGAMDTXIlQDYcpCkEHoshBKkRARsASegUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
-   "id": "geographie-s02-1-q40",
-   "fiche": "geographie-s02-1-f5",
-   "type": "qcm",
-   "niveau": 3,
-   "enonce": "À Ouagadougou, la quantité de déchets a triplé en vingt ans. Une rue suit la même évolution : si elle en produisait 100 kilos il y a vingt ans, combien en produit-elle aujourd'hui ?",
-   "choix": [
-    "300 kilos",
-    "200 kilos",
-    "130 kilos",
-    "400 kilos"
-   ],
-   "explication": "Tripler, c'est multiplier par trois : 100 × 3 = 300. La masse de déchets grossit donc très vite.",
-   "source": {
-    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1 - Etude de cas 1 Burkina Faso.pdf",
-    "page": 2
-   },
-   "r": "=8gFaF0BEYkVZFUZ",
-   "poids": 1
-  },
-  {
-   "id": "geographie-s02-1-q41",
-   "fiche": "geographie-s02-1-f5",
-   "type": "association",
-   "niveau": 3,
-   "enonce": "Relie chaque chiffre à ce qu'il décrit à Ouagadougou.",
-   "gauche": [
-    "Environ un tiers",
-    "Trois fois plus",
-    "Environ 3 millions"
-   ],
-   "droite": [
-    "Le nombre d'habitants de la capitale",
-    "La part de plastique dans les déchets",
-    "Les déchets d'aujourd'hui, comparés à il y a vingt ans"
-   ],
-   "explication": "Un déchet sur trois environ est en plastique, et la ville en produit trois fois plus qu'il y a vingt ans. Elle compte près de 3 millions d'habitants.",
-   "source": {
-    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1 - Etude de cas 1 Burkina Faso.pdf",
-    "page": 2
-   },
-   "r": "==AKsklQdlCRe8RSEYnQyclSZlCH",
    "poids": 1
   }
  ],

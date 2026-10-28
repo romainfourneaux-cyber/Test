@@ -117,20 +117,22 @@ JEU.enregistrer("cours", {
    "fiche": "geographie-s01-1-f1",
    "type": "qcm",
    "niveau": 1,
-   "enonce": "Dans l'organisation de l'année, que signale la lettre P devant une séance ?",
+   "enonce": "Qu'indique l'échelle d'une carte ?",
    "choix": [
-    "Un support papier seulement",
-    "Des vidéos et un support papier",
-    "Un devoir à envoyer à la correction",
-    "Une séance déjà vue en 6e"
+    "Le rapport entre les distances sur la carte et les distances réelles",
+    "La hauteur des montagnes et la profondeur des mers que la carte représente",
+    "Le nombre d'habitants de chaque région dessinée sur la carte",
+    "L'année où la carte a été dessinée et le nom de son auteur"
    ],
-   "explication": "P veut dire support papier uniquement. V signale des vidéos en plus du papier.",
-   "indice": "L'autre lettre, V, parle de vidéos.",
+   "explication": "L'échelle dit de combien la réalité a été réduite : un centimètre sur la carte représente une distance précise sur le terrain. Grâce à elle, on peut mesurer de vraies distances.",
+   "indice": "Pense à ce qui permet de mesurer un trajet sur une carte.",
    "source": {
-    "fichier": "cours/geographie/Geo 5e - Tableau de progression.pdf",
-    "page": 1
+    "theme": "Présentation du programme et regarder les outils du géographe",
+    "titre": "Échelle (proportion)",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/%C3%89chelle_(proportion)"
    },
-   "r": "=w0GIMABXsyBQYRVDwwBfMBGjl1Fa1lHaUhRHcSZ",
+   "r": "=QUFM4xKXwtpHElGLwAHJcjXMEVDdogCG1xFndRAXQhEJ9wASphNeVkRI1QAHIhGbMiUGAQGRxAHbwRDjl1Fa1lHOQhRM4TZ",
    "poids": 1
   },
   {
@@ -138,12 +140,14 @@ JEU.enregistrer("cours", {
    "fiche": "geographie-s01-1-f1",
    "type": "vrai_faux",
    "niveau": 1,
-   "enonce": "Les outils du géographe 1 à 8 ont déjà été étudiés en 6e.",
+   "enonce": "Un planisphère représente toute la surface de la Terre, mise à plat sur une feuille.",
    "corrections": [],
-   "explication": "Oui, ils datent de la 6e. En 5e, on peut les relire ou les découvrir.",
+   "explication": "Un planisphère est une représentation plane de toute la surface du globe. Pour voir la Terre en volume, il faut un globe terrestre.",
    "source": {
-    "fichier": "cours/geographie/Geo 5e - Tableau de progression.pdf",
-    "page": 1
+    "theme": "Présentation du programme et regarder les outils du géographe",
+    "titre": "Planisphère",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Planisph%C3%A8re"
    },
    "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
    "poids": 1
@@ -153,19 +157,21 @@ JEU.enregistrer("cours", {
    "fiche": "geographie-s01-1-f1",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Comment se sert-on du tableau de progression ?",
+   "enonce": "Pourquoi une carte a-t-elle une légende ?",
    "choix": [
-    "On coche ce qui est compris et su, et on note ce qui reste à revoir",
-    "On y recopie ses réponses aux devoirs avant de les envoyer à la correction",
-    "On y écrit la note reçue pour chaque devoir corrigé",
-    "On y coche chaque vidéo regardée, et rien d'autre"
+    "Pour expliquer ce que veulent dire ses couleurs et ses symboles",
+    "Pour donner le nom de la personne qui a dessiné la carte et sa date",
+    "Pour raconter l'histoire ancienne du territoire qu'elle représente",
+    "Pour indiquer la distance réelle entre deux points de la carte"
    ],
-   "explication": "Le tableau a une case « compris et su » et une case de remarques pour les points à revoir. Il sert à suivre ses progrès.",
+   "explication": "Les couleurs, les traits et les figurés d'une carte sont des conventions : la légende les traduit. Les distances, elles, se lisent avec l'échelle.",
    "source": {
-    "fichier": "cours/geographie/Geo 5e - Tableau de progression.pdf",
-    "page": 1
+    "theme": "Présentation du programme et regarder les outils du géographe",
+    "titre": "Carte géographique",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Carte_g%C3%A9ographique"
    },
-   "r": "==ARbsBKEAxFVFtqOpgBbYyXFxFWf80AFk0Fz0xGFthHJphCSRkNeVUQI5EHPQRGfgSEVFhBUk0BaMASm4URQVUDAUgRH0TZ",
+   "r": "=clFQ0hBMIwCbMmXAYUDaogRVsxBi4BAKYRUasAHS1QMEFQFZBgCKMBDEc2FAQRVUogTdcRHyQUCFV1CPRxEGISZ",
    "poids": 1
   },
   {
@@ -173,37 +179,34 @@ JEU.enregistrer("cours", {
    "fiche": "geographie-s01-1-f1",
    "type": "vrai_faux",
    "niveau": 2,
-   "enonce": "La lettre V signale une séance proposée seulement en vidéo, sans papier.",
-   "corrections": [
-    "Faux : V signale des vidéos et un support papier.",
-    "Faux : V signale un support papier seulement.",
-    "Faux : V signale une séance déjà vue en 6e."
-   ],
-   "explication": "V veut dire vidéos et support papier. P veut dire support papier uniquement.",
+   "enonce": "Une carte thématique représente un seul sujet précis, par exemple la population ou les forêts d'un territoire.",
+   "corrections": [],
+   "explication": "Une carte thématique ne montre pas tout le paysage : elle choisit une donnée et la met en avant. Une carte routière ou topographique, elle, représente la forme des lieux.",
    "source": {
-    "fichier": "cours/geographie/Geo 5e - Tableau de progression.pdf",
-    "page": 1
+    "theme": "Présentation du programme et regarder les outils du géographe",
+    "titre": "Carte thématique",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Carte_th%C3%A9matique"
    },
-   "r": "=8gSt9FAc11DfYkEb0xNCAgFV9BHOtxFIBjQMbfSHkhRVwgFndRGEshFA0xTkgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
    "poids": 1
   },
   {
    "id": "geographie-s01-1-q18",
    "fiche": "geographie-s01-1-f1",
    "type": "vrai_faux",
-   "niveau": 2,
-   "enonce": "Les études de cas de l'année sont proposées avec des vidéos.",
-   "corrections": [
-    "Faux : elles sont marquées P, sur papier seulement.",
-    "Faux : elles n'existent qu'en vidéo, sans papier.",
-    "Faux : seules celles du thème 3 ont des vidéos."
-   ],
-   "explication": "Toutes les études de cas portent la lettre P. Les vidéos accompagnent surtout les cours, marqués V.",
+   "niveau": 3,
+   "enonce": "Un plan de ville est à plus grande échelle qu'un planisphère, car la réalité y est moins réduite.",
+   "corrections": [],
+   "explication": "À grande échelle, le nombre de l'échelle est proche de un : on réduit peu, comme sur un plan ou une carte d'état-major. Un planisphère réduit énormément la Terre : c'est une très petite échelle.",
+   "indice": "Grande échelle veut dire peu de réduction.",
    "source": {
-    "fichier": "cours/geographie/Geo 5e - Tableau de progression.pdf",
-    "page": 1
+    "theme": "Présentation du programme et regarder les outils du géographe",
+    "titre": "Échelle (proportion)",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/%C3%89chelle_(proportion)"
    },
-   "r": "==wENxFHtgECQF0GKUhRbchLCQRFVNAHd8kX4MmXAwp7b4BFHQgUzwhGWUlAMIwAXgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -211,60 +214,62 @@ JEU.enregistrer("cours", {
    "fiche": "geographie-s01-1-f1",
    "type": "vrai_faux",
    "niveau": 2,
-   "enonce": "Les outils du géographe 1 à 9 ont tous été étudiés en 6e.",
-   "corrections": [
-    "Faux : seuls les outils 1 à 8 datent de la 6e ; l'outil 9 se place dans le thème 1.",
-    "Faux : aucun outil du géographe n'a été vu en 6e.",
-    "Faux : seuls les outils 1 à 3 datent de la 6e."
-   ],
-   "explication": "Les outils 1 à 8 ont été vus en 6e et peuvent être relus. L'outil 9, sur la pauvreté et les inégalités, se place dans le thème 1.",
+   "enonce": "Sur une carte classique, comme celles de l'IGN, le haut de la carte correspond au nord.",
+   "corrections": [],
+   "explication": "Sur les cartes traditionnelles, les lignes verticales, les méridiens, pointent vers le nord géographique : le nord est donc en haut. Une carte orientée autrement doit le signaler.",
    "source": {
-    "fichier": "cours/geographie/Geo 5e - Tableau de progression.pdf",
-    "page": 1
+    "theme": "Présentation du programme et regarder les outils du géographe",
+    "titre": "Nord",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Nord"
    },
-   "r": "==wGEd0QndBGNbbGd4kCegEMDRQUNsADHoQGSJSAVxVVdAgGa0xTv0gXVgEWPdgCJdxISFwCQUACK8kSINu7FRQDdMwDSwRHnFAEJUlAFshCBgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
    "poids": 1
   },
   {
    "id": "geographie-s01-1-q20",
    "fiche": "geographie-s01-1-f1",
    "type": "qcm_multiple",
-   "niveau": 3,
-   "enonce": "Quelles séances sont marquées V, avec des vidéos en plus du papier ?",
+   "niveau": 2,
+   "enonce": "Que doit comporter une carte pour qu'on puisse la lire ? (plusieurs réponses)",
    "choix": [
-    "La présentation du programme de 5e",
-    "La première partie du cours 1 du thème 1",
-    "L'outil 9 sur la pauvreté et les inégalités",
-    "L'étude de cas sur le Burkina Faso",
-    "Le devoir n° 1 de géographie",
-    "L'étude de cas sur l'Inde"
+    "Un titre",
+    "Une légende",
+    "Une échelle",
+    "L'orientation : où se trouve le nord",
+    "Un sommaire",
+    "Une préface"
    ],
-   "explication": "La présentation, les cours et l'outil 9 ont des vidéos. Les études de cas et les devoirs sont sur papier seulement.",
+   "explication": "Titre, orientation, légende, échelle : ces quatre repères servent à lire n'importe quelle carte. On y ajoute souvent la source des données.",
    "source": {
-    "fichier": "cours/geographie/Geo 5e - Tableau de progression.pdf",
-    "page": 1
+    "theme": "Présentation du programme et regarder les outils du géographe",
+    "titre": "Cartographie",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Cartographie"
    },
-   "r": "==gGQZAz2WAAC4QFBD4QMUhXLMgRSwgUuHbAAcwBc8wHSlwLNcBQe5kVGpAAGITHSlyVdt0XPdRBr7eDB1wGLY0VJFQNHohBVRQDOpwGcEDTVUBScccpPQwF1IQVEkzUFxkCHhkJJVEUANgDUEgBAcjUAEQVfYwBbMBHtgkFc6OHfY0BlAFH",
+   "r": "==wMNZhGsMURQFkTKAxEGAwMSBhFVhsqB8ESI1iQMEETaEwAPsRHg5zVJdFFFIgCasg6uXEUDtTTKREDWkyFSwstdk0CBciSv9AAHl1BbYEC8AFH",
    "poids": 1
   },
   {
    "id": "geographie-s01-1-q21",
    "fiche": "geographie-s01-1-f1",
    "type": "qcm",
-   "niveau": 2,
-   "enonce": "Comment un élève de 5e peut-il se servir des outils du géographe 1 à 8 ?",
+   "niveau": 1,
+   "enonce": "Qu'étudie la géographie ?",
    "choix": [
-    "Les consulter, les découvrir ou les revoir",
-    "Les envoyer à la correction comme un devoir",
-    "Les apprendre seulement au moment du thème 3",
-    "Il ne peut pas : ils sont réservés à la 6e"
+    "La Terre telle qu'elle est aujourd'hui, et la façon dont les humains y vivent",
+    "Seulement les roches, les volcans et les tremblements de terre",
+    "Seulement les noms des pays, des capitales et des grands fleuves à apprendre par cœur",
+    "La vie des rois et des reines d'autrefois, siècle après siècle"
    ],
-   "explication": "Ces outils ont été vus en 6e. En 5e, on peut les consulter, les découvrir ou les revoir quand on en a besoin.",
+   "explication": "La géographie décrit la Terre d'aujourd'hui : ses milieux naturels et surtout la manière dont les sociétés humaines s'y organisent. Le passé lointain, c'est l'histoire ; les roches seules, c'est la géologie.",
    "source": {
-    "fichier": "cours/geographie/Geo 5e - Tableau de progression.pdf",
-    "page": 1
+    "theme": "Présentation du programme et regarder les outils du géographe",
+    "titre": "Géographie",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/G%C3%A9ographie"
    },
-   "r": "lBAHKMAFb4EHXQwYYpQFfdQHQMhBR4esRUkBUUgTDBQD3EEEGNUAMYUFM4TZ",
+   "r": "=AFHtg0EctlTWYUFHshJfAQDVJADC8kBGwSSFtlQJz6BAk0ErIVAAUVXAsxBVxQMYpwXY9wTSUBDSJiHZAgUEghTK4BBmkVRQ9FHKIjRI4TZ",
    "poids": 1
   },
   {
@@ -397,21 +402,22 @@ JEU.enregistrer("cours", {
    "id": "geographie-s01-1-q23",
    "fiche": "geographie-s01-1-f2",
    "type": "ordre",
-   "niveau": 3,
-   "enonce": "Remets dans l'ordre le début du thème 1.",
+   "niveau": 2,
+   "enonce": "Classe ces continents du plus peuplé au moins peuplé.",
    "elements": [
-    "Le cours 1, deuxième partie",
-    "L'étude de cas sur l'Inde",
-    "Le cours 1, première partie",
-    "Le devoir n° 1",
-    "L'étude de cas sur le Burkina Faso"
+    "Europe",
+    "Asie",
+    "Océanie",
+    "Afrique"
    ],
-   "explication": "Chaque partie du cours 1 est suivie d'une étude de cas : le Burkina Faso, puis l'Inde. Le devoir n° 1 vient ensuite, avant le cours 2.",
+   "explication": "L'Asie regroupe plus de la moitié des humains et l'Afrique vient ensuite. L'Europe compte moins d'habitants que l'Afrique, et l'Océanie est de très loin la moins peuplée.",
    "source": {
-    "fichier": "cours/geographie/Geo 5e - Tableau de progression.pdf",
-    "page": 1
+    "theme": "Présentation du programme et regarder les outils du géographe",
+    "titre": "Population mondiale",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Population_mondiale"
    },
-   "r": "=AnVZwhQfpkUFBEH",
+   "r": "o9hQfpUVFNEH",
    "poids": 1
   },
   {
@@ -453,19 +459,21 @@ JEU.enregistrer("cours", {
    "fiche": "geographie-s01-1-f2",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Comment le cours 2 du thème 1, « Richesse et pauvreté dans le monde », est-il découpé ?",
+   "enonce": "Comment appelle-t-on la science qui étudie les populations humaines : les naissances, les décès, la fécondité, les migrations ?",
    "choix": [
-    "I. Une pauvreté en recul ; II. Des inégalités à différentes échelles",
-    "I. Les besoins du Sud ; II. Le vieillissement du Nord",
-    "I. Une ressource inégalement répartie ; II. Une ressource convoitée et menacée",
-    "I. Les risques naturels ; II. Le changement global"
+    "La démographie",
+    "La géologie",
+    "La climatologie",
+    "L'économie"
    ],
-   "explication": "Le cours 2 montre d'abord que la pauvreté recule, puis que les inégalités existent à différentes échelles. Les besoins du Sud et le vieillissement du Nord appartiennent au cours 1.",
+   "explication": "La démographie étudie les populations : combien elles sont, comment elles naissent, meurent, se marient et se déplacent. Le thème 1 de géographie s'appuie sur ses chiffres.",
    "source": {
-    "fichier": "cours/geographie/Geo 5e - Tableau de progression.pdf",
-    "page": 1
+    "theme": "Présentation du programme et regarder les outils du géographe",
+    "titre": "Démographie",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/D%C3%A9mographie"
    },
-   "r": "==wRGhkADMgDKsNhSZAAB8BDcYcsOUCRBURjt+UFPrqBu4BFCwtsHcwTB0wBNsEfk5EVGpAHRICAVtAERBcrbchG1gFBF1wCBMjRHtTZ",
+   "r": "=s0CGoBGi8lAaB0xsKgRI4TZ",
    "poids": 1
   },
   {
@@ -593,19 +601,21 @@ JEU.enregistrer("cours", {
    "fiche": "geographie-s01-1-f3",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Pourquoi l'Argentine est-elle étudiée dans le cours « Nourrir les hommes » ?",
+   "enonce": "Pourquoi dit-on que le pétrole, le charbon et le gaz ne sont pas des ressources renouvelables ?",
    "choix": [
-    "Parce que c'est un géant agricole",
-    "Parce qu'elle connaît des conflits liés à l'eau",
-    "Parce qu'elle vit de ses hydrocarbures",
-    "Parce qu'un cyclone l'a frappée"
+    "Parce qu'ils mettent des millions d'années à se former et qu'on les consomme bien plus vite",
+    "Parce qu'ils coûtent très cher à extraire et à transporter jusqu'aux usines et aux villes",
+    "Parce qu'ils viennent presque toujours de pays étrangers, qu'il faut payer en dollars",
+    "Parce qu'ils polluent l'air des villes quand on les brûle dans les moteurs et les chaudières"
    ],
-   "explication": "L'étude de cas 6 présente l'Argentine comme un géant agricole. Elle complète celle sur la situation alimentaire de l'Éthiopie.",
+   "explication": "Ces énergies fossiles viennent de matière vivante enfouie et transformée pendant des millions d'années. Nos réserves s'épuisent donc bien plus vite qu'elles ne se reforment.",
    "source": {
-    "fichier": "cours/geographie/Geo 5e - Tableau de progression.pdf",
-    "page": 2
+    "theme": "Présentation du programme et regarder les outils du géographe",
+    "titre": "Combustible fossile",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Combustible_fossile"
    },
-   "r": "Q1wLCZAXflgDGJxBT4esSU0GEkkGccxTg0AAAxlTKUAFIISZ",
+   "r": "=wkCS8wHSRzBZURVfwwBNIVDuAkCGNUAMYUFM4xZcohQAAQSaogUaYCQXo1SOpQFGlcsnFAEMb7HH8ASWgEMDpAXBJgBLYkGXMiUBsAEF0xCCI1GvQkQAxlTKUAFIISZ",
    "poids": 1
   },
   {
@@ -636,13 +646,15 @@ JEU.enregistrer("cours", {
    "id": "geographie-s01-1-q31",
    "fiche": "geographie-s01-1-f3",
    "type": "vrai_faux",
-   "niveau": 2,
-   "enonce": "Le thème 2 compte deux devoirs à envoyer à la correction.",
+   "niveau": 1,
+   "enonce": "Moins de 3 % de l'eau de la Terre est de l'eau douce.",
    "corrections": [],
-   "explication": "Oui, les devoirs n° 3 et n° 4. Le premier suit le cours sur l'énergie, le second le cours sur l'alimentation.",
+   "explication": "L'eau douce représente à peine deux ou trois centièmes de l'eau de la planète ; tout le reste est salé. Et la plus grande part de cette eau douce est gelée dans les glaciers et les neiges.",
    "source": {
-    "fichier": "cours/geographie/Geo 5e - Tableau de progression.pdf",
-    "page": 2
+    "theme": "Présentation du programme et regarder les outils du géographe",
+    "titre": "Eau douce",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Eau_douce"
    },
    "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
    "poids": 1
@@ -671,19 +683,18 @@ JEU.enregistrer("cours", {
    "id": "geographie-s01-1-q14",
    "fiche": "geographie-s01-1-f4",
    "type": "vrai_faux",
-   "niveau": 1,
-   "enonce": "Le thème 3 compte plusieurs études de cas.",
-   "corrections": [
-    "Faux : il n'en a qu'une, sur le cyclone Nargis en Birmanie.",
-    "Faux : il n'en a aucune.",
-    "Faux : il en a six, comme le thème 2."
-   ],
-   "explication": "Le thème 3 n'a qu'une seule étude de cas. Elle porte sur le cyclone Nargis.",
+   "niveau": 3,
+   "enonce": "Un séisme dans un désert où personne n'habite n'est pas un risque, car il ne menace ni personnes ni biens.",
+   "corrections": [],
+   "explication": "Un risque, c'est un aléa, le phénomène dangereux, qui menace des enjeux : des habitants, des maisons, des routes. Sans enjeu, il n'y a qu'un phénomène naturel, pas de risque.",
+   "indice": "Pas d'enjeu, pas de risque.",
    "source": {
-    "fichier": "cours/geographie/Geo 5e - Tableau de progression.pdf",
-    "page": 2
+    "theme": "Présentation du programme et regarder les outils du géographe",
+    "titre": "Risque naturel",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Risque_naturel"
    },
-   "r": "=oDUbBAHfgwAdshKjNEAV41BIQxBnIlIcoRCWggCOpgHIFDWWURALEwEBxxAnNRVLAhVH40AbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -732,18 +743,20 @@ JEU.enregistrer("cours", {
    "fiche": "geographie-s01-1-f4",
    "type": "vrai_faux",
    "niveau": 2,
-   "enonce": "Dans le thème 3, le cours 2 sur le changement global est proposé avec des vidéos.",
+   "enonce": "Un accident dans une usine chimique est un risque naturel.",
    "corrections": [
-    "Faux : il est marqué P, sur papier seulement.",
-    "Faux : il n'existe qu'en vidéo, sans papier.",
-    "Faux : c'est une étude de cas, pas un cours."
+    "Faux : c'est un risque industriel, une forme de risque technologique.",
+    "Faux : c'est un risque naturel seulement s'il pleut ce jour-là.",
+    "Faux : c'est un risque climatique."
    ],
-   "explication": "Ce cours porte la lettre P : il est seulement sur papier. Le cours 1 du thème 3, lui, a des vidéos.",
+   "explication": "Un risque naturel vient d'un phénomène de la nature : séisme, cyclone, inondation. Un accident d'usine est un risque industriel, classé parmi les risques technologiques, car il vient d'une activité humaine.",
    "source": {
-    "fichier": "cours/geographie/Geo 5e - Tableau de progression.pdf",
-    "page": 2
+    "theme": "Présentation du programme et regarder les outils du géographe",
+    "titre": "Risque technologique",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Risque_technologique"
    },
-   "r": "==AGXMgGBMwCM4hMXYQRHQBAe4gAIFDWWURA+80zlyxA1MBGFFgAM40AbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "r": "Qd0GIthHPEgBegCHdYAEFk0CaMwGq8VRQlkTKsAFGQxZXsBEV1VBLYAAcADWBsFROpwEXoxG1I1GQUVBasASRgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -766,18 +779,21 @@ JEU.enregistrer("cours", {
    "fiche": "geographie-s01-1-f4",
    "type": "ordre",
    "niveau": 3,
-   "enonce": "Remets dans l'ordre les séances du thème 3.",
+   "enonce": "Remets dans l'ordre la vie d'un cyclone tropical.",
    "elements": [
-    "L'étude de cas sur le cyclone Nargis",
-    "Le cours sur le changement global et ses effets",
-    "Le cours sur les risques naturels, industriels et technologiques"
+    "Il touche la côte avec des vents violents et des pluies torrentielles",
+    "Il se forme au-dessus d'un océan chaud",
+    "Il faiblit vite en avançant sur les terres",
+    "Il se renforce en avançant sur la mer chaude, qui lui donne son énergie"
    ],
-   "explication": "Le thème 3 commence par le cours sur les risques, suivi de l'étude de cas sur le cyclone Nargis. Le cours sur le changement global le termine.",
+   "explication": "L'eau chaude de l'océan est le carburant du cyclone : il naît et grossit au-dessus d'elle. Une fois sur la terre ou sur une mer froide, il perd sa source d'énergie et faiblit.",
    "source": {
-    "fichier": "cours/geographie/Geo 5e - Tableau de progression.pdf",
-    "page": 2
+    "theme": "Présentation du programme et regarder les outils du géographe",
+    "titre": "Cyclone tropical",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Cyclone_tropical"
    },
-   "r": "==wMepkVFBEH",
+   "r": "o9hQfpUVFNEH",
    "poids": 1
   },
   {
@@ -785,19 +801,21 @@ JEU.enregistrer("cours", {
    "fiche": "geographie-s01-1-f4",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Comment le thème 3 est-il organisé ?",
+   "enonce": "Comment appelle-t-on l'ensemble des changements rapides que les activités humaines font subir à toute la planète : climat, milieux naturels, sociétés ?",
    "choix": [
-    "Deux cours, une seule étude de cas",
-    "Trois cours et six études de cas",
-    "Un seul cours et deux études de cas",
-    "Deux cours et deux études de cas"
+    "Le changement global",
+    "Le développement durable",
+    "La transition démographique",
+    "L'exode rural"
    ],
-   "explication": "Le thème 3 a deux cours, sur les risques puis sur le changement global. Entre les deux, une seule étude de cas, sur le cyclone Nargis.",
+   "explication": "Le changement global désigne les transformations planétaires causées par les humains, le réchauffement du climat en premier. Le développement durable, lui, est une façon d'y répondre.",
    "source": {
-    "fichier": "cours/geographie/Geo 5e - Tableau de progression.pdf",
-    "page": 2
+    "theme": "Présentation du programme et regarder les outils du géographe",
+    "titre": "Changement global",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Changement_global"
    },
-   "r": "==QTBkAINAQUNswCTIBwxe2FZABECk0CBcASv51FAJUDP5xEMYTZ",
+   "r": "==AUZQwFeUQCPZgBmAEASN0DHUgRM4TZ",
    "poids": 1
   },
   {
@@ -825,7 +843,7 @@ JEU.enregistrer("cours", {
  ],
  "bonus": [],
  "nonCouvert": [
-  "La fiche « Les outils du géographe » (outils 1 à 8, vus en 6e) n'est pas déposée : son contenu n'est pas dans le jeu.",
+  "La fiche « Les outils du géographe » (outils 1 à 8, vus en 6e) n'est pas déposée : les questions sur ces outils, comme celles sur la population, les ressources et les risques, sont des questions de thème (sources en ligne vérifiées, règle du 25/10/2026), à comparer au livret papier.",
   "La vidéo de présentation du programme (repère V du tableau) n'est pas déposée.",
   "Le contenu des cours eux-mêmes (thèmes 2 et 3, cours 2 du thème 1, outil 9) : seuls leurs titres figurent dans le tableau."
  ]
