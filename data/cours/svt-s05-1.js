@@ -350,7 +350,7 @@ JEU.enregistrer("cours", {
     "On calcule l'écart entre les deux dates",
     "On compte les pics de réchauffement du cycle",
     "On lit la température la plus basse",
-    "On additionne les deux dates"
+    "On divise la durée du cycle entier par deux"
    ],
    "explication": "La durée, c'est la différence entre la date de la fin et celle du début. On calcule ainsi chaque période glaciaire, puis leur moyenne.",
    "source": {
