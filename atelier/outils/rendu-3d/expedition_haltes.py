@@ -437,12 +437,14 @@ def halte_escarmouche():
     derrière. Aucune couleur de camp."""
     E.scene_vignette(rayon_sol=1.8)
     m = mats_armes()
-    m["lame"] = C.mat_metal("lame_sombre", "#767a82", rugosite=0.42)      # acier plus sombre : la lame se détache du parchemin
-    # un grand X : les lames se croisent à mi-hauteur (plantées à ± 0,52 m, penchées de 26°), les gardes d'or en haut ;
-    # l'écu, sombre et plus petit, est derrière le croisement (la caméra à 45° remonte ce qui est en arrière)
-    objets = epee("epee1", m, (-0.5, 0.1, -0.08), penche=27, lacet=3, longueur=1.45, largeur=0.12)
-    objets += epee("epee2", m, (0.5, 0.15, -0.08), penche=-27, lacet=-3, longueur=1.45, largeur=0.12)
-    objets += bouclier_rond("ecu", 0.55, (0.0, 0.55, 0), penche=20, lacet=-6, m=m, mat=E.mat_planches("ecu_planches", "#6e4f30"))
+    # revue du 28/10/2026 : à 46 px, lames sombres sur écu sombre faisaient une motte brune ; acier clair, lames plus
+    # larges, écu plus petit et de bois clair : le X se lit (le liseré d'encre le détache du parchemin)
+    m["lame"] = C.mat_metal("lame_claire", "#b4b9c1", rugosite=0.42)
+    # un grand X : les lames se croisent à mi-hauteur (plantées à ± 0,52 m, penchées de 28°), les gardes d'or en haut ;
+    # l'écu, plus petit, est derrière le croisement (la caméra à 45° remonte ce qui est en arrière)
+    objets = epee("epee1", m, (-0.52, 0.1, -0.08), penche=28, lacet=3, longueur=1.5, largeur=0.14)
+    objets += epee("epee2", m, (0.52, 0.15, -0.08), penche=-28, lacet=-3, longueur=1.5, largeur=0.14)
+    objets += bouclier_rond("ecu", 0.46, (0.0, 0.6, 0), penche=20, lacet=-6, m=m, mat=E.mat_planches("ecu_planches", "#a8845a"))
     objets = racine(objets, 1.5, -0.72)
     return E.rendre_rondel("halte-escarmouche", objets, echantillons=ECHANTILLONS, contour=0.5)
 

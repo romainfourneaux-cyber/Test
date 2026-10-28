@@ -282,7 +282,7 @@ def carte_deroulee(nom, loc=(0, 0, 0), lacet=0.0, l=1.8, p=1.2, teinte="#c9b283"
         rl.location = (x, p / 2, 0.08)
         objets.append(rl)
     menc = E.mat_encre(nom + "_enc")
-    objets += polyligne(nom + "_route", [(-0.68, -0.4), (-0.32, -0.12), (0.05, -0.22), (0.32, 0.2), (0.7, 0.34)], 0.024, 0.05, menc)
+    objets += polyligne(nom + "_route", [(-0.68, -0.4), (-0.32, -0.12), (0.05, -0.22), (0.32, 0.2), (0.7, 0.34)], 0.024, 0.07, menc)
     for k, (x, y) in enumerate(((-0.68, -0.4), (0.32, 0.2))):
         objets.append(E.disque("%s_b%d" % (nom, k), 0.09, 0.012, (x, y, 0.02), menc, segments=16))
     for k, (x, y) in enumerate(((-0.25, 0.3), (-0.05, 0.38), (0.15, 0.28))):
@@ -483,11 +483,13 @@ def faveur_annales():
 def faveur_eclaireurs():
     """Éclaireurs (cartographe, géographie) : carte déroulée, compas de laiton debout dessus, cor de chasse ocre posé contre."""
     E.scene_vignette(rayon_sol=1.8)
-    objets = carte_deroulee("carte", (-0.1, 0.3, 0), lacet=-6, l=2.1, p=1.35)
+    # revue du 28/10/2026 : à 56 px, la carte se fondait dans le champ ; feuille plus sombre, route plus épaisse,
+    # composition agrandie (1,45 au lieu de 1,25) : la carte, le compas et le cor se lisent
+    objets = carte_deroulee("carte", (-0.1, 0.3, 0), lacet=-6, l=2.1, p=1.35, teinte="#b4915c")
     objets += compas("compas", (-0.6, 0.35, 0.02), lacet=25, ecart=0.3, hauteur=0.8)
     # grand cor dressé en croissant, le pavillon vers la caméra, l'embouchure au sol
     objets += cor("cor", (0.55, -0.45, 0.42), rot=(55, 0, 20), rayon=0.5)
-    return racine(objets, 1.25, -0.3, 0.0)
+    return racine(objets, 1.45, -0.3, 0.0)
 
 
 def faveur_simples():
