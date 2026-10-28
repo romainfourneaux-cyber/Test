@@ -137,6 +137,134 @@ JEU.enregistrer("cours", {
     "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
     "page": 4
    }
+  },
+  {
+   "id": "geographie-s03-1-f5",
+   "notion": "La Chine : de l'enfant unique à trois enfants",
+   "titre": "La Chine change de politique",
+   "texte": "En 1979, pour éviter la surpopulation, le pouvoir chinois impose la politique de l'enfant unique : un seul enfant par couple, sous peine de fortes amendes. Quarante ans plus tard, la Chine vieillit et les naissances baissent. En 2021, les couples sont autorisés à avoir trois enfants. La Chine est devenue une puissance démographique vieillissante.",
+   "pointsCles": [
+    "1979 : politique de l'enfant unique, imposée par le pouvoir pour éviter la surpopulation, avec de fortes amendes",
+    "2021 : trois enfants autorisés, pour répondre au vieillissement et à la baisse des naissances",
+    "Un seul enfant pendant quarante ans : moins de jeunes aujourd'hui, et des parents âgés plus nombreux",
+    "La Chine : un pays émergent devenu une puissance démographique vieillissante"
+   ],
+   "dates": [
+    {
+     "annee": 1979,
+     "evenement": "La Chine impose la politique de l'enfant unique"
+    },
+    {
+     "annee": 2021,
+     "evenement": "La Chine autorise trois enfants par couple"
+    }
+   ],
+   "lieux": [
+    "Chine"
+   ],
+   "personnages": [],
+   "vocabulaire": [
+    {
+     "mot": "politique de l'enfant unique",
+     "def": "la règle chinoise de 1979 qui interdisait aux couples d'avoir plus d'un enfant"
+    },
+    {
+     "mot": "surpopulation",
+     "def": "une population trop nombreuse pour les ressources d'un territoire"
+    }
+   ],
+   "schema": null,
+   "prerequis": [
+    "geographie-s03-1-f1",
+    "geographie-s01-2-f3"
+   ],
+   "source": {
+    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
+    "page": 9
+   }
+  },
+  {
+   "id": "geographie-s03-1-f6",
+   "notion": "La France vieillit : un habitant sur cinq a 65 ans ou plus",
+   "titre": "La France vieillit",
+   "texte": "Une population vieillit quand la part des personnes âgées grandit. Causes : on vit plus longtemps, ou les femmes ont moins d'enfants. En France, les 65 ans et plus faisaient 12,8 % de la population en 1986 et 19,4 % en 2017 ; aujourd'hui, plus d'un habitant sur cinq. Défis : retraites, santé, logements.",
+   "pointsCles": [
+    "Vieillissement : la part des personnes âgées augmente dans la population",
+    "Deux causes, dont une seule suffit : espérance de vie plus longue, fécondité plus basse",
+    "France : 12,8 % de 65 ans et plus en 1986, 19,4 % en 2017, plus d'un habitant sur cinq en 2026 (Insee)",
+    "Conséquences : moins d'actifs pour financer les retraites, soins plus coûteux, seulement 6 % des logements adaptés à la perte d'autonomie"
+   ],
+   "dates": [
+    {
+     "annee": 2017,
+     "evenement": "En France, près d'un habitant sur cinq a 65 ans ou plus"
+    }
+   ],
+   "lieux": [
+    "France"
+   ],
+   "personnages": [],
+   "vocabulaire": [
+    {
+     "mot": "actif",
+     "def": "une personne qui travaille ou cherche du travail, à la différence des retraités et des enfants"
+    },
+    {
+     "mot": "perte d'autonomie",
+     "def": "quand une personne âgée ne peut plus faire seule les gestes de la vie quotidienne"
+    }
+   ],
+   "schema": null,
+   "prerequis": [
+    "geographie-s03-1-f1",
+    "geographie-s03-1-f3"
+   ],
+   "source": {
+    "programme": "La croissance démographique et ses effets",
+    "titre": "Vieillissement démographique",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Vieillissement_d%C3%A9mographique"
+   }
+  },
+  {
+   "id": "geographie-s03-1-f7",
+   "notion": "Le Japon, pays des records d'âge",
+   "titre": "Le Japon : une population qui baisse",
+   "texte": "Le Japon compte 123 millions d'habitants en 2025, contre 128 millions à son maximum, vers 2010 : la population baisse. L'espérance de vie y est la plus élevée du monde, 85,5 ans en 2024. Plus d'un Japonais sur quatre a 65 ans ou plus. En 2024 : 686 000 naissances, et 900 000 décès de plus que de naissances.",
+   "pointsCles": [
+    "123 millions d'habitants en 2025 ; maximum de 128 millions vers 2010, puis baisse",
+    "Espérance de vie la plus élevée du monde : 85,5 ans en 2024 (82,3 ans pour les hommes, 88,2 pour les femmes)",
+    "Plus d'un habitant sur quatre a 65 ans ou plus ; âge médian : 47,7 ans en 2018",
+    "2024 : 686 000 naissances, un solde naturel de − 919 000 ; presque pas d'immigration",
+    "Projections : moins de 100 millions d'habitants vers le milieu du siècle"
+   ],
+   "dates": [
+    {
+     "annee": 2010,
+     "evenement": "Le Japon atteint son maximum de population, 128 millions d'habitants"
+    }
+   ],
+   "lieux": [
+    "Japon"
+   ],
+   "personnages": [],
+   "vocabulaire": [
+    {
+     "mot": "solde naturel",
+     "def": "les naissances moins les décès d'une année ; négatif quand les décès l'emportent"
+    }
+   ],
+   "schema": null,
+   "prerequis": [
+    "geographie-s03-1-f1",
+    "geographie-s03-1-f6"
+   ],
+   "source": {
+    "programme": "La croissance démographique et ses effets",
+    "titre": "Démographie du Japon",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/D%C3%A9mographie_du_Japon"
+   }
   }
  ],
  "schemas": [],
@@ -220,19 +348,19 @@ JEU.enregistrer("cours", {
    "fiche": "geographie-s03-1-f1",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Pourquoi la population des pays développés vieillit-elle ?",
+   "enonce": "Comment une espérance de vie plus longue fait-elle vieillir une population ?",
    "choix": [
-    "Parce qu'il y naît peu d'enfants et qu'on y vit très longtemps",
-    "Parce qu'il y naît beaucoup d'enfants et qu'on y vit très longtemps",
-    "Parce qu'il y naît peu d'enfants et qu'on y meurt de plus en plus jeune",
-    "Parce que les jeunes partent en masse s'installer dans les pays du Sud"
+    "Les personnes âgées vivent plus longtemps, donc elles deviennent plus nombreuses dans la population",
+    "Elle fait naître plus d'enfants, car les parents vivent assez longtemps pour en avoir davantage",
+    "Elle pousse les jeunes à partir vivre à l'étranger, où la vie est moins chère",
+    "Elle ne change rien à l'âge moyen des habitants"
    ],
-   "explication": "Peu de naissances, c'est peu de jeunes ; une longue espérance de vie, c'est beaucoup de personnes âgées. La part des personnes âgées grandit donc.",
+   "explication": "Quand on vit plus vieux, les personnes âgées s'accumulent : leur part dans la population grandit. C'est l'une des causes du vieillissement, à côté de la baisse des naissances.",
    "source": {
     "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
     "page": 4
    },
-   "r": "QZQFYQRHJEQHEMmXNb/Xa8kEP8hU+I1GKIFBY40GXgEMZtAVLBgCBJQSHIiAVFx2yiAAPtASvQkQAxlTKUAFIISZ",
+   "r": "==QTccgKZRQWY5BAWYECecWAbQQERpxCccQDx8ECaNkTcMhCZI1McAxCbQBAYogFIBDSJkFSOxACJ0gUrFQBIARBOAAAegEMYlQRNoRADABAEcWAQwstWscrPFQDtMkCG91CfYUFM4TZ",
    "poids": 1
   },
   {
@@ -751,6 +879,512 @@ JEU.enregistrer("cours", {
    },
    "r": "==AKsklQdlCRe8RSEYnQyclSZlCH",
    "poids": 1
+  },
+  {
+   "id": "geographie-s03-1-q34",
+   "fiche": "geographie-s03-1-f5",
+   "type": "qcm",
+   "niveau": 1,
+   "enonce": "Qu'impose la Chine aux couples à partir de 1979 ?",
+   "choix": [
+    "Un seul enfant",
+    "Au moins trois enfants",
+    "Deux enfants exactement",
+    "Aucun enfant avant trente ans"
+   ],
+   "explication": "La politique de l'enfant unique limitait chaque couple à un enfant, sous peine de fortes amendes. Le but était d'éviter la surpopulation.",
+   "source": {
+    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
+    "page": 9
+   },
+   "r": "==ATbwRClMEAVE0GKUhRHcSZ",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s03-1-q35",
+   "fiche": "geographie-s03-1-f5",
+   "type": "vrai_faux",
+   "niveau": 1,
+   "enonce": "En 2021, la Chine autorise les couples à avoir trois enfants.",
+   "corrections": [],
+   "explication": "Oui : le pouvoir chinois répond ainsi au vieillissement et à la baisse des naissances. C'est la fin de l'enfant unique.",
+   "source": {
+    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
+    "page": 9
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s03-1-q36",
+   "fiche": "geographie-s03-1-f5",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Pourquoi la Chine impose-t-elle la politique de l'enfant unique en 1979 ?",
+   "choix": [
+    "Pour éviter une surpopulation",
+    "Pour faire vieillir sa population",
+    "Pour attirer des travailleurs immigrés",
+    "Pour remplir ses écoles"
+   ],
+   "explication": "Le pouvoir craignait que la population ne devienne trop nombreuse pour les ressources du pays. Il a donc limité les naissances par la loi.",
+   "source": {
+    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
+    "page": 9
+   },
+   "r": "=c0WCdwGHoAHCgiAHAhBRxAAaIlGmkFDDRYrPRxEGISZ",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s03-1-q37",
+   "fiche": "geographie-s03-1-f5",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Pourquoi la Chine change-t-elle de politique en 2021 ?",
+   "choix": [
+    "Parce que sa population vieillit et que les naissances baissent",
+    "Parce que sa population augmente encore trop vite pour ses ressources",
+    "Parce que les familles ont trop d'enfants",
+    "Parce qu'elle manque de logements"
+   ],
+   "explication": "Après quarante ans d'enfant unique, la Chine manque de jeunes et compte de plus en plus de personnes âgées. Elle autorise donc trois enfants par couple.",
+   "source": {
+    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
+    "page": 9
+   },
+   "r": "=cVEbQhGdYwEKMmXAY1QPwRFPgAHnFAEJUFFc8xTG0wYZxQWBdgCPARScgyGBQQGEkRAfIVCw0AAAxlTKUAFIISZ",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s03-1-q38",
+   "fiche": "geographie-s03-1-f5",
+   "type": "ordre",
+   "niveau": 2,
+   "enonce": "Remets dans l'ordre l'histoire de la politique démographique chinoise.",
+   "elements": [
+    "Les couples peuvent avoir trois enfants",
+    "Le pouvoir impose l'enfant unique, avec de fortes amendes",
+    "La population vieillit et les naissances baissent",
+    "La Chine craint la surpopulation"
+   ],
+   "explication": "La peur de la surpopulation mène à l'enfant unique en 1979. Quarante ans plus tard, le vieillissement et la baisse des naissances amènent la règle des trois enfants, en 2021.",
+   "source": {
+    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
+    "page": 9
+   },
+   "r": "o1hQdp0VFFEH",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s03-1-q39",
+   "fiche": "geographie-s03-1-f5",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Depuis la fin de l'enfant unique, les Chinoises ont de nouveau beaucoup d'enfants : plus de trois en moyenne.",
+   "corrections": [
+    "Faux : environ 1,7 enfant par femme ces dernières années, bien en dessous du seuil de renouvellement.",
+    "Faux : elles n'ont plus du tout d'enfants.",
+    "Faux : exactement trois, comme la loi le permet."
+   ],
+   "explication": "Même assouplie, la règle n'a pas relancé les naissances : environ 1,7 enfant par femme. Le vieillissement de la Chine continue donc.",
+   "source": {
+    "theme": "Cours 1 – 2e partie – III Dans les pays du Nord",
+    "titre": "Vieillissement démographique",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Vieillissement_d%C3%A9mographique"
+   },
+   "r": "==gOQtVEbQBBLMgHNUDWKsFSc80ACkkHucAEWUFBN4EHHcAMeBQUNAgCGhADbUiUZZBEYrKABMBSwg0Fd6+BBQxANIFNXYRRQwBBLkgUaISXFF0QPkACDkURrNUVLoxAAgRAXgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s03-1-q40",
+   "fiche": "geographie-s03-1-f5",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Un pays limite les naissances pendant quarante ans, puis les encourage. Quel problème nouveau explique ce retournement ?",
+   "choix": [
+    "Le vieillissement : trop peu de jeunes pour les actifs et les retraites de demain",
+    "La surpopulation, devenue plus forte qu'avant malgré la limitation des naissances",
+    "Une immigration massive venue des pays voisins, qui fait grossir les villes",
+    "Une famine"
+   ],
+   "explication": "C'est le cas de la Chine : l'enfant unique a réduit le nombre de jeunes, et les parents de cette génération vieillissent. Encourager les naissances vise à rééquilibrer la population.",
+   "source": {
+    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
+    "page": 9
+   },
+   "r": "=sEAGMRBmkURQlkTcMgEAMRNGAxFVJADC8kBNMmXDwVWN4gRVwgHnBAAKUQUasQAH0QKNAQUNshCWYUGdUjBV9VVFcwCCcxGwQUCZR0CGAhRM4TZ",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s03-1-q41",
+   "fiche": "geographie-s03-1-f5",
+   "type": "trou",
+   "niveau": 1,
+   "enonce": "Complète les deux dates.",
+   "texte": "En ___, la Chine impose l'enfant unique ; en ___, elle autorise trois enfants.",
+   "banque": [
+    "1979",
+    "2021",
+    "1949",
+    "2001"
+   ],
+   "explication": "L'enfant unique date de 1979, la règle des trois enfants de 2021. Entre les deux, quarante ans de naissances limitées.",
+   "source": {
+    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
+    "page": 9
+   },
+   "r": "==AKss0XdJkWhZXSo9wVY91VLlCH",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s03-1-q42",
+   "fiche": "geographie-s03-1-f6",
+   "type": "qcm",
+   "niveau": 1,
+   "enonce": "Quelle part des Français a plus de soixante-cinq ans aujourd'hui ?",
+   "choix": [
+    "Plus d'un sur cinq",
+    "Environ un sur deux",
+    "Moins d'un sur dix",
+    "Environ un sur vingt"
+   ],
+   "explication": "Au 1er janvier 2026, un peu plus d'un Français sur cinq a plus de soixante-cinq ans, d'après l'Insee. Un sur neuf a même plus de soixante-quinze ans.",
+   "source": {
+    "theme": "Cours 1 – 2e partie – III Dans les pays du Nord",
+    "titre": "Population par âge au 1er janvier 2026",
+    "editeur": "Insee",
+    "url": "https://www.insee.fr/fr/statistiques/2381474"
+   },
+   "r": "=cEBfAQDPBQHw0wCApgCPVxEFISZ",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s03-1-q43",
+   "fiche": "geographie-s03-1-f6",
+   "type": "vrai_faux",
+   "niveau": 1,
+   "enonce": "En France, la part des personnes âgées dans la population a augmenté depuis les années 1980.",
+   "corrections": [],
+   "explication": "Oui : les plus de soixante-cinq ans faisaient 12,8 % des Français en 1986, 19,4 % en 2017. Et la hausse continue.",
+   "source": {
+    "theme": "Cours 1 – 2e partie – III Dans les pays du Nord",
+    "titre": "Vieillissement démographique",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Vieillissement_d%C3%A9mographique"
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s03-1-q44",
+   "fiche": "geographie-s03-1-f6",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Comment la part des plus de soixante-cinq ans a-t-elle évolué en France entre 1986 et 2017 ?",
+   "choix": [
+    "Elle est passée d'environ un habitant sur huit à près d'un sur cinq",
+    "Elle a baissé, d'un habitant sur cinq à un sur huit, grâce aux naissances",
+    "Elle n'a pas bougé : un habitant sur dix",
+    "Elle a doublé, d'un sur quatre à un sur deux"
+   ],
+   "explication": "De 12,8 % à 19,4 % : un habitant sur huit, puis presque un sur cinq. En 2026, le cap d'un sur cinq est dépassé.",
+   "source": {
+    "theme": "Cours 1 – 2e partie – III Dans les pays du Nord",
+    "titre": "Vieillissement démographique",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Vieillissement_d%C3%A9mographique"
+   },
+   "r": "NdBCAExZAAgFV9BHJtgUbsu7XUUDOzqRSAwBvI1BQYQUdAgDGEQIM1QFDtxTIkwGbEDHQIUERxwxsGwGi0VRB51CPNgCFcTZ",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s03-1-q45",
+   "fiche": "geographie-s03-1-f6",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Pourquoi le vieillissement rend-il les retraites plus difficiles à financer ?",
+   "choix": [
+    "Parce qu'il y a de moins en moins d'actifs pour chaque retraité",
+    "Parce que les retraités dépensent moins qu'avant dans les commerces et les loisirs",
+    "Parce que les jeunes refusent de travailler",
+    "Parce que les personnes âgées ne paient plus aucun impôt"
+   ],
+   "explication": "En France, les retraites sont payées par les cotisations des actifs. Quand les retraités augmentent plus vite que les actifs, chaque travailleur doit en financer davantage.",
+   "source": {
+    "theme": "Cours 1 – 2e partie – III Dans les pays du Nord",
+    "titre": "Vieillissement démographique",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Vieillissement_d%C3%A9mographique"
+   },
+   "r": "QxtpBgBCcsxFaMGSQQETGwgRUwRH3IlBDwRBK8ASWgEMDxgWA5UADYkGc4SHYUEEVk0DPtASvQkQAxlTKUAFIISZ",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s03-1-q46",
+   "fiche": "geographie-s03-1-f6",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "Pour qu'une population vieillisse, il faut forcément que l'espérance de vie augmente et que la fécondité baisse en même temps.",
+   "corrections": [
+    "Faux : une seule des deux causes suffit à faire vieillir une population.",
+    "Faux : seule la baisse de la fécondité compte.",
+    "Faux : seule l'immigration fait vieillir une population."
+   ],
+   "explication": "Vivre plus longtemps suffit à augmenter la part des personnes âgées ; avoir moins d'enfants suffit aussi. En France, les deux jouent ensemble.",
+   "source": {
+    "theme": "Cours 1 – 2e partie – III Dans les pays du Nord",
+    "titre": "Vieillissement démographique",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Vieillissement_d%C3%A9mographique"
+   },
+   "r": "==gEQZULCxQQMJgGWkQGSJCHAU0BYUgAGcRA10AAHR0DJYkxqK1MbMxAAIQSdoQAdIiTF1EWLsgRVwgFndRGQAhAJtQAHgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s03-1-q47",
+   "fiche": "geographie-s03-1-f6",
+   "type": "qcm_multiple",
+   "niveau": 2,
+   "enonce": "Quelles conséquences le vieillissement a-t-il pour un pays comme la France ? (plusieurs réponses)",
+   "choix": [
+    "Moins d'actifs pour financer les retraites",
+    "Des dépenses de santé plus élevées",
+    "Des logements à adapter à la perte d'autonomie",
+    "Des écoles surchargées",
+    "Des bidonvilles qui s'étendent",
+    "Une forte hausse des naissances"
+   ],
+   "explication": "Retraites, santé, logement : voilà les trois chantiers d'un pays qui vieillit. Les écoles pleines et les bidonvilles sont plutôt les défis des pays jeunes du Sud.",
+   "source": {
+    "theme": "Cours 1 – 2e partie – III Dans les pays du Nord",
+    "titre": "Vieillissement démographique",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Vieillissement_d%C3%A9mographique"
+   },
+   "r": "yQ0AA8BKcoREAAhTK80FcEDSVUBTC8kxlmEAiYQBEEBEJ5MrStxNDBAWIlAAKYkGXMAUZdkBUAcrZcBBq7eRGhlAfY0zqaQKTYQRQURSdoQAGYSXMbfSOxxAiskXlFAERwBEbohCAgEMIlQFftADIcwBbEiUHAhGBkUHJsBHgwkQR1QHB8QCkAFH",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s03-1-q48",
+   "fiche": "geographie-s03-1-f6",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "En France, seuls 6 % des logements sont adaptés à la perte d'autonomie. Quel défi cela montre-t-il ?",
+   "choix": [
+    "Adapter les logements à des personnes âgées de plus en plus nombreuses",
+    "Construire plus d'écoles maternelles pour accueillir des enfants plus nombreux",
+    "Loger les familles nombreuses venues des campagnes",
+    "Réduire la taille des familles"
+   ],
+   "explication": "Avec plus d'un habitant sur cinq âgé de plus de soixante-cinq ans, beaucoup de Français vieilliront chez eux. Leurs logements doivent être aménagés, et la téléassistance à domicile se développe.",
+   "source": {
+    "theme": "Cours 1 – 2e partie – III Dans les pays du Nord",
+    "titre": "Vieillissement démographique",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Vieillissement_d%C3%A9mographique"
+   },
+   "r": "X41CcMxAbAhKdsRRGQQBe8EHNMmXQkVXOpgAGpxFuHrEHbbUasQAccAMfBQRN0hCCYUyxeWABsAEcwQCA4BSwgUCV81CbYxBNMTZ",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s03-1-q49",
+   "fiche": "geographie-s03-1-f6",
+   "type": "trou",
+   "niveau": 2,
+   "enonce": "Complète avec les bons pourcentages.",
+   "texte": "En France, les plus de soixante-cinq ans représentaient ___ % de la population en 1986 et ___ % en 2017.",
+   "banque": [
+    "12,8",
+    "19,4",
+    "5,2",
+    "35,1"
+   ],
+   "explication": "Un habitant sur huit en 1986, presque un sur cinq en 2017. Le vieillissement est régulier depuis quarante ans.",
+   "source": {
+    "theme": "Cours 1 – 2e partie – III Dans les pays du Nord",
+    "titre": "Vieillissement démographique",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Vieillissement_d%C3%A9mographique"
+   },
+   "r": "==AKsskWDtUWhZXSo9gVDR1VLlCH",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s03-1-q50",
+   "fiche": "geographie-s03-1-f7",
+   "type": "vrai_faux",
+   "niveau": 1,
+   "enonce": "Au Japon, l'espérance de vie est l'une des plus élevées du monde.",
+   "corrections": [],
+   "explication": "Oui : 85,5 ans en 2024, la plus élevée au monde. Les femmes japonaises vivent en moyenne 88 ans.",
+   "source": {
+    "theme": "Cours 1 – 2e partie – III Dans les pays du Nord",
+    "titre": "Démographie du Japon",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/D%C3%A9mographie_du_Japon"
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s03-1-q51",
+   "fiche": "geographie-s03-1-f7",
+   "type": "qcm",
+   "niveau": 1,
+   "enonce": "Comment la population du Japon évolue-t-elle depuis une quinzaine d'années ?",
+   "choix": [
+    "Elle baisse",
+    "Elle augmente vite",
+    "Elle reste stable",
+    "Elle double"
+   ],
+   "explication": "Le Japon a culminé à 128 millions d'habitants il y a une quinzaine d'années. Il en compte 123 millions en 2025, et la baisse continue.",
+   "source": {
+    "theme": "Cours 1 – 2e partie – III Dans les pays du Nord",
+    "titre": "Démographie du Japon",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/D%C3%A9mographie_du_Japon"
+   },
+   "r": "==gSm4lFcxEDPNgCFcTZ",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s03-1-q52",
+   "fiche": "geographie-s03-1-f7",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Quelle part des Japonais a plus de soixante-cinq ans ?",
+   "choix": [
+    "Plus d'un sur quatre",
+    "Environ un sur dix",
+    "Environ un sur deux",
+    "Moins d'un sur vingt"
+   ],
+   "explication": "Plus de 28 % des Japonais ont passé soixante-cinq ans : plus d'un sur quatre. C'est l'une des populations les plus âgées du monde.",
+   "source": {
+    "theme": "Cours 1 – 2e partie – III Dans les pays du Nord",
+    "titre": "Démographie du Japon",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/D%C3%A9mographie_du_Japon"
+   },
+   "r": "==AUQcRAQwxHPBQHw0wCApgCPVxEFISZ",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s03-1-q53",
+   "fiche": "geographie-s03-1-f7",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Pourquoi la population japonaise diminue-t-elle, alors que le pays ne manque ni de nourriture ni de soins ?",
+   "choix": [
+    "Parce qu'il y meurt chaque année bien plus de personnes qu'il n'en naît, et que presque personne n'immigre",
+    "Parce que beaucoup de jeunes Japonais partent chaque année vivre en Chine, en Corée ou aux États-Unis",
+    "Parce que l'espérance de vie y recule depuis les années 2000, à cause du travail",
+    "Parce qu'une épidémie a frappé le pays"
+   ],
+   "explication": "En 2024, le Japon a compté 686 000 naissances et plus de 900 000 décès de plus que de naissances. Sans immigration pour compenser, la population baisse.",
+   "source": {
+    "theme": "Cours 1 – 2e partie – III Dans les pays du Nord",
+    "titre": "Démographie du Japon",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/D%C3%A9mographie_du_Japon"
+   },
+   "r": "=AFEXIBGEMgBVZwYItwWC1RHDYRSXIzAGAwBBk0CaMAS3gURZkFwseACJxhIVtRRZghTb4hUbYyQLolXcogFGxgFnFAAJUQUHsgBQgkJEa6WD9wTDMBGT8SEVFxBEwwAPtASvQkQAxlTKUAFIISZ",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s03-1-q54",
+   "fiche": "geographie-s03-1-f7",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "En 2024, le Japon a compté plus de naissances que de décès.",
+   "corrections": [
+    "Faux : il y a eu bien plus de décès que de naissances, plus de 900 000 de différence.",
+    "Faux : naissances et décès étaient à égalité.",
+    "Faux : les naissances ont augmenté, mais restent sous les décès."
+   ],
+   "explication": "Le solde naturel japonais est très négatif : environ − 919 000 en 2024. Les naissances, 686 000, ont même baissé de 6 % en un an.",
+   "source": {
+    "theme": "Cours 1 – 2e partie – III Dans les pays du Nord",
+    "titre": "Démographie du Japon",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/D%C3%A9mographie_du_Japon"
+   },
+   "r": "==AUMF0AFcwF1sttDMBGN4kCWg0cdUVFd4lVGNQDSRzBZURVdpxCMwRCw4FDUNkTKIgRMcgNSZQz2KBwtugUNcSDWAUQe8ECDAAEndAEFRRUQ40AbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s03-1-q55",
+   "fiche": "geographie-s03-1-f7",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Quel est l'âge médian au Japon ?",
+   "choix": [
+    "Environ 47 ans",
+    "Environ 17 ans",
+    "Environ 30 ans",
+    "Environ 70 ans"
+   ],
+   "explication": "La moitié des Japonais ont plus de 47 ans (2018). Au Burkina Faso, l'âge médian est de 17 ans : deux pays aux antipodes.",
+   "source": {
+    "theme": "Cours 1 – 2e partie – III Dans les pays du Nord",
+    "titre": "Démographie du Japon",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/D%C3%A9mographie_du_Japon"
+   },
+   "r": "==ATcwRCjpRUVMUAd8AEHcTZ",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s03-1-q56",
+   "fiche": "geographie-s03-1-f7",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Le Japon a 123 millions d'habitants en 2025 et pourrait passer sous 100 millions vers le milieu du siècle. Que doit-il surtout préparer ?",
+   "choix": [
+    "Moins de travailleurs et plus de retraités à soutenir",
+    "Des écoles pour des enfants toujours plus nombreux",
+    "De nouveaux quartiers pour loger l'exode rural",
+    "Des fronts pionniers pour nourrir sa population"
+   ],
+   "explication": "Avec moins de naissances et une vie très longue, le Japon aura moins d'actifs pour plus de personnes âgées. Retraites, soins et main-d'œuvre sont ses grands défis.",
+   "source": {
+    "theme": "Cours 1 – 2e partie – III Dans les pays du Nord",
+    "titre": "Démographie du Japon",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/D%C3%A9mographie_du_Japon"
+   },
+   "r": "KFDRLAVWbAQFGlcsnFA3mGAGIwxGXoxYIFQFetxAWYUHXcWAHABEdUwBOQQCxkVRQlkTcgwDG8TZ",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s03-1-q57",
+   "fiche": "geographie-s03-1-f7",
+   "type": "association",
+   "niveau": 3,
+   "enonce": "Relie chaque pays à sa situation démographique.",
+   "gauche": [
+    "Japon",
+    "Burkina Faso",
+    "Chine",
+    "Hongrie"
+   ],
+   "droite": [
+    "Enfant unique hier, trois enfants autorisés aujourd'hui",
+    "Population qui baisse, plus d'un habitant sur quatre âgé",
+    "Aides aux familles nombreuses pour relancer les naissances",
+    "Population très jeune qui grandit vite"
+   ],
+   "explication": "Le Japon vieillit et perd des habitants ; le Burkina Faso rajeunit et grandit. La Chine a changé de règle, la Hongrie aide les familles.",
+   "source": {
+    "theme": "Cours 1 – 2e partie – III Dans les pays du Nord",
+    "titre": "Démographie du Japon",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/D%C3%A9mographie_du_Japon"
+   },
+   "r": "==ANvUnXG5TWsklQdlCRe4RSEYnQyclSZlCH",
+   "poids": 1
   }
  ],
  "bonus": [
@@ -764,11 +1398,24 @@ JEU.enregistrer("cours", {
     "editeur": "Organisation des Nations Unies (ONU)",
     "url": "https://www.un.org/fr/observances/older-persons-day"
    }
+  },
+  {
+   "id": "geographie-s03-1-b2",
+   "fiche": "geographie-s03-1-f6",
+   "titre": "La retraite à 67 ans en Allemagne",
+   "texte": "L'Allemagne compte environ 1,5 enfant par femme depuis les années 1970. Pour continuer à payer les retraites avec moins d'actifs, ses assemblées ont décidé de relever l'âge légal de départ de 65 à 67 ans, par étapes, entre 2012 et 2029.",
+   "source": {
+    "titre": "Vieillissement démographique",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Vieillissement_d%C3%A9mographique"
+   }
   }
  ],
  "nonCouvert": [
-  "Les graphiques du cours (espérance de vie des Français depuis 1960, part des personnes âgées dans plusieurs pays) : seuls leurs titres sont lisibles dans l'extraction, leurs valeurs ne sont pas reprises.",
-  "Page 9 (la Chine, puissance démographique vieillissante) : exercice non repris dans ce cours.",
+  "Les graphiques du cours (espérance de vie des Français depuis 1960, part des personnes âgées dans plusieurs pays) : seuls leurs titres sont lisibles dans l'extraction ; la fiche f6 donne les parts françaises d'après une page fiable.",
+  "Attente du programme : la Russie et l'Europe de l'Est, où la population baisse : seulement nommées (f1), aucune fiche de programme, faute de chiffres vérifiés.",
+  "Attente du programme : les migrations comme réponse au vieillissement, avec des chiffres : le livret ne cite que le choix de la France et de l'Allemagne, sans nombre ; aucune fiche ajoutée.",
+  "L'Italie et l'Allemagne, pays les plus âgés d'Europe : non couverts, faute de page vérifiée.",
   "Les vidéos du cours (repère V au tableau de progression) ne sont pas déposées."
  ]
 });

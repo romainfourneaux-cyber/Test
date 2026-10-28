@@ -626,6 +626,32 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
+   "id": "geographie-s08-2-q49",
+   "fiche": "geographie-s08-2-f3",
+   "type": "association",
+   "niveau": 2,
+   "enonce": "Relie chaque étape du parcours d'une élève finlandaise à ce qu'elle lui coûte.",
+   "gauche": [
+    "La cantine et le dentiste de l'école",
+    "Le conservatoire",
+    "La chambre d'étudiante",
+    "Le lycée et l'université"
+   ],
+   "droite": [
+    "Gratuits, tous les jours d'école",
+    "Presque rien",
+    "La moitié du loyer habituel, grâce à l'État",
+    "Gratuits, repas du lycée compris"
+   ],
+   "explication": "Presque tout est gratuit, de la cantine à l'université. Le conservatoire coûte presque rien et la chambre d'étudiante moitié prix.",
+   "source": {
+    "fichier": "cours/geographie/Geo 5e - Theme 1 - Etude de cas 3.pdf",
+    "page": 2
+   },
+   "r": "==ANvQnXG5TWsslQdlCRewRSEYnQyYlSZlCH",
+   "poids": 1
+  },
+  {
    "id": "geographie-s08-2-q25",
    "fiche": "geographie-s08-2-f4",
    "type": "qcm",
@@ -910,6 +936,27 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
+   "id": "geographie-s08-2-q50",
+   "fiche": "geographie-s08-2-f5",
+   "type": "trou",
+   "niveau": 1,
+   "enonce": "Complète la phrase.",
+   "texte": "En Afghanistan, une classe compte en moyenne ___ élèves ; en Finlande, ___.",
+   "banque": [
+    "43",
+    "15",
+    "25",
+    "60"
+   ],
+   "explication": "43 élèves par classe en Afghanistan, 15 en Finlande. Presque trois fois plus d'un côté que de l'autre.",
+   "source": {
+    "fichier": "cours/geographie/Geo 5e - Theme 1 - Etude de cas 3.pdf",
+    "page": 2
+   },
+   "r": "y8iS2xxRuFwMNVlULlCH",
+   "poids": 1
+  },
+  {
    "id": "geographie-s08-2-q41",
    "fiche": "geographie-s08-2-f6",
    "type": "qcm",
@@ -1024,6 +1071,28 @@ JEU.enregistrer("cours", {
    },
    "r": "oMFDHMwEacjXQQXDAoCRKt0FuEgBQcSUHsSTep0JfpweNsxCGNAHD4CAcbKGwkEAqAFRhhUFa91GqYECsAFH",
    "poids": 1
+  },
+  {
+   "id": "geographie-s08-2-q51",
+   "fiche": "geographie-s08-2-f6",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Dans le monde, parmi les adultes qui ne savent ni lire ni écrire, qui est le plus nombreux ?",
+   "choix": [
+    "Les femmes : deux sur trois",
+    "Les hommes : deux sur trois",
+    "Autant d'hommes que de femmes",
+    "Les enfants de moins de dix ans, qui n'ont pas encore eu le temps d'apprendre"
+   ],
+   "explication": "D'après l'UNESCO, au moins 739 millions d'adultes ne savent ni lire ni écrire, et deux sur trois sont des femmes. Chez les jeunes, la situation s'améliore : 93 % savaient lire en 2024.",
+   "source": {
+    "theme": "Étude de cas 3 – L’éducation en Afghanistan et en Finlande",
+    "titre": "L'alphabétisation : ce qu'il faut savoir",
+    "editeur": "UNESCO",
+    "url": "https://www.unesco.org/fr/literacy/need-know"
+   },
+   "r": "=wEHPkwGGcGAAYRVJwxCLIlUj5FAYB0CJYUFM4TZ",
+   "poids": 1
   }
  ],
  "bonus": [
@@ -1048,6 +1117,17 @@ JEU.enregistrer("cours", {
     "editeur": "UNESCO",
     "url": "https://www.unesco.org/fr/literacy/need-know"
    }
+  },
+  {
+   "id": "geographie-s08-2-b3",
+   "fiche": "geographie-s08-2-f3",
+   "titre": "En France, l'école gratuite et obligatoire depuis 1881-1882",
+   "texte": "L'école gratuite a une longue histoire en France. La loi du 16 juin 1881 rend l'école primaire publique gratuite ; celle du 28 mars 1882 rend l'instruction obligatoire de 6 à 13 ans. Elles portent le nom de Jules Ferry, ministre de l'Instruction publique. Obligation d'instruction, pas d'école : une famille pouvait instruire ses enfants à la maison.",
+   "source": {
+    "titre": "Lois Jules Ferry",
+    "editeur": "Wikipédia, l'encyclopédie libre",
+    "url": "https://fr.wikipedia.org/wiki/Lois_Jules_Ferry"
+   }
   }
  ],
  "nonCouvert": [
@@ -1055,6 +1135,9 @@ JEU.enregistrer("cours", {
   "La carte du taux d'alphabétisation (2018) est lue à l'œil : seules les grandes zones (plus de 95 %, moins de 50 %) sont reprises, sans valeur par pays.",
   "Les détails violents du texte sur les attaques contre les écolières ne sont pas repris ; les talibans sont seulement nommés comme le pouvoir en place, sans qualificatif.",
   "Le parcours de la jeune Finlandaise est anonymisé : son prénom n'est pas repris.",
-  "Les photos (garçon fabriquant des briques, classe par terre, salle de classe finlandaise) et les deux cartes de situation ne sont pas reproduites."
+  "Les photos (garçon fabriquant des briques, classe par terre, salle de classe finlandaise) et les deux cartes de situation ne sont pas reproduites.",
+  "L'étude de cas s'arrête en 2021 : l'accès des filles afghanes à l'école depuis cette date n'est pas traité, faute de page vérifiée et pour ne pas contredire le livret.",
+  "Les réformes récentes de l'école finlandaise (durée de la scolarité obligatoire) ne sont pas reprises : le jeu suit le livret (de 7 à 16 ans).",
+  "L'IDH des deux pays, que le programme invite à comparer, n'est pas dans le tableau du livret : la comparaison se fait par l'espérance de vie, le PIB par habitant et l'alphabétisation (le classement 2023 est dans geographie-s08-1)."
  ]
 });

@@ -136,14 +136,14 @@ JEU.enregistrer("cours", {
   },
   {
    "id": "geographie-s08-1-f5",
-   "notion": "L'accès aux soins dans un pays pauvre : un dispensaire de brousse",
-   "titre": "Un dispensaire de brousse à Madagascar",
-   "texte": "Une infirmière raconte sa mission à Madagascar, dans un village de 4 000 habitants. Le dispensaire, un petit centre de santé, a un médecin, une sage-femme et une employée qui fait office d'infirmière, mais ni électricité ni eau courante. Les vaccins sont gardés dans un réfrigérateur au pétrole. Les malades sont examinés sur une planche de bois, parfois par terre.",
+   "notion": "Se soigner dans un pays pauvre",
+   "titre": "Se soigner quand les médecins manquent",
+   "texte": "Plus un pays est pauvre, moins il a de soignants. D'après l'OMS, il manquera 11,1 millions d'agents de santé en 2030, et la Région Europe compte treize fois plus de médecins par habitant que la Région Afrique. Dans un dispensaire de brousse, comme celui de Madagascar, un médecin soigne des milliers de personnes, sans électricité ni eau courante.",
    "pointsCles": [
-    "Dispensaire : un petit établissement médical dans un pays pauvre",
-    "À Tsaharasina (Madagascar) : un médecin, une sage-femme, une employée qui fait office d'infirmière",
-    "Ni électricité ni eau courante ; vaccins dans un réfrigérateur au pétrole",
-    "Malades examinés sur une planche de bois ou par terre"
+    "OMS (2026) : il manquera 11,1 millions d'agents de santé dans le monde en 2030 ; 67 pays n'en auront pas assez",
+    "La densité de soignants suit le revenu du pays : treize fois plus de médecins par habitant en Région Europe qu'en Région Afrique, six fois plus d'infirmiers et de sages-femmes",
+    "Près d'un médecin sur quatre a plus de 55 ans : les départs à la retraite vont aggraver le manque",
+    "Dans le cours : à Tsaharasina (Madagascar), un médecin, une sage-femme et une employée faisant office d'infirmière ; ni électricité ni eau courante ; un réfrigérateur au pétrole pour les vaccins"
    ],
    "dates": [],
    "lieux": [
@@ -155,15 +155,79 @@ JEU.enregistrer("cours", {
     {
      "mot": "dispensaire",
      "def": "un petit établissement médical, dans les pays pauvres"
+    },
+    {
+     "mot": "agent de santé",
+     "def": "toute personne qui soigne : médecin, infirmier, sage-femme"
+    },
+    {
+     "mot": "densité de médecins",
+     "def": "le nombre de médecins pour 10 000 habitants"
     }
    ],
    "schema": null,
    "prerequis": [
-    "geographie-s07-1-f2"
+    "geographie-s07-1-f2",
+    "geographie-s08-1-f4"
    ],
    "source": {
-    "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 2.pdf",
-    "page": 6
+    "programme": "Répartition de la richesse et de la pauvreté dans le monde",
+    "titre": "Un médecin sur quatre approche de la retraite : l'OMS alerte sur la pénurie mondiale de personnels de santé (19 octobre 2026)",
+    "editeur": "Organisation mondiale de la santé (OMS)",
+    "url": "https://www.who.int/fr/news/item/19-10-2026-one-in-four-doctors-nearing-retirement-age-as-who-warns-of-global-health-workforce-gap"
+   }
+  },
+  {
+   "id": "geographie-s08-1-f6",
+   "notion": "L'IDH en chiffres : le classement du PNUD",
+   "titre": "Le classement de l'IDH : de 0,385 à 0,962",
+   "texte": "Chaque rapport du PNUD classe les pays par IDH. En 2021, sur 191 pays, la Suisse est première avec 0,962 et le Soudan du Sud dernier avec 0,385 ; moyenne mondiale : 0,732. L'IDH combine trois notes de 0 à 1 : espérance de vie, années d'école, revenu par habitant. Deux pays aussi riches peuvent avoir des IDH différents.",
+   "pointsCles": [
+    "PNUD (Programme des Nations unies pour le développement) : l'IDH existe depuis 1990, avec un classement à chaque rapport",
+    "2021 : Suisse 0,962 (première sur 191 pays), Soudan du Sud 0,385 (dernier), moyenne mondiale 0,732",
+    "Trois notes de 0 à 1 combinées en une seule : santé (espérance de vie), éducation (années d'école attendues et moyennes), niveau de vie (revenu par habitant)",
+    "Seuils : très élevé à partir de 0,800 ; élevé de 0,700 à 0,799 ; moyen de 0,555 à 0,699 ; faible en dessous",
+    "Limite : une moyenne nationale cache les écarts entre les habitants d'un même pays"
+   ],
+   "astuce": "Retiens les deux bouts de l'échelle en 2021 : Suisse 0,962 tout en haut, Soudan du Sud 0,385 tout en bas.",
+   "dates": [
+    {
+     "annee": 1990,
+     "evenement": "Le PNUD publie le premier indice de développement humain"
+    },
+    {
+     "annee": 2021,
+     "evenement": "IDH : Suisse 0,962, Soudan du Sud 0,385, moyenne mondiale 0,732"
+    }
+   ],
+   "lieux": [
+    "Suisse",
+    "Soudan du Sud"
+   ],
+   "personnages": [
+    "Amartya Sen",
+    "Mahbub ul Haq"
+   ],
+   "vocabulaire": [
+    {
+     "mot": "PNUD",
+     "def": "le Programme des Nations unies pour le développement, qui calcule et publie l'IDH"
+    },
+    {
+     "mot": "moyenne nationale",
+     "def": "un chiffre pour tout un pays, qui cache les écarts entre ses habitants"
+    }
+   ],
+   "schema": null,
+   "prerequis": [
+    "geographie-s08-1-f2",
+    "geographie-s08-1-f3"
+   ],
+   "source": {
+    "programme": "Répartition de la richesse et de la pauvreté dans le monde",
+    "titre": "Indice de développement humain",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Indice_de_d%C3%A9veloppement_humain"
    }
   }
  ],
@@ -941,6 +1005,217 @@ JEU.enregistrer("cours", {
    },
    "r": "==QTUMQARcmBbAQAKraAMIVA2wVRZE0CGQxzqagJfUFEREVHL8UAGoiTAEFhtKgRVwgFn5VDQQRBA4x2xCwYeBQUNswCIcABXMiUHAwGWAQAcIVDw0AAAxlTKUAFIISZ",
    "poids": 1
+  },
+  {
+   "id": "geographie-s08-1-q42",
+   "fiche": "geographie-s08-1-f5",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Comment le nombre de médecins par habitant varie-t-il d'un pays à l'autre ?",
+   "choix": [
+    "Il suit le revenu du pays : treize fois plus de médecins par habitant en Région Europe qu'en Région Afrique",
+    "Il est à peu près le même partout dans le monde, car les médecins vont là où l'on a besoin d'eux",
+    "Il est plus élevé dans les pays pauvres, où l'on tombe plus souvent malade",
+    "Il dépend du climat"
+   ],
+   "explication": "L'OMS constate que la densité de soignants suit le revenu national. L'Europe compte treize fois plus de médecins par habitant que l'Afrique, et six fois plus d'infirmiers et de sages-femmes.",
+   "source": {
+    "theme": "Outil 9 – Mesurer la pauvreté et les inégalités",
+    "titre": "Un médecin sur quatre approche de la retraite : l'OMS alerte sur la pénurie mondiale de personnels de santé",
+    "editeur": "Organisation mondiale de la santé (OMS)",
+    "url": "https://www.who.int/fr/news/item/19-10-2026-one-in-four-doctors-nearing-retirement-age-as-who-warns-of-global-health-workforce-gap"
+   },
+   "r": "==AUicABMcwFo4UAdEAJEa6ZNAgCBNBGSJiAacBA0kEAAsxDq7+NVM0CPJBCIYgLQQRDVNACe8UAGoiTAEFhtKgRD0gU0cQGVUlAAEQCS1QOEBwRZ5UVGVBETcjUAEQVEcwCZchGjhUCVk1BaUhRFsTZ",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s08-1-q43",
+   "fiche": "geographie-s08-1-f5",
+   "type": "vrai_faux",
+   "niveau": 1,
+   "enonce": "En France, on compte environ 33 médecins pour 10 000 habitants ; à Madagascar, moins de 2.",
+   "corrections": [],
+   "explication": "Oui : 33,4 médecins pour 10 000 habitants en France (2021) contre 1,8 à Madagascar (2014) ; au Niger, c'est moins de 1. Un médecin malgache a donc bien plus de patients.",
+   "source": {
+    "theme": "Outil 9 – Mesurer la pauvreté et les inégalités",
+    "titre": "List of countries by number of medical doctors",
+    "editeur": "Wikipédia (en anglais)",
+    "url": "https://en.wikipedia.org/wiki/List_of_countries_by_number_of_medical_doctors"
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s08-1-q44",
+   "fiche": "geographie-s08-1-f6",
+   "type": "qcm",
+   "niveau": 1,
+   "enonce": "Quel organisme publie l'IDH et le classement des pays ?",
+   "choix": [
+    "Le PNUD, un programme des Nations unies",
+    "La Banque mondiale, qui fixe aussi le seuil de pauvreté",
+    "L'INSEE",
+    "Le gouvernement suisse"
+   ],
+   "explication": "Le PNUD, Programme des Nations unies pour le développement, publie l'IDH depuis 1990. La Banque mondiale, elle, s'occupe du seuil de pauvreté.",
+   "source": {
+    "theme": "Outil 9 – Mesurer la pauvreté et les inégalités",
+    "titre": "Indice de développement humain",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Indice_de_d%C3%A9veloppement_humain"
+   },
+   "r": "=clAMcQAHgEMDpAXZ9QIGVBDWc2FYgAFD4QAdIAStgVRZk2OhYjRM4TZ",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s08-1-q45",
+   "fiche": "geographie-s08-1-f6",
+   "type": "vrai_faux",
+   "niveau": 1,
+   "enonce": "En 2021, la Suisse avait l'IDH le plus élevé du monde, avec 0,962.",
+   "corrections": [],
+   "explication": "Oui : 0,962, la meilleure note sur 191 pays classés. Le Soudan du Sud fermait la marche avec 0,385.",
+   "source": {
+    "theme": "Outil 9 – Mesurer la pauvreté et les inégalités",
+    "titre": "Indice de développement humain",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Indice_de_d%C3%A9veloppement_humain"
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s08-1-q46",
+   "fiche": "geographie-s08-1-f6",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Quel pays avait l'IDH le plus bas en 2021 ?",
+   "choix": [
+    "Le Soudan du Sud",
+    "L'Inde",
+    "L'Afghanistan, en guerre depuis quarante ans",
+    "Le Brésil"
+   ],
+   "explication": "Le Soudan du Sud, avec 0,385, fermait le classement des 191 pays. C'est très loin de la moyenne mondiale de 0,732.",
+   "source": {
+    "theme": "Outil 9 – Mesurer la pauvreté et les inégalités",
+    "titre": "Indice de développement humain",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Indice_de_d%C3%A9veloppement_humain"
+   },
+   "r": "T1wG8IVHn0wCUl0GAUjRM4TZ",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s08-1-q47",
+   "fiche": "geographie-s08-1-f6",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Pourquoi deux pays aussi riches l'un que l'autre peuvent-ils avoir des IDH différents ?",
+   "choix": [
+    "Parce que l'IDH compte aussi l'espérance de vie et les années d'école, pas seulement le revenu",
+    "Parce que l'IDH dépend de la taille du pays et du nombre de ses habitants, qui changent tout le calcul",
+    "Parce que l'IDH est tiré au sort chaque année",
+    "Parce que l'IDH ne compte que le revenu"
+   ],
+   "explication": "Le revenu n'est qu'une des trois notes. Si la santé ou l'école sont moins bonnes, l'IDH baisse malgré la richesse.",
+   "source": {
+    "theme": "Outil 9 – Mesurer la pauvreté et les inégalités",
+    "titre": "Indice de développement humain",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Indice_de_d%C3%A9veloppement_humain"
+   },
+   "r": "PAxWIhhCUYEDecmBbAAGUUwGKEASwwUFVEwCDkQBAHLYWUlFQgtqAEwEIBDSJURWL80AP8hUiYRVAYxHIwhxxiBMIJUWNcAHVMBCSJiBFggGSkkJrszTv0AAAxlTKUAFIISZ",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s08-1-q48",
+   "fiche": "geographie-s08-1-f6",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "La moyenne mondiale de l'IDH est inférieure à 0,5.",
+   "corrections": [
+    "Faux : elle était de 0,732 en 2021, dans la tranche « élevé ».",
+    "Faux : elle est exactement de 1.",
+    "Faux : elle était de 0,962 en 2021."
+   ],
+   "explication": "0,732 en 2021 : le monde est, en moyenne, dans la tranche élevée. Mais l'écart entre pays va de 0,385 à 0,962.",
+   "source": {
+    "theme": "Outil 9 – Mesurer la pauvreté et les inégalités",
+    "titre": "Indice de développement humain",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Indice_de_d%C3%A9veloppement_humain"
+   },
+   "r": "==ASPAE1kaEwxGzFZwstRJMrPdBAgMEBHllTOogRawhJWUVSENUWc9EHNM2HWJQAe90ACkkBuMRAMbbUMIwAXgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s08-1-q49",
+   "fiche": "geographie-s08-1-f6",
+   "type": "ordre",
+   "niveau": 3,
+   "enonce": "Range ces pays de l'IDH le plus faible au plus élevé (classement 2023).",
+   "elements": [
+    "France",
+    "Afghanistan",
+    "Islande",
+    "Inde"
+   ],
+   "explication": "Afghanistan 0,496 (faible), Inde 0,685 (moyen), France 0,920 et Islande 0,972 (très élevé). L'Islande est première du classement 2023.",
+   "indice": "L'Islande est en tête du classement 2023.",
+   "source": {
+    "theme": "Outil 9 – Mesurer la pauvreté et les inégalités",
+    "titre": "Liste des pays par IDH",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Liste_des_pays_par_IDH"
+   },
+   "r": "o9hQfpUVFNEH",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s08-1-q51",
+   "fiche": "geographie-s08-1-f6",
+   "type": "trou",
+   "niveau": 1,
+   "enonce": "Complète la phrase.",
+   "texte": "L'IDH est publié par le ___ ; en 2021, la ___ était première du classement et le Soudan du Sud dernier.",
+   "banque": [
+    "PNUD",
+    "Suisse",
+    "FMI",
+    "France"
+   ],
+   "explication": "Le PNUD publie l'IDH depuis 1990. En 2021, la Suisse avait 0,962 et le Soudan du Sud 0,385.",
+   "source": {
+    "theme": "Outil 9 – Mesurer la pauvreté et les inégalités",
+    "titre": "Indice de développement humain",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Indice_de_d%C3%A9veloppement_humain"
+   },
+   "r": "==gMvokJeZBXY1RTKREDBQzGAYzVqU0MNZRHt01RZ8gK6giNLlCH",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s08-1-q52",
+   "fiche": "geographie-s08-1-f6",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Comment l'IDH d'un pays est-il calculé ?",
+   "choix": [
+    "On donne une note de 0 à 1 à la santé, à l'éducation et au revenu, puis on combine les trois",
+    "On additionne le PIB et le nombre d'habitants",
+    "On demande aux habitants de noter leur pays de 0 à 1, puis on fait la moyenne de leurs réponses",
+    "On compte les hôpitaux et les écoles"
+   ],
+   "explication": "Chaque dimension reçoit une note entre 0 et 1, d'après un minimum et un maximum fixés à l'avance. Les trois notes sont ensuite combinées en une seule : l'IDH.",
+   "source": {
+    "theme": "Outil 9 – Mesurer la pauvreté et les inégalités",
+    "titre": "Indice de développement humain",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Indice_de_d%C3%A9veloppement_humain"
+   },
+   "r": "PYBXCxxGGVBDec2FbwwFcYQDPxxBj5FDA1lTDNBCMQgIAUFEUEVHL8EHHoSWEYFWKYcpBVgUnHbVJxtsdAgDBgkIBVUlu7kXGZsqSdnUQEQVU0RABIVDtgVRQNEAAIgRH0TZ",
+   "poids": 1
   }
  ],
  "bonus": [
@@ -954,6 +1229,17 @@ JEU.enregistrer("cours", {
     "editeur": "Wikipédia, l'encyclopédie libre",
     "url": "https://fr.wikipedia.org/wiki/Indice_de_d%C3%A9veloppement_humain"
    }
+  },
+  {
+   "id": "geographie-s08-1-b2",
+   "fiche": "geographie-s08-1-f4",
+   "titre": "73 ans : l'espérance de vie dans le monde",
+   "texte": "D'après l'ONU, l'espérance de vie à la naissance atteint 73,3 ans dans le monde en 2024, soit 8,4 ans de plus qu'en 1995. Elle devrait approcher 77 ans vers 2054. Cette moyenne cache de grands écarts : le cours compare la Finlande, 81 ans, et l'Afghanistan, 53 ans.",
+   "source": {
+    "titre": "Population (Enjeux mondiaux)",
+    "editeur": "Organisation des Nations unies",
+    "url": "https://www.un.org/fr/global-issues/population"
+   }
   }
  ],
  "nonCouvert": [
@@ -961,7 +1247,9 @@ JEU.enregistrer("cours", {
   "Le PDF du cours 2 n'est pas encore déposé dans DEPOT/ : les cartes (PIB par habitant en 2017, IDH, espérance de vie) ne sont connues que par leur légende. Les réponses aux questions de la page 6 (régions à IDH très élevé, pays à IDH élevé ou moyen, continent le moins développé, inégalités en Asie et en Amérique du Sud) ne sont pas reprises.",
   "Les corrigés des exercices des pages 5 et 6, imprimés à l'envers, sont illisibles dans le texte extrait.",
   "La carte de la page 6 range l'IDH avec d'autres seuils (élevé de 0,75 à 0,80, moyen de 0,55 à 0,75) : le jeu retient ceux de la carte de la page 2.",
-  "Les valeurs de mortalité infantile de l'Inde, du Congo et de la République centrafricaine sont douteuses dans le texte extrait : seul le rang de la République centrafricaine (le plus élevé) est repris.",
-  "Le document 2 de la page 5 (une image) n'est pas décrit."
+  "Les valeurs de mortalité infantile de l'Inde, du Congo et de la République centrafricaine sont douteuses dans le texte extrait : seul le rang de la République centrafricaine (le plus élevé) est repris ; aucune valeur récente par pays (UNICEF) n'a été ajoutée.",
+  "Le document 2 de la page 5 (une image) n'est pas décrit.",
+  "Le détail du calcul de l'IDH (minimums et maximums de chaque note, moyenne géométrique) n'est pas enseigné : le jeu s'en tient aux trois notes combinées.",
+  "La construction par l'élève d'une carte ou d'un graphique du développement (démarche attendue par le programme) n'est pas un exercice du jeu."
  ]
 });

@@ -6,11 +6,11 @@ JEU.enregistrer("cours", {
   {
    "id": "geographie-s04-1-f1",
    "notion": "La population de l'Inde",
-   "titre": "L'Inde, deuxième géant démographique",
-   "texte": "L'Inde compte près de 1,4 milliard d'habitants en 2020 : c'est le deuxième pays le plus peuplé du monde, juste derrière la Chine, qu'elle devrait dépasser vers 2030. En un siècle, le nombre d'Indiens a été multiplié par sept. Sur le graphique, la courbe de la population grimpe sans arrêt depuis 1920, pendant que natalité et mortalité descendent.",
+   "titre": "L'Inde, géant démographique",
+   "texte": "En 2020, l'Inde compte près de 1,4 milliard d'habitants : c'est alors le deuxième pays le plus peuplé du monde, juste derrière la Chine, qu'elle doit dépasser vers 2030 d'après les prévisions de l'époque. En un siècle, le nombre d'Indiens a été multiplié par sept. Depuis 1920, la population grimpe sans arrêt, pendant que natalité et mortalité descendent.",
    "pointsCles": [
     "Près de 1,4 milliard d'habitants en 2020",
-    "Deuxième pays le plus peuplé du monde, derrière la Chine, qu'il devrait dépasser vers 2030",
+    "En 2020, deuxième pays le plus peuplé du monde, derrière la Chine ; dépassement prévu vers 2030 (il a eu lieu dès 2023)",
     "Population multipliée par sept en un siècle",
     "Depuis 1920, la population monte pendant que la natalité et la mortalité baissent"
    ],
@@ -224,6 +224,104 @@ JEU.enregistrer("cours", {
     "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1 - Etude de cas 2 Inde.pdf",
     "page": 2
    }
+  },
+  {
+   "id": "geographie-s04-1-f7",
+   "notion": "L'Inde, pays le plus peuplé du monde depuis 2023",
+   "titre": "2023 : l'Inde passe devant la Chine",
+   "texte": "Au printemps 2023, d'après l'ONU, l'Inde dépasse la Chine : environ 1,429 milliard d'habitants contre 1,426. Elle devient le pays le plus peuplé du monde, avec environ 18 % des humains. Sa population grandit encore, de moins de 1 % par an, alors que celle de la Chine baisse depuis 2022. Le dernier recensement indien date de 2011.",
+   "pointsCles": [
+    "Avril 2023 (estimation de l'ONU) : 1,429 milliard d'Indiens contre 1,426 milliard de Chinois, trois millions d'écart",
+    "Premier pays du monde par la population : environ 18 % de l'humanité",
+    "Croissance ralentie : moins de 1 % par an (0,88 % en 2023) ; environ deux enfants par femme",
+    "La Chine, elle, perd des habitants depuis 2022",
+    "Pas de recensement depuis 2011 : le comptage prévu en 2021 a été retardé par la pandémie ; les chiffres récents sont des estimations"
+   ],
+   "astuce": "1,429 contre 1,426 : trois millions d'écart, à peine une grande ville, et l'Inde prend la première place.",
+   "dates": [
+    {
+     "annee": 2011,
+     "evenement": "Dernier recensement de l'Inde"
+    },
+    {
+     "annee": 2022,
+     "evenement": "La population de la Chine commence à baisser"
+    },
+    {
+     "annee": 2023,
+     "evenement": "L'Inde devient le pays le plus peuplé du monde"
+    }
+   ],
+   "lieux": [
+    "Inde",
+    "Chine"
+   ],
+   "personnages": [],
+   "vocabulaire": [
+    {
+     "mot": "recensement",
+     "def": "le comptage officiel de tous les habitants d'un pays, organisé par l'État"
+    },
+    {
+     "mot": "estimation",
+     "def": "un chiffre calculé à partir d'enquêtes et de prévisions, quand on n'a pas compté tout le monde"
+    }
+   ],
+   "schema": null,
+   "prerequis": [
+    "geographie-s04-1-f1",
+    "geographie-s04-1-f2"
+   ],
+   "source": {
+    "programme": "La croissance démographique et ses effets",
+    "titre": "Démographie de l'Inde",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/D%C3%A9mographie_de_l%27Inde"
+   }
+  },
+  {
+   "id": "geographie-s04-1-f8",
+   "notion": "Uttar Pradesh et Bihar : le Nord qui grandit, le Sud stabilisé",
+   "titre": "Le Nord grandit encore, le Sud s'est stabilisé",
+   "texte": "La croissance de l'Inde vient surtout du Nord, dans la plaine du Gange. L'Uttar Pradesh, l'État le plus peuplé, compte 240 millions d'habitants ; le Bihar, 104 millions, est le seul État où les femmes ont encore plus de trois enfants en moyenne. Les États du Sud, plus riches, ont une population déjà stabilisée, qui baisse même par endroits.",
+   "pointsCles": [
+    "Uttar Pradesh : 240 millions d'habitants (2023), l'État le plus peuplé de l'Inde ; capitale Lucknow",
+    "Bihar : 104 millions d'habitants, l'État le plus dense ; le seul au-dessus de trois enfants par femme",
+    "Les deux États s'étendent au nord, dans la plaine du Gange, le long de la frontière du Népal",
+    "Au Sud, des États plus riches, à la population stabilisée, parfois en baisse",
+    "Résultat : l'Inde grandit encore, mais de moins en moins vite"
+   ],
+   "dates": [],
+   "lieux": [
+    "Uttar Pradesh",
+    "Bihar",
+    "Lucknow",
+    "Patna",
+    "Gange",
+    "Népal"
+   ],
+   "personnages": [],
+   "vocabulaire": [
+    {
+     "mot": "État fédéré",
+     "def": "une des grandes régions qui composent l'Inde, avec son propre gouvernement, comme l'Uttar Pradesh ou le Bihar"
+    },
+    {
+     "mot": "densité de population",
+     "def": "le nombre d'habitants par kilomètre carré"
+    }
+   ],
+   "schema": null,
+   "prerequis": [
+    "geographie-s04-1-f3",
+    "geographie-s04-1-f7"
+   ],
+   "source": {
+    "programme": "La croissance démographique et ses effets",
+    "titre": "Démographie de l'Inde",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/D%C3%A9mographie_de_l%27Inde"
+   }
   }
  ],
  "schemas": [],
@@ -233,14 +331,14 @@ JEU.enregistrer("cours", {
    "fiche": "geographie-s04-1-f1",
    "type": "qcm",
    "niveau": 1,
-   "enonce": "Quel est le rang de l'Inde parmi les pays les plus peuplés du monde ?",
+   "enonce": "Avant 2023, quel était le rang de l'Inde parmi les pays les plus peuplés du monde ?",
    "choix": [
     "Le deuxième, derrière la Chine",
     "Le premier, devant la Chine",
     "Le troisième, derrière la Chine et les États-Unis",
     "Le dixième"
    ],
-   "explication": "L'Inde est la deuxième puissance démographique de la planète. Seule la Chine est encore un peu plus peuplée.",
+   "explication": "Jusqu'en 2022, l'Inde était la deuxième puissance démographique de la planète, juste derrière la Chine. Elle est passée devant en 2023.",
    "source": {
     "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1 - Etude de cas 2 Inde.pdf",
     "page": 1
@@ -255,7 +353,7 @@ JEU.enregistrer("cours", {
    "niveau": 1,
    "enonce": "L'Inde compte près de 1,4 milliard d'habitants.",
    "corrections": [],
-   "explication": "Oui, près de 1,4 milliard. Seule la Chine fait encore un peu mieux.",
+   "explication": "Oui, près de 1,4 milliard, et même un peu plus aujourd'hui. Jusqu'en 2022, la Chine en comptait un peu plus.",
    "source": {
     "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1 - Etude de cas 2 Inde.pdf",
     "page": 1
@@ -288,9 +386,9 @@ JEU.enregistrer("cours", {
    "fiche": "geographie-s04-1-f1",
    "type": "vrai_faux",
    "niveau": 2,
-   "enonce": "L'Inde devrait dépasser la Chine et devenir le pays le plus peuplé du monde vers 2030.",
+   "enonce": "Il y a quelques années, on prévoyait que l'Inde dépasserait la Chine et deviendrait le pays le plus peuplé du monde vers 2030.",
    "corrections": [],
-   "explication": "Oui, vers 2030 d'après l'étude de cas. La population indienne continue de grimper vite.",
+   "explication": "Oui, c'était la prévision de l'étude de cas. C'est arrivé plus tôt : d'après l'ONU, l'Inde est passée devant la Chine dès 2023.",
    "source": {
     "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1 - Etude de cas 2 Inde.pdf",
     "page": 1
@@ -1036,25 +1134,380 @@ JEU.enregistrer("cours", {
    },
    "r": "=MRTcFgIPhAQg5kCCYkGXsiHcMxGe0wBNI1GmEURQB0AAUgRFZQKXEgFcIwGL8hUbou7RwVQPgwzlewGnFAERcgHP4kCWgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
+  },
+  {
+   "id": "geographie-s04-1-q45",
+   "fiche": "geographie-s04-1-f7",
+   "type": "qcm",
+   "niveau": 1,
+   "enonce": "Depuis quelle année l'Inde est-elle le pays le plus peuplé du monde ?",
+   "choix": [
+    "2023",
+    "2011",
+    "Vers 2030, comme prévu",
+    "Pas encore : la Chine reste devant"
+   ],
+   "explication": "Au printemps 2023, d'après l'ONU, l'Inde est passée devant la Chine. 2011 est l'année du dernier recensement indien.",
+   "source": {
+    "theme": "Étude de cas 2 – La situation démographique de l’Inde",
+    "titre": "Démographie de l'Inde",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/D%C3%A9mographie_de_l%27Inde"
+   },
+   "r": "NVFVZBUZ",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s04-1-q46",
+   "fiche": "geographie-s04-1-f7",
+   "type": "vrai_faux",
+   "niveau": 1,
+   "enonce": "En 2023, l'Inde est passée devant la Chine et est devenue le pays le plus peuplé du monde.",
+   "corrections": [],
+   "explication": "Oui : environ 1,429 milliard d'Indiens contre 1,426 milliard de Chinois, d'après l'ONU. L'écart est d'environ trois millions de personnes.",
+   "source": {
+    "theme": "Étude de cas 2 – La situation démographique de l’Inde",
+    "titre": "Démographie de l'Inde",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/D%C3%A9mographie_de_l%27Inde"
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s04-1-q47",
+   "fiche": "geographie-s04-1-f7",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Pourquoi l'Inde est-elle passée devant la Chine ?",
+   "choix": [
+    "Sa population augmente encore, alors que celle de la Chine baisse depuis 2022",
+    "Parce que des millions de Chinois sont partis vivre en Inde",
+    "Parce que la Chine a cédé une partie de son territoire et de ses habitants à ses voisins",
+    "Parce que l'Inde a fait un grand recensement en 2021 qui a tout changé"
+   ],
+   "explication": "L'Inde grandit encore d'un peu moins de 1 % par an. La Chine, elle, a vu sa population baisser en 2022, pour la première fois depuis le début des années 1960.",
+   "source": {
+    "theme": "Étude de cas 2 – La situation démographique de l’Inde",
+    "titre": "Démographie de la Chine",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/D%C3%A9mographie_de_la_Chine"
+   },
+   "r": "==gSx9RVH0QHGMhFMYxZXYgFcAxCOpAHBsibFRVQOpgAGxgHrchFFBBBY4EHAcwLMVUGIxBAFgADSJiBbAAGWwxDPxxBqkFBZhlHAYhRIESZ",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s04-1-q48",
+   "fiche": "geographie-s04-1-f7",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Quelle part de l'humanité vit en Inde aujourd'hui ?",
+   "choix": [
+    "Environ 18 %, près d'un humain sur cinq",
+    "Environ 5 %",
+    "Environ 50 %, c'est-à-dire un humain sur deux",
+    "Environ 1 %"
+   ],
+   "explication": "Avec plus de 1,4 milliard d'habitants sur un peu plus de 8 milliards, l'Inde abrite environ 18 % des humains. C'est presque un humain sur cinq.",
+   "source": {
+    "theme": "Étude de cas 2 – La situation démographique de l’Inde",
+    "titre": "Démographie de l'Inde",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/D%C3%A9mographie_de_l%27Inde"
+   },
+   "r": "HRwHA0wTA0BMNsAXMNgGOY0BHAmFVZR3yuhHP5VTjVBVVMUAd8AEHcTZ",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s04-1-q49",
+   "fiche": "geographie-s04-1-f7",
+   "type": "vrai_faux",
+   "niveau": 2,
+   "enonce": "La population de l'Inde augmente aujourd'hui de plus de 3 % par an.",
+   "corrections": [
+    "Faux : elle augmente de moins de 1 % par an ; la croissance a beaucoup ralenti.",
+    "Faux : la population de l'Inde baisse depuis 2022.",
+    "Faux : elle augmente de plus de 10 % par an."
+   ],
+   "explication": "La croissance indienne a ralenti : 0,88 % en 2023, avec environ deux enfants par femme. C'est la Chine, pas l'Inde, qui perd des habitants.",
+   "source": {
+    "theme": "Étude de cas 2 – La situation démographique de l’Inde",
+    "titre": "Démographie de l'Inde",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/D%C3%A9mographie_de_l%27Inde"
+   },
+   "r": "==ACHtFGdAgCekQMNUBQC1gGHMwCSZiUQYwGQoRHG0hGg0ABZ1QVPhwBJBgJCUFQVBUSLsgUb0CRKgVDLsgRD0BHi8hEQQRUMIwAXgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s04-1-q50",
+   "fiche": "geographie-s04-1-f7",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Comment connaît-on le nombre d'habitants de l'Inde, alors qu'aucun recensement n'a eu lieu depuis 2011 ?",
+   "choix": [
+    "Par des estimations, calculées à partir du recensement de 2011, des naissances et des décès",
+    "En comptant les cartes d'identité délivrées chaque année",
+    "On ne le connaît pas du tout : le chiffre de 2023 est inventé",
+    "En additionnant chaque année les habitants que chaque village et chaque ville déclarent au gouvernement"
+   ],
+   "explication": "Le comptage prévu en 2021 a été retardé par la pandémie. Les chiffres de 2023 sont donc des estimations, comme celles de l'ONU.",
+   "source": {
+    "theme": "Étude de cas 2 – La situation démographique de l’Inde",
+    "titre": "Démographie de l'Inde",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/D%C3%A9mographie_de_l%27Inde"
+   },
+   "r": "==wFeZMrF8sqWcWAQEQVFwgTccxCtwkFGR0DBYUFMYxZeREVFNUSLsgUc0CSIAlXAoQBDshUyYRVXwRBb8wHShMgNYBUE26ATUQBTQiUZZxGeAgGO8RA34FAV41CLYEFIISZ",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s04-1-q51",
+   "fiche": "geographie-s04-1-f7",
+   "type": "trou",
+   "niveau": 1,
+   "enonce": "Complète la phrase.",
+   "texte": "En ___, l'Inde est devenue le pays le plus peuplé du monde, devant la ___.",
+   "banque": [
+    "2023",
+    "Chine",
+    "2011",
+    "États-Unis"
+   ],
+   "explication": "Depuis 2023, l'Inde est première et la Chine deuxième. 2011 est la date du dernier recensement indien.",
+   "source": {
+    "theme": "Étude de cas 2 – La situation démographique de l’Inde",
+    "titre": "Démographie de l'Inde",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/D%C3%A9mographie_de_l%27Inde"
+   },
+   "r": "==gM7QEDc4iGWcUWTxAAGoxKhZXSo9QXdZFVLlCH",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s04-1-q52",
+   "fiche": "geographie-s04-1-f7",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "L'âge médian des Indiens est d'environ 29 ans. Qu'est-ce que cela veut dire ?",
+   "choix": [
+    "La moitié des Indiens a moins de 29 ans, l'autre moitié plus",
+    "Les Indiens vivent en moyenne 29 ans",
+    "La plupart des Indiens ont exactement 29 ans",
+    "Il n'y a presque aucun Indien de plus de 29 ans, car l'espérance de vie est courte"
+   ],
+   "explication": "L'âge médian coupe la population en deux moitiés : 28,7 ans en 2023 pour l'Inde. C'est le signe d'une population jeune.",
+   "source": {
+    "theme": "Étude de cas 2 – La situation démographique de l’Inde",
+    "titre": "Démographie de l'Inde",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/D%C3%A9mographie_de_l%27Inde"
+   },
+   "r": "==wRGQQBe802rqSWMoFQOpAFSwxEg5RVJZwHI4kVAhkJJVkRDdAALYECSRDHQwQEfAiTccBDjRopcl1BAsgRI4TZ",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s04-1-q53",
+   "fiche": "geographie-s04-1-f8",
+   "type": "qcm",
+   "niveau": 1,
+   "enonce": "Quel est l'État le plus peuplé de l'Inde ?",
+   "choix": [
+    "L'Uttar Pradesh",
+    "Le Bihar",
+    "Le Kerala, tout au sud du pays",
+    "Le Pendjab"
+   ],
+   "explication": "L'Uttar Pradesh compte 240 millions d'habitants. Le Bihar, son voisin, en a 104 millions.",
+   "source": {
+    "theme": "Étude de cas 2 – La situation démographique de l’Inde",
+    "titre": "Démographie de l'Inde",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/D%C3%A9mographie_de_l%27Inde"
+   },
+   "r": "=skBccBDi8VNV81DbIxMO5TZ",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s04-1-q54",
+   "fiche": "geographie-s04-1-f8",
+   "type": "vrai_faux",
+   "niveau": 1,
+   "enonce": "Le Bihar est l'État de l'Inde où les femmes ont le plus d'enfants : plus de trois en moyenne.",
+   "corrections": [],
+   "explication": "Oui : c'est le seul État indien à trois enfants par femme ou plus, d'après les derniers chiffres. Dans l'ensemble du pays, on est à environ deux.",
+   "source": {
+    "theme": "Étude de cas 2 – La situation démographique de l’Inde",
+    "titre": "Bihar",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Bihar"
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s04-1-q55",
+   "fiche": "geographie-s04-1-f8",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Où se trouvent l'Uttar Pradesh et le Bihar ?",
+   "choix": [
+    "Au nord, dans la plaine du Gange, à la frontière du Népal",
+    "Au sud, sur la côte, autour de Bangalore",
+    "À l'ouest, autour de Mumbai",
+    "Sur les îles du sud de l'Inde, dans l'océan Indien, loin du continent"
+   ],
+   "explication": "Les deux États s'étendent dans la plaine du Gange, au nord de l'Inde, le long de la frontière du Népal. Le Sud, autour de Bangalore, a une fécondité bien plus basse.",
+   "source": {
+    "theme": "Étude de cas 2 – La situation démographique de l’Inde",
+    "titre": "Uttar Pradesh",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Uttar_Pradesh"
+   },
+   "r": "=MVBP8x2r2QDQEVDL0hzlCgBp0xBDUFEF40zxi0bIJwWMlyTTIQSXkyGUkQBRhgAPFgBikURZkEHAggRcMTZ",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s04-1-q56",
+   "fiche": "geographie-s04-1-f8",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "Pourquoi la population de l'Inde continue-t-elle d'augmenter, alors que le Sud s'est stabilisé ?",
+   "choix": [
+    "Parce que les grands États du Nord, comme le Bihar, ont encore une fécondité élevée",
+    "Parce que des millions d'étrangers viennent s'installer en Inde chaque année",
+    "Parce que la mortalité remonte dans le Sud",
+    "Parce que le gouvernement indien encourage les familles nombreuses dans tout le pays depuis quelques années"
+   ],
+   "explication": "Le Nord pèse lourd : l'Uttar Pradesh et le Bihar réunissent plus de 340 millions d'habitants et beaucoup d'enfants. Le Sud, plus riche, a fini sa transition démographique.",
+   "source": {
+    "theme": "Étude de cas 2 – La situation démographique de l’Inde",
+    "titre": "Démographie de l'Inde",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/D%C3%A9mographie_de_l%27Inde"
+   },
+   "r": "QJy22OBEdAcrPt9q3QUAbJUDGXKAJdRKHUFAH4hCAogUc0iQFlxXPcwDkk0FrIFEIghHK40QWoBLjVEQJ5EHScQH7ToUGEwGQsRCPFQDv0AAAxlTKUAFIISZ",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s04-1-q57",
+   "fiche": "geographie-s04-1-f8",
+   "type": "association",
+   "niveau": 2,
+   "enonce": "Relie chaque espace à sa situation.",
+   "gauche": [
+    "Uttar Pradesh",
+    "Bihar",
+    "États du Sud"
+   ],
+   "droite": [
+    "240 millions d'habitants, l'État le plus peuplé",
+    "Plus de trois enfants par femme, le seul État au-dessus",
+    "Population stabilisée, parfois en baisse"
+   ],
+   "explication": "L'Uttar Pradesh est le géant, le Bihar l'État le plus fécond. Le Sud, plus riche, ne grandit presque plus.",
+   "source": {
+    "theme": "Étude de cas 2 – La situation démographique de l’Inde",
+    "titre": "Démographie de l'Inde",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/D%C3%A9mographie_de_l%27Inde"
+   },
+   "r": "==AKsslQdlCRewRSEYnQyYlSZlCH",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s04-1-q58",
+   "fiche": "geographie-s04-1-f8",
+   "type": "vrai_faux",
+   "niveau": 3,
+   "enonce": "S'il était un pays indépendant, l'Uttar Pradesh serait parmi les cinq pays les plus peuplés du monde.",
+   "corrections": [],
+   "explication": "Oui : avec 240 millions d'habitants, il serait cinquième, derrière la Chine, l'Inde, les États-Unis et l'Indonésie. Un seul État indien dépasse ainsi presque tous les pays.",
+   "source": {
+    "theme": "Étude de cas 2 – La situation démographique de l’Inde",
+    "titre": "Uttar Pradesh",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Uttar_Pradesh"
+   },
+   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s04-1-q59",
+   "fiche": "geographie-s04-1-f8",
+   "type": "qcm",
+   "niveau": 3,
+   "enonce": "Comment expliquer que les États du Sud de l'Inde aient cessé de grandir ?",
+   "choix": [
+    "Ils sont plus riches et ont achevé leur transition démographique : peu de naissances, peu de décès",
+    "Leurs habitants partent tous vivre dans le Nord",
+    "Le climat y empêche d'avoir des enfants",
+    "La mortalité y est très élevée, bien plus que dans le Nord du pays, à cause des épidémies"
+   ],
+   "explication": "Les États du Sud, plus riches, ont une natalité et une mortalité faibles : leur population est stabilisée. Le Nord, plus pauvre, garde des familles nombreuses.",
+   "source": {
+    "theme": "Étude de cas 2 – La situation démographique de l’Inde",
+    "titre": "Démographie de l'Inde",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/D%C3%A9mographie_de_l%27Inde"
+   },
+   "r": "=wEHavKIEaaUNswCGNBDCcmXGAgFfgQHcsRCt0AAR1wGKYhRTJlIHQADdEACcgQHFou7BUxQBYgEPoBHmAQAFdABMIwTbvaNI1gVM50GIkQSGIiUGAQHSAAHPFQHv0VRBNUAcYUFFsTZ",
+   "poids": 1
+  },
+  {
+   "id": "geographie-s04-1-q60",
+   "fiche": "geographie-s04-1-f8",
+   "type": "trou",
+   "niveau": 1,
+   "enonce": "Complète avec les noms des deux États.",
+   "texte": "L'___, avec 240 millions d'habitants, est l'État le plus peuplé de l'Inde ; le ___ est celui où les femmes ont le plus d'enfants.",
+   "banque": [
+    "Uttar Pradesh",
+    "Bihar",
+    "Kerala",
+    "Pendjab"
+   ],
+   "explication": "L'Uttar Pradesh est le géant du Nord. Le Bihar, son voisin, est le seul État au-dessus de trois enfants par femme.",
+   "source": {
+    "theme": "Étude de cas 2 – La situation démographique de l’Inde",
+    "titre": "Démographie de l'Inde",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/D%C3%A9mographie_de_l%27Inde"
+   },
+   "r": "=gGcM1xBOAAEl51VXQRGAwSTpQkHP0gRIpgDUYRSAYiBBAxVdtkBccBDi8VNV81DbIxMLlCH",
+   "poids": 1
   }
  ],
  "bonus": [
   {
    "id": "geographie-s04-1-b1",
-   "fiche": "geographie-s04-1-f1",
-   "titre": "L'Inde passe devant la Chine",
-   "texte": "D'après les estimations de l'ONU publiées en avril 2023, l'Inde est devenue cette année-là le pays le plus peuplé du monde : environ 1,429 milliard d'habitants, contre 1,426 milliard pour la Chine. C'est arrivé plus tôt que prévu : l'étude de cas annonçait ce dépassement vers 2030.",
+   "fiche": "geographie-s04-1-f7",
+   "titre": "Un pays sans recensement depuis 2011",
+   "texte": "Le dernier recensement de l'Inde date de 2011 ; le suivant, prévu en 2021, a été repoussé à cause de la pandémie de Covid. Les 1,4 milliard d'habitants annoncés depuis sont donc des estimations, par exemple celles de l'ONU, qui ont placé l'Inde devant la Chine en avril 2023, avec environ trois millions de personnes d'avance.",
    "source": {
     "titre": "Démographie de l'Inde",
     "editeur": "Wikipédia, l'encyclopédie libre",
     "url": "https://fr.wikipedia.org/wiki/D%C3%A9mographie_de_l%27Inde"
+   }
+  },
+  {
+   "id": "geographie-s04-1-b2",
+   "fiche": "geographie-s04-1-f8",
+   "titre": "L'Uttar Pradesh, plus peuplé que presque tous les pays",
+   "texte": "Avec environ 240 millions d'habitants, l'Uttar Pradesh, dont la capitale est Lucknow, serait le cinquième pays du monde s'il était indépendant, derrière la Chine, l'Inde, les États-Unis et l'Indonésie. Il s'étend dans la plaine du Gange, au nord de l'Inde, et touche le Népal.",
+   "source": {
+    "titre": "Uttar Pradesh",
+    "editeur": "Wikipédia, l'encyclopédie libre",
+    "url": "https://fr.wikipedia.org/wiki/Uttar_Pradesh"
    }
   }
  ],
  "nonCouvert": [
   "Les réponses attendues aux questions de l'étude de cas ne sont pas fournies dans le dépôt : le jeu s'appuie seulement sur les documents.",
   "Les valeurs du graphique (natalité, mortalité et population de 1920 à 2040) sont lues à l'œil : seules des évolutions et des valeurs arrondies sont reprises.",
-  "Le détail de la politique indienne de limitation des naissances n'est pas donné dans l'étude de cas.",
+  "Le détail de la politique indienne de limitation des naissances (dates, mesures) n'est donné ni par l'étude de cas ni par la page consultée.",
+  "Les causes de l'écart de fécondité entre le Nord et le Sud ne sont pas expliquées au-delà de la richesse des États du Sud : la page consultée n'en donne pas d'autre.",
+  "Les effets de la croissance sur les ressources (eau, énergie) et la pression sur l'environnement en Inde, attendus par le programme, ne sont abordés que par la pollution des villes et le revers de la Révolution verte.",
   "Les photos (traitement d'un champ, berge polluée, bidonville de Mumbai) ne sont pas reproduites."
  ]
 });
