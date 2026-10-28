@@ -688,19 +688,21 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s08-2-f4",
    "type": "qcm",
    "niveau": 1,
-   "enonce": "Quelle part du mix énergétique mondial représentait le pétrole en 2015 ?",
+   "enonce": "Qu'est-ce qu'une énergie renouvelable ?",
    "choix": [
-    "29 %",
-    "6 %",
-    "14 %",
-    "50 %"
+    "Une énergie dont la source se renouvelle sans cesse",
+    "Une énergie qui ne coûte rien",
+    "Une énergie qu'on peut garder très longtemps dans une pile ou une batterie",
+    "Une énergie tirée du charbon recyclé"
    ],
-   "explication": "Le pétrole faisait 29 % en 2015. Les 6 % sont le nucléaire et les 14 % les énergies renouvelables.",
+   "explication": "Le soleil, le vent, l'eau des rivières ou la chaleur de la Terre ne s'épuisent pas quand on les utilise. Le charbon, le pétrole et le gaz, eux, mettent des millions d'années à se former.",
    "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 13
+    "theme": "Séance 2 – Influence de la nature des sols sur les biomes; ressources naturelles",
+    "titre": "Énergie renouvelable",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/%C3%89nergie_renouvelable"
    },
-   "r": "NNkRQBUZ",
+   "r": "HBlXdoQBGpBHmEQVAkRHMghGdYgJfVEUe5kCFQBHdQjUUkQVFcQALIVDqo0FQN0xsa0AHcSZ",
    "poids": 1
   },
   {
@@ -762,21 +764,22 @@ JEU.enregistrer("cours", {
    "id": "svt-s08-2-q29",
    "fiche": "svt-s08-2-f4",
    "type": "qcm",
-   "niveau": 3,
-   "enonce": "Charbon et pétrole réunis, quelle part du mix énergétique de 2015 cela fait-il ?",
+   "niveau": 2,
+   "enonce": "Laquelle de ces sources d'énergie est renouvelable ?",
    "choix": [
-    "60 %",
-    "31 %",
-    "45 %",
-    "80 %"
+    "Le vent",
+    "Le charbon extrait des mines",
+    "Le pétrole",
+    "Le gaz naturel du sous-sol"
    ],
-   "explication": "31 % de charbon plus 29 % de pétrole font 60 %. Ces deux sources dominaient l'énergie mondiale.",
-   "indice": "Additionne les deux pourcentages.",
+   "explication": "Le vent souffle sans jamais s'épuiser : c'est une énergie renouvelable. Charbon, pétrole et gaz sont des énergies fossiles, qui ne se renouvellent pas à notre échelle.",
    "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 13
+    "theme": "Séance 2 – Influence de la nature des sols sur les biomes; ressources naturelles",
+    "titre": "Énergie renouvelable",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/%C3%89nergie_renouvelable"
    },
-   "r": "NNkRZRUZ",
+   "r": "XkFAKAhRM4TZ",
    "poids": 1
   },
   {
@@ -840,27 +843,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "svt-s08-2-q33",
-   "fiche": "svt-s08-2-f5",
-   "type": "qcm",
-   "niveau": 3,
-   "enonce": "Une source d'énergie représente 20 %. Quel angle lui donne-t-on sur le diagramme ?",
-   "choix": [
-    "72°",
-    "20°",
-    "200°",
-    "36°"
-   ],
-   "explication": "20 % = 0,2 et 0,2 × 360 = 72. La part du gaz, qui fait 20 %, occupe donc 72°.",
-   "indice": "Écris 20 % en nombre à virgule, puis multiplie par 360.",
-   "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 13
-   },
-   "r": "NZNpbVUZ",
-   "poids": 1
-  },
-  {
    "id": "svt-s08-2-q34",
    "fiche": "svt-s08-2-f5",
    "type": "vrai_faux",
@@ -892,26 +874,6 @@ JEU.enregistrer("cours", {
     "page": 14
    },
    "r": "==gEQZ0NfRQRNsgGXcQARc2FHExGeQgTKcQGjhkBVgEHLgwAbIgKdYRRHQgBe8UAN8yTEY0QL8RFP0AHuIVALohAJ1xAbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
-   "id": "svt-s08-2-q36",
-   "fiche": "svt-s08-2-f5",
-   "type": "ordre",
-   "niveau": 2,
-   "enonce": "Remets dans l'ordre les étapes de construction d'un diagramme circulaire.",
-   "elements": [
-    "Mesurer chaque angle au rapporteur, en tournant la feuille",
-    "Calculer l'angle de chaque part et vérifier que la somme fait 360",
-    "Tracer un cercle",
-    "Colorier, puis ajouter la légende et le titre"
-   ],
-   "explication": "D'abord les calculs, puis le cercle, les angles au rapporteur, et enfin couleurs, légende et titre. Le titre vient en dernier.",
-   "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 14
-   },
-   "r": "o5hQfpEVFNEH",
    "poids": 1
   },
   {

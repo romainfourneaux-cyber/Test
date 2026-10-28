@@ -638,26 +638,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "physique-s06-1-q23",
-   "fiche": "physique-s06-1-f3",
-   "type": "qcm",
-   "niveau": 2,
-   "enonce": "Près d'une source de chaleur intense, lequel se ramollit en premier ?",
-   "choix": [
-    "Le zinc",
-    "L'acier",
-    "Les deux en même temps",
-    "Aucun des deux"
-   ],
-   "explication": "Le zinc se ramollit près d'une chaleur intense. L'acier a une température de fusion beaucoup plus élevée.",
-   "source": {
-    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
-    "page": 8
-   },
-   "r": "X4EAGwhRM4TZ",
-   "poids": 1
-  },
-  {
    "id": "physique-s06-1-q24",
    "fiche": "physique-s06-1-f3",
    "type": "trou",
@@ -679,27 +659,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "physique-s06-1-q48",
-   "fiche": "physique-s06-1-f3",
-   "type": "qcm_multiple",
-   "niveau": 2,
-   "enonce": "Quelles affirmations sur le mercure sont justes ? (plusieurs réponses)",
-   "choix": [
-    "Il fond à −38,83 °C",
-    "Il se vaporise à 357 °C",
-    "Il est liquide à vingt degrés",
-    "Il est solide à vingt degrés",
-    "Il se vaporise à 0 °C"
-   ],
-   "explication": "Le mercure fond à −38,83 °C ; il bout à 357 °C. Entre les deux, à vingt degrés, il est liquide.",
-   "source": {
-    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
-    "page": 8
-   },
-   "r": "=oBUGwstD4wCLIFHkMEDD1gzsa0ANshMDwRCVVgGL8kHhEWAHZXns+UUTplUnHbVAYAGbEwHT4xYIZRFBdSTKRkKCXoUG1VWJpF/nDJSj7eRRNUAJYkCgAFH",
-   "poids": 1
-  },
-  {
    "id": "physique-s06-1-q25",
    "fiche": "physique-s06-1-f4",
    "type": "qcm",
@@ -717,26 +676,6 @@ JEU.enregistrer("cours", {
     "page": 8
    },
    "r": "==gSugFDbR0AaowBO5TZ",
-   "poids": 1
-  },
-  {
-   "id": "physique-s06-1-q26",
-   "fiche": "physique-s06-1-f4",
-   "type": "qcm",
-   "niveau": 1,
-   "enonce": "Parmi le platine, l'aluminium, le zinc et l'acier, lequel est le plus dense ?",
-   "choix": [
-    "Le platine",
-    "L'aluminium",
-    "Le zinc",
-    "L'acier"
-   ],
-   "explication": "Le platine a la plus grande masse pour 1 dm³. C'est le plus dense.",
-   "source": {
-    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
-    "page": 8
-   },
-   "r": "hh0Ccl1DDYhRM4TZ",
    "poids": 1
   },
   {

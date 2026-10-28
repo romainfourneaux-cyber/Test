@@ -255,26 +255,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "physique-s01-1-q4",
-   "fiche": "physique-s01-1-f1",
-   "type": "qcm",
-   "niveau": 2,
-   "enonce": "On range des exemples de matière dans un tableau à simple entrée. À quoi correspond chaque colonne ?",
-   "choix": [
-    "À un seul exemple de matière",
-    "À une propriété, comme « compressible »",
-    "À la masse de chaque exemple",
-    "À un état de la matière"
-   ],
-   "explication": "On fait une colonne « solide », une « liquide » et une « gazeux ». Chaque exemple va ensuite dans la colonne de son état.",
-   "source": {
-    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
-    "page": 1
-   },
-   "r": "==QTDQRwx6iBUgQVQUgTKYBS3wUEc6uTBMhRpHbZ",
-   "poids": 1
-  },
-  {
    "id": "physique-s01-1-q5",
    "fiche": "physique-s01-1-f1",
    "type": "vrai_faux",
@@ -606,25 +586,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "physique-s01-1-q36",
-   "fiche": "physique-s01-1-f3",
-   "type": "vrai_faux",
-   "niveau": 2,
-   "enonce": "Le sucre en poudre semble couler parce que ses grains fondent quand on verse le paquet.",
-   "corrections": [
-    "Faux : il semble couler parce que ses grains roulent les uns sur les autres.",
-    "Faux : il semble couler parce que ses grains se compriment en tombant.",
-    "Faux : il semble couler parce qu'il devient liquide au contact de l'air."
-   ],
-   "explication": "Les grains ne fondent pas : ils restent solides. Ils roulent simplement les uns sur les autres.",
-   "source": {
-    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
-    "page": 2
-   },
-   "r": "==ADLBEHXoxNYRQFetwAGRBHBcWAbARVCwgAPZgBmEEEa9lTcgwDIAAISZAAGEFDb4hUNAyXEUUDcogCTYQEndRGHgBFa40AbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
    "id": "physique-s01-1-q37",
    "fiche": "physique-s01-1-f3",
    "type": "qcm",
@@ -935,26 +896,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "physique-s01-1-q45",
-   "fiche": "physique-s01-1-f5",
-   "type": "qcm",
-   "niveau": 3,
-   "enonce": "Un maçon n'a qu'un fil à plomb. Comment peut-il vérifier qu'une marche est horizontale ?",
-   "choix": [
-    "En vérifiant que la marche est bien parallèle au fil tendu",
-    "En vérifiant qu'elle forme un angle droit avec le fil",
-    "En posant le fil à plat sur la marche, comme une règle",
-    "Il ne peut pas : le fil à plomb ne donne que la verticale"
-   ],
-   "explication": "Le fil donne la verticale, et l'horizontale lui est perpendiculaire. Si la marche fait un angle droit avec le fil, elle est horizontale.",
-   "source": {
-    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
-    "page": 2
-   },
-   "r": "=EWQMMVDLMgRFwABmIVAMoxAN4kCe8QLMV0WY5kCLQhBUc2FZkAEWxxHPZgBiQ0Ac91xsChRHcTZ",
-   "poids": 1
-  },
-  {
    "id": "physique-s01-1-q22",
    "fiche": "physique-s01-1-f6",
    "type": "qcm",
@@ -1036,19 +977,19 @@ JEU.enregistrer("cours", {
    "fiche": "physique-s01-1-f6",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Pourquoi faut-il tenir fermement le verre retourné pendant qu'on l'enfonce dans l'eau ?",
+   "enonce": "Pourquoi peut-on comprimer l'air d'une pompe à vélo en bouchant la sortie, mais pas l'eau d'une seringue bouchée ?",
    "choix": [
-    "L'air enfermé devient solide et alourdit beaucoup le verre",
-    "L'air enfermé risque de se transformer en eau",
-    "L'eau repousse l'air, et le verre risque de pencher",
-    "L'air enfermé se comprime jusqu'à disparaître"
+    "Parce que l'air est beaucoup plus léger que l'eau",
+    "Parce qu'un gaz est compressible et qu'un liquide ne l'est pas",
+    "Parce que l'eau garde une forme propre dans la seringue",
+    "Parce que l'air s'échappe peu à peu à travers les parois de la pompe"
    ],
-   "explication": "L'eau repousse l'air enfermé dans le verre, et l'air lui résiste. Sans le tenir, le verre risquerait de pencher et de couler au fond du saladier.",
+   "explication": "L'air est un gaz : on peut le serrer pour qu'il prenne moins de place. L'eau est un liquide : elle coule, mais elle ne se comprime pas.",
    "source": {
     "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
-    "page": 2
+    "page": 1
    },
-   "r": "=cxXLcQBIwgAndREFBBBY0hBAgkJfdBUb5kCKYUHXcmXHwAFWVgTKEwG2IUFQ9lTacwAO5TZ",
+   "r": "==wRGARGOtRANQWQFB1QOpgAPwxAu4RVLAgVc8xTG0wYIlwVE1BHDQRGfgSEVFhBUkEFOUBStglQAxlTKUAFIISZ",
    "poids": 1
   },
   {
@@ -1068,45 +1009,6 @@ JEU.enregistrer("cours", {
     "page": 1
    },
    "r": "=MRTc1QMdpwRd5kCLQhBUc2FRUkBQkhTOUlBjFEDV41BOsgRFdxKQwhFbARGWogUcYSDAk1THwRFDshAq0hFFFgAM40AbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
-   "id": "physique-s01-1-q46",
-   "fiche": "physique-s01-1-f6",
-   "type": "ordre",
-   "niveau": 3,
-   "enonce": "Remets dans l'ordre les étapes de l'expérience du verre retourné.",
-   "elements": [
-    "Plonger le verre bien droit dans l'eau, en le tenant",
-    "Coincer le mouchoir au fond du verre",
-    "Ressortir le verre bien verticalement",
-    "Retourner le verre, ouverture vers le bas"
-   ],
-   "explication": "On coince d'abord le mouchoir, puis on retourne le verre et on le plonge bien droit. On le ressort enfin, toujours verticalement.",
-   "source": {
-    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
-    "page": 2
-   },
-   "r": "o9hQfpUVFNEH",
-   "poids": 1
-  },
-  {
-   "id": "physique-s01-1-q47",
-   "fiche": "physique-s01-1-f6",
-   "type": "vrai_faux",
-   "niveau": 2,
-   "enonce": "Pendant l'expérience du verre retourné, on plonge le verre dans l'eau en le penchant sur le côté.",
-   "corrections": [
-    "Faux : on le plonge bien verticalement, et on le ressort de la même façon.",
-    "Faux : on le plonge à l'endroit, l'ouverture tournée vers le haut.",
-    "Faux : on le plonge droit, mais on le ressort en le penchant."
-   ],
-   "explication": "Le verre se plonge bien verticalement, et il se ressort de la même façon. Il faut aussi le tenir, car l'eau repousse l'air enfermé.",
-   "source": {
-    "fichier": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
-    "page": 2
-   },
-   "r": "==ADLBUAd8MgMNQFINQxluQSTsiUQEQVFsRAcEQDx0AAZ1AAAYkEMI1aGsBAYQRBPwwGcEDSTUxQLYABGxQFp0RGVUFFF4UAdgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
   },
   {

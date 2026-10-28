@@ -218,8 +218,8 @@ JEU.enregistrer("cours", {
    "choix": [
     "Une vaste zone qui partage un même climat, une flore et une faune semblables",
     "Un petit jardin cultivé derrière une maison",
-    "Une espèce d'animal",
-    "Un type de nuage"
+    "Un seul écosystème, comme une mare",
+    "Une région délimitée par des frontières"
    ],
    "explication": "Un biome est une vaste zone géographique au climat, à la flore et à la faune semblables. Une forêt tropicale ou un désert sont des biomes.",
    "source": {
@@ -435,12 +435,14 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s08-1-f2",
    "type": "vrai_faux",
    "niveau": 2,
-   "enonce": "Le maquis se trouve dans cinq zones climatiques différentes.",
+   "enonce": "La taïga est une immense forêt de conifères qui couvre le nord du Canada, de l'Europe et de la Russie.",
    "corrections": [],
-   "explication": "Oui : boréale, tempérée froide, tempérée chaude, subtropicale et tropicale. Le maquis est à cheval sur ces cinq zones.",
+   "explication": "La taïga, ou forêt boréale, forme une bande presque continue autour du pôle Nord. C'est la plus grande forêt d'un seul tenant de la planète.",
    "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 11
+    "theme": "Séance 1 – Environnement, biomes, sol",
+    "titre": "Taïga",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Ta%C3%AFga"
    },
    "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
    "poids": 1
@@ -469,21 +471,23 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s08-1-f2",
    "type": "qcm_multiple",
    "niveau": 3,
-   "enonce": "Dans quelles zones climatiques trouve-t-on du maquis ? (plusieurs réponses)",
+   "enonce": "Lesquels sont des biomes terrestres ? (plusieurs réponses)",
    "choix": [
-    "Boréale",
-    "Tempérée froide",
-    "Tempérée chaude",
-    "Subtropicale",
-    "Tropicale",
-    "Polaire"
+    "La toundra",
+    "La taïga",
+    "La savane",
+    "Le désert",
+    "Le récif corallien",
+    "Le lac"
    ],
-   "explication": "Le maquis s'étale sur cinq zones, de la boréale à la tropicale. Seule la zone polaire n'en a pas.",
+   "explication": "Toundra, taïga, savane et désert sont des biomes des continents. Le récif corallien et le lac sont des biomes aquatiques, d'eau de mer pour l'un, d'eau douce pour l'autre.",
    "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 11
+    "theme": "Séance 1 – Environnement, biomes, sol",
+    "titre": "Biome",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Biome"
    },
-   "r": "==QNhhUCU50BfkAF9A1aQBRCUIBAeAAAcECW2cRAMpgATggGkIFEMb7AA36Hf0wFPk0FIpgBJQxDSJy22eB3ymxAKYiSv9AAZx0xsSRCrAFH",
+   "r": "z0kEUwQAuHbEFBRPLJUTXYgIbRgRN8wIEp0STAS32SQARhgIN5lSi8VAbhVAbY0BlAFH",
    "poids": 1
   },
   {
@@ -504,26 +508,6 @@ JEU.enregistrer("cours", {
     "page": 11
    },
    "r": "LdxIHEADB0BCJNgUNcSDMYkXb4gRD0hAq0hFFFwHMcwGS1AJJxwRJJAAuYEDWc2FZIwGQAAHbIVDv0AAAxlTKUAFIISZ",
-   "poids": 1
-  },
-  {
-   "id": "svt-s08-1-q16",
-   "fiche": "svt-s08-1-f2",
-   "type": "qcm",
-   "niveau": 2,
-   "enonce": "Comment lit-on le biome d'un lieu sur le triangle de Holdridge ?",
-   "choix": [
-    "On cherche la case où se croisent sa zone climatique et son humidité",
-    "On lit la première ligne",
-    "On compte les cases",
-    "On regarde la couleur du triangle et on la compare à la carte"
-   ],
-   "explication": "On part de la zone climatique d'un côté, du gradient d'humidité de l'autre. La case où ils se croisent donne le biome.",
-   "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 11
-   },
-   "r": "N9cpdsxIbgBEdE1BBwhUcYSDAAEXHsxBLAgHkIFELoxCJ9AHSxRLIZBXCxBDGNgGS5fsaUEECgQDPNBBjhUDW91CHUgRH0TZ",
    "poids": 1
   },
   {
@@ -669,26 +653,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "svt-s08-1-q24",
-   "fiche": "svt-s08-1-f3",
-   "type": "qcm",
-   "niveau": 3,
-   "enonce": "Comment repère-t-on un biome sur la carte ?",
-   "choix": [
-    "Grâce à sa couleur, indiquée dans la légende",
-    "Grâce au nom des pays",
-    "Grâce aux lignes de l'équateur et des tropiques",
-    "Grâce à l'échelle"
-   ],
-   "explication": "La légende associe une couleur à chaque biome : violet pour le maquis, marron pour les déserts très secs… On cherche ensuite cette couleur sur la carte.",
-   "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 12
-   },
-   "r": "=00ACcwFgsttJUFEF4EHckwJNAAnuvhHPIwBbcmXHABEdwRAMIVCw0Qx23wCMQcpbUTZ",
-   "poids": 1
-  },
-  {
    "id": "svt-s08-1-q25",
    "fiche": "svt-s08-1-f4",
    "type": "qcm",
@@ -763,25 +727,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "svt-s08-1-q29",
-   "fiche": "svt-s08-1-f4",
-   "type": "ordre",
-   "niveau": 2,
-   "enonce": "Range les trois espaces d'un lac, de la rive vers le fond.",
-   "elements": [
-    "Les profondeurs",
-    "Le littoral",
-    "La surface"
-   ],
-   "explication": "Le littoral fait la jonction avec la terre, la surface reçoit la lumière, les profondeurs restent sombres. Trois espaces, trois peuplements.",
-   "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.pdf",
-    "page": 6
-   },
-   "r": "==wMfpEVFNEH",
-   "poids": 1
-  },
-  {
    "id": "svt-s08-1-q30",
    "fiche": "svt-s08-1-f4",
    "type": "qcm_multiple",
@@ -831,7 +776,7 @@ JEU.enregistrer("cours", {
    "choix": [
     "Moins de 1 %",
     "Plus de 10 %",
-    "Exactement 5 %",
+    "Environ 3,5 %, comme la mer",
     "Aucun sel du tout"
    ],
    "explication": "L'eau douce contient moins de 1 % de sel. Ce n'est pas zéro, mais bien moins que la mer.",
@@ -984,7 +929,7 @@ JEU.enregistrer("cours", {
    "enonce": "Qu'est-ce qu'un « fumeur » ?",
    "choix": [
     "Un volcan sous-marin très chaud, plein de vie",
-    "Un bateau à vapeur",
+    "Un courant d'eau chaude à la surface de l'océan",
     "Un poisson des abysses",
     "Un nuage de cendres au-dessus de la mer, après une éruption"
    ],

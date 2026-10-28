@@ -181,43 +181,23 @@ JEU.enregistrer("cours", {
  ],
  "questions": [
   {
-   "id": "svt-s05-1-q1",
-   "fiche": "svt-s05-1-f1",
-   "type": "qcm",
-   "niveau": 1,
-   "enonce": "Sur le graphique des climats du passé, de quelle couleur sont les périodes glaciaires ?",
-   "choix": [
-    "En bleu",
-    "En rose",
-    "En vert",
-    "En jaune"
-   ],
-   "explication": "Les périodes glaciaires sont en bleu, la couleur du froid. Les interglaciaires sont en rose.",
-   "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 10
-   },
-   "r": "Xg1CDQgRHcTZ",
-   "poids": 1
-  },
-  {
    "id": "svt-s05-1-q2",
    "fiche": "svt-s05-1-f1",
    "type": "qcm",
    "niveau": 1,
-   "enonce": "À quoi correspondent les pics de réchauffement du graphique ?",
+   "enonce": "Comment appelle-t-on une période plus chaude située entre deux périodes glaciaires ?",
    "choix": [
-    "Aux périodes interglaciaires",
-    "Aux périodes glaciaires",
-    "Aux éruptions volcaniques",
-    "Aux saisons sèches"
+    "Une période interglaciaire",
+    "Une période glaciaire",
+    "Une saison sèche",
+    "Un cycle"
    ],
-   "explication": "Chaque pic de réchauffement est une période interglaciaire. Elle est courte par rapport à la période glaciaire qui la précède.",
+   "explication": "Entre deux périodes glaciaires vient une période plus chaude : l'interglaciaire. Elle est courte par rapport à la période glaciaire qui la précède.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 10
    },
-   "r": "==wFetQHPcAARYiHScBEFcwBPFQDnIEDHRYrfYkHcMTZ",
+   "r": "=wkCU8ACbQyEZIwBU0BAGIVDnIEDHRYrfY0AHcSZ",
    "poids": 1
   },
   {
@@ -279,19 +259,19 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s05-1-f1",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Combien de cycles glaciaires le graphique montre-t-il sur quatre cent mille ans ?",
+   "enonce": "Depuis quatre cent mille ans, combien de cycles glaciaires se sont succédé, environ ?",
    "choix": [
-    "Quatre",
-    "Deux",
+    "Quatre, d'environ cent mille ans chacun",
+    "Deux, d'environ deux cent mille ans chacun",
     "Dix",
     "Quarante"
    ],
-   "explication": "Quatre cycles se succèdent sur le graphique. Chacun dure environ cent mille ans.",
+   "explication": "Quatre cycles se sont succédé en quatre cent mille ans. Chacun dure donc environ cent mille ans.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 10
    },
-   "r": "=8wCdIxBcMSZ",
+   "r": "=c1Hc0gDaswYetAVNswAK8ABSNDHQYQVfYAHGQgBmoQAVEwCdIxBcMSZ",
    "poids": 1
   },
   {
@@ -319,19 +299,22 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s05-1-f1",
    "type": "qcm",
    "niveau": 3,
-   "enonce": "Comment reconnaît-on une période interglaciaire sur le graphique ?",
+   "enonce": "Comment connaît-on la température qu'il faisait sur Terre il y a des centaines de milliers d'années ?",
    "choix": [
-    "C'est un pic de réchauffement, dessiné en rose",
-    "C'est un long creux froid, dessiné en bleu",
-    "C'est une ligne droite horizontale",
-    "C'est une zone sans aucune courbe"
+    "Grâce à la glace des pôles, qui garde des bulles d'air de l'époque",
+    "Grâce aux thermomètres de l'époque",
+    "Grâce aux récits laissés par les hommes de la préhistoire sur les parois des grottes",
+    "Grâce aux photos prises par satellite"
    ],
-   "explication": "L'interglaciaire est un pic chaud, en rose. Le long creux bleu est la période glaciaire.",
+   "explication": "Dans la glace de l'Antarctique et du Groenland, chaque couche garde de l'air et des traces de l'époque où elle s'est formée. En forant des carottes de glace, on remonte ainsi jusqu'à huit cent mille ans en arrière.",
+   "indice": "Pense à ce qui s'accumule couche après couche aux pôles.",
    "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 10
+    "theme": "Séance 4 – Étude des cycles climatiques du quaternaire et prospective",
+    "titre": "Carotte de glace",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Carotte_de_glace"
    },
-   "r": "=00AVYAAnxBEFxtsHcAHB0wJNkUQDtgADAwDHYiGWwstDk0CLI1Cq0VRbhlTbUxAOFTZ",
+   "r": "NNwEY0xNbbrQZEFDK8EABIiCBUhXLMgCTsgU0cREFBRFb8ACSFgNcVUGetwASXaGSRzFRUEESggAIIVCv0Qx23wCMQcpbUTZ",
    "poids": 1
   },
   {
@@ -339,60 +322,22 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s05-1-f1",
    "type": "qcm_multiple",
    "niveau": 2,
-   "enonce": "Que montre le graphique des climats des derniers quatre cent mille ans ? (plusieurs réponses)",
+   "enonce": "Coche ce qui est vrai de la période où nous vivons. (plusieurs réponses)",
    "choix": [
-    "Des périodes glaciaires en bleu",
-    "Des périodes interglaciaires en rose",
-    "Une alternance de froid et de chaud",
-    "La hauteur des océans chaque année",
-    "Le nombre d'habitants de l'Europe"
+    "C'est une période interglaciaire",
+    "Elle a commencé il y a un peu plus de dix mille ans, à la fin de la dernière glaciation",
+    "On l'appelle l'Holocène",
+    "C'est une période glaciaire",
+    "Elle a commencé il y a un million d'années"
    ],
-   "explication": "Le graphique montre l'alternance des périodes froides (bleu) et chaudes (rose). Rien sur les océans ni sur la population.",
+   "explication": "La dernière période glaciaire s'est terminée il y a environ onze mille sept cents ans. Depuis, nous vivons dans une période interglaciaire, l'Holocène.",
    "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 10
+    "theme": "Séance 4 – Étude des cycles climatiques du quaternaire et prospective",
+    "titre": "Holocène",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Holoc%C3%A8ne"
    },
-   "r": "7skFyMRHGUFFN40GXg0JEpwRL5kCCYEDRkyEbcBEFUwDPdhBW8QSXgUHAQhRHcxZBAxFcABAN4gHPEDSRsFROxxACYwG1sttVUlAMoSTepkNIlwVNAgCGVBDA4yEcYAFd4gTccBDsQ0Fc6uHPVxAtAFH",
-   "poids": 1
-  },
-  {
-   "id": "svt-s05-1-q9",
-   "fiche": "svt-s05-1-f2",
-   "type": "qcm",
-   "niveau": 1,
-   "enonce": "Sur ce graphique, combien d'années vaut une grande graduation ?",
-   "choix": [
-    "Cinquante mille ans",
-    "Dix mille ans",
-    "Cinq cents ans",
-    "Un million d'années"
-   ],
-   "explication": "Une grande graduation vaut cinquante mille ans. Une petite en vaut dix mille.",
-   "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 10
-   },
-   "r": "XZxGQk0CD4RAu0AABN0DacBCAETZ",
-   "poids": 1
-  },
-  {
-   "id": "svt-s05-1-q10",
-   "fiche": "svt-s05-1-f2",
-   "type": "qcm",
-   "niveau": 2,
-   "enonce": "Et une petite graduation, combien d'années vaut-elle ?",
-   "choix": [
-    "Dix mille ans",
-    "Cinquante mille ans",
-    "Mille ans",
-    "Cent mille ans"
-   ],
-   "explication": "Cinq petites graduations font une grande, soit cinquante mille ans. Une petite vaut donc dix mille ans.",
-   "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 10
-   },
-   "r": "NFgBi0AAZF0BCYkHAYTZ",
+   "r": "==ANQJCHdbqFeUQAnUFBjhUCZhkHfcQQFIVK9cVSX9hBHsxEBACTJIVDL0hzlCAH1cREFRRHJtwCSZgKLVEVB50zlaURBkyEVBQGdAwAPpQAn0AAR1QHaogFJdgICU1CAEFCOZhUEoSDMbvTAowCLYQEnNRVAkRHsw0QQ1QMERAXO9wABQBDGkyGVBQEeAAHGHLGjh0CA1gGcMQQqAFH",
    "poids": 1
   },
   {
@@ -400,19 +345,19 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s05-1-f2",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Comment mesure-t-on la durée d'une période glaciaire sur le graphique ?",
+   "enonce": "Comment trouve-t-on la durée d'une période glaciaire quand on connaît la date de son début et celle de sa fin ?",
    "choix": [
-    "On repère son début et sa fin, puis on calcule l'écart",
-    "On compte les pics de réchauffement",
-    "On mesure la hauteur de la courbe avec une règle graduée en centimètres",
-    "On lit la température la plus basse"
+    "On calcule l'écart entre les deux dates",
+    "On compte les pics de réchauffement du cycle",
+    "On lit la température la plus basse",
+    "On additionne les deux dates"
    ],
-   "explication": "On lit la date du début et celle de la fin grâce aux graduations. La différence donne la durée.",
+   "explication": "La durée, c'est la différence entre la date de la fin et celle du début. On calcule ainsi chaque période glaciaire, puis leur moyenne.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 10
    },
-   "r": "=0kBaIiTMbvCC80AKwRErMhFFthHJ1hBHgxYBsAXL5kDVYUHXcmBAcA3y2gTB0xGjh0Fd6uHKQhRH0TZ",
+   "r": "HZAFd8wCSBhNIFQFetwAGNwGGkyFVFxBQowxsWFBjhUCA5kAOUgRH0TZ",
    "poids": 1
   },
   {
@@ -471,26 +416,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "svt-s05-1-q15",
-   "fiche": "svt-s05-1-f2",
-   "type": "qcm",
-   "niveau": 3,
-   "enonce": "Les périodes glaciaires du graphique s'allongent-elles au fil des cycles ?",
-   "choix": [
-    "Oui, chacune dure plus longtemps que la précédente",
-    "Non : elles durent toutes exactement le même temps, à mille ans près",
-    "Non : elles raccourcissent",
-    "On ne peut pas le savoir"
-   ],
-   "explication": "Soixante-dix mille, quatre-vingt mille, cent mille puis cent dix mille ans : chaque période glaciaire est plus longue que la précédente. La plus récente est la plus longue.",
-   "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 10
-   },
-   "r": "HBVWAogAPraEuH7BVUFEF4kCHkxYeVBWIpBCIkQBSRzBZURVUsxGLIVDtglBUVUDPp0Dc0TZ",
-   "poids": 1
-  },
-  {
    "id": "svt-s05-1-q16",
    "fiche": "svt-s05-1-f2",
    "type": "qcm",
@@ -508,26 +433,6 @@ JEU.enregistrer("cours", {
     "page": 10
    },
    "r": "=UWAbQQVUUgAG8BS7QUAVMUAd8AEHcTZ",
-   "poids": 1
-  },
-  {
-   "id": "svt-s05-1-q17",
-   "fiche": "svt-s05-1-f3",
-   "type": "qcm",
-   "niveau": 1,
-   "enonce": "Dans l'histoire des sept nains et de leurs notes, que remarque-t-on sur leurs moyennes ?",
-   "choix": [
-    "Elles sont toutes égales",
-    "Elles sont toutes différentes",
-    "Prof a la meilleure",
-    "Atchoum a la plus basse"
-   ],
-   "explication": "Les sept nains ont exactement la même moyenne. Pourtant leurs notes sont très différentes.",
-   "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 10
-   },
-   "r": "EVBDeYSFcbaVCwgGa0BHjl1Ca5lTcMgCFcTZ",
    "poids": 1
   },
   {
@@ -605,26 +510,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "svt-s05-1-q22",
-   "fiche": "svt-s05-1-f3",
-   "type": "qcm",
-   "niveau": 3,
-   "enonce": "Lequel des sept nains a travaillé le plus régulièrement ?",
-   "choix": [
-    "Atchoum, avec quatre notes identiques",
-    "Prof, qui a beaucoup progressé",
-    "Joyeux, qui alterne de très bonnes et de très mauvaises notes",
-    "Dormeur, dont les notes baissent"
-   ],
-   "explication": "Atchoum a toujours la même note : aucun écart. Prof, lui, est celui qui a le mieux progressé.",
-   "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 10
-   },
-   "r": "L1hCHkhKZtAUJdwTVMQHdkiUQcRAQwxHPFRD1wURZA0GA4QBdMTZ",
-   "poids": 1
-  },
-  {
    "id": "svt-s05-1-q23",
    "fiche": "svt-s05-1-f3",
    "type": "association",
@@ -634,7 +519,7 @@ JEU.enregistrer("cours", {
     "Quatre notes identiques",
     "Des notes qui montent de 0 à 9",
     "Des notes qui alternent 9 et 1",
-    "Toutes les séries des sept nains"
+    "Les notes 5, 5, 5, 5 et les notes 9, 1, 9, 1"
    ],
    "droite": [
     "La même moyenne",
@@ -642,7 +527,7 @@ JEU.enregistrer("cours", {
     "Le travail le plus régulier",
     "La meilleure progression"
    ],
-   "explication": "Régularité, progression, écarts : la moyenne ne distingue rien de tout cela. Les sept séries ont la même moyenne.",
+   "explication": "Régularité, progression, écarts : la moyenne ne distingue rien de tout cela. Des notes très différentes peuvent donner exactement la même moyenne.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 10
@@ -676,39 +561,19 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s05-1-f4",
    "type": "qcm",
    "niveau": 1,
-   "enonce": "Sur les cartes de pollens, que signifie une zone blanche ?",
+   "enonce": "Sur une carte de pollens fossiles, que veut dire une zone sans aucun pollen d'arbre ?",
    "choix": [
-    "Aucun pollen d'arbre retrouvé",
-    "Beaucoup de pollens d'arbres",
-    "De la neige",
-    "Une mer"
+    "À cette époque, aucune forêt n'y poussait",
+    "Il y avait des forêts très denses",
+    "La zone était sous la mer",
+    "La zone était couverte de neige toute l'année"
    ],
-   "explication": "Le blanc indique l'absence de pollens d'arbres dans les sédiments. Le vert indique leur présence.",
+   "explication": "Les pollens tombent dans les sédiments et s'y conservent. Pas de pollen d'arbre, donc pas de forêt à cette époque.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 10
    },
-   "r": "=cEnujhGJQRHXUjUQcxFDgQSLIlBmEUCa1lTBMRBcMTZ",
-   "poids": 1
-  },
-  {
-   "id": "svt-s05-1-q25",
-   "fiche": "svt-s05-1-f4",
-   "type": "qcm",
-   "niveau": 1,
-   "enonce": "Plus le vert est foncé sur ces cartes…",
-   "choix": [
-    "Plus il y avait de pollens d'arbres",
-    "Plus il faisait froid",
-    "Plus le relief est élevé",
-    "Plus il y avait d'herbes"
-   ],
-   "explication": "L'échelle de couleurs va du blanc au vert foncé selon la quantité de pollens d'arbres. Vert foncé : forêts denses.",
-   "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 10
-   },
-   "r": "==QTB0QMPdBVKowTVgADesSHFUEEVkkGGMhHi0AHVE0BPVxEFISZ",
+   "r": "==AUzsBFWYABG4xTL8ULNExnuzBAAYEDcITEAQQVdxwGe0BGq7eRQllGKUgRpHbZ",
    "poids": 1
   },
   {
@@ -783,27 +648,6 @@ JEU.enregistrer("cours", {
     "page": 10
    },
    "r": "hlFDUN0CZgQCKIVNHARCVhBHf8kBJ4CRJYVDLMgRFcQHjIVWRsBFA8AHB0BLdVUTY9wGPXqDbTIBVZRGUwxHPZgBmgFFclEAGYUFFsTZ",
-   "poids": 1
-  },
-  {
-   "id": "svt-s05-1-q30",
-   "fiche": "svt-s05-1-f4",
-   "type": "qcm_multiple",
-   "niveau": 2,
-   "enonce": "Que faut-il lire avant d'interpréter une carte de pollens ? (plusieurs réponses)",
-   "choix": [
-    "La légende sous la carte",
-    "L'échelle de couleurs",
-    "L'époque à laquelle correspond la carte",
-    "Le nom de l'auteur",
-    "La taille de la feuille"
-   ],
-   "explication": "La légende explique l'échelle de couleurs, et chaque carte correspond à une époque. Sans ces repères, impossible de comparer les deux cartes.",
-   "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 10
-   },
-   "r": "=gzFIpRHHUQSTsiURsgGBoxCdAwBg0AAZF0CacxBFI15xWFAAAgBeYcsP9wDJdhXcoxAKwRHkIFEBUFFFIgCasg6uLUePIUTDIxGTQiUUkQVCwRAcIVDnMEASRYrDY0BlAFH",
    "poids": 1
   },
   {
@@ -925,19 +769,19 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s05-1-f5",
    "type": "qcm",
    "niveau": 3,
-   "enonce": "Comment déduit-on un climat très froid à partir de la carte d'il y a dix-huit mille ans ?",
+   "enonce": "Comment les pollens fossiles montrent-ils que le climat d'il y a dix-huit mille ans était très froid ?",
    "choix": [
-    "Presque pas d'arbres : c'est la toundra, paysage des climats très froids",
-    "Beaucoup de vert foncé, donc des forêts",
-    "Des zones blanches partout, donc des glaciers qui recouvraient tout le continent",
-    "Des pollens de palmiers"
+    "Presque aucun pollen d'arbre : le paysage était une toundra",
+    "Beaucoup de pollens d'arbres, donc de grandes forêts",
+    "Des glaciers recouvraient alors tout le continent, jusqu'à la Méditerranée",
+    "On y trouve des pollens de palmiers"
    ],
    "explication": "Pas de pollens d'arbres, donc pas de forêts : le paysage était une toundra. Or la toundra est typique du grand froid.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 11
    },
-   "r": "X4lCGkAFPIFNab7FBElGa4wHB8iTFZESK80ABgQA+MRBFlFEboQAHcwNNQQWNoBHDEkCS1nUGAwBTsxDIZBSwwUFVg0GeUxAbISZ",
+   "r": "=MFCcsAHdwSWFB1Qb8kEPggBuHbVAIBEachDCgkJBV0DNsQHEQBCVNiUbAQGdYgHPxRHggFBVg0GeUxAbISZ",
    "poids": 1
   }
  ],

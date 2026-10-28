@@ -165,26 +165,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "svt-s05-2-q2",
-   "fiche": "svt-s05-2-f1",
-   "type": "qcm",
-   "niveau": 1,
-   "enonce": "Dans l'exemple de la Réunion, quel est l'aléa ?",
-   "choix": [
-    "Les cyclones",
-    "Les habitants",
-    "Les maisons",
-    "Les bateaux de pêche"
-   ],
-   "explication": "L'aléa, c'est le cyclone. Habitants, maisons et bateaux sont les enjeux.",
-   "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 11
-   },
-   "r": "=A1GmMkCZ50FMYUFM4TZ",
-   "poids": 1
-  },
-  {
    "id": "svt-s05-2-q3",
    "fiche": "svt-s05-2-f1",
    "type": "vrai_faux",
@@ -263,20 +243,23 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s05-2-f1",
    "type": "qcm_multiple",
    "niveau": 2,
-   "enonce": "Que dit l'exemple de la Réunion sur l'aléa « cyclone » ? (plusieurs réponses)",
+   "enonce": "Lesquels de ces phénomènes sont des aléas météorologiques ou climatiques ? (plusieurs réponses)",
    "choix": [
-    "Il est toujours présent sur l'île",
-    "Cinq cyclones différents sont cités",
-    "Il a disparu après le cyclone de 1962",
-    "Il ne touche que les bateaux",
-    "C'est un enjeu"
+    "Une tempête",
+    "Une inondation après de fortes pluies",
+    "Une canicule",
+    "Un cyclone",
+    "Un tremblement de terre",
+    "Une éruption volcanique"
    ],
-   "explication": "Les cyclones reviennent régulièrement sur l'île : cinq sont cités, et l'aléa reste présent. Le cyclone est l'aléa, pas un enjeu.",
+   "explication": "Tempêtes, inondations, canicules et cyclones viennent du temps qu'il fait ou du climat. Les tremblements de terre et les volcans viennent, eux, de l'intérieur de la Terre.",
    "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 11
+    "theme": "Séance 5 – Notion de risque météo et climatique",
+    "titre": "Risque naturel",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Risque_naturel"
    },
-   "r": "==QNh5Fz2n1BMYkEH0BNSZQEbQxGHzKFOoSSFZESAAgCFAREnNwGMYzUFxkCeYMgKkQFftBHGJxBXQz22eRBRpBHa0hA2IUEVkVHKYkCgAFH",
+   "r": "==AKTxAAA4xC64URbhHTDR0AFcAJbsBBWEFDAoDUEFmXAwFWC8hRVwgB10xEFBRFJ1xxxqxMMV0WCdwGHIwBdkyGVBwGkskQNdBHp7eFYhkGPNAC8AFH",
    "poids": 1
   },
   {
@@ -380,19 +363,19 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s05-2-f2",
    "type": "qcm",
    "niveau": 3,
-   "enonce": "Pourquoi les personnes déjà sur leur lieu de travail au moment d'un cyclone comptent-elles parmi les enjeux ?",
+   "enonce": "Pourquoi les habitants d'une île comptent-ils parmi les enjeux d'un cyclone ?",
    "choix": [
-    "Parce qu'elles peuvent être blessées ou tuées par le cyclone",
-    "Parce qu'elles provoquent le cyclone",
-    "Parce qu'elles mesurent le vent",
-    "Parce qu'elles sont à l'abri dans des bâtiments solides et bien fermés"
+    "Parce qu'ils peuvent être blessés ou tués par le cyclone",
+    "Parce qu'ils provoquent le cyclone",
+    "Parce qu'ils mesurent la force du vent",
+    "Parce qu'ils sont toujours à l'abri dans des bâtiments solides"
    ],
-   "explication": "Les personnes exposées au cyclone sont les premiers enjeux. Celles qui sont déjà au travail à ce moment-là sont citées en premier dans l'exemple.",
+   "explication": "Les habitants exposés au cyclone peuvent être blessés ou tués : ils font partie des enjeux. Les maisons, les bateaux et les routes en font aussi partie.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
     "page": 11
    },
-   "r": "=cFAb4RBNYREIZSQFdETe8UFDAcsyYQVQoRUasgxxuBMIlwVNsQHSwsqSNDHQMBAUkhTccBBvgkQAxlTKUAFIISZ",
+   "r": "==wSLEQHEACVGUBSC8EFHkhU0sttQEQUcEwTBEMgeZBUBxwTDQRHYToUBsAEHwxCfI1GvQkQAxlTKUAFIISZ",
    "poids": 1
   },
   {
@@ -454,21 +437,6 @@ JEU.enregistrer("cours", {
     "page": 11
    },
    "r": "=cE3y2xBDshCi8Fz2PkAaAhRI4TZ",
-   "poids": 1
-  },
-  {
-   "id": "svt-s05-2-q17",
-   "fiche": "svt-s05-2-f3",
-   "type": "vrai_faux",
-   "niveau": 2,
-   "enonce": "Dans l'exemple de la Réunion, la vulnérabilité se lit dans les dégâts causés par chaque cyclone.",
-   "corrections": [],
-   "explication": "Oui : les dégâts, majeurs ou considérables, traduisent la vulnérabilité des enjeux. Plus ils sont graves, plus les enjeux sont vulnérables.",
-   "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 11
-   },
-   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -661,7 +629,7 @@ JEU.enregistrer("cours", {
     "Celui qui frappe l'île aux enjeux les plus vulnérables",
     "Celui qui a eu lieu le plus récemment, car la population est plus nombreuse",
     "Celui qui a duré le moins longtemps",
-    "Celui qui a reçu le plus beau nom"
+    "Celui qui frappe l'île la plus grande"
    ],
    "explication": "À aléa égal, le risque dépend de la vulnérabilité des enjeux. Plus ils sont vulnérables, plus le risque est grand.",
    "source": {
@@ -681,8 +649,8 @@ JEU.enregistrer("cours", {
     "Quel est l'aléa ?",
     "Quels sont les enjeux ?",
     "Quelle est leur vulnérabilité ?",
-    "Quelle est la couleur du ciel ?",
-    "Quel jour de la semaine est-on ?"
+    "Quel nom porte le cyclone ?",
+    "À quelle distance se trouve le continent ?"
    ],
    "explication": "Aléa, enjeux, vulnérabilité : les trois questions de l'analyse. Leurs réponses permettent de conclure sur le risque.",
    "source": {
