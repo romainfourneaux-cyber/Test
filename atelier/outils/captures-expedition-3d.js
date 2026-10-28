@@ -14,6 +14,7 @@ const CAPTURES = path.join(__dirname, "..", "captures");
 const DOSSIER = path.join(RACINE, "jeu", "assets", "images", "expedition"), DOSSIER_CACHE = DOSSIER + "-hors-ligne";
 const attendre = ms => new Promise(r => setTimeout(r, ms));
 const echecs = [], notes = {};
+let enRepli = false; // pendant la passe de repli, les fichiers manquants font des erreurs de console attendues
 
 async function capture(page, nom) { await attendre(400); await page.screenshot({ path: path.join(CAPTURES, "expedition-3d-" + nom + ".png"), fullPage: false }); console.log("capture " + nom); }
 // Compte les images rendues en place et celles retirées (repli) : img HTML chargées, image SVG présentes.
@@ -26,7 +27,7 @@ async function bilanImages(page) {
 async function nouvellePage(navigateur, w, h) {
   const page = await navigateur.newPage({ viewport: { width: w, height: h } });
   page.on("pageerror", e => echecs.push("erreur JS : " + e.message));
-  page.on("console", m => { if (m.type() === "error") echecs.push("console : " + m.text()); });
+  page.on("console", m => { if (m.type() === "error" && !(enRepli && /ERR_FILE_NOT_FOUND/.test(m.text()))) echecs.push("console : " + m.text()); });
   await page.goto(URL);
   await page.waitForSelector("#menu button[data-ecran=jouer]");
   await page.evaluate(() => { JEU.ui.fermerModale(); });
@@ -72,7 +73,7 @@ async function parcours(navigateur) {
     await page.keyboard.press("Enter");
     await page.waitForSelector("#ecran-expedition .page-semaine");
     convient = await page.evaluate(() => { const a = JEU.expedition.enCours().route.actes[0], h = a.couches.reduce((t, c) => t.concat(c), []);
-      return h.some(x => x.porte && x.porte.genre === "faveur" && JEU.expedition.EXP.BATAILLES.indexOf(x.type) >= 0) && h.some(x => x.type === "marchand") && h.some(x => x.type === "bivouac"); });
+      return h.some(x => x.porte && x.porte.genre === "faveur" && (x.type === "escarmouche" || x.type === "embuscade")) && h.some(x => x.type === "marchand") && h.some(x => x.type === "bivouac"); });
     if (!convient) { await page.evaluate(() => { JEU.expedition.finir("abandon"); JEU.ecranExpedition.etat.bilan = null; JEU.ui.afficher("expedition"); }); await page.waitForSelector("#ecran-expedition .parchemin-annee"); }
   }
   if (!convient) echecs.push("aucune route avec porte de faveur, marchand et bivouac en première semaine (20 tirages)");
@@ -84,7 +85,7 @@ async function parcours(navigateur) {
   notes.route = await bilanImages(page);
   notes.routeFond = await page.evaluate(() => { const i = document.querySelector(".route-svg image.fond"); return i ? i.getAttribute("href") : null; });
   // 5. une bataille de route à porte de faveur, gagnée par l'API : la question de la porte, puis les cartes
-  const idPorte = await page.evaluate("(" + avancerJusqua + ")(x => x.porte && x.porte.genre === 'faveur' && JEU.expedition.EXP.BATAILLES.indexOf(x.type) >= 0)");
+  const idPorte = await page.evaluate("(" + avancerJusqua + ")(x => x.porte && x.porte.genre === 'faveur' && (x.type === 'escarmouche' || x.type === 'embuscade'))");
   if (!idPorte) echecs.push("aucune halte à porte de faveur atteignable");
   else {
     await page.evaluate(id => { const X = JEU.expedition, t = X.trouverHalte(id, X.enCours()); X.entrer(id);
@@ -166,7 +167,12 @@ async function parcours(navigateur) {
 
 // Repli : le dossier des images est renommé le temps d'une page ; chaque image retirée doit laisser le dessin.
 async function repli(navigateur) {
+  // le manifeste reste (images.js recopié dans un dossier vide), seuls les fichiers d'images manquent : c'est le chemin de
+  // repliImage (image retirée au chargement raté), pas celui du manifeste absent
   fs.renameSync(DOSSIER, DOSSIER_CACHE);
+  fs.mkdirSync(DOSSIER);
+  fs.copyFileSync(path.join(DOSSIER_CACHE, "images.js"), path.join(DOSSIER, "images.js"));
+  enRepli = true;
   try {
     const page = await nouvellePage(navigateur, 1366, 768);
     await page.click("#menu button[data-ecran=jouer]");
@@ -180,7 +186,7 @@ async function repli(navigateur) {
     await page.waitForSelector("#ecran-expedition .page-semaine");
     await page.keyboard.press("Enter");
     await page.waitForSelector("#ecran-expedition .route-svg");
-    const id = await page.evaluate("(" + avancerJusqua + ")(x => x.porte && x.porte.genre === 'faveur' && JEU.expedition.EXP.BATAILLES.indexOf(x.type) >= 0)");
+    const id = await page.evaluate("(" + avancerJusqua + ")(x => x.porte && x.porte.genre === 'faveur' && (x.type === 'escarmouche' || x.type === 'embuscade'))");
     if (id) await page.evaluate(id => { const X = JEU.expedition, t = X.trouverHalte(id, X.enCours()); X.entrer(id);
       const res = X.apresBataille(t.halte, { issue: "tenu", degatsRival: 3, bonnes: 3, total: 3, entamee: true });
       if (res && res.porte) { const off = X.offrirFaveurs(res.porte, true, false); if (off && off.cartes.length) { off.question = false; JEU.sauvegarde.enregistrer(); } } }, id);
@@ -194,14 +200,16 @@ async function repli(navigateur) {
     await attendre(600);
     notes.repliRoute = await bilanImages(page);
     await capture(page, "17-repli-route");
-    if (notes.repliRoute.svg || notes.repliRoute.imgOk || notes.repliRoute.enveloppes) echecs.push("repli : des images rendues restent en place sans fichier (" + JSON.stringify(notes.repliRoute) + ")");
+    [notes.repliDepart, notes.repliCartes, notes.repliRoute].forEach((n, i) => { if (n.svg || n.img || n.enveloppes) echecs.push("repli " + i + " : des images rendues restent en place sans fichier (" + JSON.stringify(n) + ")"); });
+    if (!notes.repliCartes.cadre) echecs.push("repli : la classe cadre-image devrait rester posée (le manifeste est là), seul le pseudo-élément reste vide");
     await page.close();
-  } finally { fs.renameSync(DOSSIER_CACHE, DOSSIER); }
+  } finally { enRepli = false; fs.rmSync(DOSSIER, { recursive: true, force: true }); fs.renameSync(DOSSIER_CACHE, DOSSIER); }
 }
 
 (async () => {
   const navigateur = await chromium.launch(process.env.CHROMIUM ? { executablePath: process.env.CHROMIUM } : {});
-  try { await parcours(navigateur); await repli(navigateur); }
+  const seulement = process.argv[2]; // « repli » : seulement la passe sans fichiers d'images
+  try { if (seulement !== "repli") await parcours(navigateur); await repli(navigateur); }
   catch (e) { echecs.push("arrêt : " + (e && e.stack || e)); }
   await navigateur.close();
   console.log(JSON.stringify(notes, null, 1));

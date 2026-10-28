@@ -648,14 +648,14 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s01-2-f4",
    "type": "qcm",
    "niveau": 3,
-   "enonce": "Le jour de l'équinoxe de septembre, comment se partagent le jour et la nuit à Bourges, en France ?",
+   "enonce": "Le jour de l'équinoxe de septembre, comment se partagent le jour et la nuit en France ?",
    "choix": [
     "Ils durent autant l'un que l'autre",
     "Le jour dure deux fois plus que la nuit",
     "La nuit dure deux fois plus que le jour",
     "Il fait jour pendant toute la journée"
    ],
-   "explication": "Le jour d'un équinoxe, jour et nuit ont la même durée en tout point du globe. Bourges ne fait pas exception, même si ses jours varient beaucoup le reste de l'année.",
+   "explication": "Le jour d'un équinoxe, jour et nuit ont la même durée en tout point du globe. La France ne fait pas exception, même si la durée de ses jours varie beaucoup le reste de l'année.",
    "source": {
     "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.pdf",
     "page": 2
@@ -762,19 +762,22 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s01-2-f5",
    "type": "qcm",
    "niveau": 1,
-   "enonce": "Pourquoi numérote-t-on ses fiches de révision ?",
+   "enonce": "Pourquoi le Soleil se lève-t-il à l'est ?",
    "choix": [
-    "Pour les ranger dans l'ordre",
-    "Pour compter les définitions",
-    "Pour choisir la couleur du titre",
-    "Pour remplacer le titre de la leçon"
+    "Parce que la Terre tourne sur elle-même d'ouest en est",
+    "Parce que le Soleil tourne autour de la Terre",
+    "Parce que l'axe de la Terre est penché",
+    "Parce que la Terre est plus près du Soleil au lever du jour"
    ],
-   "explication": "Le numéro permet de remettre les fiches dans l'ordre. On s'y retrouve plus vite pour réviser.",
+   "explication": "La Terre tourne sur elle-même vers l'est, en un peu moins d'une journée. Vu du sol, le Soleil semble donc apparaître à l'est et disparaître à l'ouest.",
+   "indice": "Pense au sens dans lequel la Terre tourne sur elle-même.",
    "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 2
+    "theme": "Séance 2 – La Terre une planète en mouvement – Les axes de la Terre",
+    "titre": "Rotation de la Terre",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Rotation_de_la_Terre"
    },
-   "r": "PsQHCQhBVtiUGsAFVkEHKUhBi8VRGhkAPRxEGISZ",
+   "r": "KdjXAUxQL8kEVwwBoUVEFBBHD3qAf1wLBBQFftBHGNwBAITHBUEEDsxC7IVCv0AAAxlTKUAFIISZ",
    "poids": 1
   },
   {
@@ -782,52 +785,58 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s01-2-f5",
    "type": "vrai_faux",
    "niveau": 2,
-   "enonce": "Sur une fiche de révision, on écrit tous les titres de la même couleur.",
+   "enonce": "Les saisons existent parce que la distance entre la Terre et le Soleil change au cours de l'année.",
    "corrections": [
-    "Faux : on choisit une couleur pour chaque niveau de titre.",
-    "Faux : on change de couleur à chaque nouvelle fiche.",
-    "Faux : on écrit les titres en noir et les définitions en couleur."
+    "Faux : elles viennent de l'inclinaison de l'axe de la Terre ; la Terre est même au plus près du Soleil en janvier.",
+    "Faux : elles viennent de la Lune, qui cache le Soleil une partie de l'année.",
+    "Faux : elles viennent de la vitesse de rotation de la Terre, qui change selon les mois."
    ],
-   "explication": "Une couleur par niveau de titre aide à voir le plan d'un coup d'œil. On décale aussi d'un carreau à chaque sous-titre.",
+   "explication": "La Terre passe au plus près du Soleil début janvier, en plein hiver au nord : la distance n'explique donc pas les saisons. C'est l'inclinaison de l'axe de rotation qui les fait.",
    "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 2
+    "theme": "Séance 2 – La Terre une planète en mouvement – Les axes de la Terre",
+    "titre": "Saison",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Saison"
    },
-   "r": "==wDXtEED0xBbIVDn0AEUhEGGggRMcgNT0hBVNAHB8hUaYDSJAkQN80AIwhUzshBMoRGK4UAdgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "r": "=8gSt9FActFAOwgRHcxZewBAZ4hOOphFIBThmeUXOxxEKkhUyMRVAgx2qOwTGshJNAwRftwOGdQBSxnUQcxBU0jTO4BSmkURQV1DIpgRMYxZcohFcAxBHMQEGoiCJUBSK8kEIwAHpcBHTUlAMIwAXgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
   },
   {
    "id": "svt-s01-2-q20",
    "fiche": "svt-s01-2-f5",
    "type": "qcm_multiple",
-   "niveau": 1,
-   "enonce": "Coche ce qu'on trouve sur une bonne fiche de révision.",
+   "niveau": 2,
+   "enonce": "Coche ce qui est vrai de l'axe de rotation de la Terre.",
    "choix": [
-    "Un numéro pour la ranger",
-    "Les définitions",
-    "Un résumé encadré en couleur",
-    "Un schéma pour visualiser le résumé",
-    "Une seule couleur pour tous les titres"
+    "Il est penché d'environ 23 degrés",
+    "Il garde la même direction pendant tout le tour autour du Soleil",
+    "Son inclinaison explique les saisons",
+    "Il se redresse à chaque équinoxe",
+    "Il est couché à plat dans le plan de l'écliptique"
    ],
-   "explication": "Numéro, définitions, résumé encadré et schéma font une fiche efficace. Les titres, eux, changent de couleur selon leur niveau.",
+   "explication": "L'axe de la Terre est incliné d'environ 23 degrés et pointe toujours dans la même direction pendant la révolution. C'est pour cela qu'un hémisphère est tourné vers le Soleil pendant six mois, puis l'autre.",
    "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 2
+    "theme": "Séance 2 – La Terre une planète en mouvement – Les axes de la Terre",
+    "titre": "Obliquité",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Obliquit%C3%A9"
    },
-   "r": "1EGhmiFWdYcpUk0FrI1BAYAGF8gGBEQNNcBQC5xTHsAwx+SEGU0GkskQNBQHmEEEa5kTBMgRAHbNWQhBbQRSHz6HdADhmeUDAoDRKtUAp0BHRwxHAggxxywYeBQePIUTUMgDcYCAVRQGRtxGAIASs8Fz2D0GBYEC8AFH",
+   "r": "=8iSwMkCGR0DcYUFM4xZXAAFc0RGWogUGwiXMQ1QHMQBIAgUp0hJHl1UFcgCecAENARUNwhGJIBHTcGAAoQARxgAPZQHskVRBN0DLgwAZIVKdwREWQxGHsgUN4yhmiVDPMgRD0AAmURVJwzUFxEHbvaMKBQUN0VXGhgBA4CBbAgUVk0xsqxCtgUFVkVHKYkCgAFH",
    "poids": 1
   },
   {
    "id": "svt-s01-2-q33",
    "fiche": "svt-s01-2-f5",
    "type": "vrai_faux",
-   "niveau": 2,
-   "enonce": "Sur une fiche de révision, on décale le texte d'un carreau à chaque niveau de titre inférieur.",
+   "niveau": 1,
+   "enonce": "La Terre met environ 365 jours et un quart pour faire un tour complet autour du Soleil.",
    "corrections": [],
-   "explication": "Un sous-titre s'écrit un carreau plus loin que le titre au-dessus de lui. Plus le niveau est petit, plus on avance.",
+   "explication": "Une révolution complète dure à peu près 365 jours et un quart. Ce quart de jour en trop s'accumule et donne le 29 février tous les quatre ans.",
    "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 2
+    "theme": "Séance 2 – La Terre une planète en mouvement – Les axes de la Terre",
+    "titre": "Année",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Ann%C3%A9e"
    },
    "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
    "poids": 1
@@ -837,18 +846,20 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s01-2-f5",
    "type": "vrai_faux",
    "niveau": 2,
-   "enonce": "Sur une fiche de révision, le résumé s'écrit sans cadre ni couleur.",
+   "enonce": "L'alternance du jour et de la nuit vient du tour que fait la Terre autour du Soleil.",
    "corrections": [
-    "Faux : on l'écrit dans un cadre colorié.",
-    "Faux : on ne met jamais de résumé sur une fiche.",
-    "Faux : on l'écrit au dos de la fiche, au crayon."
+    "Faux : elle vient de la rotation de la Terre sur elle-même, en un peu moins d'une journée.",
+    "Faux : elle vient de la Lune, qui cache le Soleil chaque nuit.",
+    "Faux : elle vient de l'inclinaison de l'axe de la Terre."
    ],
-   "explication": "Le résumé est rangé dans un cadre colorié, bien visible. Un schéma peut ensuite aider à le visualiser.",
+   "explication": "C'est la rotation de la Terre sur elle-même qui tourne chaque lieu vers le Soleil, puis vers l'ombre. Le tour autour du Soleil, lui, donne l'année.",
    "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 2
+    "theme": "Séance 2 – La Terre une planète en mouvement – Les axes de la Terre",
+    "titre": "Rotation de la Terre",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Rotation_de_la_Terre"
    },
-   "r": "SQESAHrLAoRCaIRSL0hFJASDLAUDdEwBCkkBuAgFMbrVF4UAdgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "r": "=4zDLBFhtGAFTYAGndxGQIVFJ1RAbcgLNABUd5UATY0BXcmXQgw3ySwQK4BBm0wFA5lTKQBFMYyZTkRRQURSAAwGcISWKcUDPMgRD0gUzwBEMMQUMIwAXgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -856,19 +867,21 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s01-2-f5",
    "type": "ordre",
    "niveau": 2,
-   "enonce": "Range ces titres du plus général au plus détaillé, comme sur une fiche de révision.",
+   "enonce": "Range ces durées de la plus courte à la plus longue.",
    "elements": [
-    "1.1 Le système solaire dans l'Univers",
-    "Thème A : la planète Terre",
-    "I. La Terre dans le système solaire",
-    "Chapitre 1 : la Terre, une planète en mouvement"
+    "Une saison",
+    "Une rotation de la Terre sur elle-même",
+    "Une révolution de la Terre autour du Soleil",
+    "Un tour de la Lune autour de la Terre"
    ],
-   "explication": "On va du thème au chapitre, puis à la partie et enfin à la sous-partie. Chaque niveau a sa couleur et avance d'un carreau.",
+   "explication": "La Terre tourne sur elle-même en un peu moins d'un jour, et la Lune fait le tour de la Terre en environ 27 jours. Une saison dure environ trois mois et la révolution complète environ 365 jours.",
    "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 2
+    "theme": "Séance 2 – La Terre une planète en mouvement – Les axes de la Terre",
+    "titre": "Lune",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Lune"
    },
-   "r": "o1hQdpUVFNEH",
+   "r": "o9hQfpUVFNEH",
    "poids": 1
   },
   {
@@ -876,25 +889,27 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s01-2-f5",
    "type": "association",
    "niveau": 3,
-   "enonce": "Relie chaque élément d'une fiche de révision à son rôle.",
+   "enonce": "Relie chaque mouvement ou particularité de la Terre à ce qu'il produit.",
    "gauche": [
-    "Le numéro",
-    "Le cadre colorié",
-    "Le schéma",
-    "Le décalage d'un carreau"
+    "La rotation de la Terre sur elle-même",
+    "La révolution de la Terre autour du Soleil",
+    "L'inclinaison de l'axe de rotation",
+    "L'orbite en forme d'ellipse"
    ],
    "droite": [
-    "Visualiser le résumé",
-    "Ranger les fiches dans l'ordre",
-    "Montrer un titre de niveau inférieur",
-    "Regrouper les informations du résumé"
+    "Les saisons",
+    "Un point le plus proche et un point le plus éloigné du Soleil",
+    "Le jour et la nuit",
+    "L'année"
    ],
-   "explication": "Le numéro range, le cadre regroupe le résumé et le schéma aide à le visualiser. Le décalage d'un carreau signale un niveau de titre inférieur.",
+   "explication": "La rotation donne le jour et la nuit, la révolution donne l'année, et l'axe penché donne les saisons. Comme l'orbite est une ellipse, la Terre passe par un point le plus proche du Soleil, le périhélie, et un point le plus éloigné, l'aphélie.",
    "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 2
+    "theme": "Séance 2 – La Terre une planète en mouvement – Les axes de la Terre",
+    "titre": "Saison",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Saison"
    },
-   "r": "==ANvUnXG5TWsklQdlCRe4RSEYnQyclSZlCH",
+   "r": "==ANvYnXG5TWsklQdlCRe4RSEYnQyQlSZlCH",
    "poids": 1
   },
   {
@@ -902,19 +917,22 @@ JEU.enregistrer("cours", {
    "fiche": "svt-s01-2-f5",
    "type": "qcm",
    "niveau": 3,
-   "enonce": "Tu écris un sous-titre juste sous un titre de ta fiche. Que dois-tu faire ?",
+   "enonce": "Pourquoi ajoute-t-on un 29 février tous les quatre ans ?",
    "choix": [
-    "Avancer d'un carreau et changer de couleur",
-    "Garder la même couleur et la même marge que le titre",
-    "Commencer une nouvelle fiche avec un nouveau numéro",
-    "L'encadrer en couleur, comme le résumé"
+    "Parce qu'un tour autour du Soleil dure un peu plus de 365 jours",
+    "Parce que février est le mois le plus froid de l'année",
+    "Parce que la Terre tourne un peu moins vite sur elle-même tous les quatre ans",
+    "Parce que la Lune fait un tour de plus cette année-là"
    ],
-   "explication": "Un sous-titre est d'un niveau inférieur : il prend une autre couleur et avance d'un carreau. Le cadre colorié est réservé au résumé.",
+   "explication": "Une révolution dure environ 365 jours et un quart. Tous les quatre ans, ces quarts de jour font un jour entier, qu'on ajoute au calendrier.",
+   "indice": "Compte ce que font quatre quarts de jour.",
    "source": {
-    "fichier": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
-    "page": 2
+    "theme": "Séance 2 – La Terre une planète en mouvement – Les axes de la Terre",
+    "titre": "Année bissextile",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Ann%C3%A9e_bissextile"
    },
-   "r": "=A1BQARHcEADS1wJNcBUKBgDOUQSGIiUAQAEDsxDMIlB2oQAV81CMgwBfMTZ",
+   "r": "=clFHQgBE80ReBXDAEVDdohCWk0BiIQVLAQUMwhGWg0LEBQWC1zTTIQSAITHBABFRtxGAYAStglQAxlTKUAFIISZ",
    "poids": 1
   }
  ],
