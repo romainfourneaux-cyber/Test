@@ -327,7 +327,7 @@ module.exports = {
       enonce: "« Shall » s'emploie avec tous les sujets : Shall they come ?",
       corrections: ["Faux : shall s'emploie avec I et we : Shall we come ?", "Faux : shall ne s'emploie qu'au passé.", "Faux : shall s'emploie seulement avec you."],
       reponse: { vrai: false, correction: "Faux : shall s'emploie avec I et we : Shall we come ?" },
-      explication: "Shall accompagne I et we : « Shall I play ? », « Shall we go ? ». Avec les autres sujets, la question au futur se fait avec will : « Will they come ? ».", source: L(9) },
+      explication: "Shall accompagne I et we, comme dans « Shall I play » ou « Shall we go ». Avec les autres sujets, la question au futur se fait avec will, comme dans « Will they come ».", source: L(9) },
     { id: "anglais-seq03-q52", fiche: "anglais-seq03-g6", type: "qcm_multiple", niveau: 3,
       enonce: "Quelles phrases sont correctes ? Coche toutes les bonnes réponses.",
       choix: ["We'll need a map.", "He will needs a map.", "Will they be late ?", "She won't to come.", "I shall be ready.", "They will to sing."],

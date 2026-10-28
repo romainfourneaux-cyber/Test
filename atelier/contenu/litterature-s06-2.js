@@ -12,6 +12,7 @@ const S = { fichier: "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf
 // de thème : le corrigé ne dit du passé simple que son effet dans un passage, et la consigne de rédaction est hors jeu.
 const THEME = "Cours 5 – Lire la leçon littéraire p41 à 43"; // intitulé du planning, pour les questions de thème (règle du 25/10/2026)
 const T = (titre, page) => ({ theme: THEME, titre, editeur: "Wikipédia", url: "https://fr.wikipedia.org/wiki/" + page });
+// Seconde relecture du 28/10/2026 (vérification des questions de thème et des cours minces) : leurres de q15, q19 et q24 remplacés ; q16 (thème) porte désormais sur l'écrit et l'oral, q9 et q10 posant déjà premier plan et arrière-plan.
 
 module.exports = {
   id: "litterature-s06-2",
@@ -137,15 +138,15 @@ module.exports = {
       explication: "« Ouvrit », « entra », « sauta » sont au passé simple. « Ouvrait » est à l'imparfait, « partirons » au futur, « dort » au présent.", source: S },
     { id: "litterature-s06-2-q15", fiche: "litterature-s06-2-f2", type: "qcm", niveau: 3,
       enonce: "Pourquoi Jim n'est-il plus sûr de ce qu'il a perçu quand il rejoint le navire ?",
-      choix: ["Parce que le navire est arrivé sur lui trop vite, dans un courant de plus en plus rapide", "Parce que le capitaine lui a raconté une fausse histoire", "Parce qu'il a gardé les yeux fermés pendant toute la traversée, de peur de tomber à l'eau", "Parce qu'il ne connaît pas le nom du navire qu'il cherche"],
+      choix: ["Parce que le navire est arrivé sur lui trop vite, dans un courant de plus en plus rapide", "Parce qu'il s'est endormi dans le canot pendant la traversée", "Parce qu'il était encore trop loin pour bien voir", "Parce qu'il ne connaît pas le nom du navire qu'il cherche"],
       reponse: "Parce que le navire est arrivé sur lui trop vite, dans un courant de plus en plus rapide",
       explication: "Plus Jim avance, plus le courant est rapide : le navire surgit d'un coup. Pris de court, Jim ne sait plus très bien ce qu'il a vu.", source: S },
-    { id: "litterature-s06-2-q16", fiche: "litterature-s06-2-f2", type: "trou", niveau: 1,
+    { id: "litterature-s06-2-q16", fiche: "litterature-s06-2-f2", type: "trou", niveau: 2,
       enonce: "Complète la phrase.",
-      texte: "Dans un récit au passé, les actions de premier plan sont au passé ___ ; le décor et les descriptions sont à l'___.",
-      banque: ["simple", "imparfait", "composé", "futur"],
-      reponse: [["simple"], ["imparfait"]],
-      explication: "Le passé simple raconte les actions qui se suivent. L'imparfait installe le décor, en arrière-plan.", source: T("Passé simple en français", "Pass%C3%A9_simple_en_fran%C3%A7ais") },
+      texte: "Aujourd'hui, le passé simple s'emploie surtout à l'___, dans les récits ; à l'oral, on raconte plutôt au passé ___.",
+      banque: ["écrit", "composé", "oral", "imparfait"],
+      reponse: [["écrit"], ["composé"]],
+      explication: "Le passé simple est devenu un temps de l'écrit : on le lit dans les romans, on ne l'entend presque plus. Quand on raconte à l'oral, on emploie le passé composé.", source: T("Passé simple en français", "Pass%C3%A9_simple_en_fran%C3%A7ais") },
     // f3 : changer de narrateur
     { id: "litterature-s06-2-q17", fiche: "litterature-s06-2-f3", type: "qcm", niveau: 1,
       enonce: "Dans L'Île au trésor, qui est le narrateur ?",
@@ -158,7 +159,7 @@ module.exports = {
       explication: "Oui : le narrateur est celui qui raconte et dit « je ». Si c'est le capitaine, « je » le désigne.", source: S },
     { id: "litterature-s06-2-q19", fiche: "litterature-s06-2-f3", type: "qcm", niveau: 2,
       enonce: "Comment change un récit quand on remplace le narrateur par un autre personnage ?",
-      choix: ["On raconte ce que ce personnage voit, pense et ressent", "L'histoire devient un poème", "Les verbes passent tous au futur", "On garde exactement les mêmes phrases en changeant seulement le titre"],
+      choix: ["On raconte ce que ce personnage voit, pense et ressent", "On change les événements de la scène", "On raconte à la troisième personne, sans « je »", "On garde exactement les mêmes phrases, seul le nom du narrateur change"],
       reponse: "On raconte ce que ce personnage voit, pense et ressent",
       explication: "Le nouveau narrateur dit « je » et donne sa façon de voir la scène. On découvre ce que lui pense et ressent.", source: S },
     { id: "litterature-s06-2-q20", fiche: "litterature-s06-2-f3", type: "vrai_faux", niveau: 2,
@@ -184,7 +185,7 @@ module.exports = {
       explication: "Le narrateur raconte ; en changer, c'est donner « je » à un autre personnage. La focalisation interne suit ce qu'un personnage ressent.", source: S },
     { id: "litterature-s06-2-q24", fiche: "litterature-s06-2-f3", type: "qcm", niveau: 3,
       enonce: "Pourquoi la même scène paraît-elle différente quand le capitaine Smollett la raconte à la place de Jim ?",
-      choix: ["Parce qu'on découvre ce que lui voit, pense et ressent", "Parce que le capitaine ne sait pas écrire", "Parce que la scène se passe alors à un autre endroit", "Parce que les verbes au passé simple sont interdits dans sa bouche"],
+      choix: ["Parce qu'on découvre ce que lui voit, pense et ressent", "Parce que le capitaine raconte d'autres événements", "Parce que la scène se passe alors à un autre endroit", "Parce que le capitaine ne dit jamais « je »"],
       reponse: "Parce qu'on découvre ce que lui voit, pense et ressent",
       explication: "Chaque narrateur raconte avec ses yeux et ses sentiments. Le capitaine ne voit pas la scène comme Jim, même si les faits sont les mêmes.", source: S }
   ],

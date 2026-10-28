@@ -14,6 +14,7 @@ const S = p => ({ fichier: F, page: p });
 // q13 et q26 (détails de dictionnaire et de légende) supprimées ; q12 (water sky) devenue question de thème sur l'iceberg.
 const THEME = "Un hivernage dans les glaces – Lire la présentation du livre et parcourir la vie de l’auteur p1 à 27"; // intitulé du planning, pour les questions de thème (règle du 25/10/2026)
 const T = (titre, page) => ({ theme: THEME, titre, editeur: "Wikipédia", url: "https://fr.wikipedia.org/wiki/" + page });
+// Seconde relecture du 28/10/2026 (vérification des questions de thème et des cours minces) : un leurre de q12 remplacé.
 
 module.exports = {
   id: "lecture-s01-1",
@@ -176,7 +177,7 @@ module.exports = {
       explication: "L'ice shelf est un glacier posé sur l'océan, l'iceberg un bloc qui s'en détache. Le pack réunit des blocs de banquise, le brash de petits débris.", source: S(1) },
     { id: "lecture-s01-1-q12", fiche: "lecture-s01-1-f3", type: "qcm", niveau: 2,
       enonce: "Pourquoi un iceberg flotte-t-il au lieu de couler ?",
-      choix: ["Parce que la glace est moins dense que l'eau de mer", "Parce qu'il est creux à l'intérieur", "Parce que le sel de l'eau de mer le porte, comme un bouchon de liège", "Parce que le vent le soulève"],
+      choix: ["Parce que la glace est moins dense que l'eau de mer", "Parce qu'il est creux à l'intérieur", "Parce que les courants le poussent vers le haut", "Parce que le vent le soulève"],
       reponse: "Parce que la glace est moins dense que l'eau de mer",
       explication: "À volume égal, la glace pèse moins que l'eau : elle est moins dense, donc elle flotte. C'est pour cela que les icebergs dérivent sans couler.",
       indice: "Pense à un glaçon dans un verre d'eau.", source: T("Iceberg", "Iceberg") },

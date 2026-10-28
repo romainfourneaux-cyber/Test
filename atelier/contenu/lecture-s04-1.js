@@ -13,6 +13,7 @@ const S = p => ({ fichier: F, page: p });
 // et bœuf musqué) devenues questions de thème : les fiches f3 et f5 ne sont que deux phrases de la liste, presque en chiffres.
 const THEME = "Un hivernage dans les glaces – Lire les chapitres 5 et 6 p55 à 67"; // intitulé du planning, pour les questions de thème (règle du 25/10/2026)
 const T = (titre, page) => ({ theme: THEME, titre, editeur: "Wikipédia", url: "https://fr.wikipedia.org/wiki/" + page });
+// Seconde relecture du 28/10/2026 (vérification des questions de thème et des cours minces) : leurres de q4, q34 et q35 remplacés ; q15 devient un trou sur les animaux de l'océan Arctique (q9 et q10 posaient déjà « le pingouin vole ») ; q20 reformulée.
 
 module.exports = {
   id: "lecture-s04-1",
@@ -103,7 +104,7 @@ module.exports = {
       explication: "Oui : le phoque est un pinnipède, comme le morse, l'otarie, le lion de mer et l'éléphant de mer.", source: S(4) },
     { id: "lecture-s04-1-q4", fiche: "lecture-s04-1-f1", type: "qcm", niveau: 2,
       enonce: "Comment distinguer une otarie d'un phoque ?",
-      choix: ["Les oreilles de l'otarie se voient", "L'otarie est blanche, le phoque est brun", "L'otarie vole, le phoque ne vole pas", "L'otarie vit seulement sur la terre ferme"],
+      choix: ["Les oreilles de l'otarie se voient", "L'otarie est blanche, le phoque est brun", "L'otarie a des moustaches, le phoque n'en a pas", "L'otarie vit seulement sur la terre ferme"],
       reponse: "Les oreilles de l'otarie se voient",
       explication: "Les oreilles de l'otarie sont visibles, celles du phoque non. Tous les deux sont des pinnipèdes.", source: S(4) },
     { id: "lecture-s04-1-q5", fiche: "lecture-s04-1-f1", type: "qcm_multiple", niveau: 2,
@@ -145,10 +146,10 @@ module.exports = {
       explication: "L'orque vit dans l'océan Arctique, comme la baleine blanche et le requin du Groenland. Le bœuf musqué, le lemming et le harfang vivent sur la terre.", source: S(4) },
     { id: "lecture-s04-1-q15", fiche: "lecture-s04-1-f2", type: "trou", niveau: 2,
       enonce: "Complète la phrase.",
-      texte: "Le ___ sait voler ; le ___, lui, ne vole pas.",
-      banque: ["pingouin", "manchot", "phoque", "morse"],
-      reponse: [["pingouin"], ["manchot"]],
-      explication: "Le pingouin vole ; le manchot en est incapable. C'est ce qui les distingue.", source: S(4) },
+      texte: "Dans l'océan Arctique nagent la baleine ___, le requin du ___ et l'orque.",
+      banque: ["blanche", "Groenland", "bleue", "Antarctique"],
+      reponse: [["blanche"], ["Groenland"]],
+      explication: "La baleine blanche, le requin du Groenland et l'orque sont les géants de l'océan Arctique. La baleine bleue, elle, est rangée avec les animaux de l'Antarctique.", source: S(4) },
 
     // f3 : le harfang des neiges et le lemming
     { id: "lecture-s04-1-q17", fiche: "lecture-s04-1-f3", type: "qcm", niveau: 1,
@@ -166,9 +167,9 @@ module.exports = {
       reponse: { vrai: false, correction: "Faux : c'est le plus petit mammifère de l'Arctique." },
       explication: "Le lemming arctique est un petit rongeur qui ressemble à la souris. Aucun mammifère de l'Arctique n'est plus petit que lui.", source: S(4) },
     { id: "lecture-s04-1-q20", fiche: "lecture-s04-1-f3", type: "qcm", niveau: 2,
-      enonce: "De quel animal le lemming arctique est-il le voisin ?",
-      choix: ["De la souris", "Du lièvre", "De la chèvre", "Du renard"],
-      reponse: "De la souris",
+      enonce: "À quel animal le lemming arctique ressemble-t-il ?",
+      choix: ["À une souris", "À un lièvre", "À une chèvre", "À un renard"],
+      reponse: "À une souris",
       explication: "Le lemming arctique ressemble à une souris : c'est un rongeur. Il est aussi le plus petit des mammifères de l'Arctique.", source: S(4) },
     { id: "lecture-s04-1-q21", fiche: "lecture-s04-1-f3", type: "qcm", niveau: 2,
       enonce: "Pourquoi le harfang des neiges vit-il là où vivent les lemmings ?",
@@ -229,12 +230,12 @@ module.exports = {
       explication: "Oui : le loup arctique est un petit loup blanc. Il ne dépasse pas 90 cm.", source: S(4) },
     { id: "lecture-s04-1-q34", fiche: "lecture-s04-1-f5", type: "vrai_faux", niveau: 3,
       enonce: "Le loup arctique chasse toujours seul, même les grosses proies.",
-      corrections: ["Faux : il chasse en meute les grosses proies, comme le bœuf musqué, et seul les petites, comme le lièvre ou le lemming.", "Faux : il ne chasse jamais, il ne mange que des plantes.", "Faux : il chasse seul, mais uniquement la nuit."],
+      corrections: ["Faux : il chasse en meute les grosses proies, comme le bœuf musqué, et seul les petites, comme le lièvre ou le lemming.", "Faux : il chasse toujours en meute, même les petites proies.", "Faux : il chasse seul, mais uniquement la nuit."],
       reponse: { vrai: false, correction: "Faux : il chasse en meute les grosses proies, comme le bœuf musqué, et seul les petites, comme le lièvre ou le lemming." },
       explication: "Seul, le loup arctique attrape des lemmings et des lièvres. Pour un bœuf musqué, il chasse en meute.", source: T("Loup arctique", "Loup_arctique") },
     { id: "lecture-s04-1-q35", fiche: "lecture-s04-1-f5", type: "qcm", niveau: 2,
       enonce: "Comment les bœufs musqués se défendent-ils quand des loups les attaquent ?",
-      choix: ["Ils se serrent en cercle, les petits au milieu", "Ils se dispersent chacun de son côté", "Ils plongent dans la mer", "Ils se cachent dans un trou creusé dans la neige"],
+      choix: ["Ils se serrent en cercle, les petits au milieu", "Ils se dispersent chacun de son côté", "Ils s'enfuient en courant vers les montagnes", "Ils se cachent dans un trou creusé dans la neige"],
       reponse: "Ils se serrent en cercle, les petits au milieu",
       explication: "Les adultes forment un cercle, les petits au centre, et font face aux loups. Le plus fort d'entre eux se charge de repousser l'attaque.", source: T("Bœuf musqué", "B%C5%93uf_musqu%C3%A9") },
     { id: "lecture-s04-1-q36", fiche: "lecture-s04-1-f5", type: "qcm", niveau: 1,

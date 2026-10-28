@@ -14,6 +14,7 @@ const S = p => ({ fichier: F, page: p });
 // (les deux pôles n'ont pas les mêmes animaux). Signalé à Romain : la page de la liste reprise ici décrit l'Antarctique.
 const THEME = "Un hivernage dans les glaces – Lire les chapitres 7 et 8 p68 à 76"; // intitulé du planning, pour les questions de thème (règle du 25/10/2026)
 const T = (titre, page) => ({ theme: THEME, titre, editeur: "Wikipédia", url: "https://fr.wikipedia.org/wiki/" + page });
+// Seconde relecture du 28/10/2026 (vérification des questions de thème et des cours minces) : deux leurres de q1 remplacés.
 
 module.exports = {
   id: "lecture-s05-1",
@@ -82,7 +83,7 @@ module.exports = {
     // f1 : l'Antarctique et le manchot empereur
     { id: "lecture-s05-1-q1", fiche: "lecture-s05-1-f1", type: "qcm", niveau: 1,
       enonce: "Pourquoi des humains séjournent-ils en Antarctique ?",
-      choix: ["Pour faire de la recherche", "Pour chasser les manchots", "Pour y élever des bœufs musqués", "Pour y passer leurs vacances"],
+      choix: ["Pour faire de la recherche", "Pour chasser les manchots", "Pour y cultiver des champs", "Pour y construire des villes"],
       reponse: "Pour faire de la recherche",
       explication: "Personne n'habite l'Antarctique pour toujours. Les humains y viennent surtout pour la recherche.", source: S(5) },
     { id: "lecture-s05-1-q2", fiche: "lecture-s05-1-f1", type: "vrai_faux", niveau: 1,

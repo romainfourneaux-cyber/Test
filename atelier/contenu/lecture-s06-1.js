@@ -14,6 +14,7 @@ const S = p => ({ fichier: F, page: p });
 // de thème (armer un navire), la liste ne disant de l'armement que « préparation ».
 const THEME = "Un hivernage dans les glaces – Lire les chapitres 9 et 10 p77 à 88"; // intitulé du planning, pour les questions de thème (règle du 25/10/2026)
 const T = (titre, page) => ({ theme: THEME, titre, editeur: "Wikipédia", url: "https://fr.wikipedia.org/wiki/" + page });
+// Seconde relecture du 28/10/2026 (vérification des questions de thème et des cours minces) : explication de q4 adoucie.
 
 module.exports = {
   id: "lecture-s06-1",
@@ -117,7 +118,7 @@ module.exports = {
       enonce: "Dans un récit de mer, que veut dire « armer un navire » ?",
       choix: ["L'équiper pour prendre la mer : équipage, matériel", "Le charger de canons pour se défendre contre les pirates", "Lui ajouter un mât", "Le repeindre aux couleurs de son pays avant le départ"],
       reponse: "L'équiper pour prendre la mer : équipage, matériel",
-      explication: "Armer un navire, c'est le préparer à appareiller : embarquer l'équipage et tout le matériel nécessaire. Rien à voir avec des armes.", source: T("Armement (marine)", "Armement_(marine)") },
+      explication: "Armer un navire, c'est le préparer à appareiller : embarquer l'équipage et tout le matériel nécessaire. Ici, il ne s'agit pas d'armes.", source: T("Armement (marine)", "Armement_(marine)") },
     { id: "lecture-s06-1-q5", fiche: "lecture-s06-1-f1", type: "trou", niveau: 1,
       enonce: "Complète la phrase.",
       texte: "Pour entrer dans le port, le navire suit les ___ ; il accoste ensuite le long de l'___.",

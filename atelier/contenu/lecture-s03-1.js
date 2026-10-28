@@ -13,6 +13,7 @@ const S = p => ({ fichier: F, page: p });
 // q18 réécrite sans calcul ; q20 devenue question de thème (pourquoi le mille marin), la fiche f5 n'étant que trois mesures.
 const THEME = "Un hivernage dans les glaces – Lire les chapitres 3 et 4 p45 à 54"; // intitulé du planning, pour les questions de thème (règle du 25/10/2026)
 const T = (titre, page) => ({ theme: THEME, titre, editeur: "Wikipédia", url: "https://fr.wikipedia.org/wiki/" + page });
+// Seconde relecture du 28/10/2026 (vérification des questions de thème et des cours minces) : deux leurres de q20 remplacés.
 
 module.exports = {
   id: "lecture-s03-1",
@@ -262,7 +263,7 @@ module.exports = {
       explication: "Le pied fait environ 32 cm, la demi-encablure 100 m et l'encablure 200 m. Le mille marin est le plus long : 1 852 m.", source: S(3) },
     { id: "lecture-s03-1-q20", fiche: "lecture-s03-1-f5", type: "qcm", niveau: 3,
       enonce: "Pourquoi les marins mesurent-ils les distances en milles marins plutôt qu'en kilomètres ?",
-      choix: ["Parce qu'un mille vaut une minute de latitude sur le globe", "Parce que le kilomètre n'existait pas encore", "Parce qu'un mille est plus court qu'un kilomètre, donc plus précis", "Parce que les navires vont trop vite pour le kilomètre"],
+      choix: ["Parce qu'un mille vaut une minute de latitude sur le globe", "Parce qu'un mille marin vaut tout juste mille mètres", "Parce qu'un mille est plus court qu'un kilomètre, donc plus précis", "Parce que les distances en mer sont trop grandes pour le kilomètre"],
       reponse: "Parce qu'un mille vaut une minute de latitude sur le globe",
       explication: "Un mille marin, c'est la longueur d'une minute d'arc de latitude, soit 1 852 m. Les marins s'en servent pour leurs calculs de route sur le globe.", source: T("Mille marin", "Mille_marin") },
     { id: "lecture-s03-1-q37", fiche: "lecture-s03-1-f5", type: "vrai_faux", niveau: 2,

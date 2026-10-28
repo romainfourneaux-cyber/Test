@@ -182,8 +182,8 @@ JEU.enregistrer("cours", {
    "choix": [
     "Pour faire de la recherche",
     "Pour chasser les manchots",
-    "Pour y élever des bœufs musqués",
-    "Pour y passer leurs vacances"
+    "Pour y cultiver des champs",
+    "Pour y construire des villes"
    ],
    "explication": "Personne n'habite l'Antarctique pour toujours. Les humains y viennent surtout pour la recherche.",
    "source": {

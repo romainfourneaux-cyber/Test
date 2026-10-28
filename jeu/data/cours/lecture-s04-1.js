@@ -241,7 +241,7 @@ JEU.enregistrer("cours", {
    "choix": [
     "Les oreilles de l'otarie se voient",
     "L'otarie est blanche, le phoque est brun",
-    "L'otarie vole, le phoque ne vole pas",
+    "L'otarie a des moustaches, le phoque n'en a pas",
     "L'otarie vit seulement sur la terre ferme"
    ],
    "explication": "Les oreilles de l'otarie sont visibles, celles du phoque non. Tous les deux sont des pinnipèdes.",
@@ -402,19 +402,19 @@ JEU.enregistrer("cours", {
    "type": "trou",
    "niveau": 2,
    "enonce": "Complète la phrase.",
-   "texte": "Le ___ sait voler ; le ___, lui, ne vole pas.",
+   "texte": "Dans l'océan Arctique nagent la baleine ___, le requin du ___ et l'orque.",
    "banque": [
-    "pingouin",
-    "manchot",
-    "phoque",
-    "morse"
+    "blanche",
+    "Groenland",
+    "bleue",
+    "Antarctique"
    ],
-   "explication": "Le pingouin vole ; le manchot en est incapable. C'est ce qui les distingue.",
+   "explication": "La baleine blanche, le requin du Groenland et l'orque sont les géants de l'océan Arctique. La baleine bleue, elle, est rangée avec les animaux de l'Antarctique.",
    "source": {
     "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
     "page": 4
    },
-   "r": "=sDNQNTHdYwGQQAT04VNhNEDAJUCB8gFLlCH",
+   "r": "7szSWkyEZsAEesRKNlCRe8AAd5EAOoABLlCH",
    "poids": 1
   },
   {
@@ -476,19 +476,19 @@ JEU.enregistrer("cours", {
    "fiche": "lecture-s04-1-f3",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "De quel animal le lemming arctique est-il le voisin ?",
+   "enonce": "À quel animal le lemming arctique ressemble-t-il ?",
    "choix": [
-    "De la souris",
-    "Du lièvre",
-    "De la chèvre",
-    "Du renard"
+    "À une souris",
+    "À un lièvre",
+    "À une chèvre",
+    "À un renard"
    ],
    "explication": "Le lemming arctique ressemble à une souris : c'est un rongeur. Il est aussi le plus petit des mammifères de l'Arctique.",
    "source": {
     "fichier": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
     "page": 4
    },
-   "r": "=A1Gq8FEa5lTOogRMYTZ",
+   "r": "NFQAxglCG1wCBMhRpHbZ",
    "poids": 1
   },
   {
@@ -708,7 +708,7 @@ JEU.enregistrer("cours", {
    "enonce": "Le loup arctique chasse toujours seul, même les grosses proies.",
    "corrections": [
     "Faux : il chasse en meute les grosses proies, comme le bœuf musqué, et seul les petites, comme le lièvre ou le lemming.",
-    "Faux : il ne chasse jamais, il ne mange que des plantes.",
+    "Faux : il chasse toujours en meute, même les petites proies.",
     "Faux : il chasse seul, mais uniquement la nuit."
    ],
    "explication": "Seul, le loup arctique attrape des lemmings et des lièvres. Pour un bœuf musqué, il chasse en meute.",
@@ -730,7 +730,7 @@ JEU.enregistrer("cours", {
    "choix": [
     "Ils se serrent en cercle, les petits au milieu",
     "Ils se dispersent chacun de son côté",
-    "Ils plongent dans la mer",
+    "Ils s'enfuient en courant vers les montagnes",
     "Ils se cachent dans un trou creusé dans la neige"
    ],
    "explication": "Les adultes forment un cercle, les petits au centre, et font face aux loups. Le plus fort d'entre eux se charge de repousser l'attaque.",

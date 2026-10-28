@@ -551,14 +551,14 @@ JEU.enregistrer("cours", {
    "fiche": "litterature-s01-2-f3",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Le mot « hyperbole » vient du grec huperbolê, formé de hyper, « au-delà », et de ballein, « jeter ». Que raconte cette étymologie ?",
+   "enonce": "En grec, « hyperbole » veut dire à peu près « jeter au-delà ». Qu'est-ce que cette origine nous apprend sur l'hyperbole ?",
    "choix": [
-    "Elle « lance au-delà » : elle dépasse la réalité",
-    "Elle parle à voix basse, sans jamais rien grossir",
-    "Elle range les mots les uns après les autres, en liste",
-    "Elle remonte à l'origine d'un mot et à son ancien sens"
+    "Elle va au-delà de la réalité : elle exagère",
+    "Elle rapproche deux choses avec le mot « comme »",
+    "Elle cite plusieurs éléments à la suite, comme une liste",
+    "Elle imite un bruit avec des sons"
    ],
-   "explication": "Jeter au-delà, c'est aller plus loin que la réalité : l'hyperbole exagère. Son nom grec raconte déjà ce qu'elle fait.",
+   "explication": "Le mot grec est fait de hyper, « au-delà », et de ballein, « jeter ». Une hyperbole « jette » le propos au-delà du vrai : elle grossit la réalité.",
    "indice": "Au-delà de quoi va une exagération ?",
    "source": {
     "theme": "Cours 1 – Lire la leçon littéraire p9 à 11",
@@ -566,7 +566,7 @@ JEU.enregistrer("cours", {
     "editeur": "Wikipédia",
     "url": "https://fr.wikipedia.org/wiki/Hyperbole_(rh%C3%A9torique)"
    },
-   "r": "=EGhmGERC4wzluhUm4RVAYgAI4hxxywYIlQWI5UVG19qSdesZAQEcxxDPdxCtwUCVYIrPNgCFcTZ",
+   "r": "=00AUEcsgMRDAUFFFIgCSJ1YEaaQEJgDPX6GSZiHVBQERlcrDcBDuhFBVwEGPNgCFcTZ",
    "poids": 1
   },
   {

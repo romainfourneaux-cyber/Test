@@ -1535,7 +1535,7 @@ JEU.enregistrer("anglais", {
     "Faux : shall ne s'emploie qu'au passé.",
     "Faux : shall s'emploie seulement avec you."
    ],
-   "explication": "Shall accompagne I et we : « Shall I play ? », « Shall we go ? ». Avec les autres sujets, la question au futur se fait avec will : « Will they come ? ».",
+   "explication": "Shall accompagne I et we, comme dans « Shall I play » ou « Shall we go ». Avec les autres sujets, la question au futur se fait avec will, comme dans « Will they come ».",
    "source": {
     "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
     "page": 9

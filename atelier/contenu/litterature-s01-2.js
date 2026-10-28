@@ -11,6 +11,7 @@ const S = { fichier: "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf
 // q30 devenue question de thème (étymologie d'« hyperbole »), la fiche f3 n'ayant qu'un exemple d'étymologie.
 const THEME = "Cours 1 – Lire la leçon littéraire p9 à 11"; // intitulé du planning, pour les questions de thème (règle du 25/10/2026)
 const T = (titre, page) => ({ theme: THEME, titre, editeur: "Wikipédia", url: "https://fr.wikipedia.org/wiki/" + page });
+// Seconde relecture du 28/10/2026 (vérification des questions de thème et des cours minces) : q30 reformulée (énoncé plus clair, leurres pris dans les autres figures).
 
 module.exports = {
   id: "litterature-s01-2",
@@ -201,10 +202,10 @@ module.exports = {
       corrections: [], reponse: { vrai: true, correction: null },
       explication: "Il vient du grec kinêma. Ce mot veut dire « mouvement ».", source: S },
     { id: "litterature-s01-2-q30", fiche: "litterature-s01-2-f3", type: "qcm", niveau: 2,
-      enonce: "Le mot « hyperbole » vient du grec huperbolê, formé de hyper, « au-delà », et de ballein, « jeter ». Que raconte cette étymologie ?",
-      choix: ["Elle « lance au-delà » : elle dépasse la réalité", "Elle parle à voix basse, sans jamais rien grossir", "Elle range les mots les uns après les autres, en liste", "Elle remonte à l'origine d'un mot et à son ancien sens"],
-      reponse: "Elle « lance au-delà » : elle dépasse la réalité",
-      explication: "Jeter au-delà, c'est aller plus loin que la réalité : l'hyperbole exagère. Son nom grec raconte déjà ce qu'elle fait.",
+      enonce: "En grec, « hyperbole » veut dire à peu près « jeter au-delà ». Qu'est-ce que cette origine nous apprend sur l'hyperbole ?",
+      choix: ["Elle va au-delà de la réalité : elle exagère", "Elle rapproche deux choses avec le mot « comme »", "Elle cite plusieurs éléments à la suite, comme une liste", "Elle imite un bruit avec des sons"],
+      reponse: "Elle va au-delà de la réalité : elle exagère",
+      explication: "Le mot grec est fait de hyper, « au-delà », et de ballein, « jeter ». Une hyperbole « jette » le propos au-delà du vrai : elle grossit la réalité.",
       indice: "Au-delà de quoi va une exagération ?", source: T("Hyperbole (rhétorique)", "Hyperbole_(rh%C3%A9torique)") },
     { id: "litterature-s01-2-q31", fiche: "litterature-s01-2-f3", type: "association", niveau: 2,
       enonce: "Relie chaque mot à ce qu'il désigne.",
