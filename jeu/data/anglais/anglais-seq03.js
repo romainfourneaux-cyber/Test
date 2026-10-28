@@ -1531,16 +1531,16 @@ JEU.enregistrer("anglais", {
    "niveau": 2,
    "enonce": "« Shall » s'emploie avec tous les sujets : Shall they come ?",
    "corrections": [
-    "Faux : shall s'emploie avec I et we, surtout pour proposer quelque chose : Shall we come ?",
+    "Faux : shall s'emploie avec I et we : Shall we come ?",
     "Faux : shall ne s'emploie qu'au passé.",
     "Faux : shall s'emploie seulement avec you."
    ],
-   "explication": "Shall accompagne I et we, le plus souvent pour proposer quelque chose, comme dans « Shall we go » ou « Shall I help you ». Avec les autres sujets, la question au futur se fait avec will : « Will they come ».",
+   "explication": "Shall accompagne I et we : « Shall I play ? », « Shall we go ? ». Avec les autres sujets, la question au futur se fait avec will : « Will they come ? ».",
    "source": {
     "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
     "page": 9
    },
-   "r": "YchEOpwCJogUiUQVJkBEB0zTIhkJepQXO5kCTcRBXIzAVdBECYgHAAAGj9FEa1lTbMRCdAgMBUVSQYQSaogUhMmTAMETOpwDJUgAqchUWUVHF8wBBgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "r": "=QBTQJVDuIkBVgUGPpgCIoBFS9URQYQSaogUhMmTAMETOpwDJUgAqchUWUVHF8wBBgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
   },
   {

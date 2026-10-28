@@ -367,7 +367,7 @@ JEU.enregistrer("cours", {
    "enonce": "Pourquoi le titre d'un graphique suit-il toujours le modèle « évolution de … en fonction de … » ?",
    "choix": [
     "Parce qu'il dit quelle grandeur on suit et de quoi elle dépend",
-    "Parce que c'est la phrase la plus courte à écrire au-dessus d'un graphique",
+    "Parce qu'il rappelle dans quel ordre on a tracé les deux axes",
     "Parce que le titre remplace le nom et l'unité des deux axes",
     "Parce qu'il indique les graduations à mettre sur chaque axe"
    ],

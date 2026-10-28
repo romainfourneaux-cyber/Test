@@ -547,7 +547,9 @@ def faveur_lettres():
     objets += E.pile_pieces("pile", 7, 0.19, 0.04, loc=(0.78, -0.3, 0), graine=5)
     objets += E.pile_pieces("eparses", 1, 0.19, 0.04, loc=(0.45, -0.78, 0), graine=2)
     objets += E.pile_pieces("eparses2", 2, 0.19, 0.04, loc=(1.1, -0.7, 0), graine=8)
-    return racine(objets, 1.55, -0.25, 0.0)       # 1,4 → 1,55 le 28/10/2026 : trop petit dans le rondel à 56 px
+    # 1,4 → 1,55 le 28/10/2026 : trop petit dans le rondel à 56 px ; décalé de 0,15 m à gauche pour que les pièces
+    # éparses restent sur le champ (à 1,55 elles chevauchaient l'anneau, la lettre laissant du vide à gauche)
+    return racine(objets, 1.55, -0.25, -0.15)
 
 
 FAVEURS = {"annales": faveur_annales, "eclaireurs": faveur_eclaireurs, "simples": faveur_simples,

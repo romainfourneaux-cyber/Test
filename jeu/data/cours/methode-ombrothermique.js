@@ -544,7 +544,7 @@ JEU.enregistrer("cours", {
     "Les températures se lisent à gauche, en °C",
     "Les précipitations se lisent à droite, en mm",
     "L'axe horizontal est gradué en années",
-    "Les précipitations se lisent à gauche, en °C"
+    "Les précipitations se lisent à gauche, en mm"
    ],
    "explication": "En bas, les douze mois ; à gauche, les températures en °C ; à droite, les précipitations en mm. L'axe horizontal ne porte jamais d'années : le diagramme décrit une année moyenne, mois par mois.",
    "source": {

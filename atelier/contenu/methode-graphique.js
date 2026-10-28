@@ -135,7 +135,7 @@ module.exports = {
       explication: "Le modèle ne change jamais : l'évolution d'une grandeur en fonction d'une autre.", source: P(1) },
     { id: "methode-graphique-q29", fiche: "methode-graphique-f2", type: "qcm", niveau: 3,
       enonce: "Pourquoi le titre d'un graphique suit-il toujours le modèle « évolution de … en fonction de … » ?",
-      choix: ["Parce qu'il dit quelle grandeur on suit et de quoi elle dépend", "Parce que c'est la phrase la plus courte à écrire au-dessus d'un graphique", "Parce que le titre remplace le nom et l'unité des deux axes", "Parce qu'il indique les graduations à mettre sur chaque axe"],
+      choix: ["Parce qu'il dit quelle grandeur on suit et de quoi elle dépend", "Parce qu'il rappelle dans quel ordre on a tracé les deux axes", "Parce que le titre remplace le nom et l'unité des deux axes", "Parce qu'il indique les graduations à mettre sur chaque axe"],
       reponse: "Parce qu'il dit quelle grandeur on suit et de quoi elle dépend",
       explication: "Après « évolution de » vient la grandeur suivie, celle de l'axe vertical ; après « en fonction de », celle dont elle dépend, sur l'axe horizontal. Le titre résume donc ce que portent les deux axes.", source: P(1) },
     { id: "methode-graphique-q31", fiche: "methode-graphique-f2", type: "qcm", niveau: 3,

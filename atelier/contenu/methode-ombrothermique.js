@@ -194,7 +194,7 @@ module.exports = {
       explication: "Un axe horizontal pour les mois, et deux axes verticaux : les °C à gauche, les mm à droite. Cela fait trois axes.", source: P(1) },
     { id: "methode-ombrothermique-q31", fiche: "methode-ombrothermique-f3", type: "qcm_multiple", niveau: 3,
       enonce: "Coche les phrases justes sur les axes d'un diagramme ombrothermique.",
-      choix: ["L'axe horizontal porte les douze mois", "Les températures se lisent à gauche, en °C", "Les précipitations se lisent à droite, en mm", "L'axe horizontal est gradué en années", "Les précipitations se lisent à gauche, en °C"],
+      choix: ["L'axe horizontal porte les douze mois", "Les températures se lisent à gauche, en °C", "Les précipitations se lisent à droite, en mm", "L'axe horizontal est gradué en années", "Les précipitations se lisent à gauche, en mm"],
       reponse: ["L'axe horizontal porte les douze mois", "Les températures se lisent à gauche, en °C", "Les précipitations se lisent à droite, en mm"],
       explication: "En bas, les douze mois ; à gauche, les températures en °C ; à droite, les précipitations en mm. L'axe horizontal ne porte jamais d'années : le diagramme décrit une année moyenne, mois par mois.", source: P(1) },
     // f4 : la règle des graduations

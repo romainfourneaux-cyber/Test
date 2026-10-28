@@ -873,7 +873,7 @@ JEU.enregistrer("cours", {
     "Donner ses formes selon le mode, le temps et la personne",
     "Chercher dans le dictionnaire la façon d'écrire son infinitif",
     "Trouver quelle fonction il occupe dans la phrase",
-    "L'accorder en genre et en nombre avec le nom qu'il complète"
+    "L'accorder en genre et en nombre, comme un adjectif"
    ],
    "explication": "Conjuguer, c'est donner les formes d'un verbe selon le mode, le temps et la personne : je chante, nous chantions, qu'il chante. Chercher la fonction d'un mot ou l'orthographe de son infinitif, c'est de l'analyse, pas de la conjugaison.",
    "indice": "Pense à ce qui change entre je chante, nous chantions et qu'il chante.",
