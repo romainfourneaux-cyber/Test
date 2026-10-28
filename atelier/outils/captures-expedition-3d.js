@@ -97,8 +97,9 @@ async function parcours(navigateur) {
     await page.waitForSelector("#ecran-expedition button.carte-faveur");
     await capture(page, "07-porte-cartes");
     notes.cartes = await bilanImages(page);
-    notes.cartesGeometrie = await page.evaluate(() => { const b = document.querySelector(".exp-fenetre.cartes").getBoundingClientRect(), c = [...document.querySelectorAll("button.carte-faveur")].map(x => Math.round(x.getBoundingClientRect().top));
-      return { haut: Math.round(b.top), bas: Math.round(b.bottom), largeur: Math.round(b.width), rangees: [...new Set(c)].length, vue: innerHeight }; });
+    notes.cartesGeometrie = await page.evaluate(() => { const b = document.querySelector(".exp-fenetre.cartes").getBoundingClientRect(), c = [...document.querySelectorAll("button.carte-faveur")].map(x => x.getBoundingClientRect().top);
+      const rangees = c.reduce((r, t) => (r.some(y => Math.abs(y - t) < 12) ? r : r.concat([t])), []).length; // une carte en relief (focus) remonte de 4 px
+      return { haut: Math.round(b.top), bas: Math.round(b.bottom), largeur: Math.round(b.width), cartes: c.length, rangees, vue: innerHeight }; });
     await page.keyboard.press("1");
     await page.waitForSelector("#ecran-expedition .route-svg");
     await capture(page, "08-route-scellee");
@@ -107,7 +108,7 @@ async function parcours(navigateur) {
   // 6. le marchand (étal ouvert sans question : remise déjà notée), puis le bivouac
   const idMarchand = await page.evaluate("(" + avancerJusqua + ")(x => x.type === 'marchand')");
   if (idMarchand) {
-    await page.evaluate(id => { const e = JEU.expedition.enCours(); e.etal[id] = { remise: true }; JEU.sauvegarde.enregistrer(); JEU.ui.afficher("expedition"); }, idMarchand);
+    await page.evaluate(id => { JEU.expedition.ouvrirEtal(id, true); JEU.ui.afficher("expedition"); }, idMarchand); // l'étal est déjà ouvert avec remise : pas de question
     await page.waitForSelector("#ecran-expedition .route-svg");
     await page.click(".route-svg .halte.atteignable[data-id='" + idMarchand + "']");
     await page.waitForSelector("#ecran-expedition .etal");

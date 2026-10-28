@@ -926,12 +926,13 @@ button.cour-chip:hover { background: rgba(255,250,236,.55); box-shadow: 0 0 0 1p
   box-shadow: 0 0 0 2px var(--or), 0 0 0 4px var(--encre), 0 0 0 7px var(--or-sombre), 0 14px 30px rgba(0,0,0,.45); animation: apparition .22s ease-out; }
 .exp-fenetre h2 { margin: .1rem 0 .2rem; }
 /* cadre de page rendu (cadre-page.png, classe posée par ecran-expedition.js quand l'entrée existe) : un pseudo-élément en
-   border-image couvre la fenêtre et ses filets, bande de 40 px (tranches de 80 px du fichier de 480), 9 px au-delà du bord ;
-   si l'image ne se charge pas, le pseudo-élément reste transparent et la fenêtre garde ses filets dessinés. La fenêtre s'élargit
-   de 40 px pour que les quatre cartes de faveur tiennent toujours sur une ligne (contenu de 816 px). */
-.exp-fenetre.cadre-image { z-index: 0; max-width: 900px; padding: 2.4rem 2.5rem 2.5rem; }
-.exp-fenetre.cadre-image::before { content: ""; position: absolute; inset: -11px; z-index: -1; pointer-events: none; border: 40px solid transparent;
-  border-image: url("../assets/images/expedition/cadre-page.png") 80 fill / 40px round; }
+   border-image couvre la fenêtre et ses filets (bande de 40 px, tranches de 80 px du fichier de 480, posée 23 px au-delà du bord
+   puis rognée de 14 px : il reste 11 px de marge de parchemin, le filet, la bande d'or, le filet, et 9 px au-delà des filets
+   dessinés). Si l'image ne se charge pas, le pseudo-élément reste transparent et la fenêtre garde ses filets dessinés. Le
+   contenu garde 810 px de large : les quatre cartes de faveur tiennent sur une ligne, la fenêtre ne grandit que de 13 px. */
+.exp-fenetre.cadre-image { z-index: 0; padding: 1.4rem 1.45rem 1.5rem; }
+.exp-fenetre.cadre-image::before { content: ""; position: absolute; inset: -25px; z-index: -1; pointer-events: none; border: 40px solid transparent;
+  border-image: url("../assets/images/expedition/cadre-page.png") 80 fill / 40px round; clip-path: inset(14px round 7px); }
 .fen-tete { --teinte: var(--or); display: flex; align-items: center; gap: .8rem; margin-bottom: .6rem; padding-bottom: .5rem; border-bottom: 1px dashed rgba(46,36,25,.35); }
 .fen-tete > div { min-width: 0; }
 .fen-tete p { margin: 0; }
