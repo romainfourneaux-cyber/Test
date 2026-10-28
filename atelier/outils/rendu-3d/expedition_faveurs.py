@@ -537,7 +537,7 @@ def faveur_ballade():
     objets = rouleau_deroule("rouleau", (0.1, 0.15, 0), lacet=-12, l=1.6, p=1.05)
     # presque à plat sur le rouleau (le manche vers le bout enroulé), la caisse vers la caméra
     objets += luth("luth", (-0.1, -0.2, 0.015 + 0.6 * math.sin(math.radians(10))), rot=(10, 0, -28), echelle=1.35)
-    return racine(objets, 1.4, -0.25, 0.0)
+    return racine(objets, 1.55, -0.25, 0.0)       # 1,4 → 1,55 le 28/10/2026 : trop petit dans le rondel à 56 px
 
 
 def faveur_lettres():
@@ -547,16 +547,17 @@ def faveur_lettres():
     objets += E.pile_pieces("pile", 7, 0.19, 0.04, loc=(0.78, -0.3, 0), graine=5)
     objets += E.pile_pieces("eparses", 1, 0.19, 0.04, loc=(0.45, -0.78, 0), graine=2)
     objets += E.pile_pieces("eparses2", 2, 0.19, 0.04, loc=(1.1, -0.7, 0), graine=8)
-    return racine(objets, 1.4, -0.25, 0.0)
+    return racine(objets, 1.55, -0.25, 0.0)       # 1,4 → 1,55 le 28/10/2026 : trop petit dans le rondel à 56 px
 
 
 FAVEURS = {"annales": faveur_annales, "eclaireurs": faveur_eclaireurs, "simples": faveur_simples,
            "engrenages": faveur_engrenages, "ballade": faveur_ballade, "lettres": faveur_lettres}
 
 
-def rendre_faveur(ident):
+def rendre_faveur(ident, rangs=(1, 2)):
     """Rend l'objet d'une faveur une fois (sprite + ombre, comme E.rendre_rondel) et le pose dans les deux cadres :
-    bronze (rang 1, commune) et argent (rang 2, rare), champ teinté de la matière. Enregistre les deux images."""
+    bronze (rang 1, commune) et argent (rang 2, rare), champ teinté de la matière. Enregistre les deux images
+    (ou le seul rang demandé : « faveur-annales-2 » sur la ligne de commande refait l'image d'argent sans toucher au bronze)."""
     objets = FAVEURS[ident]()
     px = E.VIGNETTE * C.ECHELLE
     sprite, ombre = C.rendre_sprite("faveur-" + ident, px, px, objets, ombre=True, contour=0.45, surech=E.SURECH, echantillons=ECHANTILLONS,
@@ -564,6 +565,8 @@ def rendre_faveur(ident):
     champ = E.champ_teinte(E.MATIERES[MATIERE_FAVEUR[ident]])
     chemins = []
     for rang, anneau in ((1, "bronze"), (2, "argent")):
+        if rang not in rangs:
+            continue
         nom = "faveur-%s-%d" % (ident, rang)
         final = E.cadre_rondel(anneau, parchemin=champ).copy()
         if ombre is not None:
@@ -733,8 +736,9 @@ def main(args):
     quoi = [a for a in args if not a.startswith("--")]
     tout = not quoi and not ("--loupe" in args or "--planche" in args)
     for ident in FAVEURS:
-        if tout or "faveurs" in quoi or ident in quoi or ("faveur-" + ident) in quoi or any(q.startswith("faveur-" + ident + "-") for q in quoi):
-            rendre_faveur(ident)
+        rangs = tuple(r for r in (1, 2) if tout or "faveurs" in quoi or ident in quoi or ("faveur-" + ident) in quoi or ("faveur-%s-%d" % (ident, r)) in quoi)
+        if rangs:
+            rendre_faveur(ident, rangs)
     couches = [q for q in quoi if q.startswith("armorial-")]
     if tout or "armorial" in quoi:
         armorial()

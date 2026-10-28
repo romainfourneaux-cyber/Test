@@ -440,6 +440,8 @@ def halte_escarmouche():
     # revue du 28/10/2026 : à 46 px, lames sombres sur écu sombre faisaient une motte brune ; acier clair, lames plus
     # larges, écu plus petit et de bois clair : le X se lit (le liseré d'encre le détache du parchemin)
     m["lame"] = C.mat_metal("lame_claire", "#b4b9c1", rugosite=0.42)
+    # gardes et pommeaux de bronze : à 46 px, l'or se confondait avec l'anneau d'or du rondel tout proche
+    m["or"] = E.mat_bronze("garde_bronze")
     # un grand X : les lames se croisent à mi-hauteur (plantées à ± 0,52 m, penchées de 28°), les gardes d'or en haut ;
     # l'écu, plus petit, est derrière le croisement (la caméra à 45° remonte ce qui est en arrière)
     objets = epee("epee1", m, (-0.52, 0.1, -0.08), penche=28, lacet=3, longueur=1.5, largeur=0.14)
@@ -634,7 +636,8 @@ def compagnie(nom):
     # l'objet et son ombre sont recentrés après coup (centrer) : la toile de 24 unités doit garder 2 px de marge autour
     E.scene_vignette((w, h), inclinaison=45, px_par_m=11 if sac else 10, ancre=(w / 2.0, h / 2.0), rayon_sol=1.6)
     if nom == "compagnie-sac-plein":
-        objets = E.sac("sac", 0.55, 1.7, mat=E.mat_toile("jute", E.JUTE), lacet=15)
+        # jute plus chaude que E.JUTE : à 24 px, le sac plein tirait sur le gris (revue du 28/10/2026)
+        objets = E.sac("sac", 0.55, 1.7, mat=E.mat_toile("jute", "#cdb27e"), lacet=15)
     elif nom == "compagnie-sac-vide":
         # toile claire mais pas blanche (le fond du jeu lui-même disparaissait sur le parchemin)
         objets = E.sac("sac", 0.55, 1.7, mat=E.mat_toile("toile", "#d9ccb0"), lacet=15, plein=False)
