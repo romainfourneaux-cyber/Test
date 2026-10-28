@@ -6,6 +6,8 @@
 // Burkina Faso en chiffres, recensement de 2019) et f7 (les PMA), faits vérifiés sur les pages citées ; leurs questions
 // sont des questions de thème (source { theme, titre, editeur, url }). Les fiches f1 à f5 viennent de l'étude de cas
 // déposée et restent inchangées. Anti-spoil : aucune question-paragraphe sur « les défis des pays du Sud ».
+// Relecture du 28/10/2026 (après-midi), pages rouvertes : chiffres de f6 et f7 confirmés (36,9 ‰ et 8,7 ‰ en 2018, 22,7 % de
+// citadins en 2006, 44 PMA dont 32 africains) ; q44 reformulée (44 % : plus de quatre sur dix), accord de q53.
 const F = "cours/geographie/Geo 5e - Theme 1 - Cours 1 - Etude de cas 1 Burkina Faso.pdf";
 const P = (page) => ({ fichier: F, page: page });
 const THEME = "Étude de cas 1 – Le Burkina Faso";
@@ -102,7 +104,7 @@ module.exports = {
     {
       id: "geographie-s02-1-f6", notion: "Le Burkina Faso en chiffres",
       titre: "Un pays de 20 millions d'habitants, très jeune",
-      texte: "Au recensement de 2019, le Burkina Faso comptait 20,5 millions d'habitants, et sa population grandit de près de 3 % par an. En 2018, on y comptait 37 naissances et 9 décès pour mille habitants. Résultat : un pays jeune : âge médian 17 ans, 44 % de moins de quinze ans. Un habitant sur quatre vit en ville.",
+      texte: "Au recensement de 2019, le Burkina Faso comptait 20,5 millions d'habitants, et sa population grandit de près de 3 % par an. En 2018, on y comptait 37 naissances et 9 décès pour mille habitants. Résultat, un pays jeune : âge médian 17 ans, 44 % de moins de quinze ans. Un habitant sur quatre vit en ville.",
       pointsCles: [
         "20,5 millions d'habitants au recensement de 2019 ; + 2,9 % par an entre 2006 et 2019",
         "2018 : 37 naissances et 9 décès pour mille habitants, soit un accroissement naturel de 28 pour mille",
@@ -337,7 +339,7 @@ module.exports = {
       explication: "Le recensement de 2019 a compté 20,5 millions de Burkinabés. En 1960, ils étaient environ 5 millions.",
       source: T("Démographie du Burkina Faso", U_DEMO) },
     { id: "geographie-s02-1-q44", fiche: "geographie-s02-1-f6", type: "vrai_faux", niveau: 1,
-      enonce: "Au Burkina Faso, près d'un habitant sur deux a moins de quinze ans.",
+      enonce: "Au Burkina Faso, plus de quatre habitants sur dix ont moins de quinze ans.",
       corrections: [], reponse: { vrai: true, correction: null },
       explication: "Oui : 44 % des Burkinabés ont moins de quinze ans. C'est la marque d'une natalité très forte.",
       source: T("Démographie du Burkina Faso", U_DEMO) },
@@ -393,7 +395,7 @@ module.exports = {
       explication: "Oui, en 1971. L'ONU revoit la liste régulièrement, selon trois critères.",
       source: T("Pays les moins avancés", U_PMA) },
     { id: "geographie-s02-1-q53", fiche: "geographie-s02-1-f7", type: "qcm", niveau: 2,
-      enonce: "Sur quel continent se trouve la plupart des PMA ?",
+      enonce: "Sur quel continent se trouvent la plupart des PMA ?",
       choix: ["En Afrique", "En Asie", "En Amérique du Sud", "En Océanie"],
       reponse: "En Afrique",
       explication: "32 des 44 PMA sont africains, dont le Burkina Faso. L'Asie en compte 8, l'Océanie 3, et l'Amérique un seul, Haïti.",

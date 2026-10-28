@@ -238,7 +238,6 @@ JEU.enregistrer("cours", {
    "texte": "En 2023, d'après l'ONU, près de six humains sur dix vivent en Asie : 4,8 milliards. L'Afrique vient ensuite avec 1,5 milliard, puis les Amériques (1 milliard), l'Europe (750 millions) et l'Océanie (46 millions). La croissance à venir se concentre en Afrique subsaharienne : sa population devrait augmenter de près de 80 % d'ici 2054, pour atteindre 2,2 milliards.",
    "pointsCles": [
     "Asie 59 %, Afrique 18 %, Amériques 13 %, Europe 9 %, Océanie moins de 1 % (ONU, 2023)",
-    "L'Inde et la Chine comptent chacune environ 1,4 milliard d'habitants",
     "Afrique subsaharienne : + 79 % d'ici 2054, soit 2,2 milliards d'habitants (prévision ONU)",
     "Neuf pays africains, dont l'Angola, le Niger et la RDC, devraient voir leur population doubler entre 2024 et 2054",
     "La Chine devrait perdre environ 200 millions d'habitants d'ici 2054"
@@ -249,9 +248,7 @@ JEU.enregistrer("cours", {
     "Afrique subsaharienne",
     "Europe",
     "Amériques",
-    "Océanie",
-    "Inde",
-    "Chine"
+    "Océanie"
    ],
    "personnages": [],
    "vocabulaire": [
@@ -679,19 +676,19 @@ JEU.enregistrer("cours", {
    "fiche": "geographie-s01-2-f3",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Pourquoi la population des PMA augmente-t-elle si vite ?",
+   "enonce": "Dans les PMA, on meurt moins qu'avant. Pourquoi la population y augmente-t-elle pourtant si vite ?",
    "choix": [
-    "Parce que la mortalité y baisse alors que la natalité reste très haute",
-    "Parce que la natalité et la mortalité y augmentent toutes les deux très vite",
-    "Parce que la natalité y baisse plus vite que la mortalité",
-    "Parce que la mortalité y reste très haute alors que la natalité augmente"
+    "Parce qu'il y naît toujours beaucoup d'enfants : les naissances dépassent largement les décès",
+    "Parce que la natalité y a chuté encore plus vite que la mortalité",
+    "Parce que des millions d'habitants des pays riches viennent s'y installer",
+    "Parce qu'on y vit plus longtemps que partout ailleurs"
    ],
-   "explication": "On y meurt moins qu'avant, mais il naît toujours beaucoup d'enfants. Les naissances dépassent largement les décès, donc la population grimpe.",
+   "explication": "Moins de décès, mais toujours autant de naissances : l'écart entre les deux fait grimper la population. C'est le début de la transition démographique.",
    "source": {
     "fichier": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
     "page": 2
    },
-   "r": "XgkGacgDJFw7xeQEVRRHdoAAIpu7RwVQPsxBIk0ErIFEQQQUawBAekwYIZhRE9QDG9RSbToBckAFFsRACIVCv0AAAxlTKUAFIISZ",
+   "r": "PYRnu3gxlKQSBIiHVFxGUQwCIAQCv0QEbhUHccgFAH7ISZAAW8BCdwxGJ0SDWAVQOVlRV0BHmQxGAIVFJ5hGdsgNMBwVN0RHTkwAHgiBVFx2yiAAPtASvQkQAxlTKUAFIISZ",
    "poids": 1
   },
   {
@@ -1225,7 +1222,7 @@ JEU.enregistrer("cours", {
     "Parce que l'ONU reçoit chaque jour le compte exact des naissances et des décès de tous les pays",
     "Parce que c'est le jour d'une grande conférence mondiale sur la population"
    ],
-   "explication": "Personne ne compte les humains un par un : l'ONU estime la population à partir des recensements et des registres. La date d'un cap est donc un repère symbolique, avec une marge d'erreur de plusieurs mois.",
+   "explication": "Personne ne compte les humains un par un : l'ONU estime la population à partir des recensements et des registres. La date d'un cap est donc un repère symbolique : en 1987, la marge d'erreur dépassait un an.",
    "source": {
     "theme": "Thème 1 – Cours 1 – 1re partie – Croissance et développement de la population",
     "titre": "Journée mondiale de la population",
@@ -1501,7 +1498,7 @@ JEU.enregistrer("cours", {
  ],
  "nonCouvert": [
   "Les graphiques et la carte du cours (évolution de la population mondiale, croissance dans le monde, fécondité par pays) : seuls leurs titres sont lisibles dans l'extraction, leurs valeurs ne sont pas reprises.",
-  "Page 6 (les pays les plus peuplés du monde) : exercice qui recoupe le devoir n° 1, non repris ; les deux pays de plus d'un milliard d'habitants sont nommés dans la fiche f7, sans question.",
+  "Page 6 (les pays les plus peuplés du monde) : exercice qui recoupe le devoir n° 1, non repris ; les pays les plus peuplés ne sont pas nommés dans ce cours (l'étude de cas 2 traite l'Inde).",
   "Page 8 (carte mentale, texte sur le surpeuplement) : exercices non repris ; page 9 (la Chine) sert au cours geographie-s03-1.",
   "Attente du programme : la croissance démographique vue à l'échelle d'un pays émergent (Chine) : la Chine n'apparaît qu'en prévision de baisse (f7) ; l'étude de cas 2 (Inde) complète.",
   "Attente du programme : les effets de la croissance sur l'environnement et les ressources (eau, nourriture) : traités dans la deuxième partie du cours (geographie-s02-2).",

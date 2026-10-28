@@ -77,6 +77,10 @@ JEU.enregistrer("cours", {
     {
      "mot": "ressource renouvelable",
      "def": "une ressource qui se reforme assez vite pour ne pas s'épuiser, comme le vent ou le soleil"
+    },
+    {
+     "mot": "hydrocarbures",
+     "def": "le pétrole et le gaz naturel"
     }
    ],
    "schema": null,
@@ -174,9 +178,9 @@ JEU.enregistrer("cours", {
    "id": "geographie-s01-1-f6",
    "notion": "Se repérer sur le planisphère : continents, océans, densités",
    "titre": "Continents, océans et densités",
-   "texte": "En France, on compte six continents : Afrique, Amérique, Antarctique, Asie, Europe, Océanie. L'Asie est le plus vaste et, de loin, le plus peuplé ; l'Océanie est le plus petit ; l'Antarctique, presque vide. Les océans couvrent 71 % de la planète, et le Pacifique est le plus grand. La densité de population compte les habitants par kilomètre carré.",
+   "texte": "On compte le plus souvent six continents : Afrique, Amérique, Antarctique, Asie, Europe, Océanie ; cinq si l'on écarte l'Antarctique, presque vide. L'Asie est le plus vaste et, de loin, le plus peuplé ; l'Océanie, le plus petit. Les océans couvrent 71 % de la planète, le Pacifique en tête. La densité de population compte les habitants par km².",
    "pointsCles": [
-    "Six continents dans l'usage français ; sept dans les pays anglo-saxons, qui séparent les deux Amériques",
+    "Six continents dans l'usage français (cinq sans l'Antarctique) ; sept dans les pays anglo-saxons, qui séparent les deux Amériques",
     "L'Asie : le plus vaste et le plus peuplé ; l'Océanie : le plus petit ; l'Antarctique : presque inhabité",
     "Cinq océans : Pacifique, Atlantique, Indien, Austral, Arctique ; le Pacifique est le plus grand et le plus profond",
     "Densité de population = habitants ÷ surface, en habitants par km² ; monde : environ 55 (2023) ; France métropolitaine : 118"
@@ -893,7 +897,7 @@ JEU.enregistrer("cours", {
     "La transition démographique",
     "L'exode rural"
    ],
-   "explication": "Le changement global désigne les transformations planétaires causées par les humains, le réchauffement du climat en premier. Le développement durable, lui, est une façon d'y répondre.",
+   "explication": "Le changement global désigne les transformations planétaires causées par les humains, le changement du climat en premier. Le développement durable, lui, est une façon d'y répondre.",
    "source": {
     "theme": "Présentation du programme et regarder les outils du géographe",
     "titre": "Changement global",
@@ -956,21 +960,21 @@ JEU.enregistrer("cours", {
    "fiche": "geographie-s01-1-f6",
    "type": "qcm",
    "niveau": 1,
-   "enonce": "Combien de continents compte-t-on d'habitude en France ?",
+   "enonce": "Quel est le plus petit continent par la surface ?",
    "choix": [
-    "Six",
-    "Quatre",
-    "Cinq",
-    "Neuf"
+    "L'Océanie",
+    "L'Europe",
+    "L'Antarctique",
+    "L'Afrique"
    ],
-   "explication": "En France, on compte six continents : Afrique, Amérique, Antarctique, Asie, Europe et Océanie. Les pays anglo-saxons en comptent sept, car ils séparent les deux Amériques.",
+   "explication": "L'Océanie, c'est l'Australie et les îles du Pacifique : moins de 8 millions de km², un peu moins que l'Europe. L'Asie est le plus vaste, avec plus de 44 millions de km².",
    "source": {
     "theme": "Présentation du programme et regarder les outils du géographe",
     "titre": "Continent",
     "editeur": "Wikipédia",
     "url": "https://fr.wikipedia.org/wiki/Continent"
    },
-   "r": "=QkHAESZ",
+   "r": "hhEDbx0xsWQKO5TZ",
    "poids": 1
   },
   {
@@ -1002,7 +1006,7 @@ JEU.enregistrer("cours", {
     "L'océan Indien",
     "L'océan Arctique"
    ],
-   "explication": "Le Pacifique couvre à lui seul près de la moitié de la surface des océans. C'est aussi dans ses eaux que se trouve le point le plus profond, la fosse des Mariannes, à près de onze kilomètres sous la surface.",
+   "explication": "Le Pacifique couvre à lui seul plus de deux cinquièmes de la surface des océans. C'est aussi dans ses eaux que se trouve le point le plus profond, la fosse des Mariannes, à près de onze kilomètres sous la surface.",
    "source": {
     "theme": "Présentation du programme et regarder les outils du géographe",
     "titre": "Océan",

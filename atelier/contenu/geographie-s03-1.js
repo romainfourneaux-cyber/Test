@@ -8,6 +8,9 @@
 // déposé. Anti-spoil (devoir n° 1, question B3 ratée par l'élève) : la question « pourquoi les pays du Nord
 // vieillissent-ils ? » n'est pas posée telle quelle ; q19 a été réécrite le 28/10/2026 pour n'interroger qu'une cause
 // à la fois ; les autres questions éclatent le savoir (fécondité, espérance de vie, naissances et décès).
+// Relecture du 28/10/2026 (après-midi), pages rouvertes : q39 sans le « 1,7 enfant par femme » (chiffre de 2020 dépassé ; on garde
+// « moins de deux »), q49 devenue un trou sur la notion (elle doublait q44), f7 et q50/q53 : espérance de vie arrondie à « environ 85 ans »
+// et immigration « faible » (+ 153 000 en 2024 sur la page) au lieu de « presque nulle » ; parts de l'Insee (22,2 % de 65 ans et plus) confirmées.
 const F = "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf";
 const P = (page) => ({ fichier: F, page: page });
 const THEME = "Cours 1 – 2e partie – III Dans les pays du Nord";
@@ -127,12 +130,12 @@ module.exports = {
     {
       id: "geographie-s03-1-f7", notion: "Le Japon, pays des records d'âge",
       titre: "Le Japon : une population qui baisse",
-      texte: "Le Japon compte 123 millions d'habitants en 2025, contre 128 millions à son maximum, vers 2010 : la population baisse. L'espérance de vie y est la plus élevée du monde, 85,5 ans en 2024. Plus d'un Japonais sur quatre a 65 ans ou plus. En 2024 : 686 000 naissances, et 900 000 décès de plus que de naissances.",
+      texte: "Le Japon compte 123 millions d'habitants en 2025, contre 128 millions à son maximum, vers 2010 : la population baisse. L'espérance de vie y est la plus élevée du monde : environ 85 ans. Plus d'un Japonais sur quatre a 65 ans ou plus. En 2024 : 686 000 naissances, et 900 000 décès de plus que de naissances.",
       pointsCles: [
         "123 millions d'habitants en 2025 ; maximum de 128 millions vers 2010, puis baisse",
-        "Espérance de vie la plus élevée du monde : 85,5 ans en 2024 (82,3 ans pour les hommes, 88,2 pour les femmes)",
+        "Espérance de vie la plus élevée du monde : environ 85 ans ; les femmes vivent plus longtemps que les hommes",
         "Plus d'un habitant sur quatre a 65 ans ou plus ; âge médian : 47,7 ans en 2018",
-        "2024 : 686 000 naissances, un solde naturel de − 919 000 ; presque pas d'immigration",
+        "2024 : 686 000 naissances, un solde naturel de − 919 000 ; une immigration trop faible pour combler l'écart",
         "Projections : moins de 100 millions d'habitants vers le milieu du siècle"
       ],
       dates: [{ annee: 2010, evenement: "Le Japon atteint son maximum de population, 128 millions d'habitants" }],
@@ -332,9 +335,9 @@ module.exports = {
       explication: "La peur de la surpopulation mène à l'enfant unique en 1979. Quarante ans plus tard, le vieillissement et la baisse des naissances amènent la règle des trois enfants, en 2021.", source: P(9) },
     { id: "geographie-s03-1-q39", fiche: "geographie-s03-1-f5", type: "vrai_faux", niveau: 2,
       enonce: "Depuis la fin de l'enfant unique, les Chinoises ont de nouveau beaucoup d'enfants : plus de trois en moyenne.",
-      corrections: ["Faux : environ 1,7 enfant par femme ces dernières années, bien en dessous du seuil de renouvellement.", "Faux : elles n'ont plus du tout d'enfants.", "Faux : exactement trois, comme la loi le permet."],
-      reponse: { vrai: false, correction: "Faux : environ 1,7 enfant par femme ces dernières années, bien en dessous du seuil de renouvellement." },
-      explication: "Même assouplie, la règle n'a pas relancé les naissances : environ 1,7 enfant par femme. Le vieillissement de la Chine continue donc.",
+      corrections: ["Faux : elles ont en moyenne moins de deux enfants, et la fin de l'enfant unique n'a pas relancé les naissances.", "Faux : elles n'ont plus du tout d'enfants.", "Faux : exactement trois, comme la loi le permet."],
+      reponse: { vrai: false, correction: "Faux : elles ont en moyenne moins de deux enfants, et la fin de l'enfant unique n'a pas relancé les naissances." },
+      explication: "Même assouplie, la règle n'a pas relancé les naissances : moins de deux enfants par femme en moyenne. Le vieillissement de la Chine continue donc.",
       source: T("Vieillissement démographique", "Wikipédia", U_VIEIL) },
     { id: "geographie-s03-1-q40", fiche: "geographie-s03-1-f5", type: "qcm", niveau: 3,
       enonce: "Un pays limite les naissances pendant quarante ans, puis les encourage. Quel problème nouveau explique ce retournement ?",
@@ -390,17 +393,17 @@ module.exports = {
       explication: "Avec plus d'un habitant sur cinq âgé de plus de soixante-cinq ans, beaucoup de Français vieilliront chez eux. Leurs logements doivent être aménagés, et la téléassistance à domicile se développe.",
       source: T("Vieillissement démographique", "Wikipédia", U_VIEIL) },
     { id: "geographie-s03-1-q49", fiche: "geographie-s03-1-f6", type: "trou", niveau: 2,
-      enonce: "Complète avec les bons pourcentages.",
-      texte: "En France, les plus de soixante-cinq ans représentaient ___ % de la population en 1986 et ___ % en 2017.",
-      banque: ["12,8", "19,4", "5,2", "35,1"],
-      reponse: [["12,8"], ["19,4"]],
-      explication: "Un habitant sur huit en 1986, presque un sur cinq en 2017. Le vieillissement est régulier depuis quarante ans.",
+      enonce: "Complète la phrase.",
+      texte: "Une population ___ quand la part des personnes âgées augmente. Cela arrive quand on vit plus longtemps, ou quand les femmes ont moins d'___.",
+      banque: ["vieillit", "rajeunit", "enfants", "décès"],
+      reponse: [["vieillit"], ["enfants"]],
+      explication: "Le vieillissement, c'est la hausse de la part des personnes âgées. Une vie plus longue ou moins de naissances suffit à le déclencher.",
       source: T("Vieillissement démographique", "Wikipédia", U_VIEIL) },
     // f7 : le Japon (questions de thème)
     { id: "geographie-s03-1-q50", fiche: "geographie-s03-1-f7", type: "vrai_faux", niveau: 1,
       enonce: "Au Japon, l'espérance de vie est l'une des plus élevées du monde.",
       corrections: [], reponse: { vrai: true, correction: null },
-      explication: "Oui : 85,5 ans en 2024, la plus élevée au monde. Les femmes japonaises vivent en moyenne 88 ans.",
+      explication: "Oui : environ 85 ans, la plus élevée au monde. Les femmes japonaises vivent en moyenne plus longtemps encore que les hommes.",
       source: T("Démographie du Japon", "Wikipédia", U_JAPON) },
     { id: "geographie-s03-1-q51", fiche: "geographie-s03-1-f7", type: "qcm", niveau: 1,
       enonce: "Comment la population du Japon évolue-t-elle depuis une quinzaine d'années ?",
@@ -416,9 +419,9 @@ module.exports = {
       source: T("Démographie du Japon", "Wikipédia", U_JAPON) },
     { id: "geographie-s03-1-q53", fiche: "geographie-s03-1-f7", type: "qcm", niveau: 2,
       enonce: "Pourquoi la population japonaise diminue-t-elle, alors que le pays ne manque ni de nourriture ni de soins ?",
-      choix: ["Parce qu'il y meurt chaque année bien plus de personnes qu'il n'en naît, et que presque personne n'immigre", "Parce que beaucoup de jeunes Japonais partent chaque année vivre en Chine, en Corée ou aux États-Unis", "Parce que l'espérance de vie y recule depuis les années 2000, à cause du travail", "Parce qu'une épidémie a frappé le pays"],
-      reponse: "Parce qu'il y meurt chaque année bien plus de personnes qu'il n'en naît, et que presque personne n'immigre",
-      explication: "En 2024, le Japon a compté 686 000 naissances et plus de 900 000 décès de plus que de naissances. Sans immigration pour compenser, la population baisse.",
+      choix: ["Parce qu'il y meurt chaque année bien plus de personnes qu'il n'en naît, et que l'immigration ne comble pas l'écart", "Parce que beaucoup de jeunes Japonais partent chaque année vivre en Chine, en Corée ou aux États-Unis", "Parce que l'espérance de vie y recule depuis les années 2000, à cause du travail", "Parce qu'une épidémie a frappé le pays"],
+      reponse: "Parce qu'il y meurt chaque année bien plus de personnes qu'il n'en naît, et que l'immigration ne comble pas l'écart",
+      explication: "En 2024, le Japon a compté 686 000 naissances et plus de 900 000 décès de plus que de naissances. L'immigration, faible, ne compense pas cette perte : la population baisse.",
       source: T("Démographie du Japon", "Wikipédia", U_JAPON) },
     { id: "geographie-s03-1-q54", fiche: "geographie-s03-1-f7", type: "vrai_faux", niveau: 2,
       enonce: "En 2024, le Japon a compté plus de naissances que de décès.",

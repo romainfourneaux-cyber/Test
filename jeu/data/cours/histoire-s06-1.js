@@ -478,7 +478,7 @@ JEU.enregistrer("cours", {
     "Les meuniers",
     "Les vilains"
    ],
-   "explication": "Les laboureurs sont les paysans les plus riches : eux seuls peuvent payer un attelage et une charrue. Le vilain est simplement un paysan libre.",
+   "explication": "Les laboureurs sont les paysans les plus riches : eux seuls peuvent payer un attelage et une charrue. Les autres paysans n'en ont pas les moyens.",
    "source": {
     "fichier": "cours/histoire/Histoire 5e - Moyen Age - Etude de cas 3 Vie et travail des paysans.pdf",
     "page": 1
@@ -608,14 +608,18 @@ JEU.enregistrer("cours", {
    "fiche": "histoire-s06-1-f2",
    "type": "vrai_faux",
    "niveau": 3,
-   "enonce": "La charrue et le collier d'épaule sont deux inventions qui rendent le labour plus efficace.",
-   "corrections": [],
-   "explication": "Oui : la charrue retourne la terre en profondeur, et le collier d'épaule permet à l'animal de la tirer sans être étouffé. Les deux vont ensemble.",
+   "enonce": "Le collier d'épaule serre la gorge de l'animal quand il tire fort.",
+   "corrections": [
+    "Faux : il repose sur les épaules et n'étouffe plus l'animal, qui peut tirer plus lourd.",
+    "Faux : le collier d'épaule se fixe aux pattes de l'animal.",
+    "Faux : le collier d'épaule est réservé aux moutons."
+   ],
+   "explication": "Le collier d'épaule n'étouffe plus l'animal, à la différence des anciens attelages. Il peut donc tirer des charges plus lourdes.",
    "source": {
     "fichier": "cours/histoire/Histoire 5e - Moyen Age - Etude de cas 3 Vie et travail des paysans.pdf",
     "page": 1
    },
-   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "r": "=g0DAtAFTYgHnFAAJUQUbsQHbwxYZBBUd5kBTcRSetyEYwwGQ4kAPFQHv0VRQtECakgEAHLYcUVEQElGLMwBJMDhmWhXLMgRUwRAndhBKUAFb40AbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -684,21 +688,20 @@ JEU.enregistrer("cours", {
    "fiche": "histoire-s06-1-f3",
    "type": "qcm_multiple",
    "niveau": 2,
-   "enonce": "Quelles taxes sont dues par tous les paysans, libres ou non ? (plusieurs réponses)",
+   "enonce": "Qui doit le cens, le champart, les banalités et les corvées ? (plusieurs réponses)",
    "choix": [
-    "Le cens",
-    "Les banalités",
-    "Le champart",
-    "Les corvées",
-    "Le chevage",
-    "La mainmorte"
+    "Les vilains",
+    "Les serfs",
+    "Les laboureurs",
+    "Le seigneur",
+    "Le roi"
    ],
-   "explication": "Cens, banalités, champart et corvées pèsent sur tous les paysans. Le chevage et la mainmorte ne concernent que les serfs.",
+   "explication": "Ces quatre taxes pèsent sur tous les paysans, libres ou non, riches ou pauvres. Le seigneur les reçoit, il ne les paie pas.",
    "source": {
     "fichier": "cours/histoire/Histoire 5e - Moyen Age - Etude de cas 3 Vie et travail des paysans.pdf",
     "page": 1
    },
-   "r": "1EmXAwp7Y0RCFkUAi4zVJdVBb8wHfkwKOVEUhx0QEVBwxOzGZQwGQsgTccBJhFwRGN0CMY0AlAFH",
+   "r": "=8yVWcABMwhGdogIBVkRIJSTKRkGUUzFGUkBUUCTDB1GtQEBZREGPVxAlAFH",
    "poids": 1
   },
   {
@@ -813,14 +816,18 @@ JEU.enregistrer("cours", {
    "fiche": "histoire-s06-1-f3",
    "type": "vrai_faux",
    "niveau": 3,
-   "enonce": "Un vilain, paysan libre, doit lui aussi le cens, le champart, les banalités et les corvées.",
-   "corrections": [],
-   "explication": "Oui : ces quatre taxes sont dues par tous les paysans, libres ou non. Être libre ne dispense pas de payer le seigneur.",
+   "enonce": "Un paysan libre ne doit aucune taxe au seigneur.",
+   "corrections": [
+    "Faux : libre ou non, tout paysan doit des taxes au seigneur, pour sa terre comme pour l'usage du moulin ou du four.",
+    "Faux : le paysan libre doit seulement le chevage.",
+    "Faux : seul le seigneur paie des taxes, au roi."
+   ],
+   "explication": "Être libre ne dispense pas de payer le seigneur. Seules trois taxes de plus, comme la mainmorte, sont réservées aux serfs.",
    "source": {
     "fichier": "cours/histoire/Histoire 5e - Moyen Age - Etude de cas 3 Vie et travail des paysans.pdf",
     "page": 1
    },
-   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "r": "==QFhNwFAJECPNhAJdAKStBDZQgBD80BMMGSCQlXbgkCGtxBoIQVAgBHG0wTXoRMIFRFM1xTUMhBCcmXHABEf4wBKEAS2wURGhkFOIhRacxISFADaURSA4QARISXFFEWBshRKdQHpIFAKUFFbwgBegUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -948,15 +955,15 @@ JEU.enregistrer("cours", {
     "Chevage",
     "Formariage",
     "Mainmorte",
-    "Vilain"
+    "Héritier"
    ],
    "droite": [
     "Droit payé par les héritiers d'un serf",
-    "Paysan libre",
+    "Personne qui reçoit les biens de quelqu'un à sa mort",
     "Redevance en argent due par les serfs",
     "Taxe pour le mariage d'un serf hors de la seigneurie"
    ],
-   "explication": "Chevage : de l'argent ; formariage : le mariage ; mainmorte : l'héritage. Le vilain est le paysan libre, qui ne doit pas ces trois taxes.",
+   "explication": "Chevage : de l'argent ; formariage : le mariage ; mainmorte : l'héritage. Ce sont les héritiers du serf qui paient la mainmorte.",
    "source": {
     "fichier": "cours/histoire/Histoire 5e - Moyen Age - Etude de cas 3 Vie et travail des paysans.pdf",
     "page": 1
@@ -1241,21 +1248,21 @@ JEU.enregistrer("cours", {
    "fiche": "histoire-s06-1-f6",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Combien de blé une meule de moulin à eau peut-elle moudre en une heure ?",
+   "enonce": "À partir de quel siècle le moulin à eau se répand-il dans les campagnes d'Europe ?",
    "choix": [
-    "Environ 150 kg",
-    "Environ 1 kg",
-    "Environ 15 kg",
-    "Environ 15 tonnes"
+    "Le IXe siècle",
+    "Le XIVe siècle",
+    "Le Ve siècle",
+    "Le XVIIIe siècle"
    ],
-   "explication": "Une meule mue par l'eau peut moudre 150 kg de blé à l'heure. C'est bien plus qu'une meule tournée à la main.",
+   "explication": "Le moulin à eau se développe en Europe à partir du IXe siècle. Une seule meule peut alors moudre 150 kg de blé en une heure, bien plus qu'une meule tournée à la main.",
    "source": {
     "theme": "Cours 8 – Étude de cas 3 et 4",
     "titre": "Moulin à eau",
     "editeur": "Wikipédia",
     "url": "https://fr.wikipedia.org/wiki/Moulin_%C3%A0_eau"
    },
-   "r": "==ATIkBSzhBVVMUAd8AEHcTZ",
+   "r": "==ATK4xCr7ODG1wC38iRM4TZ",
    "poids": 1
   },
   {

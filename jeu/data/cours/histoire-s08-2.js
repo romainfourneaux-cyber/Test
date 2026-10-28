@@ -220,7 +220,7 @@ JEU.enregistrer("cours", {
    "titre": "Un fief qui vaut une guerre : la Guyenne",
    "texte": "Le 4 décembre 1259, Henri III d'Angleterre rend hommage à Louis IX : il renonce à la Normandie et à l'Anjou, mais garde la Guyenne comme vassal du roi de France. Un roi vassal d'un roi, cela tourne mal. La Guyenne est saisie en 1294, en 1324, puis en 1337. Édouard III réplique : la guerre de Cent Ans.",
    "pointsCles": [
-    "La Guyenne (le nom apparaît en 1259) : l'ancien duché d'Aquitaine, autour de Bordeaux, aux mains des Plantagenêts, rois d'Angleterre, jusqu'en 1453",
+    "La Guyenne (le nom apparaît au XIIIe siècle) : l'ancien duché d'Aquitaine, autour de Bordeaux, aux mains des Plantagenêts, rois d'Angleterre, jusqu'en 1453",
     "Traité de Paris : accord du 28 mai 1258, hommage d'Henri III à Louis IX le 4 décembre 1259 ; Henri garde Guyenne, Limousin, Périgord, Quercy, Agenais et Saintonge du sud, et abandonne Normandie, Anjou, Touraine, Maine, Poitou",
     "1286 : Édouard Ier rend hommage à Philippe le Bel ; 1294 : Philippe le Bel saisit le duché, guerre de Guyenne (1294-1297)",
     "1323-1324 : l'affaire de la bastide de Saint-Sardos ; Charles IV confisque l'Aquitaine ; le jeune Édouard III rend hommage pour son père (1325)",
@@ -258,7 +258,7 @@ JEU.enregistrer("cours", {
    "vocabulaire": [
     {
      "mot": "Aquitaine",
-     "def": "le grand duché du Sud-Ouest, que l'on appelle Guyenne à partir de 1259"
+     "def": "le grand duché du Sud-Ouest, que l'on appelle Guyenne à partir du XIIIe siècle"
     },
     {
      "mot": "renoncer",
@@ -430,7 +430,7 @@ JEU.enregistrer("cours", {
    "enonce": "Quelle scène l'enluminure de Jean Fouquet étudiée en séance représente-t-elle ?",
    "choix": [
     "L'hommage d'Édouard Ier à Philippe le Bel",
-    "Le couronnement de Charlemagne à Rome",
+    "Le couronnement de Charlemagne à Rome, en 800",
     "La bataille de Bouvines",
     "L'élection de Hugues Capet"
    ],
@@ -483,21 +483,22 @@ JEU.enregistrer("cours", {
    "id": "histoire-s08-2-q15",
    "fiche": "histoire-s08-2-f2",
    "type": "qcm",
-   "niveau": 3,
-   "enonce": "Philippe le Bel règne de 1285 à 1314. À quelle période l'hommage d'Édouard Ier a-t-il pu avoir lieu ?",
+   "niveau": 2,
+   "enonce": "En quelle année Édouard Ier rend-il hommage à Philippe le Bel ?",
    "choix": [
-    "Entre 1285 et 1314",
-    "En 1214, à Bouvines",
-    "Vers 1455-1460",
-    "En 987"
+    "1286",
+    "1259",
+    "1294",
+    "1337"
    ],
-   "explication": "L'hommage est rendu au roi Philippe le Bel : il a donc lieu pendant son règne, en 1286. 1455-1460 est la date de la peinture, pas de la scène.",
-   "indice": "Un hommage se rend à un roi qui règne.",
+   "explication": "L'hommage a lieu en 1286, au début du règne de Philippe le Bel. En 1259, c'était Henri III devant Louis IX ; en 1294, le roi de France saisit la Guyenne.",
    "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 11 - Support.pdf",
-    "page": 2
+    "theme": "Cours 11 – Étude de document",
+    "titre": "Édouard Ier (roi d'Angleterre)",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/%C3%89douard_Ier_(roi_d%27Angleterre)"
    },
-   "r": "=cUQAp1XPZQDjhRXHwhTKQhEHcTZ",
+   "r": "NBlXbNUZ",
    "poids": 1
   },
   {
@@ -921,7 +922,7 @@ JEU.enregistrer("cours", {
    "enonce": "Pour quelle terre le roi d'Angleterre est-il le vassal du roi de France, après 1259 ?",
    "choix": [
     "La Guyenne, dans le Sud-Ouest",
-    "La Normandie",
+    "La Normandie, autour de la ville de Rouen",
     "L'Île-de-France",
     "La Flandre"
    ],
@@ -1107,7 +1108,7 @@ JEU.enregistrer("cours", {
    "id": "histoire-s08-2-b2",
    "fiche": "histoire-s08-2-f1",
    "titre": "Jean Fouquet, le peintre de Tours",
-   "texte": "Jean Fouquet, né vers 1420 à Tours, est l'un des plus grands peintres de la première Renaissance. Vers 1445, il séjourne en Italie et peint le portrait du pape. Revenu à Tours, il peint Charles VII, enlumine les Heures d'Étienne Chevalier et, vers 1455-1460, les 51 miniatures des Grandes Chroniques de France. En 1475, Louis XI lui donne le titre de peintre du roi. Il meurt entre 1478 et 1481.",
+   "texte": "Jean Fouquet, né vers 1420, sans doute à Tours, est l'un des plus grands peintres français du XVe siècle. Entre 1443 et 1447, il séjourne en Italie et peint le portrait du pape. Revenu à Tours, il peint Charles VII, enlumine les Heures d'Étienne Chevalier et, vers 1455-1460, les 51 miniatures des Grandes Chroniques de France. En 1475, les archives de Louis XI le nomment « peintre du roi ». Il meurt entre 1478 et 1481.",
    "source": {
     "titre": "Jean Fouquet",
     "editeur": "Wikipédia, l'encyclopédie libre",

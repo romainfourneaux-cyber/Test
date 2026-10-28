@@ -9,6 +9,8 @@
 // questions sont des questions de thème (source { theme, titre, editeur, url }). Les fiches f1 à f4 viennent de la page 3
 // du cours déposé et restent inchangées. Anti-spoil : aucune question « définis bidonville / front pionnier », rien sur
 // la Côte d'Ivoire, aucune question-paragraphe sur les défis du Sud.
+// Relecture du 28/10/2026 (après-midi), pages rouvertes : q43 datée comme la page (1990-2005, de 47 % à 37 %), q46 sans le
+// « ralentissement après 1965 » que la page ne dit pas ; définition ONU-Habitat, Casablanca 1931, Dharavi et bonus migrants confirmés.
 const F = "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf";
 const P = (page) => ({ fichier: F, page: page });
 const THEME = "Cours 1 – 2e partie – II Dans les pays du Sud";
@@ -339,10 +341,10 @@ module.exports = {
       explication: "Oui : on y compte entre 600 000 et un million d'habitants selon les estimations, sur à peine plus de deux kilomètres carrés. Kibera, à Nairobi, est l'un des plus grands d'Afrique.",
       source: T("Dharavi", U_DHARAVI) },
     { id: "geographie-s02-2-q43", fiche: "geographie-s02-2-f5", type: "qcm", niveau: 3,
-      enonce: "Au début des années 2000, la part des citadins du Sud vivant en bidonville a reculé, mais leur nombre a continué d'augmenter. Comment est-ce possible ?",
+      enonce: "En quinze ans, jusqu'en 2005, la part des citadins des pays du Sud vivant en bidonville est passée de 47 % à 37 %, mais leur nombre a continué d'augmenter. Comment est-ce possible ?",
       choix: ["Parce que les villes ont gagné énormément d'habitants : une part plus petite d'un total bien plus grand", "Parce que l'ONU a changé sa définition du bidonville pour y faire entrer davantage de quartiers", "Parce que les bidonvilles se sont vidés vers les campagnes", "C'est impossible : si la part baisse, le nombre baisse aussi"],
       reponse: "Parce que les villes ont gagné énormément d'habitants : une part plus petite d'un total bien plus grand",
-      explication: "La part est passée de 47 % à 37 % en quinze ans, mais les villes du Sud ont grossi de centaines de millions d'habitants. Un pourcentage plus petit d'un total bien plus grand peut donner un nombre plus élevé.",
+      explication: "Pendant ces quinze ans, la population des villes du Sud a beaucoup augmenté. Un pourcentage plus petit d'un total bien plus grand peut donner un nombre plus élevé.",
       source: T("Bidonville", U_BIDON) },
     { id: "geographie-s02-2-q44", fiche: "geographie-s02-2-f5", type: "association", niveau: 2,
       enonce: "Relie chaque mot au pays où on l'emploie.",
@@ -362,7 +364,7 @@ module.exports = {
       enonce: "Quand l'exode rural s'est-il arrêté en France, d'après l'Insee ?",
       choix: ["Vers 1975", "Vers 1850", "Vers 1931", "Il continue encore aujourd'hui"],
       reponse: "Vers 1975",
-      explication: "L'exode rural français a nettement ralenti après 1965 et s'est arrêté vers 1975. Les campagnes françaises avaient compté le plus de ruraux vers 1850-1860.",
+      explication: "D'après l'Insee, l'exode rural français s'est arrêté vers 1975. Les campagnes françaises avaient compté le plus de ruraux vers 1850-1860.",
       source: T("Exode rural", U_EXODE) },
     { id: "geographie-s02-2-q47", fiche: "geographie-s02-2-f6", type: "qcm_multiple", niveau: 2,
       enonce: "Qu'est-ce qui pousse des ruraux à partir vers la ville ? (plusieurs réponses)",

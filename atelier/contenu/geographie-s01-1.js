@@ -11,6 +11,8 @@
 // Contre-relecture du 28/10/2026 (matin) : q7 et q28 supprimées, leurres de q20, q21, q29, q32 et sources de q3 et q32
 // revus, q19 reformulée. Les questions sur les titres du tableau (q5, q6, q8, q17, q24, q25, q9 à q16, q27, q30, q33, q36)
 // gardent leur source déposée.
+// Relecture du 28/10/2026 (après-midi), pages rouvertes : q40 remplacée (le nombre de continents dépend de la convention :
+// cinq pour l'ONU et les JO ; même identifiant, même fiche, même type), f6 nuancée, q42 et q35 ajustées à la page, « hydrocarbures » défini (f3).
 const F = "cours/geographie/Geo 5e - Tableau de progression.pdf";
 const P = (page) => ({ fichier: F, page: page });
 const THEME = "Présentation du programme et regarder les outils du géographe";
@@ -65,7 +67,8 @@ module.exports = {
       dates: [], lieux: ["Tunisie", "Moyen-Orient", "Russie", "Chine", "Éthiopie", "Argentine"], personnages: [],
       vocabulaire: [
         { mot: "eau douce", def: "une eau presque sans sel : celle des rivières, des lacs, des glaciers et des nappes souterraines" },
-        { mot: "ressource renouvelable", def: "une ressource qui se reforme assez vite pour ne pas s'épuiser, comme le vent ou le soleil" }
+        { mot: "ressource renouvelable", def: "une ressource qui se reforme assez vite pour ne pas s'épuiser, comme le vent ou le soleil" },
+        { mot: "hydrocarbures", def: "le pétrole et le gaz naturel" }
       ],
       schema: null, prerequis: [], source: PR("Des ressources limitées, à gérer et à renouveler", "Eau douce", "Wikipédia", U_EAU)
     },
@@ -111,9 +114,9 @@ module.exports = {
     {
       id: "geographie-s01-1-f6", notion: "Se repérer sur le planisphère : continents, océans, densités",
       titre: "Continents, océans et densités",
-      texte: "En France, on compte six continents : Afrique, Amérique, Antarctique, Asie, Europe, Océanie. L'Asie est le plus vaste et, de loin, le plus peuplé ; l'Océanie est le plus petit ; l'Antarctique, presque vide. Les océans couvrent 71 % de la planète, et le Pacifique est le plus grand. La densité de population compte les habitants par kilomètre carré.",
+      texte: "On compte le plus souvent six continents : Afrique, Amérique, Antarctique, Asie, Europe, Océanie ; cinq si l'on écarte l'Antarctique, presque vide. L'Asie est le plus vaste et, de loin, le plus peuplé ; l'Océanie, le plus petit. Les océans couvrent 71 % de la planète, le Pacifique en tête. La densité de population compte les habitants par km².",
       pointsCles: [
-        "Six continents dans l'usage français ; sept dans les pays anglo-saxons, qui séparent les deux Amériques",
+        "Six continents dans l'usage français (cinq sans l'Antarctique) ; sept dans les pays anglo-saxons, qui séparent les deux Amériques",
         "L'Asie : le plus vaste et le plus peuplé ; l'Océanie : le plus petit ; l'Antarctique : presque inhabité",
         "Cinq océans : Pacifique, Atlantique, Indien, Austral, Arctique ; le Pacifique est le plus grand et le plus profond",
         "Densité de population = habitants ÷ surface, en habitants par km² ; monde : environ 55 (2023) ; France métropolitaine : 118"
@@ -316,7 +319,7 @@ module.exports = {
       enonce: "Comment appelle-t-on l'ensemble des changements rapides que les activités humaines font subir à toute la planète : climat, milieux naturels, sociétés ?",
       choix: ["Le changement global", "Le développement durable", "La transition démographique", "L'exode rural"],
       reponse: "Le changement global",
-      explication: "Le changement global désigne les transformations planétaires causées par les humains, le réchauffement du climat en premier. Le développement durable, lui, est une façon d'y répondre.",
+      explication: "Le changement global désigne les transformations planétaires causées par les humains, le changement du climat en premier. Le développement durable, lui, est une façon d'y répondre.",
       source: W("Changement global", "https://fr.wikipedia.org/wiki/Changement_global") },
     { id: "geographie-s01-1-q36", fiche: "geographie-s01-1-f4", type: "qcm_multiple", niveau: 3,
       enonce: "Quels titres appartiennent au thème 3 ?",
@@ -332,10 +335,10 @@ module.exports = {
       source: W("Risque majeur", U_RISQUE) },
     // f6 : continents, océans, densités
     { id: "geographie-s01-1-q40", fiche: "geographie-s01-1-f6", type: "qcm", niveau: 1,
-      enonce: "Combien de continents compte-t-on d'habitude en France ?",
-      choix: ["Six", "Quatre", "Cinq", "Neuf"],
-      reponse: "Six",
-      explication: "En France, on compte six continents : Afrique, Amérique, Antarctique, Asie, Europe et Océanie. Les pays anglo-saxons en comptent sept, car ils séparent les deux Amériques.",
+      enonce: "Quel est le plus petit continent par la surface ?",
+      choix: ["L'Océanie", "L'Europe", "L'Antarctique", "L'Afrique"],
+      reponse: "L'Océanie",
+      explication: "L'Océanie, c'est l'Australie et les îles du Pacifique : moins de 8 millions de km², un peu moins que l'Europe. L'Asie est le plus vaste, avec plus de 44 millions de km².",
       source: W("Continent", U_CONTINENT) },
     { id: "geographie-s01-1-q41", fiche: "geographie-s01-1-f6", type: "vrai_faux", niveau: 1,
       enonce: "L'Asie est à la fois le continent le plus vaste et le plus peuplé.",
@@ -346,7 +349,7 @@ module.exports = {
       enonce: "Quel océan est le plus grand et le plus profond ?",
       choix: ["Le Pacifique", "L'Atlantique", "L'océan Indien", "L'océan Arctique"],
       reponse: "Le Pacifique",
-      explication: "Le Pacifique couvre à lui seul près de la moitié de la surface des océans. C'est aussi dans ses eaux que se trouve le point le plus profond, la fosse des Mariannes, à près de onze kilomètres sous la surface.",
+      explication: "Le Pacifique couvre à lui seul plus de deux cinquièmes de la surface des océans. C'est aussi dans ses eaux que se trouve le point le plus profond, la fosse des Mariannes, à près de onze kilomètres sous la surface.",
       source: W("Océan", U_OCEAN) },
     { id: "geographie-s01-1-q43", fiche: "geographie-s01-1-f6", type: "vrai_faux", niveau: 2,
       enonce: "Les océans couvrent environ un tiers de la surface de la Terre.",

@@ -500,7 +500,7 @@ JEU.enregistrer("cours", {
     "Choisi, par un vote ou un accord",
     "Né fils de roi",
     "Vainqueur d'une bataille",
-    "Couronné par un empereur"
+    "Couronné par l'empereur germanique"
    ],
    "explication": "Élire, c'est choisir quelqu'un, par un vote ou un accord. En 987, Hugues Capet est ainsi élu roi.",
    "source": {
@@ -615,20 +615,22 @@ JEU.enregistrer("cours", {
    "fiche": "histoire-s07-2-f2",
    "type": "qcm_multiple",
    "niveau": 2,
-   "enonce": "Que peut-on dire de l'élection de Hugues Capet ? (plusieurs réponses)",
+   "enonce": "Que sait-on de Hugues Capet ? (plusieurs réponses)",
    "choix": [
-    "Elle a lieu en 987",
-    "Elle a lieu un peu avant l'an mil",
-    "Elle se place au Xe siècle",
-    "Elle a lieu après la bataille de Bouvines",
-    "Elle marque le début de la guerre de Cent Ans"
+    "Il est duc des Francs avant d'être roi",
+    "Il est élu par les grands du royaume, à Senlis",
+    "Il fait sacrer son fils Robert de son vivant",
+    "Il gagne la bataille de Bouvines",
+    "Il conquiert l'Angleterre"
    ],
-   "explication": "Hugues Capet est élu en 987, au Xe siècle, treize ans avant l'an mil. Bouvines (1214) et la guerre de Cent Ans (1337) viennent bien après.",
+   "explication": "Duc des Francs depuis 960, Hugues est élu à Senlis en 987 et fait sacrer son fils Robert dès Noël. Bouvines (1214) et Hastings (1066) sont l'affaire d'autres hommes.",
    "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 9 - Support.pdf",
-    "page": 1
+    "theme": "Cours 9 – Féodaux et seigneurs",
+    "titre": "Hugues Capet",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Hugues_Capet"
    },
-   "r": "==wLXBQGSEcrGEASmUXRAxkTKUwBFIwZXYQRQ0RBr0kXK9CRIUxQPgkCG1BHmQAFFBAFZ4UAHgkNIxQWN8wTDoQB3UmXXJVTIlEAKIVHmQUCVwkTKogCsAFH",
+   "r": "o9gGBcAEAQwZcohFVRRDOtBANEiQ3UhXCYAAGdQH0I1BAcgEI0xTGEgILVUWkx0QEVBAekyFmUU1ymkQK8RHiQlCH1wGLYUFNwhJAIRRGQRBO1xEYMGWJwp7OtRFDkkHOAVWHxhHb4kCAwR6uLUUNoRAHABCSRTEbQwB3kUHKYBSggVAVkVHKYkCgAFH",
    "poids": 1
   },
   {
@@ -772,7 +774,7 @@ JEU.enregistrer("cours", {
     "En Aquitaine, autour de Bordeaux",
     "Dans tout le royaume de France, d'un seul tenant"
    ],
-   "explication": "Les possessions du roi se concentrent en Île-de-France et dans l'Orléanais, avec quelques îlots isolés comme Montreuil-sur-Mer. Elles viennent surtout de l'héritage de sa famille, les Robertiens.",
+   "explication": "Les possessions du roi se concentrent en Île-de-France et dans l'Orléanais, avec quelques îlots isolés. Elles viennent surtout de l'héritage de sa famille, les Robertiens.",
    "source": {
     "theme": "Cours 9 – Féodaux et seigneurs",
     "titre": "Domaine royal français",
@@ -901,7 +903,7 @@ JEU.enregistrer("cours", {
     "Quand le seigneur achète un moulin",
     "Quand le seigneur perd aux dés"
    ],
-   "explication": "L'aide en argent n'est due que dans des cas précis : mariage de la fille aînée, croisade, rançon. Le reste de l'aide se fait les armes à la main.",
+   "explication": "L'aide en argent n'est due que dans quelques cas précis, comme le mariage de la fille aînée, le départ en croisade ou la rançon du seigneur. Le reste de l'aide se fait les armes à la main.",
    "source": {
     "theme": "Cours 9 – Féodaux et seigneurs",
     "titre": "Vassalité",
@@ -944,7 +946,7 @@ JEU.enregistrer("cours", {
     "Parce que Jean a perdu la guerre de Cent Ans",
     "Parce que l'Angleterre fait partie du royaume de France depuis 1066"
    ],
-   "explication": "Jean sans Terre a enlevé la fiancée d'un de ses propres vassaux, Hugues de Lusignan, qui en appelle à leur suzerain commun, le roi de France. Jugé félon, Jean perd ses fiefs, dont la Normandie.",
+   "explication": "Jean sans Terre s'en prend à l'un de ses propres vassaux, Hugues de Lusignan, qui en appelle à leur suzerain commun, le roi de France. Condamné, Jean perd ses fiefs français, dont la Normandie.",
    "indice": "Pour ses terres en France, le roi d'Angleterre est l'homme de qui ?",
    "source": {
     "theme": "Cours 9 – Féodaux et seigneurs",
@@ -1094,7 +1096,7 @@ JEU.enregistrer("cours", {
     "La liste complète des chevaliers normands débarqués en 1066",
     "Le testament de Guillaume en faveur de ses trois fils"
    ],
-   "explication": "Guillaume fait enquêter sur tout le royaume pour connaître ses terres et mieux répartir l'impôt. Le 1er août 1086, à Salisbury, ses vassaux lui jurent fidélité.",
+   "explication": "Guillaume fait enquêter sur tout le royaume pour connaître ses terres et leurs richesses. Le 1er août 1086, à Salisbury, ses vassaux lui jurent fidélité.",
    "source": {
     "theme": "Cours 9 – Féodaux et seigneurs",
     "titre": "Guillaume le Conquérant",

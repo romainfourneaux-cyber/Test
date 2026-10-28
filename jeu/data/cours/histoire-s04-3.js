@@ -10,7 +10,7 @@ JEU.enregistrer("cours", {
    "texte": "Vers l'an mil, les paysans se regroupent en villages, autour du château et de l'église. Du XIe au XIIIe siècle, l'Occident gagne des champs sur la forêt : c'est l'âge des grands défrichements, et la population fait plus que doubler. Arrivée à Marseille fin 1347, la Grande Peste ravage la France en 1348 et vide des villages.",
    "pointsCles": [
     "Vers l'an mil : les paysans se regroupent en villages ; la seigneurie banale se développe",
-    "XIe-XIIIe siècle : grands défrichements ; l'Occident passe d'environ 38 millions d'habitants au début du Xe siècle à plus de 75 millions au début du XIVe",
+    "XIe-XIIIe siècle : grands défrichements ; d'après les historiens, l'Europe passe d'environ 38 millions d'habitants au début du Xe siècle à plus de 75 millions au début du XIVe",
     "Fin 1347 : la Peste débarque à Messine, puis à Marseille ; 1348 : toute la France est touchée",
     "Entre 30 et 60 % des Européens meurent en cinq ou six ans ; des villages sont abandonnés"
    ],
@@ -85,7 +85,7 @@ JEU.enregistrer("cours", {
    "id": "histoire-s04-3-f3",
    "notion": "Les travaux des paysans mois par mois",
    "titre": "Une année de travail : le calendrier du Rustican",
-   "texte": "Un livre du XVe siècle, le Rustican, montre les travaux de chaque mois. Au printemps : épandre le fumier, tailler la vigne, tondre les moutons. En été : fenaison en juin, moisson en juillet, battage du blé en août. En automne : semailles en septembre, vendange et foulage du raisin en octobre, glandée des porcs en novembre.",
+   "texte": "Un livre copié et illustré au XVe siècle, le Rustican, montre les travaux de chaque mois. Au printemps : épandre le fumier, tailler la vigne, tondre les moutons. En été : fenaison en juin, moisson en juillet, battage du blé en août. En automne : semailles en septembre, vendange et foulage du raisin en octobre, glandée des porcs en novembre.",
    "pointsCles": [
     "Janvier : argile pour les tuiles ; février : fumier ; mars : taille de la vigne ; avril : tonte des moutons",
     "Mai : le seigneur chasse au faucon",
@@ -310,26 +310,6 @@ JEU.enregistrer("cours", {
     "page": 1
    },
    "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
-   "id": "histoire-s04-3-q3",
-   "fiche": "histoire-s04-3-f1",
-   "type": "qcm",
-   "niveau": 2,
-   "enonce": "Que se passe-t-il dans les campagnes du XIe au XIIIe siècle, au temps des grands défrichements ?",
-   "choix": [
-    "La production et la population augmentent",
-    "Les famines et la peste vident les campagnes",
-    "Le village médiéval disparaît",
-    "La seigneurie banale prend fin"
-   ],
-   "explication": "Les grands défrichements vont avec un développement économique et démographique. Les campagnes produisent plus et la population augmente.",
-   "source": {
-    "fichier": "cours/histoire/Histoire 5e - Seance 6 - Support.pdf",
-    "page": 1
-   },
-   "r": "==wVRsBFdAgCf8gNMV0WCdwGHoAHCgiAVRQGR1xCPxxBqklBAlUAdYhRI4TZ",
    "poids": 1
   },
   {
@@ -1147,14 +1127,14 @@ JEU.enregistrer("cours", {
    "fiche": "histoire-s04-3-f6",
    "type": "qcm",
    "niveau": 3,
-   "enonce": "Pourquoi les historiens disent-ils que le village médiéval est une « cellule » de la seigneurie ?",
+   "enonce": "Un seigneur préfère que les paysans de ses terres vivent groupés près de son château plutôt que dispersés. Qu'y gagne-t-il ?",
    "choix": [
-    "Le seigneur y tient ses habitants rassemblés sous son contrôle",
-    "Parce que chaque maison est minuscule",
-    "Parce que les paysans y sont enfermés la nuit",
-    "Parce que le village est entouré d'un grand mur de pierre"
+    "Des habitants plus faciles à commander et à taxer",
+    "Des paysans qui n'ont plus besoin de cultiver les champs",
+    "Une forêt plus grande autour du château",
+    "Un moulin qui tourne plus vite"
    ],
-   "explication": "Rassemblés autour du château et de l'église, les paysans sont plus faciles à commander, à juger et à taxer. C'est pour cela que l'on parle de cellules.",
+   "explication": "Rassemblés autour du château et de l'église, les paysans sont plus faciles à protéger, mais aussi à commander, à juger et à taxer. C'est pour cela que les historiens parlent d'encellulement.",
    "indice": "Qui commande dans le village ?",
    "source": {
     "theme": "Cours 6 – La vie dans les campagnes au Moyen Âge",
@@ -1162,7 +1142,7 @@ JEU.enregistrer("cours", {
     "editeur": "Wikipédia",
     "url": "https://fr.wikipedia.org/wiki/Encellulement"
    },
-   "r": "QBRCBL7GaEQHLM2QKYUDdoRCVkUAuHbGHgBFa0hDAgEMZtAVZdQDH4QSBISAVFxGUAgGPtASxgFAbp0BKUhRM4TZ",
+   "r": "=cxXLcxBSkk0EKVAAU1AMoQATUgLCZQFN26TVMQBbQyETUkBEUgHPFAHtwUEc90DHYUFMYTZ",
    "poids": 1
   }
  ],

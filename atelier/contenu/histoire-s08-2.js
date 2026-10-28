@@ -143,7 +143,7 @@ module.exports = {
       id: "histoire-s08-2-f5", notion: "La Guyenne, pomme de discorde entre les deux rois",
       titre: "Un fief qui vaut une guerre : la Guyenne",
       texte: "Le 4 décembre 1259, Henri III d'Angleterre rend hommage à Louis IX : il renonce à la Normandie et à l'Anjou, mais garde la Guyenne comme vassal du roi de France. Un roi vassal d'un roi, cela tourne mal. La Guyenne est saisie en 1294, en 1324, puis en 1337. Édouard III réplique : la guerre de Cent Ans.",
-      pointsCles: ["La Guyenne (le nom apparaît en 1259) : l'ancien duché d'Aquitaine, autour de Bordeaux, aux mains des Plantagenêts, rois d'Angleterre, jusqu'en 1453", "Traité de Paris : accord du 28 mai 1258, hommage d'Henri III à Louis IX le 4 décembre 1259 ; Henri garde Guyenne, Limousin, Périgord, Quercy, Agenais et Saintonge du sud, et abandonne Normandie, Anjou, Touraine, Maine, Poitou", "1286 : Édouard Ier rend hommage à Philippe le Bel ; 1294 : Philippe le Bel saisit le duché, guerre de Guyenne (1294-1297)", "1323-1324 : l'affaire de la bastide de Saint-Sardos ; Charles IV confisque l'Aquitaine ; le jeune Édouard III rend hommage pour son père (1325)", "1337 : Philippe VI saisit la Guyenne ; en octobre, Édouard III rompt son lien de vassalité et réclame la couronne : la guerre de Cent Ans commence ; la Guyenne redevient française après Castillon (1453)"],
+      pointsCles: ["La Guyenne (le nom apparaît au XIIIe siècle) : l'ancien duché d'Aquitaine, autour de Bordeaux, aux mains des Plantagenêts, rois d'Angleterre, jusqu'en 1453", "Traité de Paris : accord du 28 mai 1258, hommage d'Henri III à Louis IX le 4 décembre 1259 ; Henri garde Guyenne, Limousin, Périgord, Quercy, Agenais et Saintonge du sud, et abandonne Normandie, Anjou, Touraine, Maine, Poitou", "1286 : Édouard Ier rend hommage à Philippe le Bel ; 1294 : Philippe le Bel saisit le duché, guerre de Guyenne (1294-1297)", "1323-1324 : l'affaire de la bastide de Saint-Sardos ; Charles IV confisque l'Aquitaine ; le jeune Édouard III rend hommage pour son père (1325)", "1337 : Philippe VI saisit la Guyenne ; en octobre, Édouard III rompt son lien de vassalité et réclame la couronne : la guerre de Cent Ans commence ; la Guyenne redevient française après Castillon (1453)"],
       astuce: "Trois saisies, trois rois de France : Philippe le Bel (1294), Charles IV (1324), Philippe VI (1337).",
       dates: [
         { annee: 1259, evenement: "Traité de Paris : Henri III rend hommage à Louis IX pour la Guyenne" },
@@ -152,7 +152,7 @@ module.exports = {
       ],
       lieux: ["Guyenne", "Bordeaux", "Paris", "Saint-Sardos"], personnages: ["Henri III", "Louis IX", "Édouard Ier", "Charles IV", "Édouard III", "Philippe VI"],
       vocabulaire: [
-        { mot: "Aquitaine", def: "le grand duché du Sud-Ouest, que l'on appelle Guyenne à partir de 1259" },
+        { mot: "Aquitaine", def: "le grand duché du Sud-Ouest, que l'on appelle Guyenne à partir du XIIIe siècle" },
         { mot: "renoncer", def: "abandonner un droit ou un bien" },
         { mot: "Agenais", def: "la région d'Agen, entre Bordeaux et Toulouse, disputée entre les deux rois" }
       ],
@@ -201,7 +201,7 @@ module.exports = {
     // f2 : l'hommage de 1286 (fiche de programme ; q10 et q11 viennent de la légende du support)
     { id: "histoire-s08-2-q10", fiche: "histoire-s08-2-f2", type: "qcm", niveau: 1,
       enonce: "Quelle scène l'enluminure de Jean Fouquet étudiée en séance représente-t-elle ?",
-      choix: ["L'hommage d'Édouard Ier à Philippe le Bel", "Le couronnement de Charlemagne à Rome", "La bataille de Bouvines", "L'élection de Hugues Capet"],
+      choix: ["L'hommage d'Édouard Ier à Philippe le Bel", "Le couronnement de Charlemagne à Rome, en 800", "La bataille de Bouvines", "L'élection de Hugues Capet"],
       reponse: "L'hommage d'Édouard Ier à Philippe le Bel",
       explication: "La légende du support nomme la scène : l'hommage d'Édouard Ier à Philippe le Bel. Le couronnement de Charlemagne est une autre enluminure de Fouquet.", source: S(2) },
     { id: "histoire-s08-2-q11", fiche: "histoire-s08-2-f2", type: "vrai_faux", niveau: 1,
@@ -214,11 +214,12 @@ module.exports = {
       reponse: "Parce qu'il tient du roi de France des terres situées en France, l'Aquitaine",
       explication: "Édouard Ier est roi d'Angleterre, mais aussi duc d'Aquitaine, dans le sud-ouest du royaume de France. Pour ces terres, il dépend du roi de France : c'est pourquoi il lui rend hommage, en 1286.",
       source: T("Édouard Ier (roi d'Angleterre)", U_EDOUARD) },
-    { id: "histoire-s08-2-q15", fiche: "histoire-s08-2-f2", type: "qcm", niveau: 3,
-      enonce: "Philippe le Bel règne de 1285 à 1314. À quelle période l'hommage d'Édouard Ier a-t-il pu avoir lieu ?",
-      choix: ["Entre 1285 et 1314", "En 1214, à Bouvines", "Vers 1455-1460", "En 987"],
-      reponse: "Entre 1285 et 1314",
-      explication: "L'hommage est rendu au roi Philippe le Bel : il a donc lieu pendant son règne, en 1286. 1455-1460 est la date de la peinture, pas de la scène.", indice: "Un hommage se rend à un roi qui règne.", source: S(2) },
+    { id: "histoire-s08-2-q15", fiche: "histoire-s08-2-f2", type: "qcm", niveau: 2,
+      enonce: "En quelle année Édouard Ier rend-il hommage à Philippe le Bel ?",
+      choix: ["1286", "1259", "1294", "1337"],
+      reponse: "1286",
+      explication: "L'hommage a lieu en 1286, au début du règne de Philippe le Bel. En 1259, c'était Henri III devant Louis IX ; en 1294, le roi de France saisit la Guyenne.",
+      source: T("Édouard Ier (roi d'Angleterre)", U_EDOUARD) },
     { id: "histoire-s08-2-q16", fiche: "histoire-s08-2-f2", type: "qcm", niveau: 1,
       enonce: "Qui est Édouard Ier ?",
       choix: ["Le roi d'Angleterre, qui a aussi des terres en France", "Le fils de Philippe le Bel, futur roi de France", "L'empereur germanique, venu rendre visite au roi de France à Paris", "Le peintre de l'enluminure"],
@@ -334,7 +335,7 @@ module.exports = {
     // f5 : la Guyenne (fiche de programme, questions de thème)
     { id: "histoire-s08-2-q42", fiche: "histoire-s08-2-f5", type: "qcm", niveau: 1,
       enonce: "Pour quelle terre le roi d'Angleterre est-il le vassal du roi de France, après 1259 ?",
-      choix: ["La Guyenne, dans le Sud-Ouest", "La Normandie", "L'Île-de-France", "La Flandre"],
+      choix: ["La Guyenne, dans le Sud-Ouest", "La Normandie, autour de la ville de Rouen", "L'Île-de-France", "La Flandre"],
       reponse: "La Guyenne, dans le Sud-Ouest",
       explication: "Par le traité de Paris, Henri III garde la Guyenne, l'ancienne Aquitaine, comme fief tenu du roi de France. Il a dû renoncer à la Normandie.",
       source: T("Traité de Paris (1259)", U_TRAITE1259) },
@@ -393,7 +394,7 @@ module.exports = {
       id: "histoire-s08-2-b2",
       fiche: "histoire-s08-2-f1",
       titre: "Jean Fouquet, le peintre de Tours",
-      texte: "Jean Fouquet, né vers 1420 à Tours, est l'un des plus grands peintres de la première Renaissance. Vers 1445, il séjourne en Italie et peint le portrait du pape. Revenu à Tours, il peint Charles VII, enlumine les Heures d'Étienne Chevalier et, vers 1455-1460, les 51 miniatures des Grandes Chroniques de France. En 1475, Louis XI lui donne le titre de peintre du roi. Il meurt entre 1478 et 1481.",
+      texte: "Jean Fouquet, né vers 1420, sans doute à Tours, est l'un des plus grands peintres français du XVe siècle. Entre 1443 et 1447, il séjourne en Italie et peint le portrait du pape. Revenu à Tours, il peint Charles VII, enlumine les Heures d'Étienne Chevalier et, vers 1455-1460, les 51 miniatures des Grandes Chroniques de France. En 1475, les archives de Louis XI le nomment « peintre du roi ». Il meurt entre 1478 et 1481.",
       source: { titre: "Jean Fouquet", editeur: "Wikipédia, l'encyclopédie libre", url: U_FOUQUET }
     }
   ],

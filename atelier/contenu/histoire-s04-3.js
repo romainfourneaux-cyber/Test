@@ -52,7 +52,7 @@ module.exports = {
       id: "histoire-s04-3-f1", notion: "De l'an mil à 1348 : essor des campagnes, puis la Peste",
       titre: "Trois siècles de conquête de la terre, puis la Peste",
       texte: "Vers l'an mil, les paysans se regroupent en villages, autour du château et de l'église. Du XIe au XIIIe siècle, l'Occident gagne des champs sur la forêt : c'est l'âge des grands défrichements, et la population fait plus que doubler. Arrivée à Marseille fin 1347, la Grande Peste ravage la France en 1348 et vide des villages.",
-      pointsCles: ["Vers l'an mil : les paysans se regroupent en villages ; la seigneurie banale se développe", "XIe-XIIIe siècle : grands défrichements ; l'Occident passe d'environ 38 millions d'habitants au début du Xe siècle à plus de 75 millions au début du XIVe", "Fin 1347 : la Peste débarque à Messine, puis à Marseille ; 1348 : toute la France est touchée", "Entre 30 et 60 % des Européens meurent en cinq ou six ans ; des villages sont abandonnés"],
+      pointsCles: ["Vers l'an mil : les paysans se regroupent en villages ; la seigneurie banale se développe", "XIe-XIIIe siècle : grands défrichements ; d'après les historiens, l'Europe passe d'environ 38 millions d'habitants au début du Xe siècle à plus de 75 millions au début du XIVe", "Fin 1347 : la Peste débarque à Messine, puis à Marseille ; 1348 : toute la France est touchée", "Entre 30 et 60 % des Européens meurent en cinq ou six ans ; des villages sont abandonnés"],
       dates: [
         { annee: 1000, evenement: "Vers l'an mil : naissance du village médiéval" },
         { annee: 1050, evenement: "Vers 1050 : début de l'ère des grands défrichements" },
@@ -81,7 +81,7 @@ module.exports = {
     {
       id: "histoire-s04-3-f3", notion: "Les travaux des paysans mois par mois",
       titre: "Une année de travail : le calendrier du Rustican",
-      texte: "Un livre du XVe siècle, le Rustican, montre les travaux de chaque mois. Au printemps : épandre le fumier, tailler la vigne, tondre les moutons. En été : fenaison en juin, moisson en juillet, battage du blé en août. En automne : semailles en septembre, vendange et foulage du raisin en octobre, glandée des porcs en novembre.",
+      texte: "Un livre copié et illustré au XVe siècle, le Rustican, montre les travaux de chaque mois. Au printemps : épandre le fumier, tailler la vigne, tondre les moutons. En été : fenaison en juin, moisson en juillet, battage du blé en août. En automne : semailles en septembre, vendange et foulage du raisin en octobre, glandée des porcs en novembre.",
       pointsCles: ["Janvier : argile pour les tuiles ; février : fumier ; mars : taille de la vigne ; avril : tonte des moutons", "Mai : le seigneur chasse au faucon", "Juin : fenaison ; juillet : moisson ; août : battage", "Septembre : semailles ; octobre : vendange et foulage ; novembre : glandée ; décembre : on tue les porcs"],
       astuce: "L'été est le plus chargé : faucher (juin), moissonner (juillet), battre (août).",
       dates: [],
@@ -160,11 +160,7 @@ module.exports = {
       enonce: "Le village médiéval naît vers l'an mil.",
       corrections: [], reponse: { vrai: true, correction: null },
       explication: "Oui : le village médiéval naît vers l'an mil. La seigneurie banale se développe à la même époque.", source: S6(1) },
-    { id: "histoire-s04-3-q3", fiche: "histoire-s04-3-f1", type: "qcm", niveau: 2,
-      enonce: "Que se passe-t-il dans les campagnes du XIe au XIIIe siècle, au temps des grands défrichements ?",
-      choix: ["La production et la population augmentent", "Les famines et la peste vident les campagnes", "Le village médiéval disparaît", "La seigneurie banale prend fin"],
-      reponse: "La production et la population augmentent",
-      explication: "Les grands défrichements vont avec un développement économique et démographique. Les campagnes produisent plus et la population augmente.", source: S6(1) },
+    // q3 retirée le 28/10/2026 (relecture) : elle recoupait la question C3 du devoir n°1 (transformations des campagnes à partir du XIe siècle) et faisait doublon avec q7. Identifiant non réutilisé.
     { id: "histoire-s04-3-q4", fiche: "histoire-s04-3-f1", type: "vrai_faux", niveau: 2,
       enonce: "La Grande peste a lieu avant les grands défrichements.",
       corrections: ["Faux : la Grande peste (1348) vient après les grands défrichements du XIe au XIIIe siècle.", "Faux : la Grande peste a lieu en même temps que la naissance du village médiéval.", "Faux : la Grande peste a lieu vers l'an mil."],
@@ -385,10 +381,10 @@ module.exports = {
       explication: "Les raids vikings du IXe siècle précèdent le regroupement des villages vers l'an mil. Puis viennent les défrichements et, en 1348, la Peste.",
       source: T("Encellulement", U_ENCELLULEMENT) },
     { id: "histoire-s04-3-q48", fiche: "histoire-s04-3-f6", type: "qcm", niveau: 3,
-      enonce: "Pourquoi les historiens disent-ils que le village médiéval est une « cellule » de la seigneurie ?",
-      choix: ["Le seigneur y tient ses habitants rassemblés sous son contrôle", "Parce que chaque maison est minuscule", "Parce que les paysans y sont enfermés la nuit", "Parce que le village est entouré d'un grand mur de pierre"],
-      reponse: "Le seigneur y tient ses habitants rassemblés sous son contrôle",
-      explication: "Rassemblés autour du château et de l'église, les paysans sont plus faciles à commander, à juger et à taxer. C'est pour cela que l'on parle de cellules.", indice: "Qui commande dans le village ?",
+      enonce: "Un seigneur préfère que les paysans de ses terres vivent groupés près de son château plutôt que dispersés. Qu'y gagne-t-il ?",
+      choix: ["Des habitants plus faciles à commander et à taxer", "Des paysans qui n'ont plus besoin de cultiver les champs", "Une forêt plus grande autour du château", "Un moulin qui tourne plus vite"],
+      reponse: "Des habitants plus faciles à commander et à taxer",
+      explication: "Rassemblés autour du château et de l'église, les paysans sont plus faciles à protéger, mais aussi à commander, à juger et à taxer. C'est pour cela que les historiens parlent d'encellulement.", indice: "Qui commande dans le village ?",
       source: T("Encellulement", U_ENCELLULEMENT) }
   ],
   bonus: [

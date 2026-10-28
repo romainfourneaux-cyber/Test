@@ -230,12 +230,12 @@ JEU.enregistrer("cours", {
    "id": "geographie-s03-1-f7",
    "notion": "Le Japon, pays des records d'âge",
    "titre": "Le Japon : une population qui baisse",
-   "texte": "Le Japon compte 123 millions d'habitants en 2025, contre 128 millions à son maximum, vers 2010 : la population baisse. L'espérance de vie y est la plus élevée du monde, 85,5 ans en 2024. Plus d'un Japonais sur quatre a 65 ans ou plus. En 2024 : 686 000 naissances, et 900 000 décès de plus que de naissances.",
+   "texte": "Le Japon compte 123 millions d'habitants en 2025, contre 128 millions à son maximum, vers 2010 : la population baisse. L'espérance de vie y est la plus élevée du monde : environ 85 ans. Plus d'un Japonais sur quatre a 65 ans ou plus. En 2024 : 686 000 naissances, et 900 000 décès de plus que de naissances.",
    "pointsCles": [
     "123 millions d'habitants en 2025 ; maximum de 128 millions vers 2010, puis baisse",
-    "Espérance de vie la plus élevée du monde : 85,5 ans en 2024 (82,3 ans pour les hommes, 88,2 pour les femmes)",
+    "Espérance de vie la plus élevée du monde : environ 85 ans ; les femmes vivent plus longtemps que les hommes",
     "Plus d'un habitant sur quatre a 65 ans ou plus ; âge médian : 47,7 ans en 2018",
-    "2024 : 686 000 naissances, un solde naturel de − 919 000 ; presque pas d'immigration",
+    "2024 : 686 000 naissances, un solde naturel de − 919 000 ; une immigration trop faible pour combler l'écart",
     "Projections : moins de 100 millions d'habitants vers le milieu du siècle"
    ],
    "dates": [
@@ -982,18 +982,18 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Depuis la fin de l'enfant unique, les Chinoises ont de nouveau beaucoup d'enfants : plus de trois en moyenne.",
    "corrections": [
-    "Faux : environ 1,7 enfant par femme ces dernières années, bien en dessous du seuil de renouvellement.",
+    "Faux : elles ont en moyenne moins de deux enfants, et la fin de l'enfant unique n'a pas relancé les naissances.",
     "Faux : elles n'ont plus du tout d'enfants.",
     "Faux : exactement trois, comme la loi le permet."
    ],
-   "explication": "Même assouplie, la règle n'a pas relancé les naissances : environ 1,7 enfant par femme. Le vieillissement de la Chine continue donc.",
+   "explication": "Même assouplie, la règle n'a pas relancé les naissances : moins de deux enfants par femme en moyenne. Le vieillissement de la Chine continue donc.",
    "source": {
     "theme": "Cours 1 – 2e partie – III Dans les pays du Nord",
     "titre": "Vieillissement démographique",
     "editeur": "Wikipédia",
     "url": "https://fr.wikipedia.org/wiki/Vieillissement_d%C3%A9mographique"
    },
-   "r": "==gOQtVEbQBBLMgHNUDWKsFSc80ACkkHucAEWUFBN4EHHcAMeBQUNAgCGhADbUiUZZBEYrKABMBSwg0Fd6+BBQxANIFNXYRRQwBBLkgUaISXFF0QPkACDkURrNUVLoxAAgRAXgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "r": "==AGXMQHKUACIEANbQxCVJADC802rCyQEkFSc8UFHkhUmU1GFBBBYcQAHg0NDRwUDtASKYEDWcGHcMQVQUgTbcBSv5VEbxECBMgRRcgIWUFARElGAYQHFMGSLsFSXAwCGdwFnZwGKUlAMIwAXgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -1192,22 +1192,22 @@ JEU.enregistrer("cours", {
    "fiche": "geographie-s03-1-f6",
    "type": "trou",
    "niveau": 2,
-   "enonce": "Complète avec les bons pourcentages.",
-   "texte": "En France, les plus de soixante-cinq ans représentaient ___ % de la population en 1986 et ___ % en 2017.",
+   "enonce": "Complète la phrase.",
+   "texte": "Une population ___ quand la part des personnes âgées augmente. Cela arrive quand on vit plus longtemps, ou quand les femmes ont moins d'___.",
    "banque": [
-    "12,8",
-    "19,4",
-    "5,2",
-    "35,1"
+    "vieillit",
+    "rajeunit",
+    "enfants",
+    "décès"
    ],
-   "explication": "Un habitant sur huit en 1986, presque un sur cinq en 2017. Le vieillissement est régulier depuis quarante ans.",
+   "explication": "Le vieillissement, c'est la hausse de la part des personnes âgées. Une vie plus longue ou moins de naissances suffit à le déclencher.",
    "source": {
     "theme": "Cours 1 – 2e partie – III Dans les pays du Nord",
     "titre": "Vieillissement démographique",
     "editeur": "Wikipédia",
     "url": "https://fr.wikipedia.org/wiki/Vieillissement_d%C3%A9mographique"
    },
-   "r": "==AKsskWDtUWhZXSo9gVDR1VLlCH",
+   "r": "=sDNQRjBbQwEfwAT04VNhlFDZF0BK8AELlCH",
    "poids": 1
   },
   {
@@ -1217,7 +1217,7 @@ JEU.enregistrer("cours", {
    "niveau": 1,
    "enonce": "Au Japon, l'espérance de vie est l'une des plus élevées du monde.",
    "corrections": [],
-   "explication": "Oui : 85,5 ans en 2024, la plus élevée au monde. Les femmes japonaises vivent en moyenne 88 ans.",
+   "explication": "Oui : environ 85 ans, la plus élevée au monde. Les femmes japonaises vivent en moyenne plus longtemps encore que les hommes.",
    "source": {
     "theme": "Cours 1 – 2e partie – III Dans les pays du Nord",
     "titre": "Démographie du Japon",
@@ -1278,19 +1278,19 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Pourquoi la population japonaise diminue-t-elle, alors que le pays ne manque ni de nourriture ni de soins ?",
    "choix": [
-    "Parce qu'il y meurt chaque année bien plus de personnes qu'il n'en naît, et que presque personne n'immigre",
+    "Parce qu'il y meurt chaque année bien plus de personnes qu'il n'en naît, et que l'immigration ne comble pas l'écart",
     "Parce que beaucoup de jeunes Japonais partent chaque année vivre en Chine, en Corée ou aux États-Unis",
     "Parce que l'espérance de vie y recule depuis les années 2000, à cause du travail",
     "Parce qu'une épidémie a frappé le pays"
    ],
-   "explication": "En 2024, le Japon a compté 686 000 naissances et plus de 900 000 décès de plus que de naissances. Sans immigration pour compenser, la population baisse.",
+   "explication": "En 2024, le Japon a compté 686 000 naissances et plus de 900 000 décès de plus que de naissances. L'immigration, faible, ne compense pas cette perte : la population baisse.",
    "source": {
     "theme": "Cours 1 – 2e partie – III Dans les pays du Nord",
     "titre": "Démographie du Japon",
     "editeur": "Wikipédia",
     "url": "https://fr.wikipedia.org/wiki/D%C3%A9mographie_du_Japon"
    },
-   "r": "=AFEXIBGEMgBVZwYItwWC1RHDYRSXIzAGAwBBk0CaMAS3gURZkFwseACJxhIVtRRZghTb4hUbYyQLolXcogFGxgFnFAAJUQUHsgBQgkJEa6WD9wTDMBGT8SEVFxBEwwAPtASvQkQAxlTKUAFIISZ",
+   "r": "HF0XPwwzl6kHnFAFVUFFFwgAdswYItQFDFgBScwGV4yHYwgUdk0CaMAS3gURZkFwseACJxhIVtRRZghTb4hUbYyQLolXcogFGxgFnFAAJUQUHsgBQgkJEa6WD9wTDMBGT8SEVFxBEwwAPtASvQkQAxlTKUAFIISZ",
    "poids": 1
   },
   {
