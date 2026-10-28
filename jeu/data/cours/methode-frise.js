@@ -151,25 +151,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "methode-frise-q3",
-   "fiche": "methode-frise-f1",
-   "type": "vrai_faux",
-   "niveau": 1,
-   "enonce": "On écrit le titre de la frise avant de tracer l'axe du temps.",
-   "corrections": [
-    "Faux : on trace d'abord l'axe ; le titre se met à la fin, sans l'oublier.",
-    "Faux : on choisit d'abord l'échelle, puis on écrit le titre, puis on trace l'axe.",
-    "Faux : on commence par placer les événements, puis on écrit le titre."
-   ],
-   "explication": "Le titre est la dernière étape. Il est obligatoire.",
-   "source": {
-    "fichier": "methodes/Fiche methode - Frise chronologique.pdf",
-    "page": 1
-   },
-   "r": "=MRTcphJElwVYFASKYkGcYSAVl0GY8gTO4BSj7eRBh0APNQFJdRNGwREVRRBORlUNsDTClVDK0RCEgQVjIFEGQxAd4UAdgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
    "id": "methode-frise-q4",
    "fiche": "methode-frise-f1",
    "type": "qcm",
@@ -205,77 +186,20 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "methode-frise-q15",
-   "fiche": "methode-frise-f1",
-   "type": "vrai_faux",
-   "niveau": 2,
-   "enonce": "Pour réaliser une frise, on place les événements avant de choisir l'échelle.",
-   "corrections": [
-    "Faux : on choisit l'échelle d'abord, puis on place les événements.",
-    "Faux : on place les événements seulement après avoir écrit le titre.",
-    "Faux : on n'a pas besoin d'échelle pour placer les événements."
-   ],
-   "explication": "L'échelle vient en deuxième, juste après l'axe. Les événements se placent ensuite, grâce à elle.",
-   "source": {
-    "fichier": "methodes/Fiche methode - Frise chronologique.pdf",
-    "page": 1
-   },
-   "r": "Qd0GepRADsADc4esDwstRpxCDIVDgwUCF1AAAYUFAcwNSlVAH4xCPgkFIZSQJAVRNYcpBVgUzshBMoRGK4UAdgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
-   "id": "methode-frise-q16",
-   "fiche": "methode-frise-f1",
-   "type": "qcm",
-   "niveau": 3,
-   "enonce": "Un élève a tracé son axe, choisi son échelle et placé ses événements. Que lui reste-t-il à faire ?",
-   "choix": [
-    "Donner un titre à sa frise",
-    "Tracer un second axe du temps",
-    "Choisir une nouvelle échelle",
-    "Placer les événements une seconde fois"
-   ],
-   "explication": "Les trois premières étapes sont faites. Il ne reste que la quatrième : le titre, à ne pas oublier.",
-   "source": {
-    "fichier": "methodes/Fiche methode - Frise chronologique.pdf",
-    "page": 1
-   },
-   "r": "=wkCV8wGUc2EGUU1ym0CdYQA30wCA1AHKgACGYTZ",
-   "poids": 1
-  },
-  {
    "id": "methode-frise-q17",
    "fiche": "methode-frise-f1",
    "type": "vrai_faux",
    "niveau": 2,
-   "enonce": "Sur une frise, la flèche au bout de l'axe du temps est tournée vers le présent.",
+   "enonce": "Sur une frise, l'axe est une flèche du temps : on le lit du passé vers le présent, les dates les plus anciennes en premier.",
    "corrections": [],
-   "explication": "Oui : l'axe va du passé vers le présent, dans le sens de la flèche. Les dates les plus récentes sont donc du côté de la pointe.",
+   "explication": "L'axe d'une frise est une flèche du temps : elle part des temps les plus anciens et avance vers aujourd'hui. Les dates les plus récentes sont donc du côté de la pointe.",
    "source": {
-    "fichier": "methodes/Fiche methode - Frise chronologique.pdf",
-    "page": 1
+    "theme": "Savoir-faire : la frise chronologique",
+    "titre": "Frise chronologique",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Frise_chronologique"
    },
    "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
-   "id": "methode-frise-q27",
-   "fiche": "methode-frise-f1",
-   "type": "qcm_multiple",
-   "niveau": 2,
-   "enonce": "Quelles étapes faut-il avoir faites avant de placer les événements ? (plusieurs réponses)",
-   "choix": [
-    "Tracer l'axe du temps",
-    "Choisir une échelle",
-    "Donner un titre",
-    "Écrire le nom des événements"
-   ],
-   "explication": "L'axe puis l'échelle viennent avant le placement des événements, avec leur date et leur nom. Le titre vient en dernier.",
-   "source": {
-    "fichier": "methodes/Fiche methode - Frise chronologique.pdf",
-    "page": 1
-   },
-   "r": "7s0Fr4BENYB2q6kCc0xYfxgREFwBlQURQRjAYAQARxhCPdBEioQCV81CMcAF9AFH",
    "poids": 1
   },
   {
@@ -318,21 +242,6 @@ JEU.enregistrer("cours", {
     "page": 1
    },
    "r": "hVFEUhEHdcQBJFUZ",
-   "poids": 1
-  },
-  {
-   "id": "methode-frise-q8",
-   "fiche": "methode-frise-f2",
-   "type": "vrai_faux",
-   "niveau": 1,
-   "enonce": "Avec l'échelle 1 cm = 10 ans, 20 ans se représentent par 2 cm.",
-   "corrections": [],
-   "explication": "20 divisé par 10 donne 2 : il faut bien 2 cm.",
-   "source": {
-    "fichier": "methodes/Fiche methode - Frise chronologique.pdf",
-    "page": 1
-   },
-   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -393,25 +302,6 @@ JEU.enregistrer("cours", {
     "page": 1
    },
    "r": "NtQBJFUZ",
-   "poids": 1
-  },
-  {
-   "id": "methode-frise-q19",
-   "fiche": "methode-frise-f2",
-   "type": "vrai_faux",
-   "niveau": 2,
-   "enonce": "Avec l'échelle 1 carreau = 1 siècle, une période de 200 ans occupe 20 carreaux.",
-   "corrections": [
-    "Faux : elle occupe 2 carreaux, car 200 ans font 2 siècles.",
-    "Faux : elle occupe 200 carreaux, un par année.",
-    "Faux : elle occupe 1 carreau, car c'est une seule période."
-   ],
-   "explication": "Un carreau vaut un siècle, soit 100 ans. 200 ans prennent donc 2 carreaux.",
-   "source": {
-    "fichier": "methodes/Fiche methode - Frise chronologique.pdf",
-    "page": 1
-   },
-   "r": "=oDUbZBEdogxsuxGj9RRBNUAJYUFHMxZCV0VVNACN8kXQYDTAc0XPwgRUl0F3cgFGoRUMIwAXgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -557,42 +447,23 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "methode-frise-q23",
-   "fiche": "methode-frise-f3",
-   "type": "vrai_faux",
-   "niveau": 2,
-   "enonce": "Pour placer un événement, il suffit d'écrire son nom : la date n'est pas utile.",
-   "corrections": [
-    "Faux : on indique la date et le nom de l'événement.",
-    "Faux : on écrit seulement la date, sans le nom.",
-    "Faux : on écrit le titre de la frise à côté de l'événement."
-   ],
-   "explication": "Un événement placé porte toujours sa date et son nom. L'un sans l'autre ne suffit pas.",
-   "source": {
-    "fichier": "methodes/Fiche methode - Frise chronologique.pdf",
-    "page": 1
-   },
-   "r": "=QBTBZgBmAEAbRYrZ8cpO5xZXERRY4xBOpgHIdDSFBVWPsgRHUgUicABMExHA4UAdgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
    "id": "methode-frise-q24",
    "fiche": "methode-frise-f3",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Pourquoi décale-t-on parfois les traits de dates proches les unes des autres ?",
+   "enonce": "Pourquoi garde-t-on la même échelle d'un bout à l'autre de la frise ?",
    "choix": [
-    "Pour que les noms des événements ne se chevauchent pas",
-    "Pour montrer que ces dates sont moins importantes",
-    "Pour changer l'échelle de cette partie de la frise",
-    "Pour indiquer que ces événements ont eu lieu le même jour"
+    "Pour que deux durées égales aient toujours la même longueur",
+    "Pour que tous les événements paraissent aussi importants les uns que les autres",
+    "Pour que la frise tienne sur une seule page du cahier",
+    "Pour pouvoir changer le titre de la frise plus tard"
    ],
-   "explication": "Quand deux dates sont proches, leurs noms risquent de se recouvrir. On décale les traits pour pouvoir tout écrire lisiblement.",
+   "explication": "L'échelle est choisie une fois pour toute la frise : dix ans font toujours la même longueur, au début comme à la fin de l'axe. Sinon, on ne pourrait plus comparer les durées d'un coup d'œil.",
    "source": {
     "fichier": "methodes/Fiche methode - Frise chronologique.pdf",
     "page": 1
    },
-   "r": "==AUbISXFF0QLcQBTgABiohFFBhAJtQAStxNDBAWIBgxlCBwxeWAQEQVCQQABI1GmEURQh1HPRxEGISZ",
+   "r": "==wRHQADbgAHH8SDAg1htKgRHUgU0AAAK8BBGoxTGYgJERQFetwAHEAwxeWAQwstDwhCPpQHmkURQh1HPRxEGISZ",
    "poids": 1
   },
   {
@@ -614,27 +485,6 @@ JEU.enregistrer("cours", {
     "page": 1
    },
    "r": "1EGBRRQFD9lVeFkUzwBEBwhEKECSWgUMYBwRI5hADYURXkSFUgAEdsxDHEjSv9ATFgRWCdFUfp1ZBQBCUUTSLsgUNcCTcwESDAgRDAgB0MxGcERUIISTepkaYMFAAkVXT5UScIyGbwQACwBJPdBDjh0CSVYrdY0AlAFH",
-   "poids": 1
-  },
-  {
-   "id": "methode-frise-q26",
-   "fiche": "methode-frise-f3",
-   "type": "trou",
-   "niveau": 1,
-   "enonce": "Complète la phrase.",
-   "texte": "Une période commence à sa date de ___ et s'arrête à sa date de ___.",
-   "banque": [
-    "début",
-    "fin",
-    "naissance",
-    "titre"
-   ],
-   "explication": "Une période s'étend entre deux dates. La première est son début, la seconde sa fin.",
-   "source": {
-    "fichier": "methodes/Fiche methode - Frise chronologique.pdf",
-    "page": 1
-   },
-   "r": "=gDKTdwBJA1MvB3RBhFDGXqALlCH",
    "poids": 1
   }
  ],

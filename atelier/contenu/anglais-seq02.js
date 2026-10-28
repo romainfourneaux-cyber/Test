@@ -411,10 +411,6 @@ module.exports = {
       choix: ["Parce que l'adjectif possessif suit le possesseur, ici une fille", "Parce que brother est un nom masculin", "Parce que her est le pluriel de his", "Parce que his ne s'emploie qu'avec des objets"],
       reponse: "Parce que l'adjectif possessif suit le possesseur, ici une fille",
       explication: "En anglais, c'est le possesseur qui décide : une fille → her, un garçon → his. Le genre du mot brother n'a aucune importance.", source: C(1) },
-    { id: "anglais-seq02-q70", fiche: "anglais-seq02-g9", type: "vrai_faux", niveau: 1,
-      enonce: "« Their » est l'adjectif possessif de « they ».",
-      corrections: [], reponse: { vrai: true, correction: null },
-      explication: "They → their : their house, their ideas. Our est celui de we.", source: C(1) },
 
     // g10 : pronoms possessifs
     { id: "anglais-seq02-q71", fiche: "anglais-seq02-g10", type: "qcm", niveau: 1,
@@ -476,10 +472,6 @@ module.exports = {
       texte: "my ___ car",
       reponse: [["teacher's"]],
       explication: "Teacher + 's, puis car : my teacher's car. Le 's marque le possesseur.", source: L(5) },
-    { id: "anglais-seq02-q84", fiche: "anglais-seq02-g11", type: "vrai_faux", niveau: 2,
-      enonce: "« Emma's brother » veut dire « le frère d'Emma ».",
-      corrections: [], reponse: { vrai: true, correction: null },
-      explication: "Le 's est sur Emma, le possesseur ; brother est ce qu'elle a. Le frère d'Emma.", source: X(3) },
 
     // g12 : prononciation du -s
     { id: "anglais-seq02-q85", fiche: "anglais-seq02-g12", type: "qcm", niveau: 1,
@@ -647,21 +639,7 @@ module.exports = {
       gauche: ["They were walking in the park when it started to rain.", "Where did you go on Saturday ?", "She didn't bring her camera.", "Yesterday, we visited an old castle."],
       droite: ["Elle n'a pas apporté son appareil photo.", "Hier, nous avons visité un vieux château.", "Ils se promenaient dans le parc quand il s'est mis à pleuvoir.", "Où es-tu allé samedi ?"],
       reponse: [[0, 2], [1, 3], [2, 0], [3, 1]],
-      explication: "Were walking : se promenaient (action en cours) ; started : s'est mis à (action soudaine). Did you go : es-tu allé.", source: L(5) },
-    // compléments : prononciation du -ed et du -s
-    { id: "anglais-seq02-q123", fiche: "anglais-seq02-g2", type: "qcm", niveau: 2,
-      enonce: "Comment se prononce le -ed de « stopped » ?",
-      choix: ["[t]", "[id]", "[d]", "[ed]"], reponse: "[t]",
-      explication: "Stop se termine par le son [p], sourd : stopped se prononce avec [t]. Pas de syllabe en plus.", source: L(4) },
-    { id: "anglais-seq02-q124", fiche: "anglais-seq02-g12", type: "qcm_multiple", niveau: 3,
-      enonce: "Quels verbes ont un -s qui se prononce [s] ? Coche toutes les bonnes réponses.",
-      choix: ["speaks", "gets up", "lives", "arrives", "jumps", "has"],
-      reponse: ["speaks", "gets up", "jumps"],
-      explication: "Speaks, gets up et jumps finissent par un son sourd : [s]. Lives, arrives et has finissent par un son sonore : [z].", source: L(4) },
-    { id: "anglais-seq02-q125", fiche: "anglais-seq02-g12", type: "qcm", niveau: 1,
-      enonce: "Comment se prononce le -s de « arrives » ?",
-      choix: ["[z]", "[s]", "[iz]", "il ne se prononce pas"], reponse: "[z]",
-      explication: "Arrive se termine par le son [v], sonore : le -s se prononce [z].", source: L(4) }
+      explication: "Were walking : se promenaient (action en cours) ; started : s'est mis à (action soudaine). Did you go : es-tu allé.", source: L(5) }
   ],
   bonus: [],
   nonCouvert: [

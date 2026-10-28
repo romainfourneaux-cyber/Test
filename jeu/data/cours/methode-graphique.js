@@ -263,44 +263,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "methode-graphique-q24",
-   "fiche": "methode-graphique-f1",
-   "type": "vrai_faux",
-   "niveau": 2,
-   "enonce": "On choisit l'unité de chaque axe avant de nommer les axes.",
-   "corrections": [
-    "Faux : on nomme d'abord les deux axes, puis on choisit les unités.",
-    "Faux : on choisit les unités en tout dernier, après avoir placé les points.",
-    "Faux : seul l'axe vertical a besoin d'une unité."
-   ],
-   "explication": "Les deux premières étapes nomment l'axe horizontal puis l'axe vertical. Le choix des unités et les graduations viennent en troisième.",
-   "source": {
-    "fichier": "methodes/Fiche methode - Realisation graphique.pdf",
-    "page": 1
-   },
-   "r": "==ASPAEHPXaHbkyBVZBEdkkGGEQAsUkBVMUAPVxDcIwZeZAANARSWoxFMMmXAkVDK0RCEgQVjIFEIghHH4UAdgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
-   "id": "methode-graphique-q25",
-   "fiche": "methode-graphique-f1",
-   "type": "vrai_faux",
-   "niveau": 2,
-   "enonce": "L'axe vertical d'un graphique s'appelle l'axe des abscisses.",
-   "corrections": [
-    "Faux : c'est l'axe des ordonnées ; l'abscisse est l'axe horizontal.",
-    "Faux : c'est l'axe de l'origine ; l'abscisse est l'axe horizontal.",
-    "Faux : c'est l'axe des graduations ; l'abscisse est l'axe oblique."
-   ],
-   "explication": "Abscisse : axe horizontal. Ordonnée : axe vertical.",
-   "source": {
-    "fichier": "methodes/Fiche methode - Realisation graphique.pdf",
-    "page": 1
-   },
-   "r": "=gxFDIgDSggBI4CAa0QVUExDI5BS34FAVgUHc8QBaAhJVlRROFlGLYcsG0iQBckQOxxACk0F/MhUJUVBasASRgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
    "id": "methode-graphique-q26",
    "fiche": "methode-graphique-f1",
    "type": "qcm",
@@ -366,9 +328,9 @@ JEU.enregistrer("cours", {
    "fiche": "methode-graphique-f2",
    "type": "vrai_faux",
    "niveau": 1,
-   "enonce": "Sur un graphique fait à la main, le titre s'écrit au crayon à papier et se souligne à la règle.",
+   "enonce": "Le titre d'un graphique nomme d'abord la grandeur de l'axe vertical, puis celle de l'axe horizontal.",
    "corrections": [],
-   "explication": "Oui. À l'ordinateur, il se met en gras et souligné.",
+   "explication": "Le modèle ne change jamais : l'évolution d'une grandeur en fonction d'une autre. La grandeur de l'axe vertical vient en premier, celle de l'axe horizontal en second.",
    "source": {
     "fichier": "methodes/Fiche methode - Realisation graphique.pdf",
     "page": 1
@@ -398,78 +360,23 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "methode-graphique-q22",
-   "fiche": "methode-graphique-f2",
-   "type": "qcm",
-   "niveau": 2,
-   "enonce": "Comment écrit-on le titre d'un graphique réalisé à l'ordinateur ?",
-   "choix": [
-    "En petits caractères, sans soulignement",
-    "Au crayon à papier",
-    "En gras et souligné",
-    "En italique et souligné"
-   ],
-   "explication": "À l'ordinateur, le titre se met en gras et souligné. À la main, au crayon et souligné à la règle.",
-   "source": {
-    "fichier": "methodes/Fiche methode - Realisation graphique.pdf",
-    "page": 1
-   },
-   "r": "==AUcb6GWAgAa0xGjlFAV41DdEgRHcTZ",
-   "poids": 1
-  },
-  {
-   "id": "methode-graphique-q28",
-   "fiche": "methode-graphique-f2",
-   "type": "vrai_faux",
-   "niveau": 2,
-   "enonce": "Sur un graphique fait à la main, le titre s'écrit au crayon à papier et se souligne à main levée.",
-   "corrections": [
-    "Faux : il s'écrit au crayon à papier et se souligne à la règle.",
-    "Faux : il s'écrit au stylo et se souligne à la règle.",
-    "Faux : il s'écrit en gras et ne se souligne pas."
-   ],
-   "explication": "À la main, le titre s'écrit au crayon à papier et se souligne à la règle. À l'ordinateur, il se met en gras et souligné.",
-   "source": {
-    "fichier": "methodes/Fiche methode - Realisation graphique.pdf",
-    "page": 1
-   },
-   "r": "==ASPAkCKEQwxWjUUkQVRrqTKwxDqEEEa5lTKUhRdcxZAABDFARGO9csI1iQcQ1XN80EHkkBuAgFMbrVa40AbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
    "id": "methode-graphique-q29",
    "fiche": "methode-graphique-f2",
-   "type": "qcm_multiple",
+   "type": "qcm",
    "niveau": 3,
-   "enonce": "Qu'est-ce qui est demandé pour le titre d'un graphique fait à la main ?",
+   "enonce": "Pourquoi le titre d'un graphique suit-il toujours le modèle « évolution de … en fonction de … » ?",
    "choix": [
-    "Suivre le modèle « évolution de… en fonction de… »",
-    "Le souligner à la règle",
-    "L'écrire en gras",
-    "L'écrire au stylo rouge",
-    "L'écrire au crayon à papier"
+    "Parce qu'il dit quelle grandeur on suit et de quoi elle dépend",
+    "Parce que c'est la phrase la plus courte à écrire au-dessus d'un graphique",
+    "Parce que le titre remplace le nom et l'unité des deux axes",
+    "Parce qu'il indique les graduations à mettre sur chaque axe"
    ],
-   "explication": "À la main : crayon à papier, souligné à la règle, et toujours le même modèle de phrase. Le gras, c'est pour un graphique fait à l'ordinateur.",
+   "explication": "Après « évolution de » vient la grandeur suivie, celle de l'axe vertical ; après « en fonction de », celle dont elle dépend, sur l'axe horizontal. Le titre résume donc ce que portent les deux axes.",
    "source": {
     "fichier": "methodes/Fiche methode - Realisation graphique.pdf",
     "page": 1
    },
-   "r": "=4xDeffDI/OhD0gUp0BHRYxHGgwTc0wYLW+1IpwTIkAAGIjHaMB3ymUxtKVDvUopRJ0APNgCJdRNEwBEmMVRMpgHPsu7XUBTC8kxlmEAiwhEMkBBG0xTXQSYBc0RIdwHHYRSSToUboADQsRDPdQCjh0Fc9VDGXaQlAFH",
-   "poids": 1
-  },
-  {
-   "id": "methode-graphique-q30",
-   "fiche": "methode-graphique-f2",
-   "type": "vrai_faux",
-   "niveau": 1,
-   "enonce": "Le titre d'un graphique est en général facile à repérer dans la consigne.",
-   "corrections": [],
-   "explication": "Oui : la consigne contient presque toujours la phrase « graphique représentant l'évolution de Y en fonction de X ». Il suffit de la reprendre.",
-   "source": {
-    "fichier": "methodes/Fiche methode - Realisation graphique.pdf",
-    "page": 1
-   },
-   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "r": "=cVAbQRGHzqFIZSQJAVDHAwEXk0FjIVAAUVBAsBHSZALNcBQIpQAHQhDSJiHZAAAAkkGGYBSvQkQAxlTKUAFIISZ",
    "poids": 1
   },
   {
@@ -627,26 +534,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "methode-graphique-q35",
-   "fiche": "methode-graphique-f3",
-   "type": "qcm",
-   "niveau": 1,
-   "enonce": "Avec quoi trace-t-on les pointillés qui servent à placer un point ?",
-   "choix": [
-    "Au stylo à bille",
-    "Au feutre noir",
-    "Au crayon de couleur",
-    "Au crayon à papier"
-   ],
-   "explication": "Les pointillés se tracent au crayon à papier. La couleur ne sert qu'à repasser les points, si la consigne le demande.",
-   "source": {
-    "fichier": "methodes/Fiche methode - Realisation graphique.pdf",
-    "page": 1
-   },
-   "r": "XdBEYkxDfIFyA2wCaR1DdUgRcMTZ",
-   "poids": 1
-  },
-  {
    "id": "methode-graphique-q12",
    "fiche": "methode-graphique-f4",
    "type": "vrai_faux",
@@ -703,40 +590,6 @@ JEU.enregistrer("cours", {
     "page": 2
    },
    "r": "=MVHAYQHYM2XAw1QcogAGxxEnBAEMgBFb4xTHwwYZtAUAtwATMgGSZCBVBwFDwRAMIVCv0AAAxlTKUAFIISZ",
-   "poids": 1
-  },
-  {
-   "id": "methode-graphique-q36",
-   "fiche": "methode-graphique-f4",
-   "type": "vrai_faux",
-   "niveau": 2,
-   "enonce": "Si l'origine des axes fait partie des points mesurés, on la relie à la courbe.",
-   "corrections": [],
-   "explication": "Oui : on laisse l'origine de côté seulement quand elle ne fait pas partie des points. Si c'est un point du tableau, on la relie comme les autres.",
-   "source": {
-    "fichier": "methodes/Fiche methode - Realisation graphique.pdf",
-    "page": 2
-   },
-   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
-   "id": "methode-graphique-q37",
-   "fiche": "methode-graphique-f4",
-   "type": "vrai_faux",
-   "niveau": 2,
-   "enonce": "On relie les points au stylo à bille, pour que la courbe ne s'efface pas.",
-   "corrections": [
-    "Faux : on les relie au crayon à papier, ou de couleur si la consigne le demande.",
-    "Faux : on les relie au feutre, pour bien voir la courbe.",
-    "Faux : on les relie au crayon de couleur, dans tous les cas."
-   ],
-   "explication": "La courbe se trace au crayon à papier. Le crayon de couleur sert seulement si la consigne le demande.",
-   "source": {
-    "fichier": "methodes/Fiche methode - Realisation graphique.pdf",
-    "page": 2
-   },
-   "r": "6A1WAExHIMgCWgkJBVEUDlgBVggBRc2EZUEHCkEHacBB2IkBVgkCPNRCJ5VNXwRFUEQSOzqUGwCVEckTOpxBGxwGrcxBFZAFF4UAdgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -815,26 +668,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "methode-graphique-q17",
-   "fiche": "methode-graphique-f5",
-   "type": "qcm_multiple",
-   "niveau": 2,
-   "enonce": "Avec quoi trace-t-on les axes d'un graphique ? (plusieurs réponses)",
-   "choix": [
-    "Un feutre épais à main levée",
-    "Un crayon à papier",
-    "Un stylo à bille sans règle",
-    "Une règle"
-   ],
-   "explication": "Les axes se tracent à la règle et au crayon à papier. On peut ainsi corriger.",
-   "source": {
-    "fichier": "methodes/Fiche methode - Realisation graphique.pdf",
-    "page": 5
-   },
-   "r": "voUMIxQRM5xTGXaScgyCUchFRdwON5lSmEkAd6OHPNAC8AFH",
-   "poids": 1
-  },
-  {
    "id": "methode-graphique-q18",
    "fiche": "methode-graphique-f5",
    "type": "qcm",
@@ -906,26 +739,6 @@ JEU.enregistrer("cours", {
     "page": 5
    },
    "r": "=MVHbAAEIZCWUQVRN8kxlm0FvER3mmxFJtQAHgEIINBVNIkCI8gDbUTHSlQVCwRAcIlGmo0CaFUAdYhRM4TZ",
-   "poids": 1
-  },
-  {
-   "id": "methode-graphique-q43",
-   "fiche": "methode-graphique-f5",
-   "type": "qcm",
-   "niveau": 2,
-   "enonce": "Combien de flèches porte un axe dont toutes les valeurs sont positives ?",
-   "choix": [
-    "Deux flèches, une à chaque bout",
-    "Une flèche, à une extrémité",
-    "Aucune flèche",
-    "Une flèche au milieu de l'axe"
-   ],
-   "explication": "Avec des valeurs d'un seul signe, l'axe a une flèche à une extrémité. Il en faut deux quand il y a des valeurs positives et négatives.",
-   "source": {
-    "fichier": "methodes/Fiche methode - Realisation graphique.pdf",
-    "page": 5
-   },
-   "r": "Pws9ZdgAPX6GG8zFVBwGEkkzsKFRmUkBd6uAJY0AHcSZ",
    "poids": 1
   },
   {
@@ -1004,26 +817,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "methode-graphique-q44",
-   "fiche": "methode-graphique-f6",
-   "type": "qcm",
-   "niveau": 2,
-   "enonce": "Consigne : « Trace le graphique représentant l'évolution du prix du pain en fonction des années. » Que mets-tu sur l'axe horizontal ?",
-   "choix": [
-    "Le prix du pain",
-    "L'évolution",
-    "Les années",
-    "Le titre du graphique"
-   ],
-   "explication": "Ce qui suit « en fonction de » va sur l'axe horizontal : ici, les années. Le prix du pain va sur l'axe vertical.",
-   "source": {
-    "fichier": "methodes/Fiche methode - Realisation graphique.pdf",
-    "page": 5
-   },
-   "r": "==gSwgEz2PEAOYUFM4TZ",
-   "poids": 1
-  },
-  {
    "id": "methode-graphique-q45",
    "fiche": "methode-graphique-f6",
    "type": "association",
@@ -1045,25 +838,6 @@ JEU.enregistrer("cours", {
     "page": 5
    },
    "r": "==AKsklQdlCRewRSEYnQyQlSZlCH",
-   "poids": 1
-  },
-  {
-   "id": "methode-graphique-q46",
-   "fiche": "methode-graphique-f6",
-   "type": "vrai_faux",
-   "niveau": 3,
-   "enonce": "Dans « l'évolution de Y en fonction de X », Y est le nom de l'axe des abscisses.",
-   "corrections": [
-    "Faux : Y est le nom de l'axe des ordonnées, l'axe vertical.",
-    "Faux : Y est le nom de l'axe horizontal, celui des ordonnées.",
-    "Faux : Y est le titre du graphique, pas le nom d'un axe."
-   ],
-   "explication": "Y suit « évolution de » : c'est l'axe vertical, celui des ordonnées. X est l'axe horizontal, celui des abscisses.",
-   "source": {
-    "fichier": "methodes/Fiche methode - Realisation graphique.pdf",
-    "page": 5
-   },
-   "r": "PUGXZQgFY0BHKQASmUFBSEkTDVxAAHbKcoRAH4RSdogFIZSVEIRQOpgAGRQHpIFEJUVBaswTrgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
   }
  ],

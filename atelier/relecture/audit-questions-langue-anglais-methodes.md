@@ -1,6 +1,6 @@
 # Audit des questions de langue, d'anglais et de méthode (28/10/2026)
 
-Demande de Romain du 25/10/2026 : retirer les questions bizarres et, quand le cours déposé est trop mince, poser une question de thème. Grille : atelier/relecture/grille-audit-questions.md. Détail question par question : atelier/relecture/audit-questions-langue-anglais-methodes.json (71 entrées : tout ce qui n'est pas gardé tel quel, plus sept « garder » signalés avec une raison, sans retouche). Rien n'a encore été appliqué dans atelier/contenu/.
+Demande de Romain du 25/10/2026 : retirer les questions bizarres et, quand le cours déposé est trop mince, poser une question de thème. Grille : atelier/relecture/grille-audit-questions.md. Détail question par question : atelier/relecture/audit-questions-langue-anglais-methodes.json (71 entrées : tout ce qui n'est pas gardé tel quel, plus sept « garder » signalés avec une raison, sans retouche). Appliqué le 28/10/2026 dans atelier/contenu/ (détail dans docs/JOURNAL.md) ; en plus des verdicts, methode-instruments-q54 a été ajoutée (question de thème sur la fiole jaugée, Wikipédia) pour que la fiche f7, une seule phrase dans la fiche déposée, garde cinq questions après le retrait du doublon q48 : le cours compte 46 questions dont 2 de thème. La source Larousse de langue-conj10-q19 est l'entrée /18262 (définition complète), l'adresse /18283 citée plus bas n'en montre qu'un aperçu tronqué.
 
 ## Résumé
 

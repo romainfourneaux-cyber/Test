@@ -641,8 +641,9 @@ def compagnie(nom):
     elif nom == "compagnie-or":
         objets = E.pile_pieces("or", 6, 0.46, 0.1, graine=3)
     elif nom == "compagnie-plan":
-        # parchemin un peu plus sombre que le clair : au soleil, le clair brûlait (contrôle des blancs)
-        objets = E.rouleau("plan", 1.3, 0.2, lacet=-20, ruban=E.RUBRIQUE, mat=E.mat_parchemin("plan_p", "#dccba0", grain=0.3))
+        # parchemin franchement plus sombre que le champ (revue du 28/10/2026 : à 24 px, le rouleau clair n'était qu'une
+        # trace blanche sur le cartouche) et rouleau plus gros ; au soleil, le clair brûlait aussi (contrôle des blancs)
+        objets = E.rouleau("plan", 1.5, 0.27, lacet=-20, ruban=E.RUBRIQUE, mat=E.mat_parchemin("plan_p", "#c4ac7c", grain=0.3))
     else:
         objets = lanterne("lanterne", (0, 0, 0), hauteur=1.2, rayon=0.33, lacet=25, ouverte=False)
     img = E.rendre_vignette(nom, objets, (w, h), echantillons=ECHANTILLONS, contour=0.5, ombre=True, force_ombre=0.4)

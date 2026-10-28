@@ -287,25 +287,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "methode-tableau-q6",
-   "fiche": "methode-tableau-f2",
-   "type": "vrai_faux",
-   "niveau": 1,
-   "enonce": "Une case d'un tableau à double entrée ne peut contenir qu'une seule ligne d'écriture.",
-   "corrections": [
-    "Faux : une case peut contenir plusieurs lignes d'écriture.",
-    "Faux : une case doit rester vide.",
-    "Faux : une case contient toujours un seul nombre."
-   ],
-   "explication": "Une case peut accueillir plusieurs lignes si la donnée le demande.",
-   "source": {
-    "fichier": "methodes/Fiche methode - Tableau a double entree.pdf",
-    "page": 1
-   },
-   "r": "=oDUbBwBE0xBdERwAqQAV41CBEwDFIFNAAAAcIAHC8hUaoyQAE0QBwgRSwxF3IFEWQhEJtQAHgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
    "id": "methode-tableau-q7",
    "fiche": "methode-tableau-f2",
    "type": "qcm",
@@ -343,26 +324,6 @@ JEU.enregistrer("cours", {
     "page": 1
    },
    "r": "EpxFpwhGWcAFZ40VS1wJNABVIpRzlGQScIjUHAhGBkUHJcw+G2QUVk1GOAgRFsTZ",
-   "poids": 1
-  },
-  {
-   "id": "methode-tableau-q16",
-   "fiche": "methode-tableau-f2",
-   "type": "qcm",
-   "niveau": 3,
-   "enonce": "Un tableau a 4 rangs et 5 colonnes de données, sans compter les en-têtes. Combien de cases de données compte-t-il ?",
-   "choix": [
-    "20",
-    "9",
-    "30",
-    "25"
-   ],
-   "explication": "Chaque rang croise chaque colonne : 4 × 5 = 20 cases. C'est le cas d'un tableau de recette pour 4 tailles de gâteau et 5 ingrédients.",
-   "source": {
-    "fichier": "methodes/Fiche methode - Tableau a double entree.pdf",
-    "page": 1
-   },
-   "r": "==ARZBUZ",
    "poids": 1
   },
   {
@@ -413,16 +374,16 @@ JEU.enregistrer("cours", {
    "choix": [
     "150 g",
     "75 g",
-    "Eau de fleur d'oranger : 1 cc",
+    "3 œufs",
     "Farine",
     "4 personnes"
    ],
-   "explication": "Les quantités sont des données : elles vont dans les cases, parfois sur deux lignes. « Farine » et « 4 personnes » sont des catégories, écrites en tête des colonnes et des rangs.",
+   "explication": "Les quantités sont des données : elles vont dans les cases, au croisement d'une taille de gâteau et d'un ingrédient. « Farine » et « 4 personnes » sont des catégories, écrites en tête d'une colonne et d'un rang.",
    "source": {
     "fichier": "methodes/Fiche methode - Tableau a double entree.pdf",
     "page": 1
    },
-   "r": "7sUEkIFRF9UUbsACckQMCJUUNwhGDowDSJiFVBBF0skQNVBS2pxRZ8QCPZ1UYBFH",
+   "r": "=szSBEyBmDaVCtkQNVBS2pxRZ8QCPZ1UYBFH",
    "poids": 1
   },
   {

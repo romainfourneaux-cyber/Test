@@ -596,21 +596,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "methode-instruments-q36",
-   "fiche": "methode-instruments-f3",
-   "type": "vrai_faux",
-   "niveau": 1,
-   "enonce": "Après la tare, l'écran de la balance affiche 0, même avec le récipient posé dessus.",
-   "corrections": [],
-   "explication": "Oui : la tare remet l'écran à zéro avec le récipient vide. Ensuite, seule la masse du contenu s'affiche.",
-   "source": {
-    "fichier": "methodes/Fiche methode - Instruments de mesure en physique-chimie.pdf",
-    "page": 1
-   },
-   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
    "id": "methode-instruments-q37",
    "fiche": "methode-instruments-f3",
    "type": "vrai_faux",
@@ -627,26 +612,6 @@ JEU.enregistrer("cours", {
     "page": 1
    },
    "r": "==gEQZE+vXEUf9wGG18qSVzBGUEEYwhHfMBStIURGR0GfYkSMYhLEUVEbQBAeYQEBD4XFBVQOtAFJswEgZRVAYgHZ4UAdgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
-   "id": "methode-instruments-q38",
-   "fiche": "methode-instruments-f3",
-   "type": "qcm",
-   "niveau": 3,
-   "enonce": "Comment peser seulement le lait versé dans une casserole ?",
-   "choix": [
-    "Verser le lait dans la casserole, faire la tare, puis lire",
-    "Poser la casserole vide, faire la tare, verser le lait, lire",
-    "Poser la casserole pleine, puis faire la tare et lire",
-    "Poser la casserole vide, verser le lait, puis lire sans faire la tare"
-   ],
-   "explication": "La tare se fait avec la casserole vide. Après avoir versé, l'écran n'affiche que la masse du lait.",
-   "source": {
-    "fichier": "methodes/Fiche methode - Instruments de mesure en physique-chimie.pdf",
-    "page": 1
-   },
-   "r": "=MFDcYgHI9WWMQVQOpgCGtxF0AAETUVXMwhDGgkIBVEUfdgDAYURXMyGDUEEdYAHKEwGi4URUFkTdMQFGISZ",
    "poids": 1
   },
   {
@@ -745,47 +710,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "methode-instruments-q52",
-   "fiche": "methode-instruments-f4",
-   "type": "qcm",
-   "niveau": 3,
-   "enonce": "Qu'ont en commun le réglet et le mètre ruban ?",
-   "choix": [
-    "Ils mesurent tous deux des dimensions",
-    "Ils sont tous deux souples et se déroulent",
-    "Ils vérifient tous deux qu'une surface est verticale",
-    "Ils mesurent tous deux le volume d'un liquide"
-   ],
-   "explication": "Le réglet, une règle rigide, et le mètre ruban, souple, mesurent tous deux des longueurs. Le volume d'un liquide se lit dans une éprouvette, et la verticale se vérifie au fil à plomb.",
-   "source": {
-    "fichier": "methodes/Fiche methode - Instruments de mesure en physique-chimie.pdf",
-    "page": 2
-   },
-   "r": "L1RAdEAMDBAWEpwTVMQDS9zBQEQVCwRAbIFHtg0FA51CCYUFFsTZ",
-   "poids": 1
-  },
-  {
-   "id": "methode-instruments-q53",
-   "fiche": "methode-instruments-f4",
-   "type": "trou",
-   "niveau": 1,
-   "enonce": "Complète avec le nom des instruments.",
-   "texte": "Le ___ est une règle métallique rigide ; le mètre ___, souple, se déroule pour mesurer les grandes longueurs.",
-   "banque": [
-    "réglet",
-    "ruban",
-    "doseur",
-    "plomb"
-   ],
-   "explication": "Le réglet est une règle en métal, rigide. Le mètre ruban, lui, est souple et se déroule.",
-   "source": {
-    "fichier": "methodes/Fiche methode - Instruments de mesure en physique-chimie.pdf",
-    "page": 2
-   },
-   "r": "=gDaPAgDEMxGQxhXocUAUUQCKAgSv9QEQFUCGXKFLlCH",
-   "poids": 1
-  },
-  {
    "id": "methode-instruments-q14",
    "fiche": "methode-instruments-f5",
    "type": "qcm",
@@ -865,25 +789,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "methode-instruments-q41",
-   "fiche": "methode-instruments-f5",
-   "type": "vrai_faux",
-   "niveau": 2,
-   "enonce": "Pour bien lire un volume, il faut placer l'œil un peu au-dessus du ménisque.",
-   "corrections": [
-    "Faux : l'œil se place au niveau du ménisque, ni au-dessus ni au-dessous.",
-    "Faux : l'œil se place un peu au-dessous du ménisque.",
-    "Faux : l'œil se place tout en haut de l'éprouvette."
-   ],
-   "explication": "Au-dessus, on lit trop haut ; au-dessous, trop bas. Seul l'œil au niveau du ménisque donne la bonne mesure.",
-   "source": {
-    "fichier": "methodes/Fiche methode - Instruments de mesure en physique-chimie.pdf",
-    "page": 2
-   },
-   "r": "=MRTcthNCZhRIpgQTcQSbkiUGAhBCwgCCdQCjR0CVEwCacRFAwh7xiRRAURSb4wFeoyQFBETOpQBHUgAndhBFlBG6vKSegUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
    "id": "methode-instruments-q42",
    "fiche": "methode-instruments-f5",
    "type": "qcm",
@@ -901,27 +806,6 @@ JEU.enregistrer("cours", {
     "page": 2
    },
    "r": "==AUiYQAAMABGwxHbv6YItAQNsgALkgCStmBcowBFAcrPZgBmQUFc50xsShRHcSZ",
-   "poids": 1
-  },
-  {
-   "id": "methode-instruments-q43",
-   "fiche": "methode-instruments-f5",
-   "type": "trou",
-   "niveau": 1,
-   "enonce": "Complète la règle de lecture.",
-   "texte": "Dans un récipient étroit, la surface creusée du liquide s'appelle le ___. Pour bien lire, on place l'œil à son ___.",
-   "banque": [
-    "ménisque",
-    "niveau",
-    "col",
-    "sommet"
-   ],
-   "explication": "Le ménisque est la surface courbée du liquide dans un récipient étroit. On le lit l'œil à sa hauteur, ni au-dessus ni au-dessous.",
-   "source": {
-    "fichier": "methodes/Fiche methode - Instruments de mesure en physique-chimie.pdf",
-    "page": 2
-   },
-   "r": "=sDNQJzEQMBHfsUND9iSmgFFGREAGX6CLlCH",
    "poids": 1
   },
   {
@@ -1121,21 +1005,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "methode-instruments-q48",
-   "fiche": "methode-instruments-f7",
-   "type": "vrai_faux",
-   "niveau": 1,
-   "enonce": "Une fiole jaugée peut mesurer une contenance à la goutte près.",
-   "corrections": [],
-   "explication": "Oui : grâce au trait gravé sur son col très étroit, sa précision peut atteindre la goutte.",
-   "source": {
-    "fichier": "methodes/Fiche methode - Instruments de mesure en physique-chimie.pdf",
-    "page": 3
-   },
-   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
    "id": "methode-instruments-q49",
    "fiche": "methode-instruments-f7",
    "type": "qcm",
@@ -1153,6 +1022,28 @@ JEU.enregistrer("cours", {
     "page": 3
    },
    "r": "LdBNbYBz2OQGOxh2rGTWFBlTA4ACD0BHoERVAsBBJxhGdgxYBws9b9QHBYUHbYCABUUGEwQHPxRHjxURQFUAGAgRI4TZ",
+   "poids": 1
+  },
+  {
+   "id": "methode-instruments-q54",
+   "fiche": "methode-instruments-f7",
+   "type": "qcm",
+   "niveau": 2,
+   "enonce": "À quoi sert surtout une fiole jaugée au laboratoire ?",
+   "choix": [
+    "À préparer une solution avec un volume exactement connu",
+    "À chauffer doucement un liquide sans risquer de le renverser",
+    "À peser une poudre avec plus de précision qu'une balance",
+    "À mesurer la température d'un liquide à un degré près"
+   ],
+   "explication": "Une fiole jaugée contient un volume précis quand le liquide atteint son trait : on s'en sert pour préparer une solution dont on connaît exactement le volume. Elle ne chauffe rien, ne pèse rien et ne donne pas de température.",
+   "source": {
+    "theme": "Savoir-faire : les instruments de mesure",
+    "titre": "Fiole jaugée",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Fiole_jaug%C3%A9e"
+   },
+   "r": "=00BG0iQGURWAowCD0REmoAEFBBHcIAAEgULYVkVIhhDGhgBbMzBZogBRxAAaIlGm8FBFRYrdYhRpHbZ",
    "poids": 1
   },
   {
@@ -1180,12 +1071,14 @@ JEU.enregistrer("cours", {
    "fiche": "methode-instruments-f8",
    "type": "vrai_faux",
    "niveau": 1,
-   "enonce": "Si une expérience est impossible à faire, ses résultats sont présentés en photo dans le livret.",
+   "enonce": "Le thermomètre du matériel de TP mesure une température, exprimée en degrés Celsius (°C).",
    "corrections": [],
-   "explication": "Oui : on peut alors s'appuyer sur les photos du livret.",
+   "explication": "Un thermomètre sert à mesurer une température. On la lit en degrés Celsius, notés °C.",
    "source": {
-    "fichier": "methodes/Physique-chimie - Materiel des TP.pdf",
-    "page": 1
+    "theme": "Savoir-faire : les instruments de mesure",
+    "titre": "Thermomètre",
+    "editeur": "Wikipédia",
+    "url": "https://fr.wikipedia.org/wiki/Thermom%C3%A8tre"
    },
    "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
    "poids": 1
@@ -1219,38 +1112,19 @@ JEU.enregistrer("cours", {
    "fiche": "methode-instruments-f8",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Comment faire si une expérience du livret ne peut pas être réalisée à la maison ?",
+   "enonce": "Comment mesure-t-on le volume d'eau à verser pour une expérience à la maison ?",
    "choix": [
-    "On étudie ses résultats sur les photos du livret",
-    "On la remplace par une autre expérience au choix",
-    "On la fait plus tard, seul, sans adulte",
-    "On recopie les résultats d'un camarade"
+    "Avec le verre doseur",
+    "Avec la balance électronique",
+    "Avec le thermomètre",
+    "Avec le réglet"
    ],
-   "explication": "Le livret montre les résultats en photo. On peut donc suivre le cours quand même.",
+   "explication": "Le verre doseur est gradué : on y lit directement un volume de liquide. La balance donne une masse, le thermomètre une température et le réglet une longueur.",
    "source": {
     "fichier": "methodes/Physique-chimie - Materiel des TP.pdf",
     "page": 1
    },
-   "r": "==wDaoAFQAgHndQEFZgHdEwBCgEMIlQFftBHGVRHTMjHAYB3yuhTccxGjhEDRhlGGXqRH0TZ",
-   "poids": 1
-  },
-  {
-   "id": "methode-instruments-q50",
-   "fiche": "methode-instruments-f8",
-   "type": "vrai_faux",
-   "niveau": 2,
-   "enonce": "Une expérience qui paraît simple peut se faire seul, sans adulte.",
-   "corrections": [
-    "Faux : toutes les expériences se font sous la surveillance d'un adulte.",
-    "Faux : seules les expériences avec une casserole demandent un adulte.",
-    "Faux : on peut la faire avec un camarade du même âge, sans adulte."
-   ],
-   "explication": "La règle ne connaît pas d'exception : chaque expérience se fait avec un adulte qui surveille. C'est une règle de sécurité.",
-   "source": {
-    "fichier": "methodes/Physique-chimie - Materiel des TP.pdf",
-    "page": 1
-   },
-   "r": "PoUbIFRWYpgDGhAHVNiUQYwGQUgAGchHxglFVwkAPVxEGEwZGshCTEFDd8UANAyQAw1XHzqFewgU0cRGFZAFdsBAGgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
+   "r": "==AUHABECYgCPdhGxg0EVgkAPVwAfMTZ",
    "poids": 1
   },
   {

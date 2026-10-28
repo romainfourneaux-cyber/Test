@@ -1819,21 +1819,6 @@ JEU.enregistrer("anglais", {
    "poids": 1
   },
   {
-   "id": "anglais-seq02-q70",
-   "fiche": "anglais-seq02-g9",
-   "type": "vrai_faux",
-   "niveau": 1,
-   "enonce": "« Their » est l'adjectif possessif de « they ».",
-   "corrections": [],
-   "explication": "They → their : their house, their ideas. Our est celui de we.",
-   "source": {
-    "fichier": "cours/anglais/Anglais 5e - Sequence 2 - Exercices supplementaires - Corriges.pdf",
-    "page": 1
-   },
-   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
    "id": "anglais-seq02-q71",
    "fiche": "anglais-seq02-g10",
    "type": "qcm",
@@ -2072,21 +2057,6 @@ JEU.enregistrer("anglais", {
     "page": 5
    },
    "r": "y8iSwowFQVUDOMgELlCH",
-   "poids": 1
-  },
-  {
-   "id": "anglais-seq02-q84",
-   "fiche": "anglais-seq02-g11",
-   "type": "vrai_faux",
-   "niveau": 2,
-   "enonce": "« Emma's brother » veut dire « le frère d'Emma ».",
-   "corrections": [],
-   "explication": "Le 's est sur Emma, le possesseur ; brother est ce qu'elle a. Le frère d'Emma.",
-   "source": {
-    "fichier": "cours/anglais/Anglais 5e - Sequence 2 - Exercices supplementaires.pdf",
-    "page": 3
-   },
-   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -2843,68 +2813,6 @@ JEU.enregistrer("anglais", {
     "page": 5
    },
    "r": "==ANvYnXG5TWsklQdlCRe4RSEYnQyQlSZlCH",
-   "poids": 1
-  },
-  {
-   "id": "anglais-seq02-q123",
-   "fiche": "anglais-seq02-g2",
-   "type": "qcm",
-   "niveau": 2,
-   "enonce": "Comment se prononce le -ed de « stopped » ?",
-   "choix": [
-    "[t]",
-    "[id]",
-    "[d]",
-    "[ed]"
-   ],
-   "explication": "Stop se termine par le son [p], sourd : stopped se prononce avec [t]. Pas de syllabe en plus.",
-   "source": {
-    "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
-    "page": 4
-   },
-   "r": "=Q0OdkSZ",
-   "poids": 1
-  },
-  {
-   "id": "anglais-seq02-q124",
-   "fiche": "anglais-seq02-g12",
-   "type": "qcm_multiple",
-   "niveau": 3,
-   "enonce": "Quels verbes ont un -s qui se prononce [s] ? Coche toutes les bonnes réponses.",
-   "choix": [
-    "speaks",
-    "gets up",
-    "lives",
-    "arrives",
-    "jumps",
-    "has"
-   ],
-   "explication": "Speaks, gets up et jumps finissent par un son sourd : [s]. Lives, arrives et has finissent par un son sonore : [z].",
-   "source": {
-    "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
-    "page": 4
-   },
-   "r": "==gMEVRGfIDGXl0VBwhTcYQDk8QSX4VBOMgFaAFH",
-   "poids": 1
-  },
-  {
-   "id": "anglais-seq02-q125",
-   "fiche": "anglais-seq02-g12",
-   "type": "qcm",
-   "niveau": 1,
-   "enonce": "Comment se prononce le -s de « arrives » ?",
-   "choix": [
-    "[z]",
-    "[s]",
-    "[iz]",
-    "il ne se prononce pas"
-   ],
-   "explication": "Arrive se termine par le son [v], sonore : le -s se prononce [z].",
-   "source": {
-    "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
-    "page": 4
-   },
-   "r": "=Q0OTkSZ",
    "poids": 1
   }
  ],

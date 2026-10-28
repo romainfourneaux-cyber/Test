@@ -1529,14 +1529,18 @@ JEU.enregistrer("anglais", {
    "fiche": "anglais-seq03-g6",
    "type": "vrai_faux",
    "niveau": 2,
-   "enonce": "À la 1re personne, on peut poser la question au futur avec shall ou avec will : Shall I close the window ? / Will I close the window ?",
-   "corrections": [],
-   "explication": "Avec I et we, shall et will sont tous les deux possibles dans une question. Shall insiste sur la proposition.",
+   "enonce": "« Shall » s'emploie avec tous les sujets : Shall they come ?",
+   "corrections": [
+    "Faux : shall s'emploie avec I et we, surtout pour proposer quelque chose : Shall we come ?",
+    "Faux : shall ne s'emploie qu'au passé.",
+    "Faux : shall s'emploie seulement avec you."
+   ],
+   "explication": "Shall accompagne I et we, le plus souvent pour proposer quelque chose, comme dans « Shall we go » ou « Shall I help you ». Avec les autres sujets, la question au futur se fait avec will : « Will they come ».",
    "source": {
     "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
     "page": 9
    },
-   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
+   "r": "YchEOpwCJogUiUQVJkBEB0zTIhkJepQXO5kCTcRBXIzAVdBECYgHAAAGj9FEa1lTbMRCdAgMBUVSQYQSaogUhMmTAMETOpwDJUgAqchUWUVHF8wBBgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
    "poids": 1
   },
   {
@@ -2151,21 +2155,6 @@ JEU.enregistrer("anglais", {
    "poids": 1
   },
   {
-   "id": "anglais-seq03-q83",
-   "fiche": "anglais-seq03-g10",
-   "type": "vrai_faux",
-   "niveau": 2,
-   "enonce": "Avec « last summer », on emploie le prétérit : We went to Spain last summer.",
-   "corrections": [],
-   "explication": "Last summer, l'été dernier, est un repère du passé. Went est le prétérit de go.",
-   "source": {
-    "fichier": "cours/anglais/Anglais 5e - Sequence 3 - Exercices supplementaires - Corriges.pdf",
-    "page": 2
-   },
-   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
    "id": "anglais-seq03-q84",
    "fiche": "anglais-seq03-g10",
    "type": "qcm",
@@ -2509,19 +2498,19 @@ JEU.enregistrer("anglais", {
    "fiche": "anglais-seq03-g12",
    "type": "qcm",
    "niveau": 2,
-   "enonce": "Comment se prononce « usually » ?",
+   "enonce": "Quel son entend-on au milieu de « usually », le même que dans « television » ?",
    "choix": [
-    "[ˈjuːʒʊəli]",
-    "[ˈʌzʊli]",
-    "[ˈjuːʃəli]",
-    "[ˈjuːdʒəli]"
+    "[ʒ]",
+    "[ʃ]",
+    "[tʃ]",
+    "[ʤ]"
    ],
-   "explication": "Usually se dit [ˈjuːʒʊəli] : un [uː] long et le son [ʒ], comme dans television.",
+   "explication": "Usually et television ont le même son [ʒ]. Le [ʃ] est celui de shop, le [tʃ] celui de chair et le [ʤ] celui de jump.",
    "source": {
     "fichier": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
     "page": 11
    },
-   "r": "TRzBDseoJf+9/3bpawg7imSZ",
+   "r": "NtD9jmSZ",
    "poids": 1
   },
   {

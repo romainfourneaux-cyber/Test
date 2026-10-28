@@ -59,7 +59,7 @@ const avancerJusqua = `function (pred) {
   const X = JEU.expedition; let n = 0;
   while (n++ < 14) {
     const att = X.atteignables(), h = att.find(pred); if (h) return h.id;
-    const a = att.find(x => x.type !== "grand") || att[0]; if (!a) return null;
+    const a = att.find(x => x.type !== "grand"); if (!a) return null; // jamais le Grand Gardien : l'expédition resterait ouverte
     X.entrer(a.id);
     if (X.EXP.BATAILLES.indexOf(a.type) >= 0) X.apresBataille(a, { issue: "tenu", degatsRival: 3, bonnes: 3, total: 3, entamee: true }); else X.terminerHalte(a.id);
   }
@@ -180,7 +180,7 @@ async function parcours(navigateur, w, h) {
     await capture(page, "14-marchand");
     await page.keyboard.press("Escape");
     await page.waitForSelector("#ecran-expedition .route-svg");
-  } else echecs.push("aucun marchand atteignable (" + suffixe + ")");
+  } else notes["marchand" + suffixe] = "aucun marchand atteignable avant le Grand Gardien";
   const idBivouac = await page.evaluate("(" + avancerJusqua + ")(x => x.type === 'bivouac')");
   if (idBivouac) {
     await page.evaluate(() => JEU.ui.afficher("expedition"));
@@ -190,8 +190,9 @@ async function parcours(navigateur, w, h) {
     await capture(page, "15-bivouac");
     await page.keyboard.press("1");
     await page.waitForSelector("#ecran-expedition .route-svg");
-  } else echecs.push("aucun bivouac atteignable (" + suffixe + ")");
+  } else notes["bivouac" + suffixe] = "aucun bivouac atteignable avant le Grand Gardien";
   // 7. les faveurs tenues (F), avec une faveur rare posée par l'API pour voir l'argent, et un plan de bataille
+  if (!await page.evaluate(() => !!JEU.expedition.enCours())) { echecs.push("l'expédition s'est close avant les faveurs (" + suffixe + ")"); await page.close(); return; }
   await page.evaluate(() => { const e = JEU.expedition.enCours(); if (!e.faveurs.some(f => f.id === "eclaireurs")) e.faveurs.push({ id: "eclaireurs", rang: 2 }); e.plan = 25; e.espion = true; JEU.sauvegarde.enregistrer(); JEU.ui.afficher("expedition"); });
   await page.waitForSelector("#ecran-expedition .route-svg");
   await capture(page, "16-route-compagnie");

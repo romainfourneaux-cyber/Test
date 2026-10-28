@@ -276,21 +276,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "methode-ombrothermique-q24",
-   "fiche": "methode-ombrothermique-f1",
-   "type": "vrai_faux",
-   "niveau": 2,
-   "enonce": "Le diagramme de Vichy pour la période 1971-2000 repose sur des moyennes de trente ans.",
-   "corrections": [],
-   "explication": "De 1971 à 2000, on compte trente années de mesures. C'est bien la durée utilisée pour calculer ces moyennes.",
-   "source": {
-    "fichier": "methodes/Fiche methode - Diagramme ombrothermique.pdf",
-    "page": 1
-   },
-   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
    "id": "methode-ombrothermique-q4",
    "fiche": "methode-ombrothermique-f2",
    "type": "qcm",
@@ -381,26 +366,6 @@ JEU.enregistrer("cours", {
     "page": 1
    },
    "r": "Yc1XaAgDS1wNDBwRZ5UHTURSbToHAYQGQogTDFQAsAURQFkTbMRCdIlIWU1CQggBD8kHd4CWGUBSC80AScwF0sttXUAFb40AbgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
-   "id": "methode-ombrothermique-q26",
-   "fiche": "methode-ombrothermique-f2",
-   "type": "qcm",
-   "niveau": 2,
-   "enonce": "Quand un diagramme porte deux courbes de températures, que représentent-elles ?",
-   "choix": [
-    "Les moyennes des plus basses et des plus hautes",
-    "Les températures relevées dans deux villes voisines",
-    "Les températures de deux années différentes",
-    "Les températures de deux saisons opposées"
-   ],
-   "explication": "L'une donne la moyenne des températures les plus basses de la journée, l'autre celle des plus hautes. Les deux concernent le même lieu.",
-   "source": {
-    "fichier": "methodes/Fiche methode - Diagramme ombrothermique.pdf",
-    "page": 1
-   },
-   "r": "==ARVwgByMRHFZABF4xTB0wJNEBUN0hCVUBCQcWAAkQBRpxCLI1GmM0CQRVACYUFM4TZ",
    "poids": 1
   },
   {
@@ -573,20 +538,20 @@ JEU.enregistrer("cours", {
    "fiche": "methode-ombrothermique-f3",
    "type": "qcm_multiple",
    "niveau": 3,
-   "enonce": "Coche les phrases justes sur les axes du diagramme.",
+   "enonce": "Coche les phrases justes sur les axes d'un diagramme ombrothermique.",
    "choix": [
-    "L'axe horizontal est noir",
+    "L'axe horizontal porte les douze mois",
     "Les températures se lisent à gauche, en °C",
     "Les précipitations se lisent à droite, en mm",
     "L'axe horizontal est gradué en années",
-    "Les deux axes verticaux ont les mêmes graduations"
+    "Les précipitations se lisent à gauche, en °C"
    ],
-   "explication": "Noir en bas pour les mois, rouge à gauche pour les °C, bleu à droite pour les mm. Les axes verticaux n'ont pas les mêmes graduations, car le maximum en mm vaut le double du maximum en °C.",
+   "explication": "En bas, les douze mois ; à gauche, les températures en °C ; à droite, les précipitations en mm. L'axe horizontal ne porte jamais d'années : le diagramme décrit une année moyenne, mois par mois.",
    "source": {
     "fichier": "methodes/Fiche methode - Diagramme ombrothermique.pdf",
     "page": 1
    },
-   "r": "z00HFM2QAURALsxDJshFnJttFFwHM0hBegkJeVkRDFgBScQHbczGWwstDkhTccBJhFwR21JrPhwAJ5lIaYBEUYRSOzqUc0CSWwVQOpQFGpxF1cQAEcA2q6hAXwxYeBQePIUTU8gBccmBGAQVdggGB0hEq8lCd1wCXcQQlAFH",
+   "r": "yQ0CEIVKXUVSQUAAB0hFINu7FF0QLwxDKk0F0IlBLoBGd8wGbghKOxs9f5xTVMQJQtGU2U9tRdwCP5VDr4EEUpkTPXqRdwhIBwRCVRhGOxxFaYTWEcEht+xCD0hU0cROHl1UacAAfgkJXBhWJ5EHDoQSXMDAaURVdggGB0hEq8lCd1wCXcQQlAFH",
    "poids": 1
   },
   {
@@ -684,26 +649,6 @@ JEU.enregistrer("cours", {
    "poids": 1
   },
   {
-   "id": "methode-ombrothermique-q33",
-   "fiche": "methode-ombrothermique-f4",
-   "type": "qcm",
-   "niveau": 3,
-   "enonce": "Sur l'axe des précipitations, 6 carreaux valent 30 mm. Combien valent ces 6 carreaux sur l'axe des températures ?",
-   "choix": [
-    "15 °C",
-    "30 °C",
-    "45 °C",
-    "7,5 °C"
-   ],
-   "explication": "À la même hauteur, la valeur en mm est le double de la valeur en °C. Si 6 carreaux font 30 mm, ils font donc 15 °C.",
-   "source": {
-    "fichier": "methodes/Fiche methode - Diagramme ombrothermique.pdf",
-    "page": 3
-   },
-   "r": "=8QLfTqRcNUZ",
-   "poids": 1
-  },
-  {
    "id": "methode-ombrothermique-q34",
    "fiche": "methode-ombrothermique-f4",
    "type": "qcm_multiple",
@@ -722,27 +667,6 @@ JEU.enregistrer("cours", {
     "page": 1
    },
    "r": "1EmbVffDbxlRSwgUq8RVVJ0UFxELCr6YdIVFZtwTLsQSCN3QXl0VykNrPJUXjlFAVA0APZlVYBFH",
-   "poids": 1
-  },
-  {
-   "id": "methode-ombrothermique-q35",
-   "fiche": "methode-ombrothermique-f4",
-   "type": "trou",
-   "niveau": 1,
-   "enonce": "Complète la règle.",
-   "texte": "La valeur maximale des précipitations est égale au ___ de la température maximale.",
-   "banque": [
-    "double",
-    "triple",
-    "moitié",
-    "quart"
-   ],
-   "explication": "Le maximum en mm vaut deux fois le maximum en °C. Par exemple, 100 mm vont avec 50 °C.",
-   "source": {
-    "fichier": "methodes/Fiche methode - Diagramme ombrothermique.pdf",
-    "page": 1
-   },
-   "r": "eA3RQFEDakgALlCH",
    "poids": 1
   },
   {
@@ -843,60 +767,6 @@ JEU.enregistrer("cours", {
     "page": 5
    },
    "r": "=oUMYBQQY9wBGNwBcgCEVRQGRlcrPpQAs8lBVgEAaYEFIISZ",
-   "poids": 1
-  },
-  {
-   "id": "methode-ombrothermique-q36",
-   "fiche": "methode-ombrothermique-f5",
-   "type": "vrai_faux",
-   "niveau": 2,
-   "enonce": "Pour dessiner un bâton, on trace d'abord un petit trait horizontal à la bonne hauteur, centré sur le mois.",
-   "corrections": [],
-   "explication": "On place d'abord un petit trait à la hauteur du cumul, au-dessus du mois. On dessine ensuite le rectangle, colorié en bleu clair.",
-   "source": {
-    "fichier": "methodes/Fiche methode - Diagramme ombrothermique.pdf",
-    "page": 3
-   },
-   "r": "==ASBJgGIw1ScgyGBYAEDsRAMAFRmg1FBdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
-   "id": "methode-ombrothermique-q37",
-   "fiche": "methode-ombrothermique-f5",
-   "type": "vrai_faux",
-   "niveau": 2,
-   "enonce": "On colorie les bâtons des précipitations en rouge.",
-   "corrections": [
-    "Faux : on les colorie en bleu clair.",
-    "Faux : on les laisse sans couleur.",
-    "Faux : on les colorie en noir, comme l'axe des mois."
-   ],
-   "explication": "Les bâtons sont coloriés en bleu clair, comme l'axe des précipitations. Le rouge est réservé aux températures.",
-   "source": {
-    "fichier": "methodes/Fiche methode - Diagramme ombrothermique.pdf",
-    "page": 4
-   },
-   "r": "Pc1SHgBCCwgUdYSQHUxQL80APsRHr0hFFZAFF4UAdgUeN0BQMhSTcR0Bd4iBWAwBDYQDN5VDwEEBTdBTGcAFfAFP",
-   "poids": 1
-  },
-  {
-   "id": "methode-ombrothermique-q38",
-   "fiche": "methode-ombrothermique-f5",
-   "type": "qcm",
-   "niveau": 3,
-   "enonce": "À Vichy, le mois le plus pluvieux reçoit 98 mm. Quels maximums ronds choisit-on pour les deux axes verticaux ?",
-   "choix": [
-    "100 mm et 50 °C",
-    "98 mm et 49 °C",
-    "100 mm et 100 °C",
-    "50 mm et 100 °C"
-   ],
-   "explication": "On arrondit juste au-dessus de 98 : 100 mm. La règle donne alors la moitié pour les températures, soit 50 °C.",
-   "source": {
-    "fichier": "methodes/Fiche methode - Diagramme ombrothermique.pdf",
-    "page": 2
-   },
-   "r": "Tpi3tKFW21QEQ1wACYkVZNUZ",
    "poids": 1
   }
  ],
