@@ -7,6 +7,12 @@
 window.JEU = window.JEU || {};
 JEU.imagesExpedition = {
   "annee-fond": {"f": "assets/images/expedition/annee-fond.jpg", "w": 1000, "h": 104, "ax": 0, "ay": 0},
+  "armorial-banniere": {"f": "assets/images/expedition/armorial-banniere.png", "w": 100, "h": 110, "ax": 0, "ay": 0},
+  "armorial-bourse": {"f": "assets/images/expedition/armorial-bourse.png", "w": 100, "h": 110, "ax": 0, "ay": 0},
+  "armorial-ecu": {"f": "assets/images/expedition/armorial-ecu.png", "w": 100, "h": 110, "ax": 0, "ay": 0},
+  "armorial-murs": {"f": "assets/images/expedition/armorial-murs.png", "w": 100, "h": 110, "ax": 0, "ay": 0},
+  "armorial-ouverture": {"f": "assets/images/expedition/armorial-ouverture.png", "w": 100, "h": 110, "ax": 0, "ay": 0},
+  "armorial-vivres": {"f": "assets/images/expedition/armorial-vivres.png", "w": 100, "h": 110, "ax": 0, "ay": 0},
   "cadre-page": {"f": "assets/images/expedition/cadre-page.png", "w": 240, "h": 240, "ax": 0, "ay": 0, "coupe": 60},
   "carte-expedition": {"f": "assets/images/expedition/carte-expedition.jpg", "w": 320, "h": 190, "ax": 0, "ay": 0},
   "compagnie-espion": {"f": "assets/images/expedition/compagnie-espion.png", "w": 24, "h": 24, "ax": 12, "ay": 12},

@@ -111,16 +111,16 @@ def arc_tore(nom, rayon, s0, s1, a0, a1, mat, segments=40, cotes=12, loc=(0, 0, 
     return ob
 
 
-def prisme(nom, pts, y0, ep, mat, biseau=0.0):
-    """Plaque plane debout dans le plan X-Z (points (x, z)), face avant en y0 (vers la caméra, -Y), épaisseur ep vers +Y."""
+def prisme(nom, pts, z0, ep, mat, biseau=0.0):
+    """Plaque plane couchée (points (x, y)), posée en z0, épaisseur ep vers le haut (vers la caméra de dessus)."""
     bm = bmesh.new()
-    avant = [bm.verts.new((x, y0, z)) for x, z in pts]
-    arriere = [bm.verts.new((x, y0 + ep, z)) for x, z in pts]
-    bm.faces.new(avant)
-    bm.faces.new(arriere[::-1])
+    bas = [bm.verts.new((x, y, z0)) for x, y in pts]
+    haut = [bm.verts.new((x, y, z0 + ep)) for x, y in pts]
+    bm.faces.new(bas[::-1])
+    bm.faces.new(haut)
     n = len(pts)
     for i in range(n):
-        bm.faces.new((avant[i], avant[(i + 1) % n], arriere[(i + 1) % n], arriere[i]))
+        bm.faces.new((bas[i], bas[(i + 1) % n], haut[(i + 1) % n], haut[i]))
     bmesh.ops.recalc_face_normals(bm, faces=bm.faces)
     ob = C.objet_maillage(nom, bm, mat)
     if biseau > 0:
@@ -164,8 +164,8 @@ def couper(pts, f):
     return out
 
 
-def bande_xz(p, q, largeur):
-    """Quadrilatère fin le long du segment p -> q (points (x, z)) : trait d'encre d'un écu."""
+def bande_xy(p, q, largeur):
+    """Quadrilatère fin le long du segment p -> q (points (x, y)) : trait d'encre d'un écu."""
     dx, dz = q[0] - p[0], q[1] - p[1]
     l = math.hypot(dx, dz) or 1.0
     nx, nz = -dz / l * largeur / 2, dx / l * largeur / 2
@@ -303,7 +303,8 @@ def compas(nom, loc=(0, 0, 0), lacet=0.0, ecart=0.22, hauteur=0.48):
 
 def cor(nom, loc=(0, 0, 0), rot=(0, 0, 0), rayon=0.34, teinte=E.MATIERES["geographie"]):
     """Cor de chasse ocre : corne courbe qui s'évase (portion de tore à section décroissante), pavillon et embouchure de laiton."""
-    mc = C.mat_simple(nom + "_corne", teinte, rugosite=0.45, speculaire=0.5, bosse=0.15, echelle_bosse=60.0)
+    # corne mate et un peu plus sombre que la teinte visée : dressée face au ciel, elle s'éclaircit au rendu
+    mc = C.mat_simple(nom + "_corne", "#8f561a", rugosite=0.65, speculaire=0.25, bosse=0.15, echelle_bosse=60.0)
     ml = E.mat_or_poli(nom + "_laiton")
     a0, a1 = -15.0, 225.0
     s0 = rayon * 0.34
@@ -575,7 +576,9 @@ def rendre_faveur(ident):
 
 
 # ---------------------------------------------------------------- l'Armorial : écu et cinq émaux
-ECU_L, ECU_H = 8.8, 10.0                 # mètres : 88 unités de large (x de 6 à 94), 100 de haut vus à 12° (≈ 98 unités)
+# L'écu est couché et vu de dessus (caméra à 90°) : en orthographique, sa silhouette est celle du SVG (de face), et son
+# champ reçoit le soleil du nord-ouest comme le rondel des médaillons ; debout, il tournait le dos au soleil et sortait gris.
+ECU_L, ECU_H = 8.8, 10.0                 # mètres : 88 unités de large (x de 6 à 94), 100 de haut (y de 6 à 106)
 ARMORIAL_ANCRE = (50.0, 106.0)           # la pointe de l'écu tombe à 106 unités du haut (4 unités de marge en bas)
 QUARTIERS = ("vivres", "bourse", "murs", "banniere", "ouverture")
 
@@ -586,7 +589,7 @@ def U(u):
 
 
 def V(v):
-    """Ordonnée SVG (6 en haut, 110 à la pointe) -> z en mètres (la pointe à 0, le haut à ECU_H)."""
+    """Ordonnée SVG (6 en haut, 110 à la pointe) -> y en mètres (la pointe à 0, le haut à ECU_H, le nord en haut)."""
     return (110.0 - v) / 104.0 * ECU_H
 
 
@@ -594,42 +597,43 @@ def plan_armorial():
     """Construit l'écu et ses cinq plaques d'émail dans la scène courante ; renvoie (objets de l'écu, {quartier: plaque})."""
     contour = E.contour_ecu(ECU_L, ECU_H, n=18)
     objets = []
-    # de l'arrière vers l'avant : liseré d'encre un peu plus grand (le trait de 2,5 unités du SVG), écu d'or (sa bande
-    # reste visible sur 0,37 m autour du champ), fin cerne d'encre, champ de parchemin
-    objets.append(prisme("lisere", decaler_contour(contour, -0.14), 0.0, 0.32, E.mat_encre("lisere_encre")))
-    objets.append(prisme("or", contour, -0.04, 0.3, E.mat_or("ecu_or"), biseau=0.02))
-    objets.append(prisme("cerne_champ", decaler_contour(contour, 0.37), -0.05, 0.012, E.mat_encre("cerne_encre")))
-    objets.append(prisme("champ", decaler_contour(contour, 0.42), -0.06, 0.03, E.mat_parchemin("ecu_parchemin", E.PARCHEMIN_CLAIR, grain=0.45, echelle=3.0)))
+    # du bas vers le haut : liseré d'encre un peu plus grand (le trait de 2,5 unités du SVG), écu d'or bombé au bord (sa
+    # bande reste visible sur 0,37 m autour du champ), fin cerne d'encre, champ de parchemin un peu surélevé
+    objets.append(prisme("lisere", decaler_contour(contour, -0.14), 0.0, 0.2, E.mat_encre("lisere_encre")))
+    objets.append(prisme("or", contour, 0.0, 0.3, E.mat_or("ecu_or"), biseau=0.03))
+    objets.append(prisme("cerne_champ", decaler_contour(contour, 0.37), 0.3, 0.012, E.mat_encre("cerne_encre")))
+    # parchemin un peu plus sombre et plus chaud que le clair du SVG : en plein soleil, le clair brûlait (contrôle des blancs)
+    objets.append(prisme("champ", decaler_contour(contour, 0.42), 0.3, 0.04, E.mat_parchemin("ecu_parchemin", "#ecd49c", grain=0.5, echelle=3.0), biseau=0.012))
     # séparations des quartiers : traits d'encre couchés sur le champ (croix et losange)
     interieur = decaler_contour(contour, 0.46)
-    bas = min(z for _, z in interieur)
+    bas = min(y for _, y in interieur)
     menc = E.mat_encre("traits_encre")
-    traits = [bande_xz((U(10.4), V(50)), (U(89.6), V(50)), 0.1), bande_xz((0.0, V(10.4)), (0.0, bas), 0.1)]
+    traits = [bande_xy((U(10.4), V(50)), (U(89.6), V(50)), 0.1), bande_xy((0.0, V(10.4)), (0.0, bas), 0.1)]
     loz = [(U(50), V(36)), (U(64), V(60)), (U(50), V(84)), (U(36), V(60))]
     for k in range(4):
-        traits.append(bande_xz(loz[k], loz[(k + 1) % 4], 0.1))
+        traits.append(bande_xy(loz[k], loz[(k + 1) % 4], 0.1))
     for k, t in enumerate(traits):
-        objets.append(prisme("trait%d" % k, t, -0.075, 0.015, menc))
+        objets.append(prisme("trait%d" % k, t, 0.34, 0.012, menc))
     # les cinq plaques d'émail, découpées dans le champ intérieur
     plaques = {}
     formes = {
-        "vivres": couper(couper(interieur, lambda x, z: -x), lambda x, z: z - V(50)),
-        "bourse": couper(couper(interieur, lambda x, z: x), lambda x, z: z - V(50)),
-        "murs": couper(couper(interieur, lambda x, z: -x), lambda x, z: V(50) - z),
-        "banniere": couper(couper(interieur, lambda x, z: x), lambda x, z: V(50) - z),
+        "vivres": couper(couper(interieur, lambda x, y: -x), lambda x, y: y - V(50)),
+        "bourse": couper(couper(interieur, lambda x, y: x), lambda x, y: y - V(50)),
+        "murs": couper(couper(interieur, lambda x, y: -x), lambda x, y: V(50) - y),
+        "banniere": couper(couper(interieur, lambda x, y: x), lambda x, y: V(50) - y),
         "ouverture": loz,
     }
     for q in QUARTIERS:
         pts = formes[q]
-        y0 = -0.11 if q == "ouverture" else -0.09
-        plaques[q] = prisme("email_" + q, pts, y0, 0.03, E.mat_teinte("email_" + q, E.ARMORIAL[q], rugosite=0.38), biseau=0.01)
+        z0 = 0.385 if q == "ouverture" else 0.355
+        plaques[q] = prisme("email_" + q, pts, z0, 0.03, E.mat_teinte("email_" + q, E.ARMORIAL[q], rugosite=0.38), biseau=0.01)
     return objets, plaques
 
 
 def armorial(noms=None):
-    """Rend les six couches avec la même caméra : l'écu (plaques cachées) puis chaque plaque seule."""
+    """Rend les six couches avec la même caméra (de dessus) : l'écu (plaques cachées) puis chaque plaque seule."""
     noms = noms or ["armorial-ecu"] + ["armorial-" + q for q in QUARTIERS]
-    E.scene_vignette((100, 110), inclinaison=12, px_par_m=10, ancre=ARMORIAL_ANCRE, rayon_sol=None, appoint=1.0)
+    E.scene_vignette((100, 110), inclinaison=90, px_par_m=10, ancre=ARMORIAL_ANCRE, rayon_sol=None, appoint=0.5)
     ecu, plaques = plan_armorial()
     tous = ecu + list(plaques.values())
     chemins = []
@@ -741,6 +745,7 @@ def main(args):
             E.sauver(nom, H.compagnie(nom))
     if "--sans-planche" not in args:
         E.planche("faveurs")
+    if "--loupe" in args or "--sans-planche" not in args:
         loupe()
     if tout or quoi:
         E.verifier_budget()
