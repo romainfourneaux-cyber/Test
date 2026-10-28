@@ -24,6 +24,7 @@ dessus (lettrines, chemins, médaillons, cases, fenêtre à cadre) : on la regar
 """
 import math
 import os
+import random
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -54,7 +55,7 @@ ROUTE_ECHELLE_OND = 3.0         # taille des ondulations (m)
 CADRE_M = 24.0                  # feuille du cadre de page (m) : 480 px, 20 px/m ; tranches de 6 m
 CADRE_RETRAIT = 3.0             # le milieu de la bande d'or à 3 m du bord
 CADRE_COUPE = 60                # largeur des tranches de border-image (unités logiques)
-CARTE = (320, 190, 6, 20)       # carte-expedition : w, h, px_par_m, ancre_bas (unités logiques)
+CARTE = (320, 190, 7, 20)       # carte-expedition : w, h, px_par_m, ancre_bas (unités logiques) ; 7 px/m : cadrage serré
 
 
 def journal(*m):
@@ -112,9 +113,10 @@ def recaler(img, cible, contraste=1.25, plafond=244):
     return Image.fromarray(np.clip(a, 0, plafond).astype(np.uint8))
 
 
-def patine_chaude(img, force=0.35, graine=7, grain=0.04, bord=0.06):
+def patine_chaude(img, force=0.35, graine=7, grain=0.04, bord=0.06, teinte=(1.0, 0.88, 0.70)):
     """La patine du module commun (bords assombris et irréguliers, grain fin), les bords virant franchement au brun
-    chaud comme le dégradé du SVG (#e2d3ad) plutôt qu'au gris."""
+    chaud (#9b815a au ras du bord : le brun des cadres du jeu) plutôt qu'au kaki ; teinte : ce que gardent le rouge, le
+    vert et le bleu au bord."""
     W, H = img.size
     a = np.array(img.convert("RGB"), dtype=np.float32)
     yy, xx = np.mgrid[0:H, 0:W].astype(np.float32)
@@ -125,8 +127,33 @@ def patine_chaude(img, force=0.35, graine=7, grain=0.04, bord=0.06):
     t = (1 - T.lisse01(0.0, bord * 3, d)) ** 1.3
     ombre = 1 - force * t
     g = 1 + grain * T.bruit(W, H, 3, graine + 1, octaves=2)
-    teinte = np.array((1.0, 0.95, 0.84), dtype=np.float32)
+    teinte = np.array(teinte, dtype=np.float32)
     a = a * (ombre * g)[..., None] * (1 - (1 - teinte) * t[..., None])
+    return Image.fromarray(np.clip(a, 0, 255).astype(np.uint8))
+
+
+TACHES = ((0.14, 0.72, 0.060), (0.41, 0.46, 0.042), (0.63, 0.84, 0.055), (0.87, 0.40, 0.048))   # x, y (part de W, H), rayon (part de W)
+
+
+def taches(img, graine=5, positions=TACHES, force=0.13):
+    """Quelques taches très pâles d'un vieux vélin : auréoles brunes aux bords irréguliers, réparties sur la feuille
+    au-dessous des lettrines et des dates. Rien qui ressemble à un dessin, rien qui gêne les traits et les médaillons
+    posés dessus : au plus 13 % de brun, le parchemin reste lisible dessous."""
+    W, H = img.size
+    a = np.array(img.convert("RGB"), dtype=np.float32)
+    rnd = random.Random(graine)
+    yy, xx = np.mgrid[0:H, 0:W].astype(np.float32)
+    n = T.bruit(W, H, max(8, W // 20), graine + 3, octaves=3)
+    total = np.zeros((H, W), dtype=np.float32)
+    for px, py, pr in positions:
+        cx, cy, rx = px * W, py * H, pr * W
+        ry = rx * rnd.uniform(0.6, 0.9)
+        d = np.hypot((xx - cx) / rx, (yy - cy) / ry) + 0.22 * n
+        coeur = T.lisse01(1.05, 0.5, d)                       # 1 au centre, 0 au-delà du bord
+        aureole = np.exp(-((d - 0.95) / 0.09) ** 2)            # le cerne plus marqué d'une auréole
+        total = np.maximum(total, (0.45 * coeur + 0.75 * aureole) * rnd.uniform(0.7, 1.0))
+    teinte = np.array((0.82, 0.72, 0.55), dtype=np.float32)
+    a = a * (1 - force * np.clip(total, 0, 1)[..., None] * (1 - teinte))
     return Image.fromarray(np.clip(a, 0, 255).astype(np.uint8))
 
 
@@ -134,7 +161,7 @@ def route_et_annee():
     """route-fond.jpg puis annee-fond.jpg (bande du même rendu)."""
     W, H = (500, 160) if ESSAI else (2000, 640)
     brut = recaler(rendre_feuille_route(W, H, echantillons=24 if ESSAI else 48), ROUTE_CIBLE)
-    route = patine_chaude(brut, force=0.35, bord=0.045)
+    route = patine_chaude(taches(brut), force=0.35, bord=0.045)
     C.controle_blancs(route, "route-fond")
     # la bande de l'année : les 208 px du milieu (104 unités), patine plus légère
     hb = H * 208 // 640
@@ -187,14 +214,15 @@ def tuile_raccordable(tuile):
 
 
 def patine_uniforme(img, force=0.14, marge_px=52, rampe_px=50):
-    """Bords d'une feuille un peu assombris et bruns, sans irrégularité (les tranches de border-image se répètent)."""
+    """Bords d'une feuille un peu assombris et bruns (pas gris), sans irrégularité (les tranches de border-image se
+    répètent)."""
     a = np.array(img.convert("RGB"), dtype=np.float32)
     H, W = a.shape[:2]
     yy, xx = np.mgrid[0:H, 0:W].astype(np.float32)
     d = np.minimum(np.minimum(xx, W - 1 - xx), np.minimum(yy, H - 1 - yy))
     t = 1 - T.lisse01(marge_px - rampe_px, marge_px, d)
     f = 1 - force * t
-    teinte = np.array((1.0, 0.98, 0.94), dtype=np.float32)
+    teinte = np.array((1.0, 0.955, 0.87), dtype=np.float32)
     a = a * f[..., None] * (1 - (1 - teinte) * t[..., None])
     return Image.fromarray(np.clip(a, 0, 255).astype(np.uint8))
 
@@ -246,7 +274,7 @@ def cadre_page():
     img = C._reduire(img, surech).convert("RGB")
     img = img.filter(ImageFilter.UnsharpMask(radius=1.0, percent=35, threshold=1))
     img = recaler_hors_cadre(img, "#f2e8cf")
-    img = patine_uniforme(img, force=0.13, marge_px=34, rampe_px=30)
+    img = patine_uniforme(img, force=0.15, marge_px=34, rampe_px=30)
     coupe = CADRE_COUPE * C.ECHELLE
     centre = tuile_raccordable(img.crop((coupe, coupe, px - coupe, px - coupe)))
     img.paste(centre, (coupe, coupe))
@@ -262,7 +290,9 @@ def cadre_page():
 # ---------------------------------------------------------------- la carte « Partir en expédition »
 PLAN_M = 140.0                  # côté du sol (m), centré sur (0, 25)
 PLAN_CENTRE = (0.0, 25.0)
-ROUTE_TRACE = [(0.5, -12.0), (1.8, -4.0), (-1.6, 3.0), (-4.2, 9.0), (-2.4, 14.5), (1.8, 19.0), (3.2, 23.0), (3.0, 27.0)]
+# À 7 px/m la carte voit 46 m de large et le sol de y = -4,5 à y = 38 m ; le médaillon de la carte (64 px) couvre le bas
+# du centre (x de -4,6 à 4,6 m, y jusqu'à 2,7 m) : la borne du départ et la bannière restent à gauche, hors du médaillon.
+ROUTE_TRACE = [(0.5, -10.0), (2.0, -3.0), (-1.5, 3.0), (-3.6, 8.0), (-1.6, 12.0), (1.6, 15.0), (2.4, 18.0), (2.2, 20.5)]
 
 
 def masque_route(taille=1024, largeur=3.2, graine=5):
@@ -412,19 +442,20 @@ def rendre_carte(w, h, ppm, ancre_bas, surech):
     k = C.ECHELLE * surech
     C.reglages_rendu(w * k, h * k, echantillons=32 if ESSAI else 48, transparent=False, exposition=-0.1)
     sol_carte(masque_route())
-    # le bourg de France au bout de la route (échelle 0,6), le même que celui de la carte de campagne
+    # le bourg de France au bout de la route (échelle 0,65), le même que celui de la carte de campagne
     objs, lacet = K.bourg("france")
-    pivot = C.pivot("bourg", objs, lacet, (3.0, 31.5, 0))
-    pivot.scale = (0.6, 0.6, 0.6)
-    # la borne et la bannière au lys au départ de la route, à gauche ; la charrette à l'arrêt, à droite
-    borne("borne1", (-3.0, -3.5, 0))
-    borne("borne2", (4.6, 18.5, 0), hauteur=1.3)
-    C.drapeau("banniere", "france", 5.2, 3.0, 2.0, loc=(-5.6, -1.5, 0), vent=1.0, epi=True, echelle_embleme=0.66)
-    charrette("charrette", (7.4, 1.0, 0), lacet=-62, echelle=1.3)
+    pivot = C.pivot("bourg", objs, lacet, (2.4, 23.5, 0))
+    pivot.scale = (0.62, 0.62, 0.62)
+    # la borne et la bannière au lys au départ de la route, à gauche (hors du médaillon de la carte) ; la charrette à
+    # l'arrêt, à droite de la route
+    borne("borne1", (-5.8, -0.6, 0))
+    borne("borne2", (4.4, 14.0, 0), hauteur=1.3)
+    C.drapeau("banniere", "france", 5.2, 3.0, 2.0, loc=(-8.2, 1.2, 0), vent=1.0, epi=True, echelle_embleme=0.66)
+    charrette("charrette", (7.0, 2.0, 0), lacet=-62, echelle=1.5)
     feuillus = K.houppier("houppier", ("#2f4423", "#5c7338"))
     tronc = E.mat_bois("tronc", "#4a3522")
-    for nom, loc, r in (("arbre1", (-13.0, 6.5, 0), 3.2), ("arbre2", (12.5, 11.0, 0), 2.8), ("arbre3", (-9.5, 24.0, 0), 2.6),
-                        ("arbre4", (16.0, 30.0, 0), 2.4), ("arbre5", (-18.0, 36.0, 0), 2.9)):
+    for nom, loc, r in (("arbre1", (-12.5, 6.0, 0), 3.0), ("arbre2", (11.0, 9.5, 0), 2.8), ("arbre3", (-8.5, 19.5, 0), 2.6),
+                        ("arbre4", (13.0, 23.0, 0), 2.4), ("arbre5", (-15.5, 29.0, 0), 2.9), ("arbre6", (10.5, 31.0, 0), 2.3)):
         arbre(nom, feuillus, loc, r, tronc)
     return C.rendre(os.path.join(C.CACHE, "_rendu", "carte-expedition.png"))
 

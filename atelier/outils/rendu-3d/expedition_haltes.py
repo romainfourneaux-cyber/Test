@@ -85,10 +85,30 @@ def mats_armes():
             "sombre": C.mat_metal("fer_sombre", FER_SOMBRE, rugosite=0.62, metal=0.8)}
 
 
-def epee(nom, m, loc=(0, 0, 0), penche=0.0, lacet=0.0, longueur=1.05):
+# Flammes d'enluminure : rouge-orangé franc, opaques, émission modérée. Les flammes de commun (force 6, alpha 0,85) sont
+# faites pour l'herbe sombre du champ de bataille ; sur le parchemin clair, AgX les délave en rose pâle.
+FLAMME, FLAMME_COEUR = ("#f0501a", 2.0), ("#ffb43c", 3.0)
+
+
+def mat_flammes(nom):
+    return (E.mat_flamme(nom + "_fl", FLAMME[0], force=FLAMME[1], alpha=1.0),
+            E.mat_flamme(nom + "_fl2", FLAMME_COEUR[0], force=FLAMME_COEUR[1], alpha=1.0))
+
+
+def feu_vif(nom, loc=(0, 0, 0), rayon=0.3, hauteur=0.55):
+    """Feu de camp de commun (bûches, pierres), flammes remplacées par les flammes d'enluminure, un peu plus hautes."""
+    objets = E.feu(nom, loc=loc, rayon=rayon, hauteur=hauteur)
+    mf, mf2 = mat_flammes(nom)
+    for o in objets:
+        if o.name.startswith(nom + "_f"):
+            o.data.materials[0] = mf2 if o.name.endswith("_f3") else mf
+    return objets
+
+
+def epee(nom, m, loc=(0, 0, 0), penche=0.0, lacet=0.0, longueur=1.05, largeur=0.07):
     """Épée plantée dans le sol, pointe en bas : lame effilée, garde d'or, poignée de cuir, pommeau. penche : degrés
-    autour de Y (le haut part vers +X si positif)."""
-    w = 0.07
+    autour de Y (le haut part vers +X si positif) ; largeur : demi-largeur de la lame (m)."""
+    w = largeur
     bm = bmesh.new()
     pts = [(0, 0), (-w * 0.35, 0.12), (-w, 0.3), (-w, longueur), (w, longueur), (w, 0.3), (w * 0.35, 0.12)]
     bm.faces.new([bm.verts.new((x, 0.0, z)) for x, z in pts])
@@ -96,13 +116,28 @@ def epee(nom, m, loc=(0, 0, 0), penche=0.0, lacet=0.0, longueur=1.05):
     so = lame.modifiers.new("ep", "SOLIDIFY")
     so.thickness = 0.03
     so.offset = 0.0
-    garde = C.boite(nom + "_garde", 0.42, 0.07, 0.06, (0, 0, longueur), m["or"])
+    garde = C.boite(nom + "_garde", 0.42 + 2.2 * (w - 0.07), 0.07, 0.07, (0, 0, longueur), m["or"])
     C.biseau(garde, 0.015)
-    poignee = C.cylindre(nom + "_poignee", 0.05, 0.3, (0, 0, longueur + 0.06), m["cuir"], segments=12)
-    pommeau = C.sphere(nom + "_pommeau", 0.085, (0, 0, longueur + 0.06 + 0.3 + 0.055), m["or"], subdiv=2)
+    poignee = C.cylindre(nom + "_poignee", 0.05, 0.3, (0, 0, longueur + 0.07), m["cuir"], segments=12)
+    pommeau = C.sphere(nom + "_pommeau", 0.09, (0, 0, longueur + 0.07 + 0.3 + 0.06), m["or"], subdiv=2)
     objets = [lame, garde, poignee, pommeau]
     p = pivot_rot(nom + "_pivot", objets, (0.0, penche, lacet), loc)
     return objets + [p]
+
+
+def ecu_bois(nom, largeur=0.9, hauteur=1.0, loc=(0, 0, 0), penche=8.0, lacet=0.0, m=None):
+    """Écu (forme héraldique) de planches cerclé d'un liseré de fer, umbo d'acier ; debout face à la caméra, pied en loc.
+    Aucune couleur de camp : c'est un écu de route."""
+    m = m or mats_armes()
+    objets = E.ecusson(nom, largeur, hauteur, "#9a7a50", epaisseur=0.07, loc=loc, penche=penche, lacet=lacet,
+                       mat=E.mat_planches(nom + "_planches", "#9a7a50"), lisere=None, bombe=0.05)
+    bord = E.ecusson(nom + "_bord", largeur * 1.08, hauteur * 1.06, "#7d7a74", epaisseur=0.04, loc=(loc[0], loc[1] + 0.045, loc[2] - 0.03),
+                     penche=penche, lacet=lacet, mat=m["fer"], lisere=None)
+    a = math.radians(penche)
+    zc = hauteur * 0.6
+    umbo = C.sphere(nom + "_umbo", largeur * 0.16, (loc[0], loc[1] - zc * math.sin(a) - 0.05, loc[2] + zc * math.cos(a)), m["lame"], subdiv=2,
+                    echelle=(1, 0.55, 1))
+    return objets + bord + [umbo]
 
 
 def bouclier_rond(nom, rayon=0.7, loc=(0, 0, 0), penche=18.0, lacet=0.0, m=None, mat=None):
@@ -132,10 +167,10 @@ def hallebarde(nom, m, a, b):
     a, b = Vector(a), Vector(b)
     d = (b - a).normalized()
     objets = lance(nom, m, a, b, rayon=0.045, fer=0.32)
-    hache = C.boite(nom + "_hache", 0.42, 0.03, 0.48, (0, 0, 0), m["lame"], base=False)
+    hache = C.boite(nom + "_hache", 0.5, 0.03, 0.56, (0, 0, 0), m["lame"], base=False)
     C.biseau(hache, 0.012, segments=2)
-    orienter(hache, d, b - d * 0.55)
-    hache.location = b - d * 0.55 + Vector((0.2, 0, 0))
+    orienter(hache, d, b - d * 0.6)
+    hache.location = b - d * 0.6 + Vector((0.24, 0, 0))
     crochet = C.boite(nom + "_crochet", 0.16, 0.025, 0.12, (0, 0, 0), m["lame"], base=False)
     orienter(crochet, d, b - d * 0.5)
     crochet.location = b - d * 0.5 - Vector((0.12, 0, 0))
@@ -358,11 +393,11 @@ def grenier(nom, loc=(0, 0, 0), lacet=-30.0):
     chaume = E.mat_toile(nom + "_chaume", CHAUME)
     toit = P.toit_deux_pans(nom + "_toit", -l / 2, l / 2, -p / 2, p / 2, 1.1, 0.7, chaume, debord=0.18)
     objets = [socle, murs, porte, toit]
-    mf, mf2 = E.mat_flamme(nom + "_fl", "#ff6a14", force=3.2, alpha=0.95), E.mat_flamme(nom + "_fl2", "#ffb03a", force=4.5, alpha=0.95)
-    for k, (x, y, z, r, kz, m) in enumerate(((-0.3, 0.05, 1.45, 0.3, 2.6, mf), (0.3, -0.1, 1.4, 0.26, 2.3, mf), (0.0, 0.1, 1.55, 0.2, 2.9, mf2), (0.6, 0.05, 1.3, 0.18, 2.0, mf), (-0.6, 0.0, 1.3, 0.16, 1.9, mf), (0.15, -0.35, 1.25, 0.14, 2.0, mf2))):
+    mf, mf2 = mat_flammes(nom)
+    for k, (x, y, z, r, kz, m) in enumerate(((-0.3, 0.05, 1.45, 0.36, 2.8, mf), (0.3, -0.1, 1.4, 0.32, 2.5, mf), (0.0, 0.1, 1.55, 0.24, 3.1, mf2), (0.6, 0.05, 1.3, 0.22, 2.2, mf), (-0.6, 0.0, 1.3, 0.2, 2.0, mf), (0.15, -0.35, 1.25, 0.17, 2.2, mf2))):
         objets.append(C.sphere("%s_f%d" % (nom, k), r, (x, y, z), m, subdiv=2, echelle=(1, 1, kz)))
     mfu = E.mat_fumee(nom + "_fumee", "#6f675c", alpha=0.6)
-    for k, (x, y, z, r) in enumerate(((0.3, 0.3, 2.2, 0.32), (0.62, 0.45, 2.45, 0.26), (-0.2, 0.4, 2.35, 0.22))):
+    for k, (x, y, z, r) in enumerate(((0.3, 0.3, 2.35, 0.26), (0.62, 0.45, 2.55, 0.2), (-0.2, 0.4, 2.45, 0.17))):
         objets.append(C.sphere("%s_s%d" % (nom, k), r, (x, y, z), mfu, subdiv=2, echelle=(1.3, 1.0, 0.8)))
     return objets + [C.pivot(nom + "_pivot", objets, lacet, loc)]
 
@@ -398,13 +433,18 @@ def etal(nom, loc=(0, 0, 0), lacet=-18.0):
 
 # ---------------------------------------------------------------- les dix médaillons
 def halte_escarmouche():
-    """Deux épées croisées plantées dans le champ, devant un écu rond de bois posé de biais. Aucune couleur de camp."""
+    """Deux grandes épées croisées plantées dans le champ (le X de l'icône du jeu), un écu rond de bois plus petit posé
+    derrière. Aucune couleur de camp."""
     E.scene_vignette(rayon_sol=1.8)
     m = mats_armes()
-    objets = epee("epee1", m, (-0.37, -0.3, -0.08), penche=38, lacet=6) + epee("epee2", m, (0.37, -0.25, -0.08), penche=-38, lacet=-6)
-    objets += bouclier_rond("ecu", 0.62, (0.05, 0.3, 0), penche=16, lacet=-10, m=m, mat=E.mat_planches("ecu_planches", "#9a7a50"))
-    objets = racine(objets, 1.5, -0.15)
-    return E.rendre_rondel("halte-escarmouche", objets, echantillons=ECHANTILLONS)
+    m["lame"] = C.mat_metal("lame_sombre", "#767a82", rugosite=0.42)      # acier plus sombre : la lame se détache du parchemin
+    # un grand X : les lames se croisent à mi-hauteur (plantées à ± 0,52 m, penchées de 26°), les gardes d'or en haut ;
+    # l'écu, sombre et plus petit, est derrière le croisement (la caméra à 45° remonte ce qui est en arrière)
+    objets = epee("epee1", m, (-0.5, 0.1, -0.08), penche=27, lacet=3, longueur=1.45, largeur=0.12)
+    objets += epee("epee2", m, (0.5, 0.15, -0.08), penche=-27, lacet=-3, longueur=1.45, largeur=0.12)
+    objets += bouclier_rond("ecu", 0.55, (0.0, 0.55, 0), penche=20, lacet=-6, m=m, mat=E.mat_planches("ecu_planches", "#6e4f30"))
+    objets = racine(objets, 1.5, -0.55)
+    return E.rendre_rondel("halte-escarmouche", objets, echantillons=ECHANTILLONS, contour=0.5)
 
 
 def halte_embuscade():
@@ -423,8 +463,9 @@ def halte_embuscade():
 def halte_bivouac():
     """Tente de toile et feu de camp devant à droite, une bûche de réserve."""
     E.scene_vignette(rayon_sol=1.8)
-    objets = E.tente("tente", 2.0, 1.75, 1.5, loc=(-0.35, 0.3, 0), lacet=-28)
-    objets += E.feu("feu", loc=(0.8, -0.5, 0), rayon=0.38, hauteur=0.7)
+    # toile tannée (plus sombre que le champ de parchemin, sinon la tente s'efface à 56 px)
+    objets = E.tente("tente", 2.0, 1.75, 1.5, loc=(-0.35, 0.3, 0), lacet=-28, mat=E.mat_toile("tente_toile", "#c2a97c"), ouverture="#4a3a28")
+    objets += feu_vif("feu", loc=(0.85, -0.5, 0), rayon=0.42, hauteur=0.85)
     buche = C.cylindre("buche", 0.07, 0.55, (0, 0, 0), E.mat_bois("buche_bois", "#4a3018"), segments=10)
     buche.rotation_euler = (0, math.pi / 2, math.radians(25))
     buche.location = (0.45, -1.0, 0.07)
@@ -453,14 +494,16 @@ def halte_ev_defi():
     """Pas d'armes : poteau coiffé d'un heaume, deux lances croisées derrière, écu de bois pendu au poteau."""
     E.scene_vignette(rayon_sol=1.8)
     m = mats_armes()
-    objets = [C.cylindre("poteau", 0.09, 1.75, (0, 0.05, 0), E.mat_bois("poteau_bois", "#5a3e22"), segments=12)]
-    objets += heaume("heaume", (0, 0.05, 1.75), 0.26, m)
-    objets += lance("lance1", m, (-0.8, 0.5, 0.0), (0.55, 0.42, 2.25), rayon=0.05, fer=0.32)
-    objets += lance("lance2", m, (0.8, 0.5, 0.0), (-0.55, 0.42, 2.25), rayon=0.05, fer=0.32)
-    objets += bouclier_rond("ecu", 0.5, (0.0, -0.12, 0.5), penche=6, lacet=0, m=m, mat=E.mat_planches("ecu_planches", "#9a7a50"))
+    # silhouette verticale, différente des deux autres médaillons d'armes : grand heaume sur un poteau, écu en forme
+    # d'écusson (pas rond) pendu devant, lances croisées derrière
+    objets = [C.cylindre("poteau", 0.1, 1.85, (0, 0.05, 0), E.mat_bois("poteau_bois", "#5a3e22"), segments=12)]
+    objets += heaume("heaume", (0, 0.05, 1.85), 0.32, m)
+    objets += lance("lance1", m, (-0.85, 0.5, 0.0), (0.6, 0.42, 2.35), rayon=0.05, fer=0.32)
+    objets += lance("lance2", m, (0.85, 0.5, 0.0), (-0.6, 0.42, 2.35), rayon=0.05, fer=0.32)
+    objets += ecu_bois("ecu", 0.95, 1.05, (0.0, -0.1, 0.55), penche=8, m=m)
     for o in objets:
-        o.location.y -= 0.35 if o.parent is None else 0.0
-    objets = racine(objets, 1.12, -0.4)
+        o.location.y -= 0.3 if o.parent is None else 0.0
+    objets = racine(objets, 1.08, -0.4)
     return E.rendre_rondel("halte-ev-defi", objets, echantillons=ECHANTILLONS)
 
 
@@ -468,12 +511,12 @@ def halte_ev_mercenaires():
     """Écu rond de bois posé droit, deux hallebardes croisées derrière, bourse de cuir devant."""
     E.scene_vignette(rayon_sol=1.8)
     m = mats_armes()
-    objets = hallebarde("hal1", m, (-0.85, 0.45, 0.0), (0.6, 0.38, 2.3)) + hallebarde("hal2", m, (0.85, 0.45, 0.0), (-0.6, 0.38, 2.3))
-    objets += bouclier_rond("ecu", 0.6, (0.0, -0.05, 0), penche=14, lacet=6, m=m)
-    objets += E.sac("bourse", 0.2, 0.36, (0.62, -0.62, 0), mat=E.mat_cuir("bourse_cuir", "#6a4426"), lacet=30)
+    objets = hallebarde("hal1", m, (-0.9, 0.45, 0.0), (0.65, 0.38, 2.3)) + hallebarde("hal2", m, (0.9, 0.45, 0.0), (-0.65, 0.38, 2.3))
+    objets += bouclier_rond("ecu", 0.52, (0.0, -0.05, 0), penche=14, lacet=6, m=m)
+    objets += E.sac("bourse", 0.22, 0.4, (0.66, -0.6, 0), mat=E.mat_cuir("bourse_cuir", "#6a4426"), lacet=30)
     for o in objets:
         o.location.y -= 0.3 if o.parent is None else 0.0
-    objets = racine(objets, 1.1, -0.4)
+    objets = racine(objets, 1.12, -0.4)
     return E.rendre_rondel("halte-ev-mercenaires", objets, echantillons=ECHANTILLONS)
 
 
@@ -489,10 +532,10 @@ def halte_ev_espion():
     """Lanterne sourde, lettre au cachet de cire, dague posée en travers."""
     E.scene_vignette(rayon_sol=1.8)
     m = mats_armes()
-    objets = lanterne("lanterne", (-0.55, 0.15, 0), hauteur=1.05, rayon=0.27, lacet=20)
-    objets += lettre("lettre", (0.5, -0.35, 0), 0.9, 0.62, lacet=16)
-    objets += dague("dague", m, (0.66, -0.45, 0.035), lacet=-40, longueur=0.78)
-    objets = racine(objets, 1.5, -0.1)
+    objets = lanterne("lanterne", (-0.6, 0.15, 0), hauteur=1.3, rayon=0.32, lacet=20)
+    objets += lettre("lettre", (0.55, -0.35, 0), 1.05, 0.72, lacet=16)
+    objets += dague("dague", m, (0.72, -0.45, 0.035), lacet=-40, longueur=0.9)
+    objets = racine(objets, 1.45, -0.1)
     return E.rendre_rondel("halte-ev-espion", objets, echantillons=ECHANTILLONS)
 
 
@@ -567,7 +610,10 @@ def porte(nom):
 
 
 # ---------------------------------------------------------------- sceaux
-SCEAUX = {"sceau-reussie": (E.CIRE_JOUEUR, "lys"), "sceau-cedes": (E.CIRE_PLOMB, "ecu-brise")}
+# Plomb : l'emblème posé est pris dans l'ombre du plomb (sombre sur gris), pas dans son reflet : un écu brisé clair sur
+# du gris clair ne se lisait pas à 32 unités. Le troisième terme ne sert qu'à la plaque de l'emblème (expedition_commun.sceau_cire).
+CIRE_PLOMB_SOMBRE = (E.CIRE_PLOMB[0], E.CIRE_PLOMB[1], "#363942")
+SCEAUX = {"sceau-reussie": (E.CIRE_JOUEUR, "lys"), "sceau-cedes": (CIRE_PLOMB_SOMBRE, "ecu-brise")}
 
 
 def sceau(nom):
@@ -583,17 +629,20 @@ def sceau(nom):
 def compagnie(nom):
     w, h = E.CATALOGUE[nom][1], E.CATALOGUE[nom][2]
     sac = nom.startswith("compagnie-sac")
-    E.scene_vignette((w, h), inclinaison=45, px_par_m=11 if sac else 12, ancre=(w / 2.0, h / 2.0), rayon_sol=1.6)
+    # l'objet et son ombre sont recentrés après coup (centrer) : la toile de 24 unités doit garder 2 px de marge autour
+    E.scene_vignette((w, h), inclinaison=45, px_par_m=11 if sac else 10, ancre=(w / 2.0, h / 2.0), rayon_sol=1.6)
     if nom == "compagnie-sac-plein":
         objets = E.sac("sac", 0.55, 1.7, mat=E.mat_toile("jute", E.JUTE), lacet=15)
     elif nom == "compagnie-sac-vide":
-        objets = E.sac("sac", 0.55, 1.7, mat=E.mat_toile("toile", E.FOND), lacet=15, plein=False)
+        # toile claire mais pas blanche (le fond du jeu lui-même disparaissait sur le parchemin)
+        objets = E.sac("sac", 0.55, 1.7, mat=E.mat_toile("toile", "#d9ccb0"), lacet=15, plein=False)
     elif nom == "compagnie-or":
-        objets = E.pile_pieces("or", 7, 0.5, 0.11, graine=3)
+        objets = E.pile_pieces("or", 6, 0.46, 0.1, graine=3)
     elif nom == "compagnie-plan":
-        objets = E.rouleau("plan", 1.4, 0.21, lacet=-20, ruban=E.RUBRIQUE)
+        # parchemin un peu plus sombre que le clair : au soleil, le clair brûlait (contrôle des blancs)
+        objets = E.rouleau("plan", 1.3, 0.2, lacet=-20, ruban=E.RUBRIQUE, mat=E.mat_parchemin("plan_p", "#dccba0", grain=0.3))
     else:
-        objets = lanterne("lanterne", (0, 0, 0), hauteur=1.3, rayon=0.36, lacet=25, ouverte=False)
+        objets = lanterne("lanterne", (0, 0, 0), hauteur=1.2, rayon=0.33, lacet=25, ouverte=False)
     img = E.rendre_vignette(nom, objets, (w, h), echantillons=ECHANTILLONS, contour=0.5, ombre=True, force_ombre=0.4)
     return E.controler(centrer(img), nom)      # contenu centré (ombre comprise) ; l'ancre du manifeste vient du catalogue
 
@@ -605,8 +654,8 @@ COMPAGNIE = ("compagnie-sac-plein", "compagnie-sac-vide", "compagnie-or", "compa
 def loupe():
     """Chaque image de la famille à sa taille d'écran courante (médaillon 56 px, écusson 22, sceau 32) et agrandie 3 ×."""
     man = E.lire_manifeste()
-    ids = [k for k in E.catalogue("haltes") if k in man]
-    tailles = {"halte": 56, "porte": 22, "sceau": 32}
+    ids = [k for k in E.catalogue("haltes") + list(COMPAGNIE) if k in man]
+    tailles = {"halte": 56, "porte": 22, "sceau": 32, "compagnie": 24}     # largeur d'écran de l'objet logique (px)
     police, petite = E._police(14), E._police(11)
     cw, ch = 56 * 3 + 56 + 40, 56 * 3 + 40
     cols = 4
@@ -617,15 +666,16 @@ def loupe():
         e = man[k]
         im = Image.open(os.path.join(C.RACINE, "jeu", e["f"])).convert("RGBA")
         t = tailles[k.split("-")[0]]
-        t = int(round(t * im.size[0] / (e["w"] * 2)))        # taille d'écran de l'image entière (les sceaux font 40 pour 34 de cire)
-        petit = im.convert("RGBa").resize((t, t), Image.LANCZOS).convert("RGBA")
-        zoom = petit.resize((t * 3, t * 3), Image.NEAREST)
+        tw = int(round(t * im.size[0] / (e["w"] * 2)))        # largeur d'écran de l'image entière (les sceaux font 40 pour 34 de cire)
+        th = max(1, int(round(tw * im.size[1] / im.size[0])))
+        petit = im.convert("RGBa").resize((tw, th), Image.LANCZOS).convert("RGBA")
+        zoom = petit.resize((tw * 3, th * 3), Image.NEAREST)
         x, y = 16 + (n % cols) * (cw + 12), 16 + (n // cols) * (ch + 12)
         d.rectangle((x, y, x + cw, y + ch), outline=(170, 150, 110))
         can.paste(petit, (x + 8, y + 8), petit)
         can.paste(zoom, (x + 8 + 56 + 16, y + 8), zoom)
-        d.text((x + 8, y + ch - 20), "%s : %d px, × 3" % (k, t), fill=C.rgb8(E.ENCRE), font=petite)
-    d.text((16, can.size[1] - 24), "Famille « haltes » à la taille d'écran (1366 × 768) et agrandie 3 fois, sans lissage", fill=C.rgb8(E.RUBRIQUE), font=police)
+        d.text((x + 8, y + ch - 20), "%s : %d px, × 3" % (k, tw), fill=C.rgb8(E.ENCRE), font=petite)
+    d.text((16, can.size[1] - 24), "Famille « haltes » (et icônes de la compagnie) à la taille d'écran (1366 × 768) et agrandie 3 fois, sans lissage", fill=C.rgb8(E.RUBRIQUE), font=police)
     chemin = os.path.join(E.CAPTURES, "planche-expedition-haltes-56.png")
     can.save(chemin)
     E.journal("loupe : " + os.path.relpath(chemin, C.RACINE))
