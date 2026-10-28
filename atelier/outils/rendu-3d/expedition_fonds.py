@@ -17,7 +17,8 @@ Quatre images, rendues avec le module commun (même soleil du nord-ouest, mêmes
     charrette à l'arrêt, des houppiers ; vue de trois quarts à 40° comme les lieux de la carte, pas de ciel, aucun
     personnage.
 Lancer : cd /home/user/Test && python3 atelier/outils/rendu-3d/expedition_fonds.py [route|annee|cadre|carte|planche]
-  [--essai] (rendus réduits dans le cache, rien d'écrit dans jeu/).
+  [--essai] (rendus réduits dans le cache, rien d'écrit dans jeu/) [--sans-rendu] (reprend les rendus bruts du cache
+  pour refaire seulement le post-traitement et l'enregistrement).
 La planche atelier/captures/planche-expedition-fonds.png pose sur chaque fond une maquette de ce que l'écran dessine
 dessus (lettrines, chemins, médaillons, cases, fenêtre à cadre) : on la regarde avant de livrer.
 """
@@ -39,6 +40,7 @@ from PIL import Image, ImageDraw, ImageFilter  # noqa: E402
 FAMILLE = "fonds"
 IDS = ("route-fond", "annee-fond", "cadre-page", "carte-expedition")
 ESSAI = False
+SANS_RENDU = False           # --sans-rendu : reprend les rendus bruts du cache (_rendu/) pour refaire le post-traitement
 
 # Feuille de route : 100 × 32 m vus de dessus à 20 px/m. Le rendu (soleil, ciel, AgX) d'un parchemin clair retombe vers
 # #d1c8bc, gris et sombre à côté du parchemin du jeu, et l'exposition n'y change rien (AgX compresse les hautes lumières :
@@ -79,8 +81,20 @@ def feuille(nom, largeur, hauteur, mat, amplitude=ROUTE_ONDULATION, echelle_m=RO
     return C.objet_maillage(nom, bm, mat, lisse=True)
 
 
+def rendu_cache(nom):
+    """Le rendu brut en cache (atelier/sources-3d/_cache/_rendu/<nom>.png), ou None."""
+    chemin = os.path.join(C.CACHE, "_rendu", nom + ".png")
+    if SANS_RENDU and os.path.exists(chemin):
+        journal("reprise du rendu en cache " + os.path.relpath(chemin, C.RACINE))
+        return Image.open(chemin).convert("RGBA")
+    return None
+
+
 def rendre_feuille_route(W, H, echantillons=48):
     """Rendu RGB de la feuille de route (W × H px), sans patine."""
+    brut = rendu_cache("route-fond")
+    if brut is not None and brut.size == (W, H):
+        return brut.convert("RGB")
     E.scene_dessus(ROUTE_M[0], ROUTE_M[1], W, H, echantillons=echantillons, exposition=-0.1)
     feuille("feuille", ROUTE_M[0], ROUTE_M[1], E.mat_parchemin("parchemin_route", ROUTE_TEINTE, grain=0.6, echelle=6.0))
     return E.rendre_opaque("route-fond")
@@ -140,7 +154,7 @@ def cadre_objets():
     """La feuille de 24 × 24 m et son cadre : filet d'encre, bande d'or bombée (0,5 m), filet d'encre, le milieu de la
     bande à 3 m du bord ; une perle d'or à chaque angle de la bande."""
     L = CADRE_M
-    objets = [feuille("feuille", L, L, E.mat_parchemin("parchemin_cadre", "#efe3c6", grain=0.3, echelle=5.0),
+    objets = [feuille("feuille", L, L, E.mat_parchemin("parchemin_cadre", "#efe3c6", grain=0.45, echelle=5.0),
                       amplitude=0.03, echelle_m=4.0, graine=23)]
     encre, or_ = E.mat_encre("encre_cadre"), E.mat_or("or_cadre", "#c8942c", rugosite=0.4, metal=0.8)
     r = CADRE_RETRAIT
@@ -198,6 +212,21 @@ def recaler_hors_cadre(img, cible, contraste=1.15):
     return Image.fromarray(np.clip(a * (c / np.maximum(moy, 1.0)), 0, 246).astype(np.uint8))
 
 
+def palette_coins(img, couleurs=255):
+    """PNG à palette (256 couleurs par coupe médiane, tramé) avec un index réservé aux coins transparents : la mise à
+    256 couleurs du module commun (octree) aplatit le dégradé des bords du cadre en paliers ; la coupe médiane le garde.
+    Le fichier passe sous le seuil de quantification de sauver, qui l'écrit tel quel."""
+    rgb, a = img.convert("RGB"), np.array(img.split()[3])
+    p = rgb.quantize(couleurs, method=Image.Quantize.MEDIANCUT, dither=Image.Dither.FLOYDSTEINBERG)
+    pal = (p.getpalette() + [0] * 768)[:765] + [0, 0, 0]
+    idx = np.array(p, dtype=np.uint8)
+    idx[a < 128] = 255
+    q = Image.fromarray(idx, "P")
+    q.putpalette(pal)
+    q.info["transparency"] = bytes([255] * 255 + [0])
+    return q
+
+
 def masque_coins(taille, rayon):
     """Alpha d'une feuille aux coins arrondis (rayon en px), bord net."""
     m = Image.new("L", (taille, taille), 0)
@@ -209,9 +238,11 @@ def cadre_page():
     """cadre-page.png : la feuille rendue de dessus à 2 ×, réduite, patinée, le centre rendu raccordable, coins arrondis."""
     px = 480
     surech = 1 if ESSAI else 2
-    E.scene_dessus(CADRE_M, CADRE_M, px * surech, px * surech, echantillons=32 if ESSAI else 64, exposition=-0.1, appoint=0.5)
-    cadre_objets()
-    img = C.rendre(os.path.join(C.CACHE, "_rendu", "cadre-page.png"))
+    img = rendu_cache("cadre-page")
+    if img is None or img.size != (px * surech, px * surech):
+        E.scene_dessus(CADRE_M, CADRE_M, px * surech, px * surech, echantillons=32 if ESSAI else 64, exposition=-0.1, appoint=0.5)
+        cadre_objets()
+        img = C.rendre(os.path.join(C.CACHE, "_rendu", "cadre-page.png"))
     img = C._reduire(img, surech).convert("RGB")
     img = img.filter(ImageFilter.UnsharpMask(radius=1.0, percent=35, threshold=1))
     img = recaler_hors_cadre(img, "#f2e8cf")
@@ -225,7 +256,7 @@ def cadre_page():
     if ESSAI:
         img.save(os.path.join(C.CACHE, "essai-cadre-page.png"))
         return
-    E.sauver("cadre-page", img, extra={"coupe": CADRE_COUPE})
+    E.sauver("cadre-page", palette_coins(img), extra={"coupe": CADRE_COUPE})
 
 
 # ---------------------------------------------------------------- la carte « Partir en expédition »
@@ -363,6 +394,20 @@ def carte_expedition():
     """carte-expedition.jpg : la route vers le bourg, de trois quarts à 40°, sans ciel."""
     w, h, ppm, ancre_bas = CARTE
     surech = 1 if ESSAI else E.SURECH
+    img = rendu_cache("carte-expedition")
+    if img is None or img.size != (w * C.ECHELLE * surech, h * C.ECHELLE * surech):
+        img = rendre_carte(w, h, ppm, ancre_bas, surech)
+    img = C._reduire(img, surech).convert("RGB")
+    img = img.filter(ImageFilter.UnsharpMask(radius=1.2, percent=45, threshold=1))
+    C.controle_blancs(img, "carte-expedition")
+    if ESSAI:
+        img.save(os.path.join(C.CACHE, "essai-carte-expedition.jpg"), quality=86)
+        return
+    E.sauver("carte-expedition", img, max_ko=160)
+
+
+def rendre_carte(w, h, ppm, ancre_bas, surech):
+    """La scène de la carte : sol, bourg, bornes, bannière, charrette, arbres ; rendu brut RGBA (surech ×)."""
     E.scene_scene(w, h, ppm, ancre_bas, surech=surech, sol=False)
     k = C.ECHELLE * surech
     C.reglages_rendu(w * k, h * k, echantillons=32 if ESSAI else 48, transparent=False, exposition=-0.1)
@@ -381,14 +426,7 @@ def carte_expedition():
     for nom, loc, r in (("arbre1", (-13.0, 6.5, 0), 3.2), ("arbre2", (12.5, 11.0, 0), 2.8), ("arbre3", (-9.5, 24.0, 0), 2.6),
                         ("arbre4", (16.0, 30.0, 0), 2.4), ("arbre5", (-18.0, 36.0, 0), 2.9)):
         arbre(nom, feuillus, loc, r, tronc)
-    img = C.rendre(os.path.join(C.CACHE, "_rendu", "carte-expedition.png"))
-    img = C._reduire(img, surech).convert("RGB")
-    img = img.filter(ImageFilter.UnsharpMask(radius=1.2, percent=45, threshold=1))
-    C.controle_blancs(img, "carte-expedition")
-    if ESSAI:
-        img.save(os.path.join(C.CACHE, "essai-carte-expedition.jpg"), quality=86)
-        return
-    E.sauver("carte-expedition", img, max_ko=160)
+    return C.rendre(os.path.join(C.CACHE, "_rendu", "carte-expedition.png"))
 
 
 # ---------------------------------------------------------------- planche de contrôle
@@ -410,7 +448,7 @@ def _pointille(d, a, b, pas=9, trait=2, fill=ENCRE, largeur=2):
 def maquette_route(fond):
     """Pose sur le fond (à l'échelle logique, 1000 × 320) ce que carteSVG dessine : lettrines, dates, filets, chemins,
     médaillons (dont halte-brume rendu), gardien, bannière « Cette semaine », voile de brume."""
-    im = fond.convert("RGBA")
+    im = fond.convert("RGB")
     d = ImageDraw.Draw(im, "RGBA")
     gras, texte, petit = E._police(32), E._police(15), E._police(13)
     BANDE = 320
@@ -458,8 +496,7 @@ def maquette_route(fond):
         bx = 20 + i * BANDE
         for x, y in ((bx + 80, 130), (bx + 80, 230), (bx + 170, 180), (bx + 260, 130), (bx + 260, 230)):
             if brume:
-                im.alpha_composite(brume, (x - 32, y - 32))
-                d = ImageDraw.Draw(im, "RGBA")
+                im.paste(brume, (x - 32, y - 32), brume)
             else:
                 d.ellipse((x - 24, y - 24, x + 24, y + 24), fill=OR, outline=ENCRE, width=2)
     # bannière « Cette semaine » de la troisième bande
@@ -467,12 +504,12 @@ def maquette_route(fond):
     d.line((bx, 8, bx, 46), fill=ENCRE, width=2)
     d.polygon(((bx - 2, 10), (bx - 136, 10), (bx - 128, 19), (bx - 136, 28), (bx - 2, 28)), fill=RUBRIQUE, outline=ENCRE)
     d.text((bx - 126, 11), "Cette semaine", fill=(255, 243, 208), font=texte)
-    return im
+    return im.convert("RGBA")
 
 
 def maquette_annee(fond):
     """Les cases du parchemin de l'année (27 × 34, à partir de x = 20), la frontière, le repère du relais."""
-    im = fond.convert("RGBA")
+    im = fond.convert("RGB")
     d = ImageDraw.Draw(im, "RGBA")
     police = E._police(15)
     for i in range(34):
@@ -488,7 +525,7 @@ def maquette_annee(fond):
     d.text((x + 6, 84), "Frontière", fill=RUBRIQUE, font=police)
     d.polygon(((x - 15, 16), (x - 130, 16), (x - 122, 24), (x - 130, 32), (x - 15, 32)), fill=RUBRIQUE, outline=ENCRE)
     d.text((x - 122, 17), "Cette semaine", fill=(255, 243, 208), font=police)
-    return im
+    return im.convert("RGBA")
 
 
 def maquette_fenetre(cadre, largeur, hauteur, coupe_px=120, bord=60):
@@ -575,7 +612,7 @@ def planche_fonds():
         cx, cy = e["w"] // 2, e["h"] + 2
         d.ellipse((cx - 32, cy - 32, cx + 32, cy + 32), fill=(61, 33, 22), outline=OR, width=3)
         d.rectangle((0, 0, e["w"] - 1, e["h"] - 1), outline=ENCRE, width=2)
-        cellules.append(("carte-expedition, à l'échelle logique (320 × 190) avec le médaillon de la carte", carte, legende("carte-expedition", e)))
+        cellules.append(("carte-expedition à 320 × 190, avec le médaillon", carte, legende("carte-expedition", e)))
         cellules.append(("carte-expedition, le fichier (640 × 380)", im, ""))
     absents = [k for k in IDS if k not in man or not os.path.exists(os.path.join(C.RACINE, "jeu", man[k]["f"]))]
     # mise en page : une cellule par ligne, deux côte à côte quand elles tiennent
@@ -605,8 +642,9 @@ def planche_fonds():
 
 
 def main(args):
-    global ESSAI
+    global ESSAI, SANS_RENDU
     ESSAI = "--essai" in args
+    SANS_RENDU = "--sans-rendu" in args
     quoi = [a for a in args if not a.startswith("--")] or ["tout"]
     tout = "tout" in quoi
     if tout or "route" in quoi or "annee" in quoi or "route-fond" in quoi or "annee-fond" in quoi:
@@ -618,6 +656,8 @@ def main(args):
     if not ESSAI:
         planche_fonds()
         E.verifier_budget()
+    elif "planche" in quoi:
+        planche_fonds()
 
 
 if __name__ == "__main__":

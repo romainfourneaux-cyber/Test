@@ -10,6 +10,8 @@ Images (jeu/assets/images/expedition/, manifeste images.js, cahier atelier/conce
   - deux sceaux de 40 unités (80 px) : sceau-reussie (cire bleue de France au lys), sceau-cedes (plomb à l'écu brisé).
 Lancer : cd /home/user/Test && python3 atelier/outils/rendu-3d/expedition_haltes.py [noms d'images | medaillons | portes | sceaux]
 Sans argument : tout, puis la planche atelier/captures/planche-expedition-haltes.png et la vérification du budget.
+Les cinq icônes de la compagnie (compagnie-sac-plein, -sac-vide, -or, -plan, -espion ; famille « faveurs » du catalogue)
+sont rendues ici seulement quand le manifeste ne les a pas encore, ou sur demande (« compagnie »).
 --loupe : planche de lisibilité (chaque médaillon à 56 px, et le même agrandi 3 ×) atelier/captures/planche-expedition-haltes-56.png.
 """
 import math
@@ -25,6 +27,7 @@ import places as P  # noqa: E402
 import bmesh  # noqa: E402
 import bpy  # noqa: E402
 from mathutils import Vector  # noqa: E402
+import numpy as np  # noqa: E402
 from PIL import Image, ImageDraw  # noqa: E402
 
 ECHANTILLONS = 48            # médaillons (cahier § 4) ; écussons 32
@@ -516,7 +519,9 @@ MEDAILLONS = {
 }
 
 # ---------------------------------------------------------------- écussons des portes
-# écusson du SVG (ecussonPorte) : 22 × 24 unités, centre à (x, y + 1) ; l'image fait 28 × 28, ancre (14, 13)
+# écusson du SVG (ecussonPorte) : 22 × 24 unités, centre à (x, y + 1) ; l'image fait 28 × 28, son contenu est centré
+# (centrer) et l'ancre du manifeste vaut (14, 13) : le centre de l'image tombe sur le centre de l'écu du SVG, que l'image couvre.
+# Vue presque de face (30°, écu penché de 10°) : vu de plus haut, l'écu se tasse (à 55°, 19 unités de haut au lieu de 24).
 PORTES = {
     "porte-histoire": (E.MATIERES["histoire"], "chroniqueur"),
     "porte-geographie": (E.MATIERES["geographie"], "routes"),
@@ -528,22 +533,37 @@ PORTES = {
     "porte-parchemin": (E.PORTES["parchemin"], "parchemins"),
     "porte-vivres": (E.PORTES["vivres"], "recolte"),
 }
-PORTE_LARG, PORTE_HAUT, PORTE_PENCHE = 1.85, 2.1, 14.0
-PORTE_ANCRE = (14.0, 25.4)          # pied de l'écusson dans l'image (unités) : l'écu est centré sur la toile
+PORTE_LARG, PORTE_HAUT, PORTE_PENCHE, PORTE_INCL = 1.8, 2.0, 10.0, 30
+PORTE_ANCRE = (14.0, 25.0)          # pied de l'écusson dans l'image (unités), avant centrage
 PORTE_AY = 13                       # ancre du manifeste : le centre de l'image tombe sur (x, y + 1), le centre de l'écu du SVG
+
+
+def centrer(img, seuil=8):
+    """Recentre le contenu (boîte de l'alpha) au milieu de l'image, au pixel près, puis recontrôle les bords."""
+    a = np.array(img)[..., 3]
+    ys, xs = np.nonzero(a > seuil)
+    if not len(xs):
+        return img
+    dx = int(round((img.size[0] - 1) / 2.0 - (xs.min() + xs.max()) / 2.0))
+    dy = int(round((img.size[1] - 1) / 2.0 - (ys.min() + ys.max()) / 2.0))
+    if dx == 0 and dy == 0:
+        return img
+    out = Image.new("RGBA", img.size, (0, 0, 0, 0))
+    out.paste(img, (dx, dy))
+    return out
 
 
 def porte(nom):
     teinte, icone = PORTES[nom]
-    E.scene_vignette(E.PORTE, inclinaison=55, px_par_m=11, ancre=PORTE_ANCRE, rayon_sol=None)
+    E.scene_vignette(E.PORTE, inclinaison=PORTE_INCL, px_par_m=11, ancre=PORTE_ANCRE, rayon_sol=None)
     objets = E.ecusson("porte", PORTE_LARG, PORTE_HAUT, teinte, epaisseur=0.09, penche=PORTE_PENCHE, lisere=E.ENCRE)
     objets[1].location.z -= 0.04 * PORTE_HAUT           # liseré d'encre d'épaisseur égale en haut et sur les flancs
     a = math.radians(PORTE_PENCHE)
     zc, av = 0.62, 0.07                                  # pied de l'emblème sur l'écu (hauteur le long de l'écu), avancée
     loc = (0.0, zc * math.sin(a) - av * math.cos(a), zc * math.cos(a) + av * math.sin(a))
     objets.append(E.plaque_icone("embleme", icone, 1.15, "#fff8e4", epaisseur=0.03, loc=loc, penche=PORTE_PENCHE))
-    img = E.rendre_vignette(nom, objets, E.PORTE, echantillons=32, contour=0.5, ombre=False)
-    return img
+    img = centrer(E.rendre_vignette(nom, objets, E.PORTE, echantillons=32, contour=0.5, ombre=False))
+    return E.controler(img, nom)
 
 
 # ---------------------------------------------------------------- sceaux
@@ -555,6 +575,30 @@ def sceau(nom):
     E.scene_vignette(E.SCEAU, inclinaison=70, rayon_sol=None)
     objets = E.sceau_cire("sceau", rayon=E.D_SCEAU / 2.0 / E.PX_PAR_M, teintes=teintes, icone=icone, graine=5 if icone == "lys" else 9)
     return E.rendre_vignette(nom, objets, E.SCEAU, echantillons=ECHANTILLONS, contour=0.3, ombre=False)
+
+
+# ---------------------------------------------------------------- icônes de la compagnie (catalogue : famille « faveurs »)
+# Le cahier les range dans expedition_faveurs.py, « facultatif, en dernier » ; ce script les rend seulement si le manifeste
+# ne les a pas encore (ou si on les demande par leur nom) : sacs 24 × 28, ancre au pied (12, 26) ; or, plan, espion 24 × 24.
+def compagnie(nom):
+    w, h = E.CATALOGUE[nom][1], E.CATALOGUE[nom][2]
+    sac = nom.startswith("compagnie-sac")
+    E.scene_vignette((w, h), inclinaison=45, px_par_m=11 if sac else 12, ancre=(w / 2.0, h / 2.0), rayon_sol=1.6)
+    if nom == "compagnie-sac-plein":
+        objets = E.sac("sac", 0.55, 1.7, mat=E.mat_toile("jute", E.JUTE), lacet=15)
+    elif nom == "compagnie-sac-vide":
+        objets = E.sac("sac", 0.55, 1.7, mat=E.mat_toile("toile", E.FOND), lacet=15, plein=False)
+    elif nom == "compagnie-or":
+        objets = E.pile_pieces("or", 7, 0.5, 0.11, graine=3)
+    elif nom == "compagnie-plan":
+        objets = E.rouleau("plan", 1.4, 0.21, lacet=-20, ruban=E.RUBRIQUE)
+    else:
+        objets = lanterne("lanterne", (0, 0, 0), hauteur=1.3, rayon=0.36, lacet=25, ouverte=False)
+    img = E.rendre_vignette(nom, objets, (w, h), echantillons=ECHANTILLONS, contour=0.5, ombre=True, force_ombre=0.4)
+    return E.controler(centrer(img), nom)      # contenu centré (ombre comprise) ; l'ancre du manifeste vient du catalogue
+
+
+COMPAGNIE = ("compagnie-sac-plein", "compagnie-sac-vide", "compagnie-or", "compagnie-plan", "compagnie-espion")
 
 
 # ---------------------------------------------------------------- planche de lisibilité à 56 px
@@ -591,7 +635,7 @@ def loupe():
 # ---------------------------------------------------------------- lancement
 def main(args):
     quoi = [a for a in args if not a.startswith("--")]
-    tout = not quoi
+    tout = not quoi and not ("--loupe" in args or "--planche" in args)     # --loupe ou --planche seuls : pas de rendu
     for nom, f in MEDAILLONS.items():
         if tout or "medaillons" in quoi or nom in quoi or nom.replace("halte-", "") in quoi:
             E.sauver(nom, f())
@@ -601,11 +645,15 @@ def main(args):
     for nom in SCEAUX:
         if tout or "sceaux" in quoi or nom in quoi:
             E.sauver(nom, sceau(nom))
+    for nom in COMPAGNIE:
+        if nom in quoi or "compagnie" in quoi or (tout and nom in E.manquants("faveurs")):
+            E.sauver(nom, compagnie(nom))
     if "--sans-planche" not in args:
         E.planche("haltes")
     if "--loupe" in args or tout:
         loupe()
-    E.verifier_budget()
+    if tout or quoi:
+        E.verifier_budget()
 
 
 if __name__ == "__main__":

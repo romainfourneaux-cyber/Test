@@ -7,6 +7,10 @@
 window.JEU = window.JEU || {};
 JEU.imagesExpedition = {
   "annee-fond": {"f": "assets/images/expedition/annee-fond.jpg", "w": 1000, "h": 104, "ax": 0, "ay": 0},
+  "cadre-page": {"f": "assets/images/expedition/cadre-page.png", "w": 240, "h": 240, "ax": 0, "ay": 0, "coupe": 60},
+  "carte-expedition": {"f": "assets/images/expedition/carte-expedition.jpg", "w": 320, "h": 190, "ax": 0, "ay": 0},
+  "compagnie-sac-plein": {"f": "assets/images/expedition/compagnie-sac-plein.png", "w": 24, "h": 28, "ax": 12, "ay": 26},
+  "compagnie-sac-vide": {"f": "assets/images/expedition/compagnie-sac-vide.png", "w": 24, "h": 28, "ax": 12, "ay": 26},
   "halte-bivouac": {"f": "assets/images/expedition/halte-bivouac.png", "w": 64, "h": 64, "ax": 32, "ay": 32},
   "halte-brume": {"f": "assets/images/expedition/halte-brume.png", "w": 64, "h": 64, "ax": 32, "ay": 32},
   "halte-embuscade": {"f": "assets/images/expedition/halte-embuscade.png", "w": 64, "h": 64, "ax": 32, "ay": 32},
@@ -18,5 +22,16 @@ JEU.imagesExpedition = {
   "halte-ev-marchands": {"f": "assets/images/expedition/halte-ev-marchands.png", "w": 64, "h": 64, "ax": 32, "ay": 32},
   "halte-ev-mercenaires": {"f": "assets/images/expedition/halte-ev-mercenaires.png", "w": 64, "h": 64, "ax": 32, "ay": 32},
   "halte-marchand": {"f": "assets/images/expedition/halte-marchand.png", "w": 64, "h": 64, "ax": 32, "ay": 32},
-  "route-fond": {"f": "assets/images/expedition/route-fond.jpg", "w": 1000, "h": 320, "ax": 0, "ay": 0}
+  "porte-anglais": {"f": "assets/images/expedition/porte-anglais.png", "w": 28, "h": 28, "ax": 14, "ay": 13},
+  "porte-bourse": {"f": "assets/images/expedition/porte-bourse.png", "w": 28, "h": 28, "ax": 14, "ay": 13},
+  "porte-geographie": {"f": "assets/images/expedition/porte-geographie.png", "w": 28, "h": 28, "ax": 14, "ay": 13},
+  "porte-histoire": {"f": "assets/images/expedition/porte-histoire.png", "w": 28, "h": 28, "ax": 14, "ay": 13},
+  "porte-litterature": {"f": "assets/images/expedition/porte-litterature.png", "w": 28, "h": 28, "ax": 14, "ay": 13},
+  "porte-parchemin": {"f": "assets/images/expedition/porte-parchemin.png", "w": 28, "h": 28, "ax": 14, "ay": 13},
+  "porte-physique": {"f": "assets/images/expedition/porte-physique.png", "w": 28, "h": 28, "ax": 14, "ay": 13},
+  "porte-svt": {"f": "assets/images/expedition/porte-svt.png", "w": 28, "h": 28, "ax": 14, "ay": 13},
+  "porte-vivres": {"f": "assets/images/expedition/porte-vivres.png", "w": 28, "h": 28, "ax": 14, "ay": 13},
+  "route-fond": {"f": "assets/images/expedition/route-fond.jpg", "w": 1000, "h": 320, "ax": 0, "ay": 0},
+  "sceau-cedes": {"f": "assets/images/expedition/sceau-cedes.png", "w": 40, "h": 40, "ax": 20, "ay": 20},
+  "sceau-reussie": {"f": "assets/images/expedition/sceau-reussie.png", "w": 40, "h": 40, "ax": 20, "ay": 20}
 };
