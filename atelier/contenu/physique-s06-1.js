@@ -9,6 +9,7 @@
 const F = "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf";
 const P = p => ({ fichier: F, page: p });
 // Audit des questions du 28/10/2026 appliqué : q23 et q26 (doublons) et q48 (valeurs du mercure par cœur) supprimées.
+// Relecture du 28/10/2026 : un leurre de q39 remplacé (« faire déborder l'océan » était enfantin).
 
 // Schéma redessiné (aucune image reprise) : les trois états et les quatre changements d'état de l'eau.
 function cycle() {
@@ -297,7 +298,7 @@ module.exports = {
       explication: "L'eau des glaciers est hors de l'océan. Un glaçon ajouté à un verre plein fait monter le niveau, comme un glacier qui fond.", source: P(9) },
     { id: "physique-s06-1-q39", fiche: "physique-s06-1-f5", type: "qcm", niveau: 3,
       enonce: "Après la fonte, le niveau du verre A est un peu plus bas que le repère. Qu'est-ce que cela montre pour la banquise ?",
-      choix: ["Sa fonte fait un peu baisser le niveau", "Sa fonte fait monter le niveau de l'océan", "Sa fonte ne change rien du tout", "Sa fonte fait déborder l'océan"],
+      choix: ["Sa fonte fait un peu baisser le niveau", "Sa fonte fait monter le niveau de l'océan", "Sa fonte ne change rien du tout", "Sa fonte fait monter le niveau autant que celle des glaciers"],
       reponse: "Sa fonte fait un peu baisser le niveau",
       explication: "La banquise est dans l'eau, comme les glaçons du verre A. Sa fonte fait baisser le niveau légèrement, elle ne le fait pas monter.", source: P(9) },
     // f6 : banquise et calottes

@@ -634,10 +634,10 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Comment se forment les nuages ?",
    "choix": [
-    "La pluie remonte du sol vers le ciel dès que le soleil chauffe fort",
+    "La vapeur d'eau de l'air se réchauffe au soleil et devient visible",
     "La vapeur d'eau de l'air se refroidit et forme des gouttelettes",
-    "La neige des montagnes fond et flotte dans l'air en altitude",
-    "Le vent soulève l'eau des lacs et la garde en l'air"
+    "L'eau des lacs monte dans le ciel sous forme de gouttes, sans changer d'état",
+    "De la glace fond en altitude et donne des gouttelettes"
    ],
    "explication": "L'air humide monte et se refroidit : sa vapeur d'eau se change en minuscules gouttelettes d'eau liquide. Un nuage est donc fait d'eau liquide, comme le brouillard.",
    "source": {
@@ -854,10 +854,10 @@ JEU.enregistrer("cours", {
    "niveau": 2,
    "enonce": "Comment notre corps perd-il de l'eau chaque jour ?",
    "choix": [
-    "Seulement quand on pleure ou qu'on saigne",
+    "Seulement par l'urine",
     "Par l'urine, la sueur et la respiration",
-    "Seulement en été, quand il fait chaud",
-    "Il n'en perd jamais : il la garde toute"
+    "Seulement par la sueur, les jours de chaleur",
+    "Il n'en perd presque pas : il garde l'eau qu'il a bue"
    ],
    "explication": "Chaque jour, le corps rejette de l'eau dans l'urine, la sueur et même l'air qu'on expire. Il faut donc la remplacer en buvant et en mangeant.",
    "source": {
@@ -877,11 +877,11 @@ JEU.enregistrer("cours", {
    "enonce": "D'où vient l'eau dont notre corps a besoin chaque jour ?",
    "choix": [
     "Des boissons",
-    "De l'air qu'on respire",
+    "De l'air humide qu'on respire",
     "Des aliments, comme les fruits, les légumes ou la soupe",
-    "De la lumière du soleil"
+    "De l'eau du bain, qui entrerait par la peau"
    ],
-   "explication": "On boit la plus grande partie de l'eau qu'il nous faut, mais les aliments en apportent aussi. L'air et la lumière, eux, n'en apportent pas.",
+   "explication": "On boit la plus grande partie de l'eau qu'il nous faut, mais les aliments en apportent aussi. L'air qu'on respire et l'eau du bain n'en apportent pas : l'eau n'entre pas par la peau.",
    "source": {
     "theme": "Séance 2 – Le cycle de l’eau",
     "titre": "Eau",
@@ -995,9 +995,9 @@ JEU.enregistrer("cours", {
    "enonce": "Dans le cycle de l'eau, qu'est-ce qui fait passer l'eau des océans dans l'air ?",
    "choix": [
     "Le vent, qui l'arrache aux vagues",
-    "Les poissons, qui la rejettent en respirant",
+    "Le froid de la nuit, qui la change en vapeur",
     "La chaleur du Soleil, qui l'évapore",
-    "Le sel, qui la fait monter dans le ciel"
+    "Les nuages, qui l'aspirent depuis la mer"
    ],
    "explication": "Chauffée par le Soleil, l'eau de surface s'évapore et monte dans l'air sous forme de vapeur. C'est le moteur du cycle de l'eau.",
    "source": {

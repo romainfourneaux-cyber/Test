@@ -12,6 +12,8 @@ const P = p => ({ fichier: F, page: p });
 // Audit des questions du 28/10/2026 appliqué : cours le plus mince (corrigé de cinq lignes et un graphique). q7 supprimée ;
 // q22, q27 et q28 réécrites sans renvoi au graphique ; 8 questions de thème (q1, q3, q4, q5, q6 : vaporisation, évaporation,
 // ébullition ; q23, q26 : température de fusion ; q31 : le sel sur les routes), soit 8 sur 36 ; q2 et q8 retouchées.
+// Relecture du 28/10/2026 : q24 et q25 détachées du graphique du livret ; leurres de q3, q6 et q23 remplacés par des confusions du thème ;
+// q31 cite la page sous son vrai titre (« Fondant routier », où « Sel de déneigement » redirige).
 const THEME = "Séance 5 – Caractéristiques des changements d'état"; // intitulé du planning, pour les questions de thème (règle du 25/10/2026)
 const T = (titre, page) => ({ theme: THEME, titre, editeur: "Wikipédia", url: "https://fr.wikipedia.org/wiki/" + page });
 
@@ -128,7 +130,7 @@ module.exports = {
       explication: "La glace, solide, devient liquide : c'est une fusion. C'est l'inverse de la solidification.", source: P(6) },
     { id: "physique-s05-1-q3", fiche: "physique-s05-1-f1", type: "vrai_faux", niveau: 2,
       enonce: "L'ébullition est la seule façon pour un liquide de devenir un gaz.",
-      corrections: ["Faux : l'évaporation, lente et à la surface du liquide, est aussi une vaporisation.", "Faux : la liquéfaction est aussi une façon pour un liquide de devenir un gaz.", "Faux : un liquide ne peut jamais devenir un gaz."],
+      corrections: ["Faux : l'évaporation, lente et à la surface du liquide, est aussi une vaporisation.", "Faux : la liquéfaction est aussi une façon pour un liquide de devenir un gaz.", "Faux : la fusion est aussi une façon pour un liquide de devenir un gaz."],
       reponse: { vrai: false, correction: "Faux : l'évaporation, lente et à la surface du liquide, est aussi une vaporisation." },
       explication: "La vaporisation, le passage du liquide au gaz, a deux formes : l'évaporation, à la surface, et l'ébullition, avec des bulles dans tout le liquide. Les deux donnent de la vapeur.", source: T("Vaporisation", "Vaporisation") },
     { id: "physique-s05-1-q4", fiche: "physique-s05-1-f1", type: "vrai_faux", niveau: 1,
@@ -143,7 +145,7 @@ module.exports = {
       explication: "Évaporation et ébullition sont deux vaporisations : lente à la surface du linge, rapide avec des bulles dans la casserole. La buée est une liquéfaction et le glaçon qui fond, une fusion.", source: T("Changement d'état", "Changement_d%27%C3%A9tat") },
     { id: "physique-s05-1-q6", fiche: "physique-s05-1-f1", type: "qcm", niveau: 3,
       enonce: "Pourquoi le linge mouillé sèche-t-il, alors qu'on ne le chauffe jamais jusqu'à l'ébullition ?",
-      choix: ["Parce que le tissu absorbe l'eau et la garde pour toujours", "Parce que l'eau devient d'abord solide, puis disparaît", "Parce que l'eau s'évapore à sa surface, sans bouillir", "Parce que le vent change l'eau du linge en glace"],
+      choix: ["Parce que l'eau se liquéfie au contact de l'air", "Parce que toute l'eau tombe au sol, goutte après goutte", "Parce que l'eau s'évapore à sa surface, sans bouillir", "Parce que le tissu transforme l'eau en air"],
       reponse: "Parce que l'eau s'évapore à sa surface, sans bouillir",
       explication: "L'évaporation se fait à la surface du liquide, à une température bien plus basse que l'ébullition. L'eau du linge passe lentement dans l'air sous forme de vapeur.", source: T("Évaporation", "%C3%89vaporation") },
     // f2 : le palier
@@ -235,16 +237,16 @@ module.exports = {
       explication: "Le temps se met en abscisse, sur l'axe horizontal. La température, mesurée au fil du temps, se met en ordonnée.", source: P(7) },
     { id: "physique-s05-1-q23", fiche: "physique-s05-1-f4", type: "qcm", niveau: 2,
       enonce: "Comment appelle-t-on la température à laquelle un corps pur passe de l'état solide à l'état liquide ?",
-      choix: ["Sa température d'ébullition", "Sa température de fusion", "Sa température ambiante", "Sa densité"],
+      choix: ["Sa température d'ébullition", "Sa température de fusion", "Sa température ambiante", "Sa température de liquéfaction"],
       reponse: "Sa température de fusion",
       explication: "La température de fusion est celle où le solide et le liquide d'un corps pur existent ensemble. Chaque corps pur a la sienne.", source: T("Point de fusion", "Point_de_fusion") },
     { id: "physique-s05-1-q24", fiche: "physique-s05-1-f4", type: "ordre", niveau: 2,
-      enonce: "Remets dans l'ordre les trois zones du graphique, de la première à la dernière.",
+      enonce: "De l'eau salée refroidit jusqu'à geler entièrement. Remets dans l'ordre les trois étapes, de la première à la dernière.",
       elements: ["Eau liquide et solide", "Eau solide", "Eau liquide"],
       reponse: [2, 0, 1],
       explication: "L'eau salée est d'abord liquide, puis liquide et solide pendant la solidification, puis entièrement solide.", source: P(7) },
     { id: "physique-s05-1-q25", fiche: "physique-s05-1-f4", type: "vrai_faux", niveau: 2,
-      enonce: "Sur ce graphique, l'eau salée est d'abord solide, puis liquide.",
+      enonce: "Quand on laisse de l'eau salée refroidir jusqu'à ce qu'elle gèle, elle est d'abord solide, puis liquide.",
       corrections: ["Faux : elle est d'abord liquide, puis elle se solidifie.", "Faux : elle reste liquide du début à la fin.", "Faux : elle est gazeuse au début."],
       reponse: { vrai: false, correction: "Faux : elle est d'abord liquide, puis elle se solidifie." },
       explication: "C'est une solidification : l'eau part de l'état liquide. Elle finit à l'état solide.", source: P(7) },
@@ -277,7 +279,7 @@ module.exports = {
       enonce: "Pourquoi répand-on du sel sur les routes verglacées en hiver ?",
       choix: ["Le sel chauffe la route en se dissolvant", "Avec du sel, l'eau gèle plus bas : le verglas fond", "Le sel rend la glace plus dure et donc moins glissante", "Le sel absorbe toute l'eau de la route"],
       reponse: "Avec du sel, l'eau gèle plus bas : le verglas fond",
-      explication: "Le sel se dissout dans l'eau et abaisse sa température de solidification. La glace fond alors, même un peu en dessous de zéro degré.", source: T("Sel de déneigement", "Sel_de_d%C3%A9neigement") },
+      explication: "Le sel se dissout dans l'eau et abaisse sa température de solidification. La glace fond alors, même un peu en dessous de zéro degré.", source: T("Fondant routier", "Fondant_routier") },
     { id: "physique-s05-1-q32", fiche: "physique-s05-1-f5", type: "qcm", niveau: 3,
       enonce: "Pourquoi dit-on que la solidification de l'eau salée n'a pas de vrai palier ?",
       choix: ["Parce que la température continue de baisser doucement", "Parce que la température remonte pendant le changement d'état", "Parce que le changement d'état est instantané", "Parce que l'eau salée reste liquide à toute température"],

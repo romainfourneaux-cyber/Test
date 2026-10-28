@@ -9,6 +9,7 @@ const F = "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 -
 const P = p => ({ fichier: F, page: p });
 // Audit des questions du 28/10/2026 appliqué : 5 questions supprimées (q8, q29, q34, q36, q40) ; q23, q24, q25, q26 et q30 réécrites
 // en formulations générales ; 1 question de thème (q27 : le sucre et l'eau chaude) ; q28, q31, q33 et q35 retouchées.
+// Relecture du 28/10/2026 : q24 déplacée sur « sel au fond = mélange hétérogène » (elle redisait q23) ; explication de q27 reformulée (une phrase suivait la page citée).
 const THEME = "Séance 4 – Mélange et dissolution"; // intitulé du planning, pour les questions de thème (règle du 25/10/2026)
 const T = (titre, page) => ({ theme: THEME, titre, editeur: "Wikipédia", url: "https://fr.wikipedia.org/wiki/" + page });
 
@@ -203,10 +204,10 @@ module.exports = {
       reponse: "Passé une certaine quantité, il reste au fond sans se dissoudre",
       explication: "L'eau ne peut dissoudre qu'une quantité limitée de sel : c'est sa solubilité. Au-delà, le sel reste visible au fond et le mélange devient hétérogène.", source: P(5) },
     { id: "physique-s04-1-q24", fiche: "physique-s04-1-f4", type: "vrai_faux", niveau: 2,
-      enonce: "On peut dissoudre autant de sel qu'on veut dans un verre d'eau.",
-      corrections: ["Faux : au-delà d'une certaine quantité, le sel ne se dissout plus et le mélange devient hétérogène.", "Faux : le sel se dissout sans limite seulement dans l'eau chaude.", "Faux : le sel ne se dissout jamais dans l'eau, il reste toujours au fond."],
-      reponse: { vrai: false, correction: "Faux : au-delà d'une certaine quantité, le sel ne se dissout plus et le mélange devient hétérogène." },
-      explication: "La quantité de sel que l'eau peut dissoudre a une limite. Au-delà, le sel reste au fond du verre.", source: P(5) },
+      enonce: "On a mis trop de sel dans un verre d'eau : il en reste au fond. Le mélange est pourtant encore homogène.",
+      corrections: ["Faux : il est hétérogène, puisqu'on distingue le sel au fond de l'eau.", "Faux : il n'y a plus de mélange du tout, seulement de l'eau.", "Faux : il est hétérogène tant qu'on n'a pas agité ; après agitation, tout le sel se dissout."],
+      reponse: { vrai: false, correction: "Faux : il est hétérogène, puisqu'on distingue le sel au fond de l'eau." },
+      explication: "L'eau ne peut dissoudre qu'une quantité limitée de sel. Quand il en reste au fond, on voit deux matières : le mélange est hétérogène.", source: P(5) },
     { id: "physique-s04-1-q25", fiche: "physique-s04-1-f4", type: "vrai_faux", niveau: 2,
       enonce: "Dans cent grammes d'eau, on peut dissoudre environ 35 g de sel ; au-delà, il en reste au fond.",
       corrections: [], reponse: { vrai: true, correction: null },
@@ -220,7 +221,7 @@ module.exports = {
       enonce: "Comment dissoudre plus de sucre dans un même verre d'eau ?",
       choix: ["En remuant plus vite", "En chauffant l'eau", "En ajoutant du sel", "En mettant le verre au frais"],
       reponse: "En chauffant l'eau",
-      explication: "Le sucre est très soluble dans l'eau, et sa solubilité augmente avec la température. Dans l'eau chaude, un même verre en dissout donc davantage.", source: T("Saccharose", "Saccharose") },
+      explication: "Le sucre se dissout très bien dans l'eau, et encore mieux quand elle est chaude. Un même verre d'eau chaude en dissout donc davantage qu'un verre d'eau froide.", source: T("Saccharose", "Saccharose") },
     { id: "physique-s04-1-q28", fiche: "physique-s04-1-f4", type: "qcm", niveau: 2,
       enonce: "On pèse l'eau en grammes alors que c'est un liquide. Pourquoi est-ce possible ?",
       choix: ["Parce qu'un gramme d'eau occupe un millilitre", "Parce que l'eau n'a pas de volume", "Parce que la balance mesure aussi les volumes", "Parce que le sel change le volume de l'eau"],

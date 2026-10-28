@@ -11,6 +11,7 @@ const P = p => ({ fichier: F, page: p });
 // Audit des questions du 28/10/2026 appliqué : q1, q13, q26 et q35 supprimées (protocole, détail du livret, doublon) ; q9, q11, q12
 // et q29 réécrites sans les dosages du TP ; 3 questions de thème sur la fiche f1 (q4 : indicateur coloré, q5 : pH-mètre,
 // q8 : échelle de 0 à 14) ; q16 et q32 retouchées.
+// Relecture du 28/10/2026 : q4 demande le mot « indicateur coloré » (elle redisait q7) ; q2, q10 et q14 détachées de la séance et des dosages du livret.
 const THEME = "Séance 1 – Les acides et les bases"; // intitulé du planning, pour les questions de thème (règle du 25/10/2026)
 const T = (titre, page) => ({ theme: THEME, titre, editeur: "Wikipédia", url: "https://fr.wikipedia.org/wiki/" + page });
 
@@ -82,7 +83,7 @@ module.exports = {
   questions: [
     // f1 : fabriquer le papier pH
     { id: "physique-s08-1-q2", fiche: "physique-s08-1-f1", type: "qcm", niveau: 1,
-      enonce: "Avec quel légume fabrique-t-on le papier pH de cette séance ?",
+      enonce: "Avec quel légume peut-on fabriquer un papier pH à la maison ?",
       choix: ["Le chou rouge", "La carotte", "La betterave", "Le poireau"],
       reponse: "Le chou rouge",
       explication: "Le jus de chou rouge colore le papier. Sa couleur change ensuite selon le liquide testé.", source: P(10) },
@@ -90,10 +91,11 @@ module.exports = {
       enonce: "Le papier pH est fabriqué en trempant du papier dans du jus de chou rouge, puis en le laissant sécher.",
       corrections: [], reponse: { vrai: true, correction: null },
       explication: "Oui : le papier Canson s'imprègne du jus, puis sèche. On le coupe ensuite en bandelettes.", source: P(10) },
-    { id: "physique-s08-1-q4", fiche: "physique-s08-1-f1", type: "vrai_faux", niveau: 1,
-      enonce: "Le jus de chou rouge est un indicateur coloré : sa couleur change selon que le liquide est acide ou basique.",
-      corrections: [], reponse: { vrai: true, correction: null },
-      explication: "Oui : le chou rouge contient des pigments qui changent de couleur avec l'acidité. C'est pour cela que son jus sert à fabriquer un papier pH.", source: T("Indicateur de pH", "Indicateur_de_pH") },
+    { id: "physique-s08-1-q4", fiche: "physique-s08-1-f1", type: "vrai_faux", niveau: 2,
+      enonce: "Une substance dont la couleur change selon que le liquide est acide ou basique, comme le jus de chou rouge, s'appelle un solvant.",
+      corrections: ["Faux : elle s'appelle un indicateur coloré.", "Faux : elle s'appelle un soluté.", "Faux : elle s'appelle une base."],
+      reponse: { vrai: false, correction: "Faux : elle s'appelle un indicateur coloré." },
+      explication: "Le jus de chou rouge est un indicateur coloré : ses pigments changent de couleur avec l'acidité du liquide. C'est pour cela qu'il sert à fabriquer un papier pH.", source: T("Indicateur de pH", "Indicateur_de_pH") },
     { id: "physique-s08-1-q5", fiche: "physique-s08-1-f1", type: "qcm", niveau: 2,
       enonce: "Quel instrument donne directement la valeur du pH d'un liquide, sous forme d'un nombre ?",
       choix: ["Un thermomètre", "Une balance", "Un pH-mètre", "Une éprouvette graduée"],
@@ -121,7 +123,7 @@ module.exports = {
       reponse: "Rose",
       explication: "Un liquide acide fait virer le papier au rose, d'autant plus vif qu'il est acide. Le bleu et le vert sont les couleurs des liquides basiques.", source: P(11) },
     { id: "physique-s08-1-q10", fiche: "physique-s08-1-f2", type: "qcm", niveau: 1,
-      enonce: "Quelle couleur prend le papier dans de l'eau additionnée d'une cuillère à café de lessive ?",
+      enonce: "Quelle couleur prend le papier au chou rouge dans de l'eau additionnée de lessive ?",
       choix: ["Vert", "Rose vif", "Mauve", "Rose pâle"],
       reponse: "Vert",
       explication: "La lessive fait virer le papier au vert. La levure chimique le fait virer au bleu clair.", source: P(11) },
@@ -139,7 +141,7 @@ module.exports = {
       enonce: "Pourquoi peut-on obtenir d'autres couleurs en refaisant l'expérience du papier pH chez soi ?",
       choix: ["Parce que le pH de l'eau du robinet varie", "Parce que le chou rouge n'est jamais de la même couleur", "Parce que le papier Canson change de couleur en séchant", "Parce que le vinaigre n'est pas toujours acide"],
       reponse: "Parce que le pH de l'eau du robinet varie",
-      explication: "Les couleurs dépendent du pH de l'eau du robinet utilisée. Ici, elle était légèrement basique, ce qui donne du bleu.", source: P(11) },
+      explication: "Les couleurs dépendent du pH de l'eau du robinet utilisée. Dans l'exemple du livret, elle était légèrement basique, ce qui donnait du bleu.", source: P(11) },
     { id: "physique-s08-1-q15", fiche: "physique-s08-1-f2", type: "qcm", niveau: 3,
       enonce: "On ajoute de plus en plus de vinaigre à l'eau. Comment évolue la couleur du papier ?",
       choix: ["Elle passe au rose, de plus en plus vif", "Elle passe du rose pâle au vert foncé", "Elle passe au bleu clair, puis au vert foncé", "Elle ne change pas"],

@@ -11,6 +11,7 @@ const F = "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 -
 const P = p => ({ fichier: F, page: p });
 // Audit des questions du 28/10/2026 appliqué : 8 doublons ou détails du TP supprimés (q30, q31, q38, q39, q41, q43, q44, q46) ;
 // 7 questions de thème (q37, q21, q22, q45, q50, q47, q48 : nuages, eau et corps, réserves d'eau, cycle de l'eau) ; q20 retouchée.
+// Relecture du 28/10/2026 : leurres de q37, q45, q48 et q50 remplacés par des confusions plausibles du thème (plus de leurres enfantins).
 const THEME = "Séance 2 – Le cycle de l’eau"; // intitulé du planning, pour les questions de thème (règle du 25/10/2026)
 const T = (titre, page) => ({ theme: THEME, titre, editeur: "Wikipédia", url: "https://fr.wikipedia.org/wiki/" + page });
 
@@ -223,7 +224,7 @@ module.exports = {
       explication: "Le givre et la neige sont de l'eau solide, comme la glace et la grêle. La rosée, elle, est de l'eau liquide.", source: P(3) },
     { id: "physique-s02-1-q37", fiche: "physique-s02-1-f3", type: "qcm", niveau: 2,
       enonce: "Comment se forment les nuages ?",
-      choix: ["La pluie remonte du sol vers le ciel dès que le soleil chauffe fort", "La vapeur d'eau de l'air se refroidit et forme des gouttelettes", "La neige des montagnes fond et flotte dans l'air en altitude", "Le vent soulève l'eau des lacs et la garde en l'air"],
+      choix: ["La vapeur d'eau de l'air se réchauffe au soleil et devient visible", "La vapeur d'eau de l'air se refroidit et forme des gouttelettes", "L'eau des lacs monte dans le ciel sous forme de gouttes, sans changer d'état", "De la glace fond en altitude et donne des gouttelettes"],
       reponse: "La vapeur d'eau de l'air se refroidit et forme des gouttelettes",
       explication: "L'air humide monte et se refroidit : sa vapeur d'eau se change en minuscules gouttelettes d'eau liquide. Un nuage est donc fait d'eau liquide, comme le brouillard.", source: T("Nuage", "Nuage") },
     // f4 : le sulfate de cuivre anhydre
@@ -279,14 +280,14 @@ module.exports = {
       explication: "Le corps d'un adulte contient environ 65 % d'eau, et un bébé encore plus. C'est pour cela qu'il faut en boire chaque jour.", source: T("Eau", "Eau") },
     { id: "physique-s02-1-q45", fiche: "physique-s02-1-f5", type: "qcm", niveau: 2,
       enonce: "Comment notre corps perd-il de l'eau chaque jour ?",
-      choix: ["Seulement quand on pleure ou qu'on saigne", "Par l'urine, la sueur et la respiration", "Seulement en été, quand il fait chaud", "Il n'en perd jamais : il la garde toute"],
+      choix: ["Seulement par l'urine", "Par l'urine, la sueur et la respiration", "Seulement par la sueur, les jours de chaleur", "Il n'en perd presque pas : il garde l'eau qu'il a bue"],
       reponse: "Par l'urine, la sueur et la respiration",
       explication: "Chaque jour, le corps rejette de l'eau dans l'urine, la sueur et même l'air qu'on expire. Il faut donc la remplacer en buvant et en mangeant.", source: T("Eau", "Eau") },
     { id: "physique-s02-1-q50", fiche: "physique-s02-1-f5", type: "qcm_multiple", niveau: 2,
       enonce: "D'où vient l'eau dont notre corps a besoin chaque jour ?",
-      choix: ["Des boissons", "De l'air qu'on respire", "Des aliments, comme les fruits, les légumes ou la soupe", "De la lumière du soleil"],
+      choix: ["Des boissons", "De l'air humide qu'on respire", "Des aliments, comme les fruits, les légumes ou la soupe", "De l'eau du bain, qui entrerait par la peau"],
       reponse: ["Des boissons", "Des aliments, comme les fruits, les légumes ou la soupe"],
-      explication: "On boit la plus grande partie de l'eau qu'il nous faut, mais les aliments en apportent aussi. L'air et la lumière, eux, n'en apportent pas.", source: T("Eau", "Eau") },
+      explication: "On boit la plus grande partie de l'eau qu'il nous faut, mais les aliments en apportent aussi. L'air qu'on respire et l'eau du bain n'en apportent pas : l'eau n'entre pas par la peau.", source: T("Eau", "Eau") },
     // f6 : les réserves d'eau
     { id: "physique-s02-1-q23", fiche: "physique-s02-1-f6", type: "qcm", niveau: 1,
       enonce: "Quel est le plus grand réservoir d'eau de la Terre ?",
@@ -314,7 +315,7 @@ module.exports = {
       explication: "Oui : environ 70 % de l'eau douce est gelée, dans les glaciers et aux pôles. L'eau des cours d'eau, celle qu'on utilise directement, n'en est qu'une toute petite part.", source: T("Eau douce", "Eau_douce") },
     { id: "physique-s02-1-q48", fiche: "physique-s02-1-f6", type: "qcm", niveau: 1,
       enonce: "Dans le cycle de l'eau, qu'est-ce qui fait passer l'eau des océans dans l'air ?",
-      choix: ["Le vent, qui l'arrache aux vagues", "Les poissons, qui la rejettent en respirant", "La chaleur du Soleil, qui l'évapore", "Le sel, qui la fait monter dans le ciel"],
+      choix: ["Le vent, qui l'arrache aux vagues", "Le froid de la nuit, qui la change en vapeur", "La chaleur du Soleil, qui l'évapore", "Les nuages, qui l'aspirent depuis la mer"],
       reponse: "La chaleur du Soleil, qui l'évapore",
       explication: "Chauffée par le Soleil, l'eau de surface s'évapore et monte dans l'air sous forme de vapeur. C'est le moteur du cycle de l'eau.", source: T("Cycle de l'eau", "Cycle_de_l%27eau") },
     { id: "physique-s02-1-q49", fiche: "physique-s02-1-f6", type: "qcm", niveau: 1,
