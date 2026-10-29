@@ -87,7 +87,8 @@
     var p = P[slug];
     var src = cheminPlaque(slug, fin);
     if (!src) return "<div class=\"plaque-vide\" role=\"img\" aria-label=\"Photo de " + esc(p.nom) + " en finition " + FIN_ACC[fin] + " à venir\"><span class=\"plaque-vide__mot\">Photo à venir</span><span class=\"plaque-vide__fin\">Finition " + FIN_ACC[fin] + "</span><span class=\"note-maq note-maq--fournir\">à fournir" + NBSP + ": photo</span></div>";
-    return "<img src=\"" + src + "\" srcset=\"" + p.srcset[fin] + "\" sizes=\"" + (sizes || "200px") + "\" width=\"440\" height=\"870\" alt=\"Plaque murale " + esc(p.nom) + ", finition " + FIN_ACC[fin] + "\" decoding=\"async\"" + (extra || "") + ">";
+    var d = (p.dims && p.dims[fin]) || [440, 870];
+    return "<img src=\"" + src + "\" srcset=\"" + p.srcset[fin] + "\" sizes=\"" + (sizes || "200px") + "\" width=\"" + d[0] + "\" height=\"" + d[1] + "\" alt=\"Plaque murale " + esc(p.nom) + ", finition " + FIN_ACC[fin] + "\" decoding=\"async\"" + (extra || "") + ">";
   }
 
   /* ---------- panier ---------- */
@@ -192,12 +193,14 @@
   $$("[data-ouvrir-panier]").forEach(function (b) { b.addEventListener("click", ouvrirPanier); });
   $$("[data-fermer-panier]").forEach(function (b) { b.addEventListener("click", fermerPanier); });
 
+  function dimsImg(rel) { var d = (TG.dimsImg && TG.dimsImg[rel]) || [100, 100]; return " width=\"" + d[0] + "\" height=\"" + d[1] + "\""; }
   function visuelLigne(a) {
-    if (a.type === "led") return "<span class=\"ligne-panier__img ligne-panier__img--photo\"><img src=\"" + TG.img + "led/led-img0.webp\" alt=\"\" width=\"52\" height=\"78\"></span>";
-    if (a.type === "carte") return "<span class=\"ligne-panier__img ligne-panier__img--photo\"><img src=\"" + TG.img + "misc/carte-cadeau.webp\" alt=\"\" width=\"52\" height=\"78\"></span>";
+    if (a.type === "led") return "<span class=\"ligne-panier__img ligne-panier__img--photo\"><img src=\"" + TG.img + "led/led-img0.webp\" alt=\"\"" + dimsImg("led/led-img0.webp") + "></span>";
+    if (a.type === "carte") return "<span class=\"ligne-panier__img ligne-panier__img--photo\"><img src=\"" + TG.img + "misc/carte-cadeau.webp\" alt=\"\"" + dimsImg("misc/carte-cadeau.webp") + "></span>";
     var src = cheminPlaque(a.slug, a.fin);
     if (!src) return "<span class=\"ligne-panier__img ligne-panier__img--vide\">photo à venir</span>";
-    return "<span class=\"ligne-panier__img\"><img src=\"" + src + "\" alt=\"\" width=\"32\" height=\"64\"></span>";
+    var d = P[a.slug].dims[a.fin];
+    return "<span class=\"ligne-panier__img\"><img src=\"" + src + "\" alt=\"\" width=\"" + d[0] + "\" height=\"" + d[1] + "\"></span>";
   }
 
   function rendrePanier() {
@@ -276,7 +279,7 @@
       var div = document.createElement("div");
       div.className = "suggestion";
       div.innerHTML = "<p class=\"suggestion__etiquette\">Compatible avec votre plaque</p>" +
-        "<div class=\"suggestion__tete\"><img src=\"" + TG.img + "led/led-img1.webp\" alt=\"Exemple réel : Le Pic du Midi rétroéclairé en vert\" width=\"44\" height=\"56\"><p>Kit LED monté au dos de " + esc(P[a.slug].nom) + " par l’atelier, +" + euros(TG.prixLed) + (a.qte > 1 ? " par plaque" : "") + ".</p></div>" +
+        "<div class=\"suggestion__tete\"><img src=\"" + TG.img + "led/led-img1.webp\" alt=\"Exemple réel : Le Pic du Midi rétroéclairé en vert\"" + dimsImg("led/led-img1.webp") + "><p>Kit LED monté au dos de " + esc(P[a.slug].nom) + " par l’atelier, +" + euros(TG.prixLed) + (a.qte > 1 ? " par plaque" : "") + ".</p></div>" +
         "<div class=\"suggestion__actions\"><label class=\"sr\" for=\"sugg-cable\">Sortie du câble</label><select id=\"sugg-cable\">" + opts + "</select><button type=\"button\" class=\"btn btn--ligne\">" + icone(ICO_PLUS) + "Ajouter le kit</button></div>";
       $("button", div).addEventListener("click", function () {
         var ls = lignes(); var cible = ls[indexSansLed]; if (!cible) return;
@@ -742,7 +745,7 @@
       } else {
         var p = P[res.slug];
         var html = "<figure class=\"cotes\"><div class=\"plaque\">" + imgPlaqueHTML(res.slug, res.fin, "(max-width: 900px) 40vw, 200px") + "</div><span class=\"cote cote--h\"><span>30 cm</span></span><span class=\"cote cote--v\"><span>60 cm</span></span></figure>";
-        if (res.led) html += "<p class=\"resultat__led\"><img src=\"" + TG.img + "led/led-img1.webp\" alt=\"\" width=\"56\" height=\"72\"><span>Exemple réel de rétroéclairage : Le Pic du Midi en vert.</span></p>";
+        if (res.led) html += "<p class=\"resultat__led\"><img src=\"" + TG.img + "led/led-img1.webp\" alt=\"\"" + dimsImg("led/led-img1.webp") + "><span>Exemple réel de rétroéclairage : Le Pic du Midi en vert.</span></p>";
         visuel.innerHTML = html;
         titre.textContent = p.nom;
         var majOptions = function () { options.textContent = "Finition " + FIN_ACC[res.fin] + (res.led ? " · kit LED monté, câble " + res.cable.toLowerCase() : "") + " · " + p.cartel; };

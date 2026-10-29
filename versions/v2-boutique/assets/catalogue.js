@@ -1,6 +1,20 @@
 /* Généré par build.py : ne pas modifier à la main. */
 window.TG = {
  "img": "../../maquette/assets/img/",
+ "dimsImg": {
+  "led/led-img0.webp": [
+   858,
+   1536
+  ],
+  "led/led-img1.webp": [
+   900,
+   1162
+  ],
+  "misc/carte-cadeau.webp": [
+   720,
+   720
+  ]
+ },
  "seuil": 130,
  "remise": 0.1,
  "prixLed": 15,
@@ -22,6 +36,20 @@ window.TG = {
     "gris": "../../maquette/assets/img/p/le-pic-du-midi-gris-440.webp 440w, ../../maquette/assets/img/p/le-pic-du-midi-gris-880.webp 880w",
     "dore": "../../maquette/assets/img/p/le-pic-du-midi-dore-440.webp 440w, ../../maquette/assets/img/p/le-pic-du-midi-dore-880.webp 880w"
    },
+   "dims": {
+    "noir": [
+     440,
+     873
+    ],
+    "gris": [
+     440,
+     875
+    ],
+    "dore": [
+     440,
+     873
+    ]
+   },
    "nbAvis": 2,
    "moyenne": 5.0
   },
@@ -40,6 +68,20 @@ window.TG = {
     "noir": "../../maquette/assets/img/p/le-tourmalet-noir-440.webp 440w, ../../maquette/assets/img/p/le-tourmalet-noir-880.webp 880w",
     "gris": "../../maquette/assets/img/p/le-tourmalet-gris-440.webp 440w, ../../maquette/assets/img/p/le-tourmalet-gris-880.webp 880w",
     "dore": "../../maquette/assets/img/p/le-tourmalet-dore-440.webp 440w, ../../maquette/assets/img/p/le-tourmalet-dore-880.webp 880w"
+   },
+   "dims": {
+    "noir": [
+     440,
+     856
+    ],
+    "gris": [
+     440,
+     874
+    ],
+    "dore": [
+     440,
+     885
+    ]
    },
    "nbAvis": 1,
    "moyenne": 5.0
@@ -60,6 +102,20 @@ window.TG = {
     "gris": "../../maquette/assets/img/p/le-montaigu-gris-440.webp 440w, ../../maquette/assets/img/p/le-montaigu-gris-880.webp 880w",
     "dore": "../../maquette/assets/img/p/le-montaigu-dore-440.webp 440w, ../../maquette/assets/img/p/le-montaigu-dore-880.webp 880w"
    },
+   "dims": {
+    "noir": [
+     440,
+     854
+    ],
+    "gris": [
+     440,
+     878
+    ],
+    "dore": [
+     440,
+     876
+    ]
+   },
    "nbAvis": 0,
    "moyenne": 0
   },
@@ -78,6 +134,20 @@ window.TG = {
     "noir": "../../maquette/assets/img/p/le-cirque-de-gavarnie-noir-440.webp 440w, ../../maquette/assets/img/p/le-cirque-de-gavarnie-noir-880.webp 880w",
     "gris": "../../maquette/assets/img/p/le-cirque-de-gavarnie-gris-440.webp 440w, ../../maquette/assets/img/p/le-cirque-de-gavarnie-gris-880.webp 880w",
     "dore": "../../maquette/assets/img/p/le-cirque-de-gavarnie-dore-440.webp 440w, ../../maquette/assets/img/p/le-cirque-de-gavarnie-dore-880.webp 779w"
+   },
+   "dims": {
+    "noir": [
+     440,
+     874
+    ],
+    "gris": [
+     440,
+     846
+    ],
+    "dore": [
+     440,
+     857
+    ]
    },
    "nbAvis": 0,
    "moyenne": 0
@@ -98,6 +168,20 @@ window.TG = {
     "gris": "../../maquette/assets/img/p/le-pont-despagne-gris-440.webp 440w, ../../maquette/assets/img/p/le-pont-despagne-gris-880.webp 880w",
     "dore": "../../maquette/assets/img/p/le-pont-despagne-dore-440.webp 440w, ../../maquette/assets/img/p/le-pont-despagne-dore-880.webp 880w"
    },
+   "dims": {
+    "noir": [
+     440,
+     876
+    ],
+    "gris": [
+     440,
+     858
+    ],
+    "dore": [
+     440,
+     879
+    ]
+   },
    "nbAvis": 0,
    "moyenne": 0
   },
@@ -116,6 +200,20 @@ window.TG = {
     "noir": "../../maquette/assets/img/p/la-tour-des-jacobins-noir-440.webp 440w, ../../maquette/assets/img/p/la-tour-des-jacobins-noir-880.webp 880w",
     "gris": "../../maquette/assets/img/p/la-tour-des-jacobins-gris-440.webp 440w, ../../maquette/assets/img/p/la-tour-des-jacobins-gris-880.webp 880w",
     "dore": "../../maquette/assets/img/p/la-tour-des-jacobins-dore-440.webp 440w, ../../maquette/assets/img/p/la-tour-des-jacobins-dore-880.webp 880w"
+   },
+   "dims": {
+    "noir": [
+     440,
+     865
+    ],
+    "gris": [
+     440,
+     856
+    ],
+    "dore": [
+     440,
+     864
+    ]
    },
    "nbAvis": 1,
    "moyenne": 5.0
@@ -136,6 +234,20 @@ window.TG = {
     "gris": "../../maquette/assets/img/p/le-chateau-de-mauvezin-gris-440.webp 440w, ../../maquette/assets/img/p/le-chateau-de-mauvezin-gris-880.webp 880w",
     "dore": "../../maquette/assets/img/p/le-chateau-de-mauvezin-dore-440.webp 440w, ../../maquette/assets/img/p/le-chateau-de-mauvezin-dore-880.webp 880w"
    },
+   "dims": {
+    "noir": [
+     440,
+     873
+    ],
+    "gris": [
+     440,
+     871
+    ],
+    "dore": [
+     440,
+     881
+    ]
+   },
    "nbAvis": 1,
    "moyenne": 5.0
   },
@@ -153,6 +265,16 @@ window.TG = {
    "srcset": {
     "noir": "../../maquette/assets/img/p/labbaye-de-lescaladieu-noir-440.webp 440w, ../../maquette/assets/img/p/labbaye-de-lescaladieu-noir-880.webp 880w",
     "gris": "../../maquette/assets/img/p/labbaye-de-lescaladieu-gris-440.webp 440w, ../../maquette/assets/img/p/labbaye-de-lescaladieu-gris-880.webp 880w"
+   },
+   "dims": {
+    "noir": [
+     440,
+     856
+    ],
+    "gris": [
+     440,
+     875
+    ]
    },
    "nbAvis": 0,
    "moyenne": 0
@@ -173,6 +295,20 @@ window.TG = {
     "gris": "../../maquette/assets/img/p/lisard-gris-440.webp 440w, ../../maquette/assets/img/p/lisard-gris-880.webp 880w",
     "dore": "../../maquette/assets/img/p/lisard-dore-440.webp 440w, ../../maquette/assets/img/p/lisard-dore-880.webp 880w"
    },
+   "dims": {
+    "noir": [
+     440,
+     851
+    ],
+    "gris": [
+     440,
+     870
+    ],
+    "dore": [
+     440,
+     871
+    ]
+   },
    "nbAvis": 1,
    "moyenne": 5.0
   },
@@ -192,6 +328,20 @@ window.TG = {
     "gris": "../../maquette/assets/img/p/lours-gris-440.webp 440w, ../../maquette/assets/img/p/lours-gris-880.webp 880w",
     "dore": "../../maquette/assets/img/p/lours-dore-440.webp 440w, ../../maquette/assets/img/p/lours-dore-880.webp 880w"
    },
+   "dims": {
+    "noir": [
+     440,
+     865
+    ],
+    "gris": [
+     440,
+     868
+    ],
+    "dore": [
+     440,
+     878
+    ]
+   },
    "nbAvis": 1,
    "moyenne": 5.0
   },
@@ -209,6 +359,16 @@ window.TG = {
    "srcset": {
     "gris": "../../maquette/assets/img/p/le-cerf-gris-440.webp 440w, ../../maquette/assets/img/p/le-cerf-gris-880.webp 880w",
     "dore": "../../maquette/assets/img/p/le-cerf-dore-440.webp 440w, ../../maquette/assets/img/p/le-cerf-dore-880.webp 880w"
+   },
+   "dims": {
+    "gris": [
+     440,
+     872
+    ],
+    "dore": [
+     440,
+     885
+    ]
    },
    "nbAvis": 1,
    "moyenne": 4.0
@@ -229,6 +389,20 @@ window.TG = {
     "gris": "../../maquette/assets/img/p/la-marmotte-gris-440.webp 440w, ../../maquette/assets/img/p/la-marmotte-gris-880.webp 880w",
     "dore": "../../maquette/assets/img/p/la-marmotte-dore-440.webp 440w, ../../maquette/assets/img/p/la-marmotte-dore-880.webp 880w"
    },
+   "dims": {
+    "noir": [
+     440,
+     851
+    ],
+    "gris": [
+     440,
+     875
+    ],
+    "dore": [
+     440,
+     870
+    ]
+   },
    "nbAvis": 1,
    "moyenne": 5.0
   },
@@ -240,6 +414,7 @@ window.TG = {
    "cartel": "",
    "fins": {},
    "srcset": {},
+   "dims": {},
    "nbAvis": 0,
    "moyenne": 0
   },
@@ -251,6 +426,7 @@ window.TG = {
    "cartel": "",
    "fins": {},
    "srcset": {},
+   "dims": {},
    "nbAvis": 0,
    "moyenne": 0
   }

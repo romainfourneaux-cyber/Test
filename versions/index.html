@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Maquettes Terre Gravée</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..800&amp;display=swap">
+<style>
+/* Mise en page : une liste de fiches de version, capture en tête, liens directs vers les pages à tester. */
+:root {
+  --fond: #F5F5F0; --surface: #FFFFFF; --encre: #2C2C2C; --encre-2: #5A5D58; --trait: #D0D0D0;
+  --sauge: #DCE2D4; --cuivre: #CBAA88; --cuivre-texte: #7C5A33; --attente: #8A8D88;
+  --f-titre: "Archivo", "Segoe UI", system-ui, sans-serif; --f-texte: "Archivo", "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --fond: #1F201F; --surface: #2A2B2A; --encre: #F0F0EA; --encre-2: #B5B8B2; --trait: #3E403D;
+  --sauge: #34392F; --cuivre: #CBAA88; --cuivre-texte: #DDBF9C; --attente: #8E918B; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --fond: #1F201F; --surface: #2A2B2A; --encre: #F0F0EA; --encre-2: #B5B8B2; --trait: #3E403D;
+  --sauge: #34392F; --cuivre: #CBAA88; --cuivre-texte: #DDBF9C; --attente: #8E918B; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--fond); color: var(--encre); font-family: var(--f-texte); font-size: 16px; line-height: 1.55; }
+.cadre { max-width: 1120px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: clamp(28px, 5vw, 64px); }
+.entete { display: grid; gap: 10px; margin-bottom: clamp(24px, 4vw, 40px); max-width: 44rem; }
+.marque { font-family: var(--f-titre); font-weight: 700; font-stretch: 112%; letter-spacing: .14em; text-transform: uppercase; font-size: .8rem; color: var(--cuivre-texte); margin: 0; }
+h1 { font-family: var(--f-titre); font-weight: 800; font-stretch: 105%; font-size: clamp(2rem, 1.4rem + 2.6vw, 3.2rem); line-height: 1.05; margin: 0; text-wrap: balance; }
+.chapo { color: var(--encre-2); margin: 0; font-size: 1.05rem; }
+.conseils { display: flex; flex-wrap: wrap; gap: 8px; margin: 6px 0 0; padding: 0; list-style: none; }
+.conseils li { background: var(--sauge); padding: 4px 10px; font-size: .85rem; }
+.liste { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(16px, 2.5vw, 28px); list-style: none; margin: 0; padding: 0; }
+.version { background: var(--surface); border: 1px solid var(--trait); display: grid; grid-template-rows: auto 1fr; min-width: 0; }
+.version img { width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; display: block; border-bottom: 1px solid var(--trait); background: var(--sauge); }
+.version .vide { aspect-ratio: 16 / 10; display: grid; place-items: center; background: repeating-linear-gradient(135deg, var(--sauge) 0 12px, var(--fond) 12px 24px); color: var(--encre-2); font-size: .9rem; border-bottom: 1px solid var(--trait); }
+.corps { display: grid; gap: 12px; padding: 18px 18px 20px; align-content: start; min-width: 0; }
+.ligne { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.numero { font-family: var(--f-titre); font-weight: 700; font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: var(--cuivre-texte); }
+.statut { font-size: .75rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; padding: 2px 8px; border: 1px solid currentColor; }
+.statut--fini { color: var(--encre); }
+.statut--cours { color: var(--cuivre-texte); }
+.statut--attente { color: var(--attente); }
+h2 { font-family: var(--f-titre); font-weight: 750; font-stretch: 105%; font-size: 1.45rem; line-height: 1.15; margin: 0; }
+.corps p { margin: 0; color: var(--encre-2); }
+.points { margin: 0; padding-left: 18px; color: var(--encre-2); font-size: .95rem; }
+.actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+.bouton { display: inline-flex; align-items: center; min-height: 44px; padding: 0 16px; background: var(--encre); color: var(--fond); text-decoration: none; font-weight: 600; }
+.bouton:hover { background: var(--cuivre); color: #2C2C2C; }
+.lien { display: inline-flex; align-items: center; min-height: 44px; padding: 0 12px; border: 1px solid var(--trait); color: var(--encre); text-decoration: none; font-size: .92rem; }
+.lien:hover { border-color: var(--encre); }
+a:focus-visible { outline: 2px solid var(--cuivre); outline-offset: 2px; }
+.pied { margin-top: clamp(28px, 4vw, 48px); color: var(--encre-2); font-size: .88rem; max-width: 44rem; }
+@media (max-width: 760px) { .liste { grid-template-columns: minmax(0, 1fr); } }
+</style>
+</head>
+<body>
+<div class="cadre">
+  <header class="entete">
+    <p class="marque">Terre Gravée</p>
+    <h1>Les maquettes du nouveau site</h1>
+    <p class="chapo">Quatre directions pour terregravee.fr, construites avec le vrai contenu du site. Ouvrez-les, cliquez partout, ajoutez au panier : rien n’est envoyé ni payé.</p>
+    <ul class="conseils"><li>Brouillons non publiés</li><li>Paiements désactivés</li><li>Les étiquettes « à valider » attendent votre décision</li></ul>
+  </header>
+  <ul class="liste"><li class="version"><img src="../maquette/captures/accueil-desktop.jpg" alt="Accueil de la version Mur d’exposition" loading="lazy" width="1440" height="900"><div class="corps">
+  <div class="ligne"><span class="numero">Version 0</span><span class="statut statut--fini">Terminée</span></div>
+  <h2>Mur d’exposition</h2>
+  <p>La première maquette. Les plaques sont accrochées comme dans une galerie, avec leur ombre portée et un cartel par modèle. Un bouton simule le kit LED la nuit.</p>
+  <ul class="points"><li>Simulation du rétroéclairage dans le héros</li><li>Pastilles noir, gris, doré sur chaque carte</li><li>Notes de refonte : 18 problèmes du site actuel</li></ul>
+  <div class="actions"><a class="bouton" href="../maquette/index.html">Ouvrir</a><a class="lien" href="../maquette/collection.html">Collection</a><a class="lien" href="../maquette/produit-le-pic-du-midi.html">Fiche Pic du Midi</a><a class="lien" href="../maquette/notes.html">Notes de refonte</a></div>
+</div></li><li class="version"><img src="../versions/v1-carnet/captures/accueil-desktop.jpg" alt="Accueil de la version Carnet de territoire" loading="lazy" width="1440" height="900"><div class="corps">
+  <div class="ligne"><span class="numero">Version 1</span><span class="statut statut--cours">Relecture en cours</span></div>
+  <h2>Carnet de territoire</h2>
+  <p>Un atlas de la Bigorre. Chaque plaque raconte son lieu, et une carte interactive des Hautes-Pyrénées relie les modèles à leurs sommets, villages et monuments.</p>
+  <ul class="points"><li>Carte des lieux et trajet de fabrication</li><li>Récits de lieu sur chaque fiche</li><li>Cadeaux souvenir : cure, randonnée, crémaillère</li></ul>
+  <div class="actions"><a class="bouton" href="../versions/v1-carnet/index.html">Ouvrir</a><a class="lien" href="../versions/v1-carnet/carte.html">Carte</a><a class="lien" href="../versions/v1-carnet/collection.html">Collection</a><a class="lien" href="../versions/v1-carnet/strategie.html">Stratégie</a></div>
+</div></li><li class="version"><img src="../versions/v2-boutique/captures/accueil-desktop.jpg" alt="Accueil de la version Boutique qui convertit" loading="lazy" width="1440" height="900"><div class="corps">
+  <div class="ligne"><span class="numero">Version 2</span><span class="statut statut--cours">Relecture en cours</span></div>
+  <h2>Boutique qui convertit</h2>
+  <p>Les codes des marques qui vendent en direct : quiz pour trouver sa plaque, lot de trois, kit LED proposé au bon moment, guide cadeaux de Noël et preuve sociale près du bouton d’achat.</p>
+  <ul class="points"><li>Quiz « Quelle plaque pour quel mur ? »</li><li>Triptyque et barre de livraison offerte</li><li>Guide cadeaux de Noël 2026</li></ul>
+  <div class="actions"><a class="bouton" href="../versions/v2-boutique/index.html">Ouvrir</a><a class="lien" href="../versions/v2-boutique/quiz.html">Quiz</a><a class="lien" href="../versions/v2-boutique/noel.html">Noël</a><a class="lien" href="../versions/v2-boutique/strategie.html">Stratégie</a></div>
+</div></li><li class="version"><div class="vide">Capture à venir</div><div class="corps">
+  <div class="ligne"><span class="numero">Version 3</span><span class="statut statut--attente">En construction</span></div>
+  <h2>Showroom immersif</h2>
+  <p>Un showroom de nuit inspiré du Pic du Midi. On essaie la plaque sur un mur d’exemple ou sur la photo de son propre mur, on choisit la finition et on allume les LED.</p>
+  <ul class="points"><li>Essai chez soi avec sa propre photo</li><li>Configurateur finition et couleur LED</li><li>Lien de configuration à partager</li></ul>
+  <div class="actions"><span class="lien" aria-disabled="true">Bientôt disponible</span></div>
+</div></li></ul>
+  <p class="pied">Chaque version a une page « Stratégie » qui explique ses choix de design et de marketing, avec les informations à fournir. Pour revenir ici depuis une version, utilisez le lien « Comparer les versions » du bandeau.</p>
+</div>
+</body>
+</html>

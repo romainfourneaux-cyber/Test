@@ -1852,9 +1852,10 @@ def catalogue_js():
             "nom": p["nom"], "prix": p["prix"], "collection": p["collection"], "best": bool(p["best"]),
             "cartel": " · ".join(p["cartel"]) if p["cartel"] else "", "fins": fins,
             "srcset": {f: srcset(p["slug"], f) for f in fins if fins[f]},
+            "dims": {f: TAILLES[fins[f]] for f in fins if fins[f]},
             "nbAvis": len(p["avis"]), "moyenne": round(moyenne(p), 1),
         }
-    config = {"img": IMG, "seuil": SEUIL, "remise": REMISE, "prixLed": PRIX_LED, "prixPlaque": PRIX_PLAQUE,
+    config = {"img": IMG, "dimsImg": {k: TAILLES[k] for k in ("led/led-img0.webp", "led/led-img1.webp", "misc/carte-cadeau.webp")}, "seuil": SEUIL, "remise": REMISE, "prixLed": PRIX_LED, "prixPlaque": PRIX_PLAQUE,
               "produits": donnees, "moyenne": round(MOYENNE, 1), "nbAvis": NB_AVIS}
     texte = ("/* Généré par build.py : ne pas modifier à la main. */\nwindow.TG = "
              + json.dumps(config, ensure_ascii=False, indent=1) + ";\n")
