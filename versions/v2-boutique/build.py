@@ -653,6 +653,9 @@ def faq_objections(led=True):
          "<p>Oui. L’aluminium thermolaqué s’utilise en intérieur comme en extérieur. %s</p>" % confirmer("fixation conseillée en extérieur")),
         ("Quand vais-je la recevoir ?",
          "<p>En 2 à 4 jours ouvrés après l’expédition, à titre indicatif. Nous vous prévenons en cas de retard.</p>"),
+        ("Comment la plaque voyage-t-elle ?",
+         "<p>Dans un emballage renforcé : une pochette en carton ondulé, des plaques de calage et une boîte en carton type livre, au format A2. %s</p>"
+         % confirmer("emballage utilisé aujourd’hui")),
     ]
     if led:
         q.append(("Comment s’alimente le kit LED ?",
@@ -1867,7 +1870,7 @@ def qr():
 <section class="section wrap" aria-labelledby="titre-garanties-qr">
   <h2 id="titre-garanties-qr" class="sous-titre">Commander en confiance</h2>
   <ul class="bandeau-garanties">
-    <li>%s<span><strong>Livraison en 2 à 4 jours ouvrés</strong> après l’expédition, à titre indicatif</span></li>
+    <li>%s<span><strong>Emballage renforcé</strong> (carton ondulé, calage, boîte type livre), livraison en 2 à 4 jours ouvrés après l’expédition, à titre indicatif %s</span></li>
     <li>%s<span><strong>Paiement sécurisé</strong> par carte bancaire (Stripe), PayPal, Apple Pay ou Google Pay</span></li>
     <li>%s<span><strong>14 jours pour vous rétracter</strong> après réception, comme le prévoit la loi</span></li>
     <li>%s<span><strong>Garanties légales</strong> de conformité et des vices cachés. <a href="%s">Lire les CGV</a></span></li>
@@ -1886,13 +1889,13 @@ def qr():
   <div class="bandeau-sm"><div><p class="surtitre">Toute la collection</p><h2>Douze plaques des Pyrénées</h2><p>Sommets, patrimoine et faune, à 65 € la plaque.</p></div><a class="btn btn--ligne" href="collection.html">Voir les 12 plaques%s</a></div>
 </section>
 """ % (valider("page d’arrivée du QR code des panneaux de démonstration (vestiaires, sortie)"),
-       icone("copier"), valider("code AQUENSIS, livraison offerte dès la première plaque"), icone("fleche"),
+       icone("copier"), valider("code AQUENSIS, ou un code neutre comme BIGORRE, et livraison offerte dès la première plaque"), icone("fleche"),
        img("misc/aquensis.webp", "Bassin du centre thermal Aquensis : la rangée de panneaux découpés et rétroéclairés conçus pour le centre",
            "(max-width: 899px) 92vw, 560px", eager=True),
        accord_aquensis(),
        cartes, icone("camion"), valider("seuil et code"),
        "".join(boutons), "".join(resultats),
-       icone("camion"), icone("cadenas"), icone("retour"), icone("bouclier"), CGV,
+       icone("camion"), confirmer("emballage"), icone("cadenas"), icone("retour"), icone("bouclier"), CGV,
        mention_avis(), "".join(citation(a, "avis--4", rappel=True) for a in avis_aq),
        icone("fleche"))
     page("qr.html", "Vous venez d’Aquensis ? · Terre Gravée",
@@ -1939,6 +1942,7 @@ def contact():
     <div class="aide__bloc" id="livraison">
       <h3>%sLivraison</h3>
       <p>Livraison en 2 à 4 jours ouvrés après l’expédition, à titre indicatif. Nous vous prévenons en cas de retard.</p>
+      <p>Emballage renforcé : la plaque voyage dans une pochette en carton ondulé, entre des plaques de calage, dans une boîte en carton type livre au format A2. %s</p>
       <p>Les frais dépendent du poids et de la destination. Ils sont affichés avant la validation de la commande. %s</p>
       <p>Livraison offerte dès 130 € d’articles livrés (plaques et kits LED), soit deux plaques. La carte cadeau, envoyée par e-mail, n’entre pas dans ce calcul. %s</p>
     </div>
@@ -1972,7 +1976,7 @@ def contact():
   <div class="bandeau-sm"><div><p class="surtitre">Créations spéciales</p><h2>Un projet sur mesure ?</h2><p>Grand format, acier Corten, série pour un lieu ou un événement.</p></div><a class="btn btn--ligne" href="sur-mesure.html">Voir le sur mesure%s</a></div>
 </section>
 """ % (icone("copier"), fournir("délai habituel"), confirmer("sur rendez-vous ou non"), MENTIONS,
-       icone("camion"), fournir("grille des tarifs"), valider("seuil"),
+       icone("camion"), confirmer("emballage utilisé aujourd’hui"), fournir("grille des tarifs"), valider("seuil"),
        icone("retour"), confirmer("obligation en vigueur depuis le 19 juin 2026, à vérifier avec un juriste"),
        icone("cadenas"), icone("bouclier"), CGV, fournir("nom et site"), icone("lampe"), icone("check"),
        fournir("dates d’achat ou de réception"), fournir("règles de modération"), icone("fleche"))
@@ -2073,8 +2077,10 @@ def strategie():
          "par exemple <code>qr.html?utm_source=aquensis&amp;utm_medium=qr&amp;utm_content=vestiaires</code> (puis <code>sortie</code>). "
          "Le QR code du dossier Marketing devra pointer vers cette adresse.",
          "Visites issues du QR code, par emplacement ; ajouts au panier et commandes depuis qr.html ; commandes avec le code AQUENSIS.",
-         "L’accord de la SEMETHERM pour poser les panneaux et citer le projet. Le paramètre de suivi. Le code AQUENSIS et sa valeur proposée "
-         "(livraison offerte dès la première plaque), à calculer avec le coût réel du port d’une plaque."),
+         "L’accord de la SEMETHERM pour poser les panneaux et citer le projet, et pour utiliser le nom Aquensis comme code ; sans cet accord, "
+         "un code neutre (BIGORRE ou BIENVENUE). Le paramètre de suivi. La valeur proposée du code (livraison offerte dès la première plaque), "
+         "à calculer avec le coût réel du port d’une plaque et à vérifier par rapport aux limites de remise du business plan. "
+         "Variante dont vous connaissez le coût d’avance : le kit LED à prix réduit avec la première plaque, elle aussi à valider."),
         ("Commerçants et restaurants partenaires",
          "Une plaque offerte et exposée, avec un petit chevalet et son QR code (<code>utm_source</code> au nom du lieu). Sur le site, une liste « Où voir nos plaques », "
          "publiée seulement après accord de chaque lieu. La carte interactive de la version 1 peut l’afficher.",
@@ -2099,16 +2105,33 @@ def strategie():
          "La page sur mesure s’adresse désormais aux villes, hôtels et entreprises : frise, grands formats, éditions spéciales. Le formulaire a un type de demande dédié.",
          "Demandes professionnelles, taux de devis signés, montant moyen.",
          "L’offre (quantités, délais, personnalisation possible ou non) et la facturation."),
+        ("Rétroéclairage",
+         "Le kit LED existe déjà pour les plaques de 60 × 30 cm : sa <a href=\"produit-led.html\">fiche</a>, l’option sur chaque fiche produit, la suggestion du panier "
+         "et la question « Lumière » du quiz. Pour les grands formats et les séries, la page sur mesure pourra proposer le rétroéclairage, comme pour les panneaux "
+         "d’Aquensis, avec une case dans le formulaire de devis.",
+         "Part des plaques vendues avec le kit LED ; demandes de devis avec rétroéclairage.",
+         "La faisabilité et le prix du rétroéclairage sur les grands formats et les séries."),
         ("Thèmes sportifs : cols, rugby",
          "Un thème « Sport » dans la boutique et dans le quiz dès qu’il y aura plusieurs modèles (aujourd’hui Le Tourmalet et la réponse « Le vélo » du quiz). "
          "La lettre « être prévenu » peut demander les thèmes qui intéressent.",
          "Ventes du Tourmalet, inscriptions par thème, demandes reçues.",
          "Les modèles. Pour le rugby, ni logo ni nom de club sans licence : ce sont des marques déposées."),
+        ("Autres faunes et flores",
+         "La collection Faune réunit aujourd’hui " + str(sum(1 for p in CATALOGUE if p["collection"] == "faune")) + " animaux des Pyrénées. La planche des dessins inédits de la page sur mesure montre déjà des fleurs : "
+         "chaque nouveau modèle passe par le bloc « Bientôt » et la lettre « être prévenu », puis un filtre « Flore » rejoint la boutique dès la première fleur.",
+         "Ventes de la collection Faune, inscriptions à la lettre, demandes reçues pour une espèce ou une fleur.",
+         "Les espèces et les fleurs retenues, les illustrations, le calendrier de sortie."),
         ("Autres territoires et grands sites : Mont-Saint-Michel, Étretat, Pont du Gard",
          "Une boutique organisée par territoire, les Pyrénées d’abord, avec une adresse par territoire. Avant de produire, la lettre « être prévenu » propose "
          "le choix du territoire pour mesurer la demande. La signature « Graver l’âme des territoires » s’y prête.",
          "Inscriptions par territoire, ventes du premier modèle hors Pyrénées.",
          "Le premier territoire, les illustrations, les droits sur l’image et le nom des sites : certains sont des marques déposées ou des domaines nationaux."),
+        ("Emballage renforcé",
+         "La FAQ des fiches produit (« Comment la plaque voyage-t-elle ? »), la page <a href=\"contact.html#livraison\">contact</a> et les garanties de "
+         "<a href=\"qr.html\">qr.html</a> décrivent la boîte en carton type livre au format A2, la pochette en carton ondulé et les plaques de calage. "
+         "Une photo du colis ouvert rassurerait davantage.",
+         "Colis abîmés et retours pour casse ; avis qui parlent de l’emballage.",
+         "Que cet emballage est bien celui utilisé aujourd’hui. Une photo du colis."),
     ]
     idees_html = "".join("""<li class="tech">
   <h3>%s</h3>
@@ -2279,6 +2302,7 @@ def strategie():
           <li>Le logo exporté en SVG depuis logo.ai.</li>
           <li>Un aperçu du dessin du Jardin Massey, et les dates de sortie des trois modèles en préparation.</li>
           <li>Le format exact et le prix des versions grand format.</li>
+          <li>La confirmation que l’emballage renforcé (boîte type livre, carton ondulé, calage) est celui utilisé aujourd’hui, et une photo du colis.</li>
         </ul>
       </div>
       <div>
@@ -2294,7 +2318,7 @@ def strategie():
           <li>Options cadeau : message joint et prix masqués.</li>
           <li>Jour de sortie des plaques exclusives : le premier jeudi du mois.</li>
           <li>Panneaux de démonstration à Aquensis (vestiaires, sortie) et page d’arrivée qr.html.</li>
-          <li>Code de bienvenue AQUENSIS : livraison offerte dès la première plaque.</li>
+          <li>Code de bienvenue AQUENSIS : livraison offerte dès la première plaque, à vérifier par rapport aux limites de remise du business plan. Le nom demande l’accord de la SEMETHERM ; sinon, un code neutre (BIGORRE ou BIENVENUE).</li>
           <li>Paramètre de suivi des QR codes : <code>utm_source</code>, <code>utm_medium</code>, <code>utm_content</code>.</li>
           <li>Adopter ou non la palette de votre charte.</li>
         </ul>

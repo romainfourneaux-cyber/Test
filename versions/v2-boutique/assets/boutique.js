@@ -166,6 +166,8 @@
   function messageLivraison(montant) {
     if (montant <= 0) return "Livraison offerte dès " + euros(TG.seuil) + " d’articles livrés, soit deux plaques.";
     if (montant >= TG.seuil) return "La livraison est offerte pour cette commande.";
+    // Sur qr.html, le tiroir rappelle aussi le code de bienvenue : on précise que ce reste s’entend sans le code.
+    if (document.body.classList.contains("page-qr")) return "Sans le code, plus que " + euros(TG.seuil - montant) + " pour la livraison offerte.";
     return "Plus que " + euros(TG.seuil - montant) + " pour la livraison offerte.";
   }
 

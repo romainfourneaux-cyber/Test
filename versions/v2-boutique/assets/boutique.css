@@ -844,6 +844,8 @@ dialog.panier::backdrop { background: rgba(14, 29, 58, .55); }
 .panier__defile { flex: 1; overflow-y: auto; padding: 16px 18px; display: grid; gap: 16px; align-content: start; overscroll-behavior: contain; }
 .panier__livraison { display: grid; gap: 8px; padding: 14px; background: var(--neige); border-radius: var(--r-m); }
 .panier__livraison-msg { font-weight: 700; }
+.panier__code { padding: 8px 10px; font-size: .9rem; background: var(--cuivre); color: var(--ardoise); border-radius: var(--r-s); }
+.panier__code .note-maq { margin-left: 2px; }
 .panier__liste { list-style: none; display: grid; gap: 0; }
 .panier__vide { padding: 18px 0; display: grid; gap: 12px; }
 .ligne-panier { display: grid; grid-template-columns: 52px minmax(0, 1fr) auto; gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--ligne); align-items: start; }
