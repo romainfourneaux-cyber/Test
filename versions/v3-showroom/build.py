@@ -572,9 +572,9 @@ GESTION_AVIS = ('<p class="mention-avis">Comment les avis sont gérés (contrepa
 
 
 def schema_echelle(ident="titre-echelle"):
-    """Plaque 60 × 30 cm sur un mur, à côté d'une porte et d'un meuble : échelle indicative."""
+    """Plaque 30 × 60 cm sur un mur, à côté d'une porte et d'un meuble : échelle indicative."""
     return """<svg class="schema schema--echelle" viewBox="0 0 300 250" role="img" aria-labelledby=\"""" + ident + """\">
-<title id=\"""" + ident + """\">Schéma à l’échelle : la plaque de 60 × 30 cm au-dessus d’un meuble de 120 cm, à côté d’une porte de 204 cm</title>
+<title id=\"""" + ident + """\">Schéma à l’échelle : la plaque de 30 × 60 cm au-dessus d’un meuble de 120 cm, à côté d’une porte de 204 cm</title>
 <line class="trait" x1="6" y1="232" x2="294" y2="232"/>
 <rect class="trait" x="22" y="28" width="83" height="204"/>
 <circle cx="96" cy="134" r="2" fill="currentColor"/>
@@ -609,7 +609,7 @@ def schema_origine(ident="titre-schema-origine"):
 def schema_grand_format():
     """Silhouette d'un grand format en préparation : dimensions inconnues, donc non chiffrées."""
     return """<svg class="schema schema--gf" viewBox="0 0 300 262" role="img" aria-labelledby="titre-gf-schema">
-<title id="titre-gf-schema">Silhouette indicative d’un grand format en préparation, à côté d’une personne de 175 cm et d’une plaque de 60 × 30 cm. Grand format, dimensions à confirmer.</title>
+<title id="titre-gf-schema">Silhouette indicative d’un grand format en préparation, à côté d’une personne de 175 cm et d’une plaque de 30 × 60 cm. Grand format, dimensions à confirmer.</title>
 <line class="trait" x1="4" y1="242" x2="296" y2="242"/>
 <circle class="silhouette" cx="34" cy="79" r="11"/>
 <rect class="silhouette" x="21" y="92" width="26" height="72" rx="6"/>
@@ -617,7 +617,7 @@ def schema_grand_format():
 <rect class="silhouette" x="23" y="160" width="10" height="82" rx="3"/><rect class="silhouette" x="35" y="160" width="10" height="82" rx="3"/>
 <text x="10" y="60">175 cm</text>
 <rect class="plaque-s" x="76" y="96" width="30" height="60"/>
-<text x="66" y="172">60 × 30</text>
+<text x="66" y="172">30 × 60</text>
 <rect class="grand-s" x="150" y="40" width="90" height="180"/>
 <line class="trait" x1="150" y1="28" x2="240" y2="28"/><line class="trait" x1="150" y1="23" x2="150" y2="33"/><line class="trait" x1="240" y1="23" x2="240" y2="33"/>
 <text x="183" y="20">? cm</text>
@@ -632,7 +632,7 @@ def schema_grand_format():
 
 def schema_sur_mesure():
     return """<svg class="schema schema--sm" viewBox="0 0 380 250" role="img" aria-labelledby="titre-sm-schema">
-<title id="titre-sm-schema">Comparaison d’échelle : une personne de 175 cm, une plaque de 60 × 30 cm et un grand format de 200 × 100 cm</title>
+<title id="titre-sm-schema">Comparaison d’échelle : une personne de 175 cm, une plaque de 30 × 60 cm et un grand format de 200 × 100 cm</title>
 <line class="trait" x1="4" y1="232" x2="376" y2="232"/>
 <circle class="silhouette" cx="38" cy="69" r="11"/>
 <rect class="silhouette" x="25" y="82" width="26" height="72" rx="6"/>
@@ -640,7 +640,7 @@ def schema_sur_mesure():
 <rect class="silhouette" x="27" y="150" width="10" height="82" rx="3"/><rect class="silhouette" x="39" y="150" width="10" height="82" rx="3"/>
 <line class="trait" x1="10" y1="57" x2="10" y2="232"/><text x="2" y="50">175 cm</text>
 <rect class="plaque-s" x="82" y="52" width="30" height="60"/>
-<text x="74" y="128">60 × 30</text>
+<text x="74" y="128">30 × 60</text>
 <rect class="grand-s" x="160" y="32" width="200" height="100"/>
 <line class="trait" x1="160" y1="144" x2="360" y2="144"/><text x="232" y="160">200 cm</text>
 <line class="trait" x1="368" y1="32" x2="368" y2="132"/><text x="300" y="24">100 cm</text>
@@ -704,7 +704,8 @@ def vitrine_preparation():
     for nom, lieu, crop in EN_PREPARATION:
         if crop:
             x, y = crop
-            alt = "Dessin de découpe de la future plaque {}, extrait de la planche des dessins inédits".format(nom)
+            de_nom = "du " + nom[3:] if nom.startswith("Le ") else "de " + nom
+            alt = "Dessin {}, extrait de la planche des dessins inédits ; la découpe de la plaque peut différer".format(de_nom)
             dessin = ('<div class="decoupe__dessin"><img src="{}misc/autres-plaques.webp" width="1400" height="1258" alt="{}" loading="lazy" decoding="async" '
                       'style="width:{:.2f}%;left:{:.2f}%;top:{:.2f}%"></div>').format(IMG, e(alt), 140000.0 / DECOUPE_L, -100.0 * x / DECOUPE_L, -100.0 * y / DECOUPE_H)
             tag = "Dessin, pas une photo"
@@ -730,7 +731,7 @@ def vitrine_preparation():
     <div class="section__tete">
       <div>
         <p class="surtitre">En préparation à l’atelier</p>
-        <h2 id="titre-preparation">Trois dessins sur la table de découpe</h2>
+        <h2 id="titre-preparation">Trois modèles sur la table de découpe</h2>
         <p class="chapo">Leurs fichiers de découpe sont prêts, mais ces plaques ne sont pas encore en vente. Vous voyez ici les dessins, pas des photos de plaques.</p>
         <p>""" + marq(MARQ_PREPA) + """</p>
       </div>
@@ -809,7 +810,7 @@ def accueil():
 <section aria-label="La plaque en bref">
   <div class="cadre">
     <ul class="cartouche">
-      <li><span>Format</span><strong>60 × 30 cm</strong><p>Épaisseur 2 mm, usage intérieur et extérieur</p></li>
+      <li><span>Format</span><strong>30 × 60 cm</strong><p>Épaisseur 2 mm, usage intérieur et extérieur</p></li>
       <li><span>Matière</span><strong>Aluminium</strong><p>Découpé au laser, puis thermolaqué</p></li>
       <li><span>Finitions</span><strong>Noir, gris, doré</strong><p>Même prix pour les trois</p></li>
       <li><span>Prix TTC</span><strong>65 €</strong><p>Quel que soit le modèle</p></li>
@@ -853,7 +854,7 @@ def accueil():
       <h2 id="titre-essai">Votre mur, la bonne taille, avant d’acheter</h2>
       <ol class="etapes">
         <li><div><h3>Choisissez un mur</h3><p>Plâtre, béton, brique ou bois, avec la teinte de votre choix. Ou importez une photo de votre mur.</p></div></li>
-        <li><div><h3>Placez la plaque à l’échelle</h3><p>Glissez-la au doigt ou à la souris. Calez le repère sur une porte ou une prise : la plaque s’affiche en 60 × 30 cm.</p></div></li>
+        <li><div><h3>Placez la plaque à l’échelle</h3><p>Glissez-la au doigt ou à la souris. Calez le repère sur une porte ou une prise : la plaque s’affiche en 30 × 60 cm.</p></div></li>
         <li><div><h3>Allumez, partagez</h3><p>Passez en aperçu de nuit pour voir le rétroéclairage, puis envoyez le lien à un proche ou enregistrez l’image.</p></div></li>
       </ol>
       <p class="note-privee">""" + ICONE_PRIVE + """<span>Votre photo reste sur votre appareil. Rien n’est envoyé, rien n’est conservé.</span></p>
@@ -1012,7 +1013,7 @@ def collection():
   <header class="entete-page">
     <p class="surtitre">La galerie</p>
     <h1>Douze plaques, deux accessoires</h1>
-    <p class="chapo">Chaque plaque mesure 60 × 30 cm et existe en noir, gris ou doré, au même prix de 65 €. Éteignez la salle pour voir le rendu avec le kit LED.</p>
+    <p class="chapo">Chaque plaque mesure 30 × 60 cm et existe en noir, gris ou doré, au même prix de 65 €. Éteignez la salle pour voir le rendu avec le kit LED.</p>
   </header>
   <div class="barre-outils">
     <div class="groupe-outil"><span class="etiquette" id="etiquette-filtre">Thème</span><div class="puces" role="group" aria-labelledby="etiquette-filtre">""" + "".join(puces) + """</div></div>
@@ -1065,7 +1066,7 @@ def rassurance(etat="Plaque dans son état d’origine"):
 
 def caracteristiques():
     return """<dl class="carac">
-  <dt>Format</dt><dd>60 × 30 cm, épaisseur 2 mm</dd>
+  <dt>Format</dt><dd>30 × 60 cm, épaisseur 2 mm</dd>
   <dt>Matière</dt><dd>Aluminium découpé au laser, thermolaqué, finition mate ou satinée</dd>
   <dt>Finitions</dt><dd>Noir, gris ou doré, même prix</dd>
   <dt>Titre</dt><dd>Découpé en lettrage pochoir, à ponts</dd>
@@ -1141,7 +1142,7 @@ def fiche_plaque(p):
         boutons.append('<button type="button" class="vue-bouton" data-vue="reel" aria-pressed="false"><span class="vue-bouton__img vue-bouton__img--cover">{}</span>Photo allumée</button>'
                        .format(vignette("v/" + rel.split("/")[-1].replace(".webp", "-160.webp"), rel, 72, 64)))
     vues.append('<div class="vue vue--echelle" data-vue="echelle" hidden>' + schema_echelle("titre-echelle-vue") + '<span class="vue-legende">Échelle indicative</span></div>')
-    boutons.append('<button type="button" class="vue-bouton" data-vue="echelle" aria-pressed="false"><span class="vue-bouton__img vue-bouton__img--echelle" aria-hidden="true">60 × 30</span>À l’échelle</button>')
+    boutons.append('<button type="button" class="vue-bouton" data-vue="echelle" aria-pressed="false"><span class="vue-bouton__img vue-bouton__img--echelle" aria-hidden="true">30 × 60</span>À l’échelle</button>')
 
     nb = len(p["avis"])
     if nb:
@@ -1275,15 +1276,15 @@ def fiche_plaque(p):
         titre_h=e(titre_h), histoire=histoire, lien=lien, fig=fig, mention=MENTION_AVIS, gestion=GESTION_AVIS, bloc_avis=bloc_avis, sim=sim)
     jsonld = {
         "@context": "https://schema.org", "@type": "Product", "name": p["nom"], "brand": {"@type": "Brand", "name": "Terre Gravée"},
-        "description": "Plaque murale en aluminium découpé au laser et thermolaqué, 60 × 30 cm, finition noire, grise ou dorée.",
+        "description": "Plaque murale en aluminium découpé au laser et thermolaqué, 30 × 60 cm, finition noire, grise ou dorée.",
         "material": "Aluminium", "width": "30 cm", "height": "60 cm",
         "image": URL_IMG_SITE + "p/{}-{}-880.webp".format(slug, fin0),
         "offers": {"@type": "Offer", "price": "65.00", "priceCurrency": "EUR", "url": p["url_actuelle"]},
     }
     if nb:
         jsonld["aggregateRating"] = {"@type": "AggregateRating", "ratingValue": note_fr(sum(a["note"] for a in p["avis"]) / nb).replace(",", "."), "reviewCount": nb}
-    page("produit-{}.html".format(slug), "{} · plaque murale 60 × 30 cm · Terre Gravée (maquette v3)".format(p["nom"]),
-         "Plaque {} en aluminium découpé, 60 × 30 cm. Configurez la finition et le kit LED, essayez-la sur votre mur. 65 € TTC.".format(p["nom"]),
+    page("produit-{}.html".format(slug), "{} · plaque murale 30 × 60 cm · Terre Gravée (maquette v3)".format(p["nom"]),
+         "Plaque {} en aluminium découpé, 30 × 60 cm. Configurez la finition et le kit LED, essayez-la sur votre mur. 65 € TTC.".format(p["nom"]),
          contenu, jsonld=jsonld)
 
 
@@ -1486,7 +1487,7 @@ def essayer():
         <div class="champ"><label for="modele-essai">Modèle</label><select id="modele-essai">""" + options_modeles("le-pic-du-midi") + """</select></div>
         <fieldset><legend class="sous-titre">Finition</legend><div class="choix-finition">""" + radios_finition("finition-essai", "le-pic-du-midi", "noir") + """</div></fieldset>
         <div class="taille-fixe">
-          <p class="sous-titre" style="margin:0">Taille : <span class="mono">60 × 30 cm</span> · taille réelle</p>
+          <p class="sous-titre" style="margin:0">Taille : <span class="mono">30 × 60 cm</span> · taille réelle</p>
           <p class="attenue petit">La plaque reste affichée à sa taille réelle sur le mur. Besoin d’un plus grand format ? <a href="sur-mesure.html">Voir le sur-mesure, jusqu’à 2 × 1 m</a>.</p>
         </div>
         <div class="placement">
@@ -1531,7 +1532,7 @@ def essayer():
   </div>
 </div>"""
     page("essayer.html", "Essayer une plaque sur votre mur · Terre Gravée (maquette v3)",
-         "Visualiseur Terre Gravée : posez une plaque de 60 × 30 cm sur un mur d’exemple ou sur la photo de votre mur, à l’échelle, de jour ou rétroéclairée.",
+         "Visualiseur Terre Gravée : posez une plaque de 30 × 60 cm sur un mur d’exemple ou sur la photo de votre mur, à l’échelle, de jour ou rétroéclairée.",
          contenu, actif="essayer.html", scripts_sup='<script src="assets/essayer.js"></script>\n')
 
 
@@ -1555,7 +1556,7 @@ def sur_mesure():
   <div class="cadre passerelle-grille">
     <div style="display:grid;gap:16px">
       <p class="surtitre">Échelle</p>
-      <h2 id="titre-echelles">De 60 × 30 cm à 2 × 1 m</h2>
+      <h2 id="titre-echelles">De 30 × 60 cm à 2 × 1 m</h2>
       <p class="chapo">Le grand format change la pièce : il habille un mur entier, une façade ou un hall d’accueil.</p>
     </div>
     <figure>""" + schema_sur_mesure() + """<figcaption class="legende-schema">Comparaison d’échelle indicative : personne de 175 cm, plaque standard, grand format.</figcaption></figure>
@@ -1569,7 +1570,7 @@ def sur_mesure():
         <p>""" + marq(MARQ_PREPA) + """</p>
         <p class="attenue">L’atelier prépare des versions grand format de quatre plaques :</p>
         <ul class="liste-grands">""" + "".join('<li><a href="produit-{0}.html">{1}</a></li>'.format(s, e(PRODUITS[s]["nom"])) for s in GRANDS_FORMATS) + """</ul>
-        <p class="attenue petit">Dimensions, finitions et prix : à confirmer. Les liens mènent aux plaques actuelles, en 60 × 30 cm.</p>
+        <p class="attenue petit">Dimensions, finitions et prix : à confirmer. Les liens mènent aux plaques actuelles, en 30 × 60 cm.</p>
         <p><a class="lien-fleche" href="#demande">Demander un grand format</a></p>
       </div>
     </div>
@@ -1682,7 +1683,7 @@ def qr():
     <div class="heros__texte">
       <p class="surtitre">Panneau de démonstration · Aquensis<span data-qr-source></span></p>
       <h1 id="titre-qr"><span class="h1-ligne">Vous avez vu nos plaques allumées à Aquensis ?</span> <em class="h1-ligne">Essayez-les chez vous.</em></h1>
-      <p>""" + marq("à valider : accord de la SEMETHERM") + """</p>
+      <p>""" + marq("à valider : accord de la SEMETHERM") + " " + marq("proposition à valider : panneaux de démonstration à installer") + """</p>
       <p class="chapo">Le même principe, en plaque de 30 × 60 cm pour votre mur : aluminium découpé au laser, rétroéclairage en option. Posez-la sur une photo de votre pièce, allumez-la, puis décidez.</p>
       <div class="actions">
         <a class="btn btn--led" href=\"""" + essai + """\">Essayer chez moi, allumée</a>
@@ -1777,7 +1778,7 @@ TECHNIQUES = [
                      + lien_src("https://www.ama.org/press-releases/press-release-from-the-journal-of-marketing-augmented-reality-in-retail-and-its-impact-on-sales/", "AMA") +
                      "). Dans les tests Baymard sur la déco, 87 % des testeurs qui voyaient « View in Room » ne l’utilisaient pas, surtout à cause d’une mauvaise expérience passée, puis de gestes confus et de redimensionnements accidentels ("
                      + lien_src("https://baymard.com/blog/deprioritize-view-in-room-augmented-reality", "Baymard") +
-                     "). D’où un outil 2D, sans application ni caméra, avec une taille verrouillée sur 60 × 30 cm."),
+                     "). D’où un outil 2D, sans application ni caméra, avec une taille verrouillée sur 30 × 60 cm."),
         "valider": "Ne rien promettre sur la baisse des retours : aucune preuve solide. Tester sur un iPhone et un Android réels.",
         "kpi": "Part des visiteurs des fiches qui ouvrent le visualiseur, part qui placent une plaque, conversion des utilisateurs comparée aux autres (en tenant compte de l’auto-sélection), retours motivés par « rendu différent ».",
     },
@@ -1837,7 +1838,7 @@ TECHNIQUES = [
     {
         "nom": "Passerelle vers le sur-mesure",
         "ou": "Fin du configurateur, accueil (silhouettes cotées), page <a href=\"sur-mesure.html\">sur-mesure</a> avec formulaire court.",
-        "pourquoi": "La valeur d’un produit qu’on a contribué à concevoir (Franke et al., 2010). Les silhouettes cotées (175 cm, 60 × 30 cm, 200 × 100 cm) rendent le grand format concret.",
+        "pourquoi": "La valeur d’un produit qu’on a contribué à concevoir (Franke et al., 2010). Les silhouettes cotées (175 cm, 30 × 60 cm, 200 × 100 cm) rendent le grand format concret.",
         "valider": "Le délai de réponse aux devis. L’information, avant commande, que le sur-mesure n’ouvre pas droit à la rétractation (art. L221-28, 3°) est déjà dans la page.",
         "kpi": "Demandes de devis, taux de transformation devis vers commande, montant moyen, délai de réponse.",
     },
@@ -2011,6 +2012,7 @@ def section_palette():
         ("Cuivre foncé " + CUIVRE_FONCE + " sur blanc cassé", CUIVRE_FONCE, c["Blanc cassé"], "Liens et petits textes cuivrés"),
         ("Blanc sur cuivre foncé " + CUIVRE_FONCE, "#FFFFFF", CUIVRE_FONCE, "Si un bouton à texte blanc est voulu"),
         ("Noir ardoise sur vert sauge", c["Noir ardoise"], c["Vert sauge très pâle"], "Sections techniques"),
+        ("Cuivre foncé " + CUIVRE_FONCE + " sur vert sauge", CUIVRE_FONCE, c["Vert sauge très pâle"], "À éviter pour les liens : sur sauge, liens en noir ardoise soulignés"),
         ("Cuivre clair sur noir ardoise", c["Cuivre clair"], c["Noir ardoise"], "Accent sur fond sombre"),
         ("Argent doux sur blanc cassé", c["Argent doux"], c["Blanc cassé"], "Filets décoratifs seulement"),
     ]
@@ -2042,16 +2044,16 @@ def section_palette():
         <div class="apercus-charte">
           <figure class="apercu apercu--ardoise">
             <p class="apercu__titre">Le Pic du Midi</p>
-            <p>Plaque en aluminium découpé au laser, 60 × 30 cm.</p>
-            <p class="apercu__fiche">Format 60 × 30 cm · épaisseur 2 mm</p>
+            <p>Plaque en aluminium découpé au laser, 30 × 60 cm.</p>
+            <p class="apercu__fiche">Format 30 × 60 cm · épaisseur 2 mm</p>
             <span class="apercu__bouton">Ajouter au panier · 65 €</span>
             <span class="apercu__lien">Essayer chez moi</span>
             <figcaption>1 · Nuit ardoise et cuivre</figcaption>
           </figure>
           <figure class="apercu apercu--jour">
             <p class="apercu__titre">Le Pic du Midi</p>
-            <p>Plaque en aluminium découpé au laser, 60 × 30 cm.</p>
-            <p class="apercu__fiche">Format 60 × 30 cm · épaisseur 2 mm</p>
+            <p>Plaque en aluminium découpé au laser, 30 × 60 cm.</p>
+            <p class="apercu__fiche">Format 30 × 60 cm · épaisseur 2 mm</p>
             <span class="apercu__bouton">Ajouter au panier · 65 €</span>
             <span class="apercu__lien">Essayer chez moi</span>
             <figcaption>2 · Jour métal brut</figcaption>
@@ -2059,7 +2061,7 @@ def section_palette():
         </div>
         <ol>
           <li><strong>Nuit ardoise et cuivre</strong> : le fond nuit devient noir ardoise #2C2C2C, le texte blanc cassé, les filets argent doux, et l’accent de l’interface cuivre clair, avec un texte noir ardoise sur les boutons. La lumière des plaques garde la couleur LED choisie par le visiteur. C’est un changement de quelques variables : vous pouvez l’essayer tout de suite sur toute la maquette.</li>
-          <li><strong>Jour métal brut</strong> : fond blanc cassé, texte noir ardoise, sections techniques en vert sauge, boutons cuivre clair à texte ardoise, liens en cuivre foncé """ + CUIVRE_FONCE + """. La nuit ne vit plus que dans les scènes, quand on allume la plaque. Il faut reprendre toute la feuille de style : à décider avant d’y travailler.</li>
+          <li><strong>Jour métal brut</strong> : fond blanc cassé, texte noir ardoise, sections techniques en vert sauge, boutons cuivre clair à texte ardoise, liens en cuivre foncé """ + CUIVRE_FONCE + """ sur le fond blanc cassé. Sur le vert sauge, ce cuivre ne passe pas AA : les liens y restent en noir ardoise, soulignés. La nuit ne vit plus que dans les scènes, quand on allume la plaque. Il faut reprendre toute la feuille de style : à décider avant d’y travailler.</li>
         </ol>
         <div class="bascule-charte" role="group" aria-label="Couleurs de la maquette">
           <button type="button" data-charte="nuit" aria-pressed="true">Nuit bleue (version 3)</button>
@@ -2067,7 +2069,7 @@ def section_palette():
         </div>
         <p class="petit">Le choix est mémorisé dans ce navigateur seulement et s’applique à toutes les pages de la maquette. Le bandeau du haut le rappelle.</p>
         <h3>Le logo</h3>
-        <p>Votre logo existe en vectoriel (logo.ai), avec trois déclinaisons PNG : l’emblème au coq, « TERRE GRAVÉE » et « Graver l’âme des territoires ». Exporté en SVG """ + marq("à fournir") + """, il remplacera la signature typographique de l’en-tête et du pied de page, et le petit pictogramme dessiné pour la maquette.</p>
+        <p>Votre logo existe en vectoriel (logo.ai) et en trois fichiers PNG (logo.png, logo2.png, logo3.png). Il réunit l’emblème au coq, le nom « TERRE GRAVÉE » et la signature « Graver l’âme des territoires ». Exporté en SVG """ + marq("à fournir") + """, il remplacera la signature typographique de l’en-tête et du pied de page, et le petit pictogramme dessiné pour la maquette.</p>
       </section>"""
 
 
@@ -2087,7 +2089,7 @@ def section_idees():
         <h2>Vos idées, mises en œuvre</h2>
         <p>Votre Contexte fixe deux cibles prioritaires : les touristes et les habitants attachés à leur patrimoine. Voici vos idées pour les toucher, avec ce que le site doit prévoir, l’indicateur à suivre et ce qui reste à valider. Aucune n’est en ligne : ce sont des propositions.</p>
         <div class="liste-techniques">""" + "".join(cartes) + """</div>
-        <p>Deux autres idées de votre Contexte sont déjà traitées ailleurs : la carte interactive des plaques est le cœur de la version 1, et l’emballage renforcé (boîte en carton de type livre au format A2, pochette en carton ondulé, plaques de calage) peut être décrit sur les fiches pour rassurer sur la livraison.</p>
+        <p>Deux autres idées de votre Contexte sont déjà traitées ailleurs : la carte interactive des plaques est le cœur de la version 1, et l’emballage renforcé (boîte en carton de type livre au format A2, pochette en carton ondulé, plaques de calage) peut être décrit sur les fiches pour rassurer sur la livraison. Les plaques sur devis (page sur-mesure) et le rétroéclairage (kit LED à 15 €) sont déjà dans cette maquette.</p>
       </section>"""
 
 
@@ -2163,7 +2165,7 @@ def strategie():
           <li><strong>Rayon de 150 km</strong> (art. L121-2) : Revel est à environ 155 km de Gerde et de Bagnères-de-Bigorre à vol d’oiseau. Le héros dit donc « fabriquée entre Revel (31) et Bagnères-de-Bigorre (65) ». La phrase « Toutes nos plaques sont réalisées dans un rayon de 150 km » n’apparaît qu’entre guillemets, avec le marqueur « centre du rayon à confirmer ». Dites-nous d’où part le rayon.</li>
           <li><strong>Avis</strong> (""" + lien_src("https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000049571119", "art. L111-7-2") + """ et """ + lien_src("https://www.legifrance.gouv.fr/jorf/id/JORFARTI000035720943", "art. D111-16 à D111-19") + """) : déjà en place, la mention « publiés sans vérification d’achat » près des avis et des notes, la date de publication, l’ordre chronologique et l’adresse pour signaler un doute. Pas encore conforme : il manque près de chaque avis la date de l’expérience de consommation (D111-17, 1° b), marquée « date à fournir », et la rubrique dédiée (contreparties, délais de publication et de conservation : D111-17, 2° ; motifs de refus : L111-7-2), marquée « rubrique à fournir ».</li>
           <li><strong>Prix</strong> : prix TTC et mention de TVA partout, aucun prix barré. Toute réduction future devra se référer au prix le plus bas des 30 derniers jours (""" + lien_src("https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000044549592", "art. L112-1-1") + """).</li>
-          <li><strong>Aquensis</strong> : citer le nom et montrer la photo demande l’accord écrit de la SEMETHERM, d’où le marqueur sur l’accueil et sur qr.html. Le site dit seulement que le projet a été conçu pour Aquensis, rien de plus. Des baigneurs apparaissent sur la photo : s’ils sont reconnaissables, il faut les flouter ou obtenir leur accord (droit à l’image).</li>
+          <li><strong>Aquensis</strong> : citer le nom et montrer la photo demande l’accord écrit de la SEMETHERM, d’où le marqueur sur l’accueil et sur qr.html. L’accueil dit seulement que le projet a été conçu pour Aquensis. La page qr.html suppose les panneaux de démonstration installés : elle ne doit être mise en ligne qu’avec eux. Des baigneurs apparaissent sur la photo : s’ils sont reconnaissables, il faut les flouter ou obtenir leur accord (droit à l’image).</li>
           <li><strong>QR codes et mesure</strong> : un repère dans l’adresse (<code>?src=</code>) ne dépose rien sur l’appareil. L’outil de mesure qui le lit doit, lui, respecter les règles de la CNIL sur les traceurs (consentement, ou exemption pour certains outils de mesure d’audience). La page qr.html n’en charge aucun.</li>
           <li><strong>Modèles en préparation</strong> : ils sont présentés par leurs dessins, jamais par une fausse photo, avec le marqueur « en préparation, à valider ». Aucune date ni aucun prix n’est annoncé tant qu’ils ne sont pas fixés.</li>
           <li><strong>Simulation</strong> : chaque rendu de nuit et chaque mur est marqué « simulation, rendu indicatif » ; les mises en situation sont nommées ainsi, jamais présentées comme des photos de clients.</li>

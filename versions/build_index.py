@@ -22,23 +22,23 @@ VERSIONS = [
     {
         "dossier": "versions/v1-carnet", "nom": "Carnet de territoire", "numero": "v1",
         "resume": "Un atlas de la Bigorre. Chaque plaque raconte son lieu, et une carte interactive des Hautes-Pyrénées relie les modèles à leurs sommets, villages et monuments.",
-        "points": ["Carte des lieux et trajet de fabrication", "Récits de lieu sur chaque fiche", "Cadeaux souvenir : cure, randonnée, crémaillère"],
+        "points": ["Carte des lieux, d’Aquensis et des modèles à venir", "Histoire d’origine : les 30 panneaux d’Aquensis", "Récits de lieu et cadeaux souvenir"],
         "capture": "versions/v1-carnet/captures/accueil-desktop.jpg",
-        "pages": [("Accueil", "index.html"), ("Carte", "carte.html"), ("Collection", "collection.html"), ("Stratégie", "strategie.html")],
+        "pages": [("Accueil", "index.html"), ("Carte", "carte.html"), ("Page QR Aquensis", "qr.html"), ("Stratégie", "strategie.html")],
     },
     {
         "dossier": "versions/v2-boutique", "nom": "Boutique qui convertit", "numero": "v2",
         "resume": "Les codes des marques qui vendent en direct : quiz pour trouver sa plaque, lot de trois, kit LED proposé au bon moment, guide cadeaux de Noël et preuve sociale près du bouton d’achat.",
-        "points": ["Quiz « Quelle plaque pour quel mur ? »", "Triptyque et barre de livraison offerte", "Guide cadeaux de Noël 2026"],
+        "points": ["Quiz « Quelle plaque pour quel mur ? »", "Triptyque, livraison offerte, guide de Noël", "Page d’accueil des visiteurs du QR code Aquensis"],
         "capture": "versions/v2-boutique/captures/accueil-desktop.jpg",
-        "pages": [("Accueil", "index.html"), ("Quiz", "quiz.html"), ("Noël", "noel.html"), ("Stratégie", "strategie.html")],
+        "pages": [("Accueil", "index.html"), ("Quiz", "quiz.html"), ("Noël", "noel.html"), ("Page QR Aquensis", "qr.html"), ("Stratégie", "strategie.html")],
     },
     {
         "dossier": "versions/v3-showroom", "nom": "Showroom immersif", "numero": "v3",
         "resume": "Un showroom de nuit inspiré du Pic du Midi. On essaie la plaque sur un mur d’exemple ou sur la photo de son propre mur, on choisit la finition et on allume les LED.",
-        "points": ["Essai chez soi avec sa propre photo", "Configurateur finition et couleur LED", "Lien de configuration à partager"],
+        "points": ["Essai chez soi avec sa propre photo", "Configurateur finition et couleur LED", "Vitrine des modèles en préparation"],
         "capture": "versions/v3-showroom/captures/accueil-desktop.jpg",
-        "pages": [("Accueil", "index.html"), ("Essayer chez vous", "essayer.html"), ("Collection", "collection.html"), ("Stratégie", "strategie.html")],
+        "pages": [("Accueil", "index.html"), ("Essayer chez vous", "essayer.html"), ("Page QR Aquensis", "qr.html"), ("Stratégie", "strategie.html")],
     },
 ]
 

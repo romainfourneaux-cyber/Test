@@ -498,7 +498,7 @@ def pied():
 
 def tiroir_panier(qr=False):
     # Sur qr.html, le panier rappelle le code de bienvenue pour ne pas contredire le ticket de la page.
-    code = ('<p class="panier__code">Avec le code AQUENSIS, à saisir au paiement : livraison offerte dès la première plaque. %s</p>'
+    code = ('<p class="panier__code">Avec le code <strong>AQUENSIS</strong>, à saisir au paiement : livraison offerte dès la première plaque. %s</p>'
             % valider("code et valeur") if qr else "")
     return """<dialog class="panier" id="panier" aria-labelledby="panier-titre">
   <div class="panier__cadre">
@@ -680,6 +680,8 @@ BIENTOT = [
      "Dessin préparatoire de La Transhumance : un troupeau de vaches et son berger sur un chemin de montagne"),
     ("Le Jardin Massey", "Tarbes", None, None, ""),
 ]
+NB_FAUNE = sum(1 for p in CATALOGUE if p["collection"] == "faune")
+EN_LETTRES = {2: "deux", 3: "trois", 4: "quatre", 5: "cinq", 6: "six", 7: "sept", 8: "huit", 9: "neuf", 10: "dix"}
 GRANDS_FORMATS = "Le Cirque de Gavarnie, Le Tourmalet, Le Pont d’Espagne et Le Pic du Midi"
 
 
@@ -1870,7 +1872,7 @@ def qr():
 <section class="section wrap" aria-labelledby="titre-garanties-qr">
   <h2 id="titre-garanties-qr" class="sous-titre">Commander en confiance</h2>
   <ul class="bandeau-garanties">
-    <li>%s<span><strong>Emballage renforcé</strong> (carton ondulé, calage, boîte type livre), livraison en 2 à 4 jours ouvrés après l’expédition, à titre indicatif %s</span></li>
+    <li>%s<span><strong>Emballage renforcé</strong>, livraison en 2 à 4 jours ouvrés après l’expédition, à titre indicatif %s</span></li>
     <li>%s<span><strong>Paiement sécurisé</strong> par carte bancaire (Stripe), PayPal, Apple Pay ou Google Pay</span></li>
     <li>%s<span><strong>14 jours pour vous rétracter</strong> après réception, comme le prévoit la loi</span></li>
     <li>%s<span><strong>Garanties légales</strong> de conformité et des vices cachés. <a href="%s">Lire les CGV</a></span></li>
@@ -2117,7 +2119,7 @@ def strategie():
          "Ventes du Tourmalet, inscriptions par thème, demandes reçues.",
          "Les modèles. Pour le rugby, ni logo ni nom de club sans licence : ce sont des marques déposées."),
         ("Autres faunes et flores",
-         "La collection Faune réunit aujourd’hui " + str(sum(1 for p in CATALOGUE if p["collection"] == "faune")) + " animaux des Pyrénées. La planche des dessins inédits de la page sur mesure montre déjà des fleurs : "
+         "La collection Faune réunit aujourd’hui " + EN_LETTRES.get(NB_FAUNE, str(NB_FAUNE)) + " animaux des Pyrénées. La planche des dessins inédits de la page sur mesure montre déjà des fleurs : "
          "chaque nouveau modèle passe par le bloc « Bientôt » et la lettre « être prévenu », puis un filtre « Flore » rejoint la boutique dès la première fleur.",
          "Ventes de la collection Faune, inscriptions à la lettre, demandes reçues pour une espèce ou une fleur.",
          "Les espèces et les fleurs retenues, les illustrations, le calendrier de sortie."),

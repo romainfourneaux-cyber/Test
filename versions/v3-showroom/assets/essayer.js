@@ -538,7 +538,7 @@
     var suffixe = etat.kit ? " · kit LED, lumière " + nomLum : (etat.allume ? " · aperçu de nuit, lumière " + nomLum : "");
     ctx.fillText("Terre Gravée · " + p.n + " · " + O.FIN[etat.fin].n + suffixe, 32, H + bande / 2);
     ctx.fillStyle = "#b7c1d4"; ctx.font = "400 18px 'JetBrains Mono', Consolas, monospace"; ctx.textAlign = "right";
-    ctx.fillText("Simulation, rendu indicatif · 60 × 30 cm", W - 32, H + bande / 2);
+    ctx.fillText("Simulation, rendu indicatif · 30 × 60 cm", W - 32, H + bande / 2);
     c.toBlob(function (blob) { fini(blob); }, "image/jpeg", 0.88);
   }
   var exporter = $("[data-exporter]");

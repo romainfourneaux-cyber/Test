@@ -16,7 +16,7 @@ Double-cliquez sur `index.html`. Tout fonctionne en local, sans serveur. Une con
 |---|---|
 | `index.html` | Accueil : vitrine qui s’allume quand elle arrive à l’écran, galerie qu’on éteint, essai, kit LED, « La première installation » (la photo d’Aquensis traitée en niche éclairée, les cotes du projet, l’échelle niche et plaque), fabrication, les 9 avis, sur-mesure, cadeaux, lettre |
 | `collection.html` | La galerie : 12 plaques et un bloc Accessoires, filtres, « voir en » noir, gris ou doré, salle éteinte, puis la vitrine « En préparation à l’atelier » (Le Casque du Lhéris, La Transhumance, Le Jardin Massey : dessins de découpe, pas de photos) |
-| `essayer.html` | Page signature : murs dessinés ou photo de votre mur, placement à l’échelle (60 × 30 cm), aperçu de nuit, kit LED en option, lien et image JPEG à partager |
+| `essayer.html` | Page signature : murs dessinés ou photo de votre mur, placement à l’échelle (30 × 60 cm), aperçu de nuit, kit LED en option, lien et image JPEG à partager |
 | `produit-*.html` | 14 fiches : configurateur avec prix en direct pour les 12 plaques, fiches dédiées au kit LED et à la carte cadeau |
 | `sur-mesure.html` | Échelles, grands formats en préparation (silhouette cotée « grand format, à confirmer »), matières, plaques exclusives, demande de devis |
 | `contact.html` | E-mail à copier, adresse de l’atelier, questions fréquentes |
@@ -35,8 +35,12 @@ Styles : `assets/showroom.css`. La palette de Romain y est définie en variables
 
 `assets/img/` contient des variantes légères (vignettes, photos du kit LED, carte cadeau) créées par `outils/vignettes.py`, qui demande Pillow. `build.py` s’en passe si elles manquent.
 
+## Format des plaques
+
+Le site note toujours le format en largeur × hauteur, comme le Drive : plaque de 30 × 60 cm (portrait), niche d’Aquensis de 1 × 2 m, grand format de 200 × 100 cm. Le schéma d’échelle et le visualiseur gardent leurs cotes 30 cm et 60 cm.
+
 ## Marqueurs liés au Drive
 
-- « à valider : accord de la SEMETHERM pour citer le projet Aquensis » sur l’histoire d’origine (accueil, `qr.html`) ; « à valider : accord de la SEMETHERM » en tête de `qr.html`.
+- « à valider : accord de la SEMETHERM pour citer le projet Aquensis » sur l’histoire d’origine (accueil, `qr.html`) ; « à valider : accord de la SEMETHERM » et « proposition à valider : panneaux de démonstration à installer » en tête de `qr.html`, qui ne doit être mise en ligne qu’avec ces panneaux.
 - « en préparation, à valider » sur les trois modèles en préparation et les grands formats ; « grand format, à confirmer » sur la silhouette cotée.
 - « paramètre de suivi à valider » sur le repère `?src=` des QR codes ; « proposition à valider » sur chaque idée marketing et sur l’adaptation à la charte.

@@ -1463,3 +1463,8 @@ html.feuille-ouverte, html.feuille-ouverte body { overflow: hidden; }
 }
 :root[data-palette="marque"][data-theme="light"] .bouton--plein { background: #CBAA88; color: #2C2C2C; border-color: #CBAA88; }
 :root[data-palette="marque"][data-theme="light"] .bouton--plein:hover { background: #2C2C2C; color: #F5F5F0; border-color: #2C2C2C; }
+
+/* Précision « (1 m × 2 m) » sous Aquensis : seulement quand la carte a la place (sinon elle touche « Argelès-Gazost ») */
+@media (max-width: 1280px) { .atlas--grande .repere__plus { display: none; } }
+/* Étiquette abaissée de quelques pixels (Le Casque du Lhéris, sous « Atelier (adresse) · Gerde ») ; masquée sous 700 px */
+.repere--bas .repere__nom { margin-top: 12px; }
