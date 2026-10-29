@@ -39,6 +39,7 @@ h1 { font-family: var(--f-titre); font-weight: 800; font-stretch: 105%; font-siz
 .statut--fini { color: var(--encre); }
 .statut--cours { color: var(--cuivre-texte); }
 .statut--attente { color: var(--attente); }
+.statut--source { color: var(--encre-2); }
 h2 { font-family: var(--f-titre); font-weight: 750; font-stretch: 105%; font-size: 1.45rem; line-height: 1.15; margin: 0; }
 .corps p { margin: 0; color: var(--encre-2); }
 .points { margin: 0; padding-left: 18px; color: var(--encre-2); font-size: .95rem; }
@@ -56,34 +57,28 @@ a:focus-visible { outline: 2px solid var(--cuivre); outline-offset: 2px; }
 <div class="cadre">
   <header class="entete">
     <p class="marque">Terre Gravée</p>
-    <h1>Les maquettes du nouveau site</h1>
-    <p class="chapo">Quatre directions pour terregravee.fr, construites avec le vrai contenu du site. Ouvrez-les, cliquez partout, ajoutez au panier : rien n’est envoyé ni payé.</p>
+    <h1>La maquette retenue et ses sources</h1>
+    <p class="chapo">La version 4 mélange le mur d’exposition et le carnet de territoire. Les deux sources restent consultables pour comparer. Ouvrez-les, cliquez partout, ajoutez au panier : rien n’est envoyé ni payé.</p>
     <ul class="conseils"><li>Brouillons non publiés</li><li>Paiements désactivés</li><li>Les étiquettes « à valider » attendent votre décision</li></ul>
   </header>
-  <ul class="liste"><li class="version"><img src="../maquette/captures/accueil-desktop.jpg" alt="Accueil de la version Mur d’exposition" loading="lazy" width="1440" height="900"><div class="corps">
-  <div class="ligne"><span class="numero">Version 0</span><span class="statut statut--fini">Terminée</span></div>
+  <ul class="liste"><li class="version"><div class="vide">Capture à venir</div><div class="corps">
+  <div class="ligne"><span class="numero">Version 4</span><span class="statut statut--attente">En construction</span></div>
+  <h2>Galerie de territoire</h2>
+  <p>Le mélange retenu : le mur d’exposition de la v0, sa simulation LED et ses fiches claires, enrichis de la carte des lieux, de l’histoire d’Aquensis et du texte de chaque lieu de la v1, aux couleurs de la charte Terre Gravée.</p>
+  <ul class="points"><li>Mur d’exposition et rétroéclairage LED</li><li>Carte des lieux simplifiée</li><li>Histoire d’Aquensis et charte de la marque</li></ul>
+  <div class="actions"><span class="lien" aria-disabled="true">Bientôt disponible</span></div>
+</div></li><li class="version"><img src="../maquette/captures/accueil-desktop.jpg" alt="Accueil de la version Mur d’exposition" loading="lazy" width="1440" height="900"><div class="corps">
+  <div class="ligne"><span class="numero">Version 0</span><span class="statut statut--source">Source du mélange</span></div>
   <h2>Mur d’exposition</h2>
-  <p>La première maquette. Les plaques sont accrochées comme dans une galerie, avec leur ombre portée et un cartel par modèle. Un bouton simule le kit LED la nuit.</p>
+  <p>La première maquette, jugée trop simple. Les plaques sont accrochées comme dans une galerie, avec leur ombre portée et un cartel par modèle.</p>
   <ul class="points"><li>Simulation du rétroéclairage dans le héros</li><li>Pastilles noir, gris, doré sur chaque carte</li><li>Notes de refonte : 18 problèmes du site actuel</li></ul>
-  <div class="actions"><a class="bouton" href="../maquette/index.html">Ouvrir</a><a class="lien" href="../maquette/collection.html">Collection</a><a class="lien" href="../maquette/produit-le-pic-du-midi.html">Fiche Pic du Midi</a><a class="lien" href="../maquette/notes.html">Notes de refonte</a></div>
+  <div class="actions"><a class="bouton" href="../maquette/index.html">Ouvrir</a><a class="lien" href="../maquette/collection.html">Collection</a><a class="lien" href="../maquette/notes.html">Notes de refonte</a></div>
 </div></li><li class="version"><img src="../versions/v1-carnet/captures/accueil-desktop.jpg" alt="Accueil de la version Carnet de territoire" loading="lazy" width="1440" height="900"><div class="corps">
-  <div class="ligne"><span class="numero">Version 1</span><span class="statut statut--cours">Terminée</span></div>
+  <div class="ligne"><span class="numero">Version 1</span><span class="statut statut--source">Source du mélange</span></div>
   <h2>Carnet de territoire</h2>
-  <p>Un atlas de la Bigorre. Chaque plaque raconte son lieu, et une carte interactive des Hautes-Pyrénées relie les modèles à leurs sommets, villages et monuments.</p>
-  <ul class="points"><li>Carte des lieux, d’Aquensis et des modèles à venir</li><li>Histoire d’origine : les 30 panneaux d’Aquensis</li><li>Récits de lieu et cadeaux souvenir</li></ul>
-  <div class="actions"><a class="bouton" href="../versions/v1-carnet/index.html">Ouvrir</a><a class="lien" href="../versions/v1-carnet/carte.html">Carte</a><a class="lien" href="../versions/v1-carnet/qr.html">Page QR Aquensis</a><a class="lien" href="../versions/v1-carnet/strategie.html">Stratégie</a></div>
-</div></li><li class="version"><img src="../versions/v2-boutique/captures/accueil-desktop.jpg" alt="Accueil de la version Boutique qui convertit" loading="lazy" width="1440" height="900"><div class="corps">
-  <div class="ligne"><span class="numero">Version 2</span><span class="statut statut--cours">Terminée</span></div>
-  <h2>Boutique qui convertit</h2>
-  <p>Les codes des marques qui vendent en direct : quiz pour trouver sa plaque, lot de trois, kit LED proposé au bon moment, guide cadeaux de Noël et preuve sociale près du bouton d’achat.</p>
-  <ul class="points"><li>Quiz « Quelle plaque pour quel mur ? »</li><li>Triptyque, livraison offerte, guide de Noël</li><li>Page d’accueil des visiteurs du QR code Aquensis</li></ul>
-  <div class="actions"><a class="bouton" href="../versions/v2-boutique/index.html">Ouvrir</a><a class="lien" href="../versions/v2-boutique/quiz.html">Quiz</a><a class="lien" href="../versions/v2-boutique/noel.html">Noël</a><a class="lien" href="../versions/v2-boutique/qr.html">Page QR Aquensis</a><a class="lien" href="../versions/v2-boutique/strategie.html">Stratégie</a></div>
-</div></li><li class="version"><img src="../versions/v3-showroom/captures/accueil-desktop.jpg" alt="Accueil de la version Showroom immersif" loading="lazy" width="1440" height="900"><div class="corps">
-  <div class="ligne"><span class="numero">Version 3</span><span class="statut statut--cours">Terminée</span></div>
-  <h2>Showroom immersif</h2>
-  <p>Un showroom de nuit inspiré du Pic du Midi. On essaie la plaque sur un mur d’exemple ou sur la photo de son propre mur, on choisit la finition et on allume les LED.</p>
-  <ul class="points"><li>Essai chez soi avec sa propre photo</li><li>Configurateur finition et couleur LED</li><li>Vitrine des modèles en préparation</li></ul>
-  <div class="actions"><a class="bouton" href="../versions/v3-showroom/index.html">Ouvrir</a><a class="lien" href="../versions/v3-showroom/essayer.html">Essayer chez vous</a><a class="lien" href="../versions/v3-showroom/qr.html">Page QR Aquensis</a><a class="lien" href="../versions/v3-showroom/strategie.html">Stratégie</a></div>
+  <p>La version atlas, jugée trop complexe. Chaque plaque raconte son lieu, avec une carte interactive très complète des Hautes-Pyrénées.</p>
+  <ul class="points"><li>Carte des lieux avec filtres et calques</li><li>Histoire d’origine : les 30 panneaux d’Aquensis</li><li>Récits de lieu et cadeaux souvenir</li></ul>
+  <div class="actions"><a class="bouton" href="../versions/v1-carnet/index.html">Ouvrir</a><a class="lien" href="../versions/v1-carnet/carte.html">Carte</a><a class="lien" href="../versions/v1-carnet/strategie.html">Stratégie</a></div>
 </div></li></ul>
   <p class="pied">Chaque version a une page « Stratégie » qui explique ses choix de design et de marketing, avec les informations à fournir. Pour revenir ici depuis une version, utilisez le lien « Comparer les versions » du bandeau.</p>
 </div>

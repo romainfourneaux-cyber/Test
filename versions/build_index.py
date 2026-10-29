@@ -13,36 +13,29 @@ RACINE = os.path.dirname(ICI)
 
 VERSIONS = [
     {
+        "dossier": "versions/v4-galerie", "nom": "Galerie de territoire", "numero": "v4",
+        "resume": "Le mélange retenu : le mur d’exposition de la v0, sa simulation LED et ses fiches claires, enrichis de la carte des lieux, de l’histoire d’Aquensis et du texte de chaque lieu de la v1, aux couleurs de la charte Terre Gravée.",
+        "points": ["Mur d’exposition et rétroéclairage LED", "Carte des lieux simplifiée", "Histoire d’Aquensis et charte de la marque"],
+        "capture": "versions/v4-galerie/captures/accueil-desktop.jpg",
+        "pages": [("Accueil", "index.html"), ("Carte", "carte.html"), ("Collection", "collection.html"), ("Notes", "notes.html")],
+    },
+    {
         "dossier": "maquette", "nom": "Mur d’exposition", "numero": "v0",
-        "resume": "La première maquette. Les plaques sont accrochées comme dans une galerie, avec leur ombre portée et un cartel par modèle. Un bouton simule le kit LED la nuit.",
+        "resume": "La première maquette, jugée trop simple. Les plaques sont accrochées comme dans une galerie, avec leur ombre portée et un cartel par modèle.",
         "points": ["Simulation du rétroéclairage dans le héros", "Pastilles noir, gris, doré sur chaque carte", "Notes de refonte : 18 problèmes du site actuel"],
         "capture": "maquette/captures/accueil-desktop.jpg",
-        "pages": [("Accueil", "index.html"), ("Collection", "collection.html"), ("Fiche Pic du Midi", "produit-le-pic-du-midi.html"), ("Notes de refonte", "notes.html")],
+        "pages": [("Accueil", "index.html"), ("Collection", "collection.html"), ("Notes de refonte", "notes.html")],
     },
     {
         "dossier": "versions/v1-carnet", "nom": "Carnet de territoire", "numero": "v1",
-        "resume": "Un atlas de la Bigorre. Chaque plaque raconte son lieu, et une carte interactive des Hautes-Pyrénées relie les modèles à leurs sommets, villages et monuments.",
-        "points": ["Carte des lieux, d’Aquensis et des modèles à venir", "Histoire d’origine : les 30 panneaux d’Aquensis", "Récits de lieu et cadeaux souvenir"],
+        "resume": "La version atlas, jugée trop complexe. Chaque plaque raconte son lieu, avec une carte interactive très complète des Hautes-Pyrénées.",
+        "points": ["Carte des lieux avec filtres et calques", "Histoire d’origine : les 30 panneaux d’Aquensis", "Récits de lieu et cadeaux souvenir"],
         "capture": "versions/v1-carnet/captures/accueil-desktop.jpg",
-        "pages": [("Accueil", "index.html"), ("Carte", "carte.html"), ("Page QR Aquensis", "qr.html"), ("Stratégie", "strategie.html")],
-    },
-    {
-        "dossier": "versions/v2-boutique", "nom": "Boutique qui convertit", "numero": "v2",
-        "resume": "Les codes des marques qui vendent en direct : quiz pour trouver sa plaque, lot de trois, kit LED proposé au bon moment, guide cadeaux de Noël et preuve sociale près du bouton d’achat.",
-        "points": ["Quiz « Quelle plaque pour quel mur ? »", "Triptyque, livraison offerte, guide de Noël", "Page d’accueil des visiteurs du QR code Aquensis"],
-        "capture": "versions/v2-boutique/captures/accueil-desktop.jpg",
-        "pages": [("Accueil", "index.html"), ("Quiz", "quiz.html"), ("Noël", "noel.html"), ("Page QR Aquensis", "qr.html"), ("Stratégie", "strategie.html")],
-    },
-    {
-        "dossier": "versions/v3-showroom", "nom": "Showroom immersif", "numero": "v3",
-        "resume": "Un showroom de nuit inspiré du Pic du Midi. On essaie la plaque sur un mur d’exemple ou sur la photo de son propre mur, on choisit la finition et on allume les LED.",
-        "points": ["Essai chez soi avec sa propre photo", "Configurateur finition et couleur LED", "Vitrine des modèles en préparation"],
-        "capture": "versions/v3-showroom/captures/accueil-desktop.jpg",
-        "pages": [("Accueil", "index.html"), ("Essayer chez vous", "essayer.html"), ("Page QR Aquensis", "qr.html"), ("Stratégie", "strategie.html")],
+        "pages": [("Accueil", "index.html"), ("Carte", "carte.html"), ("Stratégie", "strategie.html")],
     },
 ]
 
-STATUTS = {"maquette": "Terminée"}
+STATUTS = {"maquette": "Source du mélange", "versions/v1-carnet": "Source du mélange"}
 
 
 def e(t):
@@ -51,10 +44,10 @@ def e(t):
 
 def statut(v):
     if v["dossier"] in STATUTS:
-        return STATUTS[v["dossier"]], "fini"
+        return STATUTS[v["dossier"]], "source"
     if not os.path.exists(os.path.join(RACINE, v["dossier"], "index.html")):
         return "En construction", "attente"
-    return os.environ.get("STATUT_VERSIONS", "Relecture en cours"), "cours"
+    return os.environ.get("STATUT_VERSIONS", "Proposition retenue"), "fini"
 
 
 STYLE = """
@@ -90,6 +83,7 @@ h1 { font-family: var(--f-titre); font-weight: 800; font-stretch: 105%; font-siz
 .statut--fini { color: var(--encre); }
 .statut--cours { color: var(--cuivre-texte); }
 .statut--attente { color: var(--attente); }
+.statut--source { color: var(--encre-2); }
 h2 { font-family: var(--f-titre); font-weight: 750; font-stretch: 105%; font-size: 1.45rem; line-height: 1.15; margin: 0; }
 .corps p { margin: 0; color: var(--encre-2); }
 .points { margin: 0; padding-left: 18px; color: var(--encre-2); font-size: .95rem; }
@@ -132,8 +126,8 @@ def contenu(prefixe):
     return f"""<div class="cadre">
   <header class="entete">
     <p class="marque">Terre Gravée</p>
-    <h1>Les maquettes du nouveau site</h1>
-    <p class="chapo">Quatre directions pour terregravee.fr, construites avec le vrai contenu du site. Ouvrez-les, cliquez partout, ajoutez au panier : rien n’est envoyé ni payé.</p>
+    <h1>La maquette retenue et ses sources</h1>
+    <p class="chapo">La version 4 mélange le mur d’exposition et le carnet de territoire. Les deux sources restent consultables pour comparer. Ouvrez-les, cliquez partout, ajoutez au panier : rien n’est envoyé ni payé.</p>
     <ul class="conseils"><li>Brouillons non publiés</li><li>Paiements désactivés</li><li>Les étiquettes « à valider » attendent votre décision</li></ul>
   </header>
   <ul class="liste">{''.join(fiches)}</ul>
