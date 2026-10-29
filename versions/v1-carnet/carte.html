@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>La carte des plaques · Terre Gravée</title>
+<meta name="description" content="Carte interactive des Hautes-Pyrénées : les huit lieux gravés par Terre Gravée, la zone du Parc national pour la faune et le trajet de fabrication de Revel à Bagnères-de-Bigorre.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="color-scheme" content="light dark">
+<script>try{var t=localStorage.getItem("tg-v1-theme");if(t==="dark"||t==="light"){document.documentElement.setAttribute("data-theme",t);}}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;500;600;700&amp;family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..600&amp;display=swap">
+<link rel="stylesheet" href="assets/carnet.css">
+
+</head>
+<body class="page-carte">
+<a class="evitement" href="#contenu">Aller au contenu</a>
+<div class="bandeau-maquette">
+  <div class="cadre bandeau-maquette__ligne">
+    <p><strong>Maquette version 1 · brouillon non publié · paiements désactivés</strong></p>
+    <p class="bandeau-maquette__liens"><a href="strategie.html">Lire la stratégie</a><a href="../index.html">Comparer les versions</a></p>
+  </div>
+</div>
+<header class="entete">
+  <div class="cadre entete__ligne">
+    <a class="marque" href="index.html"><svg class="marque__signe" viewBox="0 0 40 40" aria-hidden="true" focusable="false"><path d="M20 4c7 0 15 5 15 14 0 10-8 18-16 18S5 30 5 21C5 12 13 4 20 4Z"/><path d="M20 10c4.5 0 9 3 9 8.5 0 6-5 11-10 11s-8.6-4-8.6-9.6C10.4 14.4 15 10 20 10Z"/><path d="M19.6 16c2.4 0 4.2 1.6 4.2 3.8s-2 4.4-4.4 4.4-3.8-1.7-3.8-3.9 1.7-4.3 4-4.3Z"/></svg><span class="marque__texte"><span class="marque__nom">Terre Gravée</span><span class="marque__sous">Carnet de territoire</span></span></a>
+    <nav class="nav" id="nav-principale" aria-label="Navigation principale"><ul><li><a href="carte.html" aria-current="page">La carte</a></li><li><a href="collection.html">Les plaques</a></li><li><a href="index.html#fabrication">Fabrication</a></li><li><a href="sur-mesure.html">Sur mesure</a></li><li><a href="contact.html">Contact</a></li></ul></nav>
+    <div class="entete__outils">
+      <button type="button" class="outil outil--theme" data-theme-bascule aria-pressed="false">
+        <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M15.5 12.6A6.5 6.5 0 0 1 7.4 4.5a6.5 6.5 0 1 0 8.1 8.1Z"/></svg>
+        <span class="outil__texte" data-theme-texte>Carte de nuit</span>
+      </button>
+      <button type="button" class="outil outil--commande" data-ouvrir-commande aria-haspopup="dialog">
+        <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M4 6.5h12l-1 10H5Z M7.5 6.5V5a2.5 2.5 0 0 1 5 0v1.5"/></svg>
+        <span class="outil__texte">Commande</span><span class="compteur" data-compteur>0</span><span class="visuellement-cache"> article(s)</span>
+      </button>
+      <button type="button" class="outil outil--menu" aria-expanded="false" aria-controls="nav-principale" data-menu>
+        <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M3 6h14M3 10h14M3 14h14"/></svg>
+        <span class="visuellement-cache">Menu</span>
+      </button>
+    </div>
+  </div>
+</header>
+<main id="contenu" tabindex="-1">
+
+<div class="cadre carte-page">
+  <header class="carte-page__entete">
+    <nav aria-label="Fil d’Ariane"><ol class="ariane"><li><a href="index.html">Carnet</a></li><li aria-current="page">La carte</li></ol></nav>
+    <h1>La carte des plaques</h1>
+    <p class="chapo">Chaque repère est un lieu gravé. Ouvrez-le pour voir la plaque, son cartel et les avis qui en parlent. Chaque lieu a sa propre adresse : vous pouvez l’envoyer à quelqu’un.</p>
+  </header>
+  <div class="carte-page__outils">
+    <div class="puces" role="group" aria-label="Afficher les lieux"><button type="button" class="puce" data-filtre-carte="tout" aria-pressed="true">Tous les lieux <span>12</span></button><button type="button" class="puce" data-filtre-carte="sommets" aria-pressed="false"><svg class="symbole symbole--sommets" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 2.2 14.2 13.4H1.8Z"/></svg>Sommets et cols <span>3</span></button><button type="button" class="puce" data-filtre-carte="sites" aria-pressed="false"><svg class="symbole symbole--sites" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="5.6"/></svg>Sites naturels <span>2</span></button><button type="button" class="puce" data-filtre-carte="patrimoine" aria-pressed="false"><svg class="symbole symbole--patrimoine" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect x="2.6" y="2.6" width="10.8" height="10.8"/></svg>Patrimoine <span>3</span></button><button type="button" class="puce" data-filtre-carte="faune" aria-pressed="false"><svg class="symbole symbole--faune" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 1.6 14.4 8 8 14.4 1.6 8Z"/></svg>Faune du Parc national <span>4</span></button></div>
+    <div class="calques" role="group" aria-label="Calques de la carte">
+      <label class="interrupteur"><input type="checkbox" data-calque="trajet" checked><span>Trajet de fabrication</span></label>
+      <label class="interrupteur"><input type="checkbox" data-calque="relief" checked><span>Relief</span></label>
+      <label class="interrupteur"><input type="checkbox" data-calque="villes" checked><span>Villes</span></label>
+    </div>
+  </div>
+  <div class="carte-page__grille">
+    <figure class="atlas atlas--grande" data-carte>
+      <div class="carte__plan" style="aspect-ratio:782.9 / 670.0" data-plan="grande">
+  <svg class="carte__fond" viewBox="0 0 782.9 670.0" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+  <defs>
+    <clipPath id="decoupe-grande"><path d="M195.3,67.2L182.0,69.1L167.8,38.1L170.3,24.3L179.2,15.6L182.9,3.8L189.1,-0.4L205.4,9.2L200.3,24.5L212.7,38.3L212.4,47.4L203.3,57.9L201.7,55.3L194.8,60.4L195.3,67.2ZM195.1,-48.6L192.2,-60.7L202.6,-63.9L209.8,-61.3L210.1,-56.4L223.2,-45.0L225.0,-36.7L220.5,-2.5L215.8,2.9L199.3,-3.9L190.1,-2.2L186.2,-22.4L190.7,-27.9L202.3,-23.1L207.3,-26.2L204.7,-49.3L195.1,-48.6ZM199.9,-272.4L199.4,-279.4L215.3,-281.6L216.6,-296.3L230.6,-296.2L238.0,-303.2L241.8,-295.6L245.9,-297.5L246.3,-294.0L259.4,-295.5L268.1,-275.4L268.6,-256.2L277.2,-250.5L283.0,-233.1L292.4,-234.9L302.2,-224.4L308.3,-208.5L323.5,-209.8L329.5,-213.9L336.3,-200.2L344.8,-200.8L344.1,-203.4L352.7,-207.4L356.0,-204.9L355.9,-200.1L366.2,-184.9L363.7,-181.7L369.5,-155.7L380.5,-154.7L392.1,-134.4L371.3,-124.0L367.5,-114.2L376.7,-104.7L382.7,-89.5L397.9,-92.8L402.5,-71.5L399.9,-66.6L403.9,-61.2L416.7,-65.3L421.7,-57.8L431.9,-60.4L440.9,-57.8L452.9,-67.0L458.7,-66.6L474.4,-76.2L488.7,-78.1L490.2,-62.9L495.0,-58.1L501.5,-57.4L508.1,-64.5L510.0,-62.7L513.5,-33.2L525.3,-39.1L557.4,-45.6L556.9,-40.0L562.9,-40.2L559.8,-39.9L560.2,-23.6L573.9,-18.8L594.8,-17.9L596.3,-30.7L623.5,-22.0L632.1,-15.1L642.3,-24.1L666.6,-17.1L673.6,-19.6L675.1,-16.2L682.0,-15.1L682.8,-10.9L689.1,-9.7L691.8,-12.6L703.0,-4.1L707.0,-5.8L735.7,8.8L735.1,16.5L721.2,21.2L719.9,32.9L707.3,36.2L692.7,50.9L693.9,56.3L685.4,57.7L675.6,72.3L686.5,78.1L689.8,76.9L690.5,89.7L674.5,100.8L669.4,96.7L662.6,102.3L649.3,97.6L640.9,111.8L650.5,115.5L655.6,111.7L652.6,117.9L627.6,144.7L615.2,152.1L594.1,178.7L610.4,192.0L602.3,198.8L628.5,194.8L630.1,201.3L638.4,203.2L635.3,207.1L637.1,214.3L660.2,216.7L659.7,227.1L676.2,230.6L675.8,235.8L683.2,235.8L675.2,244.6L681.3,249.7L680.6,262.9L685.3,272.6L682.3,274.2L671.1,265.2L664.3,268.4L662.9,291.4L656.3,301.1L657.2,305.3L660.0,302.3L659.2,306.7L665.9,308.7L684.5,289.7L691.0,287.8L697.9,290.9L699.2,286.6L703.7,287.6L704.7,274.6L714.5,275.4L721.8,289.4L721.2,298.9L729.7,309.9L727.1,319.6L718.6,321.4L723.5,337.6L735.9,341.1L743.4,349.1L740.4,357.1L735.7,358.5L729.2,368.2L714.2,375.6L709.3,382.8L708.5,396.4L699.5,409.3L692.1,439.2L682.1,449.2L676.0,449.9L673.0,445.3L661.6,448.7L655.2,442.4L638.4,441.6L634.0,433.7L631.0,435.5L627.0,431.8L620.0,431.8L616.2,439.6L616.6,450.8L607.4,458.2L612.8,463.2L604.2,493.1L604.3,499.6L609.9,505.5L609.5,519.9L603.4,538.0L609.8,550.4L609.2,570.8L606.0,575.2L599.2,576.2L625.3,599.7L623.7,607.1L613.1,615.0L589.9,620.0L565.6,613.9L559.9,610.4L558.0,596.9L545.6,595.8L534.2,585.7L523.4,599.0L508.6,604.8L505.9,625.9L499.6,626.5L486.6,636.8L463.5,616.8L466.9,610.2L460.9,594.2L453.1,591.5L436.4,592.7L421.4,580.7L399.3,573.0L390.3,580.8L389.2,587.0L370.7,587.7L368.2,593.9L355.7,599.2L348.2,599.5L336.9,592.9L328.1,595.1L322.4,606.1L313.5,612.3L306.0,614.1L288.7,607.5L281.2,608.3L280.7,616.6L272.1,624.2L258.6,625.1L234.5,615.8L229.2,617.9L224.4,613.8L220.4,592.1L192.6,589.5L189.0,583.3L191.7,578.0L184.7,571.7L180.8,558.4L169.5,543.1L161.0,540.8L163.1,534.4L157.9,529.2L157.6,517.3L153.0,511.7L142.2,523.5L132.1,523.4L126.1,514.8L114.2,514.0L109.8,507.2L106.7,509.0L95.7,501.1L92.6,486.9L83.4,490.9L69.7,481.5L68.3,474.5L46.5,468.8L41.4,460.6L46.0,440.0L39.6,427.8L39.4,413.4L32.7,405.6L31.3,393.5L43.3,391.0L45.4,383.5L52.8,379.0L61.0,380.6L64.7,376.4L64.5,359.1L58.0,349.5L60.5,343.0L56.2,317.3L60.6,304.1L68.8,304.1L80.7,296.3L83.8,283.8L79.7,277.2L81.8,271.8L95.6,270.3L106.8,276.3L117.4,268.3L124.3,267.3L131.9,258.0L137.8,257.5L125.0,245.6L127.2,235.6L134.3,225.7L134.1,218.1L126.1,211.8L130.5,204.4L128.9,195.0L142.7,199.9L149.0,188.1L163.8,181.8L167.5,174.1L166.2,166.8L169.5,166.3L169.3,160.9L178.3,152.3L177.9,144.6L184.6,129.7L189.3,130.7L193.2,143.5L199.4,143.4L200.8,132.8L221.0,132.9L216.6,87.6L225.1,87.5L234.5,92.8L237.2,77.4L252.9,56.0L252.0,49.0L258.3,39.6L257.8,35.4L250.9,34.1L253.2,29.8L238.2,24.7L237.0,9.1L249.3,-5.8L252.1,-19.6L268.4,-22.1L278.2,-15.3L292.3,-36.2L274.8,-53.6L276.9,-57.0L274.3,-61.8L271.8,-58.9L266.5,-63.0L271.4,-73.7L269.3,-77.3L274.4,-83.8L267.6,-83.4L270.4,-86.3L267.9,-88.0L277.8,-112.2L267.2,-121.6L268.9,-135.1L258.6,-134.0L252.6,-120.0L246.1,-122.7L239.2,-100.2L221.5,-100.4L225.1,-107.8L233.5,-109.6L219.0,-125.3L225.6,-142.4L222.6,-153.5L256.7,-155.0L257.7,-162.1L245.3,-164.9L245.2,-178.5L234.4,-181.9L241.4,-202.6L238.0,-215.3L229.7,-222.9L226.3,-232.1L222.6,-231.3L222.4,-238.1L211.7,-236.9L205.8,-232.1L201.9,-233.9L205.7,-247.2L199.9,-272.4Z"/></clipPath>
+  </defs>
+  <rect x="0" y="0" width="782.9" height="670.0" class="carte__hors"/>
+  <path d="M195.3,67.2L182.0,69.1L167.8,38.1L170.3,24.3L179.2,15.6L182.9,3.8L189.1,-0.4L205.4,9.2L200.3,24.5L212.7,38.3L212.4,47.4L203.3,57.9L201.7,55.3L194.8,60.4L195.3,67.2ZM195.1,-48.6L192.2,-60.7L202.6,-63.9L209.8,-61.3L210.1,-56.4L223.2,-45.0L225.0,-36.7L220.5,-2.5L215.8,2.9L199.3,-3.9L190.1,-2.2L186.2,-22.4L190.7,-27.9L202.3,-23.1L207.3,-26.2L204.7,-49.3L195.1,-48.6ZM199.9,-272.4L199.4,-279.4L215.3,-281.6L216.6,-296.3L230.6,-296.2L238.0,-303.2L241.8,-295.6L245.9,-297.5L246.3,-294.0L259.4,-295.5L268.1,-275.4L268.6,-256.2L277.2,-250.5L283.0,-233.1L292.4,-234.9L302.2,-224.4L308.3,-208.5L323.5,-209.8L329.5,-213.9L336.3,-200.2L344.8,-200.8L344.1,-203.4L352.7,-207.4L356.0,-204.9L355.9,-200.1L366.2,-184.9L363.7,-181.7L369.5,-155.7L380.5,-154.7L392.1,-134.4L371.3,-124.0L367.5,-114.2L376.7,-104.7L382.7,-89.5L397.9,-92.8L402.5,-71.5L399.9,-66.6L403.9,-61.2L416.7,-65.3L421.7,-57.8L431.9,-60.4L440.9,-57.8L452.9,-67.0L458.7,-66.6L474.4,-76.2L488.7,-78.1L490.2,-62.9L495.0,-58.1L501.5,-57.4L508.1,-64.5L510.0,-62.7L513.5,-33.2L525.3,-39.1L557.4,-45.6L556.9,-40.0L562.9,-40.2L559.8,-39.9L560.2,-23.6L573.9,-18.8L594.8,-17.9L596.3,-30.7L623.5,-22.0L632.1,-15.1L642.3,-24.1L666.6,-17.1L673.6,-19.6L675.1,-16.2L682.0,-15.1L682.8,-10.9L689.1,-9.7L691.8,-12.6L703.0,-4.1L707.0,-5.8L735.7,8.8L735.1,16.5L721.2,21.2L719.9,32.9L707.3,36.2L692.7,50.9L693.9,56.3L685.4,57.7L675.6,72.3L686.5,78.1L689.8,76.9L690.5,89.7L674.5,100.8L669.4,96.7L662.6,102.3L649.3,97.6L640.9,111.8L650.5,115.5L655.6,111.7L652.6,117.9L627.6,144.7L615.2,152.1L594.1,178.7L610.4,192.0L602.3,198.8L628.5,194.8L630.1,201.3L638.4,203.2L635.3,207.1L637.1,214.3L660.2,216.7L659.7,227.1L676.2,230.6L675.8,235.8L683.2,235.8L675.2,244.6L681.3,249.7L680.6,262.9L685.3,272.6L682.3,274.2L671.1,265.2L664.3,268.4L662.9,291.4L656.3,301.1L657.2,305.3L660.0,302.3L659.2,306.7L665.9,308.7L684.5,289.7L691.0,287.8L697.9,290.9L699.2,286.6L703.7,287.6L704.7,274.6L714.5,275.4L721.8,289.4L721.2,298.9L729.7,309.9L727.1,319.6L718.6,321.4L723.5,337.6L735.9,341.1L743.4,349.1L740.4,357.1L735.7,358.5L729.2,368.2L714.2,375.6L709.3,382.8L708.5,396.4L699.5,409.3L692.1,439.2L682.1,449.2L676.0,449.9L673.0,445.3L661.6,448.7L655.2,442.4L638.4,441.6L634.0,433.7L631.0,435.5L627.0,431.8L620.0,431.8L616.2,439.6L616.6,450.8L607.4,458.2L612.8,463.2L604.2,493.1L604.3,499.6L609.9,505.5L609.5,519.9L603.4,538.0L609.8,550.4L609.2,570.8L606.0,575.2L599.2,576.2L625.3,599.7L623.7,607.1L613.1,615.0L589.9,620.0L565.6,613.9L559.9,610.4L558.0,596.9L545.6,595.8L534.2,585.7L523.4,599.0L508.6,604.8L505.9,625.9L499.6,626.5L486.6,636.8L463.5,616.8L466.9,610.2L460.9,594.2L453.1,591.5L436.4,592.7L421.4,580.7L399.3,573.0L390.3,580.8L389.2,587.0L370.7,587.7L368.2,593.9L355.7,599.2L348.2,599.5L336.9,592.9L328.1,595.1L322.4,606.1L313.5,612.3L306.0,614.1L288.7,607.5L281.2,608.3L280.7,616.6L272.1,624.2L258.6,625.1L234.5,615.8L229.2,617.9L224.4,613.8L220.4,592.1L192.6,589.5L189.0,583.3L191.7,578.0L184.7,571.7L180.8,558.4L169.5,543.1L161.0,540.8L163.1,534.4L157.9,529.2L157.6,517.3L153.0,511.7L142.2,523.5L132.1,523.4L126.1,514.8L114.2,514.0L109.8,507.2L106.7,509.0L95.7,501.1L92.6,486.9L83.4,490.9L69.7,481.5L68.3,474.5L46.5,468.8L41.4,460.6L46.0,440.0L39.6,427.8L39.4,413.4L32.7,405.6L31.3,393.5L43.3,391.0L45.4,383.5L52.8,379.0L61.0,380.6L64.7,376.4L64.5,359.1L58.0,349.5L60.5,343.0L56.2,317.3L60.6,304.1L68.8,304.1L80.7,296.3L83.8,283.8L79.7,277.2L81.8,271.8L95.6,270.3L106.8,276.3L117.4,268.3L124.3,267.3L131.9,258.0L137.8,257.5L125.0,245.6L127.2,235.6L134.3,225.7L134.1,218.1L126.1,211.8L130.5,204.4L128.9,195.0L142.7,199.9L149.0,188.1L163.8,181.8L167.5,174.1L166.2,166.8L169.5,166.3L169.3,160.9L178.3,152.3L177.9,144.6L184.6,129.7L189.3,130.7L193.2,143.5L199.4,143.4L200.8,132.8L221.0,132.9L216.6,87.6L225.1,87.5L234.5,92.8L237.2,77.4L252.9,56.0L252.0,49.0L258.3,39.6L257.8,35.4L250.9,34.1L253.2,29.8L238.2,24.7L237.0,9.1L249.3,-5.8L252.1,-19.6L268.4,-22.1L278.2,-15.3L292.3,-36.2L274.8,-53.6L276.9,-57.0L274.3,-61.8L271.8,-58.9L266.5,-63.0L271.4,-73.7L269.3,-77.3L274.4,-83.8L267.6,-83.4L270.4,-86.3L267.9,-88.0L277.8,-112.2L267.2,-121.6L268.9,-135.1L258.6,-134.0L252.6,-120.0L246.1,-122.7L239.2,-100.2L221.5,-100.4L225.1,-107.8L233.5,-109.6L219.0,-125.3L225.6,-142.4L222.6,-153.5L256.7,-155.0L257.7,-162.1L245.3,-164.9L245.2,-178.5L234.4,-181.9L241.4,-202.6L238.0,-215.3L229.7,-222.9L226.3,-232.1L222.6,-231.3L222.4,-238.1L211.7,-236.9L205.8,-232.1L201.9,-233.9L205.7,-247.2L199.9,-272.4Z" class="carte__dep"/>
+</svg>
+  <canvas class="carte__relief" data-relief="carte" data-vb="0 0 782.9 670.0" aria-hidden="true"></canvas>
+  <svg class="carte__dessus" viewBox="0 0 782.9 670.0" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false"><defs><clipPath id="decoupe-grande-b"><path d="M195.3,67.2L182.0,69.1L167.8,38.1L170.3,24.3L179.2,15.6L182.9,3.8L189.1,-0.4L205.4,9.2L200.3,24.5L212.7,38.3L212.4,47.4L203.3,57.9L201.7,55.3L194.8,60.4L195.3,67.2ZM195.1,-48.6L192.2,-60.7L202.6,-63.9L209.8,-61.3L210.1,-56.4L223.2,-45.0L225.0,-36.7L220.5,-2.5L215.8,2.9L199.3,-3.9L190.1,-2.2L186.2,-22.4L190.7,-27.9L202.3,-23.1L207.3,-26.2L204.7,-49.3L195.1,-48.6ZM199.9,-272.4L199.4,-279.4L215.3,-281.6L216.6,-296.3L230.6,-296.2L238.0,-303.2L241.8,-295.6L245.9,-297.5L246.3,-294.0L259.4,-295.5L268.1,-275.4L268.6,-256.2L277.2,-250.5L283.0,-233.1L292.4,-234.9L302.2,-224.4L308.3,-208.5L323.5,-209.8L329.5,-213.9L336.3,-200.2L344.8,-200.8L344.1,-203.4L352.7,-207.4L356.0,-204.9L355.9,-200.1L366.2,-184.9L363.7,-181.7L369.5,-155.7L380.5,-154.7L392.1,-134.4L371.3,-124.0L367.5,-114.2L376.7,-104.7L382.7,-89.5L397.9,-92.8L402.5,-71.5L399.9,-66.6L403.9,-61.2L416.7,-65.3L421.7,-57.8L431.9,-60.4L440.9,-57.8L452.9,-67.0L458.7,-66.6L474.4,-76.2L488.7,-78.1L490.2,-62.9L495.0,-58.1L501.5,-57.4L508.1,-64.5L510.0,-62.7L513.5,-33.2L525.3,-39.1L557.4,-45.6L556.9,-40.0L562.9,-40.2L559.8,-39.9L560.2,-23.6L573.9,-18.8L594.8,-17.9L596.3,-30.7L623.5,-22.0L632.1,-15.1L642.3,-24.1L666.6,-17.1L673.6,-19.6L675.1,-16.2L682.0,-15.1L682.8,-10.9L689.1,-9.7L691.8,-12.6L703.0,-4.1L707.0,-5.8L735.7,8.8L735.1,16.5L721.2,21.2L719.9,32.9L707.3,36.2L692.7,50.9L693.9,56.3L685.4,57.7L675.6,72.3L686.5,78.1L689.8,76.9L690.5,89.7L674.5,100.8L669.4,96.7L662.6,102.3L649.3,97.6L640.9,111.8L650.5,115.5L655.6,111.7L652.6,117.9L627.6,144.7L615.2,152.1L594.1,178.7L610.4,192.0L602.3,198.8L628.5,194.8L630.1,201.3L638.4,203.2L635.3,207.1L637.1,214.3L660.2,216.7L659.7,227.1L676.2,230.6L675.8,235.8L683.2,235.8L675.2,244.6L681.3,249.7L680.6,262.9L685.3,272.6L682.3,274.2L671.1,265.2L664.3,268.4L662.9,291.4L656.3,301.1L657.2,305.3L660.0,302.3L659.2,306.7L665.9,308.7L684.5,289.7L691.0,287.8L697.9,290.9L699.2,286.6L703.7,287.6L704.7,274.6L714.5,275.4L721.8,289.4L721.2,298.9L729.7,309.9L727.1,319.6L718.6,321.4L723.5,337.6L735.9,341.1L743.4,349.1L740.4,357.1L735.7,358.5L729.2,368.2L714.2,375.6L709.3,382.8L708.5,396.4L699.5,409.3L692.1,439.2L682.1,449.2L676.0,449.9L673.0,445.3L661.6,448.7L655.2,442.4L638.4,441.6L634.0,433.7L631.0,435.5L627.0,431.8L620.0,431.8L616.2,439.6L616.6,450.8L607.4,458.2L612.8,463.2L604.2,493.1L604.3,499.6L609.9,505.5L609.5,519.9L603.4,538.0L609.8,550.4L609.2,570.8L606.0,575.2L599.2,576.2L625.3,599.7L623.7,607.1L613.1,615.0L589.9,620.0L565.6,613.9L559.9,610.4L558.0,596.9L545.6,595.8L534.2,585.7L523.4,599.0L508.6,604.8L505.9,625.9L499.6,626.5L486.6,636.8L463.5,616.8L466.9,610.2L460.9,594.2L453.1,591.5L436.4,592.7L421.4,580.7L399.3,573.0L390.3,580.8L389.2,587.0L370.7,587.7L368.2,593.9L355.7,599.2L348.2,599.5L336.9,592.9L328.1,595.1L322.4,606.1L313.5,612.3L306.0,614.1L288.7,607.5L281.2,608.3L280.7,616.6L272.1,624.2L258.6,625.1L234.5,615.8L229.2,617.9L224.4,613.8L220.4,592.1L192.6,589.5L189.0,583.3L191.7,578.0L184.7,571.7L180.8,558.4L169.5,543.1L161.0,540.8L163.1,534.4L157.9,529.2L157.6,517.3L153.0,511.7L142.2,523.5L132.1,523.4L126.1,514.8L114.2,514.0L109.8,507.2L106.7,509.0L95.7,501.1L92.6,486.9L83.4,490.9L69.7,481.5L68.3,474.5L46.5,468.8L41.4,460.6L46.0,440.0L39.6,427.8L39.4,413.4L32.7,405.6L31.3,393.5L43.3,391.0L45.4,383.5L52.8,379.0L61.0,380.6L64.7,376.4L64.5,359.1L58.0,349.5L60.5,343.0L56.2,317.3L60.6,304.1L68.8,304.1L80.7,296.3L83.8,283.8L79.7,277.2L81.8,271.8L95.6,270.3L106.8,276.3L117.4,268.3L124.3,267.3L131.9,258.0L137.8,257.5L125.0,245.6L127.2,235.6L134.3,225.7L134.1,218.1L126.1,211.8L130.5,204.4L128.9,195.0L142.7,199.9L149.0,188.1L163.8,181.8L167.5,174.1L166.2,166.8L169.5,166.3L169.3,160.9L178.3,152.3L177.9,144.6L184.6,129.7L189.3,130.7L193.2,143.5L199.4,143.4L200.8,132.8L221.0,132.9L216.6,87.6L225.1,87.5L234.5,92.8L237.2,77.4L252.9,56.0L252.0,49.0L258.3,39.6L257.8,35.4L250.9,34.1L253.2,29.8L238.2,24.7L237.0,9.1L249.3,-5.8L252.1,-19.6L268.4,-22.1L278.2,-15.3L292.3,-36.2L274.8,-53.6L276.9,-57.0L274.3,-61.8L271.8,-58.9L266.5,-63.0L271.4,-73.7L269.3,-77.3L274.4,-83.8L267.6,-83.4L270.4,-86.3L267.9,-88.0L277.8,-112.2L267.2,-121.6L268.9,-135.1L258.6,-134.0L252.6,-120.0L246.1,-122.7L239.2,-100.2L221.5,-100.4L225.1,-107.8L233.5,-109.6L219.0,-125.3L225.6,-142.4L222.6,-153.5L256.7,-155.0L257.7,-162.1L245.3,-164.9L245.2,-178.5L234.4,-181.9L241.4,-202.6L238.0,-215.3L229.7,-222.9L226.3,-232.1L222.6,-231.3L222.4,-238.1L211.7,-236.9L205.8,-232.1L201.9,-233.9L205.7,-247.2L199.9,-272.4Z"/></clipPath><pattern id="hachures-grande" patternUnits="userSpaceOnUse" width="7" height="7" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="7" class="hachure"/></pattern></defs><g class="calque-parc"><path d="M-21.9,380.0L87.8,385.0L146.3,435.0L204.9,475.0L248.8,510.0L292.7,520.0L329.2,485.0L387.8,475.0L439.0,510.0L490.2,560.0L534.1,600.0L578.0,650.0L578.0,810.0L-21.9,810.0Z" clip-path="url(#decoupe-grande-b)" class="carte__parc" fill="url(#hachures-grande)"/></g><g class="calque-eaux"><path d="M395.1,398.0L428.0,373.0L437.5,325.0L400.9,294.0L380.5,244.0L370.9,225.0L351.2,185.0L336.6,130.0L325.6,77.0L316.1,10.0L310.2,-76.0" class="carte__riviere"/><path d="M273.6,620.0L264.1,575.0L285.3,523.0L275.1,470.0L268.5,438.0L234.1,380.0L215.8,352.0L198.3,307.0L212.2,260.0L237.1,215.0L197.5,202.0L154.4,206.0L115.6,183.0L51.2,150.0L-21.9,110.0" class="carte__riviere"/><path d="M167.5,456.0L187.3,421.0L201.2,385.0L215.8,352.0" class="carte__riviere carte__riviere--petite"/><path d="M482.9,550.0L506.3,493.0L531.9,405.0L548.7,348.0L563.4,290.0L600.0,240.0L636.5,220.0L685.6,223.0L739.0,230.0L819.4,240.0" class="carte__riviere"/></g><path d="M195.3,67.2L182.0,69.1L167.8,38.1L170.3,24.3L179.2,15.6L182.9,3.8L189.1,-0.4L205.4,9.2L200.3,24.5L212.7,38.3L212.4,47.4L203.3,57.9L201.7,55.3L194.8,60.4L195.3,67.2ZM195.1,-48.6L192.2,-60.7L202.6,-63.9L209.8,-61.3L210.1,-56.4L223.2,-45.0L225.0,-36.7L220.5,-2.5L215.8,2.9L199.3,-3.9L190.1,-2.2L186.2,-22.4L190.7,-27.9L202.3,-23.1L207.3,-26.2L204.7,-49.3L195.1,-48.6ZM199.9,-272.4L199.4,-279.4L215.3,-281.6L216.6,-296.3L230.6,-296.2L238.0,-303.2L241.8,-295.6L245.9,-297.5L246.3,-294.0L259.4,-295.5L268.1,-275.4L268.6,-256.2L277.2,-250.5L283.0,-233.1L292.4,-234.9L302.2,-224.4L308.3,-208.5L323.5,-209.8L329.5,-213.9L336.3,-200.2L344.8,-200.8L344.1,-203.4L352.7,-207.4L356.0,-204.9L355.9,-200.1L366.2,-184.9L363.7,-181.7L369.5,-155.7L380.5,-154.7L392.1,-134.4L371.3,-124.0L367.5,-114.2L376.7,-104.7L382.7,-89.5L397.9,-92.8L402.5,-71.5L399.9,-66.6L403.9,-61.2L416.7,-65.3L421.7,-57.8L431.9,-60.4L440.9,-57.8L452.9,-67.0L458.7,-66.6L474.4,-76.2L488.7,-78.1L490.2,-62.9L495.0,-58.1L501.5,-57.4L508.1,-64.5L510.0,-62.7L513.5,-33.2L525.3,-39.1L557.4,-45.6L556.9,-40.0L562.9,-40.2L559.8,-39.9L560.2,-23.6L573.9,-18.8L594.8,-17.9L596.3,-30.7L623.5,-22.0L632.1,-15.1L642.3,-24.1L666.6,-17.1L673.6,-19.6L675.1,-16.2L682.0,-15.1L682.8,-10.9L689.1,-9.7L691.8,-12.6L703.0,-4.1L707.0,-5.8L735.7,8.8L735.1,16.5L721.2,21.2L719.9,32.9L707.3,36.2L692.7,50.9L693.9,56.3L685.4,57.7L675.6,72.3L686.5,78.1L689.8,76.9L690.5,89.7L674.5,100.8L669.4,96.7L662.6,102.3L649.3,97.6L640.9,111.8L650.5,115.5L655.6,111.7L652.6,117.9L627.6,144.7L615.2,152.1L594.1,178.7L610.4,192.0L602.3,198.8L628.5,194.8L630.1,201.3L638.4,203.2L635.3,207.1L637.1,214.3L660.2,216.7L659.7,227.1L676.2,230.6L675.8,235.8L683.2,235.8L675.2,244.6L681.3,249.7L680.6,262.9L685.3,272.6L682.3,274.2L671.1,265.2L664.3,268.4L662.9,291.4L656.3,301.1L657.2,305.3L660.0,302.3L659.2,306.7L665.9,308.7L684.5,289.7L691.0,287.8L697.9,290.9L699.2,286.6L703.7,287.6L704.7,274.6L714.5,275.4L721.8,289.4L721.2,298.9L729.7,309.9L727.1,319.6L718.6,321.4L723.5,337.6L735.9,341.1L743.4,349.1L740.4,357.1L735.7,358.5L729.2,368.2L714.2,375.6L709.3,382.8L708.5,396.4L699.5,409.3L692.1,439.2L682.1,449.2L676.0,449.9L673.0,445.3L661.6,448.7L655.2,442.4L638.4,441.6L634.0,433.7L631.0,435.5L627.0,431.8L620.0,431.8L616.2,439.6L616.6,450.8L607.4,458.2L612.8,463.2L604.2,493.1L604.3,499.6L609.9,505.5L609.5,519.9L603.4,538.0L609.8,550.4L609.2,570.8L606.0,575.2L599.2,576.2L625.3,599.7L623.7,607.1L613.1,615.0L589.9,620.0L565.6,613.9L559.9,610.4L558.0,596.9L545.6,595.8L534.2,585.7L523.4,599.0L508.6,604.8L505.9,625.9L499.6,626.5L486.6,636.8L463.5,616.8L466.9,610.2L460.9,594.2L453.1,591.5L436.4,592.7L421.4,580.7L399.3,573.0L390.3,580.8L389.2,587.0L370.7,587.7L368.2,593.9L355.7,599.2L348.2,599.5L336.9,592.9L328.1,595.1L322.4,606.1L313.5,612.3L306.0,614.1L288.7,607.5L281.2,608.3L280.7,616.6L272.1,624.2L258.6,625.1L234.5,615.8L229.2,617.9L224.4,613.8L220.4,592.1L192.6,589.5L189.0,583.3L191.7,578.0L184.7,571.7L180.8,558.4L169.5,543.1L161.0,540.8L163.1,534.4L157.9,529.2L157.6,517.3L153.0,511.7L142.2,523.5L132.1,523.4L126.1,514.8L114.2,514.0L109.8,507.2L106.7,509.0L95.7,501.1L92.6,486.9L83.4,490.9L69.7,481.5L68.3,474.5L46.5,468.8L41.4,460.6L46.0,440.0L39.6,427.8L39.4,413.4L32.7,405.6L31.3,393.5L43.3,391.0L45.4,383.5L52.8,379.0L61.0,380.6L64.7,376.4L64.5,359.1L58.0,349.5L60.5,343.0L56.2,317.3L60.6,304.1L68.8,304.1L80.7,296.3L83.8,283.8L79.7,277.2L81.8,271.8L95.6,270.3L106.8,276.3L117.4,268.3L124.3,267.3L131.9,258.0L137.8,257.5L125.0,245.6L127.2,235.6L134.3,225.7L134.1,218.1L126.1,211.8L130.5,204.4L128.9,195.0L142.7,199.9L149.0,188.1L163.8,181.8L167.5,174.1L166.2,166.8L169.5,166.3L169.3,160.9L178.3,152.3L177.9,144.6L184.6,129.7L189.3,130.7L193.2,143.5L199.4,143.4L200.8,132.8L221.0,132.9L216.6,87.6L225.1,87.5L234.5,92.8L237.2,77.4L252.9,56.0L252.0,49.0L258.3,39.6L257.8,35.4L250.9,34.1L253.2,29.8L238.2,24.7L237.0,9.1L249.3,-5.8L252.1,-19.6L268.4,-22.1L278.2,-15.3L292.3,-36.2L274.8,-53.6L276.9,-57.0L274.3,-61.8L271.8,-58.9L266.5,-63.0L271.4,-73.7L269.3,-77.3L274.4,-83.8L267.6,-83.4L270.4,-86.3L267.9,-88.0L277.8,-112.2L267.2,-121.6L268.9,-135.1L258.6,-134.0L252.6,-120.0L246.1,-122.7L239.2,-100.2L221.5,-100.4L225.1,-107.8L233.5,-109.6L219.0,-125.3L225.6,-142.4L222.6,-153.5L256.7,-155.0L257.7,-162.1L245.3,-164.9L245.2,-178.5L234.4,-181.9L241.4,-202.6L238.0,-215.3L229.7,-222.9L226.3,-232.1L222.6,-231.3L222.4,-238.1L211.7,-236.9L205.8,-232.1L201.9,-233.9L205.7,-247.2L199.9,-272.4Z" class="carte__limite"/><g class="calque-eaux"><text x="348" y="130" class="carte__eau">l’Adour</text><text x="225" y="385" class="carte__eau" transform="rotate(-52 225 385)">Gave de Pau</text><text x="560" y="360" class="carte__eau" transform="rotate(62 560 360)">la Neste</text></g><g class="carte__pays"><text x="176" y="654">ESPAGNE</text><text x="15" y="185" text-anchor="middle" transform="rotate(-90 15 185)">PYRÉNÉES-ATLANTIQUES</text><text x="768" y="340" text-anchor="middle" transform="rotate(90 768 340)">HAUTE-GARONNE</text></g><g class="calque-villes"><circle cx="327.8" cy="77.0" r="2.6" class="carte__ville-point"/><text x="333.8" y="81.0" text-anchor="start" class="carte__ville">Tarbes</text><circle cx="237.1" cy="215.0" r="2.6" class="carte__ville-point"/><text x="231.1" y="219.0" text-anchor="end" class="carte__ville">Lourdes</text><circle cx="198.3" cy="307.0" r="2.6" class="carte__ville-point"/><text x="192.3" y="311.0" text-anchor="end" class="carte__ville">Argelès-Gazost</text><circle cx="268.5" cy="438.0" r="2.6" class="carte__ville-point"/><text x="274.5" y="442.0" text-anchor="start" class="carte__ville">Luz-Saint-Sauveur</text><circle cx="187.3" cy="421.0" r="2.6" class="carte__ville-point"/><text x="181.3" y="425.0" text-anchor="end" class="carte__ville">Cauterets</text><circle cx="531.9" cy="405.0" r="2.6" class="carte__ville-point"/><text x="537.9" y="409.0" text-anchor="start" class="carte__ville">Arreau</text><circle cx="506.3" cy="493.0" r="2.6" class="carte__ville-point"/><text x="512.3" y="497.0" text-anchor="start" class="carte__ville">Saint-Lary-Soulan</text></g><g class="calque-trajet">
+  <path d="M774.9,158.1 L379.7,245.0" class="trajet__ligne"/>
+  <path d="M774.9,158.1 l-12,-3 l3,6 z" class="trajet__fleche" transform="rotate(-12 774.9 158.1)"/>
+  <circle cx="379.7" cy="245.0" r="11" class="trajet__etape"/>
+  <rect x="393.6" y="255.0" width="9" height="9" class="trajet__atelier" transform="translate(-4.5 -4.5)"/>
+  <text x="772.9" y="128.1" text-anchor="end" class="trajet__texte"><tspan x="772.9">Revel (31) · découpe laser</tspan><tspan x="772.9" dy="15">à environ 155 km, hors cadre</tspan></text>
+  <text x="402.6" y="271.0" class="trajet__texte trajet__texte--petit"><tspan x="402.6">Gerde · atelier</tspan></text>
+</g><g class="carte__graticule"><line x1="0.0" y1="560.0" x2="782.9" y2="560.0"/><line x1="0.0" y1="310.0" x2="782.9" y2="310.0"/><line x1="0.0" y1="60.0" x2="782.9" y2="60.0"/><line x1="87.8" y1="0.0" x2="87.8" y2="670.0"/><line x1="270.7" y1="0.0" x2="270.7" y2="670.0"/><line x1="453.6" y1="0.0" x2="453.6" y2="670.0"/><line x1="636.5" y1="0.0" x2="636.5" y2="670.0"/></g><g><text x="6.0" y="556.0" class="carte__grad">42°45′ N</text><text x="6.0" y="306.0" class="carte__grad">43°00′ N</text><text x="6.0" y="56.0" class="carte__grad">43°15′ N</text><text x="91.8" y="14.0" class="carte__grad">0°15′ O</text><text x="274.7" y="14.0" class="carte__grad">0°00′</text><text x="457.6" y="14.0" class="carte__grad">0°15′ E</text><text x="640.5" y="14.0" class="carte__grad">0°30′ E</text></g><g class="carte__echelle"><path d="M18,640h90M18,636v8M108,636v8"/><text x="18" y="632">0</text><text x="108" y="632" text-anchor="middle">10 km</text></g><g class="carte__nord"><path d="M757,34l7,18l-7,-5l-7,5z"/><text x="757" y="28" text-anchor="middle">N</text></g></svg>
+  <div class="carte__reperes"><button type="button" class="repere repere--d" style="left:59.81%;top:28.36%" data-lieu="le-chateau-de-mauvezin" data-cat="patrimoine" id="rep-le-chateau-de-mauvezin" aria-label="Le Château de Mauvezin, Mauvezin (65), Château fort" aria-controls="panneau" aria-expanded="false"><svg class="repere__sym repere__sym--patrimoine" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect x="2.6" y="2.6" width="10.8" height="10.8"/></svg><span class="repere__nom">Le Château de Mauvezin</span></button><button type="button" class="repere repere--d" style="left:59.81%;top:31.34%" data-lieu="labbaye-de-lescaladieu" data-cat="patrimoine" id="rep-labbaye-de-lescaladieu" aria-label="L’Abbaye de l’Escaladieu, Bonnemazon (65), Abbaye cistercienne" aria-controls="panneau" aria-expanded="false"><svg class="repere__sym repere__sym--patrimoine" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect x="2.6" y="2.6" width="10.8" height="10.8"/></svg><span class="repere__nom">L’Abbaye de l’Escaladieu</span></button><button type="button" class="repere repere--g" style="left:48.50%;top:36.57%" data-lieu="la-tour-des-jacobins" data-cat="patrimoine" id="rep-la-tour-des-jacobins" aria-label="La Tour des Jacobins, Bagnères-de-Bigorre (65), Monument historique" aria-controls="panneau" aria-expanded="false"><svg class="repere__sym repere__sym--patrimoine" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect x="2.6" y="2.6" width="10.8" height="10.8"/></svg><span class="repere__nom">La Tour des Jacobins</span></button><button type="button" class="repere repere--g" style="left:44.86%;top:52.24%" data-lieu="le-montaigu" data-cat="sommets" id="rep-le-montaigu" aria-label="Le Montaigu, Pic du Montaigu, 2 339 m" aria-controls="panneau" aria-expanded="false"><svg class="repere__sym repere__sym--sommets" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 2.2 14.2 13.4H1.8Z"/></svg><span class="repere__nom">Le Montaigu</span></button><button type="button" class="repere repere--d" style="left:47.85%;top:55.67%" data-lieu="le-pic-du-midi" data-cat="sommets" id="rep-le-pic-du-midi" aria-label="Le Pic du Midi, Pic du Midi de Bigorre, 2 877 m" aria-controls="panneau" aria-expanded="false"><svg class="repere__sym repere__sym--sommets" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 2.2 14.2 13.4H1.8Z"/></svg><span class="repere__nom">Le Pic du Midi</span></button><button type="button" class="repere repere--d" style="left:48.13%;top:59.85%" data-lieu="le-tourmalet" data-cat="sommets" id="rep-le-tourmalet" aria-label="Le Tourmalet, Col du Tourmalet, 2 115 m" aria-controls="panneau" aria-expanded="false"><svg class="repere__sym repere__sym--sommets" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 2.2 14.2 13.4H1.8Z"/></svg><span class="repere__nom">Le Tourmalet</span></button><button type="button" class="repere repere--g" style="left:21.40%;top:68.06%" data-lieu="le-pont-despagne" data-cat="sites" id="rep-le-pont-despagne" aria-label="Le Pont d’Espagne, Cauterets (65), Cascades et forêt" aria-controls="panneau" aria-expanded="false"><svg class="repere__sym repere__sym--sites" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="5.6"/></svg><span class="repere__nom">Le Pont d’Espagne</span></button><button type="button" class="repere repere--d" style="left:33.64%;top:91.79%" data-lieu="le-cirque-de-gavarnie" data-cat="sites" id="rep-le-cirque-de-gavarnie" aria-label="Le Cirque de Gavarnie, Gavarnie (65), Patrimoine mondial de l’UNESCO" aria-controls="panneau" aria-expanded="false"><svg class="repere__sym repere__sym--sites" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="5.6"/></svg><span class="repere__nom">Le Cirque de Gavarnie</span></button><button type="button" class="repere repere--zone" style="left:11.68%;top:76.87%" data-lieu="faune" data-cat="faune" id="rep-faune" aria-label="Faune du Parc national, 4 plaques : l’isard, l’ours, le cerf, la marmotte" aria-controls="panneau" aria-expanded="false"><svg class="repere__sym repere__sym--faune" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 1.6 14.4 8 8 14.4 1.6 8Z"/></svg><span class="repere__nom">Faune du Parc national<small>4 plaques</small></span></button></div>
+</div>
+      <figcaption class="carte__legende">
+        <ul class="legende"><li><svg class="symbole symbole--sommets" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 2.2 14.2 13.4H1.8Z"/></svg>Sommets et cols</li><li><svg class="symbole symbole--sites" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="5.6"/></svg>Sites naturels</li><li><svg class="symbole symbole--patrimoine" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect x="2.6" y="2.6" width="10.8" height="10.8"/></svg>Patrimoine</li><li><svg class="symbole symbole--faune" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 1.6 14.4 8 8 14.4 1.6 8Z"/></svg>Faune du Parc national</li><li><span class="leg-trajet" aria-hidden="true"></span>Trajet de fabrication</li><li><span class="leg-parc" aria-hidden="true"></span>Parc national (zone schématique)</li></ul>
+        <p><strong>Positions indicatives.</strong> Les repères situent les lieux à quelques centaines de mètres près ; les animaux n’ont pas de repère. Rivières tracées de façon schématique. Contour du département simplifié d’après les données IGN (Licence Ouverte 2.0). Relief décoratif, sans valeur topographique.</p>
+      </figcaption>
+    </figure>
+    <aside class="panneau" id="panneau" aria-label="Fiche du lieu choisi" data-panneau>
+      <div class="panneau__barre"><span class="panneau__poignee" aria-hidden="true"></span><button type="button" class="panneau__fermer" data-fermer-panneau>Fermer</button></div>
+      <div class="panneau__accueil" data-panneau-accueil>
+        <p class="etiquette"><span class="balise" aria-hidden="true"></span>Mode d’emploi</p>
+        <h2>Choisissez un repère</h2>
+        <p>Cliquez sur un symbole de la carte, ou parcourez la liste des lieux sous la carte. Au clavier : Tab pour passer d’un repère à l’autre, Entrée pour l’ouvrir, Échap pour refermer.</p>
+        <div class="panneau__fabrication">
+          <h3>Le trajet d’une plaque</h3>
+          <ol class="mini-trajet">
+            <li><strong>Revel (31)</strong> découpe laser</li>
+            <li><strong>Bagnères-de-Bigorre (65)</strong> thermolaquage, assemblage, contrôle, expédition</li>
+            <li><strong>Gerde (65)</strong> l’atelier Terre Gravée</li>
+          </ol>
+          <p><a class="lien-fleche" href="index.html#fabrication">Le détail de la fabrication</a></p>
+        </div>
+      </div>
+      <article class="panneau__fiche" data-fiche-lieu="le-chateau-de-mauvezin" hidden aria-labelledby="titre-le-chateau-de-mauvezin">
+  <div class="panneau__visuel"><img src="../../maquette/assets/img/p/le-chateau-de-mauvezin-noir-440.webp" srcset="../../maquette/assets/img/p/le-chateau-de-mauvezin-noir-440.webp 440w, ../../maquette/assets/img/p/le-chateau-de-mauvezin-noir-880.webp 880w" sizes="(max-width: 900px) 40vw, 170px" width="440" height="873" alt="Plaque Le Château de Mauvezin, finition noire" loading="lazy" decoding="async" data-vt="vt-le-chateau-de-mauvezin"></div>
+  <div class="panneau__corps">
+    <p class="panneau__cat"><svg class="symbole symbole--patrimoine" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect x="2.6" y="2.6" width="10.8" height="10.8"/></svg>Patrimoine</p>
+    <h2 id="titre-le-chateau-de-mauvezin" tabindex="-1">Le Château de Mauvezin</h2>
+    <dl class="cartel">
+      <div><dt>Lieu</dt><dd>Mauvezin (65)</dd></div>
+      <div><dt>Repère</dt><dd>Château fort</dd></div>
+      <div><dt>Position</dt><dd>43°07′ N · 0°16′ E <span class="cartel__note">indicative</span></dd></div>
+    </dl>
+    <p class="panneau__extrait">Perché et puissant, le château de Mauvezin veille sur la Bigorre depuis des siècles. Cette plaque découpe la pierre dans le métal, donnant à voir l’imposante silhouette de la forteresse dans un jeu d’ombre captivant. Un hommage à…</p>
+    <ul class="avis-liste"><li class="avis avis--compact">
+  <figure>
+    <p class="avis__note"><span class="etoiles" aria-hidden="true">★★★★★<span class="etoiles__vide"></span></span><span class="visuellement-cache">Note : 5 sur 5</span></p>
+    <blockquote><p>« Habitant à Mauvezin top d&#x27;avoir un peu de mon patrimoine chez moi »</p></blockquote>
+    <figcaption><span class="avis__auteur">Sergio</span><span class="avis__date">publié le <time datetime="2025-09-01">1er septembre 2025</time></span></figcaption>
+  </figure>
+</li></ul><p class="mention-avis">Avis publiés sur le site sans vérification d’achat. <a href="contact.html#avis">Comment sont publiés les avis</a></p>
+    <p class="panneau__prix"><strong>65 €</strong> TTC, en noir, gris ou doré</p>
+    <div class="panneau__actions">
+      <a class="bouton bouton--plein" href="produit-le-chateau-de-mauvezin.html">Voir la plaque</a>
+      <button type="button" class="bouton bouton--trait" data-partager="le-chateau-de-mauvezin">Copier le lien du lieu</button>
+    </div>
+  </div>
+</article><article class="panneau__fiche" data-fiche-lieu="labbaye-de-lescaladieu" hidden aria-labelledby="titre-labbaye-de-lescaladieu">
+  <div class="panneau__visuel"><img src="../../maquette/assets/img/p/labbaye-de-lescaladieu-noir-440.webp" srcset="../../maquette/assets/img/p/labbaye-de-lescaladieu-noir-440.webp 440w, ../../maquette/assets/img/p/labbaye-de-lescaladieu-noir-880.webp 880w" sizes="(max-width: 900px) 40vw, 170px" width="440" height="856" alt="Plaque L’Abbaye de l’Escaladieu, finition noire" loading="lazy" decoding="async" data-vt="vt-labbaye-de-lescaladieu"></div>
+  <div class="panneau__corps">
+    <p class="panneau__cat"><svg class="symbole symbole--patrimoine" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect x="2.6" y="2.6" width="10.8" height="10.8"/></svg>Patrimoine</p>
+    <h2 id="titre-labbaye-de-lescaladieu" tabindex="-1">L’Abbaye de l’Escaladieu</h2>
+    <dl class="cartel">
+      <div><dt>Lieu</dt><dd>Bonnemazon (65)</dd></div>
+      <div><dt>Repère</dt><dd>Abbaye cistercienne</dd></div>
+      <div><dt>Position</dt><dd>43°06′ N · 0°16′ E <span class="cartel__note">indicative</span></dd></div>
+    </dl>
+    <p class="panneau__extrait">La silhouette de l’abbaye d’Escaladieu, toute en harmonie, évoque la paix, la contemplation, la beauté médiévale. Cette plaque est un hommage au patrimoine cistercien, à l’élégance sobre, à la spiritualité dans la matière. Idéale…</p>
+    <p class="panneau__sans-avis">Pas encore d’avis sur ce modèle.</p>
+    <p class="panneau__prix"><strong>65 €</strong> TTC, en noir, gris ou doré</p>
+    <div class="panneau__actions">
+      <a class="bouton bouton--plein" href="produit-labbaye-de-lescaladieu.html">Voir la plaque</a>
+      <button type="button" class="bouton bouton--trait" data-partager="labbaye-de-lescaladieu">Copier le lien du lieu</button>
+    </div>
+  </div>
+</article><article class="panneau__fiche" data-fiche-lieu="la-tour-des-jacobins" hidden aria-labelledby="titre-la-tour-des-jacobins">
+  <div class="panneau__visuel"><img src="../../maquette/assets/img/p/la-tour-des-jacobins-noir-440.webp" srcset="../../maquette/assets/img/p/la-tour-des-jacobins-noir-440.webp 440w, ../../maquette/assets/img/p/la-tour-des-jacobins-noir-880.webp 880w" sizes="(max-width: 900px) 40vw, 170px" width="440" height="865" alt="Plaque La Tour des Jacobins, finition noire" loading="lazy" decoding="async" data-vt="vt-la-tour-des-jacobins"></div>
+  <div class="panneau__corps">
+    <p class="panneau__cat"><svg class="symbole symbole--patrimoine" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect x="2.6" y="2.6" width="10.8" height="10.8"/></svg>Patrimoine</p>
+    <h2 id="titre-la-tour-des-jacobins" tabindex="-1">La Tour des Jacobins</h2>
+    <dl class="cartel">
+      <div><dt>Lieu</dt><dd>Bagnères-de-Bigorre (65)</dd></div>
+      <div><dt>Repère</dt><dd>Monument historique</dd></div>
+      <div><dt>Position</dt><dd>43°04′ N · 0°09′ E <span class="cartel__note">indicative</span></dd></div>
+    </dl>
+    <p class="panneau__extrait">Élancée, fière et singulière, la Tour des Jacobins domine Bagnères-de-Bigorre comme un témoin de pierre. Seul vestige d’un ancien couvent, elle défie le temps avec élégance, racontant à elle seule l’histoire religieuse et…</p>
+    <ul class="avis-liste"><li class="avis avis--compact">
+  <figure>
+    <p class="avis__note"><span class="etoiles" aria-hidden="true">★★★★★<span class="etoiles__vide"></span></span><span class="visuellement-cache">Note : 5 sur 5</span></p>
+    <blockquote><p>« Superbe plaque détail minutieux merci Romain »</p></blockquote>
+    <figcaption><span class="avis__auteur">Greg 65</span><span class="avis__date">publié le <time datetime="2025-10-01">1er octobre 2025</time></span></figcaption>
+  </figure>
+</li></ul><p class="mention-avis">Avis publiés sur le site sans vérification d’achat. <a href="contact.html#avis">Comment sont publiés les avis</a></p>
+    <p class="panneau__prix"><strong>65 €</strong> TTC, en noir, gris ou doré</p>
+    <div class="panneau__actions">
+      <a class="bouton bouton--plein" href="produit-la-tour-des-jacobins.html">Voir la plaque</a>
+      <button type="button" class="bouton bouton--trait" data-partager="la-tour-des-jacobins">Copier le lien du lieu</button>
+    </div>
+  </div>
+</article><article class="panneau__fiche" data-fiche-lieu="le-montaigu" hidden aria-labelledby="titre-le-montaigu">
+  <div class="panneau__visuel"><img src="../../maquette/assets/img/p/le-montaigu-noir-440.webp" srcset="../../maquette/assets/img/p/le-montaigu-noir-440.webp 440w, ../../maquette/assets/img/p/le-montaigu-noir-880.webp 880w" sizes="(max-width: 900px) 40vw, 170px" width="440" height="854" alt="Plaque Le Montaigu, finition noire" loading="lazy" decoding="async" data-vt="vt-le-montaigu"></div>
+  <div class="panneau__corps">
+    <p class="panneau__cat"><svg class="symbole symbole--sommets" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 2.2 14.2 13.4H1.8Z"/></svg>Sommets et cols</p>
+    <h2 id="titre-le-montaigu" tabindex="-1">Le Montaigu</h2>
+    <dl class="cartel">
+      <div><dt>Lieu</dt><dd>Pic du Montaigu</dd></div>
+      <div><dt>Altitude</dt><dd>2 339 m</dd></div>
+      <div><dt>Position</dt><dd>42°58′ N · 0°07′ E <span class="cartel__note">indicative</span></dd></div>
+    </dl>
+    <p class="panneau__extrait">Élancé, emblématique, le Montaigu domine la plaine de sa présence tranquille. Notre création en révèle les lignes douces, presque graphiques, dans un design sobre et captivant. Parfaite pour qui cherche à installer chez soi une…</p>
+    <p class="panneau__sans-avis">Pas encore d’avis sur ce modèle.</p>
+    <p class="panneau__prix"><strong>65 €</strong> TTC, en noir, gris ou doré</p>
+    <div class="panneau__actions">
+      <a class="bouton bouton--plein" href="produit-le-montaigu.html">Voir la plaque</a>
+      <button type="button" class="bouton bouton--trait" data-partager="le-montaigu">Copier le lien du lieu</button>
+    </div>
+  </div>
+</article><article class="panneau__fiche" data-fiche-lieu="le-pic-du-midi" hidden aria-labelledby="titre-le-pic-du-midi">
+  <div class="panneau__visuel"><img src="../../maquette/assets/img/p/le-pic-du-midi-noir-440.webp" srcset="../../maquette/assets/img/p/le-pic-du-midi-noir-440.webp 440w, ../../maquette/assets/img/p/le-pic-du-midi-noir-880.webp 880w" sizes="(max-width: 900px) 40vw, 170px" width="440" height="873" alt="Plaque Le Pic du Midi, finition noire" loading="lazy" decoding="async" data-vt="vt-le-pic-du-midi"></div>
+  <div class="panneau__corps">
+    <p class="panneau__cat"><svg class="symbole symbole--sommets" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 2.2 14.2 13.4H1.8Z"/></svg>Sommets et cols</p>
+    <h2 id="titre-le-pic-du-midi" tabindex="-1">Le Pic du Midi</h2>
+    <dl class="cartel">
+      <div><dt>Lieu</dt><dd>Pic du Midi de Bigorre</dd></div>
+      <div><dt>Altitude</dt><dd>2 877 m</dd></div>
+      <div><dt>Position</dt><dd>42°56′ N · 0°09′ E <span class="cartel__note">indicative</span></dd></div>
+    </dl>
+    <p class="panneau__extrait">Émergeant des nuages comme un vaisseau de pierre, le Pic du Midi de Bigorre défie le ciel depuis des siècles. Cette plaque en métal en capture toute la majesté : silhouette élancée, isolement saisissant, et aura presque mystique.…</p>
+    <ul class="avis-liste"><li class="avis avis--compact">
+  <figure>
+    <p class="avis__note"><span class="etoiles" aria-hidden="true">★★★★★<span class="etoiles__vide"></span></span><span class="visuellement-cache">Note : 5 sur 5</span></p>
+    <blockquote><p>« Pris en noir rend super bien dans mon salon. »</p></blockquote>
+    <figcaption><span class="avis__auteur">Isa</span><span class="avis__date">publié le <time datetime="2025-09-25">25 septembre 2025</time></span></figcaption>
+  </figure>
+</li><li class="avis avis--compact">
+  <figure>
+    <p class="avis__note"><span class="etoiles" aria-hidden="true">★★★★★<span class="etoiles__vide"></span></span><span class="visuellement-cache">Note : 5 sur 5</span></p>
+    <blockquote><p>« Classe et facile à installer grâce au scratch »</p></blockquote>
+    <figcaption><span class="avis__auteur">Romain P.</span><span class="avis__date">publié le <time datetime="2025-09-15">15 septembre 2025</time></span></figcaption>
+  </figure>
+</li></ul><p class="mention-avis">Avis publiés sur le site sans vérification d’achat. <a href="contact.html#avis">Comment sont publiés les avis</a></p>
+    <p class="panneau__prix"><strong>65 €</strong> TTC, en noir, gris ou doré</p>
+    <div class="panneau__actions">
+      <a class="bouton bouton--plein" href="produit-le-pic-du-midi.html">Voir la plaque</a>
+      <button type="button" class="bouton bouton--trait" data-partager="le-pic-du-midi">Copier le lien du lieu</button>
+    </div>
+  </div>
+</article><article class="panneau__fiche" data-fiche-lieu="le-tourmalet" hidden aria-labelledby="titre-le-tourmalet">
+  <div class="panneau__visuel"><img src="../../maquette/assets/img/p/le-tourmalet-noir-440.webp" srcset="../../maquette/assets/img/p/le-tourmalet-noir-440.webp 440w, ../../maquette/assets/img/p/le-tourmalet-noir-880.webp 880w" sizes="(max-width: 900px) 40vw, 170px" width="440" height="856" alt="Plaque Le Tourmalet, finition noire" loading="lazy" decoding="async" data-vt="vt-le-tourmalet"></div>
+  <div class="panneau__corps">
+    <p class="panneau__cat"><svg class="symbole symbole--sommets" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 2.2 14.2 13.4H1.8Z"/></svg>Sommets et cols</p>
+    <h2 id="titre-le-tourmalet" tabindex="-1">Le Tourmalet</h2>
+    <dl class="cartel">
+      <div><dt>Lieu</dt><dd>Col du Tourmalet</dd></div>
+      <div><dt>Altitude</dt><dd>2 115 m</dd></div>
+      <div><dt>Position</dt><dd>42°55′ N · 0°09′ E <span class="cartel__note">indicative</span></dd></div>
+    </dl>
+    <p class="panneau__extrait">Mythique. Sauvage. Intemporel. Le col du Tourmalet, haut lieu des exploits cyclistes, s’invite chez vous avec cette plaque élégante et racée. Chaque ligne évoque l’ascension, la sueur, la légende. Un clin d’œil discret et…</p>
+    <ul class="avis-liste"><li class="avis avis--compact">
+  <figure>
+    <p class="avis__note"><span class="etoiles" aria-hidden="true">★★★★★<span class="etoiles__vide"></span></span><span class="visuellement-cache">Note : 5 sur 5</span></p>
+    <blockquote><p>« Monté cet été j&#x27;ai souffert du coup je me suis fais un cadeau. Pris en gris ! »</p></blockquote>
+    <figcaption><span class="avis__auteur">Jerome D.</span><span class="avis__date">publié le <time datetime="2025-09-02">2 septembre 2025</time></span></figcaption>
+  </figure>
+</li></ul><p class="mention-avis">Avis publiés sur le site sans vérification d’achat. <a href="contact.html#avis">Comment sont publiés les avis</a></p>
+    <p class="panneau__prix"><strong>65 €</strong> TTC, en noir, gris ou doré</p>
+    <div class="panneau__actions">
+      <a class="bouton bouton--plein" href="produit-le-tourmalet.html">Voir la plaque</a>
+      <button type="button" class="bouton bouton--trait" data-partager="le-tourmalet">Copier le lien du lieu</button>
+    </div>
+  </div>
+</article><article class="panneau__fiche" data-fiche-lieu="le-pont-despagne" hidden aria-labelledby="titre-le-pont-despagne">
+  <div class="panneau__visuel"><img src="../../maquette/assets/img/p/le-pont-despagne-noir-440.webp" srcset="../../maquette/assets/img/p/le-pont-despagne-noir-440.webp 440w, ../../maquette/assets/img/p/le-pont-despagne-noir-880.webp 880w" sizes="(max-width: 900px) 40vw, 170px" width="440" height="876" alt="Plaque Le Pont d’Espagne, finition noire" loading="lazy" decoding="async" data-vt="vt-le-pont-despagne"></div>
+  <div class="panneau__corps">
+    <p class="panneau__cat"><svg class="symbole symbole--sites" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="5.6"/></svg>Sites naturels</p>
+    <h2 id="titre-le-pont-despagne" tabindex="-1">Le Pont d’Espagne</h2>
+    <dl class="cartel">
+      <div><dt>Lieu</dt><dd>Cauterets (65)</dd></div>
+      <div><dt>Repère</dt><dd>Cascades et forêt</dd></div>
+      <div><dt>Position</dt><dd>42°51′ N · 0°08′ O <span class="cartel__note">indicative</span></dd></div>
+    </dl>
+    <p class="panneau__extrait">Torrent, cascade, forêt, et pierre: le Pont d’Espagne est un passage entre les mondes. Notre plaque immortalise cette beauté suspendue, entre le fracas de l’eau et le silence des bois. Une évocation poétique et forte, idéale pour…</p>
+    <p class="panneau__sans-avis">Pas encore d’avis sur ce modèle.</p>
+    <p class="panneau__prix"><strong>65 €</strong> TTC, en noir, gris ou doré</p>
+    <div class="panneau__actions">
+      <a class="bouton bouton--plein" href="produit-le-pont-despagne.html">Voir la plaque</a>
+      <button type="button" class="bouton bouton--trait" data-partager="le-pont-despagne">Copier le lien du lieu</button>
+    </div>
+  </div>
+</article><article class="panneau__fiche" data-fiche-lieu="le-cirque-de-gavarnie" hidden aria-labelledby="titre-le-cirque-de-gavarnie">
+  <div class="panneau__visuel"><img src="../../maquette/assets/img/p/le-cirque-de-gavarnie-noir-440.webp" srcset="../../maquette/assets/img/p/le-cirque-de-gavarnie-noir-440.webp 440w, ../../maquette/assets/img/p/le-cirque-de-gavarnie-noir-880.webp 880w" sizes="(max-width: 900px) 40vw, 170px" width="440" height="874" alt="Plaque Le Cirque de Gavarnie, finition noire" loading="lazy" decoding="async" data-vt="vt-le-cirque-de-gavarnie"></div>
+  <div class="panneau__corps">
+    <p class="panneau__cat"><svg class="symbole symbole--sites" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="5.6"/></svg>Sites naturels</p>
+    <h2 id="titre-le-cirque-de-gavarnie" tabindex="-1">Le Cirque de Gavarnie</h2>
+    <dl class="cartel">
+      <div><dt>Lieu</dt><dd>Gavarnie (65)</dd></div>
+      <div><dt>Repère</dt><dd>Patrimoine mondial de l’UNESCO</dd></div>
+      <div><dt>Position</dt><dd>42°42′ N · 0°01′ O <span class="cartel__note">indicative</span></dd></div>
+    </dl>
+    <p class="panneau__extrait">Offrez à votre intérieur une évasion vertigineuse. Notre plaque “Gavarnie” capture la majesté du cirque le plus emblématique des Pyrénées, là où la nature sculpte la montagne avec grâce et puissance. Découpée avec précision dans…</p>
+    <p class="panneau__sans-avis">Pas encore d’avis sur ce modèle.</p>
+    <p class="panneau__prix"><strong>65 €</strong> TTC, en noir, gris ou doré</p>
+    <div class="panneau__actions">
+      <a class="bouton bouton--plein" href="produit-le-cirque-de-gavarnie.html">Voir la plaque</a>
+      <button type="button" class="bouton bouton--trait" data-partager="le-cirque-de-gavarnie">Copier le lien du lieu</button>
+    </div>
+  </div>
+</article><article class="panneau__fiche" data-fiche-lieu="faune" hidden aria-labelledby="titre-faune">
+  <div class="panneau__corps">
+    <p class="panneau__cat"><svg class="symbole symbole--faune" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 1.6 14.4 8 8 14.4 1.6 8Z"/></svg>Faune du Parc national</p>
+    <h2 id="titre-faune" tabindex="-1">Quatre animaux, sans adresse</h2>
+    <p class="panneau__extrait">L’isard, l’ours, le cerf et la marmotte vivent dans le massif. La carte ne leur donne pas de point précis : la zone hachurée situe le Parc national des Pyrénées de façon schématique.</p>
+    <ul class="faune"><li><a href="produit-lisard.html"><img src="../../maquette/assets/img/p/lisard-noir-440.webp" srcset="../../maquette/assets/img/p/lisard-noir-440.webp 440w, ../../maquette/assets/img/p/lisard-noir-880.webp 880w" sizes="(max-width: 900px) 20vw, 80px" width="440" height="851" alt="Plaque L’Isard, finition noire" loading="lazy" decoding="async"><span class="faune__nom">L’Isard</span><i>Rupicapra pyrenaica</i></a></li><li><a href="produit-lours.html"><img src="../../maquette/assets/img/p/lours-noir-440.webp" srcset="../../maquette/assets/img/p/lours-noir-440.webp 440w, ../../maquette/assets/img/p/lours-noir-880.webp 880w" sizes="(max-width: 900px) 20vw, 80px" width="440" height="865" alt="Plaque L’Ours, finition noire" loading="lazy" decoding="async"><span class="faune__nom">L’Ours</span><i>Ursus arctos</i></a></li><li><a href="produit-le-cerf.html"><img src="../../maquette/assets/img/p/le-cerf-gris-440.webp" srcset="../../maquette/assets/img/p/le-cerf-gris-440.webp 440w, ../../maquette/assets/img/p/le-cerf-gris-880.webp 880w" sizes="(max-width: 900px) 20vw, 80px" width="440" height="872" alt="Plaque Le Cerf, finition grise" loading="lazy" decoding="async"><span class="faune__nom">Le Cerf</span><i>Cervus elaphus</i></a></li><li><a href="produit-la-marmotte.html"><img src="../../maquette/assets/img/p/la-marmotte-noir-440.webp" srcset="../../maquette/assets/img/p/la-marmotte-noir-440.webp 440w, ../../maquette/assets/img/p/la-marmotte-noir-880.webp 880w" sizes="(max-width: 900px) 20vw, 80px" width="440" height="851" alt="Plaque La Marmotte, finition noire" loading="lazy" decoding="async"><span class="faune__nom">La Marmotte</span><i>Marmota marmota</i></a></li></ul>
+    <ul class="avis-liste"><li class="avis avis--compact">
+  <figure>
+    <p class="avis__note"><span class="etoiles" aria-hidden="true">★★★★★<span class="etoiles__vide"></span></span><span class="visuellement-cache">Note : 5 sur 5</span></p>
+    <blockquote><p>« Mis dans notre maison de vacance à Campan top ! »</p></blockquote>
+    <figcaption><span class="avis__auteur">Marie</span><a class="avis__plaque" href="produit-lisard.html">L’Isard</a><span class="avis__date">publié le <time datetime="2025-09-27">27 septembre 2025</time></span></figcaption>
+  </figure>
+</li><li class="avis avis--compact">
+  <figure>
+    <p class="avis__note"><span class="etoiles" aria-hidden="true">★★★★★<span class="etoiles__vide"></span></span><span class="visuellement-cache">Note : 5 sur 5</span></p>
+    <blockquote><p>« Super plaque vu suite à la visite sur Aquensis »</p></blockquote>
+    <figcaption><span class="avis__auteur">Anto 65</span><a class="avis__plaque" href="produit-lours.html">L’Ours</a><span class="avis__date">publié le <time datetime="2025-09-04">4 septembre 2025</time></span></figcaption>
+  </figure>
+</li><li class="avis avis--compact">
+  <figure>
+    <p class="avis__note"><span class="etoiles" aria-hidden="true">★★★★<span class="etoiles__vide">★</span></span><span class="visuellement-cache">Note : 4 sur 5</span></p>
+    <blockquote><p>« Cadeau pour un ami pris en gris top. 1 étoile en moins j&#x27;ai attendu une semaine pour la livraison ! »</p></blockquote>
+    <figcaption><span class="avis__auteur">Gerald</span><a class="avis__plaque" href="produit-le-cerf.html">Le Cerf</a><span class="avis__date">publié le <time datetime="2025-09-06">6 septembre 2025</time></span></figcaption>
+  </figure>
+</li><li class="avis avis--compact">
+  <figure>
+    <p class="avis__note"><span class="etoiles" aria-hidden="true">★★★★★<span class="etoiles__vide"></span></span><span class="visuellement-cache">Note : 5 sur 5</span></p>
+    <blockquote><p>« Vu pendant la cure à Bagneres. Merci à Romain de nous les avoir montrés avant l&#x27;achat. »</p></blockquote>
+    <figcaption><span class="avis__auteur">Sophia P.</span><a class="avis__plaque" href="produit-la-marmotte.html">La Marmotte</a><span class="avis__date">publié le <time datetime="2025-09-26">26 septembre 2025</time></span></figcaption>
+  </figure>
+</li></ul>
+    <p class="mention-avis">Avis publiés sur le site sans vérification d’achat. <a href="contact.html#avis">Comment sont publiés les avis</a></p>
+    <p class="panneau__prix"><strong>65 €</strong> TTC la plaque, en noir, gris ou doré</p>
+  </div>
+</article>
+      <div class="panneau__nav" data-panneau-nav hidden>
+        <button type="button" class="lien-bouton" data-lieu-voisin="-1">Lieu précédent</button>
+        <button type="button" class="lien-bouton" data-lieu-voisin="1">Lieu suivant</button>
+      </div>
+    </aside>
+  </div>
+  <section class="lieux-liste" aria-labelledby="titre-liste">
+    <h2 id="titre-liste">Les lieux, du nord au sud</h2>
+    <p class="chapo">La même information que la carte, en liste. Les coordonnées sont indicatives.</p>
+    <ol class="lieux" data-liste-lieux><li data-cat="patrimoine"><button type="button" class="lieu" data-lieu="le-chateau-de-mauvezin" aria-controls="panneau"><svg class="symbole symbole--patrimoine" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect x="2.6" y="2.6" width="10.8" height="10.8"/></svg><span class="lieu__nom">Le Château de Mauvezin</span><span class="lieu__detail">Mauvezin (65) · Château fort</span><span class="lieu__coord">43°07′ N · 0°16′ E</span></button></li><li data-cat="patrimoine"><button type="button" class="lieu" data-lieu="labbaye-de-lescaladieu" aria-controls="panneau"><svg class="symbole symbole--patrimoine" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect x="2.6" y="2.6" width="10.8" height="10.8"/></svg><span class="lieu__nom">L’Abbaye de l’Escaladieu</span><span class="lieu__detail">Bonnemazon (65) · Abbaye cistercienne</span><span class="lieu__coord">43°06′ N · 0°16′ E</span></button></li><li data-cat="patrimoine"><button type="button" class="lieu" data-lieu="la-tour-des-jacobins" aria-controls="panneau"><svg class="symbole symbole--patrimoine" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect x="2.6" y="2.6" width="10.8" height="10.8"/></svg><span class="lieu__nom">La Tour des Jacobins</span><span class="lieu__detail">Bagnères-de-Bigorre (65) · Monument historique</span><span class="lieu__coord">43°04′ N · 0°09′ E</span></button></li><li data-cat="sommets"><button type="button" class="lieu" data-lieu="le-montaigu" aria-controls="panneau"><svg class="symbole symbole--sommets" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 2.2 14.2 13.4H1.8Z"/></svg><span class="lieu__nom">Le Montaigu</span><span class="lieu__detail">Pic du Montaigu · 2 339 m</span><span class="lieu__coord">42°58′ N · 0°07′ E</span></button></li><li data-cat="sommets"><button type="button" class="lieu" data-lieu="le-pic-du-midi" aria-controls="panneau"><svg class="symbole symbole--sommets" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 2.2 14.2 13.4H1.8Z"/></svg><span class="lieu__nom">Le Pic du Midi</span><span class="lieu__detail">Pic du Midi de Bigorre · 2 877 m</span><span class="lieu__coord">42°56′ N · 0°09′ E</span></button></li><li data-cat="sommets"><button type="button" class="lieu" data-lieu="le-tourmalet" aria-controls="panneau"><svg class="symbole symbole--sommets" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 2.2 14.2 13.4H1.8Z"/></svg><span class="lieu__nom">Le Tourmalet</span><span class="lieu__detail">Col du Tourmalet · 2 115 m</span><span class="lieu__coord">42°55′ N · 0°09′ E</span></button></li><li data-cat="sites"><button type="button" class="lieu" data-lieu="le-pont-despagne" aria-controls="panneau"><svg class="symbole symbole--sites" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="5.6"/></svg><span class="lieu__nom">Le Pont d’Espagne</span><span class="lieu__detail">Cauterets (65) · Cascades et forêt</span><span class="lieu__coord">42°51′ N · 0°08′ O</span></button></li><li data-cat="sites"><button type="button" class="lieu" data-lieu="le-cirque-de-gavarnie" aria-controls="panneau"><svg class="symbole symbole--sites" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="5.6"/></svg><span class="lieu__nom">Le Cirque de Gavarnie</span><span class="lieu__detail">Gavarnie (65) · Patrimoine mondial de l’UNESCO</span><span class="lieu__coord">42°42′ N · 0°01′ O</span></button></li><li data-cat="faune"><button type="button" class="lieu" data-lieu="faune" aria-controls="panneau"><svg class="symbole symbole--faune" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 1.6 14.4 8 8 14.4 1.6 8Z"/></svg><span class="lieu__nom">L’Isard</span><span class="lieu__detail"><i>Rupicapra pyrenaica</i> · Parc national</span><span class="lieu__coord">sans repère précis</span></button></li><li data-cat="faune"><button type="button" class="lieu" data-lieu="faune" aria-controls="panneau"><svg class="symbole symbole--faune" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 1.6 14.4 8 8 14.4 1.6 8Z"/></svg><span class="lieu__nom">L’Ours</span><span class="lieu__detail"><i>Ursus arctos</i> · Parc national</span><span class="lieu__coord">sans repère précis</span></button></li><li data-cat="faune"><button type="button" class="lieu" data-lieu="faune" aria-controls="panneau"><svg class="symbole symbole--faune" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 1.6 14.4 8 8 14.4 1.6 8Z"/></svg><span class="lieu__nom">Le Cerf</span><span class="lieu__detail"><i>Cervus elaphus</i> · Parc national</span><span class="lieu__coord">sans repère précis</span></button></li><li data-cat="faune"><button type="button" class="lieu" data-lieu="faune" aria-controls="panneau"><svg class="symbole symbole--faune" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 1.6 14.4 8 8 14.4 1.6 8Z"/></svg><span class="lieu__nom">La Marmotte</span><span class="lieu__detail"><i>Marmota marmota</i> · Parc national</span><span class="lieu__coord">sans repère précis</span></button></li></ol>
+  </section>
+  <section class="partage" aria-labelledby="titre-partage">
+    <div>
+      <h2 id="titre-partage">Un lieu, une adresse</h2>
+      <p>Chaque repère a son lien direct, par exemple <code>carte.html#le-tourmalet</code>. Envoyez-le à un cycliste, glissez-le dans un message de vacances : la carte s’ouvre sur le bon lieu.</p>
+    </div>
+    <p class="partage__pro">Office de tourisme, gîte, centre thermal : vous voulez montrer la carte à vos visiteurs ? <a href="sur-mesure.html#series">Parlons d’une série ou d’un partenariat</a> <span class="note-maquette note-maquette--valider">proposition à valider</span></p>
+  </section>
+</div>
+</main>
+<footer class="pied">
+  <div class="cadre">
+    <div class="pied__grille">
+      <div class="pied__marque">
+        <a class="marque" href="index.html"><svg class="marque__signe" viewBox="0 0 40 40" aria-hidden="true" focusable="false"><path d="M20 4c7 0 15 5 15 14 0 10-8 18-16 18S5 30 5 21C5 12 13 4 20 4Z"/><path d="M20 10c4.5 0 9 3 9 8.5 0 6-5 11-10 11s-8.6-4-8.6-9.6C10.4 14.4 15 10 20 10Z"/><path d="M19.6 16c2.4 0 4.2 1.6 4.2 3.8s-2 4.4-4.4 4.4-3.8-1.7-3.8-3.9 1.7-4.3 4-4.3Z"/></svg><span class="marque__texte"><span class="marque__nom">Terre Gravée</span><span class="marque__sous">Carnet de territoire</span></span></a>
+        <p class="pied__slogan">Graver l’âme des territoires</p>
+        <p>Atelier Terre Gravée<br>16 rue du Pic du Midi, 65200 Gerde<br><a href="contact.html">contact@terregravee.fr</a></p>
+      </div>
+      <div>
+        <h2 class="pied__titre">Le carnet</h2>
+        <ul>
+          <li><a href="carte.html">La carte des plaques</a></li>
+          <li><a href="collection.html">Les douze plaques</a></li>
+          <li><a href="produit-led.html">Kit LED</a></li>
+          <li><a href="produit-carte-cadeau.html">Carte cadeau</a></li>
+          <li><a href="sur-mesure.html">Sur mesure et séries</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="pied__titre">Commander</h2>
+        <ul>
+          <li><a href="contact.html#livraison">Livraison et retours</a></li>
+          <li><a href="contact.html#avis">Comment sont publiés les avis</a></li>
+          <li><a href="https://terregravee.fr/cgv/">Conditions générales de vente</a></li>
+          <li><a href="https://terregravee.fr/politique/">Mentions légales et confidentialité</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="pied__titre">Suivre l’atelier</h2>
+        <ul>
+          <li><a href="index.html#lettre">Lettre « planche inédite »</a></li>
+          <li>Instagram <span class="note-maquette note-maquette--fournir">lien à fournir</span></li>
+          <li>Facebook <span class="note-maquette note-maquette--fournir">lien à fournir</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="pied__bas">
+      <p>Terre Gravée · Micro-entreprise · Responsable : Romain Fourneaux · SIRET 941 234 270 00010</p>
+      <p>Prix TTC, TVA non applicable (art. 293 B du CGI)</p>
+    </div>
+  </div>
+</footer>
+<dialog class="commande" id="commande" aria-labelledby="titre-commande">
+  <div class="commande__haut">
+    <h2 id="titre-commande">Votre commande</h2>
+    <button type="button" class="commande__fermer" data-fermer-commande>Fermer</button>
+  </div>
+  <ul class="commande__liste" data-liste-commande></ul>
+  <div class="commande__bas">
+    <p class="commande__total"><span>Sous-total TTC</span><strong data-total-commande>0 €</strong></p>
+    <p class="commande__info">Frais de port selon le poids et la destination, affichés avant validation <span class="note-maquette note-maquette--fournir">montant à fournir</span></p>
+    <p class="commande__info">Expédition depuis Bagnères-de-Bigorre, livraison en 2 à 4 jours ouvrés (indicatif).</p>
+    <button type="button" class="bouton bouton--plein" disabled aria-describedby="commande-desactivee">Commander</button>
+    <p class="commande__info" id="commande-desactivee">Maquette : la commande et le paiement sont désactivés. Le panier reste dans ce navigateur.</p>
+  </div>
+</dialog>
+<div class="toast" role="status" aria-live="polite"><span data-toast-texte></span><button type="button" data-ouvrir-commande>Voir la commande</button></div>
+<script src="assets/donnees-carte.js"></script><script src="assets/carnet.js"></script>
+<script src="assets/carte.js"></script>
+</body>
+</html>
