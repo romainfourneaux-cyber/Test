@@ -7,6 +7,7 @@
 <meta name="description" content="Contacter l’atelier Terre Gravée à Gerde : e-mail, adresse, livraison, retours, paiement, garanties et gestion des avis.">
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#ffffff">
+<script>try { if (window.localStorage.getItem("tg-v2-notes") === "masquees") document.documentElement.classList.add("sans-notes"); } catch (e) {}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&amp;family=Figtree:ital,wght@0,400..700;1,400&amp;display=swap">
@@ -14,7 +15,7 @@
 </head>
 <body class="">
 <a class="lien-evitement" href="#contenu">Aller au contenu</a>
-<div class="bandeau-maq" role="note"><div class="wrap bandeau-maq__in"><p><strong>Maquette version 2 · brouillon non publié · paiements désactivés</strong></p><p class="bandeau-maq__liens"><a href="strategie.html">Lire la stratégie</a><a href="../index.html">Comparer les versions</a></p></div></div>
+<div class="bandeau-maq" role="note"><div class="wrap bandeau-maq__in"><p><strong>Maquette version 2 · brouillon non publié · paiements désactivés</strong></p><p class="bandeau-maq__liens"><a href="strategie.html">Lire la stratégie</a><a href="../index.html">Comparer les versions</a><button type="button" class="bandeau-maq__notes" data-notes aria-pressed="false">Masquer les notes jaunes</button></p></div></div>
 <header class="entete" data-entete>
   <div class="wrap entete__in">
     <a class="logo" href="index.html"><svg class="logo__marque" viewBox="0 0 40 40" aria-hidden="true" focusable="false"><rect width="40" height="40" rx="3" fill="#0E1D3A"/><rect x="8" y="11" width="24" height="7" fill="#fff"/><rect x="8" y="22" width="24" height="7" fill="#D0121F"/></svg><span class="logo__nom">Terre Gravée</span><span class="sr">, retour à l’accueil</span></a>
@@ -36,7 +37,7 @@
   <div class="contact">
     <div class="case case--contact">
       <h2>Écrire à l’atelier</h2>
-      <p class="contact__email"><span id="adresse-email">contact@terregravee.fr</span><button type="button" class="btn btn--ligne" data-copier="adresse-email"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 9h10v11H9z M5 15V4h10"/></svg>Copier</button></p>
+      <p class="contact__email"><span id="adresse-email">contact@terregravee.fr</span><button type="button" class="btn btn--ligne" data-copier="adresse-email" data-repli="Adresse sélectionnée, copiez-la"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 9h10v11H9z M5 15V4h10"/></svg>Copier</button></p>
       <p class="petit">Délai de réponse <span class="note-maq note-maq--fournir">à fournir : délai habituel</span></p>
       <h2>Adresse de l’atelier</h2>
       <address>Terre Gravée<br>16 rue du Pic du Midi<br>65200 Gerde</address>
@@ -63,20 +64,21 @@
       <h3><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h11v9H3z M14 10h4l3 3v3h-7z M7 18.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z M17 18.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z"/></svg>Livraison</h3>
       <p>Livraison en 2 à 4 jours ouvrés après l’expédition, à titre indicatif. Nous vous prévenons en cas de retard.</p>
       <p>Les frais dépendent du poids et de la destination. Ils sont affichés avant la validation de la commande. <span class="note-maq note-maq--fournir">à fournir : grille des tarifs</span></p>
-      <p>Livraison offerte dès 130 € de plaques. <span class="note-maq note-maq--valider">seuil : proposition à valider</span></p>
+      <p>Livraison offerte dès 130 € d’articles livrés (plaques et kits LED), soit deux plaques. La carte cadeau, envoyée par e-mail, n’entre pas dans ce calcul. <span class="note-maq note-maq--valider">seuil : proposition à valider</span></p>
     </div>
     <div class="aide__bloc" id="retours">
       <h3><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 7 4 12l5 5M4 12h11a5 5 0 0 1 0 10h-2"/></svg>Retours et rétractation</h3>
       <p>Vous avez 14 jours après réception pour vous rétracter sans justification. La plaque doit être dans son état d’origine. Les frais de retour sont à votre charge. Les pièces personnalisées sont exclues.</p>
-      <p class="petit">Sur le site : un bouton « Renoncer au contrat ici » dans l’espace commande. <span class="note-maq note-maq--fournir">à confirmer : obligation en vigueur depuis le 19 juin 2026, à vérifier avec un juriste</span></p>
+      <p class="petit">Sur le site : un bouton « Renoncer au contrat ici » visible et accessible sans connexion pendant les 14 jours. <span class="note-maq note-maq--fournir">à confirmer : obligation en vigueur depuis le 19 juin 2026, à vérifier avec un juriste</span></p>
     </div>
     <div class="aide__bloc">
       <h3><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 11h12v9H6z M8.5 11V8a3.5 3.5 0 0 1 7 0v3"/></svg>Paiement</h3>
-      <p>Carte bancaire (Stripe), PayPal, y compris en 4 fois sans frais, Apple Pay et Google Pay. Prix TTC, TVA non applicable (art. 293 B du CGI).</p>
+      <p>Carte bancaire (Stripe), PayPal, y compris en 4 fois sans frais dès 20 € d’achat sous réserve d’acceptation par PayPal, Apple Pay et Google Pay. Prix TTC, TVA non applicable (art. 293 B du CGI).</p>
     </div>
     <div class="aide__bloc">
       <h3><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 5 6v5c0 4.5 3 8 7 10 4-2 7-5.5 7-10V6Z M9 12l2 2 4-4"/></svg>Garanties</h3>
       <p>Vos achats bénéficient des garanties légales de conformité et des vices cachés. <a href="https://terregravee.fr/cgv/">Lire les conditions générales de vente</a></p>
+      <p class="petit">Médiateur de la consommation : <span class="note-maq note-maq--fournir">à fournir : nom et site</span></p>
     </div>
     <div class="aide__bloc">
       <h3><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6 M10 21h4 M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2V16h5v-.1c0-.8.4-1.5 1-2A6 6 0 0 0 12 3Z"/></svg>Kit LED</h3>
@@ -85,6 +87,7 @@
     <div class="aide__bloc" id="avis-gestion">
       <h3><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 10 17 19 7"/></svg>Comment nous gérons les avis</h3>
       <p>Les avis sont publiés sur le site sans vérification d’achat. Ils sont affichés du plus récent au plus ancien, avec leur date de publication et la note donnée.</p>
+      <p>Date de l’expérience (achat ou réception) pour chaque avis : <span class="note-maq note-maq--fournir">à fournir : dates d’achat ou de réception</span></p>
       <p>Contrepartie, délai de publication, durée de conservation, motifs de refus : <span class="note-maq note-maq--fournir">à fournir : règles de modération</span> Pour signaler un avis douteux, écrivez à contact@terregravee.fr.</p>
     </div>
   </div>
@@ -112,11 +115,11 @@
       <li><a href="produit-carte-cadeau.html">Carte cadeau</a></li>
     </ul></nav>
     <nav aria-label="Aide"><h2>Aide</h2><ul>
-      <li><a href="quiz.html">Quiz : quelle plaque choisir ?</a></li>
-      <li><a href="noel.html">Guide cadeaux de Noël</a></li>
-      <li><a href="contact.html#livraison">Livraison et retours</a></li>
-      <li><a href="contact.html#avis-gestion">Comment nous gérons les avis</a></li>
-      <li><a href="sur-mesure.html">Sur mesure et séries</a></li>
+      <li><a href="quiz.html">Quiz</a></li>
+      <li><a href="noel.html">Guide de Noël</a></li>
+      <li><a href="contact.html#livraison">Livraison, retours</a></li>
+      <li><a href="contact.html#avis-gestion">Gestion des avis</a></li>
+      <li><a href="sur-mesure.html">Sur mesure</a></li>
       <li><a href="contact.html">Contact</a></li>
     </ul></nav>
     <div><h2>Suivre l’atelier</h2><ul>
@@ -140,9 +143,9 @@
     </div>
     <div class="panier__defile">
       <div class="panier__livraison" data-panier-livraison>
-        <p class="panier__livraison-msg" data-livraison-msg>Livraison offerte dès 130 € de plaques.</p>
+        <p class="panier__livraison-msg" data-livraison-msg>Livraison offerte dès 130 € d’articles livrés.</p>
         <div class="jauge" data-jauge aria-hidden="true"><span class="jauge__rempli"></span><span class="jauge__seuil">130 €</span></div>
-        <p class="petit"><span class="note-maq note-maq--valider">seuil de 130 € : proposition à valider</span></p>
+        <p class="petit">Hors carte cadeau, envoyée par e-mail. <span class="note-maq note-maq--valider">seuil de 130 € : proposition à valider</span></p>
       </div>
       <ul class="panier__liste" data-panier-liste></ul>
       <div class="panier__suggestions" data-panier-suggestions></div>
@@ -154,16 +157,17 @@
           <p class="petit"><span class="note-maq note-maq--valider">options cadeau : proposition à valider</span> Vous hésitez sur le modèle ? <a href="produit-carte-cadeau.html">La carte cadeau</a> vaut une plaque au choix.</p>
         </div>
       </details>
+      <p class="petit panier__paiement">Sur le site : carte bancaire (Stripe), PayPal (y compris en 4 fois sans frais dès 20 € d’achat, sous réserve d’acceptation par PayPal), Apple Pay et Google Pay. Commande sans création de compte <span class="note-maq note-maq--fournir">à confirmer : commande sans compte</span></p>
     </div>
     <div class="panier__bas">
       <dl class="panier__totaux">
         <div><dt>Sous-total</dt><dd data-sous-total>0&nbsp;€</dd></div>
-        <div data-ligne-remise hidden><dt>Remise Triptyque <span class="petit">(<span class="note-maq note-maq--valider">−10 % : proposition à valider</span>)</span></dt><dd data-remise>0&nbsp;€</dd></div>
+        <div data-ligne-remise hidden><dt>Remise Triptyque <span class="note-maq note-maq--valider">−10 % : proposition à valider</span></dt><dd data-remise>0&nbsp;€</dd></div>
         <div><dt>Livraison</dt><dd data-port>Selon poids et destination</dd></div>
         <div class="panier__total"><dt>Total estimé</dt><dd data-total-panier>0&nbsp;€</dd></div>
       </dl>
       <button type="button" class="btn btn--action btn--plein" disabled aria-describedby="note-commande">Commander</button>
-      <p class="petit" id="note-commande">Maquette : la commande est désactivée. Sur le site : commande sans création de compte, carte bancaire (Stripe), PayPal (y compris en 4 fois sans frais), Apple Pay et Google Pay.</p>
+      <p class="petit panier__note" id="note-commande">Maquette : la commande est désactivée.</p>
     </div>
   </div>
 </dialog>

@@ -4,13 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>La carte des plaques · Terre Gravée</title>
-<meta name="description" content="Carte interactive des Hautes-Pyrénées : les huit lieux gravés par Terre Gravée, la zone du Parc national pour la faune et le trajet de fabrication de Revel à Bagnères-de-Bigorre.">
+<meta name="description" content="Carte interactive des Hautes-Pyrénées : les huit lieux gravés par Terre Gravée, la faune des Pyrénées et le trajet de fabrication de Revel à Bagnères-de-Bigorre.">
 <meta name="robots" content="noindex, nofollow">
 <meta name="color-scheme" content="light dark">
 <script>try{var t=localStorage.getItem("tg-v1-theme");if(t==="dark"||t==="light"){document.documentElement.setAttribute("data-theme",t);}}catch(e){}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;500;600;700&amp;family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..600&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&amp;family=Newsreader:ital,opsz,wght@0,16..72,400..600;1,16..72,400&amp;display=swap">
 <link rel="stylesheet" href="assets/carnet.css">
 
 </head>
@@ -25,7 +25,7 @@
 <header class="entete">
   <div class="cadre entete__ligne">
     <a class="marque" href="index.html"><svg class="marque__signe" viewBox="0 0 40 40" aria-hidden="true" focusable="false"><path d="M20 4c7 0 15 5 15 14 0 10-8 18-16 18S5 30 5 21C5 12 13 4 20 4Z"/><path d="M20 10c4.5 0 9 3 9 8.5 0 6-5 11-10 11s-8.6-4-8.6-9.6C10.4 14.4 15 10 20 10Z"/><path d="M19.6 16c2.4 0 4.2 1.6 4.2 3.8s-2 4.4-4.4 4.4-3.8-1.7-3.8-3.9 1.7-4.3 4-4.3Z"/></svg><span class="marque__texte"><span class="marque__nom">Terre Gravée</span><span class="marque__sous">Carnet de territoire</span></span></a>
-    <nav class="nav" id="nav-principale" aria-label="Navigation principale"><ul><li><a href="carte.html" aria-current="page">La carte</a></li><li><a href="collection.html">Les plaques</a></li><li><a href="index.html#fabrication">Fabrication</a></li><li><a href="sur-mesure.html">Sur mesure</a></li><li><a href="contact.html">Contact</a></li></ul></nav>
+    <nav class="nav" id="nav-principale" aria-label="Navigation principale"><ul><li><a href="carte.html" aria-current="page">La carte</a></li><li><a href="collection.html">Les plaques</a></li><li><a href="index.html#fabrication">Fabrication</a></li><li><a href="sur-mesure.html">Sur mesure</a></li><li><a href="contact.html">Contact</a></li><li class="nav__theme"><button type="button" class="outil outil--theme-menu" data-theme-bascule aria-pressed="false"><svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M15.5 12.6A6.5 6.5 0 0 1 7.4 4.5a6.5 6.5 0 1 0 8.1 8.1Z"/></svg><span>Carte de nuit</span></button></li></ul></nav>
     <div class="entete__outils">
       <button type="button" class="outil outil--theme" data-theme-bascule aria-pressed="false">
         <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M15.5 12.6A6.5 6.5 0 0 1 7.4 4.5a6.5 6.5 0 1 0 8.1 8.1Z"/></svg>
@@ -36,8 +36,9 @@
         <span class="outil__texte">Commande</span><span class="compteur" data-compteur>0</span><span class="visuellement-cache"> article(s)</span>
       </button>
       <button type="button" class="outil outil--menu" aria-expanded="false" aria-controls="nav-principale" data-menu>
-        <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M3 6h14M3 10h14M3 14h14"/></svg>
-        <span class="visuellement-cache">Menu</span>
+        <svg class="outil__ouvrir" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M3 6h14M3 10h14M3 14h14"/></svg>
+        <svg class="outil__fermer" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M5 5l10 10M15 5L5 15"/></svg>
+        <span class="visuellement-cache" data-menu-texte>Ouvrir le menu</span>
       </button>
     </div>
   </div>
@@ -51,7 +52,7 @@
     <p class="chapo">Chaque repère est un lieu gravé. Ouvrez-le pour voir la plaque, son cartel et les avis qui en parlent. Chaque lieu a sa propre adresse : vous pouvez l’envoyer à quelqu’un.</p>
   </header>
   <div class="carte-page__outils">
-    <div class="puces" role="group" aria-label="Afficher les lieux"><button type="button" class="puce" data-filtre-carte="tout" aria-pressed="true">Tous les lieux <span>12</span></button><button type="button" class="puce" data-filtre-carte="sommets" aria-pressed="false"><svg class="symbole symbole--sommets" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 2.2 14.2 13.4H1.8Z"/></svg>Sommets et cols <span>3</span></button><button type="button" class="puce" data-filtre-carte="sites" aria-pressed="false"><svg class="symbole symbole--sites" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="5.6"/></svg>Sites naturels <span>2</span></button><button type="button" class="puce" data-filtre-carte="patrimoine" aria-pressed="false"><svg class="symbole symbole--patrimoine" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect x="2.6" y="2.6" width="10.8" height="10.8"/></svg>Patrimoine <span>3</span></button><button type="button" class="puce" data-filtre-carte="faune" aria-pressed="false"><svg class="symbole symbole--faune" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 1.6 14.4 8 8 14.4 1.6 8Z"/></svg>Faune du Parc national <span>4</span></button></div>
+    <div class="puces" role="group" aria-label="Afficher les lieux"><button type="button" class="puce" data-filtre-carte="tout" aria-pressed="true">Tous les lieux <span>12</span></button><button type="button" class="puce" data-filtre-carte="sommets" aria-pressed="false"><svg class="symbole symbole--sommets" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 2.2 14.2 13.4H1.8Z"/></svg>Sommets et cols <span>3</span></button><button type="button" class="puce" data-filtre-carte="sites" aria-pressed="false"><svg class="symbole symbole--sites" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="5.6"/></svg>Sites naturels <span>2</span></button><button type="button" class="puce" data-filtre-carte="patrimoine" aria-pressed="false"><svg class="symbole symbole--patrimoine" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect x="2.6" y="2.6" width="10.8" height="10.8"/></svg>Patrimoine <span>3</span></button><button type="button" class="puce" data-filtre-carte="faune" aria-pressed="false"><svg class="symbole symbole--faune" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 1.6 14.4 8 8 14.4 1.6 8Z"/></svg>Faune des Pyrénées <span>4</span></button></div>
     <div class="calques" role="group" aria-label="Calques de la carte">
       <label class="interrupteur"><input type="checkbox" data-calque="trajet" checked><span>Trajet de fabrication</span></label>
       <label class="interrupteur"><input type="checkbox" data-calque="relief" checked><span>Relief</span></label>
@@ -73,15 +74,18 @@
   <path d="M774.9,158.1 L379.7,245.0" class="trajet__ligne"/>
   <path d="M774.9,158.1 l-12,-3 l3,6 z" class="trajet__fleche" transform="rotate(-12 774.9 158.1)"/>
   <circle cx="379.7" cy="245.0" r="11" class="trajet__etape"/>
-  <rect x="393.6" y="255.0" width="9" height="9" class="trajet__atelier" transform="translate(-4.5 -4.5)"/>
   <text x="772.9" y="128.1" text-anchor="end" class="trajet__texte"><tspan x="772.9">Revel (31) · découpe laser</tspan><tspan x="772.9" dy="15">à environ 155 km, hors cadre</tspan></text>
-  <text x="402.6" y="271.0" class="trajet__texte trajet__texte--petit"><tspan x="402.6">Gerde · atelier</tspan></text>
+</g>
+<g class="calque-atelier">
+  <rect x="393.6" y="255.0" width="9" height="9" class="atelier__point" transform="translate(-4.5 -4.5)"/>
+  <text x="402.6" y="271.0" class="atelier__texte">Atelier (adresse) · Gerde</text>
 </g><g class="carte__graticule"><line x1="0.0" y1="560.0" x2="782.9" y2="560.0"/><line x1="0.0" y1="310.0" x2="782.9" y2="310.0"/><line x1="0.0" y1="60.0" x2="782.9" y2="60.0"/><line x1="87.8" y1="0.0" x2="87.8" y2="670.0"/><line x1="270.7" y1="0.0" x2="270.7" y2="670.0"/><line x1="453.6" y1="0.0" x2="453.6" y2="670.0"/><line x1="636.5" y1="0.0" x2="636.5" y2="670.0"/></g><g><text x="6.0" y="556.0" class="carte__grad">42°45′ N</text><text x="6.0" y="306.0" class="carte__grad">43°00′ N</text><text x="6.0" y="56.0" class="carte__grad">43°15′ N</text><text x="91.8" y="14.0" class="carte__grad">0°15′ O</text><text x="274.7" y="14.0" class="carte__grad">0°00′</text><text x="457.6" y="14.0" class="carte__grad">0°15′ E</text><text x="640.5" y="14.0" class="carte__grad">0°30′ E</text></g><g class="carte__echelle"><path d="M18,640h90M18,636v8M108,636v8"/><text x="18" y="632">0</text><text x="108" y="632" text-anchor="middle">10 km</text></g><g class="carte__nord"><path d="M757,34l7,18l-7,-5l-7,5z"/><text x="757" y="28" text-anchor="middle">N</text></g></svg>
-  <div class="carte__reperes"><button type="button" class="repere repere--d" style="left:59.81%;top:28.36%" data-lieu="le-chateau-de-mauvezin" data-cat="patrimoine" id="rep-le-chateau-de-mauvezin" aria-label="Le Château de Mauvezin, Mauvezin (65), Château fort" aria-controls="panneau" aria-expanded="false"><svg class="repere__sym repere__sym--patrimoine" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect x="2.6" y="2.6" width="10.8" height="10.8"/></svg><span class="repere__nom">Le Château de Mauvezin</span></button><button type="button" class="repere repere--d" style="left:59.81%;top:31.34%" data-lieu="labbaye-de-lescaladieu" data-cat="patrimoine" id="rep-labbaye-de-lescaladieu" aria-label="L’Abbaye de l’Escaladieu, Bonnemazon (65), Abbaye cistercienne" aria-controls="panneau" aria-expanded="false"><svg class="repere__sym repere__sym--patrimoine" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect x="2.6" y="2.6" width="10.8" height="10.8"/></svg><span class="repere__nom">L’Abbaye de l’Escaladieu</span></button><button type="button" class="repere repere--g" style="left:48.50%;top:36.57%" data-lieu="la-tour-des-jacobins" data-cat="patrimoine" id="rep-la-tour-des-jacobins" aria-label="La Tour des Jacobins, Bagnères-de-Bigorre (65), Monument historique" aria-controls="panneau" aria-expanded="false"><svg class="repere__sym repere__sym--patrimoine" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect x="2.6" y="2.6" width="10.8" height="10.8"/></svg><span class="repere__nom">La Tour des Jacobins</span></button><button type="button" class="repere repere--g" style="left:44.86%;top:52.24%" data-lieu="le-montaigu" data-cat="sommets" id="rep-le-montaigu" aria-label="Le Montaigu, Pic du Montaigu, 2 339 m" aria-controls="panneau" aria-expanded="false"><svg class="repere__sym repere__sym--sommets" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 2.2 14.2 13.4H1.8Z"/></svg><span class="repere__nom">Le Montaigu</span></button><button type="button" class="repere repere--d" style="left:47.85%;top:55.67%" data-lieu="le-pic-du-midi" data-cat="sommets" id="rep-le-pic-du-midi" aria-label="Le Pic du Midi, Pic du Midi de Bigorre, 2 877 m" aria-controls="panneau" aria-expanded="false"><svg class="repere__sym repere__sym--sommets" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 2.2 14.2 13.4H1.8Z"/></svg><span class="repere__nom">Le Pic du Midi</span></button><button type="button" class="repere repere--d" style="left:48.13%;top:59.85%" data-lieu="le-tourmalet" data-cat="sommets" id="rep-le-tourmalet" aria-label="Le Tourmalet, Col du Tourmalet, 2 115 m" aria-controls="panneau" aria-expanded="false"><svg class="repere__sym repere__sym--sommets" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 2.2 14.2 13.4H1.8Z"/></svg><span class="repere__nom">Le Tourmalet</span></button><button type="button" class="repere repere--g" style="left:21.40%;top:68.06%" data-lieu="le-pont-despagne" data-cat="sites" id="rep-le-pont-despagne" aria-label="Le Pont d’Espagne, Cauterets (65), Cascades et forêt" aria-controls="panneau" aria-expanded="false"><svg class="repere__sym repere__sym--sites" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="5.6"/></svg><span class="repere__nom">Le Pont d’Espagne</span></button><button type="button" class="repere repere--d" style="left:33.64%;top:91.79%" data-lieu="le-cirque-de-gavarnie" data-cat="sites" id="rep-le-cirque-de-gavarnie" aria-label="Le Cirque de Gavarnie, Gavarnie (65), Patrimoine mondial de l’UNESCO" aria-controls="panneau" aria-expanded="false"><svg class="repere__sym repere__sym--sites" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="5.6"/></svg><span class="repere__nom">Le Cirque de Gavarnie</span></button><button type="button" class="repere repere--zone" style="left:11.68%;top:76.87%" data-lieu="faune" data-cat="faune" id="rep-faune" aria-label="Faune du Parc national, 4 plaques : l’isard, l’ours, le cerf, la marmotte" aria-controls="panneau" aria-expanded="false"><svg class="repere__sym repere__sym--faune" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 1.6 14.4 8 8 14.4 1.6 8Z"/></svg><span class="repere__nom">Faune du Parc national<small>4 plaques</small></span></button></div>
+  <div class="carte__reperes"><span class="repere-rappel" style="left:59.81%;top:28.36%;width:14px;transform:rotate(-39.3deg)" data-dans-grappe="baronnies" aria-hidden="true"></span><button type="button" class="repere repere--d repere--decale" style="left:59.81%;top:28.36%;--dx:11px;--dy:-9px" data-lieu="le-chateau-de-mauvezin" data-cat="patrimoine" data-dans-grappe="baronnies" id="rep-le-chateau-de-mauvezin" aria-label="Le Château de Mauvezin, Mauvezin (65), Château fort" aria-controls="panneau" aria-expanded="false"><svg class="repere__sym repere__sym--patrimoine" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect x="2.6" y="2.6" width="10.8" height="10.8"/></svg><span class="repere__nom">Le Château de Mauvezin</span></button><span class="repere-rappel" style="left:58.60%;top:29.85%;width:14px;transform:rotate(140.7deg)" data-dans-grappe="baronnies" aria-hidden="true"></span><button type="button" class="repere repere--g repere--decale" style="left:58.60%;top:29.85%;--dx:-11px;--dy:9px" data-lieu="labbaye-de-lescaladieu" data-cat="patrimoine" data-dans-grappe="baronnies" id="rep-labbaye-de-lescaladieu" aria-label="L’Abbaye de l’Escaladieu, Bonnemazon (65), Abbaye cistercienne" aria-controls="panneau" aria-expanded="false"><svg class="repere__sym repere__sym--patrimoine" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect x="2.6" y="2.6" width="10.8" height="10.8"/></svg><span class="repere__nom">L’Abbaye de l’Escaladieu</span></button><button type="button" class="repere repere--g" style="left:48.50%;top:36.57%" data-lieu="la-tour-des-jacobins" data-cat="patrimoine" id="rep-la-tour-des-jacobins" aria-label="La Tour des Jacobins, Bagnères-de-Bigorre (65), Monument historique" aria-controls="panneau" aria-expanded="false"><svg class="repere__sym repere__sym--patrimoine" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect x="2.6" y="2.6" width="10.8" height="10.8"/></svg><span class="repere__nom">La Tour des Jacobins</span></button><button type="button" class="repere repere--g" style="left:41.03%;top:48.66%" data-lieu="le-montaigu" data-cat="sommets" data-dans-grappe="massif" id="rep-le-montaigu" aria-label="Le Montaigu, Pic du Montaigu, 2 339 m" aria-controls="panneau" aria-expanded="false"><svg class="repere__sym repere__sym--sommets" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 2.2 14.2 13.4H1.8Z"/></svg><span class="repere__nom">Le Montaigu</span></button><button type="button" class="repere repere--d" style="left:47.85%;top:55.67%" data-lieu="le-pic-du-midi" data-cat="sommets" data-dans-grappe="massif" id="rep-le-pic-du-midi" aria-label="Le Pic du Midi, Pic du Midi de Bigorre, 2 877 m" aria-controls="panneau" aria-expanded="false"><svg class="repere__sym repere__sym--sommets" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 2.2 14.2 13.4H1.8Z"/></svg><span class="repere__nom">Le Pic du Midi</span></button><button type="button" class="repere repere--d" style="left:48.13%;top:59.85%" data-lieu="le-tourmalet" data-cat="sommets" data-dans-grappe="massif" id="rep-le-tourmalet" aria-label="Le Tourmalet, Col du Tourmalet, 2 115 m" aria-controls="panneau" aria-expanded="false"><svg class="repere__sym repere__sym--sommets" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 2.2 14.2 13.4H1.8Z"/></svg><span class="repere__nom">Le Tourmalet</span></button><button type="button" class="repere repere--d" style="left:21.40%;top:68.06%" data-lieu="le-pont-despagne" data-cat="sites" id="rep-le-pont-despagne" aria-label="Le Pont d’Espagne, Cauterets (65), Cascades et forêt" aria-controls="panneau" aria-expanded="false"><svg class="repere__sym repere__sym--sites" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="5.6"/></svg><span class="repere__nom">Le Pont d’Espagne</span></button><button type="button" class="repere repere--d" style="left:33.64%;top:91.79%" data-lieu="le-cirque-de-gavarnie" data-cat="sites" id="rep-le-cirque-de-gavarnie" aria-label="Le Cirque de Gavarnie, Gavarnie (65), Patrimoine mondial de l’UNESCO" aria-controls="panneau" aria-expanded="false"><svg class="repere__sym repere__sym--sites" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="5.6"/></svg><span class="repere__nom">Le Cirque de Gavarnie</span></button><button type="button" class="repere repere--zone" style="left:49.53%;top:80.60%" data-lieu="faune" data-cat="faune" id="rep-faune" aria-label="Faune des Pyrénées, 4 plaques : l’isard, l’ours, le cerf, la marmotte" aria-controls="panneau" aria-expanded="false"><svg class="repere__sym repere__sym--faune" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 1.6 14.4 8 8 14.4 1.6 8Z"/></svg><span class="repere__nom">Faune des Pyrénées<small>4 plaques, sans repère précis</small></span></button><button type="button" class="grappe" style="left:45.67%;top:54.73%;--dx:0px;--dy:0px" data-grappe="massif" data-cat="sommets" id="grappe-massif" aria-label="Massif du Pic du Midi, 3 plaques : Le Pic du Midi, Le Tourmalet, Le Montaigu" aria-controls="panneau" aria-expanded="false"><span class="grappe__pastille"><svg class="grappe__sym grappe__sym--sommets" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 2.2 14.2 13.4H1.8Z"/></svg><span class="grappe__nb">3</span></span></button><button type="button" class="grappe" style="left:59.20%;top:29.10%;--dx:30px;--dy:8px" data-grappe="baronnies" data-cat="patrimoine" id="grappe-baronnies" aria-label="Mauvezin et l’Escaladieu, 2 plaques : Le Château de Mauvezin, L’Abbaye de l’Escaladieu" aria-controls="panneau" aria-expanded="false"><span class="grappe__rappel" style="width:31px;transform:rotate(14.9deg)" aria-hidden="true"></span><span class="grappe__pastille"><svg class="grappe__sym grappe__sym--patrimoine" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect x="2.6" y="2.6" width="10.8" height="10.8"/></svg><span class="grappe__nb">2</span></span></button></div>
+  
 </div>
       <figcaption class="carte__legende">
-        <ul class="legende"><li><svg class="symbole symbole--sommets" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 2.2 14.2 13.4H1.8Z"/></svg>Sommets et cols</li><li><svg class="symbole symbole--sites" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="5.6"/></svg>Sites naturels</li><li><svg class="symbole symbole--patrimoine" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect x="2.6" y="2.6" width="10.8" height="10.8"/></svg>Patrimoine</li><li><svg class="symbole symbole--faune" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 1.6 14.4 8 8 14.4 1.6 8Z"/></svg>Faune du Parc national</li><li><span class="leg-trajet" aria-hidden="true"></span>Trajet de fabrication</li><li><span class="leg-parc" aria-hidden="true"></span>Parc national (zone schématique)</li></ul>
-        <p><strong>Positions indicatives.</strong> Les repères situent les lieux à quelques centaines de mètres près ; les animaux n’ont pas de repère. Rivières tracées de façon schématique. Contour du département simplifié d’après les données IGN (Licence Ouverte 2.0). Relief décoratif, sans valeur topographique.</p>
+        <ul class="legende"><li><svg class="symbole symbole--sommets" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 2.2 14.2 13.4H1.8Z"/></svg>Sommets et cols</li><li><svg class="symbole symbole--sites" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="5.6"/></svg>Sites naturels</li><li><svg class="symbole symbole--patrimoine" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect x="2.6" y="2.6" width="10.8" height="10.8"/></svg>Patrimoine</li><li><svg class="symbole symbole--faune" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 1.6 14.4 8 8 14.4 1.6 8Z"/></svg>Faune des Pyrénées</li><li><span class="leg-trajet" aria-hidden="true"></span>Trajet de fabrication</li><li><span class="leg-atelier" aria-hidden="true"></span>Adresse de l’atelier</li><li><span class="leg-parc" aria-hidden="true"></span>Parc national des Pyrénées, zone schématique, repère géographique</li></ul>
+        <p><strong>Positions indicatives, à un ou deux kilomètres près.</strong> Les animaux n’ont pas de repère : la zone hachurée situe le Parc national des Pyrénées de façon schématique, comme repère géographique. Rivières tracées de façon schématique. Contour du département simplifié d’après les données IGN (Licence Ouverte 2.0). Relief décoratif, sans valeur topographique.</p>
       </figcaption>
     </figure>
     <aside class="panneau" id="panneau" aria-label="Fiche du lieu choisi" data-panneau>
@@ -90,223 +94,287 @@
         <p class="etiquette"><span class="balise" aria-hidden="true"></span>Mode d’emploi</p>
         <h2>Choisissez un repère</h2>
         <p>Cliquez sur un symbole de la carte, ou parcourez la liste des lieux sous la carte. Au clavier : Tab pour passer d’un repère à l’autre, Entrée pour l’ouvrir, Échap pour refermer.</p>
+        <p><button type="button" class="bouton bouton--trait" data-commencer>Commencer par le nord</button></p>
         <div class="panneau__fabrication">
           <h3>Le trajet d’une plaque</h3>
           <ol class="mini-trajet">
             <li><strong>Revel (31)</strong> découpe laser</li>
             <li><strong>Bagnères-de-Bigorre (65)</strong> thermolaquage, assemblage, contrôle, expédition</li>
-            <li><strong>Gerde (65)</strong> l’atelier Terre Gravée</li>
           </ol>
+          <p class="panneau__atelier"><span class="leg-atelier" aria-hidden="true"></span>L’atelier Terre Gravée a son adresse à Gerde (65), à côté de Bagnères-de-Bigorre.</p>
           <p><a class="lien-fleche" href="index.html#fabrication">Le détail de la fabrication</a></p>
         </div>
       </div>
       <article class="panneau__fiche" data-fiche-lieu="le-chateau-de-mauvezin" hidden aria-labelledby="titre-le-chateau-de-mauvezin">
-  <div class="panneau__visuel"><img src="../../maquette/assets/img/p/le-chateau-de-mauvezin-noir-440.webp" srcset="../../maquette/assets/img/p/le-chateau-de-mauvezin-noir-440.webp 440w, ../../maquette/assets/img/p/le-chateau-de-mauvezin-noir-880.webp 880w" sizes="(max-width: 900px) 40vw, 170px" width="440" height="873" alt="Plaque Le Château de Mauvezin, finition noire" loading="lazy" decoding="async" data-vt="vt-le-chateau-de-mauvezin"></div>
+  <div class="panneau__tete">
+    <div class="panneau__visuel"><img src="../../maquette/assets/img/p/le-chateau-de-mauvezin-noir-440.webp" srcset="../../maquette/assets/img/p/le-chateau-de-mauvezin-noir-440.webp 440w, ../../maquette/assets/img/p/le-chateau-de-mauvezin-noir-880.webp 880w" sizes="(max-width: 960px) 84px, 96px" width="440" height="873" alt="Plaque Le Château de Mauvezin, finition noire" loading="lazy" decoding="async" data-vt="vt-le-chateau-de-mauvezin"></div>
+    <div class="panneau__titre">
+      <p class="panneau__cat"><svg class="symbole symbole--patrimoine" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect x="2.6" y="2.6" width="10.8" height="10.8"/></svg>Patrimoine</p>
+      <h2 id="titre-le-chateau-de-mauvezin" tabindex="-1">Le Château de Mauvezin</h2>
+    </div>
+  </div>
   <div class="panneau__corps">
-    <p class="panneau__cat"><svg class="symbole symbole--patrimoine" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect x="2.6" y="2.6" width="10.8" height="10.8"/></svg>Patrimoine</p>
-    <h2 id="titre-le-chateau-de-mauvezin" tabindex="-1">Le Château de Mauvezin</h2>
     <dl class="cartel">
       <div><dt>Lieu</dt><dd>Mauvezin (65)</dd></div>
       <div><dt>Repère</dt><dd>Château fort</dd></div>
       <div><dt>Position</dt><dd>43°07′ N · 0°16′ E <span class="cartel__note">indicative</span></dd></div>
     </dl>
-    <p class="panneau__extrait">Perché et puissant, le château de Mauvezin veille sur la Bigorre depuis des siècles. Cette plaque découpe la pierre dans le métal, donnant à voir l’imposante silhouette de la forteresse dans un jeu d’ombre captivant. Un hommage à…</p>
+    <p class="panneau__extrait">Un château fort perché sur une colline des Baronnies, à l’est de Bagnères-de-Bigorre.</p>
     <ul class="avis-liste"><li class="avis avis--compact">
   <figure>
-    <p class="avis__note"><span class="etoiles" aria-hidden="true">★★★★★<span class="etoiles__vide"></span></span><span class="visuellement-cache">Note : 5 sur 5</span></p>
+    <p class="avis__note"><span class="etoiles" aria-hidden="true"><span class="etoiles__fond">★★★★★</span><span class="etoiles__plein" style="width:100%">★★★★★</span></span><span class="visuellement-cache">Note : 5 sur 5</span></p>
     <blockquote><p>« Habitant à Mauvezin top d&#x27;avoir un peu de mon patrimoine chez moi »</p></blockquote>
     <figcaption><span class="avis__auteur">Sergio</span><span class="avis__date">publié le <time datetime="2025-09-01">1er septembre 2025</time></span></figcaption>
   </figure>
 </li></ul><p class="mention-avis">Avis publiés sur le site sans vérification d’achat. <a href="contact.html#avis">Comment sont publiés les avis</a></p>
-    <p class="panneau__prix"><strong>65 €</strong> TTC, en noir, gris ou doré</p>
-    <div class="panneau__actions">
-      <a class="bouton bouton--plein" href="produit-le-chateau-de-mauvezin.html">Voir la plaque</a>
-      <button type="button" class="bouton bouton--trait" data-partager="le-chateau-de-mauvezin">Copier le lien du lieu</button>
+  </div>
+  <div class="panneau__pied">
+      <p class="panneau__prix"><strong>65 €</strong> TTC, en noir, gris ou doré</p>
+      <div class="panneau__actions">
+        <a class="bouton bouton--plein" href="produit-le-chateau-de-mauvezin.html">Voir la plaque</a>
+        <button type="button" class="bouton bouton--trait" data-partager="le-chateau-de-mauvezin" aria-label="Copier le lien du lieu : Le Château de Mauvezin">Copier le lien</button>
+      </div>
+    </div>
+</article><article class="panneau__fiche" data-fiche-lieu="labbaye-de-lescaladieu" hidden aria-labelledby="titre-labbaye-de-lescaladieu">
+  <div class="panneau__tete">
+    <div class="panneau__visuel"><img src="../../maquette/assets/img/p/labbaye-de-lescaladieu-noir-440.webp" srcset="../../maquette/assets/img/p/labbaye-de-lescaladieu-noir-440.webp 440w, ../../maquette/assets/img/p/labbaye-de-lescaladieu-noir-880.webp 880w" sizes="(max-width: 960px) 84px, 96px" width="440" height="856" alt="Plaque L’Abbaye de l’Escaladieu, finition noire" loading="lazy" decoding="async" data-vt="vt-labbaye-de-lescaladieu"></div>
+    <div class="panneau__titre">
+      <p class="panneau__cat"><svg class="symbole symbole--patrimoine" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect x="2.6" y="2.6" width="10.8" height="10.8"/></svg>Patrimoine</p>
+      <h2 id="titre-labbaye-de-lescaladieu" tabindex="-1">L’Abbaye de l’Escaladieu</h2>
     </div>
   </div>
-</article><article class="panneau__fiche" data-fiche-lieu="labbaye-de-lescaladieu" hidden aria-labelledby="titre-labbaye-de-lescaladieu">
-  <div class="panneau__visuel"><img src="../../maquette/assets/img/p/labbaye-de-lescaladieu-noir-440.webp" srcset="../../maquette/assets/img/p/labbaye-de-lescaladieu-noir-440.webp 440w, ../../maquette/assets/img/p/labbaye-de-lescaladieu-noir-880.webp 880w" sizes="(max-width: 900px) 40vw, 170px" width="440" height="856" alt="Plaque L’Abbaye de l’Escaladieu, finition noire" loading="lazy" decoding="async" data-vt="vt-labbaye-de-lescaladieu"></div>
   <div class="panneau__corps">
-    <p class="panneau__cat"><svg class="symbole symbole--patrimoine" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect x="2.6" y="2.6" width="10.8" height="10.8"/></svg>Patrimoine</p>
-    <h2 id="titre-labbaye-de-lescaladieu" tabindex="-1">L’Abbaye de l’Escaladieu</h2>
     <dl class="cartel">
       <div><dt>Lieu</dt><dd>Bonnemazon (65)</dd></div>
       <div><dt>Repère</dt><dd>Abbaye cistercienne</dd></div>
-      <div><dt>Position</dt><dd>43°06′ N · 0°16′ E <span class="cartel__note">indicative</span></dd></div>
+      <div><dt>Position</dt><dd>43°07′ N · 0°15′ E <span class="cartel__note">indicative</span></dd></div>
     </dl>
-    <p class="panneau__extrait">La silhouette de l’abbaye d’Escaladieu, toute en harmonie, évoque la paix, la contemplation, la beauté médiévale. Cette plaque est un hommage au patrimoine cistercien, à l’élégance sobre, à la spiritualité dans la matière. Idéale…</p>
+    <p class="panneau__extrait">Une abbaye cistercienne fondée en 1142 à Bonnemazon, au confluent du Luz et de l’Arros, près du château de Mauvezin.</p>
     <p class="panneau__sans-avis">Pas encore d’avis sur ce modèle.</p>
-    <p class="panneau__prix"><strong>65 €</strong> TTC, en noir, gris ou doré</p>
-    <div class="panneau__actions">
-      <a class="bouton bouton--plein" href="produit-labbaye-de-lescaladieu.html">Voir la plaque</a>
-      <button type="button" class="bouton bouton--trait" data-partager="labbaye-de-lescaladieu">Copier le lien du lieu</button>
+  </div>
+  <div class="panneau__pied">
+      <p class="panneau__prix"><strong>65 €</strong> TTC, en noir, gris ou doré</p>
+      <div class="panneau__actions">
+        <a class="bouton bouton--plein" href="produit-labbaye-de-lescaladieu.html">Voir la plaque</a>
+        <button type="button" class="bouton bouton--trait" data-partager="labbaye-de-lescaladieu" aria-label="Copier le lien du lieu : L’Abbaye de l’Escaladieu">Copier le lien</button>
+      </div>
+    </div>
+</article><article class="panneau__fiche" data-fiche-lieu="la-tour-des-jacobins" hidden aria-labelledby="titre-la-tour-des-jacobins">
+  <div class="panneau__tete">
+    <div class="panneau__visuel"><img src="../../maquette/assets/img/p/la-tour-des-jacobins-noir-440.webp" srcset="../../maquette/assets/img/p/la-tour-des-jacobins-noir-440.webp 440w, ../../maquette/assets/img/p/la-tour-des-jacobins-noir-880.webp 880w" sizes="(max-width: 960px) 84px, 96px" width="440" height="865" alt="Plaque La Tour des Jacobins, finition noire" loading="lazy" decoding="async" data-vt="vt-la-tour-des-jacobins"></div>
+    <div class="panneau__titre">
+      <p class="panneau__cat"><svg class="symbole symbole--patrimoine" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect x="2.6" y="2.6" width="10.8" height="10.8"/></svg>Patrimoine</p>
+      <h2 id="titre-la-tour-des-jacobins" tabindex="-1">La Tour des Jacobins</h2>
     </div>
   </div>
-</article><article class="panneau__fiche" data-fiche-lieu="la-tour-des-jacobins" hidden aria-labelledby="titre-la-tour-des-jacobins">
-  <div class="panneau__visuel"><img src="../../maquette/assets/img/p/la-tour-des-jacobins-noir-440.webp" srcset="../../maquette/assets/img/p/la-tour-des-jacobins-noir-440.webp 440w, ../../maquette/assets/img/p/la-tour-des-jacobins-noir-880.webp 880w" sizes="(max-width: 900px) 40vw, 170px" width="440" height="865" alt="Plaque La Tour des Jacobins, finition noire" loading="lazy" decoding="async" data-vt="vt-la-tour-des-jacobins"></div>
   <div class="panneau__corps">
-    <p class="panneau__cat"><svg class="symbole symbole--patrimoine" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect x="2.6" y="2.6" width="10.8" height="10.8"/></svg>Patrimoine</p>
-    <h2 id="titre-la-tour-des-jacobins" tabindex="-1">La Tour des Jacobins</h2>
     <dl class="cartel">
       <div><dt>Lieu</dt><dd>Bagnères-de-Bigorre (65)</dd></div>
       <div><dt>Repère</dt><dd>Monument historique</dd></div>
       <div><dt>Position</dt><dd>43°04′ N · 0°09′ E <span class="cartel__note">indicative</span></dd></div>
     </dl>
-    <p class="panneau__extrait">Élancée, fière et singulière, la Tour des Jacobins domine Bagnères-de-Bigorre comme un témoin de pierre. Seul vestige d’un ancien couvent, elle défie le temps avec élégance, racontant à elle seule l’histoire religieuse et…</p>
+    <p class="panneau__extrait">Au cœur de Bagnères-de-Bigorre, la tour est le seul vestige d’un ancien couvent. Elle est protégée au titre des monuments historiques.</p>
     <ul class="avis-liste"><li class="avis avis--compact">
   <figure>
-    <p class="avis__note"><span class="etoiles" aria-hidden="true">★★★★★<span class="etoiles__vide"></span></span><span class="visuellement-cache">Note : 5 sur 5</span></p>
+    <p class="avis__note"><span class="etoiles" aria-hidden="true"><span class="etoiles__fond">★★★★★</span><span class="etoiles__plein" style="width:100%">★★★★★</span></span><span class="visuellement-cache">Note : 5 sur 5</span></p>
     <blockquote><p>« Superbe plaque détail minutieux merci Romain »</p></blockquote>
     <figcaption><span class="avis__auteur">Greg 65</span><span class="avis__date">publié le <time datetime="2025-10-01">1er octobre 2025</time></span></figcaption>
   </figure>
 </li></ul><p class="mention-avis">Avis publiés sur le site sans vérification d’achat. <a href="contact.html#avis">Comment sont publiés les avis</a></p>
-    <p class="panneau__prix"><strong>65 €</strong> TTC, en noir, gris ou doré</p>
-    <div class="panneau__actions">
-      <a class="bouton bouton--plein" href="produit-la-tour-des-jacobins.html">Voir la plaque</a>
-      <button type="button" class="bouton bouton--trait" data-partager="la-tour-des-jacobins">Copier le lien du lieu</button>
+  </div>
+  <div class="panneau__pied">
+      <p class="panneau__prix"><strong>65 €</strong> TTC, en noir, gris ou doré</p>
+      <div class="panneau__actions">
+        <a class="bouton bouton--plein" href="produit-la-tour-des-jacobins.html">Voir la plaque</a>
+        <button type="button" class="bouton bouton--trait" data-partager="la-tour-des-jacobins" aria-label="Copier le lien du lieu : La Tour des Jacobins">Copier le lien</button>
+      </div>
+    </div>
+</article><article class="panneau__fiche" data-fiche-lieu="le-montaigu" hidden aria-labelledby="titre-le-montaigu">
+  <div class="panneau__tete">
+    <div class="panneau__visuel"><img src="../../maquette/assets/img/p/le-montaigu-noir-440.webp" srcset="../../maquette/assets/img/p/le-montaigu-noir-440.webp 440w, ../../maquette/assets/img/p/le-montaigu-noir-880.webp 880w" sizes="(max-width: 960px) 84px, 96px" width="440" height="854" alt="Plaque Le Montaigu, finition noire" loading="lazy" decoding="async" data-vt="vt-le-montaigu"></div>
+    <div class="panneau__titre">
+      <p class="panneau__cat"><svg class="symbole symbole--sommets" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 2.2 14.2 13.4H1.8Z"/></svg>Sommets et cols</p>
+      <h2 id="titre-le-montaigu" tabindex="-1">Le Montaigu</h2>
     </div>
   </div>
-</article><article class="panneau__fiche" data-fiche-lieu="le-montaigu" hidden aria-labelledby="titre-le-montaigu">
-  <div class="panneau__visuel"><img src="../../maquette/assets/img/p/le-montaigu-noir-440.webp" srcset="../../maquette/assets/img/p/le-montaigu-noir-440.webp 440w, ../../maquette/assets/img/p/le-montaigu-noir-880.webp 880w" sizes="(max-width: 900px) 40vw, 170px" width="440" height="854" alt="Plaque Le Montaigu, finition noire" loading="lazy" decoding="async" data-vt="vt-le-montaigu"></div>
   <div class="panneau__corps">
-    <p class="panneau__cat"><svg class="symbole symbole--sommets" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 2.2 14.2 13.4H1.8Z"/></svg>Sommets et cols</p>
-    <h2 id="titre-le-montaigu" tabindex="-1">Le Montaigu</h2>
     <dl class="cartel">
       <div><dt>Lieu</dt><dd>Pic du Montaigu</dd></div>
       <div><dt>Altitude</dt><dd>2 339 m</dd></div>
-      <div><dt>Position</dt><dd>42°58′ N · 0°07′ E <span class="cartel__note">indicative</span></dd></div>
+      <div><dt>Position</dt><dd>42°59′ N · 0°04′ E <span class="cartel__note">indicative</span></dd></div>
     </dl>
-    <p class="panneau__extrait">Élancé, emblématique, le Montaigu domine la plaine de sa présence tranquille. Notre création en révèle les lignes douces, presque graphiques, dans un design sobre et captivant. Parfaite pour qui cherche à installer chez soi une…</p>
+    <p class="panneau__extrait">2 339 m, au nord-ouest du Pic du Midi, sur la rive gauche de la vallée de Lesponne. Moins connu que son voisin, il domine lui aussi la plaine.</p>
     <p class="panneau__sans-avis">Pas encore d’avis sur ce modèle.</p>
-    <p class="panneau__prix"><strong>65 €</strong> TTC, en noir, gris ou doré</p>
-    <div class="panneau__actions">
-      <a class="bouton bouton--plein" href="produit-le-montaigu.html">Voir la plaque</a>
-      <button type="button" class="bouton bouton--trait" data-partager="le-montaigu">Copier le lien du lieu</button>
+  </div>
+  <div class="panneau__pied">
+      <p class="panneau__prix"><strong>65 €</strong> TTC, en noir, gris ou doré</p>
+      <div class="panneau__actions">
+        <a class="bouton bouton--plein" href="produit-le-montaigu.html">Voir la plaque</a>
+        <button type="button" class="bouton bouton--trait" data-partager="le-montaigu" aria-label="Copier le lien du lieu : Le Montaigu">Copier le lien</button>
+      </div>
+    </div>
+</article><article class="panneau__fiche" data-fiche-lieu="le-pic-du-midi" hidden aria-labelledby="titre-le-pic-du-midi">
+  <div class="panneau__tete">
+    <div class="panneau__visuel"><img src="../../maquette/assets/img/p/le-pic-du-midi-noir-440.webp" srcset="../../maquette/assets/img/p/le-pic-du-midi-noir-440.webp 440w, ../../maquette/assets/img/p/le-pic-du-midi-noir-880.webp 880w" sizes="(max-width: 960px) 84px, 96px" width="440" height="873" alt="Plaque Le Pic du Midi, finition noire" loading="lazy" decoding="async" data-vt="vt-le-pic-du-midi"></div>
+    <div class="panneau__titre">
+      <p class="panneau__cat"><svg class="symbole symbole--sommets" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 2.2 14.2 13.4H1.8Z"/></svg>Sommets et cols</p>
+      <h2 id="titre-le-pic-du-midi" tabindex="-1">Le Pic du Midi</h2>
     </div>
   </div>
-</article><article class="panneau__fiche" data-fiche-lieu="le-pic-du-midi" hidden aria-labelledby="titre-le-pic-du-midi">
-  <div class="panneau__visuel"><img src="../../maquette/assets/img/p/le-pic-du-midi-noir-440.webp" srcset="../../maquette/assets/img/p/le-pic-du-midi-noir-440.webp 440w, ../../maquette/assets/img/p/le-pic-du-midi-noir-880.webp 880w" sizes="(max-width: 900px) 40vw, 170px" width="440" height="873" alt="Plaque Le Pic du Midi, finition noire" loading="lazy" decoding="async" data-vt="vt-le-pic-du-midi"></div>
   <div class="panneau__corps">
-    <p class="panneau__cat"><svg class="symbole symbole--sommets" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 2.2 14.2 13.4H1.8Z"/></svg>Sommets et cols</p>
-    <h2 id="titre-le-pic-du-midi" tabindex="-1">Le Pic du Midi</h2>
     <dl class="cartel">
       <div><dt>Lieu</dt><dd>Pic du Midi de Bigorre</dd></div>
       <div><dt>Altitude</dt><dd>2 877 m</dd></div>
       <div><dt>Position</dt><dd>42°56′ N · 0°09′ E <span class="cartel__note">indicative</span></dd></div>
     </dl>
-    <p class="panneau__extrait">Émergeant des nuages comme un vaisseau de pierre, le Pic du Midi de Bigorre défie le ciel depuis des siècles. Cette plaque en métal en capture toute la majesté : silhouette élancée, isolement saisissant, et aura presque mystique.…</p>
+    <p class="panneau__extrait">2 877 m. Un observatoire occupe le sommet depuis la fin du XIXe siècle, et le Pic se voit depuis toute la plaine de Tarbes. La plaque en dessine la silhouette et le ciel étoilé.</p>
     <ul class="avis-liste"><li class="avis avis--compact">
   <figure>
-    <p class="avis__note"><span class="etoiles" aria-hidden="true">★★★★★<span class="etoiles__vide"></span></span><span class="visuellement-cache">Note : 5 sur 5</span></p>
+    <p class="avis__note"><span class="etoiles" aria-hidden="true"><span class="etoiles__fond">★★★★★</span><span class="etoiles__plein" style="width:100%">★★★★★</span></span><span class="visuellement-cache">Note : 5 sur 5</span></p>
     <blockquote><p>« Pris en noir rend super bien dans mon salon. »</p></blockquote>
     <figcaption><span class="avis__auteur">Isa</span><span class="avis__date">publié le <time datetime="2025-09-25">25 septembre 2025</time></span></figcaption>
   </figure>
 </li><li class="avis avis--compact">
   <figure>
-    <p class="avis__note"><span class="etoiles" aria-hidden="true">★★★★★<span class="etoiles__vide"></span></span><span class="visuellement-cache">Note : 5 sur 5</span></p>
+    <p class="avis__note"><span class="etoiles" aria-hidden="true"><span class="etoiles__fond">★★★★★</span><span class="etoiles__plein" style="width:100%">★★★★★</span></span><span class="visuellement-cache">Note : 5 sur 5</span></p>
     <blockquote><p>« Classe et facile à installer grâce au scratch »</p></blockquote>
     <figcaption><span class="avis__auteur">Romain P.</span><span class="avis__date">publié le <time datetime="2025-09-15">15 septembre 2025</time></span></figcaption>
   </figure>
 </li></ul><p class="mention-avis">Avis publiés sur le site sans vérification d’achat. <a href="contact.html#avis">Comment sont publiés les avis</a></p>
-    <p class="panneau__prix"><strong>65 €</strong> TTC, en noir, gris ou doré</p>
-    <div class="panneau__actions">
-      <a class="bouton bouton--plein" href="produit-le-pic-du-midi.html">Voir la plaque</a>
-      <button type="button" class="bouton bouton--trait" data-partager="le-pic-du-midi">Copier le lien du lieu</button>
+  </div>
+  <div class="panneau__pied">
+      <p class="panneau__prix"><strong>65 €</strong> TTC, en noir, gris ou doré</p>
+      <div class="panneau__actions">
+        <a class="bouton bouton--plein" href="produit-le-pic-du-midi.html">Voir la plaque</a>
+        <button type="button" class="bouton bouton--trait" data-partager="le-pic-du-midi" aria-label="Copier le lien du lieu : Le Pic du Midi">Copier le lien</button>
+      </div>
+    </div>
+</article><article class="panneau__fiche" data-fiche-lieu="le-tourmalet" hidden aria-labelledby="titre-le-tourmalet">
+  <div class="panneau__tete">
+    <div class="panneau__visuel"><img src="../../maquette/assets/img/p/le-tourmalet-noir-440.webp" srcset="../../maquette/assets/img/p/le-tourmalet-noir-440.webp 440w, ../../maquette/assets/img/p/le-tourmalet-noir-880.webp 880w" sizes="(max-width: 960px) 84px, 96px" width="440" height="856" alt="Plaque Le Tourmalet, finition noire" loading="lazy" decoding="async" data-vt="vt-le-tourmalet"></div>
+    <div class="panneau__titre">
+      <p class="panneau__cat"><svg class="symbole symbole--sommets" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 2.2 14.2 13.4H1.8Z"/></svg>Sommets et cols</p>
+      <h2 id="titre-le-tourmalet" tabindex="-1">Le Tourmalet</h2>
     </div>
   </div>
-</article><article class="panneau__fiche" data-fiche-lieu="le-tourmalet" hidden aria-labelledby="titre-le-tourmalet">
-  <div class="panneau__visuel"><img src="../../maquette/assets/img/p/le-tourmalet-noir-440.webp" srcset="../../maquette/assets/img/p/le-tourmalet-noir-440.webp 440w, ../../maquette/assets/img/p/le-tourmalet-noir-880.webp 880w" sizes="(max-width: 900px) 40vw, 170px" width="440" height="856" alt="Plaque Le Tourmalet, finition noire" loading="lazy" decoding="async" data-vt="vt-le-tourmalet"></div>
   <div class="panneau__corps">
-    <p class="panneau__cat"><svg class="symbole symbole--sommets" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 2.2 14.2 13.4H1.8Z"/></svg>Sommets et cols</p>
-    <h2 id="titre-le-tourmalet" tabindex="-1">Le Tourmalet</h2>
     <dl class="cartel">
       <div><dt>Lieu</dt><dd>Col du Tourmalet</dd></div>
       <div><dt>Altitude</dt><dd>2 115 m</dd></div>
       <div><dt>Position</dt><dd>42°55′ N · 0°09′ E <span class="cartel__note">indicative</span></dd></div>
     </dl>
-    <p class="panneau__extrait">Mythique. Sauvage. Intemporel. Le col du Tourmalet, haut lieu des exploits cyclistes, s’invite chez vous avec cette plaque élégante et racée. Chaque ligne évoque l’ascension, la sueur, la légende. Un clin d’œil discret et…</p>
+    <p class="panneau__extrait">2 115 m, entre Barèges et La Mongie. C’est le col le plus souvent franchi par le Tour de France. La route est fermée l’hiver.</p>
     <ul class="avis-liste"><li class="avis avis--compact">
   <figure>
-    <p class="avis__note"><span class="etoiles" aria-hidden="true">★★★★★<span class="etoiles__vide"></span></span><span class="visuellement-cache">Note : 5 sur 5</span></p>
+    <p class="avis__note"><span class="etoiles" aria-hidden="true"><span class="etoiles__fond">★★★★★</span><span class="etoiles__plein" style="width:100%">★★★★★</span></span><span class="visuellement-cache">Note : 5 sur 5</span></p>
     <blockquote><p>« Monté cet été j&#x27;ai souffert du coup je me suis fais un cadeau. Pris en gris ! »</p></blockquote>
     <figcaption><span class="avis__auteur">Jerome D.</span><span class="avis__date">publié le <time datetime="2025-09-02">2 septembre 2025</time></span></figcaption>
   </figure>
 </li></ul><p class="mention-avis">Avis publiés sur le site sans vérification d’achat. <a href="contact.html#avis">Comment sont publiés les avis</a></p>
-    <p class="panneau__prix"><strong>65 €</strong> TTC, en noir, gris ou doré</p>
-    <div class="panneau__actions">
-      <a class="bouton bouton--plein" href="produit-le-tourmalet.html">Voir la plaque</a>
-      <button type="button" class="bouton bouton--trait" data-partager="le-tourmalet">Copier le lien du lieu</button>
+  </div>
+  <div class="panneau__pied">
+      <p class="panneau__prix"><strong>65 €</strong> TTC, en noir, gris ou doré</p>
+      <div class="panneau__actions">
+        <a class="bouton bouton--plein" href="produit-le-tourmalet.html">Voir la plaque</a>
+        <button type="button" class="bouton bouton--trait" data-partager="le-tourmalet" aria-label="Copier le lien du lieu : Le Tourmalet">Copier le lien</button>
+      </div>
+    </div>
+</article><article class="panneau__fiche" data-fiche-lieu="le-pont-despagne" hidden aria-labelledby="titre-le-pont-despagne">
+  <div class="panneau__tete">
+    <div class="panneau__visuel"><img src="../../maquette/assets/img/p/le-pont-despagne-noir-440.webp" srcset="../../maquette/assets/img/p/le-pont-despagne-noir-440.webp 440w, ../../maquette/assets/img/p/le-pont-despagne-noir-880.webp 880w" sizes="(max-width: 960px) 84px, 96px" width="440" height="876" alt="Plaque Le Pont d’Espagne, finition noire" loading="lazy" decoding="async" data-vt="vt-le-pont-despagne"></div>
+    <div class="panneau__titre">
+      <p class="panneau__cat"><svg class="symbole symbole--sites" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="5.6"/></svg>Sites naturels</p>
+      <h2 id="titre-le-pont-despagne" tabindex="-1">Le Pont d’Espagne</h2>
     </div>
   </div>
-</article><article class="panneau__fiche" data-fiche-lieu="le-pont-despagne" hidden aria-labelledby="titre-le-pont-despagne">
-  <div class="panneau__visuel"><img src="../../maquette/assets/img/p/le-pont-despagne-noir-440.webp" srcset="../../maquette/assets/img/p/le-pont-despagne-noir-440.webp 440w, ../../maquette/assets/img/p/le-pont-despagne-noir-880.webp 880w" sizes="(max-width: 900px) 40vw, 170px" width="440" height="876" alt="Plaque Le Pont d’Espagne, finition noire" loading="lazy" decoding="async" data-vt="vt-le-pont-despagne"></div>
   <div class="panneau__corps">
-    <p class="panneau__cat"><svg class="symbole symbole--sites" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="5.6"/></svg>Sites naturels</p>
-    <h2 id="titre-le-pont-despagne" tabindex="-1">Le Pont d’Espagne</h2>
     <dl class="cartel">
       <div><dt>Lieu</dt><dd>Cauterets (65)</dd></div>
       <div><dt>Repère</dt><dd>Cascades et forêt</dd></div>
       <div><dt>Position</dt><dd>42°51′ N · 0°08′ O <span class="cartel__note">indicative</span></dd></div>
     </dl>
-    <p class="panneau__extrait">Torrent, cascade, forêt, et pierre: le Pont d’Espagne est un passage entre les mondes. Notre plaque immortalise cette beauté suspendue, entre le fracas de l’eau et le silence des bois. Une évocation poétique et forte, idéale pour…</p>
+    <p class="panneau__extrait">Au-dessus de Cauterets, un pont de pierre enjambe le gave, entre les cascades et la forêt.</p>
     <p class="panneau__sans-avis">Pas encore d’avis sur ce modèle.</p>
-    <p class="panneau__prix"><strong>65 €</strong> TTC, en noir, gris ou doré</p>
-    <div class="panneau__actions">
-      <a class="bouton bouton--plein" href="produit-le-pont-despagne.html">Voir la plaque</a>
-      <button type="button" class="bouton bouton--trait" data-partager="le-pont-despagne">Copier le lien du lieu</button>
+  </div>
+  <div class="panneau__pied">
+      <p class="panneau__prix"><strong>65 €</strong> TTC, en noir, gris ou doré</p>
+      <div class="panneau__actions">
+        <a class="bouton bouton--plein" href="produit-le-pont-despagne.html">Voir la plaque</a>
+        <button type="button" class="bouton bouton--trait" data-partager="le-pont-despagne" aria-label="Copier le lien du lieu : Le Pont d’Espagne">Copier le lien</button>
+      </div>
+    </div>
+</article><article class="panneau__fiche" data-fiche-lieu="le-cirque-de-gavarnie" hidden aria-labelledby="titre-le-cirque-de-gavarnie">
+  <div class="panneau__tete">
+    <div class="panneau__visuel"><img src="../../maquette/assets/img/p/le-cirque-de-gavarnie-noir-440.webp" srcset="../../maquette/assets/img/p/le-cirque-de-gavarnie-noir-440.webp 440w, ../../maquette/assets/img/p/le-cirque-de-gavarnie-noir-880.webp 880w" sizes="(max-width: 960px) 84px, 96px" width="440" height="874" alt="Plaque Le Cirque de Gavarnie, finition noire" loading="lazy" decoding="async" data-vt="vt-le-cirque-de-gavarnie"></div>
+    <div class="panneau__titre">
+      <p class="panneau__cat"><svg class="symbole symbole--sites" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="5.6"/></svg>Sites naturels</p>
+      <h2 id="titre-le-cirque-de-gavarnie" tabindex="-1">Le Cirque de Gavarnie</h2>
     </div>
   </div>
-</article><article class="panneau__fiche" data-fiche-lieu="le-cirque-de-gavarnie" hidden aria-labelledby="titre-le-cirque-de-gavarnie">
-  <div class="panneau__visuel"><img src="../../maquette/assets/img/p/le-cirque-de-gavarnie-noir-440.webp" srcset="../../maquette/assets/img/p/le-cirque-de-gavarnie-noir-440.webp 440w, ../../maquette/assets/img/p/le-cirque-de-gavarnie-noir-880.webp 880w" sizes="(max-width: 900px) 40vw, 170px" width="440" height="874" alt="Plaque Le Cirque de Gavarnie, finition noire" loading="lazy" decoding="async" data-vt="vt-le-cirque-de-gavarnie"></div>
   <div class="panneau__corps">
-    <p class="panneau__cat"><svg class="symbole symbole--sites" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="5.6"/></svg>Sites naturels</p>
-    <h2 id="titre-le-cirque-de-gavarnie" tabindex="-1">Le Cirque de Gavarnie</h2>
     <dl class="cartel">
       <div><dt>Lieu</dt><dd>Gavarnie (65)</dd></div>
       <div><dt>Repère</dt><dd>Patrimoine mondial de l’UNESCO</dd></div>
       <div><dt>Position</dt><dd>42°42′ N · 0°01′ O <span class="cartel__note">indicative</span></dd></div>
     </dl>
-    <p class="panneau__extrait">Offrez à votre intérieur une évasion vertigineuse. Notre plaque “Gavarnie” capture la majesté du cirque le plus emblématique des Pyrénées, là où la nature sculpte la montagne avec grâce et puissance. Découpée avec précision dans…</p>
+    <p class="panneau__extrait">Un cirque de falaises au fond de la vallée de Gavarnie, contre la frontière espagnole. Il est inscrit au patrimoine mondial de l’UNESCO.</p>
     <p class="panneau__sans-avis">Pas encore d’avis sur ce modèle.</p>
-    <p class="panneau__prix"><strong>65 €</strong> TTC, en noir, gris ou doré</p>
-    <div class="panneau__actions">
-      <a class="bouton bouton--plein" href="produit-le-cirque-de-gavarnie.html">Voir la plaque</a>
-      <button type="button" class="bouton bouton--trait" data-partager="le-cirque-de-gavarnie">Copier le lien du lieu</button>
-    </div>
   </div>
+  <div class="panneau__pied">
+      <p class="panneau__prix"><strong>65 €</strong> TTC, en noir, gris ou doré</p>
+      <div class="panneau__actions">
+        <a class="bouton bouton--plein" href="produit-le-cirque-de-gavarnie.html">Voir la plaque</a>
+        <button type="button" class="bouton bouton--trait" data-partager="le-cirque-de-gavarnie" aria-label="Copier le lien du lieu : Le Cirque de Gavarnie">Copier le lien</button>
+      </div>
+    </div>
 </article><article class="panneau__fiche" data-fiche-lieu="faune" hidden aria-labelledby="titre-faune">
   <div class="panneau__corps">
-    <p class="panneau__cat"><svg class="symbole symbole--faune" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 1.6 14.4 8 8 14.4 1.6 8Z"/></svg>Faune du Parc national</p>
+    <p class="panneau__cat"><svg class="symbole symbole--faune" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 1.6 14.4 8 8 14.4 1.6 8Z"/></svg>Faune des Pyrénées</p>
     <h2 id="titre-faune" tabindex="-1">Quatre animaux, sans adresse</h2>
-    <p class="panneau__extrait">L’isard, l’ours, le cerf et la marmotte vivent dans le massif. La carte ne leur donne pas de point précis : la zone hachurée situe le Parc national des Pyrénées de façon schématique.</p>
-    <ul class="faune"><li><a href="produit-lisard.html"><img src="../../maquette/assets/img/p/lisard-noir-440.webp" srcset="../../maquette/assets/img/p/lisard-noir-440.webp 440w, ../../maquette/assets/img/p/lisard-noir-880.webp 880w" sizes="(max-width: 900px) 20vw, 80px" width="440" height="851" alt="Plaque L’Isard, finition noire" loading="lazy" decoding="async"><span class="faune__nom">L’Isard</span><i>Rupicapra pyrenaica</i></a></li><li><a href="produit-lours.html"><img src="../../maquette/assets/img/p/lours-noir-440.webp" srcset="../../maquette/assets/img/p/lours-noir-440.webp 440w, ../../maquette/assets/img/p/lours-noir-880.webp 880w" sizes="(max-width: 900px) 20vw, 80px" width="440" height="865" alt="Plaque L’Ours, finition noire" loading="lazy" decoding="async"><span class="faune__nom">L’Ours</span><i>Ursus arctos</i></a></li><li><a href="produit-le-cerf.html"><img src="../../maquette/assets/img/p/le-cerf-gris-440.webp" srcset="../../maquette/assets/img/p/le-cerf-gris-440.webp 440w, ../../maquette/assets/img/p/le-cerf-gris-880.webp 880w" sizes="(max-width: 900px) 20vw, 80px" width="440" height="872" alt="Plaque Le Cerf, finition grise" loading="lazy" decoding="async"><span class="faune__nom">Le Cerf</span><i>Cervus elaphus</i></a></li><li><a href="produit-la-marmotte.html"><img src="../../maquette/assets/img/p/la-marmotte-noir-440.webp" srcset="../../maquette/assets/img/p/la-marmotte-noir-440.webp 440w, ../../maquette/assets/img/p/la-marmotte-noir-880.webp 880w" sizes="(max-width: 900px) 20vw, 80px" width="440" height="851" alt="Plaque La Marmotte, finition noire" loading="lazy" decoding="async"><span class="faune__nom">La Marmotte</span><i>Marmota marmota</i></a></li></ul>
+    <p class="panneau__extrait">L’isard, l’ours, le cerf et la marmotte vivent dans le massif. La carte ne leur donne pas de point précis : la zone hachurée situe le Parc national des Pyrénées de façon schématique, comme simple repère géographique.</p>
+    <ul class="faune"><li><a href="produit-lisard.html"><img src="../../maquette/assets/img/p/lisard-noir-440.webp" srcset="../../maquette/assets/img/p/lisard-noir-440.webp 440w, ../../maquette/assets/img/p/lisard-noir-880.webp 880w" sizes="44px" width="440" height="851" alt="Plaque L’Isard, finition noire" loading="lazy" decoding="async"><span class="faune__nom">L’Isard</span><i>Rupicapra pyrenaica</i></a></li><li><a href="produit-lours.html"><img src="../../maquette/assets/img/p/lours-noir-440.webp" srcset="../../maquette/assets/img/p/lours-noir-440.webp 440w, ../../maquette/assets/img/p/lours-noir-880.webp 880w" sizes="44px" width="440" height="865" alt="Plaque L’Ours, finition noire" loading="lazy" decoding="async"><span class="faune__nom">L’Ours</span><i>Ursus arctos</i></a></li><li><a href="produit-le-cerf.html"><img src="../../maquette/assets/img/p/le-cerf-gris-440.webp" srcset="../../maquette/assets/img/p/le-cerf-gris-440.webp 440w, ../../maquette/assets/img/p/le-cerf-gris-880.webp 880w" sizes="44px" width="440" height="872" alt="Plaque Le Cerf, finition grise" loading="lazy" decoding="async"><span class="faune__nom">Le Cerf</span><i>Cervus elaphus</i></a></li><li><a href="produit-la-marmotte.html"><img src="../../maquette/assets/img/p/la-marmotte-noir-440.webp" srcset="../../maquette/assets/img/p/la-marmotte-noir-440.webp 440w, ../../maquette/assets/img/p/la-marmotte-noir-880.webp 880w" sizes="44px" width="440" height="851" alt="Plaque La Marmotte, finition noire" loading="lazy" decoding="async"><span class="faune__nom">La Marmotte</span><i>Marmota marmota</i></a></li></ul>
     <ul class="avis-liste"><li class="avis avis--compact">
   <figure>
-    <p class="avis__note"><span class="etoiles" aria-hidden="true">★★★★★<span class="etoiles__vide"></span></span><span class="visuellement-cache">Note : 5 sur 5</span></p>
+    <p class="avis__note"><span class="etoiles" aria-hidden="true"><span class="etoiles__fond">★★★★★</span><span class="etoiles__plein" style="width:100%">★★★★★</span></span><span class="visuellement-cache">Note : 5 sur 5</span></p>
     <blockquote><p>« Mis dans notre maison de vacance à Campan top ! »</p></blockquote>
     <figcaption><span class="avis__auteur">Marie</span><a class="avis__plaque" href="produit-lisard.html">L’Isard</a><span class="avis__date">publié le <time datetime="2025-09-27">27 septembre 2025</time></span></figcaption>
   </figure>
 </li><li class="avis avis--compact">
   <figure>
-    <p class="avis__note"><span class="etoiles" aria-hidden="true">★★★★★<span class="etoiles__vide"></span></span><span class="visuellement-cache">Note : 5 sur 5</span></p>
+    <p class="avis__note"><span class="etoiles" aria-hidden="true"><span class="etoiles__fond">★★★★★</span><span class="etoiles__plein" style="width:100%">★★★★★</span></span><span class="visuellement-cache">Note : 5 sur 5</span></p>
     <blockquote><p>« Super plaque vu suite à la visite sur Aquensis »</p></blockquote>
     <figcaption><span class="avis__auteur">Anto 65</span><a class="avis__plaque" href="produit-lours.html">L’Ours</a><span class="avis__date">publié le <time datetime="2025-09-04">4 septembre 2025</time></span></figcaption>
   </figure>
 </li><li class="avis avis--compact">
   <figure>
-    <p class="avis__note"><span class="etoiles" aria-hidden="true">★★★★<span class="etoiles__vide">★</span></span><span class="visuellement-cache">Note : 4 sur 5</span></p>
+    <p class="avis__note"><span class="etoiles" aria-hidden="true"><span class="etoiles__fond">★★★★★</span><span class="etoiles__plein" style="width:80%">★★★★★</span></span><span class="visuellement-cache">Note : 4 sur 5</span></p>
     <blockquote><p>« Cadeau pour un ami pris en gris top. 1 étoile en moins j&#x27;ai attendu une semaine pour la livraison ! »</p></blockquote>
     <figcaption><span class="avis__auteur">Gerald</span><a class="avis__plaque" href="produit-le-cerf.html">Le Cerf</a><span class="avis__date">publié le <time datetime="2025-09-06">6 septembre 2025</time></span></figcaption>
   </figure>
 </li><li class="avis avis--compact">
   <figure>
-    <p class="avis__note"><span class="etoiles" aria-hidden="true">★★★★★<span class="etoiles__vide"></span></span><span class="visuellement-cache">Note : 5 sur 5</span></p>
+    <p class="avis__note"><span class="etoiles" aria-hidden="true"><span class="etoiles__fond">★★★★★</span><span class="etoiles__plein" style="width:100%">★★★★★</span></span><span class="visuellement-cache">Note : 5 sur 5</span></p>
     <blockquote><p>« Vu pendant la cure à Bagneres. Merci à Romain de nous les avoir montrés avant l&#x27;achat. »</p></blockquote>
     <figcaption><span class="avis__auteur">Sophia P.</span><a class="avis__plaque" href="produit-la-marmotte.html">La Marmotte</a><span class="avis__date">publié le <time datetime="2025-09-26">26 septembre 2025</time></span></figcaption>
   </figure>
 </li></ul>
     <p class="mention-avis">Avis publiés sur le site sans vérification d’achat. <a href="contact.html#avis">Comment sont publiés les avis</a></p>
-    <p class="panneau__prix"><strong>65 €</strong> TTC la plaque, en noir, gris ou doré</p>
+  </div>
+  <div class="panneau__pied"><p class="panneau__prix"><strong>65 €</strong> TTC la plaque, en noir, gris ou doré</p>
+    <div class="panneau__actions"><a class="bouton bouton--plein" href="collection.html#faune">Voir les quatre plaques</a></div></div>
+</article><article class="panneau__fiche" data-fiche-grappe="massif" hidden aria-labelledby="titre-grappe-massif">
+  <div class="panneau__corps">
+    <p class="panneau__cat"><svg class="symbole symbole--sommets" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 2.2 14.2 13.4H1.8Z"/></svg>3 lieux proches</p>
+    <h2 id="titre-grappe-massif" tabindex="-1">Massif du Pic du Midi</h2>
+    <p class="panneau__extrait">Ces repères sont trop proches pour être touchés un à un sur cet écran. Choisissez un lieu :</p>
+    <ul class="lieux lieux--choix"><li><button type="button" class="lieu" data-lieu="le-pic-du-midi" aria-controls="panneau"><svg class="symbole symbole--sommets" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 2.2 14.2 13.4H1.8Z"/></svg><span class="lieu__nom">Le Pic du Midi</span><span class="lieu__detail">Pic du Midi de Bigorre · 2 877 m</span></button></li><li><button type="button" class="lieu" data-lieu="le-tourmalet" aria-controls="panneau"><svg class="symbole symbole--sommets" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 2.2 14.2 13.4H1.8Z"/></svg><span class="lieu__nom">Le Tourmalet</span><span class="lieu__detail">Col du Tourmalet · 2 115 m</span></button></li><li><button type="button" class="lieu" data-lieu="le-montaigu" aria-controls="panneau"><svg class="symbole symbole--sommets" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 2.2 14.2 13.4H1.8Z"/></svg><span class="lieu__nom">Le Montaigu</span><span class="lieu__detail">Pic du Montaigu · 2 339 m</span></button></li></ul>
+  </div>
+</article><article class="panneau__fiche" data-fiche-grappe="baronnies" hidden aria-labelledby="titre-grappe-baronnies">
+  <div class="panneau__corps">
+    <p class="panneau__cat"><svg class="symbole symbole--patrimoine" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect x="2.6" y="2.6" width="10.8" height="10.8"/></svg>2 lieux proches</p>
+    <h2 id="titre-grappe-baronnies" tabindex="-1">Mauvezin et l’Escaladieu</h2>
+    <p class="panneau__extrait">Ces repères sont trop proches pour être touchés un à un sur cet écran. Choisissez un lieu :</p>
+    <ul class="lieux lieux--choix"><li><button type="button" class="lieu" data-lieu="le-chateau-de-mauvezin" aria-controls="panneau"><svg class="symbole symbole--patrimoine" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect x="2.6" y="2.6" width="10.8" height="10.8"/></svg><span class="lieu__nom">Le Château de Mauvezin</span><span class="lieu__detail">Mauvezin (65) · Château fort</span></button></li><li><button type="button" class="lieu" data-lieu="labbaye-de-lescaladieu" aria-controls="panneau"><svg class="symbole symbole--patrimoine" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect x="2.6" y="2.6" width="10.8" height="10.8"/></svg><span class="lieu__nom">L’Abbaye de l’Escaladieu</span><span class="lieu__detail">Bonnemazon (65) · Abbaye cistercienne</span></button></li></ul>
   </div>
 </article>
       <div class="panneau__nav" data-panneau-nav hidden>
@@ -318,7 +386,7 @@
   <section class="lieux-liste" aria-labelledby="titre-liste">
     <h2 id="titre-liste">Les lieux, du nord au sud</h2>
     <p class="chapo">La même information que la carte, en liste. Les coordonnées sont indicatives.</p>
-    <ol class="lieux" data-liste-lieux><li data-cat="patrimoine"><button type="button" class="lieu" data-lieu="le-chateau-de-mauvezin" aria-controls="panneau"><svg class="symbole symbole--patrimoine" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect x="2.6" y="2.6" width="10.8" height="10.8"/></svg><span class="lieu__nom">Le Château de Mauvezin</span><span class="lieu__detail">Mauvezin (65) · Château fort</span><span class="lieu__coord">43°07′ N · 0°16′ E</span></button></li><li data-cat="patrimoine"><button type="button" class="lieu" data-lieu="labbaye-de-lescaladieu" aria-controls="panneau"><svg class="symbole symbole--patrimoine" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect x="2.6" y="2.6" width="10.8" height="10.8"/></svg><span class="lieu__nom">L’Abbaye de l’Escaladieu</span><span class="lieu__detail">Bonnemazon (65) · Abbaye cistercienne</span><span class="lieu__coord">43°06′ N · 0°16′ E</span></button></li><li data-cat="patrimoine"><button type="button" class="lieu" data-lieu="la-tour-des-jacobins" aria-controls="panneau"><svg class="symbole symbole--patrimoine" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect x="2.6" y="2.6" width="10.8" height="10.8"/></svg><span class="lieu__nom">La Tour des Jacobins</span><span class="lieu__detail">Bagnères-de-Bigorre (65) · Monument historique</span><span class="lieu__coord">43°04′ N · 0°09′ E</span></button></li><li data-cat="sommets"><button type="button" class="lieu" data-lieu="le-montaigu" aria-controls="panneau"><svg class="symbole symbole--sommets" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 2.2 14.2 13.4H1.8Z"/></svg><span class="lieu__nom">Le Montaigu</span><span class="lieu__detail">Pic du Montaigu · 2 339 m</span><span class="lieu__coord">42°58′ N · 0°07′ E</span></button></li><li data-cat="sommets"><button type="button" class="lieu" data-lieu="le-pic-du-midi" aria-controls="panneau"><svg class="symbole symbole--sommets" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 2.2 14.2 13.4H1.8Z"/></svg><span class="lieu__nom">Le Pic du Midi</span><span class="lieu__detail">Pic du Midi de Bigorre · 2 877 m</span><span class="lieu__coord">42°56′ N · 0°09′ E</span></button></li><li data-cat="sommets"><button type="button" class="lieu" data-lieu="le-tourmalet" aria-controls="panneau"><svg class="symbole symbole--sommets" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 2.2 14.2 13.4H1.8Z"/></svg><span class="lieu__nom">Le Tourmalet</span><span class="lieu__detail">Col du Tourmalet · 2 115 m</span><span class="lieu__coord">42°55′ N · 0°09′ E</span></button></li><li data-cat="sites"><button type="button" class="lieu" data-lieu="le-pont-despagne" aria-controls="panneau"><svg class="symbole symbole--sites" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="5.6"/></svg><span class="lieu__nom">Le Pont d’Espagne</span><span class="lieu__detail">Cauterets (65) · Cascades et forêt</span><span class="lieu__coord">42°51′ N · 0°08′ O</span></button></li><li data-cat="sites"><button type="button" class="lieu" data-lieu="le-cirque-de-gavarnie" aria-controls="panneau"><svg class="symbole symbole--sites" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="5.6"/></svg><span class="lieu__nom">Le Cirque de Gavarnie</span><span class="lieu__detail">Gavarnie (65) · Patrimoine mondial de l’UNESCO</span><span class="lieu__coord">42°42′ N · 0°01′ O</span></button></li><li data-cat="faune"><button type="button" class="lieu" data-lieu="faune" aria-controls="panneau"><svg class="symbole symbole--faune" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 1.6 14.4 8 8 14.4 1.6 8Z"/></svg><span class="lieu__nom">L’Isard</span><span class="lieu__detail"><i>Rupicapra pyrenaica</i> · Parc national</span><span class="lieu__coord">sans repère précis</span></button></li><li data-cat="faune"><button type="button" class="lieu" data-lieu="faune" aria-controls="panneau"><svg class="symbole symbole--faune" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 1.6 14.4 8 8 14.4 1.6 8Z"/></svg><span class="lieu__nom">L’Ours</span><span class="lieu__detail"><i>Ursus arctos</i> · Parc national</span><span class="lieu__coord">sans repère précis</span></button></li><li data-cat="faune"><button type="button" class="lieu" data-lieu="faune" aria-controls="panneau"><svg class="symbole symbole--faune" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 1.6 14.4 8 8 14.4 1.6 8Z"/></svg><span class="lieu__nom">Le Cerf</span><span class="lieu__detail"><i>Cervus elaphus</i> · Parc national</span><span class="lieu__coord">sans repère précis</span></button></li><li data-cat="faune"><button type="button" class="lieu" data-lieu="faune" aria-controls="panneau"><svg class="symbole symbole--faune" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 1.6 14.4 8 8 14.4 1.6 8Z"/></svg><span class="lieu__nom">La Marmotte</span><span class="lieu__detail"><i>Marmota marmota</i> · Parc national</span><span class="lieu__coord">sans repère précis</span></button></li></ol>
+    <ol class="lieux" data-liste-lieux><li data-cat="patrimoine"><button type="button" class="lieu" data-lieu="le-chateau-de-mauvezin" aria-controls="panneau"><svg class="symbole symbole--patrimoine" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect x="2.6" y="2.6" width="10.8" height="10.8"/></svg><span class="lieu__nom">Le Château de Mauvezin</span><span class="lieu__detail">Mauvezin (65) · Château fort</span><span class="lieu__coord">43°07′ N · 0°16′ E</span></button></li><li data-cat="patrimoine"><button type="button" class="lieu" data-lieu="labbaye-de-lescaladieu" aria-controls="panneau"><svg class="symbole symbole--patrimoine" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect x="2.6" y="2.6" width="10.8" height="10.8"/></svg><span class="lieu__nom">L’Abbaye de l’Escaladieu</span><span class="lieu__detail">Bonnemazon (65) · Abbaye cistercienne</span><span class="lieu__coord">43°07′ N · 0°15′ E</span></button></li><li data-cat="patrimoine"><button type="button" class="lieu" data-lieu="la-tour-des-jacobins" aria-controls="panneau"><svg class="symbole symbole--patrimoine" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><rect x="2.6" y="2.6" width="10.8" height="10.8"/></svg><span class="lieu__nom">La Tour des Jacobins</span><span class="lieu__detail">Bagnères-de-Bigorre (65) · Monument historique</span><span class="lieu__coord">43°04′ N · 0°09′ E</span></button></li><li data-cat="sommets"><button type="button" class="lieu" data-lieu="le-montaigu" aria-controls="panneau"><svg class="symbole symbole--sommets" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 2.2 14.2 13.4H1.8Z"/></svg><span class="lieu__nom">Le Montaigu</span><span class="lieu__detail">Pic du Montaigu · 2 339 m</span><span class="lieu__coord">42°59′ N · 0°04′ E</span></button></li><li data-cat="sommets"><button type="button" class="lieu" data-lieu="le-pic-du-midi" aria-controls="panneau"><svg class="symbole symbole--sommets" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 2.2 14.2 13.4H1.8Z"/></svg><span class="lieu__nom">Le Pic du Midi</span><span class="lieu__detail">Pic du Midi de Bigorre · 2 877 m</span><span class="lieu__coord">42°56′ N · 0°09′ E</span></button></li><li data-cat="sommets"><button type="button" class="lieu" data-lieu="le-tourmalet" aria-controls="panneau"><svg class="symbole symbole--sommets" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 2.2 14.2 13.4H1.8Z"/></svg><span class="lieu__nom">Le Tourmalet</span><span class="lieu__detail">Col du Tourmalet · 2 115 m</span><span class="lieu__coord">42°55′ N · 0°09′ E</span></button></li><li data-cat="sites"><button type="button" class="lieu" data-lieu="le-pont-despagne" aria-controls="panneau"><svg class="symbole symbole--sites" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="5.6"/></svg><span class="lieu__nom">Le Pont d’Espagne</span><span class="lieu__detail">Cauterets (65) · Cascades et forêt</span><span class="lieu__coord">42°51′ N · 0°08′ O</span></button></li><li data-cat="sites"><button type="button" class="lieu" data-lieu="le-cirque-de-gavarnie" aria-controls="panneau"><svg class="symbole symbole--sites" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="5.6"/></svg><span class="lieu__nom">Le Cirque de Gavarnie</span><span class="lieu__detail">Gavarnie (65) · Patrimoine mondial de l’UNESCO</span><span class="lieu__coord">42°42′ N · 0°01′ O</span></button></li><li data-cat="faune"><button type="button" class="lieu" data-lieu="faune" aria-controls="panneau"><svg class="symbole symbole--faune" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 1.6 14.4 8 8 14.4 1.6 8Z"/></svg><span class="lieu__nom">L’Isard</span><span class="lieu__detail"><i>Rupicapra pyrenaica</i> · Faune des Pyrénées</span><span class="lieu__coord">sans repère précis</span></button></li><li data-cat="faune"><button type="button" class="lieu" data-lieu="faune" aria-controls="panneau"><svg class="symbole symbole--faune" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 1.6 14.4 8 8 14.4 1.6 8Z"/></svg><span class="lieu__nom">L’Ours</span><span class="lieu__detail"><i>Ursus arctos</i> · Faune des Pyrénées</span><span class="lieu__coord">sans repère précis</span></button></li><li data-cat="faune"><button type="button" class="lieu" data-lieu="faune" aria-controls="panneau"><svg class="symbole symbole--faune" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 1.6 14.4 8 8 14.4 1.6 8Z"/></svg><span class="lieu__nom">Le Cerf</span><span class="lieu__detail"><i>Cervus elaphus</i> · Faune des Pyrénées</span><span class="lieu__coord">sans repère précis</span></button></li><li data-cat="faune"><button type="button" class="lieu" data-lieu="faune" aria-controls="panneau"><svg class="symbole symbole--faune" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 1.6 14.4 8 8 14.4 1.6 8Z"/></svg><span class="lieu__nom">La Marmotte</span><span class="lieu__detail"><i>Marmota marmota</i> · Faune des Pyrénées</span><span class="lieu__coord">sans repère précis</span></button></li></ol>
   </section>
   <section class="partage" aria-labelledby="titre-partage">
     <div>
@@ -350,6 +418,7 @@
       <div>
         <h2 class="pied__titre">Commander</h2>
         <ul>
+          <li><a class="pied__retractation" href="contact.html#retractation">Renoncer au contrat ici</a></li>
           <li><a href="contact.html#livraison">Livraison et retours</a></li>
           <li><a href="contact.html#avis">Comment sont publiés les avis</a></li>
           <li><a href="https://terregravee.fr/cgv/">Conditions générales de vente</a></li>
@@ -379,6 +448,7 @@
   <ul class="commande__liste" data-liste-commande></ul>
   <div class="commande__bas">
     <p class="commande__total"><span>Sous-total TTC</span><strong data-total-commande>0 €</strong></p>
+    <p class="visuellement-cache" aria-live="polite" data-annonce-commande></p>
     <p class="commande__info">Frais de port selon le poids et la destination, affichés avant validation <span class="note-maquette note-maquette--fournir">montant à fournir</span></p>
     <p class="commande__info">Expédition depuis Bagnères-de-Bigorre, livraison en 2 à 4 jours ouvrés (indicatif).</p>
     <button type="button" class="bouton bouton--plein" disabled aria-describedby="commande-desactivee">Commander</button>

@@ -7,6 +7,7 @@
 <meta name="description" content="Composez un Triptyque : trois plaques murales Terre Gravée au choix, alignées sur votre mur. Aperçu en direct et prix du lot.">
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#ffffff">
+<script>try { if (window.localStorage.getItem("tg-v2-notes") === "masquees") document.documentElement.classList.add("sans-notes"); } catch (e) {}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&amp;family=Figtree:ital,wght@0,400..700;1,400&amp;display=swap">
@@ -14,7 +15,7 @@
 </head>
 <body class="page-trip">
 <a class="lien-evitement" href="#contenu">Aller au contenu</a>
-<div class="bandeau-maq" role="note"><div class="wrap bandeau-maq__in"><p><strong>Maquette version 2 · brouillon non publié · paiements désactivés</strong></p><p class="bandeau-maq__liens"><a href="strategie.html">Lire la stratégie</a><a href="../index.html">Comparer les versions</a></p></div></div>
+<div class="bandeau-maq" role="note"><div class="wrap bandeau-maq__in"><p><strong>Maquette version 2 · brouillon non publié · paiements désactivés</strong></p><p class="bandeau-maq__liens"><a href="strategie.html">Lire la stratégie</a><a href="../index.html">Comparer les versions</a><button type="button" class="bandeau-maq__notes" data-notes aria-pressed="false">Masquer les notes jaunes</button></p></div></div>
 <header class="entete" data-entete>
   <div class="wrap entete__in">
     <a class="logo" href="index.html"><svg class="logo__marque" viewBox="0 0 40 40" aria-hidden="true" focusable="false"><rect width="40" height="40" rx="3" fill="#0E1D3A"/><rect x="8" y="11" width="24" height="7" fill="#fff"/><rect x="8" y="22" width="24" height="7" fill="#D0121F"/></svg><span class="logo__nom">Terre Gravée</span><span class="sr">, retour à l’accueil</span></a>
@@ -77,9 +78,9 @@
 <section class="section section--neige" aria-labelledby="titre-trip-info">
   <div class="wrap trio-infos">
     <h2 id="titre-trip-info" class="sr">Bon à savoir</h2>
-    <div><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h11v9H3z M14 10h4l3 3v3h-7z M7 18.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z M17 18.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z"/></svg><h3>Expédiées ensemble</h3><p>Les trois plaques partent dans le même colis. La livraison est offerte dès 130 €. <span class="note-maq note-maq--valider">seuil : proposition à valider</span></p></div>
+    <div><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h11v9H3z M14 10h4l3 3v3h-7z M7 18.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z M17 18.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z"/></svg><h3>Expédiées ensemble</h3><p>Les trois plaques partent ensemble. <span class="note-maq note-maq--fournir">à confirmer : envoi en un seul colis</span> La livraison est offerte dès 130 € d’articles livrés. <span class="note-maq note-maq--valider">seuil : proposition à valider</span></p></div>
     <div><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5 10 17 19 7"/></svg><h3>Pose sans perçage</h3><p>Deux fixations 3M Command™ par plaque. Le décalage avec le mur dessine les ombres.</p></div>
-    <div><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19V5l8 14V5 M16 9h4 M16 13h4"/></svg><h3>Trois numéros</h3><p>Chaque plaque garde son numéro de série gravé au dos.</p></div>
+    <div><span class="ico ico-num" aria-hidden="true">N°</span><h3>Trois numéros</h3><p>Chaque plaque garde son numéro de série gravé au dos.</p></div>
   </div>
 </section>
 
@@ -102,11 +103,11 @@
       <li><a href="produit-carte-cadeau.html">Carte cadeau</a></li>
     </ul></nav>
     <nav aria-label="Aide"><h2>Aide</h2><ul>
-      <li><a href="quiz.html">Quiz : quelle plaque choisir ?</a></li>
-      <li><a href="noel.html">Guide cadeaux de Noël</a></li>
-      <li><a href="contact.html#livraison">Livraison et retours</a></li>
-      <li><a href="contact.html#avis-gestion">Comment nous gérons les avis</a></li>
-      <li><a href="sur-mesure.html">Sur mesure et séries</a></li>
+      <li><a href="quiz.html">Quiz</a></li>
+      <li><a href="noel.html">Guide de Noël</a></li>
+      <li><a href="contact.html#livraison">Livraison, retours</a></li>
+      <li><a href="contact.html#avis-gestion">Gestion des avis</a></li>
+      <li><a href="sur-mesure.html">Sur mesure</a></li>
       <li><a href="contact.html">Contact</a></li>
     </ul></nav>
     <div><h2>Suivre l’atelier</h2><ul>
@@ -130,9 +131,9 @@
     </div>
     <div class="panier__defile">
       <div class="panier__livraison" data-panier-livraison>
-        <p class="panier__livraison-msg" data-livraison-msg>Livraison offerte dès 130 € de plaques.</p>
+        <p class="panier__livraison-msg" data-livraison-msg>Livraison offerte dès 130 € d’articles livrés.</p>
         <div class="jauge" data-jauge aria-hidden="true"><span class="jauge__rempli"></span><span class="jauge__seuil">130 €</span></div>
-        <p class="petit"><span class="note-maq note-maq--valider">seuil de 130 € : proposition à valider</span></p>
+        <p class="petit">Hors carte cadeau, envoyée par e-mail. <span class="note-maq note-maq--valider">seuil de 130 € : proposition à valider</span></p>
       </div>
       <ul class="panier__liste" data-panier-liste></ul>
       <div class="panier__suggestions" data-panier-suggestions></div>
@@ -144,16 +145,17 @@
           <p class="petit"><span class="note-maq note-maq--valider">options cadeau : proposition à valider</span> Vous hésitez sur le modèle ? <a href="produit-carte-cadeau.html">La carte cadeau</a> vaut une plaque au choix.</p>
         </div>
       </details>
+      <p class="petit panier__paiement">Sur le site : carte bancaire (Stripe), PayPal (y compris en 4 fois sans frais dès 20 € d’achat, sous réserve d’acceptation par PayPal), Apple Pay et Google Pay. Commande sans création de compte <span class="note-maq note-maq--fournir">à confirmer : commande sans compte</span></p>
     </div>
     <div class="panier__bas">
       <dl class="panier__totaux">
         <div><dt>Sous-total</dt><dd data-sous-total>0&nbsp;€</dd></div>
-        <div data-ligne-remise hidden><dt>Remise Triptyque <span class="petit">(<span class="note-maq note-maq--valider">−10 % : proposition à valider</span>)</span></dt><dd data-remise>0&nbsp;€</dd></div>
+        <div data-ligne-remise hidden><dt>Remise Triptyque <span class="note-maq note-maq--valider">−10 % : proposition à valider</span></dt><dd data-remise>0&nbsp;€</dd></div>
         <div><dt>Livraison</dt><dd data-port>Selon poids et destination</dd></div>
         <div class="panier__total"><dt>Total estimé</dt><dd data-total-panier>0&nbsp;€</dd></div>
       </dl>
       <button type="button" class="btn btn--action btn--plein" disabled aria-describedby="note-commande">Commander</button>
-      <p class="petit" id="note-commande">Maquette : la commande est désactivée. Sur le site : commande sans création de compte, carte bancaire (Stripe), PayPal (y compris en 4 fois sans frais), Apple Pay et Google Pay.</p>
+      <p class="petit panier__note" id="note-commande">Maquette : la commande est désactivée.</p>
     </div>
   </div>
 </dialog>

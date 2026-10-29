@@ -21,6 +21,14 @@ with open(os.path.join(MAQUETTE, "assets", "img", "_sizes.json"), encoding="utf-
     TAILLES = json.load(fichier_tailles)
 
 IMG = "../../maquette/assets/img/"
+LOCAL = "assets/img/"
+# Copies réduites (vignettes, photos larges) générées une fois avec Pillow dans assets/img/,
+# avec leurs dimensions dans assets/img/_variantes.json. Sans ce fichier, les originaux sont utilisés.
+CHEMIN_VARIANTES = os.path.join(ICI, "assets", "img", "_variantes.json")
+VARIANTES = {}
+if os.path.exists(CHEMIN_VARIANTES):
+    with open(CHEMIN_VARIANTES, encoding="utf-8") as fichier_var:
+        VARIANTES = json.load(fichier_var)
 SITE = "https://terregravee.fr"
 CGV = SITE + "/cgv/"
 MENTIONS = SITE + "/politique/"
@@ -34,7 +42,7 @@ PRIX_TRIPTYQUE = 3 * PRIX_PLAQUE * (1 - REMISE)
 DATE_NOEL = "lundi 14 décembre 2026"
 
 COLLECTIONS = [
-    ("paysages", "Paysages", "Sommets, cols et cirques"),
+    ("paysages", "Paysages", "Sommets, col, cirque et pont"),
     ("patrimoine", "Patrimoine", "Tours, châteaux et abbayes"),
     ("faune", "Faune", "Les animaux des Pyrénées"),
     ("accessoires", "Accessoires", "Kit LED et carte cadeau"),
@@ -52,6 +60,56 @@ MOYENNE = sum(a["note"] for a in TOUS_AVIS) / NB_AVIS
 REPARTITION = {n: sum(1 for a in TOUS_AVIS if a["note"] == n) for n in range(1, 6)}
 MOIS = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre",
         "octobre", "novembre", "décembre"]
+SEUIL_TXT = "Livraison offerte dès 130 € d’articles livrés, soit deux plaques"
+
+# Histoires réécrites en phrases factuelles (lieu, altitude, ce que montre la découpe) : les textes
+# du site actuel contenaient des formules creuses et, pour Gavarnie, une contradiction (« métal brut »,
+# « création unique »). Le catalogue de la v0 n'est pas modifié.
+HISTOIRES = {
+    "le-pic-du-midi": ("Le sommet sous les étoiles", [
+        "Le Pic du Midi de Bigorre culmine à 2 877 m. La plaque montre le sommet et son antenne sous un ciel "
+        "piqué d’étoiles : chaque étoile est un petit trou découpé au laser.",
+        "Avec le kit LED, la lumière passe par toutes les découpes, étoiles comprises."]),
+    "le-tourmalet": ("Le col des cyclistes", [
+        "Le col du Tourmalet monte à 2 115 m. La plaque montre la route en lacets, trois cyclistes en pleine "
+        "montée, un chalet et les crêtes au-dessus.",
+        "Pour ceux qui l’ont monté à vélo, ou qui comptent le faire."]),
+    "le-montaigu": ("Un sommet de Bigorre", [
+        "Le Montaigu culmine à 2 339 m. La plaque montre sa pointe au-dessus des crêtes, puis les sapins et les "
+        "prairies en bandes jusqu’au bas de la plaque."]),
+    "le-cirque-de-gavarnie": ("Les parois du cirque", [
+        "Le cirque de Gavarnie est classé au patrimoine mondial de l’UNESCO. Découpée avec précision dans "
+        "l’aluminium, la plaque montre ses parois en gradins, les cascades qui en tombent, puis la forêt et les "
+        "rochers du premier plan.",
+        "Une création inspirée d’un site classé au patrimoine mondial de l’UNESCO."]),
+    "le-pont-despagne": ("L’arche au-dessus du torrent", [
+        "Le Pont d’Espagne se trouve à Cauterets. La plaque montre l’arche de pierre au-dessus du torrent, "
+        "entre les rochers et les feuillages."]),
+    "la-tour-des-jacobins": ("La tour de Bagnères", [
+        "La tour des Jacobins, monument historique, se dresse au centre de Bagnères-de-Bigorre. C’est le seul "
+        "vestige d’un ancien couvent.",
+        "La plaque détaille ses étages, ses fenêtres et sa flèche, avec les toits de la ville autour."]),
+    "le-chateau-de-mauvezin": ("Le château fort", [
+        "Le château de Mauvezin est un château fort de Bigorre. La plaque montre ses tours devant les montagnes, "
+        "avec des feuillages et des oiseaux au premier plan."]),
+    "labbaye-de-lescaladieu": ("L’abbaye cistercienne", [
+        "L’abbaye de l’Escaladieu, à Bonnemazon, est une abbaye cistercienne. La plaque montre ses bâtiments et "
+        "son clocher, avec des feuillages et des roses au premier plan."]),
+    "lisard": ("L’animal des hauteurs", [
+        "L’isard vit en altitude dans les Pyrénées. La plaque le montre debout sur les rochers, entre les sapins, "
+        "avec un sommet derrière lui."]),
+    "lours": ("Face à l’ours brun", [
+        "L’ours brun vit dans les forêts des Pyrénées. La plaque le montre de face, entre deux troncs, au milieu "
+        "des feuillages.",
+        "Posée avec le léger décalage des fixations, la découpe projette l’ombre de sa silhouette sur le mur."]),
+    "le-cerf": ("Le cerf et ses bois", [
+        "La plaque montre le cerf de face, entouré de feuillages. Ses bois occupent tout le haut de la découpe.",
+        "Elle trouve sa place au salon, au bureau ou dehors : l’aluminium thermolaqué s’utilise en intérieur "
+        "comme en extérieur."]),
+    "la-marmotte": ("La marmotte sur son rocher", [
+        "La marmotte vit dans les prairies d’altitude. La plaque la montre dressée sur un rocher, entre des "
+        "branches et des fleurs."]),
+}
 
 
 # ---------------------------------------------------------------- utilitaires
@@ -182,13 +240,40 @@ def img_plaque(p, fin, sizes, eager=False, attrs=""):
             % (IMG, rel, srcset(p["slug"], fin), sizes, w, h, e(alt_plaque(p, fin)), charge, extra))
 
 
+def srcset_variantes(rel):
+    """srcset avec les copies réduites de assets/img/ puis l’original, ou chaîne vide s’il n’y en a pas."""
+    var = VARIANTES.get(rel) or []
+    if not var:
+        return ""
+    w, _ = dims(rel)
+    morceaux = ["%s%s %dw" % (LOCAL, nom, vw) for nom, vw, _ in var]
+    morceaux.append("%s%s %dw" % (IMG, rel, w))
+    return ", ".join(morceaux)
+
+
+def petite(rel):
+    """Plus petite copie (chemin, largeur, hauteur) pour une vignette, sinon l’original."""
+    var = VARIANTES.get(rel) or []
+    if var:
+        nom, w, h = var[0]
+        return LOCAL + nom, w, h
+    w, h = dims(rel)
+    return IMG + rel, w, h
+
+
 def img(rel, alt, sizes="100vw", classe="", eager=False, attrs=""):
     w, h = dims(rel)
     cls = ' class="%s"' % classe if classe else ""
     charge = 'fetchpriority="high"' if eager else 'loading="lazy"'
     extra = " " + attrs if attrs else ""
-    return ('<img%s src="%s%s" width="%d" height="%d" sizes="%s" alt="%s" %s decoding="async"%s>'
-            % (cls, IMG, rel, w, h, sizes, e(alt), charge, extra))
+    jeu = srcset_variantes(rel)
+    jeu_attr = ' srcset="%s"' % jeu if jeu else ""
+    return ('<img%s src="%s%s"%s width="%d" height="%d" sizes="%s" alt="%s" %s decoding="async"%s>'
+            % (cls, IMG, rel, jeu_attr, w, h, sizes, e(alt), charge, extra))
+
+
+def ico_num():
+    return '<span class="ico ico-num" aria-hidden="true">N°</span>'
 
 
 def vide_plaque(p, fin, cache=False):
@@ -216,8 +301,8 @@ def cartel(p):
         return ""
     lieu, detail = p["cartel"]
     if p["collection"] == "faune":
-        return "%s · <i>%s</i>" % (e(lieu), e(detail))
-    return "%s · %s" % (e(lieu), e(detail))
+        return "%s · <i>%s</i>" % (e(lieu), e(detail))
+    return "%s · %s" % (e(lieu), e(detail))
 
 
 # ---------------------------------------------------------------- composants
@@ -236,7 +321,7 @@ def pastilles(p, fin):
 def ligne_avis(p, lien=True):
     nb = len(p["avis"])
     if not nb:
-        return '<p class="carte__avis carte__avis--vide">Nouveau, pas encore d’avis</p>'
+        return '<p class="carte__avis carte__avis--vide">Pas encore d’avis</p>'
     m = moyenne(p)
     return ('<p class="carte__avis">%s<span class="carte__note">%s</span><span class="attenue">(%d avis)</span>'
             '<span class="sr">Note %s sur 5, %d avis</span></p>' % (etoiles(m), note_fr(m), nb, note_fr(m), nb))
@@ -249,7 +334,9 @@ def carte(p, fin=None, sizes=TAILLE_CARTE, ordre=0, titre="h3", badge_ok=True):
     url = "produit-%s.html" % p["slug"]
     commun = ('data-collection="%s" data-slug="%s" data-tri="%s" data-avis="%d" data-best="%d" data-ordre="%d"'
               % (p["collection"], p["slug"], e(tri_nom(p["nom"])), len(p["avis"]), 1 if p["best"] else 0, ordre))
-    badge = '<p class="carte__badge">%sMeilleure vente</p>' % balise("balise carte__balise") if (p["best"] and badge_ok) else ""
+    accessoire = p["collection"] == "accessoires"
+    badge = ('<p class="carte__badge">%sMeilleure vente</p>' % balise("balise carte__balise")
+             if (p["best"] and badge_ok and not accessoire) else "")
     if p["slug"] == "led":
         return ('<li class="carte carte--accessoire" %s><div class="carte__visuel"><a href="%s" tabindex="-1" aria-hidden="true">'
                 '<div class="plaque plaque--photo">%s</div></a></div><div class="carte__corps">%s'
@@ -281,20 +368,43 @@ def carte(p, fin=None, sizes=TAILLE_CARTE, ordre=0, titre="h3", badge_ok=True):
                ligne_avis(p), prix(p["prix"]), pastilles(p, fin), icone("plus"), e(p["nom"]), ACC_FIN[fin]))
 
 
-def citation(a, taille="", lien=True):
+def fin_citee(a, p):
+    """Finition nommée dans l’avis (« pris en gris »), pour que la vignette ne contredise pas le texte."""
+    texte = a["texte"].lower()
+    for f, mot in (("noir", "en noir"), ("gris", "en gris"), ("dore", "en doré")):
+        if mot in texte and a_photo(p["slug"], f):
+            return f
+    return fin_defaut(p)
+
+
+def citation(a, taille="", lien=True, rappel=False):
     p = PRODUITS[a["produit"]]
-    fin = fin_defaut(p)
+    fin = fin_citee(a, p)
     vignette = ('<a class="avis__produit" href="produit-%s.html"><span class="avis__vignette">%s</span><span>%s</span></a>'
                 % (p["slug"], img_plaque(p, fin, "40px"), e(p["nom"]))) if lien else ""
+    controle = '<span class="avis__controle">Publié sans vérification d’achat</span>' if rappel else ""
     return ('<li class="avis %s"><figure><div class="avis__haut">%s<span class="sr">Note %d sur 5</span></div>'
             '<blockquote><p>« %s »</p></blockquote><figcaption><span class="avis__auteur">%s</span>'
-            '<time datetime="%s">%s</time></figcaption></figure>%s</li>'
-            % (taille, etoiles(a["note"]), a["note"], e(a["texte"]), e(a["auteur"]), a["date"], date_fr(a["date"]), vignette))
+            '<span>Publié le <time datetime="%s">%s</time></span>%s%s</figcaption></figure>%s</li>'
+            % (taille, etoiles(a["note"]), a["note"], e(a["texte"]), e(a["auteur"]), a["date"], date_fr(a["date"]),
+               controle, fournir("date de l’expérience"), vignette))
 
 
 def mention_avis():
     return ('<p class="mention-avis">Avis publiés sur le site sans vérification d’achat. Classés du plus récent au plus ancien, '
-            'date de publication affichée. <a href="contact.html#avis-gestion">Comment nous gérons les avis</a></p>')
+            'avec leur date de publication ; la date de l’expérience (achat ou réception) reste à fournir. '
+            '<a href="contact.html#avis-gestion">Comment nous gérons les avis</a></p>')
+
+
+def repartition_mini():
+    """Répartition des notes en barres compactes pour la case de l’accueil."""
+    lignes = []
+    for n in (5, 4):
+        nb = REPARTITION[n]
+        lignes.append('<li><span>%d★</span><span class="repart__barre"><span style="width:%d%%"></span></span><span>%d</span></li>'
+                      % (n, round(nb / NB_AVIS * 100), nb))
+    return ('<p class="sr">Répartition : %d avis à 5 étoiles, %d à 4 étoiles.</p>'
+            '<ul class="repart repart--mini" aria-hidden="true">%s</ul>' % (REPARTITION[5], REPARTITION[4], "".join(lignes)))
 
 
 def repartition():
@@ -323,7 +433,7 @@ FONTS = ("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth
 
 def entete(actif):
     liens = "".join('<li><a href="%s"%s>%s</a></li>' % (h, ' aria-current="page"' if h == actif else "", n) for h, n in NAV)
-    return """<div class="bandeau-maq" role="note"><div class="wrap bandeau-maq__in"><p><strong>Maquette version 2 · brouillon non publié · paiements désactivés</strong></p><p class="bandeau-maq__liens"><a href="strategie.html">Lire la stratégie</a><a href="../index.html">Comparer les versions</a></p></div></div>
+    return """<div class="bandeau-maq" role="note"><div class="wrap bandeau-maq__in"><p><strong>Maquette version 2 · brouillon non publié · paiements désactivés</strong></p><p class="bandeau-maq__liens"><a href="strategie.html">Lire la stratégie</a><a href="../index.html">Comparer les versions</a><button type="button" class="bandeau-maq__notes" data-notes aria-pressed="false">Masquer les notes jaunes</button></p></div></div>
 <header class="entete" data-entete>
   <div class="wrap entete__in">
     <a class="logo" href="index.html">%s<span class="logo__nom">Terre Gravée</span><span class="sr">, retour à l’accueil</span></a>
@@ -355,11 +465,11 @@ def pied():
       <li><a href="produit-carte-cadeau.html">Carte cadeau</a></li>
     </ul></nav>
     <nav aria-label="Aide"><h2>Aide</h2><ul>
-      <li><a href="quiz.html">Quiz : quelle plaque choisir ?</a></li>
-      <li><a href="noel.html">Guide cadeaux de Noël</a></li>
-      <li><a href="contact.html#livraison">Livraison et retours</a></li>
-      <li><a href="contact.html#avis-gestion">Comment nous gérons les avis</a></li>
-      <li><a href="sur-mesure.html">Sur mesure et séries</a></li>
+      <li><a href="quiz.html">Quiz</a></li>
+      <li><a href="noel.html">Guide de Noël</a></li>
+      <li><a href="contact.html#livraison">Livraison, retours</a></li>
+      <li><a href="contact.html#avis-gestion">Gestion des avis</a></li>
+      <li><a href="sur-mesure.html">Sur mesure</a></li>
       <li><a href="contact.html">Contact</a></li>
     </ul></nav>
     <div><h2>Suivre l’atelier</h2><ul>
@@ -385,9 +495,9 @@ def tiroir_panier():
     </div>
     <div class="panier__defile">
       <div class="panier__livraison" data-panier-livraison>
-        <p class="panier__livraison-msg" data-livraison-msg>Livraison offerte dès %s de plaques.</p>
+        <p class="panier__livraison-msg" data-livraison-msg>Livraison offerte dès %s d’articles livrés.</p>
         %s
-        <p class="petit">%s</p>
+        <p class="petit">Hors carte cadeau, envoyée par e-mail. %s</p>
       </div>
       <ul class="panier__liste" data-panier-liste></ul>
       <div class="panier__suggestions" data-panier-suggestions></div>
@@ -399,22 +509,23 @@ def tiroir_panier():
           <p class="petit">%s Vous hésitez sur le modèle ? <a href="produit-carte-cadeau.html">La carte cadeau</a> vaut une plaque au choix.</p>
         </div>
       </details>
+      <p class="petit panier__paiement">Sur le site : carte bancaire (Stripe), PayPal (y compris en 4 fois sans frais dès 20 € d’achat, sous réserve d’acceptation par PayPal), Apple Pay et Google Pay. Commande sans création de compte %s</p>
     </div>
     <div class="panier__bas">
       <dl class="panier__totaux">
         <div><dt>Sous-total</dt><dd data-sous-total>0&nbsp;€</dd></div>
-        <div data-ligne-remise hidden><dt>Remise Triptyque <span class="petit">(%s)</span></dt><dd data-remise>0&nbsp;€</dd></div>
+        <div data-ligne-remise hidden><dt>Remise Triptyque %s</dt><dd data-remise>0&nbsp;€</dd></div>
         <div><dt>Livraison</dt><dd data-port>Selon poids et destination</dd></div>
         <div class="panier__total"><dt>Total estimé</dt><dd data-total-panier>0&nbsp;€</dd></div>
       </dl>
       <button type="button" class="btn btn--action btn--plein" disabled aria-describedby="note-commande">Commander</button>
-      <p class="petit" id="note-commande">Maquette : la commande est désactivée. Sur le site : commande sans création de compte, carte bancaire (Stripe), PayPal (y compris en 4 fois sans frais), Apple Pay et Google Pay.</p>
+      <p class="petit panier__note" id="note-commande">Maquette : la commande est désactivée.</p>
     </div>
   </div>
 </dialog>
 <div class="annonce sr" aria-live="polite" data-annonce></div>""" % (
         icone("croix"), prix(SEUIL), jauge_livraison(), valider("seuil de 130 €"), icone("cadeau"),
-        valider("options cadeau"), valider("−10 %"))
+        valider("options cadeau"), confirmer("commande sans compte"), valider("−10 %"))
 
 
 def typo(texte):
@@ -461,6 +572,7 @@ def page(fichier, titre, description, contenu, actif=None, jsonld=None, classe="
 <meta name="description" content="%s">
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#ffffff">
+<script>try { if (window.localStorage.getItem("tg-v2-notes") === "masquees") document.documentElement.classList.add("sans-notes"); } catch (e) {}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="%s">
@@ -497,12 +609,14 @@ ORGANISATION = {
 
 # ---------------------------------------------------------------- blocs réutilisés
 
-def rassurance():
+def rassurance(quatre_fois=True):
+    paypal = ("PayPal (y compris en 4 fois sans frais dès 20 € d’achat, sous réserve d’acceptation par PayPal)"
+              if quatre_fois else "PayPal")
     return """<ul class="rassurance">
   <li>%s<span><strong>14 jours pour vous rétracter</strong> après réception, comme le prévoit la loi. Article dans son état d’origine, frais de retour à votre charge.</span></li>
-  <li>%s<span><strong>Paiement sécurisé</strong> par carte bancaire (Stripe), PayPal (y compris en 4 fois sans frais), Apple Pay ou Google Pay.</span></li>
+  <li>%s<span><strong>Paiement sécurisé</strong> par carte bancaire (Stripe), %s, Apple Pay ou Google Pay.</span></li>
   <li>%s<span><strong>Garanties légales</strong> de conformité et des vices cachés. <a href="%s">Lire les CGV</a></span></li>
-</ul>""" % (icone("retour"), icone("cadenas"), icone("bouclier"), CGV)
+</ul>""" % (icone("retour"), icone("cadenas"), paypal, icone("bouclier"), CGV)
 
 
 def chemin_fabrication(compact=False):
@@ -577,23 +691,25 @@ def accueil():
       <div class="heros__fins"><span>Voir en</span><div class="pastilles" role="group" aria-label="Finition affichée">%s</div></div>
     </div>
   </div>
-  <figure class="case case--aquensis">
-    %s
-    <figcaption><span class="etiquette">Photo réelle</span> Plaques Terre Gravée à Aquensis, Bagnères-de-Bigorre</figcaption>
-    <blockquote class="aquensis__avis">%s<p>« %s »</p><footer>%s, avis sur <a href="produit-lours.html">L’Ours</a></footer></blockquote>
-  </figure>
+  <div class="case case--aquensis">
+    <figure class="aquensis__fig">
+      <div class="aquensis__photo">%s<span class="etiquette">Photo réelle</span></div>
+      <figcaption class="aquensis__legende">Plaques Terre Gravée à Aquensis, Bagnères-de-Bigorre</figcaption>
+    </figure>
+    <blockquote class="aquensis__avis">%s<span class="sr">Note %d sur 5</span><p>« %s »</p><footer><span>%s · publié le <time datetime="%s">%s</time> · avis sur <a href="produit-lours.html">L’Ours</a></span><span>Avis publié sans vérification d’achat. %s</span></footer></blockquote>
+  </div>
   <div class="case case--quiz">
     <p class="surtitre">Vous hésitez ?</p>
     <h2>Quelle plaque pour quel mur ?</h2>
     <p>Quatre questions sur votre pièce, votre mur et vos goûts. À la fin : un modèle, une finition et le prix total. Sans e-mail.</p>
     <ol class="mini-etapes" aria-label="Les quatre questions"><li><span class="barre-balise" aria-hidden="true"></span>Pièce</li><li><span class="barre-balise" aria-hidden="true"></span>Mur</li><li><span class="barre-balise" aria-hidden="true"></span>Thème</li><li><span class="barre-balise" aria-hidden="true"></span>Lumière</li></ol>
-    <a class="btn btn--action" href="quiz.html">Commencer le quiz%s</a>
+    <a class="btn btn--clair" href="quiz.html">Commencer le quiz%s</a>
   </div>
   <div class="case case--noel">
     <p class="surtitre">Noël 2026</p>
     <h2>Un cadeau par profil</h2>
     <p>Randonneur, cycliste, amoureux de Bagnères, curiste ou indécis : les plaques triées pour chacun.</p>
-    <p class="case__date">Commandez avant le %s pour recevoir avant Noël. %s</p>
+    <p class="case__date">Commandez au plus tard le %s pour recevoir avant Noël. %s</p>
     <a class="lien-fleche" href="noel.html">Ouvrir le guide cadeaux%s</a>
   </div>
   <div class="case case--trip">
@@ -610,6 +726,7 @@ def accueil():
     <p class="note-geante">%s<span>/5</span></p>
     %s
     <p><strong>%d avis</strong> publiés sur le site</p>
+    %s
     <p class="petit attenue">Sans vérification d’achat</p>
     <a class="lien-fleche" href="#avis">Lire les avis%s</a>
   </div>
@@ -625,7 +742,9 @@ def accueil():
   <div class="case case--serie">
     <p class="numero-geant" aria-hidden="true">N°</p>
     <h2>Série limitée</h2>
-    <p>Chaque plaque porte son numéro, gravé au dos.</p>
+    <p>Chaque modèle est édité en série limitée. Le numéro de votre exemplaire est gravé au dos de la plaque.</p>
+    <p class="petit">%s</p>
+    <a class="lien-fleche" href="collection.html">Les 12 modèles%s</a>
   </div>
   <div class="case case--retours">
     %s
@@ -637,7 +756,7 @@ def accueil():
 
 <section class="section wrap" aria-labelledby="titre-best">
   <div class="tete-section">
-    <div><p class="surtitre">Meilleures ventes du site actuel</p><h2 id="titre-best">Les plus demandées</h2></div>
+    <div><p class="surtitre">Meilleures ventes affichées sur le site actuel %s</p><h2 id="titre-best">Quatre plaques pour commencer</h2></div>
     <p class="tete-section__aide">Touchez une pastille pour changer de finition, puis ajoutez au panier.</p>
   </div>
   <ul class="grille-cartes">%s</ul>
@@ -647,7 +766,7 @@ def accueil():
 <section class="section section--neige" id="avis" aria-labelledby="titre-avis">
   <div class="wrap">
     <div class="tete-avis">
-      <div><p class="surtitre">Avis clients</p><h2 id="titre-avis">Ce que disent les clients</h2></div>
+      <div><p class="surtitre">Avis</p><h2 id="titre-avis">Ce que disent les avis publiés sur le site</h2></div>
       <div class="resume-avis">
         <p class="note-geante">%s<span>/5</span></p>
         <div>%s<p>%d avis, dont %d à 5 étoiles et %d à 4 étoiles</p></div>
@@ -662,7 +781,7 @@ def accueil():
 <section class="section wrap" aria-labelledby="titre-chemin">
   <div class="tete-section">
     <div><p class="surtitre">Fabrication</p><h2 id="titre-chemin">Le chemin d’une plaque</h2></div>
-    <p class="tete-section__aide citation-marque">« Toutes nos plaques sont réalisées dans un rayon de 150 km. »</p>
+    <div class="tete-section__aide"><p class="citation-marque">« Toutes nos plaques sont réalisées dans un rayon de 150 km. »</p><p class="petit">L’atelier, à propos de sa fabrication. %s</p></div>
   </div>
   %s
 </section>
@@ -681,19 +800,23 @@ def accueil():
 </section>
 """ % (
         icone("fleche"), img_plaque(pic, "noir", "(max-width: 640px) 46vw, 300px", eager=True, attrs="data-heros-img"), heros_fins,
-        img("misc/aquensis.webp", "Bassin du centre thermal Aquensis : sous la charpente en bois, une rangée de plaques Terre Gravée rétroéclairées", "(max-width: 1100px) 100vw, 440px"),
-        etoiles(anto["note"]), e(anto["texte"]), e(anto["auteur"]),
+        img("misc/aquensis.webp", "Bassin du centre thermal Aquensis : sous la charpente en bois, une rangée de plaques Terre Gravée rétroéclairées",
+            "(max-width: 699px) 92vw, (max-width: 1099px) 46vw, 430px"),
+        etoiles(anto["note"]), anto["note"], e(anto["texte"]), e(anto["auteur"]), anto["date"], date_fr(anto["date"]),
+        fournir("date de l’expérience"),
         icone("fleche"),
         DATE_NOEL, valider("date limite"), icone("fleche"),
         trip, prix(PRIX_TRIPTYQUE), prix(PRIX_TRIPTYQUE / 3), valider("remise de 10 %"), icone("fleche"),
-        note_fr(MOYENNE), etoiles(MOYENNE), NB_AVIS, icone("fleche"),
-        img("led/led-img0.webp", "Plaque L’Ours rétroéclairée en bleu", "(max-width: 1100px) 40vw, 200px"), icone("fleche"),
+        note_fr(MOYENNE), etoiles(MOYENNE), NB_AVIS, repartition_mini(), icone("fleche"),
+        img("led/led-img0.webp", "Plaque L’Ours rétroéclairée en bleu", "(max-width: 699px) 30vw, 150px"), icone("fleche"),
+        fournir("taille de chaque série"), icone("fleche"),
         icone("retour", "ico ico--grand"), icone("fleche"),
-        cartes_best, puces, icone("fleche"),
+        confirmer("à vérifier avec les ventes réelles"), cartes_best, puces, icone("fleche"),
         note_fr(MOYENNE), etoiles(MOYENNE), NB_AVIS, REPARTITION[5], REPARTITION[4], repartition(),
         mention_avis(), avis,
+        confirmer("centre du rayon de 150 km, Revel étant à environ 155 km de l’atelier à vol d’oiseau"),
         chemin_fabrication(),
-        img("misc/autres-plaques.webp", "Planche de dix-huit dessins inédits : sommets, fleurs et animaux des Pyrénées", "(max-width: 900px) 100vw, 560px"),
+        img("misc/autres-plaques.webp", "Planche de dix-huit dessins inédits : sommets, fleurs et animaux des Pyrénées", "(max-width: 899px) 92vw, 600px"),
         valider("jour de sortie"),
         formulaire_lettre("accueil"),
     )
@@ -725,7 +848,7 @@ def collection():
         cartes.append(carte(p, ordre=i))
         if i == 3:
             cartes.append("""<li class="tuile-promo tuile-promo--quiz" data-promo><p class="surtitre">Vous hésitez ?</p><h2 class="tuile-promo__titre">Quelle plaque pour quel mur ?</h2><p>Quatre questions, une recommandation précise.</p><a class="btn btn--action" href="quiz.html">Faire le quiz%s</a></li>""" % icone("fleche"))
-        if i == 8:
+        if i == 7:
             trip = "".join('<div class="plaque">%s</div>' % img_plaque(PRODUITS[s], f, "80px") for s, f in
                            (("lisard", "noir"), ("lours", "noir"), ("la-marmotte", "noir")))
             cartes.append("""<li class="tuile-promo tuile-promo--trip" data-promo><div class="trip__mini" aria-hidden="true">%s</div><p class="surtitre">Lot de trois</p><h2 class="tuile-promo__titre">Le Triptyque</h2><p><strong>%s</strong> les trois plaques au choix.</p><p class="petit">%s</p><a class="lien-fleche" href="triptyque.html">Composer%s</a></li>"""
@@ -744,17 +867,17 @@ def collection():
       <div class="tri"><label for="tri">Trier</label><select id="tri"><option value="atelier">Ordre de l’atelier</option><option value="best">Meilleures ventes d’abord</option><option value="nom">Nom, de A à Z</option><option value="avis">Les plus commentées</option></select></div>
     </div>
   </div>
-  <p class="compte" data-compte aria-live="polite">%d articles</p>
+  <div class="compte-ligne"><p class="compte" data-compte aria-live="polite">%d articles</p><p class="petit attenue">« Meilleure vente » : étiquette reprise du site actuel. %s</p></div>
   <ul class="grille-cartes grille-cartes--collection" data-grille>%s</ul>
 </div>
 <section class="section wrap">
   <ul class="bandeau-garanties">
     <li>%s<span><strong>Livraison en 2 à 4 jours ouvrés</strong> après l’expédition, à titre indicatif</span></li>
-    <li>%s<span><strong>Livraison offerte dès 130 €</strong>, soit deux plaques %s</span></li>
+    <li>%s<span><strong>Livraison offerte dès 130 € d’articles livrés</strong>, soit deux plaques, hors carte cadeau %s</span></li>
     <li>%s<span><strong>14 jours pour vous rétracter</strong>, comme le prévoit la loi</span></li>
     <li>%s<span><strong>Série limitée</strong>, numéro gravé au dos</span></li>
   </ul>
-</section>""" % ("".join(puces), voir, len(CATALOGUE), "".join(cartes), icone("camion"), icone("camion"), valider(), icone("retour"), icone("numero"))
+</section>""" % ("".join(puces), voir, len(CATALOGUE), confirmer("ventes réelles"), "".join(cartes), icone("camion"), icone("camion"), valider(), icone("retour"), ico_num())
     page("collection.html", "Boutique : toutes les plaques · Terre Gravée",
          "Les douze plaques murales Terre Gravée en aluminium découpé : paysages, patrimoine et faune des Pyrénées, en noir, gris ou doré. 65 € la plaque.",
          contenu, actif="collection.html")
@@ -840,7 +963,8 @@ def fiche_plaque(p):
             corps = ('<figure class="cotes cotes--fiche"><div class="plaque plaque--fiche">%s</div><span class="cote cote--h"><span>30 cm</span></span>'
                      '<span class="cote cote--v"><span>60 cm</span></span></figure>'
                      % img_plaque(p, f, "(max-width: 900px) 42vw, 250px", eager=(f == fin0)))
-            vign = '<img src="%s%s" alt="" width="24" height="48" loading="lazy">' % (IMG, photo(slug, f))
+            vw, vh = dims(photo(slug, f))
+            vign = '<img src="%s%s" alt="" width="%d" height="%d" loading="lazy" decoding="async">' % (IMG, photo(slug, f), vw, vh)
         else:
             corps = '<div class="cotes cotes--fiche"><div class="plaque plaque--fiche">%s</div></div>' % vide_plaque(p, f)
             vign = '<span class="vignette__vide" aria-hidden="true"></span>'
@@ -850,8 +974,9 @@ def fiche_plaque(p):
     if p["decor"]:
         scenes.append('<div class="scene scene--photo" data-scene="situation" hidden><figure>%s<figcaption>Mise en situation</figcaption></figure></div>'
                       % img(p["decor"], "Mise en situation de la plaque %s dans un intérieur" % p["nom"], "(max-width: 900px) 92vw, 640px"))
-        vignettes.append('<button type="button" class="vignette vignette--photo" data-vue="situation" aria-pressed="false"><img src="%s%s" alt="" width="48" height="48" loading="lazy"><span>En situation</span></button>'
-                         % (IMG, p["decor"].replace("-1200", "-640")))
+        v_src, v_w, v_h = petite(p["decor"].replace("-1200", "-640"))
+        vignettes.append('<button type="button" class="vignette vignette--photo" data-vue="situation" aria-pressed="false"><img src="%s" alt="" width="%d" height="%d" loading="lazy" decoding="async"><span>En situation</span></button>'
+                         % (v_src, v_w, v_h))
     scenes.append('<div class="scene scene--echelle" data-scene="echelle" hidden><figure>%s<figcaption>Schéma à l’échelle, pour juger de la taille</figcaption></figure></div>' % schema_echelle(p, fin0))
     vignettes.append('<button type="button" class="vignette vignette--echelle" data-vue="echelle" aria-pressed="false"><span class="vignette__echelle" aria-hidden="true"></span><span>À l’échelle</span></button>')
 
@@ -866,7 +991,8 @@ def fiche_plaque(p):
     else:
         note = ('<a class="achat__avis" href="#avis"><span class="attenue">Pas encore d’avis sur ce modèle · boutique : %s/5 sur %d avis</span></a>'
                 % (note_fr(MOYENNE), NB_AVIS))
-    histoire = "".join("<p>%s</p>" % e(x) for x in p["histoire"])
+    titre_hist, textes_hist = HISTOIRES.get(slug, (p["titre_histoire"], p["histoire"]))
+    histoire = "".join("<p>%s</p>" % e(x) for x in textes_hist)
     lien = ('<p><a class="lien-fleche" href="%s">%s%s</a></p>' % (e(p["lien"]["url"]), e(p["lien"]["label"]), icone("fleche"))) if p["lien"] else ""
     if p["decor"]:
         figure = '<figure class="histoire__fig">%s<figcaption>Mise en situation</figcaption></figure>' % img(
@@ -890,7 +1016,7 @@ def fiche_plaque(p):
       <h1 class="achat__titre">%s</h1>
       %s
       <p class="achat__serie">%sSérie limitée, numéro gravé au dos %s</p>
-      <div class="achat__prix"><p><strong data-prix-unitaire>65 €</strong> <span>TTC · TVA non applicable (art. 293 B du CGI)</span></p><p class="petit">ou en 4 fois sans frais avec PayPal, soit 4 × 16,25 €</p></div>
+      <div class="achat__prix"><p><strong data-prix-unitaire>65 €</strong> <span>TTC · TVA non applicable (art. 293 B du CGI)</span></p><p class="petit">ou en 4 fois sans frais avec PayPal, soit 4 × 16,25 €, sous réserve d’acceptation par PayPal</p></div>
       <fieldset class="choix-fin"><legend>Finition : <strong data-fin-nom>%s</strong></legend><div class="choix-fin__liste">%s</div></fieldset>
       <div class="option-led">
         <label class="option-led__case"><input type="checkbox" data-option-led>%s<span class="option-led__txt"><strong>Ajouter le kit LED, monté par l’atelier</strong><small>Ruban RGB, télécommande et alimentation USB (adaptateur secteur non fourni).</small></span><span class="option-led__prix">+15 €</span></label>
@@ -910,7 +1036,7 @@ def fiche_plaque(p):
         <button type="button" class="btn btn--action btn--large" data-ajouter>%sAjouter au panier</button>
       </div>
       <div class="livraison-fiche">
-        <p data-livraison-fiche>Livraison offerte dès 130 € : il manquera 65 € avec cette plaque.</p>
+        <p data-livraison-fiche>Livraison offerte dès 130 € d’articles livrés : il manquera 65 € avec cette plaque.</p>
         %s
         <p class="petit">%s Frais de port selon le poids et la destination, affichés avant validation. %s</p>
         <div class="livraison-fiche__date">%s<p><span data-estimation>Livraison en 2 à 4 jours ouvrés après l’expédition, à titre indicatif.</span> %s</p></div>
@@ -943,7 +1069,7 @@ def fiche_plaque(p):
 </section>
 
 <section class="section wrap" aria-labelledby="titre-fab">
-  <div class="tete-section"><div><p class="surtitre">Fabrication</p><h2 id="titre-fab">Fabriquée dans un rayon de 150 km</h2></div></div>
+  <div class="tete-section"><div><p class="surtitre">Fabrication</p><h2 id="titre-fab">Découpée à Revel (31), thermolaquée et expédiée à Bagnères-de-Bigorre (65)</h2></div></div>
   %s
 </section>
 
@@ -967,14 +1093,14 @@ def fiche_plaque(p):
         cartel(p), e(p["nom"]), note,
         balise(), fournir("taille de la série"),
         NOM_FIN[fin0], "".join(radios),
-        img("led/led-img1.webp", "Exemple réel : Le Pic du Midi rétroéclairé en vert", "56px", "option-led__photo"),
+        img("led/led-img1.webp", "Exemple réel : Le Pic du Midi rétroéclairé en vert", "44px", "option-led__photo"),
         option_cable(),
         icone("cadeau"), valider("options cadeau"),
         icone("panier"),
         jauge_livraison(), valider("seuil de 130 €"), fournir("tarifs de port"),
         icone("camion"), confirmer("délai de préparation"),
         rassurance(), faq_objections(),
-        e(p["titre_histoire"]), histoire, lien, figure,
+        e(titre_hist), histoire, lien, figure,
         chemin_fabrication(compact=True),
         e(p["nom"]), bloc_avis_produit(p),
         NOM_COLL[p["collection"]], icone("fleche"), assoc,
@@ -990,7 +1116,7 @@ def fiche_plaque(p):
     jsonld = {
         "@context": "https://schema.org", "@type": "Product", "name": p["nom"],
         "brand": {"@type": "Brand", "name": "Terre Gravée"},
-        "description": p["histoire"][0] if p["histoire"] else "", "material": "Aluminium thermolaqué",
+        "description": textes_hist[0] if textes_hist else "", "material": "Aluminium thermolaqué",
         "width": {"@type": "QuantitativeValue", "value": 30, "unitCode": "CMT"},
         "height": {"@type": "QuantitativeValue", "value": 60, "unitCode": "CMT"},
         "offers": {"@type": "Offer", "price": "65.00", "priceCurrency": "EUR", "url": p["url_actuelle"]},
@@ -1008,8 +1134,8 @@ def fiche_led(p):
     scenes = "".join('<div class="scene scene--photo" data-scene="%s"%s><figure>%s</figure></div>'
                      % (k, "" if i == 0 else " hidden", img("led/%s.webp" % k, alt, "(max-width: 900px) 92vw, 600px", eager=(i == 0)))
                      for i, (k, alt, _) in enumerate(vues))
-    vignettes = "".join('<button type="button" class="vignette vignette--photo" data-vue="%s" aria-pressed="%s"><img src="%sled/%s.webp" alt="" width="48" height="48" loading="lazy"><span>%s</span></button>'
-                        % (k, "true" if i == 0 else "false", IMG, k, n) for i, (k, _, n) in enumerate(vues))
+    vignettes = "".join('<button type="button" class="vignette vignette--photo" data-vue="%s" aria-pressed="%s"><img src="%s" alt="" width="%d" height="%d" loading="lazy" decoding="async"><span>%s</span></button>'
+                        % ((k, "true" if i == 0 else "false") + petite("led/%s.webp" % k) + (n,)) for i, (k, _, n) in enumerate(vues))
     etapes = [
         ("tuto/tuto-2.webp", "Décollement progressif de la bande adhésive du ruban", "Coller le ruban", "Nettoyez le dos de la plaque. Collez le ruban le long du contour en commençant côté raccord Pico, en décollant la bande adhésive petit à petit."),
         ("tuto/tuto-4.webp", "Ruban LED formant un arrondi dans un angle", "Passer les angles", "Formez un arrondi doux dans chaque angle, sans pli brusque."),
@@ -1019,7 +1145,7 @@ def fiche_led(p):
     ]
     tuto = "".join('<li class="tuto__etape"><figure>%s</figure><h3>%s</h3><p>%s</p></li>' % (img(r, alt, "(max-width: 640px) 80vw, 220px"), t, d)
                    for r, alt, t, d in etapes)
-    assoc = "".join(carte(PRODUITS[s]) for s in ("le-pic-du-midi", "lours", "lisard"))
+    assoc = "".join(carte(PRODUITS[s]) for s in ("le-pic-du-midi", "lours", "lisard", "la-tour-des-jacobins"))
     contenu = """
 <div class="wrap">
   <nav aria-label="Fil d’Ariane" class="ariane-fiche"><ol class="ariane"><li><a href="index.html">Accueil</a></li><li><a href="collection.html#accessoires">Accessoires</a></li><li aria-current="page">Kit LED</li></ol></nav>
@@ -1056,7 +1182,7 @@ def fiche_led(p):
   <div class="wrap">
     <div class="tete-section"><div><p class="surtitre">Notice</p><h2 id="titre-tuto">Poser le kit vous-même</h2></div><p class="tete-section__aide">Commandé avec une plaque, le kit arrive déjà monté. Seul, il se pose en cinq étapes.</p></div>
     <div class="tuto">
-      <figure class="tuto__contenu">%s<figcaption>Le contenu du kit</figcaption></figure>
+      <figure class="tuto__contenu">%s<figcaption><strong>Le contenu du kit</strong><span>Ruban LED RGB autocollant avec raccord Pico et contrôleur intégré, télécommande infrarouge, alimentation USB (adaptateur secteur non fourni) et QR code de l’application.</span></figcaption></figure>
       <ol class="tuto__etapes">%s</ol>
     </div>
   </div>
@@ -1066,7 +1192,7 @@ def fiche_led(p):
   <ul class="grille-cartes grille-cartes--assoc">%s</ul>
 </section>
 """ % (PRIX_LED, scenes, vignettes, option_cable(), icone("panier"), confirmer("2 m sur la fiche actuelle, 1,5 m sur la notice"),
-       rassurance(), img("tuto/tuto-0.webp", "Contenu du kit LED : ruban enroulé, boîtier, télécommande", "(max-width: 900px) 92vw, 420px"),
+       rassurance(quatre_fois=False), img("tuto/tuto-0.webp", "Contenu du kit LED : ruban enroulé, boîtier, télécommande", "(max-width: 900px) 92vw, 420px"),
        tuto, icone("fleche"), assoc)
     barre = """<div class="barre-achat" data-barre><div class="barre-achat__in"><div class="barre-achat__produit"><strong>Kit LED</strong></div><p class="barre-achat__prix"><span class="sr">Total : </span><strong data-total>15 €</strong></p><button type="button" class="btn btn--action" data-ajouter>Ajouter</button></div></div>"""
     page("produit-led.html", "Kit LED pour plaque murale · Terre Gravée",
@@ -1077,7 +1203,7 @@ def fiche_led(p):
 
 
 def fiche_carte(p):
-    assoc = "".join(carte(PRODUITS[s]) for s in ("le-pic-du-midi", "la-tour-des-jacobins", "lours"))
+    assoc = "".join(carte(PRODUITS[s]) for s in ("le-pic-du-midi", "la-tour-des-jacobins", "lours", "lisard"))
     contenu = """
 <div class="wrap">
   <nav aria-label="Fil d’Ariane" class="ariane-fiche"><ol class="ariane"><li><a href="index.html">Accueil</a></li><li><a href="collection.html#accessoires">Accessoires</a></li><li aria-current="page">Carte cadeau</li></ol></nav>
@@ -1111,7 +1237,7 @@ def fiche_carte(p):
         <div><dt>Valeur</dt><dd>Une plaque au choix, sur tous les modèles disponibles</dd></div>
         <div><dt>Envoi</dt><dd>Immédiat par e-mail, ou à imprimer</dd></div>
         <div><dt>Validité</dt><dd>%s</dd></div>
-        <div><dt>Livraison offerte</dt><dd>Envoyée par e-mail, sans frais de port. Prise en compte dans le seuil de livraison offerte %s</dd></div>
+        <div><dt>Frais d’envoi</dt><dd>Aucun : envoi par e-mail ou à imprimer. Non prise en compte dans le seuil de livraison offerte des plaques %s</dd></div>
       </dl>
       <p class="petit">Pour Noël : la carte part par e-mail jusqu’au 24 décembre, même après la date limite de commande des plaques. <a href="noel.html">Voir le guide cadeaux</a></p>
     </div>
@@ -1124,7 +1250,7 @@ def fiche_carte(p):
   </div>
 </section>
 """ % (p["prix"], img("misc/carte-cadeau.webp", "Carte cadeau Terre Gravée, couleur cuivre, avec le logo et le slogan", "(max-width: 900px) 80vw, 480px", eager=True),
-       valider("montant de 80 €"), icone("panier"), fournir("durée de validité"), valider("prise en compte"), icone("fleche"), assoc)
+       valider("montant de 80 €"), icone("panier"), fournir("durée de validité"), valider("règle proposée"), icone("fleche"), assoc)
     page("produit-carte-cadeau.html", "Carte cadeau · Terre Gravée",
          "Carte cadeau Terre Gravée : elle vaut une plaque au choix sur tous les modèles. Envoi immédiat par e-mail ou à imprimer. 65 €.",
          contenu, classe="page-fiche",
@@ -1167,13 +1293,13 @@ def quiz():
     q2 = "".join([opt("mur", "clair", "Blanc ou très clair", mur("#F6F5F1")), opt("mur", "gris", "Gris ou béton", mur("#B7BBBF")),
                   opt("mur", "fonce", "Foncé", mur("#1F3350", "mur--fonce"), "Bleu nuit, vert, noir"),
                   opt("mur", "bois", "Bois ou pierre", mur("#B98D5F", "mur--bois")), opt("mur", "nsp", "Je ne sais pas", mur("#E6E9EE", "mur--nsp"))])
-    q3 = "".join([opt("theme", "sommets", "Les sommets", mini("le-pic-du-midi", "noir"), "Pic du Midi, Montaigu, Gavarnie…"),
+    q3 = "".join([opt("theme", "sommets", "Les sommets et grands sites", mini("le-pic-du-midi", "noir"), "Pic du Midi, Montaigu, cirque de Gavarnie…"),
                   opt("theme", "patrimoine", "Les vieilles pierres", mini("le-chateau-de-mauvezin", "noir"), "Tour, château, abbaye"),
                   opt("theme", "faune", "Les animaux", mini("lisard", "gris"), "Isard, ours, cerf, marmotte"),
-                  opt("theme", "velo", "Le vélo", mini("le-tourmalet", "gris"), "Les cols mythiques"),
+                  opt("theme", "velo", "Le vélo", mini("le-tourmalet", "gris"), "Le col du Tourmalet"),
                   opt("theme", "bagneres", "Bagnères-de-Bigorre", mini("la-tour-des-jacobins", "dore"), "La ville et ses alentours"),
-                  opt("theme", "nsp", "Je ne sais pas", nsp, "Montrez-moi les plus demandées")])
-    q4 = "".join([opt("lumiere", "oui", "Oui, qu’elle s’allume", '<span class="choix__photo">%s</span>' % img("led/led-img1.webp", "", "90px"), "Kit LED monté par l’atelier, +15 €"),
+                  opt("theme", "nsp", "Je ne sais pas", nsp, "Montrez-moi une sélection")])
+    q4 = "".join([opt("lumiere", "oui", "Oui, qu’elle s’allume", '<span class="choix__photo">%s</span>' % img("led/led-img1.webp", "", "140px"), "Kit LED monté par l’atelier, +15 €"),
                   opt("lumiere", "non", "Non, la découpe suffit", mini("lours", "noir"), "Les ombres font le travail"),
                   opt("lumiere", "nsp", "Je ne sais pas encore", nsp, "Je déciderai plus tard")])
     questions = [
@@ -1214,7 +1340,7 @@ def quiz():
           <p class="resultat__options" data-res-options></p>
           <div class="resultat__pourquoi"><h3>Pourquoi ce choix</h3><ul data-res-pourquoi></ul></div>
           <div data-res-led-option></div>
-          <p class="resultat__total">Total : <output data-res-total>65 €</output> <span class="attenue">TTC, hors frais de port</span></p>
+          <p class="resultat__total">Total : <output data-res-total>65 €</output> <span class="attenue" data-res-port>TTC, hors frais de port</span></p>
           <div class="resultat__actions">
             <button type="button" class="btn btn--action btn--large" data-res-ajouter>%sTout ajouter au panier</button>
             <a class="btn btn--ligne" href="collection.html" data-res-fiche>Voir la fiche</a>
@@ -1230,12 +1356,12 @@ def quiz():
         <div class="resultat__partage">
           <h3>Garder ce résultat</h3>
           <p class="petit">Ce lien rouvre votre recommandation, à envoyer à qui vous voulez.</p>
-          <div class="partage"><label class="sr" for="lien-resultat">Lien du résultat</label><input id="lien-resultat" type="text" readonly data-res-lien><button type="button" class="btn btn--ligne" data-copier-champ="lien-resultat">%sCopier</button></div>
+          <div class="partage"><label class="sr" for="lien-resultat">Lien du résultat</label><input id="lien-resultat" type="text" readonly data-res-lien><button type="button" class="btn btn--ligne" data-copier-champ="lien-resultat" data-repli="Lien sélectionné, copiez-le">%sCopier</button></div>
         </div>
         <form class="resultat__email" data-demo novalidate>
           <h3>Recevoir ma sélection par e-mail</h3>
           <p class="petit">Facultatif. Nous envoyons le résultat une fois, sans autre usage.</p>
-          <div class="champ"><label for="email-quiz">Adresse e-mail</label><input id="email-quiz" type="email" autocomplete="email" placeholder="prenom@exemple.fr"></div>
+          <div class="champ"><label for="email-quiz">Adresse e-mail</label><input id="email-quiz" type="email" autocomplete="email" placeholder="prenom@exemple.fr"><small><a href="%s">Confidentialité</a></small></div>
           <label class="coche"><input type="checkbox" name="lettre"> <span>Je souhaite aussi recevoir la lettre de Terre Gravée (sorties de plaques exclusives). Désinscription en un clic.</span></label>
           <button type="submit" class="btn btn--nuit">Recevoir ma sélection</button>
           <p class="message-demo" role="status" hidden>Maquette : rien n’est envoyé.</p>
@@ -1252,7 +1378,7 @@ def quiz():
     <div>%s<h3>Pour offrir</h3><p>Pas sûr de ses goûts ? La <a href="produit-carte-cadeau.html">carte cadeau</a> vaut une plaque au choix.</p></div>
   </div>
 </section>
-""" % (etapes, blocs, icone("fleche"), icone("panier"), icone("copier"), icone("check"), icone("check"), icone("cadeau"))
+""" % (etapes, blocs, icone("fleche"), icone("panier"), icone("copier"), MENTIONS, icone("check"), icone("check"), icone("cadeau"))
     page("quiz.html", "Quiz : quelle plaque pour quel mur ? · Terre Gravée",
          "Quatre questions sur votre pièce, votre mur et vos goûts pour trouver la plaque Terre Gravée qui vous va : modèle, finition, kit LED et prix total.",
          contenu, actif="quiz.html", classe="page-quiz")
@@ -1267,7 +1393,7 @@ def noel():
         cits = [a for a in TOUS_AVIS if a["auteur"] in avis_auteurs]
         cit = ""
         if cits:
-            cit = '<ul class="profil__avis">%s</ul>' % "".join(citation(a, "avis--profil") for a in cits)
+            cit = '<ul class="profil__avis">%s</ul>' % "".join(citation(a, "avis--profil", rappel=True) for a in cits)
         return """<section class="profil" id="%s" aria-labelledby="titre-%s">
   <div class="profil__tete">
     <p class="surtitre">%s</p>
@@ -1279,12 +1405,16 @@ def noel():
   <div class="profil__corps"><ul class="grille-cartes grille-cartes--profil">%s</ul>%s</div>
 </section>""" % (ancre, ancre, surtitre, ancre, titre, texte, extra, cartes, cit)
 
+    trio_rando = (("le-cirque-de-gavarnie", "noir"), ("le-pont-despagne", "noir"), ("lisard", "noir"))
+    tuile_rando = ('<li class="tuile-promo tuile-promo--trip"><div class="trip__mini" aria-hidden="true">%s</div><p class="surtitre">Lot de trois</p><h3 class="tuile-promo__titre">Gavarnie, le Pont d’Espagne et l’isard</h3><p>Les trois en Triptyque : %s.</p><p class="petit">%s</p><a class="lien-fleche" href="triptyque.html#t=%s">Composer%s</a></li>'
+                   % ("".join('<div class="plaque">%s</div>' % img_plaque(PRODUITS[s], f, "50px") for s, f in trio_rando),
+                      prix(PRIX_TRIPTYQUE), valider("remise de 10 %"), ",".join("%s-%s" % sf for sf in trio_rando), icone("fleche")))
     rando = profil("randonneur", "Sentiers et grands sites", "Pour un randonneur",
-                   "Des lieux qu’on rejoint à pied : le cirque de Gavarnie, classé au patrimoine mondial de l’UNESCO, le Pont d’Espagne à Cauterets, et l’isard qu’on croise en altitude.",
-                   ["le-cirque-de-gavarnie", "le-pont-despagne", "lisard"], ["Marie"])
+                   "Des lieux qu’on rejoint à pied : le cirque de Gavarnie, classé au patrimoine mondial de l’UNESCO, et le Pont d’Espagne à Cauterets. L’isard, qu’on croise en altitude, complète le Triptyque.",
+                   ["le-cirque-de-gavarnie", "le-pont-despagne"], ["Marie"], tuile=tuile_rando)
     tuile_led = ('<li class="tuile-promo tuile-promo--led"><div class="tuile-promo__photo">%s</div><p class="surtitre">Option · +15 €</p><h3 class="tuile-promo__titre">Qu’elle s’allume le soir</h3><p>Cochez le kit LED sur la fiche : l’atelier le monte au dos avant l’envoi.</p><a class="lien-fleche" href="produit-led.html">Voir le kit LED%s</a></li>'
                  % (img("led/led-img1.webp", "Plaque Le Pic du Midi rétroéclairée en vert", "200px"), icone("fleche")))
-    velo = profil("cycliste", "Cols mythiques", "Pour un cycliste",
+    velo = profil("cycliste", "Col mythique", "Pour un cycliste",
                   "Le col du Tourmalet culmine à 2 115 m. Ceux qui l’ont monté s’en souviennent longtemps.",
                   ["le-tourmalet", "le-pic-du-midi"], ["Jerome D."], fins={"le-tourmalet": "gris"}, tuile=tuile_led)
     tuile_trip = ('<li class="tuile-promo tuile-promo--trip"><div class="trip__mini" aria-hidden="true">%s</div><p class="surtitre">Lot de trois</p><h3 class="tuile-promo__titre">Bagnères en Triptyque</h3><p>La tour, le Pic et un troisième lieu au choix : %s les trois.</p><p class="petit">%s</p><a class="lien-fleche" href="triptyque.html#t=la-tour-des-jacobins-dore,le-pic-du-midi-dore">Composer%s</a></li>'
@@ -1296,7 +1426,7 @@ def noel():
     aquensis = ('<figure class="profil__photo">%s<figcaption>Plaques Terre Gravée à Aquensis, Bagnères-de-Bigorre</figcaption></figure>'
                 % img("misc/aquensis.webp", "Bassin du centre thermal Aquensis avec une rangée de plaques Terre Gravée rétroéclairées", "(max-width: 900px) 92vw, 420px"))
     curiste = profil("curiste", "Vu à Aquensis", "Pour un curiste",
-                     "Deux clients racontent avoir découvert nos plaques à Aquensis, le centre thermal de Bagnères-de-Bigorre, ou pendant leur cure.",
+                     "Deux avis racontent avoir découvert nos plaques à Aquensis, le centre thermal de Bagnères-de-Bigorre, ou pendant une cure.",
                      ["la-marmotte", "lours"], ["Sophia P.", "Anto 65"], extra=aquensis, tuile=tuile_led)
     indecis = """<section class="profil profil--indecis" id="indecis" aria-labelledby="titre-indecis">
   <div class="profil__tete">
@@ -1324,13 +1454,13 @@ def noel():
       <nav aria-label="Fil d’Ariane"><ol class="ariane"><li><a href="index.html">Accueil</a></li><li aria-current="page">Guide cadeaux</li></ol></nav>
       <p class="surtitre">Guide cadeaux · Noël 2026</p>
       <h1>Un cadeau qui vient d’ici</h1>
-      <p class="chapo">Cinq profils, deux ou trois plaques pour chacun. Toutes à 65 €, fabriquées entre Revel et Bagnères-de-Bigorre.</p>
+      <p class="chapo">Cinq profils, des plaques ou une carte cadeau pour chacun. Toutes les plaques sont à 65 €, découpées à Revel et thermolaquées à Bagnères-de-Bigorre.</p>
       <ul class="puces puces--profils" aria-label="Choisir un profil">%s</ul>
     </div>
     <aside class="date-cle" aria-labelledby="titre-date">
       %s
       <h2 id="titre-date">Pour recevoir avant Noël</h2>
-      <p class="date-cle__date">Commandez avant le <strong>%s</strong></p>
+      <p class="date-cle__date">Commandez au plus tard le <strong>%s</strong></p>
       <p class="petit">%s Elle dépend du stock et du délai de thermolaquage.</p>
       <p class="date-cle__apres">Après cette date, la <a href="produit-carte-cadeau.html">carte cadeau</a> part par e-mail jusqu’au 24 décembre.</p>
       <p class="petit">Livraison en 2 à 4 jours ouvrés après l’expédition, à titre indicatif. Nous vous prévenons en cas de retard.</p>
@@ -1339,13 +1469,14 @@ def noel():
   <div class="noel-calendrier" aria-labelledby="titre-calendrier">
     <h2 id="titre-calendrier" class="sous-titre">Le calendrier jusqu’à Noël</h2>
     <ol class="calendrier" data-calendrier>
-      <li class="calendrier__point" style="--x:0%%"><span class="calendrier__date">1<sup>er</sup> nov.</span><span>Le guide est ouvert</span></li>
+      <li class="calendrier__point" style="--x:0%%"><span class="calendrier__date">1<sup>er</sup> nov.</span><span>Ouverture du guide</span>%s</li>
       <li class="calendrier__point" style="--x:47%%"><span class="calendrier__date">27 nov.</span><span>Black Friday : nos prix ne changent pas</span>%s</li>
-      <li class="calendrier__point calendrier__point--fort" style="--x:79%%"><span class="calendrier__date">14 déc.</span><span>Dernière commande conseillée</span>%s</li>
+      <li class="calendrier__point calendrier__point--fort" style="--x:79%%"><span class="calendrier__date">14 déc.</span><span>Dernier jour de commande conseillé</span>%s</li>
       <li class="calendrier__point" style="--x:100%%"><span class="calendrier__date">24 déc.</span><span>Dernières cartes cadeaux par e-mail</span></li>
     </ol>
     <p class="calendrier__ici" data-calendrier-ici hidden></p>
   </div>
+  <div class="noel-avis">%s</div>
   %s
   %s
   %s
@@ -1358,7 +1489,7 @@ def noel():
     <ul class="services">
       <li>%s<h3>Message et prix masqués</h3><p>Un message joint au colis et des prix masqués sur le bon de livraison.</p><p class="petit">%s</p></li>
       <li>%s<h3>Livraison chez la personne</h3><p>Indiquez son adresse comme adresse de livraison, et la vôtre pour la facture.</p><p class="petit">%s</p></li>
-      <li>%s<h3>Retours après les fêtes</h3><p>14 jours après réception pour se rétracter, comme le prévoit la loi. Nous proposons d’aller jusqu’au 15 janvier 2027 pour les cadeaux.</p><p class="petit">%s</p></li>
+      <li>%s<h3>Retours après les fêtes</h3><p>Vous avez 14 jours après la réception du colis pour vous rétracter, comme le prévoit la loi. Nous proposons d’aller jusqu’au 15 janvier 2027 pour les cadeaux.</p><p class="petit">%s</p></li>
       <li>%s<h3>Trois plaques, un lot</h3><p>Le <a href="triptyque.html">Triptyque</a> : trois plaques au choix pour %s.</p><p class="petit">%s</p></li>
     </ul>
   </div>
@@ -1368,15 +1499,17 @@ def noel():
   <div class="faq-liste">
     <details class="faq"><summary>Et si la plaque arrive en retard ?</summary><div class="faq__corps"><p>Le délai de 2 à 4 jours ouvrés après l’expédition est indicatif. En cas de retard, nous vous prévenons. Si la date est trop proche, la carte cadeau par e-mail reste possible jusqu’au 24 décembre.</p></div></details>
     <details class="faq"><summary>Puis-je ajouter le kit LED à un cadeau ?</summary><div class="faq__corps"><p>Oui. Cochez l’option sur la fiche de la plaque : l’atelier monte le ruban au dos avant l’envoi. Prévoyez un adaptateur secteur USB, non fourni.</p></div></details>
-    <details class="faq"><summary>La personne peut-elle échanger ?</summary><div class="faq__corps"><p>Elle dispose de 14 jours après réception pour se rétracter, plaque dans son état d’origine, frais de retour à sa charge. Avec la carte cadeau, elle choisit elle-même son modèle.</p></div></details>
+    <details class="faq"><summary>Et si le cadeau ne plaît pas ?</summary><div class="faq__corps"><p>Vous, l’acheteur, disposez de 14 jours à compter de la réception du colis par la personne pour vous rétracter, plaque dans son état d’origine, frais de retour à votre charge. Un échange n’est pas prévu par la loi. %s Avec la carte cadeau, la personne choisit elle-même son modèle.</p></div></details>
     <details class="faq"><summary>Faites-vous des remises pour le Black Friday ?</summary><div class="faq__corps"><p>Non : le prix reste 65 € toute l’année. Le seul lot proposé est le Triptyque. %s</p></div></details>
   </div>
 </section>
 """ % (chips, balise("balise balise--grande"), DATE_NOEL, valider("date proposée"),
-       valider(), valider("date"),
+       valider("date d’ouverture"), valider(), valider("date"),
+       mention_avis(),
        rando, velo, bagneres, curiste, indecis,
        icone("cadeau"), valider("option à mettre en place"), icone("camion"), confirmer("adresse de livraison distincte dans WooCommerce"),
        icone("retour"), valider("retours prolongés jusqu’au 15 janvier"), icone("plus"), prix(PRIX_TRIPTYQUE), valider("remise de 10 %"),
+       valider("échange à proposer ou non"),
        valider("politique Black Friday"))
     page("noel.html", "Guide cadeaux de Noël 2026 · Terre Gravée",
          "Idées cadeaux de Noël par profil : randonneur, cycliste, amoureux de Bagnères, curiste ou indécis. Plaques murales des Pyrénées à 65 € et carte cadeau.",
@@ -1444,13 +1577,13 @@ def triptyque():
 <section class="section section--neige" aria-labelledby="titre-trip-info">
   <div class="wrap trio-infos">
     <h2 id="titre-trip-info" class="sr">Bon à savoir</h2>
-    <div>%s<h3>Expédiées ensemble</h3><p>Les trois plaques partent dans le même colis. La livraison est offerte dès 130 €. %s</p></div>
+    <div>%s<h3>Expédiées ensemble</h3><p>Les trois plaques partent ensemble. %s La livraison est offerte dès 130 € d’articles livrés. %s</p></div>
     <div>%s<h3>Pose sans perçage</h3><p>Deux fixations 3M Command™ par plaque. Le décalage avec le mur dessine les ombres.</p></div>
     <div>%s<h3>Trois numéros</h3><p>Chaque plaque garde son numéro de série gravé au dos.</p></div>
   </div>
 </section>
 """ % (prix(PRIX_TRIPTYQUE), prix(PRIX_TRIPTYQUE / 3), valider("remise de 10 %"), emplacements, option_cable("cable-trip", "Sortie du câble"), prix(PRIX_TRIPTYQUE),
-       icone("panier"), icone("copier"), boutons_idees, filtres, "".join(choix), icone("camion"), valider("seuil"), icone("check"), icone("numero"))
+       icone("panier"), icone("copier"), boutons_idees, filtres, "".join(choix), icone("camion"), confirmer("envoi en un seul colis"), valider("seuil"), icone("check"), ico_num())
     page("triptyque.html", "Composer un Triptyque de trois plaques · Terre Gravée",
          "Composez un Triptyque : trois plaques murales Terre Gravée au choix, alignées sur votre mur. Aperçu en direct et prix du lot.",
          contenu, actif="triptyque.html", classe="page-trip")
@@ -1465,7 +1598,7 @@ def sur_mesure():
   <header class="tete-page">
     <nav aria-label="Fil d’Ariane"><ol class="ariane"><li><a href="index.html">Accueil</a></li><li aria-current="page">Sur mesure</li></ol></nav>
     <h1>Sur mesure et séries</h1>
-    <p class="chapo">Un modèle vous plaît, mais il le faut plus grand, dans un autre métal ou en plusieurs exemplaires ? Voici ce que l’atelier sait faire.</p>
+    <p class="chapo">Un modèle vous plaît, mais il le faut plus grand, dans une autre matière ou en plusieurs exemplaires ? Voici ce que l’atelier sait faire.</p>
   </header>
   <div class="bento-sm">
     <section class="case case--sm-adapter" aria-labelledby="titre-adapter">
@@ -1474,10 +1607,10 @@ def sur_mesure():
         <h2 id="titre-adapter">Adapter un modèle existant</h2>
         <ul class="liste-coches">
           <li>%sUn autre format, jusqu’à 2 m × 1 m</li>
-          <li>%sUn autre métal : aluminium dans la teinte RAL de votre choix, acier Corten, aluminium brut</li>
+          <li>%sUne autre matière ou teinte : aluminium dans la teinte RAL de votre choix, acier Corten, aluminium brut</li>
           <li>%sUne autre fixation ou un autre support</li>
         </ul>
-        <p class="petit">Selon faisabilité. Les pièces sur mesure ne peuvent pas être retournées : le droit de rétractation ne s’applique pas aux pièces personnalisées.</p>
+        <p class="petit">Selon faisabilité. Les pièces sur mesure sont exclues du droit de rétractation (art. L221-28, 3° du Code de la consommation). Elles bénéficient des garanties légales de conformité et des vices cachés.</p>
       </div>
       <div class="duo-metal">
         <figure><div class="plaque plaque--photo">%s</div><figcaption>Acier Corten</figcaption></figure>
@@ -1504,7 +1637,7 @@ def sur_mesure():
         </ul>
         <p class="petit">La quantité minimale dépend du projet.</p>
       </div>
-      <figure>%s<figcaption>Plaques Terre Gravée à Aquensis, Bagnères-de-Bigorre</figcaption></figure>
+      <div class="plaque-vide plaque-vide--pro"><span class="plaque-vide__mot">Photo d’une série professionnelle</span>%s</div>
     </section>
     <section class="case case--sm-non" aria-labelledby="titre-non">
       <h2 id="titre-non">Ce que nous ne faisons pas</h2>
@@ -1524,12 +1657,12 @@ def sur_mesure():
       <div class="champs">
         <div class="champ"><label for="sm-type">Type de demande</label><select id="sm-type"><option>Adapter un modèle existant</option><option>Plaque exclusive</option><option>Série pour un professionnel</option></select></div>
         <div class="champ"><label for="sm-modele">Modèle de départ</label><select id="sm-modele"><option>Aucun en particulier</option>%s</select></div>
-        <div class="champ"><label for="sm-metal">Métal</label><select id="sm-metal"><option>Aluminium thermolaqué, teinte RAL</option><option>Acier Corten</option><option>Aluminium brut</option><option>Je ne sais pas encore</option></select></div>
+        <div class="champ"><label for="sm-metal">Matière</label><select id="sm-metal"><option>Aluminium thermolaqué, teinte RAL</option><option>Acier Corten</option><option>Aluminium brut</option><option>Je ne sais pas encore</option></select></div>
         <div class="champ"><label for="sm-format">Format souhaité</label><input id="sm-format" type="text" placeholder="Par exemple 120 × 60 cm"><small>Jusqu’à 2 m × 1 m</small></div>
         <div class="champ"><label for="sm-qte">Quantité</label><input id="sm-qte" type="number" min="1" value="1" inputmode="numeric"></div>
         <div class="champ"><label for="sm-usage">Usage</label><select id="sm-usage"><option>Intérieur</option><option>Extérieur</option><option>Les deux</option></select></div>
         <div class="champ champ--large"><label for="sm-projet">Votre projet</label><textarea id="sm-projet" rows="4" placeholder="Lieu, support, délai souhaité"></textarea></div>
-        <div class="champ champ--large"><label for="sm-fichier">Croquis ou photo (facultatif)</label><input id="sm-fichier" type="file" accept="image/*,.pdf"></div>
+        <div class="champ champ--large champ--fichier"><span class="champ__titre">Croquis ou photo (facultatif)</span><div class="fichier"><input id="sm-fichier" class="fichier__input" type="file" accept="image/*,.pdf" aria-describedby="sm-fichier-nom"><label class="btn btn--ligne fichier__bouton" for="sm-fichier">Joindre un croquis ou une photo</label><span class="petit attenue" id="sm-fichier-nom" data-fichier-nom>Aucun fichier choisi</span></div></div>
         <div class="champ"><label for="sm-nom">Nom</label><input id="sm-nom" type="text" autocomplete="name" required></div>
         <div class="champ"><label for="sm-email">E-mail</label><input id="sm-email" type="email" autocomplete="email" required></div>
       </div>
@@ -1544,10 +1677,10 @@ def sur_mesure():
        img("misc/mauvezin-brut.webp", "Plaque Le Château de Mauvezin en aluminium brut", "(max-width: 900px) 40vw, 200px"),
        img("misc/autres-plaques.webp", "Planche de dix-huit dessins inédits : sommets, fleurs et animaux des Pyrénées", "(max-width: 900px) 92vw, 520px"), icone("fleche"),
        icone("check"), icone("check"), icone("check"),
-       img("misc/aquensis.webp", "Bassin du centre thermal Aquensis avec une rangée de plaques Terre Gravée rétroéclairées", "(max-width: 900px) 92vw, 520px"),
+       fournir("photo d’une série professionnelle"),
        fournir("délai de réponse habituel"), options, MENTIONS)
     page("sur-mesure.html", "Sur mesure et séries · Terre Gravée",
-         "Plaques en métal sur mesure : jusqu’à 2 × 1 m, aluminium RAL, acier Corten ou aluminium brut. Plaques exclusives et séries pour professionnels.",
+         "Plaques sur mesure : jusqu’à 2 × 1 m, aluminium RAL, acier Corten ou aluminium brut. Plaques exclusives et séries pour professionnels.",
          contenu, actif="sur-mesure.html")
 
 
@@ -1564,7 +1697,7 @@ def contact():
   <div class="contact">
     <div class="case case--contact">
       <h2>Écrire à l’atelier</h2>
-      <p class="contact__email"><span id="adresse-email">contact@terregravee.fr</span><button type="button" class="btn btn--ligne" data-copier="adresse-email">%sCopier</button></p>
+      <p class="contact__email"><span id="adresse-email">contact@terregravee.fr</span><button type="button" class="btn btn--ligne" data-copier="adresse-email" data-repli="Adresse sélectionnée, copiez-la">%sCopier</button></p>
       <p class="petit">Délai de réponse %s</p>
       <h2>Adresse de l’atelier</h2>
       <address>Terre Gravée<br>16 rue du Pic du Midi<br>65200 Gerde</address>
@@ -1591,20 +1724,21 @@ def contact():
       <h3>%sLivraison</h3>
       <p>Livraison en 2 à 4 jours ouvrés après l’expédition, à titre indicatif. Nous vous prévenons en cas de retard.</p>
       <p>Les frais dépendent du poids et de la destination. Ils sont affichés avant la validation de la commande. %s</p>
-      <p>Livraison offerte dès 130 € de plaques. %s</p>
+      <p>Livraison offerte dès 130 € d’articles livrés (plaques et kits LED), soit deux plaques. La carte cadeau, envoyée par e-mail, n’entre pas dans ce calcul. %s</p>
     </div>
     <div class="aide__bloc" id="retours">
       <h3>%sRetours et rétractation</h3>
       <p>Vous avez 14 jours après réception pour vous rétracter sans justification. La plaque doit être dans son état d’origine. Les frais de retour sont à votre charge. Les pièces personnalisées sont exclues.</p>
-      <p class="petit">Sur le site : un bouton « Renoncer au contrat ici » dans l’espace commande. %s</p>
+      <p class="petit">Sur le site : un bouton « Renoncer au contrat ici » visible et accessible sans connexion pendant les 14 jours. %s</p>
     </div>
     <div class="aide__bloc">
       <h3>%sPaiement</h3>
-      <p>Carte bancaire (Stripe), PayPal, y compris en 4 fois sans frais, Apple Pay et Google Pay. Prix TTC, TVA non applicable (art. 293 B du CGI).</p>
+      <p>Carte bancaire (Stripe), PayPal, y compris en 4 fois sans frais dès 20 € d’achat sous réserve d’acceptation par PayPal, Apple Pay et Google Pay. Prix TTC, TVA non applicable (art. 293 B du CGI).</p>
     </div>
     <div class="aide__bloc">
       <h3>%sGaranties</h3>
       <p>Vos achats bénéficient des garanties légales de conformité et des vices cachés. <a href="%s">Lire les conditions générales de vente</a></p>
+      <p class="petit">Médiateur de la consommation : %s</p>
     </div>
     <div class="aide__bloc">
       <h3>%sKit LED</h3>
@@ -1613,6 +1747,7 @@ def contact():
     <div class="aide__bloc" id="avis-gestion">
       <h3>%sComment nous gérons les avis</h3>
       <p>Les avis sont publiés sur le site sans vérification d’achat. Ils sont affichés du plus récent au plus ancien, avec leur date de publication et la note donnée.</p>
+      <p>Date de l’expérience (achat ou réception) pour chaque avis : %s</p>
       <p>Contrepartie, délai de publication, durée de conservation, motifs de refus : %s Pour signaler un avis douteux, écrivez à contact@terregravee.fr.</p>
     </div>
   </div>
@@ -1623,7 +1758,8 @@ def contact():
 """ % (icone("copier"), fournir("délai habituel"), confirmer("sur rendez-vous ou non"), MENTIONS,
        icone("camion"), fournir("grille des tarifs"), valider("seuil"),
        icone("retour"), confirmer("obligation en vigueur depuis le 19 juin 2026, à vérifier avec un juriste"),
-       icone("cadenas"), icone("bouclier"), CGV, icone("lampe"), icone("check"), fournir("règles de modération"), icone("fleche"))
+       icone("cadenas"), icone("bouclier"), CGV, fournir("nom et site"), icone("lampe"), icone("check"),
+       fournir("dates d’achat ou de réception"), fournir("règles de modération"), icone("fleche"))
     page("contact.html", "Aide et contact · Terre Gravée",
          "Contacter l’atelier Terre Gravée à Gerde : e-mail, adresse, livraison, retours, paiement, garanties et gestion des avis.",
          contenu, actif="contact.html")
@@ -1636,13 +1772,13 @@ def strategie():
         return '<a href="%s">%s</a>' % (url, nom)
 
     tendances = [
-        ("Bento hiérarchisé", "L’accueil et la page sur mesure utilisent des cases de tailles différentes, ordonnées comme un tunnel sur mobile : héros, quiz, note, preuve réelle, lot, option LED, Noël, retours.",
+        ("Bento hiérarchisé", "L’accueil et la page sur mesure utilisent des cases de tailles différentes, ordonnées comme un tunnel sur mobile : héros, quiz, Noël pendant la campagne, preuve réelle, note et série, lot, option LED, retours.",
          "Le bento ne marche que si la taille des cases suit leur importance (%s). Il est devenu banal à cases égales (%s), d’où des tailles et des rayons volontairement inégaux."
          % (src("https://bubble.io/blog/web-design-trends/", "Bubble"), src("https://www.creativeboom.com/insight/10-trends-creatives-are-so-over-in-2026/", "Creative Boom"))),
         ("Blanc structurant, rouge du balisage", "Fond blanc pur, bleu nuit pour le texte, rouge réservé aux actions et aux repères de progression. Le motif blanc et rouge des sentiers de grande randonnée sert de système : étapes du quiz, jauge de livraison offerte, logo.",
          "Pantone a choisi un blanc, Cloud Dancer, pour 2026 (%s). Pour ne pas ressembler à tout le monde, le blanc est associé au rouge du balisage pyrénéen." % src("https://www.smithsonianmag.com/smart-news/pantones-color-of-the-year-for-2026-is-a-blank-canvas-called-cloud-dancer-or-in-other-words-white-180987805/", "Smithsonian")),
         ("Typographie", "Bricolage Grotesque en largeur 75 et graisses 700 à 800 pour les titres, Figtree pour le texte. Deux familles seulement.",
-         "Bricolage Grotesque est très vue sur les pages SaaS (%s) : la version étroite et grasse lui donne un air de panneau de sentier. Figtree est une sans calme (%s). <code>text-wrap: balance</code> sur les titres (%s)."
+         "Bricolage Grotesque est très répandue sur les pages SaaS (%s) : la version étroite et grasse lui donne un air de panneau de sentier. Figtree est une linéale sobre (%s). <code>text-wrap: balance</code> sur les titres (%s)."
          % (src("https://www.afontfinder.com/blog/bricolage-grotesque-review", "A Font Finder"), src("https://www.gleamstudio.design/blog-post/font-trends-2026", "Gleam Studio"),
             src("https://web-platform-dx.github.io/web-features-explorer/features/text-wrap-balance/", "web-features"))),
         ("Commerce honnête", "Aucun compte à rebours, aucun faux stock, aucun prix barré. La seule rareté affichée est réelle : la série numérotée.",
@@ -1660,7 +1796,7 @@ def strategie():
     ]
     techniques = [
         ("Vente guidée par quiz", "quiz.html, case de l’accueil, tuile dans la boutique, fiche carte cadeau",
-         "Quand on ne sait pas ce qu’on préfère, trop de choix bloque l’achat (%s). Les utilisateurs refusent de donner leur e-mail avant le résultat et veulent un résultat précis et modifiable (%s), avec des étapes visibles et un retour arrière (%s). Chiffres d’éditeur, preuve faible : 69 %% de complétion et panier plus élevé de 11 à 15 %% (%s)."
+         "Quand on ne sait pas ce qu’on préfère, trop de choix bloque l’achat (%s). Les utilisateurs sont particulièrement agacés quand on exige leurs coordonnées avant le résultat, et ils ajustent leurs réponses pour explorer (%s) ; des étapes visibles et un retour arrière sont recommandés (%s). Chiffres d’éditeur, preuve faible : 69 %% de complétion et panier plus élevé de 11 à 15 %% (%s)."
          % (src("https://www.kellogg.northwestern.edu/faculty/research/detail/2015/when-product-assortment-leads-to-choice-overload-a-conceptual", "Chernev et al., 2015"), src("https://www.nngroup.com/articles/calculator-expectations/", "NN/g"), src("https://www.nngroup.com/articles/wizards/", "NN/g"), src("https://revenuehunt.com/state-of-product-recommendation-quizzes/", "RevenueHunt")),
          "La logique de recommandation (quel modèle pour quelles réponses), le texte de consentement, l’outil d’envoi de l’e-mail facultatif.",
          "Taux de démarrage, complétion par question, quiz vers ajout au panier, quiz vers commande, panier moyen des utilisateurs du quiz, taux d’acceptation de l’e-mail."),
@@ -1676,7 +1812,7 @@ def strategie():
         ("Livraison offerte dès 130 €", "Jauge dans le panier, message dynamique sous le bouton des fiches, bandeau de garanties",
          "Les seuils augmentent les ventes mais peuvent détruire la marge (%s). Le message « plus que X € » doit être près du bouton et dans le panier, pas seulement dans un bandeau (%s). 130 € correspond à deux plaques."
          % (src("https://ideas.repec.org/a/inm/ormksc/v25y2006i1p51-64.html", "Lewis, Singh et Fay, 2006"), src("https://baymard.com/blog/avoid-banners-only-free-shipping", "Baymard")),
-         "Le seuil et le coût réel du port pour 2 et 3 plaques.", "Part des paniers au-dessus du seuil, panier moyen, coût du port et marge nette par commande."),
+         "Le seuil, la règle de calcul (articles livrés : plaques et kits LED, hors carte cadeau) et le coût réel du port pour 2 et 3 plaques.", "Part des paniers au-dessus du seuil, panier moyen, coût du port et marge nette par commande."),
         ("Lot Triptyque", "triptyque.html (composeur avec aperçu sur le mur), case de l’accueil, tuile boutique, fiches, panier",
          "Un lot à prix réduit agit surtout par la remise, et vendre aussi les plaques à l’unité convient quand les goûts varient (%s). Le contenu du lot doit être visible dès la vignette (%s). Displate met en avant un lot de trois (%s)."
          % (src("https://personal.eur.nl/stremersch/artikels/Strategic%20Bundling%20of%20Products%20and%20Prices%20A%20New%20Synthesis%20for%20Marketing.pdf", "Stremersch et Tellis, 2002"), src("https://baymard.com/research-articles/include-contents-quantities-list-item-sets-bundles", "Baymard"), src("https://displate.com/", "Displate")),
@@ -1686,20 +1822,20 @@ def strategie():
          % (src("https://baymard.com/blog/product-recommendations-cart", "Baymard"), src("https://www.nngroup.com/articles/deceptive-patterns/", "NN/g")),
          "La longueur exacte du ruban, le sens de lecture de la sortie du câble (vue de face ou de dos).", "Taux d’ajout du kit, passage du panier au paiement, retours et réclamations sur le kit."),
         ("Guide cadeaux de Noël par profil", "noel.html, case de l’accueil",
-         "Selon le baromètre Havas Market et YouGov d’octobre 2026, 66 %% des Français prévoient l’essentiel de leurs achats avant le 1er décembre, et les frais de port (47 %%) et les délais (46 %%) pèsent dans le choix (%s). Une date de livraison et une date limite de commande rassurent mieux qu’une vitesse (%s)."
+         "Selon le baromètre Havas Market réalisé avec YouGov (sondage des 6 et 7 octobre 2026 auprès de 1 004 Français), deux tiers des achats de Noël (66 %%) sont programmés avant le 1er décembre, et novembre concentre à lui seul 55 %% des intentions d’achat (%s). Afficher une date de livraison estimée rassure mieux qu’une vitesse (%s) ; la date limite de commande en est la déclinaison pour Noël."
          % (src("https://www.e-marketing.fr/retail-1095/noel-2026-budget-en-hausse-mais-des-achats-sous-forte-contrainte-175794", "e-marketing.fr"), src("https://baymard.com/blog/shipping-speed-vs-delivery-date", "Baymard")),
-         "La date limite du lundi 14 décembre 2026 (aucune date officielle La Poste 2026 trouvée), les options cadeau, les retours prolongés au 15 janvier, la position « pas de remise » pour le Black Friday du 27 novembre.",
+         "La date limite (au plus tard le lundi 14 décembre 2026 ; aucune date officielle La Poste 2026 trouvée), l’ouverture du guide le 1er novembre, les options cadeau, les retours prolongés au 15 janvier, la position « pas de remise » pour le Black Friday du 27 novembre.",
          "Trafic et conversion par profil, part du chiffre d’affaires avant le 1er décembre, commandes livrées après Noël."),
         ("Options cadeau sur la fiche et dans le panier", "« C’est pour offrir ? » sur chaque fiche, dans le panier et sur la page Noël",
-         "78 %% des sites ne montrent pas les options cadeau sur la fiche ; les acheteurs veulent surtout masquer les prix et ajouter un message (%s)." % src("https://baymard.com/blog/gifting-flow", "Baymard"),
+         "80 %% des sites ne montrent pas les options cadeau sur la fiche ; les acheteurs veulent surtout masquer les prix et ajouter un message (%s)." % src("https://baymard.com/blog/gifting-flow", "Baymard"),
          "La faisabilité dans WooCommerce (message et bon de livraison sans prix).", "Part des commandes avec option cadeau."),
         ("Carte cadeau", "Fiche carte cadeau, guide de Noël, panier, quiz",
          "Au Royaume-Uni, 68 %% des utilisateurs de cartes cadeaux dépensent plus que leur valeur (%s, association professionnelle, preuve faible)." % src("https://www.paymentsjournal.com/gift-cards-lead-to-even-more-consumer-spending/", "GCVA via PaymentsJournal"),
-         "Le montant de 80 € (plaque et kit), la durée de validité, la prise en compte dans le seuil de livraison offerte.", "Ventes de cartes après la date limite, taux d’utilisation, dépense au-delà de la carte."),
+         "Le montant de 80 € (plaque et kit), la durée de validité, et la règle proposée : la carte, envoyée par e-mail, n’entre pas dans le seuil de livraison offerte.", "Ventes de cartes après la date limite, taux d’utilisation, dépense au-delà de la carte."),
         ("Preuve sociale conforme", "Avis à côté du bouton et en bas de fiche, case de l’accueil, bento de 9 avis, photo réelle d’Aquensis",
          "Les premiers avis font l’essentiel de l’effet et la probabilité d’achat culmine entre 4,0 et 4,7 étoiles (%s) : on affiche donc le nombre, la répartition, les dates et l’avis à 4 étoiles. Montrer des avis mixtes (%s)."
          % (src("https://spiegel.medill.northwestern.edu/How-Online-Reviews-Influence-Sales", "Spiegel Research Center"), src("https://www.nngroup.com/articles/ecommerce-product-pages/", "NN/g")),
-         "La mention de contrôle (aujourd’hui : sans vérification d’achat), les règles de modération, des réponses aux avis.", "Clics vers les avis, nouveaux avis par mois, part d’avis avec photo."),
+         "La mention de contrôle (aujourd’hui : sans vérification d’achat), la date de l’expérience (achat ou réception) de chaque avis, les règles de modération, des réponses aux avis.", "Clics vers les avis, nouveaux avis par mois, part d’avis avec photo."),
         ("Rareté honnête", "Mention « Série limitée, numéro gravé au dos » sur les fiches et l’accueil",
          "Un message « quantité limitée » persuade plus qu’un message « temps limité » (%s), à condition d’être vrai (%s)."
          % (src("https://experts.umn.edu/en/publications/scarcity-messages-a-consumer-competition-perspective/", "Aggarwal, Jun et Huh, 2011"), src("https://www.nngroup.com/articles/deceptive-patterns/", "NN/g")),
@@ -1709,8 +1845,8 @@ def strategie():
          % (src("https://www.nngroup.com/articles/newsletters/", "NN/g"), src("https://www.omnisend.com/2026-ecommerce-marketing-report", "Omnisend"), src("https://www.cnil.fr/fr/la-prospection-commerciale-par-courrier-electronique", "CNIL")),
          "Le jour de sortie (premier jeudi du mois), l’outil d’envoi et sa gestion des pixels de suivi.", "Taux d’inscription, conversion des alertes, désinscriptions."),
         ("Fabrication visible", "Le chemin d’une plaque sur l’accueil et les fiches",
-         "Rendre le travail visible augmente la valeur perçue (%s). On écrit « découpé au laser », jamais « fait main »." % src("https://ideas.repec.org/a/inm/ormnsc/v57y2011i9p1564-1579.html", "Buell et Norton, 2011"),
-         "Les étapes et les lieux.", "Profondeur de lecture des fiches, taux de conversion."),
+         "Rendre le travail visible augmente la valeur perçue (%s). On écrit « découpé au laser », jamais « fait main ». Les fiches nomment les lieux réels plutôt que le rayon de 150 km." % src("https://ideas.repec.org/a/inm/ormnsc/v57y2011i9p1564-1579.html", "Buell et Norton, 2011"),
+         "Les étapes et les lieux, et le centre du rayon de 150 km cité par l’atelier : Revel est à environ 155 km de Gerde à vol d’oiseau.", "Profondeur de lecture des fiches, taux de conversion."),
     ]
     tend_html = "".join('<li class="strat-carte"><h3>%s</h3><p>%s</p><p class="strat-carte__source">%s</p></li>' % (t, a, b) for t, a, b in tendances)
     tech_html = "".join("""<li class="tech">
@@ -1740,10 +1876,11 @@ def strategie():
   <section class="strat-bloc" aria-labelledby="s-concept">
     <h2 id="s-concept">Le concept</h2>
     <div class="strat-deux">
-      <p>Le balisage blanc et rouge des sentiers pyrénéens sert de fil conducteur. Il marque la progression : les quatre étapes du quiz, la jauge vers la livraison offerte, le logo. Le rouge est réservé aux boutons d’action, il n’y en a qu’un par écran.</p>
+      <p>Le balisage blanc et rouge des sentiers pyrénéens sert de fil conducteur. Il marque la progression : les quatre étapes du quiz, la jauge vers la livraison offerte, le logo. Le bouton rouge plein est réservé à l’action principale de l’écran ; les autres boutons sont blancs ou bleu nuit.</p>
       <p>Trois portes d’entrée mènent au panier : la boutique pour ceux qui savent, le quiz pour ceux qui hésitent, le guide de Noël pour ceux qui offrent. Le panier fait ensuite monter la commande : livraison offerte à deux plaques, Triptyque à trois, kit LED si la plaque n’en a pas.</p>
     </div>
     <p class="petit">Thème unique clair assumé : les photos des plaques ont des découpes blanches. Un mode sombre montrerait des trous blancs sur fond foncé.</p>
+    <p class="petit">Les histoires des modèles ont été réécrites en phrases factuelles (lieu, altitude, ce que montre la découpe) à partir des textes du site actuel : à relire. Le bouton « Masquer les notes jaunes » du bandeau permet de juger le rendu sans les étiquettes de maquette.</p>
     <ul class="strat-pages">%s</ul>
   </section>
 
@@ -1764,11 +1901,14 @@ def strategie():
       <li><strong>Pas de fausse urgence ni de fausse rareté.</strong> Aucun compte à rebours ni stock inventé (art. L121-2 et L121-4, 7° du Code de la consommation). La date limite de Noël est écrite en clair.</li>
       <li><strong>Le droit de rétractation de 14 jours est un droit légal.</strong> Il est présenté comme tel, jamais comme un avantage de la marque (art. L121-4, 10°). Un délai prolongé au 15 janvier serait, lui, un vrai geste commercial.</li>
       <li><strong>Prix et réductions.</strong> Pas de prix barré. Une réduction annoncée se réfère au prix le plus bas des 30 derniers jours (%s). Le Triptyque est une offre de lot, hors de ce champ selon une lecture professionnelle (%s), mais soumise à la loyauté (art. L121-1).</li>
-      <li><strong>Avis.</strong> Dire près des avis qu’ils sont publiés sans vérification d’achat, avec leur date et leur ordre de classement (%s ; %s). Ne jamais écrire « avis vérifiés » sans contrôle réel (art. L121-4, 27°).</li>
-      <li><strong>Lettre d’information et e-mail du quiz.</strong> Consentement préalable, case non cochée, désinscription simple (%s). Depuis le 14 juillet 2026, mesurer les ouvertures d’e-mails exige aussi un consentement (%s).</li>
-      <li><strong>Bouton de rétractation.</strong> Un bouton « Renoncer au contrat ici » est obligatoire depuis le 19 juin 2026 selon une analyse d’avocats (%s). Les articles exacts restent à vérifier.</li>
-      <li><strong>Sur mesure.</strong> Les biens nettement personnalisés sont exclus du droit de rétractation (%s) : la page sur mesure le dit.</li>
-      <li><strong>Origine et fabrication.</strong> La découpe est faite au laser par un sous-traitant à Revel : ne pas écrire « fait main » (art. L121-2).</li>
+      <li><strong>Avis.</strong> Dire près des avis qu’ils sont publiés sans vérification d’achat, avec la date de publication et la date de l’expérience, et l’ordre de classement (art. D111-17 ; %s ; %s). La date de l’expérience manque encore : chaque avis porte l’étiquette « à fournir ». Ne jamais présenter les auteurs comme des clients ni écrire « avis vérifiés » sans contrôle réel (art. L121-4, 27°).</li>
+      <li><strong>Lettre d’information et e-mail du quiz.</strong> Consentement préalable, case non cochée, désinscription simple (%s). Selon la recommandation de la CNIL du 14 avril 2026 (délibération n° 2026-042), les pixels de suivi dans les e-mails exigent le consentement, sauf pour mesurer la délivrabilité ; pour les adresses déjà collectées, trois mois pour informer les destinataires et leur permettre de s’opposer (%s).</li>
+      <li><strong>Bouton de rétractation.</strong> Un bouton « Renoncer au contrat ici », visible, accessible directement et disponible pendant tout le délai de rétractation, est obligatoire depuis le 19 juin 2026. Il vient de l’ordonnance n° 2026-2 du 5 janvier 2026, qui transpose la directive (UE) 2023/2673, et d’un décret du même jour (%s). Les articles exacts restent à vérifier avec un juriste.</li>
+      <li><strong>Sur mesure.</strong> Les biens nettement personnalisés sont exclus du droit de rétractation (%s), mais restent couverts par les garanties légales de conformité et des vices cachés : la page sur mesure le dit.</li>
+      <li><strong>Cadeaux.</strong> Le droit de rétractation appartient à l’acheteur ; le délai court à partir de la réception par la personne qu’il a désignée (art. L221-18). La loi ne prévoit pas d’échange : c’est une décision commerciale.</li>
+      <li><strong>Origine et fabrication.</strong> La découpe laser est faite à Revel (31) : ne pas écrire « fait main » (art. L121-2). L’affirmation « dans un rayon de 150 km » reste citée entre guillemets : Revel est à environ 155 km de l’atelier, il faut préciser le centre du rayon.</li>
+      <li><strong>Médiateur de la consommation.</strong> Ses coordonnées doivent figurer sur le site (art. L612-1 et L616-1). Elles manquent : la page contact porte l’étiquette « à fournir ».</li>
+      <li><strong>Étiquettes « Meilleure vente ».</strong> Elles sont reprises du site actuel. À garder seulement si elles reflètent les ventes réelles.</li>
       <li><strong>Balisage blanc et rouge.</strong> Le motif est un clin d’œil graphique, sans sigle ni logo de la Fédération française de randonnée. Point à vérifier avant publication : la fédération protège ses marques de balisage.</li>
       <li><strong>Polices.</strong> La maquette charge Google Fonts. Un tribunal de Munich a condamné en 2022 un site qui transmettait ainsi l’adresse IP des visiteurs (%s). Sur le vrai site, héberger les deux polices soi-même.</li>
       <li><strong>Accessibilité.</strong> Les micro-entreprises de services sont a priori exemptées de l’European Accessibility Act (%s). La maquette vise quand même le niveau AA : focus visible, cibles de 24 px au moins, contrastes, mouvement réduit.</li>
@@ -1791,17 +1931,23 @@ def strategie():
           <li>La fixation conseillée en extérieur.</li>
           <li>Les liens Instagram et Facebook.</li>
           <li>Les règles de modération des avis et votre délai de réponse habituel.</li>
+          <li>La date d’achat ou de réception pour chaque avis.</li>
+          <li>Le nom et le site du médiateur de la consommation.</li>
+          <li>Le centre du rayon de 150 km cité pour la fabrication.</li>
+          <li>Les ventes réelles derrière les étiquettes « Meilleure vente ».</li>
+          <li>Une photo d’une série professionnelle, si vous en avez une.</li>
         </ul>
       </div>
       <div>
         <h3>Décisions commerciales</h3>
         <ul class="strat-liste">
-          <li>Seuil de livraison offerte : 130 €, soit deux plaques.</li>
+          <li>Seuil de livraison offerte : 130 € d’articles livrés (plaques et kits LED, hors carte cadeau), soit deux plaques.</li>
           <li>Remise Triptyque : 10 %%, soit 175,50 € les trois.</li>
-          <li>Date limite de commande pour Noël : lundi 14 décembre 2026.</li>
+          <li>Date limite de commande pour Noël : au plus tard le lundi 14 décembre 2026.</li>
+          <li>Ouverture du guide de Noël : le 1er novembre.</li>
           <li>Black Friday du 27 novembre : pas de remise, prix stable.</li>
-          <li>Retours prolongés jusqu’au 15 janvier 2027 pour les cadeaux.</li>
-          <li>Carte cadeau de 80 € (plaque et kit LED), et sa prise en compte dans le seuil de livraison.</li>
+          <li>Retours prolongés jusqu’au 15 janvier 2027 pour les cadeaux, et échange proposé ou non.</li>
+          <li>Carte cadeau de 80 € (plaque et kit LED), non prise en compte dans le seuil de livraison.</li>
           <li>Options cadeau : message joint et prix masqués.</li>
           <li>Jour de sortie des plaques exclusives : le premier jeudi du mois.</li>
         </ul>
@@ -1850,12 +1996,16 @@ def catalogue_js():
                 fins[f] = photo(p["slug"], f) if a_photo(p["slug"], f) else None
         donnees[p["slug"]] = {
             "nom": p["nom"], "prix": p["prix"], "collection": p["collection"], "best": bool(p["best"]),
-            "cartel": " · ".join(p["cartel"]) if p["cartel"] else "", "fins": fins,
+            "cartel": " · ".join(p["cartel"]) if p["cartel"] else "", "fins": fins,
             "srcset": {f: srcset(p["slug"], f) for f in fins if fins[f]},
             "dims": {f: TAILLES[fins[f]] for f in fins if fins[f]},
             "nbAvis": len(p["avis"]), "moyenne": round(moyenne(p), 1),
         }
-    config = {"img": IMG, "dimsImg": {k: TAILLES[k] for k in ("led/led-img0.webp", "led/led-img1.webp", "misc/carte-cadeau.webp")}, "seuil": SEUIL, "remise": REMISE, "prixLed": PRIX_LED, "prixPlaque": PRIX_PLAQUE,
+    vignettes = {}
+    for k in ("led/led-img0.webp", "led/led-img1.webp", "misc/carte-cadeau.webp"):
+        src, w, h = petite(k)
+        vignettes[k] = [src, w, h]
+    config = {"img": IMG, "vignettes": vignettes, "seuil": SEUIL, "remise": REMISE, "prixLed": PRIX_LED, "prixPlaque": PRIX_PLAQUE,
               "produits": donnees, "moyenne": round(MOYENNE, 1), "nbAvis": NB_AVIS}
     texte = ("/* Généré par build.py : ne pas modifier à la main. */\nwindow.TG = "
              + json.dumps(config, ensure_ascii=False, indent=1) + ";\n")

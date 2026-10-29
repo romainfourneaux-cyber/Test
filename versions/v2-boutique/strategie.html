@@ -7,6 +7,7 @@
 <meta name="description" content="Note pour Romain : concept, tendances, techniques marketing, points légaux et informations à fournir pour la version 2 de la maquette Terre Gravée.">
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#ffffff">
+<script>try { if (window.localStorage.getItem("tg-v2-notes") === "masquees") document.documentElement.classList.add("sans-notes"); } catch (e) {}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&amp;family=Figtree:ital,wght@0,400..700;1,400&amp;display=swap">
@@ -14,7 +15,7 @@
 </head>
 <body class="page-strat">
 <a class="lien-evitement" href="#contenu">Aller au contenu</a>
-<div class="bandeau-maq" role="note"><div class="wrap bandeau-maq__in"><p><strong>Maquette version 2 · brouillon non publié · paiements désactivés</strong></p><p class="bandeau-maq__liens"><a href="strategie.html">Lire la stratégie</a><a href="../index.html">Comparer les versions</a></p></div></div>
+<div class="bandeau-maq" role="note"><div class="wrap bandeau-maq__in"><p><strong>Maquette version 2 · brouillon non publié · paiements désactivés</strong></p><p class="bandeau-maq__liens"><a href="strategie.html">Lire la stratégie</a><a href="../index.html">Comparer les versions</a><button type="button" class="bandeau-maq__notes" data-notes aria-pressed="false">Masquer les notes jaunes</button></p></div></div>
 <header class="entete" data-entete>
   <div class="wrap entete__in">
     <a class="logo" href="index.html"><svg class="logo__marque" viewBox="0 0 40 40" aria-hidden="true" focusable="false"><rect width="40" height="40" rx="3" fill="#0E1D3A"/><rect x="8" y="11" width="24" height="7" fill="#fff"/><rect x="8" y="22" width="24" height="7" fill="#D0121F"/></svg><span class="logo__nom">Terre Gravée</span><span class="sr">, retour à l’accueil</span></a>
@@ -38,16 +39,17 @@
   <section class="strat-bloc" aria-labelledby="s-concept">
     <h2 id="s-concept">Le concept</h2>
     <div class="strat-deux">
-      <p>Le balisage blanc et rouge des sentiers pyrénéens sert de fil conducteur. Il marque la progression : les quatre étapes du quiz, la jauge vers la livraison offerte, le logo. Le rouge est réservé aux boutons d’action, il n’y en a qu’un par écran.</p>
+      <p>Le balisage blanc et rouge des sentiers pyrénéens sert de fil conducteur. Il marque la progression : les quatre étapes du quiz, la jauge vers la livraison offerte, le logo. Le bouton rouge plein est réservé à l’action principale de l’écran ; les autres boutons sont blancs ou bleu nuit.</p>
       <p>Trois portes d’entrée mènent au panier : la boutique pour ceux qui savent, le quiz pour ceux qui hésitent, le guide de Noël pour ceux qui offrent. Le panier fait ensuite monter la commande : livraison offerte à deux plaques, Triptyque à trois, kit LED si la plaque n’en a pas.</p>
     </div>
     <p class="petit">Thème unique clair assumé : les photos des plaques ont des découpes blanches. Un mode sombre montrerait des trous blancs sur fond foncé.</p>
+    <p class="petit">Les histoires des modèles ont été réécrites en phrases factuelles (lieu, altitude, ce que montre la découpe) à partir des textes du site actuel : à relire. Le bouton « Masquer les notes jaunes » du bandeau permet de juger le rendu sans les étiquettes de maquette.</p>
     <ul class="strat-pages"><li><a href="index.html">index.html</a><span>Accueil en bento hiérarchisé</span></li><li><a href="collection.html">collection.html</a><span>Boutique filtrable, ajout rapide</span></li><li><a href="produit-le-pic-du-midi.html">produit-le-pic-du-midi.html</a><span>Fiche produit type</span></li><li><a href="produit-le-cerf.html">produit-le-cerf.html</a><span>Fiche avec une finition sans photo</span></li><li><a href="produit-led.html">produit-led.html</a><span>Kit LED et notice</span></li><li><a href="produit-carte-cadeau.html">produit-carte-cadeau.html</a><span>Carte cadeau</span></li><li><a href="quiz.html">quiz.html</a><span>Page signature : quiz</span></li><li><a href="noel.html">noel.html</a><span>Page signature : guide de Noël</span></li><li><a href="triptyque.html">triptyque.html</a><span>Composeur de Triptyque</span></li><li><a href="sur-mesure.html">sur-mesure.html</a><span>Sur mesure et séries</span></li><li><a href="contact.html">contact.html</a><span>Aide et contact</span></li></ul>
   </section>
 
   <section class="strat-bloc" aria-labelledby="s-tendances">
     <h2 id="s-tendances">Les tendances utilisées</h2>
-    <ul class="strat-grille"><li class="strat-carte"><h3>Bento hiérarchisé</h3><p>L’accueil et la page sur mesure utilisent des cases de tailles différentes, ordonnées comme un tunnel sur mobile : héros, quiz, note, preuve réelle, lot, option LED, Noël, retours.</p><p class="strat-carte__source">Le bento ne marche que si la taille des cases suit leur importance (<a href="https://bubble.io/blog/web-design-trends/">Bubble</a>). Il est devenu banal à cases égales (<a href="https://www.creativeboom.com/insight/10-trends-creatives-are-so-over-in-2026/">Creative Boom</a>), d’où des tailles et des rayons volontairement inégaux.</p></li><li class="strat-carte"><h3>Blanc structurant, rouge du balisage</h3><p>Fond blanc pur, bleu nuit pour le texte, rouge réservé aux actions et aux repères de progression. Le motif blanc et rouge des sentiers de grande randonnée sert de système : étapes du quiz, jauge de livraison offerte, logo.</p><p class="strat-carte__source">Pantone a choisi un blanc, Cloud Dancer, pour 2026 (<a href="https://www.smithsonianmag.com/smart-news/pantones-color-of-the-year-for-2026-is-a-blank-canvas-called-cloud-dancer-or-in-other-words-white-180987805/">Smithsonian</a>). Pour ne pas ressembler à tout le monde, le blanc est associé au rouge du balisage pyrénéen.</p></li><li class="strat-carte"><h3>Typographie</h3><p>Bricolage Grotesque en largeur 75 et graisses 700 à 800 pour les titres, Figtree pour le texte. Deux familles seulement.</p><p class="strat-carte__source">Bricolage Grotesque est très vue sur les pages SaaS (<a href="https://www.afontfinder.com/blog/bricolage-grotesque-review">A Font Finder</a>) : la version étroite et grasse lui donne un air de panneau de sentier. Figtree est une sans calme (<a href="https://www.gleamstudio.design/blog-post/font-trends-2026">Gleam Studio</a>). <code>text-wrap: balance</code> sur les titres (<a href="https://web-platform-dx.github.io/web-features-explorer/features/text-wrap-balance/">web-features</a>).</p></li><li class="strat-carte"><h3>Commerce honnête</h3><p>Aucun compte à rebours, aucun faux stock, aucun prix barré. La seule rareté affichée est réelle : la série numérotée.</p><p class="strat-carte__source">La consultation européenne sur le futur Digital Fairness Act vise les comptes à rebours et les fausses raretés (<a href="https://www.osborneclarke.com/insights/digital-fairness-act-unpacked-dark-patterns">Osborne Clarke</a>).</p></li><li class="strat-carte"><h3>Interface discrète et rapide</h3><p>Filets fins, pas d’ombres lourdes, pas de <code>backdrop-filter</code>, aucune bibliothèque JavaScript. Images WebP avec dimensions.</p><p class="strat-carte__source">Le <code>backdrop-filter</code> coûte cher sur Android milieu de gamme et pose problème sous iOS 26 (<a href="https://dev.to/studiomeyer_io/web-design-trends-2026-what-actually-held-up-after-six-months-23p8">StudioMeyer</a>, données d’agence ; <a href="https://gist.github.com/alessiomaffeis/41224fad0df2bb722db13473091f0933">gist</a>, source faible). Objectifs Core Web Vitals : LCP ≤ 2,5 s, INP ≤ 200 ms, CLS ≤ 0,1 (<a href="https://web.dev/articles/vitals">web.dev</a>).</p></li><li class="strat-carte"><h3>Barre d’achat collante, seulement sur les fiches</h3><p>Sur téléphone, la barre apparaît quand le bouton principal sort de l’écran. Elle contient les finitions, le total et le bouton.</p><p class="strat-carte__source">Elle ne gagne que dans une minorité de tests, et seulement si elle permet de finir le choix (<a href="https://cleancommit.io/blog/sticky-add-to-cart-buttons/">Cleancommit</a> ; <a href="https://www.goodui.org/patterns/41">GoodUI</a>). Elle n’apparaît donc ni sur l’accueil ni sur la boutique.</p></li><li class="strat-carte"><h3>Transitions entre pages, en bonus</h3><p><code>@view-transition</code> activé hors mouvement réduit : fondu entre les pages sous Chrome, Edge et Safari 18.2, navigation normale ailleurs.</p><p class="strat-carte__source">Support des transitions entre documents (<a href="https://web-platform-dx.github.io/web-features-explorer/features/cross-document-view-transitions/">web-features</a>).</p></li><li class="strat-carte"><h3>Lisible par les machines</h3><p>Données structurées JSON-LD (Organization, Product, AggregateRating) et HTML sémantique.</p><p class="strat-carte__source">Structure lisible par les agents IA (<a href="https://bubble.io/blog/web-design-trends/">Bubble</a>). Les étoiles Google exigent des avis visibles et non rémunérés en secret (<a href="https://developers.google.com/search/docs/appearance/structured-data/review-snippet">Google</a>).</p></li></ul>
+    <ul class="strat-grille"><li class="strat-carte"><h3>Bento hiérarchisé</h3><p>L’accueil et la page sur mesure utilisent des cases de tailles différentes, ordonnées comme un tunnel sur mobile : héros, quiz, Noël pendant la campagne, preuve réelle, note et série, lot, option LED, retours.</p><p class="strat-carte__source">Le bento ne marche que si la taille des cases suit leur importance (<a href="https://bubble.io/blog/web-design-trends/">Bubble</a>). Il est devenu banal à cases égales (<a href="https://www.creativeboom.com/insight/10-trends-creatives-are-so-over-in-2026/">Creative Boom</a>), d’où des tailles et des rayons volontairement inégaux.</p></li><li class="strat-carte"><h3>Blanc structurant, rouge du balisage</h3><p>Fond blanc pur, bleu nuit pour le texte, rouge réservé aux actions et aux repères de progression. Le motif blanc et rouge des sentiers de grande randonnée sert de système : étapes du quiz, jauge de livraison offerte, logo.</p><p class="strat-carte__source">Pantone a choisi un blanc, Cloud Dancer, pour 2026 (<a href="https://www.smithsonianmag.com/smart-news/pantones-color-of-the-year-for-2026-is-a-blank-canvas-called-cloud-dancer-or-in-other-words-white-180987805/">Smithsonian</a>). Pour ne pas ressembler à tout le monde, le blanc est associé au rouge du balisage pyrénéen.</p></li><li class="strat-carte"><h3>Typographie</h3><p>Bricolage Grotesque en largeur 75 et graisses 700 à 800 pour les titres, Figtree pour le texte. Deux familles seulement.</p><p class="strat-carte__source">Bricolage Grotesque est très répandue sur les pages SaaS (<a href="https://www.afontfinder.com/blog/bricolage-grotesque-review">A Font Finder</a>) : la version étroite et grasse lui donne un air de panneau de sentier. Figtree est une linéale sobre (<a href="https://www.gleamstudio.design/blog-post/font-trends-2026">Gleam Studio</a>). <code>text-wrap: balance</code> sur les titres (<a href="https://web-platform-dx.github.io/web-features-explorer/features/text-wrap-balance/">web-features</a>).</p></li><li class="strat-carte"><h3>Commerce honnête</h3><p>Aucun compte à rebours, aucun faux stock, aucun prix barré. La seule rareté affichée est réelle : la série numérotée.</p><p class="strat-carte__source">La consultation européenne sur le futur Digital Fairness Act vise les comptes à rebours et les fausses raretés (<a href="https://www.osborneclarke.com/insights/digital-fairness-act-unpacked-dark-patterns">Osborne Clarke</a>).</p></li><li class="strat-carte"><h3>Interface discrète et rapide</h3><p>Filets fins, pas d’ombres lourdes, pas de <code>backdrop-filter</code>, aucune bibliothèque JavaScript. Images WebP avec dimensions.</p><p class="strat-carte__source">Le <code>backdrop-filter</code> coûte cher sur Android milieu de gamme et pose problème sous iOS 26 (<a href="https://dev.to/studiomeyer_io/web-design-trends-2026-what-actually-held-up-after-six-months-23p8">StudioMeyer</a>, données d’agence ; <a href="https://gist.github.com/alessiomaffeis/41224fad0df2bb722db13473091f0933">gist</a>, source faible). Objectifs Core Web Vitals : LCP ≤ 2,5 s, INP ≤ 200 ms, CLS ≤ 0,1 (<a href="https://web.dev/articles/vitals">web.dev</a>).</p></li><li class="strat-carte"><h3>Barre d’achat collante, seulement sur les fiches</h3><p>Sur téléphone, la barre apparaît quand le bouton principal sort de l’écran. Elle contient les finitions, le total et le bouton.</p><p class="strat-carte__source">Elle ne gagne que dans une minorité de tests, et seulement si elle permet de finir le choix (<a href="https://cleancommit.io/blog/sticky-add-to-cart-buttons/">Cleancommit</a> ; <a href="https://www.goodui.org/patterns/41">GoodUI</a>). Elle n’apparaît donc ni sur l’accueil ni sur la boutique.</p></li><li class="strat-carte"><h3>Transitions entre pages, en bonus</h3><p><code>@view-transition</code> activé hors mouvement réduit : fondu entre les pages sous Chrome, Edge et Safari 18.2, navigation normale ailleurs.</p><p class="strat-carte__source">Support des transitions entre documents (<a href="https://web-platform-dx.github.io/web-features-explorer/features/cross-document-view-transitions/">web-features</a>).</p></li><li class="strat-carte"><h3>Lisible par les machines</h3><p>Données structurées JSON-LD (Organization, Product, AggregateRating) et HTML sémantique.</p><p class="strat-carte__source">Structure lisible par les agents IA (<a href="https://bubble.io/blog/web-design-trends/">Bubble</a>). Les étoiles Google exigent des avis visibles et non rémunérés en secret (<a href="https://developers.google.com/search/docs/appearance/structured-data/review-snippet">Google</a>).</p></li></ul>
   </section>
 
   <section class="strat-bloc" aria-labelledby="s-techniques">
@@ -57,7 +59,7 @@
   <h3>Vente guidée par quiz</h3>
   <dl>
     <div><dt>Où</dt><dd>quiz.html, case de l’accueil, tuile dans la boutique, fiche carte cadeau</dd></div>
-    <div><dt>Pourquoi</dt><dd>Quand on ne sait pas ce qu’on préfère, trop de choix bloque l’achat (<a href="https://www.kellogg.northwestern.edu/faculty/research/detail/2015/when-product-assortment-leads-to-choice-overload-a-conceptual">Chernev et al., 2015</a>). Les utilisateurs refusent de donner leur e-mail avant le résultat et veulent un résultat précis et modifiable (<a href="https://www.nngroup.com/articles/calculator-expectations/">NN/g</a>), avec des étapes visibles et un retour arrière (<a href="https://www.nngroup.com/articles/wizards/">NN/g</a>). Chiffres d’éditeur, preuve faible : 69 % de complétion et panier plus élevé de 11 à 15 % (<a href="https://revenuehunt.com/state-of-product-recommendation-quizzes/">RevenueHunt</a>).</dd></div>
+    <div><dt>Pourquoi</dt><dd>Quand on ne sait pas ce qu’on préfère, trop de choix bloque l’achat (<a href="https://www.kellogg.northwestern.edu/faculty/research/detail/2015/when-product-assortment-leads-to-choice-overload-a-conceptual">Chernev et al., 2015</a>). Les utilisateurs sont particulièrement agacés quand on exige leurs coordonnées avant le résultat, et ils ajustent leurs réponses pour explorer (<a href="https://www.nngroup.com/articles/calculator-expectations/">NN/g</a>) ; des étapes visibles et un retour arrière sont recommandés (<a href="https://www.nngroup.com/articles/wizards/">NN/g</a>). Chiffres d’éditeur, preuve faible : 69 % de complétion et panier plus élevé de 11 à 15 % (<a href="https://revenuehunt.com/state-of-product-recommendation-quizzes/">RevenueHunt</a>).</dd></div>
     <div><dt>À valider</dt><dd>La logique de recommandation (quel modèle pour quelles réponses), le texte de consentement, l’outil d’envoi de l’e-mail facultatif.</dd></div>
     <div><dt>Indicateurs</dt><dd>Taux de démarrage, complétion par question, quiz vers ajout au panier, quiz vers commande, panier moyen des utilisateurs du quiz, taux d’acceptation de l’e-mail.</dd></div>
   </dl>
@@ -82,7 +84,7 @@
   <dl>
     <div><dt>Où</dt><dd>Jauge dans le panier, message dynamique sous le bouton des fiches, bandeau de garanties</dd></div>
     <div><dt>Pourquoi</dt><dd>Les seuils augmentent les ventes mais peuvent détruire la marge (<a href="https://ideas.repec.org/a/inm/ormksc/v25y2006i1p51-64.html">Lewis, Singh et Fay, 2006</a>). Le message « plus que X € » doit être près du bouton et dans le panier, pas seulement dans un bandeau (<a href="https://baymard.com/blog/avoid-banners-only-free-shipping">Baymard</a>). 130 € correspond à deux plaques.</dd></div>
-    <div><dt>À valider</dt><dd>Le seuil et le coût réel du port pour 2 et 3 plaques.</dd></div>
+    <div><dt>À valider</dt><dd>Le seuil, la règle de calcul (articles livrés : plaques et kits LED, hors carte cadeau) et le coût réel du port pour 2 et 3 plaques.</dd></div>
     <div><dt>Indicateurs</dt><dd>Part des paniers au-dessus du seuil, panier moyen, coût du port et marge nette par commande.</dd></div>
   </dl>
 </li><li class="tech">
@@ -105,15 +107,15 @@
   <h3>Guide cadeaux de Noël par profil</h3>
   <dl>
     <div><dt>Où</dt><dd>noel.html, case de l’accueil</dd></div>
-    <div><dt>Pourquoi</dt><dd>Selon le baromètre Havas Market et YouGov d’octobre 2026, 66 % des Français prévoient l’essentiel de leurs achats avant le 1er décembre, et les frais de port (47 %) et les délais (46 %) pèsent dans le choix (<a href="https://www.e-marketing.fr/retail-1095/noel-2026-budget-en-hausse-mais-des-achats-sous-forte-contrainte-175794">e-marketing.fr</a>). Une date de livraison et une date limite de commande rassurent mieux qu’une vitesse (<a href="https://baymard.com/blog/shipping-speed-vs-delivery-date">Baymard</a>).</dd></div>
-    <div><dt>À valider</dt><dd>La date limite du lundi 14 décembre 2026 (aucune date officielle La Poste 2026 trouvée), les options cadeau, les retours prolongés au 15 janvier, la position « pas de remise » pour le Black Friday du 27 novembre.</dd></div>
+    <div><dt>Pourquoi</dt><dd>Selon le baromètre Havas Market réalisé avec YouGov (sondage des 6 et 7 octobre 2026 auprès de 1 004 Français), deux tiers des achats de Noël (66 %) sont programmés avant le 1er décembre, et novembre concentre à lui seul 55 % des intentions d’achat (<a href="https://www.e-marketing.fr/retail-1095/noel-2026-budget-en-hausse-mais-des-achats-sous-forte-contrainte-175794">e-marketing.fr</a>). Afficher une date de livraison estimée rassure mieux qu’une vitesse (<a href="https://baymard.com/blog/shipping-speed-vs-delivery-date">Baymard</a>) ; la date limite de commande en est la déclinaison pour Noël.</dd></div>
+    <div><dt>À valider</dt><dd>La date limite (au plus tard le lundi 14 décembre 2026 ; aucune date officielle La Poste 2026 trouvée), l’ouverture du guide le 1er novembre, les options cadeau, les retours prolongés au 15 janvier, la position « pas de remise » pour le Black Friday du 27 novembre.</dd></div>
     <div><dt>Indicateurs</dt><dd>Trafic et conversion par profil, part du chiffre d’affaires avant le 1er décembre, commandes livrées après Noël.</dd></div>
   </dl>
 </li><li class="tech">
   <h3>Options cadeau sur la fiche et dans le panier</h3>
   <dl>
     <div><dt>Où</dt><dd>« C’est pour offrir ? » sur chaque fiche, dans le panier et sur la page Noël</dd></div>
-    <div><dt>Pourquoi</dt><dd>78 % des sites ne montrent pas les options cadeau sur la fiche ; les acheteurs veulent surtout masquer les prix et ajouter un message (<a href="https://baymard.com/blog/gifting-flow">Baymard</a>).</dd></div>
+    <div><dt>Pourquoi</dt><dd>80 % des sites ne montrent pas les options cadeau sur la fiche ; les acheteurs veulent surtout masquer les prix et ajouter un message (<a href="https://baymard.com/blog/gifting-flow">Baymard</a>).</dd></div>
     <div><dt>À valider</dt><dd>La faisabilité dans WooCommerce (message et bon de livraison sans prix).</dd></div>
     <div><dt>Indicateurs</dt><dd>Part des commandes avec option cadeau.</dd></div>
   </dl>
@@ -122,7 +124,7 @@
   <dl>
     <div><dt>Où</dt><dd>Fiche carte cadeau, guide de Noël, panier, quiz</dd></div>
     <div><dt>Pourquoi</dt><dd>Au Royaume-Uni, 68 % des utilisateurs de cartes cadeaux dépensent plus que leur valeur (<a href="https://www.paymentsjournal.com/gift-cards-lead-to-even-more-consumer-spending/">GCVA via PaymentsJournal</a>, association professionnelle, preuve faible).</dd></div>
-    <div><dt>À valider</dt><dd>Le montant de 80 € (plaque et kit), la durée de validité, la prise en compte dans le seuil de livraison offerte.</dd></div>
+    <div><dt>À valider</dt><dd>Le montant de 80 € (plaque et kit), la durée de validité, et la règle proposée : la carte, envoyée par e-mail, n’entre pas dans le seuil de livraison offerte.</dd></div>
     <div><dt>Indicateurs</dt><dd>Ventes de cartes après la date limite, taux d’utilisation, dépense au-delà de la carte.</dd></div>
   </dl>
 </li><li class="tech">
@@ -130,7 +132,7 @@
   <dl>
     <div><dt>Où</dt><dd>Avis à côté du bouton et en bas de fiche, case de l’accueil, bento de 9 avis, photo réelle d’Aquensis</dd></div>
     <div><dt>Pourquoi</dt><dd>Les premiers avis font l’essentiel de l’effet et la probabilité d’achat culmine entre 4,0 et 4,7 étoiles (<a href="https://spiegel.medill.northwestern.edu/How-Online-Reviews-Influence-Sales">Spiegel Research Center</a>) : on affiche donc le nombre, la répartition, les dates et l’avis à 4 étoiles. Montrer des avis mixtes (<a href="https://www.nngroup.com/articles/ecommerce-product-pages/">NN/g</a>).</dd></div>
-    <div><dt>À valider</dt><dd>La mention de contrôle (aujourd’hui : sans vérification d’achat), les règles de modération, des réponses aux avis.</dd></div>
+    <div><dt>À valider</dt><dd>La mention de contrôle (aujourd’hui : sans vérification d’achat), la date de l’expérience (achat ou réception) de chaque avis, les règles de modération, des réponses aux avis.</dd></div>
     <div><dt>Indicateurs</dt><dd>Clics vers les avis, nouveaux avis par mois, part d’avis avec photo.</dd></div>
   </dl>
 </li><li class="tech">
@@ -153,8 +155,8 @@
   <h3>Fabrication visible</h3>
   <dl>
     <div><dt>Où</dt><dd>Le chemin d’une plaque sur l’accueil et les fiches</dd></div>
-    <div><dt>Pourquoi</dt><dd>Rendre le travail visible augmente la valeur perçue (<a href="https://ideas.repec.org/a/inm/ormnsc/v57y2011i9p1564-1579.html">Buell et Norton, 2011</a>). On écrit « découpé au laser », jamais « fait main ».</dd></div>
-    <div><dt>À valider</dt><dd>Les étapes et les lieux.</dd></div>
+    <div><dt>Pourquoi</dt><dd>Rendre le travail visible augmente la valeur perçue (<a href="https://ideas.repec.org/a/inm/ormnsc/v57y2011i9p1564-1579.html">Buell et Norton, 2011</a>). On écrit « découpé au laser », jamais « fait main ». Les fiches nomment les lieux réels plutôt que le rayon de 150 km.</dd></div>
+    <div><dt>À valider</dt><dd>Les étapes et les lieux, et le centre du rayon de 150 km cité par l’atelier : Revel est à environ 155 km de Gerde à vol d’oiseau.</dd></div>
     <div><dt>Indicateurs</dt><dd>Profondeur de lecture des fiches, taux de conversion.</dd></div>
   </dl>
 </li></ol>
@@ -166,11 +168,14 @@
       <li><strong>Pas de fausse urgence ni de fausse rareté.</strong> Aucun compte à rebours ni stock inventé (art. L121-2 et L121-4, 7° du Code de la consommation). La date limite de Noël est écrite en clair.</li>
       <li><strong>Le droit de rétractation de 14 jours est un droit légal.</strong> Il est présenté comme tel, jamais comme un avantage de la marque (art. L121-4, 10°). Un délai prolongé au 15 janvier serait, lui, un vrai geste commercial.</li>
       <li><strong>Prix et réductions.</strong> Pas de prix barré. Une réduction annoncée se réfère au prix le plus bas des 30 derniers jours (<a href="https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000044549592">art. L112-1-1</a>). Le Triptyque est une offre de lot, hors de ce champ selon une lecture professionnelle (<a href="https://www.medef.com/uploads/media/node/0019/100/14563-faq-annoncesreductionprix-medef-31052022.pdf">FAQ du MEDEF, 2022</a>), mais soumise à la loyauté (art. L121-1).</li>
-      <li><strong>Avis.</strong> Dire près des avis qu’ils sont publiés sans vérification d’achat, avec leur date et leur ordre de classement (<a href="https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000049571119">art. L111-7-2</a> ; <a href="https://www.legifrance.gouv.fr/jorf/id/JORFARTI000035720943">décret 2017-1436</a>). Ne jamais écrire « avis vérifiés » sans contrôle réel (art. L121-4, 27°).</li>
-      <li><strong>Lettre d’information et e-mail du quiz.</strong> Consentement préalable, case non cochée, désinscription simple (<a href="https://www.cnil.fr/fr/la-prospection-commerciale-par-courrier-electronique">CNIL</a>). Depuis le 14 juillet 2026, mesurer les ouvertures d’e-mails exige aussi un consentement (<a href="https://www.cnil.fr/fr/recommandation-pixel-suivi-courriels">CNIL, recommandation pixels</a>).</li>
-      <li><strong>Bouton de rétractation.</strong> Un bouton « Renoncer au contrat ici » est obligatoire depuis le 19 juin 2026 selon une analyse d’avocats (<a href="https://hlc.com/fr/publications/transposition-under-french-law-of-the-eu-mandatory-withdrawal-button-for-online-sales">Hogan Lovells</a>). Les articles exacts restent à vérifier.</li>
-      <li><strong>Sur mesure.</strong> Les biens nettement personnalisés sont exclus du droit de rétractation (<a href="https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000044563170">art. L221-28, 3°</a>) : la page sur mesure le dit.</li>
-      <li><strong>Origine et fabrication.</strong> La découpe est faite au laser par un sous-traitant à Revel : ne pas écrire « fait main » (art. L121-2).</li>
+      <li><strong>Avis.</strong> Dire près des avis qu’ils sont publiés sans vérification d’achat, avec la date de publication et la date de l’expérience, et l’ordre de classement (art. D111-17 ; <a href="https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000049571119">art. L111-7-2</a> ; <a href="https://www.legifrance.gouv.fr/jorf/id/JORFARTI000035720943">décret 2017-1436</a>). La date de l’expérience manque encore : chaque avis porte l’étiquette « à fournir ». Ne jamais présenter les auteurs comme des clients ni écrire « avis vérifiés » sans contrôle réel (art. L121-4, 27°).</li>
+      <li><strong>Lettre d’information et e-mail du quiz.</strong> Consentement préalable, case non cochée, désinscription simple (<a href="https://www.cnil.fr/fr/la-prospection-commerciale-par-courrier-electronique">CNIL</a>). Selon la recommandation de la CNIL du 14 avril 2026 (délibération n° 2026-042), les pixels de suivi dans les e-mails exigent le consentement, sauf pour mesurer la délivrabilité ; pour les adresses déjà collectées, trois mois pour informer les destinataires et leur permettre de s’opposer (<a href="https://www.cnil.fr/fr/recommandation-pixel-suivi-courriels">CNIL, recommandation pixels</a>).</li>
+      <li><strong>Bouton de rétractation.</strong> Un bouton « Renoncer au contrat ici », visible, accessible directement et disponible pendant tout le délai de rétractation, est obligatoire depuis le 19 juin 2026. Il vient de l’ordonnance n° 2026-2 du 5 janvier 2026, qui transpose la directive (UE) 2023/2673, et d’un décret du même jour (<a href="https://hlc.com/fr/publications/transposition-under-french-law-of-the-eu-mandatory-withdrawal-button-for-online-sales">Hogan Lovells</a>). Les articles exacts restent à vérifier avec un juriste.</li>
+      <li><strong>Sur mesure.</strong> Les biens nettement personnalisés sont exclus du droit de rétractation (<a href="https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000044563170">art. L221-28, 3°</a>), mais restent couverts par les garanties légales de conformité et des vices cachés : la page sur mesure le dit.</li>
+      <li><strong>Cadeaux.</strong> Le droit de rétractation appartient à l’acheteur ; le délai court à partir de la réception par la personne qu’il a désignée (art. L221-18). La loi ne prévoit pas d’échange : c’est une décision commerciale.</li>
+      <li><strong>Origine et fabrication.</strong> La découpe laser est faite à Revel (31) : ne pas écrire « fait main » (art. L121-2). L’affirmation « dans un rayon de 150 km » reste citée entre guillemets : Revel est à environ 155 km de l’atelier, il faut préciser le centre du rayon.</li>
+      <li><strong>Médiateur de la consommation.</strong> Ses coordonnées doivent figurer sur le site (art. L612-1 et L616-1). Elles manquent : la page contact porte l’étiquette « à fournir ».</li>
+      <li><strong>Étiquettes « Meilleure vente ».</strong> Elles sont reprises du site actuel. À garder seulement si elles reflètent les ventes réelles.</li>
       <li><strong>Balisage blanc et rouge.</strong> Le motif est un clin d’œil graphique, sans sigle ni logo de la Fédération française de randonnée. Point à vérifier avant publication : la fédération protège ses marques de balisage.</li>
       <li><strong>Polices.</strong> La maquette charge Google Fonts. Un tribunal de Munich a condamné en 2022 un site qui transmettait ainsi l’adresse IP des visiteurs (<a href="https://thehackernews.com/2022/01/german-court-rules-websites-embedding.html">The Hacker News</a>). Sur le vrai site, héberger les deux polices soi-même.</li>
       <li><strong>Accessibilité.</strong> Les micro-entreprises de services sont a priori exemptées de l’European Accessibility Act (<a href="https://www.ccpc.ie/business/enforcement/accessibility/european-accessibility-act-guidelines-for-microenterprises/">CCPC</a>). La maquette vise quand même le niveau AA : focus visible, cibles de 24 px au moins, contrastes, mouvement réduit.</li>
@@ -193,17 +198,23 @@
           <li>La fixation conseillée en extérieur.</li>
           <li>Les liens Instagram et Facebook.</li>
           <li>Les règles de modération des avis et votre délai de réponse habituel.</li>
+          <li>La date d’achat ou de réception pour chaque avis.</li>
+          <li>Le nom et le site du médiateur de la consommation.</li>
+          <li>Le centre du rayon de 150 km cité pour la fabrication.</li>
+          <li>Les ventes réelles derrière les étiquettes « Meilleure vente ».</li>
+          <li>Une photo d’une série professionnelle, si vous en avez une.</li>
         </ul>
       </div>
       <div>
         <h3>Décisions commerciales</h3>
         <ul class="strat-liste">
-          <li>Seuil de livraison offerte : 130 €, soit deux plaques.</li>
+          <li>Seuil de livraison offerte : 130 € d’articles livrés (plaques et kits LED, hors carte cadeau), soit deux plaques.</li>
           <li>Remise Triptyque : 10 %, soit 175,50 € les trois.</li>
-          <li>Date limite de commande pour Noël : lundi 14 décembre 2026.</li>
+          <li>Date limite de commande pour Noël : au plus tard le lundi 14 décembre 2026.</li>
+          <li>Ouverture du guide de Noël : le 1er novembre.</li>
           <li>Black Friday du 27 novembre : pas de remise, prix stable.</li>
-          <li>Retours prolongés jusqu’au 15 janvier 2027 pour les cadeaux.</li>
-          <li>Carte cadeau de 80 € (plaque et kit LED), et sa prise en compte dans le seuil de livraison.</li>
+          <li>Retours prolongés jusqu’au 15 janvier 2027 pour les cadeaux, et échange proposé ou non.</li>
+          <li>Carte cadeau de 80 € (plaque et kit LED), non prise en compte dans le seuil de livraison.</li>
           <li>Options cadeau : message joint et prix masqués.</li>
           <li>Jour de sortie des plaques exclusives : le premier jeudi du mois.</li>
         </ul>
@@ -245,11 +256,11 @@
       <li><a href="produit-carte-cadeau.html">Carte cadeau</a></li>
     </ul></nav>
     <nav aria-label="Aide"><h2>Aide</h2><ul>
-      <li><a href="quiz.html">Quiz : quelle plaque choisir ?</a></li>
-      <li><a href="noel.html">Guide cadeaux de Noël</a></li>
-      <li><a href="contact.html#livraison">Livraison et retours</a></li>
-      <li><a href="contact.html#avis-gestion">Comment nous gérons les avis</a></li>
-      <li><a href="sur-mesure.html">Sur mesure et séries</a></li>
+      <li><a href="quiz.html">Quiz</a></li>
+      <li><a href="noel.html">Guide de Noël</a></li>
+      <li><a href="contact.html#livraison">Livraison, retours</a></li>
+      <li><a href="contact.html#avis-gestion">Gestion des avis</a></li>
+      <li><a href="sur-mesure.html">Sur mesure</a></li>
       <li><a href="contact.html">Contact</a></li>
     </ul></nav>
     <div><h2>Suivre l’atelier</h2><ul>
@@ -273,9 +284,9 @@
     </div>
     <div class="panier__defile">
       <div class="panier__livraison" data-panier-livraison>
-        <p class="panier__livraison-msg" data-livraison-msg>Livraison offerte dès 130 € de plaques.</p>
+        <p class="panier__livraison-msg" data-livraison-msg>Livraison offerte dès 130 € d’articles livrés.</p>
         <div class="jauge" data-jauge aria-hidden="true"><span class="jauge__rempli"></span><span class="jauge__seuil">130 €</span></div>
-        <p class="petit"><span class="note-maq note-maq--valider">seuil de 130 € : proposition à valider</span></p>
+        <p class="petit">Hors carte cadeau, envoyée par e-mail. <span class="note-maq note-maq--valider">seuil de 130 € : proposition à valider</span></p>
       </div>
       <ul class="panier__liste" data-panier-liste></ul>
       <div class="panier__suggestions" data-panier-suggestions></div>
@@ -287,16 +298,17 @@
           <p class="petit"><span class="note-maq note-maq--valider">options cadeau : proposition à valider</span> Vous hésitez sur le modèle ? <a href="produit-carte-cadeau.html">La carte cadeau</a> vaut une plaque au choix.</p>
         </div>
       </details>
+      <p class="petit panier__paiement">Sur le site : carte bancaire (Stripe), PayPal (y compris en 4 fois sans frais dès 20 € d’achat, sous réserve d’acceptation par PayPal), Apple Pay et Google Pay. Commande sans création de compte <span class="note-maq note-maq--fournir">à confirmer : commande sans compte</span></p>
     </div>
     <div class="panier__bas">
       <dl class="panier__totaux">
         <div><dt>Sous-total</dt><dd data-sous-total>0&nbsp;€</dd></div>
-        <div data-ligne-remise hidden><dt>Remise Triptyque <span class="petit">(<span class="note-maq note-maq--valider">−10 % : proposition à valider</span>)</span></dt><dd data-remise>0&nbsp;€</dd></div>
+        <div data-ligne-remise hidden><dt>Remise Triptyque <span class="note-maq note-maq--valider">−10 % : proposition à valider</span></dt><dd data-remise>0&nbsp;€</dd></div>
         <div><dt>Livraison</dt><dd data-port>Selon poids et destination</dd></div>
         <div class="panier__total"><dt>Total estimé</dt><dd data-total-panier>0&nbsp;€</dd></div>
       </dl>
       <button type="button" class="btn btn--action btn--plein" disabled aria-describedby="note-commande">Commander</button>
-      <p class="petit" id="note-commande">Maquette : la commande est désactivée. Sur le site : commande sans création de compte, carte bancaire (Stripe), PayPal (y compris en 4 fois sans frais), Apple Pay et Google Pay.</p>
+      <p class="petit panier__note" id="note-commande">Maquette : la commande est désactivée.</p>
     </div>
   </div>
 </dialog>

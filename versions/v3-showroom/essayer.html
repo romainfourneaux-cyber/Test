@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Essayer une plaque sur votre mur · Terre Gravée (maquette v3)</title>
+<meta name="description" content="Visualiseur Terre Gravée : posez une plaque de 60 × 30 cm sur un mur d’exemple ou sur la photo de votre mur, à l’échelle, de jour ou rétroéclairée.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#060a14">
+<script>(function(){try{var c=localStorage.getItem("tg3-led"),m={"bleu": ["#5cb8ff", "92 184 255"], "blanc": ["#eef2ff", "238 242 255"], "vert": ["#5fe39a", "95 227 154"], "rouge": ["#ff6464", "255 100 100"], "violet": ["#b88cff", "184 140 255"], "orange": ["#ffa24c", "255 162 76"]};if(m[c]){var r=document.documentElement;r.style.setProperty("--led",m[c][0]);r.style.setProperty("--led-rgb",m[c][1]);r.setAttribute("data-led",c);}}catch(e){}})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&amp;family=Manrope:wght@400;500;600;700;800&amp;family=Unbounded:wght@400;500;600&amp;display=swap">
+<link rel="stylesheet" href="assets/showroom.css">
+</head>
+<body>
+<a class="lien-evitement" href="#contenu">Aller au contenu</a>
+<div class="bandeau-maquette"><div class="cadre"><p>Maquette version 3 · brouillon non publié · paiements désactivés</p><nav aria-label="Maquette"><a href="strategie.html">La stratégie</a><a href="../index.html">Comparer les versions</a></nav></div></div>
+<header class="entete">
+  <div class="cadre">
+    <a class="marque" href="index.html" aria-label="Terre Gravée, accueil"><svg viewBox="0 0 22 40" aria-hidden="true" focusable="false"><rect x="1" y="1" width="20" height="38" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3.6 34 8.6 23.5l2.4 3.2 3-8.2 4.6 15.5Z" fill="currentColor"/><rect x="13.5" y="13" width="1.1" height="5.6" fill="currentColor"/><circle class="marque__etoile" cx="6.6" cy="8.4" r="1.5"/></svg><span class="marque__nom" aria-hidden="true">TERRE GRAVÉE<small>Graver l’âme des territoires</small></span></a>
+    <nav class="nav" id="nav-principale" aria-label="Navigation principale"><a href="collection.html">La galerie</a><a href="essayer.html" class="nav__essai" aria-current="page">Essayer chez moi</a><a href="produit-led.html">Kit LED</a><a href="sur-mesure.html">Sur mesure</a><a href="contact.html">Contact</a></nav>
+    <div class="entete__actions">
+      <button type="button" class="bouton-icone bouton-panier" data-ouvrir-panier><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8ZM9 8V6a3 3 0 0 1 6 0v2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg><span class="bouton-panier__texte" aria-hidden="true">Panier</span><span class="vh">Ouvrir le panier, articles :</span><span class="compteur">0</span></button>
+      <button type="button" class="bouton-icone bouton-menu" aria-expanded="false" aria-controls="nav-principale"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 7h16M4 12h16M4 17h10" stroke="currentColor" stroke-width="1.6" fill="none"/></svg><span class="vh">Menu</span></button>
+    </div>
+  </div>
+</header>
+<main id="contenu">
+
+<div class="cadre">
+  <header class="entete-page" style="padding-bottom:20px">
+    <p class="surtitre">Essayer chez moi</p>
+    <h1>Votre mur, la plaque, à l’échelle</h1>
+    <p class="chapo">Choisissez un mur d’exemple ou importez une photo du vôtre. Placez la plaque, allumez-la, partagez le résultat.</p>
+  </header>
+  <div class="essai" data-essai>
+    <div class="essai__visuel">
+      <div class="essai__scene avec-cotes" id="scene-essai">
+        <div class="mur mur--platre" data-mur></div>
+        <img class="photo-mur" data-photo width="1600" height="1200" alt="Votre photo de mur, affichée seulement sur cet appareil" hidden>
+        <div class="plinthe" data-decor></div>
+        <div class="meuble" data-decor aria-hidden="true"><div class="meuble__corps"></div><span class="meuble__pied meuble__pied--g"></span><span class="meuble__pied meuble__pied--d"></span><span class="meuble__vase"></span><span class="meuble__livres"></span></div>
+        <div class="plaque-mobile" data-plaque tabindex="0" role="group" aria-roledescription="plaque déplaçable" aria-label="Plaque Le Pic du Midi" aria-describedby="aide-plaque"><div class="emplacement plaque-cotee"><div class="plaque fin-noir"><img class="plaque__jour" src="../../maquette/assets/img/p/le-pic-du-midi-noir-440.webp" srcset="../../maquette/assets/img/p/le-pic-du-midi-noir-440.webp 440w, ../../maquette/assets/img/p/le-pic-du-midi-noir-880.webp 880w" sizes="(max-width: 1000px) 30vw, 180px" width="440" height="873" alt="Plaque Le Pic du Midi, finition noire" fetchpriority="high" decoding="async"><img class="plaque__nuit sil-noir" src="../../maquette/assets/img/p/le-pic-du-midi-noir-440.webp" srcset="../../maquette/assets/img/p/le-pic-du-midi-noir-440.webp 440w, ../../maquette/assets/img/p/le-pic-du-midi-noir-880.webp 880w" sizes="(max-width: 1000px) 30vw, 180px" width="440" height="873" alt="Plaque Le Pic du Midi rétroéclairée, simulation" loading="lazy" decoding="async"></div><div class="plaque plaque--vide" role="img" aria-label="Photo de la plaque Le Pic du Midi en finition noire à venir" hidden><span data-texte-vide>Le Pic du Midi en finition noire : photo à venir</span><span class="marqueur">photo à fournir</span></div><span class="cote cote--h" aria-hidden="true"><span data-cote-l>30 cm</span></span><span class="cote cote--v" aria-hidden="true"><span data-cote-h>60 cm</span></span></div></div>
+        <div class="barre-echelle" aria-hidden="true"><b data-barre-texte>1 m</b><span data-barre style="width:100px"></span></div>
+        <div class="repere" data-repere hidden>
+          <svg aria-hidden="true" focusable="false"><line x1="0" y1="0" x2="0" y2="0"/></svg>
+          <button type="button" class="poignee" data-poignee="a" aria-label="Extrémité 1 du repère d’échelle, flèches pour déplacer"></button>
+          <button type="button" class="poignee" data-poignee="b" aria-label="Extrémité 2 du repère d’échelle, flèches pour déplacer"></button>
+          <span class="repere__etiquette" data-repere-etiquette aria-hidden="true"></span>
+        </div>
+        <p class="etiquette-sim">Simulation · rendu indicatif</p>
+      </div>
+      <p class="essai__aide" id="aide-plaque"><span>Glissez la plaque à la souris ou au doigt. Au clavier : sélectionnez-la puis utilisez les flèches, Maj pour aller dix fois plus vite.</span><span>Échelle indicative</span></p>
+    </div>
+    <div class="essai__panneau">
+      <div class="onglets" role="tablist" aria-label="Réglages">
+        <button type="button" role="tab" id="o-mur" aria-controls="p-mur" aria-selected="true">Mur</button>
+        <button type="button" role="tab" id="o-plaque" aria-controls="p-plaque" aria-selected="false" tabindex="-1">Plaque</button>
+        <button type="button" role="tab" id="o-lumiere" aria-controls="p-lumiere" aria-selected="false" tabindex="-1">Lumière</button>
+        <button type="button" role="tab" id="o-partage" aria-controls="p-partage" aria-selected="false" tabindex="-1">Partager</button>
+      </div>
+      <section class="panneau actif" id="p-mur" role="tabpanel" aria-labelledby="t-mur">
+        <h2 id="t-mur">1 · Le mur</h2>
+        <div class="choix-mur" role="group" aria-label="Murs d’exemple"><button type="button" data-choix-mur="platre" aria-pressed="true"><span class="mur mur--platre" aria-hidden="true"></span>Plâtre</button><button type="button" data-choix-mur="beton" aria-pressed="false"><span class="mur mur--beton" aria-hidden="true"></span>Béton</button><button type="button" data-choix-mur="brique" aria-pressed="false"><span class="mur mur--brique" aria-hidden="true"></span>Brique</button><button type="button" data-choix-mur="bois" aria-pressed="false"><span class="mur mur--bois" aria-hidden="true"></span>Bois</button><button type="button" data-choix-mur="photo" aria-pressed="false" hidden><span class="mur" style="background:#3a4560" aria-hidden="true"></span>Ma photo</button></div>
+        <div class="ligne-couleur"><input type="color" id="couleur-mur" value="#e8e3d9"><label for="couleur-mur">Teinte du mur</label></div>
+        <p class="attenue petit" data-info-echelle>Mur d’exemple : 1,80 m de hauteur visible.</p>
+        <div class="import">
+          <input type="file" id="photo-mur" accept="image/*">
+          <label class="btn btn--ligne" for="photo-mur">Importer une photo de mon mur</label>
+          <p class="note-privee"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3 4 6v6c0 4.4 3.4 8.3 8 9 4.6-.7 8-4.6 8-9V6Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="m8.5 12 2.5 2.5 4.5-5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg><span>Votre photo est traitée sur votre appareil. Rien n’est envoyé, rien n’est conservé après la fermeture de la page.</span></p>
+          <p class="attenue petit" data-etat-import aria-live="polite"></p>
+          <button type="button" class="btn btn--petit btn--ligne" data-retirer-photo hidden>Retirer ma photo</button>
+        </div>
+        <div class="champ" data-bloc-repere hidden>
+          <p class="sous-titre" style="margin:0">Repère d’échelle <span>· indicatif</span></p>
+          <p class="attenue petit">Affichez le repère, posez ses deux extrémités sur un objet connu de la photo, indiquez sa longueur, puis appliquez.</p>
+          <button type="button" class="btn btn--petit btn--ligne" data-montrer-repere aria-pressed="false">Afficher le repère</button>
+          <label for="reference-echelle">Objet de référence</label>
+          <select id="reference-echelle"><option value="204">Hauteur d’une porte, environ 204 cm</option><option value="8">Prise ou interrupteur, environ 8 cm</option><option value="autre">Autre longueur</option></select>
+          <div class="champ" data-bloc-autre hidden><label for="reference-autre">Longueur réelle en cm</label><input id="reference-autre" type="number" inputmode="decimal" min="2" max="600" step="1" value="100"></div>
+          <button type="button" class="btn btn--petit btn--led" data-appliquer-repere>Appliquer l’échelle</button>
+          <p class="attenue petit" data-etat-repere aria-live="polite"></p>
+        </div>
+      </section>
+      <section class="panneau" id="p-plaque" role="tabpanel" aria-labelledby="t-plaque">
+        <h2 id="t-plaque">2 · La plaque</h2>
+        <div class="champ"><label for="modele-essai">Modèle</label><select id="modele-essai"><optgroup label="Paysages"><option value="le-pic-du-midi" selected>Le Pic du Midi</option><option value="le-tourmalet">Le Tourmalet</option><option value="le-montaigu">Le Montaigu</option><option value="le-cirque-de-gavarnie">Le Cirque de Gavarnie</option><option value="le-pont-despagne">Le Pont d’Espagne</option></optgroup><optgroup label="Patrimoine"><option value="la-tour-des-jacobins">La Tour des Jacobins</option><option value="le-chateau-de-mauvezin">Le Château de Mauvezin</option><option value="labbaye-de-lescaladieu">L’Abbaye de l’Escaladieu</option></optgroup><optgroup label="Faune"><option value="lisard">L’Isard</option><option value="lours">L’Ours</option><option value="le-cerf">Le Cerf</option><option value="la-marmotte">La Marmotte</option></optgroup></select></div>
+        <fieldset><legend class="sous-titre">Finition</legend><div class="choix-finition"><label><input type="radio" name="finition-essai" value="noir" checked><span class="echantillon fin-noir" aria-hidden="true"></span>Noir <span class="marqueur" hidden>photo à venir</span></label><label><input type="radio" name="finition-essai" value="gris"><span class="echantillon fin-gris" aria-hidden="true"></span>Gris <span class="marqueur" hidden>photo à venir</span></label><label><input type="radio" name="finition-essai" value="dore"><span class="echantillon fin-dore" aria-hidden="true"></span>Doré <span class="marqueur" hidden>photo à venir</span></label></div></fieldset>
+        <div class="taille-fixe">
+          <p class="sous-titre" style="margin:0">Taille : <span class="mono">60 × 30 cm</span> · taille réelle</p>
+          <p class="attenue petit">La plaque reste affichée à sa taille réelle sur le mur. Besoin d’un plus grand format ? <a href="sur-mesure.html">Voir le sur-mesure, jusqu’à 2 × 1 m</a>.</p>
+        </div>
+        <div class="placement">
+          <div class="pad" role="group" aria-label="Déplacer la plaque">
+            <button type="button" class="haut" data-deplacer="haut" aria-label="Monter"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="m3 10 5-5 5 5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></button>
+            <button type="button" class="gauche" data-deplacer="gauche" aria-label="Vers la gauche"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M10 3 5 8l5 5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></button>
+            <button type="button" class="centre" data-deplacer="centre">Centrer</button>
+            <button type="button" class="droite" data-deplacer="droite" aria-label="Vers la droite"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="m6 3 5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></button>
+            <button type="button" class="bas" data-deplacer="bas" aria-label="Descendre"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="m3 6 5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></button>
+          </div>
+          <p>Chaque appui déplace la plaque de 1 % de la largeur du mur. Maj + clic : 10 %.</p>
+        </div>
+        <label class="case"><input type="checkbox" id="afficher-cotes" checked><span>Afficher les cotes</span></label>
+      </section>
+      <section class="panneau" id="p-lumiere" role="tabpanel" aria-labelledby="t-lumiere">
+        <h2 id="t-lumiere">3 · La lumière</h2>
+        <button type="button" class="interrupteur" data-interrupteur-essai aria-pressed="false"><span class="interrupteur__piste" aria-hidden="true"></span>Aperçu de nuit</button>
+        <p class="attenue petit">L’aperçu montre la plaque rétroéclairée dans une pièce sombre. Il ne change que le rendu : il n’ajoute rien à votre configuration.</p>
+        <p class="encadre-alerte" data-note-apercu hidden>Aperçu avec le kit LED, qui n’est pas dans votre configuration.</p>
+        <div><p class="sous-titre">Couleur <span>· réglable à la télécommande, nuancier <span class="marqueur">à confirmer</span></span></p><div class="nuancier " role="group" aria-label="Couleur du rétroéclairage"><button type="button" data-couleur-led="bleu" style="--c:#5cb8ff" aria-pressed="false" aria-label="Bleu" title="Bleu"></button><button type="button" data-couleur-led="blanc" style="--c:#eef2ff" aria-pressed="false" aria-label="Blanc" title="Blanc"></button><button type="button" data-couleur-led="vert" style="--c:#5fe39a" aria-pressed="false" aria-label="Vert" title="Vert"></button><button type="button" data-couleur-led="rouge" style="--c:#ff6464" aria-pressed="false" aria-label="Rouge" title="Rouge"></button><button type="button" data-couleur-led="violet" style="--c:#b88cff" aria-pressed="false" aria-label="Violet" title="Violet"></button><button type="button" data-couleur-led="orange" style="--c:#ffa24c" aria-pressed="false" aria-label="Orange" title="Orange"></button></div></div>
+        <div class="curseur" data-options-lumiere hidden><div class="curseur__tete"><label for="intensite-essai">Intensité de l’aperçu</label><output id="intensite-sortie" for="intensite-essai">100 %</output></div><input type="range" id="intensite-essai" min="20" max="100" step="5" value="100"></div>
+        <div class="option-kit">
+          <label class="case"><input type="checkbox" id="kit-essai"><span>Ajouter le kit LED (+15 €) à ma configuration</span></label>
+          <p class="attenue petit">Ruban RGB monté au dos par l’atelier avant l’envoi, télécommande, alimentation USB (adaptateur secteur non fourni).</p>
+          <div class="champ" data-bloc-cable hidden><label for="cable-essai">Sortie du câble, vue de dos</label><select id="cable-essai"><option value="bg">Bas gauche</option><option value="bd" selected>Bas droite</option><option value="hg">Haut gauche</option><option value="hd">Haut droite</option></select></div>
+        </div>
+      </section>
+      <section class="panneau" id="p-partage" role="tabpanel" aria-labelledby="t-partage">
+        <h2 id="t-partage">4 · Votre configuration</h2>
+        <div class="resume-config"><span>Résumé</span><output data-resume-essai aria-live="polite">Le Pic du Midi · Noir : 65 €</output></div>
+        <div class="resume-essai">
+          <button type="button" class="btn btn--led" data-ajouter-essai>Ajouter au panier</button>
+          <div class="duo-boutons"><button type="button" class="btn btn--petit btn--ligne" data-copier-essai>Copier le lien</button><button type="button" class="btn btn--petit btn--ligne" data-partager-essai>Envoyer pour avis</button></div>
+          <button type="button" class="btn btn--petit btn--ligne" data-exporter>Enregistrer l’image de mon mur</button>
+          <p class="attenue petit" data-etat-export aria-live="polite"></p>
+          <p class="attenue petit">Le lien contient le modèle, la finition, le kit LED et sa couleur s’il est choisi, jamais votre photo. Partager une image de votre intérieur reste votre choix. Hashtag suggéré : #MonMurTerreGravee <span class="marqueur">proposition à valider</span></p>
+          <a class="lien-fleche" data-lien-fiche-essai href="produit-le-pic-du-midi.html">Voir la fiche Le Pic du Midi</a>
+        </div>
+        <div class="passerelle"><strong>Votre lieu n’existe pas encore ?</strong><p>Sur mesure jusqu’à 2 × 1 m, en acier Corten ou en aluminium brut.</p><p><a class="lien-fleche" href="sur-mesure.html">Voir le sur-mesure</a></p></div>
+      </section>
+    </div>
+  </div>
+</div>
+</main>
+<footer class="pied">
+  <div class="cadre">
+    <div class="pied__grille">
+      <div>
+        <a class="marque" href="index.html"><svg viewBox="0 0 22 40" aria-hidden="true" focusable="false"><rect x="1" y="1" width="20" height="38" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M3.6 34 8.6 23.5l2.4 3.2 3-8.2 4.6 15.5Z" fill="currentColor"/><rect x="13.5" y="13" width="1.1" height="5.6" fill="currentColor"/><circle class="marque__etoile" cx="6.6" cy="8.4" r="1.5"/></svg><span class="marque__nom">TERRE GRAVÉE<small>Graver l’âme des territoires</small></span></a>
+        <address>Atelier Terre Gravée<br>16 rue du Pic du Midi<br>65200 Gerde</address>
+        <p style="margin-top:8px"><a href="contact.html">contact@terregravee.fr</a></p>
+      </div>
+      <div>
+        <h2>Le showroom</h2>
+        <ul>
+          <li><a href="collection.html">La galerie des 12 plaques</a></li>
+          <li><a href="essayer.html">Essayer chez moi</a></li>
+          <li><a href="produit-led.html">Kit LED</a></li>
+          <li><a href="produit-carte-cadeau.html">Carte cadeau</a></li>
+          <li><a href="sur-mesure.html">Sur mesure</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Aide</h2>
+        <ul>
+          <li><a href="contact.html">Contact et questions</a></li>
+          <li><a href="contact.html#livraison">Livraison et retours</a></li>
+          <li><button type="button" class="lien-bouton" data-retractation>Renoncer au contrat ici</button> <span class="marqueur">fonction à brancher, à confirmer</span></li>
+          <li><a href="strategie.html">Stratégie de cette maquette</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Informations légales</h2>
+        <ul>
+          <li><a href="https://terregravee.fr/cgv/">Conditions générales de vente</a></li>
+          <li><a href="https://terregravee.fr/politique/">Mentions légales</a> <span class="marqueur">page à mettre à jour</span></li>
+          <li>Politique de confidentialité <span class="marqueur">à rédiger</span></li>
+          <li>Médiateur de la consommation : <span class="marqueur">à fournir</span></li>
+          <li>Téléphone : <span class="marqueur">à fournir</span></li>
+          <li>Hébergeur du site : <span class="marqueur">à fournir</span></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Suivre l’atelier</h2>
+        <ul>
+          <li>Instagram <span class="marqueur">lien à fournir</span></li>
+          <li>Facebook <span class="marqueur">lien à fournir</span></li>
+          <li><a href="index.html#lettre">Lettre « prochaines plaques »</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="pied__bas">
+      <span>© 2026 Terre Gravée · Micro-entreprise · Responsable : Romain Fourneaux · SIRET 941 234 270 00010</span>
+      <span>Prix TTC, TVA non applicable (art. 293 B du CGI)</span>
+    </div>
+  </div>
+</footer>
+<dialog class="panier" id="panier" aria-labelledby="titre-panier">
+  <div class="panier__haut"><h2 id="titre-panier" tabindex="-1">Panier</h2><button type="button" class="bouton-icone" data-fermer-panier>Fermer</button></div>
+  <div class="panier__liste"></div>
+  <div class="panier__bas">
+    <div class="panier__total"><span>Sous-total TTC</span><strong>0 €</strong></div>
+    <p>Frais de port selon le poids et la destination, affichés avant validation <span class="marqueur">montant à fournir</span></p>
+    <button type="button" class="btn btn--led btn--plein" disabled aria-describedby="panier-explication">Commander</button>
+    <p id="panier-explication">Maquette : la commande est désactivée et aucun paiement n’est possible. En ligne : carte bancaire (Stripe), PayPal (y compris en 4 fois sans frais), Apple Pay, Google Pay. <span class="marqueur">mention légale PayPal 4X à fournir</span></p>
+    <p>Après une commande, vous pourrez vous rétracter pendant 14 jours : <button type="button" class="lien-bouton" data-retractation>Renoncer au contrat ici</button> <span class="marqueur">fonction à brancher, à confirmer</span></p>
+  </div>
+</dialog>
+<div class="toast" role="status" aria-live="polite"><span class="toast__texte"></span><button type="button">Voir le panier</button></div>
+<p id="annonce" class="vh" aria-live="polite"></p>
+<script src="assets/catalogue.js"></script>
+<script src="assets/showroom.js"></script>
+<script src="assets/essayer.js"></script>
+</body>
+</html>

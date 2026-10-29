@@ -40,17 +40,16 @@
   /* ---------- Menu mobile ---------- */
   var entete = $(".entete");
   var boutonMenu = $("[data-menu]");
+  var texteMenu = $("[data-menu-texte]");
+  function etatMenu(ouvert) {
+    entete.classList.toggle("menu-ouvert", ouvert);
+    boutonMenu.setAttribute("aria-expanded", ouvert ? "true" : "false");
+    if (texteMenu) texteMenu.textContent = ouvert ? "Fermer le menu" : "Ouvrir le menu";
+  }
   if (entete && boutonMenu) {
-    boutonMenu.addEventListener("click", function () {
-      var ouvert = entete.classList.toggle("menu-ouvert");
-      boutonMenu.setAttribute("aria-expanded", ouvert ? "true" : "false");
-    });
+    boutonMenu.addEventListener("click", function () { etatMenu(!entete.classList.contains("menu-ouvert")); });
     document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape" && entete.classList.contains("menu-ouvert")) {
-        entete.classList.remove("menu-ouvert");
-        boutonMenu.setAttribute("aria-expanded", "false");
-        boutonMenu.focus();
-      }
+      if (e.key === "Escape" && entete.classList.contains("menu-ouvert")) { etatMenu(false); boutonMenu.focus(); }
     });
   }
 
@@ -113,16 +112,38 @@
       var milieu = document.createElement("div");
       var nom = document.createElement("strong"); nom.textContent = l.nom; milieu.appendChild(nom);
       (l.details || []).forEach(function (d) { var s = document.createElement("span"); s.textContent = d; milieu.appendChild(s); });
-      var q = document.createElement("span"); q.textContent = "Quantité : " + l.qte + " × " + euros(l.prix); milieu.appendChild(q);
-      var retirer = document.createElement("button"); retirer.type = "button"; retirer.textContent = "Retirer";
+      var pu = document.createElement("span"); pu.textContent = euros(l.prix) + " l’unité"; milieu.appendChild(pu);
+      // Quantité modifiable dans le tiroir : − et +, total annoncé
+      var qte = document.createElement("span"); qte.className = "ligne-commande__qte";
+      var moins = document.createElement("button"); moins.type = "button"; moins.textContent = "−";
+      moins.setAttribute("aria-label", "Retirer un exemplaire : " + l.nom);
+      var sortie = document.createElement("output"); sortie.textContent = l.qte;
+      var plus = document.createElement("button"); plus.type = "button"; plus.textContent = "+";
+      plus.setAttribute("aria-label", "Ajouter un exemplaire : " + l.nom);
+      var changer = function (delta, bouton) {
+        var ls = lirePanier(); if (!ls[i]) return;
+        ls[i].qte = Math.max(1, Math.min(9, ls[i].qte + delta));
+        ecrirePanier(ls); annoncer(ls[i].nom + " : quantité " + ls[i].qte + ".");
+        var memeBouton = $$(".ligne-commande")[i]; if (memeBouton) { var b = memeBouton.querySelectorAll(".ligne-commande__qte button")[bouton]; if (b) b.focus(); }
+      };
+      moins.addEventListener("click", function () { changer(-1, 0); });
+      plus.addEventListener("click", function () { changer(1, 1); });
+      qte.appendChild(moins); qte.appendChild(sortie); qte.appendChild(plus);
+      milieu.appendChild(qte);
+      var retirer = document.createElement("button"); retirer.type = "button"; retirer.textContent = "Retirer"; retirer.className = "ligne-commande__retirer";
       retirer.setAttribute("aria-label", "Retirer " + l.nom + " de la commande");
-      retirer.addEventListener("click", function () { var ls = lirePanier(); ls.splice(i, 1); ecrirePanier(ls); var f = $("[data-fermer-commande]"); if (f) f.focus(); });
+      retirer.addEventListener("click", function () { var ls = lirePanier(); var n = ls[i] ? ls[i].nom : ""; ls.splice(i, 1); ecrirePanier(ls); annoncer(n + " retiré de la commande."); var f = $("[data-fermer-commande]"); if (f) f.focus(); });
       milieu.appendChild(retirer);
       var prix = document.createElement("span"); prix.className = "ligne-commande__prix"; prix.textContent = euros(l.prix * l.qte);
       li.appendChild(visuel); li.appendChild(milieu); li.appendChild(prix);
       liste.appendChild(li);
     });
     var t = $("[data-total-commande]"); if (t) t.textContent = euros(total);
+  }
+  function annoncer(texte) {
+    var a = $("[data-annonce-commande]"); if (!a) return;
+    var total = 0; lirePanier().forEach(function (l) { total += l.prix * l.qte; });
+    a.textContent = texte + " Sous-total : " + euros(total) + ".";
   }
   afficherPanier();
 
@@ -169,7 +190,7 @@
         var ok = filtre === "tout" || c.getAttribute("data-collection") === filtre;
         c.hidden = !ok; if (ok) n++;
       });
-      compte.textContent = n + (n > 1 ? " articles" : " article");
+      compte.textContent = n + (n > 1 ? " plaques" : " plaque");
       $$("[data-filtre]").forEach(function (b) { b.setAttribute("aria-pressed", b.getAttribute("data-filtre") === filtre ? "true" : "false"); });
     };
     $$("[data-filtre]").forEach(function (b) {
@@ -267,14 +288,33 @@
   var JOURS = ["dimanche", "lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi"];
   var MOIS = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"];
   var FERIES = ["1-1", "5-1", "5-8", "7-14", "8-15", "11-1", "11-11", "12-25"];
-  function ouvre(d) { var j = d.getDay(); return j !== 0 && j !== 6 && FERIES.indexOf((d.getMonth() + 1) + "-" + d.getDate()) < 0; }
+  // Fériés mobiles : lundi de Pâques, Ascension, lundi de Pentecôte (calcul de Pâques, algorithme de Meeus)
+  function paques(a) {
+    var b = a % 19, c = Math.floor(a / 100), d = a % 100, e = Math.floor(c / 4), f = c % 4, g = Math.floor((c + 8) / 25);
+    var h = Math.floor((c - g + 1) / 3), i = (19 * b + c - e - h + 15) % 30, k = Math.floor(d / 4), l = d % 4;
+    var m = (32 + 2 * f + 2 * k - i - l) % 7, n = Math.floor((b + 11 * i + 22 * m) / 451);
+    var mois = Math.floor((i + m - 7 * n + 114) / 31), jour = ((i + m - 7 * n + 114) % 31) + 1;
+    return new Date(a, mois - 1, jour);
+  }
+  var mobiles = {};
+  function feriesMobiles(a) {
+    if (!mobiles[a]) {
+      var p = paques(a);
+      mobiles[a] = [1, 39, 50].map(function (n) { var d = new Date(p.getTime()); d.setDate(d.getDate() + n); return (d.getMonth() + 1) + "-" + d.getDate(); });
+    }
+    return mobiles[a];
+  }
+  function ouvre(d) {
+    var j = d.getDay(), cle = (d.getMonth() + 1) + "-" + d.getDate();
+    return j !== 0 && j !== 6 && FERIES.indexOf(cle) < 0 && feriesMobiles(d.getFullYear()).indexOf(cle) < 0;
+  }
   function plusOuvres(d, n) { var r = new Date(d.getTime()); while (n > 0) { r.setDate(r.getDate() + 1); if (ouvre(r)) n--; } return r; }
   function dateCourte(d) { return JOURS[d.getDay()] + " " + (d.getDate() === 1 ? "1er" : d.getDate()) + " " + MOIS[d.getMonth()]; }
   var auj = new Date();
   var d1 = plusOuvres(auj, 2), d2 = plusOuvres(auj, 4);
   var fourchette = "entre le " + dateCourte(d1) + " et le " + dateCourte(d2);
-  $$("[data-estimation]").forEach(function (el) { el.textContent = "Commandée aujourd’hui, livraison estimée " + fourchette + " (2 à 4 jours ouvrés)"; });
-  $$("[data-estimation-texte]").forEach(function (el) { el.textContent = "Pour une commande passée aujourd’hui : " + fourchette + "."; });
+  $$("[data-estimation]").forEach(function (el) { el.textContent = "Estimation indicative pour une commande passée aujourd’hui\u00a0: livraison " + fourchette + "."; });
+  $$("[data-estimation-texte]").forEach(function (el) { el.textContent = "Estimation indicative pour une commande passée aujourd’hui\u00a0: " + fourchette + "."; });
 
   /* ---------- Formulaires et boutons simulés ---------- */
   $$("form[data-demo]").forEach(function (f) {
@@ -288,6 +328,37 @@
   $$("[data-demo-bouton]").forEach(function (b) {
     b.addEventListener("click", function () { var m = b.parentElement.querySelector(".message-demo"); if (m) m.hidden = false; });
   });
+
+  /* ---------- Rétractation : déclaration, puis confirmation (simulées) ---------- */
+  $$("form[data-retract]").forEach(function (f) {
+    var e1 = $("[data-retract-etape=\"1\"]", f), e2 = $("[data-retract-etape=\"2\"]", f);
+    var resume = $("[data-retract-resume]", f), msg = $(".message-demo", f);
+    f.addEventListener("submit", function (ev) {
+      ev.preventDefault();
+      if (!f.checkValidity()) { if (f.reportValidity) f.reportValidity(); return; }
+      var v = function (n) { return (f.elements[n] && f.elements[n].value.trim()) || ""; };
+      resume.textContent = "2. Vérifiez puis confirmez : rétractation de la commande " + v("commande") + " au nom de " + v("nom") +
+        (v("articles") ? " (" + v("articles") + ")" : " (toute la commande)") + ". L’accusé de réception partira à " + v("email") + ".";
+      e1.hidden = true; e2.hidden = false; msg.hidden = true; resume.focus();
+    });
+    $("[data-retract-retour]", f).addEventListener("click", function () { e2.hidden = true; e1.hidden = false; var c = $("input", e1); if (c) c.focus(); });
+    $("[data-retract-confirmer]", f).addEventListener("click", function () { e2.hidden = true; msg.hidden = false; msg.focus(); });
+  });
+
+  /* ---------- Registre des avis : replié à trois sur mobile, avec un bouton pour tout afficher ---------- */
+  var registre = $(".registre");
+  var voirAvis = $("[data-registre-voir]");
+  if (registre && voirAvis && window.matchMedia && window.matchMedia("(max-width: 760px)").matches) {
+    registre.classList.add("registre--replie");
+    voirAvis.hidden = false;
+    voirAvis.setAttribute("aria-expanded", "false");
+    voirAvis.addEventListener("click", function () {
+      var replie = registre.classList.toggle("registre--replie");
+      voirAvis.setAttribute("aria-expanded", replie ? "false" : "true");
+      voirAvis.textContent = replie ? voirAvis.getAttribute("data-texte") : "Afficher les trois plus récents";
+    });
+    voirAvis.setAttribute("data-texte", voirAvis.textContent);
+  }
 
   /* ---------- Copier l’adresse e-mail ---------- */
   $$("[data-copier]").forEach(function (b) {
@@ -425,17 +496,20 @@
     }
     var ch = cache[cle];
     var ctx = canvas.getContext("2d");
-    var echelle = canvas.width / vb[2];
+    // Même cadrage que les SVG : « slice » (couvre la boîte, centré) ou boîte aux proportions du viewBox
+    var echelle = canvas.hasAttribute("data-slice") ? Math.max(canvas.width / vb[2], canvas.height / vb[3]) : canvas.width / vb[2];
+    var ox = (canvas.width - vb[2] * echelle) / 2, oy = (canvas.height - vb[3] * echelle) / 2;
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.setTransform(echelle, 0, 0, echelle, -vb[0] * echelle, -vb[1] * echelle);
+    ctx.setTransform(echelle, 0, 0, echelle, ox - vb[0] * echelle, oy - vb[1] * echelle);
     var couleur = getComputedStyle(racine).getPropertyValue("--courbe").trim() || "#9C6B3A";
     var nuit = themeActuel() === "dark";
     ctx.strokeStyle = couleur;
     ctx.lineJoin = "round";
+    var epais = canvas.getAttribute("data-relief") === "heros" ? 1.4 : 1;
     var trace = function (alphaFin, alphaFort) {
-      ctx.globalAlpha = alphaFin; ctx.lineWidth = 0.6 * dpr / echelle; ctx.stroke(ch.fines);
-      ctx.globalAlpha = alphaFort; ctx.lineWidth = 1.15 * dpr / echelle; ctx.stroke(ch.fortes);
+      ctx.globalAlpha = alphaFin; ctx.lineWidth = 0.6 * epais * dpr / echelle; ctx.stroke(ch.fines);
+      ctx.globalAlpha = alphaFort; ctx.lineWidth = 1.15 * epais * dpr / echelle; ctx.stroke(ch.fortes);
     };
     if (canvas.getAttribute("data-relief") === "carte") {
       trace(nuit ? 0.22 : 0.2, nuit ? 0.3 : 0.28);
@@ -444,19 +518,19 @@
       trace(nuit ? 0.55 : 0.5, nuit ? 0.75 : 0.72);
       ctx.restore();
     } else {
-      trace(nuit ? 0.5 : 0.45, nuit ? 0.7 : 0.68);
+      trace(nuit ? 0.5 : 0.5, nuit ? 0.72 : 0.72);
     }
     ctx.globalAlpha = 1;
   }
   function redessinerReliefs() { reliefs.forEach(dessinerRelief); }
   if (reliefs.length) {
     redessinerReliefs();
-    var largeurs = reliefs.map(function (c) { return c.clientWidth; });
+    var largeurs = reliefs.map(function (c) { return c.clientWidth + "x" + c.clientHeight; });
     var attente = null;
     window.addEventListener("resize", function () {
       clearTimeout(attente);
       attente = setTimeout(function () {
-        reliefs.forEach(function (c, i) { if (c.clientWidth !== largeurs[i]) { largeurs[i] = c.clientWidth; dessinerRelief(c); } });
+        reliefs.forEach(function (c, i) { var t = c.clientWidth + "x" + c.clientHeight; if (t !== largeurs[i]) { largeurs[i] = t; dessinerRelief(c); } });
       }, 150);
     });
   }

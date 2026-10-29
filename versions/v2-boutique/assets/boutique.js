@@ -6,14 +6,17 @@
 
   var TG = window.TG || { produits: {}, img: "", seuil: 130, remise: 0.1, prixLed: 15, prixPlaque: 65 };
   var P = TG.produits;
-  var NBSP = " ";
+  var NBSP = "\u00a0";
+  var NNBSP = "\u202f";
   var FIN_NOM = { noir: "Noir", gris: "Gris", dore: "Doré" };
   var FIN_ACC = { noir: "noire", gris: "grise", dore: "dorée" };
   var CABLES = ["Haut gauche", "Haut droite", "Bas gauche", "Bas droite"];
 
   function $(s, c) { return (c || document).querySelector(s); }
   function $$(s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); }
-  function esc(t) { return String(t).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;", "'": "&#39;" }[c]; }); }
+  // typographie française : espace insécable avant « : », fine insécable avant « ? ! ; »
+  function fr(t) { return String(t).replace(/ :/g, "\u00a0:").replace(/ ([?!;])/g, "\u202f$1"); }
+  function esc(t) { return fr(t).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;", "'": "&#39;" }[c]; }); }
   function euros(n) {
     var entier = Math.abs(n - Math.round(n)) < 1e-9;
     var s = entier ? String(Math.round(n)) : n.toFixed(2);
@@ -161,7 +164,7 @@
     el.setAttribute("data-plein", p >= 100 ? "1" : "0");
   }
   function messageLivraison(montant) {
-    if (montant <= 0) return "Livraison offerte dès " + euros(TG.seuil) + " de plaques, soit deux plaques.";
+    if (montant <= 0) return "Livraison offerte dès " + euros(TG.seuil) + " d’articles livrés, soit deux plaques.";
     if (montant >= TG.seuil) return "La livraison est offerte pour cette commande.";
     return "Plus que " + euros(TG.seuil - montant) + " pour la livraison offerte.";
   }
@@ -193,10 +196,14 @@
   $$("[data-ouvrir-panier]").forEach(function (b) { b.addEventListener("click", ouvrirPanier); });
   $$("[data-fermer-panier]").forEach(function (b) { b.addEventListener("click", fermerPanier); });
 
-  function dimsImg(rel) { var d = (TG.dimsImg && TG.dimsImg[rel]) || [100, 100]; return " width=\"" + d[0] + "\" height=\"" + d[1] + "\""; }
+  // vignette allégée (assets/img) avec ses dimensions réelles, sinon l’original
+  function vignette(rel, alt) {
+    var v = (TG.vignettes && TG.vignettes[rel]) || [TG.img + rel, 100, 100];
+    return "<img src=\"" + v[0] + "\" alt=\"" + esc(alt || "") + "\" width=\"" + v[1] + "\" height=\"" + v[2] + "\" decoding=\"async\">";
+  }
   function visuelLigne(a) {
-    if (a.type === "led") return "<span class=\"ligne-panier__img ligne-panier__img--photo\"><img src=\"" + TG.img + "led/led-img0.webp\" alt=\"\"" + dimsImg("led/led-img0.webp") + "></span>";
-    if (a.type === "carte") return "<span class=\"ligne-panier__img ligne-panier__img--photo\"><img src=\"" + TG.img + "misc/carte-cadeau.webp\" alt=\"\"" + dimsImg("misc/carte-cadeau.webp") + "></span>";
+    if (a.type === "led") return "<span class=\"ligne-panier__img ligne-panier__img--photo\">" + vignette("led/led-img0.webp") + "</span>";
+    if (a.type === "carte") return "<span class=\"ligne-panier__img ligne-panier__img--photo\">" + vignette("misc/carte-cadeau.webp") + "</span>";
     var src = cheminPlaque(a.slug, a.fin);
     if (!src) return "<span class=\"ligne-panier__img ligne-panier__img--vide\">photo à venir</span>";
     var d = P[a.slug].dims[a.fin];
@@ -214,7 +221,7 @@
     if (!l.length) {
       var vide = document.createElement("li");
       vide.className = "panier__vide";
-      vide.innerHTML = "<p>Votre panier est vide.</p><p><a class=\"lien-fleche\" href=\"collection.html\">Voir les plaques" + icone(ICO_FLECHE) + "</a></p><p class=\"petit\">Vous hésitez ? <a href=\"quiz.html\">Le quiz</a> recommande une plaque en quatre questions.</p>";
+      vide.innerHTML = "<p>Votre panier est vide.</p><p><a class=\"lien-fleche\" href=\"collection.html\">Voir les plaques" + icone(ICO_FLECHE) + "</a></p><p class=\"petit\">Vous hésitez" + NNBSP + "? <a href=\"quiz.html\">Le quiz</a> recommande une plaque en quatre questions.</p>";
       liste.appendChild(vide);
     }
     l.forEach(function (a, i) {
@@ -249,7 +256,7 @@
     var portConnu = true;
     if (port) {
       if (!l.length) port.textContent = "—";
-      else if (t.physique <= 0) port.textContent = "Sans frais : envoi par e-mail";
+      else if (t.physique <= 0) port.textContent = "Sans frais" + NBSP + ": envoi par e-mail";
       else if (t.physiqueNet >= TG.seuil) port.textContent = "Offerte";
       else { port.textContent = "Selon poids et destination"; portConnu = false; }
     }
@@ -279,7 +286,7 @@
       var div = document.createElement("div");
       div.className = "suggestion";
       div.innerHTML = "<p class=\"suggestion__etiquette\">Compatible avec votre plaque</p>" +
-        "<div class=\"suggestion__tete\"><img src=\"" + TG.img + "led/led-img1.webp\" alt=\"Exemple réel : Le Pic du Midi rétroéclairé en vert\"" + dimsImg("led/led-img1.webp") + "><p>Kit LED monté au dos de " + esc(P[a.slug].nom) + " par l’atelier, +" + euros(TG.prixLed) + (a.qte > 1 ? " par plaque" : "") + ".</p></div>" +
+        "<div class=\"suggestion__tete\">" + vignette("led/led-img1.webp", "Exemple réel" + NBSP + ": Le Pic du Midi rétroéclairé en vert") + "<p>Kit LED monté au dos de " + esc(P[a.slug].nom) + " par l’atelier, +" + euros(TG.prixLed) + (a.qte > 1 ? " par plaque" : "") + ".</p></div>" +
         "<div class=\"suggestion__actions\"><label class=\"sr\" for=\"sugg-cable\">Sortie du câble</label><select id=\"sugg-cable\">" + opts + "</select><button type=\"button\" class=\"btn btn--ligne\">" + icone(ICO_PLUS) + "Ajouter le kit</button></div>";
       $("button", div).addEventListener("click", function () {
         var ls = lignes(); var cible = ls[indexSansLed]; if (!cible) return;
@@ -485,7 +492,7 @@
       var apres = t.physiqueNet + (type === "carte" ? 0 : totalFiche());
       if (t.physiqueNet >= TG.seuil) el.textContent = "Votre panier a déjà la livraison offerte.";
       else if (apres >= TG.seuil) el.textContent = "Avec cet article, la livraison est offerte (dès " + euros(TG.seuil) + ").";
-      else el.textContent = "Livraison offerte dès " + euros(TG.seuil) + NBSP + ": avec cet article, il manquera " + euros(TG.seuil - apres) + ".";
+      else el.textContent = "Livraison offerte dès " + euros(TG.seuil) + " d’articles livrés" + NBSP + ": avec cet article, il manquera " + euros(TG.seuil - apres) + ".";
       majJauge($(".livraison-fiche [data-jauge]"), apres);
     };
     var majPrix = function () {
@@ -571,16 +578,26 @@
     var barre = $("[data-barre]");
     var boutonPrincipal = $(".achat [data-ajouter]", fiche);
     if (barre && boutonPrincipal) {
-      var attente = false;
-      var majBarre = function () {
-        attente = false;
-        barre.classList.toggle("visible", boutonPrincipal.getBoundingClientRect().bottom < 0);
-      };
-      window.addEventListener("scroll", function () {
-        if (!attente) { attente = true; window.requestAnimationFrame(majBarre); }
-      }, { passive: true });
-      window.addEventListener("resize", majBarre);
-      majBarre();
+      // La barre apparaît dès que le bouton principal n’est pas à l’écran, au-dessus comme au-dessous :
+      // sur téléphone, le prix et l’action sont donc visibles dès le premier écran.
+      var majBarre = function (visibleBouton) { barre.classList.toggle("visible", !visibleBouton); };
+      if ("IntersectionObserver" in window) {
+        new IntersectionObserver(function (entrees) {
+          entrees.forEach(function (en) { majBarre(en.isIntersecting); });
+        }, { threshold: 0 }).observe(boutonPrincipal);
+      } else {
+        var attente = false;
+        var mesurer = function () {
+          attente = false;
+          var r = boutonPrincipal.getBoundingClientRect();
+          majBarre(r.bottom > 0 && r.top < window.innerHeight);
+        };
+        window.addEventListener("scroll", function () {
+          if (!attente) { attente = true; window.requestAnimationFrame(mesurer); }
+        }, { passive: true });
+        window.addEventListener("resize", mesurer);
+        mesurer();
+      }
     }
     majPrix();
   }
@@ -631,15 +648,30 @@
     };
     var sauver = function (res) { ecrire(CLE_QUIZ, { rep: reponses(), res: res || memo.res || null }); };
 
+    // Avance automatique : seulement après un choix au doigt ou à la souris. Au clavier, les flèches
+    // changent la réponse sans changer de question ; on passe à la suite avec « Question suivante ».
+    var viaPointeur = false, minuteur = null;
+    form.addEventListener("pointerdown", function (e) { viaPointeur = !!(e.target.closest && e.target.closest(".choix")); });
+    form.addEventListener("keydown", function () { viaPointeur = false; });
+    var allerEnHaut = function () { form.scrollIntoView({ block: "start" }); };
     $$("input[type=radio]", form).forEach(function (r) {
-      r.addEventListener("change", function () { erreur.hidden = true; sauver(); majEtapes(); });
+      r.addEventListener("change", function () {
+        erreur.hidden = true; sauver(); majEtapes();
+        if (viaPointeur && r.name === cles[etape] && etape < cles.length - 1) {
+          var depuis = etape;
+          clearTimeout(minuteur);
+          minuteur = setTimeout(function () { if (etape === depuis) { montrer(depuis + 1, true); allerEnHaut(); } }, 280);
+        }
+        viaPointeur = false;
+      });
     });
     suivant.addEventListener("click", function () {
+      clearTimeout(minuteur);
       if (!valeur(cles[etape])) { erreur.hidden = false; return; }
-      if (etape < cles.length - 1) { montrer(etape + 1, true); form.scrollIntoView({ block: "start" }); }
+      if (etape < cles.length - 1) { montrer(etape + 1, true); allerEnHaut(); }
       else afficherResultat(calculer(reponses()), false);
     });
-    retour.addEventListener("click", function () { if (etape > 0) montrer(etape - 1, true); });
+    retour.addEventListener("click", function () { clearTimeout(minuteur); if (etape > 0) montrer(etape - 1, true); });
     boutonsEtapes.forEach(function (b, i) { b.addEventListener("click", function () { montrer(i, true); }); });
 
     var TAGS = {
@@ -663,7 +695,7 @@
       chambre: "Pour une chambre : un sujet calme, qu’on regarde volontiers en fin de journée.",
       bureau: "Pour un bureau : un repère de montagne à regarder entre deux tâches.",
       entree: "Pour une entrée : la plaque accueille les invités et se pose sans perçage.",
-      exterieur: "Dehors : l’aluminium thermolaqué s’utilise aussi en extérieur.",
+      exterieur: { t: "Dehors : l’aluminium thermolaqué s’utilise aussi en extérieur.", note: "<span class=\"note-maq note-maq--fournir\">à confirmer" + NBSP + ": fixation conseillée en extérieur</span>" },
       offrir: "Pour offrir : si vous doutez, la carte cadeau laisse la personne choisir."
     };
     var RAISONS_MUR = {
@@ -674,12 +706,12 @@
       nsp: "Mur inconnu : le noir est la finition la plus facile à placer."
     };
     var RAISONS_THEME = {
-      sommets: "Vous aimez les sommets.",
+      sommets: "Vous aimez les sommets et les grands sites.",
       patrimoine: "Vous aimez les vieilles pierres et l’histoire locale.",
       faune: "Vous aimez les animaux des Pyrénées.",
       velo: "Vous aimez le vélo : le col du Tourmalet culmine à 2" + " " + "115 m.",
       bagneres: "Vous êtes attaché à Bagnères-de-Bigorre.",
-      nsp: "Vous n’avez pas tranché : voici l’une des meilleures ventes du site actuel."
+      nsp: "Vous n’avez pas tranché : voici l’une des plaques marquées « meilleure vente » sur le site actuel."
     };
 
     function calculer(r) {
@@ -696,8 +728,9 @@
       });
       scores.sort(function (a, b) { return b.sc - a.sc || a.i - b.i; });
       var choix = scores[0].s;
+      // La finition suit le mur, même si sa photo manque : l’emplacement « photo à venir » s’affiche alors.
       var finVoulue = FIN_MUR[r.mur] || "noir";
-      var fin = finAvecPhoto(choix, finVoulue);
+      var fin = finVoulue;
       var led = r.lumiere === "oui" && r.piece !== "exterieur";
       var alts = [scores[1].s, scores[2].s];
       return { slug: choix, fin: fin, finVoulue: finVoulue, led: led, alts: alts, r: r };
@@ -709,7 +742,7 @@
       if (res.carte) return ["C’est pour offrir et vous ne connaissez pas ses goûts : la personne choisit elle-même sa plaque.", "La carte part tout de suite par e-mail, ou vous l’imprimez."];
       if (RAISONS_PIECE[r.piece]) l.push(RAISONS_PIECE[r.piece]);
       if (RAISONS_MUR[r.mur]) l.push(RAISONS_MUR[r.mur]);
-      if (res.fin !== res.finVoulue) l.push("La finition " + FIN_ACC[res.finVoulue] + " existe aussi pour ce modèle, sa photo est à venir.");
+      if (!cheminPlaque(res.slug, res.fin)) l.push("La photo de " + P[res.slug].nom + " en finition " + FIN_ACC[res.fin] + " est à venir : cette finition est bien vendue.");
       if (RAISONS_THEME[r.theme]) l.push(RAISONS_THEME[r.theme]);
       if (r.lumiere === "oui" && r.piece === "exterieur") l.push("Dehors, nous ne proposons pas le kit LED d’office : son usage extérieur reste à confirmer avec l’atelier.");
       else if (r.lumiere === "oui") l.push("Vous voulez de la lumière : le kit LED est monté au dos par l’atelier, +" + euros(TG.prixLed) + ".");
@@ -718,13 +751,36 @@
       return l;
     }
 
+    // Même gabarit que les cartes de la boutique : cartel, nom, note, prix, pastilles, bouton.
+    var ETOILE = "<svg viewBox=\"0 0 20 20\" aria-hidden=\"true\" focusable=\"false\"><path d=\"M10 1.6l2.5 5.3 5.8.7-4.3 4 1.1 5.8L10 14.6l-5.1 2.8 1.1-5.8-4.3-4 5.8-.7z\"/></svg>";
+    function ligneAvisAlt(p) {
+      if (!p.nbAvis) return "<p class=\"carte__avis carte__avis--vide\">Pas encore d’avis</p>";
+      var cinq = ETOILE + ETOILE + ETOILE + ETOILE + ETOILE;
+      var note = String(p.moyenne.toFixed(1)).replace(".", ",");
+      return "<p class=\"carte__avis\"><span class=\"etoiles\" style=\"--n:" + (p.moyenne / 5 * 100) + "%\" aria-hidden=\"true\"><span class=\"etoiles__fond\">" + cinq + "</span><span class=\"etoiles__plein\">" + cinq + "</span></span><span class=\"carte__note\">" + note + "</span><span class=\"attenue\">(" + p.nbAvis + " avis)</span><span class=\"sr\">Note " + note + " sur 5, " + p.nbAvis + " avis</span></p>";
+    }
     function carteAlt(slug, fin) {
       var p = P[slug];
       if (slug === "carte-cadeau") return "";
-      fin = finAvecPhoto(slug, fin);
-      return "<li class=\"carte\" data-slug=\"" + slug + "\" data-fin=\"" + fin + "\"><div class=\"carte__visuel\"><a href=\"produit-" + slug + ".html\" tabindex=\"-1\" aria-hidden=\"true\"><div class=\"plaque\">" + imgPlaqueHTML(slug, fin, "(max-width: 900px) 40vw, 200px", " loading=\"lazy\" data-img") + "</div></a></div>" +
-        "<div class=\"carte__corps\"><p class=\"carte__cartel\">" + esc(p.cartel) + "</p><h4 class=\"carte__nom\"><a href=\"produit-" + slug + ".html\">" + esc(p.nom) + "</a></h4><p class=\"carte__avis carte__avis--vide\">Finition " + FIN_ACC[fin] + "</p>" +
-        "<div class=\"carte__bas\"><span class=\"carte__prix\">" + euros(p.prix) + "</span></div><button type=\"button\" class=\"btn-ajout\" data-ajout-carte>" + icone(ICO_PLUS) + "Ajouter<span class=\"sr\" data-ajout-sr> " + esc(p.nom) + ", finition " + FIN_ACC[fin] + ", au panier</span></button></div></li>";
+      var manque = ["noir", "gris", "dore"].filter(function (f) { return !p.fins[f]; });
+      var img = cheminPlaque(slug, fin) ? imgPlaqueHTML(slug, fin, "(max-width: 699px) 44vw, 250px", " loading=\"lazy\" data-img") : "";
+      var vide = "";
+      if (manque.length) {
+        var fv = cheminPlaque(slug, fin) ? manque[0] : fin;
+        vide = "<div class=\"plaque-vide\" role=\"img\" aria-label=\"Photo de " + esc(p.nom) + " en finition " + FIN_ACC[fv] + " à venir\" data-vide" + (cheminPlaque(slug, fin) ? " hidden" : "") + "><span class=\"plaque-vide__mot\">Photo à venir</span><span class=\"plaque-vide__fin\" data-vide-fin>Finition " + FIN_ACC[fv] + "</span><span class=\"note-maq note-maq--fournir\">à fournir" + NBSP + ": photo</span></div>";
+      }
+      if (!img) {
+        var fImg = finAvecPhoto(slug, "noir");
+        img = imgPlaqueHTML(slug, fImg, "(max-width: 699px) 44vw, 250px", " loading=\"lazy\" data-img hidden");
+      }
+      var pastilles = ["noir", "gris", "dore"].map(function (f) {
+        var lib = FIN_NOM[f] + (p.fins[f] ? "" : ", photo à venir");
+        return "<button type=\"button\" class=\"pastille pastille--" + f + (p.fins[f] ? "" : " pastille--manque") + "\" data-fin=\"" + f + "\" aria-pressed=\"" + (f === fin) + "\" title=\"" + lib + "\"><span class=\"sr\">" + lib + "</span></button>";
+      }).join("");
+      return "<li class=\"carte\" data-slug=\"" + slug + "\" data-fin=\"" + fin + "\"><div class=\"carte__visuel\"><a href=\"produit-" + slug + ".html\" tabindex=\"-1\" aria-hidden=\"true\"><div class=\"plaque\" data-plaque>" + img + vide + "</div></a></div>" +
+        "<div class=\"carte__corps\"><p class=\"carte__cartel\">" + esc(p.cartel) + "</p><h4 class=\"carte__nom\"><a href=\"produit-" + slug + ".html\">" + esc(p.nom) + "</a></h4>" + ligneAvisAlt(p) +
+        "<div class=\"carte__bas\"><span class=\"carte__prix\">" + euros(p.prix) + "</span><div class=\"pastilles\" role=\"group\" aria-label=\"Finition de " + esc(p.nom) + "\">" + pastilles + "</div></div>" +
+        "<button type=\"button\" class=\"btn-ajout\" data-ajout-carte>" + icone(ICO_PLUS) + "Ajouter<span class=\"sr\" data-ajout-sr> " + esc(p.nom) + ", finition " + FIN_ACC[fin] + ", au panier</span></button></div></li>";
     }
 
     var resultatCourant = null;
@@ -733,6 +789,8 @@
       var visuel = $("[data-res-visuel]"), titre = $("[data-res-titre]"), options = $("[data-res-options]");
       var liste = $("[data-res-pourquoi]"), total = $("[data-res-total]"), fiche = $("[data-res-fiche]");
       var ledZone = $("[data-res-led-option]"), alts = $("[data-res-alternatives]"), lien = $("[data-res-lien]");
+      var port = $("[data-res-port]");
+      port.textContent = "TTC, hors frais de port";
       $("[data-res-surtitre]").textContent = depuisLien ? "Résultat partagé" : "Notre recommandation";
       var calcTotal;
       if (res.carte) {
@@ -741,11 +799,12 @@
         options.textContent = euros(65) + ", une plaque au choix, envoi immédiat par e-mail";
         ledZone.innerHTML = "";
         calcTotal = function () { return 65; };
+        port.textContent = "TTC, sans frais de port" + NBSP + ": envoi par e-mail";
         fiche.href = "produit-carte-cadeau.html";
       } else {
         var p = P[res.slug];
         var html = "<figure class=\"cotes\"><div class=\"plaque\">" + imgPlaqueHTML(res.slug, res.fin, "(max-width: 900px) 40vw, 200px") + "</div><span class=\"cote cote--h\"><span>30 cm</span></span><span class=\"cote cote--v\"><span>60 cm</span></span></figure>";
-        if (res.led) html += "<p class=\"resultat__led\"><img src=\"" + TG.img + "led/led-img1.webp\" alt=\"\"" + dimsImg("led/led-img1.webp") + "><span>Exemple réel de rétroéclairage : Le Pic du Midi en vert.</span></p>";
+        if (res.led) html += "<p class=\"resultat__led\">" + vignette("led/led-img1.webp") + "<span>Exemple réel de rétroéclairage : Le Pic du Midi en vert.</span></p>";
         visuel.innerHTML = html;
         titre.textContent = p.nom;
         var majOptions = function () { options.textContent = "Finition " + FIN_ACC[res.fin] + (res.led ? " · kit LED monté, câble " + res.cable.toLowerCase() : "") + " · " + p.cartel; };
@@ -760,7 +819,11 @@
         fiche.href = "produit-" + res.slug + ".html";
         majOptions();
       }
-      liste.innerHTML = pourquoi(res).map(function (t) { return "<li>" + esc(t) + "</li>"; }).join("");
+      // une raison est un texte, ou { t: texte, note: étiquette de maquette déjà en HTML }
+      liste.innerHTML = pourquoi(res).map(function (x) {
+        var o = typeof x === "string" ? { t: x } : x;
+        return "<li>" + esc(o.t) + (o.note ? " " + o.note : "") + "</li>";
+      }).join("");
       var majTotal = function () { total.textContent = euros(calcTotal()); };
       var majLien = function () {
         var base = location.href.split("#")[0];
@@ -770,10 +833,10 @@
       majTotal(); majLien();
       var htmlAlts = res.alts.map(function (s) { return carteAlt(s, res.carte ? "noir" : res.fin); }).join("");
       if (!res.carte) {
-        var trio = [res.slug].concat(res.alts).map(function (s) { return s + "-" + finAvecPhoto(s, res.fin); });
+        var trio = [res.slug].concat(res.alts).map(function (s) { return s + "-" + res.fin; });
         htmlAlts += "<li class=\"tuile-promo tuile-promo--trip\"><div class=\"trip__mini\" aria-hidden=\"true\">" +
-          [res.slug].concat(res.alts).map(function (s) { return "<div class=\"plaque\">" + imgPlaqueHTML(s, finAvecPhoto(s, res.fin), "50px") + "</div>"; }).join("") +
-          "</div><p class=\"surtitre\">Les trois ensemble</p><h4 class=\"tuile-promo__titre\">Votre plaque et ses deux pistes en Triptyque</h4><p><strong>" + euros(3 * TG.prixPlaque * (1 - TG.remise)) + "</strong> les trois.</p><p class=\"petit\">" + valider("remise de 10" + NBSP + "%") + "</p><a class=\"btn btn--ligne\" href=\"triptyque.html#t=" + trio.join(",") + "\">Voir le Triptyque" + icone(ICO_FLECHE) + "</a></li>";
+          [res.slug].concat(res.alts).map(function (s) { return "<div class=\"plaque\">" + imgPlaqueHTML(s, res.fin, "50px") + "</div>"; }).join("") +
+          "</div><p class=\"surtitre\">Les trois ensemble</p><h4 class=\"tuile-promo__titre\">Votre plaque et ses deux pistes en Triptyque</h4><p><strong>" + euros(3 * TG.prixPlaque * (1 - TG.remise)) + "</strong> les trois.</p><p class=\"petit\">" + valider("remise de 10" + NBSP + "%") + "</p><a class=\"lien-fleche\" href=\"triptyque.html#t=" + trio.join(",") + "\">Voir le Triptyque" + icone(ICO_FLECHE) + "</a></li>";
       }
       alts.innerHTML = htmlAlts;
       form.hidden = true;
@@ -828,6 +891,7 @@
   function initTriptyque(zone) {
     var places = [null, null, null];
     var finsPrevues = ["noir", "noir", "noir"];
+    var finsChoisies = [false, false, false];
     var actif = 0;
     var emps = $$("[data-emplacement]", zone);
     var pioches = $$("[data-pioche]", zone);
@@ -879,7 +943,10 @@
     pioches.forEach(function (pb) {
       pb.addEventListener("click", function () {
         var slug = pb.getAttribute("data-pioche");
-        var fin = caseMeme && caseMeme.checked ? (places[actif] ? places[actif].fin : finsPrevues[actif]) : (places[actif] ? places[actif].fin : finsPrevues[actif]);
+        // Sans finition choisie pour ce lieu, on prend une finition qui a une photo (Le Cerf en gris, comme dans la boutique).
+        var base = finsPrevues[actif];
+        var explicite = finsChoisies[actif] || (caseMeme && caseMeme.checked);
+        var fin = explicite ? base : finAvecPhoto(slug, base);
         places[actif] = { slug: slug, fin: fin };
         annoncer(P[slug].nom + " placé en lieu " + (actif + 1) + ".");
         actif = prochainVide(actif);
@@ -892,7 +959,7 @@
         pb.addEventListener("click", function () {
           var f = pb.getAttribute("data-emp-fin");
           var cibles = caseMeme && caseMeme.checked ? [0, 1, 2] : [i];
-          cibles.forEach(function (k) { finsPrevues[k] = f; if (places[k]) places[k].fin = f; });
+          cibles.forEach(function (k) { finsPrevues[k] = f; finsChoisies[k] = true; if (places[k]) places[k].fin = f; });
           rendre();
         });
       });
@@ -900,7 +967,7 @@
     if (caseMeme) caseMeme.addEventListener("change", function () {
       if (!caseMeme.checked) return;
       var f = places[actif] ? places[actif].fin : finsPrevues[actif];
-      [0, 1, 2].forEach(function (k) { finsPrevues[k] = f; if (places[k]) places[k].fin = f; });
+      [0, 1, 2].forEach(function (k) { finsPrevues[k] = f; finsChoisies[k] = true; if (places[k]) places[k].fin = f; });
       rendre();
     });
     if (caseLed) caseLed.addEventListener("change", rendre);
@@ -916,7 +983,7 @@
       items.forEach(function (it, i) {
         if (i > 2) return;
         var m = it.match(/^(.*)-(noir|gris|dore)$/);
-        if (m && P[m[1]] && P[m[1]].collection !== "accessoires") { places[i] = { slug: m[1], fin: m[2] }; finsPrevues[i] = m[2]; }
+        if (m && P[m[1]] && P[m[1]].collection !== "accessoires") { places[i] = { slug: m[1], fin: m[2] }; finsPrevues[i] = m[2]; finsChoisies[i] = true; }
       });
       actif = 0;
       for (var k = 0; k < 3; k++) { if (!places[k]) { actif = k; break; } }
@@ -955,7 +1022,7 @@
         if (cibleSelection.select) cibleSelection.select();
         else { var r = document.createRange(); r.selectNodeContents(cibleSelection); var s = window.getSelection(); s.removeAllRanges(); s.addRange(r); }
       }
-      bouton.lastChild.textContent = "Sélectionné : Ctrl+C";
+      bouton.lastChild.textContent = bouton.getAttribute("data-repli") || (cibleSelection ? "Texte sélectionné, copiez-le" : "Copiez l’adresse de la page");
     };
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(texte).then(ok, repli);
@@ -978,6 +1045,30 @@
       }
       var msg = $(".message-demo", f);
       if (msg) { msg.hidden = false; msg.textContent = msg.textContent; }
+    });
+  });
+
+  /* ---------- notes jaunes de maquette : masquables pour juger le rendu réel ---------- */
+  var CLE_NOTES = "tg-v2-notes";
+  var majBoutonsNotes = function () {
+    var masquees = document.documentElement.classList.contains("sans-notes");
+    $$("[data-notes]").forEach(function (b) { b.setAttribute("aria-pressed", masquees ? "true" : "false"); });
+  };
+  $$("[data-notes]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var masquees = document.documentElement.classList.toggle("sans-notes");
+      try { window.localStorage.setItem(CLE_NOTES, masquees ? "masquees" : "visibles"); } catch (e) { /* préférence non mémorisée */ }
+      majBoutonsNotes();
+      annoncer(masquees ? "Notes de maquette masquées." : "Notes de maquette affichées.");
+    });
+  });
+  majBoutonsNotes();
+
+  /* ---------- champ fichier en français ---------- */
+  $$(".fichier__input").forEach(function (champ) {
+    var nom = $("[data-fichier-nom]", champ.parentNode);
+    champ.addEventListener("change", function () {
+      if (nom) nom.textContent = champ.files && champ.files.length ? champ.files[0].name : "Aucun fichier choisi";
     });
   });
 
