@@ -499,7 +499,7 @@ ORGANISATION = {
 
 def rassurance():
     return """<ul class="rassurance">
-  <li>%s<span><strong>14 jours pour vous rétracter</strong> après réception, comme le prévoit la loi. Plaque dans son état d’origine, frais de retour à votre charge.</span></li>
+  <li>%s<span><strong>14 jours pour vous rétracter</strong> après réception, comme le prévoit la loi. Article dans son état d’origine, frais de retour à votre charge.</span></li>
   <li>%s<span><strong>Paiement sécurisé</strong> par carte bancaire (Stripe), PayPal (y compris en 4 fois sans frais), Apple Pay ou Google Pay.</span></li>
   <li>%s<span><strong>Garanties légales</strong> de conformité et des vices cachés. <a href="%s">Lire les CGV</a></span></li>
 </ul>""" % (icone("retour"), icone("cadenas"), icone("bouclier"), CGV)
@@ -1331,7 +1331,7 @@ def noel():
       %s
       <h2 id="titre-date">Pour recevoir avant Noël</h2>
       <p class="date-cle__date">Commandez avant le <strong>%s</strong></p>
-      <p class="petit">%s Elle dépend du stock et du thermolaquage. Pas de compte à rebours ici : une date, écrite en clair.</p>
+      <p class="petit">%s Elle dépend du stock et du délai de thermolaquage.</p>
       <p class="date-cle__apres">Après cette date, la <a href="produit-carte-cadeau.html">carte cadeau</a> part par e-mail jusqu’au 24 décembre.</p>
       <p class="petit">Livraison en 2 à 4 jours ouvrés après l’expédition, à titre indicatif. Nous vous prévenons en cas de retard.</p>
     </aside>

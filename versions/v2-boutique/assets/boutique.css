@@ -868,6 +868,16 @@ dialog.panier::backdrop { background: rgba(14, 29, 58, .55); }
 .quiz__erreur { padding: 10px 14px; border: 2px solid var(--rouge); border-radius: var(--r-s); font-weight: 700; }
 .quiz__memo { color: var(--attenue); }
 .quiz.est-js .quiz__question:not(.est-active) { display: none; }
+@media (max-width: 600px) {
+  .choix { padding: 10px; gap: 8px; }
+  .choix__visuel { height: 64px; }
+  .choix__ico { width: 40px; height: 40px; }
+  .choix__plaque .plaque { height: 58px; }
+  .choix__photo img { height: 64px; }
+  .choix__nsp { width: 42px; height: 42px; font-size: 1.5rem; }
+  .tete-page--quiz .chapo { font-size: 1rem; }
+  .quiz-etape__rep { display: none; }
+}
 
 .quiz-resultat { display: grid; gap: 28px; outline: none; }
 .resultat { display: grid; gap: 24px; padding: clamp(18px, 3vw, 36px); border: 2px solid var(--nuit); border-radius: var(--r-l); background: #fff; position: relative; }
@@ -1001,6 +1011,12 @@ dialog.panier::backdrop { background: rgba(14, 29, 58, .55); }
 .pioche.est-choisie .plaque { background: var(--neige); }
 .pioche.est-choisie::after { content: attr(data-rang); position: absolute; right: 6px; top: 6px; min-width: 20px; height: 20px; border-radius: 10px; background: var(--nuit); color: #fff; font-size: .72rem; font-weight: 700; display: grid; place-items: center; }
 @media (min-width: 1000px) { .compo { grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: 44px; align-items: start; } .compo__mur-zone { position: sticky; top: calc(var(--entete-h) + 16px); } }
+@media (max-width: 999px) {
+  .compo__mur-zone { display: contents; }
+  .compo__mur { order: 1; }
+  .compo__pioche { order: 2; }
+  .compo__resume { order: 3; }
+}
 
 /* ---------------------------------------------------------------- sur mesure et contact */
 .bento-sm { display: grid; gap: 12px; padding-bottom: 56px; }
