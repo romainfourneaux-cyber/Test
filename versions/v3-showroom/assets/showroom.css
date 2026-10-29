@@ -19,13 +19,21 @@
   --marqueur: #ffd166;
   --sur-marqueur: #1d1500;
   --ok: #86e3b0;
-  --mur-jour: radial-gradient(120% 75% at 50% -12%, #f6f3ec 0%, #e1ddd4 48%, #c3beb3 100%);
+  --mur-jour: radial-gradient(120% 75% at 50% -12%, #f5f5f0 0%, #e1ddd4 48%, #c3beb3 100%); /* part du blanc cassé de la charte */
   --mur-nuit: radial-gradient(120% 75% at 50% -12%, #1a2338 0%, #0c1222 55%, #070b15 100%);
   --titre: "Unbounded", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
   --corps: "Manrope", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
   --mono: "JetBrains Mono", "Cascadia Mono", Consolas, "Courier New", monospace;
   --rayon: 4px;
   --entete-h: 68px;
+  /* Palette de marque de Romain, reprise par endroits (voir strategie.html, « Votre palette ») */
+  --ardoise: #2c2c2c;
+  --blanc-casse: #f5f5f0;
+  --argent: #d0d0d0;
+  --sauge: #dce2d4;
+  --cuivre: #cbaa88;
+  --cuivre-rgb: 203 170 136;
+  --cuivre-fonce: #866444;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -599,7 +607,7 @@ select:hover, .champ input:hover, .champ textarea:hover { border-color: var(--te
 .mur--bois {
   --mur-couleur: #b88a5c;
   background-image:
-    repeating-linear-gradient(90deg, transparent 0 calc(var(--cm) * 13.6), rgb(60 36 18 / .7) calc(var(--cm) * 13.6) calc(var(--cm) * 14)),
+    repeating-linear-gradient(90deg, transparent 0 calc(var(--cm) * 14 - var(--cm) * .4), rgb(60 36 18 / .7) calc(var(--cm) * 14 - var(--cm) * .4) calc(var(--cm) * 14)),
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.06 .9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .2 0 0 0 0 .1 0 0 0 0 0 0 0 0 .45 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
     linear-gradient(90deg, rgb(255 255 255 / .06), rgb(0 0 0 / .06) 50%, rgb(255 255 255 / .04));
   background-size: auto, 240px 240px, calc(var(--cm) * 28) 100%;
@@ -1024,6 +1032,159 @@ input[type="range"] { width: 100%; accent-color: var(--led); min-height: 28px; }
 .tuto img { width: 100%; height: 150px; object-fit: cover; border-radius: 2px; }
 .tuto p { font-size: .875rem; color: var(--texte-2); }
 .tuto p::before { counter-increment: tuto; content: counter(tuto) ". "; font-family: var(--mono); color: var(--led); }
+
+/* ---------- La première installation (Aquensis) ---------- */
+.origine__grille { display: grid; gap: 32px; align-items: start; }
+@media (min-width: 980px) { .origine__grille { grid-template-columns: minmax(0, 1.25fr) minmax(0, .75fr); gap: 56px; } }
+.origine__grille > *, .origine__echelle > * { min-width: 0; }
+.niche-photo { position: relative; margin: 0; padding-top: 34px; --cote: var(--texte-2); --cote-fond: var(--nuit-1); --bord-niche: clamp(10px, 1.6vw, 18px); }
+.niche-photo__cotes { position: absolute; top: 34px; left: var(--bord-niche); right: var(--bord-niche); height: 0; }
+.niche-photo__cadre {
+  position: relative;
+  padding: var(--bord-niche);
+  background: #07090f;
+  border: 1px solid var(--filet-fort);
+  border-radius: 2px;
+  box-shadow: 0 30px 80px -30px rgb(0 0 0 / .85), 0 0 140px -30px rgb(var(--cuivre-rgb) / .7);
+}
+.niche-photo__cadre::before {
+  content: "";
+  position: absolute;
+  left: 12%; right: 12%; top: -1px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--cuivre), transparent);
+  box-shadow: 0 0 22px 3px rgb(var(--cuivre-rgb) / .55);
+  pointer-events: none;
+}
+.niche-photo__cadre::after {
+  content: "";
+  position: absolute;
+  inset: var(--bord-niche);
+  border-radius: 1px;
+  pointer-events: none;
+  box-shadow: inset 0 0 0 1px rgb(var(--cuivre-rgb) / .6), inset 0 0 64px rgb(var(--cuivre-rgb) / .38);
+}
+.niche-photo__cadre img { width: 100%; border-radius: 1px; }
+.niche-photo .niche__photo-tag { top: calc(var(--bord-niche) + 10px); bottom: auto; left: calc(var(--bord-niche) + 10px); }
+.niche-photo figcaption { margin-top: 12px; font-size: .875rem; color: var(--texte-2); }
+.origine__texte { display: grid; gap: 18px; align-content: start; }
+.origine__texte p { color: var(--texte-2); }
+.origine__texte strong { color: var(--texte); }
+.cotes-projet { display: grid; border-top: 1px solid var(--filet); font-family: var(--mono); }
+.cotes-projet div { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 12px; padding: 9px 0; border-bottom: 1px solid var(--filet); }
+.cotes-projet dt { font-size: .6875rem; letter-spacing: .12em; text-transform: uppercase; color: var(--texte-3); padding-top: 2px; }
+.cotes-projet dd { margin: 0; font-size: .875rem; color: var(--texte); }
+.origine__echelle { display: grid; gap: 24px; align-items: center; margin-top: clamp(36px, 5vw, 56px); padding-top: 28px; border-top: 1px dashed var(--filet-fort); }
+@media (min-width: 900px) { .origine__echelle { grid-template-columns: minmax(0, 340px) minmax(0, 1fr); gap: 56px; } }
+.schema--origine { max-width: 340px; }
+.origine__suite { display: grid; gap: 12px; align-content: start; }
+.origine__suite .actions { gap: 12px 24px; margin-top: 4px; }
+.schema .niche-s { fill: rgb(var(--cuivre-rgb) / .1); stroke: var(--cuivre); stroke-width: 1.3; }
+.encart--serie { margin-top: 48px; grid-template-columns: 1fr; }
+@media (min-width: 900px) { .encart--serie { grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 32px; align-items: start; } }
+.encart--serie__texte { display: grid; gap: 12px; justify-items: start; }
+
+/* ---------- Vitrine « En préparation à l'atelier » : dessins de découpe, pas de photos ---------- */
+#preparation { margin-top: clamp(40px, 5vw, 64px); }
+.grille-decoupes { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 32px 20px; }
+@media (min-width: 900px) { .grille-decoupes { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px 24px; } }
+.decoupe { display: grid; gap: 14px; align-content: start; min-width: 0; }
+.decoupe__plan {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  display: grid;
+  place-items: center;
+  border-radius: 2px;
+  border: 1px solid rgb(208 208 208 / .2);
+  container-type: inline-size;
+  background-color: var(--ardoise);
+  background-image: linear-gradient(rgb(208 208 208 / .07) 1px, transparent 1px), linear-gradient(90deg, rgb(208 208 208 / .07) 1px, transparent 1px);
+  background-size: 20px 20px;
+  --cote: var(--argent);
+  --cote-fond: var(--ardoise);
+}
+.decoupe__piece { position: relative; width: 36cqi; aspect-ratio: 194 / 380; outline: 1px dashed rgb(208 208 208 / .5); outline-offset: 5px; }
+.decoupe__dessin { position: absolute; inset: 0; overflow: hidden; }
+.decoupe__dessin img { position: absolute; max-width: none; height: auto; filter: invert(1) grayscale(1) brightness(.84); mix-blend-mode: lighten; }
+.decoupe__vide { position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; gap: 8px; padding: 6px; text-align: center; color: var(--argent); font-family: var(--mono); font-size: .6875rem; letter-spacing: .1em; text-transform: uppercase; background: repeating-linear-gradient(135deg, rgb(208 208 208 / .06) 0 8px, transparent 8px 16px); }
+@media (max-width: 599px) { .decoupe__plan { aspect-ratio: 4 / 3; } .decoupe__piece { width: 25cqi; } }
+.decoupe__plan .niche__photo-tag { background: rgb(44 44 44 / .92); color: var(--argent); border: 1px solid rgb(208 208 208 / .25); }
+.decoupe .carte__corps p:not(.cartel) { line-height: 1.4; }
+
+/* ---------- Sur-mesure : grands formats en préparation ---------- */
+.grands-formats { display: grid; gap: 28px; align-items: center; margin-top: clamp(40px, 5vw, 64px); padding-top: 32px; border-top: 1px dashed var(--filet-fort); }
+@media (min-width: 980px) { .grands-formats { grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: 64px; } }
+.grands-formats > * { min-width: 0; }
+.grands-formats__texte { display: grid; gap: 14px; align-content: start; }
+.liste-grands { display: flex; flex-wrap: wrap; gap: 8px; }
+.liste-grands a { display: inline-flex; align-items: center; min-height: 40px; padding: 6px 12px; border: 1px solid var(--filet-fort); border-radius: 2px; text-decoration: none; font-weight: 600; font-size: .9375rem; }
+.liste-grands a:hover { border-color: var(--led); }
+.schema .marq-s { fill: var(--marqueur); }
+.schema text.marq-t { fill: var(--sur-marqueur); font-size: 9px; letter-spacing: .04em; font-weight: 500; }
+
+/* ---------- Page QR (panneaux de démonstration d'Aquensis) ---------- */
+.qr-heros h1 { max-width: 19ch; font-size: clamp(1.85rem, 1.05rem + 2.7vw, 3.3rem); }
+@media (min-width: 1100px) { .grille-niches--six { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 28px 16px; } }
+.infos-qr { margin-top: 36px; }
+.titre-encadre { font-family: var(--corps); font-size: 1rem; font-weight: 700; letter-spacing: 0; color: var(--texte); }
+.encadre-alerte code { font-family: var(--mono); font-size: .85em; background: var(--nuit-2); padding: 1px 5px; border-radius: 2px; color: var(--texte); overflow-wrap: anywhere; }
+.encadre-alerte output { color: var(--texte); }
+
+/* ---------- Stratégie : palette, aperçus, contrastes ---------- */
+.palette { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 150px), 1fr)); gap: 12px; }
+.palette li { display: grid; gap: 6px; align-content: start; padding: 12px; border: 1px solid var(--filet); border-radius: 2px; background: var(--nuit-1); }
+.palette__pastille { display: block; height: 72px; border-radius: 2px; box-shadow: inset 0 0 0 1px rgb(255 255 255 / .14); }
+.doc__corps .palette strong { font-size: .9375rem; }
+.palette code { justify-self: start; }
+.doc__corps .palette li > span:last-child { font-size: .8125rem; color: var(--texte-2); }
+.doc__corps h3 { font-size: 1.1rem; margin-top: 8px; }
+.tableau-defile { overflow-x: auto; }
+.paire-couleurs { display: flex; align-items: center; gap: 10px; }
+.duo-couleurs { flex: none; }
+.duo-couleurs span { display: inline-grid; place-items: center; width: 34px; height: 26px; border-radius: 2px; font-weight: 700; font-size: .8125rem; box-shadow: inset 0 0 0 1px rgb(255 255 255 / .14); }
+@media (max-width: 560px) { .tableau--contrastes { font-size: .8125rem; } .tableau--contrastes th:last-child, .tableau--contrastes td:last-child { display: none; } }
+.apercus-charte { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); }
+.apercu { margin: 0; padding: 20px; border-radius: 2px; display: grid; gap: 10px; align-content: start; font-size: .9375rem; }
+.doc__corps .apercu p { color: inherit; }
+.apercu--ardoise { background: #2c2c2c; color: #f5f5f0; border: 1px solid #d0d0d0; }
+.apercu--jour { background: #f5f5f0; color: #2c2c2c; border: 1px solid #d0d0d0; }
+.apercu__titre { font-family: var(--titre); font-size: 1.1rem; }
+.doc__corps .apercu .apercu__fiche { background: #dce2d4; color: #2c2c2c; padding: 8px 10px; border-radius: 2px; font-family: var(--mono); font-size: .75rem; }
+.apercu__bouton { justify-self: start; background: #cbaa88; color: #2c2c2c; font-weight: 700; padding: 10px 16px; border-radius: 4px; }
+.apercu__lien { justify-self: start; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+.apercu--ardoise .apercu__lien { color: #cbaa88; }
+.apercu--jour .apercu__lien { color: #866444; }
+.apercu figcaption { font-family: var(--mono); font-size: .6875rem; letter-spacing: .1em; text-transform: uppercase; padding-top: 8px; border-top: 1px solid #d0d0d0; }
+.bascule-charte { display: flex; flex-wrap: wrap; gap: 8px; }
+.bascule-charte button { min-height: 44px; padding: 8px 14px; border: 1px solid var(--filet-fort); border-radius: var(--rayon); background: transparent; font-weight: 700; font-size: .9375rem; color: var(--texte); }
+.bascule-charte button:hover { border-color: var(--led); }
+.bascule-charte button[aria-pressed="true"] { border-color: var(--led); box-shadow: 0 0 0 1px var(--led); }
+
+/* ---------- Essai : couleurs de la charte de Romain (nuit ardoise et cuivre) ----------
+   Activé depuis strategie.html. L'interface prend le cuivre clair ; la lumière des plaques garde la couleur LED
+   choisie (--lumiere capture sur :root la couleur posée en style en ligne par le script). */
+:root { --lumiere: var(--led); --lumiere-rgb: var(--led-rgb); }
+:root[data-charte="ardoise"] body { --led: var(--cuivre); --led-rgb: var(--cuivre-rgb); }
+:root[data-charte="ardoise"] :is(.scene, .essai__scene, .nuancier, .interrupteur, .horizon, .vue-bouton__img--nuit, .options-led, .cable-plan, .prix-led, .schema) { --led: var(--lumiere); --led-rgb: var(--lumiere-rgb); }
+:root[data-charte="ardoise"] {
+  --nuit-0: #2c2c2c;
+  --nuit-1: #333332;
+  --nuit-2: #3b3b3a;
+  --nuit-3: #474745;
+  --filet: #4b4b48;
+  --filet-fort: #6f6f6a;
+  --texte: #f5f5f0;
+  --texte-2: #d0d0d0;
+  --texte-3: #afafa9;
+  --sur-led: #2c2c2c;
+  --mur-nuit: radial-gradient(120% 75% at 50% -12%, #3b3b39 0%, #262625 55%, #1c1c1b 100%);
+}
+:root[data-charte="ardoise"] .ciel { background-image: radial-gradient(ellipse 70% 55% at 72% 0%, rgb(203 170 136 / .16), transparent 72%), radial-gradient(ellipse 60% 50% at 0% 100%, rgb(0 0 0 / .25), transparent 70%); }
+:root[data-charte="ardoise"] .bandeau-maquette { background: #262626; }
+:root[data-charte="ardoise"] .bandeau-maquette p::after { content: "· essai des couleurs de votre charte"; }
+:root[data-charte="ardoise"] .horizon .loin { fill: #353534; }
+:root[data-charte="ardoise"] .schema .silhouette { fill: #55554f; }
+:root[data-charte="ardoise"] .niche-photo__cadre { background: #1f1f1e; }
 
 /* ---------- Transitions entre pages (amélioration progressive) ---------- */
 @media (prefers-reduced-motion: no-preference) {

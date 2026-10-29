@@ -7,7 +7,7 @@
 <meta name="description" content="Note pour Romain : concept, tendances, techniques marketing, points légaux et informations à fournir pour la version 2 de la maquette Terre Gravée.">
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#ffffff">
-<script>try { if (window.localStorage.getItem("tg-v2-notes") === "masquees") document.documentElement.classList.add("sans-notes"); } catch (e) {}</script>
+<script>try { if (window.localStorage.getItem("tg-v2-notes") === "masquees") document.documentElement.classList.add("sans-notes"); if (window.localStorage.getItem("tg-v2-charte") === "romain") document.documentElement.classList.add("charte"); } catch (e) {}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&amp;family=Figtree:ital,wght@0,400..700;1,400&amp;display=swap">
@@ -15,7 +15,7 @@
 </head>
 <body class="page-strat">
 <a class="lien-evitement" href="#contenu">Aller au contenu</a>
-<div class="bandeau-maq" role="note"><div class="wrap bandeau-maq__in"><p><strong>Maquette version 2 · brouillon non publié · paiements désactivés</strong></p><p class="bandeau-maq__liens"><a href="strategie.html">Lire la stratégie</a><a href="../index.html">Comparer les versions</a><button type="button" class="bandeau-maq__notes" data-notes aria-pressed="false">Masquer les notes jaunes</button></p></div></div>
+<div class="bandeau-maq" role="note"><div class="wrap bandeau-maq__in"><p><strong>Maquette version 2 · brouillon non publié · paiements désactivés</strong></p><p class="bandeau-maq__liens"><a href="strategie.html">Lire la stratégie</a><a href="../index.html">Comparer les versions</a><button type="button" class="bandeau-maq__notes" data-notes aria-pressed="false">Masquer les notes jaunes</button><button type="button" class="bandeau-maq__notes bandeau-maq__charte" data-charte-quitter>Quitter la palette de votre charte</button></p></div></div>
 <header class="entete" data-entete>
   <div class="wrap entete__in">
     <a class="logo" href="index.html"><svg class="logo__marque" viewBox="0 0 40 40" aria-hidden="true" focusable="false"><rect width="40" height="40" rx="3" fill="#0E1D3A"/><rect x="8" y="11" width="24" height="7" fill="#fff"/><rect x="8" y="22" width="24" height="7" fill="#D0121F"/></svg><span class="logo__nom">Terre Gravée</span><span class="sr">, retour à l’accueil</span></a>
@@ -44,12 +44,53 @@
     </div>
     <p class="petit">Thème unique clair assumé : les photos des plaques ont des découpes blanches. Un mode sombre montrerait des trous blancs sur fond foncé.</p>
     <p class="petit">Les histoires des modèles ont été réécrites en phrases factuelles (lieu, altitude, ce que montre la découpe) à partir des textes du site actuel : à relire. Le bouton « Masquer les notes jaunes » du bandeau permet de juger le rendu sans les étiquettes de maquette.</p>
-    <ul class="strat-pages"><li><a href="index.html">index.html</a><span>Accueil en bento hiérarchisé</span></li><li><a href="collection.html">collection.html</a><span>Boutique filtrable, ajout rapide</span></li><li><a href="produit-le-pic-du-midi.html">produit-le-pic-du-midi.html</a><span>Fiche produit type</span></li><li><a href="produit-le-cerf.html">produit-le-cerf.html</a><span>Fiche avec une finition sans photo</span></li><li><a href="produit-led.html">produit-led.html</a><span>Kit LED et notice</span></li><li><a href="produit-carte-cadeau.html">produit-carte-cadeau.html</a><span>Carte cadeau</span></li><li><a href="quiz.html">quiz.html</a><span>Page signature : quiz</span></li><li><a href="noel.html">noel.html</a><span>Page signature : guide de Noël</span></li><li><a href="triptyque.html">triptyque.html</a><span>Composeur de Triptyque</span></li><li><a href="sur-mesure.html">sur-mesure.html</a><span>Sur mesure et séries</span></li><li><a href="contact.html">contact.html</a><span>Aide et contact</span></li></ul>
+    <ul class="strat-pages"><li><a href="index.html">index.html</a><span>Accueil en bento hiérarchisé</span></li><li><a href="collection.html">collection.html</a><span>Boutique filtrable, ajout rapide</span></li><li><a href="produit-le-pic-du-midi.html">produit-le-pic-du-midi.html</a><span>Fiche produit type</span></li><li><a href="produit-le-cerf.html">produit-le-cerf.html</a><span>Fiche avec une finition sans photo</span></li><li><a href="produit-led.html">produit-led.html</a><span>Kit LED et notice</span></li><li><a href="produit-carte-cadeau.html">produit-carte-cadeau.html</a><span>Carte cadeau</span></li><li><a href="quiz.html">quiz.html</a><span>Page signature : quiz</span></li><li><a href="noel.html">noel.html</a><span>Page signature : guide de Noël</span></li><li><a href="triptyque.html">triptyque.html</a><span>Composeur de Triptyque</span></li><li><a href="sur-mesure.html">sur-mesure.html</a><span>Sur mesure et séries</span></li><li><a href="qr.html">qr.html</a><span>Page d’arrivée du QR code d’Aquensis</span></li><li><a href="contact.html">contact.html</a><span>Aide et contact</span></li></ul>
   </section>
 
   <section class="strat-bloc" aria-labelledby="s-tendances">
     <h2 id="s-tendances">Les tendances utilisées</h2>
     <ul class="strat-grille"><li class="strat-carte"><h3>Bento hiérarchisé</h3><p>L’accueil et la page sur mesure utilisent des cases de tailles différentes, ordonnées comme un tunnel sur mobile : héros, quiz, Noël pendant la campagne, preuve réelle, note et série, lot, option LED, retours.</p><p class="strat-carte__source">Le bento ne marche que si la taille des cases suit leur importance (<a href="https://bubble.io/blog/web-design-trends/">Bubble</a>). Il est devenu banal à cases égales (<a href="https://www.creativeboom.com/insight/10-trends-creatives-are-so-over-in-2026/">Creative Boom</a>), d’où des tailles et des rayons volontairement inégaux.</p></li><li class="strat-carte"><h3>Blanc structurant, rouge du balisage</h3><p>Fond blanc pur, bleu nuit pour le texte, rouge réservé aux actions et aux repères de progression. Le motif blanc et rouge des sentiers de grande randonnée sert de système : étapes du quiz, jauge de livraison offerte, logo.</p><p class="strat-carte__source">Pantone a choisi un blanc, Cloud Dancer, pour 2026 (<a href="https://www.smithsonianmag.com/smart-news/pantones-color-of-the-year-for-2026-is-a-blank-canvas-called-cloud-dancer-or-in-other-words-white-180987805/">Smithsonian</a>). Pour ne pas ressembler à tout le monde, le blanc est associé au rouge du balisage pyrénéen.</p></li><li class="strat-carte"><h3>Typographie</h3><p>Bricolage Grotesque en largeur 75 et graisses 700 à 800 pour les titres, Figtree pour le texte. Deux familles seulement.</p><p class="strat-carte__source">Bricolage Grotesque est très répandue sur les pages SaaS (<a href="https://www.afontfinder.com/blog/bricolage-grotesque-review">A Font Finder</a>) : la version étroite et grasse lui donne un air de panneau de sentier. Figtree est une linéale sobre (<a href="https://www.gleamstudio.design/blog-post/font-trends-2026">Gleam Studio</a>). <code>text-wrap: balance</code> sur les titres (<a href="https://web-platform-dx.github.io/web-features-explorer/features/text-wrap-balance/">web-features</a>).</p></li><li class="strat-carte"><h3>Commerce honnête</h3><p>Aucun compte à rebours, aucun faux stock, aucun prix barré. La seule rareté affichée est réelle : la série numérotée.</p><p class="strat-carte__source">La consultation européenne sur le futur Digital Fairness Act vise les comptes à rebours et les fausses raretés (<a href="https://www.osborneclarke.com/insights/digital-fairness-act-unpacked-dark-patterns">Osborne Clarke</a>).</p></li><li class="strat-carte"><h3>Interface discrète et rapide</h3><p>Filets fins, pas d’ombres lourdes, pas de <code>backdrop-filter</code>, aucune bibliothèque JavaScript. Images WebP avec dimensions.</p><p class="strat-carte__source">Le <code>backdrop-filter</code> coûte cher sur Android milieu de gamme et pose problème sous iOS 26 (<a href="https://dev.to/studiomeyer_io/web-design-trends-2026-what-actually-held-up-after-six-months-23p8">StudioMeyer</a>, données d’agence ; <a href="https://gist.github.com/alessiomaffeis/41224fad0df2bb722db13473091f0933">gist</a>, source faible). Objectifs Core Web Vitals : LCP ≤ 2,5 s, INP ≤ 200 ms, CLS ≤ 0,1 (<a href="https://web.dev/articles/vitals">web.dev</a>).</p></li><li class="strat-carte"><h3>Barre d’achat collante, seulement sur les fiches</h3><p>Sur téléphone, la barre apparaît quand le bouton principal sort de l’écran. Elle contient les finitions, le total et le bouton.</p><p class="strat-carte__source">Elle ne gagne que dans une minorité de tests, et seulement si elle permet de finir le choix (<a href="https://cleancommit.io/blog/sticky-add-to-cart-buttons/">Cleancommit</a> ; <a href="https://www.goodui.org/patterns/41">GoodUI</a>). Elle n’apparaît donc ni sur l’accueil ni sur la boutique.</p></li><li class="strat-carte"><h3>Transitions entre pages, en bonus</h3><p><code>@view-transition</code> activé hors mouvement réduit : fondu entre les pages sous Chrome, Edge et Safari 18.2, navigation normale ailleurs.</p><p class="strat-carte__source">Support des transitions entre documents (<a href="https://web-platform-dx.github.io/web-features-explorer/features/cross-document-view-transitions/">web-features</a>).</p></li><li class="strat-carte"><h3>Lisible par les machines</h3><p>Données structurées JSON-LD (Organization, Product, AggregateRating) et HTML sémantique.</p><p class="strat-carte__source">Structure lisible par les agents IA (<a href="https://bubble.io/blog/web-design-trends/">Bubble</a>). Les étoiles Google exigent des avis visibles et non rémunérés en secret (<a href="https://developers.google.com/search/docs/appearance/structured-data/review-snippet">Google</a>).</p></li></ul>
+  </section>
+
+  <section class="strat-bloc" aria-labelledby="s-palette">
+    <h2 id="s-palette">Votre palette</h2>
+    <p>Votre fichier « Palette Terres Gravées : version centrée métal brut » définit cinq couleurs. Les voici, avec les contrastes mesurés selon les règles WCAG (AA : 4,5:1 pour le texte, 3:1 pour les gros titres et les bordures utiles).</p>
+    <ul class="palette"><li class="pal"><span class="pal__pastille" style="background:#2C2C2C" aria-hidden="true"></span><span class="pal__txt"><strong>Noir ardoise</strong><code>#2C2C2C</code><span>Texte, en-tête, pied de page, contrastes</span><small>Texte ardoise sur blanc cassé : 12,8:1. Texte blanc sur ardoise : 14:1.</small></span></li><li class="pal"><span class="pal__pastille" style="background:#F5F5F0" aria-hidden="true"></span><span class="pal__txt"><strong>Blanc cassé</strong><code>#F5F5F0</code><span>Fond principal</span><small>Fond de page : le texte noir ardoise y atteint 12,8:1.</small></span></li><li class="pal"><span class="pal__pastille" style="background:#D0D0D0" aria-hidden="true"></span><span class="pal__txt"><strong>Argent doux</strong><code>#D0D0D0</code><span>Détails, bordures, icônes</span><small>1,4:1 sur blanc cassé : décor seulement. Pour les bordures de champs, il faut 3:1 : un gris #7D7D78 (3,8:1).</small></span></li><li class="pal"><span class="pal__pastille" style="background:#DCE2D4" aria-hidden="true"></span><span class="pal__txt"><strong>Vert sauge très pâle</strong><code>#DCE2D4</code><span>Fonds de sections secondaires</span><small>Texte noir ardoise sur sauge : 10,6:1.</small></span></li><li class="pal"><span class="pal__pastille" style="background:#CBAA88" aria-hidden="true"></span><span class="pal__txt"><strong>Cuivre clair</strong><code>#CBAA88</code><span>Boutons d’action, survol</span><small>Texte blanc sur cuivre clair : 2,2:1, refusé. Texte noir ardoise : 6,4:1, conforme AA.</small></span></li></ul>
+    <div class="strat-deux">
+      <div>
+        <h3>Ce que la version 2 en reprend</h3>
+        <ul class="strat-liste">
+          <li>L’argent doux est très proche des filets de la maquette (#D3DAE4).</li>
+          <li>Le vert sauge sert de fond à la section « Né à Aquensis » de l’accueil, comme vous le prévoyez pour les sections secondaires.</li>
+          <li>Le cuivre clair revient dans le filet de cette section, qui évoque l’effet Corten des panneaux, dans la carte cadeau (votre visuel) et dans le code AQUENSIS de <a href="qr.html">qr.html</a>, toujours avec un texte noir ardoise.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Ce dont elle s’écarte, et pourquoi</h3>
+        <ul class="strat-liste">
+          <li>Le texte et les fonds foncés sont en bleu nuit, pas en noir ardoise : le bleu accompagne le balisage blanc et rouge des sentiers, fil conducteur de cette version.</li>
+          <li>Le bouton d’action est rouge, pas cuivre : c’est le rouge du balisage, et le texte blanc y atteint 5,5:1. Sur le cuivre clair, le texte blanc tombe à 2,2:1.</li>
+          <li>Le fond est blanc pur, plus franc que le blanc cassé : la version joue le contraste net d’un panneau de sentier.</li>
+        </ul>
+      </div>
+    </div>
+    <h3 class="strat-sous">Rester fidèle à votre charte : l’adaptation proposée</h3>
+    <div class="echantillons" aria-label="Échantillons de bouton d’achat">
+      <div class="ech ech--v2"><p class="ech__titre">Version 2</p><span class="ech__bouton">Ajouter au panier</span><span class="ech__fond">Section secondaire</span><p class="ech__note">Blanc sur rouge : 5,5:1</p></div>
+      <div class="ech ech--charte"><p class="ech__titre">Votre charte</p><span class="ech__bouton">Ajouter au panier</span><span class="ech__fond">Section secondaire</span><p class="ech__note">Ardoise sur cuivre clair : 6,4:1</p></div>
+      <div class="ech ech--refus"><p class="ech__titre">À éviter</p><span class="ech__bouton" role="img" aria-label="Exemple refusé : texte blanc sur cuivre clair">Ajouter au panier</span><span class="ech__fond">Section secondaire</span><p class="ech__note">Blanc sur cuivre clair : 2,2:1, illisible</p></div>
+    </div>
+    <div class="tableau-defile" tabindex="0" role="region" aria-label="Tableau de l’adaptation, à faire défiler sur téléphone">
+      <table class="tableau-charte">
+        <thead><tr><th scope="col">Rôle</th><th scope="col">Version 2</th><th scope="col">Votre charte</th><th scope="col">Contraste vérifié</th></tr></thead>
+        <tbody><tr><th scope="row">Texte, en-tête, pied de page</th><td>Bleu nuit #0E1D3A</td><td>Noir ardoise #2C2C2C</td><td>12,8:1 sur blanc cassé</td></tr><tr><th scope="row">Fond principal</th><td>Blanc pur #FFFFFF</td><td>Blanc cassé #F5F5F0</td><td>Les cartes produit restent blanches</td></tr><tr><th scope="row">Sections secondaires, fond des photos</th><td>Gris neige #F3F5F8</td><td>Vert sauge #DCE2D4</td><td>Texte ardoise : 10,6:1</td></tr><tr><th scope="row">Filets et bordures</th><td>Gris bleuté #D3DAE4</td><td>Argent doux #D0D0D0 ; #7D7D78 pour les champs et pastilles</td><td>3,8:1 pour les bordures utiles</td></tr><tr><th scope="row">Bouton d’action</th><td>Rouge #D0121F, texte blanc (5,5:1)</td><td>Cuivre clair #CBAA88, texte noir ardoise ; survol #B8936C</td><td>6,4:1 ; 4,9:1 au survol</td></tr><tr><th scope="row">Texte ou lien cuivré</th><td>Aucun</td><td>Cuivre foncé #7E5A36</td><td>5,6:1 sur blanc cassé ; le cuivre clair en texte (2:1) est refusé</td></tr><tr><th scope="row">Texte atténué</th><td>#4F5D78</td><td>#5A5A55</td><td>6,3:1 sur blanc cassé, 5,2:1 sur sauge</td></tr><tr><th scope="row">Balisage : étapes, jauge, pied de page</th><td>Blanc et rouge</td><td>Blanc et cuivre clair, filet ardoise</td><td>Décor</td></tr></tbody>
+      </table>
+    </div>
+    <div class="essai-charte">
+      <button type="button" class="btn btn--nuit" data-charte aria-pressed="false">Voir toute la maquette aux couleurs de votre charte</button>
+      <p class="petit">L’aperçu s’applique à toutes les pages et reste actif dans ce navigateur. Le bandeau jaune affiche alors un bouton pour en sortir. Les notes jaunes de maquette ne changent pas. <span class="note-maq note-maq--valider">palette de votre charte, à adopter ou non : proposition à valider</span></p>
+    </div>
+    <p><strong>Votre logo.</strong> Il existe en vectoriel (logo.ai), avec l’emblème au coq, « TERRE GRAVÉE » et « Graver l’âme des territoires ». Exporté en SVG, il peut remplacer la signature typographique de l’en-tête et du pied de page (le carré balisé et le nom en Bricolage Grotesque), en version claire sur les fonds foncés. <span class="note-maq note-maq--fournir">à fournir : logo exporté en SVG depuis logo.ai</span></p>
   </section>
 
   <section class="strat-bloc" aria-labelledby="s-techniques">
@@ -162,6 +203,69 @@
 </li></ol>
   </section>
 
+  <section class="strat-bloc" aria-labelledby="s-idees">
+    <h2 id="s-idees">Vos idées, mises en œuvre</h2>
+    <p>Votre business plan vise d’abord les touristes et les habitants attachés à leur patrimoine. Voici vos idées, une par une : ce que le site doit prévoir, ce qu’il faudra mesurer et ce qui reste à décider. La carte interactive des plaques, que vous envisagez aussi, est la page carte de la version 1.</p>
+    <ol class="techs techs--idees"><li class="tech">
+  <h3>Panneaux de démonstration à Aquensis, avec QR code</h3>
+  <dl>
+    <div><dt>Sur le site</dt><dd>Des panneaux petit format aux vestiaires et à la sortie, avec le prix affiché et le rappel qu’il existe d’autres modèles. Le QR code mène à <a href="qr.html">qr.html</a>, déjà dans la maquette : « Vous venez d’Aquensis ? », quatre plaques de Bagnères et de la Bigorre avec ajout direct au panier, quiz en un clic, garanties et code de bienvenue AQUENSIS. Un QR code par emplacement, chacun avec son paramètre de suivi, par exemple <code>qr.html?utm_source=aquensis&amp;utm_medium=qr&amp;utm_content=vestiaires</code> (puis <code>sortie</code>). Le QR code du dossier Marketing devra pointer vers cette adresse.</dd></div>
+    <div><dt>Indicateur</dt><dd>Visites issues du QR code, par emplacement ; ajouts au panier et commandes depuis qr.html ; commandes avec le code AQUENSIS.</dd></div>
+    <div><dt>À valider</dt><dd>L’accord de la SEMETHERM pour poser les panneaux et citer le projet. Le paramètre de suivi. Le code AQUENSIS et sa valeur proposée (livraison offerte dès la première plaque), à calculer avec le coût réel du port d’une plaque.</dd></div>
+  </dl>
+</li><li class="tech">
+  <h3>Commerçants et restaurants partenaires</h3>
+  <dl>
+    <div><dt>Sur le site</dt><dd>Une plaque offerte et exposée, avec un petit chevalet et son QR code (<code>utm_source</code> au nom du lieu). Sur le site, une liste « Où voir nos plaques », publiée seulement après accord de chaque lieu. La carte interactive de la version 1 peut l’afficher.</dd></div>
+    <div><dt>Indicateur</dt><dd>Visites et commandes par lieu, rapportées au coût de la plaque offerte.</dd></div>
+    <div><dt>À valider</dt><dd>La liste des lieux, la contrepartie, un accord écrit avec chacun.</dd></div>
+  </dl>
+</li><li class="tech">
+  <h3>Offices de tourisme et boutiques des grands sites</h3>
+  <dl>
+    <div><dt>Sur le site</dt><dd>Pour le téléphérique du Pic du Midi, les concept-stores ou les offices de tourisme : un espace « Revendeurs » sur la page sur mesure, avec une présentation, des photos en haute définition et un formulaire. Les conditions de revente restent hors du site, envoyées sur demande. Une page « Où acheter » une fois les dépôts signés.</dd></div>
+    <div><dt>Indicateur</dt><dd>Demandes de revendeurs, commandes professionnelles, ventes par lieu.</dd></div>
+    <div><dt>À valider</dt><dd>Les conditions de revente, le stock, le choix des lieux (Le Pic du Midi au téléphérique du Pic du Midi, par exemple).</dd></div>
+  </dl>
+</li><li class="tech">
+  <h3>Événements : fête du château de Mauvezin, montée du col du Tourmalet</h3>
+  <dl>
+    <div><dt>Sur le site</dt><dd>Un bloc « Nous retrouver » avec les dates. Sur le stand, la même mécanique que qr.html : un QR code avec son paramètre, vers une page qui met en avant <a href="produit-le-chateau-de-mauvezin.html">Le Château de Mauvezin</a> ou <a href="produit-le-tourmalet.html">Le Tourmalet</a>.</dd></div>
+    <div><dt>Indicateur</dt><dd>Visites et commandes pendant l’événement et la semaine suivante ; inscriptions à la lettre.</dd></div>
+    <div><dt>À valider</dt><dd>La participation, les dates, l’emplacement du stand.</dd></div>
+  </dl>
+</li><li class="tech">
+  <h3>Grands formats pour la ville</h3>
+  <dl>
+    <div><dt>Sur le site</dt><dd>La page <a href="sur-mesure.html">sur mesure</a> annonce les grands formats en préparation (Le Cirque de Gavarnie, Le Tourmalet, Le Pont d’Espagne et Le Pic du Midi), rappelle la référence d’Aquensis (30 panneaux de 1 m × 2 m) et propose « Grand format » dans le formulaire.</dd></div>
+    <div><dt>Indicateur</dt><dd>Demandes de devis grand format, devis signés.</dd></div>
+    <div><dt>À valider</dt><dd>Les formats, les prix sur devis, l’accord de la SEMETHERM pour citer la référence.</dd></div>
+  </dl>
+</li><li class="tech">
+  <h3>Offres aux professionnels : hôtels, entreprises</h3>
+  <dl>
+    <div><dt>Sur le site</dt><dd>La page sur mesure s’adresse désormais aux villes, hôtels et entreprises : frise, grands formats, éditions spéciales. Le formulaire a un type de demande dédié.</dd></div>
+    <div><dt>Indicateur</dt><dd>Demandes professionnelles, taux de devis signés, montant moyen.</dd></div>
+    <div><dt>À valider</dt><dd>L’offre (quantités, délais, personnalisation possible ou non) et la facturation.</dd></div>
+  </dl>
+</li><li class="tech">
+  <h3>Thèmes sportifs : cols, rugby</h3>
+  <dl>
+    <div><dt>Sur le site</dt><dd>Un thème « Sport » dans la boutique et dans le quiz dès qu’il y aura plusieurs modèles (aujourd’hui Le Tourmalet et la réponse « Le vélo » du quiz). La lettre « être prévenu » peut demander les thèmes qui intéressent.</dd></div>
+    <div><dt>Indicateur</dt><dd>Ventes du Tourmalet, inscriptions par thème, demandes reçues.</dd></div>
+    <div><dt>À valider</dt><dd>Les modèles. Pour le rugby, ni logo ni nom de club sans licence : ce sont des marques déposées.</dd></div>
+  </dl>
+</li><li class="tech">
+  <h3>Autres territoires et grands sites : Mont-Saint-Michel, Étretat, Pont du Gard</h3>
+  <dl>
+    <div><dt>Sur le site</dt><dd>Une boutique organisée par territoire, les Pyrénées d’abord, avec une adresse par territoire. Avant de produire, la lettre « être prévenu » propose le choix du territoire pour mesurer la demande. La signature « Graver l’âme des territoires » s’y prête.</dd></div>
+    <div><dt>Indicateur</dt><dd>Inscriptions par territoire, ventes du premier modèle hors Pyrénées.</dd></div>
+    <div><dt>À valider</dt><dd>Le premier territoire, les illustrations, les droits sur l’image et le nom des sites : certains sont des marques déposées ou des domaines nationaux.</dd></div>
+  </dl>
+</li></ol>
+    <p class="petit">Pour suivre les QR codes, les paramètres <code>utm_source</code>, <code>utm_medium</code> et <code>utm_content</code> sont lus par la plupart des outils de mesure d’audience. La mesure doit respecter les règles de la CNIL sur les traceurs.</p>
+  </section>
+
   <section class="strat-bloc" aria-labelledby="s-legal">
     <h2 id="s-legal">Points de vigilance légaux</h2>
     <ul class="strat-liste">
@@ -203,6 +307,10 @@
           <li>Le centre du rayon de 150 km cité pour la fabrication.</li>
           <li>Les ventes réelles derrière les étiquettes « Meilleure vente ».</li>
           <li>Une photo d’une série professionnelle, si vous en avez une.</li>
+          <li>L’accord écrit de la SEMETHERM pour citer le projet Aquensis : l’histoire d’origine porte l’étiquette « à valider » d’ici là.</li>
+          <li>Le logo exporté en SVG depuis logo.ai.</li>
+          <li>Un aperçu du dessin du Jardin Massey, et les dates de sortie des trois modèles en préparation.</li>
+          <li>Les modèles et les prix des grands formats.</li>
         </ul>
       </div>
       <div>
@@ -217,6 +325,10 @@
           <li>Carte cadeau de 80 € (plaque et kit LED), non prise en compte dans le seuil de livraison.</li>
           <li>Options cadeau : message joint et prix masqués.</li>
           <li>Jour de sortie des plaques exclusives : le premier jeudi du mois.</li>
+          <li>Panneaux de démonstration à Aquensis (vestiaires, sortie) et page d’arrivée qr.html.</li>
+          <li>Code de bienvenue AQUENSIS : livraison offerte dès la première plaque.</li>
+          <li>Paramètre de suivi des QR codes : <code>utm_source</code>, <code>utm_medium</code>, <code>utm_content</code>.</li>
+          <li>Adopter ou non la palette de votre charte.</li>
         </ul>
       </div>
     </div>
@@ -232,6 +344,7 @@
       <div><dt>Quiz</dt><dd>Démarrages, complétion, ajouts au panier depuis le résultat.</dd></div>
       <div><dt>Taux d’inscription</dt><dd>Inscriptions à la lettre divisées par visites de l’accueil.</dd></div>
       <div><dt>Saison de Noël</dt><dd>Part des ventes avant le 1er décembre, ventes de cartes après le 14 décembre.</dd></div>
+      <div><dt>QR codes d’Aquensis</dt><dd>Visites par emplacement, commandes depuis qr.html, utilisations du code AQUENSIS.</dd></div>
     </dl>
     <p class="petit">Mesure d’audience à mettre en place dans le respect des règles de la CNIL sur les traceurs.</p>
   </section>

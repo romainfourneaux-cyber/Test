@@ -7,7 +7,7 @@
 <meta name="description" content="Adapter une plaque Terre Gravée (format jusqu’à 2 × 1 m, acier Corten, aluminium brut), plaques exclusives en très petite quantité, séries pour professionnels et lieux culturels.">
 <meta name="robots" content="noindex, nofollow">
 <meta name="color-scheme" content="light dark">
-<script>try{var t=localStorage.getItem("tg-v1-theme");if(t==="dark"||t==="light"){document.documentElement.setAttribute("data-theme",t);}}catch(e){}</script>
+<script>try{var t=localStorage.getItem("tg-v1-theme");if(t==="dark"||t==="light"){document.documentElement.setAttribute("data-theme",t);}if(localStorage.getItem("tg-v1-palette")==="marque"){document.documentElement.setAttribute("data-palette","marque");}}catch(e){}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&amp;family=Newsreader:ital,opsz,wght@0,16..72,400..600;1,16..72,400&amp;display=swap">
@@ -59,11 +59,15 @@
       <p class="etiquette"><span class="balise" aria-hidden="true"></span>Dès une plaque</p>
       <h2 id="titre-adapter">Adapter un modèle existant</h2>
       <ul class="liste-carnet">
-        <li>Un autre format, jusqu’à 2 m × 1 m.</li>
+        <li>Un autre format, jusqu’à 2 m × 1 m.</li>
         <li>Un autre métal : aluminium dans la teinte RAL de votre choix, acier Corten ou aluminium brut.</li>
         <li>Une autre fixation, ou un support.</li>
       </ul>
       <p>Possible dès une seule plaque, selon faisabilité. Une pièce adaptée à votre demande n’est pas couverte par le droit de rétractation.</p>
+      <div class="grands-formats" id="grands-formats">
+        <h3>Grands formats <span class="note-maquette note-maquette--valider">en préparation, à valider</span></h3>
+        <p>Des versions grand format du Cirque de Gavarnie, du Tourmalet, du Pont d’Espagne et du Pic du Midi sont en préparation. Dimensions et prix <span class="note-maquette note-maquette--confirmer">à confirmer</span></p>
+      </div>
     </div>
     <div class="materiaux">
       <figure><div class="materiaux__plaque"><img src="../../maquette/assets/img/misc/mauvezin-corten.webp" width="560" height="1052" alt="Plaque Le Château de Mauvezin en acier Corten, teinte rouille" loading="eager" decoding="async"></div><figcaption>Acier Corten</figcaption></figure>
@@ -92,6 +96,8 @@
         <li>Une frise qui raconte une histoire locale.</li>
         <li>Des plaques signalétiques au style artistique.</li>
         <li>Des éditions spéciales pour une exposition, un événement ou un lieu touristique.</li>
+        <li>Des grands formats pour une ville, une place ou un lieu public <span class="note-maquette note-maquette--valider">proposition à valider</span></li>
+        <li>Des plaques pour les hôtels, les gîtes et les entreprises : décoration, cadeaux d’affaires <span class="note-maquette note-maquette--valider">proposition à valider</span></li>
       </ul>
       <p>La quantité minimale dépend du projet.</p>
     </div>
@@ -128,7 +134,7 @@
         <div class="champ"><label for="type-demande">Type de demande</label><select id="type-demande" name="type"><option>Adapter un modèle existant</option><option>Plaque exclusive</option><option>Série pour un professionnel</option></select></div>
         <div class="champ"><label for="modele">Modèle de départ</label><select id="modele" name="modele"><option>Aucun en particulier</option><option>Le Pic du Midi</option><option>Le Tourmalet</option><option>Le Montaigu</option><option>Le Cirque de Gavarnie</option><option>Le Pont d’Espagne</option><option>La Tour des Jacobins</option><option>Le Château de Mauvezin</option><option>L’Abbaye de l’Escaladieu</option><option>L’Isard</option><option>L’Ours</option><option>Le Cerf</option><option>La Marmotte</option></select></div>
         <div class="champ"><label for="metal">Métal</label><select id="metal" name="metal"><option>Aluminium thermolaqué, teinte RAL</option><option>Acier Corten</option><option>Aluminium brut</option><option>Je ne sais pas encore</option></select></div>
-        <div class="champ"><label for="format">Format souhaité</label><input id="format" name="format" type="text" placeholder="Par exemple 120 × 60 cm"><small>Jusqu’à 2 m × 1 m</small></div>
+        <div class="champ"><label for="format">Format souhaité</label><input id="format" name="format" type="text" placeholder="Par exemple 120 × 60 cm"><small>Jusqu’à 2 m × 1 m</small></div>
         <div class="champ"><label for="quantite-projet">Quantité</label><input id="quantite-projet" name="quantite" type="number" min="1" value="1"></div>
         <div class="champ"><label for="usage">Usage</label><select id="usage" name="usage"><option>Intérieur</option><option>Extérieur</option><option>Les deux</option></select></div>
         <div class="champ champ--large"><label for="message-projet">Votre projet</label><textarea id="message-projet" name="message" rows="4"></textarea></div>

@@ -55,6 +55,31 @@ MURS = [("platre", "Plâtre"), ("beton", "Béton"), ("brique", "Brique"), ("bois
 LED_REELLE = {"lours": ("led/led-img0.webp", "Plaque L’Ours rétroéclairée en bleu par le kit LED, photo réelle"),
               "le-pic-du-midi": ("led/led-img1.webp", "Plaque Le Pic du Midi rétroéclairée en vert par le kit LED, photo réelle")}
 URL_IMG_SITE = SITE + "/assets/img/"  # hypothèse : images publiées sous ce chemin une fois le site en ligne
+
+# --- Informations tirées du Drive de Romain (partie publiable seulement) ---
+MARQ_AQUENSIS = "à valider : accord de la SEMETHERM pour citer le projet Aquensis"
+MARQ_PREPA = "en préparation, à valider"
+# Palette « Terres Gravées : version centrée métal brut » définie par Romain
+PALETTE = [
+    ("Noir ardoise", "#2C2C2C", "Texte, en-tête, pied de page, contrastes"),
+    ("Blanc cassé", "#F5F5F0", "Fond principal"),
+    ("Argent doux", "#D0D0D0", "Détails, bordures, icônes"),
+    ("Vert sauge très pâle", "#DCE2D4", "Fonds de sections secondaires (description technique)"),
+    ("Cuivre clair", "#CBAA88", "Boutons d’action, survol"),
+]
+CUIVRE_FONCE = "#866444"  # proposition : cuivre assombri pour du texte ou un fond sous texte blanc
+# Modèles en préparation (dossier « rex ») : fichiers de découpe prêts.
+# Recadrage dans misc/autres-plaques.webp (1400 × 1258) : tuile de 194 × 380 px à partir de (x, y).
+DECOUPE_L, DECOUPE_H = 194, 380
+EN_PREPARATION = [
+    ("Le Casque du Lhéris", None, (477, 4)),
+    ("La Transhumance", None, (477, 874)),
+    ("Le Jardin Massey", "Tarbes (65)", None),
+]
+GRANDS_FORMATS = ["le-cirque-de-gavarnie", "le-tourmalet", "le-pont-despagne", "le-pic-du-midi"]
+# Sujets lisibles sur les panneaux de la photo d'Aquensis et présents dans la collection
+SUJETS_AQUENSIS = ["le-cerf", "lisard", "le-tourmalet", "le-pont-despagne", "le-chateau-de-mauvezin", "le-cirque-de-gavarnie"]
+QR_REPERES = [("aquensis-vestiaires", "vestiaires"), ("aquensis-sortie", "sortie")]
 MOIS = ["janv.", "févr.", "mars", "avr.", "mai", "juin", "juil.", "août", "sept.", "oct.", "nov.", "déc."]
 
 TOUS_AVIS = sorted([dict(a, produit=p["slug"]) for p in CATALOGUE for a in p["avis"]], key=lambda a: a["date"], reverse=True)
@@ -91,6 +116,21 @@ def rgb(hexa):
 
 def marq(t):
     return '<span class="marqueur">' + e(t) + "</span>"
+
+
+def luminance(hexa):
+    def canal(c):
+        c = c / 255.0
+        return c / 12.92 if c <= 0.04045 else ((c + 0.055) / 1.055) ** 2.4
+    n = int(hexa[1:], 16)
+    r, g, b = (n >> 16) & 255, (n >> 8) & 255, n & 255
+    return 0.2126 * canal(r) + 0.7152 * canal(g) + 0.0722 * canal(b)
+
+
+def contraste(a, b):
+    """Rapport de contraste WCAG entre deux couleurs hexadécimales."""
+    la, lb = sorted((luminance(a), luminance(b)), reverse=True)
+    return (la + 0.05) / (lb + 0.05)
 
 
 def dims(rel):
@@ -281,7 +321,9 @@ def script_led():
     m = {c: [h, rgb(h)] for c, _, h in COULEURS}
     return ('<script>(function(){try{var c=localStorage.getItem("tg3-led"),m=' + json.dumps(m) +
             ';if(m[c]){var r=document.documentElement;r.style.setProperty("--led",m[c][0]);'
-            'r.style.setProperty("--led-rgb",m[c][1]);r.setAttribute("data-led",c);}}catch(e){}})();</script>')
+            'r.style.setProperty("--led-rgb",m[c][1]);r.setAttribute("data-led",c);}}catch(e){}'
+            # essai des couleurs de la charte de Romain (strategie.html, « Votre palette ») : mémorisé dans ce navigateur seulement
+            'try{if(localStorage.getItem("tg3-charte")==="ardoise")document.documentElement.setAttribute("data-charte","ardoise");}catch(e){}})();</script>')
 
 
 def nuancier(classe=""):
@@ -546,6 +588,48 @@ def schema_echelle(ident="titre-echelle"):
 </svg>"""
 
 
+def schema_origine(ident="titre-schema-origine"):
+    """Une niche d'Aquensis (1 × 2 m) et une plaque (30 × 60 cm), à la même échelle : 1 unité = 1 cm."""
+    return """<svg class="schema schema--origine" viewBox="0 0 300 256" role="img" aria-labelledby=\"""" + ident + """\">
+<title id=\"""" + ident + """\">Comparaison d’échelle : une niche d’Aquensis de 1 × 2 m et une plaque de 30 × 60 cm, de même proportion</title>
+<line class="trait" x1="4" y1="234" x2="296" y2="234"/>
+<rect class="niche-s" x="40" y="34" width="100" height="200"/>
+<line class="trait" x1="40" y1="22" x2="140" y2="22"/><line class="trait" x1="40" y1="17" x2="40" y2="27"/><line class="trait" x1="140" y1="17" x2="140" y2="27"/>
+<text x="81" y="15">1 m</text>
+<line class="trait" x1="28" y1="34" x2="28" y2="234"/><line class="trait" x1="23" y1="34" x2="33" y2="34"/><line class="trait" x1="23" y1="234" x2="33" y2="234"/>
+<text x="4" y="138">2 m</text>
+<text x="40" y="250">niche × 30</text>
+<rect class="plaque-s" x="196" y="94" width="30" height="60"/>
+<line class="trait led-trait" x1="196" y1="84" x2="226" y2="84"/><text x="193" y="77">30 cm</text>
+<line class="trait led-trait" x1="236" y1="94" x2="236" y2="154"/><text x="241" y="128">60 cm</text>
+<text x="180" y="250">plaque</text>
+</svg>"""
+
+
+def schema_grand_format():
+    """Silhouette d'un grand format en préparation : dimensions inconnues, donc non chiffrées."""
+    return """<svg class="schema schema--gf" viewBox="0 0 300 262" role="img" aria-labelledby="titre-gf-schema">
+<title id="titre-gf-schema">Silhouette indicative d’un grand format en préparation, à côté d’une personne de 175 cm et d’une plaque de 60 × 30 cm. Grand format, dimensions à confirmer.</title>
+<line class="trait" x1="4" y1="242" x2="296" y2="242"/>
+<circle class="silhouette" cx="34" cy="79" r="11"/>
+<rect class="silhouette" x="21" y="92" width="26" height="72" rx="6"/>
+<rect class="silhouette" x="14" y="96" width="7" height="60" rx="3"/><rect class="silhouette" x="47" y="96" width="7" height="60" rx="3"/>
+<rect class="silhouette" x="23" y="160" width="10" height="82" rx="3"/><rect class="silhouette" x="35" y="160" width="10" height="82" rx="3"/>
+<text x="10" y="60">175 cm</text>
+<rect class="plaque-s" x="76" y="96" width="30" height="60"/>
+<text x="66" y="172">60 × 30</text>
+<rect class="grand-s" x="150" y="40" width="90" height="180"/>
+<line class="trait" x1="150" y1="28" x2="240" y2="28"/><line class="trait" x1="150" y1="23" x2="150" y2="33"/><line class="trait" x1="240" y1="23" x2="240" y2="33"/>
+<text x="183" y="20">? cm</text>
+<line class="trait" x1="252" y1="40" x2="252" y2="220"/><line class="trait" x1="247" y1="40" x2="257" y2="40"/><line class="trait" x1="247" y1="220" x2="257" y2="220"/>
+<text x="258" y="134">? cm</text>
+<rect class="marq-s" x="158" y="106" width="74" height="46" rx="2"/>
+<text class="marq-t" x="195" y="121" text-anchor="middle">GRAND</text>
+<text class="marq-t" x="195" y="133" text-anchor="middle">FORMAT,</text>
+<text class="marq-t" x="195" y="145" text-anchor="middle">À CONFIRMER</text>
+</svg>"""
+
+
 def schema_sur_mesure():
     return """<svg class="schema schema--sm" viewBox="0 0 380 250" role="img" aria-labelledby="titre-sm-schema">
 <title id="titre-sm-schema">Comparaison d’échelle : une personne de 175 cm, une plaque de 60 × 30 cm et un grand format de 200 × 100 cm</title>
@@ -561,6 +645,115 @@ def schema_sur_mesure():
 <line class="trait" x1="160" y1="144" x2="360" y2="144"/><text x="232" y="160">200 cm</text>
 <line class="trait" x1="368" y1="32" x2="368" y2="132"/><text x="300" y="24">100 cm</text>
 </svg>"""
+
+
+# ---------- Histoire d'origine, modèles en préparation ----------
+
+def section_origine():
+    """« La première installation » : les 30 niches conçues pour Aquensis (faits du Drive de Romain)."""
+    return """
+<section class="section section--sombre section--bord origine" id="premiere-installation" aria-labelledby="titre-origine">
+  <div class="cadre">
+    <div class="section__tete">
+      <div>
+        <p class="surtitre">La première installation</p>
+        <h2 id="titre-origine">Avant les plaques, trente niches allumées à Aquensis</h2>
+        <p class="chapo">Terre Gravée est née d’un projet de décoration conçu pour Aquensis, le centre thermal de Bagnères-de-Bigorre.</p>
+        <p>""" + marq(MARQ_AQUENSIS) + """</p>
+      </div>
+    </div>
+    <div class="origine__grille">
+      <figure class="niche-photo">
+        <div class="niche-photo__cotes" aria-hidden="true"><span class="cote cote--h"><span>30 niches · 1 × 2 m chacune</span></span></div>
+        <div class="niche-photo__cadre">
+          """ + img("misc/aquensis.webp", "Les niches en aluminium découpé et rétroéclairé, alignées au-dessus des bassins d’Aquensis", "(max-width: 980px) 92vw, 760px") + """
+          <span class="niche__photo-tag">Photo réelle</span>
+        </div>
+        <figcaption>Les niches découpées et rétroéclairées masquent la coursive technique, au-dessus des bassins.</figcaption>
+      </figure>
+      <div class="origine__texte">
+        <p>Il fallait masquer une coursive technique. La réponse : des panneaux en métal découpé, qui jouent avec les vides et les pleins.</p>
+        <dl class="cotes-projet">
+          <div><dt>Niches</dt><dd>30</dd></div>
+          <div><dt>Format</dt><dd>1 × 2 m chacune</dd></div>
+          <div><dt>Illustrations</dt><dd>60</dd></div>
+          <div><dt>Thème</dt><dd>Patrimoine, flore et faune de Bagnères et de la Bigorre</dd></div>
+          <div><dt>Matière</dt><dd>Aluminium thermolaqué effet Corten</dd></div>
+          <div><dt>Lumière</dt><dd>Découpe laser, rétroéclairage</dd></div>
+        </dl>
+        <p>Deux illustratrices, Maude Villatte et Lola Jacquet, ont dessiné les 60 illustrations. Chacune a été adaptée aux contraintes de la découpe : taille des ouvertures, rigidité, accroche.</p>
+        <p><strong>Les visiteurs ont adoré.</strong> C’est cet accueil qui a donné l’idée de proposer des plaques aux particuliers, au format 30 × 60 cm.</p>
+      </div>
+    </div>
+    <div class="origine__echelle">
+      <figure>""" + schema_origine() + """<figcaption class="legende-schema">À la même échelle : une niche de 1 × 2 m et une plaque de 30 × 60 cm.</figcaption></figure>
+      <div class="origine__suite">
+        <p class="surtitre">De la niche à la plaque</p>
+        <h3>La même proportion, pour un mur de la maison</h3>
+        <p class="attenue">La plaque garde le rapport de 1 à 2 des niches. La lumière reste une option : le kit LED, à 15 €.</p>
+        <div class="actions"><a class="lien-fleche" href="essayer.html">Essayer une plaque sur mon mur</a><a class="lien-fleche" href="produit-led.html">Le kit LED</a></div>
+      </div>
+    </div>
+  </div>
+</section>"""
+
+
+def vitrine_preparation():
+    """Vitrine « En préparation à l'atelier » : dessins de découpe, jamais de fausse photo de plaque."""
+    cartes = []
+    for nom, lieu, crop in EN_PREPARATION:
+        if crop:
+            x, y = crop
+            alt = "Dessin de découpe de la future plaque {}, extrait de la planche des dessins inédits".format(nom)
+            dessin = ('<div class="decoupe__dessin"><img src="{}misc/autres-plaques.webp" width="1400" height="1258" alt="{}" loading="lazy" decoding="async" '
+                      'style="width:{:.2f}%;left:{:.2f}%;top:{:.2f}%"></div>').format(IMG, e(alt), 140000.0 / DECOUPE_L, -100.0 * x / DECOUPE_L, -100.0 * y / DECOUPE_H)
+            tag = "Dessin, pas une photo"
+        else:
+            dessin = ('<div class="decoupe__vide" role="img" aria-label="Dessin de la future plaque {} à fournir"><span>Dessin</span>{}</div>'
+                      .format(e(nom), marq("à fournir")))
+            tag = "Aperçu à venir"
+        cartes.append("""<li class="decoupe">
+  <div class="decoupe__plan">
+    <div class="decoupe__piece">{dessin}<span class="cote cote--h" aria-hidden="true"><span>30 cm</span></span><span class="cote cote--v" aria-hidden="true"><span>60 cm</span></span></div>
+    <span class="niche__photo-tag">{tag}</span>
+  </div>
+  <div class="carte__corps">
+    <p class="cartel">{lieu}</p>
+    <h3 class="carte__nom">{nom}</h3>
+    <p>{marq}</p>
+    <p class="attenue petit">Finitions, date de sortie et prix : à confirmer.</p>
+  </div>
+</li>""".format(dessin=dessin, tag=tag, lieu=(e(lieu) + " · " if lieu else "") + "Fichier de découpe prêt", nom=e(nom), marq=marq(MARQ_PREPA)))
+    return """
+<section class="section section--sombre section--bord" id="preparation" aria-labelledby="titre-preparation">
+  <div class="cadre">
+    <div class="section__tete">
+      <div>
+        <p class="surtitre">En préparation à l’atelier</p>
+        <h2 id="titre-preparation">Trois dessins sur la table de découpe</h2>
+        <p class="chapo">Leurs fichiers de découpe sont prêts, mais ces plaques ne sont pas encore en vente. Vous voyez ici les dessins, pas des photos de plaques.</p>
+        <p>""" + marq(MARQ_PREPA) + """</p>
+      </div>
+      <a class="lien-fleche" href="index.html#lettre">Être prévenu de leur sortie</a>
+    </div>
+    <ul class="grille-decoupes">""" + "".join(cartes) + """</ul>
+  </div>
+</section>"""
+
+
+def carte_qr(p):
+    """Carte compacte de qr.html : la plaque allumée, un lien direct vers le visualiseur en aperçu de nuit."""
+    fin = fin_defaut(p["slug"])
+    essai = "essayer.html#{}-{}-nuit".format(p["slug"], fin)
+    return """<li class="carte apparait" data-slug="{slug}">
+  <a class="niche" href="{essai}" tabindex="-1" aria-hidden="true"><div class="scene">{emp}</div></a>
+  <div class="carte__corps">
+    <p class="cartel">{cartel}</p>
+    <h3 class="carte__nom"><a href="produit-{slug}.html#{slug}-{fin}">{nom}</a></h3>
+    <div class="carte__liens"><a href="{essai}">Essayer chez moi</a><span class="carte__prix">{prix}</span></div>
+  </div>
+</li>""".format(slug=p["slug"], essai=essai, emp=emplacement(p, fin, "(max-width: 760px) 16vw, 80px"), cartel=cartel(p),
+                fin=fin, nom=e(p["nom"]), prix=euros(p["prix"]))
 
 
 # ---------- Accueil ----------
@@ -691,8 +884,9 @@ def accueil():
     </div>
   </div>
 </section>
+""" + section_origine() + """
 
-<section class="section section--sombre section--bord" aria-labelledby="titre-fab">
+<section class="section" aria-labelledby="titre-fab">
   <div class="cadre">
     <div class="section__tete">
       <div>
@@ -707,11 +901,12 @@ def accueil():
       <li><span class="lieu">Bagnères-de-Bigorre (65)</span><h3>Thermolaquage</h3><p>Finition noire, grise ou dorée, mate ou satinée.</p></li>
       <li><span class="lieu">Bagnères-de-Bigorre (65)</span><h3>Assemblage et envoi</h3><p>Contrôle qualité, numéro au dos, expédition.</p></li>
     </ol>
-    <div class="duo-photo">
-      <figure>""" + img("misc/aquensis.webp", "Plaques Terre Gravée exposées au-dessus des bassins d’Aquensis, à Bagnères-de-Bigorre", "(max-width: 900px) 92vw, 760px") + """<figcaption>Plaques Terre Gravée à Aquensis, Bagnères-de-Bigorre</figcaption></figure>
-      <div class="encart">
+    <div class="encart encart--serie">
+      <div>
         <p class="surtitre">Série limitée</p>
         <h3>Chaque plaque porte son numéro</h3>
+      </div>
+      <div class="encart--serie__texte">
         <p class="attenue">Les modèles sont édités en série limitée. Le numéro est gravé au dos de chaque plaque.</p>
         <p class="numero-grave" aria-hidden="true">N° ___ · gravé au dos</p>
         <p class="attenue petit">Aucun compte à rebours ni stock affiché : la rareté annoncée est celle de la série, rien d’autre.</p>
@@ -720,7 +915,7 @@ def accueil():
   </div>
 </section>
 
-<section class="section" aria-labelledby="titre-avis">
+<section class="section section--sombre section--bord" aria-labelledby="titre-avis">
   <div class="cadre">
     <div class="avis-tete">
       <div style="display:grid;gap:12px">
@@ -736,7 +931,7 @@ def accueil():
   </div>
 </section>
 
-<section class="section section--sombre section--bord" aria-labelledby="titre-sm">
+<section class="section" aria-labelledby="titre-sm">
   <div class="cadre passerelle-grille">
     <div style="display:grid;gap:16px">
       <p class="surtitre">Sur mesure</p>
@@ -748,7 +943,7 @@ def accueil():
   </div>
 </section>
 
-<section class="section" aria-labelledby="titre-noel">
+<section class="section section--sombre section--bord" aria-labelledby="titre-noel">
   <div class="cadre">
     <div class="section__tete"><div><p class="surtitre">Cadeaux</p><h2 id="titre-noel">Pour Noël, deux façons d’offrir</h2></div></div>
     <div class="deux-blocs">
@@ -773,12 +968,14 @@ def accueil():
   </div>
 </section>
 
-<section class="section section--sombre section--bord" id="lettre" aria-labelledby="titre-lettre">
+<section class="section" id="lettre" aria-labelledby="titre-lettre">
   <div class="cadre lettre">
     <div style="display:grid;gap:14px">
       <p class="surtitre">Lettre « prochaines plaques »</p>
       <h2 id="titre-lettre">Être prévenu des nouveaux dessins</h2>
       <p class="chapo">Des dessins inédits sortent de temps en temps, en très petite quantité, parfois en exemplaire unique. Un e-mail quand une plaque sort, rien d’autre.</p>
+      <p class="attenue">En préparation à l’atelier : Le Casque du Lhéris, La Transhumance et Le Jardin Massey. """ + marq(MARQ_PREPA) + """</p>
+      <p><a class="lien-fleche" href="collection.html#preparation">Voir les dessins en préparation</a></p>
     </div>
     <form class="formulaire" data-demo novalidate>
       <div class="champ"><label for="email-lettre">Adresse e-mail</label><input id="email-lettre" type="email" autocomplete="email" placeholder="vous@exemple.fr" required data-erreur-vide="Indiquez votre adresse e-mail." data-erreur-format="Indiquez une adresse e-mail valide, par exemple vous@exemple.fr."></div>
@@ -836,7 +1033,7 @@ def collection():
       <ul class="grille-accessoires">""" + accessoires + """</ul>
     </section>
   </div>
-</div>
+</div>""" + vitrine_preparation() + """
 <section class="section">
   <div class="cadre">
     <ul class="cartouche">
@@ -1363,6 +1560,20 @@ def sur_mesure():
     </div>
     <figure>""" + schema_sur_mesure() + """<figcaption class="legende-schema">Comparaison d’échelle indicative : personne de 175 cm, plaque standard, grand format.</figcaption></figure>
   </div>
+  <div class="cadre">
+    <div class="grands-formats" id="grands-formats">
+      <figure>""" + schema_grand_format() + """<figcaption class="legende-schema">Silhouette indicative : format et dimensions à confirmer.</figcaption></figure>
+      <div class="grands-formats__texte">
+        <p class="surtitre">Grands formats en préparation</p>
+        <h3>Quatre paysages de la collection, en plus grand</h3>
+        <p>""" + marq(MARQ_PREPA) + """</p>
+        <p class="attenue">L’atelier prépare des versions grand format de quatre plaques :</p>
+        <ul class="liste-grands">""" + "".join('<li><a href="produit-{0}.html">{1}</a></li>'.format(s, e(PRODUITS[s]["nom"])) for s in GRANDS_FORMATS) + """</ul>
+        <p class="attenue petit">Dimensions, finitions et prix : à confirmer. Les liens mènent aux plaques actuelles, en 60 × 30 cm.</p>
+        <p><a class="lien-fleche" href="#demande">Demander un grand format</a></p>
+      </div>
+    </div>
+  </div>
 </section>
 <section class="section section--sombre section--bord" aria-labelledby="titre-matieres">
   <div class="cadre">
@@ -1374,7 +1585,7 @@ def sur_mesure():
     </div>
     <div class="duo-photo duo-photo--haut" style="margin-top:48px">
       <figure class="planche-inedits">""" + img("misc/autres-plaques.webp", "Planche de 18 dessins inédits de paysages, de flore et de faune des Pyrénées", "(max-width: 900px) 92vw, 760px") + """<figcaption>Dessins inédits de paysages, de flore et de faune des Pyrénées.</figcaption></figure>
-      <div class="encart"><p class="surtitre">Plaques exclusives</p><h3>Des dessins pas encore dans la collection</h3><p class="attenue">Ils sortent ponctuellement, en très petite quantité, parfois en exemplaire unique.</p><p><a class="lien-fleche" href="index.html#lettre">Être prévenu des sorties</a></p></div>
+      <div class="encart"><p class="surtitre">Plaques exclusives</p><h3>Des dessins pas encore dans la collection</h3><p class="attenue">Ils sortent ponctuellement, en très petite quantité, parfois en exemplaire unique.</p><p class="attenue">Deux d’entre eux, Le Casque du Lhéris et La Transhumance, sont en préparation à l’atelier. """ + marq(MARQ_PREPA) + """</p><p><a class="lien-fleche" href="collection.html#preparation">Voir les dessins en préparation</a></p><p><a class="lien-fleche" href="index.html#lettre">Être prévenu des sorties</a></p></div>
     </div>
   </div>
 </section>
@@ -1456,6 +1667,98 @@ def contact():
     page("contact.html", "Contact et questions · Terre Gravée (maquette v3)",
          "Contacter l’atelier Terre Gravée à Gerde : e-mail, adresse, livraison, retours, pose sans perçage et kit LED.",
          contenu, actif="contact.html")
+
+
+# ---------- Page d'arrivée du QR code (panneaux de démonstration d'Aquensis) ----------
+
+def qr():
+    pic = PRODUITS["le-pic-du-midi"]
+    essai = "essayer.html#le-pic-du-midi-noir-nuit"  # aperçu de nuit seulement : jamais de kit LED présélectionné
+    cartes = "".join(carte_qr(PRODUITS[s]) for s in SUJETS_AQUENSIS)
+    reperes = " · ".join('<a href="qr.html?src={0}">{1}</a>'.format(r, n) for r, n in QR_REPERES)
+    contenu = """
+<section class="heros ciel qr-heros" aria-labelledby="titre-qr">
+  <div class="cadre heros__grille">
+    <div class="heros__texte">
+      <p class="surtitre">Panneau de démonstration · Aquensis<span data-qr-source></span></p>
+      <h1 id="titre-qr"><span class="h1-ligne">Vous avez vu nos plaques allumées à Aquensis ?</span> <em class="h1-ligne">Essayez-les chez vous.</em></h1>
+      <p>""" + marq("à valider : accord de la SEMETHERM") + """</p>
+      <p class="chapo">Le même principe, en plaque de 30 × 60 cm pour votre mur : aluminium découpé au laser, rétroéclairage en option. Posez-la sur une photo de votre pièce, allumez-la, puis décidez.</p>
+      <div class="actions">
+        <a class="btn btn--led" href=\"""" + essai + """\">Essayer chez moi, allumée</a>
+        <a class="btn btn--ligne" href="collection.html">Voir les 12 plaques</a>
+      </div>
+      <p class="preuve mono">65 € la plaque · kit LED +15 € · 12 modèles · noir, gris ou doré</p>
+      <p class="attenue petit">Le visualiseur s’ouvre sur Le Pic du Midi, en aperçu de nuit. L’aperçu ne change que le rendu : le kit LED ne s’ajoute que si vous le choisissez.</p>
+    </div>
+    <div class="vitrine" data-vitrine data-allumage data-slug="le-pic-du-midi" data-fin="noir">
+      <div class="scene">
+        """ + emplacement(pic, "noir", "(max-width: 980px) 30vw, 150px", eager="high", cotes=True, eager_nuit=True) + """
+        <p class="etiquette-sim">Simulation · rendu indicatif</p>
+      </div>
+      <div class="vitrine__commandes">
+        <div class="vitrine__ligne">
+          <button type="button" class="interrupteur" data-interrupteur aria-pressed="false"><span class="interrupteur__piste" aria-hidden="true"></span>Rétroéclairage <span class="interrupteur__prix">kit LED +15 €</span></button>
+          """ + nuancier("nuancier--petit") + """
+        </div>
+        <div class="vitrine__resume">
+          <output data-resume aria-live="polite">Le Pic du Midi, finition noire : 65 €</output>
+          <a class="lien-fleche" href="produit-le-pic-du-midi.html#le-pic-du-midi-noir">Voir la fiche</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  """ + HORIZON + """
+</section>
+
+<section class="section" aria-labelledby="titre-qr-sujets">
+  <div class="cadre">
+    <div class="section__tete">
+      <div>
+        <p class="surtitre">Vu à Aquensis, chez vous en 30 × 60 cm</p>
+        <h2 id="titre-qr-sujets">Six sujets des panneaux existent en plaque</h2>
+        <p class="chapo">Le cerf, l’isard, le Tourmalet, le pont d’Espagne, le château de Mauvezin et le cirque de Gavarnie figurent sur les panneaux d’Aquensis. Le dessin du cerf, par exemple, est le même que sur sa plaque.</p>
+      </div>
+      <div class="section__outils">
+        <div class="barre-salle">
+          <button type="button" class="interrupteur" data-bascule-nuit="#qr-galerie" aria-pressed="true" data-texte-jour="Éteindre la salle" data-texte-nuit="Rallumer la salle"><span class="interrupteur__piste" aria-hidden="true"></span><span data-libelle-bascule>Rallumer la salle</span></button>
+          """ + nuancier("nuancier--petit") + """
+        </div>
+        <a class="lien-fleche" href="collection.html">Les 12 plaques</a>
+      </div>
+    </div>
+    <ul class="grille-niches grille-niches--six est-nuit" id="qr-galerie">""" + cartes + """</ul>
+    <p class="attenue petit infos-qr">Rendu de nuit : simulation indicative, avec le kit LED en option (+15 €). Chaque lien « Essayer chez moi » ouvre le visualiseur sur ce modèle, en aperçu de nuit.</p>
+  </div>
+</section>
+
+<section class="section section--sombre section--bord" aria-labelledby="titre-qr-origine">
+  <div class="cadre passerelle-grille">
+    <div style="display:grid;gap:16px">
+      <p class="surtitre">La première installation</p>
+      <h2 id="titre-qr-origine">Trente niches de 1 × 2 m, conçues pour Aquensis</h2>
+      <p>""" + marq(MARQ_AQUENSIS) + """</p>
+      <p class="chapo">Les grandes niches découpées masquent une coursive technique, au-dessus des bassins. L’accueil des visiteurs a donné l’idée des plaques pour la maison.</p>
+      <p><a class="lien-fleche" href="index.html#premiere-installation">L’histoire de la première installation</a></p>
+    </div>
+    <figure>""" + schema_origine("titre-schema-origine-qr") + """<figcaption class="legende-schema">À la même échelle : une niche de 1 × 2 m et une plaque de 30 × 60 cm.</figcaption></figure>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="titre-qr-suivi">
+  <div class="cadre cadre--etroit">
+    <div class="encadre-alerte">
+      <h2 class="titre-encadre" id="titre-qr-suivi">Note de maquette : le suivi des QR codes</h2>
+      <span>Chaque panneau aura son propre lien, par exemple <code>qr.html?src=aquensis-vestiaires</code> et <code>qr.html?src=aquensis-sortie</code>. """ + marq("paramètre de suivi à valider") + """</span>
+      <span>Cette page lit seulement ce repère pour l’afficher ci-dessous. Elle ne mesure rien et ne dépose aucun cookie.</span>
+      <span class="mono">Repère lu : <output data-qr-repere>aucun</output></span>
+      <p>Tester un repère : """ + reperes + """</p>
+    </div>
+  </div>
+</section>"""
+    page("qr.html", "Vu à Aquensis ? Essayez la plaque chez vous · Terre Gravée (maquette v3)",
+         "Vous avez vu les plaques Terre Gravée allumées à Aquensis ? Essayez-les sur votre mur, en aperçu de nuit, avant de commander. 65 € la plaque.",
+         contenu)
 
 
 # ---------- Stratégie ----------
@@ -1629,6 +1932,165 @@ TENDANCES = [
 ]
 
 
+PV = marq("proposition à valider")
+
+# Idées marketing de Romain (Contexte.docx), traduites en éléments de site.
+IDEES = [
+    {
+        "nom": "Panneaux de démonstration à Aquensis, avec QR code",
+        "idee": "De petites plaques allumées dans les vestiaires et à la sortie d’Aquensis, avec un QR code vers le site, le prix et un rappel qu’il existe d’autres modèles.",
+        "site": ("La page <a href=\"qr.html\">qr.html</a> accueille ceux qui scannent : « Vous avez vu nos plaques allumées à Aquensis ? Essayez-les chez vous ». "
+                 "Le bouton principal ouvre le visualiseur déjà réglé (<code>essayer.html#le-pic-du-midi-noir-nuit</code> : Le Pic du Midi, aperçu de nuit, sans kit LED ajouté). "
+                 "La page reprend le prix (65 €, kit LED 15 €), montre six sujets des panneaux qui existent en plaque et renvoie à l’histoire de la première installation. "
+                 "Un lien par panneau : <code>qr.html?src=aquensis-vestiaires</code> et <code>qr.html?src=aquensis-sortie</code>."),
+        "kpi": "Visites issues du QR code, panneau par panneau, grâce au paramètre de suivi (à valider) ; part de ces visites qui ouvrent le visualiseur ; commandes qui suivent. Un seul code pour tous les panneaux empêcherait de comparer les vestiaires et la sortie.",
+        "valider": "L’accord écrit de la SEMETHERM, pour les panneaux comme pour citer le projet. Les emplacements. Le format du paramètre. L’adresse vers laquelle pointe le QR code du dossier Marketing : s’il mène ailleurs, le refaire ou rediriger cette adresse vers qr.html. " + PV,
+    },
+    {
+        "nom": "Commerçants et restaurants partenaires",
+        "idee": "Offrir des plaques à des commerçants et à des restaurants du coin, qui les exposent.",
+        "site": "Une rubrique « Où voir les plaques » (à créer) qui liste les lieux ayant donné leur accord, et un QR code propre à chaque lieu (<code>?src=nom-du-lieu</code>) vers une page d’arrivée adaptée, sur le modèle de qr.html. Aucun lieu n’est cité sans son accord.",
+        "kpi": "Visites et commandes par lieu, rapportées au nombre de plaques offertes.",
+        "valider": "La liste des lieux et leur accord écrit. Ce qui est offert. Une plaque offerte contre une exposition est une contrepartie : si un de ces lieux publie un avis, elle devra être signalée. " + PV,
+    },
+    {
+        "nom": "Offices de tourisme et boutiques des grands sites",
+        "idee": "Être présent dans les boutiques de souvenirs des grands sites (le téléphérique du Pic du Midi, par exemple), les concept-stores et les offices de tourisme.",
+        "site": "Une page « Professionnels et revendeurs » (à créer) : la gamme, un dossier de présentation à télécharger (à fournir), un formulaire de contact pro. Les conditions de revente sont communiquées sur demande, jamais affichées. Sur les fiches, un encart « Aussi en boutique » dès qu’un point de vente est confirmé.",
+        "kpi": "Demandes de revendeurs, points de vente actifs, ventes par point de vente, visites venues d’un QR code en boutique.",
+        "valider": "Les conditions de revente (à fournir), le présentoir, le dépôt ou l’achat ferme. " + PV,
+    },
+    {
+        "nom": "Événements : fête du château de Mauvezin, montée du col du Tourmalet",
+        "idee": "Tenir un stand lors des grands rendez-vous locaux.",
+        "site": "Un bloc « Où nous rencontrer » (à créer) sur l’accueil et la page contact, avec les dates (à fournir). Un QR code par événement, avec son propre repère, vers la fiche du modèle lié : <a href=\"produit-le-chateau-de-mauvezin.html\">Le Château de Mauvezin</a>, <a href=\"produit-le-tourmalet.html\">Le Tourmalet</a>. Inscription à la lettre sur place, case de consentement comprise.",
+        "kpi": "Visites par code d’événement, inscriptions à la lettre dans la semaine, commandes dans les 30 jours.",
+        "valider": "La participation, les dates, l’accord des organisateurs. " + PV,
+    },
+    {
+        "nom": "Grands formats pour la ville",
+        "idee": "Proposer des grands formats à la ville.",
+        "site": "La page <a href=\"sur-mesure.html#grands-formats\">sur-mesure</a> montre les grands formats en préparation (Le Cirque de Gavarnie, Le Tourmalet, Le Pont d’Espagne, Le Pic du Midi) avec une silhouette cotée « grand format, à confirmer », et l’offre « Pros, collectivités, lieux culturels ». La première installation d’Aquensis peut servir de référence, si la SEMETHERM l’accepte. Un dossier pour les collectivités (à fournir).",
+        "kpi": "Demandes de devis venant de collectivités, devis signés.",
+        "valider": "Les dimensions et la tenue en extérieur des grands formats. L’interlocuteur à la mairie. " + PV,
+    },
+    {
+        "nom": "Offres aux professionnels : hôtels, entreprises",
+        "idee": "Des services pour les hôtels et les entreprises.",
+        "site": "Dans la page sur-mesure, des exemples concrets : une plaque du site voisin dans chaque chambre d’hôtel, un cadeau d’affaires, une frise pour un hall d’accueil. Le formulaire de devis demande le type de structure.",
+        "kpi": "Devis professionnels, montant moyen, commandes répétées.",
+        "valider": "Les quantités minimales, les délais, d’éventuels tarifs par quantité (à fournir, communiqués sur devis). " + PV,
+    },
+    {
+        "nom": "Thèmes sportifs : cols cyclistes, rugby",
+        "idee": "Des plaques sur les cols et sur le rugby.",
+        "site": "Un filtre « Sport » dans la galerie dès qu’il y a trois modèles, en partant du <a href=\"produit-le-tourmalet.html\">Tourmalet</a>. La lettre « prochaines plaques » annonce les sorties. Une page par col répond aux recherches du type « souvenir col du Tourmalet ».",
+        "kpi": "Inscriptions à la lettre depuis ces pages, ventes des modèles sportifs, part des visites venues des moteurs de recherche.",
+        "valider": "Les dessins et la liste des cols. Les noms et logos de clubs, comme certains noms d’épreuves, sont des marques protégées : pas d’usage sans accord. " + PV,
+    },
+    {
+        "nom": "Autres territoires : Mont-Saint-Michel, Étretat, Pont du Gard",
+        "idee": "Étendre la collection à d’autres faunes, d’autres flores et d’autres grands sites.",
+        "site": "Prévoir dès maintenant un classement par territoire (la Bigorre aujourd’hui), des adresses du type <code>/bigorre/</code>, et un formulaire « Votre lieu n’existe pas encore ? » qui mesure la demande. La signature « Graver l’âme des territoires » s’y prête déjà.",
+        "kpi": "Demandes de lieux hors Bigorre, ventes hors des Hautes-Pyrénées, inscriptions à la lettre par territoire.",
+        "valider": "L’ordre des territoires. La fabrication, aujourd’hui entre Revel et Bagnères-de-Bigorre. Les droits : certains grands sites encadrent l’usage de leur nom ou de leur image. " + PV,
+    },
+]
+
+
+def section_palette():
+    pastilles = "".join('<li><span class="palette__pastille" style="background:{1}" aria-hidden="true"></span><strong>{0}</strong><code>{1}</code><span>{2}</span></li>'
+                        .format(n, h, u) for n, h, u in PALETTE)
+    c = {n: h for n, h, _ in PALETTE}
+    lignes = [
+        ("Noir ardoise sur blanc cassé", c["Noir ardoise"], c["Blanc cassé"], "Texte courant"),
+        ("Noir ardoise sur cuivre clair", c["Noir ardoise"], c["Cuivre clair"], "Texte des boutons"),
+        ("Blanc sur cuivre clair", "#FFFFFF", c["Cuivre clair"], "À éviter"),
+        ("Blanc cassé sur cuivre clair", c["Blanc cassé"], c["Cuivre clair"], "À éviter"),
+        ("Cuivre clair sur blanc cassé", c["Cuivre clair"], c["Blanc cassé"], "À éviter pour du texte"),
+        ("Cuivre foncé " + CUIVRE_FONCE + " sur blanc cassé", CUIVRE_FONCE, c["Blanc cassé"], "Liens et petits textes cuivrés"),
+        ("Blanc sur cuivre foncé " + CUIVRE_FONCE, "#FFFFFF", CUIVRE_FONCE, "Si un bouton à texte blanc est voulu"),
+        ("Noir ardoise sur vert sauge", c["Noir ardoise"], c["Vert sauge très pâle"], "Sections techniques"),
+        ("Cuivre clair sur noir ardoise", c["Cuivre clair"], c["Noir ardoise"], "Accent sur fond sombre"),
+        ("Argent doux sur blanc cassé", c["Argent doux"], c["Blanc cassé"], "Filets décoratifs seulement"),
+    ]
+    rangs = []
+    for nom, a, b, usage in lignes:
+        r = contraste(a, b)
+        verdict = "Oui" if r >= 4.5 else ("Non" if r < 3 else "Grand texte seulement")
+        rangs.append('<tr><td><span class="paire-couleurs"><span class="duo-couleurs" aria-hidden="true"><span style="background:{b};color:{a}">Aa</span></span><span>{nom}</span></span></td><td class="num">{r}:1</td><td>{v}</td><td>{u}</td></tr>'
+                     .format(a=a, b=b, nom=nom, r="{:.1f}".format(r).replace(".", ","), v=verdict, u=usage))
+    return """<section id="palette">
+        <h2>Votre palette</h2>
+        <p>Votre charte « Palette Terres Gravées : version centrée métal brut » définit cinq couleurs. Les voici, avec l’usage que vous leur donnez.</p>
+        <ul class="palette">""" + pastilles + """</ul>
+        <h3>Comment cette version la reprend, et où elle s’en écarte</h3>
+        <ul>
+          <li><strong>Elle s’en écarte sur le fond et l’accent.</strong> Le showroom se visite de nuit : fond bleu nuit (#060a14) au lieu du blanc cassé, et un accent piloté par la couleur LED choisie (bleu par défaut) au lieu du cuivre. C’est le parti pris de la version : montrer la lumière.</li>
+          <li><strong>Elle la reprend dans les scènes et les détails.</strong> Le mur clair sur lequel les plaques sont exposées part du blanc cassé #F5F5F0. La lueur de la photo d’Aquensis (accueil, « La première installation ») et le contour des niches du schéma d’échelle sont en cuivre clair, en écho à l’effet Corten. Les dessins de la vitrine « En préparation à l’atelier » sont tracés en argent doux sur noir ardoise.</li>
+          <li><strong>Le texte des boutons reste sombre</strong>, comme votre charte le demande pour le cuivre.</li>
+        </ul>
+        <h3>Les contrastes à respecter</h3>
+        <p>Le seuil WCAG AA est de 4,5:1 pour le texte courant et de 3:1 pour le grand texte et les contours utiles (champs de formulaire, boutons sans fond). Les rapports ci-dessous sont calculés.</p>
+        <div class="tableau-defile"><table class="tableau tableau--contrastes">
+          <thead><tr><th scope="col">Couleurs</th><th scope="col">Rapport</th><th scope="col">AA, texte courant</th><th scope="col">Usage</th></tr></thead>
+          <tbody>""" + "".join(rangs) + """</tbody>
+        </table></div>
+        <p>Retenez deux règles : <strong>jamais de texte blanc sur le cuivre clair</strong> (texte noir ardoise, ou cuivre foncé """ + CUIVRE_FONCE + """ si vous voulez du blanc), et <strong>l’argent doux reste décoratif</strong> sur fond clair : pour le contour d’un champ, prenez l’ardoise.</p>
+        <h3>Si vous voulez rester fidèle à votre charte</h3>
+        <p>Deux adaptations possibles, sans perdre le geste signature, la plaque qui s’allume. """ + PV + """</p>
+        <div class="apercus-charte">
+          <figure class="apercu apercu--ardoise">
+            <p class="apercu__titre">Le Pic du Midi</p>
+            <p>Plaque en aluminium découpé au laser, 60 × 30 cm.</p>
+            <p class="apercu__fiche">Format 60 × 30 cm · épaisseur 2 mm</p>
+            <span class="apercu__bouton">Ajouter au panier · 65 €</span>
+            <span class="apercu__lien">Essayer chez moi</span>
+            <figcaption>1 · Nuit ardoise et cuivre</figcaption>
+          </figure>
+          <figure class="apercu apercu--jour">
+            <p class="apercu__titre">Le Pic du Midi</p>
+            <p>Plaque en aluminium découpé au laser, 60 × 30 cm.</p>
+            <p class="apercu__fiche">Format 60 × 30 cm · épaisseur 2 mm</p>
+            <span class="apercu__bouton">Ajouter au panier · 65 €</span>
+            <span class="apercu__lien">Essayer chez moi</span>
+            <figcaption>2 · Jour métal brut</figcaption>
+          </figure>
+        </div>
+        <ol>
+          <li><strong>Nuit ardoise et cuivre</strong> : le fond nuit devient noir ardoise #2C2C2C, le texte blanc cassé, les filets argent doux, et l’accent de l’interface cuivre clair, avec un texte noir ardoise sur les boutons. La lumière des plaques garde la couleur LED choisie par le visiteur. C’est un changement de quelques variables : vous pouvez l’essayer tout de suite sur toute la maquette.</li>
+          <li><strong>Jour métal brut</strong> : fond blanc cassé, texte noir ardoise, sections techniques en vert sauge, boutons cuivre clair à texte ardoise, liens en cuivre foncé """ + CUIVRE_FONCE + """. La nuit ne vit plus que dans les scènes, quand on allume la plaque. Il faut reprendre toute la feuille de style : à décider avant d’y travailler.</li>
+        </ol>
+        <div class="bascule-charte" role="group" aria-label="Couleurs de la maquette">
+          <button type="button" data-charte="nuit" aria-pressed="true">Nuit bleue (version 3)</button>
+          <button type="button" data-charte="ardoise" aria-pressed="false">Nuit ardoise et cuivre (votre charte)</button>
+        </div>
+        <p class="petit">Le choix est mémorisé dans ce navigateur seulement et s’applique à toutes les pages de la maquette. Le bandeau du haut le rappelle.</p>
+        <h3>Le logo</h3>
+        <p>Votre logo existe en vectoriel (logo.ai), avec trois déclinaisons PNG : l’emblème au coq, « TERRE GRAVÉE » et « Graver l’âme des territoires ». Exporté en SVG """ + marq("à fournir") + """, il remplacera la signature typographique de l’en-tête et du pied de page, et le petit pictogramme dessiné pour la maquette.</p>
+      </section>"""
+
+
+def section_idees():
+    cartes = []
+    for t in IDEES:
+        cartes.append("""<article class="technique">
+  <h3>{nom}</h3>
+  <dl>
+    <div><dt>Votre idée</dt><dd>{idee}</dd></div>
+    <div><dt>Sur le site</dt><dd>{site}</dd></div>
+    <div><dt>Indicateur</dt><dd>{kpi}</dd></div>
+    <div><dt>À valider</dt><dd>{val}</dd></div>
+  </dl>
+</article>""".format(**{"nom": t["nom"], "idee": t["idee"], "site": t["site"], "kpi": t["kpi"], "val": t["valider"]}))
+    return """<section id="idees">
+        <h2>Vos idées, mises en œuvre</h2>
+        <p>Votre Contexte fixe deux cibles prioritaires : les touristes et les habitants attachés à leur patrimoine. Voici vos idées pour les toucher, avec ce que le site doit prévoir, l’indicateur à suivre et ce qui reste à valider. Aucune n’est en ligne : ce sont des propositions.</p>
+        <div class="liste-techniques">""" + "".join(cartes) + """</div>
+        <p>Deux autres idées de votre Contexte sont déjà traitées ailleurs : la carte interactive des plaques est le cœur de la version 1, et l’emballage renforcé (boîte en carton de type livre au format A2, pochette en carton ondulé, plaques de calage) peut être décrit sur les fiches pour rassurer sur la livraison.</p>
+      </section>"""
+
+
 def strategie():
     techniques = []
     for t in TECHNIQUES:
@@ -1652,7 +2114,8 @@ def strategie():
   <div class="doc">
     <nav class="doc__sommaire" aria-label="Sommaire"><p>Sommaire</p><ol>
       <li><a href="#concept">Le concept</a></li><li><a href="#parcours">Pour qui</a></li><li><a href="#tendances">Tendances utilisées</a></li>
-      <li><a href="#techniques">Techniques marketing</a></li><li><a href="#mesure">Mesurer sans se tromper</a></li>
+      <li><a href="#palette">Votre palette</a></li>
+      <li><a href="#techniques">Techniques marketing</a></li><li><a href="#idees">Vos idées, mises en œuvre</a></li><li><a href="#mesure">Mesurer sans se tromper</a></li>
       <li><a href="#legal">Vigilance légale</a></li><li><a href="#fournir">À fournir et à décider</a></li><li><a href="#limites">Limites de la maquette</a></li>
     </ol></nav>
     <div class="doc__corps">
@@ -1660,14 +2123,15 @@ def strategie():
         <h2>Le concept</h2>
         <p>Un showroom en ligne, de nuit, inspiré du Pic du Midi : un observatoire, un ciel étoilé, et vos plaques qui s’allument. Le visiteur <strong>essaie</strong> la plaque sur son mur, la <strong>configure</strong> et l’<strong>allume</strong>. Le prix suit chacun de ses choix.</p>
         <p>Les deux autres versions partent d’autres idées : la version 1, « Carnet de territoire », raconte les lieux ; la version 2, « Boutique qui convertit », optimise le parcours d’achat. Celle-ci mise sur l’objet et sa lumière, pour réduire l’incertitude qui freine l’achat d’une déco murale : la taille, le rendu sur mon mur, le rendu le soir.</p>
-        <p><strong>Pages clés :</strong> <a href="essayer.html">le visualiseur</a>, <a href="produit-le-pic-du-midi.html">une fiche avec configurateur</a>, <a href="collection.html">la galerie qu’on éteint</a>, <a href="index.html">l’accueil et son allumage</a>.</p>
+        <p><strong>Pages clés :</strong> <a href="essayer.html">le visualiseur</a>, <a href="produit-le-pic-du-midi.html">une fiche avec configurateur</a>, <a href="collection.html">la galerie qu’on éteint</a>, <a href="index.html">l’accueil et son allumage</a>, <a href="qr.html">la page des QR codes d’Aquensis</a>.</p>
+        <p><strong>Ce que votre Drive a apporté :</strong> l’histoire d’origine, sur l’accueil, dans la section <a href="index.html#premiere-installation">« La première installation »</a> ; la vitrine <a href="collection.html#preparation">« En préparation à l’atelier »</a> dans la galerie ; les <a href="sur-mesure.html#grands-formats">grands formats en préparation</a> dans le sur-mesure ; la page <a href="qr.html">qr.html</a> pour les panneaux de démonstration ; et, ci-dessous, votre palette et vos idées marketing. Les chiffres internes du Drive (coûts, volumes, fournisseurs) ne figurent nulle part dans la maquette.</p>
       </section>
       <section id="parcours">
         <h2>Pour qui</h2>
-        <p>Des hypothèses de travail, pas des affirmations à publier :</p>
+        <p>Votre Contexte vise d’abord les touristes et les habitants attachés à leur patrimoine. Voici les profils retenus, comme hypothèses de travail et non comme affirmations à publier :</p>
         <ul>
           <li><strong>L’habitant de Bigorre</strong> fier de son territoire : il connaît le lieu, il hésite sur la finition et la taille. Le visualiseur et la photo de son mur répondent.</li>
-          <li><strong>Le curiste ou le touriste</strong> qui a vu les plaques à Aquensis ou en ville : il veut retrouver le modèle et le voir chez lui. Deux avis mentionnent Aquensis et une cure à Bagnères.</li>
+          <li><strong>Le curiste ou le touriste</strong> qui a vu les niches allumées à Aquensis : il veut retrouver le sujet et le voir chez lui. Deux avis mentionnent Aquensis et une cure à Bagnères. La page <a href="qr.html">qr.html</a> l’accueille s’il scanne un panneau de démonstration.</li>
           <li><strong>Le cycliste</strong> du Tourmalet : il achète un souvenir d’exploit. Le lien partageable lui sert à montrer son choix.</li>
           <li><strong>La personne qui offre</strong> : elle doute du goût du destinataire. Lien « pour avis », option cadeau, carte cadeau.</li>
         </ul>
@@ -1676,13 +2140,15 @@ def strategie():
         <h2>Tendances utilisées</h2>
         <p>Le fil rouge des tendances 2026 : un design « propre » se génère en quelques minutes, la différence vient de choix délibérés (""" + lien_src("https://bubble.io/blog/web-design-trends/", "Bubble") + """). Ici, le geste signature est la lumière. Les photos des plaques et du kit allumé sont réelles. Les mises en situation sont des montages, et le rendu de nuit est une simulation : les deux sont signalés comme tels sur le site.</p>
         <ul class="cartes-tendances">""" + tendances + """</ul>
-        <p><strong>Identité :</strong> nuit bleutée (#060a14), accent piloté par la couleur LED (bleu par défaut), titres en Unbounded, texte en Manrope, cotes en JetBrains Mono. Composants propres à cette version : la vitrine cotée, les niches éclairées qu’on éteint, le cartouche technique, l’interrupteur.</p>
+        <p><strong>Identité :</strong> nuit bleutée (#060a14), accent piloté par la couleur LED (bleu par défaut), titres en Unbounded, texte en Manrope, cotes en JetBrains Mono. Composants propres à cette version : la vitrine cotée, les niches éclairées qu’on éteint, le cartouche technique, l’interrupteur. Votre palette de marque y trouve sa place par endroits : voir la section suivante.</p>
       </section>
+      """ + section_palette() + """
       <section id="techniques">
         <h2>Techniques marketing</h2>
         <p>Chaque technique indique où elle se trouve, pourquoi elle marche, ce qu’il faut valider et l’indicateur à suivre. Les chiffres viennent de la recherche fournie, avec leur source.</p>
         <div class="liste-techniques">""" + "".join(techniques) + """</div>
       </section>
+      """ + section_idees() + """
       <section id="mesure">
         <h2>Mesurer sans se tromper</h2>
         <p>Avec le trafic d’une micro-entreprise, un test A/B aura rarement assez de puissance statistique. Mieux vaut comparer des périodes comparables avant et après, et faire quelques tests avec de vraies personnes, par exemple trois clients qui essaient le visualiseur sur leur téléphone.</p>
@@ -1697,6 +2163,9 @@ def strategie():
           <li><strong>Rayon de 150 km</strong> (art. L121-2) : Revel est à environ 155 km de Gerde et de Bagnères-de-Bigorre à vol d’oiseau. Le héros dit donc « fabriquée entre Revel (31) et Bagnères-de-Bigorre (65) ». La phrase « Toutes nos plaques sont réalisées dans un rayon de 150 km » n’apparaît qu’entre guillemets, avec le marqueur « centre du rayon à confirmer ». Dites-nous d’où part le rayon.</li>
           <li><strong>Avis</strong> (""" + lien_src("https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000049571119", "art. L111-7-2") + """ et """ + lien_src("https://www.legifrance.gouv.fr/jorf/id/JORFARTI000035720943", "art. D111-16 à D111-19") + """) : déjà en place, la mention « publiés sans vérification d’achat » près des avis et des notes, la date de publication, l’ordre chronologique et l’adresse pour signaler un doute. Pas encore conforme : il manque près de chaque avis la date de l’expérience de consommation (D111-17, 1° b), marquée « date à fournir », et la rubrique dédiée (contreparties, délais de publication et de conservation : D111-17, 2° ; motifs de refus : L111-7-2), marquée « rubrique à fournir ».</li>
           <li><strong>Prix</strong> : prix TTC et mention de TVA partout, aucun prix barré. Toute réduction future devra se référer au prix le plus bas des 30 derniers jours (""" + lien_src("https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000044549592", "art. L112-1-1") + """).</li>
+          <li><strong>Aquensis</strong> : citer le nom et montrer la photo demande l’accord écrit de la SEMETHERM, d’où le marqueur sur l’accueil et sur qr.html. Le site dit seulement que le projet a été conçu pour Aquensis, rien de plus. Des baigneurs apparaissent sur la photo : s’ils sont reconnaissables, il faut les flouter ou obtenir leur accord (droit à l’image).</li>
+          <li><strong>QR codes et mesure</strong> : un repère dans l’adresse (<code>?src=</code>) ne dépose rien sur l’appareil. L’outil de mesure qui le lit doit, lui, respecter les règles de la CNIL sur les traceurs (consentement, ou exemption pour certains outils de mesure d’audience). La page qr.html n’en charge aucun.</li>
+          <li><strong>Modèles en préparation</strong> : ils sont présentés par leurs dessins, jamais par une fausse photo, avec le marqueur « en préparation, à valider ». Aucune date ni aucun prix n’est annoncé tant qu’ils ne sont pas fixés.</li>
           <li><strong>Simulation</strong> : chaque rendu de nuit et chaque mur est marqué « simulation, rendu indicatif » ; les mises en situation sont nommées ainsi, jamais présentées comme des photos de clients.</li>
           <li><strong>Photo importée</strong> : elle est lue et affichée dans le navigateur, sans envoi ni conservation. À garder ainsi en ligne : c’est ce qui évite tout traitement de données personnelles.</li>
           <li><strong>E-mail</strong> (""" + lien_src("https://www.cnil.fr/fr/la-prospection-commerciale-par-courrier-electronique", "CNIL") + """) : consentement explicite, case non cochée et obligatoire pour s’inscrire, désinscription simple. Les relances par e-mail suivent les mêmes règles de prospection : consentement préalable, ou client existant pour des produits analogues. Les pixels de suivi dans les e-mails demandent en principe un consentement, sauf exceptions (e-mails transactionnels, mesure de délivrabilité) : """ + lien_src("https://www.cnil.fr/fr/recommandation-pixel-suivi-courriels", "recommandation CNIL adoptée le 12 mars 2026") + """.</li>
@@ -1739,6 +2208,14 @@ def strategie():
             <tr><td>Paiement</td><td>La mention légale imposée par PayPal pour le paiement en 4 fois</td><td>Fiches, panier, galerie, contact, carte cadeau</td></tr>
             <tr><td>Carte cadeau</td><td>La rétractation et les conditions d’utilisation de la carte</td><td>Fiche carte cadeau</td></tr>
             <tr><td>Mises en situation</td><td>Leur origine (montage, image générée ou non) avant d’écrire « aucune image générée »</td><td>Fiches</td></tr>
+            <tr><td>Aquensis</td><td>L’accord écrit de la SEMETHERM pour citer le projet, publier la photo et installer des panneaux de démonstration</td><td>Accueil, qr.html</td></tr>
+            <tr><td>Photo d’Aquensis</td><td>Le droit de l’utiliser, et le floutage des baigneurs s’ils sont reconnaissables</td><td>Accueil</td></tr>
+            <tr><td>QR codes</td><td>Le format du paramètre de suivi, et l’adresse vers laquelle pointe le QR code existant</td><td>qr.html</td></tr>
+            <tr><td>Modèles en préparation</td><td>Dates de sortie, finitions, prix, photos des plaques, dessin du Jardin Massey</td><td>Galerie, accueil, sur-mesure</td></tr>
+            <tr><td>Grands formats</td><td>Dimensions, finitions, prix, tenue en extérieur</td><td>Sur-mesure</td></tr>
+            <tr><td>Logo</td><td>Un export SVG du logo vectoriel (logo.ai)</td><td>En-tête, pied de page</td></tr>
+            <tr><td>Décision</td><td>Les couleurs : nuit bleue de la version ou nuit ardoise et cuivre de votre charte</td><td>Toutes les pages</td></tr>
+            <tr><td>Décision</td><td>Vos idées marketing : lieux, événements, conditions pour les professionnels</td><td>Stratégie, « Vos idées, mises en œuvre »</td></tr>
           </tbody>
         </table>
       </section>
@@ -1802,6 +2279,7 @@ def main():
     fiche_carte()
     sur_mesure()
     contact()
+    qr()
     strategie()
     print("{} pages générées dans {}".format(len(PAGES), ICI))
 

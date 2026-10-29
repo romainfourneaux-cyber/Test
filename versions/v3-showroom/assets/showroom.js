@@ -688,6 +688,38 @@
     });
   }
 
+  /* ---------- Essai des couleurs de la charte (strategie.html) : mémorisé dans ce navigateur seulement ---------- */
+  var boutonsCharte = $$("button[data-charte]");
+  function majBoutonsCharte() {
+    var actuelle = document.documentElement.getAttribute("data-charte") === "ardoise" ? "ardoise" : "nuit";
+    boutonsCharte.forEach(function (b) { b.setAttribute("aria-pressed", b.getAttribute("data-charte") === actuelle ? "true" : "false"); });
+  }
+  boutonsCharte.forEach(function (b) {
+    b.addEventListener("click", function () {
+      var ardoise = b.getAttribute("data-charte") === "ardoise";
+      avecTransition(function () {
+        if (ardoise) document.documentElement.setAttribute("data-charte", "ardoise");
+        else document.documentElement.removeAttribute("data-charte");
+        majBoutonsCharte();
+      });
+      try { if (ardoise) window.localStorage.setItem("tg3-charte", "ardoise"); else window.localStorage.removeItem("tg3-charte"); } catch (e) { /* stockage indisponible */ }
+      annoncer(ardoise ? "Couleurs de votre charte : nuit ardoise et cuivre" : "Couleurs de la version 3 : nuit bleue");
+    });
+  });
+  if (boutonsCharte.length) majBoutonsCharte();
+
+  /* ---------- Page QR : le repère de suivi est lu pour être affiché, jamais envoyé ---------- */
+  var reperesQr = $$("[data-qr-repere]");
+  var sourceQr = $("[data-qr-source]");
+  if (reperesQr.length || sourceQr) {
+    var src = "";
+    try { src = new URLSearchParams(window.location.search).get("src") || ""; } catch (e) { src = ""; }
+    if (!/^[a-z0-9-]{1,40}$/.test(src)) src = "";
+    var NOMS_QR = { "aquensis-vestiaires": "panneau des vestiaires", "aquensis-sortie": "panneau de la sortie" };
+    reperesQr.forEach(function (o) { o.textContent = src || "aucun"; });
+    if (sourceQr && NOMS_QR[src]) sourceQr.textContent = " · " + NOMS_QR[src];
+  }
+
   /* ---------- Outils partagés avec le visualiseur ---------- */
   window.TG3.outils = {
     euros: euros, lireHash: lireHash, ecrireHash: ecrireHash, chaineHash: chaineHash, urlSansHash: urlSansHash, srcPlaque: srcPlaque, srcVignette: srcVignette, aPhoto: aPhoto,

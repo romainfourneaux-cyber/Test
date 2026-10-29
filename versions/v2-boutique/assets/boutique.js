@@ -1064,6 +1064,53 @@
   });
   majBoutonsNotes();
 
+  /* ---------- aperçu « votre charte » : palette de Romain sur toute la maquette ---------- */
+  var CLE_CHARTE = "tg-v2-charte";
+  var majCharte = function (active, memoriser) {
+    document.documentElement.classList.toggle("charte", active);
+    if (memoriser) { try { window.localStorage.setItem(CLE_CHARTE, active ? "romain" : "v2"); } catch (e) { /* préférence non mémorisée */ } }
+    $$("[data-charte]").forEach(function (b) { b.setAttribute("aria-pressed", active ? "true" : "false"); });
+  };
+  $$("[data-charte]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var active = !document.documentElement.classList.contains("charte");
+      majCharte(active, true);
+      annoncer(active ? "Palette de votre charte appliquée à la maquette." : "Palette de la version 2 rétablie.");
+    });
+  });
+  $$("[data-charte-quitter]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      majCharte(false, true);
+      annoncer("Palette de la version 2 rétablie.");
+      var lien = $(".bandeau-maq__liens a");
+      if (lien) lien.focus();
+    });
+  });
+  majCharte(document.documentElement.classList.contains("charte"), false);
+
+  /* ---------- qr.html : quiz en un clic ---------- */
+  var clic = $("[data-clic]");
+  if (clic) {
+    var choixClic = $$("[data-clic-choix]", clic), resClic = $$("[data-clic-res]", clic), attente = $("[data-clic-attente]", clic);
+    choixClic.forEach(function (b) {
+      b.addEventListener("click", function () {
+        var cle = b.getAttribute("data-clic-choix");
+        choixClic.forEach(function (x) { x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
+        var cible = null;
+        resClic.forEach(function (r) { var ok = r.getAttribute("data-clic-res") === cle; r.hidden = !ok; if (ok) cible = r; });
+        if (attente) attente.hidden = true;
+        annoncer("Plaque proposée" + NBSP + ": " + b.getAttribute("data-clic-nom") + ". Elle s’affiche sous les réponses, avec son bouton d’ajout au panier.");
+        if (cible) {
+          var haut = cible.getBoundingClientRect().top;
+          if (haut > window.innerHeight - 160) {
+            var doux = window.matchMedia && !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+            cible.scrollIntoView({ block: "nearest", behavior: doux ? "smooth" : "auto" });
+          }
+        }
+      });
+    });
+  }
+
   /* ---------- champ fichier en français ---------- */
   $$(".fichier__input").forEach(function (champ) {
     var nom = $("[data-fichier-nom]", champ.parentNode);

@@ -37,6 +37,25 @@
   if (mq && mq.addEventListener) mq.addEventListener("change", function () { majBascule(); redessinerReliefs(); });
   majBascule();
 
+  /* ---------- Aperçu « palette de Romain » (page Stratégie) : gardé dans ce navigateur ---------- */
+  function majPalette() {
+    var marque = racine.getAttribute("data-palette") === "marque";
+    $$("[data-palette-bascule]").forEach(function (b) {
+      b.setAttribute("aria-pressed", marque ? "true" : "false");
+      var t = $("[data-palette-texte]", b);
+      if (t) t.textContent = marque ? "Revenir à la palette de la version 1" : "Voir la maquette avec ta palette";
+    });
+  }
+  $$("[data-palette-bascule]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var marque = racine.getAttribute("data-palette") !== "marque";
+      if (marque) racine.setAttribute("data-palette", "marque"); else racine.removeAttribute("data-palette");
+      ecrire("tg-v1-palette", marque ? "marque" : "");
+      majPalette();
+    });
+  });
+  majPalette();
+
   /* ---------- Menu mobile ---------- */
   var entete = $(".entete");
   var boutonMenu = $("[data-menu]");

@@ -53,6 +53,9 @@ CATS = {
     "sites": ("Sites naturels", "rond"),
     "patrimoine": ("Patrimoine", "carre"),
     "faune": ("Faune des Pyrénées", "losange"),
+    # Hors catalogue : le décor d’origine, et les modèles en préparation
+    "vrai": ("Où voir les plaques en vrai", "etoile"),
+    "bientot": ("Bientôt, en préparation", "pointille"),
 }
 ORDRE_CATS = ("sommets", "sites", "patrimoine", "faune")
 # slug : (lat, lon, catégorie, côté de l’étiquette)
@@ -70,13 +73,46 @@ LIEUX = {
 FAUNE = ["lisard", "lours", "le-cerf", "la-marmotte"]
 # Repère de la zone faune : dans la partie hachurée du Parc national située dans le département
 ZONE_FAUNE = (42.77, 0.16)
+
+# Où voir les plaques en vrai : le décor d’origine à Aquensis, centre thermal de Bagnères-de-Bigorre
+# (quartier des thermes, rue du Pont d’Arras ; position indicative).
+AQUENSIS = (43.063, 0.146)
+# Modèles en préparation (dossier « rex » de Romain, juin et juillet 2026) : repères « bientôt », en pointillé.
+# dessin : coin haut gauche du dessin sur la planche misc/autres-plaques.webp (cases de 200 × 398 px), ou None.
+BIENTOT = {
+    "le-casque-du-lheris": {
+        "nom": "Le Casque du Lhéris", "pos": (43.02, 0.20), "forme": "sommets", "cote": "d",
+        "lieu": "Entre Bagnères-de-Bigorre et Campan", "dlab": "Altitude", "detail": "1 595 m",
+        "texte": "1 595 m, entre Bagnères-de-Bigorre et la vallée de Campan. On y monte à pied depuis le col des Palomières ou depuis Campan.",
+        "dessin": (474, 0),
+    },
+    "le-jardin-massey": {
+        "nom": "Le Jardin Massey", "pos": (43.236, 0.074), "forme": "patrimoine", "cote": "g",
+        "lieu": "Tarbes", "dlab": "Repère", "detail": "Parc paysager du XIXe siècle",
+        "texte": "Un parc paysager au cœur de Tarbes, ancienne propriété du botaniste Placide Massey (1777-1853), qui l’a légué à la ville. Il abrite le musée Massey.",
+        "dessin": None,
+    },
+}
+# La Transhumance : pas de lieu précis, une zone sans repère (comme la faune)
+TRANSHUMANCE = {
+    "nom": "La Transhumance", "zone": (42.95, 0.50),
+    "texte": "Au printemps, les troupeaux montent vers les estives ; ils redescendent à l’automne. La transhumance n’a pas d’adresse : la carte ne lui donne pas de point précis.",
+    "dessin": (474, 860),
+}
+GRANDS_FORMATS = ["le-cirque-de-gavarnie", "le-tourmalet", "le-pont-despagne", "le-pic-du-midi"]
+
 # Grappes de repères trop proches pour être touchées séparément sur un petit écran (≤ 960 px)
+# (clé, nom, membres, catégorie du symbole, décalage x, décalage y en pixels)
 GRAPPES = [
     ("massif", "Massif du Pic du Midi", ["le-pic-du-midi", "le-tourmalet", "le-montaigu"], "sommets", 0, 0),
     ("baronnies", "Mauvezin et l’Escaladieu", ["le-chateau-de-mauvezin", "labbaye-de-lescaladieu"], "patrimoine", 30, 8),
+    ("bagneres", "Bagnères-de-Bigorre et le Lhéris", ["la-tour-des-jacobins", "aquensis", "le-casque-du-lheris"], "patrimoine", -20, -14),
 ]
+# Point d’ancrage d’une grappe (trait de rappel) quand le centre des membres ne tombe sur aucun lieu
+ANCRES_GRAPPES = {"bagneres": LIEUX["la-tour-des-jacobins"][:2]}
 # Sur grand écran, symboles écartés de quelques pixels (avec trait de rappel) quand deux lieux sont à moins de 2 km
-DECALAGES = {"le-chateau-de-mauvezin": (11, -9), "labbaye-de-lescaladieu": (-11, 9)}
+DECALAGES = {"le-chateau-de-mauvezin": (11, -9), "labbaye-de-lescaladieu": (-11, 9), "aquensis": (-18, 29),
+             "le-jardin-massey": (-13, -13)}
 GERDE = (43.055, 0.168)
 BAGNERES = (43.065, 0.149)
 REVEL = (43.458, 2.004)
@@ -87,7 +123,32 @@ def cat_de(slug):
         return LIEUX[slug][2]
     if slug in FAUNE:
         return "faune"
+    if slug == "aquensis":
+        return "vrai"
+    if slug in BIENTOT or slug == "la-transhumance":
+        return "bientot"
     return None
+
+
+def pos_de(slug):
+    """Position indicative (lat, lon) d’un repère de la carte."""
+    if slug in LIEUX:
+        return LIEUX[slug][0], LIEUX[slug][1]
+    if slug == "aquensis":
+        return AQUENSIS
+    if slug in BIENTOT:
+        return BIENTOT[slug]["pos"]
+    raise KeyError(slug)
+
+
+def nom_de(slug):
+    if slug in PRODUITS:
+        return PRODUITS[slug]["nom"]
+    if slug == "aquensis":
+        return "Aquensis"
+    if slug in BIENTOT:
+        return BIENTOT[slug]["nom"]
+    return TRANSHUMANCE["nom"]
 
 
 def km(a, b):
@@ -267,6 +328,8 @@ def note(texte, sorte="fournir"):
 A_FOURNIR = note("à fournir")
 A_CONFIRMER = note("à confirmer", "confirmer")
 A_VALIDER = note("proposition à valider", "valider")
+A_PREPARATION = note("en préparation, à valider", "valider")
+A_SEMETHERM = note("à valider : accord de la SEMETHERM pour citer le projet Aquensis", "valider")
 
 
 def etoiles(n):
@@ -276,16 +339,19 @@ def etoiles(n):
             '<span class="etoiles__plein" style="width:{:.0f}%">★★★★★</span></span>').format(pct)
 
 
-def symbole(cat, cls="symbole"):
-    forme = CATS[cat][1]
-    if forme == "triangle":
-        d = '<path d="M8 2.2 14.2 13.4H1.8Z"/>'
-    elif forme == "rond":
-        d = '<circle cx="8" cy="8" r="5.6"/>'
-    elif forme == "carre":
-        d = '<rect x="2.6" y="2.6" width="10.8" height="10.8"/>'
-    else:
-        d = '<path d="M8 1.6 14.4 8 8 14.4 1.6 8Z"/>'
+FORMES = {
+    "triangle": '<path d="M8 2.2 14.2 13.4H1.8Z"/>',
+    "rond": '<circle cx="8" cy="8" r="5.6"/>',
+    "carre": '<rect x="2.6" y="2.6" width="10.8" height="10.8"/>',
+    "losange": '<path d="M8 1.6 14.4 8 8 14.4 1.6 8Z"/>',
+    "etoile": '<path d="M8 1 9.9 5.6 14.7 5.9 11 9.1 12.2 13.9 8 11.3 3.8 13.9 5 9.1 1.3 5.9 6.1 5.6Z"/>',
+}
+
+
+def symbole(cat, cls="symbole", forme=None):
+    """Symbole de catégorie ; pour « bientôt », la forme de la catégorie du lieu, en creux et en pointillé."""
+    f = CATS[cat][1] if forme is None else CATS[forme][1]
+    d = FORMES.get(f, FORMES["rond"])
     return '<svg class="{} {}--{}" viewBox="0 0 16 16" aria-hidden="true" focusable="false">{}</svg>'.format(cls, cls, cat, d)
 
 
@@ -434,7 +500,7 @@ def typo_texte(t):
     for _ in range(2):
         t = re.sub(r"(\d) (\d{3})(?!\d)", r"\1" + FINE + r"\2", t)
     t = re.sub(r"(\d) (€|m|km|cm|mm|jours|%|Ko|Mo|exemplaires|plaques|avis|lieux|modèles|étoiles|ans)(?![\wÀ-ÿ])", r"\1" + NBSP + r"\2", t)
-    t = re.sub(r"(\d) × (\d)", r"\1" + NBSP + "×" + NBSP + r"\2", t)
+    t = t.replace(" × ", NBSP + "×" + NBSP)  # dimensions : 60 × 30 cm, 1 m × 2 m
     t = t.replace("N° ", "N°" + NBSP).replace(" – ", NBSP + "– ")
     return t
 
@@ -571,7 +637,7 @@ def page(fichier, titre, description, contenu, actif=None, jsonld=None, scripts=
 <meta name="description" content="{desc}">
 <meta name="robots" content="noindex, nofollow">
 <meta name="color-scheme" content="light dark">
-<script>try{{var t=localStorage.getItem("tg-v1-theme");if(t==="dark"||t==="light"){{document.documentElement.setAttribute("data-theme",t);}}}}catch(e){{}}</script>
+<script>try{{var t=localStorage.getItem("tg-v1-theme");if(t==="dark"||t==="light"){{document.documentElement.setAttribute("data-theme",t);}}if(localStorage.getItem("tg-v1-palette")==="marque"){{document.documentElement.setAttribute("data-palette","marque");}}}}catch(e){{}}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="{polices}">
@@ -859,7 +925,7 @@ def decalage(slug):
     if slug not in DECALAGES:
         return "", "", ""
     dx, dy = DECALAGES[slug]
-    x, y = pc(LIEUX[slug][0], LIEUX[slug][1])
+    x, y = pc(*pos_de(slug))
     grappe = [g[0] for g in GRAPPES if slug in g[2]]
     dans = ' data-dans-grappe="{}"'.format(grappe[0]) if grappe else ""
     rappel = ('<span class="repere-rappel" style="left:{:.2f}%;top:{:.2f}%;width:{:.0f}px;transform:rotate({:.1f}deg)"{} aria-hidden="true"></span>'
@@ -905,28 +971,76 @@ def zone_faune(bouton=True):
             ).format(x, y, symbole("faune", "repere__sym"), nom)
 
 
+def cats_grappe(membres):
+    vues = []
+    for s in membres:
+        if cat_de(s) not in vues:
+            vues.append(cat_de(s))
+    return " ".join(vues)
+
+
+def dans_grappe(slug):
+    g = [g[0] for g in GRAPPES if slug in g[2]]
+    return ' data-dans-grappe="{}"'.format(g[0]) if g else ""
+
+
+def bouton_vrai():
+    """Repère « Où voir les plaques en vrai » : le décor d’origine à Aquensis (étoile cuivre)."""
+    x, y = pc(*AQUENSIS)
+    dstyle, dcls, rappel = decalage("aquensis")
+    return (rappel + '<button type="button" class="repere repere--g repere--vrai{dcls}" style="left:{x:.2f}%;top:{y:.2f}%{dstyle}" data-lieu="aquensis" '
+            'data-cat="vrai"{dans} id="rep-aquensis" aria-label="Aquensis, Bagnères-de-Bigorre : où voir les plaques en vrai, le décor d’origine" '
+            'aria-controls="panneau" aria-expanded="false">{sym}<span class="repere__nom">Aquensis<small>le décor d’origine</small></span></button>').format(
+                dcls=dcls, x=x, y=y, dstyle=dstyle, dans=dans_grappe("aquensis"), sym=symbole("vrai", "repere__sym"))
+
+
+def bouton_bientot(slug):
+    """Repère « bientôt » : modèle en préparation, symbole en creux et en pointillé."""
+    b = BIENTOT[slug]
+    x, y = pc(*b["pos"])
+    dstyle, dcls, rappel = decalage(slug)
+    return (rappel + '<button type="button" class="repere repere--{cote} repere--bientot{dcls}" style="left:{x:.2f}%;top:{y:.2f}%{dstyle}" data-lieu="{slug}" '
+            'data-cat="bientot"{dans} id="rep-{slug}" aria-label="{aria}" aria-controls="panneau" aria-expanded="false">'
+            '{sym}<span class="repere__nom">{nom}<small>bientôt, en préparation</small></span></button>').format(
+                cote=b["cote"], dcls=dcls, x=x, y=y, dstyle=dstyle, slug=slug, dans=dans_grappe(slug),
+                aria=e("{}, {} : modèle en préparation".format(b["nom"], b["lieu"])), sym=symbole("bientot", "repere__sym", b["forme"]), nom=e(b["nom"]))
+
+
+def zone_transhumance():
+    x, y = pc(*TRANSHUMANCE["zone"])
+    return ('<button type="button" class="repere repere--zone repere--bientot" style="left:{:.2f}%;top:{:.2f}%" data-lieu="la-transhumance" data-cat="bientot" '
+            'id="rep-la-transhumance" aria-label="La Transhumance : modèle en préparation, sans repère précis" aria-controls="panneau" aria-expanded="false">'
+            '{}<span class="repere__nom">La Transhumance<small>bientôt, sans repère précis</small></span></button>').format(
+                x, y, symbole("bientot", "repere__sym", "sites"))
+
+
 def bouton_grappe(cle, nom, membres, cat, dx, dy):
-    """Grappe affichée sous 960 px à la place de repères trop proches ; dx, dy : décalage du symbole en pixels."""
-    pts = [pc(LIEUX[s][0], LIEUX[s][1]) for s in membres]
+    """Grappe affichée sous 960 px à la place de repères trop proches ; dx, dy : décalage du symbole en pixels.
+    data-cat liste les catégories des membres (filtres de la carte)."""
+    pts = [pc(*pos_de(s)) for s in membres]
     x = sum(p[0] for p in pts) / len(pts)
     y = sum(p[1] for p in pts) / len(pts)
-    noms = ", ".join(PRODUITS[s]["nom"] for s in membres)
+    if cle in ANCRES_GRAPPES:
+        x, y = pc(*ANCRES_GRAPPES[cle])
+    noms = ", ".join(nom_de(s) for s in membres)
     rappel = ""
     if dx or dy:
         long = math.hypot(dx, dy)
         angle = math.degrees(math.atan2(dy, dx))
         rappel = '<span class="grappe__rappel" style="width:{:.0f}px;transform:rotate({:.1f}deg)" aria-hidden="true"></span>'.format(long, angle)
-    return ('<button type="button" class="grappe" style="left:{x:.2f}%;top:{y:.2f}%;--dx:{dx}px;--dy:{dy}px" data-grappe="{cle}" data-cat="{cat}" '
+    quoi = "{} plaques".format(len(membres)) if all(s in PRODUITS for s in membres) else "{} repères".format(len(membres))
+    return ('<button type="button" class="grappe" style="left:{x:.2f}%;top:{y:.2f}%;--dx:{dx}px;--dy:{dy}px" data-grappe="{cle}" data-cat="{cats}" '
             'id="grappe-{cle}" aria-label="{aria}" aria-controls="panneau" aria-expanded="false">{rappel}'
             '<span class="grappe__pastille">{sym}<span class="grappe__nb">{n}</span></span></button>').format(
-                x=x, y=y, dx=dx, dy=dy, cle=cle, cat=cat, rappel=rappel, sym=symbole(cat, "grappe__sym"), n=len(membres),
-                aria=e("{}, {} plaques : {}".format(nom, len(membres), noms)))
+                x=x, y=y, dx=dx, dy=dy, cle=cle, cats=cats_grappe(membres), rappel=rappel, sym=symbole(cat, "grappe__sym"), n=len(membres),
+                aria=e("{}, {} : {}".format(nom, quoi, noms)))
 
 
 def carte_plan(uid, interactif=True, trajet=True, legende_cls=""):
     vb = (0, 0, VB_W, VB_H)
     if interactif:
         reperes = ("".join(bouton_repere(s) for s in sorted(LIEUX, key=lambda s: -LIEUX[s][0])) + zone_faune(True) +
+                   bouton_vrai() + "".join(bouton_bientot(s) for s in BIENTOT) + zone_transhumance() +
                    "".join(bouton_grappe(*g) for g in GRAPPES))
         ouvrir = ""
     else:
@@ -950,6 +1064,8 @@ def legende():
     items.append('<li><span class="leg-trajet" aria-hidden="true"></span>Trajet de fabrication</li>')
     items.append('<li><span class="leg-atelier" aria-hidden="true"></span>Adresse de l’atelier</li>')
     items.append('<li><span class="leg-parc" aria-hidden="true"></span>Parc national des Pyrénées, zone schématique, repère géographique</li>')
+    items.append('<li>{}Où voir les plaques en vrai</li>'.format(symbole("vrai")))
+    items.append('<li>{}Bientôt : modèle {}</li>'.format(symbole("bientot"), A_PREPARATION))
     return '<ul class="legende">{}</ul>'.format("".join(items))
 
 
@@ -1264,25 +1380,56 @@ def occasions():
 </section>""".format(etiq=etiquette("Idées cadeaux"), lis="".join(lis), valider=A_VALIDER, mention=MENTION_AVIS)
 
 
-def aquensis():
+# Les titres lus sur la photo d’Aquensis (panneaux du décor d’origine devenus des plaques)
+SUR_LA_PHOTO = ["le-cerf", "lisard", "le-tourmalet", "le-pont-despagne", "le-chateau-de-mauvezin", "le-cirque-de-gavarnie"]
+
+
+def origine():
+    """Entrée du carnet « Là où tout a commencé : Aquensis » : l’histoire d’origine, avec le marqueur d’accord."""
     a1 = dict(PRODUITS["lours"]["avis"][0], produit="lours")
     a2 = dict(PRODUITS["la-marmotte"]["avis"][0], produit="la-marmotte")
-    return """<section class="section aquensis" aria-labelledby="titre-aquensis">
-  <div class="cadre aquensis__grille">
-    <figure class="aquensis__photo">
-      {img}
-      <figcaption>Plaques Terre Gravée à Aquensis, Bagnères-de-Bigorre</figcaption>
-    </figure>
-    <div class="aquensis__texte">
-      {etiq}
-      <h2 id="titre-aquensis">Vues à Bagnères</h2>
-      <p>Deux avis racontent avoir découvert les plaques à Aquensis, le centre thermal de Bagnères-de-Bigorre, ou pendant une cure.</p>
-      <ul class="avis-liste avis-liste--colonne">{a1}{a2}</ul>
-      {mention}
+    vus = ", ".join('<a href="produit-{}.html">{}</a>'.format(s, e(PRODUITS[s]["nom"])) for s in SUR_LA_PHOTO)
+    return """<section class="section origine" id="origine" aria-labelledby="titre-origine">
+  <div class="cadre">
+    <div class="origine__grille">
+      <figure class="origine__photo">
+        {img}
+        <figcaption>Photo réelle · Aquensis, Bagnères-de-Bigorre : le décor d’origine, rétroéclairé, au-dessus des bassins.</figcaption>
+      </figure>
+      <div class="origine__texte">
+        {etiq}
+        <h2 id="titre-origine">Là où tout a commencé : Aquensis</h2>
+        <p class="origine__marqueur">{semetherm}</p>
+        <div class="lecture">
+          <p>Avant les plaques, il y a eu un décor. À Aquensis, le centre thermal de Bagnères-de-Bigorre, il fallait masquer une coursive technique. Le projet conçu pour Aquensis : 30 niches de 1 m × 2 m, fermées par des panneaux de métal découpé, en jeux de vides et de pleins.</p>
+          <p>Le thème : le patrimoine, la flore et la faune de Bagnères et de la Bigorre. Maude Villatte et Lola Jacquet ont dessiné 60 illustrations. Chacune a été adaptée à la découpe : taille des ouvertures, rigidité, accroche.</p>
+          <p>Les panneaux sont en aluminium thermolaqué effet Corten, couleur rouille. Ils sont découpés au laser et rétroéclairés. Les visiteurs les ont accueillis avec enthousiasme. L’idée est venue de là : proposer ces dessins aux particuliers, en plaques de 60 × 30 cm.</p>
+        </div>
+      </div>
+    </div>
+    <div class="origine__bas">
+      <dl class="cartel cartel--origine">
+        <div><dt>Lieu</dt><dd>Aquensis, centre thermal de Bagnères-de-Bigorre</dd></div>
+        <div><dt>Projet</dt><dd>Masquer une coursive technique : 30 niches de 1 m × 2 m</dd></div>
+        <div><dt>Thème</dt><dd>Patrimoine, flore et faune de la Bigorre</dd></div>
+        <div><dt>Dessins</dt><dd>60 illustrations de Maude Villatte et Lola Jacquet</dd></div>
+        <div><dt>Matière</dt><dd>Aluminium thermolaqué effet Corten, découpe laser, rétroéclairage</dd></div>
+      </dl>
+      <div class="origine__photo-lue">
+        <h3>Sur la photo</h3>
+        <p>On lit les titres de panneaux devenus des plaques : {vus}. La Transhumance y figure aussi : elle est en préparation pour la collection {prep}</p>
+        <p class="origine__liens"><a class="lien-fleche" href="carte.html#aquensis">Aquensis sur la carte</a><a class="lien-fleche" href="collection.html">Les douze plaques</a></p>
+      </div>
+      <div class="origine__avis">
+        <h3>Vues à Bagnères</h3>
+        <ul class="avis-liste avis-liste--colonne">{a1}{a2}</ul>
+        {mention}
+      </div>
     </div>
   </div>
-</section>""".format(img=img("misc/aquensis.webp", "Le bassin d’Aquensis à Bagnères-de-Bigorre, avec une rangée de plaques Terre Gravée rétroéclairées en hauteur", "(max-width: 900px) 100vw, 820px"),
-                     etiq=etiquette("Photo réelle"), a1=avis_item(a1), a2=avis_item(a2), mention=MENTION_AVIS)
+</section>""".format(img=img("misc/aquensis.webp", "Le bassin d’Aquensis à Bagnères-de-Bigorre ; au-dessus, une rangée de panneaux en métal découpé, rétroéclairés : le décor d’origine", "(max-width: 900px) 100vw, 780px"),
+                     etiq=etiquette("Entrée du carnet · L’origine"), semetherm=A_SEMETHERM, vus=vus, prep=A_PREPARATION,
+                     a1=avis_item(a1), a2=avis_item(a2), mention=MENTION_AVIS)
 
 
 def registre_avis():
@@ -1348,6 +1495,11 @@ def lettre(id_section="lettre"):
         <li>Une lettre par mois au plus {valider}</li>
         <li>Aucune remise promise, aucun code promo</li>
       </ul>
+      <div class="bientot">
+        <p class="bientot__titre">Bientôt dans le carnet {prep}</p>
+        <ul class="bientot__liste">{bientot}</ul>
+        <p class="bientot__note">Et des grands formats du Cirque de Gavarnie, du Tourmalet, du Pont d’Espagne et du Pic du Midi. <a href="sur-mesure.html#grands-formats">Voir le sur-mesure</a></p>
+      </div>
       <form class="formulaire formulaire--lettre" data-demo novalidate>
         <div class="champ">
           <label for="email-lettre">Votre adresse e-mail</label>
@@ -1368,7 +1520,10 @@ def lettre(id_section="lettre"):
     </div>
   </div>
 </section>""".format(id=id_section, img=img("misc/autres-plaques.webp", "Planche de dix-huit dessins inédits, voilée ici sauf trois : la Vierge du Bédat, la cabane du Theillet et le casque du Lhéris"),
-                     etiq=etiquette("Lettre d’information"), valider=A_VALIDER)
+                     etiq=etiquette("Lettre d’information"), valider=A_VALIDER, prep=A_PREPARATION,
+                     bientot="".join('<li><a href="carte.html#{}">{}{}</a></li>'.format(s, symbole("bientot", forme=f), n) for s, f, n in (
+                         ("le-casque-du-lheris", "sommets", "Le Casque du Lhéris"), ("la-transhumance", "sites", "La Transhumance"),
+                         ("le-jardin-massey", "patrimoine", "Le Jardin Massey, à Tarbes"))))
 
 
 ORGANISATION = {
@@ -1380,7 +1535,7 @@ ORGANISATION = {
 
 
 def accueil():
-    contenu = heros() + legende_accueil() + table_des_lieux() + a_la_une() + trajet_fabrication() + occasions() + aquensis() + registre_avis() + lettre()
+    contenu = heros() + legende_accueil() + table_des_lieux() + a_la_une() + trajet_fabrication() + occasions() + origine() + registre_avis() + lettre()
     page("index.html", "Terre Gravée · Carnet de territoire, plaques murales des Hautes-Pyrénées",
          "Douze plaques murales en aluminium découpé au laser, une par lieu ou animal des Hautes-Pyrénées. Carte des lieux, fabrication à Revel et Bagnères-de-Bigorre, 65 € la plaque.",
          contenu, jsonld=ORGANISATION, scripts=("donnees-carte.js",), classe="page-accueil")
@@ -1454,10 +1609,96 @@ def panneau_faune():
 </article>""".format(sym=symbole("faune"), lis="".join(lis), av=av, mention=MENTION_AVIS)
 
 
+def dessin_planche(pos, alt, cls=""):
+    """Un vrai dessin, découpé dans la planche des dessins inédits (misc/autres-plaques.webp) : pas une photo de plaque."""
+    x, y = pos
+    l, t, w = 100.0 * x / 200, 100.0 * y / 398, 100.0 * TAILLES["misc/autres-plaques.webp"][0] / 200
+    return '<div class="dessin {}" style="--l:{:.2f}%;--t:{:.2f}%;--w:{:.1f}%">{}</div>'.format(
+        cls, l, t, w, img("misc/autres-plaques.webp", alt))
+
+
+def dessin_a_venir(cls=""):
+    return '<div class="dessin dessin--vide {}"><span>Dessin à venir</span></div>'.format(cls)
+
+
+def detail_membre(s):
+    if s in PRODUITS:
+        return " · ".join(PRODUITS[s]["cartel"])
+    if s == "aquensis":
+        return "Où voir les plaques en vrai · le décor d’origine"
+    return "Bientôt · " + BIENTOT[s]["lieu"]
+
+
+def panneau_aquensis():
+    return """<article class="panneau__fiche" data-fiche-lieu="aquensis" hidden aria-labelledby="titre-aquensis-carte">
+  <div class="panneau__photo">{photo}</div>
+  <div class="panneau__corps">
+    <p class="panneau__cat">{sym}Où voir les plaques en vrai</p>
+    <h2 id="titre-aquensis-carte" tabindex="-1">Aquensis, là où tout a commencé</h2>
+    <p class="panneau__marqueur">{semetherm}</p>
+    <dl class="cartel">
+      <div><dt>Lieu</dt><dd>Aquensis, centre thermal de Bagnères-de-Bigorre</dd></div>
+      <div><dt>À voir</dt><dd>Le décor d’origine : 30 niches de 1 m × 2 m en métal découpé, rétroéclairées</dd></div>
+      <div><dt>Position</dt><dd>{coords} <span class="cartel__note">indicative</span></dd></div>
+    </dl>
+    <p class="panneau__extrait">Avant les plaques, il y a eu ce décor, conçu pour Aquensis. L’accueil des visiteurs a été enthousiaste : l’idée des plaques pour la maison est venue de là. Le décor se voit depuis les bassins, aux conditions d’entrée du centre.</p>
+  </div>
+  <div class="panneau__pied">
+    <p class="panneau__prix">Le même principe, en plaque de 60 × 30 cm : <strong>65 €</strong></p>
+    <div class="panneau__actions">
+      <a class="bouton bouton--plein" href="index.html#origine">Lire l’histoire</a>
+      <button type="button" class="bouton bouton--trait" data-partager="aquensis" aria-label="Copier le lien du lieu : Aquensis">Copier le lien</button>
+    </div>
+  </div>
+</article>""".format(photo=img("misc/aquensis.webp", "Le bassin d’Aquensis, à Bagnères-de-Bigorre, et les panneaux découpés et rétroéclairés du décor d’origine", "(max-width: 960px) 100vw, 400px"),
+                     sym=symbole("vrai"), coords=dms(*AQUENSIS), semetherm=A_SEMETHERM)
+
+
+def panneau_bientot(slug):
+    """Fiche d’un modèle en préparation : vrai dessin s’il existe, sinon emplacement vide ; jamais de fausse photo."""
+    if slug == "la-transhumance":
+        b = dict(TRANSHUMANCE, lieu="Les estives des Pyrénées", dlab="Thème", detail="La montée des troupeaux vers les estives", forme="sites")
+        pos = 'Pyrénées <span class="cartel__note">sans repère précis</span>'
+    else:
+        b = BIENTOT[slug]
+        pos = '{} <span class="cartel__note">indicative</span>'.format(dms(*b["pos"]))
+    if b["dessin"]:
+        visuel = dessin_planche(b["dessin"], "Dessin « {} », extrait de la planche des dessins inédits".format(b["nom"]))
+        legende_v = "Le dessin, sur la planche des dessins inédits. Pas encore de photo de la plaque."
+    else:
+        visuel = dessin_a_venir()
+        legende_v = "Pas encore de dessin ni de photo à montrer {}".format(note("dessin à fournir"))
+    return """<article class="panneau__fiche" data-fiche-lieu="{slug}" hidden aria-labelledby="titre-{slug}">
+  <div class="panneau__tete">
+    <div class="panneau__visuel panneau__visuel--dessin">{visuel}</div>
+    <div class="panneau__titre">
+      <p class="panneau__cat">{sym}Bientôt</p>
+      <h2 id="titre-{slug}" tabindex="-1">{nom}</h2>
+      <p>{prep}</p>
+    </div>
+  </div>
+  <div class="panneau__corps">
+    <dl class="cartel">
+      <div><dt>Lieu</dt><dd>{lieu}</dd></div>
+      <div><dt>{dlab}</dt><dd>{detail}</dd></div>
+      <div><dt>Position</dt><dd>{pos}</dd></div>
+    </dl>
+    <p class="panneau__extrait">{texte}</p>
+    <p class="panneau__legende-dessin">{legende_v}</p>
+  </div>
+  <div class="panneau__pied">
+    <p class="panneau__prix">Prix et date de sortie {conf}</p>
+    <div class="panneau__actions"><a class="bouton bouton--plein" href="index.html#lettre">Être prévenu de la sortie</a></div>
+  </div>
+</article>""".format(slug=slug, visuel=visuel, sym=symbole("bientot", forme=b["forme"]), nom=e(b["nom"]), prep=A_PREPARATION,
+                     lieu=e(b["lieu"]), dlab=b["dlab"], detail=e(b["detail"]), pos=pos, texte=e(b["texte"]), legende_v=legende_v,
+                     conf=A_CONFIRMER)
+
+
 def panneau_grappe(cle, nom, membres, cat, dx, dy):
     lis = "".join('<li><button type="button" class="lieu" data-lieu="{s}" aria-controls="panneau">{sym}<span class="lieu__nom">{n}</span>'
                   '<span class="lieu__detail">{d}</span></button></li>'.format(
-                      s=s, sym=symbole(cat), n=e(PRODUITS[s]["nom"]), d=e(" · ".join(PRODUITS[s]["cartel"]))) for s in membres)
+                      s=s, sym=symbole(cat_de(s), forme=BIENTOT[s]["forme"] if s in BIENTOT else None), n=e(nom_de(s)), d=e(detail_membre(s))) for s in membres)
     return """<article class="panneau__fiche" data-fiche-grappe="{cle}" hidden aria-labelledby="titre-grappe-{cle}">
   <div class="panneau__corps">
     <p class="panneau__cat">{sym}{n} lieux proches</p>
@@ -1485,23 +1726,38 @@ def liste_lieux():
                    '<span class="lieu__nom">{nom}</span><span class="lieu__detail"><i>{lat}</i> · Faune des Pyrénées</span>'
                    '<span class="lieu__coord">sans repère précis</span></button></li>'.format(
                        sym=symbole("faune"), nom=e(p["nom"]), lat=e(p["cartel"][1])))
+    lis.append('<li data-cat="vrai"><button type="button" class="lieu" data-lieu="aquensis" aria-controls="panneau">{sym}'
+               '<span class="lieu__nom">Aquensis, le décor d’origine</span><span class="lieu__detail">Où voir les plaques en vrai · Bagnères-de-Bigorre</span>'
+               '<span class="lieu__coord">{coord}</span></button></li>'.format(sym=symbole("vrai"), coord=dms(*AQUENSIS)))
+    for s in list(BIENTOT) + ["la-transhumance"]:
+        b = BIENTOT.get(s, TRANSHUMANCE)
+        forme = b.get("forme", "sites")
+        lieu = b.get("lieu", "Estives des Pyrénées")
+        coord = dms(*b["pos"]) if "pos" in b else "sans repère précis"
+        lis.append('<li data-cat="bientot"><button type="button" class="lieu" data-lieu="{s}" aria-controls="panneau">{sym}'
+                   '<span class="lieu__nom">{nom}</span><span class="lieu__detail">Bientôt, en préparation · {lieu}</span>'
+                   '<span class="lieu__coord">{coord}</span></button></li>'.format(s=s, sym=symbole("bientot", forme=forme), nom=e(b["nom"]),
+                                                                                lieu=e(lieu), coord=coord))
     return "".join(lis)
 
 
 def carte_page():
-    filtres = ['<button type="button" class="puce" data-filtre-carte="tout" aria-pressed="true">Tous les lieux <span>12</span></button>']
-    for cat in ORDRE_CATS:
-        n = len(FAUNE) if cat == "faune" else sum(1 for s in LIEUX if LIEUX[s][2] == cat)
+    filtres = ['<button type="button" class="puce" data-filtre-carte="tout" aria-pressed="true">Tout <span>{}</span></button>'.format(
+        len(LIEUX) + len(FAUNE) + 1 + len(BIENTOT) + 1)]
+    for cat in ORDRE_CATS + ("vrai", "bientot"):
+        n = {"faune": len(FAUNE), "vrai": 1, "bientot": len(BIENTOT) + 1}.get(cat) or sum(1 for s in LIEUX if LIEUX[s][2] == cat)
+        nom = "Bientôt" if cat == "bientot" else CATS[cat][0]
         filtres.append('<button type="button" class="puce" data-filtre-carte="{}" aria-pressed="false">{}{} <span>{}</span></button>'.format(
-            cat, symbole(cat), CATS[cat][0], n))
-    panneaux = ("".join(panneau_lieu(s) for s in sorted(LIEUX, key=lambda s: -LIEUX[s][0])) + panneau_faune() +
+            cat, symbole(cat), nom, n))
+    panneaux = ("".join(panneau_lieu(s) for s in sorted(LIEUX, key=lambda s: -LIEUX[s][0])) + panneau_faune() + panneau_aquensis() +
+                "".join(panneau_bientot(s) for s in list(BIENTOT) + ["la-transhumance"]) +
                 "".join(panneau_grappe(*g) for g in GRAPPES))
     contenu = """
 <div class="cadre carte-page">
   <header class="carte-page__entete">
     <nav aria-label="Fil d’Ariane"><ol class="ariane"><li><a href="index.html">Carnet</a></li><li aria-current="page">La carte</li></ol></nav>
     <h1>La carte des plaques</h1>
-    <p class="chapo">Chaque repère est un lieu gravé. Ouvrez-le pour voir la plaque, son cartel et les avis qui en parlent. Chaque lieu a sa propre adresse : vous pouvez l’envoyer à quelqu’un.</p>
+    <p class="chapo">Chaque repère plein est un lieu gravé : ouvrez-le pour voir la plaque, son cartel et les avis qui en parlent. L’étoile montre où voir les plaques en vrai, les repères en pointillé les modèles en préparation. Chaque lieu a sa propre adresse : vous pouvez l’envoyer à quelqu’un.</p>
   </header>
   <div class="carte-page__outils">
     <div class="puces" role="group" aria-label="Afficher les lieux">{filtres}</div>
@@ -1516,7 +1772,7 @@ def carte_page():
       {plan}
       <figcaption class="carte__legende">
         {legende}
-        <p><strong>Positions indicatives, à un ou deux kilomètres près.</strong> Les animaux n’ont pas de repère : la zone hachurée situe le Parc national des Pyrénées de façon schématique, comme repère géographique. Rivières tracées de façon schématique. Contour du département simplifié d’après les données IGN (Licence Ouverte 2.0). Relief décoratif, sans valeur topographique.</p>
+        <p><strong>Positions indicatives, à un ou deux kilomètres près.</strong> Aquensis et le Jardin Massey sont légèrement écartés de leur position, un trait les y relie. Les animaux et la transhumance n’ont pas de repère : la zone hachurée situe le Parc national des Pyrénées de façon schématique, comme repère géographique. Rivières tracées de façon schématique. Contour du département simplifié d’après les données IGN (Licence Ouverte 2.0). Relief décoratif, sans valeur topographique.</p>
       </figcaption>
     </figure>
     <aside class="panneau" id="panneau" aria-label="Fiche du lieu choisi" data-panneau>
@@ -1553,12 +1809,12 @@ def carte_page():
       <h2 id="titre-partage">Un lieu, une adresse</h2>
       <p>Chaque repère a son lien direct, par exemple <code>carte.html#le-tourmalet</code>. Envoyez-le à un cycliste, glissez-le dans un message de vacances : la carte s’ouvre sur le bon lieu.</p>
     </div>
-    <p class="partage__pro">Office de tourisme, gîte, centre thermal : vous voulez montrer la carte à vos visiteurs ? <a href="sur-mesure.html#series">Parlons d’une série ou d’un partenariat</a> {valider}</p>
+    <p class="partage__pro">Office de tourisme, gîte, boutique d’un grand site : vous voulez montrer la carte à vos visiteurs ? <a href="sur-mesure.html#series">Écrivez à l’atelier</a> {valider}</p>
   </section>
 </div>""".format(filtres="".join(filtres), plan=carte_plan("grande"), legende=legende(), balise=BALISE,
                  panneaux=panneaux, lieux=liste_lieux(), valider=A_VALIDER)
     page("carte.html", "La carte des plaques · Terre Gravée",
-         "Carte interactive des Hautes-Pyrénées : les huit lieux gravés par Terre Gravée, la faune des Pyrénées et le trajet de fabrication de Revel à Bagnères-de-Bigorre.",
+         "Carte interactive des Hautes-Pyrénées : les huit lieux gravés par Terre Gravée, la faune des Pyrénées, le décor d’origine à Aquensis, les modèles en préparation et le trajet de fabrication.",
          contenu, actif="carte.html", scripts=("donnees-carte.js", "carte.js"), classe="page-carte")
 
 
@@ -1630,6 +1886,7 @@ def bloc_livraison():
   <dl>
     <div><dt>Livraison</dt><dd>Expédiée depuis Bagnères-de-Bigorre, en 2 à 4 jours ouvrés, à titre indicatif ; l’atelier vous prévient en cas de retard. <span data-estimation></span> {conf}</dd></div>
     <div><dt>Frais de port</dt><dd>Selon le poids et la destination, affichés avant validation. {fournir}</dd></div>
+    <div><dt>Emballage</dt><dd>Renforcé : boîte en carton façon livre, pochette en carton ondulé et plaques de calage.</dd></div>
     <div><dt>Rétractation</dt><dd>{retract} <a href="contact.html#retractation">Renoncer au contrat ici</a></dd></div>
     <div><dt>Garanties</dt><dd>Garanties légales de conformité et des vices cachés.</dd></div>
     <div><dt>Paiement</dt><dd>{paiement}</dd></div>
@@ -2047,6 +2304,10 @@ def sur_mesure():
         <li>Une autre fixation, ou un support.</li>
       </ul>
       <p>Possible dès une seule plaque, selon faisabilité. Une pièce adaptée à votre demande n’est pas couverte par le droit de rétractation.</p>
+      <div class="grands-formats" id="grands-formats">
+        <h3>Grands formats {prep}</h3>
+        <p>Des versions grand format du Cirque de Gavarnie, du Tourmalet, du Pont d’Espagne et du Pic du Midi sont en préparation. Dimensions et prix {conf}</p>
+      </div>
     </div>
     <div class="materiaux">
       <figure>{corten}<figcaption>Acier Corten</figcaption></figure>
@@ -2075,6 +2336,8 @@ def sur_mesure():
         <li>Une frise qui raconte une histoire locale.</li>
         <li>Des plaques signalétiques au style artistique.</li>
         <li>Des éditions spéciales pour une exposition, un événement ou un lieu touristique.</li>
+        <li>Des grands formats pour une ville, une place ou un lieu public {valider}</li>
+        <li>Des plaques pour les hôtels, les gîtes et les entreprises : décoration, cadeaux d’affaires {valider}</li>
       </ul>
       <p>La quantité minimale dépend du projet.</p>
     </div>
@@ -2128,7 +2391,7 @@ def sur_mesure():
                      corten='<div class="materiaux__plaque">' + img("misc/mauvezin-corten.webp", "Plaque Le Château de Mauvezin en acier Corten, teinte rouille", eager="normal") + "</div>",
                      brut='<div class="materiaux__plaque">' + img("misc/mauvezin-brut.webp", "Plaque Le Château de Mauvezin en aluminium brut", eager="normal") + "</div>",
                      planche=img("misc/autres-plaques.webp", "Planche de dix-huit dessins inédits : la Vierge du Bédat, la brèche de Roland, l’iris, l’orchis maculée, le gypaète barbu…"),
-                     options=options)
+                     options=options, prep=A_PREPARATION, conf=A_CONFIRMER, valider=A_VALIDER)
     page("sur-mesure.html", "Sur mesure, plaques exclusives et séries · Terre Gravée",
          "Adapter une plaque Terre Gravée (format jusqu’à 2 × 1 m, acier Corten, aluminium brut), plaques exclusives en très petite quantité, séries pour professionnels et lieux culturels.",
          contenu, actif="sur-mesure.html", classe="page-sur-mesure")
@@ -2248,6 +2511,103 @@ def localisateur_gerde():
 
 
 # ---------------------------------------------------------------------------
+# Page d’atterrissage du QR code (panneaux de démonstration à Aquensis, proposition à valider)
+# ---------------------------------------------------------------------------
+
+QR_LIES = ["la-tour-des-jacobins", "le-montaigu", "le-pic-du-midi", "le-tourmalet"]
+
+
+def distance_aquensis(slug):
+    d = km(AQUENSIS, pos_de(slug))
+    if d < 1:
+        return "à {} m d’Aquensis".format(int(round(d * 10)) * 100)
+    return "à {} km d’Aquensis".format(int(round(d)))
+
+
+def qr_page():
+    cartes = []
+    for s in QR_LIES:
+        c = carte_produit(PRODUITS[s], sizes="(max-width: 600px) 44vw, 260px")
+        c = c.replace('<p class="carte__cartel">', '<p class="carte__distance">{}</p><p class="carte__cartel">'.format(distance_aquensis(s)), 1)
+        cartes.append(c)
+    grille = grille_produits([PRODUITS[s] for s in QR_LIES], cls="grille grille--quatre", prefixe_cartes=cartes)
+    lh = BIENTOT["le-casque-du-lheris"]
+    contenu = """
+<div class="cadre">
+  <header class="entete-page qr-tete">
+    <nav aria-label="Fil d’Ariane"><ol class="ariane"><li><a href="index.html">Carnet</a></li><li aria-current="page">Depuis Aquensis</li></ol></nav>
+    <div class="qr-tete__grille">
+      <div>
+        {etiq}
+        <h1>Vous avez vu nos plaques à Aquensis ?</h1>
+        <p class="qr-tete__marqueur">{semetherm}</p>
+        <p class="chapo">Les panneaux découpés et rétroéclairés, au-dessus des bassins, sont à l’origine de Terre Gravée. Les mêmes dessins existent en plaques de 60 × 30 cm, pour chez vous : <strong>65 € la plaque</strong>, en noir, gris ou doré.</p>
+        <p class="qr-tete__actions"><a class="bouton bouton--plein" href="collection.html">Voir les douze plaques</a><a class="lien-fleche" href="carte.html#aquensis">Aquensis sur la carte</a></p>
+      </div>
+      <figure class="qr-tete__photo">
+        {photo}
+        <figcaption>Photo réelle · le décor d’origine à Aquensis, Bagnères-de-Bigorre</figcaption>
+      </figure>
+    </div>
+  </header>
+  <section class="qr-histoire" aria-labelledby="titre-qr-histoire">
+    <h2 id="titre-qr-histoire">L’histoire, en bref</h2>
+    <ul class="liste-carnet">
+      <li>Un décor conçu pour Aquensis, pour masquer une coursive technique : 30 niches de 1 m × 2 m.</li>
+      <li>60 illustrations de Maude Villatte et Lola Jacquet : le patrimoine, la flore et la faune de la Bigorre.</li>
+      <li>De l’aluminium thermolaqué effet Corten, découpé au laser et rétroéclairé.</li>
+      <li>Les visiteurs les ont accueillis avec enthousiasme : les plaques pour la maison sont nées de là.</li>
+    </ul>
+    <p><a class="lien-fleche" href="index.html#origine">Lire l’histoire complète</a></p>
+  </section>
+</div>
+<section class="section section--teinte" aria-labelledby="titre-qr-lies">
+  <div class="cadre">
+    <div class="entete-section entete-section--ligne"><div><p class="etiquette">{balise}Autour de Bagnères</p><h2 id="titre-qr-lies">Les plaques de Bagnères et de ses montagnes</h2><p class="chapo">Distances à vol d’oiseau depuis Aquensis, arrondies.</p></div><a class="lien-fleche" href="carte.html">Toute la carte</a></div>
+    {grille}
+    <div class="qr-bientot">
+      <div class="qr-bientot__dessin">{dessin}</div>
+      <div>
+        <p class="qr-bientot__cat">{sym}Bientôt, {dist}</p>
+        <p class="qr-bientot__prep">{prep}</p>
+        <h3>Le Casque du Lhéris</h3>
+        <p>{texte} Le dessin existe ; la plaque n’est pas encore en vente.</p>
+        <p><a class="lien-fleche" href="#lettre">Être prévenu de la sortie</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="section section--serre" aria-labelledby="titre-qr-prix">
+  <div class="cadre">
+    <h2 id="titre-qr-prix" class="visuellement-cache">Prix, livraison et pose</h2>
+    <div class="bandeau-infos bandeau-infos--qr">
+      <div><h3>65 € la plaque</h3><p>Le même prix pour tous les modèles et toutes les finitions, TTC. Le kit LED pour la rétroéclairer : 15 €.</p></div>
+      <div><h3>Livrée chez vous</h3><p>Expédiée depuis Bagnères-de-Bigorre, en 2 à 4 jours ouvrés, à titre indicatif. Frais de port {fournir}</p></div>
+      <div><h3>Pose sans perçage</h3><p>Deux fixations adhésives 3M Command™ fournies. Ou offrez <a href="produit-carte-cadeau.html">la carte cadeau</a>, une plaque au choix.</p></div>
+    </div>
+  </div>
+</section>
+{lettre}
+<div class="cadre">
+  <aside class="encadre qr-note" aria-labelledby="titre-qr-note">
+    <h2 id="titre-qr-note">Note de maquette, pour Romain</h2>
+    <p>Cette page reçoit les visiteurs qui scannent le QR code des panneaux de démonstration proposés à Aquensis, aux vestiaires et à la sortie {valider}</p>
+    <p>Chaque QR code porterait un paramètre de suivi, par exemple <code>qr.html?utm_source=aquensis&amp;utm_medium=qr&amp;utm_campaign=vestiaires</code> (ou <code>sortie</code>). Indicateur : les visites issues du QR code, par emplacement, puis les inscriptions à la lettre et les commandes qui suivent. Paramètre et outil de mesure {valider}</p>
+    <p>Adresse vers laquelle pointe le QR code déjà prêt dans le dossier Marketing {confirmer}</p>
+  </aside>
+</div>""".format(etiq=etiquette("Depuis le QR code d’Aquensis"), semetherm=A_SEMETHERM,
+                 photo=img("misc/aquensis.webp", "Le bassin d’Aquensis à Bagnères-de-Bigorre et, au-dessus, les panneaux découpés et rétroéclairés du décor d’origine",
+                           "(max-width: 900px) 100vw, 560px", eager=True),
+                 balise=BALISE, grille=grille,
+                 dessin=dessin_planche(lh["dessin"], "Dessin « Le Casque du Lhéris », extrait de la planche des dessins inédits"),
+                 sym=symbole("bientot", forme="sommets"), dist=distance_aquensis("le-casque-du-lheris"), prep=A_PREPARATION, texte=e(lh["texte"]),
+                 fournir=note("montant à fournir"), lettre=lettre(), valider=A_VALIDER, confirmer=A_CONFIRMER)
+    page("qr.html", "Vous avez vu nos plaques à Aquensis ? · Terre Gravée",
+         "Vous avez scanné le QR code d’un panneau Terre Gravée à Aquensis : l’histoire du décor d’origine, les plaques de Bagnères-de-Bigorre et de ses montagnes, 65 € la plaque.",
+         contenu, classe="page-qr")
+
+
+# ---------------------------------------------------------------------------
 # Stratégie (page pour Romain)
 # ---------------------------------------------------------------------------
 
@@ -2264,10 +2624,17 @@ TECHNIQUES = [
         "kpi": "Taux d’ajout au panier par fiche, profondeur de lecture, entrées organiques par fiche (Search Console).",
     },
     {
+        "nom": "Une histoire d’origine vraie",
+        "ou": "Accueil (entrée du carnet « Là où tout a commencé : Aquensis », photo réelle, fiche du projet, avis qui parlent d’Aquensis), repère « Où voir les plaques en vrai » sur la carte, page qr.html.",
+        "pourquoi": "Le même levier que le récit de lieu (méta-analyse de van Laer et al., 2014, " + src("https://openaccess.city.ac.uk/id/eprint/6755/", "City, University of London") + ") : ici, l’histoire est vérifiable, avec une photo réelle et les chiffres du projet (30 niches, 60 illustrations). Aucune étude trouvée sur l’effet commercial d’une histoire d’origine pour un artisan : hypothèse à tester.",
+        "valider": "L’accord de la SEMETHERM pour citer le projet (marqueur sur chaque page qui en parle) ; ne jamais parler de partenariat ni de point de vente à Aquensis.",
+        "kpi": "Clics sur « Lire l’histoire » et « Aquensis sur la carte », lecture de la section d’origine, visites de qr.html.",
+    },
+    {
         "nom": "La carte, porte d’entrée et contenu à partager",
-        "ou": "carte.html : repères cliquables (regroupés en grappes sur mobile), panneau latéral avec prix et bouton toujours visibles, liste des lieux, une adresse par lieu (carte.html#le-tourmalet) et bouton « Copier le lien du lieu ». La carte sert aussi de décor au premier écran de l’accueil, et chaque fiche a son localisateur.",
+        "ou": "carte.html : repères cliquables (regroupés en grappes sur mobile), panneau latéral avec prix et bouton toujours visibles, liste des lieux, une adresse par lieu (carte.html#le-tourmalet) et bouton « Copier le lien du lieu ». Deux catégories hors catalogue : « Où voir les plaques en vrai » (Aquensis) et « Bientôt » (modèles en préparation, en pointillé). La carte sert aussi de décor au premier écran de l’accueil, et chaque fiche a son localisateur. C’est la carte interactive que ton Contexte prévoyait.",
         "pourquoi": "Aucune étude trouvée sur l’effet commercial d’une carte : c’est une hypothèse à tester. Le levier documenté est la visibilité : 23 % des sondés citent l’IA comme point de départ de leurs recherches de cadeaux (baromètre Havas Market / YouGov, octobre 2026, intentions déclarées, lu via " + src("https://mondetech.fr/noel-2026-novembre-mois-cle-des-achats/", "mondetech.fr") + "). Une carte accessible doit être opérable au clavier, ne pas dépendre de la couleur et proposer une alternative texte (" + src("https://www.boia.org/blog/interactive-maps-and-accessibility-4-tips", "BOIA") + ").",
-        "valider": "Proposer la carte aux offices de tourisme, gîtes ou centres thermaux (partenariat à décider) ; vérifier les positions des repères (Montaigu et Escaladieu recalés d’après leurs coordonnées publiées).",
+        "valider": "Montrer la carte aux offices de tourisme, gîtes et boutiques des grands sites (voir « Vos idées, mises en œuvre ») ; vérifier les positions des repères (Montaigu et Escaladieu recalés d’après leurs coordonnées publiées) ; les repères « bientôt » des modèles en préparation.",
         "kpi": "Taux de clic sur les repères, parcours carte → fiche → panier, sessions arrivant par un lien à ancre, liens entrants vers carte.html.",
     },
     {
@@ -2349,6 +2716,103 @@ TENDANCES = [
 ]
 
 
+# Palette de marque de Romain (dossier « Identité graphique », « version centrée métal brut »)
+PALETTE = [
+    ("Noir ardoise", "#2C2C2C", "Texte, en-tête, pied de page, contrastes",
+     "Encre un peu plus noire (#14181B) pour le texte ; pied de page bleu nuit (#0F2433), couleur de carte de nuit.", "Proche"),
+    ("Blanc cassé", "#F5F5F0", "Fond principal",
+     "Fond #F1F4F3 : un blanc légèrement bleuté de carte topographique, froid là où ta charte est chaude.", "Écart volontaire"),
+    ("Argent doux", "#D0D0D0", "Détails, bordures, icônes",
+     "Filets #CDD5D5 : presque le même gris, à peine teinté de bleu.", "Repris"),
+    ("Vert sauge très pâle", "#DCE2D4", "Fonds de sections secondaires",
+     "Les sections teintées sont bleu des eaux (#E2EDF3). Le sauge sert de fond à l’entrée « Là où tout a commencé : Aquensis » et au cadre de la photo de qr.html.", "Repris en partie"),
+    ("Cuivre clair", "#CBAA88", "Boutons d’action, survol",
+     "Boutons en encre. Le cuivre sert d’accent : filet de l’entrée d’origine, étoile « Où voir les plaques en vrai » ; le bistre des courbes de niveau (#C8A27A) en est très proche.", "Repris en accent"),
+]
+
+
+def contraste(a, b):
+    def lum(h):
+        c = [int(h.lstrip("#")[i:i + 2], 16) / 255.0 for i in (0, 2, 4)]
+        c = [x / 12.92 if x <= 0.04045 else ((x + 0.055) / 1.055) ** 2.4 for x in c]
+        return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]
+    la, lb = sorted((lum(a), lum(b)), reverse=True)
+    return (la + 0.05) / (lb + 0.05)
+
+
+def verdict(r, usage="texte"):
+    if usage == "objet":
+        return "suffisant pour un objet graphique (3 : 1)" if r >= 3 else "insuffisant, même pour un objet graphique (3 : 1)"
+    if r >= 7:
+        return "AAA"
+    if r >= 4.5:
+        return "AA"
+    if r >= 3:
+        return "AA pour un grand texte seulement"
+    return "échoue, même en grand texte"
+
+
+CONTRASTES = [
+    ("Texte blanc", "#FFFFFF", "cuivre clair", "#CBAA88", "texte"),
+    ("Texte blanc cassé", "#F5F5F0", "cuivre clair", "#CBAA88", "texte"),
+    ("Texte noir ardoise", "#2C2C2C", "cuivre clair", "#CBAA88", "texte"),
+    ("Texte noir ardoise", "#2C2C2C", "blanc cassé", "#F5F5F0", "texte"),
+    ("Texte noir ardoise", "#2C2C2C", "vert sauge", "#DCE2D4", "texte"),
+    ("Texte cuivre clair", "#CBAA88", "blanc cassé", "#F5F5F0", "texte"),
+    ("Texte cuivre foncé proposé", "#80542B", "blanc cassé", "#F5F5F0", "texte"),
+    ("Texte cuivre foncé proposé", "#80542B", "vert sauge", "#DCE2D4", "texte"),
+    ("Bordure de champ argent doux", "#D0D0D0", "blanc cassé", "#F5F5F0", "objet"),
+    ("Étoile cuivre clair, sans contour", "#CBAA88", "fond de carte", "#FAFBFB", "objet"),
+]
+
+ADAPTATION = [
+    ("Fond des pages", "#F1F4F3, blanc froid de carte", "#F5F5F0, ton blanc cassé"),
+    ("Texte et en-tête", "#14181B", "#2C2C2C, ton noir ardoise"),
+    ("Filets et bordures décoratives", "#CDD5D5", "#D0D0D0, ton argent doux ; #8A8A84 pour les bordures de champs, qui doivent atteindre 3 : 1"),
+    ("Sections teintées", "#E2EDF3, bleu des eaux", "#DCE2D4, ton vert sauge"),
+    ("Boutons d’action", "fond encre, texte blanc", "fond #CBAA88 cuivre clair, texte #2C2C2C noir ardoise ; au survol, fond noir ardoise et texte blanc cassé"),
+    ("Texte couleur cuivre (étiquettes)", "bistre #7A4A22", "#80542B, un cuivre foncé : jamais de texte en cuivre clair"),
+    ("Pied de page", "#0F2433, bleu nuit", "#2C2C2C, noir ardoise"),
+    ("À garder", "bleu des eaux, vert du Parc, rouge du balisage", "inchangés : ils portent la lecture de la carte (rivières, parc, trajet, liens)"),
+]
+
+# Idées marketing de Romain (Contexte.docx) : ce que le site prévoit, l’indicateur, ce qui reste à valider
+IDEES = [
+    {"nom": "Panneaux de démonstration à Aquensis, avec QR code",
+     "site": "La page <a href=\"qr.html\">qr.html</a> les attend : « Vous avez vu nos plaques à Aquensis ? », l’histoire en bref, les plaques liées à Bagnères avec leur distance, le prix de 65 €, la carte, la collection et la lettre. Un QR code par emplacement (vestiaires, sortie), chacun avec son paramètre de suivi : <code>qr.html?utm_source=aquensis&amp;utm_medium=qr&amp;utm_campaign=vestiaires</code>. Sur le panneau : le prix, et le rappel que d’autres modèles existent.",
+     "kpi": "Visites issues du QR code, par emplacement ; inscriptions à la lettre et commandes qui suivent une visite de qr.html.",
+     "valider": "L’accord de la SEMETHERM, pour les panneaux comme pour la citation du projet ; les emplacements ; le paramètre de suivi et l’outil de mesure (sans cookie, ou avec consentement) ; l’adresse vers laquelle pointe le QR code déjà prêt dans le dossier Marketing."},
+    {"nom": "Commerçants et restaurants partenaires",
+     "site": "Sur la carte, la catégorie « Où voir les plaques en vrai » accueille chaque lieu qui expose une plaque, avec son accord : nom, adresse, modèle exposé. Un lien court ou un QR code par lieu (<code>utm_source=nom-du-lieu</code>). Une mention claire, « plaque offerte par l’atelier », pour que le visiteur sache de quoi il s’agit.",
+     "kpi": "Visites par lieu ; commandes qui citent le lieu, avec une question facultative au moment de commander : « Où avez-vous vu nos plaques ? ».",
+     "valider": "La liste des lieux, l’accord écrit de chacun, le nombre de plaques offertes, la mention de transparence."},
+    {"nom": "Offices de tourisme et boutiques des grands sites",
+     "site": "Une page « Où acheter », créée seulement quand un dépôt est signé : aucun point de vente n’est annoncé avant. Sur la page Sur mesure, une rubrique pour les revendeurs : conditions sur demande, photos et textes prêts à l’emploi. Sur la carte, une catégorie « Où acheter », distincte de « Où voir ».",
+     "kpi": "Nombre de lieux de vente, ventes par lieu (déclarées par le lieu), visites issues de leurs QR codes.",
+     "valider": "Les lieux à démarcher (boutique du téléphérique du Pic du Midi, concept-stores, offices de tourisme) ; le prix public en boutique, le même qu’en ligne ou non ; le présentoir et l’emballage."},
+    {"nom": "Événements : fête du château de Mauvezin, montée du col du Tourmalet",
+     "site": "Un bloc « Où nous rencontrer » sur l’accueil et un repère temporaire sur la carte, avec les dates ; un rappel sur les fiches du Château de Mauvezin et du Tourmalet ; sur le stand, un QR code vers la lettre (<code>utm_campaign=mauvezin</code> ou <code>tourmalet</code>).",
+     "kpi": "Inscriptions à la lettre le jour même, visites issues du QR code du stand, ventes sur place.",
+     "valider": "La participation, les dates exactes, le paiement sur place, l’accord des organisateurs."},
+    {"nom": "Grands formats pour la ville",
+     "site": "La page Sur mesure annonce les grands formats en préparation (Gavarnie, Tourmalet, Pont d’Espagne, Pic du Midi) et les séries pour une ville ou un lieu public, avec le formulaire de devis. Une pièce installée rejoint ensuite la carte, avec l’accord de la ville.",
+     "kpi": "Demandes de devis de collectivités, visites de la page Sur mesure.",
+     "valider": "La ville à qui proposer, offert ou vendu, les dimensions et le prix des grands formats."},
+    {"nom": "Offres pour les professionnels : hôtels, entreprises",
+     "site": "Sur la page Sur mesure, la ligne « hôtels, gîtes et entreprises : décoration, cadeaux d’affaires » et le type « Série pour un professionnel » dans le formulaire. Plus tard, une page dédiée avec des exemples réels, photographiés avec l’accord des clients.",
+     "kpi": "Demandes de devis professionnelles, part des devis signés, panier moyen des commandes professionnelles.",
+     "valider": "Les conditions pour les professionnels (dégressivité éventuelle, délais) : la maquette n’affiche aucun chiffre."},
+    {"nom": "Thèmes sportifs : cols, rugby",
+     "site": "Le Tourmalet ouvre déjà la catégorie « Sommets et cols » de la carte : d’autres cols du département (Aspin, Hautacam…) y prendraient place, avec la même fiche. Pour le rugby, un dessin sans logo ni nom de club : ces marques sont protégées.",
+     "kpi": "Votes dans la lettre pour le prochain lieu gravé, inscriptions « prévenez-moi » par modèle, ventes des modèles de cols autour du passage du Tour de France.",
+     "valider": "Les thèmes, les droits sur les noms et les logos (clubs, épreuves), le calendrier de sortie."},
+    {"nom": "Autres territoires : Mont-Saint-Michel, Étretat, Pont du Gard",
+     "site": "La carte est une feuille par département (« Feuille 65 · Hautes-Pyrénées » sur l’accueil). Un autre territoire devient une autre feuille de la même collection : Feuille 50 · Manche, Feuille 76 · Seine-Maritime, Feuille 30 · Gard, chacune avec ses repères et ses fiches. Le site passe alors d’une carte à un sommaire de cartes.",
+     "kpi": "Inscriptions à une liste d’attente par territoire, demandes reçues par le formulaire de contact.",
+     "valider": "Les priorités, les illustrations, les marques à vérifier (le label « Grand Site de France » est protégé, certains noms de sites peuvent être déposés), la cohérence avec « Graver l’âme des territoires »."},
+]
+
+
 def strategie():
     tech = []
     for t in TECHNIQUES:
@@ -2363,7 +2827,7 @@ def strategie():
 </article>""".format(nom=t["nom"], ou=e(t["ou"]), pq=t["pourquoi"], val=t["valider"], kpi=e(t["kpi"])))
     tend = "".join("<li><h3>{}</h3><p>{}</p></li>".format(t, d) for t, d in TENDANCES)
     legal = [
-        ("Pratiques commerciales trompeuses", "Aucun stock, délai, label, classement des ventes ou partenariat inventé (L121-2) : le badge « Parmi les plus vendues » du site actuel n’est pas repris, faute de chiffres. La présence des plaques à Aquensis est montrée sur l’accueil seulement, sans parler de partenariat ni de point de vente, et jamais comme une réalisation professionnelle. La faune est dite « des Pyrénées », sans sigle qui évoquerait le Parc national ou sa marque. Pas de « fait main » : la découpe est faite au laser à Revel. " + src("https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000044563107", "L121-4 sur Légifrance")),
+        ("Pratiques commerciales trompeuses", "Aucun stock, délai, label, classement des ventes ou partenariat inventé (L121-2) : le badge « Parmi les plus vendues » du site actuel n’est pas repris, faute de chiffres. L’histoire d’origine (le décor conçu pour Aquensis) est racontée sur l’accueil, la carte et qr.html, toujours avec le marqueur « à valider : accord de la SEMETHERM pour citer le projet Aquensis » ; jamais de partenariat ni de point de vente à Aquensis, et le décor n’est pas présenté comme une référence pour des clients professionnels. Les modèles en préparation sont montrés sans photo de plaque (le vrai dessin de la planche, ou un emplacement vide), sans prix ni date. La faune est dite « des Pyrénées », sans sigle qui évoquerait le Parc national ou sa marque. Pas de « fait main » : la découpe est faite au laser à Revel. " + src("https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000044563107", "L121-4 sur Légifrance")),
         ("Droits légaux", "Les 14 jours de rétractation et les garanties légales sont présentés comme des droits, jamais comme un avantage de la marque (L121-4, 10°)."),
         ("Avis en ligne", "Mention « publiés sans vérification d’achat » près de chaque bloc d’avis, de chaque citation et de chaque note, dates de publication, ordre chronologique, rubrique « Comment sont publiés les avis » (L111-7-2 ; D111-16 à D111-19). Textes cités mot pour mot. " + src("https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000049571119", "L111-7-2") + ", " + src("https://www.legifrance.gouv.fr/jorf/id/JORFARTI000035720943", "décret 2017-1436")),
         ("Prix et réductions", "Aucun prix barré. Toute réduction future devra se référer au prix le plus bas des 30 derniers jours (L112-1-1). " + src("https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000044549592", "Légifrance")),
@@ -2374,6 +2838,30 @@ def strategie():
         ("Formule « rayon de 150 km »", "Revel (31) est à environ " + str(KM_REVEL) + " km de Gerde à vol d’oiseau. Selon le point de référence choisi, la formule peut être contestée : préciser le centre du rayon ou écrire « fabriquées en Occitanie »."),
     ]
     legal_html = "".join("<li><h3>{}</h3><p>{}</p></li>".format(t, d) for t, d in legal)
+    pastilles = "".join(
+        '<li class="palette__item"><span class="palette__couleur" style="background:{hx}" aria-hidden="true"></span>'
+        '<span class="palette__nom">{nom}</span><code>{hx}</code><span class="palette__role">{role}</span></li>'.format(nom=n, hx=hx, role=r)
+        for n, hx, r, _, _ in PALETTE)
+    lignes_palette = "".join(
+        '<tr><th scope="row"><span class="palette__mini" style="background:{hx}" aria-hidden="true"></span>{nom} <code>{hx}</code></th>'
+        '<td data-label="Dans la version 1">{v1}</td><td data-label="Écart">{ec}</td></tr>'.format(nom=n, hx=hx, v1=v1, ec=ec)
+        for n, hx, _, v1, ec in PALETTE)
+    lignes_contraste = "".join(
+        '<tr><th scope="row"><span class="contraste__exemple" style="color:{a};background:{b}">Aa</span>{ta} <code>{a}</code></th>'
+        '<td data-label="Sur">{tb} <code>{b}</code></td><td data-label="Contraste">{r}</td><td data-label="Verdict" class="{cls}">{v}</td></tr>'.format(
+            ta=ta, a=a, tb=tb, b=b, r=("{:.2f}".format(contraste(a, b)).replace(".", ",") + " : 1"),
+            v=verdict(contraste(a, b), u), cls="contraste--ok" if (contraste(a, b) >= (3 if u == "objet" else 4.5)) else "contraste--non")
+        for ta, a, tb, b, u in CONTRASTES)
+    lignes_adapt = "".join('<tr><th scope="row">{}</th><td data-label="Version 1">{}</td><td data-label="Fidèle à ta charte">{}</td></tr>'.format(x, y, z)
+                           for x, y, z in ADAPTATION)
+    idees = "".join("""<article class="technique idee">
+  <h3>{nom}</h3>
+  <dl>
+    <div><dt>Sur le site</dt><dd>{site}</dd></div>
+    <div><dt>Indicateur</dt><dd>{kpi}</dd></div>
+    <div><dt>À valider</dt><dd>{val} {marq}</dd></div>
+  </dl>
+</article>""".format(nom=i["nom"], site=i["site"], kpi=e(i["kpi"]), val=e(i["valider"]), marq=A_VALIDER) for i in IDEES)
     fournir = [
         "La taille de chaque série limitée (nombre d’exemplaires numérotés).",
         "La grille des frais de port, ou au moins un tarif indicatif.",
@@ -2393,15 +2881,25 @@ def strategie():
         "Une photo réelle de chaque étape, dont la découpe à Revel (l’accueil montre pour l’instant une plaque en aluminium brut, présentée comme illustration).",
         "Mate ou satinée : quelle finition pour quelle teinte.",
         "Les conditions de rétractation et d’utilisation de la carte cadeau.",
+        "L’accord écrit de la SEMETHERM pour citer le projet Aquensis (tes notes parlent d’un accord de principe ; la lettre n’est pas encore signée).",
+        "Le logo en SVG, exporté de logo.ai, pour remplacer la signature typographique.",
+        "Le dessin du Jardin Massey, s’il existe en image (la planche montre seulement Le Casque du Lhéris et La Transhumance).",
+        "Le prix et la date de sortie des modèles en préparation ; les dimensions et le prix des grands formats.",
+        "L’adresse vers laquelle pointe le QR code déjà prêt dans le dossier Marketing.",
+        "Les dates de la fête du château de Mauvezin et de la montée du Tourmalet, si tu y participes.",
     ]
     valider = [
         "Option cadeau : message sur une carte et prix masqués sur le bon de livraison.",
         "Lettre : vote pour le prochain lieu gravé, une lettre par mois au plus.",
         "Visite de l’atelier sur rendez-vous ; retrait des commandes à Gerde.",
-        "Partenariats avec offices de tourisme, gîtes ou centres thermaux autour de la carte.",
+        "Montrer la carte aux offices de tourisme, gîtes et boutiques des grands sites.",
         "Demande de photos aux personnes qui ont une plaque, pour illustrer les fiches avec leur accord.",
         "Message libre sur la carte cadeau.",
         "Guide cadeaux publié début novembre, avant le Black Friday du 27 novembre 2026.",
+        "Panneaux de démonstration à Aquensis (vestiaires, sortie), page qr.html et paramètre de suivi.",
+        "Les modèles annoncés « bientôt » : Le Casque du Lhéris, La Transhumance, Le Jardin Massey, et les grands formats.",
+        "Commerçants et restaurants qui exposent une plaque, dépôts en boutique, événements, offres aux professionnels, thèmes sportifs, autres territoires (détail dans « Vos idées, mises en œuvre »).",
+        "La palette : garder celle de la version 1, ou passer à ta charte (aperçu avec le bouton de la section « Votre palette »).",
     ]
     contenu = """
 <div class="cadre strategie">
@@ -2410,12 +2908,17 @@ def strategie():
     {etiq}
     <h1>Version 1 : le carnet de territoire</h1>
     <p class="chapo">Romain, cette page explique la version 1 : son idée, les tendances qu’elle suit, chaque technique de vente et ce qu’il te reste à décider. Les trois versions partent des mêmes faits ; celle-ci mise sur le récit des lieux et la carte.</p>
+    <nav class="strat-sommaire" aria-label="Nouveau depuis la lecture de ton Drive">
+      <p>Nouveau depuis la lecture de ton Drive :</p>
+      <ul><li><a href="#s-idees">Vos idées, mises en œuvre</a></li><li><a href="#s-palette">Votre palette</a></li><li><a href="index.html#origine">L’histoire d’origine sur l’accueil</a></li><li><a href="qr.html">La page du QR code</a></li><li><a href="carte.html#aquensis">Aquensis et les modèles « bientôt » sur la carte</a></li></ul>
+    </nav>
   </header>
   <section class="strat-bloc" aria-labelledby="s-concept">
     <h2 id="s-concept">L’idée</h2>
     <div class="lecture">
       <p>Le site devient un atlas. Chaque plaque est l’entrée d’un lieu que les gens connaissent : le Pic qu’ils voient de leur fenêtre, le col qu’ils ont monté, la tour de la ville où ils ont fait leur cure. La page signature, <a href="carte.html">la carte des plaques</a>, réunit les huit lieux, les quatre animaux des Pyrénées (sans repère précis, dans la zone schématique du Parc national) et le trajet de fabrication de Revel à Bagnères-de-Bigorre.</p>
       <p>Le ton est celui d’un carnet de terrain : cartels, coordonnées, bornes d’altitude, registre des avis. Le commerce est lent et net : prix unique, délais et frais près du bouton, aucune urgence.</p>
+      <p>Ton Drive a apporté l’histoire d’origine. Elle devient une entrée du carnet sur l’accueil, « Là où tout a commencé : Aquensis », et un repère « Où voir les plaques en vrai » sur la carte. Les modèles en préparation y ont des repères « bientôt », en pointillé, et la page <a href="qr.html">qr.html</a> attend les visiteurs des panneaux de démonstration.</p>
     </div>
     <div class="personas">
       <h3>Pour qui (hypothèses, pas des affirmations à publier)</h3>
@@ -2425,7 +2928,49 @@ def strategie():
         <li><strong>La curiste de Bagnères</strong> : elle a vu les plaques à Aquensis ou pendant sa cure.</li>
         <li><strong>La personne qui cherche un cadeau</strong> : occasions concrètes, option message, carte cadeau.</li>
       </ul>
+      <p class="personas__note">Tes cibles prioritaires, d’après ton Contexte : les touristes et les habitants attachés à leur patrimoine. La version 1 les sert en premier.</p>
     </div>
+  </section>
+  <section class="strat-bloc" aria-labelledby="s-idees">
+    <h2 id="s-idees">Vos idées, mises en œuvre</h2>
+    <p class="attenue">Les idées de ton Contexte, une par une : ce que le site doit prévoir, l’indicateur à suivre, ce qui reste à décider. Déjà en place dans cette version : la carte interactive des plaques, les plaques sur devis (page Sur mesure), le rétroéclairage (kit LED) et l’emballage renforcé (bloc « Avant de commander »).</p>
+    <div class="techniques">{idees}</div>
+  </section>
+  <section class="strat-bloc" aria-labelledby="s-palette">
+    <h2 id="s-palette">Votre palette</h2>
+    <p class="attenue">« Palette Terres Gravées : version centrée métal brut », d’après ton dossier Identité graphique.</p>
+    <ul class="palette">{pastilles}</ul>
+    <h3 class="strat-sous-titre">Comment la version 1 la reprend, ou s’en écarte</h3>
+    <p class="strat-texte">La version 1 a sa propre palette, celle d’une carte topographique : blanc froid, encre, bistre des courbes, bleu des eaux, vert du Parc, rouge du balisage. Elle reste cousine de la tienne (gris, cuivre, encre) et la rappelle là où c’est cohérent : le vert sauge et le filet cuivre de l’entrée d’origine, rappel du Corten d’Aquensis, et l’étoile cuivre des lieux où voir les plaques.</p>
+    <div class="strat-table-wrap"><table class="strat-table">
+      <caption class="visuellement-cache">Ta palette et son usage dans la version 1</caption>
+      <thead><tr><th scope="col">Ta couleur</th><th scope="col">Dans la version 1</th><th scope="col">Écart</th></tr></thead>
+      <tbody>{lignes_palette}</tbody>
+    </table></div>
+    <h3 class="strat-sous-titre">Les contrastes à respecter</h3>
+    <p class="strat-texte">Seuils WCAG : 4,5 : 1 pour un texte courant, 3 : 1 pour un grand texte ou un objet graphique (icône, bordure de champ). Le texte blanc sur cuivre clair ne passe pas : sur un bouton cuivre, écrire en noir ardoise. L’argent doux convient aux filets décoratifs, pas aux bordures de champs. Sur la carte, l’étoile cuivre porte un contour encre : c’est lui qui assure le contraste.</p>
+    <div class="strat-table-wrap"><table class="strat-table strat-table--contrastes">
+      <caption class="visuellement-cache">Contrastes calculés entre les couleurs de ta palette</caption>
+      <thead><tr><th scope="col">Couleur</th><th scope="col">Sur</th><th scope="col">Contraste</th><th scope="col">Verdict</th></tr></thead>
+      <tbody>{lignes_contraste}</tbody>
+    </table></div>
+    <h3 class="strat-sous-titre">Si tu veux rester fidèle à ta charte {valider_m}</h3>
+    <p class="strat-texte">Toutes les couleurs de la maquette passent par une douzaine de variables CSS (début de <code>assets/carnet.css</code>). Voici la correspondance proposée ; le bouton ci-dessous l’applique à toute la maquette, dans ce navigateur, pour en juger sur pièce.</p>
+    <div class="strat-table-wrap"><table class="strat-table">
+      <caption class="visuellement-cache">Adaptation proposée de la version 1 à ta charte</caption>
+      <thead><tr><th scope="col">Élément</th><th scope="col">Version 1</th><th scope="col">Fidèle à ta charte</th></tr></thead>
+      <tbody>{lignes_adapt}</tbody>
+    </table></div>
+    <div class="palette__essai">
+      <div class="palette__apercu" aria-hidden="true"><span class="palette__apercu-tete">Terre Gravée</span><span class="palette__apercu-corps"><span>Le Pic du Midi · 65 €</span><span class="palette__apercu-bouton">Ajouter à la commande</span></span><span class="palette__apercu-section">Section secondaire</span></div>
+      <div>
+        <p>Aperçu : en-tête noir ardoise, fond blanc cassé, filets argent, section vert sauge, bouton cuivre clair à texte noir ardoise.</p>
+        <p><button type="button" class="bouton bouton--trait" data-palette-bascule aria-pressed="false"><span data-palette-texte>Voir la maquette avec ta palette</span></button></p>
+        <p class="palette__aide">Le choix est gardé dans ce navigateur, de page en page ; le même bouton revient à la palette de la version 1. En mode « carte de nuit », la palette sombre de la version reste active.</p>
+      </div>
+    </div>
+    <h3 class="strat-sous-titre">Le logo</h3>
+    <p class="strat-texte">Ton logo existe en vectoriel (Identité graphique/logo/logo.ai, avec logo.png, logo2.png et logo3.png) : l’emblème au coq, « TERRE GRAVÉE » et « Graver l’âme des territoires ». La maquette affiche à la place une signature typographique, un petit signe en courbes de niveau suivi de « Terre Gravée ». Exporté en SVG, le logo peut la remplacer dans l’en-tête et le pied de page : c’est la constante <code>LOGO</code> de build.py. Fichier SVG {fournir_m}</p>
   </section>
   <section class="strat-bloc" aria-labelledby="s-tendances">
     <h2 id="s-tendances">Les tendances utilisées</h2>
@@ -2461,13 +3006,17 @@ def strategie():
       <li>Chaque fiche ouvre sur deux ou trois phrases factuelles sur le lieu, puis le texte du site actuel corrigé : il reste trop court pour un vrai récit de lieu.</li>
       <li>Le panier vit dans le navigateur ; aucune commande, aucun paiement, aucun envoi de formulaire.</li>
       <li>Les polices viennent de Google Fonts : une connexion internet est nécessaire pour les voir.</li>
+      <li>L’aperçu « ta palette » ne change que les couleurs ; le logo reste la signature typographique tant que le SVG manque.</li>
+      <li>Repères Aquensis et Jardin Massey : positions indicatives, écartées de quelques pixels sur grand écran pour ne pas masquer la tour des Jacobins et le point de Tarbes.</li>
     </ul>
   </section>
 </div>""".format(etiq=etiquette("Note pour Romain"), tend=tend, tech="".join(tech), legal=legal_html,
                  fournir="".join("<li>{}</li>".format(x) for x in fournir), valider="".join("<li>{}</li>".format(x) for x in valider),
-                 f=A_FOURNIR, c=A_CONFIRMER, v=A_VALIDER, cc=src("https://cleancommit.io/blog/sticky-add-to-cart-buttons/", "Cleancommit"))
+                 f=A_FOURNIR, c=A_CONFIRMER, v=A_VALIDER, cc=src("https://cleancommit.io/blog/sticky-add-to-cart-buttons/", "Cleancommit"),
+                 idees=idees, pastilles=pastilles, lignes_palette=lignes_palette, lignes_contraste=lignes_contraste, lignes_adapt=lignes_adapt,
+                 valider_m=A_VALIDER, fournir_m=A_FOURNIR)
     page("strategie.html", "Stratégie de la version 1 · Terre Gravée",
-         "Note pour Romain Fourneaux : concept de la version « Carnet de territoire », tendances, techniques de vente sourcées, points légaux et informations à fournir.",
+         "Note pour Romain Fourneaux : concept de la version « Carnet de territoire », ses idées mises en œuvre, sa palette, tendances, techniques de vente sourcées, points légaux et informations à fournir.",
          contenu, classe="page-strategie")
 
 
@@ -2485,6 +3034,7 @@ def main():
     fiche_carte_cadeau()
     sur_mesure()
     contact()
+    qr_page()
     strategie()
     print("Pages générées dans", ICI)
 

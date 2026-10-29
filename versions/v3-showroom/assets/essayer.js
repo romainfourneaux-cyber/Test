@@ -452,7 +452,7 @@
         k++;
       }
     } else if (m === "bois") {
-      for (var xb = 0; xb < W; xb += 14 * cm) { ctx.fillStyle = "rgba(60,36,18,.7)"; ctx.fillRect(xb + 13.6 * cm, 0, Math.max(1, 0.4 * cm), H); }
+      for (var xb = 0; xb < W; xb += 14 * cm) { ctx.fillStyle = "rgba(60,36,18,.7)"; ctx.fillRect(xb + (14 - 0.4) * cm, 0, Math.max(1, 0.4 * cm), H); }
       ctx.fillStyle = "rgba(60,36,18,.08)";
       for (var g = 0; g < W; g += 3 + (g * 7) % 9) ctx.fillRect(g, 0, 1, H);
     } else if (m === "beton") {

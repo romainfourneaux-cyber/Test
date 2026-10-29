@@ -162,6 +162,16 @@ def confirmer(detail):
     return '<span class="note-maq note-maq--fournir">à confirmer : ' + detail + "</span>"
 
 
+def accord_aquensis():
+    """Marqueur obligatoire partout où l’histoire d’Aquensis est racontée."""
+    return ('<span class="note-maq note-maq--valider">à valider : accord de la SEMETHERM pour citer le projet Aquensis</span>')
+
+
+def preparation(precision=""):
+    texte = "en préparation, à valider" + (" (" + precision + ")" if precision else "")
+    return '<span class="note-maq note-maq--valider">' + texte + '</span>'
+
+
 ETOILE = ('<svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M10 1.6l2.5 5.3 5.8.7-4.3 4 '
           '1.1 5.8L10 14.6l-5.1 2.8 1.1-5.8-4.3-4 5.8-.7z"/></svg>')
 
@@ -433,7 +443,7 @@ FONTS = ("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth
 
 def entete(actif):
     liens = "".join('<li><a href="%s"%s>%s</a></li>' % (h, ' aria-current="page"' if h == actif else "", n) for h, n in NAV)
-    return """<div class="bandeau-maq" role="note"><div class="wrap bandeau-maq__in"><p><strong>Maquette version 2 · brouillon non publié · paiements désactivés</strong></p><p class="bandeau-maq__liens"><a href="strategie.html">Lire la stratégie</a><a href="../index.html">Comparer les versions</a><button type="button" class="bandeau-maq__notes" data-notes aria-pressed="false">Masquer les notes jaunes</button></p></div></div>
+    return """<div class="bandeau-maq" role="note"><div class="wrap bandeau-maq__in"><p><strong>Maquette version 2 · brouillon non publié · paiements désactivés</strong></p><p class="bandeau-maq__liens"><a href="strategie.html">Lire la stratégie</a><a href="../index.html">Comparer les versions</a><button type="button" class="bandeau-maq__notes" data-notes aria-pressed="false">Masquer les notes jaunes</button><button type="button" class="bandeau-maq__notes bandeau-maq__charte" data-charte-quitter>Quitter la palette de votre charte</button></p></div></div>
 <header class="entete" data-entete>
   <div class="wrap entete__in">
     <a class="logo" href="index.html">%s<span class="logo__nom">Terre Gravée</span><span class="sr">, retour à l’accueil</span></a>
@@ -486,7 +496,10 @@ def pied():
 </footer>""" % (LOGO, fournir("lien"), fournir("lien"), CGV, MENTIONS)
 
 
-def tiroir_panier():
+def tiroir_panier(qr=False):
+    # Sur qr.html, le panier rappelle le code de bienvenue pour ne pas contredire le ticket de la page.
+    code = ('<p class="panier__code">Avec le code AQUENSIS, à saisir au paiement : livraison offerte dès la première plaque. %s</p>'
+            % valider("code et valeur") if qr else "")
     return """<dialog class="panier" id="panier" aria-labelledby="panier-titre">
   <div class="panier__cadre">
     <div class="panier__haut">
@@ -498,6 +511,7 @@ def tiroir_panier():
         <p class="panier__livraison-msg" data-livraison-msg>Livraison offerte dès %s d’articles livrés.</p>
         %s
         <p class="petit">Hors carte cadeau, envoyée par e-mail. %s</p>
+        %s
       </div>
       <ul class="panier__liste" data-panier-liste></ul>
       <div class="panier__suggestions" data-panier-suggestions></div>
@@ -524,7 +538,7 @@ def tiroir_panier():
   </div>
 </dialog>
 <div class="annonce sr" aria-live="polite" data-annonce></div>""" % (
-        icone("croix"), prix(SEUIL), jauge_livraison(), valider("seuil de 130 €"), icone("cadeau"),
+        icone("croix"), prix(SEUIL), jauge_livraison(), valider("seuil de 130 €"), code, icone("cadeau"),
         valider("options cadeau"), confirmer("commande sans compte"), valider("−10 %"))
 
 
@@ -572,7 +586,7 @@ def page(fichier, titre, description, contenu, actif=None, jsonld=None, classe="
 <meta name="description" content="%s">
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#ffffff">
-<script>try { if (window.localStorage.getItem("tg-v2-notes") === "masquees") document.documentElement.classList.add("sans-notes"); } catch (e) {}</script>
+<script>try { if (window.localStorage.getItem("tg-v2-notes") === "masquees") document.documentElement.classList.add("sans-notes"); if (window.localStorage.getItem("tg-v2-charte") === "romain") document.documentElement.classList.add("charte"); } catch (e) {}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="%s">
@@ -591,7 +605,7 @@ def page(fichier, titre, description, contenu, actif=None, jsonld=None, classe="
 <script src="assets/boutique.js"></script>
 </body>
 </html>
-""" % (e(titre), e(description), FONTS, donnees, classe, entete(actif), contenu, pied(), apres, tiroir_panier())
+""" % (e(titre), e(description), FONTS, donnees, classe, entete(actif), contenu, pied(), apres, tiroir_panier("page-qr" in classe.split()))
     with open(os.path.join(ICI, fichier), "w", encoding="utf-8", newline="\n") as f:
         f.write(typo(sortie))
     PAGES.append(fichier)
@@ -652,6 +666,67 @@ def faq_objections(led=True):
     return "".join('<details class="faq"><summary>%s</summary><div class="faq__corps">%s</div></details>' % (e(a), b) for a, b in q)
 
 
+# ---------------------------------------------------------------- histoire d’origine et nouveautés
+
+# Modèles en préparation (dossier « rex » de l’atelier, juin et juillet 2026). Aucune photo de plaque :
+# les deux premiers sont recadrés dans la planche des dessins inédits, le troisième n’a pas encore d’aperçu.
+BIENTOT = [
+    ("Le Casque du Lhéris", "Dessin, pas encore une plaque", "bientot-casque-du-lheris.webp", (194, 388),
+     "Dessin préparatoire du Casque du Lhéris : le sommet rocheux au-dessus des pentes"),
+    ("La Transhumance", "Dessin, pas encore une plaque", "bientot-la-transhumance.webp", (194, 380),
+     "Dessin préparatoire de La Transhumance : un troupeau de vaches et son berger sur un chemin de montagne"),
+    ("Le Jardin Massey", "Tarbes", None, None, ""),
+]
+GRANDS_FORMATS = "Le Cirque de Gavarnie, Le Tourmalet, Le Pont d’Espagne et Le Pic du Midi"
+
+
+def section_origine():
+    return """<section class="section section--origine" id="origine" aria-labelledby="titre-origine">
+  <div class="wrap origine">
+    <div class="origine__texte">
+      <p class="surtitre">Notre histoire</p>
+      <h2 id="titre-origine">Nos plaques sont nées à Aquensis</h2>
+      <p class="origine__chapo">Tout est parti d’un projet de décoration conçu pour Aquensis, le centre thermal de Bagnères-de-Bigorre.</p>
+      <p>Il fallait masquer une coursive technique. Trente niches de 1 m × 2 m ont reçu des panneaux en métal découpé, qui jouent avec les vides et les pleins. Leur thème : le patrimoine, la flore et la faune de Bagnères et de la Bigorre.</p>
+      <p>Deux illustratrices, Maude Villatte et Lola Jacquet, ont dessiné soixante illustrations. Chacune a été adaptée aux contraintes de la découpe : taille des ouvertures, rigidité, points d’accroche.</p>
+      <p>Les panneaux sont en aluminium thermolaqué effet Corten, découpés au laser et rétroéclairés. Les visiteurs ont adoré. C’est ce succès qui a donné l’idée de proposer des plaques aux particuliers, au format 60 × 30 cm.</p>
+      <p>%s</p>
+      <p class="origine__preuve"><strong>Ce que cela prouve.</strong> Le style des panneaux a d’abord plu aux visiteurs d’Aquensis. Deux avis publiés sur le site racontent avoir découvert nos plaques là-bas ou pendant une cure. <a href="#avis">Lire les avis</a></p>
+      <a class="lien-fleche" href="collection.html">Voir les 12 plaques%s</a>
+    </div>
+    <div class="origine__cote">
+      <figure class="origine__fig"><div class="origine__photo">%s<span class="etiquette">Photo réelle</span></div><figcaption>Les panneaux rétroéclairés au-dessus du bassin d’Aquensis.</figcaption></figure>
+      <ul class="origine__chiffres">
+        <li><strong>30</strong><span>niches de 1 m × 2 m</span></li>
+        <li><strong>60</strong><span>illustrations adaptées à la découpe</span></li>
+        <li><strong>2</strong><span>illustratrices pour les dessins</span></li>
+        <li><strong>60 × 30</strong><span>cm : le format des plaques, pour chez vous</span></li>
+      </ul>
+    </div>
+  </div>
+</section>""" % (accord_aquensis(), icone("fleche"),
+                 img("misc/aquensis.webp", "Détail du centre thermal Aquensis : les panneaux découpés et rétroéclairés, avec leurs titres, sous la galerie en bois",
+                     "(max-width: 959px) 92vw, 560px", classe="origine__img"))
+
+
+def bloc_bientot():
+    items = []
+    for nom, info, fichier, taille, alt in BIENTOT:
+        if fichier:
+            visuel = '<img class="bientot__img" src="%s%s" width="%d" height="%d" alt="%s" loading="lazy" decoding="async">' % (
+                LOCAL, fichier, taille[0], taille[1], e(alt))
+            detail = '<span class="bientot__info">%s</span>' % e(info)
+        else:
+            visuel = '<span class="bientot__vide" aria-hidden="true">?</span>'
+            detail = '<span class="bientot__info">%s</span><span class="bientot__info">%s</span>' % (e(info), fournir("aperçu du dessin"))
+        items.append('<li class="bientot__item">%s<span class="bientot__txt"><strong>%s</strong>%s</span></li>' % (visuel, e(nom), detail))
+    return """<div class="bientot" role="group" aria-labelledby="titre-bientot">
+        <div class="bientot__tete"><h3 id="titre-bientot" class="bientot__titre">Bientôt</h3>%s</div>
+        <ul class="bientot__liste">%s</ul>
+        <p class="petit">Les trois prochains modèles. La lettre vous prévient de leur sortie.</p>
+      </div>""" % (preparation(), "".join(items))
+
+
 # ---------------------------------------------------------------- accueil
 
 def accueil():
@@ -694,8 +769,12 @@ def accueil():
   <div class="case case--aquensis">
     <figure class="aquensis__fig">
       <div class="aquensis__photo">%s<span class="etiquette">Photo réelle</span></div>
-      <figcaption class="aquensis__legende">Plaques Terre Gravée à Aquensis, Bagnères-de-Bigorre</figcaption>
     </figure>
+    <div class="aquensis__texte">
+      <h2 class="aquensis__titre">Tout est né à Aquensis</h2>
+      <p>Ces panneaux ont été conçus pour Aquensis, le centre thermal de Bagnères-de-Bigorre. Les visiteurs les ont adorés : nos plaques sont nées de là. <a href="#origine">Notre histoire</a></p>
+      <p class="aquensis__note">%s</p>
+    </div>
     <blockquote class="aquensis__avis">%s<span class="sr">Note %d sur 5</span><p>« %s »</p><footer><span>%s · publié le <time datetime="%s">%s</time> · avis sur <a href="produit-lours.html">L’Ours</a></span><span>Avis publié sans vérification d’achat. %s</span></footer></blockquote>
   </div>
   <div class="case case--quiz">
@@ -786,6 +865,8 @@ def accueil():
   %s
 </section>
 
+%s
+
 <section class="section wrap" id="lettre" aria-labelledby="titre-lettre">
   <div class="lettre">
     <figure class="lettre__visuel">%s<figcaption>Dessins inédits de l’atelier, pas encore dans la collection</figcaption></figure>
@@ -795,13 +876,15 @@ def accueil():
       <p>Certains dessins sortent en très petite quantité, parfois en exemplaire unique. La lettre vous prévient à chaque sortie.</p>
       <p class="petit">Jour de sortie : le premier jeudi du mois. %s</p>
       %s
+      %s
     </div>
   </div>
 </section>
 """ % (
         icone("fleche"), img_plaque(pic, "noir", "(max-width: 640px) 46vw, 300px", eager=True, attrs="data-heros-img"), heros_fins,
-        img("misc/aquensis.webp", "Bassin du centre thermal Aquensis : sous la charpente en bois, une rangée de plaques Terre Gravée rétroéclairées",
+        img("misc/aquensis.webp", "Bassin du centre thermal Aquensis : sous la charpente en bois, la rangée de panneaux découpés et rétroéclairés conçus pour le centre",
             "(max-width: 699px) 92vw, (max-width: 1099px) 46vw, 430px"),
+        accord_aquensis(),
         etoiles(anto["note"]), anto["note"], e(anto["texte"]), e(anto["auteur"]), anto["date"], date_fr(anto["date"]),
         fournir("date de l’expérience"),
         icone("fleche"),
@@ -816,8 +899,10 @@ def accueil():
         mention_avis(), avis,
         confirmer("centre du rayon de 150 km, Revel étant à environ 155 km de l’atelier à vol d’oiseau"),
         chemin_fabrication(),
+        section_origine(),
         img("misc/autres-plaques.webp", "Planche de dix-huit dessins inédits : sommets, fleurs et animaux des Pyrénées", "(max-width: 899px) 92vw, 600px"),
         valider("jour de sortie"),
+        bloc_bientot(),
         formulaire_lettre("accueil"),
     )
     page("index.html", "Terre Gravée · Plaques murales des Pyrénées en aluminium",
@@ -1423,8 +1508,9 @@ def noel():
     bagneres = profil("bagneres", "La ville et son Pic", "Pour un amoureux de Bagnères",
                       "La tour des Jacobins, monument historique de Bagnères-de-Bigorre, et le Pic du Midi de Bigorre, 2 877 m.",
                       ["la-tour-des-jacobins", "le-pic-du-midi"], ["Greg 65"], fins={"la-tour-des-jacobins": "dore", "le-pic-du-midi": "dore"}, tuile=tuile_trip)
-    aquensis = ('<figure class="profil__photo">%s<figcaption>Plaques Terre Gravée à Aquensis, Bagnères-de-Bigorre</figcaption></figure>'
-                % img("misc/aquensis.webp", "Bassin du centre thermal Aquensis avec une rangée de plaques Terre Gravée rétroéclairées", "(max-width: 900px) 92vw, 420px"))
+    aquensis = ('<figure class="profil__photo">%s<figcaption>Les panneaux conçus pour Aquensis, à Bagnères-de-Bigorre : nos plaques en sont nées. %s</figcaption></figure>'
+                % (img("misc/aquensis.webp", "Bassin du centre thermal Aquensis avec la rangée de panneaux découpés et rétroéclairés conçus pour le centre", "(max-width: 900px) 92vw, 420px"),
+                   accord_aquensis()))
     curiste = profil("curiste", "Vu à Aquensis", "Pour un curiste",
                      "Deux avis racontent avoir découvert nos plaques à Aquensis, le centre thermal de Bagnères-de-Bigorre, ou pendant une cure.",
                      ["la-marmotte", "lours"], ["Sophia P.", "Anto 65"], extra=aquensis, tuile=tuile_led)
@@ -1610,6 +1696,7 @@ def sur_mesure():
           <li>%sUne autre matière ou teinte : aluminium dans la teinte RAL de votre choix, acier Corten, aluminium brut</li>
           <li>%sUne autre fixation ou un autre support</li>
         </ul>
+        <div class="grands-formats"><p><strong>Versions grand format de nos modèles</strong> : %s.</p><p>%s</p></div>
         <p class="petit">Selon faisabilité. Les pièces sur mesure sont exclues du droit de rétractation (art. L221-28, 3° du Code de la consommation). Elles bénéficient des garanties légales de conformité et des vices cachés.</p>
       </div>
       <div class="duo-metal">
@@ -1628,13 +1715,15 @@ def sur_mesure():
     </section>
     <section class="case case--sm-pro" aria-labelledby="titre-pro">
       <div>
-        <p class="surtitre">Professionnels, collectivités, lieux culturels</p>
+        <p class="surtitre">Villes, hôtels, entreprises, lieux culturels</p>
         <h2 id="titre-pro">Séries sur demande</h2>
         <ul class="liste-coches">
           <li>%sUne frise qui raconte une histoire locale</li>
+          <li>%sDes grands formats pour une place, un hall ou un bureau</li>
           <li>%sDes plaques signalétiques au style artistique</li>
-          <li>%sDes éditions spéciales pour une exposition, un événement, un lieu touristique</li>
+          <li>%sDes éditions spéciales pour un hôtel, une entreprise, un événement, un lieu touristique</li>
         </ul>
+        <p class="sm-reference">Tout est parti d’un projet conçu pour Aquensis : des panneaux pour 30 niches de 1 m × 2 m. <a href="index.html#origine">Lire l’histoire</a> %s</p>
         <p class="petit">La quantité minimale dépend du projet.</p>
       </div>
       <div class="plaque-vide plaque-vide--pro"><span class="plaque-vide__mot">Photo d’une série professionnelle</span>%s</div>
@@ -1655,7 +1744,7 @@ def sur_mesure():
     </div>
     <form class="formulaire" data-demo novalidate>
       <div class="champs">
-        <div class="champ"><label for="sm-type">Type de demande</label><select id="sm-type"><option>Adapter un modèle existant</option><option>Plaque exclusive</option><option>Série pour un professionnel</option></select></div>
+        <div class="champ"><label for="sm-type">Type de demande</label><select id="sm-type"><option>Adapter un modèle existant</option><option>Grand format</option><option>Plaque exclusive</option><option>Série pour un professionnel (ville, hôtel, entreprise)</option></select></div>
         <div class="champ"><label for="sm-modele">Modèle de départ</label><select id="sm-modele"><option>Aucun en particulier</option>%s</select></div>
         <div class="champ"><label for="sm-metal">Matière</label><select id="sm-metal"><option>Aluminium thermolaqué, teinte RAL</option><option>Acier Corten</option><option>Aluminium brut</option><option>Je ne sais pas encore</option></select></div>
         <div class="champ"><label for="sm-format">Format souhaité</label><input id="sm-format" type="text" placeholder="Par exemple 120 × 60 cm"><small>Jusqu’à 2 m × 1 m</small></div>
@@ -1672,16 +1761,143 @@ def sur_mesure():
     </form>
   </div>
 </section>
-""" % (icone("check"), icone("check"), icone("check"),
+""" % (icone("check"), icone("check"), icone("check"), e(GRANDS_FORMATS), preparation("format exact à confirmer"),
        img("misc/mauvezin-corten.webp", "Plaque Le Château de Mauvezin en acier Corten", "(max-width: 900px) 40vw, 200px"),
        img("misc/mauvezin-brut.webp", "Plaque Le Château de Mauvezin en aluminium brut", "(max-width: 900px) 40vw, 200px"),
        img("misc/autres-plaques.webp", "Planche de dix-huit dessins inédits : sommets, fleurs et animaux des Pyrénées", "(max-width: 900px) 92vw, 520px"), icone("fleche"),
-       icone("check"), icone("check"), icone("check"),
+       icone("check"), icone("check"), icone("check"), icone("check"), accord_aquensis(),
        fournir("photo d’une série professionnelle"),
        fournir("délai de réponse habituel"), options, MENTIONS)
     page("sur-mesure.html", "Sur mesure et séries · Terre Gravée",
          "Plaques sur mesure : jusqu’à 2 × 1 m, aluminium RAL, acier Corten ou aluminium brut. Plaques exclusives et séries pour professionnels.",
          contenu, actif="sur-mesure.html")
+
+
+# ---------------------------------------------------------------- page d’arrivée du QR code d’Aquensis
+
+# Quatre plaques liées à Bagnères et à la Bigorre, avec ajout direct au panier.
+QR_SELECTION = [("la-tour-des-jacobins", "dore"), ("le-pic-du-midi", "noir"), ("le-chateau-de-mauvezin", "noir"), ("lisard", "dore")]
+# Quiz en un clic : une réponse, une plaque (hors des quatre ci-dessus), et une piste pour aller plus loin.
+QR_CLIC = [
+    ("montagnes", "Les montagnes", "le-cirque-de-gavarnie", "noir",
+     "Le cirque de Gavarnie est classé au patrimoine mondial de l’UNESCO.",
+     '<a href="triptyque.html#t=le-cirque-de-gavarnie-noir,le-pic-du-midi-noir,le-montaigu-noir">Avec Le Pic du Midi et Le Montaigu, en Triptyque</a>'),
+    ("animaux", "Les animaux", "lours", "noir",
+     "Un avis publié sur le site cite cette plaque après une visite à Aquensis.",
+     '<a href="produit-la-marmotte.html">La Marmotte</a>, elle, a été vue pendant une cure, selon un autre avis.'),
+    ("pierres", "Les vieilles pierres", "labbaye-de-lescaladieu", "noir",
+     "L’abbaye cistercienne de l’Escaladieu se trouve à Bonnemazon, en Bigorre.",
+     '<a href="triptyque.html#t=labbaye-de-lescaladieu-noir,la-tour-des-jacobins-dore,le-chateau-de-mauvezin-noir">Avec la tour et le château, en Triptyque</a>'),
+    ("velo", "Le vélo", "le-tourmalet", "gris",
+     "Le col du Tourmalet monte à 2 115 m. La plaque montre la route en lacets et trois cyclistes.",
+     '<a href="produit-le-tourmalet.html">Avec le kit LED, +15 €</a> : la route s’éclaire le soir.'),
+    ("offrir", "C’est pour offrir", "carte-cadeau", None,
+     "La carte cadeau vaut une plaque : la personne choisit elle-même son modèle.",
+     'Envoi immédiat par e-mail, ou à imprimer.'),
+]
+
+
+def qr():
+    cartes = "".join(carte(PRODUITS[s], f, ordre=i, badge_ok=False) for i, (s, f) in enumerate(QR_SELECTION))
+    boutons, resultats = [], []
+    for cle, libelle, slug, fin, pourquoi, piste in QR_CLIC:
+        p = PRODUITS[slug]
+        if slug == "carte-cadeau":
+            mini = '<span class="clic__mini clic__mini--carte">%s</span>' % img("misc/carte-cadeau.webp", "", "48px")
+        else:
+            mini = '<span class="clic__mini"><span class="plaque">%s</span></span>' % img_plaque(p, fin, "28px")
+        boutons.append('<li><button type="button" class="clic__bouton" data-clic-choix="%s" data-clic-nom="%s" aria-pressed="false" aria-controls="clic-%s">%s<span>%s</span></button></li>'
+                       % (cle, e(p["nom"]), cle, mini, e(libelle)))
+        resultats.append('<div class="clic__res" id="clic-%s" data-clic-res="%s" hidden><ul class="grille-cartes grille-cartes--clic">%s</ul>'
+                         '<div class="clic__txt"><p class="surtitre">Pour vous</p><h3 class="clic__nom">%s</h3><p>%s</p><p class="petit">%s</p></div></div>'
+                         % (cle, cle, carte(p, fin, titre="h4", badge_ok=False), e(p["nom"]), e(pourquoi), piste))
+    avis_aq = [a for a in TOUS_AVIS if a["auteur"] in ("Anto 65", "Sophia P.")]
+    contenu = """
+<div class="wrap">
+  <header class="qr-tete">
+    <div class="qr-tete__texte">
+      <p class="qr-tete__note">%s</p>
+      <p class="surtitre">Bienvenue</p>
+      <h1>Vous venez d’Aquensis ?</h1>
+      <p class="chapo">Les panneaux du centre thermal ont donné naissance à nos plaques : le patrimoine et la faune de la Bigorre, découpés dans l’aluminium. En 60 × 30 cm pour votre mur, posées sans perçage.</p>
+      <div class="ticket">
+        <p class="ticket__titre">Votre code de bienvenue</p>
+        <p class="ticket__code"><span id="code-aquensis" class="ticket__mot">AQUENSIS</span><button type="button" class="btn btn--ligne ticket__copier" data-copier="code-aquensis" data-repli="Code sélectionné, copiez-le">%sCopier</button></p>
+        <p class="ticket__valeur"><strong>Livraison offerte dès la première plaque.</strong> À saisir au moment de payer.</p>
+        <p>%s</p>
+      </div>
+      <div class="qr-tete__actions">
+        <a class="btn btn--action" href="#selection">Voir les plaques de Bigorre%s</a>
+        <a class="btn btn--ligne" href="#un-clic">Trouver la mienne en un clic</a>
+      </div>
+      <p class="qr-tete__prix"><strong>65 €</strong> la plaque, en noir, gris ou doré, même prix pour toutes</p>
+    </div>
+    <figure class="qr-tete__photo">
+      <div class="qr-tete__img">%s<span class="etiquette">Photo réelle</span></div>
+      <figcaption>Les panneaux conçus pour Aquensis, au-dessus du bassin. Les visiteurs les ont adorés : nos plaques sont nées de là. <a href="index.html#origine">Notre histoire</a> %s</figcaption>
+    </figure>
+  </header>
+</div>
+
+<section class="section section--qr wrap" id="selection" aria-labelledby="titre-selection">
+  <div class="tete-section">
+    <div><p class="surtitre">Bagnères et la Bigorre</p><h2 id="titre-selection">Quatre plaques d’ici</h2></div>
+    <p class="tete-section__aide">Touchez une pastille pour changer de finition, puis ajoutez au panier. Même prix pour les trois finitions.</p>
+  </div>
+  <ul class="grille-cartes grille-cartes--qr">%s</ul>
+  <p class="qr-livraison">%s<span>Livraison offerte dès deux plaques, ou dès la première avec le code AQUENSIS. %s</span></p>
+</section>
+
+<section class="section section--neige" id="un-clic" aria-labelledby="titre-clic">
+  <div class="wrap">
+    <div class="tete-section">
+      <div><p class="surtitre">Quiz en un clic</p><h2 id="titre-clic">Qu’est-ce qui vous parle le plus ?</h2></div>
+      <p class="tete-section__aide">Une réponse, une plaque. Pour tenir compte de votre mur : <a href="quiz.html">le quiz en 4 questions</a>.</p>
+    </div>
+    <div class="clic" data-clic>
+      <ul class="clic__choix" aria-label="Ce qui vous parle le plus">%s</ul>
+      <div class="clic__resultats">
+        <p class="clic__attente" data-clic-attente>Choisissez une réponse : la plaque proposée s’affiche ici, prête à ajouter au panier.</p>
+        %s
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section wrap" aria-labelledby="titre-garanties-qr">
+  <h2 id="titre-garanties-qr" class="sous-titre">Commander en confiance</h2>
+  <ul class="bandeau-garanties">
+    <li>%s<span><strong>Livraison en 2 à 4 jours ouvrés</strong> après l’expédition, à titre indicatif</span></li>
+    <li>%s<span><strong>Paiement sécurisé</strong> par carte bancaire (Stripe), PayPal, Apple Pay ou Google Pay</span></li>
+    <li>%s<span><strong>14 jours pour vous rétracter</strong> après réception, comme le prévoit la loi</span></li>
+    <li>%s<span><strong>Garanties légales</strong> de conformité et des vices cachés. <a href="%s">Lire les CGV</a></span></li>
+  </ul>
+</section>
+
+<section class="section section--neige" aria-labelledby="titre-avis-qr">
+  <div class="wrap">
+    <div class="tete-section"><div><p class="surtitre">Avis</p><h2 id="titre-avis-qr">Ils les ont vues à Bagnères</h2></div></div>
+    %s
+    <ul class="grille-avis grille-avis--fiche">%s</ul>
+  </div>
+</section>
+
+<section class="section wrap">
+  <div class="bandeau-sm"><div><p class="surtitre">Toute la collection</p><h2>Douze plaques des Pyrénées</h2><p>Sommets, patrimoine et faune, à 65 € la plaque.</p></div><a class="btn btn--ligne" href="collection.html">Voir les 12 plaques%s</a></div>
+</section>
+""" % (valider("page d’arrivée du QR code des panneaux de démonstration (vestiaires, sortie)"),
+       icone("copier"), valider("code AQUENSIS, livraison offerte dès la première plaque"), icone("fleche"),
+       img("misc/aquensis.webp", "Bassin du centre thermal Aquensis : la rangée de panneaux découpés et rétroéclairés conçus pour le centre",
+           "(max-width: 899px) 92vw, 560px", eager=True),
+       accord_aquensis(),
+       cartes, icone("camion"), valider("seuil et code"),
+       "".join(boutons), "".join(resultats),
+       icone("camion"), icone("cadenas"), icone("retour"), icone("bouclier"), CGV,
+       mention_avis(), "".join(citation(a, "avis--4", rappel=True) for a in avis_aq),
+       icone("fleche"))
+    page("qr.html", "Vous venez d’Aquensis ? · Terre Gravée",
+         "Vous avez vu les panneaux d’Aquensis ? Quatre plaques murales de Bagnères et de la Bigorre, un quiz en un clic et un code de bienvenue.",
+         contenu, classe="page-qr")
 
 
 # ---------------------------------------------------------------- contact
@@ -1848,6 +2064,80 @@ def strategie():
          "Rendre le travail visible augmente la valeur perçue (%s). On écrit « découpé au laser », jamais « fait main ». Les fiches nomment les lieux réels plutôt que le rayon de 150 km." % src("https://ideas.repec.org/a/inm/ormnsc/v57y2011i9p1564-1579.html", "Buell et Norton, 2011"),
          "Les étapes et les lieux, et le centre du rayon de 150 km cité par l’atelier : Revel est à environ 155 km de Gerde à vol d’oiseau.", "Profondeur de lecture des fiches, taux de conversion."),
     ]
+    # Idées de Romain (Contexte du business plan) : ce que le site prévoit, l’indicateur, ce qui reste à valider.
+    idees = [
+        ("Panneaux de démonstration à Aquensis, avec QR code",
+         "Des panneaux petit format aux vestiaires et à la sortie, avec le prix affiché et le rappel qu’il existe d’autres modèles. "
+         "Le QR code mène à <a href=\"qr.html\">qr.html</a>, déjà dans la maquette : « Vous venez d’Aquensis ? », quatre plaques de Bagnères et de la Bigorre "
+         "avec ajout direct au panier, quiz en un clic, garanties et code de bienvenue AQUENSIS. Un QR code par emplacement, chacun avec son paramètre de suivi, "
+         "par exemple <code>qr.html?utm_source=aquensis&amp;utm_medium=qr&amp;utm_content=vestiaires</code> (puis <code>sortie</code>). "
+         "Le QR code du dossier Marketing devra pointer vers cette adresse.",
+         "Visites issues du QR code, par emplacement ; ajouts au panier et commandes depuis qr.html ; commandes avec le code AQUENSIS.",
+         "L’accord de la SEMETHERM pour poser les panneaux et citer le projet. Le paramètre de suivi. Le code AQUENSIS et sa valeur proposée "
+         "(livraison offerte dès la première plaque), à calculer avec le coût réel du port d’une plaque."),
+        ("Commerçants et restaurants partenaires",
+         "Une plaque offerte et exposée, avec un petit chevalet et son QR code (<code>utm_source</code> au nom du lieu). Sur le site, une liste « Où voir nos plaques », "
+         "publiée seulement après accord de chaque lieu. La carte interactive de la version 1 peut l’afficher.",
+         "Visites et commandes par lieu, rapportées au coût de la plaque offerte.",
+         "La liste des lieux, la contrepartie, un accord écrit avec chacun."),
+        ("Offices de tourisme et boutiques des grands sites",
+         "Pour le téléphérique du Pic du Midi, les concept-stores ou les offices de tourisme : un espace « Revendeurs » sur la page sur mesure, avec une présentation, "
+         "des photos en haute définition et un formulaire. Les conditions de revente restent hors du site, envoyées sur demande. Une page « Où acheter » une fois les dépôts signés.",
+         "Demandes de revendeurs, commandes professionnelles, ventes par lieu.",
+         "Les conditions de revente, le stock, le choix des lieux (Le Pic du Midi au téléphérique du Pic du Midi, par exemple)."),
+        ("Événements : fête du château de Mauvezin, montée du col du Tourmalet",
+         "Un bloc « Nous retrouver » avec les dates. Sur le stand, la même mécanique que qr.html : un QR code avec son paramètre, vers une page qui met en avant "
+         "<a href=\"produit-le-chateau-de-mauvezin.html\">Le Château de Mauvezin</a> ou <a href=\"produit-le-tourmalet.html\">Le Tourmalet</a>.",
+         "Visites et commandes pendant l’événement et la semaine suivante ; inscriptions à la lettre.",
+         "La participation, les dates, l’emplacement du stand."),
+        ("Grands formats pour la ville",
+         "La page <a href=\"sur-mesure.html\">sur mesure</a> annonce les versions grand format en préparation (" + GRANDS_FORMATS + "), dont le format exact reste à confirmer, rappelle la référence d’Aquensis "
+         "(des panneaux pour 30 niches de 1 m × 2 m) et propose « Grand format » dans le formulaire.",
+         "Demandes de devis grand format, devis signés.",
+         "Les formats, les prix sur devis, l’accord de la SEMETHERM pour citer la référence."),
+        ("Offres aux professionnels : hôtels, entreprises",
+         "La page sur mesure s’adresse désormais aux villes, hôtels et entreprises : frise, grands formats, éditions spéciales. Le formulaire a un type de demande dédié.",
+         "Demandes professionnelles, taux de devis signés, montant moyen.",
+         "L’offre (quantités, délais, personnalisation possible ou non) et la facturation."),
+        ("Thèmes sportifs : cols, rugby",
+         "Un thème « Sport » dans la boutique et dans le quiz dès qu’il y aura plusieurs modèles (aujourd’hui Le Tourmalet et la réponse « Le vélo » du quiz). "
+         "La lettre « être prévenu » peut demander les thèmes qui intéressent.",
+         "Ventes du Tourmalet, inscriptions par thème, demandes reçues.",
+         "Les modèles. Pour le rugby, ni logo ni nom de club sans licence : ce sont des marques déposées."),
+        ("Autres territoires et grands sites : Mont-Saint-Michel, Étretat, Pont du Gard",
+         "Une boutique organisée par territoire, les Pyrénées d’abord, avec une adresse par territoire. Avant de produire, la lettre « être prévenu » propose "
+         "le choix du territoire pour mesurer la demande. La signature « Graver l’âme des territoires » s’y prête.",
+         "Inscriptions par territoire, ventes du premier modèle hors Pyrénées.",
+         "Le premier territoire, les illustrations, les droits sur l’image et le nom des sites : certains sont des marques déposées ou des domaines nationaux."),
+    ]
+    idees_html = "".join("""<li class="tech">
+  <h3>%s</h3>
+  <dl>
+    <div><dt>Sur le site</dt><dd>%s</dd></div>
+    <div><dt>Indicateur</dt><dd>%s</dd></div>
+    <div><dt>À valider</dt><dd>%s</dd></div>
+  </dl>
+</li>""" % i for i in idees)
+    palette = [
+        ("Noir ardoise", "#2C2C2C", "Texte, en-tête, pied de page, contrastes", "Texte ardoise sur blanc cassé : 12,8:1. Texte blanc sur ardoise : 14:1."),
+        ("Blanc cassé", "#F5F5F0", "Fond principal", "Fond de page : le texte noir ardoise y atteint 12,8:1."),
+        ("Argent doux", "#D0D0D0", "Détails, bordures, icônes", "1,4:1 sur blanc cassé : décor seulement. Pour les bordures de champs, il faut 3:1 : un gris #7D7D78 (3,8:1)."),
+        ("Vert sauge très pâle", "#DCE2D4", "Fonds de sections secondaires", "Texte noir ardoise sur sauge : 10,6:1."),
+        ("Cuivre clair", "#CBAA88", "Boutons d’action, survol", "Texte blanc sur cuivre clair : 2,2:1, refusé. Texte noir ardoise : 6,4:1, conforme AA."),
+    ]
+    pal_html = "".join('<li class="pal"><span class="pal__pastille" style="background:%s" aria-hidden="true"></span><span class="pal__txt"><strong>%s</strong>'
+                       '<code>%s</code><span>%s</span><small>%s</small></span></li>' % (h, n, h, r, c) for n, h, r, c in palette)
+    adaptation = [
+        ("Texte, en-tête, pied de page", "Bleu nuit #0E1D3A", "Noir ardoise #2C2C2C", "12,8:1 sur blanc cassé"),
+        ("Fond principal", "Blanc pur #FFFFFF", "Blanc cassé #F5F5F0", "Les cartes produit restent blanches"),
+        ("Sections secondaires, fond des photos", "Gris neige #F3F5F8", "Vert sauge #DCE2D4", "Texte ardoise : 10,6:1"),
+        ("Filets et bordures", "Gris bleuté #D3DAE4", "Argent doux #D0D0D0 ; #7D7D78 pour les champs et pastilles", "3,8:1 pour les bordures utiles"),
+        ("Bouton d’action", "Rouge #D0121F, texte blanc (5,5:1)", "Cuivre clair #CBAA88, texte noir ardoise ; survol #B8936C", "6,4:1 ; 4,9:1 au survol"),
+        ("Texte ou lien cuivré", "Aucun", "Cuivre foncé #7E5A36", "5,6:1 sur blanc cassé ; le cuivre clair en texte (2:1) est refusé"),
+        ("Texte atténué", "#4F5D78", "#5A5A55", "6,3:1 sur blanc cassé, 5,2:1 sur sauge"),
+        ("Balisage : étapes, jauge, pied de page", "Blanc et rouge", "Blanc et cuivre clair, filet ardoise", "Décor"),
+    ]
+    adapt_html = "".join("<tr><th scope=\"row\">%s</th><td>%s</td><td>%s</td><td>%s</td></tr>" % r for r in adaptation)
     tend_html = "".join('<li class="strat-carte"><h3>%s</h3><p>%s</p><p class="strat-carte__source">%s</p></li>' % (t, a, b) for t, a, b in tendances)
     tech_html = "".join("""<li class="tech">
   <h3>%s</h3>
@@ -1862,7 +2152,8 @@ def strategie():
                    ("produit-le-pic-du-midi.html", "Fiche produit type"), ("produit-le-cerf.html", "Fiche avec une finition sans photo"),
                    ("produit-led.html", "Kit LED et notice"), ("produit-carte-cadeau.html", "Carte cadeau"),
                    ("quiz.html", "Page signature : quiz"), ("noel.html", "Page signature : guide de Noël"),
-                   ("triptyque.html", "Composeur de Triptyque"), ("sur-mesure.html", "Sur mesure et séries"), ("contact.html", "Aide et contact")]
+                   ("triptyque.html", "Composeur de Triptyque"), ("sur-mesure.html", "Sur mesure et séries"),
+                   ("qr.html", "Page d’arrivée du QR code d’Aquensis"), ("contact.html", "Aide et contact")]
     pl = "".join('<li><a href="%s">%s</a><span>%s</span></li>' % (h, h, d) for h, d in pages_liste)
     contenu = """
 <div class="wrap strat">
@@ -1889,10 +2180,58 @@ def strategie():
     <ul class="strat-grille">%s</ul>
   </section>
 
+  <section class="strat-bloc" aria-labelledby="s-palette">
+    <h2 id="s-palette">Votre palette</h2>
+    <p>Votre fichier « Palette Terres Gravées : version centrée métal brut » définit cinq couleurs. Les voici, avec les contrastes mesurés selon les règles WCAG (AA : 4,5:1 pour le texte, 3:1 pour les gros titres et les bordures utiles).</p>
+    <ul class="palette">%s</ul>
+    <div class="strat-deux">
+      <div>
+        <h3>Ce que la version 2 en reprend</h3>
+        <ul class="strat-liste">
+          <li>L’argent doux est très proche des filets de la maquette (#D3DAE4).</li>
+          <li>Le vert sauge sert de fond à la section « Nos plaques sont nées à Aquensis » de l’accueil, comme vous le prévoyez pour les sections secondaires.</li>
+          <li>Le cuivre clair revient dans le filet de cette section, qui évoque l’effet Corten des panneaux, dans la carte cadeau (votre visuel) et dans le code AQUENSIS de <a href="qr.html">qr.html</a>, toujours avec un texte noir ardoise.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Ce dont elle s’écarte, et pourquoi</h3>
+        <ul class="strat-liste">
+          <li>Le texte et les fonds foncés sont en bleu nuit, pas en noir ardoise : le bleu accompagne le balisage blanc et rouge des sentiers, fil conducteur de cette version.</li>
+          <li>Le bouton d’action est rouge, pas cuivre : c’est le rouge du balisage, et le texte blanc y atteint 5,5:1. Sur le cuivre clair, le texte blanc tombe à 2,2:1.</li>
+          <li>Le fond est blanc pur, plus franc que le blanc cassé : la version joue le contraste net d’un panneau de sentier.</li>
+        </ul>
+      </div>
+    </div>
+    <h3 class="strat-sous">Rester fidèle à votre charte : l’adaptation proposée</h3>
+    <div class="echantillons" aria-label="Échantillons de bouton d’achat">
+      <div class="ech ech--v2"><p class="ech__titre">Version 2</p><span class="ech__bouton">Ajouter au panier</span><span class="ech__fond">Section secondaire</span><p class="ech__note">Blanc sur rouge : 5,5:1</p></div>
+      <div class="ech ech--charte"><p class="ech__titre">Votre charte</p><span class="ech__bouton">Ajouter au panier</span><span class="ech__fond">Section secondaire</span><p class="ech__note">Ardoise sur cuivre clair : 6,4:1</p></div>
+      <div class="ech ech--refus"><p class="ech__titre">À éviter</p><span class="ech__bouton" role="img" aria-label="Exemple refusé : texte blanc sur cuivre clair">Ajouter au panier</span><span class="ech__fond">Section secondaire</span><p class="ech__note">Blanc sur cuivre clair : 2,2:1, illisible</p></div>
+    </div>
+    <div class="tableau-defile" tabindex="0" role="region" aria-label="Tableau de l’adaptation, à faire défiler sur téléphone">
+      <table class="tableau-charte">
+        <thead><tr><th scope="col">Rôle</th><th scope="col">Version 2</th><th scope="col">Votre charte</th><th scope="col">Contraste vérifié</th></tr></thead>
+        <tbody>%s</tbody>
+      </table>
+    </div>
+    <div class="essai-charte">
+      <button type="button" class="btn btn--nuit" data-charte aria-pressed="false">Voir toute la maquette aux couleurs de votre charte</button>
+      <p class="petit">L’aperçu s’applique à toutes les pages et reste actif dans ce navigateur. Le bandeau jaune affiche alors un bouton pour en sortir. Les notes jaunes de maquette ne changent pas. %s</p>
+    </div>
+    <p><strong>Votre logo.</strong> Il existe en vectoriel (logo.ai), avec l’emblème au coq, « TERRE GRAVÉE » et « Graver l’âme des territoires ». Exporté en SVG, il peut remplacer la signature typographique de l’en-tête et du pied de page (le carré balisé et le nom en Bricolage Grotesque), en version claire sur les fonds foncés. %s</p>
+  </section>
+
   <section class="strat-bloc" aria-labelledby="s-techniques">
     <h2 id="s-techniques">Les techniques marketing, une par une</h2>
     <p>Chaque technique indique où la voir, pourquoi elle marche, ce que vous devez décider et ce qu’il faudra mesurer. Avec le trafic d’une micro-entreprise, un test A/B aura rarement assez de visites : mieux vaut comparer avant et après sur des périodes comparables, et faire tester le site à quelques personnes.</p>
     <ol class="techs">%s</ol>
+  </section>
+
+  <section class="strat-bloc" aria-labelledby="s-idees">
+    <h2 id="s-idees">Vos idées, mises en œuvre</h2>
+    <p>Votre business plan vise d’abord les touristes et les habitants attachés à leur patrimoine. Voici vos idées, une par une : ce que le site doit prévoir, ce qu’il faudra mesurer et ce qui reste à décider. La carte interactive des plaques, que vous envisagez aussi, est la page carte de la version 1.</p>
+    <ol class="techs techs--idees">%s</ol>
+    <p class="petit">Pour suivre les QR codes, les paramètres <code>utm_source</code>, <code>utm_medium</code> et <code>utm_content</code> sont lus par la plupart des outils de mesure d’audience. La mesure doit respecter les règles de la CNIL sur les traceurs.</p>
   </section>
 
   <section class="strat-bloc" aria-labelledby="s-legal">
@@ -1936,6 +2275,10 @@ def strategie():
           <li>Le centre du rayon de 150 km cité pour la fabrication.</li>
           <li>Les ventes réelles derrière les étiquettes « Meilleure vente ».</li>
           <li>Une photo d’une série professionnelle, si vous en avez une.</li>
+          <li>L’accord écrit de la SEMETHERM pour citer le projet Aquensis : l’histoire d’origine porte l’étiquette « à valider » d’ici là.</li>
+          <li>Le logo exporté en SVG depuis logo.ai.</li>
+          <li>Un aperçu du dessin du Jardin Massey, et les dates de sortie des trois modèles en préparation.</li>
+          <li>Le format exact et le prix des versions grand format.</li>
         </ul>
       </div>
       <div>
@@ -1950,6 +2293,10 @@ def strategie():
           <li>Carte cadeau de 80 € (plaque et kit LED), non prise en compte dans le seuil de livraison.</li>
           <li>Options cadeau : message joint et prix masqués.</li>
           <li>Jour de sortie des plaques exclusives : le premier jeudi du mois.</li>
+          <li>Panneaux de démonstration à Aquensis (vestiaires, sortie) et page d’arrivée qr.html.</li>
+          <li>Code de bienvenue AQUENSIS : livraison offerte dès la première plaque.</li>
+          <li>Paramètre de suivi des QR codes : <code>utm_source</code>, <code>utm_medium</code>, <code>utm_content</code>.</li>
+          <li>Adopter ou non la palette de votre charte.</li>
         </ul>
       </div>
     </div>
@@ -1965,11 +2312,12 @@ def strategie():
       <div><dt>Quiz</dt><dd>Démarrages, complétion, ajouts au panier depuis le résultat.</dd></div>
       <div><dt>Taux d’inscription</dt><dd>Inscriptions à la lettre divisées par visites de l’accueil.</dd></div>
       <div><dt>Saison de Noël</dt><dd>Part des ventes avant le 1er décembre, ventes de cartes après le 14 décembre.</dd></div>
+      <div><dt>QR codes d’Aquensis</dt><dd>Visites par emplacement, commandes depuis qr.html, utilisations du code AQUENSIS.</dd></div>
     </dl>
     <p class="petit">Mesure d’audience à mettre en place dans le respect des règles de la CNIL sur les traceurs.</p>
   </section>
 </div>
-""" % (pl, tend_html, tech_html,
+""" % (pl, tend_html, pal_html, adapt_html, valider("palette de votre charte, à adopter ou non"), fournir("logo exporté en SVG depuis logo.ai"), tech_html, idees_html,
        src("https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000044549592", "art. L112-1-1"),
        src("https://www.medef.com/uploads/media/node/0019/100/14563-faq-annoncesreductionprix-medef-31052022.pdf", "FAQ du MEDEF, 2022"),
        src("https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000049571119", "art. L111-7-2"),
@@ -2029,6 +2377,7 @@ def main():
     noel()
     triptyque()
     sur_mesure()
+    qr()
     contact()
     strategie()
     print("%d pages générées dans %s" % (len(PAGES), ICI))

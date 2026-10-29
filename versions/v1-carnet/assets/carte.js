@@ -190,7 +190,8 @@
     b.addEventListener("click", function () {
       var cat = b.getAttribute("data-filtre-carte");
       $$("[data-filtre-carte]").forEach(function (x) { x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
-      reperes.concat(grappes).forEach(function (r) { estomper(r, !(cat === "tout" || r.getAttribute("data-cat") === cat)); });
+      // data-cat peut lister plusieurs catégories (grappe qui réunit un monument, Aquensis…)
+      reperes.concat(grappes).forEach(function (r) { estomper(r, !(cat === "tout" || (r.getAttribute("data-cat") || "").split(" ").indexOf(cat) >= 0)); });
       $$("[data-liste-lieux] li").forEach(function (li) { li.hidden = !(cat === "tout" || li.getAttribute("data-cat") === cat); });
     });
   });
