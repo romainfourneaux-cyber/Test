@@ -983,7 +983,7 @@ def fiche_plaque(p):
     barre = """<div class="barre-achat" data-barre>
   <div class="barre-achat__in">
     <div class="barre-achat__produit"><strong>%s</strong><div class="pastilles" role="group" aria-label="Finition">%s</div></div>
-    <p class="barre-achat__prix"><span class="sr">Total : </span><strong data-total>65 €</strong></p>
+    <p class="barre-achat__prix"><span class="sr">Total : </span><strong data-total>65 €</strong><small data-barre-led hidden>avec kit LED</small></p>
     <button type="button" class="btn btn--action" data-ajouter>Ajouter</button>
   </div>
 </div>""" % (e(p["nom"]), fins_barre)

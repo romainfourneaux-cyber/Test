@@ -488,6 +488,8 @@
     var majPrix = function () {
       var t = euros(totalFiche());
       $$("[data-total]").forEach(function (el) { el.textContent = t; });
+      var etiquetteLed = $("[data-barre-led]");
+      if (etiquetteLed) etiquetteLed.hidden = !(caseLed && caseLed.checked);
       if (type === "carte") {
         var pu = $("[data-prix-unitaire]"); if (pu) pu.textContent = euros(unitaire());
         var ap = $("[data-carte-apercu-montant]"); if (ap) ap.textContent = euros(unitaire());
@@ -565,11 +567,17 @@
 
     var barre = $("[data-barre]");
     var boutonPrincipal = $(".achat [data-ajouter]", fiche);
-    if (barre && boutonPrincipal && "IntersectionObserver" in window) {
-      new IntersectionObserver(function (entrees) {
-        var e = entrees[0];
-        barre.classList.toggle("visible", !e.isIntersecting && e.boundingClientRect.top < 0);
-      }).observe(boutonPrincipal);
+    if (barre && boutonPrincipal) {
+      var attente = false;
+      var majBarre = function () {
+        attente = false;
+        barre.classList.toggle("visible", boutonPrincipal.getBoundingClientRect().bottom < 0);
+      };
+      window.addEventListener("scroll", function () {
+        if (!attente) { attente = true; window.requestAnimationFrame(majBarre); }
+      }, { passive: true });
+      window.addEventListener("resize", majBarre);
+      majBarre();
     }
     majPrix();
   }
@@ -757,7 +765,15 @@
         try { history.replaceState(null, "", "#r=" + (res.carte ? "carte-cadeau" : res.slug + "-" + res.fin + (res.led ? "-led" : ""))); } catch (e) { /* navigation locale */ }
       };
       majTotal(); majLien();
-      alts.innerHTML = res.alts.map(function (s) { return carteAlt(s, res.carte ? "noir" : res.fin); }).join("");
+      var htmlAlts = res.alts.map(function (s) { return carteAlt(s, res.carte ? "noir" : res.fin); }).join("");
+      if (!res.carte) {
+        var trio = [res.slug].concat(res.alts).map(function (s) { return s + "-" + finAvecPhoto(s, res.fin); });
+        htmlAlts += "<li class=\"tuile-promo tuile-promo--trip\"><div class=\"trip__mini\" aria-hidden=\"true\">" +
+          [res.slug].concat(res.alts).map(function (s) { return "<div class=\"plaque\">" + imgPlaqueHTML(s, finAvecPhoto(s, res.fin), "50px") + "</div>"; }).join("") +
+          "</div><p class=\"surtitre\">Les trois ensemble</p><h4 class=\"tuile-promo__titre\">Votre plaque et ses deux pistes en Triptyque</h4><p><strong>" + euros(3 * TG.prixPlaque * (1 - TG.remise)) + "</strong> les trois.</p><p class=\"petit\">" + valider("remise de 10" + NBSP + "%") + "</p><a class=\"btn btn--ligne\" href=\"triptyque.html#t=" + trio.join(",") + "\">Voir le Triptyque" + icone(ICO_FLECHE) + "</a></li>";
+      }
+      alts.innerHTML = htmlAlts;
+      form.hidden = true;
       zoneRes.hidden = false;
       if (!depuisLien) sauver({ slug: res.slug, fin: res.fin, led: res.led });
       zoneRes.focus({ preventScroll: true });
@@ -769,19 +785,23 @@
       else ajouter({ type: "plaque", slug: res.slug, fin: res.fin, led: !!res.led, cable: res.led ? res.cable : "", prix: TG.prixPlaque + (res.led ? TG.prixLed : 0), qte: 1 });
     });
     $("[data-res-modifier]").addEventListener("click", function () {
+      form.hidden = false; zoneRes.hidden = true;
       montrer(0, true); form.scrollIntoView({ block: "start" });
     });
     $("[data-res-recommencer]").addEventListener("click", function () {
       $$("input[type=radio]", form).forEach(function (r) { r.checked = false; });
-      zoneRes.hidden = true; ecrire(CLE_QUIZ, {});
+      zoneRes.hidden = true; form.hidden = false; ecrire(CLE_QUIZ, {});
       try { history.replaceState(null, "", location.pathname); } catch (e) { /* navigation locale */ }
       montrer(0, true); form.scrollIntoView({ block: "start" });
     });
 
     // résultat partagé par lien : quiz.html#r=le-pic-du-midi-noir-led
-    var h = (location.hash || "").match(/^#r=([a-z-]+)$/);
     montrer(0, false);
-    if (h) {
+    var lireLien = function () {
+      var h = (location.hash || "").match(/^#r=([a-z-]+)$/);
+      if (!h) return;
+      var lien = $("[data-res-lien]");
+      if (lien && lien.value.split("#")[1] === location.hash.slice(1)) return;
       var code = h[1];
       if (code === "carte-cadeau") afficherResultat({ slug: "carte-cadeau", carte: true, partage: true, alts: ["le-pic-du-midi", "lisard"], r: {} }, true);
       else {
@@ -793,7 +813,9 @@
           afficherResultat({ slug: m[1], fin: m[2], finVoulue: m[2], led: led, partage: true, alts: memes.slice(0, 2), r: {} }, true);
         }
       }
-    }
+    };
+    lireLien();
+    window.addEventListener("hashchange", lireLien);
   }
 
   /* ---------- composeur de Triptyque ---------- */
@@ -908,8 +930,15 @@
     boutonPartage.addEventListener("click", function () {
       copier(location.href.split("#")[0] + (code() ? "#t=" + code() : ""), boutonPartage);
     });
-    var h = (location.hash || "").match(/^#t=([a-z,-]+)$/);
-    if (h) charger(h[1]);
+    var lireLienTrip = function () {
+      var h = (location.hash || "").match(/^#t=([a-z,-]+)$/);
+      if (!h || h[1] === code()) return;
+      places = [null, null, null];
+      charger(h[1]);
+      rendre();
+    };
+    lireLienTrip();
+    window.addEventListener("hashchange", lireLienTrip);
     rendre();
   }
 

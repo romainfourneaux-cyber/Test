@@ -421,7 +421,8 @@ strong { font-weight: 700; }
 .carte__balise { width: 18px; height: 12px; }
 .carte__corps { display: flex; flex-direction: column; gap: 6px; padding: 14px 14px 14px; flex: 1; }
 .carte__cartel { font-size: .8rem; color: var(--attenue); line-height: 1.35; }
-.carte__nom { font-size: 1.38rem; line-height: 1.02; }
+.carte__nom { font-family: var(--f-titre); font-stretch: 75%; font-weight: 760; font-size: 1.38rem; line-height: 1.02; }
+.tuile-promo__titre { font-family: var(--f-titre); font-stretch: 75%; font-weight: 760; line-height: 1; }
 .carte__nom a { text-decoration: none; }
 .carte__nom a:hover { text-decoration: underline; }
 .carte__avis { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 6px; font-size: .84rem; }
@@ -732,7 +733,9 @@ input:focus-visible, select:focus-visible, textarea:focus-visible { border-color
   .barre-achat__in { display: flex; align-items: center; gap: 12px; }
   .barre-achat__produit { display: grid; gap: 4px; min-width: 0; flex: 1; }
   .barre-achat__produit strong { font-family: var(--f-titre); font-stretch: 75%; font-size: 1.15rem; line-height: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .barre-achat__prix { display: grid; justify-items: end; line-height: 1; gap: 2px; }
   .barre-achat__prix strong { font-family: var(--f-titre); font-stretch: 75%; font-size: 1.45rem; font-weight: 800; }
+  .barre-achat__prix small { font-size: .72rem; font-weight: 700; color: var(--attenue); }
   .barre-achat .btn { min-height: 48px; padding-left: 16px; padding-right: 16px; }
 }
 
@@ -895,9 +898,10 @@ dialog.panier::backdrop { background: rgba(14, 29, 58, .55); }
 @media (min-width: 900px) {
   .resultat { grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 40px; align-items: start; }
   .resultat__garder { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
-  .grille-cartes--alt { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .grille-cartes--alt { grid-template-columns: repeat(3, minmax(0, 1fr)); max-width: 1000px; }
 }
 .led-option-res { display: flex; gap: 10px; align-items: flex-start; padding: 12px 14px; border: 2px solid var(--ligne); border-radius: var(--r-m); }
+[data-res-cable] { max-width: 300px; margin-top: 10px; }
 
 .trio-infos { display: grid; gap: 22px; }
 .trio-infos > div { display: grid; gap: 8px; align-content: start; }
