@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Notes de la version 4 · Terre Gravée</title>
+<meta name="description" content="Notes pour Romain : relevé des problèmes du site actuel, techniques retenues et sourcées, palette, idées mises en œuvre, points légaux, informations à fournir.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="color-scheme" content="light dark">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Allerta+Stencil&amp;family=Barlow+Semi+Condensed:ital,wght@0,500;0,600;1,500&amp;family=Jost:ital,wght@0,400;0,500;0,600;1,400&amp;family=Marcellus&amp;display=swap">
+<link rel="stylesheet" href="assets/galerie.css">
+
+</head>
+<body class="page-notes">
+<a class="lien-evitement" href="#contenu">Aller au contenu</a>
+<div class="bandeau-maquette">
+  <div class="wrap bandeau-maquette__ligne">
+    <p>Maquette version 4 · brouillon non publié · paiements désactivés</p>
+    <p class="bandeau-maquette__liens"><a href="notes.html">Notes de la maquette</a><a href="../index.html">Comparer les versions</a></p>
+  </div>
+</div>
+<header class="entete">
+  <div class="wrap entete__ligne">
+    <a class="marque" href="index.html"><svg viewBox="0 0 30 22" aria-hidden="true" focusable="false"><path d="M1.5 20.5 10 9l3.2 3.6L18.6 4.5 28.5 20.5Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M18.6 4.5V1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span class="marque__nom">TERRE GRAVÉE</span></a>
+    <nav class="nav" id="nav-principale" aria-label="Navigation principale"><a href="collection.html">Collection</a><a href="carte.html">Carte</a><a href="atelier.html">L’atelier</a><a href="sur-mesure.html">Sur mesure</a><a href="contact.html">Contact</a></nav>
+    <button type="button" class="bouton-icone bouton-panier" data-ouvrir-panier aria-label="Ouvrir le panier">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 8h14l-1.2 12.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8Z M9 8V6a3 3 0 0 1 6 0v2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+      <span class="bouton-panier__texte">Panier</span><span class="compteur">0</span>
+    </button>
+    <button type="button" class="bouton-icone bouton-menu" aria-expanded="false" aria-controls="nav-principale">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.5"/></svg>
+      <span class="visuellement-cache">Menu</span>
+    </button>
+  </div>
+</header>
+<main id="contenu" tabindex="-1">
+
+<div class="wrap notes-page">
+  <header class="entete-page">
+    <p class="surtitre">Notes de la maquette · version 4</p>
+    <h1>Galerie de territoire</h1>
+    <p class="chapo">Romain, cette page réunit le relevé des problèmes du site actuel et l’essentiel de la stratégie : ce que garde la version 4, les techniques retenues, votre palette, vos idées, et ce qu’il reste à fournir ou à décider.</p>
+  </header>
+  <div class="notes-grille">
+    <nav class="sommaire" aria-label="Sommaire">
+      <p class="sommaire__titre">Sommaire</p>
+      <ol>
+        <li><a href="#n-version">La version 4 en bref</a></li>
+        <li><a href="#n-constats">À corriger sur le site actuel</a></li>
+        <li><a href="#n-techniques">Les techniques retenues</a></li>
+        <li><a href="#n-palette">Votre palette</a></li>
+        <li><a href="#n-idees">Vos idées, mises en œuvre</a></li>
+        <li><a href="#n-legal">Points légaux</a></li>
+        <li><a href="#n-fournir">À fournir et à valider</a></li>
+        <li><a href="#n-limites">Limites de la maquette</a></li>
+      </ol>
+    </nav>
+    <div class="notes-corps">
+      <section class="note-bloc" id="n-version" aria-labelledby="t-version">
+        <h2 id="t-version">La version 4 en bref</h2>
+        <div class="texte">
+          <p>Le mur d’exposition de la v0 était trop simple, le carnet de territoire de la v1 trop complexe. La version 4 garde la base de la v0 et lui ajoute, en version courte, ce que la v1 avait de plus parlant : la carte des lieux, l’histoire d’Aquensis et le texte de chaque lieu.</p>
+        </div>
+        <div class="trois-colonnes">
+          <div><h3>Gardé de la v0</h3><ul class="liste-simple"><li>Le mur d’exposition et la simulation du rétroéclairage</li><li>Les cartes à pastilles et le bouton « Voir en »</li><li>La fiche claire, la barre d’achat sur mobile, le panier en tiroir</li><li>Les cartels, la bande de repères, la page Installation</li></ul></div>
+          <div><h3>Pris de la v1, simplifié</h3><ul class="liste-simple"><li>Une carte des lieux à repères numérotés, sans filtres ni calques</li><li>L’histoire d’Aquensis, avec la photo réelle</li><li>Le paragraphe « Le lieu » sur chaque fiche</li><li>Le trajet de Revel à Bagnères dans les quatre étapes, le bloc « Bientôt », qr.html</li></ul></div>
+          <div><h3>Laissé de côté</h3><ul class="liste-simple"><li>Grappes, filtres et calques de la carte, feuille modale</li><li>Idées cadeaux en grille, registre des avis sur l’accueil</li><li>Mode « carte de nuit » : le mode sombre suit l’appareil</li><li>Cartouches et graticules sur toutes les pages</li></ul></div>
+        </div>
+        <p class="attenue">Garde-fous : 5 entrées de menu, 8 sections sur l’accueil, trois moments interactifs (la lumière du mur, les pastilles de finition, la carte).</p>
+      </section>
+      <section class="note-bloc" id="n-constats" aria-labelledby="t-constats">
+        <h2 id="t-constats">À corriger sur le site actuel</h2>
+        <p class="attenue">Relevé du 28 octobre 2026 sur terregravee.fr, classé par urgence. Les quatre premiers points se corrigent en quelques minutes depuis WordPress.</p>
+        <ol class="constats"><li><h3><span class="niveau niveau--urgent">urgent</span>Les liens Facebook, Instagram et X de la page Contact mènent aux comptes de Hostinger.</h3><p>Ce sont les liens par défaut du thème. À remplacer par vos comptes, ou à retirer.</p></li><li><h3><span class="niveau niveau--urgent">urgent</span>Un produit vide « AUTO-DRAFT » est publié.</h3><p>L’adresse /produits/tr/ apparaît dans le catalogue et peut être indexée par Google. À mettre à la corbeille dans WooCommerce › Produits.</p></li><li><h3><span class="niveau niveau--urgent">urgent</span>Les mentions légales contiennent encore des champs à remplir.</h3><p>La page affiche « SIRET : [à compléter] » et « Téléphone : [optionnel] ». Le numéro de téléphone de l’hébergeur, exigé par la LCEN, manque aussi.</p></li><li><h3><span class="niveau niveau--urgent">urgent</span>Les CGV pointent vers un mauvais domaine.</h3><p>Le lien affiché « www.terregravee.fr » mène en réalité à www.terresgravees.fr, qui ne répond pas. Le lien vers la politique de confidentialité est vide, et le vendeur est nommé « Terres Gravées ».</p></li><li><h3><span class="niveau niveau--important">important</span>Aucun médiateur de la consommation n’est nommé.</h3><p>Les CGV renvoient vers un site générique. Le Code de la consommation (art. L612-1 et L616-1) impose d’indiquer le médiateur auquel vous adhérez : nom, site et adresse.</p></li><li><h3><span class="niveau niveau--important">important</span>Le formulaire type de rétractation manque.</h3><p>Les CGV décrivent bien le délai de 14 jours, mais le modèle de formulaire prévu par le Code de la consommation (art. L221-5) n’est pas fourni.</p></li><li><h3><span class="niveau niveau--important">important</span>Des cookies de suivi sont déposés avant le consentement.</h3><p>Dix cookies (sbjs_* pour l’attribution des commandes WooCommerce, tk_* pour les statistiques Jetpack) arrivent dès l’ouverture de la page. Google Analytics et Google Ads attendent bien le clic sur le bandeau. Deux propriétés Google Analytics sont chargées en double (G-HG9HTJQDV7 et G-E5TQ05HCMQ).</p></li><li><h3><span class="niveau niveau--important">important</span>Un lien de l’accueil est cassé.</h3><p>Le bouton « Voir » du bloc « Montage facile » mène à /infosinstallation/ (erreur 404). La page existe à l’adresse /tuto/.</p></li><li><h3><span class="niveau niveau--important">important</span>Les compteurs de catégories de l’accueil sont faux.</h3><p>L’accueil affiche 24 paysages, 32 animaux, 50 flore et 3 architecture. Le catalogue compte 5, 4, 0 et 4 modèles, et le lien Flore est vide.</p></li><li><h3><span class="niveau niveau--important">important</span>La page boutique s’intitule « prod Archives ».</h3><p>Le titre reprend le nom technique de la catégorie « prod ». La page n’a pas non plus de titre principal (H1).</p></li><li><h3><span class="niveau niveau--important">important</span>Deux finitions sont vendues sans photo.</h3><p>Le Cerf en noir et L’Abbaye de l’Escaladieu en doré. La maquette le signale par un emplacement « photo à venir ».</p></li><li><h3><span class="niveau niveau--important">important</span>La longueur du ruban LED change selon la page.</h3><p>2 mètres sur la fiche du kit, 1,5 mètre sur la page Infos &amp; installation.</p></li><li><h3><span class="niveau niveau--confort">confort</span>La fiche produit est lourde et le prix arrive tard.</h3><p>225 requêtes et 2,5 Mo de scripts : Stripe, PayPal, Apple Pay, Google Pay et hCaptcha se chargent dès l’affichage d’une plaque. Le prix apparaît sous les boutons de paiement.</p></li><li><h3><span class="niveau niveau--confort">confort</span>Les descriptions Google se répètent.</h3><p>À propos, Contact et la boutique partagent la même description (« Découvrez nos articles… »), qui évoque un blog inexistant. Celle de Créations spéciales dépasse 400 caractères.</p></li><li><h3><span class="niveau niveau--confort">confort</span>Le pied de page liste les variantes du nom.</h3><p>« Terre Gravé, Terregrave, Terres gravees… » ressemble à du bourrage de mots-clés. Ces variantes peuvent passer dans les données structurées (alternateName).</p></li><li><h3><span class="niveau niveau--confort">confort</span>Quelques fautes et accents manquants.</h3><p>« Meilleurs ventes », « Serie limitée », « Retro-eclairage », « Le Chateau de Mauvezin », « Condition general de vente », « A propos », et « Terres Gravées » dans les fiches produit.</p></li><li><h3><span class="niveau niveau--confort">confort</span>Plusieurs images n’ont pas de texte alternatif.</h3><p>Les photos du Pic du Midi et les mises en situation n’ont pas de description. Elle sert à l’accessibilité et à Google Images.</p></li><li><h3><span class="niveau niveau--confort">confort</span>Les avis affichent le nom complet des clients.</h3><p>Le prénom et l’initiale du nom suffisent (« Sophia P. »).</p></li></ol>
+      </section>
+      <section class="note-bloc" id="n-techniques" aria-labelledby="t-techniques">
+        <h2 id="t-techniques">Les techniques retenues</h2>
+        <p class="attenue">Niveau de preuve : fort pour Baymard, NN/g et les articles académiques ; moyen pour les sondages. Avec le trafic d’une micro-entreprise, préférer les comparaisons avant/après sur des périodes comparables aux tests A/B.</p>
+        <div class="techniques"><article class="technique">
+  <h3>Le mur d’exposition et la lumière</h3>
+  <dl><div><dt>Où</dt><dd>Premier écran de l’accueil : trois plaques accrochées avec leur ombre, et l’interrupteur qui simule le kit LED en cinq couleurs.</dd></div><div><dt>Pourquoi</dt><dd>Montrer l’objet et l’effet du rétroéclairage avant l’achat. Aucune étude citée : hypothèse à tester.</dd></div><div><dt>Indicateur</dt><dd>Clics sur l’interrupteur, taux d’ajout du kit LED sur les fiches.</dd></div></dl>
+</article><article class="technique">
+  <h3>Le kit LED proposé là où il sert</h3>
+  <dl><div><dt>Où</dt><dd>Option non cochée sur chaque fiche de plaque, avec la sortie du câble et le prix mis à jour.</dd></div><div><dt>Pourquoi</dt><dd>Les suggestions doivent être peu nombreuses, pertinentes et expliquées, accessoires nécessaires d’abord (<a class="source" href="https://baymard.com/blog/product-recommendations-cart">Baymard</a>) ; jamais d’option pré-cochée (<a class="source" href="https://www.nngroup.com/articles/deceptive-patterns/">NN/g</a>).</dd></div><div><dt>Indicateur</dt><dd>Taux d’attache du kit LED, panier moyen.</dd></div></dl>
+</article><article class="technique">
+  <h3>Une histoire d’origine vraie</h3>
+  <dl><div><dt>Où</dt><dd>Accueil (section L’atelier), page L’atelier, étoile « Le décor d’origine » sur la carte, page qr.html.</dd></div><div><dt>Pourquoi</dt><dd>L’immersion dans un récit agit sur les attitudes des lecteurs (méta-analyse de van Laer et al., 2014, <a class="source" href="https://openaccess.city.ac.uk/id/eprint/6755/">City, University of London</a>). Ici l’histoire est vérifiable, avec une photo réelle. Aucune étude trouvée sur l’effet commercial d’une histoire d’origine pour un artisan : hypothèse à tester.</dd></div><div><dt>Indicateur</dt><dd>Clics sur « Lire l’histoire », visites de qr.html.</dd></div></dl>
+</article><article class="technique">
+  <h3>Une carte simple des lieux</h3>
+  <dl><div><dt>Où</dt><dd>Aperçu sur l’accueil, page carte.html : repères numérotés, petite fiche, liste des lieux en dessous.</dd></div><div><dt>Pourquoi</dt><dd>Aucune étude trouvée sur l’effet commercial d’une carte : hypothèse à tester. Une carte accessible doit être opérable au clavier, ne pas dépendre de la couleur et proposer une alternative texte (<a class="source" href="https://www.boia.org/blog/interactive-maps-and-accessibility-4-tips">BOIA</a>) : c’est le rôle de la liste.</dd></div><div><dt>Indicateur</dt><dd>Clics sur les repères, parcours carte → fiche → panier.</dd></div></dl>
+</article><article class="technique">
+  <h3>Le trajet de fabrication, en clair</h3>
+  <dl><div><dt>Où</dt><dd>Quatre étapes de Revel à Bagnères-de-Bigorre, sur l’accueil et la page L’atelier.</dd></div><div><dt>Pourquoi</dt><dd>Rendre le travail visible augmente la valeur perçue (Buell et Norton, Management Science, 2011, <a class="source" href="https://ideas.repec.org/a/inm/ormnsc/v57y2011i9p1564-1579.html">IDEAS</a>).</dd></div><div><dt>Indicateur</dt><dd>Clics vers la fabrication, conversion des visiteurs qui l’ont vue (corrélation, pas causalité).</dd></div></dl>
+</article><article class="technique">
+  <h3>Des avis cités mot pour mot</h3>
+  <dl><div><dt>Où</dt><dd>Les trois avis les plus récents sur l’accueil, ceux de chaque modèle sur sa fiche, les neuf sur la page L’atelier, avec la mention « sans vérification d’achat ».</dd></div><div><dt>Pourquoi</dt><dd>Avec 5 avis, la probabilité d’achat serait 270 % plus élevée qu’avec zéro, et elle culmine entre 4,0 et 4,7 étoiles (<a class="source" href="https://spiegel.medill.northwestern.edu/How-Online-Reviews-Influence-Sales">Spiegel Research Center</a>, données d’un seul distributeur). 89 % des sites ne répondent pas aux avis négatifs (<a class="source" href="https://baymard.com/research-articles/current-state-ecommerce-product-page-ux">Baymard 2026</a>) : la réponse de l’atelier à l’avis de Gerald (4 étoiles, livraison en une semaine) est prévue sur la fiche du Cerf et la page L’atelier, à rédiger.</dd></div><div><dt>Indicateur</dt><dd>Nombre d’avis par modèle, conversion des fiches avec ou sans avis.</dd></div></dl>
+</article><article class="technique">
+  <h3>La rareté réelle : la série numérotée</h3>
+  <dl><div><dt>Où</dt><dd>Bande de repères (N° 001), caractéristiques de chaque fiche.</dd></div><div><dt>Pourquoi</dt><dd>Un message « quantité limitée » convainc plus qu’un message « temps limité » (Aggarwal, Jun et Huh, 2011, <a class="source" href="https://experts.umn.edu/en/publications/scarcity-messages-a-consumer-competition-perspective/">University of Minnesota</a>). La rareté n’est honnête que si elle est vraie (<a class="source" href="https://www.nngroup.com/articles/deceptive-patterns/">NN/g</a>).</dd></div><div><dt>Indicateur</dt><dd>Délai d’épuisement par série, inscriptions à la lettre.</dd></div></dl>
+</article><article class="technique">
+  <h3>Coût total et délais près du bouton</h3>
+  <dl><div><dt>Où</dt><dd>Trois garanties sous le bouton d’ajout (livraison, retours, paiement), frais de port annoncés dans le panier.</dd></div><div><dt>Pourquoi</dt><dd>64 % des testeurs cherchent les frais de port sur la fiche (<a class="source" href="https://baymard.com/blog/show-shipping-costs-on-product-pages">Baymard</a>) ; 41 % des sites n’indiquent pas de date de livraison à l’étape du choix de livraison (<a class="source" href="https://baymard.com/blog/shipping-speed-vs-delivery-date">Baymard</a>).</dd></div><div><dt>Indicateur</dt><dd>Taux d’abandon de panier, questions « quand vais-je recevoir ? ».</dd></div></dl>
+</article><article class="technique">
+  <h3>La barre d’achat collante sur mobile</h3>
+  <dl><div><dt>Où</dt><dd>Reprise de la v0 : le nom, le prix et le bouton restent en bas de l’écran quand on fait défiler une fiche.</dd></div><div><dt>Pourquoi</dt><dd>Elle ne gagne qu’entre 12,5 et 27 % des tests selon <a class="source" href="https://cleancommit.io/blog/sticky-add-to-cart-buttons/">Cleancommit</a> : à mesurer avant de la garder.</dd></div><div><dt>Indicateur</dt><dd>Taux d’ajout au panier sur mobile, avant et après.</dd></div></dl>
+</article><article class="technique">
+  <h3>Une lettre d’information honnête</h3>
+  <dl><div><dt>Où</dt><dd>Fin de l’accueil : une adresse, une case non cochée, le bloc « Bientôt ».</dd></div><div><dt>Pourquoi</dt><dd>Une inscription rapide qui dit ce que contient la lettre (<a class="source" href="https://www.nngroup.com/articles/newsletters/">NN/g</a>). Consentement séparé si l’on mesure l’ouverture des lettres (<a class="source" href="https://www.cnil.fr/fr/recommandation-pixel-suivi-courriels">CNIL, délibération n° 2026-042</a>).</dd></div><div><dt>Indicateur</dt><dd>Inscriptions pour 100 visiteurs, désinscriptions.</dd></div></dl>
+</article></div>
+        <p class="attenue">Évité volontairement : compte à rebours, stock affiché, prix barré, option pré-cochée, fausse urgence.</p>
+      </section>
+      <section class="note-bloc" id="n-palette" aria-labelledby="t-palette">
+        <h2 id="t-palette">Votre palette</h2>
+        <p class="attenue">La charte « version centrée métal brut » sert de base. Le cuivre foncé est ajouté pour le texte d’accent. Le mode sombre suit le réglage de l’appareil.</p>
+        <ul class="palette"><li class="palette__item"><span class="palette__couleur" style="background:#2C2C2C" aria-hidden="true"></span><span class="palette__nom">Noir ardoise <code>#2C2C2C</code></span><span class="palette__role">Texte, bandeau de maquette, pied de page, fond du mur allumé.</span></li><li class="palette__item"><span class="palette__couleur" style="background:#F5F5F0" aria-hidden="true"></span><span class="palette__nom">Blanc cassé <code>#F5F5F0</code></span><span class="palette__role">Fond des pages, texte sur fond sombre.</span></li><li class="palette__item"><span class="palette__couleur" style="background:#D0D0D0" aria-hidden="true"></span><span class="palette__nom">Argent doux <code>#D0D0D0</code></span><span class="palette__role">Filets et séparations décoratives. Les bordures de champs passent à #7E7E77 pour atteindre 3 : 1.</span></li><li class="palette__item"><span class="palette__couleur" style="background:#DCE2D4" aria-hidden="true"></span><span class="palette__nom">Vert sauge très pâle <code>#DCE2D4</code></span><span class="palette__role">Sections secondaires : l’atelier, la lettre, le récit du lieu sur chaque fiche, la rétractation.</span></li><li class="palette__item"><span class="palette__couleur" style="background:#CBAA88" aria-hidden="true"></span><span class="palette__nom">Cuivre clair <code>#CBAA88</code></span><span class="palette__role">Boutons d’action, texte noir ardoise ; étoile d’Aquensis sur la carte.</span></li><li class="palette__item"><span class="palette__couleur" style="background:#80542B" aria-hidden="true"></span><span class="palette__nom">Cuivre foncé <code>#80542B</code></span><span class="palette__role">Texte d’accent (surtitres, cartels), parce que le cuivre clair ne passe pas en texte.</span></li></ul>
+        <div class="tableau-defile" tabindex="0" role="region" aria-label="Tableau des contrastes, défilement horizontal"><table class="tableau">
+          <caption class="visuellement-cache">Contrastes calculés entre les couleurs de la palette</caption>
+          <thead><tr><th scope="col">Couleur</th><th scope="col">Sur</th><th scope="col">Contraste</th><th scope="col">Seuil WCAG AA</th></tr></thead>
+          <tbody><tr><th scope="row"><span class="contraste__exemple" style="color:#FFFFFF;background:#CBAA88" aria-hidden="true">Aa</span>Texte blanc <code>#FFFFFF</code></th><td>cuivre clair <code>#CBAA88</code></td><td class="num">2,18 : 1</td><td class="contraste--non">ne passe pas (texte, 4,5 : 1)</td></tr><tr><th scope="row"><span class="contraste__exemple" style="color:#2C2C2C;background:#CBAA88" aria-hidden="true">Aa</span>Texte noir ardoise <code>#2C2C2C</code></th><td>cuivre clair <code>#CBAA88</code></td><td class="num">6,41 : 1</td><td class="contraste--ok">passe (texte, 4,5 : 1)</td></tr><tr><th scope="row"><span class="contraste__exemple" style="color:#2C2C2C;background:#F5F5F0" aria-hidden="true">Aa</span>Texte noir ardoise <code>#2C2C2C</code></th><td>blanc cassé <code>#F5F5F0</code></td><td class="num">12,77 : 1</td><td class="contraste--ok">passe (texte, 4,5 : 1)</td></tr><tr><th scope="row"><span class="contraste__exemple" style="color:#55554E;background:#DCE2D4" aria-hidden="true">Aa</span>Texte secondaire <code>#55554E</code></th><td>vert sauge <code>#DCE2D4</code></td><td class="num">5,68 : 1</td><td class="contraste--ok">passe (texte, 4,5 : 1)</td></tr><tr><th scope="row"><span class="contraste__exemple" style="color:#CBAA88;background:#F5F5F0" aria-hidden="true">Aa</span>Texte cuivre clair <code>#CBAA88</code></th><td>blanc cassé <code>#F5F5F0</code></td><td class="num">1,99 : 1</td><td class="contraste--non">ne passe pas (texte, 4,5 : 1)</td></tr><tr><th scope="row"><span class="contraste__exemple" style="color:#80542B;background:#F5F5F0" aria-hidden="true">Aa</span>Texte cuivre foncé <code>#80542B</code></th><td>blanc cassé <code>#F5F5F0</code></td><td class="num">5,96 : 1</td><td class="contraste--ok">passe (texte, 4,5 : 1)</td></tr><tr><th scope="row"><span class="contraste__exemple" style="color:#80542B;background:#DCE2D4" aria-hidden="true">Aa</span>Texte cuivre foncé <code>#80542B</code></th><td>vert sauge <code>#DCE2D4</code></td><td class="num">4,93 : 1</td><td class="contraste--ok">passe (texte, 4,5 : 1)</td></tr><tr><th scope="row"><span class="contraste__exemple" style="color:#7E7E77;background:#F5F5F0" aria-hidden="true">Aa</span>Bordure de champ <code>#7E7E77</code></th><td>blanc cassé <code>#F5F5F0</code></td><td class="num">3,74 : 1</td><td class="contraste--ok">passe (objet graphique, 3 : 1)</td></tr></tbody>
+        </table></div>
+        <p class="attenue">Typographie : Marcellus pour les titres, Jost pour le texte, Barlow Semi Condensed pour les cartels et les étiquettes de la carte, Allerta Stencil pour la signature TERRE GRAVÉE, comme le lettrage pochoir des plaques. Votre logo vectoriel peut remplacer la signature <span class="note note--manque">à fournir</span></p>
+      </section>
+      <section class="note-bloc" id="n-idees" aria-labelledby="t-idees">
+        <h2 id="t-idees">Vos idées, mises en œuvre</h2>
+        <p class="attenue">Les idées de votre document Contexte : ce que le site prévoit, ce qui reste à décider. Déjà en place : la carte des lieux, le sur-mesure, le kit LED.</p>
+        <ul class="idees"><li><h3>Panneaux de démonstration à Aquensis, avec QR code</h3><p>La page qr.html les attend : l’histoire en bref, quatre plaques liées à Bagnères, le prix. Un paramètre de suivi par emplacement.</p><p class="attenue"><strong>À valider :</strong> L’accord de la SEMETHERM, les emplacements, le paramètre de suivi et l’outil de mesure. <span class="note note--decision">proposition à valider</span></p></li><li><h3>Commerçants et restaurants qui exposent une plaque</h3><p>La carte peut recevoir un repère « Où voir une plaque » pour chaque lieu, avec son accord et la mention « plaque offerte par l’atelier ».</p><p class="attenue"><strong>À valider :</strong> La liste des lieux, l’accord écrit de chacun. <span class="note note--decision">proposition à valider</span></p></li><li><h3>Offices de tourisme et boutiques des grands sites</h3><p>Une page « Où acheter », créée seulement quand un dépôt est signé. Aucun point de vente n’est annoncé avant.</p><p class="attenue"><strong>À valider :</strong> Les lieux à démarcher, le prix public en boutique. <span class="note note--decision">proposition à valider</span></p></li><li><h3>Événements : fête du château de Mauvezin, montée du Tourmalet</h3><p>Un repère temporaire sur la carte et un QR code vers la lettre sur le stand.</p><p class="attenue"><strong>À valider :</strong> La participation et les dates. <span class="note note--decision">proposition à valider</span></p></li><li><h3>Grands formats pour la ville</h3><p>Annoncés « en préparation » sur la page Sur mesure et dans le bloc « Bientôt » de la lettre.</p><p class="attenue"><strong>À valider :</strong> Dimensions, prix, ville à qui les proposer. <span class="note note--decision">proposition à valider</span></p></li><li><h3>Offres pour les professionnels</h3><p>La page Sur mesure présente les séries et le formulaire propose « Série pour un professionnel ». Aucun chiffre affiché.</p><p class="attenue"><strong>À valider :</strong> Les conditions (délais, dégressivité éventuelle). <span class="note note--decision">proposition à valider</span></p></li><li><h3>Thèmes sportifs : cols, rugby</h3><p>D’autres cols prendraient place sur la carte comme le Tourmalet. Pour le rugby, un dessin sans logo ni nom de club.</p><p class="attenue"><strong>À valider :</strong> Les thèmes et les droits sur les noms. <span class="note note--decision">proposition à valider</span></p></li><li><h3>Autres faunes et flores</h3><p>La planche des dessins inédits en contient déjà : l’iris, l’orchis maculée, les chardons bleus, la digitale pourpre, le grand tétras, le milan royal, le vautour fauve, le gypaète barbu. Chaque nouveau modèle passerait d’abord par le bloc « Bientôt ».</p><p class="attenue"><strong>À valider :</strong> Le choix des espèces et le calendrier. <span class="note note--decision">proposition à valider</span></p></li><li><h3>Autres territoires</h3><p>Une carte par département, avec le même principe de repères numérotés.</p><p class="attenue"><strong>À valider :</strong> Les priorités, les illustrations, les marques à vérifier. <span class="note note--decision">proposition à valider</span></p></li></ul>
+      </section>
+      <section class="note-bloc" id="n-legal" aria-labelledby="t-legal">
+        <h2 id="t-legal">Points légaux</h2>
+        <ul class="legal"><li><h3>Bouton de rétractation</h3><p>L’ordonnance n° 2026-2 du 5 janvier 2026 transpose la directive (UE) 2023/2673. Depuis le 19 juin 2026, le site doit offrir sans frais une fonction « Renoncer au contrat ici », facile à trouver pendant tout le délai ; amende administrative jusqu’à 75 000 € pour une personne morale. La maquette met un lien dans le pied de chaque page et un formulaire simulé en deux étapes sur la page Contact. Numéro du décret d’application <span class="note note--manque">à fournir</span>. <a class="source" href="https://hlc.com/fr/publications/transposition-under-french-law-of-the-eu-mandatory-withdrawal-button-for-online-sales">Hogan Lovells</a></p></li><li><h3>Avis en ligne</h3><p>Mention « publiés sans vérification d’achat » près de chaque bloc d’avis et de chaque note, dates de publication, ordre chronologique (les trois plus récents sur l’accueil, critère écrit dans la politique des avis), rubrique « Comment sont publiés les avis » (L111-7-2 ; D111-16 à D111-19). <a class="source" href="https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000049571119">L111-7-2</a>, <a class="source" href="https://www.legifrance.gouv.fr/jorf/id/JORFARTI000035720943">décret 2017-1436</a></p></li><li><h3>Prix et réductions</h3><p>Aucun prix barré. Toute réduction future devra se référer au prix le plus bas des 30 derniers jours (L112-1-1). <a class="source" href="https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000044549592">Légifrance</a></p></li><li><h3>Pratiques commerciales trompeuses</h3><p>Aucun stock, délai, label ou partenariat inventé. L’histoire d’Aquensis porte toujours le marqueur d’accord de la SEMETHERM ; jamais de partenariat ni de point de vente. Les modèles en préparation sont montrés sans photo de plaque. <a class="source" href="https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000044563107">L121-4 sur Légifrance</a></p></li><li><h3>Sur mesure</h3><p>Les pièces adaptées à la demande sont exclues du droit de rétractation (L221-28, 3°) : c’est écrit sur la page Sur mesure. <a class="source" href="https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000044563170">Légifrance</a></p></li><li><h3>Lettre d’information</h3><p>Case non cochée, finalité écrite, désinscription à chaque envoi (L34-5 CPCE, RGPD). <a class="source" href="https://www.cnil.fr/fr/la-prospection-commerciale-par-courrier-electronique">CNIL, prospection</a></p></li><li><h3>Polices</h3><p>La maquette charge Google Fonts pour être prête à l’emploi. Un tribunal de Munich a condamné en 2022 un site qui transmettait ainsi l’adresse IP des visiteurs à Google : sur le site réel, héberger les polices soi-même. <a class="source" href="https://thehackernews.com/2022/01/german-court-rules-websites-embedding.html">The Hacker News</a></p></li><li><h3>Formule « rayon de 150 km »</h3><p>Revel (31) est à environ 155 km de Gerde à vol d’oiseau. Selon le point de référence choisi, la formule peut être contestée : préciser le centre du rayon.</p></li></ul>
+      </section>
+      <section class="note-bloc note-bloc--double" id="n-fournir" aria-labelledby="t-fournir">
+        <div>
+          <h2 id="t-fournir">À fournir</h2>
+          <p class="attenue">Signalé dans les pages par <span class="note note--manque">à fournir</span> ou <span class="note note--manque">à confirmer</span>.</p>
+          <ul class="liste-simple"><li>L’accord écrit de la SEMETHERM pour citer le projet Aquensis.</li><li>Le point de référence de la formule « rayon de 150 km » (Revel est à environ 155 km de Gerde).</li><li>La fixation conseillée en extérieur.</li><li>La longueur exacte du ruban LED (2 m ou 1,5 m).</li><li>La durée de validité de la carte cadeau.</li><li>Les frais de port, ou au moins un tarif indicatif.</li><li>Les photos manquantes : Le Cerf en noir, L’Abbaye de l’Escaladieu en doré, une mise en situation du Cirque de Gavarnie et du Cerf.</li><li>Des photos réelles de la fabrication : découpe à Revel, thermolaquage, emballage.</li><li>La relecture des textes « Le lieu » de chaque fiche (marqués « à relire »).</li><li>La taille de chaque série limitée.</li><li>La politique des avis : contrepartie éventuelle, délais de publication et de conservation, motifs de refus.</li><li>Le dessin du Jardin Massey, le prix et la date de sortie des modèles en préparation, les dimensions et le prix des grands formats.</li><li>Les liens Instagram et Facebook.</li><li>Le nom et les coordonnées du médiateur de la consommation.</li><li>Le numéro du décret du 5 janvier 2026 sur la fonction de rétractation.</li><li>L’adresse vers laquelle pointe le QR code déjà prêt.</li><li>Un numéro de téléphone professionnel pour le contact et les mentions légales (Code de la consommation, art. L221-5 et R111-1 ; LCEN, art. 6-III), distinct du numéro personnel.</li><li>Le logo en SVG, pour remplacer la signature typographique.</li></ul>
+        </div>
+        <div>
+          <h2>À valider</h2>
+          <p class="attenue">Signalé dans les pages par <span class="note note--decision">proposition à valider</span>.</p>
+          <ul class="liste-simple"><li>Le paramètre de suivi du QR code d’Aquensis (page qr.html).</li><li>Les modèles annoncés en préparation : Le Casque du Lhéris, La Transhumance, Le Jardin Massey et les grands formats.</li><li>La barre d’achat collante sur mobile, à mesurer.</li><li>La réponse de l’atelier à l’avis de Gerald (livraison en une semaine), à rédiger.</li><li>Les idées commerciales de la liste « Vos idées, mises en œuvre ».</li></ul>
+        </div>
+      </section>
+      <section class="note-bloc" id="n-limites" aria-labelledby="t-limites">
+        <h2 id="t-limites">Limites de la maquette</h2>
+        <ul class="liste-simple">
+          <li>Les positions de la carte sont indicatives, à un ou deux kilomètres près ; les courbes de niveau sont décoratives.</li>
+          <li>La simulation du rétroéclairage donne une idée de l’effet ; les couleurs réelles du ruban diffèrent.</li>
+          <li>Les textes « Le lieu » sont courts et restent à relire.</li>
+          <li>Le panier vit dans le navigateur : aucune commande, aucun paiement, aucun envoi de formulaire.</li>
+          <li>Les polices viennent de Google Fonts : une connexion internet est nécessaire pour les voir.</li>
+        </ul>
+        <p><a class="lien-fleche" href="qr.html">Voir la page du QR code d’Aquensis</a></p>
+      </section>
+    </div>
+  </div>
+</div>
+</main>
+<footer class="pied">
+  <div class="wrap">
+    <div class="pied__grille">
+      <div class="pied__marque">
+        <a class="marque" href="index.html"><svg viewBox="0 0 30 22" aria-hidden="true" focusable="false"><path d="M1.5 20.5 10 9l3.2 3.6L18.6 4.5 28.5 20.5Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M18.6 4.5V1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span class="marque__nom">TERRE GRAVÉE</span></a>
+        <p class="pied__slogan">Graver l’âme des territoires</p>
+        <p>Atelier Terre Gravée<br>16 rue du Pic du Midi, 65200 Gerde<br><a href="contact.html">contact@terregravee.fr</a><br>Téléphone : numéro professionnel <span class="note note--manque">à fournir</span></p>
+      </div>
+      <div>
+        <h2>Collection</h2>
+        <ul>
+          <li><a href="collection.html#paysages">Paysages</a></li>
+          <li><a href="collection.html#patrimoine">Patrimoine</a></li>
+          <li><a href="collection.html#faune">Faune</a></li>
+          <li><a href="produit-led.html">Kit LED</a></li>
+          <li><a href="produit-carte-cadeau.html">Carte cadeau</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Commander</h2>
+        <ul>
+          <li><a href="installation.html">Installation et kit LED</a></li>
+          <li><a href="contact.html#livraison">Livraison et retours</a></li>
+          <li><a class="pied__retractation" href="contact.html#retractation">Renoncer au contrat ici</a></li>
+          <li><a href="https://terregravee.fr/cgv/">Conditions générales de vente</a></li>
+          <li><a href="https://terregravee.fr/politique/">Mentions légales et confidentialité</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>L’atelier</h2>
+        <ul>
+          <li><a href="carte.html">La carte des lieux</a></li>
+          <li><a href="atelier.html#origine">L’histoire d’Aquensis</a></li>
+          <li><a href="atelier.html#avis">Les avis</a></li>
+          <li><a href="index.html#lettre">Lettre d’information</a></li>
+          <li>Instagram, Facebook <span class="note note--manque">liens à fournir</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="pied__bas">
+      <p>© 2026 Terre Gravée · Micro-entreprise de Romain Fourneaux · SIRET 941 234 270 00010</p>
+      <p>Prix TTC, TVA non applicable (art. 293 B du CGI)</p>
+    </div>
+  </div>
+</footer>
+<div class="voile" data-fermer-panier></div>
+<div class="tiroir" role="dialog" aria-modal="true" aria-labelledby="titre-panier" aria-hidden="true" inert>
+  <div class="tiroir__haut"><h2 id="titre-panier">Panier</h2><button type="button" class="bouton-icone tiroir__fermer" data-fermer-panier>Fermer</button></div>
+  <ul class="tiroir__liste"></ul>
+  <div class="tiroir__bas">
+    <div class="tiroir__total"><span>Sous-total TTC</span><strong>0 €</strong></div>
+    <p>Frais de port selon le poids et la destination, affichés avant la validation <span class="note note--manque">montant à fournir</span>. Livraison en 2 à 4 jours ouvrés, à titre indicatif.</p>
+    <button type="button" class="btn btn--plein" disabled aria-describedby="commande-desactivee">Commander</button>
+    <p id="commande-desactivee">Maquette : la commande et le paiement sont désactivés. Le panier reste dans ce navigateur.</p>
+  </div>
+</div>
+<div class="toast" role="status" aria-live="polite"><span class="toast__texte"></span><button type="button" data-ouvrir-panier>Voir le panier</button></div>
+<script src="assets/galerie.js"></script>
+</body>
+</html>

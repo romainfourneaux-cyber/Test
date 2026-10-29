@@ -4,8 +4,9 @@ Maquettes de travail pour la refonte de [terregravee.fr](https://terregravee.fr)
 
 | Dossier | Contenu |
 |---|---|
-| [`maquette/`](maquette/) | Première maquette (v0) : « mur d'exposition », simulation du rétroéclairage LED, notes de refonte (`notes.html`) avec le relevé des problèmes du site actuel |
-| [`versions/`](versions/) | Trois versions alternatives inspirées des tendances et des techniques marketing actuelles : carnet de territoire, boutique orientée conversion, showroom immersif. `versions/index.html` les compare. |
+| [`maquette/`](maquette/) | Première maquette (v0), source du mélange (jugée trop simple) : « mur d'exposition », simulation du rétroéclairage LED, notes de refonte (`notes.html`) avec le relevé des problèmes du site actuel |
+| [`versions/v4-galerie/`](versions/v4-galerie/) | **Version retenue (v4) « Galerie de territoire »** : le mur d'exposition de la v0 enrichi de la carte des lieux, de l'histoire d'Aquensis et des textes de lieu de la v1, aux couleurs de la charte |
+| [`versions/v1-carnet/`](versions/v1-carnet/) | Version 1 « Carnet de territoire », source du mélange (jugée trop complexe). `versions/index.html` compare v4, v0 et v1 |
 | [`fichiers-uniques/`](fichiers-uniques/) | Chaque maquette regroupée en un seul fichier HTML autonome (pages, styles, scripts et photos), à ouvrir directement |
 | [`outils/`](outils/) | `regrouper.py` : régénère un fichier unique à partir d'un dossier de maquette |
 
@@ -15,3 +16,5 @@ Maquettes de travail pour la refonte de [terregravee.fr](https://terregravee.fr)
 2. Double-cliquer sur un fichier de `fichiers-uniques/` (le plus simple), ou sur `maquette/index.html`, ou sur `index.html` dans un dossier de `versions/`.
 
 Une connexion internet est nécessaire pour charger les polices.
+
+Les versions 2 (boutique orientée conversion) et 3 (showroom immersif) ont été abandonnées ; elles restent dans l'historique git.
