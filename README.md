@@ -8,6 +8,7 @@ Maquettes de travail pour la refonte de [terregravee.fr](https://terregravee.fr)
 | [`versions/v4-galerie/`](versions/v4-galerie/) | **Version retenue (v4) « Galerie de territoire »** : le mur d'exposition de la v0 enrichi de la carte des lieux, de l'histoire d'Aquensis et des textes de lieu de la v1, aux couleurs de la charte |
 | [`versions/v1-carnet/`](versions/v1-carnet/) | Version 1 « Carnet de territoire », source du mélange (jugée trop complexe). `versions/index.html` compare v4, v0 et v1 |
 | [`fichiers-uniques/`](fichiers-uniques/) | Chaque maquette regroupée en un seul fichier HTML autonome (pages, styles, scripts et photos), à ouvrir directement |
+| [`questionnaire/`](questionnaire/) | Questionnaire pour Romain (59 questions sur ce qui manque pour finir le site) : `questions.json` et le générateur de la page. Les réponses restent dans la page publiée, pas dans ce dépôt |
 | [`outils/`](outils/) | `regrouper.py` : régénère un fichier unique à partir d'un dossier de maquette |
 
 ## Ouvrir les maquettes sous Windows

@@ -1,0 +1,1254 @@
+{
+ "sections": [
+  {
+   "id": "entreprise",
+   "titre": "Ton entreprise",
+   "intro": "Deux mentions obligatoires pour les mentions légales et les CGV, puis une question sur ton adresse de Gerde.",
+   "questions": [
+    {
+     "id": "siret",
+     "question": "Ton SIRET est-il bien le 941 234 270 00010 ?",
+     "aide": "La maquette l’affiche dans le pied de page de toutes les pages, alors que les mentions légales du site actuel disent encore « SIRET : [à compléter] ». Tu peux le vérifier sur annuaire-entreprises.data.gouv.fr (loi LCEN, article 6-III).",
+     "type": "choix",
+     "priorite": "bloquant",
+     "pages": [
+      "pied de page (toutes les pages)",
+      "notes.html#n-constats"
+     ],
+     "defaut": "",
+     "exemple": "",
+     "options": [
+      "Oui, c’est le bon",
+      "Autre : le bon numéro est…"
+     ],
+     "a_relire": "",
+     "unite": ""
+    },
+    {
+     "id": "mediateur",
+     "question": "Quel est le nom de ton médiateur de la consommation ?",
+     "aide": "C’est un service gratuit qui règle à l’amiable un litige avec un client, obligatoire pour vendre aux particuliers ; écris « pas encore » si tu n’en as pas, il faudra alors en choisir un (par exemple CM2C ou Médicys) avant la mise en ligne (articles L612-1 et L616-1 du Code de la consommation).",
+     "type": "texte",
+     "priorite": "bloquant",
+     "pages": [
+      "contact.html",
+      "pied de page (toutes les pages)",
+      "notes.html#n-constats"
+     ],
+     "defaut": "",
+     "exemple": "Nom du médiateur, ou « pas encore »",
+     "options": [],
+     "a_relire": "",
+     "unite": ""
+    },
+    {
+     "id": "gerde-public",
+     "question": "Ton adresse de Gerde (16 rue du Pic du Midi) reçoit-elle du public ?",
+     "aide": "La carte affiche un repère « Atelier Terre Gravée » à Gerde, qui invite à venir, alors que la découpe se fait à Revel et la finition à Bagnères-de-Bigorre ; le retrait des commandes se règle à part, dans la question sur les modes de livraison.",
+     "type": "choix",
+     "priorite": "utile",
+     "pages": [
+      "carte.html",
+      "contact.html",
+      "atelier.html"
+     ],
+     "defaut": "",
+     "exemple": "",
+     "options": [
+      "Non : on retire le repère « Atelier » de la carte",
+      "Oui, sur rendez-vous",
+      "Autre"
+     ],
+     "a_relire": "",
+     "unite": ""
+    }
+   ]
+  },
+  {
+   "id": "livraison",
+   "titre": "Livraison et retours",
+   "intro": "Ce que le panier, la FAQ et les CGV doivent dire sur les zones, les frais, les délais et les retours.",
+   "questions": [
+    {
+     "id": "livraison-zones",
+     "question": "Dans quelles zones livres-tu ?",
+     "aide": "Aucune page ne le dit aujourd’hui, alors qu’un site marchand doit annoncer ses restrictions de livraison au plus tard au début de la commande ; les zones servent aussi à régler WooCommerce (article L221-14 du Code de la consommation).",
+     "type": "choix-multiple",
+     "priorite": "bloquant",
+     "pages": [
+      "panier (toutes les pages)",
+      "contact.html#livraison"
+     ],
+     "defaut": "France métropolitaine (hors Corse)",
+     "exemple": "",
+     "options": [
+      "France métropolitaine (hors Corse)",
+      "Corse",
+      "Outre-mer",
+      "Belgique et Luxembourg",
+      "Suisse",
+      "Autres pays de l’Union européenne",
+      "Royaume-Uni",
+      "Autre"
+     ],
+     "a_relire": "",
+     "unite": ""
+    },
+    {
+     "id": "livraison-modes",
+     "question": "Quels modes de livraison proposes-tu ?",
+     "aide": "WooCommerce ne peut pas prendre de commande sans mode de livraison, et ils apparaîtront à l’étape livraison, dans la FAQ et dans les CGV ; un retrait sur place éviterait les 5 € aux clients du coin.",
+     "type": "choix-multiple",
+     "priorite": "bloquant",
+     "pages": [
+      "panier (toutes les pages)",
+      "contact.html#livraison"
+     ],
+     "defaut": "",
+     "exemple": "",
+     "options": [
+      "Colissimo à domicile, avec suivi",
+      "Colissimo en point retrait",
+      "Mondial Relay en point relais",
+      "Chronopost",
+      "Lettre suivie La Poste",
+      "Retrait gratuit à Gerde, sur rendez-vous",
+      "Autre"
+     ],
+     "a_relire": "",
+     "unite": ""
+    },
+    {
+     "id": "livraison-regle",
+     "question": "Les 5 € de livraison, c’est par commande ou par plaque ?",
+     "aide": "« 5 € par commande, quel que soit le nombre d’articles » est une hypothèse de la maquette, affichée dans le panier, sous chaque bouton d’achat et dans la FAQ : le total port compris doit être exact avant la commande (article L221-5 du Code de la consommation).",
+     "type": "choix",
+     "priorite": "bloquant",
+     "pages": [
+      "panier (toutes les pages)",
+      "produit-*.html",
+      "contact.html#livraison"
+     ],
+     "defaut": "5 € par commande, quel que soit le nombre d’articles",
+     "exemple": "",
+     "options": [
+      "5 € par commande, quel que soit le nombre d’articles",
+      "5 € par plaque",
+      "Autre"
+     ],
+     "a_relire": "",
+     "unite": ""
+    },
+    {
+     "id": "livraison-sans-plaque",
+     "question": "Un kit LED commandé seul, sans plaque : combien coûte la livraison ?",
+     "aide": "La maquette ne dit rien d’un kit LED commandé seul, alors que le panier doit afficher le bon total avant la commande (article L221-5 du Code de la consommation).",
+     "type": "choix",
+     "priorite": "important",
+     "pages": [
+      "panier (toutes les pages)",
+      "produit-led.html",
+      "contact.html#livraison"
+     ],
+     "defaut": "",
+     "exemple": "",
+     "options": [
+      "5 €, comme une plaque",
+      "Gratuite",
+      "Le kit ne se vend pas seul",
+      "Autre : un autre prix (j’écris le montant)"
+     ],
+     "a_relire": "",
+     "unite": ""
+    },
+    {
+     "id": "livraison-tarifs-etranger",
+     "question": "Si tu livres ailleurs qu’en France métropolitaine (Corse, outre-mer, étranger), quel est le prix de la livraison pour chaque zone ?",
+     "aide": "Ces tarifs s’afficheront dans le panier et les CGV ; ne réponds pas si tu ne livres qu’en France métropolitaine hors Corse.",
+     "type": "texte",
+     "priorite": "important",
+     "pages": [
+      "panier (toutes les pages)",
+      "contact.html#livraison"
+     ],
+     "defaut": "",
+     "exemple": "Corse : … € ; Belgique : … €",
+     "options": [],
+     "a_relire": "",
+     "unite": ""
+    },
+    {
+     "id": "delai-preparation",
+     "question": "Les « 2 à 4 jours ouvrés » annoncés, c’est le temps…",
+     "aide": "Le panier dit « Expédition en 2 à 4 jours ouvrés » mais la FAQ dit « Comptez 2 à 4 jours » pour recevoir la plaque, et Gerald a attendu une semaine : pense aussi au temps de coller le kit LED.",
+     "type": "choix",
+     "priorite": "important",
+     "pages": [
+      "panier (toutes les pages)",
+      "index.html (bande de repères)",
+      "produit-*.html",
+      "contact.html#livraison"
+     ],
+     "defaut": "…avant l’envoi du colis",
+     "exemple": "",
+     "options": [
+      "…avant l’envoi du colis",
+      "…jusqu’à la réception chez le client",
+      "Autre : je donne le bon délai"
+     ],
+     "a_relire": "",
+     "unite": ""
+    },
+    {
+     "id": "delai-maximal",
+     "question": "Au plus tard, combien de jours après la commande le client reçoit-il sa plaque, transport compris ?",
+     "aide": "C’est le délai qui t’engage : la loi oblige à annoncer une date ou un délai de livraison, 30 jours à défaut, et la mention « à titre indicatif » ne te protège pas ; compte les week-ends pour qu’on puisse le comparer aux 2 à 4 jours ouvrés (article L216-1 du Code de la consommation).",
+     "type": "nombre",
+     "priorite": "important",
+     "pages": [
+      "panier (toutes les pages)",
+      "index.html (bande de repères)",
+      "contact.html#livraison"
+     ],
+     "defaut": "",
+     "exemple": "7",
+     "options": [],
+     "a_relire": "",
+     "unite": "jours (week-ends compris)"
+    },
+    {
+     "id": "noel-date-limite",
+     "question": "Jusqu’à quelle date peut-on commander pour recevoir sa plaque avant Noël 2026 ?",
+     "aide": "Elle s’affichera dans un bandeau et dans la FAQ livraison avant le Black Friday du 27 novembre : compte 24 décembre moins ton délai maximal, et réponds avant le 20 novembre environ ; une date annoncée t’engage (article L216-1 du Code de la consommation).",
+     "type": "date",
+     "priorite": "important",
+     "pages": [
+      "index.html",
+      "contact.html#livraison"
+     ],
+     "defaut": "",
+     "exemple": "16 décembre 2026",
+     "options": [],
+     "a_relire": "",
+     "unite": ""
+    },
+    {
+     "id": "retour-adresse",
+     "question": "À quelle adresse un client renvoie-t-il une plaque (rétractation ou défaut) ?",
+     "aide": "Elle figurera dans les CGV et sur la page Contact, près du formulaire « Renoncer au contrat ici » : les plaques partent de Bagnères-de-Bigorre, il faut donc savoir où elles reviennent.",
+     "type": "choix",
+     "priorite": "important",
+     "pages": [
+      "contact.html#retractation"
+     ],
+     "defaut": "16 rue du Pic du Midi, 65200 Gerde",
+     "exemple": "",
+     "options": [
+      "16 rue du Pic du Midi, 65200 Gerde",
+      "Autre adresse"
+     ],
+     "a_relire": "",
+     "unite": ""
+    },
+    {
+     "id": "colis-abime",
+     "question": "Si une plaque arrive abîmée, que proposes-tu ?",
+     "aide": "La réponse complète la FAQ « Ma plaque est arrivée abîmée » de la page Contact ; le transport reste à tes risques jusqu’à la remise au client, qui n’a rien à payer, et le remboursement seul ne suffit pas tant qu’un remplacement est possible (articles L216-4 et L217-9 du Code de la consommation).",
+     "type": "choix",
+     "priorite": "utile",
+     "pages": [
+      "contact.html#livraison"
+     ],
+     "defaut": "",
+     "exemple": "",
+     "options": [
+      "Au choix du client : une nouvelle plaque sans frais ou le remboursement",
+      "Une nouvelle plaque, envoyée sans frais",
+      "Autre"
+     ],
+     "a_relire": "",
+     "unite": ""
+    }
+   ]
+  },
+  {
+   "id": "avis",
+   "titre": "Avis clients",
+   "intro": "Ce que la loi oblige à publier sur les avis, et la vérification des 9 avis déjà en ligne.",
+   "questions": [
+    {
+     "id": "avis-contrepartie",
+     "question": "As-tu offert, ou comptes-tu offrir, quelque chose (réduction, cadeau, remboursement) en échange d’un avis ?",
+     "aide": "La page L’atelier affiche « Contrepartie offerte aux auteurs d’avis : aucune », une mention obligatoire qui doit rester vraie à l’avenir (articles L111-7-2 et D111-17 du Code de la consommation).",
+     "type": "oui-non",
+     "priorite": "bloquant",
+     "pages": [
+      "atelier.html#politique-avis"
+     ],
+     "defaut": "Non",
+     "exemple": "",
+     "options": [],
+     "a_relire": "",
+     "unite": ""
+    },
+    {
+     "id": "avis-authentiques",
+     "question": "Les 9 avis publiés viennent-ils tous de vrais clients, sans qu’aucun ait été écrit par toi ou rédigé à ta place ?",
+     "aide": "Ils sont cités mot pour mot sur l’accueil, les fiches et la page L’atelier, et un avis écrit par l’entreprise ou à sa place est une pratique commerciale trompeuse : on retire avant la mise en ligne ceux qui posent question (article L121-4 du Code de la consommation).",
+     "type": "choix",
+     "priorite": "bloquant",
+     "pages": [
+      "index.html",
+      "atelier.html#avis",
+      "produit-*.html"
+     ],
+     "defaut": "",
+     "exemple": "",
+     "options": [
+      "Oui, tous",
+      "Autre : certains sont à retirer (j’écris le prénom de l’auteur)"
+     ],
+     "a_relire": "",
+     "unite": ""
+    },
+    {
+     "id": "avis-politique",
+     "question": "Ce texte sur la publication des avis te convient-il ?",
+     "aide": "C’est une proposition pour l’encadré « Comment sont publiés les avis » de la page L’atelier, qui affiche aujourd’hui « à fournir » : réponds « OK » ou corrige les délais et les motifs (articles D111-17 à D111-19 du Code de la consommation).",
+     "type": "relecture",
+     "priorite": "bloquant",
+     "pages": [
+      "atelier.html#politique-avis"
+     ],
+     "defaut": "",
+     "exemple": "",
+     "options": [],
+     "a_relire": "Les avis sont publiés sous 7 jours au plus et restent en ligne 3 ans. Un avis est refusé ou retiré s’il contient des propos injurieux, grossiers ou diffamatoires, s’il est hors sujet, s’il donne des données personnelles, s’il porte sur un produit que l’atelier ne vend pas, s’il fait de la publicité ou s’il fait doublon. L’auteur d’un avis refusé est prévenu, avec la raison.",
+     "unite": ""
+    },
+    {
+     "id": "avis-dates",
+     "question": "Pour chacun des 9 avis, en quel mois le client a-t-il reçu sa plaque ?",
+     "aide": "La loi demande d’afficher, à côté de chaque avis, la date de l’expérience (ici, la réception de la plaque) en plus de la date de publication déjà affichée ; le mois suffit, tes commandes WooCommerce le donnent, et « je ne sais pas » est une réponse valable (article D111-17 du Code de la consommation).",
+     "type": "texte-long",
+     "priorite": "important",
+     "pages": [
+      "index.html",
+      "atelier.html#avis",
+      "produit-*.html"
+     ],
+     "defaut": "",
+     "exemple": "Isa : … ; Gerald : … ; Sergio : je ne sais pas",
+     "options": [],
+     "a_relire": "",
+     "unite": ""
+    },
+    {
+     "id": "reponse-gerald",
+     "question": "Que veux-tu répondre à l’avis de Gerald (4 étoiles, « j’ai attendu une semaine pour la livraison ») ?",
+     "aide": "Sur la fiche Le Cerf et la page L’atelier, le texte provisoire « À rédiger par Romain » s’affiche en clair : écris 2 ou 3 phrases, ou « pas de réponse » pour retirer le bloc.",
+     "type": "choix",
+     "priorite": "utile",
+     "pages": [
+      "produit-le-cerf.html#avis",
+      "atelier.html#avis"
+     ],
+     "defaut": "",
+     "exemple": "Merci Gerald pour votre avis…",
+     "options": [
+      "Propose-moi un texte",
+      "Autre : voici ma réponse"
+     ],
+     "a_relire": "",
+     "unite": ""
+    },
+    {
+     "id": "avis-acheteurs",
+     "question": "À l’avenir, qui pourra laisser un avis ?",
+     "aide": "Réserver les avis aux acheteurs permettrait d’afficher « achat vérifié » sur les nouveaux avis ; les 9 avis actuels gardent la mention « sans vérification d’achat ».",
+     "type": "choix",
+     "priorite": "utile",
+     "pages": [
+      "index.html",
+      "atelier.html#avis",
+      "produit-*.html"
+     ],
+     "defaut": "Tout le monde, comme aujourd’hui (la mention « sans vérification d’achat » reste)",
+     "exemple": "",
+     "options": [
+      "Tout le monde, comme aujourd’hui (la mention « sans vérification d’achat » reste)",
+      "Seulement les clients qui ont acheté (WooCommerce le vérifie)"
+     ],
+     "a_relire": "",
+     "unite": ""
+    }
+   ]
+  },
+  {
+   "id": "donnees",
+   "titre": "Statistiques, lettre et données des clients",
+   "intro": "Ce qu’il faut pour le bandeau cookies et la politique de confidentialité, deux pages nécessaires à la mise en ligne.",
+   "questions": [
+    {
+     "id": "mesure-outils",
+     "question": "Quels outils de statistiques ou de publicité veux-tu garder sur le site ?",
+     "aide": "Le site actuel dépose des cookies avant l’accord du visiteur et charge Google Analytics deux fois (on gardera le compte qui reçoit vraiment les données) : chaque outil gardé doit apparaître dans le bandeau et attendre l’accord du visiteur (article 82 de la loi Informatique et Libertés).",
+     "type": "choix-multiple",
+     "priorite": "important",
+     "pages": [
+      "bandeau cookies (toutes les pages)",
+      "qr.html",
+      "notes.html#n-constats"
+     ],
+     "defaut": "",
+     "exemple": "",
+     "options": [
+      "Google Analytics",
+      "Google Ads (campagnes en cours)",
+      "Statistiques Jetpack",
+      "Pixel Meta (Facebook, Instagram)",
+      "À la place de tout le reste : une mesure simple sans bandeau cookies (Matomo, un outil de statistiques réglé selon la CNIL)",
+      "Je ne sais pas"
+     ],
+     "a_relire": "",
+     "unite": ""
+    },
+    {
+     "id": "lettre-outil",
+     "question": "Avec quel outil enverras-tu la lettre d’information ?",
+     "aide": "La politique de confidentialité doit nommer ce service ; une liste d’abonnés existante ne se reprend que si chacun avait donné son accord, alors signale-la dans « Autre ».",
+     "type": "choix",
+     "priorite": "important",
+     "pages": [
+      "index.html#lettre",
+      "pied de page (toutes les pages)"
+     ],
+     "defaut": "",
+     "exemple": "",
+     "options": [
+      "Brevo",
+      "MailPoet (dans WordPress)",
+      "Mailchimp",
+      "Pas encore choisi",
+      "Pas de lettre pour l’instant : on retire le formulaire",
+      "Autre, ou j’ai déjà une liste d’abonnés (je précise l’outil)"
+     ],
+     "a_relire": "",
+     "unite": ""
+    },
+    {
+     "id": "lettre-rythme",
+     "question": "À quel rythme partira la lettre ?",
+     "aide": "Le formulaire de l’accueil promet « Être prévenu des nouvelles plaques » : l’inscrit doit savoir ce qu’il recevra et à quel rythme pour que son accord soit valable ; ne réponds pas si tu as choisi « pas de lettre » (RGPD).",
+     "type": "choix",
+     "priorite": "important",
+     "pages": [
+      "index.html#lettre"
+     ],
+     "defaut": "",
+     "exemple": "",
+     "options": [
+      "À chaque nouvelle plaque",
+      "Une par mois au plus",
+      "Une par trimestre au plus",
+      "Autre"
+     ],
+     "a_relire": "",
+     "unite": ""
+    },
+    {
+     "id": "donnees-destinataires",
+     "question": "Qui d’autre que toi voit les coordonnées des clients ?",
+     "aide": "La politique de confidentialité doit lister ces destinataires, par catégories et sans noms ; l’hébergeur et les services de paiement (Stripe, PayPal) sont déjà connus et seront ajoutés sans rien te demander (RGPD, article 13).",
+     "type": "choix-multiple",
+     "priorite": "important",
+     "pages": [
+      "politique de confidentialité (à rédiger)",
+      "contact.html",
+      "sur-mesure.html#demande"
+     ],
+     "defaut": "Le transporteur (adresse sur l’étiquette)",
+     "exemple": "",
+     "options": [
+      "Le transporteur (adresse sur l’étiquette)",
+      "Ma messagerie (Hostinger, Gmail, Outlook…)",
+      "Un logiciel de facturation ou de comptabilité",
+      "Un expert-comptable",
+      "Un prestataire qui prépare ou expédie les colis",
+      "Les illustratrices (demandes sur mesure que je leur transmets)",
+      "Autre"
+     ],
+     "a_relire": "",
+     "unite": ""
+    },
+    {
+     "id": "donnees-durees",
+     "question": "Ces durées de conservation des données te conviennent-elles ?",
+     "aide": "Chaque durée doit figurer dans la politique de confidentialité et c’est à toi de les fixer : ta politique actuelle dit 6 ans pour les commandes, une durée valable pour le fisc ; on te propose ces durées plus détaillées, qui suivent les références de la CNIL (RGPD, article 13).",
+     "type": "relecture",
+     "priorite": "important",
+     "pages": [
+      "politique de confidentialité (à rédiger)"
+     ],
+     "defaut": "",
+     "exemple": "",
+     "options": [],
+     "a_relire": "Factures : 10 ans (obligation comptable).\nAutres données de commande : 5 ans après la commande.\nClients, pour la lettre et les offres : 3 ans après le dernier achat.\nInscrits à la lettre sans achat, demandes de devis et messages sans suite : 3 ans après le dernier contact.\nCookies de mesure : 13 mois au plus ; choix fait sur le bandeau cookies : gardé 6 mois.\nAvis : la durée fixée dans le texte sur la publication des avis.",
+     "unite": ""
+    }
+   ]
+  },
+  {
+   "id": "promesses",
+   "titre": "Ce que le site promet",
+   "intro": "Chaque promesse du site doit être vraie et vérifiable : sinon on la reformule ou on la retire.",
+   "questions": [
+    {
+     "id": "serie-taille",
+     "question": "Combien d’exemplaires compte au plus chaque série limitée ?",
+     "aide": "La série limitée est annoncée sur l’accueil (« N° 001 »), les 12 fiches et la page L’atelier (« Taille de chaque série : à fournir ») et une rareté annoncée doit être réelle : on demande le plafond annoncé, jamais le nombre déjà vendu, et « pas de limite » fait retirer la mention (article L121-2 du Code de la consommation).",
+     "type": "texte",
+     "priorite": "bloquant",
+     "pages": [
+      "index.html (bande de repères)",
+      "produit-*.html",
+      "atelier.html#fabrication",
+      "installation.html"
+     ],
+     "defaut": "",
+     "exemple": "… par modèle, toutes finitions confondues (ou « par finition », ou « pas de limite »)",
+     "options": [],
+     "a_relire": "",
+     "unite": ""
+    },
+    {
+     "id": "serie-numero",
+     "question": "Chaque plaque porte-t-elle vraiment son numéro gravé au dos ?",
+     "aide": "Le site l’affirme sur l’accueil, les 12 fiches, la FAQ Installation et les descriptions Google.",
+     "type": "oui-non",
+     "priorite": "important",
+     "pages": [
+      "index.html",
+      "produit-*.html",
+      "installation.html",
+      "atelier.html#fabrication"
+     ],
+     "defaut": "Oui",
+     "exemple": "",
+     "options": [],
+     "a_relire": "",
+     "unite": ""
+    },
+    {
+     "id": "serie-epuisee",
+     "question": "Que se passe-t-il quand une série est épuisée ?",
+     "aide": "La page L’atelier pourra l’expliquer : si une nouvelle série identique suit la première, il faudra revoir la mention « série limitée ».",
+     "type": "choix",
+     "priorite": "important",
+     "pages": [
+      "atelier.html#fabrication"
+     ],
+     "defaut": "",
+     "exemple": "",
+     "options": [
+      "Le modèle est retiré de la vente",
+      "Une nouvelle édition, clairement différente (autre numérotation, autre détail)",
+      "Une nouvelle série identique (on reformulera alors la mention « série limitée »)",
+      "Pas encore décidé",
+      "Autre"
+     ],
+     "a_relire": "",
+     "unite": ""
+    },
+    {
+     "id": "rayon-150km",
+     "question": "Que faire de la formule « Dessin, découpe, laquage et expédition dans un rayon de 150 km » ?",
+     "aide": "Revel est à environ 155 km de Gerde, 156 km de Bagnères-de-Bigorre et 158 km de Tarbes à vol d’oiseau, donc depuis ces villes la phrase est fausse ; et comme elle commence par « Dessin », ne la garde que si les illustratrices travaillent aussi dans ce rayon (article L121-2 du Code de la consommation).",
+     "type": "choix",
+     "priorite": "important",
+     "pages": [
+      "index.html (bande de repères)",
+      "atelier.html#fabrication"
+     ],
+     "defaut": "",
+     "exemple": "",
+     "options": [
+      "La remplacer par « découpées en Haute-Garonne, finies à Bagnères-de-Bigorre »",
+      "La remplacer par « fabriquées en Occitanie »",
+      "La retirer",
+      "Autre : la garder, en écrivant la ville au centre du rayon"
+     ],
+     "a_relire": "",
+     "unite": ""
+    },
+    {
+     "id": "meilleures-ventes",
+     "question": "Le bloc « Meilleures ventes » de l’accueil (Le Pic du Midi, L’Ours, L’Isard, Le Cerf) et le bloc « Les plus demandées » de la fiche Carte cadeau montrent-ils vraiment ton classement ?",
+     "aide": "Ces plaques viennent de la catégorie WooCommerce « Meilleurs ventes », remplie à la main, et l’accueil actuel en montre d’autres ; un classement des ventes inventé est une pratique commerciale trompeuse (article L121-2 du Code de la consommation).",
+     "type": "choix",
+     "priorite": "important",
+     "pages": [
+      "index.html",
+      "produit-carte-cadeau.html"
+     ],
+     "defaut": "",
+     "exemple": "",
+     "options": [
+      "Oui, ce sont bien mes meilleures ventes",
+      "Renommer les blocs « Nos coups de cœur »",
+      "Retirer les blocs",
+      "Autre : mes 3 ou 4 modèles qui se vendent le plus sont… (sans chiffres)"
+     ],
+     "a_relire": "",
+     "unite": ""
+    }
+   ]
+  },
+  {
+   "id": "produits",
+   "titre": "Plaques, kit LED et carte cadeau",
+   "intro": "Les caractéristiques que le client lit avant d’acheter.",
+   "questions": [
+    {
+     "id": "exterieur-usage",
+     "question": "Une plaque peut-elle vraiment rester dehors ?",
+     "aide": "Les 12 fiches et la FAQ Installation de la maquette disent « intérieur et extérieur », mais les fixations 3M Command fournies sont prévues pour l’intérieur ; ce que le site annonce fait partie de ce que tu dois au client (article L217-5 du Code de la consommation).",
+     "type": "choix",
+     "priorite": "important",
+     "pages": [
+      "produit-*.html",
+      "installation.html"
+     ],
+     "defaut": "",
+     "exemple": "",
+     "options": [
+      "Oui, sans restriction",
+      "Oui, mais à l’abri (sous un porche, un auvent)",
+      "Non, intérieur seulement : on retire la mention « extérieur »",
+      "Autre (bord de mer, plein soleil…)"
+     ],
+     "a_relire": "",
+     "unite": ""
+    },
+    {
+     "id": "exterieur-fixation",
+     "question": "Pour une pose dehors, quelle fixation conseilles-tu ?",
+     "aide": "Les fiches et la FAQ Installation affichent « Fixation conseillée dehors : à fournir » ; ne réponds pas si la plaque est pour l’intérieur seulement.",
+     "type": "choix",
+     "priorite": "important",
+     "pages": [
+      "produit-*.html",
+      "installation.html"
+     ],
+     "defaut": "",
+     "exemple": "",
+     "options": [
+      "Vis inox et chevilles, non fournies",
+      "Vis inox fournies avec la plaque",
+      "Adhésif double face pour l’extérieur, non fourni",
+      "Autre"
+     ],
+     "a_relire": "",
+     "unite": ""
+    },
+    {
+     "id": "led-montage",
+     "question": "Quand le kit LED est commandé avec une plaque, le colles-tu au dos avant l’envoi ?",
+     "aide": "La maquette l’affirme à cinq endroits (fiches, Kit LED, L’atelier, Installation) alors que le site actuel dit seulement « expédié en même temps que votre plaque » : si c’est non, on retire le choix de la sortie du câble.",
+     "type": "choix",
+     "priorite": "important",
+     "pages": [
+      "produit-*.html",
+      "produit-led.html",
+      "atelier.html#fabrication",
+      "installation.html"
+     ],
+     "defaut": "",
+     "exemple": "",
+     "options": [
+      "Oui, l’atelier le colle, à la sortie de câble choisie par le client",
+      "Non, le kit part dans le colis et le client le pose"
+     ],
+     "a_relire": "",
+     "unite": ""
+    },
+    {
+     "id": "led-adaptateur",
+     "question": "Le kit LED est-il livré avec un chargeur (un bloc à brancher sur une prise) ?",
+     "aide": "Le site actuel dit « 1 alimentation USB » et la maquette « adaptateur secteur non fourni » : le client doit savoir s’il lui faut un chargeur.",
+     "type": "choix",
+     "priorite": "important",
+     "pages": [
+      "produit-led.html",
+      "installation.html"
+     ],
+     "defaut": "",
+     "exemple": "",
+     "options": [
+      "Non, seulement le câble USB : le client le branche sur son chargeur ou un port USB",
+      "Oui, un chargeur USB est fourni"
+     ],
+     "a_relire": "",
+     "unite": ""
+    },
+    {
+     "id": "led-exterieur",
+     "question": "Le kit LED peut-il servir dehors ?",
+     "aide": "Les plaques sont vendues pour l’extérieur mais la fiche Kit LED n’en dit rien : on ne peut écrire « usage extérieur » que si l’indice IP de l’emballage le permet, et la prise USB comme le boîtier de commande sont rarement étanches, même quand le ruban l’est.",
+     "type": "choix",
+     "priorite": "important",
+     "pages": [
+      "produit-led.html",
+      "installation.html",
+      "produit-*.html"
+     ],
+     "defaut": "",
+     "exemple": "",
+     "options": [
+      "Non, intérieur seulement",
+      "Oui, à l’abri de la pluie",
+      "Je ne sais pas : la photo de l’emballage le dira",
+      "Autre : oui, dehors (j’écris l’indice IP noté sur l’emballage, par exemple IP65)"
+     ],
+     "a_relire": "",
+     "unite": ""
+    },
+    {
+     "id": "eco-organisme",
+     "question": "Si tu adhères à une filière de recyclage (un éco-organisme), quel est ton identifiant unique (IDU) ?",
+     "aide": "Une entreprise qui met en vente des emballages (les cartons de tes colis), des équipements électriques (le kit LED) ou des piles (si la télécommande en contient) doit souvent adhérer à une filière et écrire son identifiant dans ses CGV ; écris « non » ou « je ne sais pas » si besoin, on vérifiera ensemble (article L541-10-13 du Code de l’environnement).",
+     "type": "texte",
+     "priorite": "important",
+     "pages": [
+      "CGV (à rédiger)"
+     ],
+     "defaut": "",
+     "exemple": "Emballages : FR…_01… ; ou « non » ; ou « je ne sais pas »",
+     "options": [],
+     "a_relire": "",
+     "unite": ""
+    },
+    {
+     "id": "carte-validite",
+     "question": "Combien de temps la carte cadeau est-elle valable ?",
+     "aide": "La fiche Carte cadeau et la FAQ Contact affichent « Validité : à fournir » : l’acheteur doit connaître cette durée avant d’acheter, et elle sera écrite sur la carte et dans les CGV (article L111-1 du Code de la consommation).",
+     "type": "choix",
+     "priorite": "bloquant",
+     "pages": [
+      "produit-carte-cadeau.html",
+      "contact.html#livraison"
+     ],
+     "defaut": "",
+     "exemple": "",
+     "options": [
+      "1 an",
+      "2 ans",
+      "Sans limite",
+      "Autre"
+     ],
+     "a_relire": "",
+     "unite": ""
+    },
+    {
+     "id": "carte-valeur",
+     "question": "Que vaut exactement la carte cadeau ?",
+     "aide": "La fiche affiche « Valeur : une plaque au choix » alors que la carte coûte 65 € : il faut savoir si c’est un montant ou une plaque, et qui paie la livraison, pour la fiche, la FAQ, les CGV et le réglage de WooCommerce (article L111-1 du Code de la consommation).",
+     "type": "choix",
+     "priorite": "important",
+     "pages": [
+      "produit-carte-cadeau.html",
+      "contact.html#livraison",
+      "panier (toutes les pages)"
+     ],
+     "defaut": "",
+     "exemple": "",
+     "options": [
+      "Un montant de 65 €, valable sur tout le site (plaque, kit LED) ; livraison à payer",
+      "Une plaque au choix, même si le prix change ; livraison à payer",
+      "Une plaque au choix, livraison comprise",
+      "Autre"
+     ],
+     "a_relire": "",
+     "unite": ""
+    }
+   ]
+  },
+  {
+   "id": "contenus",
+   "titre": "Textes, liens et droits",
+   "intro": "Les textes à relire, les liens à donner et les accords qui permettent de montrer les dessins et les photos.",
+   "questions": [
+    {
+     "id": "relecture-lieu",
+     "question": "Ces petits textes sur les lieux et les animaux sont-ils justes et te conviennent-ils ?",
+     "aide": "La maquette les a écrits pour l’encadré vert des 12 fiches, marqué « à relire », et pour les deux modèles en préparation de la carte : réponds « OK » ou donne la correction texte par texte.",
+     "type": "relecture",
+     "priorite": "important",
+     "pages": [
+      "produit-*.html (12 fiches de plaques)",
+      "carte.html"
+     ],
+     "defaut": "",
+     "exemple": "",
+     "options": [],
+     "a_relire": "Le Pic du Midi : 2 877 m. Un observatoire occupe le sommet depuis la fin du XIXe siècle, et le Pic se voit depuis toute la plaine de Tarbes. La plaque en dessine la silhouette et le ciel étoilé.\nLe Tourmalet : 2 115 m, entre Barèges et La Mongie. C’est le col le plus souvent franchi par le Tour de France. La route est fermée l’hiver.\nLe Montaigu : 2 339 m, au nord-ouest du Pic du Midi, sur la rive gauche de la vallée de Lesponne. Moins connu que son voisin, il domine lui aussi la plaine.\nLe Cirque de Gavarnie : Un cirque de falaises au fond de la vallée de Gavarnie, contre la frontière espagnole. Il est inscrit au patrimoine mondial de l’UNESCO.\nLe Pont d’Espagne : Au-dessus de Cauterets, un pont de pierre enjambe le gave, entre les cascades et la forêt.\nLa Tour des Jacobins : Au cœur de Bagnères-de-Bigorre, la tour est le seul vestige d’un ancien couvent. Elle est protégée au titre des monuments historiques.\nLe Château de Mauvezin : Un château fort perché sur une colline des Baronnies, à l’est de Bagnères-de-Bigorre.\nL’Abbaye de l’Escaladieu : Une abbaye cistercienne fondée en 1142 à Bonnemazon, au confluent du Luz et de l’Arros, près du château de Mauvezin.\nL’Isard : L’isard est le chamois des Pyrénées. On le croise sur les pentes rocheuses, au-dessus de la forêt.\nL’Ours : L’ours brun vit encore dans les Pyrénées, en petit nombre.\nLe Cerf : Le cerf élaphe vit dans les forêts des Pyrénées. À l’automne, on entend son brame.\nLa Marmotte : La marmotte vit dans les pelouses d’altitude. Elle siffle pour prévenir du danger.\nLe Casque du Lhéris (carte, « Entre Bagnères-de-Bigorre et Campan · 1 595 m ») : Un sommet de 1 595 m entre Bagnères-de-Bigorre et la vallée de Campan. Le dessin existe ; la plaque n’est pas encore en vente.\nLe Jardin Massey (carte, « Tarbes · parc paysager ») : Un parc paysager au cœur de Tarbes, légué à la ville par le botaniste Placide Massey. Pas encore de dessin à montrer.",
+     "unite": ""
+    },
+    {
+     "id": "relecture-histoire",
+     "question": "Es-tu d’accord avec ces versions raccourcies de tes textes « L’histoire du modèle » ?",
+     "aide": "La maquette a coupé des formules (« Mythique. Sauvage. Intemporel. », « Puissant. Rare. Mystérieux. », « Offrez à votre intérieur une évasion vertigineuse »…) et corrigé la ponctuation : ce sont tes textes, réponds « OK pour tous » ou dis lesquels doivent revenir à l’original ; si la plaque est pour l’intérieur seulement, on retirera « ou dehors » du texte du Cerf.",
+     "type": "relecture",
+     "priorite": "important",
+     "pages": [
+      "produit-*.html (12 fiches de plaques)"
+     ],
+     "defaut": "",
+     "exemple": "",
+     "options": [],
+     "a_relire": "Le Tourmalet : « Le col du Tourmalet, haut lieu des exploits cyclistes, s’invite chez vous. Chaque ligne de la plaque évoque l’ascension, la sueur, la légende. Pour les passionnés de vélo et de défis. »\nLe Cirque de Gavarnie : « Notre plaque « Gavarnie » représente le cirque le plus emblématique des Pyrénées. Elle est découpée au laser dans l’aluminium, puis thermolaquée. Pour les amoureux de grands paysages. »\nLe Pic du Midi : « Émergeant des nuages comme un vaisseau de pierre, le Pic du Midi de Bigorre défie le ciel depuis des siècles. Pour celles et ceux qui rêvent en altitude. »\nLe Montaigu : « La plaque révèle les lignes douces du Montaigu, presque graphiques, dans un dessin sobre. Parfaite pour qui cherche à installer chez soi une atmosphère de calme et de verticalité. »\nLa Tour des Jacobins : « Élancée, fière et singulière, la Tour des Jacobins domine Bagnères-de-Bigorre comme un témoin de pierre. Découpée finement dans le métal, cette plaque révèle toute la verticalité et la sobriété gothique de cette silhouette emblématique. Une création pour les amoureux d’histoire locale et de patrimoine. »\nL’Ours : « Cette plaque rend hommage à l’ours des forêts pyrénéennes, avec une découpe franche. Une pièce forte, symbole du lien à la nature sauvage. »\nLe Cerf : « La plaque « Le Cerf » rend hommage à l’animal des forêts pyrénéennes, symbole de force et de liberté. Sa silhouette est découpée au laser dans l’aluminium. Elle trouve sa place dans un salon, un bureau ou dehors. »\nLa Marmotte : « Cette plaque célèbre la marmotte, curieuse, paisible et familière. Elle apporte une touche douce et authentique à votre intérieur, entre souvenir de randonnées et charme rustique. Son découpage met en valeur sa bonhomie, dans un style naturel et chaleureux. Un clin d’œil à la vie des sommets. »\nLe Pont d’Espagne et Le Château de Mauvezin : seules la ponctuation et une majuscule (« Baronnies ») changent. L’Isard et L’Abbaye de l’Escaladieu : textes inchangés.",
+     "unite": ""
+    },
+    {
+     "id": "reseaux",
+     "question": "Quelles sont les adresses de tes comptes Instagram et Facebook (et X ou un autre réseau si tu en as) ?",
+     "aide": "Le pied de page des 23 pages et la page Contact affichent « liens à fournir », et sur le site actuel ces liens mènent aux comptes de Hostinger : écris « pas de compte » pour retirer un réseau.",
+     "type": "texte",
+     "priorite": "important",
+     "pages": [
+      "toutes les pages (pied de page)",
+      "contact.html"
+     ],
+     "defaut": "",
+     "exemple": "https://www.instagram.com/…",
+     "options": [],
+     "a_relire": "",
+     "unite": ""
+    },
+    {
+     "id": "logo",
+     "question": "Quel logo veux-tu en haut du site ?",
+     "aide": "L’en-tête et le pied de page affichent pour l’instant « TERRE GRAVÉE » en lettres pochoir ; si tu choisis le coq, on prépare nous-mêmes la version pour le web à partir de ton fichier, tu n’as rien à exporter.",
+     "type": "choix",
+     "priorite": "utile",
+     "pages": [
+      "toutes les pages (en-tête et pied de page)",
+      "notes.html#n-palette"
+     ],
+     "defaut": "",
+     "exemple": "",
+     "options": [
+      "Mon logo au coq (on reprend logo.ai, déjà dans ton Drive)",
+      "La signature « TERRE GRAVÉE » au pochoir de la maquette",
+      "Autre"
+     ],
+     "a_relire": "",
+     "unite": ""
+    },
+    {
+     "id": "illustratrices-liens",
+     "question": "Ce passage sur les illustratrices et ces deux liens sont-ils justes ?",
+     "aide": "Les deux adresses ont été supposées par la maquette, et un lien vers le mauvais compte gênerait tout le monde.",
+     "type": "relecture",
+     "priorite": "important",
+     "pages": [
+      "atelier.html#illustratrices",
+      "index.html"
+     ],
+     "defaut": "",
+     "exemple": "",
+     "options": [],
+     "a_relire": "Encadré des illustratrices (page L’atelier) : Les dessins des plaques sont signés de deux illustratrices. Pour Aquensis, elles ont dessiné 60 illustrations du patrimoine, de la flore et de la faune de la Bigorre.\nÉtape « Dessin » (accueil et L’atelier) : Les dessins originaux sont signés Maude Villatte et Lola Jacquet.\nLiens : « Maude Villatte sur Instagram » → https://www.instagram.com/maude.villatte/ ; « Le site de Lola Jacquet » → https://www.lolajacquet.com/",
+     "unite": ""
+    },
+    {
+     "id": "aquensis-dessins",
+     "question": "Parmi les 12 plaques, lesquelles reprennent un dessin du décor d’Aquensis ?",
+     "aide": "La page du QR code dit « Plusieurs de ces dessins existent en plaques » et met en avant La Tour des Jacobins, Le Pic du Midi, Le Montaigu et Le Tourmalet, alors que la photo du décor semble montrer d’autres modèles : la page doit présenter ceux que les curistes voient sur place.",
+     "type": "choix-multiple",
+     "priorite": "important",
+     "pages": [
+      "qr.html",
+      "atelier.html#origine"
+     ],
+     "defaut": "",
+     "exemple": "",
+     "options": [
+      "Le Pic du Midi",
+      "Le Tourmalet",
+      "Le Montaigu",
+      "Le Cirque de Gavarnie",
+      "Le Pont d’Espagne",
+      "La Tour des Jacobins",
+      "Le Château de Mauvezin",
+      "L’Abbaye de l’Escaladieu",
+      "L’Isard",
+      "L’Ours",
+      "Le Cerf",
+      "La Marmotte",
+      "Aucune"
+     ],
+     "a_relire": "",
+     "unite": ""
+    },
+    {
+     "id": "illustratrices-droits",
+     "question": "As-tu un accord écrit de Maude Villatte et Lola Jacquet pour vendre des plaques de leurs dessins et les montrer sur le site ?",
+     "aide": "La page L’atelier les nomme et montre leurs dessins, et une cession de droits d’auteur doit être écrite et préciser chaque usage ; si c’est non, leurs noms restent affichés, mais il faudra un accord signé avant la mise en ligne et, en attendant, on ne montre pas leurs dessins en dehors des plaques (article L131-3 du Code de la propriété intellectuelle).",
+     "type": "oui-non",
+     "priorite": "important",
+     "pages": [
+      "atelier.html#illustratrices",
+      "index.html",
+      "sur-mesure.html#exclusives"
+     ],
+     "defaut": "",
+     "exemple": "",
+     "options": [],
+     "a_relire": "",
+     "unite": ""
+    },
+    {
+     "id": "credits-photos",
+     "question": "Qui a pris les photos du site (plaques, mises en situation, décor d’Aquensis) ?",
+     "aide": "Les mentions légales citent l’auteur des photos, et si une photo vient de quelqu’un d’autre, il faut son accord pour la publier.",
+     "type": "choix",
+     "priorite": "utile",
+     "pages": [
+      "index.html",
+      "atelier.html",
+      "carte.html",
+      "qr.html",
+      "produit-*.html"
+     ],
+     "defaut": "",
+     "exemple": "",
+     "options": [
+      "Moi, Romain Fourneaux",
+      "Autre : je précise qui"
+     ],
+     "a_relire": "",
+     "unite": ""
+    },
+    {
+     "id": "semetherm-accord",
+     "question": "En plus de citer le projet Aquensis, que permet l’accord écrit de la SEMETHERM ?",
+     "aide": "La maquette publie la photo d’Aquensis sur quatre pages (accueil, L’atelier, carte, QR code) et prévoit des panneaux sur place, alors que l’accord connu porte sur la citation du projet.",
+     "type": "choix-multiple",
+     "priorite": "important",
+     "pages": [
+      "index.html",
+      "atelier.html#origine",
+      "carte.html",
+      "qr.html"
+     ],
+     "defaut": "",
+     "exemple": "",
+     "options": [
+      "Publier la photo des bassins et du décor sur le site",
+      "Poser des panneaux avec QR code dans Aquensis (vestiaires, sortie)",
+      "Rien de plus : seulement citer le projet",
+      "Je dois vérifier",
+      "J’envoie une photo de l’accord pour qu’on vérifie"
+     ],
+     "a_relire": "",
+     "unite": ""
+    }
+   ]
+  },
+  {
+   "id": "projets",
+   "titre": "Sur mesure, nouveautés et idées",
+   "intro": "Ce que la page Sur mesure et le bloc « Bientôt » peuvent annoncer, puis les décisions sur Aquensis et les prochaines idées.",
+   "questions": [
+    {
+     "id": "sur-mesure-delai",
+     "question": "Pour une pièce sur mesure, quel délai de fabrication peut-on annoncer après validation du devis ?",
+     "aide": "La page Sur mesure ne donne aucun délai : un délai type rassure et évite les demandes trop urgentes.",
+     "type": "choix",
+     "priorite": "utile",
+     "pages": [
+      "sur-mesure.html"
+     ],
+     "defaut": "",
+     "exemple": "",
+     "options": [
+      "2 à 3 semaines",
+      "3 à 6 semaines",
+      "1 à 2 mois",
+      "Ne rien afficher",
+      "Autre"
+     ],
+     "a_relire": "",
+     "unite": ""
+    },
+    {
+     "id": "sur-mesure-prix",
+     "question": "Veux-tu afficher un prix de départ pour le sur-mesure ?",
+     "aide": "Un prix « à partir de » sur la page Sur mesure évite les demandes hors budget ; tu peux aussi préférer ne rien afficher.",
+     "type": "choix",
+     "priorite": "utile",
+     "pages": [
+      "sur-mesure.html"
+     ],
+     "defaut": "",
+     "exemple": "",
+     "options": [
+      "Ne rien afficher",
+      "Autre : afficher « À partir de … € » (j’écris le montant)"
+     ],
+     "a_relire": "",
+     "unite": ""
+    },
+    {
+     "id": "devis-acompte",
+     "question": "Demandes-tu un acompte pour une commande sur mesure ?",
+     "aide": "Ce sera écrit dans les CGV et sur le devis : une pièce sur mesure n’ouvre pas droit à la rétractation, et l’acompte te protège si le client renonce (article L221-28, 3° du Code de la consommation).",
+     "type": "choix",
+     "priorite": "utile",
+     "pages": [
+      "sur-mesure.html#demande"
+     ],
+     "defaut": "",
+     "exemple": "",
+     "options": [
+      "Pas d’acompte",
+      "30 % à la commande",
+      "50 % à la commande",
+      "Paiement complet à la commande",
+      "Autre"
+     ],
+     "a_relire": "",
+     "unite": ""
+    },
+    {
+     "id": "aluminium-brut",
+     "question": "Proposes-tu vraiment l’aluminium brut (sans laquage) en sur-mesure ?",
+     "aide": "La maquette l’ajoute sur la page Sur mesure et dans le formulaire de devis, alors que ta page Créations spéciales ne cite que l’aluminium teinte RAL et l’acier Corten : si c’est non, on le retire.",
+     "type": "oui-non",
+     "priorite": "utile",
+     "pages": [
+      "sur-mesure.html"
+     ],
+     "defaut": "",
+     "exemple": "",
+     "options": [],
+     "a_relire": "",
+     "unite": ""
+    },
+    {
+     "id": "bientot-annonce",
+     "question": "Quels modèles en préparation peut-on déjà annoncer publiquement ?",
+     "aide": "Ils sont annoncés « en préparation » sur l’accueil (bloc « Bientôt »), la carte et la page Sur mesure, et annoncer un modèle qui ne sortira pas serait trompeur : on ne garde que ceux que tu coches.",
+     "type": "choix-multiple",
+     "priorite": "important",
+     "pages": [
+      "index.html#lettre",
+      "carte.html",
+      "sur-mesure.html"
+     ],
+     "defaut": "",
+     "exemple": "",
+     "options": [
+      "Le Casque du Lhéris",
+      "La Transhumance",
+      "Le Jardin Massey",
+      "Les grands formats (Gavarnie, Tourmalet, Pont d’Espagne, Pic du Midi)",
+      "Aucun pour l’instant"
+     ],
+     "a_relire": "",
+     "unite": ""
+    },
+    {
+     "id": "bientot-sorties",
+     "question": "Pour ces modèles, vers quel mois prévois-tu la sortie ?",
+     "aide": "Ces dates serviront au bloc « Bientôt », aux repères de la carte et à la lettre d’information ; « pas encore fixé » est une réponse valable.",
+     "type": "texte",
+     "priorite": "utile",
+     "pages": [
+      "index.html#lettre",
+      "carte.html"
+     ],
+     "defaut": "",
+     "exemple": "Casque du Lhéris : vers … ; Transhumance : pas encore fixé",
+     "options": [],
+     "a_relire": "",
+     "unite": ""
+    },
+    {
+     "id": "grands-formats",
+     "question": "Si tu as coché les grands formats : quelles dimensions et quel prix ?",
+     "aide": "La page Sur mesure affiche « Dimensions et prix : à fournir » dans l’encadré « Grands formats » ; sans réponse, on retire l’encadré.",
+     "type": "texte",
+     "priorite": "utile",
+     "pages": [
+      "sur-mesure.html"
+     ],
+     "defaut": "",
+     "exemple": "… × … cm, … € ou « sur devis »",
+     "options": [],
+     "a_relire": "",
+     "unite": ""
+    },
+    {
+     "id": "qr-imprime",
+     "question": "Le QR code déjà prêt (dossier Marketing) est-il imprimé ?",
+     "aide": "S’il est déjà imprimé, son adresse doit continuer de marcher après la refonte ; sinon, on peut le refaire pour qu’il ouvre la page prévue pour les curistes et compte les visites venues de chaque panneau, sans cookie ou après accord.",
+     "type": "choix",
+     "priorite": "important",
+     "pages": [
+      "qr.html"
+     ],
+     "defaut": "",
+     "exemple": "",
+     "options": [
+      "Pas encore imprimé : le refaire vers la page prévue, avec un code de suivi pour chaque panneau",
+      "Pas encore imprimé, mais je garde l’adresse actuelle",
+      "Imprimé, pas encore posé",
+      "Déjà posé à Aquensis"
+     ],
+     "a_relire": "",
+     "unite": ""
+    },
+    {
+     "id": "promo-fin-annee",
+     "question": "Prévois-tu une offre pour le Black Friday (27 novembre) ou pour Noël ?",
+     "aide": "Le bandeau de Noël est prévu avant le Black Friday ; une réduction affichée doit se calculer à partir du prix le plus bas des 30 jours précédents, soit 65 € (article L112-1-1 du Code de la consommation).",
+     "type": "choix",
+     "priorite": "utile",
+     "pages": [
+      "index.html",
+      "produit-*.html"
+     ],
+     "defaut": "",
+     "exemple": "",
+     "options": [
+      "Non",
+      "Livraison offerte",
+      "Autre : une réduction sur les plaques (j’écris le montant ou le pourcentage)"
+     ],
+     "a_relire": "",
+     "unite": ""
+    },
+    {
+     "id": "idees-priorites",
+     "question": "Parmi tes idées, lesquelles veux-tu lancer dans les 6 prochains mois ?",
+     "aide": "Elles sont listées dans les notes de la maquette (« Vos idées, mises en œuvre ») : on ne prépare sur le site que celles que tu choisis, et les détails (lieux, dates, accords écrits) viendront ensuite.",
+     "type": "choix-multiple",
+     "priorite": "utile",
+     "pages": [
+      "notes.html#n-idees",
+      "carte.html",
+      "qr.html"
+     ],
+     "defaut": "",
+     "exemple": "",
+     "options": [
+      "Panneaux de démonstration avec QR code à Aquensis",
+      "Plaques exposées chez des commerçants et restaurants",
+      "Dépôt dans des offices de tourisme et boutiques de grands sites",
+      "Stand à la fête du château de Mauvezin ou à la montée du Tourmalet",
+      "Grands formats proposés à une ville",
+      "Offres pour les hôtels et les entreprises",
+      "Thèmes sportifs (autres cols, rugby)",
+      "Nouvelles plaques de faune et de flore",
+      "Autres territoires (Mont-Saint-Michel, Étretat, Pont du Gard…)",
+      "Aucune pour l’instant"
+     ],
+     "a_relire": "",
+     "unite": ""
+    }
+   ]
+  },
+  {
+   "id": "fichiers",
+   "titre": "À envoyer depuis ton ordinateur",
+   "intro": "Les photos à envoyer quand tu es devant ton ordinateur ; la première est bloquante pour vendre le kit LED.",
+   "questions": [
+    {
+     "id": "led-securite",
+     "question": "Peux-tu envoyer une photo de l’emballage, de l’étiquette et de la notice du kit LED ?",
+     "aide": "Depuis le 13 décembre 2024, la fiche d’un produit vendu en ligne doit montrer le nom et l’adresse du fabricant, la référence et les avertissements de sécurité imprimés sur l’emballage (règlement européen 2023/988, article 19). Sans ces informations, mieux vaut ne pas vendre le kit LED au lancement. Pas besoin de dire où tu l’achètes.",
+     "type": "fichier",
+     "priorite": "bloquant",
+     "pages": [
+      "produit-led.html"
+     ],
+     "defaut": "",
+     "exemple": "",
+     "options": [],
+     "a_relire": "",
+     "unite": ""
+    },
+    {
+     "id": "photos-manquantes",
+     "question": "Peux-tu envoyer les 4 photos qui manquent ?",
+     "aide": "Le Cerf en noir et L’Abbaye de l’Escaladieu en doré sont vendus avec « photo à venir » (plaque seule, de face, comme les autres), et Le Cirque de Gavarnie et Le Cerf n’ont pas de photo posée au mur, contrairement aux 10 autres plaques.",
+     "type": "fichier",
+     "priorite": "important",
+     "pages": [
+      "produit-le-cerf.html",
+      "produit-labbaye-de-lescaladieu.html",
+      "produit-le-cirque-de-gavarnie.html",
+      "collection.html",
+      "index.html"
+     ],
+     "defaut": "",
+     "exemple": "",
+     "options": [],
+     "a_relire": "",
+     "unite": ""
+    },
+    {
+     "id": "photos-fabrication",
+     "question": "Peux-tu envoyer quelques photos de la fabrication ?",
+     "aide": "À l’étape « Découpe laser », la page L’atelier montre une photo d’illustration (« Photo de la découpe : à fournir ») : une photo au téléphone par étape suffit (découpe, laquage, emballage, dos numéroté), sans nom ni logo d’entreprise visible.",
+     "type": "fichier",
+     "priorite": "utile",
+     "pages": [
+      "atelier.html#fabrication",
+      "index.html"
+     ],
+     "defaut": "",
+     "exemple": "",
+     "options": [],
+     "a_relire": "",
+     "unite": ""
+    }
+   ]
+  }
+ ],
+ "ecartes": [
+  "Nom du vendeur (« Terre Gravée » ou « Terres Gravées ») : déjà connu, c’est Terre Gravée ; le développeur corrige les CGV et les fiches. Le dépôt de marque à l’INPI n’est pas demandé : il ne sert qu’à écrire « marque déposée ».",
+  "Directeur de la publication : déjà connu (Romain Fourneaux).",
+  "Hébergeur : nom et adresse déjà connus (Hostinger International Ltd, Larnaca). Son téléphone, exigé par la LCEN, est public et le développeur le trouve. On suppose que le nouveau site reste chez Hostinger.",
+  "Registre d’immatriculation (RCS ou registre national des entreprises) : le développeur le vérifie lui-même à partir du SIRET sur annuaire-entreprises.data.gouv.fr. Inutile de poser à Romain une question technique sur ce point.",
+  "Numéro du décret du 5 janvier 2026 sur la fonction « Renoncer au contrat ici » : c’est une recherche juridique pour le développeur sur Légifrance, pas une question pour Romain. À retirer de la liste « À fournir ».",
+  "E-mail qui reçoit les rétractations : déjà connu (contact@terregravee.fr).",
+  "Montant de la livraison (5 €), délai de 2 à 4 jours, moyens de paiement, rétractation de 14 jours : déjà connus. Seuls la règle de calcul, les zones, les modes, le sens du délai annoncé et le délai maximal sont demandés.",
+  "Livraison d’une carte cadeau seule : elle part par e-mail ou à imprimer, donc sans frais de port. Seule la livraison d’un kit LED commandé seul est demandée.",
+  "Plaques en stock ou fabriquées à la commande : remplacé par le délai annoncé et le délai maximal, qui suffisent pour écrire le site.",
+  "Poids et épaisseur de la plaque : déjà connus (0,75 kg et 2 mm d’après la fiche WooCommerce).",
+  "Sens des dimensions (30 cm de large × 60 cm de haut) : les photos des 12 plaques sont toutes en hauteur. On l’écrira ainsi, et Romain corrigera à la relecture s’il y a une exception.",
+  "Contenu du kit LED (ruban de 2 m, télécommande, application, 15 €) et nom exact des fixations 3M Command : déjà connus, et la notice 3M est déjà en lien.",
+  "Longueur et largeur conseillées pour un ruban LED fourni par le client : le site dit déjà que les plaques acceptent la plupart des rubans. Ajout possible plus tard.",
+  "Carte cadeau : l’envoi est déjà connu (aussitôt par e-mail, ou à imprimer). Sa valeur et sa durée sont demandées. L’utilisation en plusieurs fois découle de la réponse sur la valeur et se règle dans WooCommerce.",
+  "Finition mate ou satinée et conseils d’entretien : rien de faux sur le site sans ces informations. Elles pourront s’ajouter plus tard, ce qui garde le questionnaire à 59 questions.",
+  "Garantie commerciale : facultative et non annoncée sur le site. Le développeur rédige seul les garanties légales, le formulaire type de rétractation, la mention « EI », le bouton « Commande avec obligation de paiement » et l’hébergement local des polices.",
+  "Délai de réponse aux devis, aperçu à valider et conditions des séries pour les professionnels (quantité minimale, prix dégressifs, délais de paiement) : la page Sur mesure dit déjà « La quantité minimale dépend du projet », ce qui est exact. Ces conditions se fixent dans chaque devis.",
+  "Plaques exclusives : le site actuel les présente déjà (page Créations spéciales), c’est donc un fait connu.",
+  "Dessin du Jardin Massey : la carte affiche « Pas encore de dessin à montrer », ce qui est exact ; Romain l’enverra quand il voudra le montrer. Lieu de La Transhumance : elle n’a pas de lieu unique et reste sans repère sur la carte.",
+  "Autrice de chaque dessin, fiche par fiche : la page L’atelier et l’étape « Dessin » nomment déjà les deux illustratrices. Une ligne « Dessin : … » sur chaque fiche pourra s’ajouter si elles le demandent au moment de l’accord écrit, sans ajouter de question.",
+  "Chiffre de « 60 illustrations » : déjà connu (Contexte.docx du Drive), il n’est pas à revérifier. Seuls le passage et les liens sont soumis à relecture.",
+  "Compte Google Analytics à garder : le développeur garde celui qui reçoit vraiment les données. Romain dit seulement s’il veut Google Analytics.",
+  "Mesure des ouvertures de la lettre : par défaut, elle n’est pas mesurée, ce qui évite un second consentement (CNIL). Inscription des clients sans case à cocher (article L34-5 du CPCE) : on garde la case non cochée, plus simple. Liste d’abonnés existante : couverte par la dernière option de la question sur l’outil d’envoi.",
+  "Commande avec ou sans compte client : réglage WooCommerce sans effet sur les textes. Par défaut, on peut commander sans compte et le compte reste facultatif.",
+  "Adresse du QR code déjà prêt : l’image est dans le dossier Marketing du Drive, le développeur la décode lui-même. Le code de suivi est inclus dans la question sur l’impression du QR code. Les emplacements des panneaux se règlent quand ils seront posés.",
+  "Export du logo en SVG : logo.ai est déjà dans le Drive (Identité graphique/logo) et le développeur prépare la version web. Romain choisit seulement le logo.",
+  "Barre d’achat fixe sur mobile : choix de mise en page. On la garde et on compare le taux d’ajout au panier après la mise en ligne.",
+  "Détails des idées commerciales (liste des commerçants et offices de tourisme, prix en boutique, dates des événements, ville pour les grands formats, droits sur les noms de cols ou de clubs, choix des espèces, territoires) : regroupés en une seule question de priorités. Les détails seront demandés pour chaque idée lancée.",
+  "Paiement PayPal en 4 fois : c’est un réglage du compte PayPal, et les moyens de paiement sont connus. Rien à demander pour la mise en ligne.",
+  "Coûts, marges, volumes, fournisseurs, devis et prix d’achat : jamais demandés, car confidentiels et inutiles pour le site. Les photos de fabrication sont demandées sans nom ni logo d’entreprise visible, et le kit LED sans dire où il est acheté.",
+  "Marqueur « à confirmer » passé aux pages Kit LED et Installation : leurs gabarits n’ont pas d’emplacement {conf}, donc rien ne s’affiche et il n’y a rien à demander."
+ ]
+}
