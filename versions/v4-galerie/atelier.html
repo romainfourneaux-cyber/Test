@@ -55,8 +55,7 @@
       <div class="origine__texte">
         <p class="surtitre">L’origine</p>
         <h2 id="titre-origine">Tout a commencé à Aquensis</h2>
-        <p class="origine__marqueur"><span class="note note--decision">à valider : accord de la SEMETHERM pour citer le projet Aquensis</span></p>
-        <div class="texte">
+                <div class="texte">
           <p>Avant les plaques, il y a eu un décor. À Aquensis, le centre thermal de Bagnères-de-Bigorre, il fallait masquer une coursive technique. Le projet conçu pour Aquensis compte 30 niches de 1 m × 2 m, fermées par des panneaux de métal découpé.</p>
           <p>Le thème : le patrimoine, la flore et la faune de la Bigorre. Maude Villatte et Lola Jacquet ont dessiné 60 illustrations, adaptées ensuite à la découpe.</p>
           <p>Les panneaux sont en aluminium thermolaqué effet Corten, découpés au laser et rétroéclairés. Les visiteurs ont adoré. L’idée est venue de là : proposer ces dessins aux particuliers, en plaques de 60 × 30 cm.</p>
@@ -175,7 +174,7 @@
       <div class="pied__marque">
         <a class="marque" href="index.html"><svg viewBox="0 0 30 22" aria-hidden="true" focusable="false"><path d="M1.5 20.5 10 9l3.2 3.6L18.6 4.5 28.5 20.5Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M18.6 4.5V1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span class="marque__nom">TERRE GRAVÉE</span></a>
         <p class="pied__slogan">Graver l’âme des territoires</p>
-        <p>Atelier Terre Gravée<br>16 rue du Pic du Midi, 65200 Gerde<br><a href="contact.html">contact@terregravee.fr</a><br>Téléphone : numéro professionnel <span class="note note--manque">à fournir</span></p>
+        <p>Atelier Terre Gravée<br>16 rue du Pic du Midi, 65200 Gerde<br><a href="contact.html">contact@terregravee.fr</a><br>Téléphone : <a href="tel:+33642572810">06 42 57 28 10</a></p>
       </div>
       <div>
         <h2>Collection</h2>
@@ -219,8 +218,12 @@
   <div class="tiroir__haut"><h2 id="titre-panier">Panier</h2><button type="button" class="bouton-icone tiroir__fermer" data-fermer-panier>Fermer</button></div>
   <ul class="tiroir__liste"></ul>
   <div class="tiroir__bas">
-    <div class="tiroir__total"><span>Sous-total TTC</span><strong>0 €</strong></div>
-    <p>Frais de port selon le poids et la destination, affichés avant la validation <span class="note note--manque">montant à fournir</span>. Livraison en 2 à 4 jours ouvrés, à titre indicatif.</p>
+    <dl class="tiroir__montants">
+      <div><dt>Sous-total</dt><dd data-sous-total>0 €</dd></div>
+      <div><dt>Livraison</dt><dd data-livraison>5 €</dd></div>
+      <div class="tiroir__total"><dt>Total TTC</dt><dd><strong data-total>0 €</strong></dd></div>
+    </dl>
+    <p>Livraison : 5 € par commande, quel que soit le nombre d’articles. Aucuns frais pour une carte cadeau seule, envoyée par e-mail. Expédition en 2 à 4 jours ouvrés, à titre indicatif.</p>
     <button type="button" class="btn btn--plein" disabled aria-describedby="commande-desactivee">Commander</button>
     <p id="commande-desactivee">Maquette : la commande et le paiement sont désactivés. Le panier reste dans ce navigateur.</p>
   </div>

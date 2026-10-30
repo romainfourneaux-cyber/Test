@@ -159,11 +159,11 @@ def note(texte, sorte="manque"):
 
 
 A_FOURNIR = note("à fournir")
+TELEPHONE = '<a href="tel:+33642572810">06\u00a042\u00a057\u00a028\u00a010</a>'
 A_CONFIRMER = note("à confirmer")
 A_RELIRE = note("à relire")
 A_VALIDER = note("proposition à valider", "decision")
 A_PREPARATION = note("en préparation, à valider", "decision")
-A_SEMETHERM = note("à valider : accord de la SEMETHERM pour citer le projet Aquensis", "decision")
 MENTION_AVIS = ('<p class="mention-avis">Avis publiés sur le site sans vérification d’achat. '
                 '<a href="atelier.html#politique-avis">Comment sont publiés les avis</a></p>')
 
@@ -608,7 +608,7 @@ def pied():
       <div class="pied__marque">
         {marque}
         <p class="pied__slogan">Graver l’âme des territoires</p>
-        <p>Atelier Terre Gravée<br>16 rue du Pic du Midi, 65200 Gerde<br><a href="contact.html">contact@terregravee.fr</a><br>Téléphone : numéro professionnel {tel}</p>
+        <p>Atelier Terre Gravée<br>16 rue du Pic du Midi, 65200 Gerde<br><a href="contact.html">contact@terregravee.fr</a><br>Téléphone : {tel}</p>
       </div>
       <div>
         <h2>Collection</h2>
@@ -646,7 +646,7 @@ def pied():
       <p>Prix TTC, TVA non applicable (art. 293 B du CGI)</p>
     </div>
   </div>
-</footer>""".format(marque=marque(), site=SITE, lien=note("liens à fournir"), tel=note("à fournir"))
+</footer>""".format(marque=marque(), site=SITE, lien=note("liens à fournir"), tel=TELEPHONE)
 
 
 PAGES_ECRITES = []
@@ -689,8 +689,12 @@ def page(fichier, titre, description, contenu, actif=None, jsonld=None, classe="
   <div class="tiroir__haut"><h2 id="titre-panier">Panier</h2><button type="button" class="bouton-icone tiroir__fermer" data-fermer-panier>Fermer</button></div>
   <ul class="tiroir__liste"></ul>
   <div class="tiroir__bas">
-    <div class="tiroir__total"><span>Sous-total TTC</span><strong>0 €</strong></div>
-    <p>Frais de port selon le poids et la destination, affichés avant la validation {port}. Livraison en 2 à 4 jours ouvrés, à titre indicatif.</p>
+    <dl class="tiroir__montants">
+      <div><dt>Sous-total</dt><dd data-sous-total>0 €</dd></div>
+      <div><dt>Livraison</dt><dd data-livraison>5 €</dd></div>
+      <div class="tiroir__total"><dt>Total TTC</dt><dd><strong data-total>0 €</strong></dd></div>
+    </dl>
+    <p>Livraison : 5 € par commande, quel que soit le nombre d’articles. Aucuns frais pour une carte cadeau seule, envoyée par e-mail. Expédition en 2 à 4 jours ouvrés, à titre indicatif.</p>
     <button type="button" class="btn btn--plein" disabled aria-describedby="commande-desactivee">Commander</button>
     <p id="commande-desactivee">Maquette : la commande et le paiement sont désactivés. Le panier reste dans ce navigateur.</p>
   </div>
@@ -700,7 +704,7 @@ def page(fichier, titre, description, contenu, actif=None, jsonld=None, classe="
 </body>
 </html>
 """.format(titre=e(titre), desc=e(description), polices=POLICES.replace("&", "&amp;"), donnees=donnees, classe=classe,
-           entete=entete(actif), contenu=contenu, pied=pied(), port=note("montant à fournir"))
+           entete=entete(actif), contenu=contenu, pied=pied())
     with open(os.path.join(ICI, fichier), "w", encoding="utf-8") as f:
         f.write(typo(sortie))
     PAGES_ECRITES.append(fichier)
@@ -929,11 +933,9 @@ def fiches_carte():
     <p class="fiche-lieu__cartel">Le décor d’origine · Bagnères-de-Bigorre</p>
     <h2 id="titre-aquensis">Aquensis, le décor d’origine</h2>
     <p>Avant les plaques, il y a eu ce décor : 30 niches de 1 m × 2 m en aluminium découpé et rétroéclairé, au centre thermal.</p>
-    <p>{sem}</p>
     <a class="btn btn--ligne" href="atelier.html#origine">Lire l’histoire</a>
   </div>
-</article>""".format(photo=img("misc/aquensis.webp", "Le bassin d’Aquensis à Bagnères-de-Bigorre et, au-dessus, les panneaux découpés et rétroéclairés du décor d’origine"),
-                     sem=A_SEMETHERM))
+</article>""".format(photo=img("misc/aquensis.webp", "Le bassin d’Aquensis à Bagnères-de-Bigorre et, au-dessus, les panneaux découpés et rétroéclairés du décor d’origine")))
     articles.append("""<article class="fiche-lieu" data-fiche-lieu="atelier" hidden aria-labelledby="titre-atelier">
   <div class="fiche-lieu__corps">
     <p class="fiche-lieu__cartel">L’atelier · Gerde (65)</p>
@@ -977,11 +979,10 @@ def liste_lieux():
     for s, nom, detail, sorte in autres:
         lis.append("""<li class="lieu-ligne lieu-ligne--{sorte}">
   <span class="lieu-ligne__num legende__signe legende__signe--{sorte}" aria-hidden="true">{signe}</span>
-  <div class="lieu-ligne__texte"><strong>{nom}</strong><span>{detail}</span>{marqueur}</div>
+  <div class="lieu-ligne__texte"><strong>{nom}</strong><span>{detail}</span></div>
   <span class="lieu-ligne__prix"></span>
   <button type="button" class="lieu-ligne__situer" data-situer="{s}">Situer<span class="visuellement-cache"> {nom} sur la carte</span></button>
 </li>""".format(sorte=sorte, s=s, nom=e(nom), detail=e(detail),
-                marqueur='<span class="lieu-ligne__marqueur">{}</span>'.format(A_SEMETHERM) if s == "aquensis" else "",
                 signe='<svg viewBox="0 0 16 16" focusable="false"><path d="M8 1 9.9 5.6 14.7 5.9 11 9.1 12.2 13.9 8 11.3 3.8 13.9 5 9.1 1.3 5.9 6.1 5.6Z"/></svg>' if sorte == "vrai" else ("<span></span>" if sorte == "atelier" else "")))
     return "".join(lis)
 
@@ -1005,7 +1006,7 @@ def localisateur(p):
 
 ORGANISATION = {
     "@context": "https://schema.org", "@type": "Organization", "name": "Terre Gravée", "url": SITE,
-    "email": "contact@terregravee.fr", "slogan": "Graver l’âme des territoires",
+    "email": "contact@terregravee.fr", "telephone": "+33 6 42 57 28 10", "slogan": "Graver l’âme des territoires",
     "address": {"@type": "PostalAddress", "streetAddress": "16 rue du Pic du Midi", "postalCode": "65200",
                 "addressLocality": "Gerde", "addressCountry": "FR"},
 }
@@ -1127,8 +1128,7 @@ def accueil():
       <div class="origine__texte">
         <p class="surtitre">L’atelier · L’origine</p>
         <h2 id="titre-atelier-accueil">Tout a commencé à Aquensis</h2>
-        <p class="origine__marqueur">{sem}</p>
-        <p>Au centre thermal de Bagnères-de-Bigorre, il fallait masquer une coursive technique. Le décor conçu pour Aquensis compte 30 niches de 1 m × 2 m, fermées par des panneaux d’aluminium découpé, thermolaqué effet Corten et rétroéclairé. Les visiteurs ont adoré. L’idée des plaques de 60 × 30 cm pour la maison est venue de là.</p>
+                <p>Au centre thermal de Bagnères-de-Bigorre, il fallait masquer une coursive technique. Le décor conçu pour Aquensis compte 30 niches de 1 m × 2 m, fermées par des panneaux d’aluminium découpé, thermolaqué effet Corten et rétroéclairé. Les visiteurs ont adoré. L’idée des plaques de 60 × 30 cm pour la maison est venue de là.</p>
         <p><a class="lien-fleche" href="atelier.html#origine">Lire l’histoire</a></p>
       </div>
     </div>
@@ -1177,7 +1177,7 @@ def accueil():
         couleurs=couleurs, reperes=reperes(), tuiles="".join(tuiles), best=best, noms_lieux=noms_lieux, atlas=atlas("apercu", lien=True),
         photo=img("misc/aquensis.webp", "Le bassin d’Aquensis à Bagnères-de-Bigorre ; au-dessus, une rangée de panneaux en métal découpé, rétroéclairés : le décor d’origine",
                   "(max-width: 900px) 92vw, 680px"),
-        sem=A_SEMETHERM, etapes=etapes(), moy=note_fr(NOTE_MOYENNE), etoiles=jauge(NOTE_MOYENNE), nb=len(TOUS_AVIS),
+        etapes=etapes(), moy=note_fr(NOTE_MOYENNE), etoiles=jauge(NOTE_MOYENNE), nb=len(TOUS_AVIS),
         avis="".join(citation_avis(a) for a in avis_choisis), mention=MENTION_AVIS, bientot=bientot)
     page("index.html", "Terre Gravée · Plaques murales en aluminium des Hautes-Pyrénées",
          "Plaques murales en aluminium découpé au laser : paysages, patrimoine et faune des Hautes-Pyrénées. Série limitée numérotée, 60 × 30 cm, 65 €.",
@@ -1212,7 +1212,7 @@ def collection():
 <section class="section">
   <div class="wrap">
     <ul class="garanties garanties--bande">
-      <li><span>Livraison</span><span>2 à 4 jours ouvrés, à titre indicatif</span></li>
+      <li><span>Livraison</span><span>5 € par commande, 2 à 4 jours ouvrés (délai indicatif)</span></li>
       <li><span>Retours</span><span>14 jours pour vous rétracter, frais de retour à votre charge</span></li>
       <li><span>Paiement</span><span>Carte bancaire, PayPal, Apple Pay, Google Pay</span></li>
       <li><span>Fabrication</span><span>Revel (31) et Bagnères-de-Bigorre (65)</span></li>
@@ -1228,12 +1228,14 @@ def collection():
 # Fiches produit
 # ---------------------------------------------------------------------------
 
-def garanties():
+def garanties(carte=False):
+    envoi = ("<li><span>Envoi</span><span>Par e-mail, sans frais de port</span></li>" if carte else
+             "<li><span>Livraison</span><span>5 € par commande, 2 à 4 jours ouvrés (délai indicatif)</span></li>")
     return """<ul class="garanties">
-  <li><span>Livraison</span><span>2 à 4 jours ouvrés, à titre indicatif</span></li>
+  {envoi}
   <li><span>Retours</span><span>14 jours pour vous rétracter, frais de retour à votre charge</span></li>
   <li><span>Paiement</span><span>Carte bancaire (Stripe), PayPal, Apple Pay, Google Pay</span></li>
-</ul>"""
+</ul>""".format(envoi=envoi)
 
 
 def similaires(p):
@@ -1405,7 +1407,7 @@ def fiche_led():
       </div>
       {garanties}
       <dl class="caracteristiques">
-        <div><dt>Ruban</dt><dd>LED RGB autocollant, longueur 2 m ou 1,5 m {conf}</dd></div>
+        <div><dt>Ruban</dt><dd>LED RGB autocollant, longueur 2 m</dd></div>
         <div><dt>Commande</dt><dd>Télécommande, boutons sur le ruban, application smartphone</dd></div>
         <div><dt>Alimentation</dt><dd>USB, adaptateur secteur non fourni</dd></div>
         <div><dt>Origine</dt><dd>Non fabriqué en France, choisi pour sa compatibilité avec les plaques</dd></div>
@@ -1464,7 +1466,7 @@ def fiche_carte_cadeau():
 </section>
 <div class="barre-achat-mobile"><div><strong>Carte cadeau</strong><span data-prix-affiche>65 €</span></div><button type="button" class="btn" data-ajouter>Ajouter au panier</button></div>""".format(
         img=IMG + "misc/carte-cadeau.webp", visuel=img("misc/carte-cadeau.webp", "Carte cadeau Terre Gravée", cls="situation", eager="haute"),
-        garanties=garanties(), fournir=A_FOURNIR,
+        garanties=garanties(carte=True), fournir=A_FOURNIR,
         assoc='<ul class="grille-produits grille-produits--deux">{}{}</ul>{}'.format(carte_produit(PRODUITS["le-pic-du-midi"]), carte_produit(PRODUITS["lisard"]), MENTION_AVIS))
     page("produit-carte-cadeau.html", "Carte cadeau · Terre Gravée",
          "Carte cadeau Terre Gravée : une plaque au choix du destinataire, envoyée par e-mail ou à imprimer. 65 €.",
@@ -1539,8 +1541,7 @@ def atelier():
       <div class="origine__texte">
         <p class="surtitre">L’origine</p>
         <h2 id="titre-origine">Tout a commencé à Aquensis</h2>
-        <p class="origine__marqueur">{sem}</p>
-        <div class="texte">
+                <div class="texte">
           <p>Avant les plaques, il y a eu un décor. À Aquensis, le centre thermal de Bagnères-de-Bigorre, il fallait masquer une coursive technique. Le projet conçu pour Aquensis compte 30 niches de 1 m × 2 m, fermées par des panneaux de métal découpé.</p>
           <p>Le thème : le patrimoine, la flore et la faune de la Bigorre. Maude Villatte et Lola Jacquet ont dessiné 60 illustrations, adaptées ensuite à la découpe.</p>
           <p>Les panneaux sont en aluminium thermolaqué effet Corten, découpés au laser et rétroéclairés. Les visiteurs ont adoré. L’idée est venue de là : proposer ces dessins aux particuliers, en plaques de 60 × 30 cm.</p>
@@ -1606,7 +1607,7 @@ def atelier():
 </section>""".format(
         photo=img("misc/aquensis.webp", "Le bassin d’Aquensis à Bagnères-de-Bigorre ; au-dessus, une rangée de panneaux en métal découpé, rétroéclairés : le décor d’origine",
                   "(max-width: 900px) 92vw, 680px", eager=True),
-        sem=A_SEMETHERM, ref=note("point de référence à fournir"), km=KM_REVEL, etapes=etapes(detail=True),
+        ref=note("point de référence à fournir"), km=KM_REVEL, etapes=etapes(detail=True),
         serie="".join(plaque(PRODUITS[s], f, "110px") for s, f in (("le-tourmalet", "noir"), ("le-pont-despagne", "dore"), ("la-marmotte", "gris"))),
         fournir=A_FOURNIR, conf=A_CONFIRMER,
         planche=img("misc/autres-plaques.webp", "Planche de dix-huit dessins inédits : la Vierge du Bédat, le Casque du Lhéris, la brèche de Roland, l’iris, le gypaète barbu…",
@@ -1749,7 +1750,7 @@ def installation():
     <div class="deux-colonnes deux-colonnes--haut kit-contenu">
       <figure>{kit}<figcaption>Le contenu du kit</figcaption></figure>
       <ul class="liste-simple">
-        <li>Ruban LED RGB autocollant avec raccord, longueur 2 m ou 1,5 m {conf}</li>
+        <li>Ruban LED RGB autocollant avec raccord, longueur 2 m</li>
         <li>Contrôleur intégré au ruban</li>
         <li>Alimentation USB, adaptateur secteur non fourni</li>
         <li>Télécommande</li>
@@ -1806,7 +1807,7 @@ def contact():
   <div class="wrap deux-colonnes deux-colonnes--haut">
     <dl class="coordonnees">
       <div><dt>E-mail</dt><dd class="copie"><code id="adresse-email">contact@terregravee.fr</code><button type="button" data-copier="adresse-email">Copier</button></dd></div>
-      <div><dt>Téléphone</dt><dd>Numéro professionnel {fournir}</dd></div>
+      <div><dt>Téléphone</dt><dd>{tel}</dd></div>
       <div><dt>Atelier</dt><dd>Terre Gravée<br>16 rue du Pic du Midi<br>65200 Gerde</dd></div>
       <div><dt>Réseaux</dt><dd>Instagram, Facebook {liens}</dd></div>
     </dl>
@@ -1855,14 +1856,14 @@ def contact():
     <div class="entete-section"><p class="surtitre">Livraison, retours, paiement</p><h2 id="titre-faq">Questions fréquentes</h2></div>
     <div class="faq">
       <details open><summary>Quand vais-je recevoir ma plaque ?</summary><div><p>Comptez 2 à 4 jours ouvrés, à titre indicatif. Les plaques partent de Bagnères-de-Bigorre.</p></div></details>
-      <details><summary>Combien coûte la livraison ?</summary><div><p>Les frais dépendent du poids et de la destination. Ils s’affichent avant la validation de la commande. Montant {fournir}</p></div></details>
+      <details><summary>Combien coûte la livraison ?</summary><div><p>5 € par commande, quel que soit le nombre d’articles. La carte cadeau seule, envoyée par e-mail, n’a pas de frais de port. Le montant s’affiche dans le panier, avant la validation.</p></div></details>
       <details><summary>Puis-je changer d’avis ?</summary><div><p>Oui. Vous avez 14 jours après réception pour vous rétracter, comme la loi le prévoit. Les frais de retour restent à votre charge et les pièces personnalisées sont exclues. <a href="#retractation">Renoncer au contrat ici</a></p></div></details>
       <details><summary>Ma plaque est arrivée abîmée, que faire ?</summary><div><p>Envoyez une photo et une description par e-mail. Toutes les plaques bénéficient des garanties légales de conformité et des vices cachés.</p></div></details>
       <details><summary>Quels moyens de paiement ?</summary><div><p>Carte bancaire (Stripe), PayPal, Apple Pay et Google Pay.</p></div></details>
       <details><summary>Comment fonctionne la carte cadeau ?</summary><div><p>Elle vaut une plaque au choix, sur tous les modèles disponibles. Elle est envoyée par e-mail ou à imprimer. Durée de validité {fournir}</p></div></details>
     </div>
   </div>
-</section>""".format(liens=note("liens à fournir"), fournir=A_FOURNIR)
+</section>""".format(liens=note("liens à fournir"), fournir=A_FOURNIR, tel=TELEPHONE)
     page("contact.html", "Contact, livraison et rétractation · Terre Gravée",
          "Écrire à l’atelier Terre Gravée à Gerde : contact@terregravee.fr. Livraison en 2 à 4 jours ouvrés, paiement, formulaire « Renoncer au contrat ici ».",
          contenu, actif="contact.html", classe="page-contact")
@@ -1880,8 +1881,7 @@ def qr_page():
     <div class="qr-tete__texte">
       <p class="surtitre">Depuis le QR code d’Aquensis</p>
       <h1>Vous avez vu le décor d’Aquensis ?</h1>
-      <p class="origine__marqueur">{sem}</p>
-      <p class="chapo">Les panneaux découpés et rétroéclairés, au-dessus des bassins, sont à l’origine de Terre Gravée. Plusieurs de ces dessins existent en plaques de 60 × 30 cm pour la maison : <strong>65 € la plaque</strong>, en noir, gris ou doré.</p>
+            <p class="chapo">Les panneaux découpés et rétroéclairés, au-dessus des bassins, sont à l’origine de Terre Gravée. Plusieurs de ces dessins existent en plaques de 60 × 30 cm pour la maison : <strong>65 € la plaque</strong>, en noir, gris ou doré.</p>
       <p class="heros__actions"><a class="btn" href="collection.html">Voir la collection</a><a class="btn btn--ligne" href="carte.html#aquensis">Aquensis sur la carte</a></p>
     </div>
     <figure class="qr-tete__photo">{photo}<figcaption>Photo réelle · le décor d’origine à Aquensis, Bagnères-de-Bigorre</figcaption></figure>
@@ -1899,8 +1899,7 @@ def qr_page():
     <p>Cette page reçoit les visiteurs qui scannent le QR code d’un panneau d’Aquensis. Elle n’est pas dans le menu.</p>
     <p>Paramètre de suivi {valider} : par exemple <code>qr.html?utm_source=aquensis&amp;utm_medium=qr</code>, pour compter les visites venues du panneau, puis les inscriptions et les commandes qui suivent. La mesure se fait sans cookie, ou après consentement. Adresse du QR code déjà prêt {confirmer}</p>
   </aside>
-</div>""".format(sem=A_SEMETHERM,
-                 photo=img("misc/aquensis.webp", "Le bassin d’Aquensis à Bagnères-de-Bigorre et, au-dessus, les panneaux découpés et rétroéclairés du décor d’origine",
+</div>""".format(photo=img("misc/aquensis.webp", "Le bassin d’Aquensis à Bagnères-de-Bigorre et, au-dessus, les panneaux découpés et rétroéclairés du décor d’origine",
                            "(max-width: 900px) 92vw, 560px", eager="haute"),
                  grille=grille(lies, eager=4), valider=A_VALIDER, confirmer=A_CONFIRMER)
     page("qr.html", "Vous avez vu le décor d’Aquensis ? · Terre Gravée",
@@ -1922,7 +1921,7 @@ CONSTATS = [
     ("urgent", "Un produit vide « AUTO-DRAFT » est publié.",
      "L’adresse /produits/tr/ apparaît dans le catalogue et peut être indexée par Google. À mettre à la corbeille dans WooCommerce › Produits."),
     ("urgent", "Les mentions légales contiennent encore des champs à remplir.",
-     "La page affiche « SIRET : [à compléter] » et « Téléphone : [optionnel] ». Le numéro de téléphone de l’hébergeur, exigé par la LCEN, manque aussi."),
+     "La page affiche « SIRET : [à compléter] » et « Téléphone : [optionnel] » : votre numéro peut y figurer. Le numéro de téléphone de l’hébergeur, exigé par la LCEN, manque aussi."),
     ("urgent", "Les CGV pointent vers un mauvais domaine.",
      "Le lien affiché « www.terregravee.fr » mène en réalité à www.terresgravees.fr, qui ne répond pas. Le lien vers la politique de confidentialité est vide, et le vendeur est nommé « Terres Gravées »."),
     ("important", "Aucun médiateur de la consommation n’est nommé.",
@@ -1940,7 +1939,7 @@ CONSTATS = [
     ("important", "Deux finitions sont vendues sans photo.",
      "Le Cerf en noir et L’Abbaye de l’Escaladieu en doré. La maquette le signale par un emplacement « photo à venir »."),
     ("important", "La longueur du ruban LED change selon la page.",
-     "2 mètres sur la fiche du kit, 1,5 mètre sur la page Infos & installation."),
+     "2 mètres sur la fiche du kit, 1,5 mètre sur la page Infos & installation. La bonne longueur est 2 m : la page Infos & installation est à corriger."),
     ("confort", "La fiche produit est lourde et le prix arrive tard.",
      "225 requêtes et 2,5 Mo de scripts : Stripe, PayPal, Apple Pay, Google Pay et hCaptcha se chargent dès l’affichage d’une plaque. Le prix apparaît sous les boutons de paiement."),
     ("confort", "Les descriptions Google se répètent.",
@@ -1985,7 +1984,7 @@ TECHNIQUES = [
      "Un message « quantité limitée » convainc plus qu’un message « temps limité » (Aggarwal, Jun et Huh, 2011, " + src("https://experts.umn.edu/en/publications/scarcity-messages-a-consumer-competition-perspective/", "University of Minnesota") + "). La rareté n’est honnête que si elle est vraie (" + src("https://www.nngroup.com/articles/deceptive-patterns/", "NN/g") + ").",
      "Délai d’épuisement par série, inscriptions à la lettre."),
     ("Coût total et délais près du bouton",
-     "Trois garanties sous le bouton d’ajout (livraison, retours, paiement), frais de port annoncés dans le panier.",
+     "Trois garanties sous le bouton d’ajout (livraison, retours, paiement), frais de port de 5 € annoncés sous le bouton, dans la FAQ et dans le panier.",
      "64 % des testeurs cherchent les frais de port sur la fiche (" + src("https://baymard.com/blog/show-shipping-costs-on-product-pages", "Baymard") + ") ; 41 % des sites n’indiquent pas de date de livraison à l’étape du choix de livraison (" + src("https://baymard.com/blog/shipping-speed-vs-delivery-date", "Baymard") + ").",
      "Taux d’abandon de panier, questions « quand vais-je recevoir ? »."),
     ("La barre d’achat collante sur mobile",
@@ -2002,7 +2001,7 @@ LEGAL = [
     ("Bouton de rétractation", "L’ordonnance n° 2026-2 du 5 janvier 2026 transpose la directive (UE) 2023/2673. Depuis le 19 juin 2026, le site doit offrir sans frais une fonction « Renoncer au contrat ici », facile à trouver pendant tout le délai ; amende administrative jusqu’à 75 000 € pour une personne morale. La maquette met un lien dans le pied de chaque page et un formulaire simulé en deux étapes sur la page Contact. Numéro du décret d’application {}. ".format(note("à fournir")) + src("https://hlc.com/fr/publications/transposition-under-french-law-of-the-eu-mandatory-withdrawal-button-for-online-sales", "Hogan Lovells")),
     ("Avis en ligne", "Mention « publiés sans vérification d’achat » près de chaque bloc d’avis et de chaque note, dates de publication, ordre chronologique (les trois plus récents sur l’accueil, critère écrit dans la politique des avis), rubrique « Comment sont publiés les avis » (L111-7-2 ; D111-16 à D111-19). " + src("https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000049571119", "L111-7-2") + ", " + src("https://www.legifrance.gouv.fr/jorf/id/JORFARTI000035720943", "décret 2017-1436")),
     ("Prix et réductions", "Aucun prix barré. Toute réduction future devra se référer au prix le plus bas des 30 derniers jours (L112-1-1). " + src("https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000044549592", "Légifrance")),
-    ("Pratiques commerciales trompeuses", "Aucun stock, délai, label ou partenariat inventé. L’histoire d’Aquensis porte toujours le marqueur d’accord de la SEMETHERM ; jamais de partenariat ni de point de vente. Les modèles en préparation sont montrés sans photo de plaque. " + src("https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000044563107", "L121-4 sur Légifrance")),
+    ("Pratiques commerciales trompeuses", "Aucun stock, délai, label ou partenariat inventé. L’histoire d’Aquensis est citée avec l’accord écrit de la SEMETHERM (sur papier, à conserver) ; elle ne présente jamais de partenariat ni de point de vente. Les modèles en préparation sont montrés sans photo de plaque. " + src("https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000044563107", "L121-4 sur Légifrance")),
     ("Sur mesure", "Les pièces adaptées à la demande sont exclues du droit de rétractation (L221-28, 3°) : c’est écrit sur la page Sur mesure. " + src("https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000044563170", "Légifrance")),
     ("Lettre d’information", "Case non cochée, finalité écrite, désinscription à chaque envoi (L34-5 CPCE, RGPD). " + src("https://www.cnil.fr/fr/la-prospection-commerciale-par-courrier-electronique", "CNIL, prospection")),
     ("Polices", "La maquette charge Google Fonts pour être prête à l’emploi. Un tribunal de Munich a condamné en 2022 un site qui transmettait ainsi l’adresse IP des visiteurs à Google : sur le site réel, héberger les polices soi-même. " + src("https://thehackernews.com/2022/01/german-court-rules-websites-embedding.html", "The Hacker News")),
@@ -2041,7 +2040,7 @@ CONTRASTES = [
 
 IDEES = [
     ("Panneaux de démonstration à Aquensis, avec QR code", "La page qr.html les attend : l’histoire en bref, quatre plaques liées à Bagnères, le prix. Un paramètre de suivi par emplacement.",
-     "L’accord de la SEMETHERM, les emplacements, le paramètre de suivi et l’outil de mesure."),
+     "Les emplacements, le paramètre de suivi et l’outil de mesure (l’accord de la SEMETHERM est obtenu)."),
     ("Commerçants et restaurants qui exposent une plaque", "La carte peut recevoir un repère « Où voir une plaque » pour chaque lieu, avec son accord et la mention « plaque offerte par l’atelier ».",
      "La liste des lieux, l’accord écrit de chacun."),
     ("Offices de tourisme et boutiques des grands sites", "Une page « Où acheter », créée seulement quand un dépôt est signé. Aucun point de vente n’est annoncé avant.",
@@ -2061,12 +2060,9 @@ IDEES = [
 ]
 
 A_FOURNIR_LISTE = [
-    "L’accord écrit de la SEMETHERM pour citer le projet Aquensis.",
     "Le point de référence de la formule « rayon de 150 km » (Revel est à environ {} km de Gerde).".format(KM_REVEL),
     "La fixation conseillée en extérieur.",
-    "La longueur exacte du ruban LED (2 m ou 1,5 m).",
     "La durée de validité de la carte cadeau.",
-    "Les frais de port, ou au moins un tarif indicatif.",
     "Les photos manquantes : Le Cerf en noir, L’Abbaye de l’Escaladieu en doré, une mise en situation du Cirque de Gavarnie et du Cerf.",
     "Des photos réelles de la fabrication : découpe à Revel, thermolaquage, emballage.",
     "La relecture des textes « Le lieu » de chaque fiche (marqués « à relire »).",
@@ -2077,7 +2073,6 @@ A_FOURNIR_LISTE = [
     "Le nom et les coordonnées du médiateur de la consommation.",
     "Le numéro du décret du 5 janvier 2026 sur la fonction de rétractation.",
     "L’adresse vers laquelle pointe le QR code déjà prêt.",
-    "Un numéro de téléphone professionnel pour le contact et les mentions légales (Code de la consommation, art. L221-5 et R111-1 ; LCEN, art. 6-III), distinct du numéro personnel.",
     "Le logo en SVG, pour remplacer la signature typographique.",
 ]
 
@@ -2177,6 +2172,7 @@ def notes():
           <h2 id="t-fournir">À fournir</h2>
           <p class="attenue">Signalé dans les pages par {f} ou {c}.</p>
           <ul class="liste-simple">{a_fournir}</ul>
+          <p class="attenue">Reçu et intégré le 30 octobre 2026 : l’accord écrit de la SEMETHERM pour citer Aquensis (sur papier, à conserver), le téléphone, les frais de port (5 € par commande), la longueur du ruban LED (2 m).</p>
         </div>
         <div>
           <h2>À valider</h2>
@@ -2215,7 +2211,7 @@ def verifier_liens():
         with open(os.path.join(ICI, fichier), encoding="utf-8") as f:
             doc = f.read()
         for attr, cible in re.findall(r'(href|src)="([^"#?]+)', doc):
-            if cible.startswith(("http", "mailto:", "data:")):
+            if cible.startswith(("http", "mailto:", "tel:", "data:")):
                 continue
             if not os.path.exists(os.path.normpath(os.path.join(ICI, cible))):
                 manquants.append((fichier, cible))

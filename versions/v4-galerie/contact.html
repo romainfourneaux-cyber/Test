@@ -48,7 +48,7 @@
   <div class="wrap deux-colonnes deux-colonnes--haut">
     <dl class="coordonnees">
       <div><dt>E-mail</dt><dd class="copie"><code id="adresse-email">contact@terregravee.fr</code><button type="button" data-copier="adresse-email">Copier</button></dd></div>
-      <div><dt>Téléphone</dt><dd>Numéro professionnel <span class="note note--manque">à fournir</span></dd></div>
+      <div><dt>Téléphone</dt><dd><a href="tel:+33642572810">06 42 57 28 10</a></dd></div>
       <div><dt>Atelier</dt><dd>Terre Gravée<br>16 rue du Pic du Midi<br>65200 Gerde</dd></div>
       <div><dt>Réseaux</dt><dd>Instagram, Facebook <span class="note note--manque">liens à fournir</span></dd></div>
     </dl>
@@ -97,7 +97,7 @@
     <div class="entete-section"><p class="surtitre">Livraison, retours, paiement</p><h2 id="titre-faq">Questions fréquentes</h2></div>
     <div class="faq">
       <details open><summary>Quand vais-je recevoir ma plaque ?</summary><div><p>Comptez 2 à 4 jours ouvrés, à titre indicatif. Les plaques partent de Bagnères-de-Bigorre.</p></div></details>
-      <details><summary>Combien coûte la livraison ?</summary><div><p>Les frais dépendent du poids et de la destination. Ils s’affichent avant la validation de la commande. Montant <span class="note note--manque">à fournir</span></p></div></details>
+      <details><summary>Combien coûte la livraison ?</summary><div><p>5 € par commande, quel que soit le nombre d’articles. La carte cadeau seule, envoyée par e-mail, n’a pas de frais de port. Le montant s’affiche dans le panier, avant la validation.</p></div></details>
       <details><summary>Puis-je changer d’avis ?</summary><div><p>Oui. Vous avez 14 jours après réception pour vous rétracter, comme la loi le prévoit. Les frais de retour restent à votre charge et les pièces personnalisées sont exclues. <a href="#retractation">Renoncer au contrat ici</a></p></div></details>
       <details><summary>Ma plaque est arrivée abîmée, que faire ?</summary><div><p>Envoyez une photo et une description par e-mail. Toutes les plaques bénéficient des garanties légales de conformité et des vices cachés.</p></div></details>
       <details><summary>Quels moyens de paiement ?</summary><div><p>Carte bancaire (Stripe), PayPal, Apple Pay et Google Pay.</p></div></details>
@@ -112,7 +112,7 @@
       <div class="pied__marque">
         <a class="marque" href="index.html"><svg viewBox="0 0 30 22" aria-hidden="true" focusable="false"><path d="M1.5 20.5 10 9l3.2 3.6L18.6 4.5 28.5 20.5Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M18.6 4.5V1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span class="marque__nom">TERRE GRAVÉE</span></a>
         <p class="pied__slogan">Graver l’âme des territoires</p>
-        <p>Atelier Terre Gravée<br>16 rue du Pic du Midi, 65200 Gerde<br><a href="contact.html">contact@terregravee.fr</a><br>Téléphone : numéro professionnel <span class="note note--manque">à fournir</span></p>
+        <p>Atelier Terre Gravée<br>16 rue du Pic du Midi, 65200 Gerde<br><a href="contact.html">contact@terregravee.fr</a><br>Téléphone : <a href="tel:+33642572810">06 42 57 28 10</a></p>
       </div>
       <div>
         <h2>Collection</h2>
@@ -156,8 +156,12 @@
   <div class="tiroir__haut"><h2 id="titre-panier">Panier</h2><button type="button" class="bouton-icone tiroir__fermer" data-fermer-panier>Fermer</button></div>
   <ul class="tiroir__liste"></ul>
   <div class="tiroir__bas">
-    <div class="tiroir__total"><span>Sous-total TTC</span><strong>0 €</strong></div>
-    <p>Frais de port selon le poids et la destination, affichés avant la validation <span class="note note--manque">montant à fournir</span>. Livraison en 2 à 4 jours ouvrés, à titre indicatif.</p>
+    <dl class="tiroir__montants">
+      <div><dt>Sous-total</dt><dd data-sous-total>0 €</dd></div>
+      <div><dt>Livraison</dt><dd data-livraison>5 €</dd></div>
+      <div class="tiroir__total"><dt>Total TTC</dt><dd><strong data-total>0 €</strong></dd></div>
+    </dl>
+    <p>Livraison : 5 € par commande, quel que soit le nombre d’articles. Aucuns frais pour une carte cadeau seule, envoyée par e-mail. Expédition en 2 à 4 jours ouvrés, à titre indicatif.</p>
     <button type="button" class="btn btn--plein" disabled aria-describedby="commande-desactivee">Commander</button>
     <p id="commande-desactivee">Maquette : la commande et le paiement sont désactivés. Le panier reste dans ce navigateur.</p>
   </div>

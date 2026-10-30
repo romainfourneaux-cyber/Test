@@ -77,6 +77,7 @@
   $$("[data-ouvrir-panier]").forEach(function (b) { b.addEventListener("click", ouvrirPanier); });
   $$("[data-fermer-panier]").forEach(function (b) { b.addEventListener("click", fermerPanier); });
 
+  var FRAIS_PORT = 5;
   function afficherPanier() {
     var lignes = lirePanier();
     var total = 0, nombre = 0;
@@ -113,7 +114,14 @@
       li.appendChild(image); li.appendChild(milieu); li.appendChild(prix);
       liste.appendChild(li);
     });
-    var t = $(".tiroir__total strong"); if (t) t.textContent = euros(total);
+    /* Livraison : 5 € par commande dès qu’un article s’expédie ; la carte cadeau part par e-mail. */
+    var aExpedier = lignes.some(function (l) { return String(l.cle || "").indexOf("carte-cadeau") !== 0; });
+    var port = aExpedier ? FRAIS_PORT : 0;
+    var champ = function (sel, texte) { var el = $(sel); if (el) el.textContent = texte; };
+    champ("[data-sous-total]", euros(total));
+    champ("[data-livraison]", euros(port));
+    champ("[data-total]", euros(total + port));
+    var montants = $(".tiroir__montants"); if (montants) montants.hidden = !lignes.length;
   }
   afficherPanier();
   window.addEventListener("storage", function (e) { if (e.key === CLE_PANIER) afficherPanier(); });

@@ -140,7 +140,6 @@
     <p class="fiche-lieu__cartel">Le décor d’origine · Bagnères-de-Bigorre</p>
     <h2 id="titre-aquensis">Aquensis, le décor d’origine</h2>
     <p>Avant les plaques, il y a eu ce décor : 30 niches de 1 m × 2 m en aluminium découpé et rétroéclairé, au centre thermal.</p>
-    <p><span class="note note--decision">à valider : accord de la SEMETHERM pour citer le projet Aquensis</span></p>
     <a class="btn btn--ligne" href="atelier.html#origine">Lire l’histoire</a>
   </div>
 </article><article class="fiche-lieu" data-fiche-lieu="atelier" hidden aria-labelledby="titre-atelier">
@@ -223,7 +222,7 @@
   <button type="button" class="lieu-ligne__situer" data-situer="le-cirque-de-gavarnie">Situer<span class="visuellement-cache"> Le Cirque de Gavarnie sur la carte</span></button>
 </li><li class="lieu-ligne lieu-ligne--vrai">
   <span class="lieu-ligne__num legende__signe legende__signe--vrai" aria-hidden="true"><svg viewBox="0 0 16 16" focusable="false"><path d="M8 1 9.9 5.6 14.7 5.9 11 9.1 12.2 13.9 8 11.3 3.8 13.9 5 9.1 1.3 5.9 6.1 5.6Z"/></svg></span>
-  <div class="lieu-ligne__texte"><strong>Aquensis, le décor d’origine</strong><span>Centre thermal de Bagnères-de-Bigorre</span><span class="lieu-ligne__marqueur"><span class="note note--decision">à valider : accord de la SEMETHERM pour citer le projet Aquensis</span></span></div>
+  <div class="lieu-ligne__texte"><strong>Aquensis, le décor d’origine</strong><span>Centre thermal de Bagnères-de-Bigorre</span></div>
   <span class="lieu-ligne__prix"></span>
   <button type="button" class="lieu-ligne__situer" data-situer="aquensis">Situer<span class="visuellement-cache"> Aquensis, le décor d’origine sur la carte</span></button>
 </li><li class="lieu-ligne lieu-ligne--atelier">
@@ -251,7 +250,7 @@
       <div class="pied__marque">
         <a class="marque" href="index.html"><svg viewBox="0 0 30 22" aria-hidden="true" focusable="false"><path d="M1.5 20.5 10 9l3.2 3.6L18.6 4.5 28.5 20.5Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M18.6 4.5V1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span class="marque__nom">TERRE GRAVÉE</span></a>
         <p class="pied__slogan">Graver l’âme des territoires</p>
-        <p>Atelier Terre Gravée<br>16 rue du Pic du Midi, 65200 Gerde<br><a href="contact.html">contact@terregravee.fr</a><br>Téléphone : numéro professionnel <span class="note note--manque">à fournir</span></p>
+        <p>Atelier Terre Gravée<br>16 rue du Pic du Midi, 65200 Gerde<br><a href="contact.html">contact@terregravee.fr</a><br>Téléphone : <a href="tel:+33642572810">06 42 57 28 10</a></p>
       </div>
       <div>
         <h2>Collection</h2>
@@ -295,8 +294,12 @@
   <div class="tiroir__haut"><h2 id="titre-panier">Panier</h2><button type="button" class="bouton-icone tiroir__fermer" data-fermer-panier>Fermer</button></div>
   <ul class="tiroir__liste"></ul>
   <div class="tiroir__bas">
-    <div class="tiroir__total"><span>Sous-total TTC</span><strong>0 €</strong></div>
-    <p>Frais de port selon le poids et la destination, affichés avant la validation <span class="note note--manque">montant à fournir</span>. Livraison en 2 à 4 jours ouvrés, à titre indicatif.</p>
+    <dl class="tiroir__montants">
+      <div><dt>Sous-total</dt><dd data-sous-total>0 €</dd></div>
+      <div><dt>Livraison</dt><dd data-livraison>5 €</dd></div>
+      <div class="tiroir__total"><dt>Total TTC</dt><dd><strong data-total>0 €</strong></dd></div>
+    </dl>
+    <p>Livraison : 5 € par commande, quel que soit le nombre d’articles. Aucuns frais pour une carte cadeau seule, envoyée par e-mail. Expédition en 2 à 4 jours ouvrés, à titre indicatif.</p>
     <button type="button" class="btn btn--plein" disabled aria-describedby="commande-desactivee">Commander</button>
     <p id="commande-desactivee">Maquette : la commande et le paiement sont désactivés. Le panier reste dans ce navigateur.</p>
   </div>
