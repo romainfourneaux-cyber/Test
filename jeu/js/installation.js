@@ -13,7 +13,8 @@
 
   function surHttp() { return !!loc && (loc.protocol === "http:" || loc.protocol === "https:"); }
   // Vrai seulement sur la version web, dans un navigateur qui connaît les service workers.
-  function possible() { return surHttp() && !!nav && !!nav.serviceWorker; }
+  // L'application Android (atelier/android, pont window.AndroidDomaine) sert déjà tout depuis l'APK : rien à enregistrer.
+  function possible() { return surHttp() && !!nav && !!nav.serviceWorker && typeof racine.AndroidDomaine === "undefined"; }
   function installe() {
     try { return !!(racine.matchMedia && racine.matchMedia("(display-mode: standalone)").matches); } catch (e) { return false; }
   }

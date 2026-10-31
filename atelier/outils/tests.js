@@ -2547,13 +2547,14 @@ verifier("Bataillons : le rendu ne touche pas au moteur (aucune écriture de la 
     /<link rel="manifest" href="manifest.webmanifest">/.test(tete) && /<meta name="theme-color" content="#[0-9a-f]{6}">/.test(tete) && /<link rel="icon" href="assets\/images\/icones-app\/icone-192.png"/.test(tete) &&
     /<script src="js\/installation.js" defer><\/script>/.test(tete) && html.split("js/installation.js").length === 2);
   // installation.js : rien en file://, sw.js enregistré une fois en https, Réglages enrobés
-  function essaiInstallation(protocole, standalone) {
+  function essaiInstallation(protocole, standalone, android) {
     const appels = [], ecoutes = [];
     const boite = () => ({ hidden: false, insertBefore() {}, firstChild: { nextSibling: null } });
     const ctx = { console, JEU: { version: "9.9.9", ui: { ecrans: { reglages: function (s) { s.rendu = (s.rendu || 0) + 1; } }, el: boite, toast() {} } },
       navigator: { serviceWorker: { controller: null, register: u => { appels.push(u); return Promise.resolve({}); }, addEventListener: t => ecoutes.push(t) } },
       location: { protocol: protocole }, document: { querySelector: () => null }, addEventListener: t => ecoutes.push(t), matchMedia: () => ({ matches: !!standalone }) };
     ctx.window = ctx;
+    if (android) ctx.AndroidDomaine = { exporter() {} };
     vm.runInNewContext(fs.readFileSync(path.join(G.JEU, "js", "installation.js"), "utf8"), ctx, { filename: "installation.js" });
     const s = { ajouts: 0, querySelectorAll: () => [], appendChild() { s.ajouts++; }, insertBefore() { s.ajouts++; } };
     ctx.JEU.ui.ecrans.reglages(s);
@@ -2565,6 +2566,9 @@ verifier("Bataillons : le rendu ne touche pas au moteur (aucune écriture de la 
   verifier("installation.js en https : sw.js enregistré une fois, Réglages enrobés (un cartouche ajouté), écouteurs controllerchange et beforeinstallprompt, état « hors ligne en préparation… » puis « mode installé » en plein écran",
     iH.possible && iH.appels.join() === "sw.js" && iH.enrobe && iH.rendu === 1 && iH.ajouts === 1 && iH.ecoutes.indexOf("controllerchange") >= 0 && iH.ecoutes.indexOf("beforeinstallprompt") >= 0 &&
     iH.etat === "Version 9.9.9 · hors ligne en préparation…" && iS.etat === "Version 9.9.9 · mode installé", { iH, iS });
+  const iA = essaiInstallation("https:", false, true);
+  verifier("installation.js dans l'application Android (pont AndroidDomaine présent, origine https) : aucun service worker enregistré, aucun écouteur, Réglages rendus tels quels",
+    !iA.possible && iA.appels.length === 0 && iA.ecoutes.length === 0 && !iA.enrobe && iA.rendu === 1 && iA.ajouts === 0, iA);
 })();
 
 console.log("\n" + ok + " réussis, " + ko + " en échec.");
