@@ -1161,6 +1161,8 @@ html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
   white-space: pre; position: absolute; left: 0; right: 0; top: 0; -webkit-text-fill-color: currentColor;
   transform: translateY(calc(var(--c, 0) * -1.2em)); transition: transform .4s cubic-bezier(.3, .7, .35, 1); }
 .td-or { position: relative; }
+/* or gagné à une réponse juste : le compteur roule quand « +n » arrive du sceau (0,38 s), pas avant */
+.td-or.td-attend .td-chiffre::before { transition-delay: .38s; }
 .td-or.rouge b { color: #ff8f80; }
 /* la pièce brille quand l'or arrive */
 .td-or.td-gain-a svg { animation: td-piece-a .42s ease-out; }
