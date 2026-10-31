@@ -589,8 +589,9 @@
   // La route n'est plus reconstruite par une entrée d'écran : elle est redessinée sur place. Une fenêtre de halte (porte,
   // cartes, bivouac, veillée, marchand, faveurs, page de semaine) s'ouvre dans un calque par-dessus la route assombrie,
   // qui garde sa place (svg.route-arriere, inerte : ni halo, ni numéro, ni focus) ; les boutons de la route cèdent la
-  // leur à un gabarit vide de même hauteur (les cartouches ne sautent pas). Quand la fenêtre se referme, elle s'efface en
-  // 120 ms, la route s'éclaire et le sceau de la halte jouée tombe (rendreRoute).
+  // leur à un gabarit vide de même hauteur (les cartouches ne sautent pas tant que la fenêtre tient dans la hauteur de la
+  // route ; une fenêtre plus haute les pousse dessous, la page grandit avec elle : jeu.css, .route-scene). Quand la
+  // fenêtre se referme, elle s'efface en 120 ms, la route s'éclaire et le sceau de la halte jouée tombe (rendreRoute).
   var entreeEnCours = false; // vrai pendant le rendu qui suit une entrée d'écran (ui.afficher), faux sur place
   function sceneDe(s) {
     for (var c = s.firstElementChild; c; c = c.nextElementSibling) if (c.classList.contains("route-scene")) return c;
@@ -653,6 +654,7 @@
     var calque = el("div", { class: "exp-calque" }, [contenu, options.boutons || null]), vieux = enfant(scene, "exp-calque");
     if (vieux) scene.replaceChild(calque, vieux); else scene.appendChild(calque);
     scene.classList.add("voilee");
+    JEU.ui.nouvelAffichage(); // garde du double toucher : la fenêtre vient de s'ouvrir sous le doigt (interface.js)
   }
   // La route elle-même dans la scène : la carte redessinée dans le même cadre (il s'éclaire depuis l'assombrissement),
   // ses boutons à la place du gabarit, la fenêtre éventuelle qui s'efface. Renvoie vrai si une fenêtre se refermait.
@@ -666,7 +668,7 @@
     var act = enfant(scene, "place-actions") || enfant(scene, "route-actions");
     if (act) scene.replaceChild(boutons, act); else scene.insertBefore(boutons, carte.nextSibling);
     var calque = enfant(scene, "exp-calque");
-    if (calque) fermerCalque(calque);
+    if (calque) { fermerCalque(calque); window.scrollTo(0, 0); } // la route revient en haut, comme à l'entrée d'écran
     scene.classList.remove("voilee");
     return { carte: carte, fenetre: !!calque };
   }
@@ -777,7 +779,7 @@
     if (rep && rep.fini) { S.bilan = rep.fini; return rendreBilan(s, rep.fini); }
     e = X.enCours();
     if (!e) return rendreDepart(s);
-    if (e.offre && e.offre.cartes.length) return e.offre.question ? rendrePorte(s, e) : rendreCartes(s, e, e.offre, null);
+    if (e.offre && e.offre.cartes.length) return e.offre.question ? rendrePorte(s, e) : rendreCartes(s, e, e.offre, e.offre.affiner ? { titre: TEXTES.bivouac.affiner } : null);
     if (e.position === null && S.pageVue !== e.semaine) return rendrePageSemaine(s, e);
     return rendreRoute(s, e);
   };
@@ -1254,7 +1256,13 @@
     function fin() {
       var res = X.finirVeillee(bonnes, qs.length);
       if (res && res.affinables.length) {
-        return rendreCartes(s, X.enCours(), { cartes: res.affinables, halte: t.halte.id }, { titre: T.affiner, sous: res.texte, prendre: function (id) { X.affiner(id); JEU.sons.jouer("validation"); } });
+        // la faveur à affiner est enregistrée comme une offre en attente (affiner : vrai), comme les cartes d'une porte : un
+        // jeu rechargé ou un écran quitté pendant l'éventail la retrouve (aiguiller). prendreFaveur applique le rang de la
+        // carte, qui vaut le rang tenu + 1 (carteFaveur) : le même résultat qu'affiner.
+        var e2 = X.enCours();
+        e2.offre = { halte: t.halte.id, conseiller: null, cartes: res.affinables, affiner: true };
+        JEU.sauvegarde.enregistrer();
+        return rendreCartes(s, e2, e2.offre, { titre: T.affiner, sous: res.texte });
       }
       zone.innerHTML = "";
       var bouton = el("button", { class: "bouton principal", onclick: afficher }, [T.continuer, astuce("Entrée")]);

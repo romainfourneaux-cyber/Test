@@ -1841,9 +1841,10 @@
     return (vues[cle] = ancrer(c, gauche ? c.width - 1 - 3 * re : 1 + 3 * re, 1 + H * ratio, ratio));
   }
 
-  // Champion (lot B, A+) : une ellipse au sol, sous ses pieds, de la plus foncée des deux couleurs de son camp (bleu de
-  // France, rouge d'Angleterre, vert omeyyade), plus soutenue sur son bord, sans contour noir. Peinte une fois (vues), une
-  // copie par image, dans la passe du sol : sous toutes les troupes. Même traitement pour tous les camps.
+  // Champion (lot B, A+) : un anneau au sol, sous ses pieds, de la plus foncée des deux couleurs de son camp (bleu de
+  // France, rouge d'Angleterre, vert omeyyade), marqué sur son bord seul, le centre presque transparent (0,1), sans
+  // contour noir : un disque plein rouge se lisait comme une flaque de sang sous le champion anglais. Peint une fois
+  // (vues), une copie par image, dans la passe du sol : sous toutes les troupes. Même traitement pour tous les camps.
   var ANNEAU_RX = 13, ANNEAU_RY = 5.2;
   function luminance(hex) { var n = parseInt(hex.slice(1), 16); return 0.2126 * (n >> 16 & 255) + 0.7152 * (n >> 8 & 255) + 0.0722 * (n & 255); }
   function anneauChampion(coul, ratio) {
@@ -1856,7 +1857,7 @@
     var g = c.getContext("2d");
     g.translate(c.width / 2, c.height / 2); g.scale(ratio, ratio * ANNEAU_RY / ANNEAU_RX);
     var r = g.createRadialGradient(0, 0, 0, 0, 0, ANNEAU_RX);
-    r.addColorStop(0, "rgba(" + rgb + ",.28)"); r.addColorStop(0.6, "rgba(" + rgb + ",.4)");
+    r.addColorStop(0, "rgba(" + rgb + ",.1)"); r.addColorStop(0.58, "rgba(" + rgb + ",.12)");
     r.addColorStop(0.84, "rgba(" + rgb + ",.8)"); r.addColorStop(1, "rgba(" + rgb + ",0)");
     g.fillStyle = r; g.beginPath(); g.arc(0, 0, ANNEAU_RX, 0, Math.PI * 2); g.fill();
     c.lw = lw; c.lh = lh;
