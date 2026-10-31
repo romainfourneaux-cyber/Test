@@ -56,7 +56,7 @@ Ce dossier sert à construire et à nourrir un jeu web de révision pour un él�
 ## Méthode
 
 - Si le cahier des charges ne tranche pas, prends la solution la plus simple et note-la dans docs/JOURNAL.md, rubrique Décisions.
-- Après chaque changement : lance le validateur (node atelier/outils/valider.js) et les tests (node atelier/outils/tests.js), ajoute une ligne au journal (date, fichiers, changement) et, quand tu livres, incrémente le même numéro dans jeu/VERSION.txt et dans JEU.version (jeu/index.html, c'est celui que le jeu affiche). Sans Node, fais ses contrôles toi-même en lisant les fichiers et préviens Romain que l'anti-recopie et l'anti-spoil ont été vérifiés à la main.
+- Après chaque changement : lance le validateur (node atelier/outils/valider.js) et les tests (node atelier/outils/tests.js), ajoute une ligne au journal (date, fichiers, changement) et, quand tu livres, incrémente le même numéro dans jeu/VERSION.txt et dans JEU.version (jeu/index.html, c'est celui que le jeu affiche) et régénère jeu/sw.js avec node atelier/outils/generer-sw.js. Sans Node, fais ses contrôles toi-même en lisant les fichiers et préviens Romain que l'anti-recopie et l'anti-spoil ont été vérifiés à la main.
 - Si git est installé, un commit par jalon. Sinon, une copie datée de jeu/ dans atelier/versions/ avant chaque gros changement.
 - Quand Romain doit vérifier quelque chose dans le navigateur, donne-lui cinq actions au plus, chacune avec ce qu'il doit voir.
 - Commandes du projet : /traiter (intégrer les nouveaux fichiers de DEPOT/) et /relecture (fiche de relecture de la semaine et signalements de l'élève).

@@ -2509,5 +2509,63 @@ verifier("Bataillons : le rendu ne touche pas au moteur (aucune écriture de la 
     ["marchands", "defi", "mercenaires", "incendie", "espion", "archives"].every(id => { const ev = EV.evenementDe(id); return ev && ev.titre && ev.icone && ev.texte && typeof ev.questions === "number" && EV.nomCourt({ type: "evenement", ev: id }).length <= 11; }));
 })();
 
+// ---------- version web installable (31/10/2026) : manifeste, service worker généré, enregistrement en http(s) seulement ----------
+(function () {
+  const G = require("./generer-sw.js");
+  const swTexte = fs.readFileSync(G.SORTIE, "utf8");
+  const attendu = G.listerFichiers();
+  const liste = G.lireListe(swTexte) || [];
+  const manquants = attendu.filter(f => liste.indexOf(f) < 0), fantomes = liste.filter(f => attendu.indexOf(f) < 0);
+  const versionTxt = G.version();
+  verifier("sw.js : la liste de précache porte tous les fichiers de jeu/ sauf sw.js (" + attendu.length + "), aucun fichier absent du disque",
+    liste.length === attendu.length && manquants.length === 0 && fantomes.length === 0, { manquants, fantomes });
+  verifier("sw.js : le nom du cache porte le numéro de VERSION.txt (" + G.PREFIXE + versionTxt + ")",
+    G.lireVersion(swTexte) === versionTxt && swTexte.indexOf("var CACHE = \"" + G.PREFIXE + "\" + VERSION;") >= 0, G.lireVersion(swTexte));
+  verifier("sw.js : octet pour octet ce que produit generer-sw.js (sinon : node atelier/outils/generer-sw.js)", G.generer() === swTexte);
+  verifier("sw.js : index.html, manifeste, installation.js, feuille de style, données, manifestes d'images 3D, icônes, polices, sons, images des expéditions, cours et anglais dans la liste",
+    ["index.html", "manifest.webmanifest", "js/installation.js", "css/jeu.css", "data/config.js", "data/index-cours.js", "assets/images/td/sprites.js", "assets/images/expedition/images.js", "assets/icones/game-icons.js", "CREDITS.md"].every(f => liste.indexOf(f) >= 0) &&
+    [/^assets\/polices\/.*\.woff2$/, /^assets\/sons\/.*\.wav$/, /^assets\/images\/expedition\/.*\.png$/, /^assets\/images\/td\/.*\.png$/, /^data\/cours\/.*\.js$/, /^data\/anglais\/.*\.js$/].every(re => liste.some(f => re.test(f))));
+  // le service worker lui-même : trois écouteurs au chargement, racine du cache calculée depuis son adresse
+  const ecouteurs = [];
+  const ctxSW = { URL, console, Response: function () {}, caches: {}, fetch: () => {} };
+  ctxSW.self = { addEventListener: t => ecouteurs.push(t), location: { href: "https://exemple.test/jeu/sw.js", origin: "https://exemple.test" }, skipWaiting() {}, clients: { claim() {} } };
+  vm.runInNewContext(swTexte, ctxSW, { filename: "sw.js" });
+  verifier("sw.js : écouteurs install, activate et fetch ; racine « https://exemple.test/jeu/ » ; cache le-domaine-<version>",
+    ecouteurs.join(",") === "install,activate,fetch" && vm.runInNewContext("RACINE", ctxSW) === "https://exemple.test/jeu/" && vm.runInNewContext("CACHE", ctxSW) === G.PREFIXE + versionTxt, ecouteurs);
+  // manifeste
+  const manifest = JSON.parse(fs.readFileSync(path.join(G.JEU, "manifest.webmanifest"), "utf8"));
+  const icones = manifest.icons || [];
+  verifier("manifest.webmanifest : noms, start_url ./, scope ./, standalone, paysage, fr, couleurs, icônes 192, 512 et 512 maskable en PNG, présentes dans jeu/ et dans la précache",
+    manifest.name === "Le domaine · révision 5e" && manifest.short_name === "Le domaine" && manifest.start_url === "./" && manifest.scope === "./" && manifest.display === "standalone" &&
+    manifest.orientation === "landscape" && manifest.lang === "fr" && /^#[0-9a-f]{6}$/.test(manifest.background_color) && /^#[0-9a-f]{6}$/.test(manifest.theme_color) &&
+    icones.some(i => i.sizes === "192x192" && !i.purpose) && icones.some(i => i.sizes === "512x512" && !i.purpose) && icones.some(i => i.sizes === "512x512" && i.purpose === "maskable") &&
+    icones.every(i => i.type === "image/png" && fs.existsSync(path.join(G.JEU, i.src)) && liste.indexOf(i.src) >= 0), manifest);
+  // en-tête de index.html
+  const html = fs.readFileSync(path.join(G.JEU, "index.html"), "utf8");
+  const tete = html.slice(0, html.indexOf("</head>"));
+  verifier("index.html : manifeste, icône d'onglet, couleur de thème et installation.js (defer) dans l'en-tête, installation.js nulle part ailleurs",
+    /<link rel="manifest" href="manifest.webmanifest">/.test(tete) && /<meta name="theme-color" content="#[0-9a-f]{6}">/.test(tete) && /<link rel="icon" href="assets\/images\/icones-app\/icone-192.png"/.test(tete) &&
+    /<script src="js\/installation.js" defer><\/script>/.test(tete) && html.split("js/installation.js").length === 2);
+  // installation.js : rien en file://, sw.js enregistré une fois en https, Réglages enrobés
+  function essaiInstallation(protocole, standalone) {
+    const appels = [], ecoutes = [];
+    const boite = () => ({ hidden: false, insertBefore() {}, firstChild: { nextSibling: null } });
+    const ctx = { console, JEU: { version: "9.9.9", ui: { ecrans: { reglages: function (s) { s.rendu = (s.rendu || 0) + 1; } }, el: boite, toast() {} } },
+      navigator: { serviceWorker: { controller: null, register: u => { appels.push(u); return Promise.resolve({}); }, addEventListener: t => ecoutes.push(t) } },
+      location: { protocol: protocole }, document: { querySelector: () => null }, addEventListener: t => ecoutes.push(t), matchMedia: () => ({ matches: !!standalone }) };
+    ctx.window = ctx;
+    vm.runInNewContext(fs.readFileSync(path.join(G.JEU, "js", "installation.js"), "utf8"), ctx, { filename: "installation.js" });
+    const s = { ajouts: 0, querySelectorAll: () => [], appendChild() { s.ajouts++; }, insertBefore() { s.ajouts++; } };
+    ctx.JEU.ui.ecrans.reglages(s);
+    return { appels, ecoutes, rendu: s.rendu, ajouts: s.ajouts, enrobe: !!ctx.JEU.ui.ecrans.reglages.installation, possible: ctx.JEU.installation.possible(), etat: ctx.JEU.installation.etatTexte() };
+  }
+  const iF = essaiInstallation("file:"), iH = essaiInstallation("https:"), iS = essaiInstallation("https:", true);
+  verifier("installation.js en file:// : aucun service worker enregistré, aucun écouteur, écran des Réglages rendu tel quel",
+    !iF.possible && iF.appels.length === 0 && iF.ecoutes.length === 0 && !iF.enrobe && iF.rendu === 1 && iF.ajouts === 0, iF);
+  verifier("installation.js en https : sw.js enregistré une fois, Réglages enrobés (un cartouche ajouté), écouteurs controllerchange et beforeinstallprompt, état « hors ligne en préparation… » puis « mode installé » en plein écran",
+    iH.possible && iH.appels.join() === "sw.js" && iH.enrobe && iH.rendu === 1 && iH.ajouts === 1 && iH.ecoutes.indexOf("controllerchange") >= 0 && iH.ecoutes.indexOf("beforeinstallprompt") >= 0 &&
+    iH.etat === "Version 9.9.9 · hors ligne en préparation…" && iS.etat === "Version 9.9.9 · mode installé", { iH, iS });
+})();
+
 console.log("\n" + ok + " réussis, " + ko + " en échec.");
 process.exit(ko ? 1 : 0);

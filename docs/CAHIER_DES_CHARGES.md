@@ -195,11 +195,11 @@ Retirés en 0.5.0 : l'Assaut (à la Slay the Spire, 8 questions, jalon 1) et le 
 
 - HTML, CSS et JavaScript pur en scripts classiques ; ouverture par double-clic sur jeu/index.html (Edge, Chrome).
 - Arborescence :
-  - jeu/index.html (JEU.version, le numéro affiché), jeu/VERSION.txt (le même numéro), jeu/CREDITS.md
+  - jeu/index.html (JEU.version, le numéro affiché), jeu/VERSION.txt (le même numéro), jeu/CREDITS.md ; depuis le 31/10/2026, jeu/manifest.webmanifest et jeu/sw.js (version web installable ; sw.js est généré par atelier/outils/generer-sw.js)
   - jeu/css/
-  - jeu/js/ : un fichier par module (noyau, brouillage, calendrier, sauvegarde, leitner, chargeur, progression, questions, rappels, icones, anim, sons, musique, interface, mentor, signalement, codex, recit, bataille-moteur, cartes-bataille, campagne, bataille, expedition, conseil, ecran-campagne, ecran-expedition, domaine, demarrage)
+  - jeu/js/ : un fichier par module (noyau, brouillage, calendrier, sauvegarde, leitner, chargeur, progression, questions, rappels, icones, anim, sons, musique, interface, mentor, signalement, codex, recit, bataille-moteur, cartes-bataille, campagne, bataille, expedition, conseil, ecran-campagne, ecran-expedition, domaine, demarrage, installation)
   - jeu/data/ : config, planning, devoirs, index-cours, a-retravailler, suivi, personnages (souverains et rivaux de la campagne, 16/10/2026), cours/, anglais/
-  - jeu/assets/ : polices, sons, icônes, images (dont images/personnages/ : portraits des souverains), cartes
+  - jeu/assets/ : polices, sons, icônes, images (dont images/personnages/ : portraits des souverains, et images/icones-app/ : icônes de l'application installée), cartes
   - atelier/ : registre.json, index-notions.json, contenu/, extractions/, devoirs/, relectures/, outils/, versions/ ; drive/ (PDF du Drive gardés pour l'inventaire, ignorés par git : ce n'est pas une source tant qu'ils ne sont pas déposés dans DEPOT/)
 - Chargement : config, planning, devoirs, index-cours, a-retravailler, suivi et personnages, puis une balise script par cours listé. Un fichier absent ou en erreur ne bloque pas le jeu : le cours reste dans la brume (présumé acquis s'il date des semaines 1 à 6, avec la mention « contenu à venir » dans la liste des cours ; une fiche méthode affiche « contenu à venir »).
 - Sauvegarde : localStorage (clé jeu5e), schéma versionné (3 depuis la 0.5.0, avec la campagne ; 4 depuis le 15/10/2026, avec la file des questions ratées à reposer ; 5 avec la mémoire des questions posées ; 6 depuis le 24/10/2026, avec les expéditions) et migration sans perte, export et import en JSON. Le jeu rappelle d'exporter si le dernier export a plus de 7 jours.
@@ -210,6 +210,7 @@ Retirés en 0.5.0 : l'Assaut (à la Slay the Spire, 8 questions, jalon 1) et le 
 - Anglais : synthèse vocale du navigateur, en-GB de préférence. Si aucune voix anglaise n'est installée, le jeu le signale et explique comment en ajouter une dans les paramètres vocaux de Windows.
 - Accessibilité : gros boutons, raccourcis clavier (1 à 6 pour les choix, flèches, Entrée), aucun clignotement.
 - Prérequis sur le PC de Romain : Poppler (pdftoppm, pdftotext) pour lire les PDF de plus de 10 pages ; Node.js LTS, fortement conseillé, pour le validateur complet et les tests.
+- Version web installable (31/10/2026, demande de Romain : jouer sur sa tablette Android, hors ligne) : la page web publiée s'installe depuis Chrome (menu, « Ajouter à l'écran d'accueil » ou « Installer l'application ») grâce à jeu/manifest.webmanifest et à jeu/sw.js, un service worker qui met en cache tous les fichiers du jeu à la première ouverture, puis les sert sans réseau (cache d'abord, réseau en repli). jeu/js/installation.js ne l'enregistre qu'en http(s), jamais en file:// : le double-clic sur index.html sur le PC ne change pas. Le jeu lui-même ne fait toujours aucun appel réseau pendant la partie ; le service worker est le mécanisme d'installation du navigateur, rien d'autre. sw.js est généré par atelier/outils/generer-sw.js (liste de précache relevée dans jeu/, nom de cache le-domaine-<version> lu dans VERSION.txt) : à régénérer à chaque livraison ; tests.js refuse un sw.js qui ne correspond plus à jeu/. Les Réglages montrent l'état (« Version x.y.z · mode installé » ou « · hors ligne prêt ») et un bouton « Mettre à jour » ; une nouvelle version prend la main au chargement suivant. Détail dans docs/FORMAT_DONNEES.md.
 
 ## 13. Jalons
 
