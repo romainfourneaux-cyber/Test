@@ -702,7 +702,8 @@ async function essaiExpedition(navigateur, w, h, erreurs) {
 // horizontal, champ de bataille entier à l'écran (côte à côte avec la colonne, même en 1024 × 768), carte-itinéraire et
 // cartouches entiers, grille de la campagne sur deux colonnes, cibles tactiles de 44 px au moins, textes de 14 px au moins
 // dans la colonne de bataille et sur la carte, moins de 100 ms entre une réponse touchée et la question suivante
-// (JEU.mesure, et Event Timing sur pointerup et click). En portrait (800 × 1280) : « Tourne ta tablette en paysage »
+// (JEU.mesure, et Event Timing sur pointerup et click), une réponse touchée deux fois de suite n'en enregistre qu'une
+// (garde du double toucher). En portrait (800 × 1280) : « Tourne ta tablette en paysage »
 // (feuille de style seule), qui disparaît en paysage. Captures : atelier/captures/tablette-*.png.
 const CAPTURES = path.join(__dirname, "..", "captures");
 async function contexteTablette(navigateur, w, h, erreurs) {
@@ -834,6 +835,22 @@ async function essaiTablette(navigateur, w, h, erreurs) {
   champEntier(await voir("bataille-conseil"), "bataille (conseil de guerre)");
   res.enonceVisible = await page.evaluate(() => { const e = document.querySelector(".td-question .enonce"); if (!e) return false; const r = e.getBoundingClientRect(); return r.top >= 0 && r.bottom <= innerHeight; });
   if (!res.enonceVisible) E("bataille : l'énoncé n'est pas visible à l'ouverture du conseil de guerre");
+  // garde du double toucher (revue du 31/10/2026) : une bonne réponse touchée deux fois à 90 ms ne répond qu'une fois ; le
+  // second toucher tombe sur la question suivante, affichée sous le doigt, et le jeu l'ignore (interface.js, GARDE_TOUCHER)
+  const reponseD = await page.evaluate(() => { const q = JEU.ui.questionCourante; return q.type === "qcm" ? q.reponse : q.type === "vrai_faux" && q.reponse.vrai ? "Vrai" : null; });
+  if (reponseD) {
+    const iD = await page.evaluate(t => [...document.querySelectorAll(".td-question .reponses button.choix")].findIndex(b => b.lastElementChild && b.lastElementChild.textContent === t), reponseD);
+    await page.locator(".td-question .reponses button.choix").nth(iD).scrollIntoViewIfNeeded(); await attendre(400);
+    const bD = await page.locator(".td-question .reponses button.choix").nth(iD).boundingBox();
+    const avantD = await page.evaluate(() => ({ total: JEU.sauvegarde.etat().stats.total, or: JEU.bataille.enCours.or, ev: window.__ev.length, mesures: JEU.mesure.valeurs.length }));
+    await page.touchscreen.tap(bD.x + bD.width / 2, bD.y + bD.height / 2); await attendre(90);
+    await page.touchscreen.tap(bD.x + bD.width / 2, bD.y + bD.height / 2); await attendre(450);
+    res.doubleToucher = await page.evaluate(a => ({ reponses: JEU.sauvegarde.etat().stats.total - a.total, or: Math.round(JEU.bataille.enCours.or - a.or),
+      ev: window.__ev.slice(a.ev), enchaine: JEU.mesure.valeurs.length > a.mesures }), avantD);
+    // le premier toucher est une vraie réponse au doigt : sa durée compte avec les autres
+    if (res.doubleToucher.enchaine) res.durees.push(res.doubleToucher.ev.length ? Math.max(...res.doubleToucher.ev) : 16);
+    if (res.doubleToucher.reponses !== 1) E("bataille : un double toucher sur une bonne réponse en enregistre " + res.doubleToucher.reponses + " (une seule attendue) : " + JSON.stringify(res.doubleToucher));
+  }
   const mesuresAvant = await page.evaluate(() => JEU.mesure.valeurs.length);
   const jb = { questions: 0, erreurs: 0, bilans: 0, vagues: 0, durees: res.durees };
   if (!await jouerAuDoigt(page, () => page.$(".td-pret"), jb, 40)) E("bataille : le conseil de guerre ne se termine pas au doigt (" + JSON.stringify(jb) + ")");
@@ -946,13 +963,15 @@ async function essaiTablette(navigateur, w, h, erreurs) {
   await attendre(400);
   res.conseil = await page.evaluate(() => ({ compteur: document.querySelector(".compteur").textContent, erreur: !!document.querySelector(".panneau-erreur"), correction: !!document.querySelector(".scene-conseil .choix") }));
   if (!(/Affaire 2 /.test(res.conseil.compteur) || res.conseil.erreur || res.conseil.correction)) E("conseil : la carte glissée au doigt n'est pas tranchée (" + JSON.stringify(res.conseil) + ")");
-  if (res.conseil.correction) { await page.locator(".scene-conseil .choix").first().tap(); await attendre(200); }
-  if (await page.$(".panneau-erreur")) { await tap(page, ".panneau-erreur .bouton.principal"); await attendre(200); }
-  if (await page.$(".boutons-sceau .bouton")) { await page.locator(".boutons-sceau .bouton").last().tap(); await attendre(300); }
+  // 400 ms entre deux touchers : un toucher moins de 350 ms après l'affichage d'une carte, d'une question ou d'un panneau est le second
+  // toucher d'un double appui, que le jeu ignore (garde du double toucher, interface.js)
+  if (res.conseil.correction) { await page.locator(".scene-conseil .choix").first().tap(); await attendre(400); }
+  if (await page.$(".panneau-erreur")) { await tap(page, ".panneau-erreur .bouton.principal"); await attendre(400); }
+  if (await page.$(".boutons-sceau .bouton")) { await page.locator(".boutons-sceau .bouton").last().tap(); await attendre(400); }
   res.conseil.apres = await page.evaluate(() => document.querySelector(".compteur").textContent);
-  if (await page.$(".panneau-erreur")) { await tap(page, ".panneau-erreur .bouton.principal"); await attendre(200); }
-  if (await page.$(".scene-conseil .choix")) { await page.locator(".scene-conseil .choix").first().tap(); await attendre(200); }
-  if (await page.$(".panneau-erreur")) { await tap(page, ".panneau-erreur .bouton.principal"); await attendre(200); }
+  if (await page.$(".panneau-erreur")) { await tap(page, ".panneau-erreur .bouton.principal"); await attendre(400); }
+  if (await page.$(".scene-conseil .choix")) { await page.locator(".scene-conseil .choix").first().tap(); await attendre(400); }
+  if (await page.$(".panneau-erreur")) { await tap(page, ".panneau-erreur .bouton.principal"); await attendre(400); }
   await tap(page, "#bouton-quitter");
   await page.waitForSelector(".confirmation");
   await tap(page, ".confirmation .bouton.principal");
