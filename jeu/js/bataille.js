@@ -702,8 +702,16 @@
       if (decale) decalEffet(e, v);
       var x = e.x + (decale ? e.dvx : 0), y = e.y + (decale ? e.dvy : 0);
       if (g === "impact") {
-        // anneau brun au ras du sol, de 10 à 40 px en 0,35 s ; animations coupées : une tache fixe
-        if (anim) { if (e.age < 0.35) { onde(ctx, x, y + 2, 10 + 30 * e.age / 0.35, 1 - e.age / 0.35, "#6b4a2a"); voile = false; } }
+        // anneau de terre au ras du sol, de 10 à 40 px en 0,35 s : un seul trait brun qui s'élargit et pâlit, sans contour
+        // sombre (onde() cerne d'encre : relecture du lot A, il se lisait comme une cible) ; animations coupées : une tache fixe
+        if (anim) {
+          if (e.age < 0.35) {
+            var ka = e.age / 0.35, ra = 10 + 30 * ka;
+            ctx.globalAlpha = 0.42 * (1 - ka); ctx.lineWidth = 2 + 4 * ka; ctx.strokeStyle = "#5a4128";
+            ctx.beginPath(); ctx.ellipse(x, y + 2, ra, ra * 0.7, 0, 0, Math.PI * 2); ctx.stroke();
+            ctx.globalAlpha = 1; voile = false;
+          }
+        }
         else if (e.age < 0.75) { ctx.globalAlpha = 0.3; ctx.fillStyle = "#4a3420"; ctx.beginPath(); ctx.ellipse(x, y + 2, 22, 15, 0, 0, Math.PI * 2); ctx.fill(); ctx.globalAlpha = 1; voile = false; }
         continue;
       }
@@ -1023,7 +1031,7 @@
       }
     } else if (age < EFFONDREMENT) sprite(ctx, "effet-effondrement", pt.x, pt.y + 24, 3);
     if (!ef.victoire) return;
-    var b = pointBanniere(nom, pt), fr = anim && JEU.anim.ambiance() ? Math.floor(v.horloge * 8) % 6 : 0;
+    var b = pointBanniere(nom, pt), fr = anim && v.ambiance ? Math.floor(v.horloge * 8) % 6 : 0; // v.ambiance : calculée une fois par image (dessiner)
     if (anim && age < 0.55) {
       // la bannière du rival bascule autour du pied de son mât et s'efface
       var t = age / 0.55, d = descr("drapeau-" + ef.camp);
@@ -2434,8 +2442,11 @@
         }
         var or = Math.floor(p.or);
         if (or !== orAffiche) {
-          chiffres(hudOr, or);
           ecartOr = orAffiche === null ? 0 : or - orAffiche;
+          // « +n » met 0,45 s à voler du sceau au compteur : le compteur attend son arrivée pour rouler (relecture du lot A ;
+          // classe td-attend, un retard de la transition dans la feuille de style)
+          if (ecartOr > 0 && JEU.anim.actif() && document.querySelector(".tampon")) attendreVol(hudOr.parentNode);
+          chiffres(hudOr, or);
           orAffiche = or;
           if (ecartOr > 0) orGagne(ecartOr);
         }
@@ -2456,6 +2467,12 @@
           sp = rouleaux[i];
           if (sp.textContent !== c) { sp.textContent = c; if (sp.style.setProperty) sp.style.setProperty("--c", c); }
         }
+      }
+      var minuterieVol = null;
+      function attendreVol(b) {
+        if (!b) return;
+        b.classList.add("td-attend"); clearTimeout(minuterieVol);
+        minuterieVol = racine.setTimeout(function () { b.classList.remove("td-attend"); }, 900);
       }
       // Alterne deux classes (base-a, base-b) : l'animation repart sans forcer de mise en page.
       var alternes = {};
