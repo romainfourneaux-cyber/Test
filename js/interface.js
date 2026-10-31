@@ -25,6 +25,14 @@
   }
   ui.el = el;
   ui.$ = function (sel) { return document.querySelector(sel); };
+  // Tablette tactile (31/10/2026) : vrai sur un écran qui n'a ni souris ni survol (Android, au doigt). Les raccourcis
+  // clavier restent actifs ; seules leurs indications s'effacent (classe astuce-clavier, jeu.css) et deux consignes
+  // disent « touche » au lieu de « clique ».
+  ui.tactile = false;
+  try { ui.tactile = !!(racine.matchMedia && racine.matchMedia("(hover: none) and (pointer: coarse)").matches); } catch (e) { ui.tactile = false; }
+  // Indication de touche en fin de bouton, « (Entrée) » : un span que la feuille de style cache sur une tablette.
+  ui.astuce = function (t) { return el("span", { class: "astuce-clavier", texte: " (" + t + ")" }); };
+  ui.verbeClic = function () { return ui.tactile ? "touche" : "clique"; };
 
   // ---------- écrans ----------
   var ecranCourant = null;
@@ -304,7 +312,7 @@
   }
 
   function boutonValider(action) {
-    return el("button", { class: "bouton principal valider", onclick: action, texte: "Valider (Entrée)" });
+    return el("button", { class: "bouton principal valider", onclick: action }, ["Valider", ui.astuce("Entrée")]);
   }
 
   var RENDUS = {
@@ -369,7 +377,7 @@
     },
     ordre: function (q, corps, repondre) {
       var suite = [];
-      corps.appendChild(el("p", { class: "consigne", texte: "Clique les éléments dans le bon ordre (clique à nouveau pour retirer)." }));
+      corps.appendChild(el("p", { class: "consigne", texte: (ui.tactile ? "Touche" : "Clique") + " les éléments dans le bon ordre (" + ui.verbeClic() + " à nouveau pour retirer)." }));
       var liste = el("div", { class: "ordre" });
       corps.appendChild(liste);
       var boutons = q.elements.map(function (t, i) {
@@ -400,7 +408,7 @@
     association: function (q, corps, repondre) {
       var paires = [];      // [[g, d]]
       var gaucheChoisie = null;
-      corps.appendChild(el("p", { class: "consigne", texte: "Clique un élément à gauche, puis celui qui lui correspond à droite." }));
+      corps.appendChild(el("p", { class: "consigne", texte: (ui.tactile ? "Touche" : "Clique") + " un élément à gauche, puis celui qui lui correspond à droite." }));
       var grille = el("div", { class: "association" });
       var colG = el("div", { class: "colonne" }), colD = el("div", { class: "colonne" });
       grille.appendChild(colG); grille.appendChild(colD); corps.appendChild(grille);
@@ -503,7 +511,7 @@
       bonne,
       repeteReponse(q) ? null : el("p", { class: "explication", texte: q.explication || "" }),
       el("div", { class: "actions" }, [
-        el("button", { class: "bouton principal", onclick: continuer, texte: "Continuer (Entrée)" }),
+        el("button", { class: "bouton principal", onclick: continuer }, ["Continuer", ui.astuce("Entrée")]),
         f && !options.sansFiche ? el("button", { class: "bouton", onclick: function () { JEU.codex.ouvrirFiche(q.fiche); }, texte: "Voir la fiche" }) : null,
         el("button", { class: "lien signaler", onclick: function () { JEU.signalement.ouvrir(q); }, texte: "Signaler une erreur" })
       ])
@@ -528,7 +536,7 @@
     var barre = el("div", { class: "barre-partie" }, [
       el("h2", { texte: titre }),
       el("button", { class: "lien signaler", id: "signaler-derniere", hidden: true, onclick: function () { if (JEU.partie.derniere) JEU.signalement.ouvrir(JEU.partie.derniere); }, texte: "Signaler la question précédente" }),
-      el("button", { class: "bouton discret", id: "bouton-quitter", onclick: ui.proposerQuitter, texte: "Quitter (Échap)" })
+      el("button", { class: "bouton discret", id: "bouton-quitter", onclick: ui.proposerQuitter }, ["Quitter", ui.astuce("Échap")])
     ]);
     s.appendChild(barre);
     var zone = el("div", { class: "zone-partie" });
