@@ -64,8 +64,8 @@ Avant : la base mesurée par l'agent des mesures sur une copie du jeu d'avant le
 | Coût d'une brèche (ralenti) | moins de 0,1 ms | 0,063 ms | 0,062 ms |
 | Temps de calcul par image, partie identique | — | 2,03 ms | 1,99 ms |
 | Réponse → question suivante peinte, ralenti, en bataille | moins de 100 ms | 80 ms | 88 ms |
-| Réponse → question suivante, PC 1366 et 1920 (temps réel) | moins de 100 ms | — | 56 ms au pire |
-| Réponse → question suivante, tablette au doigt 1280 × 800 et 1024 × 768 | moins de 100 ms | — | 64 et 80 ms au pire |
+| Réponse → question suivante, PC 1366 et 1920 (temps réel) | moins de 100 ms | — | 56 ms au pire (deux passages) |
+| Réponse → question suivante, tablette au doigt 1280 × 800 et 1024 × 768 | moins de 100 ms | — | 88 ms au pire (deux passages) |
 | Plafonds : étincelles, traînées, particules, lueurs, secousses | 8, 24, 60, 10, 1 | — | 6, 3, 8, 1, 1 |
 | Mémoire JavaScript pendant 6 s de mêlée | pas de croissance | 17,1 → 17,1 Mo | 18,2 → 18,2 Mo |
 | Même issue sous les 4 réglages (Animations × Sang), et la même qu'avant le lot | oui | oui | oui |
@@ -103,4 +103,4 @@ Petites remarques sans correction : les six losanges d'or quand on pose une tour
 - Replis, sur des copies du jeu : nouvelle bataille.js avec les anciennes images et l'ancien manifeste (sans bandes de chute, de coup, de tir, sans cratère, nuage ni drapeau) ; sans les deux scripts neufs ; les deux à la fois ; et les deux avec Animations et Sang coupés. Aucune erreur, l'ancien dessin revient, et la partie a la même issue (même or, mêmes troupes, même victoire).
 - Version installable et application Android : aucun fichier neuf dans jeu/ depuis ma relecture ; sw.js correspond à jeu/ (tests.js) ; aucun nom en « . » ni dossier en « _ » que l'application écarterait, et aucune sorte de fichier nouvelle.
 - `node atelier/outils/tests.js` : 370 réussis, 0 échec. `node atelier/outils/valider.js` : 0 erreur, 5 alertes connues.
-- perf.js complet (PC, expédition, tablette) : aucun échec. `PARTIE=ralenti` et `PARTIE=graphismes` : aucun échec ; ce qui reste « à venir » appartient aux lots B (écrans vides entre deux écrans) et C (accueil, domaine, porte d'expédition au ralenti, marge de la tablette).
+- perf.js complet (PC, expédition, tablette) : aucun échec au premier passage. Au second, après mes corrections, un seul échec sans rapport avec le lot : « seulement 2 mesures d'Event Timing pendant l'escarmouche » (il en faut 3 ; les questions tirées au hasard demandent parfois plusieurs gestes, qui ne se mesurent pas) ; `PARTIE=expedition` relancée deux fois : 4 puis 3 mesures, aucun échec. Ce contrôle est instable : à rendre plus sûr dans perf.js (tirer des questions à un seul geste pour l'escarmouche). `PARTIE=ralenti` et `PARTIE=graphismes` : aucun échec ; ce qui reste « à venir » appartient aux lots B (écrans vides entre deux écrans) et C (accueil, domaine, porte d'expédition au ralenti, marge de la tablette).
