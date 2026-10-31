@@ -636,7 +636,9 @@
     }
     var jouer = el("button", { class: "bouton principal enorme", onclick: function () { ui.afficher("jouer"); }, html: JEU.icones.icone("jouer", 34) + "<span>Jouer</span>" });
     s.appendChild(el("div", { class: "centre" }, [jouer]));
-    setTimeout(function () { jouer.focus(); }, 0);
+    // Au clavier, Entrée lance le jeu. Sur une tablette (pas de clavier), pas de focus : il faisait défiler la page pour
+    // montrer le bouton, et le menu passait sous le bandeau dès l'ouverture (à moitié en 1280 × 800, en entier en 1024 × 768).
+    if (!ui.tactile) setTimeout(function () { jouer.focus(); }, 0);
     ui.clavier = function (k) { if (k === "Enter") { ui.afficher("jouer"); return true; } return false; };
   };
 

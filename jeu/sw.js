@@ -3,8 +3,9 @@
 // Seul jeu/js/installation.js l'enregistre, et seulement en http(s). Jamais en file:// : le double-clic sur index.html
 // reste tel quel. Le jeu lui-même ne fait aucun appel réseau : ce fichier est le mécanisme d'installation du navigateur.
 // À l'installation, il met en cache tous les fichiers du jeu (275 fichiers). Ensuite, chaque demande est servie
-// depuis le cache ; le réseau n'est qu'un repli. Une nouvelle version porte un autre nom de cache : elle s'installe,
-// efface l'ancien cache et prend la main au chargement suivant (skipWaiting, clients.claim).
+// depuis le cache ; le réseau n'est qu'un repli. Une nouvelle version porte un autre nom de cache : elle se télécharge
+// en arrière-plan puis attend. Elle prend la main quand le jeu est fermé puis rouvert, ou tout de suite si l'on touche
+// « Mettre à jour » (message « activer »). Jamais au milieu d'une partie : la page ouverte garde les fichiers de sa version.
 "use strict";
 var VERSION = "0.9.2";
 var CACHE = "le-domaine-" + VERSION;
@@ -291,7 +292,7 @@ self.addEventListener("install", function (e) {
   e.waitUntil(caches.open(CACHE).then(function (cache) {
     // cache: "reload" : on relit les fichiers sur le serveur, pas dans le cache HTTP, pour une vraie nouvelle version
     return cache.addAll(FICHIERS.map(function (f) { return new Request(RACINE + f, { cache: "reload" }); }));
-  }).then(function () { return self.skipWaiting(); }));
+  }));
 });
 
 self.addEventListener("activate", function (e) {
@@ -322,4 +323,9 @@ self.addEventListener("fetch", function (e) {
     return;
   }
   e.respondWith(caches.match(req, { ignoreSearch: true }).then(function (r) { return r || fetch(req); }));
+});
+
+// « Mettre à jour » (installation.js) : la nouvelle version en attente prend la main ; la page propose alors de recharger.
+self.addEventListener("message", function (e) {
+  if (e.data === "activer") self.skipWaiting();
 });
