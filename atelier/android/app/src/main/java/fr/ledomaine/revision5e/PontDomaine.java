@@ -21,6 +21,10 @@ import java.nio.charset.StandardCharsets;
  * Une seule méthode : écrire la sauvegarde exportée, car une WebView ne sait pas télécharger un lien blob:.
  */
 public final class PontDomaine {
+    /** Taille maximale d'une sauvegarde exportée (une partie pèse quelques centaines de kilo-octets). */
+    private static final int TAILLE_MAX = 20 * 1024 * 1024;
+    private static final int LONGUEUR_NOM_MAX = 120;
+
     private final Activity activite;
 
     PontDomaine(Activity activite) {
@@ -28,15 +32,27 @@ public final class PontDomaine {
     }
 
     /**
+     * Nom de fichier sûr : lettres, chiffres, point, tiret et souligné seulement ; ni dossier, ni nom caché (point en
+     * tête), ni nom vide ; toujours terminé par .json. Le jeu donne « sauvegarde-jeu5e-<date>.json », rien d'autre.
+     */
+    static String nomSur(String nom) {
+        String n = nom.replaceAll("[^A-Za-z0-9._-]", "_").replaceFirst("^[._-]+", "");
+        if (n.length() > LONGUEUR_NOM_MAX) n = n.substring(0, LONGUEUR_NOM_MAX);
+        if (n.isEmpty() || ".json".equals(n)) n = "sauvegarde";
+        if (!n.endsWith(".json")) n += ".json";
+        return n;
+    }
+
+    /**
      * Écrit la sauvegarde dans le dossier Téléchargements de la tablette (MediaStore, Android 10 et plus, sans
      * permission) ou, avant Android 10, dans le dossier de fichiers de l'application. Appelée depuis le fil du
-     * pont JavaScript, d'où le passage par le fil d'interface pour le message.
+     * pont JavaScript, donc hors du fil d'interface : l'écriture ne bloque pas l'écran, et le message passe par
+     * runOnUiThread. Renvoie vrai si le fichier est écrit.
      */
     @JavascriptInterface
     public boolean exporter(String nom, String contenu) {
-        if (nom == null || contenu == null) return false;
-        String nomSain = nom.replaceAll("[^A-Za-z0-9._-]", "_");
-        if (!nomSain.endsWith(".json")) nomSain += ".json";
+        if (nom == null || contenu == null || contenu.isEmpty() || contenu.length() > TAILLE_MAX) return false;
+        final String nomSain = nomSur(nom);
         int message;
         boolean ok;
         try {
@@ -53,7 +69,9 @@ public final class PontDomaine {
             ok = false;
         }
         final int texte = message;
-        activite.runOnUiThread(() -> Toast.makeText(activite, texte, Toast.LENGTH_LONG).show());
+        final boolean reussi = ok;
+        activite.runOnUiThread(() -> Toast.makeText(activite,
+                reussi ? activite.getString(texte, nomSain) : activite.getString(texte), Toast.LENGTH_LONG).show());
         return ok;
     }
 

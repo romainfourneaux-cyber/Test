@@ -26,6 +26,9 @@ command -v unzip >/dev/null || erreur "unzip manquant."
 
 VERSION="$(tr -d '[:space:]' < "$JEU/VERSION.txt")"
 [[ "$VERSION" =~ ^([0-9]+)\.([0-9]+)\.([0-9]+)$ ]] || erreur "jeu/VERSION.txt illisible : « $VERSION » (attendu majeur.mineur.correctif, par exemple 0.9.3)."
+# Le versionCode doit toujours grandir d'une version à l'autre (Android refuse une mise à jour qui recule) :
+# mineur et correctif restent donc sous 100, sinon 0.9.100 (1000) passerait devant 0.10.0 (1000) et après lui.
+[ $(( 10#${BASH_REMATCH[2]} )) -lt 100 ] && [ $(( 10#${BASH_REMATCH[3]} )) -lt 100 ] || erreur "jeu/VERSION.txt : mineur et correctif doivent rester sous 100 (« $VERSION »), sinon le versionCode cesse de croître."
 CODE=$(( 10#${BASH_REMATCH[1]} * 10000 + 10#${BASH_REMATCH[2]} * 100 + 10#${BASH_REMATCH[3]} ))
 etape "Version $VERSION (versionCode $CODE)"
 
@@ -96,6 +99,12 @@ echo "$NB_APK fichiers du jeu dans l'APK (= jeu/ moins sw.js et manifest.webmani
 etape "Sortie"
 mkdir -p "$PROJET/sorties"
 SORTIE="$PROJET/sorties/le-domaine-$VERSION.apk"
+# Un APK déjà rangé avec un versionCode plus grand : la tablette refuserait celui-ci par-dessus. Prévenir, sans arrêter.
+for ancien in "$PROJET"/sorties/*.apk; do
+  [ -f "$ancien" ] && [ "$ancien" != "$SORTIE" ] || continue
+  c="$("$OUTILS/aapt" dump badging "$ancien" 2>/dev/null | sed -n "s/^package: .*versionCode='\([0-9]*\)'.*/\1/p")"
+  [ -n "$c" ] && [ "$c" -gt "$CODE" ] && echo "ATTENTION : $(basename "$ancien") porte le versionCode $c, plus grand que $CODE : Android refusera d'installer $VERSION par-dessus."
+done
 cp "$APK" "$SORTIE"
 echo "$SORTIE"
 echo "taille : $(stat -c %s "$SORTIE") octets ($(du -h "$SORTIE" | cut -f1))"
