@@ -54,7 +54,8 @@ une sauvegarde exportée se réimporte en une minute.
 ## Sauvegarde : exporter et importer
 
 Dans le jeu, Réglages, « Exporter » : le fichier `sauvegarde-jeu5e-<date>.json` est écrit dans le dossier
-Téléchargements de la tablette (un message le confirme). De là, il se copie sur le PC par câble, se dépose sur
+Téléchargements de la tablette (un message le confirme et donne le nom du fichier ; un second export le même jour
+s'appelle `sauvegarde-jeu5e-<date> (1).json`). De là, il se copie sur le PC par câble, se dépose sur
 Drive ou s'envoie par mail, par exemple pour être mis dans DEPOT/sauvegardes/.
 
 Réglages, « Importer » : la tablette ouvre son sélecteur de fichiers ; choisir le fichier `.json`, puis confirmer.
@@ -86,6 +87,9 @@ pas lancée. À regarder au premier essai sur la tablette, dans cet ordre :
 4. Réglages, « Importer » : le sélecteur s'ouvre, le fichier se charge.
 5. Une question à trou pendant une bataille : le clavier laisse voir le champ de réponse ; les sons jouent ; le
    bouton Retour ferme bien une fenêtre, puis quitte sur double appui.
+6. La taille d'écran vue par le jeu : la Galaxy Tab A9 (8,7 pouces, 1340 × 800) n'a pas été mesurée. Le jeu a été
+   réglé pour 1280 × 800 et 1024 × 768 ; si la tablette annonce une densité de 1,33, la page fait environ
+   1005 × 600 et il faut regarder si le champ de bataille et la colonne des questions tiennent en entier.
 
 ## Pour la prochaine session
 
@@ -102,10 +106,13 @@ pas lancée. À regarder au premier essai sur la tablette, dans cet ordre :
 - `PontDomaine.java` : `window.AndroidDomaine.exporter(nom, contenu)`, présent avant le premier script de la page.
   Côté jeu, `jeu/js/sauvegarde.js` l'appelle quand il existe, sinon le lien de téléchargement habituel : c'est le
   seul changement fait dans jeu/ pour l'application.
-- Pour la passe tactile (jeu/js/installation.js, en chantier au moment de l'écriture) : dans `possible()`, ajouter
-  `typeof window.AndroidDomaine === "undefined"` pour ne rien enregistrer ni afficher dans l'application (le
-  service worker y est refusé de toute façon, mais le cartouche « Tablette et hors ligne » et la ligne « hors ligne
-  indisponible » n'ont pas lieu d'être dans l'APK).
+- jeu/js/installation.js teste `typeof window.AndroidDomaine` dans `possible()` : dans l'application, il
+  n'enregistre pas sw.js et n'affiche pas le cartouche « Tablette et hors ligne » (vérifié dans Chromium, page
+  servie au même chemin que dans la WebView, pont simulé). Le service worker reste refusé côté Java en plus.
+- Si la page plante ou si Android reprend la mémoire de son processus, `onRenderProcessGone` rebâtit l'écran au
+  lieu de laisser fermer toute l'application ; deux plantages en moins de dix secondes ferment l'application.
+- Le nom de fichier venu de la page est assaini (lettres, chiffres, point, tiret, souligné ; toujours `.json`) et
+  le texte borné à 20 Mo : la page ne peut écrire qu'un fichier .json dans Téléchargements, rien d'autre.
 - Version : l'APK construit le 31/10/2026 porte 0.9.2 parce que jeu/VERSION.txt disait 0.9.2 ; une fois le jeu
   livré en 0.9.3, relancer le script pour obtenir `sorties/le-domaine-0.9.3.apk` (numéro interne 903).
 - Proxy du conteneur : le bloc entre les repères de `gradle.properties` est récrit à chaque passage du script

@@ -52,29 +52,27 @@ public final class PontDomaine {
      */
     @JavascriptInterface
     public boolean exporter(String nom, String contenu) {
-        if (nom == null || contenu == null || contenu.isEmpty() || contenu.length() > TAILLE_MAX) return false;
+        if (nom == null || contenu == null || contenu.isEmpty() || contenu.length() > TAILLE_MAX) {
+            activite.runOnUiThread(() -> Toast.makeText(activite, R.string.export_ko, Toast.LENGTH_LONG).show());
+            return false;
+        }
         final String nomSain = nomSur(nom);
-        String nomEcrit = nomSain;
-        int message;
+        String message;
         boolean ok;
         try {
             if (Build.VERSION.SDK_INT >= 29) {
-                nomEcrit = ecrireTelechargements(nomSain, contenu);
-                message = R.string.export_ok;
+                message = activite.getString(R.string.export_ok, ecrireTelechargements(nomSain, contenu));
             } else {
                 ecrireDossierApplication(nomSain, contenu);
-                message = R.string.export_ok_ancien;
+                message = activite.getString(R.string.export_ok_ancien, nomSain);
             }
             ok = true;
         } catch (Exception e) {
-            message = R.string.export_ko;
+            message = activite.getString(R.string.export_ko);
             ok = false;
         }
-        final int texte = message;
-        final boolean reussi = ok;
-        final String nomAffiche = nomEcrit;
-        activite.runOnUiThread(() -> Toast.makeText(activite,
-                reussi ? activite.getString(texte, nomAffiche) : activite.getString(texte), Toast.LENGTH_LONG).show());
+        final String texte = message;
+        activite.runOnUiThread(() -> Toast.makeText(activite, texte, Toast.LENGTH_LONG).show());
         return ok;
     }
 

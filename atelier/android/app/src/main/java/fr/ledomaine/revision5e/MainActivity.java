@@ -28,11 +28,9 @@ import androidx.webkit.ServiceWorkerClientCompat;
 import androidx.webkit.ServiceWorkerControllerCompat;
 import androidx.webkit.WebSettingsCompat;
 import androidx.webkit.WebViewAssetLoader;
-import androidx.webkit.WebViewCompat;
 import androidx.webkit.WebViewFeature;
 
 import java.io.ByteArrayInputStream;
-import java.util.Collections;
 
 /**
  * Le domaine : le jeu de révision dans une WebView, servi depuis les assets de l'APK.
@@ -52,13 +50,6 @@ public class MainActivity extends Activity {
             + "var ev=new KeyboardEvent('keydown',{key:'Escape',code:'Escape',keyCode:27,which:27,bubbles:true,cancelable:true});"
             + "(document.activeElement||document.body).dispatchEvent(ev);"
             + "return ev.defaultPrevented?1:0;})()";
-    /**
-     * Joué avant les scripts de la page. jeu/js/installation.js ne sert qu'à la version web : il enregistre sw.js et
-     * ajoute aux Réglages un cartouche « Tablette et hors ligne » (installer depuis Chrome, mettre à jour). Sans
-     * navigator.serviceWorker, il se tait, comme en file:// sur le PC : ni essai refusé, ni consigne qui ne vaut pas ici.
-     */
-    private static final String JS_SANS_SERVICE_WORKER =
-            "try{Object.defineProperty(navigator,'serviceWorker',{value:undefined,configurable:true});}catch(e){}";
     /** Deux plantages de la page à moins de dix secondes d'écart : on ferme au lieu de relancer en boucle. */
     private static final long DELAI_PLANTAGES_MS = 10000;
     private static long dernierPlantage;
@@ -89,8 +80,8 @@ public class MainActivity extends Activity {
         brancherChargeur();
         brancherChoixFichier();
         bloquerServiceWorker();
-        masquerServiceWorker();
-        // Le pont existe avant le premier script de la page : installation.js peut tester typeof window.AndroidDomaine.
+        // Le pont existe avant le premier script de la page : installation.js teste typeof window.AndroidDomaine et,
+        // dans l'application, n'enregistre pas sw.js ni n'affiche le cartouche « Tablette et hors ligne ».
         vue.addJavascriptInterface(new PontDomaine(this), "AndroidDomaine");
         vue.loadUrl(ACCUEIL);
     }
@@ -169,12 +160,6 @@ public class MainActivity extends Activity {
                 return introuvable();
             }
         });
-    }
-
-    /** Le script JS_SANS_SERVICE_WORKER, pour notre origine seulement. WebView trop ancienne : sw.js est refusé quand même. */
-    private void masquerServiceWorker() {
-        if (!WebViewFeature.isFeatureSupported(WebViewFeature.DOCUMENT_START_SCRIPT)) return;
-        WebViewCompat.addDocumentStartJavaScript(vue, JS_SANS_SERVICE_WORKER, Collections.singleton(ORIGINE));
     }
 
     /** Import d'une sauvegarde : le champ fichier de la page ouvre le sélecteur de documents d'Android. */
