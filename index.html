@@ -8,6 +8,7 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="assets/images/icones-app/icone-192.png" type="image/png">
 <link rel="stylesheet" href="css/jeu.css">
+<link rel="stylesheet" href="css/menus.css">
 <!-- version web installable (tablette) : enregistre sw.js en http(s) seulement, jamais en file:// ; chargé après tout le reste -->
 <script src="js/installation.js" defer></script>
 </head>
@@ -27,7 +28,7 @@
   <button data-ecran="reglages">Réglages</button>
 </nav>
 <main>
-  <p class="attente">Ouverture des archives…</p>
+  <div class="attente" role="status"><span class="attente-blason"></span><p class="attente-titre"></p><span class="attente-rail"><i></i></span><p class="attente-compte">Ouverture des archives…</p></div>
   <section id="ecran-accueil" class="ecran" hidden></section>
   <section id="ecran-domaine" class="ecran" hidden></section>
   <section id="ecran-jouer" class="ecran" hidden></section>

@@ -93,7 +93,9 @@
   };
 
   // État de l'écran (mémoire seulement : tout ce qui compte est dans la sauvegarde, par JEU.expedition)
-  var S = { suite: null, bilan: null, toast: null, pageVue: null, focus: 0, enHalte: false, relais: null, front: null };
+  // scelles : { cle, ids } les haltes scellées au dernier dessin de la route (un sceau neuf tombe au dessin suivant) ;
+  // pion : { cle, id } où le pion de la compagnie était posé (au retour, il suit le chemin pris jusqu'à sa halte).
+  var S = { suite: null, bilan: null, toast: null, pageVue: null, focus: 0, enHalte: false, relais: null, front: null, scelles: null, pion: null };
 
   // Chaque réponse donnée pendant une halte compte pour l'expédition (+1 renommée par bonne réponse, compte par famille,
   // fiches ratées pour « À relire »), en plus de tout ce que JEU.questions.enregistrerReponse fait déjà (Leitner, Seconde
@@ -278,10 +280,11 @@
   function texteSVG(x, y, classe, texte, extra) {
     return "<text x='" + x + "' y='" + y + "' class='" + classe + "'" + (extra || "") + ">" + U.echapper(texte) + "</text>";
   }
-  // Nappes de brume (les sprites lieu-brume de la carte de campagne) sur une bande ; sous elles, des nuées dessinées (repli).
+  // Nappes de brume (les sprites lieu-brume de la carte de campagne) sur une bande ; des nuées dessinées seulement si le
+  // sprite manque (lot B : sous chaque nappe, l'ovale de repli à bord franc se voyait).
   function nappes(bx, pleine) {
     var br = image("lieu-brume"), s = "", poses = pleine ? [[70, 118, 1.15], [230, 96, 1.05], [150, 212, 1.2], [268, 236, 1.0], [40, 250, .95]] : [[150, 100, 1.25], [60, 220, 1.1], [250, 200, 1.15]];
-    poses.forEach(function (p) {
+    if (!br) poses.forEach(function (p) {
       s += "<ellipse cx='" + (bx + p[0]) + "' cy='" + p[1] + "' rx='" + (80 * p[2]) + "' ry='" + (34 * p[2]) + "' fill='#d9d2c3' opacity='.55'/>";
     });
     if (br) poses.forEach(function (p) {
@@ -303,14 +306,15 @@
       JEU.icones.dans(icone, x - 7, y - 8, 14, "#fff8e4") + (im ? imgSVG(im, x, y) : "") + "</g>";
   }
   // Sceau de cire posé sur une halte jouée : la cire du joueur (bleu de France), ou le plomb quand les murs ont cédé.
-  function sceauHalte(x, y, taille, echoue) {
+  // id : la halte (data-halte, pour retrouver le sceau qui doit tomber) ; attend : sceau neuf, caché jusqu'à sa chute.
+  function sceauHalte(x, y, taille, echoue, id, attend) {
     var k = "sh" + (++nSvg), c = echoue ? ["#6a6e78", "#2f3238", "#a6aab3"] : ["#2d4f94", "#14284f", "#9db2df"], pts = [], r0 = taille / 2;
     for (var i = 0; i < 28; i++) {
       var a = i / 28 * 2 * Math.PI, r = r0 * (0.86 + 0.06 * Math.sin(i * 2.6) + 0.04 * Math.cos(i * 1.7));
       pts.push((x + r * Math.cos(a)).toFixed(1) + " " + (y + r * Math.sin(a)).toFixed(1));
     }
     var im = imageExp(echoue ? "sceau-cedes" : "sceau-reussie"); // la cire rendue (34 unités de diamètre) à l'échelle du sceau
-    return "<g class='sceau-halte" + (echoue ? " plomb" : "") + "'><defs><radialGradient id='" + k + "' cx='.38' cy='.32' r='.75'><stop offset='0' stop-color='" + c[2] + "'/><stop offset='.45' stop-color='" + c[0] + "'/><stop offset='1' stop-color='" + c[1] + "'/></radialGradient></defs>" +
+    return "<g class='sceau-halte" + (echoue ? " plomb" : "") + (attend ? " attend" : "") + "'" + (id ? " data-halte='" + id + "'" : "") + "><defs><radialGradient id='" + k + "' cx='.38' cy='.32' r='.75'><stop offset='0' stop-color='" + c[2] + "'/><stop offset='.45' stop-color='" + c[0] + "'/><stop offset='1' stop-color='" + c[1] + "'/></radialGradient></defs>" +
       "<path d='M" + pts.join(" L") + "Z' fill='url(#" + k + ")' stroke='" + c[1] + "' stroke-width='1'/>" +
       "<circle cx='" + x + "' cy='" + y + "' r='" + (r0 * 0.56) + "' fill='none' stroke='" + c[1] + "' stroke-width='1.6' opacity='.75'/>" +
       JEU.icones.dans(echoue ? "ecu-brise" : "lys", x - r0 * 0.4, y - r0 * 0.4, r0 * 0.8, c[2]) + (im ? imgSVG(im, x, y, taille / 34) : "") + "</g>";
@@ -344,11 +348,41 @@
     return parts.join(", ");
   }
 
-  function carteSVG(e, d, etats) {
+  // Pion de la compagnie (lot B, B1.4) : un petit étendard bleu au lys d'or, planté au bord bas gauche de la halte où se
+  // tient la compagnie (au départ, à droite du bourg, le drap vers la droite). Dessin vectoriel, aucune image de plus.
+  function posePion(d, id) {
+    var nd = id === "depart" ? d.depart : d.parId[id];
+    if (!nd) return null;
+    return id === "depart" ? { x: nd.x + 18, y: nd.y + 20, droite: true } : { x: nd.x - nd.r + 6, y: nd.y + nd.r - 6 };
+  }
+  function pionSVG(p) {
+    var k = p.droite ? -1 : 1;
+    return "<g class='pion' transform='translate(" + p.x + " " + p.y + ")' aria-hidden='true'>" +
+      "<ellipse cx='0' cy='1' rx='7' ry='2.2' fill='#1c120a' opacity='.35'/>" +
+      "<path d='M" + (-k) + " -36h" + (-24 * k) + "l" + (6 * k) + " 7 " + (-6 * k) + " 7h" + (24 * k) + "z' fill='#24407a' stroke='#0f1d3a' stroke-width='1' stroke-linejoin='round'/>" +
+      JEU.icones.dans("lys", p.droite ? 6 : -19, -34.5, 11, OR_CLAIR) +
+      "<path d='M0 0V-38' stroke='#3a2a18' stroke-width='2.4' stroke-linecap='round'/>" +
+      "<circle cx='0' cy='-39.5' r='2.4' fill='" + OR_CLAIR + "' stroke='" + OR_SOMBRE + "' stroke-width='.8'/></g>";
+  }
+  // o (facultatif, lot B) : { arriere : la route sous une fenêtre de halte (classe route-arriere, ni halo, ni numéro, ni
+  // focus), attente : { id: true } sceaux neufs cachés jusqu'à leur chute, pion : id de la halte où la compagnie se tient
+  // ("depart" au départ), pionDe : la halte qu'elle vient de quitter (le chemin entre les deux se dorera), halosEteints :
+  // halos cachés jusqu'à leur tour }. Sans o : la carte telle qu'avant (essais).
+  function carteSVG(e, d, etats, o) {
+    o = o || {};
     var X = JEU.expedition, att = X.atteignables().map(function (h) { return h.id; }), chemins = etatsChemins(e, d, etats), semCal = semaineCalendrier();
-    var s = "<svg viewBox='0 0 " + L + " " + H + "' class='route-svg' role='group' aria-label='" + U.echapper(TEXTES.route.titre) + "'>" +
+    var arriere = !!o.arriere, attente = o.attente || {};
+    if (arriere) att = [];
+    // voile de brume : un dégradé horizontal qui s'éteint au bord d'une suite de bandes dans la brume (G : à gauche, D : à
+    // droite) ; deux bandes voisines dans la brume se touchent sans couture
+    var voile = function (id, g, dr) {
+      return "<linearGradient id='" + id + "' x1='0' x2='1'><stop offset='0' stop-color='" + FOND + "' stop-opacity='" + (g ? 0 : .42) + "'/><stop offset='" + (g ? .16 : 0) + "' stop-color='" + FOND + "' stop-opacity='.42'/>" +
+        "<stop offset='" + (dr ? .93 : 1) + "' stop-color='" + FOND + "' stop-opacity='.42'/><stop offset='1' stop-color='" + FOND + "' stop-opacity='" + (dr ? 0 : .42) + "'/></linearGradient>";
+    };
+    var s = "<svg viewBox='0 0 " + L + " " + H + "' class='" + (arriere ? "route-arriere' aria-hidden='true'" : "route-svg' role='group' aria-label='" + U.echapper(TEXTES.route.titre) + "'") + ">" +
       "<defs><radialGradient id='parchR' cx='.5' cy='.5' r='.75'><stop offset='0' stop-color='#f6eedb'/><stop offset='1' stop-color='#e2d3ad'/></radialGradient>" +
-      "<filter id='ombreR'><feDropShadow dx='1' dy='2' stdDeviation='1.5' flood-color='#000' flood-opacity='.45'/></filter></defs>" +
+      "<filter id='ombreR'><feDropShadow dx='1' dy='2' stdDeviation='1.5' flood-color='#000' flood-opacity='.45'/></filter>" +
+      voile("brumeG", true, false) + voile("brumeD", false, true) + voile("brumeGD", true, true) + voile("brumeP", false, false) + "</defs>" +
       "<rect width='" + L + "' height='" + H + "' fill='url(#parchR)'/>";
     // le parchemin rendu (route-fond) par-dessus le dégradé, qui reste le repli
     var fondR = imageExp("route-fond");
@@ -368,7 +402,9 @@
     // chemins
     d.chemins.forEach(function (c, i) {
       var et = chemins[i];
-      if (et === "pris") s += "<path d='" + courbe(c) + "' fill='none' stroke='" + OR_SOMBRE + "' stroke-width='5' stroke-linecap='round' opacity='.9'/><path d='" + courbe(c) + "' fill='none' stroke='" + OR_CLAIR + "' stroke-width='2.2' stroke-linecap='round'/>";
+      // le dernier chemin pris, que le pion parcourt au retour : caché, puis doré derrière lui (avancerPion)
+      var neuf = et === "pris" && o.pionDe && c.de === o.pionDe && c.a === o.pion ? " class='pris-neuf' pathLength='100' stroke-dasharray='100 100' stroke-dashoffset='100'" : "";
+      if (et === "pris") s += "<path" + neuf + " d='" + courbe(c) + "' fill='none' stroke='" + OR_SOMBRE + "' stroke-width='5' stroke-linecap='round' opacity='.9'/><path" + neuf + " d='" + courbe(c) + "' fill='none' stroke='" + OR_CLAIR + "' stroke-width='2.2' stroke-linecap='round'/>";
       else s += "<path class='chemin " + et + "' d='" + courbe(c) + "' fill='none' stroke='" + ENCRE + "' stroke-width='2.4' stroke-dasharray='2 7' stroke-linecap='round' opacity='" + (et === "possible" ? ".95" : et === "pale" ? ".2" : et === "hors" ? ".3" : ".55") + "'/>";
     });
     // le départ : le bourg de France (sprite de la carte de campagne), sinon un médaillon au lys
@@ -383,9 +419,11 @@
       var et = etats[nd.id], h = nd.halte, gardien = h.type === "gardien" || h.type === "grand", x = nd.x, y = nd.y, r = nd.r;
       var touche = att.indexOf(nd.id) >= 0 ? String(att.indexOf(nd.id) + 1) : null;
       var brume = et === "brume", classeNom = "halte-nom " + et.split(" ")[0];
-      s += "<g class='halte " + et + (gardien ? " gardien" : "") + "' data-id='" + nd.id + "' data-type='" + h.type + "' tabindex='" + (et === "atteignable" ? 0 : -1) + "'" +
-        (et === "atteignable" ? " role='button'" : "") + " aria-label='" + U.echapper(ariaHalte(nd, et, touche)) + "'><title>" + U.echapper(ariaHalte(nd, et, touche)) + "</title>";
-      if (et === "atteignable") s += "<g class='halo'><circle cx='" + x + "' cy='" + y + "' r='" + (r + 8) + "' fill='none' stroke='#1c120a' stroke-width='7' opacity='.4'/><circle class='halo-or' cx='" + x + "' cy='" + y + "' r='" + (r + 8) + "' fill='none' stroke='" + OR_CLAIR + "' stroke-width='4'/></g>";
+      var vive = et === "atteignable" && !arriere; // sous une fenêtre, rien ne se touche ni ne bat
+      s += "<g class='halte " + et + (gardien ? " gardien" : "") + "' data-id='" + nd.id + "' data-type='" + h.type + "' tabindex='" + (vive ? 0 : -1) + "'" +
+        (vive ? " role='button'" : "") + " aria-label='" + U.echapper(ariaHalte(nd, et, touche)) + "'><title>" + U.echapper(ariaHalte(nd, et, touche)) + "</title>";
+      // le halo dans un cadre : au retour sur la route, les halos s'allument l'un après l'autre (allumerHalos)
+      if (vive) s += "<g class='halo-cadre" + (o.halosEteints ? " eteint" : "") + "'><g class='halo'><circle cx='" + x + "' cy='" + y + "' r='" + (r + 8) + "' fill='none' stroke='#1c120a' stroke-width='7' opacity='.4'/><circle class='halo-or' cx='" + x + "' cy='" + y + "' r='" + (r + 8) + "' fill='none' stroke='" + OR_CLAIR + "' stroke-width='4'/></g></g>";
       if (gardien) {
         s += "<g class='corps' filter='url(#ombreR)'>" + medaillonGardien(nd, e) + "</g>";
         if (h.type === "grand") etiquettes += texteSVG(x, y + r + 17, classeNom, TEXTES.route.grand.split(" ")[0]) + texteSVG(x, y + r + 33, classeNom, TEXTES.route.grand.split(" ").slice(1).join(" "));
@@ -403,16 +441,22 @@
         if (!brume) etiquettes += texteSVG(x, nd.couche % 2 === 1 ? y + r + 13 : y - r - 5, classeNom, nomCourt(h));
         if (!brume && h.porte) s += ecussonPorte(h.porte, x + 16, y + 12);
       }
-      if (/jouee/.test(et)) s += sceauHalte(x + (gardien ? 10 : 6), y - (gardien ? 10 : 6), gardien ? 36 : 32, /echouee/.test(et));
+      if (/jouee/.test(et)) s += sceauHalte(x + (gardien ? 10 : 6), y - (gardien ? 10 : 6), gardien ? 36 : 32, /echouee/.test(et), nd.id, !!attente[nd.id]);
       // le numéro de touche : une borne posée au bord gauche du médaillon, là où la route arrive (jamais sur un nom)
       if (touche) s += "<g class='touche-halte'><circle cx='" + (x - r - 1) + "' cy='" + (y - 9) + "' r='11' fill='#8e3424' stroke='#f6e7bf' stroke-width='1.5'/>" + texteSVG(x - r - 1, y - 4, "txt-touche", touche) + "</g>";
       s += "</g>";
     });
+    var pp = o.pion ? posePion(d, o.pion) : null;
+    if (pp) s += pionSVG(pp);
     s += "<g class='etiquettes' aria-hidden='true'>" + etiquettes + "</g>";
-    // brume : sur les semaines suivantes de l'expédition et sur tout ce qui dépasse la frontière
-    d.bandes.forEach(function (b) {
-      if (b.etat !== "brume" && b.etat !== "avenir") return;
-      s += "<g class='brume-bande'><rect x='" + (b.x + 2) + "' y='56' width='" + (BANDE - 12) + "' height='" + (H - 60) + "' fill='" + FOND + "' opacity='.42'/>" + nappes(b.x, b.etat === "brume") + "</g>";
+    // brume : sur les semaines suivantes de l'expédition et sur tout ce qui dépasse la frontière. Le voile couvre toute la
+    // bande, du filet d'or au bas du parchemin (jusqu'au bord pour la dernière : le Grand Gardien n'en dépasse plus), et
+    // s'éteint au bord d'une suite de bandes dans la brume (lot B, B1.3 : le rectangle à bords nets se voyait)
+    var dansBrume = function (b) { return !!b && (b.etat === "brume" || b.etat === "avenir"); };
+    d.bandes.forEach(function (b, i) {
+      if (!dansBrume(b)) return;
+      var g = !dansBrume(d.bandes[i - 1]), dr = !dansBrume(d.bandes[i + 1]), x0 = b.x - 8, x1 = i === d.bandes.length - 1 ? L : b.x + BANDE - 8;
+      s += "<g class='brume-bande'><rect x='" + x0 + "' y='50' width='" + (x1 - x0) + "' height='" + (H - 50) + "' fill='url(#brume" + (g && dr ? "GD" : g ? "G" : dr ? "D" : "P") + ")'/>" + nappes(b.x, b.etat === "brume") + "</g>";
     });
     // la bannière « Cette semaine » plantée au bord droit de la semaine du calendrier, le drap vers la gauche : la hampe
     // ne traverse ni la lettrine ni les dates (qui vont de la gauche de la bande jusqu'au milieu)
@@ -540,17 +584,179 @@
       el("p", { class: "exp-sous", texte: remplir(TEXTES.route.sous, { S: e.semaine, F: X.TEXTES.fronts[e.front] || (f ? f.nom : ""), H: ordinal(X.haltesJouees(e) + 1) }) })
     ]);
   }
+  // ---------- la scène de la route (lot B, 31/10/2026 ; plan graphismes-animations-plan.md, B1.3) ----------
+  // L'écran d'une expédition en cours : l'en-tête, la scène (la carte-itinéraire et ses boutons), les cartouches du bas.
+  // La route n'est plus reconstruite par une entrée d'écran : elle est redessinée sur place. Une fenêtre de halte (porte,
+  // cartes, bivouac, veillée, marchand, faveurs, page de semaine) s'ouvre dans un calque par-dessus la route assombrie,
+  // qui garde sa place (svg.route-arriere, inerte : ni halo, ni numéro, ni focus) ; les boutons de la route cèdent la
+  // leur à un gabarit vide de même hauteur (les cartouches ne sautent pas). Quand la fenêtre se referme, elle s'efface en
+  // 120 ms, la route s'éclaire et le sceau de la halte jouée tombe (rendreRoute).
+  var entreeEnCours = false; // vrai pendant le rendu qui suit une entrée d'écran (ui.afficher), faux sur place
+  function sceneDe(s) {
+    for (var c = s.firstElementChild; c; c = c.nextElementSibling) if (c.classList.contains("route-scene")) return c;
+    return null;
+  }
+  // En-tête et cartouches neufs (halte suivante, vivres, faveurs, journal) ; la scène est gardée si elle existe.
+  function preparerScene(s, e) {
+    var el = JEU.ui.el, x = JEU.expedition.etat(), scene = sceneDe(s), tete = enTeteRoute(e), bas = el("div", { class: "exp-bas" }, [cartoucheCompagnie(e, x), cartoucheJournal(e)]);
+    if (!scene) {
+      s.innerHTML = "";
+      scene = el("div", { class: "route-scene" });
+      s.appendChild(tete); s.appendChild(scene); s.appendChild(bas);
+      return scene;
+    }
+    for (var c = s.firstElementChild, suivant; c; c = suivant) {
+      suivant = c.nextElementSibling;
+      if (c.classList.contains("exp-tete")) s.replaceChild(tete, c);
+      else if (c.classList.contains("exp-bas")) s.replaceChild(bas, c);
+    }
+    return scene;
+  }
+  function enfant(scene, classe) {
+    for (var c = scene.firstElementChild; c; c = c.nextElementSibling) if (c.classList.contains(classe) && !c.classList.contains("sortie")) return c;
+    return null;
+  }
+  // Le calque d'une fenêtre qui se referme s'efface (120 ms) puis s'en va ; il ne prend plus rien (inerte). Il part à la fin
+  // de son animation (qui attend la première image de la route redessinée), ou par une minuterie de secours.
+  function fermerCalque(c) {
+    var retirer = function () { if (c.parentNode) c.parentNode.removeChild(c); };
+    if (!(JEU.anim && JEU.anim.actif())) return retirer();
+    c.classList.add("sortie"); c.inert = true;
+    c.addEventListener("animationend", function (ev) { if (ev.target === c) retirer(); });
+    setTimeout(retirer, 700);
+  }
+  // Une fenêtre de halte par-dessus la route assombrie. options : { boutons, surPlace (la même fenêtre redessinée : sans
+  // entrée, l'étal après un achat) }.
   function cadreEcran(s, e, contenu, options) {
-    var el = JEU.ui.el, x = JEU.expedition.etat();
-    s.innerHTML = "";
-    s.appendChild(enTeteRoute(e));
-    s.appendChild(contenu);
-    if (options && options.boutons) s.appendChild(options.boutons);
-    s.appendChild(el("div", { class: "exp-bas" }, [cartoucheCompagnie(e, x), cartoucheJournal(e)]));
+    options = options || {};
+    var el = JEU.ui.el, scene0 = sceneDe(s), act0 = scene0 ? enfant(scene0, "route-actions") : null;
+    var hAct = act0 ? act0.offsetHeight : 0; // lu avant toute écriture
+    var scene = preparerScene(s, e), carte = enfant(scene, "route-carte");
+    if (!carte) {
+      // première fenêtre de cet affichage (retour d'une bataille, départ) : la route est dessinée dessous, assombrie ; un
+      // sceau neuf y attend la route pour tomber
+      var d = disposition(e), etats = etatsNoeuds(e, d);
+      var pion = S.pion && S.pion.cle === cleRoute(e) && (S.pion.id === "depart" || d.parId[S.pion.id]) ? S.pion.id : lieuCompagnie(e); // le pion n'a pas encore marché
+      carte = el("div", { class: "route-carte", html: carteSVG(e, d, etats, { arriere: true, attente: sceauxNeufs(e, etats), pion: pion }) });
+      surveillerImages(carte);
+      scene.insertBefore(carte, scene.firstChild);
+    } else {
+      var svg = carte.querySelector("svg");
+      if (svg && svg.getAttribute("class") === "route-svg") { svg.setAttribute("class", "route-arriere"); svg.removeAttribute("role"); svg.setAttribute("aria-hidden", "true"); }
+    }
+    carte.inert = true;
+    if (act0 || !enfant(scene, "place-actions")) {
+      var place = el("div", { class: "actions centre exp-actions place-actions", "aria-hidden": "true", style: hAct ? "height:" + hAct + "px" : null }, [el("span", { class: "bouton", texte: " " })]);
+      if (act0) scene.replaceChild(place, act0); else scene.insertBefore(place, carte.nextSibling);
+    }
+    if (options.surPlace && contenu.classList) contenu.classList.add("sans-entree");
+    var calque = el("div", { class: "exp-calque" }, [contenu, options.boutons || null]), vieux = enfant(scene, "exp-calque");
+    if (vieux) scene.replaceChild(calque, vieux); else scene.appendChild(calque);
+    scene.classList.add("voilee");
+  }
+  // La route elle-même dans la scène : la carte redessinée dans le même cadre (il s'éclaire depuis l'assombrissement),
+  // ses boutons à la place du gabarit, la fenêtre éventuelle qui s'efface. Renvoie vrai si une fenêtre se refermait.
+  function poserRoute(s, e, html, boutons) {
+    var el = JEU.ui.el, scene = preparerScene(s, e), carte = enfant(scene, "route-carte");
+    if (!carte) { carte = el("div", { class: "route-carte" }); scene.insertBefore(carte, scene.firstChild); }
+    carte.innerHTML = html;
+    carte.inert = false;
+    surveillerImages(carte);
+    boutons.classList.add("route-actions");
+    var act = enfant(scene, "place-actions") || enfant(scene, "route-actions");
+    if (act) scene.replaceChild(boutons, act); else scene.insertBefore(boutons, carte.nextSibling);
+    var calque = enfant(scene, "exp-calque");
+    if (calque) fermerCalque(calque);
+    scene.classList.remove("voilee");
+    return { carte: carte, fenetre: !!calque };
+  }
+  // Clé de l'expédition (une nouvelle expédition repart sans sceau « vu ») ; haltes scellées d'après les états.
+  function cleRoute(e) { return e.graine + ":" + e.depart; }
+  function scelles(etats) { var r = {}; Object.keys(etats).forEach(function (id) { if (/jouee/.test(etats[id])) r[id] = true; }); return r; }
+  // Sceaux posés depuis le dernier dessin de la route : ils attendent leur chute. Au premier dessin d'une séance (jeu
+  // rouvert, « Reprendre »), aucun : rien n'est neuf.
+  function sceauxNeufs(e, etats) {
+    var vus = S.scelles && S.scelles.cle === cleRoute(e) ? S.scelles.ids : null, neufs = {};
+    if (vus) Object.keys(scelles(etats)).forEach(function (id) { if (!vus[id]) neufs[id] = true; });
+    return neufs;
+  }
+  // Où se tient la compagnie : la dernière halte jouée de la semaine, sinon le départ de la semaine (le gardien de la
+  // semaine d'avant, ou le bourg de départ).
+  function lieuCompagnie(e) {
+    var i = indexActe(e, e.semaine);
+    if (i < 0) return "depart";
+    var seq = sequence(e, e.route.actes[i]);
+    if (seq.length) return seq[seq.length - 1];
+    return i > 0 ? e.route.actes[i - 1].gardien.id : "depart";
+  }
+  // Le pion a changé de halte depuis le dernier dessin de la route, par un chemin de la carte : son mouvement (sinon rien,
+  // il est posé). o0, o1 : son décalage par rapport au centre de la halte de départ et d'arrivée.
+  function mouvementPion(e, d, lieu) {
+    if (!S.pion || S.pion.cle !== cleRoute(e) || S.pion.id === lieu) return null;
+    var de = S.pion.id, c = d.chemins.filter(function (x) { return x.de === de && x.a === lieu; })[0];
+    var n0 = de === "depart" ? d.depart : d.parId[de], n1 = d.parId[lieu], p0 = posePion(d, de), p1 = posePion(d, lieu);
+    if (!c || !n0 || !n1 || !p0 || !p1) return null;
+    return { de: de, c: c, o0: { x: p0.x - n0.x, y: p0.y - n0.y }, o1: { x: p1.x - n1.x, y: p1.y - n1.y } };
+  }
+  // Le retour sur la route, après une halte (lot B, B1.4) : le pion suit le chemin pris (600 ms) et le trait d'or se dore
+  // derrière lui, le sceau tombe à l'arrivée, puis les halos des haltes atteignables s'allument l'un après l'autre (200 ms,
+  // 60 ms d'écart). Le pion et le trait partent tout de suite avec leur délai (Web Animations, transform et trait) ; la
+  // chute et les halos sont lancés après l'image.
+  function mettreEnScene(carte, mvt, tombent, delai) {
+    if (mvt) avancerPion(carte, mvt, delai);
+    setTimeout(function () {
+      JEU.anim.apresImage(function () {
+        if (tombent.length) faireTomber(carte, tombent);
+        setTimeout(function () { allumerHalos(carte); }, tombent.length ? 240 : 0);
+      });
+    }, delai + (mvt ? 540 : 0));
+  }
+  function avancerPion(carte, m, delai) {
+    var g = carte.querySelector(".pion"), c = m.c, mx = (c.x1 + c.x2) / 2, images = [];
+    if (!g || !g.animate) return;
+    // la courbe du chemin (courbe : Bézier cubique de contrôles (mx, y1) et (mx, y2)), échantillonnée en 13 points
+    for (var i = 0; i <= 12; i++) {
+      var t = i / 12, u = 1 - t, b0 = u * u * u, b1 = 3 * u * u * t, b2 = 3 * u * t * t, b3 = t * t * t;
+      var x = b0 * c.x1 + (b1 + b2) * mx + b3 * c.x2 + m.o0.x + (m.o1.x - m.o0.x) * t;
+      var y = (b0 + b1) * c.y1 + (b2 + b3) * c.y2 + m.o0.y + (m.o1.y - m.o0.y) * t;
+      images.push({ transform: "translate(" + n2(x) + "px, " + n2(y) + "px)" });
+    }
+    g.animate(images, { duration: 600, delay: delai, easing: "ease-in-out", fill: "backwards" });
+    Array.prototype.forEach.call(carte.querySelectorAll(".pris-neuf"), function (p) {
+      var a = p.animate([{ strokeDashoffset: 100 }, { strokeDashoffset: 0 }], { duration: 600, delay: delai, easing: "ease-in-out", fill: "both" });
+      a.onfinish = function () { p.setAttribute("stroke-dashoffset", "0"); a.cancel(); };
+    });
+  }
+  function allumerHalos(carte) {
+    Array.prototype.forEach.call(carte.querySelectorAll(".halo-cadre.eteint"), function (h, i) {
+      h.style.animationDelay = (i * 60) + "ms";
+      h.classList.remove("eteint"); h.classList.add("allume");
+    });
+  }
+  // La chute des sceaux neufs : la cire tombe (échelle 1,7 → 1, 380 ms), un éclat d'or et le son du sceau à l'impact.
+  // Lancée après l'image (rien dans le chemin d'une réponse) ; la lecture de la place du sceau se fait à l'impact.
+  function faireTomber(carte, ids) {
+    ids.forEach(function (id, i) {
+      var g = carte.querySelector(".sceau-halte[data-halte='" + id + "']");
+      if (!g || !g.isConnected) return;
+      g.classList.remove("attend"); g.classList.add("tombe");
+      setTimeout(function () {
+        if (!g.isConnected) return;
+        var r = g.getBoundingClientRect();
+        if (r.width) JEU.anim.eclat(r.left + r.width / 2, r.top + r.height / 2, "or", 6);
+        if (i === 0) JEU.sons.jouer("sceau");
+      }, 210);
+      setTimeout(function () { g.classList.remove("tombe"); }, 400);
+    });
   }
 
   // ---------- l'écran : aiguillage ----------
-  JEU.ui.ecrans.expedition = function (s) {
+  // arg : { surPlace: true } quand l'écran est redessiné sur place (JEU.ui.redessiner) ; sinon, il vient d'entrer.
+  JEU.ui.ecrans.expedition = function (s, arg) {
+    entreeEnCours = !(arg && arg.surPlace);
+    try { return aiguiller(s); } finally { entreeEnCours = false; }
+  };
+  function aiguiller(s) {
     var X = JEU.expedition;
     if (!X) { s.innerHTML = ""; return; }
     surveillerSection(s);
@@ -741,12 +947,22 @@
   }
 
   // ---------- la carte-itinéraire ----------
+  // Redessinée sur place (lot B, B1.3) : les sceaux posés depuis le dernier dessin y tombent une image après (après
+  // l'entrée d'écran, ou après l'effacement de la fenêtre qui se referme), avec un éclat d'or et le son du sceau.
+  // Animations coupées : les sceaux sont posés, le son est joué tout de suite.
   function rendreRoute(s, e) {
     var X = JEU.expedition, el = JEU.ui.el, T = TEXTES.route, att = X.atteignables();
     S.enHalte = false;
-    var d = disposition(e), etats = etatsNoeuds(e, d);
-    var carte = el("div", { class: "route-carte", html: carteSVG(e, d, etats) });
-    surveillerImages(carte);
+    var d = disposition(e), etats = etatsNoeuds(e, d), anime = !!(JEU.anim && JEU.anim.actif()), neufs = sceauxNeufs(e, etats), lieu = lieuCompagnie(e);
+    var tombent = Object.keys(neufs), mvt = anime ? mouvementPion(e, d, lieu) : null, enScene = anime && (tombent.length > 0 || !!mvt);
+    var html = carteSVG(e, d, etats, { attente: anime ? neufs : null, pion: lieu, pionDe: mvt ? mvt.de : null, halosEteints: enScene });
+    S.scelles = { cle: cleRoute(e), ids: scelles(etats) };
+    S.pion = { cle: cleRoute(e), id: lieu };
+    var boutons = el("div", { class: "actions centre exp-actions" });
+    var pose = poserRoute(s, e, html, boutons), carte = pose.carte;
+    // après l'entrée d'écran (200 ms) ou l'effacement de la fenêtre (120 ms) : la scène se joue quand elle se voit
+    if (enScene) mettreEnScene(carte, mvt, tombent, entreeEnCours ? 140 : pose.fenetre ? 110 : 0);
+    else if (tombent.length) JEU.sons.jouer("sceau");
     var noeuds = carte.querySelectorAll(".halte.atteignable");
     Array.prototype.forEach.call(noeuds, function (g, i) {
       g.addEventListener("click", function () { entrer(g.getAttribute("data-id")); });
@@ -754,11 +970,10 @@
     });
     if (S.focus >= att.length) S.focus = 0;
     var entrerB = el("button", { class: "bouton principal", disabled: !att.length, onclick: function () { if (att.length) entrer(att[Math.min(S.focus, att.length - 1)].id); } }, [T.entrer, astuce("Entrée")]);
-    var boutons = el("div", { class: "actions centre exp-actions" }, [entrerB,
+    [entrerB,
       el("button", { class: "bouton", onclick: function () { rendreFaveurs(s, X.enCours()); } }, [T.faveurs, astuce("F")]),
       el("button", { class: "bouton", onclick: function () { JEU.ui.afficher("jouer"); } }, [T.retour, astuce("Échap")]),
-      el("button", { class: "bouton discret", onclick: function () { leverLeCamp(); }, texte: T.lever })]);
-    cadreEcran(s, e, carte, { boutons: boutons });
+      el("button", { class: "bouton discret", onclick: function () { leverLeCamp(); }, texte: T.lever })].forEach(function (b) { boutons.appendChild(b); });
     if (S.toast) { JEU.ui.toast(S.toast, null, 3200); S.toast = null; }
     function focusVers(delta) {
       if (!noeuds.length) return;
@@ -941,21 +1156,33 @@
     ];
     return action ? el("button", { class: "carte-faveur rang-" + c.rang, "data-id": c.id, onclick: action }, contenu) : el("div", { class: "carte-faveur rang-" + c.rang + " tenue" }, contenu);
   }
-  // Les cartes au choix. offre : { cartes } ; options : { titre, sous, apres(id) } (par défaut : prendreFaveur puis la route).
+  // Les cartes au choix. offre : { cartes } ; options : { titre, sous, prendre(id) } (par défaut : prendreFaveur) ; puis la route.
+  // En éventail (lot B, B1.5) : les cartes se retournent l'une après l'autre (80 ms d'écart) ; la carte choisie grandit et
+  // brille (220 ms) pendant que les autres s'effacent vers le bas, puis la route revient. Le choix est enregistré tout de
+  // suite ; seul le retour à la route attend la fin du geste. Animations coupées : la route revient aussitôt.
   function rendreCartes(s, e, offre, options) {
     var X = JEU.expedition, el = JEU.ui.el, T = TEXTES.porte;
     options = options || {};
     var ouverture = offre.halte === "depart";
     var titre = options.titre || (ouverture ? T.ouverture : T.choisir), sous = options.sous || (ouverture ? T.ouvertureSous : "");
-    var boutons = [];
+    var boutons = [], choisie = false;
     var choisir = function (id) {
-      if (options.apres) { options.apres(id); return; }
-      var f = X.prendreFaveur(id);
-      if (f) { JEU.sons.jouer("validation"); JEU.ui.toast(remplir(T.tenue, { F: X.EXP.FAVEURS[f.id].nom, R: X.TEXTES.rangs[f.rang - 1] })); }
-      afficher();
+      if (choisie) return; // une touche répétée pendant le geste ne choisit pas deux fois
+      choisie = true;
+      if (options.prendre) options.prendre(id);
+      else {
+        var f = X.prendreFaveur(id);
+        if (f) { JEU.sons.jouer("validation"); JEU.ui.toast(remplir(T.tenue, { F: X.EXP.FAVEURS[f.id].nom, R: X.TEXTES.rangs[f.rang - 1] })); }
+      }
+      if (!(JEU.anim && JEU.anim.actif())) return afficher();
+      cartes.inert = true;
+      JEU.ui.clavier = function () { return true; };
+      boutons.forEach(function (b) { b.classList.add(b.getAttribute("data-id") === id ? "choisie" : "ecartee"); });
+      setTimeout(function () { if (cartes.isConnected && JEU.ui.ecranCourant() === "expedition") afficher(); }, 220);
     };
-    var cartes = el("div", { class: "cartes-faveur" }, offre.cartes.map(function (c, i) {
+    var cartes = el("div", { class: "cartes-faveur eventail" }, offre.cartes.map(function (c, i) {
       var b = carteFaveurEl(c, i + 1, function () { choisir(c.id); });
+      b.style.setProperty("--i", String(i));
       boutons.push(b);
       return b;
     }));
@@ -986,7 +1213,7 @@
     cadreEcran(s, e, boite, null);
     function choixRepos() {
       var r = X.bivouac("repos");
-      if (r) { JEU.sons.jouer("sceau"); S.toast = r.texte; }
+      if (r) S.toast = r.texte; // le son du sceau joue quand la cire tombe sur la route (rendreRoute)
       afficher();
     }
     function choixVeillee() {
@@ -1027,7 +1254,7 @@
     function fin() {
       var res = X.finirVeillee(bonnes, qs.length);
       if (res && res.affinables.length) {
-        return rendreCartes(s, X.enCours(), { cartes: res.affinables, halte: t.halte.id }, { titre: T.affiner, sous: res.texte, apres: function (id) { X.affiner(id); JEU.sons.jouer("validation"); afficher(); } });
+        return rendreCartes(s, X.enCours(), { cartes: res.affinables, halte: t.halte.id }, { titre: T.affiner, sous: res.texte, prendre: function (id) { X.affiner(id); JEU.sons.jouer("validation"); } });
       }
       zone.innerHTML = "";
       var bouton = el("button", { class: "bouton principal", onclick: afficher }, [T.continuer, astuce("Entrée")]);
@@ -1057,7 +1284,8 @@
       else JEU.ui.panneauErreur(q, zone, function () { JEU.ui.toast(T.sansRemise); rendreEtal(s, X.enCours(), t, X.ouvrirEtal(h.id, false)); });
     }, { recit: JEU.recit.cadre(q, "marchand", null, extraDe(t.acte)) });
   }
-  function rendreEtal(s, e, t, vue) {
+  // surPlace : l'étal redessiné après un achat (la fenêtre ne rejoue pas son entrée)
+  function rendreEtal(s, e, t, vue, surPlace) {
     var X = JEU.expedition, el = JEU.ui.el, T = TEXTES.marchand, h = t.halte;
     if (!vue) { S.enHalte = false; return afficher(); }
     var lignes = vue.lignes.map(function (l, i) {
@@ -1073,15 +1301,15 @@
       el("div", { class: "etal" }, lignes),
       el("p", { class: "note", texte: vue.restant })
     ]);
-    cadreEcran(s, e, boite, { boutons: el("div", { class: "actions centre exp-actions" }, [quitter]) });
+    cadreEcran(s, e, boite, { boutons: el("div", { class: "actions centre exp-actions" }, [quitter]), surPlace: surPlace });
     function acheterLigne(ligne) {
       var v = X.acheter(ligne, h.id);
       if (!v) { JEU.ui.toast(T.pasAssez); return; }
       JEU.sons.jouer("construction");
       JEU.ui.toast(remplir(T.achete, { A: (vue.lignes.filter(function (l) { return l.ligne === ligne; })[0] || { texte: "" }).texte }));
-      rendreEtal(s, X.enCours(), t, v);
+      rendreEtal(s, X.enCours(), t, v, true);
     }
-    function fermer() { X.fermerEtal(h.id); JEU.sons.jouer("sceau"); afficher(); }
+    function fermer() { X.fermerEtal(h.id); afficher(); } // le sceau tombe sur la route, avec son son (rendreRoute)
     JEU.ui.clavier = function (k) {
       var n = parseInt(k, 10);
       if (n >= 1 && n <= vue.lignes.length) { if (!lignes[n - 1].disabled) acheterLigne(vue.lignes[n - 1].ligne); return true; }

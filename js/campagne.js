@@ -504,6 +504,7 @@
       if (bilan.issue === "victoire" || prov.pv <= 0) {
         prov.pv = 0;
         if (c.conquises.indexOf(bilan.lieu) < 0) c.conquises.push(bilan.lieu);
+        c.derniereConquete = bilan.lieu; // lot B (31/10/2026) : la carte de campagne joue la cérémonie de conquête une fois, puis l'efface
         gagner(def.tribut, 8);
         c.rival.menace++;
         noter("Tu as pris " + def.nom + " " + avecArticle(campDe(def.front).nom, "à") + ".");
@@ -600,6 +601,7 @@
         el("button", { class: "bouton principal", onclick: function () { JEU.ui.finirPartie(); sortir(); }, texte: contexte ? "Continuer la route (Entrée)" : "Retour à la campagne (Entrée)" })
       ]));
       JEU.ui.clavier = function (k) { if (k === "Enter") { JEU.ui.finirPartie(); sortir(); return true; } return false; };
+      if (JEU.anim && JEU.anim.bilan) JEU.anim.bilan(scene.querySelector(".bilan"), bonnes === qs.length); // lot B : le score compte, sceau d'or si tout est juste
     }
     suivante();
   }

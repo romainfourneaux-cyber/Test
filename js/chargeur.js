@@ -6,13 +6,15 @@
 
   function dossierDe(id) { return /^anglais-/.test(id) ? "anglais" : "cours"; }
 
-  function chargerCours(fini) {
+  // avance(faits, total), facultatif : appelé à chaque cours chargé (ou absent) ; le rail de l'écran de chargement.
+  function chargerCours(fini, avance) {
     var ids = (JEU.donnees.indexCours || []).slice();
     var restant = ids.length;
     var termine = false;
     JEU.donnees.coursAbsents = [];
     function un() {
       restant--;
+      if (avance && !termine) avance(ids.length - restant, ids.length);
       if (restant <= 0 && !termine) { termine = true; fini(); }
     }
     if (!restant) { termine = true; fini(); return; }

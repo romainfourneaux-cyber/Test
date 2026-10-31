@@ -2,7 +2,7 @@
 // FICHIER GÉNÉRÉ par atelier/outils/generer-sw.js, ne pas le modifier à la main : node atelier/outils/generer-sw.js
 // Seul jeu/js/installation.js l'enregistre, et seulement en http(s). Jamais en file:// : le double-clic sur index.html
 // reste tel quel. Le jeu lui-même ne fait aucun appel réseau : ce fichier est le mécanisme d'installation du navigateur.
-// À l'installation, il met en cache tous les fichiers du jeu (307 fichiers). Ensuite, chaque demande est servie
+// À l'installation, il met en cache tous les fichiers du jeu (327 fichiers). Ensuite, chaque demande est servie
 // depuis le cache ; le réseau n'est qu'un repli. Une nouvelle version porte un autre nom de cache : elle se télécharge
 // en arrière-plan puis attend. Elle prend la main quand le jeu est fermé puis rouvert, ou tout de suite si l'on touche
 // « Mettre à jour » (message « activer »). Jamais au milieu d'une partie : la page ouverte garde les fichiers de sa version.
@@ -88,6 +88,21 @@ var FICHIERS = [
   "assets/images/icones-app/icone-192.png",
   "assets/images/icones-app/icone-512-maskable.png",
   "assets/images/icones-app/icone-512.png",
+  "assets/images/menus/bossette-laiton.png",
+  "assets/images/menus/cartouche-or-appui.png",
+  "assets/images/menus/cartouche-or.png",
+  "assets/images/menus/cartouche-parchemin-appui.png",
+  "assets/images/menus/cartouche-parchemin.png",
+  "assets/images/menus/cartouche-plomb.png",
+  "assets/images/menus/coin-dore.png",
+  "assets/images/menus/embout-rouleau.png",
+  "assets/images/menus/fanion.png",
+  "assets/images/menus/rail-laiton.png",
+  "assets/images/menus/sangle-bord.png",
+  "assets/images/menus/sceau-acquis.png",
+  "assets/images/menus/sceau-case.png",
+  "assets/images/menus/sceau-or.png",
+  "assets/images/menus/sceau-revoir.png",
   "assets/images/oeuvres/bataille-cavalerie.jpg",
   "assets/images/oeuvres/chasse-faucon.jpg",
   "assets/images/oeuvres/chasseur-chateau.jpg",
@@ -98,6 +113,10 @@ var FICHIERS = [
   "assets/images/personnages/charlemagne.jpg",
   "assets/images/personnages/clovis.jpg",
   "assets/images/personnages/pepin-le-bref.jpg",
+  "assets/images/reponses/piece-or.png",
+  "assets/images/reponses/sceau-or.png",
+  "assets/images/reponses/tampon-cire.png",
+  "assets/images/reponses/tampon-plomb.png",
   "assets/images/td/effet-carreau.png",
   "assets/images/td/effet-cratere.png",
   "assets/images/td/effet-eclats.png",
@@ -213,6 +232,7 @@ var FICHIERS = [
   "assets/sons/sceau.wav",
   "assets/sons/validation.wav",
   "css/jeu.css",
+  "css/menus.css",
   "data/a-retravailler.js",
   "data/anglais/anglais-seq01.js",
   "data/anglais/anglais-seq02.js",

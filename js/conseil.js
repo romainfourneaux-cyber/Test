@@ -69,15 +69,30 @@
       if (j) { j.classList.remove("monte"); void j.offsetWidth; j.classList.add("monte"); }
     }
 
+    // Vide la scène pour la carte suivante. La carte qui vient d'être jugée file encore (transition de 0,2 s) : elle reste,
+    // posée par-dessus (classe sortante), le temps de partir ; tout le reste est retiré tout de suite.
+    // Ce qui arrive se pose avant la carte qui file encore : dans l'ordre de la page, la carte en jeu vient la première
+    // (la sortante, en position absolue, reste par-dessus par son z-index).
+    function poser(e) { scene.insertBefore(e, scene.querySelector(".sortante")); }
+    function viderScene() {
+      var anim = JEU.anim && JEU.anim.actif();
+      Array.prototype.slice.call(scene.children).forEach(function (e) {
+        if (anim && e.classList && (e.classList.contains("part-droite") || e.classList.contains("part-gauche"))) {
+          e.classList.add("sortante"); e.removeAttribute("tabindex");
+          setTimeout(function () { e.remove(); }, 260);
+        } else e.remove();
+      });
+    }
+
     function suivante() {
       if (i >= paquet.length) return fin();
       compteur.textContent = "Affaire " + (i + 1) + " / " + paquet.length;
       var c = paquet[i];
-      scene.innerHTML = "";
+      viderScene();
       if (c.d) return decision(c.d);
       var q = c.q, cons = JEU.recit.conseiller(q.matiere), m = JEU.MATIERES[q.matiere];
       var cadre = JEU.recit.cadre(q, c.pilier);
-      var carte = el("div", { class: "carte-conseil", style: "--teinte:" + m.couleur, tabindex: "0" }, [
+      var carte = el("div", { class: "carte-conseil" + (cadre.etiquette ? " revient" : ""), style: "--teinte:" + m.couleur, tabindex: "0" }, [
         el("div", { class: "cc-tete" }, [el("span", { class: "cc-portrait", html: JEU.icones.icone(cons.icone, 46) }), el("div", {}, [el("b", { texte: cons.nom }), el("span", { texte: cons.titre }),
           cadre.repere ? el("span", { class: "recit-repere", texte: cadre.repere }) : null])]), // semaine et matière du cours (recit.js)
         el("p", { class: "cc-affaire", texte: cadre.texte }),
@@ -91,13 +106,14 @@
         el("button", { class: "bouton faux", onclick: function () { decider(false); }, texte: "← J'en doute" }),
         el("button", { class: "bouton vrai", onclick: function () { decider(true); }, texte: "Je le crois →" })
       ]);
-      scene.appendChild(carte); scene.appendChild(boutons);
+      poser(carte); poser(boutons);
       glisser(carte, decider);
       if (JEU.ui.nouvelAffichage) JEU.ui.nouvelAffichage(); // garde du double toucher (interface.js)
       var fait = false;
       function decider(v) {
         if (fait) return; fait = true;
         JEU.mesure.reponseDonnee();
+        carte.style.transform = ""; // glissée à la main : elle repart de là où le doigt l'a laissée
         carte.classList.add(v ? "part-droite" : "part-gauche");
         if (!v && !q.reponse.vrai && q.corrections && q.corrections.length) return corriger(q, c);
         conclure(q, c, { vrai: v, correction: null });
@@ -111,12 +127,12 @@
     }
 
     function corriger(q, c) {
-      scene.innerHTML = "";
-      scene.appendChild(el("p", { class: "affirmation petite", texte: "« " + q.enonce + " »" }));
-      scene.appendChild(el("p", { class: "consigne", texte: "Tu as raison d'en douter. Que faut-il dire à la place ?" }));
+      viderScene(); // la carte file à gauche pendant que les corrections arrivent
+      poser(el("p", { class: "affirmation petite", texte: "« " + q.enonce + " »" }));
+      poser(el("p", { class: "consigne", texte: "Tu as raison d'en douter. Que faut-il dire à la place ?" }));
       var corr = U.melanger(q.corrections); // la bonne correction n'est pas toujours la première
       corr.forEach(function (x, k) {
-        scene.appendChild(el("button", { class: "choix", onclick: function () { conclure(q, c, { vrai: false, correction: x }); } }, [el("span", { class: "touche", texte: String(k + 1) }), el("span", { texte: x })]));
+        poser(el("button", { class: "choix", onclick: function () { conclure(q, c, { vrai: false, correction: x }); } }, [el("span", { class: "touche", texte: String(k + 1) }), el("span", { texte: x })]));
       });
       if (JEU.ui.nouvelAffichage) JEU.ui.nouvelAffichage();
       JEU.ui.clavier = function (k) {
@@ -127,9 +143,44 @@
       JEU.mesure.questionAffichee();
     }
 
+    // Lot B (31/10/2026). Juste : le sceau « Sage décision » se pose là où la carte est partie (à 72 % de la largeur, ou
+    // à 28 % si elle est partie à gauche), à côté de la carte suivante et jamais sur son texte, et le gain s'envole du
+    // sceau. La place se calcule sur la scène (qui ne bouge pas) : la carte occupe son haut, sur min(480 px, 100 %)
+    // de large ; une seule lecture de mise en page, que gain() faisait déjà. Faux : la carte revient (réponse montrée),
+    // ton choix rougit, le bon passe en or, et le panneau d'erreur se déplie dessous.
+    // Après la dernière affaire vient le bilan, aussi large que la scène : le sceau se pose dessous.
+    function placeSceau(aDroite, dernier) {
+      var r = scene.getBoundingClientRect(), w = dernier ? r.width : Math.min(480, r.width);
+      var carte = { left: r.left + (r.width - w) / 2, top: r.top, width: w, height: dernier ? 240 : 290 };
+      return JEU.ui.placeTampon({ x: aDroite ? 72 : 28, pres: carte });
+    }
+    function montrerErreur(q, rj) {
+      var carte = scene.querySelector(".carte-conseil:not(.sortante)"), marques = [];
+      if (carte) {
+        carte.classList.remove("part-droite", "part-gauche", "vers-droite", "vers-gauche");
+        carte.style.transform = "";
+        carte.classList.add("montree");
+        var choisi = scene.querySelector(".boutons-sceau .bouton." + (rj.vrai ? "vrai" : "faux"));
+        var bon = scene.querySelector(".boutons-sceau .bouton." + (rj.vrai ? "faux" : "vrai"));
+        marques = [[choisi, "choisie-fausse"], [bon, "bonne-montree"]];
+      } else Array.prototype.forEach.call(scene.querySelectorAll(".choix"), function (b) { // la correction choisie
+        var t = b.lastElementChild ? b.lastElementChild.textContent : b.textContent;
+        marques.push([b, t === rj.correction ? "choisie-fausse" : t === q.reponse.correction ? "bonne-montree" : "ecartee"]);
+      });
+      Array.prototype.forEach.call(scene.querySelectorAll("button"), function (b) { b.disabled = true; });
+      scene.classList.add("montree");
+      marques.forEach(function (m) {
+        if (!m[0]) return;
+        m[0].classList.add(m[1]);
+        if (m[1] === "choisie-fausse" && JEU.anim) JEU.anim.secouer(m[0]);
+      });
+    }
+
     function conclure(q, c, rj) {
       JEU.ui.clavier = null;
       var juste = JEU.questions.corriger(q, rj);
+      var sceau = null;
+      if (juste && JEU.anim && JEU.anim.actif()) { sceau = placeSceau(rj.vrai, i + 1 >= paquet.length); JEU.anim.noterDepart(sceau.x, sceau.y); }
       JEU.questions.enregistrerReponse(q, juste);
       JEU.ui.noterDerniere(q);
       i++; posees++;
@@ -137,13 +188,14 @@
         bonnes++;
         monter(c.pilier, 1);
         JEU.sons.jouer("sceau");
-        JEU.ui.tampon("Sage décision", "+1 " + JEU.campagne.JAUGES[c.pilier].nom);
+        JEU.ui.tampon("Sage décision", "+1 " + JEU.campagne.JAUGES[c.pilier].nom, null, sceau ? { point: sceau } : { x: rj.vrai ? 72 : 28, pres: function () { return scene.querySelector(".carte-conseil:not(.sortante), .bilan"); } });
         JEU.ui.majRessources();
         JEU.mesure.reponseDonnee();
         suivante();
       } else {
         replacerRappels();
-        JEU.ui.panneauErreur(q, scene, function () { JEU.mesure.reponseDonnee(); suivante(); });
+        montrerErreur(q, rj);
+        JEU.ui.panneauErreur(q, scene, function () { scene.classList.remove("montree"); JEU.mesure.reponseDonnee(); suivante(); }, { garder: true, reponse: rj });
       }
     }
 
@@ -161,7 +213,7 @@
         el("button", { class: "bouton", onclick: function () { choisir(false); }, html: "← " + U.echapper(d.gauche.t) + " <small>(+" + JEU.campagne.JAUGES[d.gauche.j].nom + ")</small>" }),
         el("button", { class: "bouton", onclick: function () { choisir(true); }, html: U.echapper(d.droite.t) + " <small>(+" + JEU.campagne.JAUGES[d.droite.j].nom + ")</small> →" })
       ]);
-      scene.appendChild(carte); scene.appendChild(boutons);
+      poser(carte); poser(boutons);
       glisser(carte, choisir);
       if (JEU.ui.nouvelAffichage) JEU.ui.nouvelAffichage();
       var fait = false;
@@ -191,10 +243,10 @@
         JEU.mentor.feliciter();
         setTimeout(function () { var b = scene.querySelector(".bilan"); if (b) { var c = JEU.anim.centre(b); JEU.anim.eclat(c.x, c.y - 60, "feuilles", 60); } }, 30);
       }
-      scene.innerHTML = "";
+      viderScene();
       compteur.textContent = "";
       var liste = Object.keys(montees).map(function (k) { return "+" + montees[k] + " " + JEU.campagne.JAUGES[k].nom; }).join(", ");
-      scene.appendChild(el("div", { class: "bilan" + (taux >= 0.8 ? " reussi" : "") }, [
+      poser(el("div", { class: "bilan" + (taux >= 0.8 ? " reussi" : "") }, [
         el("h2", { texte: taux >= 0.8 ? "Un conseil avisé !" : "Le conseil est levé" }),
         el("p", { class: "grand", texte: bonnes + " / " + posees + " jugements justes" }),
         el("p", { texte: liste ? "Le royaume grandit : " + liste + "." : "Rien de perdu : le royaume garde tout ce qu'il a." }),
@@ -204,6 +256,7 @@
         ])
       ]));
       JEU.ui.clavier = function (k) { if (k === "Enter") { JEU.ui.finirPartie(); lancer(); return true; } return false; };
+      if (JEU.anim && JEU.anim.bilan) JEU.anim.bilan(scene.querySelector(".bilan"), posees > 0 && bonnes === posees); // le score compte, sceau d'or si tout est juste
     }
 
     suivante();

@@ -6,6 +6,13 @@
   var JEU = racine.JEU;
   var U = JEU.util;
   var ouvert = {};  // matière dépliée
+  var vientOuvrir = null; // la matière qu'on vient de déplier : elle seule montre sa page en s'ouvrant (classe « ouvre »)
+  // déplie ou replie une matière ; l'écran est redessiné sur place
+  function basculer(m, s) {
+    ouvert[m] = !ouvert[m];
+    vientOuvrir = ouvert[m] ? m : null;
+    JEU.ui.ecrans.codex(s, { surPlace: true });
+  }
 
   function rendreFiche(f, coursId, bonus) {
     var el = JEU.ui.el;
@@ -82,8 +89,8 @@
     if (!C || !C.galerie || !E) return;
     var g = C.galerie();
     var vus = g.souverains.filter(function (x) { return x.etat !== "avenir"; }).length;
-    var section = el("section", { class: "codex-matiere codex-galerie", style: "--teinte:#b08d3a" });
-    section.appendChild(el("button", { class: "codex-entete", onclick: function () { ouvert.galerie = !ouvert.galerie; JEU.ui.ecrans.codex(s); } }, [
+    var section = el("section", { class: "codex-matiere codex-galerie" + classesOuvert("galerie"), style: "--teinte:#b08d3a" });
+    section.appendChild(el("button", { class: "codex-entete", onclick: function () { basculer("galerie", s); } }, [
       el("span", { html: JEU.icones.icone("couronne", 26) + "Galerie des souverains" }),
       el("span", { class: "note", texte: (vus ? vus + " souverain" + (vus > 1 ? "s" : "") + " rencontré" + (vus > 1 ? "s" : "") : "aucun souverain encore") + " · " + g.rivaux.length + " rivaux" })
     ]));
@@ -116,6 +123,10 @@
     s.appendChild(section);
   }
 
+  // classes d'une section : « ouvert » si elle est dépliée (tome ouvert), « ouvre » si on vient de la déplier
+  function classesOuvert(m) { return (ouvert[m] ? " ouvert" : "") + (vientOuvrir === m ? " ouvre" : ""); }
+
+  // Les bascules redessinent sur place ({ surPlace: true }, comme ui.redessiner) : l'écran n'entre pas de nouveau.
   JEU.ui.ecrans.codex = function (s) {
     var el = JEU.ui.el;
     var etat = JEU.sauvegarde.etat();
@@ -134,8 +145,8 @@
       var ids = groupes[m] || [];
       var nb = 0;
       ids.forEach(function (id) { nb += (U.coursCharge(id).fiches || []).length; });
-      var section = el("section", { class: "codex-matiere", style: "--teinte:" + JEU.MATIERES[m].couleur });
-      var entete = el("button", { class: "codex-entete", onclick: function () { ouvert[m] = !ouvert[m]; JEU.ui.ecrans.codex(s); } }, [
+      var section = el("section", { class: "codex-matiere" + (ids.length ? classesOuvert(m) : ""), style: "--teinte:" + JEU.MATIERES[m].couleur });
+      var entete = el("button", { class: "codex-entete", onclick: function () { basculer(m, s); } }, [
         el("span", { html: JEU.icones.icone(JEU.icones.matiere(m), 26) + U.echapper(JEU.MATIERES[m].nom) }), el("span", { class: "note", texte: nb ? nb + " fiche" + (nb > 1 ? "s" : "") : "contenu à venir" })
       ]);
       section.appendChild(entete);
@@ -161,6 +172,7 @@
       }
       s.appendChild(section);
     });
+    vientOuvrir = null;
   };
 
   JEU.codex = { ouvrirFiche: ouvrirFiche, rendreFiche: rendreFiche, bonusDeFiche: bonusDeFiche };
