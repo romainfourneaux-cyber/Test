@@ -33,6 +33,20 @@
   // Indication de touche en fin de bouton, « (Entrée) » : un span que la feuille de style cache sur une tablette.
   ui.astuce = function (t) { return el("span", { class: "astuce-clavier", texte: " (" + t + ")" }); };
   ui.verbeClic = function () { return ui.tactile ? "touche" : "clique"; };
+  // Garde du double toucher (revue tablette, 31/10/2026) : au doigt, une réponse touchée deux fois de suite affiche la
+  // question suivante sous le doigt, et le second toucher y répondait sans qu'elle soit lue (or perdu, fausse réponse
+  // notée), ou sautait l'explication d'une erreur. Un toucher qui arrive moins de GARDE_TOUCHER ms après l'affichage
+  // d'une question, d'un panneau d'erreur ou d'une carte du conseil (ui.nouvelAffichage) est donc ignoré, s'il tombe
+  // dedans. La souris et le clavier ne changent pas.
+  var GARDE_TOUCHER = 350, affichageLe = 0, dernierPointeur = "";
+  ui.GARDE_TOUCHER = GARDE_TOUCHER;
+  ui.nouvelAffichage = function () { affichageLe = Date.now(); };
+  document.addEventListener("pointerdown", function (ev) { dernierPointeur = ev.pointerType || ""; }, true);
+  document.addEventListener("click", function (ev) {
+    if ((ev.pointerType || dernierPointeur) !== "touch" || Date.now() - affichageLe >= GARDE_TOUCHER) return;
+    if (!ev.target || !ev.target.closest || !ev.target.closest(".question, .panneau-erreur, .scene-conseil")) return;
+    ev.stopPropagation(); ev.preventDefault();
+  }, true);
 
   // ---------- écrans ----------
   var ecranCourant = null;
@@ -280,6 +294,7 @@
       pied.appendChild(el("button", { class: "lien", onclick: function () { JEU.mentor.dire(q.indice, "indice"); }, texte: "Un indice, chroniqueur ?" }));
     }
     carte.appendChild(pied);
+    ui.nouvelAffichage();
     JEU.mesure.questionAffichee();
   };
 
@@ -517,6 +532,7 @@
       ])
     ]);
     zone.appendChild(panneau);
+    ui.nouvelAffichage();
     panneau.querySelector(".bouton.principal").focus();
     var fait = false;
     function continuer() { if (fait) return; fait = true; ui.clavier = null; suite(); }

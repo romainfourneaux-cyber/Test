@@ -1054,7 +1054,9 @@ html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
   .bouton.petit, .bouton.discret { min-height: 44px; min-width: 44px; padding-top: .4rem; padding-bottom: .4rem; }
   .lien { display: inline-flex; align-items: center; padding: .4rem .5rem; }
   .bouton-rond { width: 44px; height: 44px; }
-  .modale-fermer { width: 48px; height: 48px; top: .2rem; right: .3rem; display: inline-flex; align-items: center; justify-content: center; }
+  /* z-index : la croix de 48 px déborde sur le contenu de la fenêtre (une fiche du Codex, en position relative, la couvrait
+     et prenait le toucher, revue du 31/10/2026) ; elle reste au-dessus */
+  .modale-fermer { width: 48px; height: 48px; top: .2rem; right: .3rem; display: inline-flex; align-items: center; justify-content: center; z-index: 2; }
   .association .choix, .zone-partie:has(> .td-cadre) .association .choix { min-height: 44px; }
   /* une case à cocher se touche sur toute sa ligne (le libellé), et la case elle-même grandit */
   label:has(> input[type=checkbox]), label:has(> input[type=radio]) { display: inline-flex; align-items: center; gap: .5rem; min-height: 44px; padding: .15rem 0; cursor: pointer; }
