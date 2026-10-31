@@ -371,6 +371,9 @@
   function prof(o) { return o.prof !== undefined ? o.prof : o.y; }
   function parProfondeur(a, b) { return prof(a) - prof(b); }
   var FACADE = 36, PRES_PORTE = 46;
+  // seuil d'une porte (lot A3) : à moins de SEUIL_PORTE px de la porte (le long de la route), une figurine est derrière la
+  // façade ; à moins de OMBRE_PORTE px, elle s'assombrit (un cran, puis deux à mi-chemin)
+  var SEUIL_PORTE = 2, OMBRE_PORTE = 14;
   var HAUT_TIR = 24, HAUT_CORPS = 12; // px : départ des traits au-dessus du pied de la tour, impact à mi-corps
 
   function dessiner(ctx, v) {
@@ -498,6 +501,12 @@
       if (Math.hypot(ux - v.porteDepart.x, uy - v.porteDepart.y) < PRES_PORTE) un.prof = Math.max(uy, v.piedDepart.y + 0.5);
       else if (Math.hypot(ux - v.porteArrivee.x, uy - v.porteArrivee.y) < PRES_PORTE) un.prof = Math.max(uy, v.piedArrivee.y + 0.5);
       volumes.push(un);
+      // ses figurines passées le seuil d'une porte (lot A3) : dessinées juste avant la place forte, dont le mur les cache
+      if (un.bat && un.bat.derriere) {
+        var dp = un.bat.derrierePlace || (un.bat.derrierePlace = { derriere: un, prof: 0 });
+        dp.prof = (un.s < p.route.longueur / 2 ? v.piedDepart.y : v.piedArrivee.y) - 0.5;
+        volumes.push(dp);
+      }
     }
     // giclées de sang (réglage « Sang dans les combats », animations actives) : juste devant la figurine touchée ou
     // tombée, triées avec elle (une façade ou une troupe plus proche de l'écran passe devant) ; les GERBES coups et les
@@ -522,6 +531,7 @@
       else if (o.emplacement !== undefined) tour(ctx, o, v);
       else if (o.genre === "chute" && o.type === "belier") tombe(ctx, o, v, sang, anim);
       else if (o.genre !== undefined) giclee(ctx, o, v, SOL);
+      else if (o.derriere) bataillon(ctx, o.derriere, v, anim, true);
       else bataillon(ctx, o, v, anim);
     }
     // gouttes retombées : posées une fois dans la couche de sol, en taches brun-rouge, quand leur giclée finit
@@ -1574,6 +1584,7 @@
     // en deuxième ligne d'une mêlée, le premier rang pousse (il ne frappe pas dans le vide)
     var contact = adv && bat.slot <= 0;
     var depuisCoup = contact && u.frappe >= 0 ? t - u.frappe : 99, figs = bat.figs, glisse = 18 * dt;
+    bat.derriere = false; // une figurine au moins passée derrière la façade d'une place forte (lot A3)
     for (var i = 0; i < figs.length; i++) {
       var fg = figs[i];
       if (!fg.debout) continue;
@@ -1599,11 +1610,12 @@
       // bousculée par une pierre tombée tout près, ou qui recule sous un trait (lot A, dessin seulement)
       if (fg.pousse !== undefined) { var fp = amortiPoussee(t - fg.pousse); if (fp > 0) { fg.x += fg.pousseX * fp; fg.y += fg.pousseY * fp; } else if (t - fg.pousse > 0.3) fg.pousse = undefined; }
       if (fg.recul !== undefined) { if (t - fg.recul < RECUL && t >= fg.recul) fg.x += fg.reculX; else fg.recul = undefined; }
-      // fondu sur le seuil des portes : chaque figurine sort (ou entre) à son tour, sur 16 px de marche ; en mêlée (les
-      // gardes du rival se battent devant sa porte), sur 6 px seulement : on ne se bat pas en fantôme ; ta troupe arrêtée
-      // devant la porte du rival (u.porte) n'entre pas : elle reste bien visible
-      var bout = Math.min(sf, L - sf), bande = adv ? 6 : 16;
-      fg.alpha = u.porte || bout >= bande + 2 ? 1 : Math.max(0, Math.min(1, (bout - 2) / bande));
+      // seuil des portes (lot A3, à la place du fondu) : la figurine qui passe le seuil (SEUIL_PORTE px de la porte) est
+      // dessinée derrière la façade, dont le mur la cache, et elle s'assombrit en approchant (l'ombre de la porte, deux
+      // crans) au lieu de devenir transparente ; ta troupe arrêtée devant la porte du rival (u.porte) reste dehors
+      var bout = u.porte ? 99 : Math.min(sf, L - sf);
+      fg.alpha = 1; fg.derriere = bout < SEUIL_PORTE; fg.ombrePorte = bout < OMBRE_PORTE / 2 ? 2 : bout < OMBRE_PORTE ? 1 : 0;
+      if (fg.derriere) bat.derriere = true;
     }
   }
 
@@ -1768,7 +1780,9 @@
   // porte-bannière avec sa bannière ; barre de vie du champion et de la tour de siège. Copie pixel pour pixel : la toile
   // est remise à l'échelle de l'écran le temps du bataillon.
   function parY(a, b) { return a.y - b.y; }
-  function bataillon(ctx, u, v, anim) {
+  // derriere (lot A3) : seulement les figurines passées derrière la façade d'une place forte (dessinées juste avant elle) ;
+  // sinon, toutes les autres.
+  function bataillon(ctx, u, v, anim, derriere) {
     var bat = u.bat;
     if (!bat) return;
     var ambiance = v.ambiance !== undefined ? v.ambiance : anim; // bannières qui flottent : ambiance
@@ -1777,7 +1791,7 @@
     var f = bat.f, figs = bat.figs, ordre = bat.ordre, ratio = v.ratio, i, fg, c;
     var rival = u.camp === "rival", coul = rival ? v.adverse.couleurs : v.couleurs, R = v.rendu;
     ordre.length = 0;
-    for (i = 0; i < figs.length; i++) if (figs[i].debout && figs[i].alpha > 0) ordre.push(figs[i]);
+    for (i = 0; i < figs.length; i++) if (figs[i].debout && figs[i].alpha > 0 && !figs[i].derriere === !derriere) ordre.push(figs[i]);
     if (!ordre.length) return;
     ordre.sort(parY);
     ctx.setTransform(1, 0, 0, 1, 0, 0);
@@ -1793,7 +1807,8 @@
           : vueFigure(fg.nom, q.type, bat.cleCamp, coul, kv, bat.gauche, q.echelle, ratio, true);
         fg.vv = c; fg.vvK = kv; fg.vvN = coupNom; fg.vvG = bat.gauche; fg.vvGen = vuesGen; fg.vvE = q.echelle;
       }
-      if (fg.recul !== undefined) c = touchee(c); // touchée par un trait : un cran plus sombre, le temps du recul
+      if (fg.ombrePorte) c = fg.ombrePorte > 1 ? sombre(c) : touchee(c); // dans l'ombre d'une porte (lot A3)
+      else if (fg.recul !== undefined) c = touchee(c); // touchée par un trait : un cran plus sombre, le temps du recul
       if (fondu * fg.alpha !== opacite) { opacite = fondu * fg.alpha; ctx.globalAlpha = opacite; }
       ctx.drawImage(c, Math.round(fg.x * ratio - c.axd), Math.round(fg.y * ratio - c.ayd));
       R.figures++;
@@ -1812,6 +1827,7 @@
     }
     ctx.globalAlpha = 1;
     ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+    if (derriere) return;
     R.bataillons++;
     if (f.barre && chef && u.pv < u.max) {
       // au-dessus de la tête (ou de la bannière, que la barre ne cache pas)
@@ -2357,7 +2373,10 @@
       else racine.addEventListener("resize", surTaille);
 
       // bandeau du champ : bâti une fois, puis seuls les textes qui changent sont remplacés
-      var hudOr = null, hudVague = null, hudRevenu = null;
+      // L'or (lot A3) : un compteur à rouleaux (chiffres), dont chaque chiffre glisse en 0,4 s (feuille de style, section
+      // « Champ : retour ») ; quand il monte, « +n » vole du sceau jusqu'à lui (orGagne). orAffiche : l'or montré ;
+      // ecartOr : son dernier changement (orPerdu montre la perte).
+      var hudOr = null, hudVague = null, hudRevenu = null, orAffiche = null, ecartOr = 0;
       function majHud() {
         if (!hudOr) {
           hudOr = el("b");
@@ -2365,16 +2384,160 @@
           hud.appendChild(hudVague = el("span", { class: "td-vague" }));
           hud.appendChild(hudRevenu = el("span", { class: "td-revenu" }));
         }
-        var t = [String(Math.floor(p.or)), p.phase === "fin" ? "Bataille terminée" : "Vague " + Math.min(p.vague + 1, p.vagues) + " / " + p.vagues + (p.phase === "vague" ? " · en cours" : " · préparation"),
+        var or = Math.floor(p.or);
+        if (or !== orAffiche) {
+          chiffres(hudOr, or);
+          ecartOr = orAffiche === null ? 0 : or - orAffiche;
+          orAffiche = or;
+          if (ecartOr > 0) orGagne(ecartOr);
+        }
+        var t = [p.phase === "fin" ? "Bataille terminée" : "Vague " + Math.min(p.vague + 1, p.vagues) + " / " + p.vagues + (p.phase === "vague" ? " · en cours" : " · préparation"),
           "Revenu : +" + p.revenu + " par vague"];
-        [hudOr, hudVague, hudRevenu].forEach(function (e, i) { if (e.textContent !== t[i]) e.textContent = t[i]; });
+        [hudVague, hudRevenu].forEach(function (e, i) { if (e.textContent !== t[i]) e.textContent = t[i]; });
+      }
+      // Compteur à rouleaux : un span par chiffre, qui garde le vrai chiffre (transparent : lecteurs d'écran, essais) et
+      // montre une colonne de 0 à 9 (::before) que la variable --c fait glisser. Les chiffres sont gardés depuis la
+      // droite (unités, dizaines…) : seuls ceux qui changent glissent ; un chiffre de plus apparaît à sa place.
+      var rouleaux = []; // les span du compteur, de gauche à droite
+      function chiffres(b, n) {
+        var txt = String(n), i, sp;
+        while (rouleaux.length > txt.length) b.removeChild(rouleaux.shift());
+        while (rouleaux.length < txt.length) { sp = el("span", { class: "td-chiffre" }); b.insertBefore(sp, rouleaux[0] || null); rouleaux.unshift(sp); }
+        for (i = 0; i < txt.length; i++) {
+          var c = txt.charAt(i);
+          sp = rouleaux[i];
+          if (sp.textContent !== c) { sp.textContent = c; if (sp.style.setProperty) sp.style.setProperty("--c", c); }
+        }
+      }
+      // Alterne deux classes (base-a, base-b) : l'animation repart sans forcer de mise en page.
+      var alternes = {};
+      function rejouer(e, base) {
+        var k = alternes[base] = !alternes[base];
+        e.classList.remove(base + "-a", base + "-b");
+        e.classList.add(base + (k ? "-a" : "-b"));
+      }
+      // « +n » part du sceau (le sceau de la réponse juste, ou de la vague repoussée) et vole jusqu'au compteur, puis la
+      // pièce brille. Une image plus tard (JEU.anim.apresImage) : jamais dans le chemin réponse → question suivante ; les
+      // positions sont relevées à ce moment. Sans sceau à l'écran (une dépense, un autre gain) : le compteur roule seul.
+      // Animations coupées : rien (le compteur change d'un coup).
+      function orGagne(n) {
+        if (!JEU.anim.actif() || !JEU.anim.apresImage) return;
+        JEU.anim.apresImage(function () {
+          var b = hudOr && hudOr.parentNode, sceau = document.querySelector(".tampon span") || document.querySelector(".tampon");
+          if (!actif || !b || !b.isConnected || !sceau) return;
+          var ra = sceau.getBoundingClientRect(), rb = hudOr.getBoundingClientRect();
+          var ax = ra.left + ra.width / 2, ay = ra.top + ra.height / 2, bx = rb.left + rb.width / 2, by = rb.top + rb.height / 2;
+          var vol = el("div", { class: "td-or-volant", "aria-hidden": "true" }, [el("span", { html: JEU.icones.icone("tresor", 18) + "+" + n })]);
+          vol.style.left = ax + "px"; vol.style.top = ay + "px";
+          vol.style.setProperty("--dx", (bx - ax) + "px"); vol.style.setProperty("--dy", (by - ay) + "px");
+          document.body.appendChild(vol);
+          racine.setTimeout(function () {
+            vol.remove();
+            if (!actif || !b.isConnected) return;
+            rejouer(b, "td-gain");
+            var ic = b.querySelector("svg");
+            if (ic && JEU.anim.eclat) { var ri = ic.getBoundingClientRect(); JEU.anim.eclat(ri.left + ri.width / 2, ri.top + ri.height / 2, "or", 6); }
+          }, 450);
+        });
       }
 
-      // L'or du bandeau rougit un instant quand une erreur en coûte (classe « perte », jeu.css).
+      // L'or du bandeau rougit un instant quand une erreur en coûte (classe « perte », jeu.css) ; le compteur tressaille
+      // de 2 px et un « −6 » rouge en tombe (lot A3). Animations coupées : la rougeur seule (classe « rouge », 0,8 s).
+      var minuterieRouge = null;
       function orPerdu() {
         var b = hudOr && hudOr.parentNode;
         if (!b) return;
+        if (!JEU.anim.actif()) {
+          b.classList.add("rouge"); clearTimeout(minuterieRouge);
+          minuterieRouge = racine.setTimeout(function () { b.classList.remove("rouge"); }, 800);
+          return;
+        }
         b.classList.remove("perte"); void b.offsetWidth; b.classList.add("perte");
+        rejouer(b, "td-tressaille");
+        if (ecartOr < 0) {
+          var chute = el("i", { class: "td-or-perte", "aria-hidden": "true", texte: "−" + (-ecartOr) });
+          b.appendChild(chute);
+          racine.setTimeout(function () { chute.remove(); }, 850);
+        }
+      }
+
+      // ---------- retour d'une action sur le champ (lot A3) ----------
+      // Secousses, éclair, liseré : des classes de la feuille de style sur le cadre du champ (section « Champ : retour »),
+      // rien n'est peint dans la toile. Une secousse à la fois (v.rendu.secousses ; l'effondrement de la fin passe avant),
+      // l'éclair au plus une fois par seconde. Animations coupées : rien de tout cela.
+      var DUREES_SECOUSSE = [0, 160, 240, 340], dernierEclair = -9, minuterieLisere = null;
+      function secouer(force) {
+        if (v.rendu.secousses || canvas.classList.contains("td-effondre")) return;
+        var c = "td-sec-" + force;
+        v.rendu.secousses = 1;
+        cadre.classList.add(c);
+        racine.setTimeout(function () { cadre.classList.remove(c); v.rendu.secousses = 0; }, DUREES_SECOUSSE[force] + 30);
+      }
+      function eclair() {
+        if (v.horloge - dernierEclair < 1) return;
+        dernierEclair = v.horloge;
+        cadre.classList.add("td-eclair");
+        racine.setTimeout(function () { cadre.classList.remove("td-eclair"); }, 90);
+      }
+      function lisereRouge() {
+        rejouer(cadre, "td-lisere");
+        clearTimeout(minuterieLisere);
+        minuterieLisere = racine.setTimeout(function () { cadre.classList.remove("td-lisere-a", "td-lisere-b"); }, 760);
+      }
+      // Les traits et les effets neufs du moteur, vus une fois (les plus récents sont au bout de leur liste ; on remonte
+      // jusqu'au premier déjà vu) : le départ d'un trait fait tirer sa tour (tr.dernierTir) et part de son point « tir »
+      // (pr.tirX, pr.tirY : dessin seulement) ; un coup de palissade (« pique ») fait de même ; une brèche secoue le champ
+      // (plus fort chez toi), éclaire la place forte touchée, fait tomber des pierres du haut du mur, et rougit le bord du
+      // champ si ce sont tes murs ; une pierre tombée près de ton château le secoue un peu. Appelée à chaque image, avant
+      // le dessin : quelques comparaisons quand rien n'est neuf.
+      function retours() {
+        var i, e, anim = null;
+        for (i = p.projectiles.length - 1; i >= 0 && !p.projectiles[i].vuTir; i--) { p.projectiles[i].vuTir = true; departTir(p.projectiles[i]); }
+        for (i = p.effets.length - 1; i >= 0 && !p.effets[i].vuRetour; i--) {
+          e = p.effets[i]; e.vuRetour = true;
+          if (e.genre === "pique") { coupPalissade(e); continue; }
+          if (e.genre !== "breche" && e.genre !== "impact") continue;
+          if (anim === null) anim = JEU.anim.actif();
+          if (e.genre === "breche") breche(e, anim);
+          else if (anim && Math.hypot(e.x - v.depart.x, e.y - v.depart.y) < PRES_CHATEAU) secouer(1);
+        }
+      }
+      var PRES_CHATEAU = 130; // px : une pierre tombée à moins de cette distance de ton château le secoue
+      function departTir(pr) {
+        var tr = null, listes = [p.tours, p.toursRivales], l, k;
+        for (l = 0; l < 2 && !tr; l++) for (k = 0; k < listes[l].length; k++) { var t = listes[l][k]; if (t.x === pr.x0 && t.y - 18 === pr.y0) { tr = t; break; } }
+        if (!tr) return;
+        tr.dernierTir = p.temps - pr.t;
+        var nom = nomTour(tr, v), s = prete(nom) ? descr(nom) : null;
+        if (s && s.tir) { pr.tirX = tr.x - s.ax + s.tir[0]; pr.tirY = tr.y - s.ay + s.tir[1]; }
+      }
+      function coupPalissade(e) {
+        var mieux = null, dm = Infinity;
+        for (var k = 0; k < p.tours.length; k++) {
+          var t = p.tours[k];
+          if (t.type !== "piquiers") continue;
+          var d = (t.x - e.x) * (t.x - e.x) + (t.y - e.y) * (t.y - e.y);
+          if (d < dm) { dm = d; mieux = t; }
+        }
+        if (mieux) mieux.dernierTir = p.temps - e.age;
+      }
+      function breche(e, anim) {
+        var rival = e.camp === "rival"; // les murs du rival (tes troupes y sont arrivées), sinon les tiens
+        if (!anim) return;
+        v.eclairPlace = { rival: rival, t: v.horloge }; // place() : la place forte touchée s'éclaire 80 ms
+        var FX = JEU.batailleEffets, porte = rival ? v.porteArrivee : v.porteDepart;
+        if (FX) {
+          // trois ou quatre pierres tombent du haut du mur au pied (tirage fixe : graine tirée de la brèche et de l'heure)
+          var g = FX.graineDe(e.x + p.temps * 7.31, e.y), n = 3 + (FX.alea(g, 1) < 0.5 ? 1 : 0);
+          for (var k = 0; k < n; k++) {
+            var x = porte.x + (FX.alea(g, 2 + k) - 0.5) * 20, haut = 24 + 12 * FX.alea(g, 6 + k);
+            FX.emettre(FX.ECLAT, x, porte.y - haut, (FX.alea(g, 10 + k) - 0.5) * 36, -15 - 25 * FX.alea(g, 14 + k), 0.8,
+              2 + 1.4 * FX.alea(g, 18 + k), porte.y + 2 + 5 * FX.alea(g, 22 + k));
+          }
+        }
+        secouer(rival ? 2 : 3);
+        eclair();
+        if (!rival) lisereRouge();
       }
 
       // --- ordres : tours, troupes, lancement ---
@@ -2656,16 +2819,24 @@
         if (M.poserTour(p, v.choix, i)) {
           v.gardeEntree = 0;
           JEU.sons.jouer("construction");
+          // la tour sort de terre (lot A3 : tour(), dessin seulement) ; le champ est redessiné à chaque image le temps de
+          // sa montée, même pendant le conseil de guerre (v.vif) ; quelques losanges d'or seulement
+          p.tours[p.tours.length - 1].bati = v.horloge;
+          v.vif = v.horloge + MONTEE + TASSEMENT + 0.35;
           var r = canvas.getBoundingClientRect();
-          JEU.anim.eclat(r.left + carte.emplacements[i][0] / M.LARGEUR * r.width, r.top + carte.emplacements[i][1] / M.HAUTEUR * r.height, "or", 14);
+          JEU.anim.eclat(r.left + carte.emplacements[i][0] / M.LARGEUR * r.width, r.top + carte.emplacements[i][1] / M.HAUTEUR * r.height, "or", 6);
           majTout();
         } else if (p.or < M.TOURS[v.choix].cout) {
           JEU.ui.toast(conseilEnCours() ? "Pas assez d'or : réponds au conseil de guerre." : "Pas assez d'or : lance la vague, ton revenu arrivera ensuite.");
         } else JEU.ui.toast("Impossible de bâtir ici.");
       }
       function ameliorer(i) {
-        if (M.ameliorerTour(p, i)) { v.gardeEntree = 0; JEU.sons.jouer("construction"); majTout(); return; }
         var t = p.tours.filter(function (x) { return x.emplacement === i; })[0];
+        if (M.ameliorerTour(p, i)) {
+          // la nouvelle tour se révèle depuis le haut, un reflet chaud monte (lot A3 : tour(), dessin seulement)
+          t.ameliore = v.horloge; t.niveauAvant = t.niveau - 1; v.vif = v.horloge + REFLET + 0.1;
+          v.gardeEntree = 0; JEU.sons.jouer("construction"); majTout(); return;
+        }
         if (t && t.niveau < M.AMELIORATION.max) JEU.ui.toast("Pas assez d'or pour améliorer cette tour.");
       }
 
@@ -2782,6 +2953,7 @@
             bilan();
           }
         }
+        retours(); // lot A3 : départ des tirs, brèches, pierres près de ton château (après la fin : l'effondrement passe avant)
         if (v.retraitPrevu !== null && v.horloge >= v.retraitPrevu) { v.retraitPrevu = null; retraitDesTroupes(); }
         if (v.retrait !== null && p.unites.length && v.horloge - v.retrait > 0.6) p.unites.length = 0;
         // bandeau et tableau de la mêlée : 4 fois par seconde, et tout de suite quand une place forte est frappée (la
@@ -2795,7 +2967,9 @@
         // un quart de seconde (la page n'a alors à peindre et composer que la question suivante, sans la toile).
         // Partout ailleurs, chaque image.
         var calme = p.phase === "preparation" && conseilEnCours();
-        if (!calme || (v.horloge >= v.repos && v.horloge - (v.dernierDessin || -1) >= 1 / IMAGES_CONSEIL)) {
+        // v.vif (lot A3) : une tour qui sort de terre ou qui s'améliore, dessinée à chaque image (le repos après une réponse
+        // reste respecté)
+        if (!calme || (v.horloge >= v.repos && (v.horloge < v.vif || v.horloge - (v.dernierDessin || -1) >= 1 / IMAGES_CONSEIL))) {
           v.dernierDessin = v.horloge;
           ctx.setTransform(v.ratio, 0, 0, v.ratio, 0, 0);
           dessiner(ctx, v);
