@@ -3,27 +3,32 @@
 // écran de la taille du fond (la « vue »), dessinée à la place du fond : une image du combat ne les redessine plus.
 // Script classique et facultatif : bataille.js l'appelle s'il est chargé (JEU.batailleSol) et dessine comme avant sinon.
 //
+// Vitesse (toile logicielle du PC sans carte graphique, tablette) : la vue n'est jamais touchée après avoir été
+// dessinée dans l'image. Une trace demandée pendant une image (poser, reposer, poserTaches) attend : elle est peinte au
+// début de l'image suivante (avancer), avant que la vue soit dessinée ; l'appelant la dessine lui-même une fois en
+// attendant (le corps couché, les taches). Tout le travail de la couche se fait donc dans avancer().
+//
 // Effacement. Une seconde toile (la « cible ») porte le fond et les traces de moins de GARDE secondes. Quand une trace
 // a GARDE secondes, on la retire de la cible : on y recopie le fond sur son rectangle, puis on y repose les traces plus
-// jeunes qui le touchent. La vue rejoint ensuite la cible, bande par bande (BANDES bandes en hauteur ; seules les bandes
-// où une trace a été retirée, et seulement leur partie touchée ; au plus BANDES_PAR_IMAGE bandes par image), avec une
-// opacité réglée sur le temps écoulé : il reste e^(−FONTE × t) de la trace t secondes après sa garde. Avec GARDE = 4,5 s
-// et FONTE = 0,8 : la trace est entière 4,5 s, encore bien visible à 6 s (30 %), presque effacée à 8 s (6 %), disparue
-// à 9 s (3 %). Au bout de FIN secondes, la bande touchée est recopiée telle quelle depuis la cible.
+// jeunes qui le touchent. Ensuite, le rectangle de la trace, dans la vue, rejoint la cible par petits pas (au plus
+// FONDUS_PAR_IMAGE rectangles par image, opacité réglée sur le temps écoulé) : il reste e^(−FONTE × t) de la trace
+// t secondes après sa garde. Une trace plus jeune qui touche ce rectangle n'en souffre pas : elle est aussi dans la cible.
+// Avec GARDE = 5 s et FONTE = 1,2 : la trace est entière 5 s, encore bien visible à 6 s (30 %), presque effacée à 8 s
+// (3 %) ; on la laisse à 1,5 % au bout de FIN s (invisible).
 // Le temps est celui de la partie (la vitesse ×2 ou ×3 efface plus vite, comme elle fait vieillir les corps).
 // La couche est refaite depuis le fond quand la netteté de la toile change, et à chaque bataille (les traces sont perdues).
 // Positions des images en px de la toile (entiers : copies pixel pour pixel) ; taches en px logiques (× ratio).
 (function (racine) {
   "use strict";
   var JEU = racine.JEU = racine.JEU || {};
-  var BANDES = 8, BANDES_PAR_IMAGE = 2, GARDE = 4.5, FONTE = 0.8, FIN = 6, MAX = 320, RETRAITS = 6, TACHES = 16;
+  var GARDE = 5, FONTE = 1.2, FIN = 3.5, MAX = 384, RETRAITS = 8, FONDUS_PAR_IMAGE = 8, TACHES = 24, CASE = 36, FENETRE = 0.6;
+  var LIBRE = 0, ATTENTE = 1, ENTIERE = 2, FONDUE = 3;
   var GENRES = ["corps", "taches", "crateres", "fleches"];
-  var ESSAI = { fondu: true, pose: true }; // ESSAI-TEMPORAIRE
 
   function toile(w, h) { var c = document.createElement("canvas"); c.width = w; c.height = h; return c; }
   function nouvelle() {
-    return { genre: "corps", t0: 0, dans: false, x0: 0, y0: 0, x1: 0, y1: 0, img1: null, ix1: 0, iy1: 0, img2: null, ix2: 0, iy2: 0,
-      taches: new Float32Array(TACHES * 4), nt: 0, couleur: "" };
+    return { etat: LIBRE, genre: "corps", t0: 0, tf: 0, repeint: false, x0: 0, y0: 0, x1: 0, y1: 0, img1: null, ix1: 0, iy1: 0, img2: null, ix2: 0, iy2: 0,
+      taches: new Float32Array(TACHES * 4), nt: 0, couleur: "", cle: -1 };
   }
 
   // Une couche neuve, copiée du fond (toile du terrain à la netteté de la toile du combat).
@@ -31,23 +36,21 @@
     var W = fond.width, H = fond.height, vue = toile(W, H), cible = toile(W, H);
     var gv = vue.getContext("2d", { alpha: false }), gc = cible.getContext("2d", { alpha: false });
     gv.drawImage(fond, 0, 0); gc.drawImage(fond, 0, 0);
-    var traces = [], bandes = [], hb = Math.ceil(H / BANDES), i;
-    for (i = 0; i < MAX; i++) traces.push(nouvelle());
-    for (i = 0; i < BANDES; i++) bandes.push({ y0: i * hb, h: Math.max(0, Math.min(hb, H - i * hb)), x0: W, x1: 0, jusqua: -1, t: 0 });
+    var traces = [], attente = [], i;
+    for (i = 0; i < MAX; i++) { traces.push(nouvelle()); attente.push(null); }
     var compte = {};
     GENRES.forEach(function (g) { compte[g] = 0; });
-    return { fond: fond, vue: vue, cible: cible, gv: gv, gc: gc, W: W, H: H, ratio: ratio, traces: traces, tete: 0, n: 0,
-      bandes: bandes, prochaine: 0, compte: compte, poses: 0, t: 0 };
+    return { fond: fond, vue: vue, cible: cible, gv: gv, gc: gc, W: W, H: H, ratio: ratio, traces: traces, tete: 0, n: 0, nF: 0, curseur: 0,
+      attente: attente, nA: 0, cases: {}, fenetre: -1, compte: compte, poses: 0, t: 0 };
   }
   // Rend la mémoire des deux toiles (fin de bataille).
   function liberer(sol) {
     if (!sol) return;
     sol.vue.width = sol.vue.height = 0; sol.cible.width = sol.cible.height = 0;
-    sol.traces.length = 0; sol.n = 0; sol.fond = null;
+    sol.traces.length = 0; sol.n = sol.nF = sol.nA = 0; sol.fond = null;
   }
 
   function peindre(g, r, ratio) {
-    if (!ESSAI.pose) return; // ESSAI-TEMPORAIRE
     if (r.img1) g.drawImage(r.img1, r.ix1, r.iy1);
     if (r.img2) g.drawImage(r.img2, r.ix2, r.iy2);
     if (r.nt) {
@@ -69,102 +72,113 @@
     r.x0 = Math.max(0, Math.floor(r.x0) - 1); r.y0 = Math.max(0, Math.floor(r.y0) - 1);
     r.x1 = Math.min(sol.W, Math.ceil(r.x1) + 1); r.y1 = Math.min(sol.H, Math.ceil(r.y1) + 1);
   }
+  function enAttente(sol, r) { if (sol.nA < MAX) sol.attente[sol.nA++] = r; }
 
-  // Une place libre dans l'anneau des traces (dans l'ordre de pose) ; plein, la plus ancienne est retirée tout de suite.
+  // Une place libre dans l'anneau des traces (dans l'ordre de pose). L'anneau plein (jamais en pratique : avancer() en
+  // garde de la marge), la trace est perdue (null).
   function place(sol, t) {
-    if (sol.n >= MAX) { retirer(sol, sol.traces[sol.tete], t); sol.tete = (sol.tete + 1) % MAX; sol.n--; }
+    if (sol.n >= MAX) return null;
     var r = sol.traces[(sol.tete + sol.n) % MAX];
     sol.n++;
-    r.t0 = t; r.dans = true; r.img1 = r.img2 = null; r.nt = 0;
+    r.etat = ATTENTE; r.t0 = t; r.tf = t; r.repeint = false; r.img1 = r.img2 = null; r.nt = 0; r.cle = -1;
     r.x0 = Infinity; r.y0 = Infinity; r.x1 = -Infinity; r.y1 = -Infinity;
+    enAttente(sol, r);
     return r;
   }
 
-  // Pose une trace faite d'une ou deux images (img1 sous img2 : la flaque, puis le corps). Rend la trace (reposer).
+  // Pose une trace faite d'une ou deux images (img1 sous img2 : la flaque, puis le corps). Peinte au début de l'image
+  // suivante. Rend la trace (reposer) ou null.
   function poser(sol, genre, t, img1, x1, y1, img2, x2, y2) {
     var r = place(sol, t);
+    if (!r) return null;
     r.genre = genre; r.img1 = img1 || null; r.ix1 = x1; r.iy1 = y1; r.img2 = img2 || null; r.ix2 = x2; r.iy2 = y2;
     boiteImage(r, r.img1, x1, y1); boiteImage(r, r.img2, x2, y2); borner(sol, r);
-    peindre(sol.gv, r, sol.ratio); peindre(sol.gc, r, sol.ratio);
     sol.compte[genre]++; sol.poses++;
     return r;
   }
-  // La flaque d'un corps déjà posé grandit : la nouvelle flaque, puis le corps par-dessus, dans les deux toiles.
+  // La flaque d'un corps déjà posé grandit : la nouvelle flaque, puis le corps par-dessus, au début de l'image suivante.
   function reposer(sol, r, t0, img1, x1, y1) {
-    if (!r || !r.dans || r.t0 !== t0) return;
+    if (!r || r.t0 !== t0 || (r.etat !== ATTENTE && r.etat !== ENTIERE)) return;
     r.img1 = img1; r.ix1 = x1; r.iy1 = y1;
     boiteImage(r, img1, x1, y1); borner(sol, r);
-    var g = [sol.gv, sol.gc];
-    for (var k = 0; k < 2; k++) { g[k].drawImage(img1, x1, y1); if (r.img2) g[k].drawImage(r.img2, r.ix2, r.iy2); }
+    if (r.etat === ENTIERE && !r.repeint) { r.repeint = true; enAttente(sol, r); }
   }
-  // Pose des taches de sang retombées (px logiques : x, y, rx, ry à la suite dans « liste », n taches au plus TACHES).
+  // Pose des taches de sang retombées (px logiques : x, y, rx, ry à la suite dans « liste »). Les taches tombées dans la
+  // même case de CASE px pendant la même fenêtre de FENETRE s partagent une trace (moins de traces à effacer).
   function poserTaches(sol, t, liste, n, couleur) {
     if (!(n > 0)) return null;
-    var r = place(sol, t), q = sol.ratio;
-    n = Math.min(n, TACHES);
-    r.genre = "taches"; r.nt = n; r.couleur = couleur;
-    for (var k = 0; k < n * 4; k++) r.taches[k] = liste[k];
-    for (k = 0; k < n; k++) {
-      var j = k * 4, x = liste[j], y = liste[j + 1], rx = liste[j + 2], ry = liste[j + 3];
+    var q = sol.ratio, fen = Math.floor(t / FENETRE);
+    if (fen !== sol.fenetre) { sol.cases = {}; sol.fenetre = fen; }
+    var cle = Math.floor(liste[0] / CASE) + 100 * Math.floor(liste[1] / CASE), r = sol.cases[cle];
+    if (!r || r.etat !== ATTENTE || r.cle !== cle || r.nt + n > TACHES) {
+      r = place(sol, t);
+      if (!r) return null;
+      r.genre = "taches"; r.couleur = couleur; r.cle = cle;
+      sol.cases[cle] = r; sol.compte.taches++; sol.poses++;
+    }
+    n = Math.min(n, TACHES - r.nt);
+    for (var k = 0; k < n; k++) {
+      var j = k * 4, x = liste[j], y = liste[j + 1], rx = liste[j + 2], ry = liste[j + 3], d = (r.nt + k) * 4;
+      r.taches[d] = x; r.taches[d + 1] = y; r.taches[d + 2] = rx; r.taches[d + 3] = ry;
       r.x0 = Math.min(r.x0, (x - rx) * q); r.y0 = Math.min(r.y0, (y - ry) * q); r.x1 = Math.max(r.x1, (x + rx) * q); r.y1 = Math.max(r.y1, (y + ry) * q);
     }
+    r.nt += n;
     borner(sol, r);
-    peindre(sol.gv, r, q); peindre(sol.gc, r, q);
-    sol.compte.taches++; sol.poses++;
     return r;
   }
 
   // Retire une trace de la cible : le fond recopié sur son rectangle, les traces plus jeunes qui le touchent reposées
-  // (coupées au rectangle) ; les bandes touchées de la vue sont à rejoindre.
+  // (coupées au rectangle). Elle commence à s'effacer de la vue.
   function retirer(sol, r, t) {
-    if (!r.dans) return;
-    r.dans = false; sol.compte[r.genre]--;
+    r.etat = FONDUE; r.tf = t; sol.compte[r.genre]--;
     var x0 = r.x0, y0 = r.y0, w = r.x1 - r.x0, h = r.y1 - r.y0, g = sol.gc, coupe = false;
-    r.img1 = r.img2 = null;
     if (!(w > 0 && h > 0)) return;
     g.drawImage(sol.fond, x0, y0, w, h, x0, y0, w, h);
-    for (var i = 0; i < sol.n; i++) {
+    for (var i = sol.nF; i < sol.n; i++) {
       var s = sol.traces[(sol.tete + i) % MAX];
-      if (s === r || !s.dans || s.x1 <= x0 || s.x0 >= r.x1 || s.y1 <= y0 || s.y0 >= r.y1) continue;
+      if (s === r || s.etat !== ENTIERE || s.x1 <= x0 || s.x0 >= r.x1 || s.y1 <= y0 || s.y0 >= r.y1) continue;
       if (!coupe) { g.save(); g.beginPath(); g.rect(x0, y0, w, h); g.clip(); coupe = true; }
       peindre(g, s, sol.ratio);
     }
     if (coupe) g.restore();
-    for (var k = 0; k < BANDES; k++) {
-      var b = sol.bandes[k];
-      if (b.y0 + b.h <= y0 || b.y0 >= r.y1) continue;
-      if (b.jusqua < 0) { b.t = t; b.x0 = x0; b.x1 = r.x1; } else { b.x0 = Math.min(b.x0, x0); b.x1 = Math.max(b.x1, r.x1); }
-      b.jusqua = t + FIN;
-    }
   }
 
-  // Avant chaque image (t : temps de la partie) : retire de la cible les traces de plus de GARDE s (au plus RETRAITS
-  // par image), puis rapproche de la cible au plus BANDES_PAR_IMAGE bandes de la vue.
+  // Au début de chaque image, avant que la vue soit dessinée (t : temps de la partie) : peint les traces en attente,
+  // retire de la cible celles de plus de GARDE s (au plus RETRAITS par image, plus si l'anneau se remplit), puis
+  // rapproche de la cible au plus FONDUS_PAR_IMAGE rectangles de traces retirées.
   function avancer(sol, t) {
     sol.t = t;
-    for (var k = 0; sol.n && k < RETRAITS; k++) {
-      var r = sol.traces[sol.tete];
-      if (r.dans && t - r.t0 < GARDE) break;
-      retirer(sol, r, t);
-      sol.tete = (sol.tete + 1) % MAX; sol.n--;
-    }
-    var faites = 0, gv = sol.gv;
-    if (!ESSAI.fondu) return; // ESSAI-TEMPORAIRE
-    for (var j = 0; j < BANDES && faites < BANDES_PAR_IMAGE; j++) {
-      var b = sol.bandes[sol.prochaine];
-      sol.prochaine = (sol.prochaine + 1) % BANDES;
-      if (b.jusqua < 0 || !(b.h > 0)) continue;
-      var w = b.x1 - b.x0;
-      if (t >= b.jusqua) {
-        if (w > 0) gv.drawImage(sol.cible, b.x0, b.y0, w, b.h, b.x0, b.y0, w, b.h);
-        b.jusqua = -1; b.x0 = sol.W; b.x1 = 0;
-      } else {
-        var a = 1 - Math.exp(-FONTE * Math.max(0, t - b.t));
-        if (a < 0.004) continue; // trop peu de temps depuis la dernière fois : la bande attend
-        if (w > 0) { gv.globalAlpha = a; gv.drawImage(sol.cible, b.x0, b.y0, w, b.h, b.x0, b.y0, w, b.h); gv.globalAlpha = 1; }
+    var i, r, k;
+    for (i = 0; i < sol.nA; i++) {
+      r = sol.attente[i]; sol.attente[i] = null;
+      if (r.etat === ATTENTE) { peindre(sol.gv, r, sol.ratio); peindre(sol.gc, r, sol.ratio); r.etat = ENTIERE; }
+      else if (r.etat === ENTIERE && r.repeint) {
+        for (k = 0; k < 2; k++) { var g = k ? sol.gc : sol.gv; g.drawImage(r.img1, r.ix1, r.iy1); if (r.img2) g.drawImage(r.img2, r.ix2, r.iy2); }
       }
-      b.t = t; faites++;
+      r.repeint = false;
     }
+    sol.nA = 0;
+    var presse = sol.n > MAX - 48; // l'anneau se remplit : on retire et on libère plus tôt
+    for (k = 0; sol.nF < sol.n && (k < RETRAITS || presse); k++) {
+      r = sol.traces[(sol.tete + sol.nF) % MAX];
+      if (r.etat !== ENTIERE || (t - r.t0 < GARDE && !(presse && k < 4))) break;
+      retirer(sol, r, t);
+      sol.nF++;
+    }
+    var gv = sol.gv, faits = 0;
+    for (k = 0; k < sol.nF && faits < FONDUS_PAR_IMAGE; k++) {
+      sol.curseur = (sol.curseur + 1) % sol.nF;
+      r = sol.traces[(sol.tete + sol.curseur) % MAX];
+      if (r.etat !== FONDUE) continue;
+      if (t - r.t0 >= GARDE + FIN || (presse && sol.curseur < 8)) { r.etat = LIBRE; r.img1 = r.img2 = null; continue; } // il en reste moins de 2 %
+      var a = 1 - Math.exp(-FONTE * Math.max(0, t - r.tf));
+      if (a < 0.05) continue;
+      var w = r.x1 - r.x0, h = r.y1 - r.y0;
+      if (w > 0 && h > 0) { gv.globalAlpha = a; gv.drawImage(sol.cible, r.x0, r.y0, w, h, r.x0, r.y0, w, h); }
+      r.tf = t; faits++;
+    }
+    gv.globalAlpha = 1;
+    while (sol.n && sol.traces[sol.tete].etat === LIBRE) { sol.tete = (sol.tete + 1) % MAX; sol.n--; sol.nF--; }
   }
 
   // ---------- images de repli (sans les images rendues en 3D) ----------
@@ -172,7 +186,7 @@
   var vues = {}, vuesRatio = 0;
   function memo(ratio) { if (vuesRatio !== ratio) { vues = {}; vuesRatio = ratio; } }
   function hasard(n) { var h = Math.sin(n * 12.9898 + 4.1) * 43758.5453; return h - Math.floor(h); }
-  // Cratère de pierre de trébuchet : terre retournée, bord clair, fond sombre, quelques mottes autour (24 × 12 px).
+  // Cratère de pierre de trébuchet : terre retournée, bord clair, fond sombre, quelques mottes autour (30 × 16 px).
   // variante 1 : sur la route (bord plus pâle).
   function cratere(ratio, variante) {
     memo(ratio);
@@ -212,9 +226,9 @@
     return (vues[cle] = c);
   }
 
-  JEU.batailleSol = { BANDES: BANDES, GARDE: GARDE, FONTE: FONTE, FIN: FIN, MAX: MAX, TACHES: TACHES,
+  JEU.batailleSol = { GARDE: GARDE, FONTE: FONTE, FIN: FIN, MAX: MAX, TACHES: TACHES,
     creer: creer, liberer: liberer, avancer: avancer, poser: poser, reposer: reposer, poserTaches: poserTaches,
-    cratere: cratere, flechePlantee: flechePlantee, essai: ESSAI, // ESSAI-TEMPORAIRE
+    cratere: cratere, flechePlantee: flechePlantee,
     // traces entières dans la couche, par genre (corps, taches, crateres, fleches)
     compte: function (sol) { return sol ? sol.compte : null; } };
 })(typeof window !== "undefined" ? window : globalThis);
