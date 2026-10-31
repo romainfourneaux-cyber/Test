@@ -9,7 +9,7 @@
   "use strict";
   var JEU = racine.JEU = racine.JEU || {};
   var nav = racine.navigator, loc = racine.location, doc = racine.document;
-  var inst = JEU.installation = { enregistrement: null, invite: null, erreur: null, controle: false };
+  var inst = JEU.installation = { enregistrement: null, invite: null, erreur: null, controle: false, rechargerApres: false };
 
   function surHttp() { return !!loc && (loc.protocol === "http:" || loc.protocol === "https:"); }
   // Vrai seulement sur la version web, dans un navigateur qui connaît les service workers.
@@ -24,16 +24,37 @@
     if (!possible()) return false;
     try {
       inst.controle = !!nav.serviceWorker.controller;
-      nav.serviceWorker.register("sw.js").then(function (reg) { inst.enregistrement = reg; rafraichir(); })
+      nav.serviceWorker.register("sw.js").then(function (reg) { inst.enregistrement = reg; suivre(reg); rafraichir(); })
         .catch(function (e) { inst.erreur = (e && e.message) || "refusé"; rafraichir(); try { console.warn("Service worker : " + inst.erreur); } catch (x) { /* rien */ } });
-      nav.serviceWorker.addEventListener("controllerchange", function () { inst.controle = true; rafraichir(); });
+      // la nouvelle version prend la main après « Mettre à jour » : on propose de recharger (jamais tout seul)
+      nav.serviceWorker.addEventListener("controllerchange", function () {
+        inst.controle = true; rafraichir();
+        if (inst.rechargerApres) { inst.rechargerApres = false; proposerRechargement(); }
+      });
     } catch (e) { inst.erreur = (e && e.message) || "refusé"; }
     return true;
+  }
+
+  // Une nouvelle version publiée se télécharge en arrière-plan (vérification du navigateur à l'ouverture) puis attend :
+  // elle prend la main quand le jeu est fermé puis rouvert, ou par « Mettre à jour ». Jamais au milieu d'une partie.
+  function enAttente() { var r = inst.enregistrement; return !!(r && r.waiting && nav.serviceWorker && nav.serviceWorker.controller); }
+  function suivre(reg) {
+    if (!reg || !reg.addEventListener) return;
+    reg.addEventListener("updatefound", function () {
+      var w = reg.installing;
+      if (w && w.addEventListener) w.addEventListener("statechange", rafraichir);
+    });
+  }
+  function activer(w) {
+    inst.rechargerApres = true;
+    toast("Installation de la nouvelle version…");
+    w.postMessage("activer");
   }
 
   // ---------- Réglages ----------
   function etatTexte() {
     var v = "Version " + (JEU.version || "");
+    if (enAttente()) return v + " · nouvelle version prête : touche « Mettre à jour »";
     if (installe()) return v + " · mode installé";
     if (inst.controle || (nav.serviceWorker && nav.serviceWorker.controller)) return v + " · hors ligne prêt";
     if (inst.erreur) return v + " · hors ligne indisponible";
@@ -57,13 +78,14 @@
     var reg = inst.enregistrement;
     if (!reg) { toast("Mise à jour impossible pour l'instant."); return; }
     if (!nav.serviceWorker.controller && !installe()) { toast("Le jeu finit de s'installer : réessaie dans un instant."); return; }
+    if (reg.waiting) { activer(reg.waiting); return; } // déjà téléchargée : elle prend la main tout de suite
     toast("Recherche d'une nouvelle version…");
     reg.update().then(function () {
-      var w = reg.installing || reg.waiting;
+      if (reg.waiting) { activer(reg.waiting); return; }
+      var w = reg.installing;
       if (!w) { toast("Le jeu est déjà à jour."); return; }
-      if (w.state === "activated") { proposerRechargement(); return; }
       w.addEventListener("statechange", function () {
-        if (w.state === "activated") proposerRechargement();
+        if (w.state === "installed") activer(w);
         else if (w.state === "redundant") toast("La mise à jour n'a pas abouti.");
       });
     }).catch(function () { toast("Pas de réseau : la mise à jour attendra."); });
@@ -91,7 +113,7 @@
         el("button", { class: "bouton", onclick: mettreAJour, texte: "Mettre à jour" }),
         btnInstaller
       ]),
-      el("p", { class: "note", texte: "« Mettre à jour » va chercher la dernière version quand il y a du réseau. Ta partie reste enregistrée dans ce navigateur : pense à l'exporter." })
+      el("p", { class: "note", texte: "Une nouvelle version se télécharge toute seule quand il y a du réseau, et s'installe à la prochaine ouverture du jeu ; « Mettre à jour » l'installe tout de suite. Ta partie reste enregistrée dans ce navigateur : pense à l'exporter." })
     ]);
   }
 
