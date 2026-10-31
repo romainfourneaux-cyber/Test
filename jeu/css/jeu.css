@@ -1077,11 +1077,16 @@ button.cour-chip:hover { background: rgba(255,250,236,.55); box-shadow: 0 0 0 1p
    route assombrie, qui garde sa place (un voile brun sur la carte, dont seule l'opacité change : la route se voit encore,
    éteinte) ; la route d'arrière-plan (svg.route-arriere, inerte) n'a ni halo ni numéro ; un gabarit invisible tient la
    hauteur des boutons de la route. La fenêtre qui se referme s'efface en 120 ms (opacité, transformation) pendant que la
-   route s'éclaire. */
-.route-scene { position: relative; }
+   route s'éclaire. Carte, boutons et calque partagent une grille : le calque couvre la carte et les boutons, et la page
+   grandit avec lui (chasse aux bugs du lot B : en position absolue, la fenêtre pendait sous la page de parchemin). Les
+   cartouches du bas ne bougent pas tant que la fenêtre tient dans la hauteur de la route ; une fenêtre plus haute
+   (porte avec son explication, éventail de faveurs) les pousse dessous, et ils remontent à sa fermeture. */
+.route-scene { position: relative; display: grid; grid-template-columns: minmax(0, 1fr); align-items: start; }
+.route-scene > .route-carte { grid-area: 1 / 1; margin: 0; }
+#ecran-expedition .route-scene > .exp-actions { grid-area: 2 / 1; margin-bottom: 0; }
 .route-carte::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: rgba(30, 20, 10, .5); opacity: 0; transition: opacity .15s ease; }
 .route-scene.voilee > .route-carte::after { opacity: 1; }
-.exp-calque { position: absolute; top: 0; left: 0; right: 0; z-index: 4; }
+.route-scene > .exp-calque { grid-area: 1 / 1 / 3 / 2; position: relative; z-index: 4; }
 .exp-calque > .exp-fenetre:first-child { margin-top: 0; }
 .exp-calque.sortie { pointer-events: none; animation: fenetre-sort .12s ease-in forwards; }
 .exp-fenetre.sans-entree { animation: none; }

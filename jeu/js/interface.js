@@ -36,15 +36,16 @@
   // Garde du double toucher (revue tablette, 31/10/2026) : au doigt, une réponse touchée deux fois de suite affiche la
   // question suivante sous le doigt, et le second toucher y répondait sans qu'elle soit lue (or perdu, fausse réponse
   // notée), ou sautait l'explication d'une erreur. Un toucher qui arrive moins de GARDE_TOUCHER ms après l'affichage
-  // d'une question, d'un panneau d'erreur ou d'une carte du conseil (ui.nouvelAffichage) est donc ignoré, s'il tombe
-  // dedans. La souris et le clavier ne changent pas.
+  // d'une question, d'un panneau d'erreur, d'une carte du conseil ou d'une fenêtre de halte d'expédition (carte de
+  // faveur, Repos, Veillée ; ui.nouvelAffichage) est donc ignoré, s'il tombe dedans. La souris et le clavier ne
+  // changent pas.
   var GARDE_TOUCHER = 350, affichageLe = 0, dernierPointeur = "";
   ui.GARDE_TOUCHER = GARDE_TOUCHER;
   ui.nouvelAffichage = function () { affichageLe = Date.now(); };
   document.addEventListener("pointerdown", function (ev) { dernierPointeur = ev.pointerType || ""; }, true);
   document.addEventListener("click", function (ev) {
     if ((ev.pointerType || dernierPointeur) !== "touch" || Date.now() - affichageLe >= GARDE_TOUCHER) return;
-    if (!ev.target || !ev.target.closest || !ev.target.closest(".question, .panneau-erreur, .scene-conseil")) return;
+    if (!ev.target || !ev.target.closest || !ev.target.closest(".question, .panneau-erreur, .scene-conseil, .exp-calque")) return;
     ev.stopPropagation(); ev.preventDefault();
   }, true);
 
@@ -70,8 +71,9 @@
     s.inert = false;
     s.removeAttribute("aria-hidden");
   }
-  // Place de l'écran affiché, notée juste avant que le menu ne se cache ou ne revienne (début et fin d'une partie) : la
-  // sortie part de là où on voyait l'écran, sans sauter de la hauteur du menu. Oubliée à l'image suivante.
+  // Place de l'écran affiché, notée juste avant que le menu ne revienne (fin d'une partie) : la sortie part de là où on
+  // voyait l'écran, sans sauter de la hauteur du menu. Oubliée à l'image suivante. (Au début d'une partie, rien à noter :
+  // l'écran de la partie entre sans sortie de l'écran d'avant, voir ui.afficher.)
   var placeNotee = null;
   function noterPlace() {
     var s = ecranCourant ? document.getElementById("ecran-" + ecranCourant) : null;
@@ -231,22 +233,24 @@
   // Centre du tampon (px, fenêtre) : à « x » % de la largeur, à mi-hauteur du haut de « pres » (un élément ou un
   // rectangle : la carte suivante), poussé hors de « pres » du côté où il est, sinon de l'autre côté, sinon dessous
   // (le bilan, aussi large que la scène), sinon sur son coin haut. ou.point : un centre déjà calculé. R : rayon du
-  // tampon (feuille de style : 144 px de cire).
+  // tampon (feuille de style : 144 px de cire). Où qu'il se pose, le centre reste à BORD px des bords de la fenêtre : le
+  // sceau frappe à l'échelle 1,8 (72 × 1,8 = 130 px de rayon) et ne déborde pas (chasse aux bugs du lot B : à côté du
+  // bilan, il sortait de 31 px en 1280 × 800) ; un côté n'est libre que si le centre y tient à BORD px du bord.
   ui.placeTampon = function (ou) {
     if (ou.point) return ou.point;
-    var R = 76, l = racine.innerWidth, x = l * (ou.x == null ? 50 : ou.x) / 100, y = racine.innerHeight * 0.42;
+    var R = 76, BORD = 140, l = racine.innerWidth, x = l * (ou.x == null ? 50 : ou.x) / 100, y = racine.innerHeight * 0.42;
     var pres = typeof ou.pres === "function" ? ou.pres() : ou.pres;
     var r = pres && pres.getBoundingClientRect ? (pres.isConnected ? pres.getBoundingClientRect() : null) : pres;
     if (r && r.width) {
       var droite = r.left + r.width, aDroite = x >= r.left + r.width / 2;
-      var placeD = droite + 8 + 2 * R <= l - 4, placeG = r.left - 8 - 2 * R >= 4;
+      var placeD = droite + 8 + R <= l - BORD, placeG = r.left - 8 - R >= BORD;
       y = r.top + Math.min(r.height / 2, 110);
-      if (aDroite && placeD) x = Math.min(Math.max(x, droite + 8 + R), l - 4 - R);
-      else if (!aDroite && placeG) x = Math.max(Math.min(x, r.left - 8 - R), 4 + R);
+      if (aDroite && placeD) x = Math.min(Math.max(x, droite + 8 + R), l - BORD);
+      else if (!aDroite && placeG) x = Math.max(Math.min(x, r.left - 8 - R), BORD);
       else if (placeD) x = droite + 8 + R;
       else if (placeG) x = r.left - 8 - R;
-      else if (r.top + r.height + 2 * R + 30 <= racine.innerHeight) { x = Math.min(Math.max(x, R + 4), l - R - 4); y = r.top + r.height + R + 4; } // dessous
-      else { x = aDroite ? droite - R * 0.55 : r.left + R * 0.55; y = r.top + R * 0.45; } // sur son coin haut
+      else if (r.top + r.height + 2 * R + 30 <= racine.innerHeight) { x = Math.min(Math.max(x, BORD), l - BORD); y = r.top + r.height + R + 4; } // dessous
+      else { x = Math.min(Math.max(aDroite ? droite - R * 0.55 : r.left + R * 0.55, BORD), l - BORD); y = r.top + R * 0.45; } // sur son coin haut
     }
     return { x: Math.round(x), y: Math.round(Math.max(R, y)) };
   };
@@ -802,7 +806,9 @@
       if (racine.requestAnimationFrame) racine.requestAnimationFrame(function () { if (panneau.isConnected) garderEnVue(panneau, haut); });
     } else panneau.querySelector(".bouton.principal").focus();
     var fait = false;
-    function continuer() { if (fait) return; fait = true; ui.clavier = null; suite(); }
+    // question restée affichée (hors bataille) : la page, défilée pour l'explication ou pour « Valider », revient en haut,
+    // comme à l'entrée d'un écran ; le récit de la question suivante et la barre de partie ne passent pas sous le bandeau
+    function continuer() { if (fait) return; fait = true; ui.clavier = null; if (montre) racine.scrollTo(0, 0); suite(); }
     ui.clavier = function (k) { if (k === "Enter" || k === " ") { continuer(); return true; } return false; };
     JEU.sons.jouer("erreur");
   };
@@ -812,7 +818,6 @@
     ui.fermerMissive(true); // jamais de missive pendant une partie (16/10/2026)
     JEU.partie = { enCours: true, titre: titre, quitter: quitter, derniere: null };
     JEU.mesure.debut = null;
-    noterPlace(); // le menu va se cacher : la sortie de l'écran part de là où on le voyait
     document.body.classList.add("en-partie");
     ui.afficher("partie");
     var s = document.getElementById("ecran-partie");
@@ -845,7 +850,7 @@
   ui.finirPartie = function () {
     JEU.partie = null;
     if (JEU.musique) JEU.musique.humeur("paix");
-    noterPlace(); // le menu va revenir : idem
+    noterPlace(); // le menu va revenir : la sortie de l'écran de la partie part de là où on le voyait
     document.body.classList.remove("en-partie");
     ui.clavier = null;
     ui.majRessources();
@@ -1129,8 +1134,14 @@
   }
 
   ui.appliquerAnimations = function () {
-    document.body.classList.toggle("sans-anim", !(JEU.anim && JEU.anim.actif()));
+    var actif = !!(JEU.anim && JEU.anim.actif());
+    document.body.classList.toggle("sans-anim", !actif);
+    // animations coupées : ce qui s'efface encore (écran qui sort, fenêtre qui se ferme) part tout de suite (chasse aux
+    // bugs du lot B : sans animation, aucun animationend, et l'ancien écran restait opaque jusqu'à la minuterie de secours)
+    if (!actif) { sorties.slice().forEach(finirSortie); if (minuterieModale) cacherModale(); }
   };
+  // la préférence du système change pendant la partie : la classe suit (JEU.anim.actif() la relit à chaque appel)
+  try { racine.matchMedia("(prefers-reduced-motion: reduce)").addEventListener("change", function () { ui.appliquerAnimations(); }); } catch (e) { /* navigateur ancien */ }
 
   // Après un import : la musique et les animations suivent tout de suite les réglages de la sauvegarde.
   // (L'import est confirmé par un clic : le navigateur autorise alors le son.)
