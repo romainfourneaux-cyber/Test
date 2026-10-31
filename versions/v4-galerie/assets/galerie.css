@@ -165,12 +165,68 @@ code { font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; 
 /* Annonce validée (modèles annoncés) : étiquette neutre, pas un marqueur pour Romain */
 .etiquette-prep { display: inline-block; font-family: var(--f-cartel); font-size: .74rem; font-weight: 600; letter-spacing: .07em; text-transform: uppercase; padding: 0 6px; line-height: 1.55; border: 1px solid currentColor; color: var(--encre-2); font-style: normal; }
 
-/* ---------- Annonce de l’accueil (sobre : ni compte à rebours ni urgence) ---------- */
-.annonce { background: var(--sauge-2); border-bottom: 1px solid var(--filet); font-size: var(--t-petit); }
-.annonce p { padding-block: 10px; }
-.annonce strong { font-weight: 600; }
-.annonce a { white-space: nowrap; }
-@media (max-width: 600px) { .annonce { font-size: .84rem; } .annonce p { padding-block: 8px; } }
+/* ---------- Aperçu de Noël (bandeau de la maquette, réservé à Romain) ---------- */
+.apercu-noel {
+  position: relative; display: inline-flex; align-items: center; gap: 8px; min-height: 30px; padding: 2px 10px 2px 6px; cursor: pointer;
+  background: none; border: 1px solid rgb(245 245 240 / .45); color: inherit; font-size: inherit; font-weight: 500; letter-spacing: .02em;
+}
+.apercu-noel::before { content: ""; position: absolute; inset: -7px -2px; } /* zone de toucher de 44 px */
+.apercu-noel__voyant { position: relative; width: 26px; height: 14px; border-radius: 7px; background: #85857D; flex: none; transition: background-color .2s; }
+.apercu-noel__voyant::after { content: ""; position: absolute; top: 2px; left: 2px; width: 10px; height: 10px; border-radius: 50%; background: #F5F5F0; transition: transform .2s var(--ease); }
+.apercu-noel[aria-pressed="true"] { border-color: var(--cuivre); }
+.apercu-noel[aria-pressed="true"] .apercu-noel__voyant { background: var(--cuivre); }
+.apercu-noel[aria-pressed="true"] .apercu-noel__voyant::after { transform: translateX(12px); background: #2C2C2C; }
+@media (hover: hover) { .apercu-noel:hover { border-color: var(--cuivre); color: var(--cuivre); } }
+
+/* ---------- Noël : bandeau sur toutes les pages ----------
+   Cuivre des plaques dorées et lettres au pochoir de la découpe laser ; couleurs fixes, identiques en mode sombre
+   (texte anthracite sur cuivre : 6,4 : 1). Ni compte à rebours ni urgence : une date limite, écrite en clair. */
+.bandeau-noel { position: relative; isolation: isolate; background: #CBAA88; color: #2C2C2C; border-bottom: 1px solid #2C2C2C; }
+.bandeau-noel::before { content: ""; position: absolute; inset: 0; z-index: -1; background: url(img/courbes.svg) center / cover no-repeat; opacity: .22; pointer-events: none; }
+.bandeau-noel__ligne {
+  display: grid; grid-template-columns: auto minmax(0, 1fr) auto; grid-template-areas: "titre texte action";
+  align-items: center; gap: 10px 28px; padding-block: 12px;
+}
+.bandeau-noel__titre {
+  grid-area: titre; font-family: var(--f-gravure); font-size: clamp(1.9rem, 1.2rem + 1.9vw, 2.75rem); line-height: 1; letter-spacing: .14em;
+  text-transform: uppercase; padding-right: 28px; border-right: 1px solid rgb(44 44 44 / .5);
+}
+.bandeau-noel__texte { grid-area: texte; display: grid; gap: 2px; min-width: 0; }
+.bandeau-noel__offre strong { font-weight: 600; font-size: clamp(1.04rem, .92rem + .45vw, 1.3rem); line-height: 1.25; letter-spacing: .01em; }
+.bandeau-noel__limite { font-size: .94rem; line-height: 1.45; }
+.bandeau-noel .note { color: #A23E2C; background: #F5F5F0; border-color: #A23E2C; }
+.bandeau-noel__action {
+  grid-area: action; display: inline-flex; align-items: center; justify-content: center; min-height: 46px; padding: 0 1.3em; white-space: nowrap;
+  background: #2C2C2C; color: #F5F5F0; border: 1px solid #2C2C2C; text-decoration: none;
+  font-weight: 500; font-size: .88rem; letter-spacing: .08em; text-transform: uppercase; transition: background-color .2s var(--ease), color .2s var(--ease);
+}
+.bandeau-noel__action::after { content: "\00a0→"; }
+@media (hover: hover) { .bandeau-noel__action:hover { background: #F5F5F0; color: #2C2C2C; } }
+.bandeau-noel :focus-visible { outline-color: #2C2C2C; }
+@media (max-width: 760px) {
+  .bandeau-noel__ligne { grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "titre action" "texte texte"; gap: 8px 14px; padding-block: 10px 12px; }
+  .bandeau-noel__titre { font-size: 1.85rem; padding-right: 0; border-right: 0; }
+  .bandeau-noel__texte { padding-top: 8px; border-top: 1px solid rgb(44 44 44 / .35); }
+  .bandeau-noel__offre strong { font-size: 1.04rem; }
+  .bandeau-noel__limite { font-size: .86rem; }
+  .bandeau-noel__action { min-height: 44px; padding: 0 1em; font-size: .8rem; letter-spacing: .06em; }
+}
+
+/* ---------- Noël : encart près du bouton d’achat et dans le panier ---------- */
+.encart-noel {
+  display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 4px 16px; align-items: start; padding: 14px 16px;
+  background: color-mix(in srgb, var(--cuivre) 22%, var(--fond)); border: 1px solid var(--cuivre); border-left-width: 5px;
+  font-size: var(--t-petit); line-height: 1.5; color: var(--encre);
+}
+.encart-noel__titre { font-family: var(--f-gravure); font-size: 1.45rem; line-height: 1.05; letter-spacing: .12em; text-transform: uppercase; color: var(--cuivre-texte); }
+.encart-noel__corps { display: grid; gap: 4px; min-width: 0; }
+.encart-noel strong { font-weight: 600; font-size: 1.02rem; }
+.tiroir__bas .encart-noel { grid-template-columns: minmax(0, 1fr); padding: 10px 14px; gap: 2px; }
+.tiroir__bas .encart-noel p { font-size: .86rem; color: var(--encre); }
+.tiroir__bas .encart-noel strong { font-size: .95rem; }
+.tiroir__bas .encart-noel__titre { font-size: 1.15rem; }
+.tiroir__montants dd.offerte { font-weight: 600; color: var(--cuivre-texte); }
+@media (max-width: 400px) { .encart-noel { grid-template-columns: minmax(0, 1fr); } }
 
 /* ---------- En-tête ---------- */
 .entete { position: sticky; top: 0; z-index: 50; background: var(--fond); border-bottom: 1px solid var(--filet); }
@@ -212,6 +268,72 @@ code { font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; 
 .plaque { margin: 0; position: relative; background: var(--filet); box-shadow: 0 1px 1px rgb(var(--ombre) / .26), 7px 16px 26px -8px rgb(var(--ombre) / .42); }
 .plaque img { width: 100%; aspect-ratio: 1 / 2; object-fit: cover; }
 .plaque--vide { display: grid; place-items: center; align-content: center; gap: 10px; aspect-ratio: 1 / 2; background: repeating-linear-gradient(135deg, var(--fond-2) 0 10px, var(--mur) 10px 20px); box-shadow: none; outline: 1px dashed var(--filet-fort); outline-offset: -1px; color: var(--encre-2); text-align: center; padding: 16px; font-size: var(--t-petit); }
+
+/* ---------- Noël : premier bloc de l’accueil ----------
+   Un mur de nuit : deux plaques rétroéclairées en blanc chaud (la simulation du kit LED), les courbes de niveau des montagnes en filigrane. */
+.noel { position: relative; isolation: isolate; overflow: hidden; background: var(--nuit); color: var(--nuit-texte); padding-block: clamp(34px, 5.5vw, 80px); }
+.noel::before { content: ""; position: absolute; inset: 0; z-index: -1; background: url(img/courbes.svg) center / cover no-repeat; opacity: .14; pointer-events: none; }
+.noel__grille {
+  display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); grid-template-areas: "texte vitrine" "cadeau vitrine" "plaques plaques";
+  gap: clamp(24px, 3.4vw, 42px) clamp(28px, 5vw, 72px);
+}
+.noel a { color: inherit; }
+@media (hover: hover) { .noel a:hover { color: var(--cuivre); } }
+.noel :focus-visible { outline-color: var(--cuivre); }
+.noel .surtitre { color: var(--cuivre); margin: 0; }
+.noel__texte { grid-area: texte; display: grid; gap: 1.1rem; align-content: start; }
+.noel h2 { font-size: clamp(2.4rem, 1.4rem + 3.6vw, 4.1rem); max-width: 12ch; }
+.noel__offre { font-family: var(--f-titre); font-size: clamp(1.3rem, 1rem + 1.1vw, 1.85rem); line-height: 1.3; color: var(--cuivre); max-width: 26em; }
+.noel__limite { font-size: 1.06rem; color: var(--nuit-texte); max-width: 34em; }
+.noel .note--manque { color: var(--alerte-nuit); }
+.noel__actions { padding-top: .3rem; }
+@media (hover: hover) { .noel .btn:hover { background: var(--nuit-texte); border-color: var(--nuit-texte); color: #2C2C2C; } }
+
+.noel__vitrine { grid-area: vitrine; display: grid; gap: 18px; align-content: start; }
+.noel__mur {
+  --led: #FFD39A; display: flex; justify-content: center; align-items: flex-start; gap: 16%; padding: 13% 14% 11%;
+  background: radial-gradient(75% 65% at 50% 42%, #2E2922 0%, #121211 78%); border: 1px solid rgb(245 245 240 / .1);
+}
+.noel__mur .plaque {
+  width: 30%; background: var(--led);
+  box-shadow: 0 0 24px 4px color-mix(in srgb, var(--led) 60%, transparent), 0 0 90px 26px color-mix(in srgb, var(--led) 24%, transparent);
+}
+.noel__mur .plaque:nth-child(2) { margin-top: 14%; }
+.noel__mur .plaque img { mix-blend-mode: multiply; filter: grayscale(1) brightness(.66) contrast(6); }
+.noel__led h3, .noel__cadeau h3 { font-size: 1.4rem; display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 12px; }
+.noel__led h3 a, .noel__cadeau h3 a { text-decoration: none; border-bottom: 1px solid rgb(245 245 240 / .4); }
+.noel__led h3 span, .noel__cadeau h3 span { font-family: var(--f-texte); font-size: 1rem; font-weight: 500; color: var(--cuivre); }
+.noel__led p, .noel__cadeau p { margin-top: 6px; font-size: var(--t-petit); color: var(--nuit-texte-2); }
+
+.noel__cadeau {
+  grid-area: cadeau; align-self: end; display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 18px; align-items: center;
+  padding: 16px; border: 1px solid var(--cuivre); background: rgb(203 170 136 / .08);
+}
+.noel__cadeau-visuel img { width: 96px; aspect-ratio: 1 / 1; object-fit: cover; }
+
+.noel__plaques { grid-area: plaques; padding-top: clamp(22px, 3vw, 34px); border-top: 1px solid rgb(245 245 240 / .18); }
+.noel__sous-titre { font-size: clamp(1.4rem, 1.2rem + .6vw, 1.75rem); margin-bottom: 22px; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 16px; }
+.noel__sous-titre span { font-family: var(--f-cartel); font-weight: 600; font-size: .82rem; letter-spacing: .1em; text-transform: uppercase; color: var(--nuit-texte-2); }
+.noel .grille-produits { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.noel .carte__visuel { background: var(--nuit-2); padding: 7% 26%; }
+.noel .carte__nom a, .noel .carte__prix { color: var(--nuit-texte); }
+.noel .carte__lieu { color: var(--nuit-texte-2); }
+.noel .pastille { box-shadow: inset 0 0 0 3px var(--nuit); border-color: rgb(245 245 240 / .4); }
+.noel .pastille[aria-pressed="true"] { border: 2px solid var(--nuit-texte); }
+@media (max-width: 900px) {
+  .noel__grille { grid-template-columns: minmax(0, 1fr); grid-template-areas: "texte" "plaques" "vitrine" "cadeau"; }
+  .noel__vitrine { grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); align-items: center; gap: 18px; }
+  .noel__mur { padding: 12% 10% 9%; }
+}
+@media (max-width: 720px) { .noel .grille-produits { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 600px) {
+  .noel__texte { gap: .9rem; }
+  .noel__limite { font-size: 1rem; }
+  .noel__actions .btn { width: 100%; }
+  .noel__cadeau { grid-template-columns: 72px minmax(0, 1fr); gap: 14px; padding: 14px; }
+  .noel__cadeau-visuel img { width: 72px; }
+  .noel__led h3, .noel__cadeau h3 { font-size: 1.25rem; }
+}
 
 /* ---------- Héros : mur d’exposition ---------- */
 .heros { padding-block: clamp(30px, 5vw, 76px) clamp(40px, 6vw, 88px); }
@@ -698,6 +820,7 @@ legend { padding: 0; }
 @media (hover: hover) { .puce:hover { border-color: var(--encre); } }
 .puce[aria-pressed="true"] { background: var(--encre); border-color: var(--encre); color: var(--fond); }
 .puce span { font-variant-numeric: tabular-nums; opacity: .75; }
+.puce--cadeaux { border-color: var(--cuivre); border-width: 2px; }
 .voir-en { display: flex; align-items: center; gap: 8px; font-size: var(--t-petit); flex-wrap: wrap; }
 .voir-en > span { font-family: var(--f-cartel); font-weight: 600; letter-spacing: .1em; text-transform: uppercase; font-size: .8rem; color: var(--encre-2); margin-right: 4px; }
 .puce--fin::before { content: ""; width: 14px; height: 14px; background: var(--fin); border: 1px solid color-mix(in srgb, var(--encre) 30%, transparent); }

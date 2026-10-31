@@ -158,9 +158,29 @@ NOEL = "Pour recevoir votre plaque avant Noël, commandez au plus tard le lundi 
 OFFRE = "Livraison offerte du vendredi 27 novembre au lundi 14 décembre 2026 inclus"
 # Mention courte de l’offre près des boutons (le panier passe à 0 € sur la même période, galerie.js)
 OFFRE_COURT = "offerte du 27 novembre au 14 décembre 2026 " + note("dates à confirmer")
-LIVRAISON_COURT = "5 € par commande (" + OFFRE_COURT + "), en " + ZONE_LIVRAISON + ". " + EXPEDITION
 # La formule « rayon de 150 km » est gardée ; la ville au centre reste à choisir
 RAYON = "Découpe, laquage et expédition dans un rayon de 150 km"
+# Promotion de Noël mise en avant sur toutes les pages (demande du 31 octobre 2026).
+# Quatre états, choisis par galerie.js en heure locale : « avant » le 27 novembre, « pendant » l’offre (jusqu’au 14 décembre inclus),
+# « apres » (du 15 au 24 décembre : la carte cadeau prend le relais), « fini » (à partir du 25 décembre : plus rien).
+# Sans JavaScript, seule la variante « neutre » s’affiche : un texte juste avant l’offre.
+DATES_NOEL = note("dates à confirmer")
+LIMITE_NOEL = "Commandez au plus tard le 14 décembre pour recevoir avant Noël."
+# Les quatre « coups de cœur », la carte cadeau et le kit LED : le filtre « Idées cadeaux » de la collection
+IDEES_CADEAUX = ("le-pic-du-midi", "lours", "lisard", "le-cerf", "carte-cadeau", "led")
+
+
+def selon(etats, html, balise="span", cls=""):
+    """Variante datée du texte de Noël : visible sans JavaScript seulement si « neutre » figure dans les états."""
+    return '<{b}{c} data-noel-quand="{e}"{h}>{t}</{b}>'.format(
+        b=balise, c=' class="{}"'.format(cls) if cls else "", e=etats, h="" if "neutre" in etats.split() else " hidden", t=html)
+
+
+# Ligne « Livraison » des garanties (fiches, collection) : elle suit l’état de l’offre comme le panier
+LIVRAISON_COURT = (selon("neutre avant", "5 € par commande (" + OFFRE_COURT + ")")
+                   + selon("pendant", "Offerte jusqu’au 14 décembre 2026 " + DATES_NOEL + ", puis 5 € par commande")
+                   + selon("apres fini", "5 € par commande")
+                   + ", en " + ZONE_LIVRAISON + ". " + EXPEDITION)
 
 
 def cartel(p):
@@ -644,6 +664,61 @@ def pied():
 </footer>""".format(logo=LOGO_COMPLET, site=SITE, tel=TELEPHONE, mediateur=MEDIATEUR)
 
 
+def bandeau_noel(accueil=False):
+    """Bandeau de Noël sous le bandeau de la maquette, sur toutes les pages : très contrasté, sans compte à rebours ni urgence."""
+    offre = (selon("neutre", "Du 27 novembre au 14 décembre : livraison offerte", "strong")
+             + selon("avant", "À partir du 27 novembre : livraison offerte, jusqu’au 14 décembre", "strong")
+             + selon("pendant", "Livraison offerte jusqu’au 14 décembre", "strong")
+             + selon("apres", "La carte cadeau, envoyée par e-mail", "strong"))
+    limite = (selon("neutre avant pendant", "{} {}".format(LIMITE_NOEL, DATES_NOEL))
+              + selon("apres", "Une plaque au choix, sans frais de port : pour offrir même après la date limite d’envoi."))
+    actions = ('<a class="bandeau-noel__action" href="{}" data-noel-quand="neutre avant pendant">Idées cadeaux</a>'.format("#noel" if accueil else "index.html#noel")
+               + '<a class="bandeau-noel__action" href="produit-carte-cadeau.html" data-noel-quand="apres" hidden>La carte cadeau</a>')
+    return """<aside class="bandeau-noel" aria-label="Noël" data-noel-quand="neutre avant pendant apres">
+  <div class="wrap bandeau-noel__ligne">
+    <p class="bandeau-noel__titre">Noël</p>
+    <div class="bandeau-noel__texte"><p class="bandeau-noel__offre">{offre}</p><p class="bandeau-noel__limite">{limite}</p></div>
+    {actions}
+  </div>
+</aside>""".format(offre=offre, limite=limite, actions=actions)
+
+
+def encart_noel(carte=False):
+    """Encart de Noël près du bouton d’achat. Plaques : offre et date limite ; carte cadeau : pas de frais de port, envoi par e-mail."""
+    if carte:
+        corps = ('<div class="encart-noel__corps"><p><strong>Pas de frais de port : la carte est envoyée par e-mail</strong>, ou à imprimer chez vous. '
+                 "Une idée pour Noël, même après la date limite d’envoi des plaques.</p></div>")
+    else:
+        corps = ("<p>"
+                 + selon("neutre", "Livraison offerte du 27 novembre au 14 décembre.", "strong")
+                 + selon("avant", "À partir du 27 novembre, livraison offerte jusqu’au 14 décembre.", "strong")
+                 + selon("pendant", "Livraison offerte jusqu’au 14 décembre.", "strong")
+                 + " " + selon("avant", "Aujourd’hui, elle coûte encore 5 €.")
+                 + "</p><p>{} {}</p>".format(LIMITE_NOEL, DATES_NOEL))
+        corps = selon("neutre avant pendant", corps, "div", "encart-noel__corps") + selon(
+            "apres", "<p>Trop tard pour recevoir une plaque avant Noël ? <a href=\"produit-carte-cadeau.html\">La carte cadeau</a>, "
+            "envoyée par e-mail, sans frais de port.</p>", "div", "encart-noel__corps")
+    # Masqué à partir du 25 décembre (état « fini »)
+    return """<aside class="encart-noel" aria-label="Noël" data-noel-quand="neutre avant pendant apres">
+  <p class="encart-noel__titre">Noël</p>
+  {corps}
+</aside>""".format(corps=corps)
+
+
+def panier_noel():
+    """Rappel de Noël dans le tiroir du panier : avant l’offre, le client paie 5 € aujourd’hui ; pendant, la livraison est offerte."""
+    return """<div class="encart-noel encart-noel--panier" data-noel-quand="neutre avant pendant">
+      <p class="encart-noel__titre">Noël</p>
+      <div class="encart-noel__corps">
+        {neutre}{avant}{pendant}
+        <p>Pour recevoir avant Noël, commandez au plus tard le lundi 14 décembre 2026. {dates}</p>
+      </div>
+    </div>""".format(
+        neutre=selon("neutre", "<strong>Livraison offerte du 27 novembre au 14 décembre.</strong>", "p"),
+        avant=selon("avant", "<strong>La livraison sera offerte à partir du 27 novembre.</strong> Aujourd’hui, elle coûte 5 € par commande.", "p"),
+        pendant=selon("pendant", "<strong>Livraison offerte jusqu’au 14 décembre inclus.</strong>", "p"), dates=DATES_NOEL)
+
+
 PAGES_ECRITES = []
 
 
@@ -671,9 +746,10 @@ def page(fichier, titre, description, contenu, actif=None, jsonld=None, classe="
 <div class="bandeau-maquette">
   <div class="wrap bandeau-maquette__ligne">
     <p>Maquette version 4 · brouillon non publié · paiements désactivés</p>
-    <p class="bandeau-maquette__liens"><a href="notes.html">Notes de la maquette</a><a href="../index.html">Comparer les versions</a></p>
+    <p class="bandeau-maquette__liens"><button type="button" class="apercu-noel" data-apercu-noel aria-pressed="false" hidden><span class="apercu-noel__voyant" aria-hidden="true"></span>Voir pendant l’offre de Noël</button><a href="notes.html">Notes de la maquette</a><a href="../index.html">Comparer les versions</a></p>
   </div>
 </div>
+{noel}
 {entete}
 <main id="contenu" tabindex="-1">
 {contenu}
@@ -689,8 +765,8 @@ def page(fichier, titre, description, contenu, actif=None, jsonld=None, classe="
       <div><dt>Livraison</dt><dd data-livraison>5 €</dd></div>
       <div class="tiroir__total"><dt>Total TTC</dt><dd><strong data-total>0 €</strong></dd></div>
     </dl>
+    {panier_noel}
     <p data-livraison-normale>Livraison : 5 € par commande, quel que soit le nombre d’articles. Aucuns frais pour une carte cadeau seule, envoyée par e-mail.</p>
-    <p data-livraison-offerte hidden>Offre de fin d’année : livraison offerte jusqu’au lundi 14 décembre 2026 inclus.</p>
     <p>{zone}, en {modes}. {expedition}.</p>
     <button type="button" class="btn btn--plein" disabled aria-describedby="commande-desactivee">Commander</button>
     <p id="commande-desactivee">Maquette : la commande et le paiement sont désactivés. Le panier reste dans ce navigateur.</p>
@@ -701,7 +777,7 @@ def page(fichier, titre, description, contenu, actif=None, jsonld=None, classe="
 </body>
 </html>
 """.format(titre=e(titre), desc=e(description), polices=POLICES.replace("&", "&amp;"), donnees=donnees, classe=classe,
-           entete=entete(actif), contenu=contenu, pied=pied(), zone=ZONE_LIVRAISON, modes=MODES_LIVRAISON, expedition=EXPEDITION)
+           noel=bandeau_noel(fichier == "index.html"), panier_noel=panier_noel(), entete=entete(actif), contenu=contenu, pied=pied(), zone=ZONE_LIVRAISON, modes=MODES_LIVRAISON, expedition=EXPEDITION)
     with open(os.path.join(ICI, fichier), "w", encoding="utf-8") as f:
         f.write(typo(sortie))
     PAGES_ECRITES.append(fichier)
@@ -734,11 +810,11 @@ def carte_produit(p, fin=None, sizes="(max-width: 720px) 40vw, (max-width: 1000p
         else:
             visuel = '<div class="plaque">{}</div>'.format(img("misc/carte-cadeau.webp", "Carte cadeau Terre Gravée"))
             lieu, pied_c, cls = "Une plaque au choix, valable 2 ans", "Par e-mail ou à imprimer", "carte__visuel carte__visuel--carre"
-        return """<li><article class="carte" data-collection="accessoires" data-nom="{nom}">
+        return """<li><article class="carte" data-collection="accessoires" data-nom="{nom}"{cadeau}>
   <a class="{cls}" href="{url}" tabindex="-1" aria-hidden="true">{visuel}</a>
   <div class="carte__infos"><{h} class="carte__nom"><a href="{url}">{nom}</a></{h}><span class="carte__prix">{prix}</span><span class="carte__lieu">{lieu}</span></div>
   <div class="carte__pied"><span class="carte__note">{pied}</span></div>
-</article></li>""".format(nom=e(p["nom"]), cls=cls, url=url, visuel=visuel, h=niveau, prix=prix, lieu=lieu, pied=pied_c)
+</article></li>""".format(nom=e(p["nom"]), cadeau=" data-cadeau" if p["slug"] in IDEES_CADEAUX else "", cls=cls, url=url, visuel=visuel, h=niveau, prix=prix, lieu=lieu, pied=pied_c)
     fin = fin if fin and a_photo(p["slug"], fin) else fin_defaut(p)
     data, pastilles = [], []
     for f, nom, _ in FINITIONS:
@@ -748,11 +824,11 @@ def carte_produit(p, fin=None, sizes="(max-width: 720px) 40vw, (max-width: 1000p
                 f=f, etat="true" if f == fin else "false", nom=nom))
         else:
             pastilles.append('<button type="button" class="pastille pastille--manque fin-{f}" disabled title="{nom} : photo à venir"><span class="visuellement-cache">{nom}, photo à venir</span></button>'.format(f=f, nom=nom))
-    return """<li><article class="carte" data-collection="{coll}" data-nom="{nom}" {data}>
+    return """<li><article class="carte" data-collection="{coll}" data-nom="{nom}"{cadeau} {data}>
   <a class="carte__visuel" href="{url}" tabindex="-1" aria-hidden="true">{visuel}</a>
   <div class="carte__infos"><{h} class="carte__nom"><a href="{url}">{nom}</a></{h}><span class="carte__prix">{prix}</span><span class="carte__lieu">{lieu}</span></div>
   <div class="carte__pied"><div class="pastilles" role="group" aria-label="Finition affichée pour {nom}">{pastilles}</div></div>
-</article></li>""".format(coll=p["collection"], nom=e(p["nom"]), data=" ".join(data), url=url, visuel=plaque(p, fin, sizes, eager=eager),
+</article></li>""".format(coll=p["collection"], nom=e(p["nom"]), cadeau=" data-cadeau" if p["slug"] in IDEES_CADEAUX else "", data=" ".join(data), url=url, visuel=plaque(p, fin, sizes, eager=eager),
                           h=niveau, prix=euros(p["prix"]), lieu=cartel_court(p), pastilles="".join(pastilles))
 
 
@@ -973,14 +1049,50 @@ ORGANISATION = {
 
 
 # ---------------------------------------------------------------------------
-# Accueil : 7 sections, sous une annonce d’une ligne (la section des avis est retirée le 31 octobre 2026)
+# Accueil : 7 sections (la section des avis est retirée le 31 octobre 2026). Pendant la saison de Noël, le bloc de Noël
+# passe en tête et reprend « Nos coups de cœur », qui revient à sa place le 15 décembre.
 # ---------------------------------------------------------------------------
 
-def annonce():
-    """Annonce sobre de fin d’année : la date limite de Noël et l’offre de livraison. Ni compte à rebours ni urgence."""
-    return """<aside class="annonce" aria-label="Annonce">
-  <div class="wrap"><p><strong>{offre}</strong> {dates} <span class="annonce__noel">{noel}</span> <a href="contact.html#livraison">Livraison et délais</a></p></div>
-</aside>""".format(offre=OFFRE + ".", dates=note("dates à confirmer"), noel=NOEL)
+def bloc_noel():
+    """Première section de l’accueil pendant la saison : l’offre, la date limite, quatre plaques à offrir, la carte cadeau
+    et le kit LED. L’image de Noël est la plaque rétroéclairée en blanc chaud (simulation), plutôt que des décorations.
+    Masquée à partir du 15 décembre : « Nos coups de cœur » reprend alors sa place plus bas."""
+    plaques = grille([PRODUITS[s] for s in ("le-pic-du-midi", "lours", "lisard", "le-cerf")], fins={"lisard": "dore", "le-cerf": "gris"})
+    offre = (selon("neutre", "Livraison offerte du 27 novembre au 14 décembre")
+             + selon("avant", "À partir du 27 novembre, la livraison est offerte, jusqu’au 14 décembre. Aujourd’hui, elle coûte encore 5 €.")
+             + selon("pendant", "Livraison offerte jusqu’au 14 décembre"))
+    mur = "".join(plaque(PRODUITS[s], f, "(max-width: 900px) 30vw, 150px", eager=True,
+                        alt="Simulation : plaque {} rétroéclairée en blanc chaud".format(PRODUITS[s]["nom"]))
+                  for s, f in (("le-pic-du-midi", "noir"), ("le-cerf", "gris")))
+    return """<section class="noel" id="noel" aria-labelledby="titre-noel" data-noel-quand="neutre avant pendant">
+  <div class="wrap noel__grille">
+    <div class="noel__texte">
+      <p class="surtitre">Noël 2026 · Idées cadeaux</p>
+      <h2 id="titre-noel">Offrir les Pyrénées pour Noël</h2>
+      <p class="noel__offre">{offre}</p>
+      <p class="noel__limite">Pour recevoir avant Noël, commandez au plus tard le lundi 14 décembre. {dates}</p>
+      <p class="noel__actions"><a class="btn" href="collection.html#cadeaux">Toutes les idées cadeaux</a></p>
+    </div>
+    <div class="noel__vitrine">
+      <div class="noel__mur">{mur}</div>
+      <div class="noel__led">
+        <h3><a href="produit-led.html">Le kit LED</a> <span>+ 15 €</span></h3>
+        <p>En option sur la fiche de chaque plaque. L’atelier le colle au dos : le soir, la plaque s’allume, par exemple en blanc chaud. Simulation ci-dessus.</p>
+      </div>
+    </div>
+    <div class="noel__plaques">
+      <h3 class="noel__sous-titre">Quatre plaques à offrir <span>65 € · noir, gris ou doré</span></h3>
+      {plaques}
+    </div>
+    <div class="noel__cadeau">
+      <a class="noel__cadeau-visuel" href="produit-carte-cadeau.html" tabindex="-1" aria-hidden="true">{carte}</a>
+      <div>
+        <h3><a href="produit-carte-cadeau.html">La carte cadeau</a> <span>65 €</span></h3>
+        <p>Une plaque au choix, valable 2 ans. Envoyée par e-mail ou à imprimer, sans frais de port : la bonne solution si la date limite d’envoi est passée.</p>
+      </div>
+    </div>
+  </div>
+</section>""".format(offre=offre, dates=DATES_NOEL, mur=mur, plaques=plaques, carte=img("misc/carte-cadeau.webp", "", "120px"))
 
 
 def accueil():
@@ -1018,7 +1130,7 @@ def accueil():
   <p class="bientot__note">Et des grands formats de 60 × 120 cm, à 150 € : Le Cirque de Gavarnie, Le Tourmalet, Le Pont d’Espagne et Le Pic du Midi. Le dessin ci-dessus vient de la planche de l’atelier. Ces plaques n’existent pas encore en photo.</p>
 </div>""".format(d1=dessin("la-transhumance", "Dessin « La Transhumance »"))
     contenu = """
-{annonce}
+{noel}
 <section class="heros">
   <div class="wrap heros__grille">
     <div class="heros__texte">
@@ -1059,7 +1171,7 @@ def accueil():
     </div>
   </div>
 </section>
-<section class="section section--clair">
+<section class="section section--clair" data-noel-quand="apres fini" hidden>
   <div class="wrap">
     <div class="entete-section entete-section--ligne">
       <div><p class="surtitre">La sélection de l’atelier</p><h2>Nos coups de cœur</h2></div>
@@ -1134,7 +1246,7 @@ def accueil():
         couleurs=couleurs, reperes=reperes(), tuiles="".join(tuiles), coups_coeur=coups_coeur, noms_lieux=noms_lieux, atlas=atlas("apercu", lien=True),
         photo=img("misc/aquensis.webp", "Le bassin d’Aquensis à Bagnères-de-Bigorre ; au-dessus, une rangée de panneaux en métal découpé, rétroéclairés : le décor d’origine",
                   "(max-width: 900px) 92vw, 680px"),
-        etapes=etapes(), bientot=bientot, annonce=annonce())
+        etapes=etapes(), bientot=bientot, noel=bloc_noel())
     page("index.html", "Terre Gravée · Plaques murales en aluminium des Hautes-Pyrénées",
          "Plaques murales en aluminium découpé au laser et thermolaqué : paysages, patrimoine et faune des Hautes-Pyrénées. 60 × 30 cm, 65 €.",
          contenu, jsonld=ORGANISATION, classe="page-accueil")
@@ -1149,6 +1261,7 @@ def collection():
     puces = ['<button type="button" class="puce" data-filtre="tout" aria-pressed="true">Tout <span>{}</span></button>'.format(len(CATALOGUE))]
     puces += ['<button type="button" class="puce" data-filtre="{}" aria-pressed="false">{} <span>{}</span></button>'.format(c, v[0], comptes[c])
               for c, v in COLLECTIONS.items()]
+    puces.append('<button type="button" class="puce puce--cadeaux" data-filtre="cadeaux" aria-pressed="false">Idées cadeaux <span>{}</span></button>'.format(len(IDEES_CADEAUX)))
     voir = "".join('<button type="button" class="puce puce--fin fin-{0}" data-voir-en="{0}" aria-pressed="false">{1}</button>'.format(f, n) for f, n, _ in FINITIONS)
     contenu = """
 <div class="wrap">
@@ -1265,6 +1378,7 @@ def fiche_plaque(p):
         <div class="quantite"><button type="button" data-qte="-1" aria-label="Retirer une plaque">−</button><input id="quantite" type="number" min="1" max="9" value="1" aria-label="Quantité"><button type="button" data-qte="1" aria-label="Ajouter une plaque">+</button></div>
         <button type="button" class="btn" data-ajouter>Ajouter au panier</button>
       </div>
+      {noel}
       {garanties}
       <dl class="caracteristiques">
         <div><dt>Format</dt><dd>60 × 30 cm, épaisseur 2 mm</dd></div>
@@ -1302,7 +1416,7 @@ def fiche_plaque(p):
 <div class="barre-achat-mobile"><div><strong>{nom}</strong><span data-prix-affiche>{prix_txt}</span></div><button type="button" class="btn" data-ajouter>Ajouter au panier</button></div>""".format(
         cid=p["collection"], coll=coll, nom=e(p["nom"]), slug=slug, prix=p["prix"], data_img=data_img, scenes="".join(scenes),
         vignettes="".join(vignettes), cartel=cartel(p), prix_txt=euros(p["prix"]), fin_nom=NOM_FIN[f0],
-        radios="".join(radios), positions=positions, garanties=garanties(), ext=A_FOURNIR, securite_led=note("à fournir"),
+        radios="".join(radios), positions=positions, garanties=garanties(), noel=encart_noel(), ext=A_FOURNIR, securite_led=note("à fournir"),
         lab_lieu="L’animal" if faune else "Le lieu", lieu_texte=e(LIEU_TEXTE[slug]).replace("XIXe", "XIX<sup>e</sup>"), loc=localisateur(p),
         voir_carte=voir_carte, titre_h=e(p["titre_histoire"]), texte=texte, lien=lien, sim=grille(similaires(p)))
     lieu, detail = p["cartel"]
@@ -1381,6 +1495,7 @@ def fiche_carte_cadeau():
         <div class="quantite"><button type="button" data-qte="-1" aria-label="Retirer une carte">−</button><input id="quantite" type="number" min="1" max="9" value="1" aria-label="Quantité"><button type="button" data-qte="1" aria-label="Ajouter une carte">+</button></div>
         <button type="button" class="btn" data-ajouter>Ajouter au panier</button>
       </div>
+      {noel}
       {garanties}
       <dl class="caracteristiques">
         <div><dt>Valeur</dt><dd>Une plaque au choix, même si le prix change</dd></div>
@@ -1400,7 +1515,7 @@ def fiche_carte_cadeau():
 </section>
 <div class="barre-achat-mobile"><div><strong>Carte cadeau</strong><span data-prix-affiche>65 €</span></div><button type="button" class="btn" data-ajouter>Ajouter au panier</button></div>""".format(
         img=IMG + "misc/carte-cadeau.webp", visuel=img("misc/carte-cadeau.webp", "Carte cadeau Terre Gravée", cls="situation", eager="haute"),
-        garanties=garanties(carte=True), offre_court=OFFRE_COURT,
+        garanties=garanties(carte=True), noel=encart_noel(carte=True), offre_court=OFFRE_COURT,
         assoc='<ul class="grille-produits grille-produits--deux">{}{}</ul>'.format(carte_produit(PRODUITS["le-pic-du-midi"]), carte_produit(PRODUITS["lisard"])))
     page("produit-carte-cadeau.html", "Carte cadeau · Terre Gravée",
          "Carte cadeau Terre Gravée : une plaque au choix du destinataire, valable 2 ans, envoyée par e-mail ou à imprimer. 65 €.",
@@ -2082,7 +2197,7 @@ def notes():
           <div><h3>Pris de la v1, simplifié</h3><ul class="liste-simple"><li>Une carte des lieux à repères numérotés, sans filtres ni calques</li><li>L’histoire d’Aquensis, avec la photo réelle</li><li>Le paragraphe « Le lieu » sur chaque fiche</li><li>Le trajet de Revel à Bagnères dans les quatre étapes, le bloc « Bientôt », qr.html</li></ul></div>
           <div><h3>Laissé de côté</h3><ul class="liste-simple"><li>Grappes, filtres et calques de la carte, feuille modale</li><li>Idées cadeaux en grille, registre des avis sur l’accueil</li><li>Mode « carte de nuit » : le mode sombre suit l’appareil</li><li>Cartouches et graticules sur toutes les pages</li></ul></div>
         </div>
-        <p class="attenue">Garde-fous : 5 entrées de menu, 7 sections sur l’accueil (la section des avis est retirée), trois moments interactifs (la lumière du mur, les pastilles de finition, la carte).</p>
+        <p class="attenue">Garde-fous : 5 entrées de menu, 7 sections sur l’accueil (la section des avis est retirée ; pendant la saison de Noël, le bloc de Noël passe en tête et reprend « Nos coups de cœur »), trois moments interactifs (la lumière du mur, les pastilles de finition, la carte).</p>
       </section>
       <section class="note-bloc" id="n-constats" aria-labelledby="t-constats">
         <h2 id="t-constats">À corriger sur le site actuel</h2>
@@ -2137,7 +2252,7 @@ def notes():
           <li>La simulation du rétroéclairage donne une idée de l’effet ; les couleurs réelles du ruban diffèrent.</li>
           <li>Les textes « Le lieu » sont courts ; vous les avez validés le 31 octobre 2026.</li>
           <li>Le panier vit dans le navigateur : aucune commande, aucun paiement, aucun envoi de formulaire.</li>
-          <li>Livraison offerte : le panier passe à 0 € du 27 novembre au 14 décembre 2026 et l’annonce de l’accueil disparaît le 15 décembre. Les autres mentions de l’offre (garanties, carte cadeau, FAQ) sont du texte fixe : à retirer du site réel le 15 décembre.</li>
+          <li>Noël : la promotion est mise en avant sur toutes les pages (bandeau sous celui de la maquette, bloc en tête de l’accueil, encart près du bouton d’achat, rappel dans le panier, qui passe à 0 € du 27 novembre au 14 décembre 2026) ; le 15 décembre, le bloc de l’accueil et l’offre disparaissent, le bandeau propose la carte cadeau jusqu’au 24 décembre, puis plus rien. L’interrupteur « Voir pendant l’offre de Noël », en haut de chaque page, simule le 1<sup>er</sup> décembre. Les mentions fixes de l’offre (fiche de la carte cadeau, FAQ) sont à retirer du site réel le 15 décembre.</li>
           <li>Les polices viennent de Google Fonts : une connexion internet est nécessaire pour les voir.</li>
         </ul>
         <p><a class="lien-fleche" href="qr.html">Voir la page du QR code d’Aquensis</a></p>

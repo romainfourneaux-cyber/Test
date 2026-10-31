@@ -52,7 +52,7 @@
      (le clavier reste dans le tiroir) ; à la fermeture, le focus revient au bouton d’origine. */
   var tiroir = $(".tiroir");
   var voile = $(".voile");
-  var horsTiroir = $$(".lien-evitement, .bandeau-maquette, .entete, main, .pied, .barre-achat-mobile, .toast");
+  var horsTiroir = $$(".lien-evitement, .bandeau-maquette, .bandeau-noel, .entete, main, .pied, .barre-achat-mobile, .toast");
   var dernierFocus = null;
   function ouvrirPanier() {
     if (!tiroir) return;
@@ -83,12 +83,47 @@
      Les dates sont comparées en heure locale : l’offre s’arrête le 15 décembre à 0 h. */
   var OFFRE_DEBUT = new Date(2026, 10, 27);
   var OFFRE_FIN = new Date(2026, 11, 15);
-  function livraisonOfferte() {
-    var maintenant = new Date();
-    return maintenant >= OFFRE_DEBUT && maintenant < OFFRE_FIN;
+  /* À partir du 25 décembre, plus rien ne parle de Noël. */
+  var NOEL_FIN = new Date(2026, 11, 25);
+
+  /* Aperçu réservé à la maquette : l’interrupteur du bandeau simule le 1er décembre 2026 à midi, pour voir l’offre active
+     sur toutes les pages et dans le panier. Le choix est mémorisé dans le navigateur (en mémoire si le stockage est bloqué). */
+  var CLE_APERCU = "tg-v4-apercu-noel";
+  var memoireApercu = false;
+  function apercuNoel() {
+    try { return localStorage.getItem(CLE_APERCU) === "1"; } catch (e) { return memoireApercu; }
   }
-  /* Après l’offre, l’annonce de fin d’année de l’accueil (offre et date limite de Noël) est masquée. */
-  if (new Date() >= OFFRE_FIN) $$(".annonce").forEach(function (el) { el.hidden = true; });
+  function maintenant() { return apercuNoel() ? new Date(2026, 11, 1, 12) : new Date(); }
+  /* Quatre états, en heure locale : « avant » le 27 novembre, « pendant » l’offre, « apres » (du 15 au 24 décembre,
+     la carte cadeau prend le relais), « fini ». Chaque élément [data-noel-quand] liste les états où il est visible. */
+  function etatNoel() {
+    var t = maintenant();
+    if (t < OFFRE_DEBUT) return "avant";
+    if (t < OFFRE_FIN) return "pendant";
+    if (t < NOEL_FIN) return "apres";
+    return "fini";
+  }
+  function livraisonOfferte() { return etatNoel() === "pendant"; }
+  function appliquerNoel() {
+    var etat = etatNoel();
+    document.documentElement.setAttribute("data-noel", etat);
+    $$("[data-noel-quand]").forEach(function (el) {
+      el.hidden = (" " + el.getAttribute("data-noel-quand") + " ").indexOf(" " + etat + " ") < 0;
+    });
+  }
+  appliquerNoel();
+  var boutonApercu = $("[data-apercu-noel]");
+  if (boutonApercu) {
+    boutonApercu.hidden = false;
+    boutonApercu.setAttribute("aria-pressed", apercuNoel() ? "true" : "false");
+    boutonApercu.addEventListener("click", function () {
+      var actif = !apercuNoel();
+      memoireApercu = actif;
+      try { if (actif) { localStorage.setItem(CLE_APERCU, "1"); } else { localStorage.removeItem(CLE_APERCU); } } catch (e) { /* stockage indisponible : l’aperçu vaut pour cette page */ }
+      boutonApercu.setAttribute("aria-pressed", actif ? "true" : "false");
+      appliquerNoel(); afficherPanier();
+    });
+  }
   function afficherPanier() {
     var lignes = lirePanier();
     var total = 0, nombre = 0;
@@ -131,16 +166,20 @@
     var offre = livraisonOfferte();
     var port = aExpedier && !offre ? FRAIS_PORT : 0;
     var champ = function (sel, texte) { var el = $(sel); if (el) el.textContent = texte; };
-    var texteNormal = $("[data-livraison-normale]"), texteOffre = $("[data-livraison-offerte]");
+    var texteNormal = $("[data-livraison-normale]");
     if (texteNormal) texteNormal.hidden = offre;
-    if (texteOffre) texteOffre.hidden = !offre;
     champ("[data-sous-total]", euros(total));
-    champ("[data-livraison]", euros(port));
+    /* Pendant l’offre : « Offerte », sans prix barré */
+    champ("[data-livraison]", offre ? "Offerte" : euros(port));
+    var ddLivraison = $("[data-livraison]"); if (ddLivraison) ddLivraison.classList.toggle("offerte", offre);
     champ("[data-total]", euros(total + port));
     var montants = $(".tiroir__montants"); if (montants) montants.hidden = !lignes.length;
   }
   afficherPanier();
-  window.addEventListener("storage", function (e) { if (e.key === CLE_PANIER) afficherPanier(); });
+  window.addEventListener("storage", function (e) {
+    if (e.key === CLE_PANIER) afficherPanier();
+    if (e.key === CLE_APERCU) { if (boutonApercu) boutonApercu.setAttribute("aria-pressed", apercuNoel() ? "true" : "false"); appliquerNoel(); afficherPanier(); }
+  });
 
   var toastEl = $(".toast");
   var minuteurToast = null;
@@ -196,7 +235,7 @@
     var appliquerFiltre = function () {
       var n = 0;
       cartes.forEach(function (c) {
-        var ok = filtre === "tout" || c.getAttribute("data-collection") === filtre;
+        var ok = filtre === "tout" || (filtre === "cadeaux" ? c.hasAttribute("data-cadeau") : c.getAttribute("data-collection") === filtre);
         c.parentElement.hidden = !ok;
         if (ok) n++;
       });
