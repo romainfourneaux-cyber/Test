@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Le domaine</string>
+    <string name="quitter">Appuie encore pour quitter</string>
+    <string name="lien_externe">Ce lien ne s\'ouvre pas dans l\'application.</string>
+    <string name="export_ok">Sauvegarde enregistrée dans Téléchargements</string>
+    <string name="export_ok_ancien">Sauvegarde enregistrée dans Android/data/fr.ledomaine.revision5e/files/Download</string>
+    <string name="export_ko">La sauvegarde n\'a pas pu être enregistrée</string>
+</resources>

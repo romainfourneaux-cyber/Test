@@ -1,0 +1,90 @@
+package fr.ledomaine.revision5e;
+
+import android.annotation.TargetApi;
+import android.app.Activity;
+import android.content.ContentResolver;
+import android.content.ContentValues;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.webkit.JavascriptInterface;
+import android.widget.Toast;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
+
+/**
+ * Pont entre la page et Android, exposé sous window.AndroidDomaine avant le premier script de la page.
+ * Une seule méthode : écrire la sauvegarde exportée, car une WebView ne sait pas télécharger un lien blob:.
+ */
+public final class PontDomaine {
+    private final Activity activite;
+
+    PontDomaine(Activity activite) {
+        this.activite = activite;
+    }
+
+    /**
+     * Écrit la sauvegarde dans le dossier Téléchargements de la tablette (MediaStore, Android 10 et plus, sans
+     * permission) ou, avant Android 10, dans le dossier de fichiers de l'application. Appelée depuis le fil du
+     * pont JavaScript, d'où le passage par le fil d'interface pour le message.
+     */
+    @JavascriptInterface
+    public boolean exporter(String nom, String contenu) {
+        if (nom == null || contenu == null) return false;
+        String nomSain = nom.replaceAll("[^A-Za-z0-9._-]", "_");
+        if (!nomSain.endsWith(".json")) nomSain += ".json";
+        int message;
+        boolean ok;
+        try {
+            if (Build.VERSION.SDK_INT >= 29) {
+                ecrireTelechargements(nomSain, contenu);
+                message = R.string.export_ok;
+            } else {
+                ecrireDossierApplication(nomSain, contenu);
+                message = R.string.export_ok_ancien;
+            }
+            ok = true;
+        } catch (Exception e) {
+            message = R.string.export_ko;
+            ok = false;
+        }
+        final int texte = message;
+        activite.runOnUiThread(() -> Toast.makeText(activite, texte, Toast.LENGTH_LONG).show());
+        return ok;
+    }
+
+    @TargetApi(29)
+    private void ecrireTelechargements(String nom, String contenu) throws Exception {
+        ContentResolver r = activite.getContentResolver();
+        ContentValues v = new ContentValues();
+        v.put(MediaStore.Downloads.DISPLAY_NAME, nom);
+        v.put(MediaStore.Downloads.MIME_TYPE, "application/json");
+        v.put(MediaStore.Downloads.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS);
+        v.put(MediaStore.Downloads.IS_PENDING, 1);
+        Uri u = r.insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, v);
+        if (u == null) throw new IllegalStateException("insertion refusée");
+        try (OutputStream s = r.openOutputStream(u)) {
+            if (s == null) throw new IllegalStateException("flux indisponible");
+            s.write(contenu.getBytes(StandardCharsets.UTF_8));
+        } catch (Exception e) {
+            r.delete(u, null, null);
+            throw e;
+        }
+        v.clear();
+        v.put(MediaStore.Downloads.IS_PENDING, 0);
+        r.update(u, v, null, null);
+    }
+
+    private void ecrireDossierApplication(String nom, String contenu) throws Exception {
+        File dossier = activite.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS);
+        if (dossier == null) dossier = new File(activite.getFilesDir(), "Download");
+        if (!dossier.exists() && !dossier.mkdirs()) throw new IllegalStateException("dossier impossible");
+        try (FileOutputStream s = new FileOutputStream(new File(dossier, nom))) {
+            s.write(contenu.getBytes(StandardCharsets.UTF_8));
+        }
+    }
+}

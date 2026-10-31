@@ -10,3 +10,5 @@ atelier/android/app/src/main/assets/
 atelier/android/**/build/
 atelier/android/.gradle/
 atelier/android/local.properties
+# séquences d'images de l'audit graphique (centaines de PNG) : hors dépôt, les plans citent leurs chemins
+atelier/captures/audit-graphismes/

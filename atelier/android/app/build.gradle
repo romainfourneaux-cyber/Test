@@ -1,0 +1,64 @@
+plugins {
+    id "com.android.application"
+}
+
+// Version du jeu : passée par atelier/outils/construire-apk.sh (-PjeuVersion, -PjeuCode) ; à défaut, lue dans
+// jeu/VERSION.txt (0.9.3 donne versionName "0.9.3" et versionCode 903 : majeur × 10000 + mineur × 100 + correctif).
+def fichierVersion = rootProject.file("../../jeu/VERSION.txt")
+def jeuVersion = project.hasProperty("jeuVersion") ? project.property("jeuVersion").toString() : fichierVersion.text.trim()
+def jeuCode = project.hasProperty("jeuCode") ? project.property("jeuCode").toString().toInteger() : {
+    def p = jeuVersion.tokenize(".")
+    p[0].toInteger() * 10000 + p[1].toInteger() * 100 + p[2].toInteger()
+}()
+
+// Clé de signature : atelier/android/cles (voir README.md : à garder pour toujours). Le mot de passe tient sur
+// une ligne dans mot-de-passe.txt. Sans ces fichiers, l'APK de release n'est pas signé (et donc pas installable).
+def dossierCles = rootProject.file("cles")
+def fichierMotDePasse = new File(dossierCles, "mot-de-passe.txt")
+def motDePasse = fichierMotDePasse.exists() ? fichierMotDePasse.text.trim() : null
+
+android {
+    namespace = "fr.ledomaine.revision5e"
+    compileSdk = 34
+
+    defaultConfig {
+        applicationId = "fr.ledomaine.revision5e"
+        minSdk = 26
+        targetSdk = 34
+        versionCode = jeuCode
+        versionName = jeuVersion
+    }
+
+    signingConfigs {
+        release {
+            storeFile = new File(dossierCles, "domaine.jks")
+            storePassword = motDePasse
+            keyAlias = "domaine"
+            keyPassword = motDePasse
+        }
+    }
+
+    buildTypes {
+        release {
+            // Deux classes Java : rien à réduire ; le jeu est dans les assets, pas dans le code.
+            minifyEnabled = false
+            shrinkResources = false
+            if (motDePasse != null) signingConfig = signingConfigs.release
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+
+    lint {
+        // Le contrôle « vital » de la release reste actif ; les simples avertissements n'arrêtent pas la construction.
+        abortOnError = false
+    }
+}
+
+dependencies {
+    // WebViewAssetLoader (le jeu servi depuis les assets) et les réglages de la WebView.
+    implementation "androidx.webkit:webkit:1.11.0"
+}

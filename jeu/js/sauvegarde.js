@@ -135,6 +135,8 @@
 
   function exporter() {
     var txt = texteExport();
+    // Application Android (atelier/android) : le pont écrit le fichier dans Téléchargements, une WebView ne télécharge pas un blob.
+    if (racine.AndroidDomaine && racine.AndroidDomaine.exporter) { racine.AndroidDomaine.exporter(nomFichier(), txt); return; }
     var blob = new Blob([txt], { type: "application/json" });
     var a = document.createElement("a");
     a.href = URL.createObjectURL(blob);
