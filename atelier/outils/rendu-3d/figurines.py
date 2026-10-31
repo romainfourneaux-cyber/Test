@@ -727,11 +727,13 @@ LACET_CHUTE = (0, -8, -14, -16)
 # descendante, vers l'avant, en degrés ; penche du buste ; jambes en garde). Le pied avant (droit) ne quitte pas
 # l'ancrage : la figurine frappe sur place, sans glisser.
 COUP_ARME = (
-    ((116, 40, 8), 210, 0, {-1: (14, 22), +1: (-12, 20)}),
+    ((116, 40, 24), 210, 0, {-1: (14, 22), +1: (-12, 20)}),
     ((22, 5, 6), 84, 12, {-1: (26, 34), +1: (-20, 14)}),
     ((6, 10, 6), 54, 9, {-1: (24, 32), +1: (-18, 14)}),
-    ((62, 45, 6), 150, 4, {-1: (16, 24), +1: (-12, 18)}),
+    ((34, 36, 8), 70, 4, {-1: (16, 24), +1: (-12, 18)}),
 )
+# l'arme armée part sur le côté de la caméra (y négatif) : levée derrière l'épaule, elle ne se cache pas derrière la tête
+Y_ARME = (-0.32, -0.08, -0.08, -0.1)
 # Lance de la piétaille : (bras droit, élévation de la lance en degrés, recul ajouté de la main sur la hampe, penche,
 # jambes) : ramener la lance, frapper d'estoc, suivre, revenir.
 COUP_LANCE = (
@@ -851,8 +853,8 @@ def soldat(nom, camp, role, phase=0.0, lacet=-22.0, echelle=1.0, recul_y=0.1, fi
         else:
             bd, angle, pen, jf = COUP_ARME[coup]
             if role == "champion" and coup == 0:
-                bd, angle = (106, 40, 8), 198          # le champion est plus grand : il arme un peu plus bas
-            d_arme = direction_arme(angle)
+                bd, angle = (106, 40, 22), 198         # le champion est plus grand : il arme un peu plus bas
+            d_arme = direction_arme(angle, Y_ARME[coup])
     j = pose_homme(phase, bras_droit=bd, bras_gauche=bg, amplitude=amp, penche=pen, genou=genou, jambes_fixes=jf,
                    balancement=bal)
     if ligne_chute and not lance_en_main:
