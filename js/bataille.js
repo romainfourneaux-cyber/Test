@@ -678,7 +678,7 @@
       if (fg) { fg.recul = t; fg.reculX = fg.gauche ? 1 : -1; }
     }
     if (SOL && sang && FX) {
-      var n = FX.alea(graine, 5) < 0.45 ? 2 : 1;
+      var h = FX.alea(graine, 5), n = h < 0.12 ? 2 : h < 0.55 ? 1 : 0; // une ou deux flèches plantées par troupe touchée, pas à chaque trait
       for (var k = 0; k < n; k++) {
         var sens = FX.alea(graine, 6 + k) < 0.5 ? -1 : 1, fx = x + sens * (3 + 6 * FX.alea(graine, 8 + k)), fy = y + 1 + 4 * FX.alea(graine, 10 + k);
         var img = SOL.flechePlantee(v.ratio, sens);
