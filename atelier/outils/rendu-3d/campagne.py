@@ -2,6 +2,7 @@
 """Carte de campagne (vue de dessus, relief) et petits sprites de lieux.
 
 Usage : python3 atelier/outils/rendu-3d/campagne.py [fond] [lieux] [lieu-<camp>[-<variante>] ...] [--essai] [--apercu dossier]
+        python3 atelier/outils/rendu-3d/campagne.py drapeaux [lieux-nus] [--dossier D]
 Sorties (jeu/assets/images/campagne/) :
   fond-campagne.jpg 2000 × 1060 (carte du jeu : viewBox 1000 × 530), JPEG ≤ 490 000 octets : carte en relief à la Total
   War, aucun texte, bords teintés de parchemin.
@@ -12,6 +13,14 @@ Sorties (jeu/assets/images/campagne/) :
   silhouette ni disque (lieu pas encore ouvert ; dessinée sans Blender, bruit en bouillonnements à pleine résolution,
   cœur opaque à 90 % ; le jeu désature aussi le terrain dessous).
   Ancrage des lieux : bas-centre moins 16 px.
+  Bannières animées de la carte (drapeaux) : drapeau-france.png, drapeau-angleterre.png, drapeau-omeyyades.png, bandes
+  de 6 images (DRAPEAU : 28 × 26 px logiques, ancrage au pied du mât), la même bannière que celle des bourgs (mât de
+  4,2 m, étoffe de 6,2 × 4,1 m, même vent, mêmes emblèmes), étoffe qui ondule (la bande boucle sans saut).
+  lieux-nus : lieu-<camp>[-<variante>]-nu.png, le même bourg sans sa bannière (même caméra, même ancrage) ; le manifeste
+  donne à ces lieux et aux lieux d'avant un point « hampe » : [x, y], pied du mât de la bannière (px logiques depuis le
+  coin haut-gauche) : l'ancrage d'un drapeau-<camp> posé là redonne la bannière, qui flotte. Les lieux d'avant gardent
+  leur bannière cuite : c'est le repli si la carte ne pose pas de drapeaux.
+  --dossier D : essai ; écrit dans D sans toucher à jeu/ ni au manifeste.
 
 Relief (même soleil que les champs de bataille : nord-ouest, 45°, versants nord-ouest éclairés, sud-est à l'ombre) :
   - une chaîne continue entre les deux fronts (crête à 3,0 + 0,8 × bruit le long de la crête, relief exagéré × 1,5),
@@ -692,12 +701,14 @@ def parchemin(img):
 VARIANTES_FRANCE = {1: (P.LACET, False, False), 2: (P.LACET - 54, True, False), 3: (P.LACET + 22, False, True)}
 
 
-def bourg(camp, couleurs=True, variante=1):
+def bourg(camp, couleurs=True, variante=1, banniere=True):
     """Petit bourg fortifié du camp : tour ou donjon, quelques maisons, enceinte basse ; bannière deux fois plus grande
     qu'avant, au-dessus des toits, sur la tour. Variantes (France) : plan retourné ou tourné d'un quart de tour et lacet
     différent ; la bannière flotte toujours dans le même vent, la tenture du mur et celle de la tour restent tournées
-    vers la caméra (côté sud-ouest). Renvoie (objets, lacet en degrés)."""
+    vers la caméra (côté sud-ouest). Renvoie (objets, lacet en degrés). banniere=False : sans la bannière (lieu « nu »,
+    la carte y pose une bannière animée) ; le pied de son mât, dans le repère du bourg, est noté dans HAMPE["locale"]."""
     lacet, miroir, quart = VARIANTES_FRANCE.get(variante, VARIANTES_FRANCE[1]) if camp == "france" else (P.LACET, False, False)
+    HAMPE["locale"] = None
 
     def tr(x, y):
         """Point du plan de base vers le plan de la variante."""
@@ -750,8 +761,10 @@ def bourg(camp, couleurs=True, variante=1):
         haut = 7.5
     if couleurs and camp != "neutre":
         # grande bannière au-dessus des toits (aire doublée), plantée au sommet de la tour, dans le vent commun
-        o += C.drapeau("ban", camp, 4.2, 6.2, 4.1, loc=(tx - 1.2, ty - 1.2, haut - 0.6), vent=1.0, cap=-28 - lacet,
-                       echelle_embleme=0.66, inverse=sud, epi=True)
+        HAMPE["locale"] = (tx - 1.2, ty - 1.2, haut - 0.6)
+        if banniere:
+            o += C.drapeau("ban", camp, 4.2, 6.2, 4.1, loc=HAMPE["locale"], vent=1.0, cap=-28 - lacet,
+                           echelle_embleme=0.66, inverse=sud, epi=True)
         # tentures tournées vers la caméra : direction du monde à 212° (sud-ouest), ramenée dans le plan du bourg
         a = math.radians(212 - lacet)
         normales = ((-1, 0, hx), (1, 0, hx), (0, -1, hy), (0, 1, hy))
@@ -762,6 +775,50 @@ def bourg(camp, couleurs=True, variante=1):
         o += C.tenture("tenture_tour", camp, 3.0, 5.0, loc=(tx + 2.12 * math.cos(a), ty + 2.12 * math.sin(a), 8.4),
                        rot_z=a + math.pi / 2, graine=3, mat_tringle=m["bois"], pointe=0.12)
     return o, lacet
+
+
+HAMPE = {"locale": None}           # pied du mât de la bannière du dernier bourg construit (repère du bourg)
+
+# bannière animée : (w, h, ax, ay) en px logiques, ancrage au pied du mât ; 6 images ; ondulation de l'étoffe
+DRAPEAU = (28, 26, 5, 16)
+IMAGES_DRAPEAU = 6
+AMPLEUR_DRAPEAU = 3.5
+
+
+def rendre_drapeau(camp, surech=2, echantillons=64, dossier=None):
+    """Bande de 6 images d'une bannière de bourg qui flotte (même mât, même étoffe, mêmes emblèmes, même vent que la
+    bannière cuite des lieux) ; l'onde court du mât vers le bout et la bande boucle sans saut."""
+    w, h, ax, ay = DRAPEAU
+    ppm = 3.6
+    k_ = C.ECHELLE
+    nom = "drapeau-" + camp
+    images = []
+    for k in range(IMAGES_DRAPEAU):
+        C.reinitialiser()
+        C.lumiere_batiment(camp)
+        C.camera_trois_quarts(w * k_ * surech, h * k_ * surech, ppm * k_ * surech, (h - ay) * k_ * surech,
+                              ancre_x_px=ax * k_ * surech)
+        objs = C.drapeau("ban", camp, 4.2, 6.2, 4.1, loc=(0, 0, 0), vent=1.0, cap=-28.0, echelle_embleme=0.66,
+                         inverse=camp == "omeyyades", epi=True, boucle=True, ampleur=AMPLEUR_DRAPEAU,
+                         phase=-2 * math.pi * k / IMAGES_DRAPEAU)
+        ident = "%s-%d" % (nom, k)
+        img, _ = C.rendre_sprite(ident, w * k_, h * k_, objs, ombre=False, surech=surech, echantillons=echantillons,
+                                 contour=0.5, epaisseur_contour=1)
+        C.controle_camp(img, ident, camp, 0.3)
+        if camp == "angleterre":
+            C.controle_sans_bleu(img, ident)
+        images.append(img)
+    if len(images) != IMAGES_DRAPEAU:
+        raise C.RefusRendu("%s : %d images" % (nom, len(images)))
+    bande = C.bande(images)
+    if dossier:
+        os.makedirs(dossier, exist_ok=True)
+        bande.save(os.path.join(dossier, nom + ".png"), optimize=True)
+        return os.path.join(dossier, nom + ".png")
+    chemin, src = C.chemin_campagne(nom + ".png")
+    C.sauver_png(bande, chemin)
+    C.maj_manifeste({nom: C.entree(src, w, h, ax, ay, IMAGES_DRAPEAU)})
+    return chemin
 
 
 def plateforme(taille_px, centre, rx, ry, graine=3):
@@ -836,10 +893,11 @@ def nappe_brume(W, H, cx, cy, graine=41):
     return Image.fromarray(np.dstack([np.clip(rgb, 0, 235), a * 255]).astype(np.uint8), "RGBA")
 
 
-def rendre_lieu(camp, surech=2, echantillons=64, variante=1):
+def rendre_lieu(camp, surech=2, echantillons=64, variante=1, banniere=True, dossier=None):
     taille, ancre, ppm = 80, 16, 3.6
     px = taille * C.ECHELLE
-    nom = "lieu-" + camp + ("-%d" % variante if variante > 1 else "")
+    nom = "lieu-" + camp + ("-%d" % variante if variante > 1 else "") + ("" if banniere else "-nu")
+    hampe = None
     if camp == "brume":
         # nappe plus large que les bourgs : 180 × 100 px logiques, ancrée sous le corps du bourg qu'elle cache ; « bas » :
         # bas visible de la nuée depuis l'ancrage (le jeu y cale le nom du lieu)
@@ -858,8 +916,14 @@ def rendre_lieu(camp, surech=2, echantillons=64, variante=1):
         C.lumiere_batiment(camp if camp in C.CAMPS else "france")
         C.camera_trois_quarts(px * surech, px * surech, ppm * C.ECHELLE * surech, ancre * C.ECHELLE * surech)
         C.sol_capteur(60)
-        objs, lacet = bourg(camp, variante=variante)
-        C.pivot("bourg", objs, lacet, (0, 3.2, 0))
+        objs, lacet = bourg(camp, variante=variante, banniere=banniere)
+        pv = C.pivot("bourg", objs, lacet, (0, 3.2, 0))
+        if HAMPE["locale"] is not None:
+            from bpy_extras.object_utils import world_to_camera_view
+            bpy.context.view_layer.update()
+            q = world_to_camera_view(bpy.context.scene, bpy.context.scene.camera, pv.matrix_world @ V(HAMPE["locale"]))
+            hampe = [round(q.x * taille, 1), round((1 - q.y) * taille, 1)]
+            C.journal("%s : pied du mât de la bannière (hampe) en %s px logiques" % (nom, hampe))
         img, _ = C.rendre_sprite(nom, px, px, objs, surech=surech, echantillons=echantillons, contour=0.5,
                                  epaisseur_contour=1, force_ombre=0.6, pres=0.06)
         # aire de terre claire sous le bourg : centre au milieu du bourg (3,2 m au nord de l'ancre)
@@ -871,7 +935,7 @@ def rendre_lieu(camp, surech=2, echantillons=64, variante=1):
         a_plat = np.array(plat)[..., 3] / 255.0
         plat.alpha_composite(img)
         img = plat
-        C.controle_camp(img, nom, camp, 0.08)
+        C.controle_camp(img, nom, camp, 0.08 if banniere else 0.04)
         # masques de contrôle pour verifier.py : R = corps du bourg (opaque), G = aire de terre nue tout autour (sans le
         # bourg ni son ombre, à moins de 14 px rendus du bourg) : le bourg doit se détacher de ce qui l'entoure à l'écran
         corps = a_bourg > 0.8
@@ -880,15 +944,45 @@ def rendre_lieu(camp, surech=2, echantillons=64, variante=1):
         Image.fromarray(np.dstack([corps * 255, aire * 255, np.zeros_like(a_bourg)]).astype(np.uint8), "RGB").save(
             os.path.join(C.CACHE, "controle-lieu-%s.png" % nom))
     C.controle_bords(img, nom)
+    if dossier:
+        os.makedirs(dossier, exist_ok=True)
+        img.save(os.path.join(dossier, nom + ".png"), optimize=True)
+        C.journal("essai écrit dans %s (hampe %s)" % (dossier, hampe))
+        return os.path.join(dossier, nom + ".png")
     chemin, src = C.chemin_campagne(nom + ".png")
     C.sauver_png(img, chemin)
-    C.maj_manifeste({nom: C.entree(src, taille, taille, taille // 2, taille - ancre)})
+    e = C.entree(src, taille, taille, taille // 2, taille - ancre)
+    entrees = {nom: e}
+    if hampe:
+        e["hampe"] = hampe
+        cuit = nom[:-3] if nom.endswith("-nu") else None
+        man = C.lire_manifeste()
+        if cuit and cuit in man:                 # même bourg, même caméra : le lieu d'avant a la même hampe
+            man[cuit]["hampe"] = hampe
+            entrees[cuit] = man[cuit]
+    C.maj_manifeste(entrees)
     return chemin
+
+
+LIEUX_NUS = (("france", 1), ("france", 2), ("france", 3), ("angleterre", 1), ("omeyyades", 1))
 
 
 def main(args):
     essai = "--essai" in args
     args = [a for a in args if a != "--essai"]
+    dossier = None
+    if "--dossier" in args:
+        i = args.index("--dossier")
+        dossier = args[i + 1]
+        args = args[:i] + args[i + 2:]
+    if "drapeaux" in args or "lieux-nus" in args:
+        if "drapeaux" in args:
+            for camp in ("france", "angleterre", "omeyyades"):
+                rendre_drapeau(camp, dossier=dossier)
+        if "lieux-nus" in args:
+            for camp, v in LIEUX_NUS:
+                rendre_lieu(camp, variante=v, banniere=False, dossier=dossier)
+        return
     if "--apercu" in args:
         i = args.index("--apercu")
         apercu(args[i + 1])

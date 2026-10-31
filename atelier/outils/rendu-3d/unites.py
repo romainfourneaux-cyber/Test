@@ -19,6 +19,7 @@ Usage : python3 atelier/outils/rendu-3d/unites.py [nom ...] [--images N] [--doss
               même w, h, ax, ay et face que la bande de marche (contrôlé). Une figurine qui tombe est recalée dans son
               image (au plus juste) si elle en sortirait ; une figurine qui frappe ne bouge pas (ses pieds restent sur
               l'ancrage) : si elle sortait de l'image, le rendu est refusé.
+  --installer D --bande B : écrit dans jeu/ (et au manifeste) les bandes B d'un essai déjà regardé (dossier D).
   --planche F --bande B : planche de la bande B, chaque troupe grossie avec sa bande de marche au-dessus (même
               ancrage) ; --source D lit les bandes neuves dans D (essai --dossier) au lieu de jeu/.
   --planche F : planche de contrôle (sans Blender) : les troupes posées sur la route d'un terrain, à leur taille en jeu
@@ -248,21 +249,8 @@ def caler_dans_image(nom, objs, pv, lw, lh, ppm, surech, deplacer=True, marge=MA
 
 
 def eteindre_bleus(img, nom):
-    """Camp anglais, figurine couchée ou renversée : l'acier tourné vers le ciel y renvoie le bleu du ciel. Les pixels
-    bleus (teinte 200-240°, saturation > 0,12) sont ramenés au gris chaud de la maille (saturation 0,06, teinte 30°),
-    valeur gardée : pas de bleu chez les Anglais, sans toucher au reste de l'image."""
-    import numpy as np
-    from PIL import Image
-    a = np.array(img.convert("RGBA"), dtype=np.float32)
-    h, sat, v, al = C._hsv(img)
-    m = (h >= 195) & (h <= 245) & (sat > 0.12) & (al > 0.02)
-    n = int(m.sum())
-    if n:
-        vv = v[m] * 255.0
-        gris = np.stack([vv, vv * 0.97, vv * 0.94], axis=-1)       # gris chaud (teinte d'environ 30°)
-        a[..., :3][m] = gris
-        C.journal("%s : %d pixels bleutés (reflet du ciel sur l'acier) ramenés au gris chaud" % (nom, n))
-    return Image.fromarray(np.clip(a, 0, 255).astype(np.uint8), "RGBA")
+    """Camp anglais, figurine couchée ou renversée : voir commun.eteindre_bleus."""
+    return C.eteindre_bleus(img, nom)
 
 
 def rendre_geste(nom, bande, surech=2, dossier=None, echantillons=64):
@@ -311,19 +299,45 @@ def rendre_geste(nom, bande, surech=2, dossier=None, echantillons=64):
         C.sauver_png(img, chemin) if chemin.startswith(C.RACINE) else img.save(chemin, optimize=True)
         C.journal("essai écrit dans %s (manifeste inchangé)" % chemin)
         return chemin
-    marche = C.lire_manifeste().get(nom)
-    C.sauver_sprite(sortie, img, None, lw, lh, lw // 2, lh - ancre, IMAGES_GESTE)
-    e = C.lire_manifeste()[sortie]
-    if sens == "gauche":
-        e["face"] = "gauche"
+    marche = C.lire_manifeste()[nom]
+    if (marche["w"], marche["h"], marche["ax"], marche["ay"]) != (lw, lh, lw // 2, lh - ancre) or \
+            marche.get("face", "droite") != sens:
+        raise C.RefusRendu("%s : la bande de marche n'a pas le cadrage attendu" % nom)
+    return ecrire_geste(nom, bande, img)
+
+
+def ecrire_geste(nom, bande, img):
+    """Écrit une bande de geste dans jeu/ et son entrée du manifeste : w, h, ax, ay et face repris de la marche
+    (contrôlé), 4 images, 2 px transparents au bord de chaque image."""
+    import numpy as np
+    marche = C.lire_manifeste()[nom]
+    lw, lh = marche["w"], marche["h"]
+    sortie = "%s-%s" % (nom, bande)
+    if img.size != (IMAGES_GESTE * lw * C.ECHELLE, lh * C.ECHELLE):
+        raise C.RefusRendu("%s : taille %s, attendu %d images de %d × %d" % (sortie, img.size, IMAGES_GESTE, lw * 2, lh * 2))
+    a = np.array(img.convert("RGBA"))[..., 3]
+    fw = a.shape[1] // IMAGES_GESTE
+    for k in range(IMAGES_GESTE):
+        C.controle_bords(img.crop((k * fw, 0, (k + 1) * fw, a.shape[0])), "%s-%d" % (sortie, k))
+    C.sauver_sprite(sortie, img, None, lw, lh, marche["ax"], marche["ay"], IMAGES_GESTE)
+    if marche.get("face"):
+        e = C.lire_manifeste()[sortie]
+        e["face"] = marche["face"]
         C.maj_manifeste({sortie: e})
-    if marche:
-        for cle in ("w", "h", "ax", "ay"):
-            if e[cle] != marche[cle]:
-                raise C.RefusRendu("%s : %s = %s, la marche a %s" % (sortie, cle, e[cle], marche[cle]))
-        if e.get("face", "droite") != marche.get("face", "droite"):
-            raise C.RefusRendu("%s : face différente de la marche" % sortie)
     return C.chemin_td(sortie + ".png")[0]
+
+
+def installer_gestes(dossier, bande):
+    """Installe dans jeu/ les bandes d'un essai (--dossier) déjà regardé sur sa planche, sans les rendre une seconde fois
+    (même code, même graine : même image) ; contrôles de ecrire_geste."""
+    from PIL import Image
+    faits = []
+    for nom in GESTES:
+        chemin = os.path.join(dossier, "%s-%s.png" % (nom, bande))
+        if os.path.exists(chemin):
+            faits.append(ecrire_geste(nom, bande, Image.open(chemin).convert("RGBA")))
+    C.journal("bandes « %s » installées depuis %s : %d" % (bande, dossier, len(faits)))
+    return faits
 
 
 def rendre_unite(nom, nb_images=IMAGES, surech=2, dossier=None):
@@ -611,6 +625,9 @@ def main(args):
         i = args.index("--dossier")
         dossier = args[i + 1]
         args = args[:i] + args[i + 2:]
+    if bande and "--installer" in args:
+        installer_gestes(args[args.index("--installer") + 1], bande)
+        return
     if bande:
         for nom in (args or GESTES):
             if nom not in GESTES:

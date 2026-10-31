@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Effets du champ de bataille : projectiles (flèche, carreau, pierre), nuage de poussière, éclats.
 
-Usage : python3 atelier/outils/rendu-3d/effets.py [nom ...]
+Usage : python3 atelier/outils/rendu-3d/effets.py [nom ...] [--dossier D]   (D : essai, sans toucher à jeu/)
 Sorties (jeu/assets/images/td/) :
   effet-fleche.png 24 × 6 px logiques, effet-carreau.png 32 × 8, effet-pierre.png 14 × 14 : projectiles pointés vers
   +X (le jeu les tourne selon leur trajectoire), ancrage au centre ;
@@ -9,6 +9,11 @@ Sorties (jeu/assets/images/td/) :
   8 px ; le jeu s'en sert aussi, réduit, pour la bouffée d'un coup porté à un soldat (sans sang) ;
   effet-eclats.png : bande de 4 images de 32 × 32 (éclats de bois et de pierre qui s'écartent), ancrage au centre :
   pierres de trébuchet et brèches seulement ; sans trait de contour, bords sans frange sombre.
+  effet-cratere.png : bande de 2 images de 24 × 16 (image 0 : sur l'herbe, image 1 : sur la route), ancrage au centre :
+  trou d'une pierre de trébuchet (1,7 m) vu de trois quarts, terre retournée, bord clair en bourrelet, centre sombre,
+  mottes ; le pourtour se fond dans le sol (alpha qui tombe à 0) ; posé une fois dans la couche de sol du champ.
+  effet-effondrement.png : bande de 8 images de 96 × 96, ancrage bas-centre moins 12 px : gros nuage de poussière
+  dense (0,85 au plus) qui monte en gonflant, pierres de la muraille projetées puis retombées ; fin de bataille.
 Même lumière que tout le reste ; projectiles sans ombre (ils sont en l'air).
 """
 import math
@@ -215,6 +220,137 @@ def eclats(k, n=4):
     return objs
 
 
+def mat_terre(nom, sombre, clair, herbe=None):
+    """Terre retournée du cratère : couleur par sommet (attribut « Col », du centre sombre au bourrelet clair, tachée
+    d'herbe arrachée), grain de boue (photo brown_mud en relief), alpha par sommet (attribut « Alpha ») : le bord se
+    fond dans le sol."""
+    m, nt, p = C.nouveau_materiau(nom)
+    p.inputs["Roughness"].default_value = 1.0
+    p.inputs["Specular IOR Level"].default_value = 0.1
+    col = nt.nodes.new("ShaderNodeAttribute")
+    col.attribute_name = "Col"
+    al = nt.nodes.new("ShaderNodeAttribute")
+    al.attribute_name = "Alpha"
+    tex = C.tex_ph("brown_mud", "diff")
+    if tex:
+        it = nt.nodes.new("ShaderNodeTexImage")
+        it.image = C.image(tex)
+        tc = nt.nodes.new("ShaderNodeTexCoord")
+        mp = nt.nodes.new("ShaderNodeMapping")
+        mp.inputs["Scale"].default_value = (1.6, 1.6, 1.6)
+        nt.links.new(tc.outputs["Object"], mp.inputs["Vector"])
+        nt.links.new(mp.outputs["Vector"], it.inputs["Vector"])
+        mx = nt.nodes.new("ShaderNodeMix")
+        mx.data_type = "RGBA"
+        mx.blend_type = "OVERLAY"
+        C._entree(mx, "Factor", "VALUE").default_value = 0.45
+        nt.links.new(col.outputs["Color"], C._entree(mx, "A", "RGBA"))
+        nt.links.new(it.outputs["Color"], C._entree(mx, "B", "RGBA"))
+        nt.links.new(C._sortie(mx, "RGBA"), p.inputs["Base Color"])
+    else:
+        nt.links.new(col.outputs["Color"], p.inputs["Base Color"])
+    nt.links.new(al.outputs["Fac"], p.inputs["Alpha"])
+    try:
+        m.surface_render_method = "BLENDED"
+    except Exception:
+        pass
+    return m
+
+
+def cratere(k):
+    """Cratère (image 0 : herbe, 1 : route) : cuvette de 1,7 m creusée sous le sol (le fond à 0,24 m), bourrelet de
+    terre rejetée (0,1 m), le tout irrégulier (bruit radial fixe) ; centre sombre, paroi brune, bourrelet clair ; sur
+    l'herbe, quelques touffes arrachées vertes sur le bourrelet ; 7 mottes posées autour."""
+    import numpy as np
+    rnd = random.Random(23 + k)
+    R = 0.85
+    route = k == 1
+    teintes = {"fond": "#2f2418" if not route else "#3d3022", "paroi": "#5a4430" if not route else "#6e5a42",
+               "bord": "#86694a" if not route else "#a89272", "herbe": "#5b6a32"}
+    fond, paroi, bord, herbe = (np.array(C.couleur(teintes[n])[:3]) for n in ("fond", "paroi", "bord", "herbe"))
+    na, nr = 48, 22
+    bosses = [rnd.uniform(-1, 1) for _ in range(6)]
+    verts, cols, alphas = [], [], []
+    for i in range(nr + 1):
+        r = 1.4 * R * i / nr
+        for a_ in range(na):
+            a = 2 * math.pi * a_ / na
+            irr = 1 + 0.09 * sum(b * math.sin((j + 2) * a + j) for j, b in enumerate(bosses)) / 3
+            rr = r / irr
+            u = rr / R
+            z = -0.24 * (1 - u * u) if u < 1 else 0.0
+            z += 0.1 * math.exp(-((u - 1.02) / 0.2) ** 2) * (1 + 0.3 * math.sin(5 * a + k))
+            verts.append((r * math.cos(a), r * math.sin(a) * 1.0, z))
+            if u < 0.55:
+                c = fond
+            elif u < 0.95:
+                c = fond + (paroi - fond) * (u - 0.55) / 0.4
+            else:
+                c = paroi + (bord - paroi) * min(1.0, (u - 0.95) / 0.12)
+            if not route and 1.0 < u < 1.3 and math.sin(7 * a + 1.3) > 0.55:
+                c = c * 0.4 + herbe * 0.6               # herbe arrachée sur le bourrelet
+            cols.append(tuple(c) + (1.0,))
+            alphas.append(max(0.0, min(1.0, (1.38 - u) / 0.28)))
+    faces = []
+    for i in range(nr):
+        for a_ in range(na):
+            b0, b1 = i * na, (i + 1) * na
+            faces.append((b0 + a_, b0 + (a_ + 1) % na, b1 + (a_ + 1) % na, b1 + a_))
+    me = bpy.data.meshes.new("cratere")
+    me.from_pydata(verts, [], faces)
+    ca = me.color_attributes.new("Col", "FLOAT_COLOR", "POINT")
+    aa = me.attributes.new("Alpha", "FLOAT", "POINT")
+    for i, c in enumerate(cols):
+        ca.data[i].color = c
+        aa.data[i].value = alphas[i]
+    for f in me.polygons:
+        f.use_smooth = True
+    ob = C.lier(bpy.data.objects.new("cratere", me))
+    me.materials.append(mat_terre("terre_cratere%d" % k, teintes["fond"], teintes["bord"]))
+    objs = [ob]
+    motte = C.mat_ph("motte%d" % k, "brown_mud", echelle_m=0.5, cible=teintes["bord"], contraste=1.2, bosse=0.6)
+    for i in range(7):
+        a = 2 * math.pi * i / 7 + rnd.uniform(-0.4, 0.4)
+        d = R * rnd.uniform(1.05, 1.32)
+        L = rnd.uniform(0.09, 0.15)
+        o = C.boite("motte%d" % i, L, L * 0.8, L * 0.6, (d * math.cos(a), d * math.sin(a), 0.0), motte)
+        C.biseau(o, 0.025)
+        o.rotation_euler = (0, 0, rnd.uniform(0, 3))
+        objs.append(o)
+    return objs
+
+
+def effondrement(k, n=8):
+    """Effondrement d'une place forte (image k sur n) : gros nuage de poussière dense qui monte en gonflant puis
+    pâlit (opacité 0,85 puis décroissante), pierres de la muraille projetées en gerbe puis retombées au sol."""
+    rnd = random.Random(31)
+    t = (k + 0.5) / n
+    opa = 0.85 * min(1.0, (t / 0.25)) * (1 - max(0.0, t - 0.55) / 0.55)
+    m = mat_poussiere(max(0.08, opa), 0.55 + 0.35 * t)
+    objs = []
+    for i in range(22):
+        a = 2 * math.pi * i / 22 + rnd.uniform(-0.3, 0.3)
+        d = rnd.uniform(0.1, 1.0) * (1.2 + 2.6 * t)
+        r = rnd.uniform(0.7, 1.15) * (1.0 + 1.6 * t)
+        z = r * 0.7 + (0.4 + 2.2 * t) * rnd.random() * (1 if i % 3 else 0.5)
+        o = C.sphere("nuage%d" % i, r, (d * math.cos(a), d * math.sin(a) * 0.6, z), m, subdiv=3, echelle=(1.0, 1.0, 0.82))
+        o.visible_shadow = False
+        objs.append(o)
+    pierre = C.mat_ph("pierre_eff", "rustic_stone_wall", echelle_m=0.6, cible="#8f8574", contraste=1.3, bosse=0.6)
+    for i in range(9):
+        a = 2 * math.pi * i / 9 + rnd.uniform(-0.3, 0.3)
+        v = rnd.uniform(0.6, 1.0)
+        tt = min(t, 0.75)
+        dx, dy = math.cos(a) * v * tt * 4.2, math.sin(a) * v * tt * 2.0
+        z = max(0.18, 1.5 + rnd.uniform(3.0, 5.0) * tt - 8.0 * tt * tt)
+        L = rnd.uniform(0.35, 0.6)
+        o = C.boite("bloc%d" % i, L, L * 0.75, L * 0.6, (dx, dy, z), pierre, base=False)
+        C.biseau(o, 0.05)
+        o.rotation_euler = (rnd.uniform(0, 6), rnd.uniform(0, 6), rnd.uniform(0, 6) + 4 * tt)
+        objs.append(o)
+    return objs
+
+
 # nom -> (fabrique(k), (w, h) logiques, images, (ax, ay) logiques, px/m, ombre)
 EFFETS = {
     "effet-fleche": (lambda k: fleche(False), (24, 6), 1, (12, 3), 22.0, False),
@@ -222,6 +358,8 @@ EFFETS = {
     "effet-pierre": (lambda k: pierre(), (14, 14), 1, (7, 7), 15.0, False),
     "effet-poussiere": (poussiere, (48, 48), 5, (24, 40), 13.0, False),
     "effet-eclats": (eclats, (32, 32), 4, (16, 16), 10.5, False),
+    "effet-cratere": (cratere, (24, 16), 2, (12, 8), 11.0, False),
+    "effet-effondrement": (effondrement, (96, 96), 8, (48, 84), 8.0, False),
 }
 
 
@@ -262,13 +400,16 @@ def sans_frange(img):
     return Image.fromarray(np.dstack([np.clip(rgb, 0, 255), al]).astype(np.uint8), "RGBA")
 
 
-def rendre_effet(nom):
+def rendre_effet(nom, dossier=None):
     fab, (lw, lh), n, (ax, ay), ppm, ombre = EFFETS[nom]
     images = []
     surech = 4 if lw <= 32 else 2
     for k in range(n):
-        # projectiles et éclats : l'ancrage (centre) correspond au point à 1 m du sol ; poussière : au sol
-        if nom == "effet-poussiere":
+        # projectiles et éclats : l'ancrage (centre) correspond au point à 1 m du sol ; poussière, cratère et
+        # effondrement : au sol
+        if nom in ("effet-cratere", "effet-effondrement"):
+            scene(lw, lh, ppm, lh - ay, surech=surech)
+        elif nom == "effet-poussiere":
             scene(lw, lh, ppm, lh - ay, surech=surech)
             C.sol_capteur(10)
         else:
@@ -278,18 +419,26 @@ def rendre_effet(nom):
         projectile = nom in ("effet-fleche", "effet-carreau")
         img, _ = C.rendre_sprite("%s-%d" % (nom, k), lw * C.ECHELLE, lh * C.ECHELLE, objs, ombre=ombre, surech=surech,
                                  echantillons=48, contour=0.0, epaisseur_contour=1,
-                                 net=0.0 if nom in ("effet-poussiere", "effet-eclats") else 0.6, pres=0.2,
-                                 force_ombre=0.35, controle=False)
+                                 net=0.0 if nom in ("effet-poussiere", "effet-eclats", "effet-effondrement") else 0.6,
+                                 pres=0.2, force_ombre=0.35, controle=False)
         if projectile:
             img = adoucir_reflets(img)          # un reflet sur la plume ne brûle pas au blanc
-        if nom == "effet-eclats":
+        if nom in ("effet-eclats", "effet-cratere", "effet-effondrement"):
             img = sans_frange(img)
         C.controle_bords(img, "%s-%d" % (nom, k))
         C.controle_blancs(img, "%s-%d" % (nom, k))
         if nom == "effet-poussiere":
             # jamais opaque (0,45 au plus) : la route et les troupes se voient à travers le nuage
             img.putalpha(img.split()[3].point(lambda v: min(v, int(OPACITE_POUSSIERE * 255))))
+        if nom == "effet-effondrement":
+            img.putalpha(img.split()[3].point(lambda v: min(v, int(0.85 * 255))))
         images.append(img)
+    if len(images) != n:
+        raise C.RefusRendu("%s : %d images au lieu de %d" % (nom, len(images), n))
+    if dossier:
+        os.makedirs(dossier, exist_ok=True)
+        C.bande(images).save(os.path.join(dossier, nom + ".png"), optimize=True)
+        return os.path.join(dossier, nom + ".png")
     C.sauver_sprite(nom, C.bande(images), None, lw, lh, ax, ay, n)
 
 
@@ -314,9 +463,14 @@ def mesurer_bande(nom, seuil=26):
 
 
 def main(args):
+    dossier = None
+    if "--dossier" in args:
+        i = args.index("--dossier")
+        dossier = args[i + 1]
+        args = args[:i] + args[i + 2:]
     for nom in (args or list(EFFETS)):
-        rendre_effet(nom)
-        if nom in ("effet-poussiere", "effet-eclats"):
+        rendre_effet(nom, dossier=dossier)
+        if nom in ("effet-poussiere", "effet-eclats", "effet-effondrement") and not dossier:
             mesurer_bande(nom)
 
 

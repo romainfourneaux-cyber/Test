@@ -1108,3 +1108,23 @@ html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
     border: 2px solid var(--encre); border-radius: 4px; box-shadow: 0 0 0 3px var(--or), 0 0 0 5px var(--encre), 0 14px 30px rgba(0,0,0,.6); opacity: .96;
   }
 }
+
+/* ---------- Champ : fin de bataille (effondrement d'une place, voile de la victoire, champ de la retraite) ----------
+   Posés par bataille.js (finMiseEnScene) quand la bataille se termine ; rien n'est peint en plein écran dans la toile.
+   Secousse forte (6 px, 0,45 s) sur la toile, une seule fois ; voile doré qui se pose en 1,2 s puis reste ; à la
+   retraite, la toile désaturée et assombrie. Animations coupées : ni secousse ni voile, la désaturation sans transition. */
+.td-cadre canvas.td-effondre { animation: td-effondre .45s ease-out; }
+@keyframes td-effondre {
+  0%, 100% { transform: none; } 14% { transform: translate(-6px, 4px); } 32% { transform: translate(5px, -4px); }
+  52% { transform: translate(-3px, 3px); } 74% { transform: translate(2px, -1px); }
+}
+.td-voile { position: absolute; inset: 0; pointer-events: none; opacity: 0;
+  background: radial-gradient(ellipse at 50% 42%, rgba(236, 200, 110, .34), rgba(201, 162, 74, .12) 55%, rgba(201, 162, 74, 0) 82%);
+  animation: td-voile 1.2s ease-out .5s forwards; }
+@keyframes td-voile { to { opacity: 1; } }
+.td-cadre canvas.td-defaite { filter: saturate(.45) brightness(.78); }
+.td-cadre canvas.td-defaite.td-fondu { transition: filter .8s ease-out; }
+@media (prefers-reduced-motion: reduce) {
+  .td-cadre canvas.td-effondre { animation: none; }
+  .td-voile { animation: none; opacity: 1; }
+}

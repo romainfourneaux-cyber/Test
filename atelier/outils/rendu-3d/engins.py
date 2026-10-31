@@ -63,10 +63,12 @@ def frene(nom="frene"):
     return C.mat_ph(nom, "medieval_wood", echelle_m=1.0, cible="#c4aa7c", contraste=1.1, bosse=0.3)
 
 
-def baliste(nom, loc, mats, echelle=1.0, lacet=0.0, arc=1.0):
+def baliste(nom, loc, mats, echelle=1.0, lacet=0.0, arc=1.0, tension=1.0, carreau=True):
     """Baliste sur affût : arbrier (fût), deux bras arqués en frêne clair, cordes sombres, carreau en place, chevalet à
     trois pieds. arc : allonge les bras (silhouette en X lisible : envergure ≥ 55 % de la largeur du sprite).
-    Le fût vise +X avant rotation (lacet)."""
+    Le fût vise +X avant rotation (lacet).
+    tension (bande de tir) : 1 = tendue (bras recourbés vers l'arrière, cordes ramenées au déclencheur), 0 = détendue
+    (bras redressés vers l'avant, corde tendue droite entre leurs bouts) ; carreau : le trait est en place."""
     e = echelle
     x0, y0, z0 = loc
     objs = []
@@ -83,23 +85,30 @@ def baliste(nom, loc, mats, echelle=1.0, lacet=0.0, arc=1.0):
     objs.append(poutre(nom + "_fut", arr, av, 0.2 * e, clair, 0.16 * e))
     # bras (arc) : deux demi-arcs dans le plan horizontal, à l'avant, recourbés vers l'arrière (silhouette en X)
     tete_bras = av + V((-0.3 * e, 0, 0.05 * e))
+    courbe = 0.15 + 0.35 * tension               # recul des bouts des bras (0,5 tendue, 0,15 détendue)
+    # point où les cordes se rejoignent : au déclencheur (tendue), juste derrière les bouts des bras (détendue)
+    noeud = (tete_bras + V((-courbe * e * arc * 0.8, 0, 0.1 * e))).lerp(arr + V((0.7 * e, 0, 0.12 * e)), tension)
     for cote in (-1, 1):
-        pts = [tete_bras + V((-0.5 * e * t * t * arc, cote * 1.15 * e * t * arc, 0.12 * e * t)) for t in (0.0, 0.35, 0.7, 1.0)]
+        pts = [tete_bras + V((-courbe * e * t * t * arc, cote * 1.15 * e * t * arc, 0.12 * e * t)) for t in (0.0, 0.35, 0.7, 1.0)]
         for k in range(3):
             objs.append(poutre(nom + "_bras%d_%d" % (cote, k), pts[k], pts[k + 1], 0.15 * e * (1.0 - 0.2 * k), clair))
-        objs.append(poutre(nom + "_corde%d" % cote, pts[-1], arr + V((0.7 * e, 0, 0.12 * e)), 0.035 * e, corde))
+        objs.append(poutre(nom + "_corde%d" % cote, pts[-1], noeud, 0.035 * e, corde))
     objs.append(C.boite(nom + "_cadre", 0.35 * e, 0.7 * e, 0.5 * e, tete_bras, fer, base=False))
     # carreau
-    objs.append(poutre(nom + "_carreau", arr + V((0.7 * e, 0, 0.16 * e)), av + V((0.5 * e, 0, 0.12 * e)), 0.05 * e, b))
+    if carreau:
+        objs.append(poutre(nom + "_carreau", arr + V((0.7 * e, 0, 0.16 * e)), av + V((0.5 * e, 0, 0.12 * e)), 0.05 * e, b))
     objs.append(C.boite(nom + "_treuil", 0.3 * e, 0.6 * e, 0.3 * e, arr + V((0.15 * e, 0, 0)), b, base=False))
     pv = C.pivot(nom + "_pv", objs, lacet, (x0, y0, z0))
     return objs + [pv]
 
 
 # ---------------------------------------------------------------- trébuchet
-def trebuchet(nom, loc, mats, echelle=1.0, contrepoids=True, lacet=0.0, bras_angle=35.0):
+def trebuchet(nom, loc, mats, echelle=1.0, contrepoids=True, lacet=0.0, bras_angle=35.0, pierre=True, fronde=(0.3, -1.6)):
     """Trébuchet : deux montants en A sur une semelle, axe, verge (bras) inclinée, contrepoids (caisse) ou cordes de
-    traction (perrière), fronde pendante. La verge lance vers +X."""
+    traction (perrière), fronde pendante. La verge lance vers +X.
+    Bande de tir : bras_angle (degrés au-dessus de l'horizontale, vers l'arrière ; 90 = verge verticale, au-delà elle
+    passe vers l'avant), fronde = (dx, dz) de la fronde depuis le bout de la verge (avant échelle), pierre = la pierre
+    est dans la fronde (False après le lâcher). Le contrepoids pend toujours sous le bout du petit bras."""
     e = echelle
     objs = []
     b, fer = mats["bois"], mats["fer"]
@@ -132,9 +141,13 @@ def trebuchet(nom, loc, mats, echelle=1.0, contrepoids=True, lacet=0.0, bras_ang
         for k in range(4):
             yy = (k - 1.5) * 0.18 * e
             objs.append(poutre(nom + "_corde%d" % k, cp + V((0, yy, 0)), V((cp.x - 0.3 * e + 0.2 * k * e, yy, 0.05)), 0.03 * e, corde))
-    # fronde pendante et pierre
-    objs.append(poutre(nom + "_fronde", bout, bout + V((0.3 * e, 0, -1.6 * e)), 0.03 * e, corde))
-    objs.append(C.sphere(nom + "_pierre", 0.28 * e, bout + V((0.3 * e, 0, -1.75 * e)), mats["pierre"], subdiv=2))
+    # fronde (pendante au repos) et pierre au bout
+    fx, fz = fronde
+    fin = bout + V((fx * e, 0, fz * e))
+    objs.append(poutre(nom + "_fronde", bout, fin, 0.03 * e, corde))
+    if pierre:
+        d_f = V((fx, 0, fz)).normalized()
+        objs.append(C.sphere(nom + "_pierre", 0.28 * e, fin + d_f * 0.15 * e, mats["pierre"], subdiv=2))
     pv = C.pivot(nom + "_pv", objs, lacet, loc)
     return objs + [pv]
 

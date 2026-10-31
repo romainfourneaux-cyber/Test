@@ -677,14 +677,20 @@ def lance(nom, mats, main, direction, longueur=2.6, recul=0.9, fanion=None, fer=
     return objs
 
 
-def arc(nom, mats, main, echelle=1.0):
-    """Arc long tenu à la main gauche, corde comprise."""
+def arc(nom, mats, main, echelle=1.0, tire=None):
+    """Arc long tenu à la main gauche, corde comprise. tire : point où la main droite tient la corde (arc bandé : les
+    branches plient davantage et une flèche est encochée) ; None : corde au repos."""
     pts = []
+    pli = 0.2 if tire is not None else 0.13
     for k in range(9):
         t = (k / 8 - 0.5) * 2
-        pts.append(V(main) + V((0.13 * (1 - t * t), 0, t * 0.85)) * echelle)
+        pts.append(V(main) + V((pli * (1 - t * t), 0, t * (0.8 if tire is not None else 0.85))) * echelle)
     objs = [_tube(nom + "_arc", pts, [0.016] * 4 + [0.022] + [0.016] * 4, mats["bois"], segments=6)]
-    objs.append(_tube(nom + "_corde", [pts[0], V(main) + V((-0.14, 0, 0)) * echelle, pts[-1]], [0.006] * 3, mats["fer"], segments=4))
+    milieu = V(tire) if tire is not None else V(main) + V((-0.14, 0, 0)) * echelle
+    objs.append(_tube(nom + "_corde", [pts[0], milieu, pts[-1]], [0.006] * 3, mats["fer"], segments=4))
+    if tire is not None:
+        d = (V(main) - milieu).normalized()
+        objs.append(_tube(nom + "_fleche", [milieu, milieu + d * 0.95 * echelle], [0.012, 0.012], mats["bois"], segments=5))
     return objs
 
 
@@ -784,7 +790,7 @@ def basculer(racine, angle_y=0.0, angle_x=0.0, centre=(0, 0, 0)):
 
 # ---------------------------------------------------------------- soldats complets
 def soldat(nom, camp, role, phase=0.0, lacet=-22.0, echelle=1.0, recul_y=0.1, fine=None, plafond=None, chute=None,
-           coup=None):
+           coup=None, tir=None):
     """Construit un soldat et renvoie ses objets (déjà orientés et posés à l'origine).
 
     role : 'fantassin' (épée + écu en amande), 'pietaille' (lance à fanion + écu), 'homme_armes' (lourd),
@@ -808,7 +814,9 @@ def soldat(nom, camp, role, phase=0.0, lacet=-22.0, echelle=1.0, recul_y=0.1, fi
     (bord haut de l'image moins une marge) : la lance de 2,6 m monte aussi haut que l'image le permet ; si son talon
     devait entrer dans le sol, elle est raccourcie d'autant.
     chute (0 à 3) : image de la bande de chute (table CHUTE) ; coup (0 à 3) : image de la bande de coup (COUP_ARME,
-    COUP_LANCE). Les deux gardent l'échelle, le lacet et le recul de la marche : même taille et même ancrage en jeu."""
+    COUP_LANCE). Les deux gardent l'échelle, le lacet et le recul de la marche : même taille et même ancrage en jeu.
+    tir (archer des tours) : None ou 0 = repos, 1 = arc bandé (main droite à la joue, flèche encochée), 2 = lâcher (main
+    droite rejetée en arrière, corde droite)."""
     if fine is None:
         fine = role != "archer"
     mats = matieres(camp)
@@ -854,7 +862,13 @@ def soldat(nom, camp, role, phase=0.0, lacet=-22.0, echelle=1.0, recul_y=0.1, fi
             bd, angle, pen, jf = COUP_ARME[coup]
             if role == "champion" and coup == 0:
                 bd, angle = (106, 40, 22), 198         # le champion est plus grand : il arme un peu plus bas
+            elif role == "champion" and coup == 3:
+                angle = 60                             # et sa longue lame revient plus bas (elle reste dans l'image)
             d_arme = direction_arme(angle, Y_ARME[coup])
+    if role == "archer" and tir == 1:
+        bd = (-70, 160)                           # coude en arrière, main droite à la joue : la corde est tirée
+    elif role == "archer" and tir == 2:
+        bd = (-80, -60)                           # la flèche est partie : la main droite file vers l'arrière
     j = pose_homme(phase, bras_droit=bd, bras_gauche=bg, amplitude=amp, penche=pen, genou=genou, jambes_fixes=jf,
                    balancement=bal)
     if ligne_chute and not lance_en_main:
@@ -986,7 +1000,7 @@ def soldat(nom, camp, role, phase=0.0, lacet=-22.0, echelle=1.0, recul_y=0.1, fi
         objs += lance(nom, mats, md, V((0.36, -0.05, 1.0)), longueur=1.95, recul=0.5, fanion=camp, taille_fanion=0.9,
                       hampe=hampe)
     if role == "archer":
-        objs += arc(nom, mats, mg, echelle=1.0)
+        objs += arc(nom, mats, mg, echelle=1.0, tire=j["main", -1] if tir == 1 else None)
     if role != "archer":
         if sud:
             r = {"pietaille": 0.33, "homme_armes": 0.42, "champion": 0.44}.get(role, 0.33)

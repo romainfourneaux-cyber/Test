@@ -2,10 +2,22 @@
 """Tours de défense posées sur les emplacements : archers, piquiers, baliste, catapulte (trébuchet), en trois niveaux
 pour la France, et les tours rivales (archers, baliste) de l'Angleterre et des Omeyyades.
 
-Usage : python3 atelier/outils/rendu-3d/tours.py [nom ...]
+Usage : python3 atelier/outils/rendu-3d/tours.py [nom ...] [--dossier D]
   nom : par exemple tour-archers-france-1 (par défaut : toutes les tours du tableau TOURS)
+  --dossier D : essai ; écrit les bandes dans D (avec leur point « tir » dans D/tir.json), sans toucher à jeu/
+        python3 atelier/outils/rendu-3d/tours.py --installer D : écrit dans jeu/ les bandes d'un essai déjà regardé
         python3 atelier/outils/rendu-3d/tours.py --planche [chemin.png]
   planche de contrôle (sans rendu) : carte « moulin » en jeu à l'échelle 1 et 2, fenêtre de 640 px, tours agrandies.
+        python3 atelier/outils/rendu-3d/tours.py --planche-bandes chemin.png [--source D]
+  planche des bandes de tir : chaque tour, son image d'avant (jeu/ ou rien) puis ses images de tir sur l'herbe, ombre
+  portée dessous, croix rouge à l'ancrage et croix jaune au point « tir » ; --source D lit un essai.
+Bandes de tir (une image de plus par geste, rendues dans la même passe et avec la même graine que l'image 0, qui
+remplace l'image d'avant) : trébuchet 4 images (armé, mi-course, verge verticale, lâché : fronde vide), baliste
+3 (tendue, détendue, retour), archers 3 (repos, arc bandé, lâcher), piquiers 3 (repos, piques poussées, retour).
+L'ombre portée n'est pas refaite (une seule par tour : celle de l'image 0, déjà dans jeu/) ; la passe d'ombre de
+l'image 0 donne aussi l'ombre de contact, reprise telle quelle par les images suivantes. Manifeste : frames 3 ou 4 et
+« tir » : [x, y] (px logiques depuis le coin haut-gauche), point de départ du trait relevé sur la scène 3D : pierre
+dans la fronde au moment du lâcher, pointe du carreau, arc de l'archer, fers des piques poussées.
 Sorties : jeu/assets/images/td/tour-<type>-<camp>-<niveau>.png, 70 × 84 px logiques (rendu 140 × 168),
 ancrage = bas-centre moins 12 px (le centre de l'emplacement) ; ombre portée à part : ombre-tour-....png ; entrées du
 manifeste sprites.js ; masques des toits de France dans le cache (controle-toits-<nom>.png, relus par verifier.py).
@@ -54,6 +66,24 @@ CAP = -28.0
 
 LACET_BALISTE = -68.0                     # la baliste vise le bas de l'écran (un peu à droite) : ses bras s'étalent en largeur
 
+# ---------------------------------------------------------------- bandes de tir
+IMAGES_TOUR = {"archers": 3, "piquiers": 3, "baliste": 3, "catapulte": 4}
+# trébuchet, images 1 à 3 : (angle de la verge au-dessus de l'horizontale vers l'arrière, fronde (dx, dz), pierre) ;
+# l'image 0 garde l'angle de repos du niveau et la fronde pendante
+TREBUCHET_TIR = ((68, (-0.9, -1.25), True), (88, (-1.55, 0.15), True), (118, (0.55, -1.5), False))
+BALISTE_TIR = ({"tension": 1.0, "carreau": True}, {"tension": 0.0, "carreau": False}, {"tension": 0.55, "carreau": False})
+PIQUES_TIR = (0.0, 1.0, 0.45)             # piques poussées : part de PIQUE_POUSSEE
+PIQUE_POUSSEE = 24.0                      # degrés : les piques tenues penchent vers l'avant
+IMAGE_TIR = {"archers": 1, "piquiers": 1, "baliste": 0, "catapulte": 2}   # image où relever le point « tir »
+
+
+def trebuchet_tir(k, repos):
+    """Arguments de engins.trebuchet pour l'image k de la bande (0 : armé, angle de repos du niveau)."""
+    if k == 0:
+        return {"bras_angle": repos}
+    a, fronde, pierre = TREBUCHET_TIR[k - 1]
+    return {"bras_angle": a, "fronde": fronde, "pierre": pierre}
+
 
 def mats_tour(camp):
     m = P.matieres(camp, "intact", echelle_tex=0.8)
@@ -71,10 +101,11 @@ def mats_tour(camp):
     return m
 
 
-def archer(camp, loc, lacet=-12.0, echelle=1.5, phase=0.6):
-    """Archer agrandi (× 1,5 : lisible à la taille du jeu), de profil vers +X, arc levé."""
+def archer(camp, loc, lacet=-12.0, echelle=1.5, phase=0.6, tir=0):
+    """Archer agrandi (× 1,5 : lisible à la taille du jeu), de profil vers +X, arc levé ; tir : 0 repos, 1 arc bandé,
+    2 lâcher."""
     objs, pv = F.soldat("archer%.1f%.1f" % (loc[0], loc[1]), camp, "archer", phase=phase, lacet=lacet, echelle=echelle,
-                        recul_y=0.0)
+                        recul_y=0.0, tir=tir)
     pv.location = loc
     return objs + [pv]
 
@@ -115,7 +146,7 @@ def hourd_rond(nom, r, z, m, h=1.5, ouvertures=((-95, 60),)):
 
 
 # ---------------------------------------------------------------- tours d'archers
-def archers_france(niveau):
+def archers_france(niveau, image=0):
     m = mats_tour("france")
     o = []
     if niveau == 1:
@@ -128,7 +159,7 @@ def archers_france(niveau):
         crn = C.creneaux_cercle("crn", r + 0.05, h + 0.7, m["pierre"], nombre=8, h=0.55, ep=0.35)
         crn.location = (0, CY, 0)
         o.append(crn)
-        o += archer("france", (0.15, CY - 0.35, h - 0.05))
+        o += archer("france", (0.15, CY - 0.35, h - 0.05), tir=image)
         o += flamme("france", (0.75, CY + 0.85, h), hauteur_mat=2.7)
         o += tenture_tour("france", (-0.55, CY - r - 0.02, h - 0.25), math.radians(-20), m=m)
         porte_a = -60
@@ -139,7 +170,7 @@ def archers_france(niveau):
         o += hourd_rond("hourd", r, h, m, h=2.0, ouvertures=((-80, 80), (150, 40)))
         # toit d'ardoises bleutées, raide (≥ 45°), débord r + 0,45 (juste au-delà du hourd), épi doré et flamme au faîte
         o += P.cone_uv("toit", r + 0.45 + 0.1, 2.3, (0, CY, h + 2.05), m["toit"], epi=m["or"])
-        o += archer("france", (0.3, CY - r - 0.1, h + 0.1), echelle=1.3, lacet=-25)
+        o += archer("france", (0.3, CY - r - 0.1, h + 0.1), echelle=1.3, lacet=-25, tir=image)
         o += flamme("france", (0.0, CY, h + 2.05 + 2.3 + 0.05), hauteur_mat=1.0, longueur=1.7, hauteur=1.05)
         o += tenture_tour("france", (-0.5, CY - r - 0.05, h - 0.45), math.radians(-18), m=m)
         porte_a = -60
@@ -163,7 +194,7 @@ def archers_france(niveau):
             o.append(C.cylindre("ech%d_cul" % k, 0.05, 0.9, (ex, ey, h - 1.6), m["pierre"], segments=16, rayon_haut=0.58))
             o.append(C.cylindre("ech%d" % k, 0.58, 1.9, (ex, ey, h - 0.7), m["pierre"], segments=16))
             o += P.cone_uv("ech%d_toit" % k, 0.72, 1.6, (ex, ey, h + 1.2), m["toit"], segments=16)
-        o += archer("france", (0.35, CY - r + 0.35, h + 0.05), echelle=1.4)
+        o += archer("france", (0.35, CY - r + 0.35, h + 0.05), echelle=1.4, tir=image)
         ar = math.radians(195)
         o += flamme("france", ((r + 0.25) * math.cos(ar), CY + (r + 0.25) * math.sin(ar), h + 1.2 + 1.6 + 0.05), hauteur_mat=1.1,
                     longueur=1.8, hauteur=1.1)
@@ -179,7 +210,7 @@ def archers_france(niveau):
     return o
 
 
-def archers_angleterre(niveau=1):
+def archers_angleterre(niveau=1, image=0):
     """Tour carrée normande, hourd de bois, toit de tuiles rouges en pavillon ; archer dans l'ouverture du hourd."""
     m = mats_tour("angleterre")
     o = []
@@ -208,7 +239,7 @@ def archers_angleterre(niveau=1):
             o.append(C.boite("hourd_poteau%d%d" % (sx, sy), 0.16, 0.16, 2.1, (sx * R, sy * R, h + 0.07), m["bois"]))
     o.append(C.boite("hourd_poteau_s", 0.16, 0.16, 2.1, (-0.6, -R, h + 0.07), m["bois"]))
     o += P.cone_uv("toit", (2 * R + 0.4) * 0.7071, 2.3, (0, 0, h + 2.12), m["toit"], pans=4, rot=math.pi / 4)
-    o += archer("angleterre", (0.35, -R + 0.15, h + 0.1), echelle=1.2, lacet=-25 - LACET)
+    o += archer("angleterre", (0.35, -R + 0.15, h + 0.1), echelle=1.2, lacet=-25 - LACET, tir=image)
     o += flamme("angleterre", (0, 0, h + 2.12 + 2.3), hauteur_mat=1.1, longueur=1.9, hauteur=1.25, cap=CAP - LACET)
     # tenture de gueules au lion sur la face ouest (au soleil), porte sur la face sud
     o += C.tenture("tenture", "angleterre", 1.5, 3.3, loc=(-cote / 2 - 0.1, -0.2, h - 0.15), rot_z=-math.pi / 2, graine=1,
@@ -219,7 +250,7 @@ def archers_angleterre(niveau=1):
     return o
 
 
-def archers_omeyyades(niveau=1):
+def archers_omeyyades(niveau=1, image=0):
     """Tour carrée ocre (soubassement de moellons, pisé au-dessus), merlons pyramidés ; porte en arc outrepassé haute
     et étroite à vantaux de bois sur la face sud ; une seule archère, haute, sur la face ouest ; tenture verte."""
     m = mats_tour("omeyyades")
@@ -228,7 +259,7 @@ def archers_omeyyades(niveau=1):
     o += P.tour_carree("tour", 0, 0, cote, h, m, merlons="pointe", mat="mur", soubassement=("pierre", 2.5), archeres=None)
     o += P.porte_arc("porte", 0.45, -cote / 2 - 0.02, 0.9, 1.8, m, outrepasse=True, seuil=0.35)
     o.append(P.fente("arch", -cote / 2 - 0.02, 0.9, h * 0.72, math.pi, m["noir"]))
-    o += archer("omeyyades", (0.3, -0.35, h - 0.05), lacet=-12 - LACET)
+    o += archer("omeyyades", (0.3, -0.35, h - 0.05), lacet=-12 - LACET, tir=image)
     o += C.drapeau("flamme", "omeyyades", 2.6, 2.5, 1.65, loc=(0.9, 1.0, h), vent=1.0, cap=CAP - LACET, inverse=True)
     o += C.tenture("tenture", "omeyyades", 1.9, 3.8, loc=(-cote / 2 - 0.12, -0.3, h - 0.35), rot_z=-math.pi / 2, graine=1,
                    mat_tringle=m["bois"])
@@ -316,12 +347,13 @@ def pique(nom, talon, d, mp, longueur=LONG_PIQUE):
             fer_feuille(nom + "_fer", base_fer, d, FER_PIQUE, 0.19, fer)]
 
 
-def piquier_tour(nom, camp, loc, lacet=-10.0, echelle=ECHELLE_PIQUIER, phase=0.0):
+def piquier_tour(nom, camp, loc, lacet=-10.0, echelle=ECHELLE_PIQUIER, phase=0.0, pique=0.0):
     """Piquier debout sur la banquette (figurine de figurines.py : maille, surcot du camp, casque à nasal, visage), mains
     serrées devant la poitrine sur la hampe. Renvoie (objets, position de la main droite dans le monde) : la pique est
-    posée ensuite, talon sur la banquette, passant par cette main."""
+    posée ensuite, talon sur la banquette, passant par cette main. pique (0 à 1) : bras tendus, la pique poussée."""
     mats = F.matieres(camp)
-    j = F.pose_homme(phase, bras_droit=(18, 92), bras_gauche=(34, 70), amplitude=3, penche=2)
+    j = F.pose_homme(phase, bras_droit=(18 + 34 * pique, 92 - 48 * pique), bras_gauche=(34 + 28 * pique, 70 - 38 * pique),
+                     amplitude=3, penche=2 + 8 * pique)
     objs = []
     objs += F.corps_homme(nom, j, mats["maille"], mats["chausses"])
     m_sur = C.mat_tissu("surcot_" + camp, C.CAMPS[camp]["tissu"], image_png=F.texture_surcot(camp))
@@ -333,15 +365,17 @@ def piquier_tour(nom, camp, loc, lacet=-10.0, echelle=ECHELLE_PIQUIER, phase=0.0
     return objs + [pv], main
 
 
-def eventail_piques(niveau, zb, m, camp="france"):
+def eventail_piques(niveau, zb, m, camp="france", pousse=0.0):
     """Piquiers et piques du niveau : toutes les piques (tenues ou plantées) forment un seul éventail presque vertical,
     ordonné de gauche à droite de −12° à +12°, longues de 4,5 m (≈ 2,2 × la palissade). Les piques plantées sont liées
-    à un râtelier (deux poteaux et une traverse). m : matières de la tour. Renvoie (objets, z du plus bas des fers)."""
+    à un râtelier (deux poteaux et une traverse). m : matières de la tour. Renvoie (objets, z du plus bas des fers).
+    pousse (0 à 1, bande de tir) : les piques tenues penchent vers l'avant (vers l'est et un peu vers la caméra) de
+    PIQUE_POUSSEE degrés au plus ; celles du râtelier ne bougent pas."""
     mp = mats_pique()
     rnd = random.Random(7 + niveau)
     o, elements = [], []
     for k, (x, y, ph) in enumerate(HOMMES[niveau]):
-        objs, main = piquier_tour("piquier%d" % k, camp, (x, CY + y, zb), phase=ph)
+        objs, main = piquier_tour("piquier%d" % k, camp, (x, CY + y, zb), phase=ph, pique=pousse)
         o += objs
         elements.append(("main", main))
     for (x, y) in PLANTEES[niveau]:
@@ -352,6 +386,9 @@ def eventail_piques(niveau, zb, m, camp="france"):
     for k, (genre, p) in enumerate(elements):
         a = math.radians(-EVENTAIL + 2 * EVENTAIL * k / (n - 1) + rnd.uniform(-1.5, 1.5))
         rec = math.radians(RECUL_PIQUES + rnd.uniform(-1.5, 1.5))
+        if genre == "main" and pousse:
+            a += math.radians(PIQUE_POUSSEE * pousse)
+            rec -= math.radians(0.3 * PIQUE_POUSSEE * pousse)
         d = V((math.sin(a), math.sin(rec), math.cos(a) * math.cos(rec))).normalized()
         talon = p - d * ((p.z - zb) / d.z) if genre == "main" else p
         o += pique("pique%d" % k, talon, d, mp)
@@ -369,7 +406,7 @@ def eventail_piques(niveau, zb, m, camp="france"):
 
 
 # ---------------------------------------------------------------- piquiers : palissade de pieux
-def piquiers_france(niveau):
+def piquiers_france(niveau, image=0):
     m = mats_tour("france")
     o = []
     r = 2.0 + 0.15 * niveau
@@ -387,7 +424,7 @@ def piquiers_france(niveau):
     # pointes claires : au moins 10 px logiques au-dessus des pieux)
     o.append(C.cylindre("banquette", r - 0.2, BANQUETTE, (0, CY, z0), m["bois"], segments=32))
     zb = z0 + BANQUETTE
-    piq, z_fers = eventail_piques(niveau, zb, m)
+    piq, z_fers = eventail_piques(niveau, zb, m, pousse=PIQUES_TIR[image])
     o += piq
     depasse = (z_fers - (z0 + h_pal * 1.08 + 0.42)) * math.cos(math.radians(C.INCLINAISON)) * PX_PAR_M
     C.journal("piquiers niveau %d : %d piques, le plus bas des fers dépasse les pieux de %.1f px logiques"
@@ -420,7 +457,7 @@ def piquiers_france(niveau):
 
 
 # ---------------------------------------------------------------- baliste
-def baliste_tour(camp, niveau):
+def baliste_tour(camp, niveau, image=0):
     """Baliste française en trois niveaux. La baliste est agrandie (envergure des bras ≥ 55 % de la largeur du sprite,
     frêne clair) et reste toujours le sommet de la silhouette : niveau 1 plate-forme de bois, niveau 2 soubassement de
     pierre crénelé, niveau 3 tour de pierre à mâchicoulis et plate-forme de combat découverte, bannière à l'arrière."""
@@ -442,7 +479,7 @@ def baliste_tour(camp, niveau):
         o.append(E.poutre("echelle_a", V((-1.0, CY - 2.2, 0)), V((-1.0, CY - 1.6, hz)), 0.07, m["bois"]))
         o.append(E.poutre("echelle_b", V((-0.5, CY - 2.2, 0)), V((-0.5, CY - 1.6, hz)), 0.07, m["bois"]))
         z = hz + 0.18
-        o += E.baliste("bal", (0.0, CY + 0.1, z), m, echelle=1.45, lacet=LACET_BALISTE, arc=1.5)
+        o += E.baliste("bal", (0.0, CY + 0.1, z), m, echelle=1.45, lacet=LACET_BALISTE, arc=1.5, **BALISTE_TIR[image])
         o += C.tenture("tenture", camp, 1.5, 2.2, loc=(0.6, CY - 1.72, hz + 0.1), rot_z=0.0, graine=1, mat_tringle=m["bois"])
         o += flamme(camp, (-1.5, CY + 1.4, z), hauteur_mat=2.6)
     elif niveau == 2:
@@ -457,7 +494,7 @@ def baliste_tour(camp, niveau):
         for k in range(4):
             C.creneaux_ligne(bm, coins[k], coins[(k + 1) % 4], hz, h=0.55, ep=0.35, pas=0.95)
         o.append(C.objet_maillage("crn", bm, m["pierre"]))
-        o += E.baliste("bal", (0.0, CY + 0.1, hz), m, echelle=1.5, lacet=LACET_BALISTE, arc=1.5)
+        o += E.baliste("bal", (0.0, CY + 0.1, hz), m, echelle=1.5, lacet=LACET_BALISTE, arc=1.5, **BALISTE_TIR[image])
         o += C.tenture("tenture", camp, 1.9, 1.7, loc=(-0.6, CY - d - 0.1, hz - 0.1), rot_z=0.0, graine=1, mat_tringle=m["bois"])
         o += flamme(camp, (-1.5, CY + 1.4, hz), hauteur_mat=3.0)
         o += P.porte_arc("porte", 0.9, CY - d - 0.02, 0.9, 1.7, m, seuil=0.35)
@@ -478,7 +515,7 @@ def baliste_tour(camp, niveau):
         for k in range(4):
             C.creneaux_ligne(bm, coins[k], coins[(k + 1) % 4], hz, h=0.6, ep=0.35, pas=0.9)
         o.append(C.objet_maillage("crn", bm, m["pierre"]))
-        o += E.baliste("bal", (0.0, CY + 0.15, hz + 0.05), m, echelle=1.6, lacet=LACET_BALISTE, arc=1.5)
+        o += E.baliste("bal", (0.0, CY + 0.15, hz + 0.05), m, echelle=1.6, lacet=LACET_BALISTE, arc=1.5, **BALISTE_TIR[image])
         o += C.drapeau("banniere", camp, 3.2, 2.2, 1.45, loc=(-1.75, CY + 1.75, hz), vent=1.0, epi=True, cap=CAP,
                        mat_mat=m["bois"])
         o += C.tenture("tenture", camp, 1.9, 2.3, loc=(-0.6, CY - d - 0.42, hz - 0.85), rot_z=0.0, graine=1,
@@ -489,7 +526,7 @@ def baliste_tour(camp, niveau):
     return o
 
 
-def baliste_rivale(camp):
+def baliste_rivale(camp, image=0):
     """Baliste rivale (niveau 1) : sur une plate-forme de pierre du camp (tour carrée basse, tournée de 32°)."""
     m = mats_tour(camp)
     o = []
@@ -500,7 +537,7 @@ def baliste_rivale(camp):
     else:
         o += P.tour_carree("soub", 0, 0, cote, hz, m, archeres=None)
     o.append(C.boite("dallage", cote - 0.25, cote - 0.25, 0.05, (0, 0, hz + 0.04), m["dalle"]))
-    o += E.baliste("bal", (0.0, 0.1, hz), m, echelle=1.45, lacet=LACET_BALISTE - LACET, arc=1.5)
+    o += E.baliste("bal", (0.0, 0.1, hz), m, echelle=1.45, lacet=LACET_BALISTE - LACET, arc=1.5, **BALISTE_TIR[image])
     o += C.tenture("tenture", camp, 2.1, 1.65, loc=(-cote / 2 - 0.14, -0.2, hz - 0.05), rot_z=-math.pi / 2, graine=1,
                    mat_tringle=m["bois"], pointe=0.12)
     o += C.tenture("tenture_s", camp, 2.0, 1.65, loc=(-0.3, -cote / 2 - 0.14, hz - 0.05), rot_z=0.0, graine=2,
@@ -518,14 +555,14 @@ def tas_boulets(nom, x, y, z, m, n=4):
     return [C.sphere("%s%d" % (nom, k), 0.26, (x + px, y + py, z + 0.24 + pz), m["boulet"], subdiv=2) for k, (px, py, pz) in enumerate(pos)]
 
 
-def catapulte_france(niveau):
+def catapulte_france(niveau, image=0):
     m = mats_tour("france")
     mt = dict(m, pierre=m["boulet"])          # la pierre de la fronde est un boulet gris, pas la pierre des murs
     o = []
     if niveau == 1:
         # perrière (trébuchet à traction) sur un plancher de bois
         o.append(C.boite("plancher", 4.2, 2.6, 0.25, (0, CY, 0), m["bois"]))
-        o += E.trebuchet("treb", (0.1, CY, 0.25), mt, echelle=0.85, contrepoids=False, lacet=-10, bras_angle=40)
+        o += E.trebuchet("treb", (0.1, CY, 0.25), mt, echelle=0.85, contrepoids=False, lacet=-10, **trebuchet_tir(image, 40))
         o += C.tenture("tenture", "france", 1.5, 1.9, loc=(-1.4, CY - 1.4, 2.15), rot_z=0.0, graine=1, mat_tringle=m["bois"],
                        pointe=0.1)
         for k, sx in enumerate((-2.2, -0.6)):
@@ -536,7 +573,7 @@ def catapulte_france(niveau):
         # trébuchet à contrepoids sur une plate-forme de pierre
         o.append(C.boite("soub", 4.4, 2.8, 1.2, (0, CY, 0), m["pierre"]))
         o.append(C.boite("dallage", 4.3, 2.7, 0.05, (0, CY, 1.2), m["dalle"]))
-        o += E.trebuchet("treb", (0.1, CY, 1.2), mt, echelle=0.95, contrepoids=True, lacet=-10, bras_angle=38)
+        o += E.trebuchet("treb", (0.1, CY, 1.2), mt, echelle=0.95, contrepoids=True, lacet=-10, **trebuchet_tir(image, 38))
         o += tas_boulets("boulet", 1.5, CY - 0.9, 1.2, m, n=4)
         o += C.tenture("tenture", "france", 1.8, 1.05, loc=(-1.0, CY - 1.45, 1.12), rot_z=0.0, graine=1, mat_tringle=m["bois"],
                        pointe=0.15)
@@ -553,7 +590,7 @@ def catapulte_france(niveau):
             C.creneaux_ligne(bm, coins[k], coins[(k + 1) % 4], 1.8, h=0.55, ep=0.35, pas=0.9)
         o.append(C.objet_maillage("crn", bm, m["pierre"]))
         o.append(C.boite("dallage", cote - 0.1, cote * 0.62 - 0.1, 0.05, (0, CY, 1.8), m["dalle"]))
-        o += E.trebuchet("treb", (0.3, CY, 1.8), mt, echelle=1.05, contrepoids=True, lacet=-10, bras_angle=36)
+        o += E.trebuchet("treb", (0.3, CY, 1.8), mt, echelle=1.05, contrepoids=True, lacet=-10, **trebuchet_tir(image, 36))
         o += tas_boulets("boulet", 1.6, CY - 0.7, 1.8, m, n=5)
         o.append(C.boite("abri", 1.4, 1.4, 1.5, (-1.7, CY + 1.1, 1.8), m["bois"]))
         o += P.cone_uv("abri_toit", 1.2, 1.4, (-1.7, CY + 1.1, 3.3), m["toit"], pans=4, rot=math.pi / 4, epi=m["or"])
@@ -568,14 +605,14 @@ def catapulte_france(niveau):
 
 TOURS = {}
 for _n in (1, 2, 3):
-    TOURS["tour-archers-france-%d" % _n] = (lambda n=_n: archers_france(n), "france")
-    TOURS["tour-piquiers-france-%d" % _n] = (lambda n=_n: piquiers_france(n), "france")
-    TOURS["tour-baliste-france-%d" % _n] = (lambda n=_n: baliste_tour("france", n), "france")
-    TOURS["tour-catapulte-france-%d" % _n] = (lambda n=_n: catapulte_france(n), "france")
-TOURS["tour-archers-angleterre-1"] = (lambda: archers_angleterre(1), "angleterre")
-TOURS["tour-archers-omeyyades-1"] = (lambda: archers_omeyyades(1), "omeyyades")
-TOURS["tour-baliste-angleterre-1"] = (lambda: baliste_rivale("angleterre"), "angleterre")
-TOURS["tour-baliste-omeyyades-1"] = (lambda: baliste_rivale("omeyyades"), "omeyyades")
+    TOURS["tour-archers-france-%d" % _n] = (lambda k=0, n=_n: archers_france(n, k), "france")
+    TOURS["tour-piquiers-france-%d" % _n] = (lambda k=0, n=_n: piquiers_france(n, k), "france")
+    TOURS["tour-baliste-france-%d" % _n] = (lambda k=0, n=_n: baliste_tour("france", n, k), "france")
+    TOURS["tour-catapulte-france-%d" % _n] = (lambda k=0, n=_n: catapulte_france(n, k), "france")
+TOURS["tour-archers-angleterre-1"] = (lambda k=0: archers_angleterre(1, k), "angleterre")
+TOURS["tour-archers-omeyyades-1"] = (lambda k=0: archers_omeyyades(1, k), "omeyyades")
+TOURS["tour-baliste-angleterre-1"] = (lambda k=0: baliste_rivale("angleterre", k), "angleterre")
+TOURS["tour-baliste-omeyyades-1"] = (lambda k=0: baliste_rivale("omeyyades", k), "omeyyades")
 
 
 def cadrage_auto(objs, marge_px=4.0):
@@ -704,23 +741,187 @@ def controles_masques(img, nom, masques):
             C._refuser(img, nom, "hampes des piques trop sombres (L* %.0f < %.0f)" % (lmed, L_HAMPES_MIN))
 
 
-def rendre_tour(nom, surech=2, echantillons=64):
+def point_tir(typ):
+    """Point de départ du trait dans la scène construite (monde), ou None : pierre dans la fronde (trébuchet), pointe du
+    carreau (baliste), milieu de l'arc (archers), milieu des fers des piques (piquiers)."""
+    bpy.context.view_layer.update()
+    dg = bpy.context.evaluated_depsgraph_get()
+
+    def sommets(o):
+        oe = o.evaluated_get(dg)
+        me = oe.to_mesh()
+        vs = [(oe.matrix_world @ v.co, v.co.copy()) for v in me.vertices]
+        oe.to_mesh_clear()
+        return vs
+    objs = [o for o in bpy.context.scene.objects if o.type == "MESH"]
+    if typ == "catapulte":
+        o = next((o for o in objs if o.name.startswith("treb_pierre")), None)
+        return o.matrix_world.translation.copy() if o else None
+    if typ == "baliste":
+        o = next((o for o in objs if o.name.startswith("bal_carreau")), None)
+        if not o:
+            return None
+        vs = sommets(o)
+        xmax = max(l.x for _, l in vs)
+        bout = [w for w, l in vs if l.x > xmax - 1e-4]
+        return sum(bout, V()) / len(bout)
+    noms = ("_arc",) if typ == "archers" else ("_fer",)
+    pts = []
+    for o in objs:
+        if any(o.name.endswith(n) or (n + ".") in o.name for n in noms) and \
+                o.name.startswith("pique" if typ == "piquiers" else "archer"):
+            pts += [w for w, _ in sommets(o)]
+    return sum(pts, V()) / len(pts) if pts else None
+
+
+def ecran(p, W, H):
+    """Point du monde -> px logiques depuis le coin haut-gauche de l'image (caméra de la scène)."""
+    from bpy_extras.object_utils import world_to_camera_view
+    s = bpy.context.scene
+    q = world_to_camera_view(s, s.camera, p)
+    return [round(q.x * W, 1), round((1 - q.y) * H, 1)]
+
+
+def rendre_tour(nom, surech=2, echantillons=64, dossier=None):
+    """Bande de tir de la tour : IMAGES_TOUR images (même scène, même graine), contrôles sur chaque image (bords,
+    couleur du camp, pas de bleu chez les Anglais ; masques des toits et des hampes sur l'image 0)."""
+    import json
     fabrique, camp = TOURS[nom]
+    typ = nom.split("-")[1]
+    n = IMAGES_TOUR[typ]
     W, H = LARGEUR * C.ECHELLE, HAUTEUR * C.ECHELLE
-    C.reinitialiser()
-    C.lumiere_batiment(camp)
-    C.camera_trois_quarts(W * surech, H * surech, PX_PAR_M * C.ECHELLE * surech, ANCRE * C.ECHELLE * surech)
-    C.sol_capteur(40)
-    objs = fabrique()
-    cadrage_auto(objs)
-    img, ombre = C.rendre_sprite(nom, W, H, objs, surech=surech, echantillons=echantillons, contour=0.55, epaisseur_contour=1,
-                                 ombre_separee=True)
-    C.controle_camp(img, nom, camp, SEUIL_CAMP)
-    if camp == "angleterre":
-        C.controle_sans_bleu(img, nom)
-    controles_masques(img, nom, masques_matieres(nom, W, H, surech))
-    C.sauver_sprite(nom, img, ombre, LARGEUR, HAUTEUR, LARGEUR // 2, HAUTEUR - ANCRE)
+    images, partage, tir, ombre0 = [], {}, None, None
+    for k in range(n):
+        C.reinitialiser()
+        C.lumiere_batiment(camp)
+        C.camera_trois_quarts(W * surech, H * surech, PX_PAR_M * C.ECHELLE * surech, ANCRE * C.ECHELLE * surech)
+        C.sol_capteur(40)
+        objs = fabrique(k)
+        _, libre = cadrage_auto(objs)
+        if libre < 1.0:
+            C.journal("%s-%d : marge en haut de %.1f px logiques seulement" % (nom, k, libre))
+        if k == IMAGE_TIR[typ]:
+            p = point_tir(typ)
+            tir = ecran(p, LARGEUR, HAUTEUR) if p is not None else None
+        ident = "%s-%d" % (nom, k)
+        img, ombre = C.rendre_sprite(ident, W, H, objs, surech=surech, echantillons=echantillons, contour=0.55,
+                                     epaisseur_contour=1, ombre_separee=True, ombre_partagee=partage)
+        if k == 0:
+            ombre0 = ombre
+        C.controle_camp(img, ident, camp, SEUIL_CAMP)
+        if camp == "angleterre":
+            img = C.eteindre_bleus(img, ident)
+            C.controle_sans_bleu(img, ident)
+        if k == 0:
+            controles_masques(img, nom, masques_matieres(nom, W, H, surech))   # remplace les matières : en dernier
+        images.append(img)
+    if len(images) != n or tir is None:
+        raise C.RefusRendu("%s : %d images (attendu %d), point « tir » %s" % (nom, len(images), n, tir))
+    C.journal("%s : %d images, point « tir » %s (px logiques)" % (nom, n, tir))
+    bande = C.bande(images)
+    if dossier:
+        os.makedirs(dossier, exist_ok=True)
+        bande.save(os.path.join(dossier, nom + ".png"), optimize=True)
+        if ombre0 is not None:
+            ombre0.save(os.path.join(dossier, "ombre-" + nom + ".png"))
+        chemin_tir = os.path.join(dossier, "tir.json")
+        tirs = json.load(open(chemin_tir)) if os.path.exists(chemin_tir) else {}
+        tirs[nom] = tir
+        json.dump(tirs, open(chemin_tir, "w"), indent=1)
+        C.journal("essai écrit dans %s (manifeste inchangé)" % dossier)
+        return os.path.join(dossier, nom + ".png")
+    return ecrire_tour(nom, bande, n, tir)
+
+
+def ecrire_tour(nom, bande, n, tir):
+    """Écrit la bande dans jeu/ (l'ombre portée d'avant est gardée) ; manifeste : frames, « tir »."""
+    if bande.size != (n * LARGEUR * C.ECHELLE, HAUTEUR * C.ECHELLE):
+        raise C.RefusRendu("%s : taille %s pour %d images" % (nom, bande.size, n))
+    for k in range(n):
+        C.controle_bords(bande.crop((k * LARGEUR * C.ECHELLE, 0, (k + 1) * LARGEUR * C.ECHELLE, HAUTEUR * C.ECHELLE)),
+                         "%s-%d" % (nom, k))
+    C.sauver_sprite(nom, bande, None, LARGEUR, HAUTEUR, LARGEUR // 2, HAUTEUR - ANCRE, n)
+    e = C.lire_manifeste()[nom]
+    e["tir"] = list(tir)
+    C.maj_manifeste({nom: e})
     return C.chemin_td(nom + ".png")[0]
+
+
+def installer(dossier):
+    """Installe dans jeu/ les bandes d'un essai déjà regardé (même code, même graine : mêmes images)."""
+    import json
+    from PIL import Image
+    tirs = json.load(open(os.path.join(dossier, "tir.json")))
+    for nom, tir in sorted(tirs.items()):
+        chemin = os.path.join(dossier, nom + ".png")
+        if os.path.exists(chemin):
+            ecrire_tour(nom, Image.open(chemin).convert("RGBA"), IMAGES_TOUR[nom.split("-")[1]], tir)
+    C.journal("tours installées depuis %s : %d" % (dossier, len(tirs)))
+
+
+def planche_bandes(sortie, source=None):
+    """Planche des bandes de tir : pour chaque tour, l'image d'avant (si --source : celle de jeu/) puis les images de la
+    bande, à 2 × la taille logique, sur l'herbe du moulin, ombre portée de jeu/ dessous ; croix rouge = ancrage, croix
+    jaune = point « tir »."""
+    import json
+    from PIL import Image, ImageDraw
+    import planche as PL
+    man = C.lire_manifeste()
+    tirs = json.load(open(os.path.join(source, "tir.json"))) if source else {}
+    terrain = Image.open(os.path.join(C.TD, "terrain-moulin.jpg")).convert("RGBA")
+    herbe = terrain.crop(coin_herbe(terrain, 140, 168))
+    f = PL.police(15, True)
+    lignes = []
+    for nom in ORDRE_PLANCHE:
+        e = man.get(nom)
+        if not e:
+            continue
+        chemin = os.path.join(source, nom + ".png") if source else os.path.join(C.RACINE, "jeu", e["src"])
+        if not os.path.exists(chemin):
+            continue
+        neuf = Image.open(chemin).convert("RGBA")
+        n = neuf.size[0] // (2 * LARGEUR)
+        avant = Image.open(os.path.join(C.RACINE, "jeu", e["src"])).convert("RGBA") if source else None
+        tir = tirs.get(nom) if source else e.get("tir")
+        lignes.append((nom, e, avant, neuf, n, tir))
+    case_w, case_h = 2 * LARGEUR, 2 * HAUTEUR
+    L = 60 + 5 * (case_w + 10) + 300
+    H = 40 + len(lignes) * (case_h + 34)
+    pl = Image.new("RGBA", (L, H), (40, 34, 28, 255))
+    d = ImageDraw.Draw(pl)
+    d.text((10, 10), "Bandes de tir des tours (2 × la taille logique) ; croix rouge : ancrage ; croix jaune : point « tir »"
+           + (" ; première case : l'image d'avant" if source else ""), fill=(240, 228, 200, 255), font=f)
+    y = 40
+    om = {}
+    for nom, e, avant, neuf, n, tir in lignes:
+        d.text((10, y), "%s  (%d images, tir %s)" % (nom, n, tir), fill=(230, 220, 195, 255), font=f)
+        y += 22
+        cases = ([avant.crop((0, 0, case_w, case_h))] if avant is not None else []) + \
+            [neuf.crop((k * case_w, 0, (k + 1) * case_w, case_h)) for k in range(n)]
+        o = None
+        if "ombre-" + nom in man:
+            eo = man["ombre-" + nom]
+            o = Image.open(os.path.join(C.RACINE, "jeu", eo["src"])).convert("RGBA")
+        x = 10
+        for i, c in enumerate(cases):
+            fond = herbe.resize((case_w, case_h)).convert("RGBA")
+            if o is not None:
+                fond.alpha_composite(o.crop((0, 0, case_w, case_h)))
+            fond.alpha_composite(c)
+            pl.alpha_composite(fond, (x, y))
+            ax, ay = x + 2 * e["ax"], y + 2 * e["ay"]
+            d.line((ax - 5, ay, ax + 5, ay), fill=(255, 60, 60, 255))
+            d.line((ax, ay - 5, ax, ay + 5), fill=(255, 60, 60, 255))
+            if tir and (avant is None or i > 0):
+                tx, ty = x + 2 * tir[0], y + 2 * tir[1]
+                d.line((tx - 5, ty - 5, tx + 5, ty + 5), fill=(255, 230, 60, 255))
+                d.line((tx - 5, ty + 5, tx + 5, ty - 5), fill=(255, 230, 60, 255))
+            x += case_w + 10
+        y += case_h + 12
+    os.makedirs(os.path.dirname(os.path.abspath(sortie)), exist_ok=True)
+    pl.convert("RGB").save(sortie, optimize=True)
+    C.journal("planche des bandes de tir écrite : %s" % sortie)
+    return sortie
 
 
 # ---------------------------------------------------------------- planche de contrôle (PIL seulement, pas de rendu)
@@ -839,8 +1040,19 @@ def main(args):
     if args and args[0] == "--planche":
         planche(args[1] if len(args) > 1 else None)
         return
+    if args and args[0] == "--planche-bandes":
+        planche_bandes(args[1], args[args.index("--source") + 1] if "--source" in args else None)
+        return
+    if args and args[0] == "--installer":
+        installer(args[1])
+        return
+    dossier = None
+    if "--dossier" in args:
+        i = args.index("--dossier")
+        dossier = args[i + 1]
+        args = args[:i] + args[i + 2:]
     for nom in (args or list(TOURS)):
-        rendre_tour(nom)
+        rendre_tour(nom, dossier=dossier)
 
 
 if __name__ == "__main__":

@@ -2,7 +2,7 @@
 // FICHIER GÉNÉRÉ par atelier/outils/generer-sw.js, ne pas le modifier à la main : node atelier/outils/generer-sw.js
 // Seul jeu/js/installation.js l'enregistre, et seulement en http(s). Jamais en file:// : le double-clic sur index.html
 // reste tel quel. Le jeu lui-même ne fait aucun appel réseau : ce fichier est le mécanisme d'installation du navigateur.
-// À l'installation, il met en cache tous les fichiers du jeu (277 fichiers). Ensuite, chaque demande est servie
+// À l'installation, il met en cache tous les fichiers du jeu (297 fichiers). Ensuite, chaque demande est servie
 // depuis le cache ; le réseau n'est qu'un repli. Une nouvelle version porte un autre nom de cache : elle se télécharge
 // en arrière-plan puis attend. Elle prend la main quand le jeu est fermé puis rouvert, ou tout de suite si l'on touche
 // « Mettre à jour » (message « activer »). Jamais au milieu d'une partie : la page ouverte garde les fichiers de sa version.
@@ -158,15 +158,35 @@ var FICHIERS = [
   "assets/images/td/tour-piquiers-france-2.png",
   "assets/images/td/tour-piquiers-france-3.png",
   "assets/images/td/unite-belier-france.png",
+  "assets/images/td/unite-cavaliers-angleterre-chute.png",
+  "assets/images/td/unite-cavaliers-angleterre-coup.png",
   "assets/images/td/unite-cavaliers-angleterre.png",
+  "assets/images/td/unite-cavaliers-france-chute.png",
+  "assets/images/td/unite-cavaliers-france-coup.png",
   "assets/images/td/unite-cavaliers-france.png",
+  "assets/images/td/unite-cavaliers-omeyyades-chute.png",
+  "assets/images/td/unite-cavaliers-omeyyades-coup.png",
   "assets/images/td/unite-cavaliers-omeyyades.png",
+  "assets/images/td/unite-champion-angleterre-chute.png",
+  "assets/images/td/unite-champion-angleterre-coup.png",
   "assets/images/td/unite-champion-angleterre.png",
+  "assets/images/td/unite-champion-omeyyades-chute.png",
+  "assets/images/td/unite-champion-omeyyades-coup.png",
   "assets/images/td/unite-champion-omeyyades.png",
+  "assets/images/td/unite-fantassins-france-chute.png",
+  "assets/images/td/unite-fantassins-france-coup.png",
   "assets/images/td/unite-fantassins-france.png",
+  "assets/images/td/unite-hommes-angleterre-chute.png",
+  "assets/images/td/unite-hommes-angleterre-coup.png",
   "assets/images/td/unite-hommes-angleterre.png",
+  "assets/images/td/unite-hommes-omeyyades-chute.png",
+  "assets/images/td/unite-hommes-omeyyades-coup.png",
   "assets/images/td/unite-hommes-omeyyades.png",
+  "assets/images/td/unite-pietaille-angleterre-chute.png",
+  "assets/images/td/unite-pietaille-angleterre-coup.png",
   "assets/images/td/unite-pietaille-angleterre.png",
+  "assets/images/td/unite-pietaille-omeyyades-chute.png",
+  "assets/images/td/unite-pietaille-omeyyades-coup.png",
   "assets/images/td/unite-pietaille-omeyyades.png",
   "assets/images/terrain-domaine.jpg",
   "assets/polices/OFL-Cinzel.txt",

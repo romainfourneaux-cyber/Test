@@ -1360,12 +1360,15 @@ def creneaux_ligne(bm, a, b, z, h=0.55, ep=0.35, pas=0.9, plein=0.55, forme="car
 
 
 def drapeau(nom, camp, hauteur_mat, longueur=1.6, hauteur=1.0, loc=(0, 0, 0), vent=1.0, phase=0.0, mat_mat=None,
-            echelle_embleme=0.62, epaisseur_mat=0.05, cap=-28.0, epi=False, inverse=False, dechire=0.0):
+            echelle_embleme=0.62, epaisseur_mat=0.05, cap=-28.0, epi=False, inverse=False, dechire=0.0, boucle=False,
+            ampleur=1.0):
     """Mât + drapeau aux couleurs du camp, qui flotte vers l'est-sud-est (vers la droite de l'écran).
 
     Le drapeau est presque dans le plan vertical X-Z, légèrement tourné vers la caméra (cap en degrés) ; étoffe un peu
     translucide : vu à contre-jour, il s'allume comme un vrai. Omeyyades : bordure verte. epi : boule dorée en tête de mât.
-    dechire : part de la longueur arrachée au bout du drapeau, en dents irrégulières (bannière d'une place en ruine)."""
+    dechire : part de la longueur arrachée au bout du drapeau, en dents irrégulières (bannière d'une place en ruine).
+    Bannière animée (bande d'images) : boucle = les deux ondes ont des fréquences entières (phase de 0 à 2π : la bande
+    boucle sans saut) ; ampleur multiplie l'ondulation de l'étoffe (1 : celle des bannières cuites)."""
     objets = []
     mat_mat = mat_mat or mat_simple("bois_mat", "#4a3524", rugosite=0.8)
     objets.append(cylindre(nom + "_mat", epaisseur_mat, hauteur_mat + 0.25, loc=loc, mat=mat_mat, segments=8))
@@ -1397,7 +1400,8 @@ def drapeau(nom, camp, hauteur_mat, longueur=1.6, hauteur=1.0, loc=(0, 0, 0), ve
         for i in range(nx + 1):
             u, v = i / nx, j / nz
             x = min(u, 1.0 - coupes[j]) * longueur
-            ond = math.sin(u * 5.0 + phase) * 0.12 * vent * u + math.sin(u * 9.0 + phase * 1.7) * 0.04 * vent * u
+            ond = (math.sin(u * 5.0 + phase) * 0.12 * vent * u
+                   + math.sin(u * 9.0 + phase * (2.0 if boucle else 1.7)) * 0.04 * vent * u) * ampleur
             z = hauteur_mat - hauteur + v * hauteur - u * u * 0.12 * vent
             ligne.append(bm.verts.new((x, ond, z)))
         grille.append(ligne)
@@ -1613,10 +1617,25 @@ def controle_sans_bleu(img, nom, tolerance=0.002):
     return p
 
 
+def eteindre_bleus(img, nom):
+    """Camp anglais (bandes de geste et de tir) : l'acier tourné vers le ciel y renvoie le bleu du ciel. Les pixels
+    bleus (teinte 195-245°, saturation > 0,12) sont ramenés au gris chaud de la maille (valeur gardée) : pas de bleu chez
+    les Anglais, sans toucher au reste de l'image. Le nombre de pixels changés est noté au journal."""
+    a = np.array(img.convert("RGBA"), dtype=np.float32)
+    h, sat, v, al = _hsv(img)
+    m = (h >= 195) & (h <= 245) & (sat > 0.12) & (al > 0.02)
+    n = int(m.sum())
+    if n:
+        vv = v[m] * 255.0
+        a[..., :3][m] = np.stack([vv, vv * 0.97, vv * 0.94], axis=-1)
+        journal("%s : %d pixels bleutés (reflet du ciel sur l'acier) ramenés au gris chaud" % (nom, n))
+    return Image.fromarray(np.clip(a, 0, 255).astype(np.uint8), "RGBA")
+
+
 def rendre_sprite(nom, largeur_px, hauteur_px, objets, ombre=True, contour=0.55, epaisseur_contour=1, surech=2,
                   echantillons=64, echantillons_ombre=24, force_ombre=OMBRE_FORCE, couleur_ombre=OMBRE_COULEUR, net=0.6,
                   ombre_separee=False, marge_ombre=(0.6, 0.4), flou_contact=0.04, force_contact=0.6, pres=0.12,
-                  controle=True):
+                  controle=True, ombre_partagee=None):
     """Rend un sprite à fond transparent, puis le réduit d'un facteur surech. Renvoie (sprite, ombre_portée ou None).
 
     largeur_px, hauteur_px : taille finale (2 × la taille logique). La caméra (camera_trois_quarts, à la taille
@@ -1627,7 +1646,10 @@ def rendre_sprite(nom, largeur_px, hauteur_px, objets, ombre=True, contour=0.55,
     sprites) ; le sprite ne garde que l'occlusion de contact (flou de 4 %).
     Sinon (troupes) : ombre douce dans le sprite, limitée au voisinage du sujet et effacée avant les bords.
     contour : opacité d'un liseré sombre d'épaisseur_contour pixels rendus, pour la lisibilité sur l'herbe.
-    controle : refuse l'image si sa bordure de 2 px n'est pas transparente."""
+    controle : refuse l'image si sa bordure de 2 px n'est pas transparente.
+    ombre_partagee (bandes de tours) : dictionnaire ; vide, il reçoit le calque d'ombre de contact de cette image ;
+    rempli, ce calque est repris tel quel et la passe d'ombre n'est pas refaite (le pied de l'ouvrage ne bouge pas d'une
+    image à l'autre : seul l'occupant change)."""
     s = bpy.context.scene
     W, H = largeur_px * surech, hauteur_px * surech
     reglages_rendu(W, H, echantillons=echantillons, transparent=True)
@@ -1642,7 +1664,8 @@ def rendre_sprite(nom, largeur_px, hauteur_px, objets, ombre=True, contour=0.55,
     alpha_sujet = np.array(sujet)[..., 3]
     calque = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     ombre_portee = None
-    if ombre and capteurs:
+    reprise = ombre_partagee is not None and "calque" in ombre_partagee
+    if ombre and capteurs and not reprise:
         for c in capteurs:
             c.visible_camera = True
         caches = []
@@ -1692,7 +1715,12 @@ def rendre_sprite(nom, largeur_px, hauteur_px, objets, ombre=True, contour=0.55,
     if net:
         rgb = sujet_r.convert("RGB").filter(ImageFilter.UnsharpMask(radius=1.2, percent=int(net * 100), threshold=1))
         sujet_r = Image.merge("RGBA", (*rgb.split(), sujet_r.split()[3]))
-    final = _reduire(calque, surech)
+    if reprise:
+        final = ombre_partagee["calque"].copy()
+    else:
+        final = _reduire(calque, surech)
+        if ombre_partagee is not None:
+            ombre_partagee["calque"] = final.copy()
     if contour:
         a = sujet_r.split()[3]
         ep = a.filter(ImageFilter.MaxFilter(2 * epaisseur_contour + 1))
@@ -1778,6 +1806,15 @@ ENTETE_MANIFESTE = (
     "// droite). Le jeu ne retourne une bande que si la troupe marche dans l'autre sens.\n"
     "// fumees (places fortes) : [[x, y], ...] en px logiques depuis le coin haut-gauche de l'image, foyers d'où le jeu\n"
     "// fait monter la fumée animée d'une place abîmée ou en ruine (aucune fumée n'est cuite dans les images ; vide si intacte).\n"
+    "// unite-<type>-<camp>-chute et -coup : bandes de geste (4 images), mêmes w, h, ax, ay et face que la marche ; chute :\n"
+    "// genoux qui plient, buste renversé, au sol, couché (arme à côté) ; coup : armer, frapper, suivi, revenir (cavaliers :\n"
+    "// lance couchée, poussée, cheval qui se cabre un peu, retour). Repli : la marche si la bande manque.\n"
+    "// tour-* : bande de tir, image 0 = repos (seule image lue par un code qui ne connaît pas les bandes) ; trébuchet 4\n"
+    "// images (armé, mi-course, verge verticale, lâché), baliste, archers et piquiers 3 ; tir : [x, y] en px logiques\n"
+    "// depuis le coin haut-gauche, point de départ du trait (pierre au lâcher, pointe du carreau, arc, fers des piques).\n"
+    "// lieu-* : hampe : [x, y], pied du mât de la bannière ; lieu-*-nu : le même bourg sans sa bannière, à compléter par\n"
+    "// drapeau-<camp> (6 images d'une étoffe qui flotte, ancrage au pied du mât) posé sur la hampe.\n"
+    "// effet-cratere : 2 images (0 : herbe, 1 : route) ; effet-effondrement : 8 images (nuage et pierres d'une place qui tombe).\n"
 )
 
 

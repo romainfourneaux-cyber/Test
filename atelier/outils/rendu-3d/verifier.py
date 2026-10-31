@@ -7,7 +7,8 @@ sprites.js, puis contrôle la lecture des images. Code de sortie 1 s'il manque q
 
 Contrat : 11 terrains (les 6 cartes et les variantes « -sud » de 5 d'entre elles, front omeyyade), fichiers manquants ou en trop, entrées du manifeste sans fichier, tailles (2 × la taille logique, × nombre
 d'images), bords transparents (2 px, alpha ≤ 8), poids des JPEG (terrains ≤ 450 000 octets, carte de campagne
-≤ 500 000 octets) et budget total (9 Mo = 9 000 000 octets : mêmes unités décimales partout).
+≤ 500 000 octets) et budget total (10,5 Mo = 10 500 000 octets : mêmes unités décimales partout ; 9 Mo avant les bandes
+de geste, de tir et les bannières animées du lot A du 31/10/2026).
 Ancrages (décision consignée : le jeu lit ax / ay dans JEU.SPRITES, jamais en dur) : place-* → (75, 88), centre de la
 cour ; tour-* → (35, 72) ; unite-* → (w / 2, h − 4). Ombres portées ombre-* : exactement (2 w, 2 h) pixels.
 Lecture : aucun sprite avec plus de 0,3 % de pixels opaques blancs brûlés (trois canaux > 235) ; couleur du camp à la
@@ -47,7 +48,18 @@ CARTES = ["domaine", "gue", "foret", "moulin", "col", "chateau"]
 # variantes du front du sud (même tracé que la carte, décor sec) : terrain-<carte>-sud
 TERRAINS = CARTES + [c + "-sud" for c in ("gue", "foret", "moulin", "col", "chateau")]
 RIVAUX = ["angleterre", "omeyyades"]
-LIMITE_TERRAIN, LIMITE_FOND, BUDGET = 450_000, 500_000, 9_000_000
+LIMITE_TERRAIN, LIMITE_FOND, BUDGET = 450_000, 500_000, 10_500_000
+IMAGES_TOUR = {"archers": 3, "piquiers": 3, "baliste": 3, "catapulte": 4}
+GESTES = {"unite-fantassins-france": (40, 40), "unite-hommes-angleterre": (40, 40), "unite-hommes-omeyyades": (40, 40),
+          "unite-pietaille-angleterre": (40, 40), "unite-pietaille-omeyyades": (40, 40), "unite-cavaliers-france": (40, 40),
+          "unite-cavaliers-angleterre": (40, 40), "unite-cavaliers-omeyyades": (40, 40),
+          "unite-champion-angleterre": (48, 48), "unite-champion-omeyyades": (48, 48)}
+
+
+def camp_unite(nom):
+    """Camp d'une bande de troupe : unite-<type>-<camp>[-chute|-coup]."""
+    m = nom.split("-")
+    return m[-2] if m[-1] in ("chute", "coup") else m[-1]
 ENTREE_PLACE = 55          # px : les troupes plus près d'un bout de route sont sous la place forte
 
 
@@ -59,12 +71,13 @@ def contrat():
     for camp in ["france"] + RIVAUX:
         for etat in ("intact", "abime", "ruine"):
             a["place-%s-%s.png" % (camp, etat)] = (TD, (150, 150), 1)
+    # tours : bandes de tir (image 0 = repos) ; trébuchet 4 images, les autres 3
     for t in ("archers", "piquiers", "baliste", "catapulte"):
         for n in (1, 2, 3):
-            a["tour-%s-france-%d.png" % (t, n)] = (TD, (70, 84), 1)
+            a["tour-%s-france-%d.png" % (t, n)] = (TD, (70, 84), IMAGES_TOUR[t])
     for camp in RIVAUX:
         for t in ("archers", "baliste"):
-            a["tour-%s-%s-1.png" % (t, camp)] = (TD, (70, 84), 1)
+            a["tour-%s-%s-1.png" % (t, camp)] = (TD, (70, 84), IMAGES_TOUR[t])
     a["unite-fantassins-france.png"] = (TD, (40, 40), 4)
     a["unite-cavaliers-france.png"] = (TD, (40, 40), 4)
     a["unite-belier-france.png"] = (TD, (56, 64), 4)
@@ -77,10 +90,21 @@ def contrat():
     a["effet-pierre.png"] = (TD, (14, 14), 1)
     a["effet-poussiere.png"] = (TD, (48, 48), 5)
     a["effet-eclats.png"] = (TD, (32, 32), 4)
+    a["effet-cratere.png"] = (TD, (24, 16), 2)                # image 0 : herbe, image 1 : route
+    a["effet-effondrement.png"] = (TD, (96, 96), 8)
+    # bandes de geste des troupes (même taille que la marche) : chute et coup, 4 images
+    for nom, (w, h) in GESTES.items():
+        for b in ("chute", "coup"):
+            a["%s-%s.png" % (nom, b)] = (TD, (w, h), 4)
     a["fond-campagne.jpg"] = (CAMP, (1000, 530), 1)
     for camp in ("france", "france-2", "france-3", "angleterre", "omeyyades"):
         a["lieu-%s.png" % camp] = (CAMP, (80, 80), 1)
     a["lieu-brume.png"] = (CAMP, (180, 100), 1)          # nappe de brume, plus large qu'un bourg
+    # bourgs sans bannière (la carte y pose une bannière animée) et bannières animées (6 images)
+    for camp in ("france", "france-2", "france-3", "angleterre", "omeyyades"):
+        a["lieu-%s-nu.png" % camp] = (CAMP, (80, 80), 1)
+    for camp in ["france"] + RIVAUX:
+        a["drapeau-%s.png" % camp] = (CAMP, (28, 26), 6)
     return a
 
 
@@ -234,8 +258,9 @@ def controle_lieux(man, fautes, notes):
     carte = np.array(Image.open(fond).convert("RGB"), dtype=np.float64) / 255.0
     k = carte.shape[1] / 1000.0
     pos = positions_campagne()
-    for lieu, camp in (("domaine", "france"), ("gue", "france-2"), ("piemont", "france-3"), ("col", "angleterre"),
-                       ("chateau", "angleterre"), ("citadelle", "omeyyades"), ("forteresse", "omeyyades")):
+    for lieu, camp in [(l_, c_ + suffixe) for suffixe in ("", "-nu") for (l_, c_) in
+                       (("domaine", "france"), ("gue", "france-2"), ("piemont", "france-3"), ("col", "angleterre"),
+                        ("chateau", "angleterre"), ("citadelle", "omeyyades"), ("forteresse", "omeyyades"))]:
         e = man.get("lieu-" + camp)
         if not e or lieu not in pos:
             continue
@@ -343,7 +368,7 @@ def main():
             if ancre and (e["ax"], e["ay"]) != ancre:
                 fautes.append("%s : ancre (%s, %s), attendu %s" % (src, e["ax"], e["ay"], ancre))
             if nom.startswith("unite-"):
-                attendue = "droite" if nom.endswith("-france") else "gauche"
+                attendue = "droite" if camp_unite(nom) == "france" else "gauche"
                 if e.get("face", "droite") != attendue:
                     fautes.append("%s : face %s, attendu %s (France vers la droite, camps rivaux vers la gauche)"
                                   % (src, e.get("face", "droite"), attendue))
@@ -361,7 +386,7 @@ def main():
             if blancs > 0.003:
                 fautes.append("%s : %.2f %% de pixels opaques blancs brûlés (> 0,3 %%)" % (src, blancs * 100))
             if nom.startswith("unite-"):
-                camp = nom.rsplit("-", 1)[1]
+                camp = camp_unite(nom)
                 cav = "cavaliers" in nom
                 if cav or camp == "omeyyades":
                     seuil = 0.20 if cav else 0.18
@@ -409,8 +434,8 @@ def main():
     controle_lieux(man, fautes, notes)
     controle_abime(fautes, notes)
     controle_toits(attendu, fautes, notes)
-    print("Contrat : %d / %d fichiers présents ; poids total (avec ombres) %.2f Mo (budget 9 Mo, 1 Mo = 1 000 000 octets)"
-          % (presents, len(attendu), total / 1e6))
+    print("Contrat : %d / %d fichiers présents ; poids total (avec ombres) %.2f Mo (budget %.1f Mo, 1 Mo = 1 000 000 octets)"
+          % (presents, len(attendu), total / 1e6, BUDGET / 1e6))
     if total > BUDGET:
         fautes.append("budget dépassé : %.2f Mo" % (total / 1e6))
     for n_ in notes:
