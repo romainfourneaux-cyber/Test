@@ -196,7 +196,7 @@
         el("p", { class: "grand", texte: bonnes + " / " + posees + " jugements justes" }),
         el("p", { texte: liste ? "Le royaume grandit : " + liste + "." : "Rien de perdu : le royaume garde tout ce qu'il a." }),
         el("div", { class: "actions" }, [
-          el("button", { class: "bouton principal", onclick: function () { JEU.ui.finirPartie(); lancer(); }, texte: "Nouveau conseil (Entrée)" }),
+          el("button", { class: "bouton principal", onclick: function () { JEU.ui.finirPartie(); lancer(); } }, ["Nouveau conseil", JEU.ui.astuce ? JEU.ui.astuce("Entrée") : " (Entrée)"]),
           el("button", { class: "bouton", onclick: function () { JEU.ui.finirPartie(); JEU.ui.afficher("jouer"); }, texte: "Retour à la campagne" })
         ])
       ]));

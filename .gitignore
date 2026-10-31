@@ -3,3 +3,10 @@ atelier/drive/
 # sources 3D CC0 téléchargées (Poly Haven), lourdes : listées dans atelier/sources-3d/SOURCES.md
 atelier/sources-3d/
 __pycache__/
+# clés de signature et sorties de l'application Android : jamais dans le dépôt (la clé est remise à Romain)
+atelier/android/cles/
+atelier/android/sorties/
+atelier/android/app/src/main/assets/
+atelier/android/**/build/
+atelier/android/.gradle/
+atelier/android/local.properties

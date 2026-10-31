@@ -270,9 +270,11 @@
         e.classList.toggle("proche", e.getAttribute("data-quartier") === q);
       });
       var aide = document.querySelector("#ecran-domaine .aide-balade");
+      // tablette (31/10/2026) : sans clavier, on touche le plan pour s'y rendre et un quartier pour l'ouvrir
+      var tactile = JEU.ui && JEU.ui.tactile;
       if (aide) aide.innerHTML = q
-        ? "Tu es au quartier <b>" + U.echapper(QUARTIERS[q].nom) + "</b> · <span class='touche'>↵</span> Entrée pour le visiter"
-        : "Chevauche avec les <b>flèches</b> ou <b>Z Q S D</b> · clique sur le plan pour t'y rendre";
+        ? "Tu es au quartier <b>" + U.echapper(QUARTIERS[q].nom) + "</b> · " + (tactile ? "touche-le pour le visiter" : "<span class='touche'>↵</span> Entrée pour le visiter")
+        : (tactile ? "Touche le plan pour y envoyer ton seigneur, ou touche un quartier pour l'ouvrir" : "Chevauche avec les <b>flèches</b> ou <b>Z Q S D</b> · clique sur le plan pour t'y rendre");
     }
   }
 

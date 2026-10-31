@@ -110,6 +110,8 @@
   function ordinal(n) { return n === 1 ? "1re" : n + "e"; }
   function ecranEl() { return document.getElementById("ecran-expedition"); }
   function afficher() { JEU.ui.afficher("expedition"); }
+  // Indication de touche en fin de bouton (« (Entrée) »), cachée sur une tablette par la feuille de style (JEU.ui.astuce, 31/10/2026)
+  function astuce(t) { return JEU.ui.astuce ? JEU.ui.astuce(t) : " (" + t + ")"; }
   function minuscule(nom) { return nom.charAt(0).toLowerCase() + nom.slice(1); }
   function conseillerDe(famille) {
     var X = JEU.expedition;
@@ -582,7 +584,7 @@
     s.appendChild(el("h1", { class: "titre-ecran", texte: T.titre }));
     if (!f || !ouverts.length) {
       s.appendChild(el("p", { class: "exp-souverain", texte: T.attente }));
-      s.appendChild(el("div", { class: "actions centre" }, [el("button", { class: "bouton", onclick: function () { JEU.ui.afficher("jouer"); }, texte: T.retour + " (Échap)" })]));
+      s.appendChild(el("div", { class: "actions centre" }, [el("button", { class: "bouton", onclick: function () { JEU.ui.afficher("jouer"); } }, [T.retour, astuce("Échap")])]));
       JEU.ui.clavier = function (k) { if (k === "Escape" || k === "Enter") { JEU.ui.afficher("jouer"); return true; } return false; };
       return;
     }
@@ -636,13 +638,13 @@
       el("p", { texte: remplir(T.duree, { M: minutes }) }),
       el("p", { texte: remplir(T.renom, { D: x.renom, T: x.renomTotal }) }),
       el("p", { class: "note", texte: x.franchies.length ? remplir(T.franchies, { F: x.franchies.join(", ") }) : T.aucuneFranchie }),
-      el("div", { class: "depart-armorial" }, [el("span", { html: ecuArmorial(x.armorial, 72) }), el("button", { class: "bouton petit", onclick: function () { rendreArmorial(s); }, texte: T.armorial + " (A)" })])
+      el("div", { class: "depart-armorial" }, [el("span", { html: ecuArmorial(x.armorial, 72) }), el("button", { class: "bouton petit", onclick: function () { rendreArmorial(s); } }, [T.armorial, astuce("A")])])
     ]));
     s.appendChild(colonnes);
-    var partir = el("button", { class: "bouton principal", onclick: function () { partirExpedition(); }, texte: T.partir + " (Entrée)" });
+    var partir = el("button", { class: "bouton principal", onclick: function () { partirExpedition(); } }, [T.partir, astuce("Entrée")]);
     s.appendChild(el("div", { class: "actions centre exp-actions" }, [partir,
-      el("button", { class: "bouton", onclick: function () { rendreArmorial(s); }, texte: T.armorial + " (A)" }),
-      el("button", { class: "bouton discret", onclick: function () { JEU.ui.afficher("jouer"); }, texte: T.retour + " (Échap)" })]));
+      el("button", { class: "bouton", onclick: function () { rendreArmorial(s); } }, [T.armorial, astuce("A")]),
+      el("button", { class: "bouton discret", onclick: function () { JEU.ui.afficher("jouer"); } }, [T.retour, astuce("Échap")])]));
     // la chronique des dernières expéditions
     var hist = x.historique.slice(0, 5);
     s.appendChild(el("div", { class: "cartouche chronique-exp" }, [
@@ -689,7 +691,7 @@
       })))
     ]);
     s.appendChild(boite);
-    var fermer = el("button", { class: "bouton", onclick: function () { rendreDepart(s); }, texte: T.fermer + " (Échap)" });
+    var fermer = el("button", { class: "bouton", onclick: function () { rendreDepart(s); } }, [T.fermer, astuce("Échap")]);
     s.appendChild(el("div", { class: "actions centre" }, [fermer]));
     JEU.ui.clavier = function (k) {
       if (k === "Escape" || k === "Enter") { rendreDepart(s); return true; }
@@ -732,7 +734,7 @@
       ])
     ]);
     if (EC) EC.surveillerPortraits(page);
-    var bouton = el("button", { class: "bouton principal", onclick: function () { rendreRoute(s, X.enCours()); }, texte: T.enRoute + " (Entrée)" });
+    var bouton = el("button", { class: "bouton principal", onclick: function () { rendreRoute(s, X.enCours()); } }, [T.enRoute, astuce("Entrée")]);
     cadreEcran(s, e, page, { boutons: el("div", { class: "actions centre exp-actions" }, [bouton]) });
     JEU.ui.clavier = function (k) { if (k === "Enter") { rendreRoute(s, X.enCours()); return true; } if (k === "Escape") { JEU.ui.afficher("jouer"); return true; } return false; };
     bouton.focus();
@@ -751,10 +753,10 @@
       g.addEventListener("focus", function () { S.focus = i; });
     });
     if (S.focus >= att.length) S.focus = 0;
-    var entrerB = el("button", { class: "bouton principal", disabled: !att.length, onclick: function () { if (att.length) entrer(att[Math.min(S.focus, att.length - 1)].id); }, texte: T.entrer + " (Entrée)" });
+    var entrerB = el("button", { class: "bouton principal", disabled: !att.length, onclick: function () { if (att.length) entrer(att[Math.min(S.focus, att.length - 1)].id); } }, [T.entrer, astuce("Entrée")]);
     var boutons = el("div", { class: "actions centre exp-actions" }, [entrerB,
-      el("button", { class: "bouton", onclick: function () { rendreFaveurs(s, X.enCours()); }, texte: T.faveurs + " (F)" }),
-      el("button", { class: "bouton", onclick: function () { JEU.ui.afficher("jouer"); }, texte: T.retour + " (Échap)" }),
+      el("button", { class: "bouton", onclick: function () { rendreFaveurs(s, X.enCours()); } }, [T.faveurs, astuce("F")]),
+      el("button", { class: "bouton", onclick: function () { JEU.ui.afficher("jouer"); } }, [T.retour, astuce("Échap")]),
       el("button", { class: "bouton discret", onclick: function () { leverLeCamp(); }, texte: T.lever })]);
     cadreEcran(s, e, carte, { boutons: boutons });
     if (S.toast) { JEU.ui.toast(S.toast, null, 3200); S.toast = null; }
@@ -788,7 +790,7 @@
       el("h2", { texte: TEXTES.compagnie.faveurs }),
       tenues.length ? el("div", { class: "cartes-faveur" }, tenues.map(function (c) { return carteFaveurEl(c, null, null); })) : el("p", { class: "note", texte: TEXTES.compagnie.aucuneFaveur })
     ]);
-    var fermer = el("button", { class: "bouton", onclick: function () { rendreRoute(s, X.enCours()); }, texte: TEXTES.armorial.fermer + " (Échap)" });
+    var fermer = el("button", { class: "bouton", onclick: function () { rendreRoute(s, X.enCours()); } }, [TEXTES.armorial.fermer, astuce("Échap")]);
     cadreEcran(s, e, boite, { boutons: el("div", { class: "actions centre exp-actions" }, [fermer]) });
     JEU.ui.clavier = function (k) { if (k === "Escape" || k === "Enter" || k === "f" || k === "F") { rendreRoute(s, X.enCours()); return true; } return false; };
     fermer.focus();
@@ -1028,7 +1030,7 @@
         return rendreCartes(s, X.enCours(), { cartes: res.affinables, halte: t.halte.id }, { titre: T.affiner, sous: res.texte, apres: function (id) { X.affiner(id); JEU.sons.jouer("validation"); afficher(); } });
       }
       zone.innerHTML = "";
-      var bouton = el("button", { class: "bouton principal", onclick: afficher, texte: T.continuer + " (Entrée)" });
+      var bouton = el("button", { class: "bouton principal", onclick: afficher }, [T.continuer, astuce("Entrée")]);
       zone.appendChild(el("div", { class: "bilan reussi" }, [el("h2", { texte: T.veillee }), el("p", { class: "grand", texte: bonnes + " / " + qs.length }), el("p", { texte: res ? res.texte : "" }), bouton]));
       JEU.ui.clavier = function (k) { if (k === "Enter") { afficher(); return true; } return false; };
       bouton.focus();
@@ -1065,7 +1067,7 @@
         el("b", { class: "le-prix", texte: l.dispo ? l.prix + " or" : (l.genre === "vivres" ? T.indisponible : T.vendu) })
       ]);
     });
-    var quitter = el("button", { class: "bouton principal", onclick: fermer, texte: T.quitter + " (Échap)" });
+    var quitter = el("button", { class: "bouton principal", onclick: fermer }, [T.quitter, astuce("Échap")]);
     var boite = el("div", { class: fenetre("marchand") }, [
       el("div", { class: "fen-tete", style: "--teinte:" + couleurFamille("physique") }, [el("span", { class: "fen-portrait", html: JEU.icones.icone("marchand", 34) }), el("div", {}, [el("h2", { texte: T.titre }), el("p", { class: "grand", texte: remplir(T.or, { O: vue.or }) + (vue.remise ? " · " + T.remise : "") })])]),
       el("div", { class: "etal" }, lignes),
@@ -1109,8 +1111,8 @@
       fiches.length ? el("div", { class: "grille-fiches a-relire" }, fiches.map(function (f) { return el("button", { class: "vignette", onclick: function () { JEU.codex.ouvrirFiche(f.id); }, texte: f.titre }); })) : el("p", { class: "note", texte: T.relireVide })
     ]);
     s.appendChild(boite);
-    var repartir = el("button", { class: "bouton principal", onclick: function () { S.bilan = null; rendreDepart(s); }, texte: T.repartir + " (Entrée)" });
-    s.appendChild(el("div", { class: "actions centre exp-actions" }, [repartir, el("button", { class: "bouton", onclick: function () { S.bilan = null; JEU.ui.afficher("jouer"); }, texte: T.retour + " (Échap)" })]));
+    var repartir = el("button", { class: "bouton principal", onclick: function () { S.bilan = null; rendreDepart(s); } }, [T.repartir, astuce("Entrée")]);
+    s.appendChild(el("div", { class: "actions centre exp-actions" }, [repartir, el("button", { class: "bouton", onclick: function () { S.bilan = null; JEU.ui.afficher("jouer"); } }, [T.retour, astuce("Échap")])]));
     if (b.issue === "victoire") { JEU.sons.jouer("validation"); if (JEU.mentor && JEU.mentor.feliciter) JEU.mentor.feliciter(); }
     JEU.ui.clavier = function (k) {
       if (k === "Enter") { S.bilan = null; rendreDepart(s); return true; }

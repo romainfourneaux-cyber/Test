@@ -9,6 +9,9 @@
   var QUESTIONS_PAR_VAGUE = 3;
   var GARDE_ENTREE = 700; // ms : l'Entrée qui finit la dernière question (ou un double appui) ne lance pas la vague
   var REPOS_APRES_REPONSE = 0.25; // s : pendant le conseil, le champ n'est pas redessiné juste après une réponse
+  var RAYON_DOIGT = 42; // unités du champ (1000 × 660) : rayon de la cible d'un emplacement sous le doigt (30 à la souris) ; tablette, 31/10/2026
+  // Indication de touche en fin de bouton (« (Entrée) »), cachée sur une tablette par la feuille de style (JEU.ui.astuce)
+  function astuce(t) { return JEU.ui.astuce ? JEU.ui.astuce(t) : " (" + t + ")"; }
   var IMAGES_CONSEIL = 8; // images par seconde du champ pendant le conseil de guerre (il ne fait que respirer)
   function camp(c) { return JEU.campagne.CAMPS[c]; }
 
@@ -1859,11 +1862,11 @@
             var cAm = M.coutAmelioration(sel);
             ordres.appendChild(el("div", { class: "td-selection" }, [
               el("p", { texte: M.TOURS[sel.type].nom + " · niveau " + sel.niveau }),
-              sel.niveau < M.AMELIORATION.max ? el("button", { class: "bouton petit", "data-cle": "ameliorer", disabled: p.or < cAm, onclick: function () { ameliorer(sel.emplacement); }, texte: "Améliorer" + (auClavier ? " (A)" : "") + " · " + cAm + " or" }) : el("span", { class: "note", texte: "Niveau maximal" }),
+              sel.niveau < M.AMELIORATION.max ? el("button", { class: "bouton petit", "data-cle": "ameliorer", disabled: p.or < cAm, onclick: function () { ameliorer(sel.emplacement); } }, ["Améliorer", auClavier ? astuce("A") : null, " · " + cAm + " or"]) : el("span", { class: "note", texte: "Niveau maximal" }),
               el("button", { class: "lien", "data-cle": "fermer", onclick: function () { v.choixTour = -1; majOrdres(); }, texte: "Fermer" })
             ]));
           }
-          ordres.appendChild(el("p", { class: "consigne", texte: "Choisis une tour, puis clique un emplacement près de la route." }));
+          ordres.appendChild(el("p", { class: "consigne", texte: "Choisis une tour, puis " + (JEU.ui.tactile ? "touche" : "clique") + " un emplacement près de la route." }));
           var lTours = el("div", { class: "td-boutons" });
           Object.keys(M.TOURS).forEach(function (k, i) {
             var d = M.TOURS[k], dispo = M.niveauArsenal(p, "tours", k) > 0;
@@ -1884,7 +1887,7 @@
           });
           ordres.appendChild(lTr);
           if (p.envois.length) ordres.appendChild(el("p", { class: "td-file", texte: "Prêts à partir : " + pluriel(p.envois.length, "soldat") }));
-          ordres.appendChild(el("button", { class: "bouton principal td-lancer", "data-cle": "lancer", disabled: !auClavier, onclick: lancerVague, texte: auClavier ? "Lancer la vague (Entrée)" : "Réponds d'abord au conseil de guerre" }));
+          ordres.appendChild(el("button", { class: "bouton principal td-lancer", "data-cle": "lancer", disabled: !auClavier, onclick: lancerVague }, auClavier ? ["Lancer la vague", astuce("Entrée")] : ["Réponds d'abord au conseil de guerre"]));
           if (auClavier) ordres.appendChild(el("p", { class: "note td-touches" }, [
             "Au clavier :", touche("1"), "à", touche(String(Object.keys(M.TOURS).length)), "une tour,", touche("← ↑ ↓ →"), "un emplacement,",
             touche("Espace"), "bâtir,", touche("A"), "améliorer,", touche("Entrée"), "lancer la vague."
@@ -1980,7 +1983,7 @@
         // les questions de cette vague sont tirées maintenant : leur niveau suit les réponses déjà données
         if (p.vague > 0) questions = questions.concat(tirer(QUESTIONS_PAR_VAGUE, questions));
         JEU.mesure.debut = null; // la première question suit une vague, pas une réponse
-        v.curseur = -1;
+        v.curseur = -1; v.survol = -1; v.survolRivale = -1;
         conseil.innerHTML = "";
         var mot = motDuRival(false); // sa décision pour cette vague, prise par le moteur à la fin de la précédente
         if (mot) conseil.appendChild(mot);
@@ -2088,7 +2091,7 @@
       function lancerVague() {
         if (p.phase !== "preparation" || conseilEnCours()) return;
         JEU.ui.clavier = null;
-        v.choixTour = -1; v.curseur = -1;
+        v.choixTour = -1; v.curseur = -1; v.survol = -1; v.survolRivale = -1; v.porteesRivales = false;
         if (contexte && contexte.eclaireurs >= 2 && p.vague === 1) p.modificateurs.espion = true; // Éclaireurs au rang 2 : la 2e vague adverse aussi perd un homme
         M.lancerVague(p);
         if (contexte && contexte.surVague) contexte.surVague(p.vague); // la halte est entamée : fermer le jeu vaut une retraite
@@ -2168,36 +2171,49 @@
         var r = canvas.getBoundingClientRect();
         return { x: (ev.clientX - r.left) / r.width * M.LARGEUR, y: (ev.clientY - r.top) / r.height * M.HAUTEUR };
       }
-      function emplacementSous(pt) {
-        var meilleur = -1, dm = 30;
+      function emplacementSous(pt, rayon) {
+        var meilleur = -1, dm = rayon || 30;
         carte.emplacements.forEach(function (e, i) { var d = Math.hypot(e[0] - pt.x, e[1] - pt.y); if (d < dm) { dm = d; meilleur = i; } });
         return meilleur;
       }
       // tour adverse sous la souris (son pied ou son corps, qui monte de 24 px) : sa portée se dessine pendant la préparation
-      function tourRivaleSous(pt) {
-        var meilleure = -1, dm = 30;
+      function tourRivaleSous(pt, rayon) {
+        var meilleure = -1, dm = rayon || 30;
         p.toursRivales.forEach(function (tr, i) {
           var d = Math.min(Math.hypot(tr.x - pt.x, tr.y - pt.y), Math.hypot(tr.x - pt.x, tr.y - 24 - pt.y));
           if (d < dm) { dm = d; meilleure = i; }
         });
         return meilleure;
       }
+      // Au doigt (tablette, 31/10/2026) : la position est prise à l'appui, la cible est plus large (RAYON_DOIGT), et la portée
+      // montrée (emplacement choisi, tour adverse touchée) reste jusqu'au toucher suivant : sans souris, rien ne « survole ».
+      var pointeurTactile = false;
+      canvas.addEventListener("pointerdown", function (ev) {
+        pointeurTactile = ev.pointerType === "touch";
+        if (!pointeurTactile) return;
+        var pt = point(ev);
+        v.survol = emplacementSous(pt, RAYON_DOIGT);
+        v.survolRivale = v.survol < 0 ? tourRivaleSous(pt, RAYON_DOIGT) : -1;
+        if (v.survol >= 0) v.curseur = -1;
+      });
       canvas.addEventListener("pointermove", function (ev) {
+        if (ev.pointerType === "touch") return;
         var pt = point(ev);
         v.survol = emplacementSous(pt);
         v.survolRivale = v.survol < 0 ? tourRivaleSous(pt) : -1;
         if (v.survol >= 0) v.curseur = -1; // la souris reprend la main
         canvas.style.cursor = v.survol >= 0 && p.phase === "preparation" ? "pointer" : "";
       });
-      canvas.addEventListener("pointerleave", function () { v.survol = -1; v.survolRivale = -1; });
+      canvas.addEventListener("pointerleave", function () { if (pointeurTactile) return; v.survol = -1; v.survolRivale = -1; });
       // pointeur (ou focus du clavier) sur un bouton de troupe : la portée de toutes les tours adverses se montre, pour
       // voir sur quel tronçon de la route tes soldats seront pris sous le tir
       function voirPortees(ev) {
+        if (ev.pointerType === "touch") return; // au doigt : le bouton touché garde le focus, les portées restent jusqu'au toucher suivant
         var b = ev.target && ev.target.closest ? ev.target.closest('[data-cle^="troupe-"]') : null;
         v.porteesRivales = !!b && (ev.type === "pointerover" || ev.type === "focusin");
       }
       ["pointerover", "pointerout", "focusin", "focusout"].forEach(function (t) { ordres.addEventListener(t, voirPortees); });
-      canvas.addEventListener("click", function (ev) { agirSur(emplacementSous(point(ev))); });
+      canvas.addEventListener("click", function (ev) { agirSur(emplacementSous(point(ev), pointeurTactile ? RAYON_DOIGT : 30)); });
       // Arrivée au clavier (Tab) sur le champ : le curseur se pose sur le premier emplacement.
       canvas.addEventListener("focus", function () {
         var auClavier = false;
