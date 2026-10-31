@@ -1128,3 +1128,55 @@ html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
   .td-cadre canvas.td-effondre { animation: none; }
   .td-voile { animation: none; opacity: 1; }
 }
+
+/* ---------- Champ : retour (secousses, éclair, liseré, or qui roule et qui vole) ----------
+   Posés par bataille.js. Rien n'est peint dans la toile : tout bouge par transform ou opacity, sur le cadre du champ
+   ou sur ses pseudo-éléments. Une secousse à la fois (bataille.js). Animations coupées (.sans-anim, préférence du
+   système) : rien ne bouge, le compteur d'or change d'un coup et rougit seulement (classe .rouge). */
+/* trois forces : 1 px (pierre près de ton château), 2 px (brèche chez le rival), 3,5 px (brèche chez toi) */
+.td-cadre.td-sec-1 { animation: td-sec-1 .16s linear; }
+.td-cadre.td-sec-2 { animation: td-sec-2 .24s ease-out; }
+.td-cadre.td-sec-3 { animation: td-sec-3 .34s ease-out; }
+@keyframes td-sec-1 { 0%, 100% { transform: none; } 30% { transform: translate(-1px, 1px); } 65% { transform: translate(1px, 0); } }
+@keyframes td-sec-2 { 0%, 100% { transform: none; } 18% { transform: translate(-2px, 1px); } 42% { transform: translate(2px, -1px); } 70% { transform: translate(-1px, 1px); } }
+@keyframes td-sec-3 { 0%, 100% { transform: none; } 14% { transform: translate(-3.5px, 2px); } 34% { transform: translate(3px, -2px); } 56% { transform: translate(-2px, 1px); } 78% { transform: translate(1px, -1px); } }
+/* l'effondrement de la fin (6 px, sur la toile) passe avant : la petite secousse du cadre s'arrête */
+.td-cadre:has(> canvas.td-effondre) { animation: none; }
+/* éclair blanc chaud (60 ms, opacité 0,15, au plus une fois par seconde) et liseré rouge quand tes murs sont frappés */
+.td-cadre::before, .td-cadre::after { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; opacity: 0; }
+.td-cadre::before { background: #fff1d2; }
+.td-cadre::after { box-shadow: inset 0 0 0 2px rgba(160, 28, 18, .9), inset 0 0 26px 8px rgba(140, 20, 10, .5); }
+.td-cadre.td-eclair::before { animation: td-eclair .06s linear; }
+@keyframes td-eclair { from { opacity: .15; } to { opacity: 0; } }
+.td-cadre.td-lisere-a::after { animation: td-lisere-a .7s ease-out; }
+.td-cadre.td-lisere-b::after { animation: td-lisere-b .7s ease-out; }
+@keyframes td-lisere-a { 0% { opacity: 0; } 14% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes td-lisere-b { 0% { opacity: 0; } 14% { opacity: 1; } 100% { opacity: 0; } }
+/* compteur d'or à rouleaux : chaque chiffre est une colonne de 0 à 9 qui glisse (0,4 s) ; le vrai chiffre reste dans la
+   page (lecteurs d'écran, essais), transparent */
+.td-or b { display: inline-flex; }
+.td-chiffre { position: relative; display: inline-block; width: .66em; height: 1.2em; line-height: 1.2em; overflow: hidden;
+  text-align: center; -webkit-text-fill-color: transparent; }
+.td-chiffre::before { content: "0\A 1\A 2\A 3\A 4\A 5\A 6\A 7\A 8\A 9"; content: "0\A 1\A 2\A 3\A 4\A 5\A 6\A 7\A 8\A 9" / "";
+  white-space: pre; position: absolute; left: 0; right: 0; top: 0; -webkit-text-fill-color: currentColor;
+  transform: translateY(calc(var(--c, 0) * -1.2em)); transition: transform .4s cubic-bezier(.3, .7, .35, 1); }
+.td-or { position: relative; }
+.td-or.rouge b { color: #ff8f80; }
+/* la pièce brille quand l'or arrive */
+.td-or.td-gain-a svg { animation: td-piece-a .42s ease-out; }
+.td-or.td-gain-b svg { animation: td-piece-b .42s ease-out; }
+@keyframes td-piece-a { 40% { transform: scale(1.35) rotate(-10deg); } }
+@keyframes td-piece-b { 40% { transform: scale(1.35) rotate(-10deg); } }
+/* « +12 » qui part du sceau et vole jusqu'au compteur : la boîte glisse en x, le chiffre en y (une courbe) */
+.td-or-volant { position: fixed; z-index: 45; pointer-events: none; margin: -14px 0 0 -26px;
+  transition: transform .45s cubic-bezier(.55, 0, .75, .4); }
+.td-or-volant > span { display: flex; align-items: center; gap: .25rem; font-family: var(--titre); font-weight: 700; font-size: 1.35rem;
+  color: #ffe08a; text-shadow: 0 2px 0 #000, 0 0 6px #000; transition: transform .45s cubic-bezier(.2, .8, .4, 1), opacity .45s ease-in; }
+/* à l'erreur : le compteur tressaille de 2 px et un « −6 » rouge en tombe */
+.td-or.td-tressaille-a { animation: td-tressaille-a .28s linear; }
+.td-or.td-tressaille-b { animation: td-tressaille-b .28s linear; }
+@keyframes td-tressaille-a { 0%, 100% { transform: none; } 25% { transform: translateX(-2px); } 55% { transform: translateX(2px); } 80% { transform: translateX(-1px); } }
+@keyframes td-tressaille-b { 0%, 100% { transform: none; } 25% { transform: translateX(-2px); } 55% { transform: translateX(2px); } 80% { transform: translateX(-1px); } }
+.td-or-perte { position: absolute; right: .3rem; top: 100%; font-style: normal; font-family: var(--titre); font-weight: 700; font-size: 1.05rem;
+  color: #ff8f80; text-shadow: 0 2px 0 #000, 0 0 5px #000; pointer-events: none; animation: td-or-chute .8s ease-in forwards; }
+@keyframes td-or-chute { 0% { opacity: 0; transform: translateY(-6px); } 15% { opacity: 1; } 100% { opacity: 0; transform: translateY(20px); } }

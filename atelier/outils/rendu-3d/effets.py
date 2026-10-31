@@ -333,8 +333,8 @@ def effondrement(k, n=8):
     objs = []
     for i in range(26):
         a = 2 * math.pi * i / 26 + rnd.uniform(-0.3, 0.3)
-        d = rnd.uniform(0.1, 1.0) * (1.8 + 2.4 * math.sqrt(t))
-        r = rnd.uniform(0.6, 1.1) * (1.3 + 1.6 * math.sqrt(t))
+        d = rnd.uniform(0.1, 1.0) * (1.6 + 1.8 * math.sqrt(t))
+        r = rnd.uniform(0.6, 1.1) * (1.2 + 1.25 * math.sqrt(t))
         z = r * 0.7 + (0.6 + 3.0 * t) * rnd.random() * (1 if i % 3 else 0.5) + 1.2 * t   # le nuage monte en gonflant
         y = d * math.sin(a) * 0.35 + 0.8 * t        # peu vers la caméra : il ne descend pas sous le pied de la place
         o = C.sphere("nuage%d" % i, r, (d * math.cos(a), y, z), m, subdiv=3, echelle=(1.0, 1.0, 0.82))
@@ -346,7 +346,7 @@ def effondrement(k, n=8):
         a = math.pi * (1.05 + 0.9 * i / 9) + rnd.uniform(-0.2, 0.2)
         v = rnd.uniform(0.6, 1.0)
         tt = min(t, 0.75)
-        dx, dy = math.cos(a) * v * tt * 4.6, math.sin(a) * v * tt * 2.2 - 0.6
+        dx, dy = math.cos(a) * v * tt * 3.8, math.sin(a) * v * tt * 1.6 - 0.3
         z = max(0.22, 2.0 + rnd.uniform(4.0, 6.0) * tt - 10.0 * tt * tt)
         L = rnd.uniform(0.45, 0.8)
         o = C.boite("bloc%d" % i, L, L * 0.75, L * 0.6, (dx, dy, z), pierre, base=False)
