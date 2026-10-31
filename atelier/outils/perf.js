@@ -31,6 +31,11 @@
 // « Tourne ta tablette » en portrait ; voir le bloc « tablette tactile » plus bas et atelier/relecture/tablette-tactile.md.
 // Variables facultatives : CHROMIUM (chemin du navigateur), DETAIL=1 (affiche toutes les mesures), PARTIE=expedition (ne joue
 // que l'essai des expéditions, pour le mettre au point), PARTIE=tablette (la passe tactile seule).
+// Lots graphiques (31/10/2026, plan atelier/conception/graphismes-animations-plan.md, section 7) : PARTIE=ralenti (processeur
+// ralenti 4 × en 1340 × 800 : boucle de bataille, écrans, Event Timing, cuir nu), PARTIE=graphismes (processeur normal :
+// grosse mêlée avec effets, plafonds, même issue sous quatre réglages, Sang et Animations coupés, propriétés animées, cuir
+// nu) ; GRAPHISMES=1 les ajoute à l'essai complet ; LOT=A|B|C (lot en cours de réception, A par défaut), PASSAGES=n (3 par
+// défaut), SORTIE=fichier.json. Voir le bloc « Lots graphiques » plus bas.
 "use strict";
 const path = require("path");
 let chromium;
@@ -1031,8 +1036,746 @@ function echecsExpedition(bilan) {
   return echecs;
 }
 
+// ---------- Lots graphiques (31/10/2026) : mesures et garde-fous du plan (atelier/conception/graphismes-animations-plan.md, 7) ----------
+// PARTIE=ralenti : processeur ralenti 4 × (CDP Emulation.setCPUThrottlingRate), fenêtre 1340 × 800, pour approcher la Galaxy
+//   Tab A9. Boucle de bataille en grosse mêlée avec effets (médiane, 95e centile, écart entre images, compteurs, tas), coût
+//   isolé d'une pierre et d'une brèche, écrans immobiles (accueil, domaine, campagne, route, conseil : écart entre images,
+//   tâches longues), Event Timing (conseil de guerre, événement, porte d'une expédition), cuir nu des transitions au doigt.
+// PARTIE=graphismes : processeur normal. Grosse mêlée avec effets en 1366 × 768 et 1920 × 1080 ; plafonds de
+//   JEU.bataille.rendu ; même issue sous quatre réglages (Animations × Sang, même graine de Math.random, horloge truquée) et
+//   aucun tirage de Math.random dans bataille-sol.js ni bataille-effets.js ; Sang coupé et Animations coupées respectés ;
+//   retours du champ animés par transform et opacity ; propriétés animées des écrans (transform et opacity seulement) ;
+//   cuir nu des transitions en 1366 × 768.
+// L'essai complet les joue aussi avec GRAPHISMES=1. Variables : LOT=A|B|C, lot en cours de réception (A par défaut) : un contrôle
+// d'un lot suivant s'écrit « À VENIR (lot X) » sans faire échouer l'essai ; PASSAGES=n, passages de chaque mesure de boucle
+// et d'écran (3 par défaut, on garde la médiane) ; SORTIE=fichier.json, bilan écrit dans ce fichier.
+// La grosse mêlée avec effets : dernière vague de la Forteresse anglaise, quatre tours (archers niveau 3, baliste,
+// trébuchet, palissade), 5 fantassins, 3 cavaliers et un bélier, places fortes à 80 (scénario de base-boucle.js, plus les
+// archers niveau 3) : pierres, volées, brèches.
+const LOT = String(process.env.LOT || "A").toUpperCase();
+const PASSAGES = Math.max(1, Number(process.env.PASSAGES) || 3);
+const PLAFONDS = { etincelles: 8, trainees: 24, particules: 60, lueurs: 10, secousses: 1 };
+// base avant le lot A (atelier/captures/audit-graphismes/plan/base-boucle.json, mêmes chiffres dans base-lot-a.json)
+const BASE_GRAPHISMES = { ralentiBoucleMediane: 7.2, boucleMax1920: 7.1, boucle95_1920: 4.1 };
+const PROPRIETES_COMPOSITEUR = new Set(["transform", "opacity", "translate", "rotate", "scale"]);
+const mediane = t => { const s = t.filter(x => typeof x === "number" && isFinite(x)).sort((a, b) => a - b); return s.length ? s[Math.floor((s.length - 1) / 2)] : null; };
+// médiane de chaque nombre de plusieurs passages ; maxima (compteurs) : le plus grand de tous les passages
+function medianes(passes) {
+  const r = { passages: passes.length };
+  if (!passes.length) return r;
+  Object.keys(passes[0]).forEach(k => { if (typeof passes[0][k] === "number") r[k] = mediane(passes.map(x => x[k])); });
+  ["maxima", "effets", "projectiles"].forEach(k => {
+    if (!passes[0][k]) return;
+    r[k] = {};
+    passes.forEach(x => Object.keys(x[k] || {}).forEach(j => { r[k][j] = Math.max(r[k][j] || 0, x[k][j]); }));
+  });
+  r.detail = passes.map(x => ({ boucleMediane: x.boucleMediane, boucle95: x.boucle95, boucleMax: x.boucleMax, imageMediane: x.imageMediane, part34: x.part34, phase: x.phase }));
+  return r;
+}
+
+// Sonde posée avant les scripts du jeu. graine : Math.random remplacé par un tirage à graine fixe (mulberry32), et chaque
+// tirage noté par fichier et fonction quand window.__noterAlea est vrai. La boucle de bataille (fonction « boucle ») est
+// chronométrée ; après chaque image : maxima des compteurs de JEU.bataille.rendu, effets publiés par le moteur pendant la
+// vague (comptés une fois chacun, par genre), projectiles par genre, et, si window.__echantillonAnims, les animations de
+// feuille de style du champ (une image sur dix).
+function sondeChamp(graine) {
+  if (graine) {
+    let a = graine >>> 0;
+    const alea = () => { a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+    window.__alea = {}; window.__noterAlea = false;
+    Math.random = function () {
+      if (window.__noterAlea) {
+        const l = (new Error().stack || "").split("\n").slice(2).find(x => /\.js:\d+/.test(x)) || "";
+        const m = l.match(/at (?:([^\s(]+) \()?.*?([\w.-]+\.js):(\d+)/);
+        const k = m ? m[2] + " · " + (m[1] || "anonyme") : "?";
+        window.__alea[k] = (window.__alea[k] || 0) + 1;
+      }
+      return alea();
+    };
+  }
+  window.__boucle = []; window.__max = {}; window.__effetsVus = {}; window.__projVus = {}; window.__animsChamp = {}; window.__animsTotal = 0;
+  const vus = new WeakSet();
+  let n = 0;
+  const raf = window.requestAnimationFrame;
+  window.requestAnimationFrame = function (f) {
+    if (!f || f.name !== "boucle") return raf.call(window, f);
+    return raf.call(window, function boucle(t) {
+      const a = performance.now(); f(t); window.__boucle.push(performance.now() - a);
+      const J = window.JEU, R = J && J.bataille && J.bataille.rendu, p = J && J.bataille && J.bataille.enCours, M = window.__max;
+      if (R) for (const k in R) {
+        const x = R[k];
+        if (typeof x === "number") { if (!(M[k] >= x)) M[k] = x; }
+        else if (x && typeof x === "object") for (const j in x) if (typeof x[j] === "number" && !(M[k + "." + j] >= x[j])) M[k + "." + j] = x[j];
+      }
+      if (p && p.phase === "vague") {
+        for (const e of p.effets) if (!vus.has(e)) { vus.add(e); window.__effetsVus[e.genre] = (window.__effetsVus[e.genre] || 0) + 1; }
+        for (const pr of p.projectiles) if (!vus.has(pr)) { vus.add(pr); window.__projVus[pr.genre] = (window.__projVus[pr.genre] || 0) + 1; }
+      }
+      if (window.__echantillonAnims && ++n % 10 === 0) document.getAnimations().forEach(an => {
+        window.__animsTotal++;
+        const ef = an.effect, c = ef && ef.target, cl = c && c.getAttribute ? c.getAttribute("class") || "" : "";
+        if (!c || !(c.closest && c.closest(".td-cadre, .td-hud") || /(^|\s)td-/.test(cl))) return;
+        const props = new Set();
+        (ef.getKeyframes ? ef.getKeyframes() : []).forEach(fr => Object.keys(fr).forEach(k => { if (!/^(offset|computedOffset|easing|composite)$/.test(k)) props.add(k); }));
+        if (an.transitionProperty) props.add(an.transitionProperty.replace(/-([a-z])/g, (m, x) => x.toUpperCase()));
+        const nom = (an.animationName || an.transitionProperty || "?") + " sur " + c.tagName.toLowerCase() + (cl ? "." + cl.trim().split(/\s+/)[0] : "") + (ef.pseudoElement || "");
+        window.__animsChamp[nom] = [...props].join(",");
+      });
+    });
+  };
+}
+
+// Dans la page : arme la grosse mêlée avec effets (la bataille de la Forteresse est en préparation, conseil fini).
+function armerMelee() {
+  const p = JEU.bataille.enCours, M = JEU.batailleMoteur, n = p.carte.emplacements.length;
+  p.arsenal.tours = { archers: 1, piquiers: 1, baliste: 1, catapulte: 1 };
+  p.arsenal.troupes = { fantassins: 1, cavaliers: 1, belier: 1 };
+  p.or = 5000;
+  const poses = {};
+  [["archers", 1], ["baliste", 3], ["catapulte", 6], ["piquiers", 8]].forEach(([t, i]) => {
+    for (let k = 0; k < n; k++) { const e = (i + k) % n; if (M.poserTour(p, t, e)) { poses[t] = e; break; } }
+  });
+  if (poses.archers !== undefined) { M.ameliorerTour(p, poses.archers); M.ameliorerTour(p, poses.archers); }
+  for (let i = 0; i < 5; i++) M.envoyer(p, "fantassins");
+  for (let i = 0; i < 3; i++) M.envoyer(p, "cavaliers");
+  M.envoyer(p, "belier");
+  p.vague = p.vagues - 1; p.or = 0;
+  p.chateau.pv = p.chateau.max = 80; p.rival.pv = p.rival.max = 80;
+  return { tours: p.tours.map(t => t.type + " " + t.niveau), envois: p.envois.length };
+}
+
+// Dans la page : observe les classes du cadre de la toile (secousses td-sec-*, éclair td-eclair) : nombre de secousses
+// posées, secousses en même temps, écart le plus court entre deux éclairs.
+function observerCadre() {
+  const c = document.querySelector(".td-cadre");
+  const o = window.__cadre = { secousses: 0, ensemble: 0, eclairs: 0, ecartEclairs: null, classes: {} };
+  if (!c) return false;
+  let avant = new Set(c.classList), dernier = null;
+  new MutationObserver(() => {
+    const l = [...c.classList];
+    o.ensemble = Math.max(o.ensemble, l.filter(x => /^td-sec-/.test(x)).length);
+    l.forEach(x => {
+      if (avant.has(x)) return;
+      o.classes[x] = (o.classes[x] || 0) + 1;
+      if (/^td-sec-/.test(x)) o.secousses++;
+      if (x === "td-eclair") { const t = performance.now(); if (dernier !== null) o.ecartEclairs = Math.min(o.ecartEclairs === null ? Infinity : o.ecartEclairs, Math.round(t - dernier)); dernier = t; o.eclairs++; }
+    });
+    avant = new Set(l);
+  }).observe(c, { attributes: true, attributeFilter: ["class"] });
+  return true;
+}
+
+// Dans la page : l'état du moteur qui fait l'issue (places fortes, or, statistiques, troupes vivantes), arrondi au millième.
+function etatMoteur() {
+  const p = JEU.bataille.enCours, r = x => Math.round(x * 1000) / 1000;
+  return JSON.stringify({ phase: p.phase, issue: p.issue || null, vague: p.vague, chateau: r(p.chateau.pv), rival: r(p.rival.pv), or: r(p.or), stats: p.stats,
+    unites: p.unites.filter(u => u.vivant).map(u => u.camp + ":" + u.type + ":" + r(u.pv) + ":" + r(u.s)).sort() });
+}
+
+async function pageChamp(navigateur, w, h, erreurs, options) {
+  options = options || {};
+  const ctx = await navigateur.newContext({ viewport: { width: w, height: h }, hasTouch: !!options.tactile });
+  const page = await ctx.newPage();
+  await page.addInitScript(sondeChamp, options.graine || 0);
+  page.on("pageerror", e => erreurs.push(e.message));
+  page.on("console", m => { if (m.type() === "error") erreurs.push(m.text()); });
+  if (options.horloge) await page.clock.install({ time: new Date("2026-10-13T18:00:00") });
+  await page.goto(URL);
+  await page.waitForFunction(() => window.JEU && JEU.pret);
+  await page.evaluate(r => { const g = JEU.sauvegarde.etat().reglages; g.musique = false; g.son = false; if (r) Object.assign(g, r); JEU.ui.appliquerAnimations(); JEU.ui.fermerModale(); }, options.reglages || null);
+  return page;
+}
+
+// Lance la grosse mêlée avec effets en temps réel : conseil de guerre (3 réponses justes), armée et tours, vague à ×3
+// jusqu'à six troupes au corps à corps, puis ×1.
+async function lancerMeleeEffets(page) {
+  await page.click("#menu button[data-ecran=jouer]");
+  await page.waitForSelector("#ecran-jouer .carte-campagne");
+  await page.evaluate(() => { JEU.ui.fermerModale(); JEU.bataille.lancer("chateau"); });
+  for (let i = 0; i < 3; i++) {
+    await page.waitForFunction(() => document.querySelector(".td-question .question"));
+    await attendre(250);
+    await repondreJuste(page);
+  }
+  await page.waitForSelector(".td-pret");
+  const armee = await page.evaluate(armerMelee);
+  for (let k = 0; k < 5 && await page.evaluate(() => JEU.bataille.enCours.phase === "preparation"); k++) { await attendre(400); await page.keyboard.press("Enter"); }
+  await page.waitForFunction(() => JEU.bataille.enCours.phase === "vague");
+  await page.evaluate(observerCadre);
+  await page.click('[data-cle="vitesse-3"]');
+  await page.waitForFunction(() => JEU.bataille.enCours.phase !== "vague" || JEU.bataille.enCours.unites.filter(u => u.adversaire).length >= 6, null, { timeout: 60000 });
+  await page.click('[data-cle="vitesse-1"]').catch(() => {});
+  return armee;
+}
+
+// Boucle de bataille pendant d secondes : écarts entre images, durée de la boucle, maxima des compteurs, tas JavaScript.
+async function mesurerBoucle(page, d) {
+  return page.evaluate(async d => {
+    window.__boucle.length = 0; window.__max = {};
+    const tas = () => performance.memory ? Math.round(performance.memory.usedJSHeapSize / 1e5) / 10 : null;
+    const tas0 = tas(), ecarts = [], fin = performance.now() + d * 1000;
+    let avant = null, figures = 0, engages = 0;
+    await new Promise(res => {
+      function f(t) {
+        if (avant !== null) ecarts.push(t - avant);
+        avant = t;
+        const p = JEU.bataille.enCours, R = JEU.bataille.rendu;
+        figures = Math.max(figures, R.figures); engages = Math.max(engages, p.unites.filter(u => u.adversaire).length);
+        if (performance.now() < fin) requestAnimationFrame(f); else res();
+      }
+      requestAnimationFrame(f);
+    });
+    const q = (t, x) => t.length ? Math.round(t[Math.min(t.length - 1, Math.floor(t.length * x))] * 10) / 10 : null;
+    const b = window.__boucle.slice().sort((x, y) => x - y), e = ecarts.slice().sort((x, y) => x - y);
+    return { images: ecarts.length, imageMediane: q(e, 0.5), image95: q(e, 0.95), plus34: ecarts.filter(x => x > 34).length,
+      part34: Math.round(1000 * ecarts.filter(x => x > 34).length / Math.max(1, ecarts.length)) / 10,
+      boucleMediane: q(b, 0.5), boucle95: q(b, 0.95), boucleMax: q(b, 1), figures, engages, niveau: JEU.bataille.rendu.niveau || 0,
+      tasDebutMo: tas0, tasFinMo: tas(), phase: JEU.bataille.enCours.phase, maxima: Object.assign({}, window.__max),
+      effets: Object.assign({}, window.__effetsVus), projectiles: Object.assign({}, window.__projVus) };
+  }, d);
+}
+
+// Grosse mêlée avec effets, PASSAGES fois (une page neuve chaque fois) ; ralenti : facteur du processeur pendant la mesure.
+async function meleeEffets(navigateur, w, h, erreurs, ralenti) {
+  const passes = [];
+  let armee = null;
+  for (let i = 0; i < PASSAGES; i++) {
+    const page = await pageChamp(navigateur, w, h, erreurs);
+    try {
+      armee = await lancerMeleeEffets(page);
+      const cdp = await page.context().newCDPSession(page);
+      if (ralenti > 1) await cdp.send("Emulation.setCPUThrottlingRate", { rate: ralenti });
+      const m = await mesurerBoucle(page, MESURE_MELEE);
+      if (ralenti > 1) await cdp.send("Emulation.setCPUThrottlingRate", { rate: 1 });
+      m.cadre = await page.evaluate(() => window.__cadre || null);
+      passes.push(m);
+    } catch (e) { erreurs.push("grosse mêlée avec effets " + w + " × " + h + " : " + e.message); }
+    await page.context().close();
+  }
+  return Object.assign({ taille: w + " × " + h, ralenti, armee, ensembleSecousses: Math.max(0, ...passes.map(x => x.cadre ? x.cadre.ensemble : 0)) }, medianes(passes));
+}
+
+// Coût isolé d'une pierre et d'une brèche, au ralenti 4 × (A2.3, A3.3 : moins de 0,1 ms chacune) : champ de la
+// Forteresse en préparation (conseil fini, une image dessinée à chaque fois), boucle médiane sur 3 s sans rien, puis avec
+// K effets du même genre gardés vivants (un neuf posé dès qu'un s'éteint) ; coût = écart des médianes ÷ K.
+async function coutEffets(navigateur, erreurs) {
+  const page = await pageChamp(navigateur, 1340, 800, erreurs);
+  const res = {};
+  try {
+    await page.click("#menu button[data-ecran=jouer]");
+    await page.waitForSelector("#ecran-jouer .carte-campagne");
+    await page.evaluate(() => { JEU.ui.fermerModale(); JEU.bataille.lancer("chateau"); });
+    for (let i = 0; i < 3; i++) { await page.waitForFunction(() => document.querySelector(".td-question .question")); await attendre(250); await repondreJuste(page); }
+    await page.waitForSelector(".td-pret");
+    await attendre(600);
+    const cdp = await page.context().newCDPSession(page);
+    await cdp.send("Emulation.setCPUThrottlingRate", { rate: 4 });
+    const mesure = (genre, K) => page.evaluate(async ([genre, K]) => {
+      const p = JEU.bataille.enCours, pts = p.route.points, actifs = [];
+      let k = 0, en = true;
+      function nourrir() {
+        if (!en) return;
+        for (let i = actifs.length - 1; i >= 0; i--) if (p.effets.indexOf(actifs[i]) < 0) actifs.splice(i, 1);
+        while (genre && actifs.length < K) {
+          const q = pts[Math.floor(pts.length * (0.3 + 0.4 * ((k++ * 0.618) % 1)))], e = { genre, x: q[0], y: q[1], age: 0 };
+          if (genre === "impact") e.rayon = 30;
+          else { e.camp = k % 2 ? "joueur" : "rival"; e.degats = 2; const pl = e.camp === "joueur" ? p.rival : p.chateau; if (pl && pl.x !== undefined) { e.x = pl.x; e.y = pl.y; } }
+          p.effets.push(e); actifs.push(e);
+        }
+        requestAnimationFrame(nourrir);
+      }
+      requestAnimationFrame(nourrir);
+      await new Promise(r => setTimeout(r, 600));
+      window.__boucle.length = 0;
+      await new Promise(r => setTimeout(r, 3000));
+      en = false;
+      const b = window.__boucle.slice().sort((x, y) => x - y);
+      return { images: b.length, mediane: b.length ? b[Math.floor(b.length / 2)] : null };
+    }, [genre, K]);
+    const vide = await mesure(null, 0), pierres = await mesure("impact", 6), vide2 = await mesure(null, 0), breches = await mesure("breche", 3);
+    await cdp.send("Emulation.setCPUThrottlingRate", { rate: 1 });
+    const r2 = x => Math.round(x * 1000) / 1000;
+    res.base = r2(vide.mediane); res.base2 = r2(vide2.mediane);
+    res.pierre = r2((pierres.mediane - vide.mediane) / 6);
+    res.breche = r2((breches.mediane - vide2.mediane) / 3);
+    res.images = [vide.images, pierres.images, vide2.images, breches.images];
+  } catch (e) { erreurs.push("coût isolé des effets : " + e.message); }
+  await page.context().close();
+  return res;
+}
+
+// Même partie, même graine de Math.random, horloge truquée, sous quatre réglages (et une partie témoin, refaite aux
+// réglages de la première) : l'état du moteur à la fin de la vague doit être le même (7.4). On relève aussi les tirages
+// de Math.random pendant la vague (fichier et fonction), les maxima des compteurs (7.1, 7.5), les classes du cadre
+// (secousses, éclairs) et les animations de feuille de style du champ.
+const REGLAGES_ISSUE = [{ animations: true, sang: true }, { animations: true, sang: false }, { animations: false, sang: true }, { animations: false, sang: false }, { animations: true, sang: true, temoin: true }];
+async function issueSousReglages(navigateur, erreurs) {
+  const res = [];
+  for (const r of REGLAGES_ISSUE) {
+    const page = await pageChamp(navigateur, 1366, 768, erreurs, { horloge: true, graine: 20261031, reglages: { animations: r.animations, sang: r.sang } });
+    const o = Object.assign({}, r);
+    try {
+      // l'état du moteur est noté à l'instant où la vague finit, avant que le dessin ne réagisse à la fin
+      await page.evaluate(src => {
+        const etat = new Function("return (" + src + ")")(), M = JEU.batailleMoteur, e = M.etape;
+        M.etape = function (p) { const avant = p.phase, x = e.apply(this, arguments); if (avant === "vague" && p.phase !== "vague" && !window.__issue) window.__issue = etat(); return x; };
+      }, etatMoteur.toString());
+      await page.click("#menu button[data-ecran=jouer]");
+      await page.waitForSelector("#ecran-jouer .carte-campagne");
+      await page.evaluate(() => { JEU.ui.fermerModale(); JEU.bataille.lancer("chateau"); });
+      await page.waitForSelector(".td-canvas");
+      await page.clock.runFor(300);
+      for (let i = 0; i < 3; i++) { await page.waitForFunction(() => document.querySelector(".td-question .question")); await repondreJuste(page); }
+      await page.waitForSelector(".td-pret");
+      o.armee = await page.evaluate(armerMelee);
+      for (let k = 0; k < 4 && await page.evaluate(() => JEU.bataille.enCours.phase === "preparation"); k++) { await page.clock.runFor(800); await page.keyboard.press("Enter"); }
+      await page.waitForFunction(() => JEU.bataille.enCours.phase !== "preparation");
+      await page.evaluate(observerCadre);
+      await page.evaluate(() => { window.__max = {}; window.__alea = {}; window.__noterAlea = true; window.__echantillonAnims = true; });
+      await page.click('[data-cle="vitesse-3"]');
+      let k = 0;
+      for (; k < 240 && !(await page.evaluate(() => !!window.__issue)); k++) await page.clock.runFor(500);
+      o.dureeVagueS = k / 2;
+      Object.assign(o, await page.evaluate(src => {
+        window.__noterAlea = false;
+        const etat = new Function("return (" + src + ")")();
+        return { issue: window.__issue || etat(), finie: !!window.__issue, maxima: Object.assign({}, window.__max), alea: Object.assign({}, window.__alea),
+          cadre: window.__cadre || null, animsChamp: Object.assign({}, window.__animsChamp), animsTotal: window.__animsTotal,
+          effets: Object.assign({}, window.__effetsVus), projectiles: Object.assign({}, window.__projVus) };
+      }, etatMoteur.toString()));
+    } catch (e) { o.erreur = e.message; }
+    await page.context().close();
+    res.push(o);
+  }
+  return res;
+}
+
+// Animations de feuille de style d'un écran (document.getAnimations()) et animations SVG (SMIL) : propriétés animées,
+// boucle infinie ou non, filtre SVG sur la cible ou un de ses parents dans le dessin SVG.
+function scanAnimations() {
+  const sortie = document.getAnimations().map(a => {
+    const ef = a.effect, t = ef && ef.getTiming ? ef.getTiming() : {}, c = ef && ef.target;
+    const props = new Set();
+    (ef && ef.getKeyframes ? ef.getKeyframes() : []).forEach(f => Object.keys(f).forEach(p => { if (!/^(offset|computedOffset|easing|composite)$/.test(p)) props.add(p); }));
+    if (a.transitionProperty) props.add(a.transitionProperty.replace(/-([a-z])/g, (m, x) => x.toUpperCase()));
+    let filtre = false;
+    for (let e = c; e && e.nodeType === 1 && e.closest && e.closest("svg"); e = e.parentElement) {
+      if (e.getAttribute("filter") || (getComputedStyle(e).filter || "none") !== "none") { filtre = true; break; }
+      if (e.tagName.toLowerCase() === "svg") break;
+    }
+    const cl = c && c.getAttribute ? (c.getAttribute("class") || "").trim() : "";
+    return { nom: a.animationName || a.transitionProperty || "?", infinie: t.iterations === Infinity, props: [...props], filtre,
+      cible: c ? (c.tagName.toLowerCase() + (cl ? "." + cl.split(/\s+/).join(".") : "")).slice(0, 70) + (ef.pseudoElement || "") : "?" };
+  });
+  document.querySelectorAll("animate, animateTransform, animateMotion, set").forEach(e => {
+    const parent = e.parentElement;
+    sortie.push({ nom: "smil " + e.tagName, infinie: e.getAttribute("repeatCount") === "indefinite", props: [e.tagName === "animateTransform" || e.tagName === "animateMotion" ? "transform" : e.getAttribute("attributeName")],
+      filtre: !!(parent && parent.closest("[filter]")), cible: parent ? parent.tagName : "?" });
+  });
+  return sortie;
+}
+// Écart à la règle « transform et opacity seulement pour ce qui tourne en continu » : animations infinies d'autres
+// propriétés (exception écrite : stroke-dashoffset sur deux traits d'eau au plus par écran), filtre SVG sous une animation.
+function ecartsAnimations(liste) {
+  const traits = liste.filter(a => a.infinie && a.props.length === 1 && a.props[0] === "strokeDashoffset" && /^path/.test(a.cible));
+  const ecarts = [];
+  liste.forEach(a => {
+    if (!a.infinie) return;
+    const autres = a.props.filter(p => !PROPRIETES_COMPOSITEUR.has(p) && !(p === "strokeDashoffset" && traits.indexOf(a) >= 0 && traits.length <= 2));
+    if (autres.length) ecarts.push(a.nom + " (" + a.cible + ") anime " + autres.join(", "));
+    if (a.filtre) ecarts.push(a.nom + " (" + a.cible + ") tourne sous un filtre SVG");
+  });
+  return ecarts;
+}
+// Avance la route par l'API jusqu'à une halte atteignable qui vérifie le critère (repris de capturer.js de l'audit).
+const AVANCER_ROUTE = `function (pred) {
+  const X = JEU.expedition; let n = 0;
+  while (n++ < 14) {
+    const att = X.atteignables(), h = att.find(pred); if (h) return h.id;
+    const a = att.find(x => x.type !== "grand"); if (!a) return null;
+    X.entrer(a.id);
+    if (X.EXP.BATAILLES.indexOf(a.type) >= 0) X.apresBataille(a, { issue: "tenu", degatsRival: 3, bonnes: 3, total: 3, entamee: true }); else X.terminerHalte(a.id);
+  }
+  return null;
+}`;
+// Depuis la campagne : une expédition commencée (parchemin de l'année, page de la semaine), jusqu'à la carte-itinéraire.
+async function ouvrirRoute(page, filmer) {
+  filmer = filmer || (async (n, f) => f());
+  await page.evaluate(() => { JEU.ui.afficher("jouer"); JEU.ui.fermerModale(); window.scrollTo(0, 0); });
+  await filmer("ouverture d'une expédition", () => page.evaluate(() => [...document.querySelectorAll(".carte-jeu")].find(x => /expédition/i.test(x.textContent)).click()));
+  await page.waitForSelector("#ecran-expedition .parchemin-annee");
+  await filmer("départ de l'expédition (page de la semaine)", () => page.keyboard.press("Enter"));
+  await page.waitForSelector("#ecran-expedition .page-semaine");
+  await filmer("entrée sur la route", () => page.keyboard.press("Enter"));
+  await page.waitForSelector("#ecran-expedition .route-svg");
+}
+
+// Propriétés animées sur chaque écran, après 1 s (7.3), processeur normal, 1366 × 768.
+async function proprietesAnimees(navigateur, erreurs) {
+  const page = await pageChamp(navigateur, 1366, 768, erreurs);
+  const res = {};
+  const prendre = async nom => { await attendre(1000); res[nom] = await page.evaluate(scanAnimations); };
+  try {
+    for (const e of ["accueil", "domaine", "jouer", "cours", "codex", "reglages"]) {
+      await page.evaluate(x => { JEU.ui.afficher(x); JEU.ui.fermerModale(); window.scrollTo(0, 0); }, e);
+      await prendre(e);
+    }
+    await ouvrirRoute(page);
+    await prendre("route");
+    await page.evaluate(() => { JEU.ui.afficher("jouer"); JEU.ui.fermerModale(); JEU.conseil.lancer(); });
+    await page.waitForSelector(".carte-conseil");
+    await prendre("conseil");
+    await page.evaluate(() => { JEU.ui.finirPartie(); JEU.ui.afficher("jouer"); JEU.ui.fermerModale(); JEU.bataille.lancer("gue"); });
+    await page.waitForSelector(".td-question .question");
+    await prendre("bataille (conseil de guerre)");
+    for (let i = 0; i < 3; i++) { await page.waitForFunction(() => document.querySelector(".td-question .question")); await attendre(200); await repondreJuste(page); }
+    await page.waitForSelector(".td-pret");
+    await page.locator(".td-bouton", { hasText: "Fantassins" }).click().catch(() => {});
+    for (let k = 0; k < 4 && await page.evaluate(() => JEU.bataille.enCours.phase === "preparation"); k++) { await attendre(400); await page.keyboard.press("Enter"); }
+    await prendre("bataille (vague)");
+  } catch (e) { erreurs.push("propriétés animées : " + e.message); }
+  await page.context().close();
+  return res;
+}
+
+// Cuir nu (7.3, B1) : images du compositeur (CDP Page.startScreencast) pendant chaque transition ; une image est « vide »
+// quand le centre de la fenêtre (20 à 80 % en largeur, 20 à 90 % en hauteur) est au cuir sans parchemin : luminance
+// moyenne sous 70 et moins de 1 % de pixels clairs (au-dessus de 150). Seuils relevés sur les séquences de l'audit
+// (cuir nu : 31 ; écran qui entre depuis l'opacité 0 : 47 à 66 ; confirmation sur son voile : 72 et plus, avec du clair).
+async function filmer(page, action, duree, largeur) {
+  const cdp = await page.context().newCDPSession(page);
+  const images = [];
+  const surImage = ev => { images.push({ data: ev.data, t: ev.metadata.timestamp }); cdp.send("Page.screencastFrameAck", { sessionId: ev.sessionId }).catch(() => {}); };
+  cdp.on("Page.screencastFrame", surImage);
+  await cdp.send("Page.startScreencast", { format: "jpeg", quality: 70, everyNthFrame: 1, maxWidth: Math.round(largeur * 0.4), maxHeight: 2000 });
+  await attendre(150);
+  const debut = Date.now() / 1000;
+  let erreur = null;
+  try { await action(); } catch (e) { erreur = e.message; }
+  await attendre(duree);
+  await cdp.send("Page.stopScreencast").catch(() => {});
+  await attendre(80);
+  cdp.off("Page.screencastFrame", surImage);
+  await cdp.detach().catch(() => {});
+  return { images: images.map(x => ({ data: x.data, t: Math.round((x.t - debut) * 1000) })), erreur };
+}
+async function luminances(navigateur, images) {
+  if (!images.length) return [];
+  const page = await navigateur.newPage({ viewport: { width: 200, height: 200 } });
+  const r = await page.evaluate(async l => {
+    const c = document.createElement("canvas"); c.width = 120; c.height = 70;
+    const g = c.getContext("2d", { willReadFrequently: true }), sortie = [];
+    for (const d of l) {
+      const im = new Image(); im.src = "data:image/jpeg;base64," + d;
+      try { await im.decode(); } catch (e) { sortie.push(null); continue; }
+      const w = im.naturalWidth, h = im.naturalHeight;
+      g.drawImage(im, w * 0.2, h * 0.2, w * 0.6, h * 0.7, 0, 0, 120, 70);
+      const px = g.getImageData(0, 0, 120, 70).data;
+      let s = 0, clairs = 0;
+      for (let i = 0; i < px.length; i += 4) { const y = 0.299 * px[i] + 0.587 * px[i + 1] + 0.114 * px[i + 2]; s += y; if (y > 150) clairs++; }
+      const n = px.length / 4;
+      sortie.push({ moy: Math.round(s / n), clair: Math.round(1000 * clairs / n) / 1000 });
+    }
+    return sortie;
+  }, images.map(x => x.data));
+  await page.close();
+  return r;
+}
+async function cuirNu(navigateur, erreurs, profil) {
+  const { w, h, ralenti, tactile } = profil;
+  const page = await pageChamp(navigateur, w, h, erreurs, { tactile });
+  const cdp = await page.context().newCDPSession(page);
+  if (tactile) await cdp.send("Emulation.setEmulatedMedia", { features: [{ name: "hover", value: "none" }, { name: "pointer", value: "coarse" }] });
+  if (ralenti > 1) await cdp.send("Emulation.setCPUThrottlingRate", { rate: ralenti });
+  const duree = ralenti > 1 ? 1600 : 900, sequences = [];
+  const clicDom = s => page.evaluate(x => { const e = document.querySelector(x); if (!e) throw new Error("absent : " + x); if (typeof e.click === "function") e.click(); else e.dispatchEvent(new MouseEvent("click", { bubbles: true })); }, s);
+  const film = async (nom, action) => {
+    const f = await filmer(page, action, duree, w);
+    const l = await luminances(navigateur, f.images);
+    const vides = f.images.map((x, i) => Object.assign({ t: x.t }, l[i] || {})).filter(x => x.moy !== undefined && x.moy < 70 && x.clair < 0.01);
+    sequences.push({ nom, images: f.images.length, vides: vides.length, quand: vides.map(x => x.t + " ms (" + x.moy + ")"), erreur: f.erreur || undefined });
+  };
+  try {
+    await page.evaluate(() => { JEU.ui.afficher("accueil"); JEU.ui.fermerModale(); window.scrollTo(0, 0); });
+    await attendre(500);
+    for (const [de, vers] of [["accueil", "domaine"], ["domaine", "jouer"], ["jouer", "cours"], ["cours", "codex"], ["codex", "reglages"], ["reglages", "accueil"]]) {
+      await film(de + " → " + vers, () => clicDom("#menu button[data-ecran=" + vers + "]"));
+      await page.evaluate(() => JEU.ui.fermerModale());
+      await attendre(300);
+    }
+    // l'événement du jour, puis le conseil du royaume
+    await page.evaluate(() => { const c = JEU.campagne.etat(); c.evenement = { id: "marchands", jour: JEU.util.jour(), fait: false }; JEU.sauvegarde.enregistrer(); JEU.ui.afficher("jouer"); JEU.ui.fermerModale(); window.scrollTo(0, 0); });
+    await page.waitForSelector(".carte-jeu.evenement");
+    await film("ouverture de l'événement du jour", () => clicDom(".carte-jeu.evenement"));
+    await page.evaluate(() => { JEU.ui.finirPartie(); JEU.ui.afficher("jouer"); JEU.ui.fermerModale(); window.scrollTo(0, 0); });
+    await attendre(400);
+    await film("ouverture du conseil du royaume", () => page.evaluate(() => JEU.conseil.lancer()));
+    await page.evaluate(() => { JEU.ui.finirPartie(); });
+    // l'expédition : ouverture, départ, route ; une halte de bivouac puis le retour sur la route (sceau posé)
+    await ouvrirRoute(page, film);
+    const idB = await page.evaluate("(" + AVANCER_ROUTE + ")(x => x.type === 'bivouac')");
+    if (idB) {
+      await page.evaluate(() => JEU.ui.afficher("expedition"));
+      await page.waitForSelector("#ecran-expedition .route-svg");
+      await attendre(400);
+      await film("ouverture d'une halte (bivouac)", () => clicDom(".route-svg .halte.atteignable[data-id='" + idB + "']"));
+      await page.waitForSelector(".choix-bivouac");
+      await film("retour sur la route après la halte", () => page.keyboard.press("1"));
+    } else sequences.push({ nom: "retour sur la route après une halte", images: 0, vides: 0, absent: "aucun bivouac atteignable" });
+  } catch (e) { erreurs.push("cuir nu " + w + " × " + h + " : " + e.message); }
+  if (ralenti > 1) await cdp.send("Emulation.setCPUThrottlingRate", { rate: 1 }).catch(() => {});
+  await page.context().close();
+  return { taille: w + " × " + h, ralenti, tactile: !!tactile, vides: sequences.reduce((s, x) => s + x.vides, 0), sequences };
+}
+
+// Écrans immobiles au ralenti 4 × en 1340 × 800 (7.3, mesurer.js de l'audit) : écarts entre images pendant 2,5 s (médiane,
+// 95e centile, part au-delà de 34 ms) et tâches longues, PASSAGES fois chacun, médiane.
+async function imagesEcran(page, duree) {
+  return page.evaluate(d => new Promise(res => {
+    const ecarts = [], longues = [];
+    let obs = null;
+    try { obs = new PerformanceObserver(l => l.getEntries().forEach(e => longues.push(Math.round(e.duration)))); obs.observe({ type: "longtask", buffered: false }); } catch (e) { obs = null; }
+    let avant = null;
+    const t0 = performance.now();
+    function pas(t) {
+      if (avant !== null) ecarts.push(t - avant);
+      avant = t;
+      if (t - t0 < d) requestAnimationFrame(pas); else {
+        if (obs) obs.disconnect();
+        ecarts.sort((a, b) => a - b);
+        const q = p => Math.round(ecarts[Math.min(ecarts.length - 1, Math.floor(p * ecarts.length))] * 10) / 10;
+        res({ images: ecarts.length, mediane: q(0.5), p95: q(0.95), part34: Math.round(100 * ecarts.filter(x => x > 34).length / ecarts.length), tacheMax: longues.length ? Math.max(...longues) : 0 });
+      }
+    }
+    requestAnimationFrame(pas);
+  }), duree);
+}
+async function ecransRalentis(navigateur, erreurs) {
+  const page = await pageChamp(navigateur, 1340, 800, erreurs, { tactile: true });
+  const cdp = await page.context().newCDPSession(page);
+  const passes = {};
+  const prendre = async nom => { await attendre(600); (passes[nom] = passes[nom] || []).push(await imagesEcran(page, 2500)); };
+  try {
+    await page.evaluate(() => { const c = JEU.campagne.etat(); if (c.conquises.indexOf("gue") < 0) c.conquises.push("gue"); JEU.sauvegarde.enregistrer(); });
+    await ouvrirRoute(page);
+    await cdp.send("Emulation.setCPUThrottlingRate", { rate: 4 });
+    for (let i = 0; i < PASSAGES; i++) {
+      for (const e of ["accueil", "domaine", "jouer", "expedition"]) {
+        await page.evaluate(x => { JEU.ui.afficher(x); JEU.ui.fermerModale(); window.scrollTo(0, 0); }, e);
+        await prendre(e === "jouer" ? "campagne" : e === "expedition" ? "route" : e);
+      }
+      await page.evaluate(() => { JEU.ui.afficher("jouer"); JEU.ui.fermerModale(); JEU.conseil.lancer(); });
+      await page.waitForSelector(".carte-conseil");
+      await prendre("conseil");
+      await page.evaluate(() => JEU.ui.finirPartie());
+    }
+  } catch (e) { erreurs.push("écrans au ralenti : " + e.message); }
+  await cdp.send("Emulation.setCPUThrottlingRate", { rate: 1 }).catch(() => {});
+  await page.context().close();
+  const res = {};
+  Object.keys(passes).forEach(k => { res[k] = medianes(passes[k]); delete res[k].detail; res[k].detail = passes[k].map(x => x.mediane + " · " + x.p95 + " · " + x.tacheMax); });
+  return res;
+}
+
+// Event Timing au ralenti 4 × en 1340 × 800 (7.2, 7.3) : de la touche qui répond à l'image peinte de la suite, pendant le
+// conseil de guerre de deux batailles, pendant un événement du jour, et à la porte de faveur d'une expédition (la question
+// du conseiller, puis les cartes). Les associations et les textes à trous (plusieurs gestes) ne sont pas mesurés.
+async function tempsReelRalenti(navigateur, erreurs) {
+  const page = await pageChamp(navigateur, 1340, 800, erreurs);
+  const cdp = await page.context().newCDPSession(page);
+  const res = { bataille: [], evenement: [], porte: [] };
+  await page.evaluate(() => {
+    window.__ev = [];
+    new PerformanceObserver(l => l.getEntries().forEach(e => { if (e.name === "keydown") window.__ev.push(e.duration); })).observe({ type: "event", durationThreshold: 16, buffered: true });
+  });
+  const mesurer = async (liste, repondre, suite) => {
+    const type = await page.evaluate(() => JEU.ui.questionCourante.type);
+    const avant = await page.evaluate(() => window.__ev.length);
+    await repondre();
+    await attendre(700);
+    if (type === "association" || type === "trou" || !(await page.evaluate(suite))) return;
+    const ev = await page.evaluate(a => window.__ev.slice(a), avant);
+    liste.push(ev.length ? Math.max(...ev) : 16);
+  };
+  try {
+    await cdp.send("Emulation.setCPUThrottlingRate", { rate: 4 });
+    for (const lieu of ["gue", "piemont"]) {
+      await page.evaluate(l => { JEU.ui.afficher("jouer"); JEU.ui.fermerModale(); JEU.bataille.lancer(l); }, lieu);
+      for (let i = 0; i < 3; i++) {
+        await page.waitForFunction(() => document.querySelector(".td-question .question"), null, { timeout: 30000 });
+        await attendre(500);
+        if (i < 2) await mesurer(res.bataille, () => repondreJuste(page), () => !!document.querySelector(".td-question .question .enonce"));
+        else await repondreJuste(page);
+      }
+      await page.waitForSelector(".td-pret", { timeout: 30000 });
+      await page.evaluate(() => JEU.ui.finirPartie());
+    }
+    // l'événement du jour : chaque réponse juste qui amène une autre question
+    await page.evaluate(() => { const c = JEU.campagne.etat(); c.evenement = { id: "marchands", jour: JEU.util.jour(), fait: false }; JEU.sauvegarde.enregistrer(); JEU.ui.afficher("jouer"); JEU.ui.fermerModale(); });
+    await page.waitForSelector(".carte-jeu.evenement");
+    await page.evaluate(() => document.querySelector(".carte-jeu.evenement").click());
+    for (let g = 0; g < 8; g++) {
+      await page.waitForSelector(".scene-evenement .question .enonce, .scene-evenement .bilan", { timeout: 30000 });
+      if (await page.$(".scene-evenement .bilan")) break;
+      if (await page.$(".panneau-erreur")) { await page.keyboard.press("Enter"); await attendre(500); continue; }
+      await mesurer(res.evenement, () => repondreJuste(page), () => !!document.querySelector(".scene-evenement .question .enonce") && !document.querySelector(".panneau-erreur"));
+    }
+    await page.evaluate(() => JEU.ui.finirPartie());
+    // la porte de faveur d'une expédition, posée par l'API après une escarmouche tenue
+    await cdp.send("Emulation.setCPUThrottlingRate", { rate: 1 });
+    await ouvrirRoute(page);
+    const idP = await page.evaluate("(" + AVANCER_ROUTE + ")(x => x.porte && x.porte.genre === 'faveur' && (x.type === 'escarmouche' || x.type === 'embuscade'))");
+    if (idP) {
+      await page.evaluate(id => { const X = JEU.expedition, t = X.trouverHalte(id, X.enCours()); X.entrer(id);
+        const r = X.apresBataille(t.halte, { issue: "tenu", degatsRival: 3, bonnes: 3, total: 3, entamee: true });
+        if (r && r.porte) { const off = X.offrirFaveurs(r.porte, true, false); if (off && off.cartes.length) { off.question = true; off.eclatante = false; JEU.sauvegarde.enregistrer(); } }
+        JEU.ui.afficher("expedition"); }, idP);
+      await page.waitForSelector("#ecran-expedition .question .enonce, #ecran-expedition button.carte-faveur");
+      await cdp.send("Emulation.setCPUThrottlingRate", { rate: 4 });
+      if (await page.$("#ecran-expedition .question .enonce")) await mesurer(res.porte, () => repondreJuste(page), () => !!document.querySelector("#ecran-expedition button.carte-faveur, #ecran-expedition .panneau-erreur"));
+    } else res.porteAbsente = "aucune porte de faveur atteignable";
+  } catch (e) { erreurs.push("Event Timing au ralenti : " + e.message); }
+  await cdp.send("Emulation.setCPUThrottlingRate", { rate: 1 }).catch(() => {});
+  await page.context().close();
+  const max = l => l.length ? Math.max(...l) : null;
+  return Object.assign(res, { maxBataille: max(res.bataille), maxEvenement: max(res.evenement), maxPorte: max(res.porte) });
+}
+
+// Passes complètes (bilan) et contrôles (ÉCHEC si le contrôle est du lot reçu ou d'un lot d'avant, À VENIR sinon).
+async function passeRalenti(navigateur, erreurs) {
+  const b = {};
+  b.meleeRalentie = await meleeEffets(navigateur, 1340, 800, erreurs, 4);
+  b.coutEffets = await coutEffets(navigateur, erreurs);
+  b.ecransRalentis = await ecransRalentis(navigateur, erreurs);
+  b.tempsReelRalenti = await tempsReelRalenti(navigateur, erreurs);
+  b.cuirNuTablette = await cuirNu(navigateur, erreurs, { w: 1340, h: 800, ralenti: 4, tactile: true });
+  return b;
+}
+async function passeGraphismes(navigateur, erreurs) {
+  const b = { meleeEffets: [] };
+  for (const [w, h] of [[1366, 768], [1920, 1080]]) b.meleeEffets.push(await meleeEffets(navigateur, w, h, erreurs, 1));
+  b.reglages = await issueSousReglages(navigateur, erreurs);
+  b.animations = await proprietesAnimees(navigateur, erreurs);
+  b.cuirNu = await cuirNu(navigateur, erreurs, { w: 1366, h: 768, ralenti: 1 });
+  return b;
+}
+function controlesGraphismes(bilan) {
+  const echecs = [], avenir = [], alertes = [];
+  const C = (lot, ok, m) => { if (ok) return; if (lot <= LOT) echecs.push(m); else avenir.push("(lot " + lot + ") " + m); };
+  const plafonds = (quoi, M) => { if (!M) return; Object.keys(PLAFONDS).forEach(k => C("A", !(M[k] > PLAFONDS[k]), quoi + " : " + k + " à " + M[k] + " (plafond " + PLAFONDS[k] + ")")); };
+  const scenario = (quoi, m) => {
+    if (!m || !m.passages) return;
+    if (!(m.engages >= 6)) alertes.push(quoi + " : seulement " + m.engages + " troupes au corps à corps pendant la mesure");
+    const e = m.effets || {};
+    if (!(e.impact > 0) || !(e.breche > 0)) alertes.push(quoi + " : pierres ou brèches absentes de la vague (" + JSON.stringify(e) + ")");
+  };
+  (bilan.meleeEffets || []).forEach(m => {
+    const q = "grosse mêlée avec effets " + m.taille;
+    if (!m.passages) { echecs.push(q + " : aucune mesure"); return; }
+    scenario(q, m);
+    C("A", m.imageMediane <= 17.5, q + " : " + m.imageMediane + " ms entre deux images en médiane (17,5 au plus)");
+    if (m.taille === "1366 × 768") {
+      C("A", m.boucleMediane < 4, q + " : boucle médiane à " + m.boucleMediane + " ms (moins de 4 ms attendu)");
+      C("A", m.boucle95 < 8, q + " : boucle à " + m.boucle95 + " ms pour 95 % des images (moins de 8 ms)");
+      C("A", m.part34 <= 2, q + " : " + m.part34 + " % des images au-delà de 34 ms (2 % au plus)");
+    } else {
+      C("A", m.boucleMax < BASE_GRAPHISMES.boucleMax1920, q + " : boucle max à " + m.boucleMax + " ms (moins de " + BASE_GRAPHISMES.boucleMax1920 + " ms, base d'avant le lot A)");
+      C("A", m.boucle95 < BASE_GRAPHISMES.boucle95_1920, q + " : boucle à " + m.boucle95 + " ms pour 95 % des images (moins de " + BASE_GRAPHISMES.boucle95_1920 + " ms)");
+    }
+    plafonds(q, m.maxima);
+    C("A", !(m.ensembleSecousses > 1), q + " : " + m.ensembleSecousses + " secousses en même temps sur le cadre");
+  });
+  const MR = bilan.meleeRalentie;
+  if (MR) {
+    const q = "grosse mêlée avec effets au ralenti 4 × (1340 × 800)";
+    if (!MR.passages) echecs.push(q + " : aucune mesure");
+    else {
+      scenario(q, MR);
+      C("A", MR.boucleMediane <= BASE_GRAPHISMES.ralentiBoucleMediane, q + " : boucle médiane à " + MR.boucleMediane + " ms (pas au-dessus de la base, " + BASE_GRAPHISMES.ralentiBoucleMediane + " ms)");
+      C("C", MR.boucleMediane < 4, q + " : boucle médiane à " + MR.boucleMediane + " ms (moins de 4 ms, régulateur actif ; cran " + MR.niveau + ")");
+      C("C", MR.imageMediane < 17.5, q + " : " + MR.imageMediane + " ms entre deux images en médiane (moins de 17,5)");
+      C("C", MR.part34 <= 5, q + " : " + MR.part34 + " % des images au-delà de 34 ms (5 % au plus)");
+      plafonds(q, MR.maxima);
+    }
+  }
+  const CE = bilan.coutEffets;
+  if (CE && CE.pierre !== undefined) {
+    C("A", CE.pierre < 0.1, "coût isolé d'une pierre au ralenti 4 × : " + CE.pierre + " ms par image (moins de 0,1)");
+    C("A", CE.breche < 0.1, "coût isolé d'une brèche au ralenti 4 × : " + CE.breche + " ms par image (moins de 0,1)");
+  }
+  const ER = bilan.ecransRalentis;
+  if (ER) Object.keys(ER).forEach(k => {
+    const m = ER[k], lot = k === "accueil" || k === "domaine" ? "C" : "A", q = "écran " + k + " au ralenti 4 × (1340 × 800)";
+    C(lot, m.mediane <= 17.5, q + " : " + m.mediane + " ms entre deux images en médiane (16,7 attendu)");
+    C(lot, m.p95 < 34, q + " : " + m.p95 + " ms pour 95 % des images (moins de 34)");
+    C(lot, !(m.tacheMax > 50), q + " : tâche longue de " + m.tacheMax + " ms (50 au plus)");
+  });
+  const TR = bilan.tempsReelRalenti;
+  if (TR) {
+    C("A", TR.bataille.length >= 2, "Event Timing au ralenti 4 × : seulement " + TR.bataille.length + " mesures au conseil de guerre");
+    C("A", !(TR.maxBataille > 100), "Event Timing au ralenti 4 × : " + TR.maxBataille + " ms entre une réponse et la question suivante peinte, en bataille (moins de 100)");
+    C("A", !(TR.maxEvenement > 100), "Event Timing au ralenti 4 × : " + TR.maxEvenement + " ms pendant un événement (moins de 100)");
+    C("A", !(TR.maxPorte > 100), "Event Timing au ralenti 4 × : " + TR.maxPorte + " ms à la porte d'une expédition (moins de 100)");
+    if (!TR.evenement.length) alertes.push("Event Timing au ralenti 4 × : aucune mesure pendant l'événement");
+    if (!TR.porte.length) alertes.push("Event Timing au ralenti 4 × : aucune mesure à la porte (" + (TR.porteAbsente || "question à plusieurs gestes") + ")");
+  }
+  [bilan.cuirNu, bilan.cuirNuTablette].forEach(c => {
+    if (!c) return;
+    c.sequences.forEach(s => C("B", !s.vides, "cuir nu " + c.taille + (c.ralenti > 1 ? " au ralenti 4 ×" : "") + " : " + s.nom + ", " + s.vides + " image(s) vide(s) à " + s.quand.join(", ")));
+  });
+  const A = bilan.animations;
+  if (A) Object.keys(A).forEach(k => ecartsAnimations(A[k]).forEach(m => C(k === "accueil" || k === "domaine" ? "C" : "A", false, "propriétés animées, écran " + k + " : " + m)));
+  const RG = bilan.reglages;
+  if (RG && RG.length) {
+    RG.filter(r => r.erreur).forEach(r => echecs.push("même issue sous quatre réglages : la partie " + JSON.stringify({ animations: r.animations, sang: r.sang }) + " n'a pas été jouée (" + r.erreur + ")"));
+    const jouees = RG.filter(r => r.issue), ref = jouees[0], temoin = jouees.find(r => r.temoin);
+    if (ref && temoin && temoin.issue !== ref.issue) alertes.push("même issue sous quatre réglages : la partie témoin (mêmes réglages que la première) finit autrement ; l'essai n'est pas reproductible ici");
+    else jouees.filter(r => !r.temoin && r !== ref).forEach(r => C("A", r.issue === ref.issue, "même graine, issue différente : Animations " + (r.animations ? "oui" : "non") + ", Sang " + (r.sang ? "oui" : "non") + " (" + r.issue.slice(0, 160) + "… au lieu de " + ref.issue.slice(0, 160) + "…)"));
+    jouees.forEach(r => { if (!r.finie) alertes.push("même issue sous quatre réglages : vague pas finie en " + r.dureeVagueS + " s (état comparé à la fin du temps)"); });
+    const tirages = {};
+    jouees.forEach(r => Object.keys(r.alea || {}).forEach(k => { tirages[k] = (tirages[k] || 0) + r.alea[k]; }));
+    Object.keys(tirages).filter(k => /^bataille-(sol|effets)\.js/.test(k)).forEach(k => C("A", false, "Math.random tiré " + tirages[k] + " fois dans le dessin neuf (" + k + ")"));
+    jouees.forEach(r => {
+      const q = "Animations " + (r.animations ? "oui" : "non") + ", Sang " + (r.sang ? "oui" : "non");
+      const M = r.maxima || {};
+      plafonds("vague à ×3 (" + q + ")", M);
+      if (r.cadre) C("A", !(r.cadre.ensemble > 1), "vague à ×3 (" + q + ") : " + r.cadre.ensemble + " secousses en même temps");
+      if (r.cadre && r.cadre.ecartEclairs !== null) C("A", r.cadre.ecartEclairs >= 950, "vague à ×3 (" + q + ") : deux éclairs à " + r.cadre.ecartEclairs + " ms d'écart (au plus un par seconde)");
+      Object.keys(r.animsChamp || {}).forEach(n => { const autres = r.animsChamp[n].split(",").filter(p => p && !PROPRIETES_COMPOSITEUR.has(p)); C("A", !autres.length, "retour du champ animé hors du compositeur (" + q + ") : " + n + " anime " + autres.join(", ")); });
+      if (!r.sang) ["gouttes", "flaques", "decalques.taches", "decalques.corps"].forEach(k => C("A", !(M[k] > 0), "Sang coupé (" + q + ") : " + k + " à " + M[k] + " pendant la vague (0 attendu)"));
+      if (!r.animations) {
+        ["particules", "trainees", "secousses"].forEach(k => C("A", !(M[k] > 0), "Animations coupées (" + q + ") : " + k + " à " + M[k] + " pendant la vague (0 attendu)"));
+        C("A", !(r.cadre && r.cadre.secousses), "Animations coupées (" + q + ") : " + (r.cadre ? r.cadre.secousses : 0) + " secousses posées sur le cadre");
+        C("A", !r.animsTotal, "Animations coupées (" + q + ") : " + r.animsTotal + " animations de feuille de style relevées pendant la vague (aucune attendue)");
+      }
+    });
+  }
+  return { echecs, avenir, alertes };
+}
+function ecrireSortie(bilan) {
+  if (!process.env.SORTIE) return;
+  require("fs").writeFileSync(process.env.SORTIE, JSON.stringify(Object.assign({ date: new Date().toISOString(), lot: LOT, passages: PASSAGES }, bilan), null, 1));
+}
+function afficherControles(r) {
+  r.alertes.forEach(m => console.log("ALERTE  " + m));
+  r.avenir.forEach(m => console.log("À VENIR " + m));
+}
+
 (async () => {
   const navigateur = await chromium.launch(process.env.CHROMIUM ? { executablePath: process.env.CHROMIUM } : {});
+  if (process.env.PARTIE === "ralenti" || process.env.PARTIE === "graphismes") {
+    const erreurs = [];
+    const bilan = process.env.PARTIE === "ralenti" ? await passeRalenti(navigateur, erreurs) : await passeGraphismes(navigateur, erreurs);
+    bilan.erreursJS = erreurs;
+    console.log(JSON.stringify(bilan, null, 1));
+    ecrireSortie(bilan);
+    await navigateur.close();
+    const r = controlesGraphismes(bilan);
+    if (erreurs.length) r.echecs.push("erreurs JavaScript dans la page, ou essai interrompu (voir erreursJS)");
+    afficherControles(r);
+    r.echecs.forEach(m => console.log("ÉCHEC  " + m));
+    process.exit(r.echecs.length ? 1 : 0);
+  }
   if (process.env.PARTIE === "tablette") {
     const erreurs = [], bilan = { tablette: [] };
     for (const [w, h] of [[1280, 800], [1024, 768]]) bilan.tablette.push(await essaiTablette(navigateur, w, h, erreurs));
@@ -1341,8 +2084,12 @@ function echecsExpedition(bilan) {
   bilan.tablette = [];
   for (const [w, h] of [[1280, 800], [1024, 768]]) bilan.tablette.push(await essaiTablette(navigateur, w, h, erreurs));
   bilan.portrait = await essaiPortrait(navigateur, erreurs);
+  // 13. lots graphiques (31/10/2026) : passe « graphismes » (processeur normal), puis passe « ralenti » (4 ×, 1340 × 800),
+  //     seulement avec GRAPHISMES=1 (une dizaine de minutes de plus) ; sinon PARTIE=graphismes et PARTIE=ralenti
+  if (process.env.GRAPHISMES) Object.assign(bilan, await passeGraphismes(navigateur, erreurs), await passeRalenti(navigateur, erreurs));
   bilan.erreursJS = erreurs;
   console.log(JSON.stringify(bilan, null, 1));
+  ecrireSortie(bilan);
   await navigateur.close();
 
   const echecs = [];
@@ -1419,6 +2166,9 @@ function echecsExpedition(bilan) {
   if (!T.repli || !T.repli.route || T.repli.terrain !== "terrain-peint") echecs.push("repli sans terrain 3D : route, ponts et gué non dessinés (" + JSON.stringify(T.repli) + ")");
   echecsExpedition(bilan).forEach(m => echecs.push(m));
   echecsTablette(bilan).forEach(m => echecs.push(m));
+  const GR = controlesGraphismes(bilan);
+  GR.echecs.forEach(m => echecs.push(m));
+  afficherControles(GR);
   echecs.forEach(m => console.log("ÉCHEC  " + m));
   process.exit(echecs.length ? 1 : 0);
 })().catch(e => { console.log("ÉCHEC  " + e.message); process.exit(1); });
