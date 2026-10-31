@@ -691,7 +691,9 @@ main { max-width: 1060px; margin: 0 auto; padding: 1.4rem 1rem 7rem; }
 @media (max-width: 720px) { .td-hud { position: static; background: #2a1d12; } }
 /* Écran large (PC) : le champ de bataille à gauche, la question et les ordres à droite, visibles ensemble.
    Le champ de bataille reste en vue (collant sous le bandeau) si la colonne de droite est plus haute. */
-@media (min-width: 1100px) {
+/* Tablette tactile en paysage (31/10/2026) : la même mise en page côte à côte dès 1000 px (1024 × 768), sur un écran sans
+   souris seulement (hover: none, pointer: coarse) ; sur un PC, rien ne change sous 1100 px. */
+@media (min-width: 1100px), (min-width: 1000px) and (hover: none) and (pointer: coarse) {
   body.en-partie main:has(.td-cadre) { max-width: 1500px; }
   .zone-partie:has(> .td-cadre) { display: grid; grid-template-columns: minmax(0, 1fr) clamp(320px, 30vw, 440px); gap: 1.2rem; align-items: start; }
   /* La barre de la partie (titre, « Signaler », « Quitter (Échap) ») est compacte, juste sous le bandeau, et y reste
@@ -731,7 +733,7 @@ main { max-width: 1060px; margin: 0 auto; padding: 1.4rem 1rem 7rem; }
 /* Fenêtre basse (portable, 768 px) : les cartes de récit en tête de la colonne (le mot du rival, un événement de vague,
    le conseiller qui pose la question) se serrent, pour que les quatre réponses restent en vue sans faire défiler la
    colonne (revue du 16/10/2026 : avec le mot du rival, trois cartes repoussaient la 4e réponse 95 px sous le bord) */
-@media (min-width: 1100px) and (max-height: 800px) {
+@media (min-width: 1100px) and (max-height: 800px), (min-width: 1000px) and (max-height: 800px) and (hover: none) and (pointer: coarse) {
   .zone-partie:has(> .td-cadre) .td-conseil .recit { gap: .6rem; margin-bottom: .45rem; padding: .35rem .75rem; }
   .zone-partie:has(> .td-cadre) .td-conseil .recit-portrait { width: 38px; height: 38px; }
   .zone-partie:has(> .td-cadre) .td-conseil .recit-portrait svg { width: 26px; height: 26px; }
@@ -746,7 +748,7 @@ main { max-width: 1060px; margin: 0 auto; padding: 1.4rem 1rem 7rem; }
   .zone-partie:has(> .td-cadre) .td-conseil:has(> .recit + .recit) .reponses { gap: .4rem; }
 }
 /* Fenêtre basse (portable avec onglets et barre des tâches) : question et réponses plus serrées */
-@media (min-width: 1100px) and (max-height: 700px) {
+@media (min-width: 1100px) and (max-height: 700px), (min-width: 1000px) and (max-height: 700px) and (hover: none) and (pointer: coarse) {
   .zone-partie:has(> .td-cadre) .enonce { font-size: 1.1rem; margin: .4rem 0 .6rem; }
   .zone-partie:has(> .td-cadre) .question { padding: .7rem 1rem .7rem; }
   .zone-partie:has(> .td-cadre) .choix { padding: .45rem .8rem; min-height: 2.5rem; font-size: 1.02rem; }
@@ -1038,3 +1040,67 @@ button.carte-faveur:hover, button.carte-faveur:focus-visible { transform: transl
   #ecran-expedition .journal-route .chronique li:nth-child(n+4) { display: none; }
 }
 @media (max-width: 820px) { .exp-bas { grid-template-columns: 1fr; } .exp-fenetre.armorial { grid-template-columns: 1fr; } .liste-cours-semaine { columns: 1; } }
+
+/* =====================================================================
+   Tablette tactile (31/10/2026) : Android 10 pouces en paysage (1280 × 800, 1024 × 768), au doigt, sans souris ni clavier.
+   Tout ce qui suit ne s'applique qu'à un écran tactile sans survol (hover: none, pointer: coarse) : le PC de Romain
+   (1366 × 768, 1920 × 1080, souris) ne change pas d'un pixel. Audit et mesures : atelier/relecture/tablette-tactile.md.
+   ===================================================================== */
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+@media (hover: none) and (pointer: coarse) {
+  /* cibles d'au moins 44 × 44 px sous le doigt : boutons, onglets, liens, cartes, choix, lignes de l'étal, champs */
+  .bouton, .onglet, .lien, .cour-chip, .codex-entete, .vignette, .ligne-etal, .choix-front, .td-bouton, .choix, .carte-faveur, .lr-medaillon,
+  input:not([type=checkbox]):not([type=radio]), select, textarea { min-height: 44px; }
+  .bouton.petit, .bouton.discret { min-height: 44px; min-width: 44px; padding-top: .4rem; padding-bottom: .4rem; }
+  .lien { display: inline-flex; align-items: center; padding: .4rem .5rem; }
+  .bouton-rond { width: 44px; height: 44px; }
+  .modale-fermer { width: 48px; height: 48px; top: .2rem; right: .3rem; display: inline-flex; align-items: center; justify-content: center; }
+  .association .choix, .zone-partie:has(> .td-cadre) .association .choix { min-height: 44px; }
+  /* une case à cocher se touche sur toute sa ligne (le libellé), et la case elle-même grandit */
+  label:has(> input[type=checkbox]), label:has(> input[type=radio]) { display: inline-flex; align-items: center; gap: .5rem; min-height: 44px; padding: .15rem 0; cursor: pointer; }
+  input[type=checkbox], input[type=radio] { width: 26px; height: 26px; margin: 0; flex: none; accent-color: var(--or-sombre); }
+  .radios label { min-height: 44px; }
+  /* pas de zoom au double toucher sur les commandes (le pincement reste possible sur le reste de la page) */
+  button, input, select, textarea, label, a, .choix, .td-canvas, .carte-svg, .route-svg, .annee-svg, .plan, .quartier, .noeud, .halte, .case, #menu, #bandeau { touch-action: manipulation; }
+  .carte-conseil { touch-action: none; } /* la carte du conseil se glisse au doigt (conseil.js) */
+  /* ni halo bleu ni sélection de texte au toucher ; pas de menu « enregistrer l'image » sur un appui long */
+  button, [role=button], .quartier, .noeud, .halte, .case, .td-canvas, .carte-conseil, .carte-svg, .route-svg, .annee-svg, .plan { -webkit-tap-highlight-color: transparent; -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
+  img, svg image { -webkit-touch-callout: none; -webkit-user-drag: none; }
+  /* le survol n'existe pas : rien ne reste « soulevé » après un toucher (le survol colle au doigt dans Chrome) ; l'appui
+     donne le même retour que le survol de la souris */
+  .carte-jeu:hover, .choix:hover, .vignette:hover, button.carte-faveur:hover, #menu button:hover { transform: none; }
+  .carte-jeu:active, .vignette:active, button.carte-faveur:active { transform: translateY(2px); }
+  .choix:active, .td-bouton:active:not(:disabled), .ligne-etal:active:not(:disabled), .choix-front:active { background: #fff6dc; border-color: var(--encre); }
+  /* les indications de touches du clavier n'ont pas de sens sans clavier (les raccourcis restent actifs, en bonus) */
+  .astuce-clavier, .carte-jeu > .touche, .carte-faveur > .touche, .choix-front .touche, .alerte-rival .touche, .route-svg .touche-halte, .td-touches, .td-bouton .touche { display: none; }
+  /* les plus petits libellés un peu plus grands */
+  .recit-repere { font-size: .78rem; }
+  .cc-texte small { font-size: .72rem; }
+  /* hauteur de la fenêtre sans la barre d'adresse (dvh) : la colonne de la bataille et les cartes tiennent dans ce qui se voit */
+  .zone-partie:has(> .td-cadre) > .td-bas { height: calc(100dvh - var(--haut-collant) - 10px); }
+  .td-cadre { max-width: max(520px, calc((100dvh - 190px) * 1000 / 660)); }
+  .carte-campagne { max-width: max(560px, calc((100dvh - var(--haut-libre)) * 1000 / 530)); }
+}
+/* tablette de 1280 px de large et moins : les cartes de la campagne sur deux colonnes (plus grandes sous le doigt) ;
+   sur la route des semaines, les boutons et les cartouches se serrent pour que tout tienne dans la hauteur */
+@media (hover: none) and (pointer: coarse) and (max-width: 1280px) {
+  .grille-jeux { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  #ecran-expedition .exp-actions { gap: .5rem; }
+  #ecran-expedition .exp-actions .bouton { padding-left: .8rem; padding-right: .8rem; }
+  #ecran-expedition .exp-bas .cartouche { padding: .45rem .8rem; }
+  #ecran-expedition .exp-bas .cartouche h3 { margin-bottom: .15rem; }
+  #ecran-expedition .cp-ligne, #ecran-expedition .cp-renom, #ecran-expedition .cp-faveurs { margin-top: .1rem; margin-bottom: .1rem; }
+  #ecran-expedition .cp-notes { display: none; }
+  #ecran-expedition .journal-route .chronique li:nth-child(n+3) { display: none; }
+}
+/* tablette tenue en portrait : un mot au centre, par-dessus le jeu (qui reste utilisable dessous : le mot ne prend
+   aucun toucher). Rien en JavaScript : la feuille de style seule, d'après l'orientation. */
+@media (hover: none) and (pointer: coarse) and (orientation: portrait) {
+  body::after {
+    content: "Tourne ta tablette en paysage"; position: fixed; left: 50%; top: 50%; z-index: 55; transform: translate(-50%, -50%);
+    box-sizing: border-box; width: min(86vw, 400px); padding: 4.4rem 1.2rem 1rem; text-align: center; pointer-events: none;
+    font-family: var(--titre); font-weight: 700; font-size: 1.2rem; line-height: 1.3; color: var(--encre);
+    background: no-repeat center .9rem/52px 52px url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 52 52'><rect x='15' y='6' width='22' height='34' rx='3' fill='%23fbf3dc' stroke='%232e2419' stroke-width='2.5'/><circle cx='26' cy='35' r='1.6' fill='%232e2419'/><path d='M42 20a16 16 0 0 1 2 18' fill='none' stroke='%23b08d3a' stroke-width='3' stroke-linecap='round'/><path d='M40 40l4-2.5 1 4.5z' fill='%23b08d3a'/><path d='M10 32a16 16 0 0 1-2-18' fill='none' stroke='%23b08d3a' stroke-width='3' stroke-linecap='round'/><path d='M12 12l-4 2.5-1-4.5z' fill='%23b08d3a'/></svg>"), var(--parchemin);
+    border: 2px solid var(--encre); border-radius: 4px; box-shadow: 0 0 0 3px var(--or), 0 0 0 5px var(--encre), 0 14px 30px rgba(0,0,0,.6); opacity: .96;
+  }
+}

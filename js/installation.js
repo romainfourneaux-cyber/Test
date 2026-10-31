@@ -55,6 +55,7 @@
   function mettreAJour() {
     var reg = inst.enregistrement;
     if (!reg) { toast("Mise à jour impossible pour l'instant."); return; }
+    if (!nav.serviceWorker.controller && !installe()) { toast("Le jeu finit de s'installer : réessaie dans un instant."); return; }
     toast("Recherche d'une nouvelle version…");
     reg.update().then(function () {
       var w = reg.installing || reg.waiting;
