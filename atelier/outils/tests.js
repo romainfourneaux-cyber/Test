@@ -2321,7 +2321,11 @@ verifier("Bataillons : le rendu ne touche pas au moteur (aucune écriture de la 
   verifier("Marchand : l'étal du MVP (faveur commune, vivres, plan de bataille, rafraîchir), −20 % quand la question est juste (vivres 32, plan 12) ; un sac de vivres et un plan (+25 or à la prochaine bataille de route) ; une ligne ne se vend qu'une fois ; l'or restant est annoncé",
     lignes.join() === "faveur,vivres,plan,rafraichir" && etal.lignes[1].prix === 32 && etal.lignes[2].prix === 12 && achatV && e.vivres === 2 && achatP && e.plan === 25 && e.or === 100 - 32 - 12 && refusP === null && refusInconnu === null && /renommée/.test(etal.restant) && X.fermerEtal(hM.id).renom === 5);
   const gId = acte.gardien.id, placeAvant = e.places[gId];
-  const tDefi = X.cloturerEvenement(platX(acte).filter(h => h.type === "evenement")[0] ? platX(acte).filter(h => h.type === "evenement")[0].id : hBiv.id, "defi", 2, 3);
+  // sans halte d'événement dans cet acte (route tirée au hasard), le bivouac sert de halte : il vient d'être fait, on l'oublie
+  // d'abord (sinon cloturerEvenement ne rend rien et le test échouait une fois sur trois environ)
+  const idDefi = platX(acte).filter(h => h.type === "evenement")[0] ? platX(acte).filter(h => h.type === "evenement")[0].id : hBiv.id;
+  delete e.faits[idDefi];
+  const tDefi = X.cloturerEvenement(idDefi, "defi", 2, 3);
   e.espion = false; const hEv2 = { id: platX(acte)[0].id };
   delete e.faits[hEv2.id];
   const tEsp = X.cloturerEvenement(hEv2.id, "espion", 1, 2), tMerc = (delete e.faits[hEv2.id], X.cloturerEvenement(hEv2.id, "mercenaires", 1, 2)), tArch = (delete e.faits[hEv2.id], e.or = 0, X.cloturerEvenement(hEv2.id, "archives", 3, 3));
@@ -2530,8 +2534,13 @@ verifier("Bataillons : le rendu ne touche pas au moteur (aucune écriture de la 
   const ctxSW = { URL, console, Response: function () {}, caches: {}, fetch: () => {} };
   ctxSW.self = { addEventListener: t => ecouteurs.push(t), location: { href: "https://exemple.test/jeu/sw.js", origin: "https://exemple.test" }, skipWaiting() {}, clients: { claim() {} } };
   vm.runInNewContext(swTexte, ctxSW, { filename: "sw.js" });
-  verifier("sw.js : écouteurs install, activate et fetch ; racine « https://exemple.test/jeu/ » ; cache le-domaine-<version>",
-    ecouteurs.join(",") === "install,activate,fetch" && vm.runInNewContext("RACINE", ctxSW) === "https://exemple.test/jeu/" && vm.runInNewContext("CACHE", ctxSW) === G.PREFIXE + versionTxt, ecouteurs);
+  verifier("sw.js : écouteurs install, activate, fetch et message ; racine « https://exemple.test/jeu/ » ; cache le-domaine-<version>",
+    ecouteurs.join(",") === "install,activate,fetch,message" && vm.runInNewContext("RACINE", ctxSW) === "https://exemple.test/jeu/" && vm.runInNewContext("CACHE", ctxSW) === G.PREFIXE + versionTxt, ecouteurs);
+  // revue du 31/10/2026 : une nouvelle version ne prend jamais la main toute seule (elle changerait les fichiers sous les pieds
+  // d'une partie ouverte) ; seulement au message « activer » de « Mettre à jour », ou quand le jeu est fermé puis rouvert
+  const corpsInstall = (swTexte.match(/addEventListener\("install"[\s\S]*?\n\}\);/) || [""])[0];
+  verifier("sw.js : pas de skipWaiting à l'installation ; skipWaiting seulement au message « activer »",
+    corpsInstall && corpsInstall.indexOf("skipWaiting") < 0 && swTexte.split("skipWaiting").length === 2 && /e\.data === "activer"\) self\.skipWaiting\(\)/.test(swTexte), corpsInstall.slice(0, 200));
   // manifeste
   const manifest = JSON.parse(fs.readFileSync(path.join(G.JEU, "manifest.webmanifest"), "utf8"));
   const icones = manifest.icons || [];
@@ -2566,6 +2575,24 @@ verifier("Bataillons : le rendu ne touche pas au moteur (aucune écriture de la 
   verifier("installation.js en https : sw.js enregistré une fois, Réglages enrobés (un cartouche ajouté), écouteurs controllerchange et beforeinstallprompt, état « hors ligne en préparation… » puis « mode installé » en plein écran",
     iH.possible && iH.appels.join() === "sw.js" && iH.enrobe && iH.rendu === 1 && iH.ajouts === 1 && iH.ecoutes.indexOf("controllerchange") >= 0 && iH.ecoutes.indexOf("beforeinstallprompt") >= 0 &&
     iH.etat === "Version 9.9.9 · hors ligne en préparation…" && iS.etat === "Version 9.9.9 · mode installé", { iH, iS });
+  // nouvelle version déjà téléchargée qui attend : les Réglages le disent, « Mettre à jour » lui envoie « activer » (sans
+  // attendre le réseau), et la prise de main amène la proposition de recharger, jamais un rechargement tout seul
+  (function () {
+    const postes = [], toasts = [], confirmations = [], ecouteursSW = {};
+    const reg = { waiting: { postMessage: m => postes.push(m) }, addEventListener() {}, update: () => { throw new Error("pas de réseau attendu"); } };
+    const ctx = { console, JEU: { version: "9.9.9", ui: { ecrans: { reglages() {} }, el: () => ({}), toast: t => toasts.push(t), confirmer: (t) => confirmations.push(t) } },
+      navigator: { serviceWorker: { controller: {}, register: () => ({ then(f) { f(reg); return { catch() {} }; } }), addEventListener: (t, f) => { ecouteursSW[t] = f; } } },
+      location: { protocol: "https:", reload() { confirmations.push("RECHARGE"); } }, document: { querySelector: () => null }, addEventListener() {}, matchMedia: () => ({ matches: false }) };
+    ctx.window = ctx;
+    vm.runInNewContext(fs.readFileSync(path.join(G.JEU, "js", "installation.js"), "utf8"), ctx, { filename: "installation.js" });
+    const etat = ctx.JEU.installation.etatTexte();
+    ctx.JEU.installation.mettreAJour();
+    const apresBouton = { postes: postes.slice(), confirmations: confirmations.slice() };
+    ecouteursSW.controllerchange();
+    verifier("installation.js : nouvelle version en attente annoncée dans les Réglages ; « Mettre à jour » lui envoie « activer », puis la prise de main propose de recharger (sans recharger tout seul)",
+      /nouvelle version prête/.test(etat) && apresBouton.postes.join() === "activer" && apresBouton.confirmations.length === 0 && confirmations.length === 1 && /Nouvelle version prête/.test(confirmations[0]),
+      { etat, apresBouton, confirmations, toasts });
+  })();
   const iA = essaiInstallation("https:", false, true);
   verifier("installation.js dans l'application Android (pont AndroidDomaine présent, origine https) : aucun service worker enregistré, aucun écouteur, Réglages rendus tels quels",
     !iA.possible && iA.appels.length === 0 && iA.ecoutes.length === 0 && !iA.enrobe && iA.rendu === 1 && iA.ajouts === 0, iA);

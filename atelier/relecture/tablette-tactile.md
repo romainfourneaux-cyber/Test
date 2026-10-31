@@ -100,3 +100,17 @@ Les captures regardées une à une : `atelier/captures/tablette-1280x800-*.png`,
 - Tout a été mesuré dans Chromium émulé, sans carte graphique : les 48 ms de médiane au doigt à densité 2 sont à confirmer sur la tablette de Romain, de même que l'ouverture du clavier Android sur un texte à trous et le téléchargement de l'export. Le mode installé (plein écran, sans barre d'adresse) est celui de la version installable.
 - Une tablette Windows avec souris (`hover: hover`) garde la mise en page du PC.
 - Numéro de version inchangé par cette passe : il monte à la livraison avec la version installable.
+
+## 5. Revue adverse du 31/10/2026 (tout au doigt, hors ligne, Android émulé)
+
+Essai hors dépôt (Playwright, jeu/ copié et servi en http comme sur GitHub Pages, sous-dossier et cache HTTP de 10 min, Chrome Android émulé, 1280 × 800 et 1024 × 768, densité 2). Captures : `atelier/captures/tablette-revue-*.png`, regardées.
+
+Corrigé pendant la revue :
+
+- Double toucher : une réponse touchée deux fois de suite (90 ms) répondait aussi à la question suivante, affichée sous le doigt (or perdu, fausse réponse notée), et pouvait sauter l'explication d'une erreur. Garde dans interface.js : un toucher qui tombe sur une question, un panneau d'erreur ou une carte du conseil moins de 350 ms après son affichage est ignoré. Souris et clavier inchangés. Contrôlé dans perf.js (passe tablette).
+- Fiche du Codex : la croix de 48 px passait sous la fiche (position relative) et ne se touchait pas. z-index dans le bloc tablette ; le PC ne change pas.
+- Accueil : le focus posé sur « Jouer » faisait défiler la page à l'ouverture ; le menu passait sous le bandeau (à moitié en 1280 × 800, en entier en 1024 × 768). Plus de focus au doigt ; le PC garde Entrée.
+- Mise à jour : une nouvelle version prenait la main toute seule pendant une partie ouverte, et « Mettre à jour » répondait « déjà à jour » alors que la page tournait encore sur l'ancienne. Désormais elle attend : jeu fermé puis rouvert, ou « Mettre à jour », qui propose de recharger.
+- Application Android : installation.js n'enregistre plus de service worker quand le pont window.AndroidDomaine existe.
+
+Vérifié sans défaut : installation (aucune erreur d'installabilité de Chromium dans un profil ordinaire), 275 fichiers en cache ; hors ligne avec le serveur arrêté, partie neuve, bataille jouée au doigt jusqu'au bilan (deux tours posées, 4 vagues à ×3), expédition jusqu'à une porte, Codex, Réglages, export du fichier : aucune requête ratée, aucune erreur ; file:// sans service worker ni cartouche ; toile de bataille à la densité de l'écran (1521 px pour 760 px CSS, plafond 2 000) ; carte-itinéraire lisible (14,7 et 14,2 px, haltes de 63 et 61 px) ; portrait.

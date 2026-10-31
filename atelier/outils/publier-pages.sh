@@ -6,6 +6,10 @@
 set -e
 cd "$(dirname "$0")/../.."
 if [ "$1" != "--sans-push" ] && [ -n "$(git status --porcelain)" ]; then echo "Arbre de travail non propre : commite d'abord (la branche est construite depuis HEAD)." >&2; exit 1; fi
+# Le service worker du site met en cache chaque fichier de sa liste : un seul fichier absent du site (non commité, ou ignoré
+# par git) fait échouer toute l'installation hors ligne. Chaque fichier de la liste de jeu/sw.js doit donc être dans HEAD.
+MANQUANTS=$(git show HEAD:jeu/sw.js | node -e 'const G=require("./atelier/outils/generer-sw.js");let t="";process.stdin.on("data",d=>t+=d).on("end",()=>{const suivis=new Set(require("child_process").execSync("git ls-tree -r --name-only HEAD jeu").toString().split("\n").map(f=>f.replace(/^jeu\//,"")));console.log((G.lireListe(t)||[]).filter(f=>!suivis.has(f)).join(" "));});')
+if [ -n "$MANQUANTS" ]; then echo "Fichiers de la liste de jeu/sw.js absents de HEAD (à commiter, ou sw.js à régénérer) : $MANQUANTS" >&2; exit 1; fi
 VERSION=$(tr -d '[:space:]' < jeu/VERSION.txt)
 SOURCE=$(git rev-parse --short HEAD)
 # 1. Une branche temporaire qui ne contient que jeu/ à la racine.
