@@ -12,3 +12,5 @@ atelier/android/.gradle/
 atelier/android/local.properties
 # séquences d'images de l'audit graphique (centaines de PNG) : hors dépôt, les plans citent leurs chemins
 atelier/captures/audit-graphismes/
+# captures d'inventaire des menus (une centaine de PNG) : hors dépôt
+atelier/captures/menus/inventaire/

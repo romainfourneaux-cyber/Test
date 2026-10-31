@@ -30,7 +30,21 @@ const T = { features: [{ name: "hover", value: "none" }, { name: "pointer", valu
       if (p === "cours") { await page.evaluate(() => document.querySelector(".semaine-bloc:nth-child(8)").scrollIntoView({ block: "start" })); await page.waitForTimeout(100); await page.screenshot({ path: f.replace(".png", "-suite.png") }); }
       if (p === "reglages") { await page.evaluate(() => document.querySelector(".liste-devoirs").scrollIntoView({ block: "center" })); await page.waitForTimeout(100); await page.screenshot({ path: f.replace(".png", "-suite.png") }); }
       if (p === "codex") { await page.evaluate(() => window.scrollTo(0, 0)); await page.waitForTimeout(100); await page.screenshot({ path: f.replace(".png", "-haut.png") }); }
-      if (p === "etats") { await page.screenshot({ path: f.replace(".png", "-entiere.png"), fullPage: true }); if (cdp) { await cdp.send("Emulation.setTouchEmulationEnabled", { enabled: true, maxTouchPoints: 5 }); await cdp.send("Emulation.setEmulatedMedia", T); } }
+      if (p === "etats") {
+        // page entière sans fullPage : fullPage coupait l'émulation du toucher (la planche tablette « entière » de la
+        // première passe a été prise avec les règles de la souris). On agrandit la fenêtre, on rallume l'émulation, on vérifie.
+        const haut = await page.evaluate(() => document.documentElement.scrollHeight);
+        await page.setViewportSize({ width: prof.w, height: haut });
+        if (cdp) { await cdp.send("Emulation.setTouchEmulationEnabled", { enabled: true, maxTouchPoints: 5 }); await cdp.send("Emulation.setEmulatedMedia", T); }
+        // la fenêtre agrandie est plus haute que large : le mot « Tourne ta tablette » (body::after, portrait) est caché pour la planche
+        const cache = await page.addStyleTag({ content: "body::after { display: none !important; }" });
+        await page.waitForTimeout(150);
+        console.log(prof.nom, "entière, pointer coarse :", await page.evaluate(() => matchMedia("(pointer: coarse)").matches));
+        await page.screenshot({ path: f.replace(".png", "-entiere.png") });
+        await cache.evaluate((n) => n.remove());
+        await page.setViewportSize({ width: prof.w, height: prof.h });
+        if (cdp) { await cdp.send("Emulation.setTouchEmulationEnabled", { enabled: true, maxTouchPoints: 5 }); await cdp.send("Emulation.setEmulatedMedia", T); }
+      }
       console.log(prof.nom, p, await page.evaluate(() => matchMedia("(pointer: coarse)").matches));
     }
     await ctx.close();
