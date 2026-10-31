@@ -1,0 +1,221 @@
+// Source en clair du cours lecture-s05-1 « Un hivernage dans les glaces – chapitres 7 et 8 ».
+// Compilé (réponses brouillées) par node atelier/outils/compiler-cours.js lecture-s05-1.
+// Seule source : la liste de vocabulaire du livre. Elle ne dit pas à quel chapitre appartient chaque mot :
+// ce cours prend les animaux de l'Antarctique (page 5 de la liste) et les oiseaux rencontrés par les marins
+// (page 5, définitions pages 6 et 7). Aucune question sur l'intrigue.
+// Anti-spoil (devoir lecture-d1) : rien sur le titre, l'auteur, les personnages, le cadre du récit ni les épreuves
+// de l'équipage ; les quatre mots du schéma de navire du devoir n'apparaissent nulle part.
+// Relu le 2026-10-24 : définitions vérifiées une à une contre les pages 5, 6 et 7 de la liste (texte et page 5 rendue en image).
+// Seconde relecture indépendante le 2026-10-24 : fidélité à la liste, bonus revérifiés en ligne, anti-spoil.
+const F = "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf";
+const S = p => ({ fichier: F, page: p });
+// Audit des questions du 28/10/2026 appliqué : q9, q13, q21, q24, q29 (détails de légende d'animaux de l'Antarctique,
+// hors sujet pour un roman arctique), q11, q16, q28, q32 (doublons) supprimées ; q7 réécrite ; q4 devenue question de thème
+// (les deux pôles n'ont pas les mêmes animaux). Signalé à Romain : la page de la liste reprise ici décrit l'Antarctique.
+const THEME = "Un hivernage dans les glaces – Lire les chapitres 7 et 8 p68 à 76"; // intitulé du planning, pour les questions de thème (règle du 25/10/2026)
+const T = (titre, page) => ({ theme: THEME, titre, editeur: "Wikipédia", url: "https://fr.wikipedia.org/wiki/" + page });
+// Seconde relecture du 28/10/2026 (vérification des questions de thème et des cours minces) : deux leurres de q1 remplacés.
+
+module.exports = {
+  id: "lecture-s05-1",
+  fiches: [
+    {
+      id: "lecture-s05-1-f1", notion: "L'Antarctique et le manchot empereur",
+      titre: "Un continent sans habitants, mais pas sans manchots",
+      texte: "Personne ne vit en permanence en Antarctique, à la différence de l'Arctique : les humains y viennent surtout pour la recherche. Les animaux, eux, y vivent. Le manchot empereur est un oiseau marin qui ne sait pas voler ; son bec est incurvé. On y croise aussi des albatros, des pétrels, des cormorans et des goélands.",
+      pointsCles: ["Aucun habitant permanent en Antarctique ; les humains y font de la recherche", "Manchot empereur : oiseau marin, ne vole pas, bec incurvé", "Autres oiseaux : albatros, pétrels, cormorans, goélands"],
+      astuce: "Antarctique = pôle Sud, sans habitants permanents. Arctique = pôle Nord, habité.",
+      dates: [], lieux: ["Antarctique"], personnages: [],
+      vocabulaire: [
+        { mot: "manchot empereur", def: "un oiseau marin de l'Antarctique, qui ne sait pas voler et dont le bec est incurvé" },
+        { mot: "incurvé", def: "courbé" },
+        { mot: "albatros", def: "un oiseau que l'on rencontre en Antarctique, comme le pétrel, le cormoran et le goéland" }
+      ],
+      schema: null, prerequis: ["lecture-s01-1-f1", "lecture-s04-1-f2"], source: S(5)
+    },
+    {
+      id: "lecture-s05-1-f2", notion: "Les oiseaux de l'Antarctique",
+      titre: "Sterne, pipit, chionis et labbe",
+      texte: "Quatre oiseaux de l'Antarctique ont des noms peu connus. La sterne antarctique est un oiseau marin. Le pipit antarctique, lui, fait partie des rares oiseaux qui ne sont pas marins. Le chionis blanc ressemble à un pigeon et vit parmi les manchots. Le labbe antarctique est un prédateur redoutable : il vole les œufs et tue les petits manchots.",
+      pointsCles: ["Sterne antarctique : un oiseau marin", "Pipit antarctique : un des rares oiseaux non marins", "Chionis blanc : il ressemble au pigeon, vit au milieu des manchots", "Labbe antarctique : prédateur, vole les œufs et tue les petits manchots"],
+      dates: [], lieux: [], personnages: [],
+      vocabulaire: [
+        { mot: "sterne antarctique", def: "un oiseau marin de l'Antarctique" },
+        { mot: "pipit antarctique", def: "un des rares oiseaux non marins de l'Antarctique" },
+        { mot: "chionis blanc", def: "un oiseau qui ressemble au pigeon et vit au milieu des manchots" },
+        { mot: "labbe antarctique", def: "un oiseau prédateur qui vole les œufs et tue les petits manchots" }
+      ],
+      schema: null, prerequis: ["lecture-s05-1-f1"], source: S(5)
+    },
+    {
+      id: "lecture-s05-1-f3", notion: "Pinnipèdes et cétacés de l'Antarctique",
+      titre: "Du léopard des mers à la baleine bleue",
+      texte: "L'Antarctique a ses pinnipèdes : le phoque et le léopard des mers, au corps tacheté. Elle a aussi ses cétacés : la baleine bleue, 30 mètres de long et 80 à 130 tonnes, est le plus gros animal de la planète ; le petit rorqual est une petite baleine ; le narval est surnommé la licorne des mers.",
+      pointsCles: ["Pinnipèdes de l'Antarctique : phoque, léopard des mers", "Le léopard des mers est tacheté, d'où son nom", "Cétacés : baleine bleue, petit rorqual de l'Antarctique, narval", "Baleine bleue : le plus gros animal de la planète, 30 m et 80 à 130 tonnes", "Narval : la licorne des mers"],
+      astuce: "Le léopard des mers a des taches comme le léopard ; le narval a une corne comme la licorne.",
+      dates: [], lieux: [], personnages: [],
+      vocabulaire: [
+        { mot: "léopard des mers", def: "un pinnipède de l'Antarctique, au corps couvert de taches" },
+        { mot: "cétacés", def: "la famille de la baleine bleue, du petit rorqual et du narval" },
+        { mot: "baleine bleue", def: "le plus gros animal de la planète : 30 m de long, 80 à 130 tonnes" },
+        { mot: "petit rorqual", def: "une petite baleine" },
+        { mot: "narval", def: "un cétacé surnommé la licorne des mers" }
+      ],
+      schema: null, prerequis: ["lecture-s04-1-f1"], source: S(5)
+    },
+    {
+      id: "lecture-s05-1-f4", notion: "Les oiseaux rencontrés par les marins",
+      titre: "Ptarmigan, sarcelle, eider et grue",
+      texte: "Les marins rencontrent d'autres oiseaux. Le ptarmigan, ou lagopède, est une sorte de perdrix du Grand Nord. La sarcelle est un oiseau aquatique sauvage, proche du canard. L'eider est un canard migrateur de l'hémisphère Nord. La grue, enfin, est un grand oiseau échassier.",
+      pointsCles: ["Ptarmigan = lagopède : une perdrix du Grand Nord", "Sarcelle : un oiseau aquatique sauvage, proche du canard", "Eider : un canard migrateur de l'hémisphère Nord", "Grue : un grand oiseau échassier"],
+      dates: [], lieux: [], personnages: [],
+      vocabulaire: [
+        { mot: "ptarmigan", def: "un lagopède, sorte de perdrix du Grand Nord" },
+        { mot: "sarcelle", def: "un oiseau aquatique sauvage, proche du canard" },
+        { mot: "eider", def: "un canard migrateur de l'hémisphère Nord" },
+        { mot: "grue", def: "un grand oiseau échassier" }
+      ],
+      schema: null, prerequis: [], source: S(5)
+    }
+  ],
+  schemas: [],
+  questions: [
+    // f1 : l'Antarctique et le manchot empereur
+    { id: "lecture-s05-1-q1", fiche: "lecture-s05-1-f1", type: "qcm", niveau: 1,
+      enonce: "Pourquoi des humains séjournent-ils en Antarctique ?",
+      choix: ["Pour faire de la recherche", "Pour chasser les manchots", "Pour y cultiver des champs", "Pour y construire des villes"],
+      reponse: "Pour faire de la recherche",
+      explication: "Personne n'habite l'Antarctique pour toujours. Les humains y viennent surtout pour la recherche.", source: S(5) },
+    { id: "lecture-s05-1-q2", fiche: "lecture-s05-1-f1", type: "vrai_faux", niveau: 1,
+      enonce: "Personne n'habite l'Antarctique de façon permanente.",
+      corrections: [], reponse: { vrai: true, correction: null },
+      explication: "Oui : à la différence de l'Arctique, l'Antarctique n'a pas d'habitants permanents. Les humains y font de la recherche.", source: S(5) },
+    { id: "lecture-s05-1-q3", fiche: "lecture-s05-1-f1", type: "vrai_faux", niveau: 2,
+      enonce: "Le manchot empereur est un oiseau marin qui vole très haut au-dessus de la mer.",
+      corrections: ["Faux : le manchot empereur ne sait pas voler.", "Faux : le manchot empereur n'est pas un oiseau, c'est un pinnipède.", "Faux : le manchot empereur vole, mais seulement au ras de l'eau."],
+      reponse: { vrai: false, correction: "Faux : le manchot empereur ne sait pas voler." },
+      explication: "Le manchot empereur est bien un oiseau marin, mais il ne sait pas voler. Son bec est incurvé.", source: S(5) },
+    { id: "lecture-s05-1-q4", fiche: "lecture-s05-1-f1", type: "qcm", niveau: 3,
+      enonce: "Pourquoi un ours polaire ne croise-t-il jamais de manchot empereur dans la nature ?",
+      choix: ["Ils vivent chacun à un pôle : le manchot au Sud, l'ours au Nord", "Le manchot empereur ne monte au pôle Nord que pendant le court été", "L'ours polaire ne s'approche jamais de la mer ni de la banquise", "Le manchot empereur vit en haute montagne, loin des côtes"],
+      reponse: "Ils vivent chacun à un pôle : le manchot au Sud, l'ours au Nord",
+      explication: "Les manchots empereurs vivent en Antarctique, autour du pôle Sud. L'ours polaire, lui, vit dans l'Arctique : les deux ne se rencontrent jamais.", source: T("Manchot empereur", "Manchot_empereur") },
+    { id: "lecture-s05-1-q5", fiche: "lecture-s05-1-f1", type: "qcm_multiple", niveau: 2,
+      enonce: "Lesquels de ces oiseaux rencontre-t-on en Antarctique ?",
+      choix: ["l'albatros", "le pétrel", "le cormoran", "le goéland", "le harfang des neiges", "le lemming arctique"],
+      reponse: ["l'albatros", "le pétrel", "le cormoran", "le goéland"],
+      explication: "Albatros, pétrels, cormorans et goélands vivent en Antarctique. Le harfang des neiges vit dans la toundra arctique, et le lemming n'est pas un oiseau mais un rongeur.", source: S(5) },
+    { id: "lecture-s05-1-q6", fiche: "lecture-s05-1-f1", type: "qcm", niveau: 2,
+      enonce: "Quelle différence y a-t-il entre l'Arctique et l'Antarctique pour les habitants ?",
+      choix: ["Personne ne vit en permanence en Antarctique", "Personne ne vit en permanence dans l'Arctique", "Les deux régions ont de grandes villes", "Les deux régions sont inhabitées"],
+      reponse: "Personne ne vit en permanence en Antarctique",
+      explication: "L'Antarctique n'a pas d'habitants permanents, contrairement à l'Arctique. On y vient surtout pour la recherche.", source: S(5) },
+    { id: "lecture-s05-1-q7", fiche: "lecture-s05-1-f1", type: "qcm", niveau: 3,
+      enonce: "Un oiseau marin qui ne sait pas voler se dandine sur la glace de l'Antarctique. Lequel est-ce ?",
+      choix: ["Le manchot empereur", "La sterne antarctique", "L'albatros", "Le goéland"],
+      reponse: "Le manchot empereur",
+      explication: "Le manchot empereur est l'oiseau marin de l'Antarctique qui ne vole pas. La sterne, l'albatros et le goéland, eux, volent.", source: S(5) },
+    { id: "lecture-s05-1-q8", fiche: "lecture-s05-1-f1", type: "trou", niveau: 1,
+      enonce: "Complète la phrase.",
+      texte: "En Antarctique, la vie humaine est surtout tournée vers la ___ ; le manchot ___ est un oiseau marin qui ne vole pas.",
+      banque: ["recherche", "empereur", "chasse", "arctique"],
+      reponse: [["recherche"], ["empereur"]],
+      explication: "Les humains viennent en Antarctique surtout pour la recherche. Le manchot empereur y vit, sans pouvoir voler.", source: S(5) },
+
+    // f2 : les oiseaux de l'Antarctique
+    { id: "lecture-s05-1-q10", fiche: "lecture-s05-1-f2", type: "vrai_faux", niveau: 1,
+      enonce: "Le labbe antarctique est un redoutable prédateur.",
+      corrections: [], reponse: { vrai: true, correction: null },
+      explication: "Oui : le labbe antarctique vole les œufs et tue les petits manchots.", source: S(5) },
+    { id: "lecture-s05-1-q12", fiche: "lecture-s05-1-f2", type: "qcm", niveau: 2,
+      enonce: "Comment le labbe antarctique s'attaque-t-il aux manchots ?",
+      choix: ["Il vole les œufs et tue les petits manchots", "Il creuse des trous sous leurs nids de glace", "Il les pousse un à un dans l'eau glacée", "Il leur vole le poisson qu'ils rapportent"],
+      reponse: "Il vole les œufs et tue les petits manchots",
+      explication: "Le labbe antarctique vole les œufs et tue les petits manchots. C'est un prédateur redoutable.", source: S(5) },
+    { id: "lecture-s05-1-q14", fiche: "lecture-s05-1-f2", type: "association", niveau: 2,
+      enonce: "Relie chaque oiseau de l'Antarctique à ce qui le décrit.",
+      gauche: ["sterne antarctique", "pipit antarctique", "chionis blanc", "labbe antarctique"],
+      droite: ["un oiseau rare, qui n'est pas marin", "un prédateur qui vole les œufs et tue les petits manchots", "un oiseau marin", "il ressemble à un pigeon et vit parmi les manchots"],
+      reponse: [[0, 2], [1, 0], [2, 3], [3, 1]],
+      explication: "La sterne est un oiseau marin, le pipit un oiseau rare non marin. Le chionis ressemble à un pigeon, et le labbe s'en prend aux œufs et aux petits des manchots.", source: S(5) },
+    { id: "lecture-s05-1-q15", fiche: "lecture-s05-1-f2", type: "qcm", niveau: 3,
+      enonce: "Lequel de ces oiseaux de l'Antarctique n'est pas un oiseau marin ?",
+      choix: ["Le pipit antarctique", "La sterne antarctique", "Le manchot empereur", "L'albatros"],
+      reponse: "Le pipit antarctique",
+      explication: "Le pipit antarctique est l'un des rares oiseaux non marins de l'Antarctique. La sterne et le manchot empereur sont des oiseaux marins.", source: S(5) },
+
+    // f3 : pinnipèdes et cétacés de l'Antarctique
+    { id: "lecture-s05-1-q17", fiche: "lecture-s05-1-f3", type: "qcm", niveau: 1,
+      enonce: "Quel est le plus gros animal de la planète ?",
+      choix: ["La baleine bleue", "Le léopard des mers", "Le narval", "Le petit rorqual"],
+      reponse: "La baleine bleue",
+      explication: "La baleine bleue est le plus gros animal de la planète. Elle mesure 30 mètres et pèse de 80 à 130 tonnes.", source: S(5) },
+    { id: "lecture-s05-1-q18", fiche: "lecture-s05-1-f3", type: "vrai_faux", niveau: 1,
+      enonce: "Le narval est surnommé la licorne des mers.",
+      corrections: [], reponse: { vrai: true, correction: null },
+      explication: "Oui : le narval, un cétacé, est appelé aussi licorne des mers.", source: S(5) },
+    { id: "lecture-s05-1-q19", fiche: "lecture-s05-1-f3", type: "vrai_faux", niveau: 2,
+      enonce: "Le léopard des mers doit son nom à sa vitesse à la course.",
+      corrections: ["Faux : il doit son nom aux taches qui couvrent son corps.", "Faux : il doit son nom à sa couleur jaune d'or.", "Faux : il doit son nom à son rugissement."],
+      reponse: { vrai: false, correction: "Faux : il doit son nom aux taches qui couvrent son corps." },
+      explication: "Le léopard des mers est un pinnipède au corps tacheté, comme le pelage d'un léopard. C'est de là que vient son nom.", source: S(5) },
+    { id: "lecture-s05-1-q20", fiche: "lecture-s05-1-f3", type: "qcm", niveau: 2,
+      enonce: "Pourquoi le léopard des mers porte-t-il ce nom ?",
+      choix: ["À cause des taches sur son corps", "Parce qu'il court très vite sur la glace", "Parce qu'il grimpe aux rochers", "Parce qu'il chasse en Afrique"],
+      reponse: "À cause des taches sur son corps",
+      explication: "Son corps est couvert de taches, comme celui du léopard. C'est un pinnipède de l'Antarctique.", source: S(5) },
+    { id: "lecture-s05-1-q22", fiche: "lecture-s05-1-f3", type: "qcm_multiple", niveau: 2,
+      enonce: "Lesquels de ces animaux sont des cétacés ?",
+      choix: ["la baleine bleue", "le petit rorqual de l'Antarctique", "le narval", "le léopard des mers", "le phoque", "le manchot empereur"],
+      reponse: ["la baleine bleue", "le petit rorqual de l'Antarctique", "le narval"],
+      explication: "Les cétacés sont la baleine bleue, le petit rorqual et le narval. Le léopard des mers et le phoque sont des pinnipèdes, le manchot un oiseau.", source: S(5) },
+    { id: "lecture-s05-1-q23", fiche: "lecture-s05-1-f3", type: "association", niveau: 3,
+      enonce: "Relie chaque animal à ce qui le décrit.",
+      gauche: ["baleine bleue", "petit rorqual", "narval", "léopard des mers"],
+      droite: ["une petite baleine", "le plus gros animal de la planète", "un pinnipède tacheté", "la licorne des mers"],
+      reponse: [[0, 1], [1, 0], [2, 3], [3, 2]],
+      explication: "La baleine bleue est le plus gros animal de la planète et le petit rorqual une petite baleine. Le narval est la licorne des mers, et le léopard des mers un pinnipède tacheté.", source: S(5) },
+
+    // f4 : les oiseaux rencontrés par les marins
+    { id: "lecture-s05-1-q25", fiche: "lecture-s05-1-f4", type: "qcm", niveau: 1,
+      enonce: "Qu'est-ce qu'un eider ?",
+      choix: ["Un canard migrateur", "Un grand oiseau échassier", "Une perdrix du Grand Nord", "Un petit rongeur"],
+      reponse: "Un canard migrateur",
+      explication: "L'eider est un canard migrateur de l'hémisphère Nord. La grue, elle, est un échassier.", source: S(6) },
+    { id: "lecture-s05-1-q26", fiche: "lecture-s05-1-f4", type: "vrai_faux", niveau: 1,
+      enonce: "La grue est un grand oiseau échassier.",
+      corrections: [], reponse: { vrai: true, correction: null },
+      explication: "Oui : la grue est un grand oiseau échassier. L'eider, lui, est un canard migrateur.", source: S(6) },
+    { id: "lecture-s05-1-q27", fiche: "lecture-s05-1-f4", type: "vrai_faux", niveau: 2,
+      enonce: "Le ptarmigan est un oiseau aquatique proche du canard.",
+      corrections: ["Faux : le ptarmigan est un lagopède, une sorte de perdrix du Grand Nord ; l'oiseau proche du canard, c'est la sarcelle.", "Faux : le ptarmigan est un grand oiseau échassier.", "Faux : le ptarmigan est un canard migrateur."],
+      reponse: { vrai: false, correction: "Faux : le ptarmigan est un lagopède, une sorte de perdrix du Grand Nord ; l'oiseau proche du canard, c'est la sarcelle." },
+      explication: "Le ptarmigan, ou lagopède, est une perdrix du Grand Nord. C'est la sarcelle qui est proche du canard.", source: S(7) },
+    { id: "lecture-s05-1-q30", fiche: "lecture-s05-1-f4", type: "qcm", niveau: 2,
+      enonce: "Comment décrire une sarcelle ?",
+      choix: ["Un oiseau aquatique proche du canard", "Un canard migrateur de l'hémisphère Nord", "Une sorte de perdrix du Grand Nord", "Un grand oiseau échassier"],
+      reponse: "Un oiseau aquatique proche du canard",
+      explication: "La sarcelle est un oiseau aquatique sauvage, proche du canard. Le canard migrateur, c'est l'eider, et la perdrix du Grand Nord, le ptarmigan.", source: S(7) },
+    { id: "lecture-s05-1-q31", fiche: "lecture-s05-1-f4", type: "association", niveau: 3,
+      enonce: "Relie chaque oiseau à ce qui le décrit.",
+      gauche: ["ptarmigan", "sarcelle", "eider", "grue"],
+      droite: ["un canard migrateur de l'hémisphère Nord", "un grand oiseau échassier", "une sorte de perdrix du Grand Nord", "un oiseau aquatique proche du canard"],
+      reponse: [[0, 2], [1, 3], [2, 0], [3, 1]],
+      explication: "Le ptarmigan est une perdrix du Grand Nord et la sarcelle un oiseau proche du canard. L'eider est un canard migrateur, et la grue un échassier.", source: S(7) },
+  ],
+  bonus: [
+    {
+      id: "lecture-s05-1-b1",
+      fiche: "lecture-s05-1-f1",
+      titre: "Le manchot empereur, champion de plongée",
+      texte: "Le manchot empereur mesure jusqu'à 122 cm et pèse de 20 à 40 kg. Sous l'eau, il tient jusqu'à 18 minutes et peut descendre à 535 m. En plein hiver, le mâle garde l'œuf sous un repli de sa peau pendant 64 jours : entre son arrivée dans la colonie et l'éclosion, il jeûne environ 115 jours, alors que l'air peut descendre à −40 °C.",
+      source: { titre: "Manchot empereur", editeur: "Wikipédia, l'encyclopédie libre", url: "https://fr.wikipedia.org/wiki/Manchot_empereur" }
+    }
+  ],
+  nonCouvert: [
+    "Le contenu des chapitres 7 et 8 (p. 68 à 76 du livre) : le livre n'est pas déposé, et la liste de vocabulaire ne dit pas à quel chapitre appartient chaque mot. Ce cours reprend les animaux de l'Antarctique (page 5 de la liste) et les oiseaux rencontrés par les marins (pages 5 à 7).",
+    "Les photos des animaux (page 5) : aucune image de la liste n'est reprise dans le jeu.",
+    "Le narval : la liste le range parmi les cétacés de la page de l'Antarctique sans dire où il vit ; la fiche garde seulement son surnom de licorne des mers.",
+    "La taille, la couleur et le mode de vie des albatros, pétrels, cormorans, goélands et de la sterne : la liste les nomme sans les décrire."
+  ]
+};

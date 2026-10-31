@@ -1,0 +1,641 @@
+[
+ {
+  "id": "langue-conj10-q19",
+  "cours": "langue-conj10",
+  "fiche": "langue-conj10-f5",
+  "verdict": "question-theme",
+  "categorie": "document",
+  "raison": "« D'où viennent la plupart des fautes d'orthographe ? » répète une affirmation de la page d'introduction du cours, pas un savoir ; q22 pose déjà la même idée en « pourquoi ». La fiche f5 (pourquoi apprendre la grammaire) est une page de présentation, mince pour des questions de cours.",
+  "piste": "QCM même id, thème « Les modes du verbe (Griffon de cuivre) », notion « conjugaison » : « Que veut dire « conjuguer un verbe » ? » → donner ses formes selon le mode, le temps et la personne ; leurres : chercher son infinitif dans le dictionnaire ; trouver sa fonction dans la phrase ; l'accorder avec le nom qu'il complète. Source : Larousse, « conjuguer », https://www.larousse.fr/dictionnaires/francais/conjuguer/18283 (énumérer les formes d'un verbe selon les modes, les temps, les personnes)."
+ },
+ {
+  "id": "langue-conj10-q38",
+  "cours": "langue-conj10",
+  "fiche": "langue-conj10-f5",
+  "verdict": "supprimer",
+  "categorie": "trivia",
+  "raison": "Les cinq thèmes du programme de grammaire du Griffon de cuivre sont l'organisation du cours, pas une connaissance. La fiche garde six questions, dont deux vrai/faux (q20, q37) et un pourquoi (q22).",
+  "piste": ""
+ },
+ {
+  "id": "langue-conj11-q16",
+  "cours": "langue-conj11",
+  "fiche": "langue-conj11-f4",
+  "verdict": "garder",
+  "categorie": "",
+  "raison": "La responsabilité envers un animal est bien ce que dit la fiche (un lien où l'animal dépend de moi). Gardée telle quelle, signalée parce qu'elle touche plus à la vie courante qu'à la grammaire.",
+  "piste": ""
+ },
+ {
+  "id": "langue-conj12-q23",
+  "cours": "langue-conj12",
+  "fiche": "langue-conj12-f5",
+  "verdict": "garder",
+  "categorie": "",
+  "raison": "L'ordre des étapes (changer de personne, puis repérer la personne, puis choisir la terminaison) est celui du cours 12, page 2, vérifié dans l'extraction : la question tient.",
+  "piste": ""
+ },
+ {
+  "id": "methode-frise-q3",
+  "cours": "methode-frise",
+  "fiche": "methode-frise-f1",
+  "verdict": "supprimer",
+  "categorie": "doublon",
+  "raison": "Même fait que q2 et q5 : le titre vient en dernier. La fiche f1 garde q5 et q17 en vrai/faux.",
+  "piste": ""
+ },
+ {
+  "id": "methode-frise-q15",
+  "cours": "methode-frise",
+  "fiche": "methode-frise-f1",
+  "verdict": "supprimer",
+  "categorie": "doublon",
+  "raison": "Même fait que q2 et q4 : l'échelle avant les événements.",
+  "piste": ""
+ },
+ {
+  "id": "methode-frise-q16",
+  "cours": "methode-frise",
+  "fiche": "methode-frise-f1",
+  "verdict": "supprimer",
+  "categorie": "doublon",
+  "raison": "Même fait que q2 et q5 (le titre reste à faire), habillé d'un élève.",
+  "piste": ""
+ },
+ {
+  "id": "methode-frise-q27",
+  "cours": "methode-frise",
+  "fiche": "methode-frise-f1",
+  "verdict": "supprimer",
+  "categorie": "doublon",
+  "raison": "Même fait que q2 : axe et échelle avant les événements. Six questions de f1 tournaient autour de l'ordre des quatre étapes ; il en reste deux (q1, q2).",
+  "piste": ""
+ },
+ {
+  "id": "methode-frise-q17",
+  "cours": "methode-frise",
+  "fiche": "methode-frise-f1",
+  "verdict": "question-theme",
+  "categorie": "autre",
+  "raison": "Le sens de la flèche de l'axe n'est pas dans la fiche déposée, qui tient en quatre lignes (axe, échelle, événements et périodes, titre) : le fait avait été ajouté sans source. Il est juste et utile, il devient une question de thème.",
+  "piste": "Vrai/faux même id, thème « Savoir-faire : la frise chronologique », notion « l'axe du temps » : « Sur une frise, l'axe est une flèche du temps : on le lit du passé vers le présent, les dates les plus anciennes en premier. » VRAI. Source : Wikipédia, « Frise chronologique », https://fr.wikipedia.org/wiki/Frise_chronologique (événements placés sur la flèche du temps, le long d'une échelle graduée)."
+ },
+ {
+  "id": "methode-frise-q8",
+  "cours": "methode-frise",
+  "fiche": "methode-frise-f2",
+  "verdict": "supprimer",
+  "categorie": "doublon",
+  "raison": "Même calcul que q6 (1 cm = 10 ans).",
+  "piste": ""
+ },
+ {
+  "id": "methode-frise-q19",
+  "cours": "methode-frise",
+  "fiche": "methode-frise-f2",
+  "verdict": "supprimer",
+  "categorie": "doublon",
+  "raison": "Même calcul que q7 (1 carreau = 1 siècle). La fiche f2 garde q9 en vrai/faux.",
+  "piste": ""
+ },
+ {
+  "id": "methode-frise-q23",
+  "cours": "methode-frise",
+  "fiche": "methode-frise-f3",
+  "verdict": "supprimer",
+  "categorie": "doublon",
+  "raison": "Même fait que q11 (date et nom), en vrai/faux ; f3 garde q12 et q22 en vrai/faux.",
+  "piste": ""
+ },
+ {
+  "id": "methode-frise-q26",
+  "cours": "methode-frise",
+  "fiche": "methode-frise-f3",
+  "verdict": "supprimer",
+  "categorie": "doublon",
+  "raison": "Même fait que q12 (une période va de sa date de début à sa date de fin), en texte à trous presque sans contenu.",
+  "piste": ""
+ },
+ {
+  "id": "methode-frise-q24",
+  "cours": "methode-frise",
+  "fiche": "methode-frise-f3",
+  "verdict": "reecrire-fiche",
+  "categorie": "autre",
+  "raison": "Décaler les traits de dates proches pour que les noms ne se chevauchent pas n'est pas dans la fiche déposée ; c'est pourtant le seul « pourquoi » de f3.",
+  "piste": "QCM même id, depuis l'étape 2 de la fiche (définir une échelle) : « Pourquoi garde-t-on la même échelle d'un bout à l'autre de la frise ? » → pour que deux durées égales aient la même longueur, où qu'elles soient sur l'axe ; leurres : pour que tous les événements aient la même importance ; pour que la frise tienne sur une seule page ; pour pouvoir changer le titre plus tard. Source de la fiche (p. 1)."
+ },
+ {
+  "id": "methode-frise-q22",
+  "cours": "methode-frise",
+  "fiche": "methode-frise-f3",
+  "verdict": "garder",
+  "categorie": "",
+  "raison": "L'écart entre deux dates qui respecte l'échelle découle de l'étape 2 de la fiche (définir une échelle) : gardée, même si la phrase n'y est pas écrite telle quelle.",
+  "piste": ""
+ },
+ {
+  "id": "methode-graphique-q24",
+  "cours": "methode-graphique",
+  "fiche": "methode-graphique-f1",
+  "verdict": "supprimer",
+  "categorie": "consigne",
+  "raison": "Savoir si l'on choisit l'unité avant ou après avoir nommé les axes est un détail de l'ordre des étapes ; q1 pose déjà l'ordre complet et q3 le point qui compte (graduer avant de placer).",
+  "piste": ""
+ },
+ {
+  "id": "methode-graphique-q25",
+  "cours": "methode-graphique",
+  "fiche": "methode-graphique-f1",
+  "verdict": "supprimer",
+  "categorie": "doublon",
+  "raison": "Même fait que q2 et q27 (abscisses à l'horizontale, ordonnées à la verticale) ; q3 reste le vrai/faux de f1.",
+  "piste": ""
+ },
+ {
+  "id": "methode-graphique-q6",
+  "cours": "methode-graphique",
+  "fiche": "methode-graphique-f2",
+  "verdict": "reecrire-fiche",
+  "categorie": "consigne",
+  "raison": "Crayon à papier et soulignement à la règle sont une consigne de présentation, pas un savoir ; c'est pourtant le vrai/faux de f2 à garder.",
+  "piste": "Vrai/faux même id, depuis la fiche : « Le titre d'un graphique nomme d'abord la grandeur de l'axe vertical, puis celle de l'axe horizontal. » VRAI. Source de la fiche (p. 1)."
+ },
+ {
+  "id": "methode-graphique-q22",
+  "cours": "methode-graphique",
+  "fiche": "methode-graphique-f2",
+  "verdict": "supprimer",
+  "categorie": "consigne",
+  "raison": "Gras et souligné à l'ordinateur : une consigne de présentation.",
+  "piste": ""
+ },
+ {
+  "id": "methode-graphique-q28",
+  "cours": "methode-graphique",
+  "fiche": "methode-graphique-f2",
+  "verdict": "supprimer",
+  "categorie": "consigne",
+  "raison": "Même consigne que q6 (crayon, règle), en faux.",
+  "piste": ""
+ },
+ {
+  "id": "methode-graphique-q29",
+  "cours": "methode-graphique",
+  "fiche": "methode-graphique-f2",
+  "verdict": "reecrire-fiche",
+  "categorie": "consigne",
+  "raison": "Trois des cinq choix portent sur le matériel (crayon, règle, gras) ; une fois q22, q28 et q30 retirées, la fiche f2 n'a plus de question en pourquoi ou comment.",
+  "piste": "QCM même id (même famille que qcm_multiple) : « Pourquoi le titre d'un graphique suit-il toujours le modèle « évolution de … en fonction de … » ? » → parce qu'il dit quelle grandeur on suit et de quoi elle dépend, c'est-à-dire ce que porte chaque axe ; leurres : parce que c'est plus court à écrire ; parce que le titre remplace le nom des axes ; parce qu'il donne les graduations. Source de la fiche (p. 1)."
+ },
+ {
+  "id": "methode-graphique-q30",
+  "cours": "methode-graphique",
+  "fiche": "methode-graphique-f2",
+  "verdict": "supprimer",
+  "categorie": "consigne",
+  "raison": "« Le titre est facile à repérer dans la consigne » parle de l'exercice, pas du graphique.",
+  "piste": ""
+ },
+ {
+  "id": "methode-graphique-q35",
+  "cours": "methode-graphique",
+  "fiche": "methode-graphique-f3",
+  "verdict": "supprimer",
+  "categorie": "consigne",
+  "raison": "Le crayon à papier pour les pointillés : du matériel, pas la méthode. La fiche f3 garde sept questions.",
+  "piste": ""
+ },
+ {
+  "id": "methode-graphique-q36",
+  "cours": "methode-graphique",
+  "fiche": "methode-graphique-f4",
+  "verdict": "supprimer",
+  "categorie": "doublon",
+  "raison": "Même fait que q12 (l'origine n'est reliée que si c'est un point mesuré).",
+  "piste": ""
+ },
+ {
+  "id": "methode-graphique-q37",
+  "cours": "methode-graphique",
+  "fiche": "methode-graphique-f4",
+  "verdict": "supprimer",
+  "categorie": "consigne",
+  "raison": "Stylo ou crayon pour relier les points : du matériel. q12 reste le vrai/faux de f4.",
+  "piste": ""
+ },
+ {
+  "id": "methode-graphique-q17",
+  "cours": "methode-graphique",
+  "fiche": "methode-graphique-f5",
+  "verdict": "supprimer",
+  "categorie": "consigne",
+  "raison": "Règle et crayon pour tracer les axes : du matériel ; q40 garde l'essentiel (perpendiculaires, origine O).",
+  "piste": ""
+ },
+ {
+  "id": "methode-graphique-q43",
+  "cours": "methode-graphique",
+  "fiche": "methode-graphique-f5",
+  "verdict": "supprimer",
+  "categorie": "doublon",
+  "raison": "Même fait que q16 et q18 (une flèche par sens, deux s'il y a des valeurs négatives) ; q42 garde l'application.",
+  "piste": ""
+ },
+ {
+  "id": "methode-graphique-q44",
+  "cours": "methode-graphique",
+  "fiche": "methode-graphique-f6",
+  "verdict": "supprimer",
+  "categorie": "doublon",
+  "raison": "Même exercice que q19 (ce qui suit « en fonction de » va à l'horizontale) ; q45 garde une application complète.",
+  "piste": ""
+ },
+ {
+  "id": "methode-graphique-q46",
+  "cours": "methode-graphique",
+  "fiche": "methode-graphique-f6",
+  "verdict": "supprimer",
+  "categorie": "doublon",
+  "raison": "Même fait que q20 et q21 (Y en ordonnée, X en abscisse).",
+  "piste": ""
+ },
+ {
+  "id": "methode-instruments-q36",
+  "cours": "methode-instruments",
+  "fiche": "methode-instruments-f3",
+  "verdict": "supprimer",
+  "categorie": "doublon",
+  "raison": "Même fait que q9 (après la tare, l'écran ne compte plus le récipient).",
+  "piste": ""
+ },
+ {
+  "id": "methode-instruments-q38",
+  "cours": "methode-instruments",
+  "fiche": "methode-instruments-f3",
+  "verdict": "supprimer",
+  "categorie": "doublon",
+  "raison": "Mêmes étapes que q8 (récipient vide, tare, verser, lire), en QCM. La fiche f3 garde q9 et q37 en vrai/faux et q10 en pourquoi.",
+  "piste": ""
+ },
+ {
+  "id": "methode-instruments-q52",
+  "cours": "methode-instruments",
+  "fiche": "methode-instruments-f4",
+  "verdict": "supprimer",
+  "categorie": "doublon",
+  "raison": "Même fait que q11 et q40 (réglet et mètre ruban mesurent des longueurs).",
+  "piste": ""
+ },
+ {
+  "id": "methode-instruments-q53",
+  "cours": "methode-instruments",
+  "fiche": "methode-instruments-f4",
+  "verdict": "supprimer",
+  "categorie": "doublon",
+  "raison": "Même fait que q39 (réglet rigide, mètre ruban souple), en texte à trous.",
+  "piste": ""
+ },
+ {
+  "id": "methode-instruments-q41",
+  "cours": "methode-instruments",
+  "fiche": "methode-instruments-f5",
+  "verdict": "supprimer",
+  "categorie": "doublon",
+  "raison": "Même fait que q14 (œil au niveau du ménisque) ; q16 reste le vrai/faux de f5.",
+  "piste": ""
+ },
+ {
+  "id": "methode-instruments-q43",
+  "cours": "methode-instruments",
+  "fiche": "methode-instruments-f5",
+  "verdict": "supprimer",
+  "categorie": "doublon",
+  "raison": "Même fait que q14 et q16, en texte à trous.",
+  "piste": ""
+ },
+ {
+  "id": "methode-instruments-q48",
+  "cours": "methode-instruments",
+  "fiche": "methode-instruments-f7",
+  "verdict": "supprimer",
+  "categorie": "doublon",
+  "raison": "Même fait que q21 et q22 (col étroit, précision à la goutte) ; q22 reste le vrai/faux de f7.",
+  "piste": ""
+ },
+ {
+  "id": "methode-instruments-q50",
+  "cours": "methode-instruments",
+  "fiche": "methode-instruments-f8",
+  "verdict": "supprimer",
+  "categorie": "doublon",
+  "raison": "Même fait que q24 (toujours un adulte).",
+  "piste": ""
+ },
+ {
+  "id": "methode-instruments-q25",
+  "cours": "methode-instruments",
+  "fiche": "methode-instruments-f8",
+  "verdict": "question-theme",
+  "categorie": "document",
+  "raison": "« Les résultats sont présentés en photo dans le livret » décrit l'organisation du livret, pas un instrument ; c'est pourtant le vrai/faux de f8, une fiche mince (une liste de matériel et deux consignes d'organisation).",
+  "piste": "Vrai/faux même id, thème « Savoir-faire : les instruments de mesure », notion « le matériel de TP » : « Le thermomètre du matériel de TP mesure une température, exprimée en degrés Celsius (°C). » VRAI. Source : Wikipédia, « Thermomètre », https://fr.wikipedia.org/wiki/Thermom%C3%A8tre. On évite la valeur 0 °C de la glace qui fond, demandée par le devoir 1 de physique."
+ },
+ {
+  "id": "methode-instruments-q27",
+  "cours": "methode-instruments",
+  "fiche": "methode-instruments-f8",
+  "verdict": "reecrire-fiche",
+  "categorie": "document",
+  "raison": "Même consigne d'organisation que q25 (les photos du livret), en « comment » ; réécrite sur le matériel, elle garde à f8 sa question en « comment ».",
+  "piste": "QCM même id : « Comment mesure-t-on le volume d'eau à verser pour une expérience à la maison ? » → avec le verre doseur ; leurres : avec la balance électronique ; avec le thermomètre ; avec le réglet. Source de la fiche (Physique-chimie - Materiel des TP.pdf, p. 1)."
+ },
+ {
+  "id": "methode-instruments-q24",
+  "cours": "methode-instruments",
+  "fiche": "methode-instruments-f8",
+  "verdict": "garder",
+  "categorie": "",
+  "raison": "La surveillance d'un adulte est une consigne, mais une règle de sécurité que l'élève doit connaître : gardée.",
+  "piste": ""
+ },
+ {
+  "id": "methode-instruments-q32",
+  "cours": "methode-instruments",
+  "fiche": "methode-instruments-f2",
+  "verdict": "garder",
+  "categorie": "",
+  "raison": "Additionner 50, 10 et 5 g est la façon même de lire une balance de Roberval : gardée malgré le calcul.",
+  "piste": ""
+ },
+ {
+  "id": "methode-ombrothermique-q24",
+  "cours": "methode-ombrothermique",
+  "fiche": "methode-ombrothermique-f1",
+  "verdict": "supprimer",
+  "categorie": "document",
+  "raison": "Le diagramme de Vichy 1971-2000 est l'exemple du livret, et compter trente années entre deux dates est un calcul, pas un savoir. q2 et q21 restent les vrai/faux de f1.",
+  "piste": ""
+ },
+ {
+  "id": "methode-ombrothermique-q26",
+  "cours": "methode-ombrothermique",
+  "fiche": "methode-ombrothermique-f2",
+  "verdict": "supprimer",
+  "categorie": "doublon",
+  "raison": "Même fait que q6 (deux courbes : températures les plus basses et les plus hautes).",
+  "piste": ""
+ },
+ {
+  "id": "methode-ombrothermique-q31",
+  "cours": "methode-ombrothermique",
+  "fiche": "methode-ombrothermique-f3",
+  "verdict": "reecrire-fiche",
+  "categorie": "trivia",
+  "raison": "« L'axe horizontal est noir » et « les deux axes verticaux ont les mêmes graduations » sont des détails de couleur et de dessin ; le reste de la question est bon.",
+  "piste": "QCM multiple même id : « Coche les phrases justes sur les axes du diagramme. » → l'axe horizontal porte les douze mois ; les températures se lisent à gauche, en °C ; les précipitations se lisent à droite, en mm ; leurres : l'axe horizontal est gradué en années ; les précipitations se lisent à gauche, en °C. Source de la fiche (p. 1)."
+ },
+ {
+  "id": "methode-ombrothermique-q33",
+  "cours": "methode-ombrothermique",
+  "fiche": "methode-ombrothermique-f4",
+  "verdict": "supprimer",
+  "categorie": "doublon",
+  "raison": "Même calcul que q11 (mm = 2 × °C), en carreaux.",
+  "piste": ""
+ },
+ {
+  "id": "methode-ombrothermique-q35",
+  "cours": "methode-ombrothermique",
+  "fiche": "methode-ombrothermique-f4",
+  "verdict": "supprimer",
+  "categorie": "doublon",
+  "raison": "Même fait que q12 (le double), en texte à trous ; q12 et q32 restent les vrai/faux de f4.",
+  "piste": ""
+ },
+ {
+  "id": "methode-ombrothermique-q36",
+  "cours": "methode-ombrothermique",
+  "fiche": "methode-ombrothermique-f5",
+  "verdict": "supprimer",
+  "categorie": "experience",
+  "raison": "Le petit trait horizontal de 5 mm centré sur le mois est un geste de dessin du livret, récité.",
+  "piste": ""
+ },
+ {
+  "id": "methode-ombrothermique-q37",
+  "cours": "methode-ombrothermique",
+  "fiche": "methode-ombrothermique-f5",
+  "verdict": "supprimer",
+  "categorie": "trivia",
+  "raison": "La couleur des bâtons (bleu clair) est un détail de dessin ; q9 et q27 gardent le code rouge/bleu des axes, qui aide à lire. q17 reste le vrai/faux de f5.",
+  "piste": ""
+ },
+ {
+  "id": "methode-ombrothermique-q38",
+  "cours": "methode-ombrothermique",
+  "fiche": "methode-ombrothermique-f5",
+  "verdict": "supprimer",
+  "categorie": "doublon",
+  "raison": "Même raisonnement que q16 (arrondir juste au-dessus du mois le plus pluvieux), sur l'exemple de Vichy du livret.",
+  "piste": ""
+ },
+ {
+  "id": "methode-ombrothermique-q9",
+  "cours": "methode-ombrothermique",
+  "fiche": "methode-ombrothermique-f3",
+  "verdict": "garder",
+  "categorie": "",
+  "raison": "Rouge à gauche pour les °C, bleu à droite pour les mm : un code de couleur de la fiche qui aide à lire le diagramme ; gardée.",
+  "piste": ""
+ },
+ {
+  "id": "methode-tableau-q6",
+  "cours": "methode-tableau",
+  "fiche": "methode-tableau-f2",
+  "verdict": "supprimer",
+  "categorie": "trivia",
+  "raison": "Qu'une case puisse contenir plusieurs lignes d'écriture est un détail de mise en page ; q17 reste le vrai/faux de f2.",
+  "piste": ""
+ },
+ {
+  "id": "methode-tableau-q16",
+  "cours": "methode-tableau",
+  "fiche": "methode-tableau-f2",
+  "verdict": "supprimer",
+  "categorie": "arithmetique",
+  "raison": "4 × 5 = 20 cases est un calcul, pas la lecture d'un tableau.",
+  "piste": ""
+ },
+ {
+  "id": "methode-tableau-q19",
+  "cours": "methode-tableau",
+  "fiche": "methode-tableau-f2",
+  "verdict": "reecrire-fiche",
+  "categorie": "document",
+  "raison": "Les choix reprennent la recette du livret (« Eau de fleur d'oranger : 1 cc ») ; la notion (données dans les cases, catégories en tête) est bonne.",
+  "piste": "QCM multiple même id : « Dans un tableau de recette, les tailles de gâteau sont en rangs et les ingrédients en colonnes. Coche ce qu'on trouve dans des cases de données. » → 150 g ; 75 g ; 3 œufs ; leurres : Farine ; 4 personnes. Source de la fiche (p. 1)."
+ },
+ {
+  "id": "anglais-seq01-q109",
+  "cours": "anglais-seq01",
+  "fiche": "anglais-seq01-g2",
+  "verdict": "supprimer",
+  "categorie": "doublon",
+  "raison": "Même fait que q10 et q14 (was ou were devant le sujet) ; q11 reste le vrai/faux de g2. Les questions q109 à q119 sont une série de vrai/faux ajoutés qui redisent la règle d'une question voisine de la même fiche.",
+  "piste": ""
+ },
+ {
+  "id": "anglais-seq01-q110",
+  "cours": "anglais-seq01",
+  "fiche": "anglais-seq01-g3",
+  "verdict": "supprimer",
+  "categorie": "doublon",
+  "raison": "Même fait que q18 et q20 (there were devant un pluriel).",
+  "piste": ""
+ },
+ {
+  "id": "anglais-seq01-q111",
+  "cours": "anglais-seq01",
+  "fiche": "anglais-seq01-g4",
+  "verdict": "supprimer",
+  "categorie": "doublon",
+  "raison": "Même fait que q24 et q26 (phrase affirmative, tag négatif avec were).",
+  "piste": ""
+ },
+ {
+  "id": "anglais-seq01-q112",
+  "cours": "anglais-seq01",
+  "fiche": "anglais-seq01-g5",
+  "verdict": "supprimer",
+  "categorie": "doublon",
+  "raison": "Même fait que q33 (are devient were).",
+  "piste": ""
+ },
+ {
+  "id": "anglais-seq01-q113",
+  "cours": "anglais-seq01",
+  "fiche": "anglais-seq01-g7",
+  "verdict": "supprimer",
+  "categorie": "doublon",
+  "raison": "Même fait que q51 et q114 (does avec he, she, it) ; q50 reste le vrai/faux de g7.",
+  "piste": ""
+ },
+ {
+  "id": "anglais-seq01-q115",
+  "cours": "anglais-seq01",
+  "fiche": "anglais-seq01-g8",
+  "verdict": "supprimer",
+  "categorie": "doublon",
+  "raison": "Même fait que q59 (can → can't they) ; q58 reste le vrai/faux de g8.",
+  "piste": ""
+ },
+ {
+  "id": "anglais-seq01-q116",
+  "cours": "anglais-seq01",
+  "fiche": "anglais-seq01-g9",
+  "verdict": "supprimer",
+  "categorie": "doublon",
+  "raison": "Même fait que q66 et q69 (What does she like demande ce qu'elle aime) ; q65 reste le vrai/faux de g9.",
+  "piste": ""
+ },
+ {
+  "id": "anglais-seq01-q118",
+  "cours": "anglais-seq01",
+  "fiche": "anglais-seq01-g11",
+  "verdict": "supprimer",
+  "categorie": "doublon",
+  "raison": "Même fait que q77 (l'adjectif avant le nom) ; q79 reste le vrai/faux de g11.",
+  "piste": ""
+ },
+ {
+  "id": "anglais-seq01-q119",
+  "cours": "anglais-seq01",
+  "fiche": "anglais-seq01-g12",
+  "verdict": "supprimer",
+  "categorie": "doublon",
+  "raison": "Même fait que q85 (these est le pluriel de this).",
+  "piste": ""
+ },
+ {
+  "id": "anglais-seq02-q70",
+  "cours": "anglais-seq02",
+  "fiche": "anglais-seq02-g9",
+  "verdict": "supprimer",
+  "categorie": "doublon",
+  "raison": "Même fait que q67 (they → their) ; q66 reste le vrai/faux de g9.",
+  "piste": ""
+ },
+ {
+  "id": "anglais-seq02-q84",
+  "cours": "anglais-seq02",
+  "fiche": "anglais-seq02-g11",
+  "verdict": "supprimer",
+  "categorie": "doublon",
+  "raison": "Même fait que q79 et q81 (le 's sur le possesseur) ; q79 reste le vrai/faux de g11.",
+  "piste": ""
+ },
+ {
+  "id": "anglais-seq02-q123",
+  "cours": "anglais-seq02",
+  "fiche": "anglais-seq02-g2",
+  "verdict": "supprimer",
+  "categorie": "doublon",
+  "raison": "Même fait que q10 et q14 (-ed en [t] après un son sourd).",
+  "piste": ""
+ },
+ {
+  "id": "anglais-seq02-q124",
+  "cours": "anglais-seq02",
+  "fiche": "anglais-seq02-g12",
+  "verdict": "supprimer",
+  "categorie": "doublon",
+  "raison": "Miroir de q87 : les six mêmes verbes, classés dans l'autre sens.",
+  "piste": ""
+ },
+ {
+  "id": "anglais-seq02-q125",
+  "cours": "anglais-seq02",
+  "fiche": "anglais-seq02-g12",
+  "verdict": "supprimer",
+  "categorie": "doublon",
+  "raison": "Même fait que q86 (-s en [z] après un son sonore).",
+  "piste": ""
+ },
+ {
+  "id": "anglais-seq03-q83",
+  "cours": "anglais-seq03",
+  "fiche": "anglais-seq03-g10",
+  "verdict": "supprimer",
+  "categorie": "doublon",
+  "raison": "Même fait que q79 (un repère du passé appelle le prétérit) ; q86 reste le vrai/faux de g10.",
+  "piste": ""
+ },
+ {
+  "id": "anglais-seq03-q51",
+  "cours": "anglais-seq03",
+  "fiche": "anglais-seq03-g6",
+  "verdict": "reecrire-fiche",
+  "categorie": "autre",
+  "raison": "« Will I close the window ? » est une tournure peu naturelle, donnée comme équivalente de Shall I ; le nonCouvert dit déjà que le jeu suit les formes sûres des corrigés.",
+  "piste": "Vrai/faux même id : « Shall s'emploie avec tous les sujets : Shall they come ? » FAUX ; corrections : shall s'emploie avec I et we, surtout pour proposer quelque chose (Shall we come ?) ; shall ne s'emploie qu'au passé ; shall s'emploie seulement avec you. Source de la fiche (p. 9)."
+ },
+ {
+  "id": "anglais-seq03-q101",
+  "cours": "anglais-seq03",
+  "fiche": "anglais-seq03-g12",
+  "verdict": "reecrire-fiche",
+  "categorie": "autre",
+  "raison": "Quatre transcriptions phonétiques complètes à comparer, c'est illisible pour un élève de 13 ans ; la fiche porte sur quelques sons, pas sur l'alphabet phonétique entier.",
+  "piste": "QCM même id : « Quel son entend-on au milieu de usually, le même que dans television ? » → [ʒ] ; leurres : [ʃ], [tʃ], [ʤ]. Source de la fiche (p. 11)."
+ },
+ {
+  "id": "anglais-seq03-q14",
+  "cours": "anglais-seq03",
+  "fiche": "anglais-seq03-g2",
+  "verdict": "garder",
+  "categorie": "",
+  "raison": "« I don't think she is » et « I think she isn't » : deux tournures données par le corrigé (p. 10) ; gardée.",
+  "piste": ""
+ }
+]

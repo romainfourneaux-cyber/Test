@@ -1,0 +1,15 @@
+Moteur : jeu/js/bataille-moteur.js · or perdu par erreur : celui du jeu · 160 batailles par case · batailles de route (options de JEU.expedition.optionsBataille) · escarmouche : attaque, 2 vagues, camp de 6, ligne + 0 ; embuscade : defense, 2 vagues, camp de 10, ligne + 1 ; gardien : defense, 2 vagues, camp de 12, ligne + 1 ; grand : defense, 3 vagues, camp de 16, ligne + 0 · lignes par semaine [[2,0],[5,1],[8,2],[12,3]] · difficulté 0 · essai « X.EXP.HALTES.gardien.ligne = 1 » · front angleterre · Armorial : aucun · faveurs : aucune · semaines 7
+
+p = 0.6 (réponses justes) · 160 batailles par case
+sem | nœud          | carte   | rival | arsenal | vag. camp | tenue (éclatante) | tenu  retraite | murs restants (quand elle tient) | coups portés (1re vague) | gardien vaincu en 1 / 2 / 3 tentatives · tentatives moy. · jamais en 5
+  7 | gardien       | foret   |   3   |    2    | 2  12   |   75 % (  6 %)   |  69 %   25 %   |                      51 % (68 %) |              3.27 (1.52) | 75 % / 91 % / 98 % · 1.35 · 1 %
+
+p = 0.7 (réponses justes) · 160 batailles par case
+sem | nœud          | carte   | rival | arsenal | vag. camp | tenue (éclatante) | tenu  retraite | murs restants (quand elle tient) | coups portés (1re vague) | gardien vaincu en 1 / 2 / 3 tentatives · tentatives moy. · jamais en 5
+  7 | gardien       | foret   |   3   |    2    | 2  12   |   88 % ( 15 %)   |  73 %   12 %   |                      67 % (76 %) |              5.36 (1.86) | 88 % / 98 % / 99 % · 1.15 · 0 %
+
+p = 0.9 (réponses justes) · 160 batailles par case
+sem | nœud          | carte   | rival | arsenal | vag. camp | tenue (éclatante) | tenu  retraite | murs restants (quand elle tient) | coups portés (1re vague) | gardien vaincu en 1 / 2 / 3 tentatives · tentatives moy. · jamais en 5
+  7 | gardien       | foret   |   3   |    2    | 2  12   |   98 % ( 55 %)   |  43 %    3 %   |                      88 % (90 %) |             11.59 (4.28) | 98 % / 100 % / 100 % · 1.03 · 0 %
+
+(10 s)

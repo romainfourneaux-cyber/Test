@@ -1,0 +1,10 @@
+/* Maquette seulement : états forcés pour la planche (focus, appui) et mise en page de la planche. Rien de ceci n'entre dans le jeu. */
+#menu button.demo-focus { outline: 2px solid var(--or-clair); outline-offset: -5px; border-radius: 10px;
+  background: radial-gradient(ellipse 62% 70% at 50% 48%, rgba(226,194,114,.34), rgba(226,194,114,0) 76%); }
+.onglet.demo-focus, .codex-entete.demo-focus, .vignette.demo-focus, input.demo-focus { outline: none; box-shadow: var(--halo); z-index: 2; }
+.planche h2 { font-size: 1rem; color: #6a2a30; margin: 1.1rem 0 .5rem; border-bottom: 1px solid rgba(176,141,58,.7); padding-bottom: .2rem; }
+.planche .rang { display: flex; flex-wrap: wrap; gap: 1rem 1.2rem; align-items: center; margin: .4rem 0 .6rem; }
+.planche .leg { display: block; font-size: .78rem; color: #6a5536; font-family: var(--titre); letter-spacing: .04em; margin-top: .35rem; text-align: center; }
+.planche .cell { display: inline-flex; flex-direction: column; align-items: center; }
+.planche .deux { display: grid; grid-template-columns: 1fr 1fr; gap: 0 2rem; }
+.planche .liste-cours { margin-top: .2rem; }

@@ -1,0 +1,212 @@
+                    FICHE MÉTHODE :
+              RÉALISATION D’UN GRAPHIQUE
+                   (graphique linéaire)
+Pour réaliser un graphique, il faut procéder par étape :
+
+   1) Déterminer les éléments qui apparaissent en abscisse (axe horizontal) et donner un nom à
+      cet axe.
+   2) Déterminer les éléments qui apparaissent en ordonnée (axe vertical) et donner un nom à cet
+      axe.
+   3) Choisir une unité pour chaque axe. La mesure sur le graphique de l’unité peut être la même.
+      Graduer les axes.
+   4) Donner un titre au graphique.
+   5) Placer les points et les relier.
+
+Tu sauras tracer un graphique en suivant toutes ces étapes dans l’ordre en classe de 3ème. En 6ème, tu
+traces des graphiques en étant aidé par les consignes données. Progressivement, au cours de tes
+années de Collège, tu vas apprendre à réaliser un graphique sans aide, selon les objectifs suivants :
+
+   I.      Objectifs de la classe de 6ème et moyens de réalisation
+   1) Savoir donner un titre à un graphique
+
+Le titre d’un graphique est toujours construit ainsi :
+« Graphique représentant l’évolution de TITRE DE L’AXE VERTICAL (ordonnées) en fonction de
+TITRE DE L’AXE HORIZONTAL (abscisses) »
+
+Le titre est généralement bien repérable dans l’énoncé.
+
+Lorsque tu réalises un graphique à la main (manuscrit), le titre doit être écrit au crayon à papier et
+souligné à la règle.
+Lorsque tu réalises un graphique à l’ordinateur (tapuscrit), le titre doit être en police grasse et
+soulignée.
+
+   2) Savoir placer les points sur les axes à partir de valeurs données dans un tableau
+
+Pour déterminer l’emplacement de chaque point correspondant aux valeurs répertoriées pour la
+réalisation du graphique, il faut chercher d’abord la valeur en abscisse, puis, à partir de celle-ci,
+tracer, au crayon à papier, un trait pointillé vertical, parallèle à l’axe des ordonnées. On cherche
+ensuite à quelle valeur correspond le point sur l’axe des ordonnées, et, à partir de celle-ci, on trace
+de la même façon un trait pointillé horizontal, parallèle à l’axe des abscisses. Le point à placer se
+trouve à l’intersection des deux traits pointillés.
+Les points d’un graphique sont des croix dont les branches sont perpendiculaires et suivent les axes
+horizontal et vertical.
+
+
+                                                                                                     1
+Fiche Méthode – Réalisation d’un graphique – Page 2/9
+Lorsque le tracé est terminé, on repasse les points au crayon de couleur si la consigne
+l’exige.
+
+   3) Savoir relier les points pour tracer la courbe
+
+Pour relier les points, utilise le crayon à papier ou de couleur si c’est précisé dans la consigne. On
+relie point par point en commençant par le premier point et en finissant par le dernier. Attention ! Il
+ne faut pas relier l’origine des axes si elle ne fait pas partie des points et il ne faut pas non plus se
+raccrocher à un axe.
+
+   4) Exemple :
+
+Énoncé : Dans le tableau ci-contre, sont consignées les
+tailles de Claude de la naissance à l’âge adulte.
+
+Consigne : Trace le graphique représentant l’évolution
+de la taille de Claude selon son âge.
+
+On donne le graphique ci-dessous, sur lequel sont
+indiqués les noms des axes, l’origine, les graduations :
+
+
+
+
+                                                                                                       2
+Fiche Méthode – Réalisation d’un graphique – Page 3/9
+
+Il faut indiquer le titre du graphique et reporter chaque point correspondant aux valeurs
+du tableau :
+
+
+
+
+                                                                                            3
+Fiche Méthode – Réalisation d’un graphique – Page 4/9
+
+
+
+
+                                                        4
+Fiche Méthode – Réalisation d’un graphique – Page 5/9
+   II.     Objectifs de la classe de 5ème et moyens de réalisation
+
+   1) Savoir réaliser les objectifs de sixième
+   2) Savoir tracer les axes
+
+Les axes sont tracés à la règle et au crayon à
+papier sur du papier millimétré ou quadrillé
+en 5x5 (petits carreaux). Ils sont
+perpendiculaires et se coupent à leur
+origine commune. Attention, ils peuvent
+représenter des valeurs négatives. Il faut y
+penser avant de les tracer !
+Ils doivent comporter une flèche par sens à
+une extrémité (cas de valeurs positives ou
+négatives) ou les deux (cas de valeurs
+positives et négatives).
+Il faut bien placer le point O (abscisse = 0 ;
+ordonnée = 0).
+Ensuite, tu places les valeurs sur les axes,
+comme précisé dans les consignes : échelle
+et graduations.
+
+   3) Indiquer le nom des axes à partir de
+      la consigne, graduer les axes selon
+      les consignes données.
+
+Phrase astuce : Grâce à l’expression
+« tracer le graphique représentant
+l’évolution de Y en fonction de X », toujours
+présente dans la consigne, tu sauras
+retrouver :
+ - le nom de l’axe des ordonnées : c’est
+     « Y »,
+ - et le nom de l’axe des abscisses : c’est
+     « X ».
+
+   4) Exemple : représenter la courbe de croissance de Claude
+
+Énoncé : Dans le tableau ci-contre, sont consignées les tailles de Claude de la naissance à l’âge
+adulte. (voir tableau en page 2)
+
+Consignes : Trace le graphique représentant l’évolution de la taille de Claude selon son âge sur une
+feuille à petits carreaux.
+Pour cela, trace l’axe vertical à 6 carreaux du bord gauche de la feuille, il doit mesurer au moins
+19 cm ; trace l’axe horizontal afin qu’il croise l’axe vertical à 0,5 cm de sa base, il doit mesurer au
+moins 10 cm.
+Sur l’axe vertical (des ordonnées), place à 1 cm la valeur 10 cm, à 2 cm la valeur 20 cm, à 3 cm la
+valeur 30 cm et ainsi de suite jusqu’à 180 cm.
+                                                                                                     5
+Fiche Méthode – Réalisation d’un graphique – Page 6/9
+Sur l’axe horizontal, place tous les 5 mm l’âge, de 1 an en 1 an, de 1 à 20 ans.
+Indique le nom des axes et les unités, et n’oublie pas de donner le titre de ton graphique
+après l’avoir tracé !
+
+
+
+
+                                                                                             6
+Fiche Méthode – Réalisation d’un graphique – Page 7/9
+
+   III.      Objectifs de la classe de 4ème et moyens de réalisation
+   1) Savoir réaliser les objectifs de 5ème
+
+   2) Indiquer le nom des axes (sans consigne), graduer les axes selon l’échelle donnée
+
+Pour trouver le nom des axes, il faut savoir que :
+   - En abscisse, on indique toujours la valeur qu’on fait varier volontairement. Par exemple : le
+       temps, les mois de l’année, un nombre donné de personnes… Cette valeur en abscisse prend
+       le nom de « donnée ». (C’est toujours « x ».)
+   - En ordonnée, on indique toujours la valeur relevée lors d’une expérience, mesurée, comptée,
+       calculée à partir de la donnée. Cette valeur prend le nom de « variable ». (C’est toujours
+       « y ».)
+
+Pour graduer les axes, il faut placer l’échelle demandée dans la consigne, puis uniquement les valeurs
+utiles : graduation de 5 en 5, de 10 en 10…
+Pour repérer les points à placer, à ce stade, on ne trace plus les pointillés sur le graphique mais on
+note les valeurs des données et des variables en léger retrait le long des axes.
+
+   3) Savoir tracer une droite expérimentale
+
+   -      S’il s’agit de valeurs mathématiques, géographiques, historiques, on te demandera de tracer
+          le graphique point par point (cf. I.3).
+   -      S’il s’agit de valeurs expérimentales (en physique, chimie ou sciences de la vie et de la Terre),
+          on cherche l’harmonie de la courbe : si à l’œil, la courbe paraît presque droite, il faut tracer
+          une droite telle qu’elle soit la plus proche de tous les points du graphique.
+
+   4) Exemple
+
+
+
+
+                                                                                                         7
+Fiche Méthode – Réalisation d’un graphique – Page 8/9
+   IV.     Objectifs de la classe de 3ème et moyens de réalisation
+   1) Savoir réaliser les objectifs de 4ème
+
+   2) Savoir trouver l’échelle de graduation la plus adaptée
+
+Pour trouver l’échelle la plus adaptée pour chaque axe, il faut chercher dans le tableau des valeurs
+celle qui est la plus grande et la diviser par le nombre de centimètres dont on dispose pour tracer
+son axe.
+
+Exemple :
+Pour l’axe horizontal, je mesure sur ma feuille de papier millimétré 20 cm de long. La valeur de
+données la plus grande est 158 unités. Je divise 158 par 20 et j’obtiens : 7,9. J’ai donc 7,9 unités dans
+1 cm. Je peux arrondir pour simplifier à 8 unités pour 1 cm.
+
+   3) Savoir tracer une courbe expérimentale.
+
+Le tracé de la courbe dépend des mêmes principes que ceux vus en classe de 4ème. Dans le cas d’un
+résultat expérimental, si, à l’œil, il s’agit d’une courbe, il faut la tracer selon le même principe que la
+droite, mais à main levée.
+
+
+
+
+                                                                                                         8
+Fiche Méthode – Réalisation d’un graphique – Page 9/9
+    4) Exemple :
+
+
+
+
+                                                        9
+

@@ -1,0 +1,695 @@
+[
+ {
+  "id": "physique-s01-1-q4",
+  "cours": "physique-s01-1",
+  "fiche": "physique-s01-1-f1",
+  "verdict": "supprimer",
+  "categorie": "consigne",
+  "raison": "La question porte sur la mise en page du tableau de l'exercice (une colonne par état), pas sur la matière. La fiche f1 garde sept bonnes questions, dont deux vrai/faux et un pourquoi.",
+  "piste": ""
+ },
+ {
+  "id": "physique-s01-1-q26",
+  "cours": "physique-s01-1",
+  "fiche": "physique-s01-1-f6",
+  "verdict": "reecrire-fiche",
+  "categorie": "experience",
+  "raison": "Tenir le verre pour qu'il ne penche pas est un détail du protocole du TP 3, pas une propriété des gaz ; c'est pourtant le seul « pourquoi » de la fiche.",
+  "piste": "QCM même id : « Pourquoi peut-on comprimer l'air d'une pompe à vélo en bouchant la sortie, mais pas l'eau d'une seringue bouchée ? » → parce qu'un gaz est compressible et qu'un liquide ne l'est pas ; leurres : parce que l'air est plus léger que l'eau ; parce que l'eau a une forme propre ; parce que l'air s'échappe par les parois. Source de la fiche (p. 1)."
+ },
+ {
+  "id": "physique-s01-1-q36",
+  "cours": "physique-s01-1",
+  "fiche": "physique-s01-1-f3",
+  "verdict": "supprimer",
+  "categorie": "doublon",
+  "raison": "Même fait et même réponse que q12 (les grains roulent, ils ne fondent pas). La fiche garde q11 et q13 en vrai/faux.",
+  "piste": ""
+ },
+ {
+  "id": "physique-s01-1-q45",
+  "cours": "physique-s01-1",
+  "fiche": "physique-s01-1-f5",
+  "verdict": "supprimer",
+  "categorie": "doublon",
+  "raison": "Même fait et même réponse que q21 (l'horizontale fait un angle droit avec le fil à plomb), habillé d'un maçon.",
+  "piste": ""
+ },
+ {
+  "id": "physique-s01-1-q46",
+  "cours": "physique-s01-1",
+  "fiche": "physique-s01-1-f6",
+  "verdict": "supprimer",
+  "categorie": "experience",
+  "raison": "Remettre dans l'ordre les gestes du TP 3 (mouchoir, verre retourné, plonger, ressortir) est un protocole récité ; la propriété étudiée (les gaz sont expansibles) reste posée par q25 et q49.",
+  "piste": ""
+ },
+ {
+  "id": "physique-s01-1-q47",
+  "cours": "physique-s01-1",
+  "fiche": "physique-s01-1-f6",
+  "verdict": "supprimer",
+  "categorie": "experience",
+  "raison": "Plonger le verre droit ou penché est un geste du protocole, pas un savoir sur les gaz.",
+  "piste": ""
+ },
+ {
+  "id": "physique-s02-1-q30",
+  "cours": "physique-s02-1",
+  "fiche": "physique-s02-1-f1",
+  "verdict": "supprimer",
+  "categorie": "doublon",
+  "raison": "Même fait et même réponse que q1 (fusion = du solide au liquide), formulé en « comment savoir ». La fiche garde q4 en pourquoi.",
+  "piste": ""
+ },
+ {
+  "id": "physique-s02-1-q31",
+  "cours": "physique-s02-1",
+  "fiche": "physique-s02-1-f2",
+  "verdict": "supprimer",
+  "categorie": "doublon",
+  "raison": "Même fait que q6 et q32 (le brouillard vient d'une liquéfaction) : quatre questions du cours tournent autour du brouillard.",
+  "piste": ""
+ },
+ {
+  "id": "physique-s02-1-q37",
+  "cours": "physique-s02-1",
+  "fiche": "physique-s02-1-f3",
+  "verdict": "question-theme",
+  "categorie": "arithmetique",
+  "raison": "Compter combien de formes d'eau sont liquides dans une liste est un dénombrement, pas une connaissance. Le cours s'appelle « Le cycle de l'eau » et le corrigé déposé ne décrit pas le cycle (dit dans nonCouvert) : la place est pour une question de thème.",
+  "piste": "QCM même id (« comment »), thème « Séance 2 – Le cycle de l’eau », notion « l'eau dans la nature » : « Comment se forment les nuages ? » → la vapeur d'eau de l'air se refroidit en montant et se change en minuscules gouttelettes ; leurres : la pluie remonte du sol vers le ciel ; la neige fond en altitude ; le vent soulève l'eau des lacs. Ne contredit pas le cours (un nuage est de l'eau liquide). Source : Vikidia, « Nuage », https://fr.vikidia.org/wiki/Nuage."
+ },
+ {
+  "id": "physique-s02-1-q38",
+  "cours": "physique-s02-1",
+  "fiche": "physique-s02-1-f3",
+  "verdict": "supprimer",
+  "categorie": "doublon",
+  "raison": "Même fait et même réponse que q11 (nuage et brouillard sont de l'eau liquide).",
+  "piste": ""
+ },
+ {
+  "id": "physique-s02-1-q39",
+  "cours": "physique-s02-1",
+  "fiche": "physique-s02-1-f4",
+  "verdict": "supprimer",
+  "categorie": "trivia",
+  "raison": "Savoir que le white-spirit laisse la poudre blanche est un résultat de la liste du TP ; q16 pose déjà le fait utile (tous les liquides ne contiennent pas d'eau) avec cet exemple.",
+  "piste": ""
+ },
+ {
+  "id": "physique-s02-1-q41",
+  "cours": "physique-s02-1",
+  "fiche": "physique-s02-1-f4",
+  "verdict": "supprimer",
+  "categorie": "trivia",
+  "raison": "L'« eau écarlate » est un produit de la liste du TP ; retenir qu'elle ne contient pas d'eau malgré son nom est un piège de nom, pas un savoir.",
+  "piste": ""
+ },
+ {
+  "id": "physique-s02-1-q43",
+  "cours": "physique-s02-1",
+  "fiche": "physique-s02-1-f4",
+  "verdict": "supprimer",
+  "categorie": "doublon",
+  "raison": "Même fait et même réponse que q16 (certains liquides laissent la poudre blanche). La fiche garde q18 en « comment ».",
+  "piste": ""
+ },
+ {
+  "id": "physique-s02-1-q20",
+  "cours": "physique-s02-1",
+  "fiche": "physique-s02-1-f5",
+  "verdict": "garder",
+  "categorie": "",
+  "raison": "Le fait est utile (un liquide sans eau ne se boit pas), mais deux leurres sont absurdes (« beaucoup trop d'eau », « ce sont des gaz »).",
+  "piste": "Remplacer ces deux leurres par « Parce qu'ils contiennent de l'eau de mer, non potable » et « Parce qu'ils sont trop sucrés »."
+ },
+ {
+  "id": "physique-s02-1-q21",
+  "cours": "physique-s02-1",
+  "fiche": "physique-s02-1-f5",
+  "verdict": "question-theme",
+  "categorie": "autre",
+  "raison": "La fiche f5 est mince : une remarque du corrigé (les liquides sans eau de l'expérience sont des poisons). En déduire qu'un liquide qui laisse la poudre blanche est forcément dangereux est un raisonnement bancal : le test repère l'eau, pas le danger.",
+  "piste": "Vrai/faux même id, thème « Séance 2 – Le cycle de l’eau », notion « l'eau, indispensable au corps » : « Un être humain peut vivre plusieurs semaines sans boire. » → FAUX ; corrections : il ne tient que quelques jours sans eau ; il tient plusieurs semaines sans manger, mais pas sans boire. Source : Wikipédia, « Déshydratation », https://fr.wikipedia.org/wiki/Déshydratation (vérifier la durée sur la page)."
+ },
+ {
+  "id": "physique-s02-1-q22",
+  "cours": "physique-s02-1",
+  "fiche": "physique-s02-1-f5",
+  "verdict": "question-theme",
+  "categorie": "experience",
+  "raison": "Désigner « le poison » dans la liste des liquides du TP est un détail d'expérience ; q44 et q50 posaient la même liste.",
+  "piste": "QCM même id, même thème et notion : « Quelle part du corps d'un être humain est faite d'eau, environ ? » → plus de la moitié (environ 60 à 65 %) ; leurres : environ un dixième ; environ un quart ; presque la totalité. Source : Vikidia, « Eau », https://fr.vikidia.org/wiki/Eau (partie sur les êtres vivants)."
+ },
+ {
+  "id": "physique-s02-1-q44",
+  "cours": "physique-s02-1",
+  "fiche": "physique-s02-1-f5",
+  "verdict": "supprimer",
+  "categorie": "doublon",
+  "raison": "Même liste et même fait que q22 et q50 (le jus de fruits contient de l'eau, les poisons sont les autres).",
+  "piste": ""
+ },
+ {
+  "id": "physique-s02-1-q45",
+  "cours": "physique-s02-1",
+  "fiche": "physique-s02-1-f5",
+  "verdict": "question-theme",
+  "categorie": "autre",
+  "raison": "Présenter le test au sulfate de cuivre comme utile « pour la santé » est une idée du jeu, pas du cours : le test montre la présence d'eau, rien de plus.",
+  "piste": "QCM même id (« comment »), même thème et notion : « Comment notre corps perd-il de l'eau chaque jour ? » → par l'urine, la sueur et la respiration ; leurres : seulement quand on pleure ; seulement en été ; il n'en perd jamais, il la garde. Source : Wikipédia, « Déshydratation », https://fr.wikipedia.org/wiki/Déshydratation."
+ },
+ {
+  "id": "physique-s02-1-q50",
+  "cours": "physique-s02-1",
+  "fiche": "physique-s02-1-f5",
+  "verdict": "question-theme",
+  "categorie": "experience",
+  "raison": "Troisième question sur la liste des « poisons » du TP (avec q22 et q44).",
+  "piste": "QCM multiple même id, même thème et notion : « D'où vient l'eau dont notre corps a besoin ? » → des boissons ; des aliments (fruits, légumes, soupe) ; leurres : de l'air qu'on respire ; de la lumière du soleil. Source : Vikidia, « Eau », https://fr.vikidia.org/wiki/Eau."
+ },
+ {
+  "id": "physique-s02-1-q46",
+  "cours": "physique-s02-1",
+  "fiche": "physique-s02-1-f6",
+  "verdict": "supprimer",
+  "categorie": "doublon",
+  "raison": "Même fait et même réponse que q26 (l'eau douce des cours d'eau sert à boire, cultiver, fabriquer).",
+  "piste": ""
+ },
+ {
+  "id": "physique-s02-1-q47",
+  "cours": "physique-s02-1",
+  "fiche": "physique-s02-1-f6",
+  "verdict": "question-theme",
+  "categorie": "doublon",
+  "raison": "Même chiffre que q25 (0,01 %), en vrai/faux. Le corrigé ne cite que deux réservoirs (dit dans nonCouvert) : la place est pour une question de thème sur les réserves d'eau.",
+  "piste": "Vrai/faux même id, thème « Séance 2 – Le cycle de l’eau », notion « les réserves d'eau de la Terre » : « La plus grande partie de l'eau douce de la Terre est stockée sous forme de glace, dans les calottes polaires et les glaciers. » → VRAI. Ne contredit pas le cours (cette glace n'est pas une réserve directement utilisable). Source : Wikipédia, « Eau douce », https://fr.wikipedia.org/wiki/Eau_douce."
+ },
+ {
+  "id": "physique-s02-1-q48",
+  "cours": "physique-s02-1",
+  "fiche": "physique-s02-1-f6",
+  "verdict": "question-theme",
+  "categorie": "arithmetique",
+  "raison": "« 10 000 seaux, combien pour 0,01 % » est un calcul de proportion déguisé, avec un indice qui donne la réponse.",
+  "piste": "QCM même id, même thème et notion : « Dans le cycle de l'eau, qu'est-ce qui fait passer l'eau des océans dans l'air ? » → la chaleur du Soleil, qui la fait s'évaporer ; leurres : le vent, qui l'arrache aux vagues ; les poissons, qui la respirent ; le sel, qui la fait monter. Source : Vikidia, « Cycle de l'eau », https://fr.vikidia.org/wiki/Cycle_de_l'eau."
+ },
+ {
+  "id": "physique-s03-1-q18",
+  "cours": "physique-s03-1",
+  "fiche": "physique-s03-1-f4",
+  "verdict": "garder",
+  "categorie": "",
+  "raison": "Bon repère (1 L d'eau pèse 1 kg), mais « D'après la pesée de l'eau » renvoie au TP.",
+  "piste": "Énoncé : « Quelle est la masse de 1 L d'eau ? »."
+ },
+ {
+  "id": "physique-s03-1-q19",
+  "cours": "physique-s03-1",
+  "fiche": "physique-s03-1-f4",
+  "verdict": "reecrire-fiche",
+  "categorie": "sans-document",
+  "raison": "Le texte à trou décrit les « premiers » et « seconds » cylindres du TP 4 : il faut avoir vu le TP pour le compléter.",
+  "piste": "Trou même id : « Deux objets qui ont le même ___ peuvent avoir des masses différentes. Deux objets qui ont la même ___ peuvent avoir des volumes différents. » banque : volume, masse, couleur, forme ; attendus : volume ; masse."
+ },
+ {
+  "id": "physique-s03-1-q29",
+  "cours": "physique-s03-1",
+  "fiche": "physique-s03-1-f1",
+  "verdict": "supprimer",
+  "categorie": "doublon",
+  "raison": "Troisième calcul du volume d'un objet plongé (avec q6 et q27), même méthode, mêmes nombres.",
+  "piste": ""
+ },
+ {
+  "id": "physique-s03-1-q32",
+  "cours": "physique-s03-1",
+  "fiche": "physique-s03-1-f2",
+  "verdict": "question-theme",
+  "categorie": "doublon",
+  "raison": "Même calcul que q8 (longueur × largeur × hauteur) avec d'autres nombres. Le corrigé convertit des cm³ en litres sans donner la règle (dit dans nonCouvert) : c'est le savoir qui manque à la fiche.",
+  "piste": "QCM même id, thème « Séance 3 – La masse et le volume », notion « le volume d'un pavé » : « Combien de centimètres cubes y a-t-il dans un litre ? » → 1 000 cm³ ; leurres : 10 cm³ ; 100 cm³ ; 10 000 cm³. Source : Wikipédia, « Litre », https://fr.wikipedia.org/wiki/Litre."
+ },
+ {
+  "id": "physique-s03-1-q36",
+  "cours": "physique-s03-1",
+  "fiche": "physique-s03-1-f3",
+  "verdict": "question-theme",
+  "categorie": "doublon",
+  "raison": "Même fait que q14 (papillon 30 mg, mésange 30 g). Les conversions entre unités de masse manquent au corrigé (dit dans nonCouvert).",
+  "piste": "Vrai/faux même id, thème « Séance 3 – La masse et le volume », notion « les unités de masse » : « Une tonne vaut mille kilogrammes, et un kilogramme vaut mille grammes. » → VRAI. Source : Wikipédia, « Tonne », https://fr.wikipedia.org/wiki/Tonne."
+ },
+ {
+  "id": "physique-s03-1-q39",
+  "cours": "physique-s03-1",
+  "fiche": "physique-s03-1-f3",
+  "verdict": "supprimer",
+  "categorie": "doublon",
+  "raison": "Même fait que q11 (crayon et mésange se pèsent en grammes).",
+  "piste": ""
+ },
+ {
+  "id": "physique-s03-1-q40",
+  "cours": "physique-s03-1",
+  "fiche": "physique-s03-1-f4",
+  "verdict": "supprimer",
+  "categorie": "experience",
+  "raison": "« Les cylindres de 70 cm³ » sont un détail du TP ; le fait général (même volume ne veut pas dire même masse) est déjà le vrai/faux q17.",
+  "piste": ""
+ },
+ {
+  "id": "physique-s03-1-q42",
+  "cours": "physique-s03-1",
+  "fiche": "physique-s03-1-f4",
+  "verdict": "garder",
+  "categorie": "",
+  "raison": "Les conclusions sont bonnes, mais « l'expérience des cylindres » suppose le TP sous les yeux.",
+  "piste": "Énoncé : « On pèse des cylindres de même volume, puis d'autres de même masse. Que montre cette expérience ? »."
+ },
+ {
+  "id": "physique-s03-1-q43",
+  "cours": "physique-s03-1",
+  "fiche": "physique-s03-1-f5",
+  "verdict": "supprimer",
+  "categorie": "doublon",
+  "raison": "Même fait et même réponse que q21 (à masse égale, le plomb prend moins de place).",
+  "piste": ""
+ },
+ {
+  "id": "physique-s03-1-q45",
+  "cours": "physique-s03-1",
+  "fiche": "physique-s03-1-f5",
+  "verdict": "supprimer",
+  "categorie": "doublon",
+  "raison": "Même raisonnement et même réponse que q44 (à volume égal, le plus dense a la plus grande masse), déjà posé avec le plomb en q21.",
+  "piste": ""
+ },
+ {
+  "id": "physique-s04-1-q8",
+  "cours": "physique-s04-1",
+  "fiche": "physique-s04-1-f1",
+  "verdict": "supprimer",
+  "categorie": "experience",
+  "raison": "« Que fait-on au mélange ? » → « On l'a agité » : un geste du TP, et une question mal accordée à sa réponse.",
+  "piste": ""
+ },
+ {
+  "id": "physique-s04-1-q23",
+  "cours": "physique-s04-1",
+  "fiche": "physique-s04-1-f4",
+  "verdict": "reecrire-fiche",
+  "categorie": "trivia",
+  "raison": "Le palier de 5 g est un réglage du TP 6, pas un savoir sur la solubilité.",
+  "piste": "QCM même id : « Que se passe-t-il quand on ajoute toujours plus de sel dans la même quantité d'eau ? » → à partir d'une certaine quantité, le sel ne se dissout plus et reste au fond ; leurres : il se dissout toujours, sans limite ; l'eau devient solide ; le sel déjà dissous ressort. Source de la fiche (p. 5). Ne pas définir la solubilité « par litre de solvant » (devoir 1, question 3)."
+ },
+ {
+  "id": "physique-s04-1-q24",
+  "cours": "physique-s04-1",
+  "fiche": "physique-s04-1-f4",
+  "verdict": "reecrire-fiche",
+  "categorie": "trivia",
+  "raison": "« 35 g, encore homogène » demande de retenir une ligne du tableau du TP.",
+  "piste": "Vrai/faux même id : « On peut dissoudre autant de sel qu'on veut dans un verre d'eau. » → FAUX ; corrections : au-delà d'une certaine quantité, le sel ne se dissout plus et le mélange devient hétérogène ; le sel se dissout sans limite seulement dans l'eau chaude."
+ },
+ {
+  "id": "physique-s04-1-q25",
+  "cours": "physique-s04-1",
+  "fiche": "physique-s04-1-f4",
+  "verdict": "reecrire-fiche",
+  "categorie": "trivia",
+  "raison": "« 40 g, tout se dissout ? » : même tableau du TP que q24.",
+  "piste": "Vrai/faux même id : « Dans 100 g d'eau, on peut dissoudre environ 35 g de sel ; au-delà, il en reste au fond. » → VRAI (ordre de grandeur du TP 6)."
+ },
+ {
+  "id": "physique-s04-1-q26",
+  "cours": "physique-s04-1",
+  "fiche": "physique-s04-1-f4",
+  "verdict": "reecrire-fiche",
+  "categorie": "document",
+  "raison": "« La solubilité trouvée dans cette expérience » suppose le TP sous les yeux ; l'idée (la précision dépend du pas de mesure) est bonne.",
+  "piste": "QCM même id : « Pour trouver combien de sel l'eau peut dissoudre, on ajoute le sel 5 g à la fois. Pourquoi le résultat n'est-il qu'approximatif ? » → entre deux ajouts, on ne sait pas exactement où le sel cesse de se dissoudre ; leurres : parce que l'eau n'a pas été pesée ; parce que le sel s'évapore ; parce que le verre était trop petit."
+ },
+ {
+  "id": "physique-s04-1-q27",
+  "cours": "physique-s04-1",
+  "fiche": "physique-s04-1-f4",
+  "verdict": "question-theme",
+  "categorie": "doublon",
+  "raison": "Même fait que q26 (ajouter gramme par gramme). La fiche f4 ne repose que sur un tableau de huit lignes.",
+  "piste": "QCM même id (« comment »), thème « Séance 4 – Mélange et dissolution », notion « la solubilité du sel : une limite » : « Comment dissoudre plus de sucre dans un même verre d'eau ? » → en chauffant l'eau : un solide se dissout en général davantage dans l'eau chaude ; leurres : en remuant plus vite ; en ajoutant du sel ; en mettant le verre au réfrigérateur. Source : Wikipédia, « Solubilité », https://fr.wikipedia.org/wiki/Solubilité (partie sur la température). Ne pas donner la définition de la solubilité (devoir 1)."
+ },
+ {
+  "id": "physique-s04-1-q28",
+  "cours": "physique-s04-1",
+  "fiche": "physique-s04-1-f4",
+  "verdict": "garder",
+  "categorie": "",
+  "raison": "Bonne question (1 g d'eau = 1 mL), mais « Dans le TP » renvoie au livret.",
+  "piste": "Énoncé : « On pèse l'eau en grammes alors que c'est un liquide. Pourquoi est-ce possible ? »."
+ },
+ {
+  "id": "physique-s04-1-q29",
+  "cours": "physique-s04-1",
+  "fiche": "physique-s04-1-f4",
+  "verdict": "supprimer",
+  "categorie": "trivia",
+  "raison": "« 30 g puis 5 g de plus » : même ligne du tableau du TP que q24.",
+  "piste": ""
+ },
+ {
+  "id": "physique-s04-1-q30",
+  "cours": "physique-s04-1",
+  "fiche": "physique-s04-1-f5",
+  "verdict": "reecrire-fiche",
+  "categorie": "trivia",
+  "raison": "« 1 mesurette pour 30 mL » est la donnée de l'exercice, pas un savoir : il faut la donner dans l'énoncé.",
+  "piste": "QCM même id : « Un biberon se prépare avec une mesurette de poudre pour 30 mL d'eau. Combien de mesurettes pour 60 mL d'eau ? » → 2 ; leurres : 1 ; 4 ; 30."
+ },
+ {
+  "id": "physique-s04-1-q31",
+  "cours": "physique-s04-1",
+  "fiche": "physique-s04-1-f5",
+  "verdict": "garder",
+  "categorie": "",
+  "raison": "Le calcul 240 ÷ 30 est le cœur de l'exercice, mais la règle « une mesurette pour 30 mL » doit être rappelée dans l'énoncé.",
+  "piste": "Énoncé : « Une mesurette de poudre pour 30 mL d'eau : combien de mesurettes pour 240 mL ? »."
+ },
+ {
+  "id": "physique-s04-1-q33",
+  "cours": "physique-s04-1",
+  "fiche": "physique-s04-1-f5",
+  "verdict": "garder",
+  "categorie": "",
+  "raison": "Bon vrai/faux (diviser, pas multiplier), mais la règle du biberon doit être rappelée.",
+  "piste": "Énoncé : « Une mesurette pour 30 mL d'eau. Pour 240 mL, on calcule 240 × 30 mesurettes. »."
+ },
+ {
+  "id": "physique-s04-1-q34",
+  "cours": "physique-s04-1",
+  "fiche": "physique-s04-1-f5",
+  "verdict": "supprimer",
+  "categorie": "doublon",
+  "raison": "Même calcul que q31 avec 120 mL.",
+  "piste": ""
+ },
+ {
+  "id": "physique-s04-1-q35",
+  "cours": "physique-s04-1",
+  "fiche": "physique-s04-1-f5",
+  "verdict": "garder",
+  "categorie": "",
+  "raison": "Bonne question de méthode, mais elle suppose la règle du biberon connue.",
+  "piste": "Énoncé : « Si une mesurette correspond à 30 mL d'eau, comment trouve-t-on le nombre de mesurettes ? »."
+ },
+ {
+  "id": "physique-s04-1-q36",
+  "cours": "physique-s04-1",
+  "fiche": "physique-s04-1-f5",
+  "verdict": "supprimer",
+  "categorie": "distracteurs",
+  "raison": "Leurres enfantins (« la couleur du lait », « la température de l'eau du robinet ») ; le fait (poudre proportionnelle à l'eau) est déjà le vrai/faux q32.",
+  "piste": ""
+ },
+ {
+  "id": "physique-s04-1-q40",
+  "cours": "physique-s04-1",
+  "fiche": "physique-s04-1-f6",
+  "verdict": "supprimer",
+  "categorie": "doublon",
+  "raison": "Même addition que q37 (200 g + 5 g).",
+  "piste": ""
+ },
+ {
+  "id": "physique-s05-1-q1",
+  "cours": "physique-s05-1",
+  "fiche": "physique-s05-1-f1",
+  "verdict": "question-theme",
+  "categorie": "experience",
+  "raison": "« Dans la première partie de l'expérience, on chauffe… » est l'exemple même donné par Romain. La fiche f1 ne décrit que le déroulé du TP (deux parties, un tableau) : elle est mince.",
+  "piste": "QCM même id (« comment »), thème « Séance 5 – Caractéristiques des changements d'état », notion « vaporisation puis fusion dans un ballon » : « Comment appelle-t-on la vaporisation rapide, avec de grosses bulles dans tout le liquide, quand l'eau atteint 100 °C ? » → l'ébullition ; leurres : l'évaporation ; la liquéfaction ; la fusion. Source : Wikipédia, « Ébullition », https://fr.wikipedia.org/wiki/Ébullition."
+ },
+ {
+  "id": "physique-s05-1-q2",
+  "cours": "physique-s05-1",
+  "fiche": "physique-s05-1-f1",
+  "verdict": "garder",
+  "categorie": "",
+  "raison": "Bonne question, à détacher du TP.",
+  "piste": "Énoncé : « De la glace fond dans un ballon. Comment s'appelle ce changement d'état ? »."
+ },
+ {
+  "id": "physique-s05-1-q3",
+  "cours": "physique-s05-1",
+  "fiche": "physique-s05-1-f1",
+  "verdict": "question-theme",
+  "categorie": "document",
+  "raison": "« Les premières lignes du tableau » ne se comprennent qu'avec le tableau du livret.",
+  "piste": "Vrai/faux même id, même thème et notion : « L'évaporation et l'ébullition sont deux façons pour un liquide de se vaporiser. » → VRAI. Source : Wikipédia, « Vaporisation », https://fr.wikipedia.org/wiki/Vaporisation."
+ },
+ {
+  "id": "physique-s05-1-q4",
+  "cours": "physique-s05-1",
+  "fiche": "physique-s05-1-f1",
+  "verdict": "question-theme",
+  "categorie": "experience",
+  "raison": "« On relève la température pendant l'expérience » : vrai par construction, sans contenu.",
+  "piste": "Vrai/faux même id, même thème et notion : « L'eau d'une flaque peut disparaître sans jamais bouillir. » → VRAI (elle s'évapore à toute température ; l'ébullition, elle, demande 100 °C). Source : Wikipédia, « Évaporation », https://fr.wikipedia.org/wiki/Évaporation."
+ },
+ {
+  "id": "physique-s05-1-q5",
+  "cours": "physique-s05-1",
+  "fiche": "physique-s05-1-f1",
+  "verdict": "question-theme",
+  "categorie": "document",
+  "raison": "Associer « première partie » et « deuxième partie » à un changement d'état est du par cœur sur le TP.",
+  "piste": "Association même id, même thème et notion : « Relie chaque situation au changement d'état » : le linge sèche sur un fil → évaporation (vaporisation) ; l'eau bout dans la casserole → ébullition (vaporisation) ; de la buée se forme sur une vitre froide → liquéfaction ; un glaçon fond dans un verre → fusion. Source : Wikipédia, « Changement d'état », https://fr.wikipedia.org/wiki/Changement_d'état."
+ },
+ {
+  "id": "physique-s05-1-q6",
+  "cours": "physique-s05-1",
+  "fiche": "physique-s05-1-f1",
+  "verdict": "question-theme",
+  "categorie": "experience",
+  "raison": "« Pourquoi l'expérience se fait-elle en deux parties ? » est une question sur l'organisation du TP.",
+  "piste": "QCM même id (« pourquoi »), même thème et notion : « Pourquoi le linge mouillé sèche-t-il, alors qu'il n'est jamais chauffé à 100 °C ? » → parce que l'eau s'évapore lentement à sa surface, à toute température ; leurres : parce que le tissu absorbe l'eau pour toujours ; parce que l'eau devient solide puis disparaît ; parce que le vent transforme l'eau en glace. Source : Wikipédia, « Évaporation », https://fr.wikipedia.org/wiki/Évaporation."
+ },
+ {
+  "id": "physique-s05-1-q7",
+  "cours": "physique-s05-1",
+  "fiche": "physique-s05-1-f1",
+  "verdict": "supprimer",
+  "categorie": "distracteurs",
+  "raison": "« Dans un tableau », contre « sur une carte » et « dans une frise chronologique » : question de consigne aux leurres absurdes.",
+  "piste": ""
+ },
+ {
+  "id": "physique-s05-1-q8",
+  "cours": "physique-s05-1",
+  "fiche": "physique-s05-1-f2",
+  "verdict": "garder",
+  "categorie": "",
+  "raison": "Bonne question sur le palier, mais le leurre « Elle double » n'a pas de sens pour une température.",
+  "piste": "Remplacer « Elle double » par « Elle monte lentement »."
+ },
+ {
+  "id": "physique-s05-1-q22",
+  "cours": "physique-s05-1",
+  "fiche": "physique-s05-1-f4",
+  "verdict": "reecrire-fiche",
+  "categorie": "sans-document",
+  "raison": "« Sur le graphique de solidification de l'eau salée » suppose le graphique du livret ; la convention (le temps en abscisse) est un savoir de méthode.",
+  "piste": "QCM même id : « On trace la température d'une eau qui refroidit au fil du temps. Quelle grandeur met-on sur l'axe horizontal ? » → le temps, en minutes ; leurres : la température ; la masse d'eau ; le volume d'eau."
+ },
+ {
+  "id": "physique-s05-1-q23",
+  "cours": "physique-s05-1",
+  "fiche": "physique-s05-1-f4",
+  "verdict": "question-theme",
+  "categorie": "document",
+  "raison": "L'unité de l'axe vertical « sur ce graphique » est un détail de lecture, doublon de q22.",
+  "piste": "QCM même id (« comment »), thème « Séance 5 – Caractéristiques des changements d'état », notion « lire le graphique de solidification » : « Comment appelle-t-on la température à laquelle un corps pur passe de l'état solide à l'état liquide ? » → sa température de fusion ; leurres : sa température d'ébullition ; sa température ambiante ; sa densité. Source : Wikipédia, « Point de fusion », https://fr.wikipedia.org/wiki/Point_de_fusion. Ne pas demander la valeur pour l'eau ni la durée d'un palier (devoir 1, question 5)."
+ },
+ {
+  "id": "physique-s05-1-q26",
+  "cours": "physique-s05-1",
+  "fiche": "physique-s05-1-f4",
+  "verdict": "question-theme",
+  "categorie": "document",
+  "raison": "« Environ 10 °C au début » est un point lu sur le graphique du livret.",
+  "piste": "Vrai/faux même id, même thème et notion : « Un petit glaçon et un gros bloc de glace pure fondent à la même température, 0 °C : la température de fusion ne dépend pas de la quantité. » → VRAI. Source : Wikipédia, « Point de fusion », https://fr.wikipedia.org/wiki/Point_de_fusion."
+ },
+ {
+  "id": "physique-s05-1-q27",
+  "cours": "physique-s05-1",
+  "fiche": "physique-s05-1-f4",
+  "verdict": "reecrire-fiche",
+  "categorie": "distracteurs",
+  "raison": "Le leurre « Le temps s'arrête de s'écouler » est l'exemple donné par Romain, et « en lisant le graphique » suppose le document.",
+  "piste": "QCM même id : « Comment sait-on que de l'eau salée est en train de se solidifier ? » → on y voit du liquide et du solide en même temps ; leurres : sa température remonte d'un coup ; elle se met à bouillir ; elle devient parfaitement transparente."
+ },
+ {
+  "id": "physique-s05-1-q28",
+  "cours": "physique-s05-1",
+  "fiche": "physique-s05-1-f4",
+  "verdict": "reecrire-fiche",
+  "categorie": "sans-document",
+  "raison": "« La dernière zone du graphique » suppose le document.",
+  "piste": "QCM même id : « Une fois toute l'eau salée devenue glace, que fait sa température si le froid continue ? » → elle continue de baisser ; leurres : elle reste bloquée à 0 °C ; elle remonte vers 0 °C ; elle revient à 10 °C."
+ },
+ {
+  "id": "physique-s05-1-q31",
+  "cours": "physique-s05-1",
+  "fiche": "physique-s05-1-f5",
+  "verdict": "question-theme",
+  "categorie": "document",
+  "raison": "« Vers la 3e minute » est une lecture du graphique du livret, sans intérêt sans lui.",
+  "piste": "QCM même id (« pourquoi »), thème « Séance 5 – Caractéristiques des changements d'état », notion « l'eau salée ne gèle pas comme l'eau pure » : « Pourquoi répand-on du sel sur les routes verglacées en hiver ? » → l'eau salée gèle à une température plus basse que l'eau pure, donc le verglas fond ; leurres : le sel chauffe la route ; le sel rend la glace plus dure ; le sel absorbe toute l'eau. Cohérent avec le cours (l'eau salée se solidifie un peu sous 0 °C). Source : Wikipédia, « Sel de déneigement », https://fr.wikipedia.org/wiki/Sel_de_déneigement."
+ },
+ {
+  "id": "physique-s06-1-q23",
+  "cours": "physique-s06-1",
+  "fiche": "physique-s06-1-f3",
+  "verdict": "supprimer",
+  "categorie": "doublon",
+  "raison": "Même fait et même réponse que q20 (le zinc se ramollit, l'acier fond bien plus haut).",
+  "piste": ""
+ },
+ {
+  "id": "physique-s06-1-q26",
+  "cours": "physique-s06-1",
+  "fiche": "physique-s06-1-f4",
+  "verdict": "supprimer",
+  "categorie": "doublon",
+  "raison": "Miroir de q25 (le moins dense / le plus dense) ; q32 range déjà les trois métaux.",
+  "piste": ""
+ },
+ {
+  "id": "physique-s06-1-q48",
+  "cours": "physique-s06-1",
+  "fiche": "physique-s06-1-f3",
+  "verdict": "supprimer",
+  "categorie": "trivia",
+  "raison": "Retenir −38,83 °C et 357 °C par cœur : les valeurs du mercure sont déjà données dans l'énoncé de q19 et q22, où elles servent à raisonner.",
+  "piste": ""
+ },
+ {
+  "id": "physique-s08-1-q1",
+  "cours": "physique-s08-1",
+  "fiche": "physique-s08-1-f1",
+  "verdict": "supprimer",
+  "categorie": "experience",
+  "raison": "Les cinq gestes du TP 8 (couper, presser, tremper, sécher, découper) sont un protocole récité.",
+  "piste": ""
+ },
+ {
+  "id": "physique-s08-1-q4",
+  "cours": "physique-s08-1",
+  "fiche": "physique-s08-1-f1",
+  "verdict": "question-theme",
+  "categorie": "doublon",
+  "raison": "Même fait que q3 (le papier est trempé dans du jus de chou rouge). La fiche f1 n'est qu'un protocole en photos : elle est mince, et la leçon (indicateur coloré, échelle de pH) n'est pas déposée.",
+  "piste": "Vrai/faux même id, thème « Séance 1 – Les acides et les bases », notion « fabriquer un papier pH » : « Le jus de chou rouge est un indicateur coloré : sa couleur change selon que le liquide est acide ou basique. » → VRAI. Source : Wikipédia, « Indicateur de pH », https://fr.wikipedia.org/wiki/Indicateur_de_pH."
+ },
+ {
+  "id": "physique-s08-1-q5",
+  "cours": "physique-s08-1",
+  "fiche": "physique-s08-1-f1",
+  "verdict": "question-theme",
+  "categorie": "trivia",
+  "raison": "La liste du matériel (vinaigre, lessive, levure) est un détail du TP.",
+  "piste": "QCM même id, même thème et notion : « Quel instrument donne directement la valeur du pH d'un liquide, sous forme d'un nombre ? » → un pH-mètre ; leurres : un thermomètre ; une balance ; une éprouvette graduée. Source : Wikipédia, « pH-mètre », https://fr.wikipedia.org/wiki/PH-mètre."
+ },
+ {
+  "id": "physique-s08-1-q8",
+  "cours": "physique-s08-1",
+  "fiche": "physique-s08-1-f1",
+  "verdict": "question-theme",
+  "categorie": "trivia",
+  "raison": "La marque du papier (Canson) n'est pas un savoir.",
+  "piste": "QCM même id, même thème et notion : « Entre quelles valeurs va l'échelle de pH utilisée au collège ? » → de 0 à 14 ; leurres : de 0 à 7 ; de 1 à 10 ; de 0 à 100. Comble un point noté non couvert. Source : Wikipédia, « Potentiel hydrogène », https://fr.wikipedia.org/wiki/Potentiel_hydrogène."
+ },
+ {
+  "id": "physique-s08-1-q9",
+  "cours": "physique-s08-1",
+  "fiche": "physique-s08-1-f2",
+  "verdict": "reecrire-fiche",
+  "categorie": "trivia",
+  "raison": "« Trois cuillères à café de vinaigre » est un dosage du TP ; le fait utile est : acide → rose.",
+  "piste": "QCM même id : « Quelle couleur prend le papier au chou rouge dans un liquide acide, comme le vinaigre ? » → rose ; leurres : vert ; bleu clair ; il reste mauve."
+ },
+ {
+  "id": "physique-s08-1-q11",
+  "cours": "physique-s08-1",
+  "fiche": "physique-s08-1-f2",
+  "verdict": "reecrire-fiche",
+  "categorie": "trivia",
+  "raison": "L'association repose sur les dosages du TP (« 1 cc », « 3 cc »).",
+  "piste": "Association même id : vinaigre → rose ; lessive → vert ; levure chimique → bleu clair ; eau neutre → mauve (couleur de départ)."
+ },
+ {
+  "id": "physique-s08-1-q12",
+  "cours": "physique-s08-1",
+  "fiche": "physique-s08-1-f2",
+  "verdict": "reecrire-fiche",
+  "categorie": "document",
+  "raison": "« L'eau du robinet de cette expérience » était basique : c'est un détail du livret.",
+  "piste": "Vrai/faux même id : « Avec le jus de chou rouge, un liquide acide donne du rose et un liquide basique du bleu ou du vert. » → VRAI."
+ },
+ {
+  "id": "physique-s08-1-q13",
+  "cours": "physique-s08-1",
+  "fiche": "physique-s08-1-f2",
+  "verdict": "supprimer",
+  "categorie": "document",
+  "raison": "« Une cuillère à café de vinaigre ramène l'eau au neutre » ne vaut que pour l'eau du robinet du livret (le corrigé le dit lui-même).",
+  "piste": ""
+ },
+ {
+  "id": "physique-s08-1-q16",
+  "cours": "physique-s08-1",
+  "fiche": "physique-s08-1-f2",
+  "verdict": "garder",
+  "categorie": "",
+  "raison": "Bonne question, mais le choix « L'eau du robinet légèrement basique de l'exemple » renvoie au livret.",
+  "piste": "Remplacer ce choix par « Une eau du robinet légèrement basique »."
+ },
+ {
+  "id": "physique-s08-1-q26",
+  "cours": "physique-s08-1",
+  "fiche": "physique-s08-1-f4",
+  "verdict": "supprimer",
+  "categorie": "trivia",
+  "raison": "Retenir « pH 2 » pour le cola : les valeurs servent déjà, données dans l'énoncé, en q30, q31 et q33.",
+  "piste": ""
+ },
+ {
+  "id": "physique-s08-1-q29",
+  "cours": "physique-s08-1",
+  "fiche": "physique-s08-1-f4",
+  "verdict": "reecrire-fiche",
+  "categorie": "document",
+  "raison": "« L'eau de Javel testée » est la mesure du livret ; l'idée (diluée, elle se rapproche du neutre) est bonne et c'est le seul « pourquoi » de la fiche.",
+  "piste": "QCM même id : « L'eau de Javel pure est très basique (pH vers 11). Pourquoi des pastilles de Javel dissoutes dans beaucoup d'eau donnent-elles un pH proche de 7 ? » → parce que la Javel est diluée ; leurres : parce que le papier pH était trop vieux ; parce que la Javel devient acide à l'air ; parce que l'eau du robinet est très acide."
+ },
+ {
+  "id": "physique-s08-1-q32",
+  "cours": "physique-s08-1",
+  "fiche": "physique-s08-1-f4",
+  "verdict": "garder",
+  "categorie": "",
+  "raison": "Bonne question, mais deux leurres sont enfantins (« en la secouant », « en la pesant »).",
+  "piste": "Leurres : « en regardant si elle pétille » et « en la chauffant »."
+ },
+ {
+  "id": "physique-s08-1-q35",
+  "cours": "physique-s08-1",
+  "fiche": "physique-s08-1-f5",
+  "verdict": "supprimer",
+  "categorie": "doublon",
+  "raison": "Même fait et même réponse que q40 (l'acide ronge le métal mis à nu), qui garde le « comment ».",
+  "piste": ""
+ }
+]

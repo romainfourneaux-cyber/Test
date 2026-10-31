@@ -1,0 +1,4 @@
+// Version de l'Android Gradle Plugin vérifiée dans le conteneur (Gradle 8.14.3, JDK 21) : voir CHAINE.md.
+plugins {
+    id "com.android.application" version "8.5.2" apply false
+}

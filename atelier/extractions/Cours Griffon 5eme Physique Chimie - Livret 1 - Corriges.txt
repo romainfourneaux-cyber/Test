@@ -1,0 +1,743 @@
+            THÈME A – Corrigé des exercices
+                et des questions de TP
+Chapitre 1
+
+Séance 1
+
+EXERCICE : construire un tableau à simple entrée
+
+ LIQUIDE                            SOLIDE                            GAZEUX
+ Jus de pomme, sang                 Stylo, peau, verre, bois, feuille Air, fumée
+                                    d’arbre, fer
+
+EXERCICE DE MÉMORISATION :
+
+
+
+
+                                          COURS GRIFFON ©
+EXERCICES D’APPLICATION :
+Exercice 1 :
+
+
+
+
+      COURS GRIFFON ©
+
+
+
+
+L’instrument au milieu est un fil à plomb. Il sert à mesurer la verticalité d’une surface, et par déduction, son
+horizontalité (qui lui est perpendiculaire).
+
+Exercice 2 :
+C’est Pierre qui a raison. En effet, le sucre en poudre est constitué de tout petits cristaux qui sont eux-mêmes
+solides. Le sucre en poudre donne l’impression de couler parce que les cristaux roulent les uns sur les autres
+quand on verse le paquet. Chaque grain de sucre a une forme propre et n’est pas compressible. Le sucre en
+poudre est donc un solide.
+
+Exercice 3 : TRAVAUX PRATIQUES 3
+
+Dans cet exercice on demande de rédiger un protocole. Il faut donc imaginer l’expérience à réaliser et
+définir les étapes de la réalisation ainsi que la question à poser à laquelle répond l’expérience :
+
+Protocole : glisse le mouchoir en papier au fond du verre et coince-le dedans. Remplis le saladier d’eau aux
+2/3. Le verre doit pouvoir y être entièrement immergé. Retourne le verre sur la table, puis prends-le dans
+cette position et plonge-le verticalement dans le saladier. Il faut que tu maintiennes le verre car l’eau va
+repousser l’air contenu dans le verre, qui risque de pencher et de couler. Après avoir complètement mis le
+verre sous l’eau, retire-le toujours bien verticalement.
+Question : Le mouchoir est-il mouillé ?
+
+On met ainsi en évidence le caractère expansible des gaz.
+En effet, l’air résiste à la pression de l’eau par l’effet inverse : l’expansion.
+
+Exercice 4 :
+
+Les liquides prennent la forme du récipient qui les contient. Leur surface libre est plane et horizontale. Le
+tube du niveau contient du liquide coloré qui prend la forme du tube et une bulle d’air. La surface qui délimite
+cette bulle d’air est la surface libre du liquide coloré. Elle est donc plane et horizontale quelle que soit la
+position du tube dans l’espace. En apposant le niveau du bricoleur aux objets, il permet donc de tester leur
+horizontalité.
+Séance 2
+EXERCICE D’APPLICATION :
+
+    1) a. le brouillard est formé de microgouttelettes d’eau : c’est une liquéfaction.
+        b. l’eau gèle : c’est la solidification.
+        c. la neige fond : c’est une fusion.
+        d. le niveau des lacs baisse en été par évaporation : c’est une vaporisation.
+    2) Tableau à simple entrée :
+ Solide                                   Liquide                          Gazeux
+ Givre, glace, neige, grêle               Brouillard, rosée, buée, nuage, Vapeur d’eau
+                                          pluie
+
+
+
+QUESTIONS :
+La couleur du sulfate de cuivre anhydre (blanc) change en bleu en présence d’eau dans les liquides :
+Le sulfate de cuivre devient bleu pour les liquides suivants : lait, jus de fruits, Coca-cola.
+Il reste blanc pour le White-spirit, l’alcool ménager et l’eau écarlate.
+On démontre ainsi que tous les liquides ne contiennent pas de l’eau.
+Le corps a besoin d’eau pour vivre. Il ne faut pas boire de liquides qui ne contiennent pas d’eau.
+N.B. Les liquides qui ne contiennent pas d’eau dans cet exemple sont des POISONS.
+
+EXERCICES D’APPLICATION :
+
+Exercice 1 :
+
+                                                                         COURS GRIFFON ©
+
+
+
+
+Exercice 2 :
+    a) Le réservoir le plus important est celui représenté par les océans et les mers. Son eau n’est pas
+        potable.
+    b) Les réserves d’eau douce directement utilisables pour la consommation, l’agriculture et l’industrie
+        sont représentées par les cours d’eau.
+    c) Ces réserves correspondent à 0,01% de l’eau totale.
+Séance 3
+Exercice 1 : Mesurer la contenance et le volume
+
+    1) Pour mesurer la contenance dans l’éprouvette de gauche, il faut placer l’œil au niveau du
+         ménisque : ici on lit 189 mL. (En effet le ménisque est entre la graduation inférieure et la
+         graduation 190 et il y a 4 petites graduations entre deux grandes donc les graduations sont
+         indiquées tous les deux mL.) Il y a 189 mL dans l’éprouvette de gauche et 196 mL dans celle de
+         droite (même principe de lecture).
+    2) Dans l’éprouvette de droite, il y a le petit panda, donc on déduit le volume de l’objet immergé :
+                                             196 -189 = 7 ml = 7 cm3.
+L’objet immergé a un volume de 7 cm3.
+
+Exercice 2 :
+
+
+
+
+TRAVAUX PRATIQUES 4 : La pesée de l’eau
+
+La masse de l’eau est de 1 kg pour 1 L.
+La cuillère coule alors que les mouchoirs en papier flottent.
+
+Les cylindres numéros 1 ont tous le même volume : 70 cm3, mais aucun n’a la même masse.
+Les cylindres numéros 2 ont tous la même masse : 100 g, mais aucun n’a le même volume.
+
+EXERCICES D’APPLICATION
+
+Exercice 1 : L’aquariophilie
+
+Il faut calculer le volume de l’aquarium. On sait que V = L x l x h , avec :
+L = 50 cm
+l = 30 cm
+h = 35 cm.
+
+Donc :
+V= 50 x 30 x 35 = 52 500 cm3 soit 52 L
+
+Il faut ensuite diviser cette contenance par la contenance des bouteilles pour obtenir le nombre de bouteilles
+nécessaires :
+52 ÷ 1,5 = 34, 66
+
+Il faut donc 35 bouteilles de 1,5 L pour remplir cet aquarium.
+Exercice 2 : Dense ou lourd ?
+
+Le plomb est plus dense que l’aluminium car les deux objets comparés ont la même masse pour un volume
+différent (le plus petit volume est celui du plomb).
+
+Exercice 3 : Caractériser les liquides
+
+Protocole :
+On dispose de 5 liquides différents transparents dont on ne connaît pas la nature. Pour les différencier, on
+mesure 250 ml de chaque liquide et on pèse ce volume. Si la masse de 250 ml de liquide correspond à un
+quart d’une masse consignée dans le tableau, on peut déterminer la nature du liquide. En effet chaque corps
+consigné a une densité propre.
+
+Séance 4
+TRAVAUX PRATIQUES 5 :
+
+Expérience 1 : Comportement des mélanges
+
+
+
+
+Expérience 2 : La dissolution
+
+Après agitation, le contenu du verre 1 (eau + sel) est transparent et homogène, alors que le contenu du verre
+2 (eau + sable) est trouble et hétérogène.
+Pour s’assurer du type de mélange, il faut les laisser reposer. Si dans quelques minutes le mélange reste
+stable, alors il est homogène. Si à l’inverse les deux éléments se séparent, le mélange est hétérogène.
+
+TRAVAUX PRATIQUES 6 : Solubilité du sel
+
+100 g d’eau représentent 100 mL.
+100 g d’eau + 5 g de sel = mélange homogène
+100 g d’eau + 10 g de sel = mélange homogène
+100 g d’eau + 15 g de sel = mélange homogène
+100 g d’eau + 20 g de sel = mélange homogène
+100 g d’eau + 25 g de sel = mélange homogène
+100 g d’eau + 30 g de sel = mélange homogène
+100 g d’eau + 35 g de sel = mélange homogène
+100 g d’eau + 40 g de sel = mélange hétérogène
+
+Le calcul est approximatif car on rajoute le sel par paliers de 5g. Pour obtenir la solubilité exacte, il faut
+travailler en grammes voire en décigrammes.
+EXERCICES D’APPLICATION
+
+Exercice 1 :
+
+Le solvant est l’eau, le soluté est la poudre de lait.
+Pour calculer le nombre de mesurettes nécessaires on utilise le coefficient de proportionnalité :
+240 mL ÷ 30 mL = 8
+Il faut donc 8 mesurettes de poudre pour préparer un biberon de lait infantile.
+
+Exercice 2 :
+
+Le soluté est le sel, le solvant est l’eau purifiée.
+La masse d’eau salée obtenue est :
+200 + 1,8 = 201,8 g.
+
+Séance 5
+QUESTIONS :
+
+Les lignes du tableau correspondant à l’expérience de vaporisation sont les trois premières lignes (qui
+correspondent aux rangs).
+Le changement d’état de la deuxième partie de l’expérience est la fusion.
+Lorsque l’eau est dans les deux états en même temps dans le ballon, la température reste la même.
+La solidification est le changement d’état du liquide au solide. Elle a lieu à la même température que le
+procédé inverse, la fusion, soit 0°C.
+
+Réalisation du graphique de solidification de l’eau salée page suivante.
+COURS GRIFFON ©
+Séance 6
+TRAVAUX PRATIQUES 7 : Volume et masse au cours du changement d’état
+
+Expérience 1 :
+La masse des glaçons comme celle du mélange glaçon et eau et comme celle de l’eau fondue est la même.
+
+Expérience 2 :
+Au bout de quelques heures, l’eau s’est solidifiée et déborde de la bouteille tout en restant solide.
+
+EXERCICE DE MÉMORISATION :
+
+          COURS GRIFFON ©
+
+
+
+
+EXERCICES D’APPLICATION
+
+Exercice 1 : Différencier les corps purs métalliques
+
+        a) Le métal le moins dense est celui dont la masse pour 1 dm 3 est la plus faible. C’est donc
+           l’aluminium. Le métal le plus dense est le platine.
+        b) L’acier, l’aluminium et le zinc sont des métaux gris clair et brillants. On peut distinguer facilement
+           l’aluminium des deux autres car il est beaucoup moins dense. Pour différencier l’acier et le zinc
+           qui ont des densités voisines, on peut déterminer leur température de fusion. Le zinc va se
+           ramollir près d’une source de chaleur intense contrairement à l’acier dont la température de
+           fusion est beaucoup plus élevée.
+        c) Le matériau qui n’est pas un corps pur est l’acier car il fond dans une fourchette de température
+           et non à une température bien précise. C’est donc un alliage.
+        d) Le mercure fond à – 38,83 °C et se vaporise à 357°C, il est donc liquide à 20°C.
+Exercice 2 : Modéliser l’impact de la fusion de la banquise et des glaciers.
+
+        a) La température de fusion de la glace pure est de 0°C, celle de début de fusion de la glace salée
+           est de – 2°C.
+        b) Si on remplit d’eau le verre A après y avoir mis les glaçons, après fusion de la glace, le niveau
+           d’eau total du verre baisse en dessous des 1 cm.
+        c) Si on met 1 glaçon après avoir rempli d’eau le verre jusqu’à 1 cm du bord, le niveau de l’eau
+           monte dans le verre.
+        d) Le verre qui correspond à la situation de la banquise est le verre A : La banquise est dans l’eau,
+           sa fonte ne fait pas monter le niveau des océans, mais au contraire le fait baisser légèrement. Le
+           verre qui correspond à la situation des glaciers est le verre B : L’eau des glaciers est hors des
+           océans. Lorsqu’ils fondent, ils augmentent la quantité d’eau et donc le niveau des océans.
+        e) La glace de mer se forme dans les océans au niveau des pôles en hiver. C’est l’eau des océans qui
+           se solidifie. Or l’eau prend plus de volume lorsqu’elle est solide que lorsqu’elle est liquide. Plus il
+           y a de banquise, plus il y a de volume d’eau total dans les océans ; moins il y a de banquise, moins
+           il y a de volume d’eau total dans les océans. Les calottes glaciaires sont de l’eau douce qui est
+           solidifiée sur les terres émergées. Lorsqu’elles fondent, l’eau douce part via les cours d’eau
+           jusqu’à l’océan et contribue à les remplir, donc à monter leurs niveaux.
+Chapitre 2
+Séance 1
+TRAVAUX PRATIQUES 8 : Fabriquer son papier pH
+
+Étapes de la préparation du papier pH :
+             COURS GRIFFON ©
+
+
+
+
+                                                Matériel nécessaire
+à l’expérience :
+
+          COURS GRIFFON ©
+Échelle colorimétrique du chou rouge :
+
+Attention, tu n’obtiendras sans doute pas les mêmes
+couleurs en trempant ton papier dans l’eau et dans
+l’eau additionnée d’une cuillère à café (cc) de
+vinaigre : cela dépend du pH de l’eau du robinet
+utilisée. Dans l’exemple ci-contre, l’eau utilisée est
+légèrement basique, donc le papier se colore en bleu.
+Il redevient de la couleur mauve de départ avec
+
+
+
+
+                                                           COURS GRIFFON ©
+l’addition d’une cuillère à café de vinaigre pour 100 mL
+d’eau, donc à un pH neutre.
+QUESTIONS :
+1) Coca-Cola : pH = 2 jus de fruits : pH = 4
+vinaigre : pH = 3         déboucheur : pH = 12 eau de javel : pH = 6
+(N.B. L’eau de Javel a un pH très basique, aux alentours de 11, quand elle est pure. Ici elle est diluée dans
+l’eau car elle est sous forme de pastilles).
+2) Le coca-cola et le jus de fruits sont des boissons au goût sucré et ont un pH respectif de 2 & de 4, ce qui
+est acide, donc oui une boisson au goût sucré peut être acide.
+
+EXERCICES D’APPLICATION :
+
+Exercice 1 : Déterminer le caractère acide ou basique d’une solution
+
+    1) Les solutions acides sont celles qui ont un pH inférieur à 7, donc ici il s’agit du jus de citron (pH =
+       2,3) et du jus de poire (pH = 4,2). Les solutions basiques sont celles qui ont un pH supérieur à 7,
+       donc ici il s’agit de la lessive (pH = 9), de l’océan (pH = 8,2) et du déboucheur de canalisations (pH =
+       12). Les solutions neutres sont celles qui ont un pH = 7, ici il s’agit de l’eau distillée.
+    2) La solution la plus basique est le déboucheur de canalisations et la solution la plus acide est le jus
+       de citron.
+    3) Jus de citron < jus de poire < eau distillée < oéan < lessive < déboucheur de canalisations.
+
+Exercice 2 : La gravure à l’eau-forte
+
+    1) Schéma légendé :
+
+
+
+
+    2) Représentation de la plaque après passage à l’acide
+
+
+
+
+    3) Les parties grattées n’ont plus de vernis, or c’est le vernis qui empêche le contact de l’acide sur le
+       métal. En entrant en contact, l’acide et le métal produisent une réaction chimique de type acide-
+       base, qui enlève de la matière au métal.
+
+
+
+Exercice 3 : le papier acid-free
+
+Le papier « acid-free » est un papier sans acide. Cela permet d’éviter les réactions acides bases qui pourraient
+se produire au contact des photos et des autres supports de celle-ci, ce qui pourrait entraîner leur
+détérioration au cours du temps.
+Séance 2
+TÂCHE COMPLEXE : Les dangers pour la biodiversité
+
+Pour récapituler les documents, tu peux réaliser au brouillon un tableau de ce type :
+on cherche à comprendre quel est le lien entre le rejet de dioxyde de carbone et la mort du corail.
+
+ Numéro   Titre du                Type de       Informations                              Lien entre les
+ du       document                document                                                documents
+ document
+ 1        Le blanchiment          Texte avec    Corail =>organisme marin. Maladie         Lien avec doc 5
+          des coraux              photos        qui les fait blanchir puis mourir.
+                                                Base de l’écosystème marin.
+ 2            Activité            Texte         Augmentation constante de dioxyde         Lien avec doc 4
+              humaine                           de carbone atmosphérique. Se
+                                                dissout dans l’eau.
+ 3            Expérience : les    Texte         La coquille d’œuf se dissout au           Lien avec doc 5.
+              coquilles d’œuf                   contact du vinaigre.
+ 4            Modélisation de     Schéma        On observe que l’eau a un pH de 7,80      Lien avec doc 2
+              la variation de     légendé       dans le premier verre, et de 6,97 dans
+              pH en fonction                    le second. Or dans le second on fait
+              de la dissolution                 buller de l’air expiré qui contient du
+              de dioxyde de                     dioxyde de carbone.
+              carbone
+ 5            L’association       Texte         Corail = association entre algue qui      Lien avec doc 1
+              algue corail                      colore le corail et animal fixé. Si pH    Lien avec doc 3
+                                                acide => algues quittent le corail. Se
+                                                décalcifie
+
+Ordre logique : doc. 1 & 5, puis doc. 2 & 4 et enfin doc. 3.
+
+Le corail est un organisme marin constitué par l’association d’une algue unicellulaire colorée et d’un animal
+fixé au squelette calcaire., comme indiqué dans le texte du document 5 ; lorsqu’il blanchit, il meurt (cf. texte
+et photos du document 1 : le blanchiment des coraux) ; Il blanchit par perte des algues lorsque le pH est acide
+(cf. document 5 : l’association algue-corail).
+Or le document 2, texte intitulé activité humaine, nous apprend que le rejet du dioxyde de carbone lié aux
+activités humaines augmente constamment et que le dioxyde de carbone se dissout dans l’eau. Ensuite le
+schéma légendé du document 4, dans lequel est modélisée la variation de pH en fonction de la dissolution
+du dioxyde de carbone, nous indique que ce dioxyde de carbone dissout provoque une baisse de pH, donc
+une acidification de l’eau.
+On peut donc émettre l’hypothèse que les algues fuient le corail quand le pH est acide pour échapper au
+ramollissement par dissolution du squelette calcaire de l’organisme animal qui les héberge. En effet,
+l’expérience sur les coquilles d’œufs décrite dans le document 3 montre comment la coquille d’un œuf se
+dissout en présence de vinaigre, qui est acide, tout comme le dioxyde de carbone dissout.
+C’est pourquoi le rejet de dioxyde de carbone lié aux activités humaines est une des causes de la mort du
+corail.
+Séance 3
+
+TRAVAUX PRATIQUES 9 : Peser une réaction chimique
+
+La masse de l’ensemble pomme de terre et Bétadine n’est pas différente de la somme des masses de la
+pomme de terre d’une part et de Bétadine d’autre part. Il y a donc conservation de masse.
+
+EXERCICES D’APPLICATION :
+
+Exercice 1 : de quel type de transformation s’agit-il ?
+
+ Transformation physique                           Transformation chimique
+     - Formation de rosée (liquéfaction)               - Une bougie allumée (combustion)
+     - Récolte du sel dans un marais salant            - Formation du vin (fermentation)
+         (séparation d’un mélange par évaporation)     - Feu d’artifice (combustion)
+     - Infusion du thé (dissolution)                   - Détartrage de la bouilloire (réaction acide-
+     - Canon à neige (solidification)                      base)
+     - Sucrer son café (dissolution)
+     - Saler les pâtes (mélange de solides)
+     - Préparer une vinaigrette (émulsion)
+     - Faire bouillir de l’eau (évaporation)
+
+Exercice 2 : les colorants alimentaires
+
+
+        •   E163 : anthocyanines du rouge au bleu
+        •   E163a : cyanidine rouge
+        •   E163b : delphinidine bleu pourpre
+        •   E163c : malvidine bleu
+        •   E163d : pélargonidine rouge brun
+        •   E163e : péonidine rose
+        •   E163f : pétunidine mauve
+        •   E163(i) : extrait de peau de raisin bleu
+        •   E163(ii) : mélanges d’anthocyanes violet
+        •   E163(iii) : extrait de cassis violet
+        •   E163(iv) : colorant du maïs pourpre rouge brun
+        •   E163(v) : colorant du chou rouge mauve
+             THÈME B – Corrigé des exercices
+                 et des questions de TP
+Chapitre 1
+
+Séance 1
+
+QUESTIONS :
+
+Par rapport à la maman de Martin, ce sont Martin et sa grand-mère qui sont en mouvement.
+Par rapport à Martin, sa maman est en mouvement et sa grand-mère est immobile.
+Pour que Martin soit immobile, il faut choisir comme référentiel la grand-mère de Martin.
+La grand-mère de Martin est à la fois immobile et en mouvement, tout dépend du référentiel (point de vue
+dans lequel on se place : elle est immobile par rapport à Martin et en mouvement par rapport à la maman
+de Martin.
+
+EXERCICES D’APPLICATION :
+
+Exercice 1 : Définir un référentiel
+
+Objet : avion de chasse dans le ciel. Depuis le sol (référentiel 1), l’avion est en mouvement. Depuis l’espace
+aux alentours de la Lune (référentiel 2), l’avion est immobile car il vole à la même vitesse que tourne la Terre
+sur elle-même.
+Objet : Femme enceinte qui marche. Depuis son mari qui est assis (référentiel 1), elle bouge. Depuis l’enfant
+qu’elle porte (référentiel 2), elle est immobile.
+Objet : La Terre. Par rapport à une famille assise dans son salon (référentiel 1), la Terre est immobile. Par
+rapport au Soleil (référentiel 2) elle tourne sur elle-même et autour du Soleil.
+
+Exercice 2 : Choisir le bon référentiel
+
+Un passager d’un train en marche est au repos => objet de référence = un autre passager.
+Une luge dévalant une pente est au repos => objet de référence = la personne qui la conduit.
+Une voiture est immobile alors qu’elle se déplace sur une autoroute => objet de référence = le conducteur.
+
+TRAVAUX PRATIQUES 11 : La trajectoire virtuelle d’un personnage
+
+La nature de la trajectoire est circulaire. Son sens est horaire.
+Si on modifie le temps d’attente, cela ne modifie pas la trajectoire mais la vitesse.
+EXERCICE DE MÉMORISATION :
+
+
+   COURS GRIFFON ©
+
+
+
+
+EXERCICES D’APPLICATION :
+
+Exercice 1 : Trajectoire rectiligne
+Exercice 2 : Trajectoires à définir
+
+Fig. a : La trajectoire est de forme rectiligne, de direction oblique et de sens du haut vers le bas.
+Fig. b : la trajectoire est de forme curviligne, de direction verticale et de sens du bas vers le haut.
+Fig. c : la trajectoire est de forme curviligne, de direction horizontale et de sens de la droite vers la gauche de
+la photographie.
+Fig. d : la trajectoire est de forme circulaire, de direction horizontale et dans le sens inverse des aiguilles
+d’une montre. (On dit aussi : sens antihoraire ou sens trigonométrique).
+
+Séance 2
+TRAVAUX PRATIQUES 12 : Déterminer une vitesse
+
+Il s’agit de mesurer une vitesse, c’est-à-dire une distance que divise un temps ; il faut donc rendre fixe une
+des variables, soit la distance, soit le temps.
+      - Première manière : on mesure le temps parcouru sur une distance fixe.
+      - Deuxième manière : on mesure une distance parcourue pour un temps fixe.
+
+• Protocole 1 : Définir la distance sur laquelle on va mesurer le temps. Marquer le point de départ et le point
+d’arrivée de la course avec des lignes tracées à la craie sur le sol, en mesurant la distance qui les sépare grâce
+au mètre enrouleur de bricoleur. Cette distance doit correspondre à la distance définie précédemment. Se
+munir d’un chronomètre. Mesurer la vitesse de course des participants en déclenchant le chronomètre au
+moment du top départ et en l’arrêtant lorsqu’ils franchissent la ligne d’arrivée.
+Calculer la vitesse de chaque participant en divisant la distance définie par chacune des vitesses mesurées.
+• Protocole 2 : Définir le temps pendant lequel on va mesurer la distance. Chaque participant se munit d’un
+plot avec lequel il va courir. Poser un plot au sol pour définir le point de départ. Se munir d’un chronomètre.
+L’enclencher au top départ. Au temps défini précédemment, arrêter le chronomètre en avertissant les
+participants qui doivent s’arrêter et poser leur plot. Mesurer ensuite les distances parcourues par chaque
+participant.
+Calculer la vitesse de chaque participant en divisant chaque distance mesurée par le temps défini.
+EXERCICE DE MÉMORISATION :
+    COURS GRIFFON ©
+
+
+
+
+EXERCICES D’APPLICATION :
+
+Exercice 1 : Comment faire pour passer d’une unité à l’autre ?
+
+    1)   Une heure = 60 minutes. 1 minute = 60 secondes. Donc 1 heure = 60 x 60 = 3 600 secondes.
+    2)   Un kilomètre = 1 000 mètres.
+    3)   Coefficient de proportionnalité de division des km/h = 3 600 ÷ 1 000 = 3,6
+    4)   Pour passer des m/s au km/h, on utilise le même coefficient de proportionnalité, mais on multiplie
+         alors les m/s.
+Exemple : ma voiture roule à 50 km/h, cela fait combien de m/s ?
+50 ÷ 3,6 = 13,88 m/s.
+La vitesse de la tortue est de 0,05 m/s, combien cela fait-il en km/h ?
+0,05 x 3,6 = 0,18 km/h (180 mètres par heure).
+
+Exercice 2 : Durée d’un trajet et distance parcourue
+
+    1) Si la voiture roule à la vitesse constante de 130 km/h, elle roule sur une autoroute.
+    2) Les deux premières cases se complètent facilement : en une heure la voiture roulant à 130 km/h a
+       parcouru 130 km. En deux heures, elle en parcourt le double. Pour la troisième case, on fait intervenir
+                                                              la relation : t = d/V. Ici : t = 715 / 130 = 5,5 h.
+                                                              Attention à ne pas oublier l’unité !!
+
+                                                                 On convertit ensuite la durée en système
+                                                                 horaire : 0,5 = une demi-heure.
+
+
+    3) Pour calculer la distance parcourue en 4 h 30 par la voiture, on utilise la relation : d = t x V, en faisant
+       attention à convertir la durée en système décimal : une demi-heure = 0,5.
+               d = 4,5 x 130
+               d = 585 km/h.      Attention à ne pas oublier l’unité !
+Séance 3
+III.1. L’ascenseur à bateaux de Falkirk
+
+    1) Dans le référentiel centre la roue, le capitaine du bateau effectue une trajectoire circulaire et
+       verticale (le sens dépend de la position de l’observateur dans la roue).
+    2) On peut supposer que la vitesse du bateau augmente puis diminue quand il est dans l’ascenseur
+       parce que l’ascenseur soit s’arrêter en haut et en bas (donc avoir une vitesse qui diminue jusqu’à
+       l’arrêt), et aller d’une station à l’autre (donc avoir une vitesse qui augmente depuis l’arrêt).
+    3) Le bateau a un mouvement rectiligne et ralenti quand il rentre dans la nacelle, puis un mouvement
+       circulaire, accéléré puis ralenti quand il est dans l’ascenseur, enfin un mouvement rectiligne et
+       accéléré quand il sort de la nacelle.
+    4) Les nacelles sont montées sur roues afin de maintenir l’horizontalité parfaite de l’ensemble nacelle
+       + eau + bateau.
+
+III.2. Tâche complexe : comment arriver à l’heure à l’aéroport ?
+
+    1) Les deux choix de trajets les plus rapides possible pour Berthe sont les deux trajets où la vitesse
+       autorisée est la plus élevée, soit l’autoroute A 7 (en rouge et jaune), et la départementale D 113 (en
+       rouge). Pour le trajet passant par l’autoroute, il faut prendre l’échangeur à Griffon et finir le trajet
+       sur D 113.
+    2) Pour le trajet par la D 113, on compte : 13 km entre départ Berthe et le croisement avec la D 10, puis
+       3 + 4 + 1 + 4 +2 + 1 km entre ce croisement et arrivée Berthe (en comptant les kilométrages indiqués
+       entre chaque petite épingle rouge, soit 30 km. Pour le trajet par l’A 7 et la D 113, on compte : 2 km
+       depuis départ Berthe jusqu’à l’épingle, puis, 13 km jusqu’à l’échangeur avec la D 10, puis, 12 km
+       jusqu’à Griffon, soit : 27 km d’autoroute. Ensuite, sur la D 10, on compte 2 + 2 + 1 = 5 km. Ce qui fait
+       un total de 32 km.
+       N.B. Entre l’estimation de 25 km et le calcul, il y a entre 5 et 7 km de différence !
+    3) Pour calculer le temps mis pour chaque trajet, on utilise la relation t = d/V.
+       Pour le trajet par la D 113, on sait qu’il s’agit d’une route sans chaussées séparées donc la vitesse est
+       limitée à 80 km/h. On a donc t = 30 / 80 = 0,375 h. On convertit cette valeur en système horaire : t =
+       0,375 x 60 = 22,5 minutes.
+       Pour le trajet par l’A 7 + D 113, on utilise la vitesse sur autoroute (130 km/h) pour la portion de trajet
+       sur l’A 7, et la vitesse sur route à deux chaussées séparées (110 km/h) pour la portion de trajet sur la
+       D 110. On a donc : t = 27 / 130 + 5 / 110 = 0,21 + 0,05 = 0,255 h = 0,255 x 60 = 15,32 minutes.
+       Berthe peut donc arriver à l’heure pour prendre son avion en passant par l’un ou l’autre trajet.
+    3) Il faut refaire les calculs en tenant compte de la vitesse comme dans le tableau suivant :
+
+ Trajet                       ROUTE D 113                           AUTOROUTE A 7 ET ROUTE D 113
+ PRÉCIPITATIONS               V = 70 km/h donc t = 30 / V = 110km/h donc t = 27 V = 70 km/h donc t =
+                              70 = 0,43 h soit 0,43 x 60 = / 110 = 0,225 h soit 0,25 x 5 / 70 = 0,07 h soit
+                              26 minutes                   60 = 14,72 = 15,12 0,07 x 60 = 4,28
+                                                           minutes.                      minutes.
+                                                           Total : t = 14,12 + 4,28 = 19,4 minutes
+ BROUILLARD INTENSE           V = 50 km/h donc t = 30/50 V = 50 km/h donc t = 27 / V = 50 km/h donc t =
+                              = 0,6 h soit 0,6 x 60 = 36 50 = 0,54 h soit 0,54 x 60 5 /50 = 0,1 heure
+                              minutes.                     = 32,4 minutes                soit 0,1 x 60 = 6
+                                                                                         minutes
+                                                           Total = 32,4 = 6 = 38,4 minutes.
+
+Dans tous les cas, Berthe peut arriver à l’heure à l’embarquement, si on ne tient pas compte du temps qu’elle
+mettra à se garer et à rejoindre l’aérogare à pied.
+III.3. Conversions d’unité de distance et de durée
+
+    1)    On divise le volume total de sang d’un adulte par le volume éjecté par le cœur à chaque battement
+         dans la même unité :
+                              5 L / 70 mL = 5 000 / 70 = 500 / 7 = 71,42 battements
+         Pour trouver le temps t mis par le cœur pour propulser tout le volume de sang d’un adulte, on résout
+         le rapport suivant :
+                                                        𝑡 71,42
+                                                          =
+                                                        1      75
+         Soit t = 0,95 minutes converties en système horaire = 0,95 x 60 = 57,1 secondes.
+
+    2) Pour convertir la vitesse du sang en m/s en km/h, j’utilise le coefficient de proportionnalité de 3,6
+       que je multiplie au m/s soit :
+                                          0,7 x 3,6 = 2,52 km/h
+
+    3) Pour convertir la vitesse du sang en km/h en m/s, j’utilise le coefficient de proportionnalité de 3,6
+       que je divise aux km/ h soit :
+                                          0,36 / 3,6 = 0,1 km/h.
+
+III.4. Variations de vitesse
+
+• compétition d’athlétisme :
+
+On utilise la relation v = d / t.
+
+Pour l’élève 1 : v = 60 / 12 = 5 m/s
+
+Pour l’élève 2 : v = 100 / 16 = 6,25 m/s.
+
+6,25 m/s > 5 m/s donc c’est l’élève 2 qui est le plus rapide.
+
+• carrousel :
+
+La personne qui parcourt la plus grande
+distance est celle qui se trouve sur la trajectoire
+la plus extérieure. En effet les chevaux du
+carrousel sont fixés sur des rayons du cercle.
+
+La vitesse est la distance que divise le temps.
+Comme chaque cheval est fixé sur les rayons du
+cercle, on sait qu’ils se déplacent en même
+temps. Le temps est donc constant. La distance
+la plus grande est celle que parcourt la personne
+sur le cheval le plus éloigné du centre, donc plus
+la distance augmente plus la vitesse augmente,
+par conséquent c’est la personne sur le cheval
+le plus extérieur qui va le plus vite.
+Chapitre 2
+
+Séance 1
+TRAVAUX PRATIQUES 13 : Lancer de balle
+
+Dans tous les cas on constate que la balle retombe au sol.
+
+EXERCICE D’APPLICATION :
+
+    1) Tu peux trouver : le bateau qui exerce une pression sur l’eau, l’eau qui exerce une pression sur le
+       bateau, l’enfant qui touche la tablette, l’enfant qui tient la tablette, le parapentiste qui se tient aux
+       sangles de son parapente, la résistance de l’air sur la voile….
+    2) Il y a deux actions mécaniques à distance que tu peux trouver : la lévitation magnétique et la gravité
+       terrestre.
+    3) Les actions de contact réparties sont la pression de l’eau sur le bateau (ou l’inverse) et la résistance
+       de l’air sur la voile. Une action de contact localisée est le toucher de la tablette par le doigt de
+       l’enfant.
+
+EXERCICES D’APPLICATION :
+
+Exercice 1 : Reconnaître le bon DIO
+
+Le bon DIO est le A.
+
+Exercice 2 : Utiliser le bon vocabulaire
+
+L’athlète exerce sur le javelot une action : il va le lancer. Le javelot est en interaction avec la Terre et avec
+l’athlète. Le javelot et l’athlète sont en interaction de contact localisée. Le javelot exerce sur l’athlète un
+contact passif.
+EXERCICE D’APPLICATION : tracer des DIO
+
+                                      Le bateau subit la gravité (interaction à distance avec la Terre) et la
+                                      pression du bas vers le haut (poussée d’Archimède) de l’eau du lac
+                                      sur laquelle lui-même exerce une pression horizontale pour se
+                                      déplacer.
+
+
+
+
+                                      Le parachutiste subit la gravité (interaction à distance avec la Terre)
+                                      et la pression du bas vers le haut (portance) de l’air sur la voile du
+                                      parachute.
+
+
+
+
+                                      L’objet en lévitation subit la gravité (interaction à distance avec la
+                                      Terre) et la lévitation magnétique (interaction à distance avec l’air).
+Séance 2
+QUESTIONS :
+Partie 1
+    1) Il y a 8 planètes dans le système solaire : Mercure, Vénus, Terre, Mars, Jupiter, Saturne, Uranus et
+         Neptune.
+    2) Une galaxie est un ensemble d’étoiles qui tourne autour d’un centre. On parle de notre Galaxie avec
+         un G majuscule car c’est l’amas d’étoiles dans lequel se trouve le Soleil. Galaxie veut dire Voie lactée
+         car on en voit un bras dans le ciel nocturne, qui semble être une traînée de lait dans le ciel.
+    3) La principale trajectoire des astres en mouvement dans l’Univers est circulaire.
+
+Partie 2
+    1) Un modèle est un moyen d’expliquer un phénomène, à partir de suppositions. Une observation est
+         une réalité visible, qui ne peut pas être niée et qui est le plus souvent répétée.
+    2) Copernic et Kepler proposent des arguments mathématiques à la théorie de l’héliocentrisme :
+         Copernic utilise les mathématiques générales et Kepler la géométrie. L’argument de Galilée est
+         l’observation des mouvements des satellites de Jupiter.
+    3) Nicolas Copernic : 1473-1543, Polonais. Chanoine (religieux), médecin et mathématicien.
+         Johannes Kepler : 1571-1630, Allemand. Professeur de mathématiques, astronome il est l’inventeur
+         des lois de Kepler qui régissent les mouvements des planètes.
+         Galileo Galilei : 1564-1642, Italien. Mathématicien, physicien. Travaille sur la gravité et la vitesse.
+         Célèbre pour le procès que l’Église mena contre lui à cause de l’héliocentrisme.
+    4) Le modèle qui correspond à la réalité de notre système astral est le système solaire, ou
+         héliocentrisme : les planètes tournent autour d’une étoile : le Soleil.
+
+EXERCICE D’APPLICATION : La distance Terre-Mars.
+                                                                         Les trajectoires des planètes sont
+                                                                         circulaires de forme elliptique. Cela
+                                                                         veut dire qu’elles ont deux centres.
+                                                                         Pour la Terre les deux centres sont
+                                                                         très proches, alors que pour Mars ils
+                                                                         sont bien distincts.
+                                                                         Les trajectoires de Mars et de la
+                                                                         Terre se rapprochent d’un côté et
+                                                                         s’éloignent de l’autre (D1 < D2). Il est
+                                                                         donc plus propice d’envoyer des
+                                                                         véhicules spatiaux depuis la Terre sur
+                                                                         Mars lorsque les deux planètes sont
+                                                                         ensemble sur les parties de leurs
+                                                                         trajectoires qui sont les plus proches
+                                                                         l’une de l’autre.
+Séance 3
+ACTIVITÉ EXPÉRIMENTALE : vitesse de rotation de la Terre
+
+    1) Dans le référentiel Terre, les deux habitants sont collés à la terre, donc ils ne bougent pas.
+    2) On utilise la relation : v = d / t où d est le périmètre de la Terre (sa circonférence à l’équateur), et où
+         t est une journée soit 24 heures.
+         La circonférence à l’équateur est le périmètre du cercle imaginaire représenté par l’équateur. On sait
+         que P = 2 x π x r avec r = rayon de la Terre = diamètre de la Terre ÷ 2. Donc
+         P = 2 x π x 12 800 ÷ 2 = π x 12 800 = 40 192 km.
+        Et v = 40 192 ÷ 24 = 1 674,66 km/h.
+        La vitesse de rotation d’un habitant du Gabon est de 1 675 km/h (en arrondissant à l’unité
+    supérieure).
+    3) On utilise la même relation pour un Parisien, mais le périmètre change, le cercle parallèle au niveau
+         de Paris est plus petit, son rayon est de 4 200km.
+    P = 2 x π x r avec r = 4 200km. Donc P = 2 x π x 4 200 = 26 376 km
+    Et v = d/ t soit : v = 26 376 ÷ 24 = 1 099 km/h.
+    La vitesse de rotation d’un Parisien est de 1 099 km/h. On constate qu’il y a près de 600 km/h d’écart
+entre les deux personnes. À l’équateur, on tourne beaucoup plus vite qu’aux pôles. La vitesse de rotation de
+la Terre est immense, mais comme nous sommes dessus, nous ne nous en apercevons pas.
+
+EXERCICE : Carte mentale
+
+
+
+
+À la recherche de la Vie :
+     1) Cette sonde avait deux objectifs : mieux connaître le système solaire et communiquer avec
+        d’éventuels extra-terrestres.
+     2) Les distances dans le système solaire sont si grandes que les voyages seraient très longs et on ne
+        sait pas si les êtres humains pourraient y survivre. L’exploration habitée de Mars est un essai. Par
+        ailleurs aucun être vivant ne peut survivre dans le vide interstellaire.
+
