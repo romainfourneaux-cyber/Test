@@ -619,7 +619,7 @@
         if (cb) {
           // le chiffre peint une fois (chiffreBreche) : une copie par image, à son opacité
           ctx.globalAlpha = Math.max(0, a);
-          ctx.drawImage(cb, touchee.chiffreX - cb.lw / 2 * ech, ty - CHIFFRE_BASE * ech, cb.lw * ech, cb.lh * ech);
+          ctx.drawImage(cb, touchee.chiffreX - cb.lw / 2 * ech, ty - cb.base * ech, cb.lw * ech, cb.lh * ech);
           ctx.globalAlpha = 1;
         } else {
           ctx.font = CHIFFRE_POLICE; ctx.textAlign = "center";
@@ -659,26 +659,31 @@
     jauge(ctx, v, true);
   }
 
-  // Chiffre d'une brèche (lot A3) : le texte détouré est ce qu'il y a de plus cher à dessiner ; il est peint une fois dans
-  // une petite toile, gardée par texte et par camp (or vif : le château adverse ; rouge clair : le tien), à la netteté de
-  // la toile. Tant que la police Cinzel n'est pas chargée : null (le texte est alors dessiné comme avant).
-  var CHIFFRE_POLICE = "bold 30px Cinzel, Georgia, serif", CHIFFRE_BASE = 33, chiffresBreche = {}, chiffresRatio = 0;
-  function chiffreBreche(txt, rival, ratio) {
-    if (chiffresRatio !== ratio) { chiffresBreche = {}; chiffresRatio = ratio; }
-    var cle = (rival ? "r" : "j") + txt, c = chiffresBreche[cle];
-    if (c) return c;
-    if (typeof document === "undefined" || (document.fonts && document.fonts.check && !document.fonts.check(CHIFFRE_POLICE))) return null;
-    c = document.createElement("canvas");
-    var g = c.getContext("2d");
-    g.font = CHIFFRE_POLICE;
-    var w = Math.ceil(g.measureText(txt).width) + 12, h = 44;
+  // Texte détouré peint une fois dans une petite toile (lot A3). Le texte est ce qu'il y a de plus cher à dessiner sur la
+  // toile, et chaque ctx.font ou fillText force le navigateur à recalculer d'abord les styles de la page s'ils ont changé
+  // (une classe posée sur le cadre, le bandeau qui change…) : dessiné à chaque image, il faisait payer ce recalcul à la
+  // boucle. La petite toile est à la netteté de la toile ; lw, lh : taille logique ; base : ligne de base (texte centré).
+  // null tant que la police n'est pas chargée : le texte est alors dessiné directement, comme avant.
+  function peindreTexte(police, taille, txt, fond, contour, epaisseur, ratio) {
+    if (typeof document === "undefined" || (document.fonts && document.fonts.check && !document.fonts.check(police))) return null;
+    var c = document.createElement("canvas"), g = c.getContext("2d");
+    var base = taille + epaisseur, h = Math.ceil(base + 0.35 * taille + epaisseur);
+    g.font = police;
+    var w = Math.ceil(g.measureText(txt).width + 2 * epaisseur + 4);
     c.width = Math.ceil(w * ratio); c.height = Math.ceil(h * ratio);
     g.setTransform(ratio, 0, 0, ratio, 0, 0);
-    g.font = CHIFFRE_POLICE; g.textAlign = "center"; g.lineWidth = 5; g.lineJoin = "round";
-    g.strokeStyle = "rgb(20,12,6)"; g.fillStyle = rival ? "rgb(255,215,94)" : "rgb(255,122,92)";
-    g.strokeText(txt, w / 2, CHIFFRE_BASE); g.fillText(txt, w / 2, CHIFFRE_BASE);
-    c.lw = w; c.lh = h;
-    return (chiffresBreche[cle] = c);
+    g.font = police; g.textAlign = "center"; g.lineWidth = epaisseur; g.lineJoin = "round";
+    g.strokeStyle = contour; g.fillStyle = fond;
+    g.strokeText(txt, w / 2, base); g.fillText(txt, w / 2, base);
+    c.lw = w; c.lh = h; c.base = base;
+    return c;
+  }
+  // Chiffre d'une brèche (« −3 ») : gardé par texte et par camp (or vif : le château adverse ; rouge clair : le tien).
+  var CHIFFRE_POLICE = "bold 30px Cinzel, Georgia, serif", chiffresBreche = {}, chiffresRatio = 0;
+  function chiffreBreche(txt, rival, ratio) {
+    if (chiffresRatio !== ratio) { chiffresBreche = {}; chiffresRatio = ratio; }
+    var cle = (rival ? "r" : "j") + txt;
+    return chiffresBreche[cle] || (chiffresBreche[cle] = peindreTexte(CHIFFRE_POLICE, 30, txt, rival ? "rgb(255,215,94)" : "rgb(255,122,92)", "rgb(20,12,6)", 5, ratio));
   }
 
   // ---------- au ras du sol (lot A) ----------
@@ -1084,7 +1089,7 @@
   // Jauge de solidité : un cartouche sombre avec l'écu du camp, la barre et les chiffres, au-dessus ou au-dessous de la
   // place forte, là où la route ne passe pas (calculé une fois : placerJauge). Il pâlit quand une troupe passe dessous,
   // pour ne jamais cacher la mêlée.
-  var JAUGE_L = 132, JAUGE_H = 42;
+  var JAUGE_L = 132, JAUGE_H = 42, JAUGE_POLICE = "bold 16px Cinzel, Georgia, serif";
   // Jauge en deux temps (lot A3) : à chaque perte, la part perdue reste claire PERTE_CLAIRE s, puis fond en PERTE_FOND s
   // jusqu'à la solidité restante. Rend le haut de la part claire (0 à 1). Animations coupées : la jauge directe.
   // État dans la place de la jauge (v.placeDepart, v.placeArrivee) : kVu (dernière part vue), clairDe, clairT.
@@ -1121,9 +1126,15 @@
     var kj = Math.max(0, Math.min(1, etat.pv / etat.max)), clair = partPerdue(pl, kj, v);
     ctx.fillStyle = rival ? "#c9a14a" : "#7d9a4a"; ctx.fillRect(bx, y0 + 6, bw * kj, 10);
     if (clair > kj) { ctx.fillStyle = "#f4e2b0"; ctx.fillRect(bx + bw * kj, y0 + 6, bw * (clair - kj), 10); } // la part perdue, claire
-    ctx.font = "bold 16px Cinzel, Georgia, serif"; ctx.textAlign = "center"; ctx.fillStyle = "#fbe9bd"; ctx.strokeStyle = "#140c06"; ctx.lineWidth = 3;
+    // les chiffres : peints une fois dans une petite toile, repeinte quand ils changent (peindreTexte : pas de texte dessiné
+    // à chaque image)
     var txt = Math.ceil(etat.pv) + " / " + etat.max;
-    ctx.strokeText(txt, bx + bw / 2, y0 + 36); ctx.fillText(txt, bx + bw / 2, y0 + 36);
+    if (pl.txtVu !== txt || pl.txtRatio !== v.ratio || !pl.txtImg) { pl.txtImg = peindreTexte(JAUGE_POLICE, 16, txt, "#fbe9bd", "#140c06", 3, v.ratio); pl.txtVu = pl.txtImg ? txt : null; pl.txtRatio = v.ratio; }
+    if (pl.txtImg) ctx.drawImage(pl.txtImg, bx + bw / 2 - pl.txtImg.lw / 2, y0 + 36 - pl.txtImg.base, pl.txtImg.lw, pl.txtImg.lh);
+    else {
+      ctx.font = JAUGE_POLICE; ctx.textAlign = "center"; ctx.fillStyle = "#fbe9bd"; ctx.strokeStyle = "#140c06"; ctx.lineWidth = 3;
+      ctx.strokeText(txt, bx + bw / 2, y0 + 36); ctx.fillText(txt, bx + bw / 2, y0 + 36);
+    }
     ctx.globalAlpha = 1;
   }
 

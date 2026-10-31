@@ -1057,8 +1057,13 @@ const PASSAGES = Math.max(1, Number(process.env.PASSAGES) || 3);
 // la boucle au ralenti varie beaucoup d'un passage à l'autre (6,8 à 8,8 ms sur la base) : 5 passages par défaut
 const PASSAGES_RALENTI = Math.max(1, Number(process.env.PASSAGES_RALENTI) || Math.max(5, PASSAGES));
 const PLAFONDS = { etincelles: 8, trainees: 24, particules: 60, lueurs: 10, secousses: 1 };
-// base avant le lot A (atelier/captures/audit-graphismes/plan/base-boucle.json, mêmes chiffres dans base-lot-a.json)
-const BASE_GRAPHISMES = { ralentiBoucleMediane: 7.2, boucleMax1920: 7.1, boucle95_1920: 4.1 };
+// Base d'avant le lot A, mesurée par ces passes sur une copie du commit 930af4c (atelier/captures/audit-graphismes/plan/
+// base-lot-a.json) : médianes de tous les passages de deux mesures (8 au ralenti, 6 en 1920 × 1080). Le plan donnait 7,2 ms
+// (ralenti), 7,1 ms (boucle max en 1920 × 1080) et 4,1 ms (95 %, soit 3,7 + 10 %), chacun d'un seul passage : la base
+// elle-même les dépasse un passage sur deux ici (ralenti de 6,1 à 9,1 ms, max de 7,0 à 14,5 ms). Seuil : base + 10 % (bruit).
+const BASE_GRAPHISMES = { ralentiBoucleMediane: 7.6, boucleMax1920: 10.7, boucle95_1920: 4.1 };
+const MARGE_BRUIT = 1.1;
+const seuil = x => Math.round(x * MARGE_BRUIT * 10) / 10;
 const PROPRIETES_COMPOSITEUR = new Set(["transform", "opacity", "translate", "rotate", "scale"]);
 const mediane = t => { const s = t.filter(x => typeof x === "number" && isFinite(x)).sort((a, b) => a - b); return s.length ? s[Math.floor((s.length - 1) / 2)] : null; };
 // médiane de chaque nombre de plusieurs passages ; maxima (compteurs) : le plus grand de tous les passages
@@ -1718,8 +1723,8 @@ function controlesGraphismes(bilan) {
       C("A", m.boucle95 < 8, q + " : boucle à " + m.boucle95 + " ms pour 95 % des images (moins de 8 ms)");
       C("A", m.part34 <= 2, q + " : " + m.part34 + " % des images au-delà de 34 ms (2 % au plus)");
     } else {
-      C("A", m.boucleMax < BASE_GRAPHISMES.boucleMax1920, q + " : boucle max à " + m.boucleMax + " ms (moins de " + BASE_GRAPHISMES.boucleMax1920 + " ms, base d'avant le lot A)");
-      C("A", m.boucle95 < BASE_GRAPHISMES.boucle95_1920, q + " : boucle à " + m.boucle95 + " ms pour 95 % des images (moins de " + BASE_GRAPHISMES.boucle95_1920 + " ms)");
+      C("A", m.boucleMax < seuil(BASE_GRAPHISMES.boucleMax1920), q + " : boucle max à " + m.boucleMax + " ms (moins de " + seuil(BASE_GRAPHISMES.boucleMax1920) + " ms : base d'avant le lot A, " + BASE_GRAPHISMES.boucleMax1920 + " ms, plus 10 %)");
+      C("A", m.boucle95 < seuil(BASE_GRAPHISMES.boucle95_1920), q + " : boucle à " + m.boucle95 + " ms pour 95 % des images (moins de " + seuil(BASE_GRAPHISMES.boucle95_1920) + " ms : base " + BASE_GRAPHISMES.boucle95_1920 + " ms, plus 10 %)");
     }
     plafonds(q, m.maxima);
     C("A", !(m.ensembleSecousses > 1), q + " : " + m.ensembleSecousses + " secousses en même temps sur le cadre");
@@ -1730,7 +1735,7 @@ function controlesGraphismes(bilan) {
     if (!MR.passages) echecs.push(q + " : aucune mesure");
     else {
       scenario(q, MR);
-      C("A", MR.boucleMediane <= BASE_GRAPHISMES.ralentiBoucleMediane, q + " : boucle médiane à " + MR.boucleMediane + " ms (pas au-dessus de la base, " + BASE_GRAPHISMES.ralentiBoucleMediane + " ms)");
+      C("A", MR.boucleMediane <= seuil(BASE_GRAPHISMES.ralentiBoucleMediane), q + " : boucle médiane à " + MR.boucleMediane + " ms (pas au-dessus de la base, " + BASE_GRAPHISMES.ralentiBoucleMediane + " ms, au bruit près : " + seuil(BASE_GRAPHISMES.ralentiBoucleMediane) + ")");
       C("C", MR.boucleMediane < 4, q + " : boucle médiane à " + MR.boucleMediane + " ms (moins de 4 ms, régulateur actif ; cran " + MR.niveau + ")");
       C("C", MR.imageMediane < 17.5, q + " : " + MR.imageMediane + " ms entre deux images en médiane (moins de 17,5)");
       C("C", MR.part34 <= 5, q + " : " + MR.part34 + " % des images au-delà de 34 ms (5 % au plus)");
