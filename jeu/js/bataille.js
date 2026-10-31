@@ -595,15 +595,25 @@
         // sa poussière est au sol (solEffets) ; sans l'image de poussière, l'écu brisé qui monte
         if (!prete("effet-poussiere")) { ctx.globalAlpha = Math.max(0, a); dessinerIcone(ctx, "ecu-brise", e.x, e.y - 12 - e.age * 14, 22, e.camp === "rival" ? v.adverse.couleurs[0] : v.couleurs[0]); ctx.globalAlpha = 1; }
       } else if (e.genre === "breche") {
-        if (e.age < 0.8) sprite(ctx, "effet-poussiere", e.x, e.y + 4, vue(e.age, 0.8, 5), false, 1.2);
-        if (e.age < 0.32) sprite(ctx, "effet-eclats", e.x, e.y - 10, vue(e.age, 0.32, 4), false, 1.3);
-        // le chiffre flotte au-dessus de la place forte touchée (et de sa jauge si elle est au-dessus), jamais sur ses murs
-        var touchee = e.camp === "rival" ? v.placeArrivee : v.placeDepart;
-        var ty = touchee.hautLibre - e.age * 30;
+        // brèche (lot A3) : deux bouffées au pied du mur, la seconde un peu après, et les éclats ; les pierres qui tombent
+        // du haut du mur sont dans le pool de particules (retours, à la première image). Animations coupées : une seule
+        // bouffée, une seule image d'éclats.
+        if (e.age < 0.8) sprite(ctx, "effet-poussiere", e.x - (anim ? 8 : 0), e.y + 4, vue(e.age, 0.8, 5), false, 1.2);
+        if (anim && e.age >= 0.1 && e.age < 0.9) sprite(ctx, "effet-poussiere", e.x + 9, e.y + 7, vue(e.age - 0.1, 0.8, 5), false, 1);
+        if (e.age < 0.32) sprite(ctx, "effet-eclats", e.x, e.y - 10, anim ? vue(e.age, 0.32, 4) : 1, false, 1.3);
+        // le chiffre frappe (de 1,6 fois sa taille à 1 en 0,12 s), puis monte au-dessus de la place forte touchée (et de sa
+        // jauge si elle est au-dessus), jamais sur ses murs. Animations coupées : sans rebond.
+        var touchee = e.camp === "rival" ? v.placeArrivee : v.placeDepart, txtB = "−" + e.degats;
+        var ty = touchee.hautLibre - (anim ? Math.max(0, e.age - 0.12) : e.age) * 30;
         ctx.font = "bold 30px Cinzel, Georgia, serif"; ctx.textAlign = "center";
         ctx.lineWidth = 5; ctx.lineJoin = "round"; ctx.strokeStyle = "rgba(20,12,6," + a + ")";
         ctx.fillStyle = (e.camp === "rival" ? "rgba(255,215,94," : "rgba(255,122,92,") + a + ")"; // or vif : le château adverse ; rouge clair : le tien
-        ctx.strokeText("−" + e.degats, touchee.chiffreX, ty); ctx.fillText("−" + e.degats, touchee.chiffreX, ty);
+        if (anim && e.age < 0.12) {
+          var ech = 1.6 - 0.6 * e.age / 0.12;
+          ctx.save(); ctx.translate(touchee.chiffreX, ty); ctx.scale(ech, ech);
+          ctx.strokeText(txtB, 0, 0); ctx.fillText(txtB, 0, 0);
+          ctx.restore();
+        } else { ctx.strokeText(txtB, touchee.chiffreX, ty); ctx.fillText(txtB, touchee.chiffreX, ty); }
       } else if (e.genre === "tourRivale") {
         // le rival bâtit une tour pendant ta préparation : de la poussière à son pied (la tour apparaît en fondu : tour(),
         // et son onde est au sol, plus haut)
@@ -1038,6 +1048,20 @@
   // place forte, là où la route ne passe pas (calculé une fois : placerJauge). Il pâlit quand une troupe passe dessous,
   // pour ne jamais cacher la mêlée.
   var JAUGE_L = 132, JAUGE_H = 42;
+  // Jauge en deux temps (lot A3) : à chaque perte, la part perdue reste claire PERTE_CLAIRE s, puis fond en PERTE_FOND s
+  // jusqu'à la solidité restante. Rend le haut de la part claire (0 à 1). Animations coupées : la jauge directe.
+  // État dans la place de la jauge (v.placeDepart, v.placeArrivee) : kVu (dernière part vue), clairDe, clairT.
+  var PERTE_CLAIRE = 0.5, PERTE_FOND = 0.3;
+  function hautClair(pl, k, h) {
+    var age = h - pl.clairT;
+    if (!(age >= 0) || age >= PERTE_CLAIRE + PERTE_FOND) return k;
+    return age < PERTE_CLAIRE ? pl.clairDe : pl.clairDe + (k - pl.clairDe) * (age - PERTE_CLAIRE) / PERTE_FOND;
+  }
+  function partPerdue(pl, k, v) {
+    if (pl.kVu === undefined || v.anim === false || k > pl.kVu) { pl.kVu = k; pl.clairDe = k; pl.clairT = -9; return k; }
+    if (k < pl.kVu) { pl.clairDe = Math.max(pl.kVu, hautClair(pl, pl.kVu, v.horloge)); pl.clairT = v.horloge; pl.kVu = k; }
+    return Math.max(k, hautClair(pl, k, v.horloge));
+  }
   function jauge(ctx, v, rival) {
     var pl = rival ? v.placeArrivee : v.placeDepart, etat = rival ? v.partie.rival : v.partie.chateau;
     var x0 = pl.jaugeX, y0 = pl.jaugeY, us = v.partie.unites, dessous = false;
@@ -1057,7 +1081,9 @@
     // barre de solidité et chiffres
     var bx = x0 + 30, bw = JAUGE_L - 38;
     ctx.fillStyle = "rgba(20,12,6,.95)"; ctx.fillRect(bx - 1, y0 + 5, bw + 2, 12);
-    ctx.fillStyle = rival ? "#c9a14a" : "#7d9a4a"; ctx.fillRect(bx, y0 + 6, bw * Math.max(0, Math.min(1, etat.pv / etat.max)), 10);
+    var kj = Math.max(0, Math.min(1, etat.pv / etat.max)), clair = partPerdue(pl, kj, v);
+    ctx.fillStyle = rival ? "#c9a14a" : "#7d9a4a"; ctx.fillRect(bx, y0 + 6, bw * kj, 10);
+    if (clair > kj) { ctx.fillStyle = "#f4e2b0"; ctx.fillRect(bx + bw * kj, y0 + 6, bw * (clair - kj), 10); } // la part perdue, claire
     ctx.font = "bold 16px Cinzel, Georgia, serif"; ctx.textAlign = "center"; ctx.fillStyle = "#fbe9bd"; ctx.strokeStyle = "#140c06"; ctx.lineWidth = 3;
     var txt = Math.ceil(etat.pv) + " / " + etat.max;
     ctx.strokeText(txt, bx + bw / 2, y0 + 36); ctx.fillText(txt, bx + bw / 2, y0 + 36);
