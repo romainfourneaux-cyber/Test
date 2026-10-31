@@ -86,7 +86,245 @@
       "' preserveAspectRatio='none' filter='url(#grisBrume)' mask='url(#masqueBrume)'/>" + entre;
   }
 
-  function carteSVG(c) {
+  // ---------- carte vivante (lot B, 31/10/2026 ; plan atelier/conception/graphismes-animations-plan.md, B3) ----------
+  // Ambiance (JEU.anim.ambiance) : fumées du domaine et des bourgs pris, nappes de brume qui dérivent, vol d'oiseaux,
+  // bannières qui flottent, eau qui scintille. Cérémonie de conquête, cachet et lueur de l'événement du jour :
+  // JEU.anim.actif(). Ce qui bouge en continu est dans un calque HTML posé sur le dessin (.vie-carte, même cadre, positions
+  // en %) et n'anime que transform et opacity : le compositeur le fait seul, sans rien demander au fil principal. Mesuré au
+  // ralenti 4 × : tout ce qui force une image du fil principal (une animation de stroke-dashoffset, un minuteur qui change
+  // un style) y fait recalculer le style de chaque élément animé (0,1 ms chacun) et repeindre la carte (5 à 28 ms). D'où :
+  // aucun minuteur ni stroke-dashoffset ; l'eau scintille par l'opacité, les bannières changent d'image par une animation
+  // en steps() ; et le moins d'éléments animés possible (une nappe de brume par front, trois fumées, un vol d'oiseaux en
+  // trois éléments). Les boucles s'arrêtent d'elles-mêmes quand l'écran est caché. Lumière du jour : une teinte fixe.
+  var vie = null; // pendant carteSVG : { ambiance, drapeaux, recents, fond, bannieres, fumees, nappes, etiquettes } (ui.ecrans.jouer)
+  var DUREE_CEREMONIE = 1350; // la missive du rival attend la fin de la cérémonie (comptée depuis son début)
+  // cheminée des trois bourgs de France, en px logiques depuis le coin haut-gauche de l'image (relevée sur les rendus) ;
+  // fument le domaine et les deux dernières provinces prises
+  var CHEMINEES = { "france": [22, 49], "france-2": [20, 44], "france-3": [20, 46] };
+  // l'eau, relevée sur fond-campagne.jpg (ligne médiane des pixels d'eau, lissée), dans le sens du courant : la rivière de
+  // sa source au fleuve, le ruisseau du Moulin jusqu'à elle, le fleuve d'est en ouest ; chaque trait a son cadre serré
+  // (x, y, largeur, hauteur) : le compositeur ne recompose que là
+  var EAU = {
+    riviere: "M351 24C349 27 344 36 341 42C338 48 336 55 333 62C331 69 328 75 326 82C323 89 322 95 320 102C319 109 316 115 314 122C312 129 311 135 310 142C309 149 311 156 308 162C306 168 299 175 294 180C289 185 283 188 278 192C272 196 265 201 260 206C255 211 250 216 247 222C243 228 241 234 237 240C234 246 229 250 225 256C220 262 215 268 212 274C208 280 207 288 204 294C200 300 197 306 192 312C188 318 181 322 176 328C172 334 167 340 164 346C161 352 160 359 159 366C158 373 158 379 158 386C158 393 160 399 160 406C160 413 160 420 159 426C159 432 156 439 155 442",
+    ruisseau: "M694 56C691 57 684 61 678 64C672 67 665 72 658 75C651 79 645 82 638 85C631 88 625 92 618 95C611 99 605 103 598 106C591 108 583 109 576 110C569 112 561 114 554 116C547 119 541 123 534 126C527 129 519 132 512 134C505 136 497 137 490 138C483 140 475 142 468 144C461 145 453 147 446 148C439 150 431 151 424 152C417 154 409 154 402 155C395 156 387 158 380 160C373 161 365 163 358 164C351 165 343 166 336 165C329 163 318 157 314 156",
+    fleuve: "M972 470C968 469 957 469 950 467C943 464 937 457 930 454C923 451 915 451 908 450C901 449 893 448 886 446C879 444 871 438 864 437C857 436 849 436 842 437C835 439 829 444 822 448C815 451 807 456 800 458C793 459 785 458 778 459C771 460 763 464 756 465C749 467 741 469 734 469C727 468 719 466 712 462C705 459 700 453 694 449C688 445 681 442 674 438C667 435 661 433 654 429C647 425 641 419 634 415C627 412 619 410 612 408C605 406 597 404 590 404C583 404 575 405 568 407C561 409 553 413 546 416C539 419 531 423 524 424C517 425 509 425 502 425C495 426 487 426 480 428C473 429 465 432 458 435C451 438 445 444 438 447C431 450 423 450 416 451C409 453 401 453 394 456C387 459 379 465 372 466C365 468 357 464 350 463C343 462 335 463 328 460C321 458 315 454 308 450C301 447 293 443 286 441C279 438 271 436 264 436C257 437 249 439 242 443C235 446 229 453 222 456C215 458 207 457 200 457C193 457 185 457 178 457C171 457 163 458 156 458C149 459 141 459 134 459C127 459 119 458 112 459C105 460 97 460 90 462C83 463 75 467 68 469C61 471 53 474 46 475C39 476 28 474 24 474"
+  };
+  var EAU_CADRES = { riviere: [150, 18, 206, 430], ruisseau: [308, 50, 392, 122], fleuve: [18, 396, 960, 86] };
+  var EAU_TIRETS = { riviere: "3 16 1.5 22", ruisseau: "2 14 1 18", fleuve: "5 19 2 27 3 23" };
+  // Images de la carte vivante (bourgs avec et sans bannière, bandes des bannières, nappe de brume), demandées et décodées
+  // au chargement du jeu (règle du projet : tout est chargé au lancement) : la première carte n'attend ni lecture ni
+  // décodage. Gardées dans le module.
+  var prechargees = [];
+  (function () {
+    if (typeof Image === "undefined" || !JEU.SPRITES) return;
+    Object.keys(JEU.SPRITES).filter(function (n) { return /^(lieu|drapeau)-/.test(n); }).forEach(function (n) {
+      var im = new Image();
+      im.src = JEU.SPRITES[n].src;
+      prechargees.push(im);
+      if (im.decode) im.decode().catch(function () { /* image absente : la carte prend son repli */ });
+    });
+  })();
+  function ambianceActive() { return !!(JEU.anim && JEU.anim.ambiance && JEU.anim.ambiance()); }
+  function animActive() { return !!(JEU.anim && JEU.anim.actif && JEU.anim.actif()); }
+  function drapeauxPrets() { return ["france", "angleterre", "omeyyades"].every(function (k) { return !!image("drapeau-" + k); }); }
+  function pc(v, total) { return Math.round(v / total * 10000) / 100 + "%"; }
+  function cadre(x, y, w, h) { return "left:" + pc(x, L) + ";top:" + pc(y, H) + ";width:" + pc(w, L) + ";height:" + pc(h, H) + ";"; }
+
+  // Lumière du jour : aube dorée avant 10 h (de l'est), plein jour, soir cuivré à partir de 18 h (de l'ouest) ; multipliée
+  // sur le terrain, sous les routes, les bourgs et les noms. Aucune animation.
+  var LUMIERES = {
+    aube: { x1: 1, x2: 0, de: "#efb088", a: "#fff4ea", op: 0.16 },
+    jour: { x1: 0, x2: 1, de: "#f6dfae", a: "#ffffff", op: 0.12 },
+    soir: { x1: 0, x2: 1, de: "#cf8048", a: "#f3d2b2", op: 0.2 }
+  };
+  function moment(heure) { return heure < 10 ? "aube" : heure < 18 ? "jour" : "soir"; }
+  function lumiereSVG(heure) {
+    var m = moment(heure), l = LUMIERES[m];
+    return "<defs><linearGradient id='lumiereC' x1='" + l.x1 + "' y1='0' x2='" + l.x2 + "' y2='.5'><stop offset='0' stop-color='" + l.de + "'/>" +
+      "<stop offset='1' stop-color='" + l.a + "'/></linearGradient></defs><rect class='lumiere-jour " + m + "' width='" + L + "' height='" + H +
+      "' fill='url(#lumiereC)' opacity='" + l.op + "' style='mix-blend-mode:multiply' pointer-events='none'/>";
+  }
+  // Eau qui scintille : des reflets clairs en pointillés le long de la rivière, du ruisseau et du fleuve, chacun dans son
+  // petit SVG du calque de vie, qui s'allume et s'éteint à son rythme (opacité de l'élément entier : le compositeur seul ;
+  // une animation dans le dessin le ferait repeindre à chaque image). Le calque passe au-dessus des noms : un masque fixe
+  // efface les reflets sous chaque nom et chaque ligne dessous (largeur estimée d'après le nombre de lettres).
+  function eauHTML(etiquettes) {
+    return ["riviere", "ruisseau", "fleuve"].map(function (k, i) {
+      var b = EAU_CADRES[k], id = "masqueEau-" + k;
+      var trous = etiquettes.filter(function (e) { return e.x + e.w / 2 > b[0] && e.x - e.w / 2 < b[0] + b[2] && e.y + 7 > b[1] && e.y - 17 < b[1] + b[3]; });
+      var masque = trous.length ? "<defs><mask id='" + id + "' maskUnits='userSpaceOnUse' x='" + b[0] + "' y='" + b[1] + "' width='" + b[2] + "' height='" + b[3] + "'>" +
+        "<rect x='" + b[0] + "' y='" + b[1] + "' width='" + b[2] + "' height='" + b[3] + "' fill='#fff'/>" + trous.map(function (e) {
+          return "<rect x='" + Math.round(e.x - e.w / 2) + "' y='" + Math.round(e.y - 17) + "' width='" + Math.round(e.w) + "' height='24' fill='#000'/>";
+        }).join("") + "</mask></defs>" : "";
+      return "<svg class='eau-vive e" + i + "' style='" + cadre(b[0], b[1], b[2], b[3]) + "' viewBox='" + b.join(" ") + "' preserveAspectRatio='none'>" + masque +
+        "<path d='" + EAU[k] + "'" + (masque ? " mask='url(#" + id + ")'" : "") + " fill='none' stroke='#f3f7ee' stroke-linecap='round' stroke-width='" + (k === "fleuve" ? 2.1 : 1.5) +
+        "' stroke-dasharray='" + EAU_TIRETS[k] + "'/></svg>";
+    }).join("");
+  }
+
+  // Ce qu'un lieu dessiné par noeud() apporte au calque de vie : sa bannière, sa fumée, sa nappe de brume.
+  function noterVie(id, lieu, campLieu, x0, y0, sp, nu) {
+    if (nu) vie.bannieres.push({ id: id, camp: campLieu, x: x0 + nu.hampe[0], y: y0 + nu.hampe[1] });
+    if (!vie.ambiance) return;
+    var ch = CHEMINEES[lieu];
+    if (ch && (id === "domaine" || vie.recents.indexOf(id) >= 0)) vie.fumees.push([x0 + ch[0], y0 + ch[1]]);
+    var p = lieu === "brume" && JEU.campagne.province(id);
+    if (p) vie.nappes.push({ front: p.front, x: x0, y: y0, w: sp.w, h: sp.h });
+  }
+  // Bannière d'un bourg : la bande de six images dans une fenêtre d'une image, ancrée au pied du mât (sa hampe). phase :
+  // 0, 1 ou 2, pour que deux bannières voisines ne flottent pas ensemble.
+  function banniereHTML(b, classe, phase) {
+    var d = image("drapeau-" + b.camp);
+    return "<span class='drapeau-carte p" + phase + (classe ? " " + classe : "") + "' data-lieu='" + b.id + "' data-camp='" + b.camp + "' style='" +
+      cadre(b.x - d.ax, b.y - d.ay, d.w, d.h) + "transform-origin:" + pc(d.ax, d.w) + " " + pc(d.ay, d.h) + "'>" +
+      "<img src='" + d.src + "' alt='' draggable='false' style='width:" + (d.frames || 1) * 100 + "%'></span>";
+  }
+
+  // Un bourg perd sa bannière flottante (bande ou bourg sans bannière absent) : il reprend son image à bannière cuite.
+  function oterBanniere(carte, id) {
+    var b = carte.querySelector(".drapeau-carte[data-lieu='" + id + "']"), im = carte.querySelector(".noeud[data-lieu='" + id + "'] image.lieu[data-cuit]");
+    if (b) b.remove();
+    if (im) { im.setAttribute("href", im.getAttribute("data-cuit")); im.removeAttribute("data-cuit"); }
+  }
+
+  // Le calque de vie, posé sur le dessin de la carte : nappes de brume, fumées, bannières, oiseaux ; puis la cérémonie de
+  // conquête s'il y en a une. Rien sans ambiance ni cérémonie.
+  function vieCarte(carte, v, conquete, suite) {
+    var h = v.ambiance && v.fond ? eauHTML(v.etiquettes) : "", nappe = image("lieu-brume");
+    // brume : les nappes d'un même front dérivent ensemble (le même vent), dans une bande de toute la largeur ; deux
+    // fronts, deux éléments animés
+    var fronts = {};
+    if (v.ambiance && nappe) v.nappes.forEach(function (n) { (fronts[n.front] = fronts[n.front] || []).push(n); });
+    Object.keys(fronts).forEach(function (fr, g) {
+      var ns = fronts[fr], y0 = Math.min.apply(null, ns.map(function (n) { return n.y; })), y1 = Math.max.apply(null, ns.map(function (n) { return n.y + n.h; }));
+      h += "<span class='brumes-vives' style='top:" + pc(y0, H) + ";height:" + pc(y1 - y0, H) + (g % 2 ? ";animation-direction:alternate-reverse" : "") + "'>" +
+        ns.map(function (n) {
+          return "<img class='nappe-vive' src='" + nappe.src + "' alt='' draggable='false' style='left:" + pc(n.x, L) + ";top:" + pc(n.y - y0, y1 - y0) + ";width:" + pc(n.w, L) + ";height:" + pc(n.h, y1 - y0) + "'>";
+        }).join("") + "</span>";
+    });
+    if (v.ambiance) v.fumees.forEach(function (f, i) {
+      h += "<span class='fumee-carte' style='left:" + pc(f[0], L) + ";top:" + pc(f[1], H) + ";--d:" + (-((i * 1.7) % 4.8)).toFixed(1) + "s'><i></i><i></i></span>";
+    });
+    v.bannieres.forEach(function (b, i) { h += banniereHTML(b, b.id === conquete ? "leve" : "", i % 3); });
+    if (v.ambiance) h += "<span class='oiseaux-carte'><i class='aile-a'></i><i class='aile-b'></i></span>";
+    if (!h && !conquete) { if (suite) suite(); return null; }
+    var div = document.createElement("div");
+    div.className = "vie-carte" + (v.ambiance ? " ambiance" : "");
+    div.setAttribute("aria-hidden", "true");
+    div.innerHTML = h;
+    carte.appendChild(div);
+    if (div.querySelector(".nappe-vive")) carte.classList.add("brume-vive");
+    // une bande de bannière qui ne se charge pas : les bourgs de ce camp reprennent leur bannière cuite (retenu pour la suite)
+    Array.prototype.forEach.call(div.querySelectorAll(".drapeau-carte img"), function (im) {
+      im.addEventListener("error", function () {
+        manquees[im.getAttribute("src")] = true;
+        var camp = im.parentNode.getAttribute("data-camp");
+        Array.prototype.forEach.call(carte.querySelectorAll(".drapeau-carte[data-camp='" + camp + "']"), function (b) { oterBanniere(carte, b.getAttribute("data-lieu")); });
+      });
+    });
+    if (conquete) ceremonie(carte, div, conquete, suite); else if (suite) suite();
+    return div;
+  }
+
+  // Province prise à la dernière bataille (campagne.derniereConquete, champ facultatif posé par JEU.campagne.apresBataille) :
+  // lue une fois et effacée ; fêtée seulement si les animations sont actives et la province bien prise.
+  function prendreConquete(c) {
+    if (c.derniereConquete === undefined) return null;
+    var id = c.derniereConquete;
+    delete c.derniereConquete;
+    JEU.sauvegarde.enregistrer();
+    return typeof id === "string" && POSITIONS[id] && c.conquises.indexOf(id) >= 0 && animActive() ? id : null;
+  }
+  // Cérémonie de conquête (1,2 s après l'entrée de l'écran, une seule fois) : la bannière adverse tombe (70°, 400 ms), le
+  // bourg adverse se fond dans celui de France, dont la bannière se lève ; un anneau d'or s'élargit et s'efface ; la brume
+  // du lieu suivant se lève ; éclat d'or et son du sceau quand la bannière touche le sol ; la ligne de la chronique arrive
+  // en dernier. Les temps sont dans la feuille de style (retards des animations) ; les éléments sont retirés à la fin.
+  function ceremonie(carte, div, id, suite) {
+    var C = JEU.campagne, p = C.province(id), f = p && C.front(p.front), pos = POSITIONS[id];
+    if (!f || !pos) { if (suite) suite(); return; }
+    var x = pos[0], y = pos[1], h = "", avant = "";
+    var nuAdv = image("lieu-" + f.camp + "-nu"), cuitAdv = image("lieu-" + f.camp);
+    var avecBanniere = !!(nuAdv && nuAdv.hampe && image("drapeau-" + f.camp) && div.querySelector(".drapeau-carte.leve"));
+    var ancien = avecBanniere ? nuAdv : cuitAdv;
+    if (ancien) avant = "<img class='bourg-ancien' src='" + ancien.src + "' alt='' draggable='false' style='" + cadre(x - ancien.ax, y - ancien.ay, ancien.w, ancien.h) + "'>";
+    if (avecBanniere) h += banniereHTML({ id: id + "-adverse", camp: f.camp, x: x - nuAdv.ax + nuAdv.hampe[0], y: y - nuAdv.ay + nuAdv.hampe[1] }, "tombe", 0);
+    var sp = image("lieu-france") || { w: 80, h: 80 }, rx = sp.w * 0.62, ry = sp.w * 0.36, cy = y - sp.h * 0.2;
+    h += "<span class='anneau-conquete' style='" + cadre(x - rx, cy - ry, 2 * rx, 2 * ry) + "'></span>";
+    // la brume se lève sur le lieu suivant du front, et entre lui et celui d'après (voile continu de voileBrume)
+    var nappe = image("lieu-brume"), suivante = C.prochaineProvince(f.id);
+    if (nappe && suivante && suivante.front === f) {
+      var q = POSITIONS[suivante.province.id], ap = f.provinces[suivante.niveau + 1], r = ap && POSITIONS[ap.id];
+      if (q) h += "<img class='nappe-leve' src='" + nappe.src + "' alt='' draggable='false' style='" + cadre(q[0] - nappe.ax, q[1] - nappe.ay, nappe.w, nappe.h) + "'>";
+      if (q && r && image("fond-campagne")) {
+        var m = [(q[0] + r[0]) / 2, (q[1] + r[1]) / 2 + 8], k = 0.95;
+        h += "<img class='nappe-leve entre' src='" + nappe.src + "' alt='' draggable='false' style='" + cadre(m[0] - nappe.ax * k, m[1] - nappe.ay * k, nappe.w * k, nappe.h * k) + "'>";
+      }
+    }
+    // posés tout de suite, immobiles (l'ancien bourg couvre le nouveau, la bannière de France attend) ; la cérémonie part
+    // une image après le premier dessin de l'écran (classe « fete ») : rien ne se joue avant d'être vu, même si l'écran
+    // tarde à se peindre
+    div.insertAdjacentHTML("afterbegin", avant);
+    div.insertAdjacentHTML("beforeend", h);
+    var lancer = JEU.anim && JEU.anim.apresImage ? JEU.anim.apresImage : function (g) { setTimeout(g, 0); };
+    lancer(function () {
+      if (!div.isConnected) { if (suite) suite(); return; }
+      div.classList.add("fete");
+      setTimeout(function () {
+        if (!div.isConnected) return;
+        if (JEU.sons) JEU.sons.jouer("sceau");
+        var b = div.getBoundingClientRect();
+        if (JEU.anim && JEU.anim.eclat && b.width) JEU.anim.eclat(b.left + x / L * b.width, b.top + (y - 24) / H * b.height, "or", 12);
+      }, 650);
+      if (suite) setTimeout(suite, DUREE_CEREMONIE);
+      setTimeout(function () {
+        Array.prototype.forEach.call(div.querySelectorAll(".bourg-ancien, .drapeau-carte.tombe, .anneau-conquete, .nappe-leve"), function (n) { n.remove(); });
+        var b = div.querySelector(".drapeau-carte.leve");
+        if (b) b.classList.remove("leve");
+        div.classList.remove("fete");
+      }, 2200);
+    });
+  }
+
+  // Événement du jour : un ruban dans le coin bas de la carte mène à sa carte de jeu (sous la carte, souvent hors de la
+  // vue) ; sur cette carte, un cachet « Aujourd'hui » en cire rendue, frappé une fois par jour, la première fois qu'elle
+  // se montre (gardé dans le module : rien dans la sauvegarde). Sans animations : ruban et cachet posés, sans frappe.
+  function rubanJour(ev) {
+    var el = JEU.ui.el;
+    return el("button", { type: "button", class: "ruban-jour", title: "Voir l'événement du jour", onclick: function () {
+      var k = document.querySelector("#ecran-jouer .carte-jeu.evenement");
+      if (!k) return;
+      k.scrollIntoView({ block: "center", behavior: animActive() ? "smooth" : "auto" });
+      k.focus({ preventScroll: true });
+    } }, [el("b", { texte: "Aujourd'hui" }), el("span", { texte: ev.titre }),
+      el("i", { "aria-hidden": "true", html: "<svg viewBox='0 0 12 12' width='12' height='12'><path d='M2 4l4 4 4-4' fill='none' stroke='currentColor' stroke-width='2'/></svg>" })]);
+  }
+  function cachetJour() {
+    return JEU.ui.el("span", { class: "cachet-jour", html: "<img src='assets/images/reponses/tampon-cire.png' alt='' draggable='false'><b>Aujourd'hui</b>" });
+  }
+  var cachetFrappe = null; // jour où le cachet a déjà été frappé
+  function frapperCachet(carteJeu) {
+    var jour = U.jour();
+    if (!carteJeu || cachetFrappe === jour) return;
+    function frapper() {
+      if (cachetFrappe === jour) return;
+      cachetFrappe = jour;
+      var c = carteJeu.querySelector(".cachet-jour");
+      if (!c || !animActive()) return;
+      c.classList.add("frappe");
+      if (JEU.sons) JEU.sons.jouer("sceau");
+    }
+    if (typeof IntersectionObserver === "undefined") { frapper(); return; }
+    var obs = new IntersectionObserver(function (es) {
+      if (!carteJeu.isConnected) { obs.disconnect(); return; }
+      if (!es.some(function (e) { return e.isIntersecting; })) return;
+      obs.disconnect();
+      frapper();
+    }, { threshold: 0.6 });
+    obs.observe(carteJeu);
+  }
+
+  function carteSVG(c, v) {
+    vie = v || null;
     var C = JEU.campagne, france = camp("joueur"), fond = image("fond-campagne");
     var brume = {}; // lieux pas encore ouverts : ni pris, ni visés
     C.FRONTS.forEach(function (f) {
@@ -106,7 +344,9 @@
       "<image href='assets/images/terrain-domaine.jpg' x='0' y='-65' width='1000' height='660' preserveAspectRatio='xMidYMid slice' filter='url(#sepiaC)'/>" +
       (fond ? "<image class='fond-3d' href='" + fond.src + "' x='0' y='0' width='" + L + "' height='" + H + "' preserveAspectRatio='none'/>" : "") +
       voileBrume(c, brume, fond) +
-      "<rect width='" + L + "' height='" + H + "' fill='url(#vigC)'/>";
+      "<rect width='" + L + "' height='" + H + "' fill='url(#vigC)'/>" +
+      (fond ? lumiereSVG(new Date().getHours()) : "");
+    if (vie) vie.fond = !!fond;
     C.FRONTS.forEach(function (f) { s += route(f.id, ["domaine"].concat(f.provinces.map(function (p) { return p.id; })), brume); });
     // titres des fronts, en haut et en bas, à l'intérieur du cadre de parchemin
     C.FRONTS.forEach(function (f, i) {
@@ -129,6 +369,7 @@
         s += noeud(POSITIONS[p.id], p.icone, coul, conquise ? "lys" : adv.embleme, p.nom, sous, p.id, etat, lieu);
       });
     });
+    vie = null;
     return s + "</svg>";
   }
 
@@ -156,6 +397,10 @@
 
   function noeud(pos, icone, coul, embleme, nom, sous, id, etat, lieu) {
     var x = pos[0], y = pos[1], sp = image("lieu-" + lieu);
+    // bannière qui flotte (lot B) : le bourg rendu sans sa bannière (lieu-…-nu), la bande drapeau-<camp> posée sur sa hampe
+    // par le calque de vie ; sans ambiance ni cérémonie, ou si une image manque : le bourg à bannière cuite
+    var campLieu = lieu.split("-")[0], nu = sp && vie && vie.drapeaux && lieu !== "brume" ? image("lieu-" + lieu + "-nu") : null;
+    if (nu && !(nu.hampe && image("drapeau-" + campLieu))) nu = null;
     var s = "<g class='noeud " + etat + (sp ? "" : " repli") + "' data-lieu='" + id + "' data-x='" + x + "' data-y='" + y + "' tabindex='" + (etat === "cible" || etat === "attaque" ? "0" : "-1") + "'>";
     var halo = etat === "cible" || etat === "attaque" ? " fill='none' stroke='" + (etat === "attaque" ? "#d0644a" : "#e2c272") + "' stroke-width='4'" : null;
     // halo : un trait d'or (ou rouge) posé sur un trait sombre, lisible sur l'herbe claire comme sur le sable du sud
@@ -173,7 +418,9 @@
     if (sp) {
       // halo posé au sol autour du bourg, aplati et remonté : il ne touche pas le nom
       if (halo) s += anneauHalo("ellipse", " cx='" + x + "' cy='" + (y - sp.h * 0.2) + "' rx='" + sp.w * 0.58 + "' ry='" + sp.w * 0.34 + "'");
-      s += medaillon + "<image class='lieu" + (lieu === "brume" ? " nappe" : "") + "' href='" + sp.src + "' x='" + (x - sp.ax) + "' y='" + (y - sp.ay) + "' width='" + sp.w + "' height='" + sp.h + "'/>";
+      s += medaillon + "<image class='lieu" + (lieu === "brume" ? " nappe" : "") + "' href='" + (nu || sp).src + "'" + (nu ? " data-cuit='" + sp.src + "'" : "") +
+        " x='" + (x - sp.ax) + "' y='" + (y - sp.ay) + "' width='" + sp.w + "' height='" + sp.h + "'/>";
+      if (vie) noterVie(id, lieu, campLieu, x - sp.ax, y - sp.ay, sp, nu);
       // nappe de brume : le nom se cale sur le bas visible de la nuée (« bas » dans sprites.js), pas sur son cadre
       bas = y + (sp.bas !== undefined ? sp.bas : sp.h - sp.ay);
       haut = y + (sp.haut !== undefined ? sp.haut : -sp.ay);
@@ -183,6 +430,8 @@
       bas = y + MEDAILLON.bas; haut = y + MEDAILLON.haut;
     }
     var l = lignesNoms(haut, bas, nomDessus(id, !sp), !!sous);
+    // place des noms, pour le masque de l'eau du calque de vie (largeurs estimées : Cinzel gras 17 px, Crimson gras 18 px)
+    if (vie) { vie.etiquettes.push({ x: x, y: l.nom, w: nom.length * 10.5 + 14 }); if (sous) vie.etiquettes.push({ x: x, y: l.sous, w: sous.length * 8.8 + 14 }); }
     s += "<g filter='url(#ombreC)'><text x='" + x + "' y='" + l.nom + "' class='nom-lieu'>" + U.echapper(nom) + "</text>";
     if (sous) s += "<text x='" + x + "' y='" + l.sous + "' class='sous-lieu'>" + U.echapper(sous) + "</text>";
     return s + "</g></g>";
@@ -202,6 +451,9 @@
       im.addEventListener("error", function () {
         var src = im.getAttribute("href");
         manquees[src] = true;
+        // bourg sans bannière absent (lot B) : le bourg à bannière cuite le remplace, sans bannière flottante
+        var cuit = im.getAttribute("data-cuit");
+        if (cuit && !manquees[cuit] && im.parentNode) { oterBanniere(carte, im.parentNode.getAttribute("data-lieu")); return; }
         var g = im.parentNode, repli = g && g.querySelector(".repli-lieu");
         if (repli) {
           // repli : le médaillon (rayon 50 avec le halo) remplace le bourg ; le nom passe sous le médaillon
@@ -416,6 +668,13 @@
     return annonce;
   }
 
+  // Après la cérémonie de conquête : la missive du rival, si l'élève est encore sur la carte, hors partie.
+  function missivesApresCeremonie() {
+    if (JEU.ui.ecranCourant() !== "jouer" || JEU.partie) return;
+    var a = afficherMissives(null);
+    if (a) JEU.ui.toast(a, "tribut", 5000);
+  }
+
   JEU.ui.ecrans.jouer = function (s) {
     var el = JEU.ui.el;
     var C = JEU.campagne;
@@ -423,6 +682,7 @@
     var c = C.etat();
     var etat = JEU.sauvegarde.etat();
     var ev = C.evenementDuJour();
+    var conquete = prendreConquete(c); // cérémonie de conquête à jouer (lot B), ou null
     s.innerHTML = "";
     s.appendChild(el("h1", { class: "titre-ecran", texte: "La campagne" }));
     s.appendChild(el("p", { class: "sous-titre-campagne", html: JEU.icones.icone("lys", 22) + " Royaume de France <span>contre</span> deux rivaux" }));
@@ -447,8 +707,13 @@
       ]));
     }
 
-    var carte = el("div", { class: "carte-campagne", html: carteSVG(c) });
+    // carte vivante (lot B) : l'ambiance et les bannières flottantes, ou la cérémonie seule
+    var amb = ambianceActive();
+    var v = { ambiance: amb, drapeaux: (amb || !!conquete) && drapeauxPrets(), recents: c.conquises.slice(-2), bannieres: [], fumees: [], nappes: [], etiquettes: [] };
+    var carte = el("div", { class: "carte-campagne", html: carteSVG(c, v) });
     surveillerImages(carte);
+    vieCarte(carte, v, conquete, conquete ? missivesApresCeremonie : null);
+    if (ev) carte.appendChild(rubanJour(ev));
     s.appendChild(carte);
     Array.prototype.forEach.call(carte.querySelectorAll(".noeud.cible, .noeud.attaque"), function (n) {
       function go() { lancerBataille(n.getAttribute("data-lieu")); }
@@ -476,11 +741,13 @@
     options.forEach(function (o, i) {
       grille.appendChild(el("button", { class: "carte-jeu" + (o.evenement ? " evenement" : ""), onclick: o.action }, [
         el("span", { class: "touche", texte: String(i + 1) }),
+        o.evenement ? cachetJour() : null,
         el("span", { class: "illustration ill-" + o.icone }, [el("span", { class: "icone-jeu", html: JEU.icones.icone(o.icone, 44) })]),
         el("h2", { texte: o.titre }), el("p", { texte: o.texte })
       ]));
     });
     s.appendChild(grille);
+    if (ev) frapperCachet(grille.querySelector(".carte-jeu.evenement"));
 
     // royaume et rivalité
     var jz = el("div", { class: "jauges-royaume" });
@@ -495,7 +762,7 @@
         el("p", { texte: c.rival.defaites + " attaque" + (c.rival.defaites > 1 ? "s" : "") + " repoussée" + (c.rival.defaites > 1 ? "s" : "") + "." }),
         rx ? el("p", { class: "note ligne-expeditions", texte: ligneExpeditions(rx) }) : null,
         el("div", { class: "menace" }, [el("span", { texte: "Menace" }), el("span", { class: "jr-barre" }, [el("span", { style: "width:" + Math.min(100, c.rival.attaque ? 100 : c.rival.menace * 50) + "%" })])]),
-        c.chronique.length ? el("ul", { class: "chronique" }, c.chronique.slice(0, 5).map(function (x) { return el("li", { texte: x.texte }); })) : el("p", { class: "note", texte: "La chronique des campagnes est encore vierge." })
+        c.chronique.length ? el("ul", { class: "chronique" }, c.chronique.slice(0, 5).map(function (x, k) { return el("li", { class: k === 0 && conquete ? "neuve" : null, texte: x.texte }); })) : el("p", { class: "note", texte: "La chronique des campagnes est encore vierge." })
       ])
     ]));
 
@@ -504,6 +771,11 @@
       if (n >= 1 && n <= options.length) { options[n - 1].action(); return true; }
       return false;
     };
+    if (conquete) {
+      // la cérémonie d'abord ; la missive du rival vient à sa fin (missivesApresCeremonie)
+      if (annonce) JEU.ui.toast(annonce, "tribut", 5000);
+      return;
+    }
     annonce = afficherMissives(annonce);
     if (annonce) JEU.ui.toast(annonce, "tribut", 5000);
   };

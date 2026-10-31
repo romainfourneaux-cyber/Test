@@ -49,14 +49,86 @@
   }, true);
 
   // ---------- écrans ----------
-  var ecranCourant = null;
+  // Changement d'écran sans cuir nu (lot B, 31/10/2026 ; plan graphismes-animations-plan.md, B1.1). L'ancien écran sort
+  // (140 ms, une légère descente) pendant que le nouveau entre déjà, depuis l'opacité 0,3 : aucune image ne montre le cuir
+  // seul. Pour sortir, l'ancien écran est déjà caché pour le jeu et la feuille de style (attribut hidden : il ne pèse plus
+  // sur la mise en page du nouveau), mais la classe « sortie » le garde visible, en position fixe là où on le voyait, sans
+  // le sortir du DOM (rien n'est recalculé dedans : ni styles, ni mise en page). Le nouvel écran défile tout de suite en
+  // haut : l'ancien ne bouge pas pour autant. Un écran rappelé alors qu'il est déjà là est redessiné sur place
+  // (ui.redessiner). Animations coupées : les écrans sautent, comme avant. Rien n'est lu dans la mise en page après une
+  // écriture : la seule lecture (la place de l'ancien écran) se fait avant de toucher au DOM.
+  var ecranCourant = null, SORTIE_MS = 140, sorties = []; // sorties : { s, style, fin, minuterie }
+  function finirSortie(o) {
+    clearTimeout(o.minuterie);
+    var i = sorties.indexOf(o);
+    if (i >= 0) sorties.splice(i, 1);
+    var s = o.s;
+    s.removeEventListener("animationend", o.fin);
+    s.hidden = true;
+    s.classList.remove("sortie", "entree");
+    s.style.cssText = o.style;
+    s.inert = false;
+    s.removeAttribute("aria-hidden");
+  }
+  // Place de l'écran affiché, notée juste avant que le menu ne se cache ou ne revienne (début et fin d'une partie) : la
+  // sortie part de là où on voyait l'écran, sans sauter de la hauteur du menu. Oubliée à l'image suivante.
+  var placeNotee = null;
+  function noterPlace() {
+    var s = ecranCourant ? document.getElementById("ecran-" + ecranCourant) : null;
+    if (!s || s.hidden || !(JEU.anim && JEU.anim.actif())) return;
+    placeNotee = { s: s, r: s.getBoundingClientRect() };
+    if (racine.requestAnimationFrame) racine.requestAnimationFrame(function () { placeNotee = null; });
+  }
+  // Pose la sortie de l'écran s (affiché) : renvoie faux si elle n'a pas lieu (écran invisible, pas de place).
+  function lancerSortie(s) {
+    var parent = s.parentNode, r = placeNotee && placeNotee.s === s ? placeNotee.r : s.getBoundingClientRect();
+    placeNotee = null;
+    if (!parent || !r.width || !r.height || r.bottom <= 0 || r.top >= racine.innerHeight) return false;
+    var haut = parent.getBoundingClientRect().top + racine.scrollY; // le haut de <main> une fois la page remontée
+    var o = { s: s, style: s.style.cssText, minuterie: null };
+    s.hidden = true;
+    s.classList.remove("entree");
+    s.classList.add("sortie");
+    s.style.left = r.left + "px"; s.style.top = r.top + "px"; s.style.width = r.width + "px";
+    // la part de l'écran qui passerait sur le menu (page défilée) est coupée
+    if (r.top < haut) s.style.clipPath = "inset(" + Math.round(haut - r.top) + "px 0 0 0)";
+    s.inert = true;
+    s.setAttribute("aria-hidden", "true");
+    // la sortie se termine à la fin de son animation : elle ne part qu'à la première image peinte du nouvel écran, qui peut
+    // tarder (un écran lourd à peindre) ; une minuterie de secours la termine de toute façon
+    o.fin = function (ev) { if (ev.target === s) finirSortie(o); };
+    s.addEventListener("animationend", o.fin);
+    o.minuterie = setTimeout(function () { finirSortie(o); }, SORTIE_MS + 600);
+    sorties.push(o);
+    return true;
+  }
+  // Au premier toucher, clic ou touche, ce qui s'efface encore (écran qui sort, fenêtre qui se ferme) s'en va d'un coup :
+  // la réponse donnée aussitôt à la première question d'une bataille n'attend pas qu'un grand calque translucide soit
+  // composé (perf.js, Event Timing en 1920 × 1080 : 128 ms avec la sortie en cours, 88 ms sans).
+  ["pointerdown", "keydown"].forEach(function (t) {
+    document.addEventListener(t, function () {
+      if (sorties.length) sorties.slice().forEach(finirSortie);
+      if (minuterieModale) cacherModale();
+    }, true);
+  });
   ui.afficher = function (nom, arg) {
     if (JEU.partie && JEU.partie.enCours && nom !== "partie") {
       ui.toast("Termine ou quitte la partie en cours d'abord.");
       return;
     }
-    Array.prototype.forEach.call(document.querySelectorAll(".ecran"), function (s) { s.hidden = true; });
+    // une sortie encore en cours se termine tout de suite (deux changements rapprochés, retour vers l'écran qui sortait)
+    sorties.slice().forEach(finirSortie);
     var s = document.getElementById("ecran-" + nom);
+    if (nom === ecranCourant && !s.hidden) return ui.redessiner(nom, arg);
+    var ancien = ecranCourant ? document.getElementById("ecran-" + ecranCourant) : null;
+    // une partie (bataille, conseil, événement) entre sans sortie de l'écran d'avant : sa première question ne doit pas
+    // attendre qu'un grand calque translucide soit défait (intégration du lot B, perf.js en 1920 × 1080 : jusqu'à 256 ms
+    // de la touche à la question suivante avec la sortie, 88 ms au plus sans). L'écran de la partie se pose d'un coup, en
+    // pleine opacité (aucune image de cuir nu), avec un léger glissé (feuille de style, #ecran-partie.entree).
+    if (!(nom !== "partie" && ancien && ancien !== s && !ancien.hidden && JEU.anim && JEU.anim.actif() && lancerSortie(ancien))) ancien = null;
+    Array.prototype.forEach.call(document.querySelectorAll("main > .ecran"), function (x) {
+      if (x !== s && !x.hidden) { x.hidden = true; x.classList.remove("entree"); }
+    });
     s.hidden = false;
     ecranCourant = nom;
     Array.prototype.forEach.call(document.querySelectorAll("#menu button"), function (b) {
@@ -68,7 +140,22 @@
     var rendu = ui.ecrans[nom];
     if (rendu) rendu(s, arg);
     window.scrollTo(0, 0);
-    s.classList.remove("entree"); void s.offsetWidth; s.classList.add("entree");
+    // l'écran sort de display: none : son animation d'entrée part d'elle-même, sans relire la mise en page
+    s.classList.add("entree");
+  };
+  // Redessin sur place d'un écran déjà affiché (route des expéditions, arsenal fermé, conquête, écran rappelé) : ni
+  // sortie, ni entrée, ni défilement. Le rendu reçoit { surPlace: true } (contrat avec l'habillage des menus, B4 : pas de
+  // cascade d'entrée). Un écran qui n'est pas affiché est montré normalement (ui.afficher).
+  ui.redessiner = function (nom, arg) {
+    var s = document.getElementById("ecran-" + nom);
+    if (!s || nom !== ecranCourant || s.hidden) return ui.afficher(nom, arg);
+    if (JEU.partie && JEU.partie.enCours && nom !== "partie") return;
+    ui.clavier = null;
+    if (document.activeElement && document.activeElement.closest && document.activeElement.closest("#menu")) document.activeElement.blur();
+    var o = { surPlace: true };
+    if (arg && typeof arg === "object") Object.keys(arg).forEach(function (k) { if (k !== "surPlace") o[k] = arg[k]; });
+    var rendu = ui.ecrans[nom];
+    if (rendu) rendu(s, o);
   };
   ui.ecrans = {};
   ui.ecranCourant = function () { return ecranCourant; };
@@ -117,27 +204,78 @@
     minuterieToast = setTimeout(function () { t.className = "toast " + (genre || ""); }, duree || 1600);
   };
 
-  // Sceau qui s'imprime au centre de l'écran (350 ms), sans retarder la question suivante : il est posé une image
-  // après elle (JEU.anim.apresImage). Un nouveau sceau remplace celui qui est encore affiché : deux bonnes réponses
-  // rapprochées ne les impriment jamais l'un sur l'autre. genre « perte » : l'or qu'une erreur coûte en bataille
-  // (cire plus sombre, chiffre rouge clair).
-  ui.tampon = function (texte, sous, genre) {
+  // Sceau qui s'imprime (350 ms), sans retarder la question suivante : il est posé une image après elle
+  // (JEU.anim.apresImage). Un nouveau sceau remplace celui qui est encore affiché : deux bonnes réponses rapprochées ne
+  // les impriment jamais l'un sur l'autre. La cire est rendue en 3D (assets/images/reponses/tampon-cire.png) et le mot
+  // est écrit en lettres d'or dans l'empreinte, sur deux lignes s'il a deux mots. genre « perte » : l'or qu'une erreur
+  // coûte en bataille (plomb, chiffre rouge clair). Le « +12 or » reste dans un span (bataille.js en fait partir l'or).
+  // ou (facultatif) : { x : abscisse en % de la fenêtre, pres : élément à ne pas couvrir } : le conseil pose « Sage
+  // décision » là où la carte est partie (72 %), à droite de la carte suivante, jamais sur son texte. Sans « ou » :
+  // au centre de l'écran (bataille).
+  ui.tampon = function (texte, sous, genre, ou) {
     var poser = function () {
       Array.prototype.forEach.call(document.querySelectorAll(".tampon"), function (x) { x.remove(); });
       var t = document.createElement("div");
       t.className = "tampon" + (genre ? " " + genre : "");
-      t.innerHTML = JEU.icones.icone("sceau", 120) + "<b>" + U.echapper(texte) + "</b>" + (sous ? "<span>" + U.echapper(sous) + "</span>" : "");
+      var mots = String(texte).split(" "), coupe = mots.length > 1 ? Math.ceil(mots.length / 2) : 0;
+      var mot = coupe ? U.echapper(mots.slice(0, coupe).join(" ")) + "<br>" + U.echapper(mots.slice(coupe).join(" ")) : U.echapper(texte);
+      var classe = coupe ? " class='deux'" : String(texte).length > 6 ? " class='long'" : ""; // un mot long (« Dommage ») tient dans la cire
+      t.innerHTML = "<i class='tampon-cire'><b" + classe + ">" + mot + "</b></i>" + (sous ? "<span>" + U.echapper(sous) + "</span>" : "");
+      var p = ou ? ui.placeTampon(ou) : null; // lu une image après la réponse : hors du chemin vers la question suivante
+      if (p) { t.style.left = p.x + "px"; t.style.top = p.y + "px"; t.classList.add("place"); }
       document.body.appendChild(t);
-      setTimeout(function () { t.remove(); }, 700);
+      setTimeout(function () { t.remove(); }, 760);
     };
     if (JEU.anim && JEU.anim.apresImage) JEU.anim.apresImage(poser); else poser();
   };
+  // Centre du tampon (px, fenêtre) : à « x » % de la largeur, à mi-hauteur du haut de « pres » (un élément ou un
+  // rectangle : la carte suivante), poussé hors de « pres » du côté où il est, sinon de l'autre côté, sinon dessous
+  // (le bilan, aussi large que la scène), sinon sur son coin haut. ou.point : un centre déjà calculé. R : rayon du
+  // tampon (feuille de style : 144 px de cire).
+  ui.placeTampon = function (ou) {
+    if (ou.point) return ou.point;
+    var R = 76, l = racine.innerWidth, x = l * (ou.x == null ? 50 : ou.x) / 100, y = racine.innerHeight * 0.42;
+    var pres = typeof ou.pres === "function" ? ou.pres() : ou.pres;
+    var r = pres && pres.getBoundingClientRect ? (pres.isConnected ? pres.getBoundingClientRect() : null) : pres;
+    if (r && r.width) {
+      var droite = r.left + r.width, aDroite = x >= r.left + r.width / 2;
+      var placeD = droite + 8 + 2 * R <= l - 4, placeG = r.left - 8 - 2 * R >= 4;
+      y = r.top + Math.min(r.height / 2, 110);
+      if (aDroite && placeD) x = Math.min(Math.max(x, droite + 8 + R), l - 4 - R);
+      else if (!aDroite && placeG) x = Math.max(Math.min(x, r.left - 8 - R), 4 + R);
+      else if (placeD) x = droite + 8 + R;
+      else if (placeG) x = r.left - 8 - R;
+      else if (r.top + r.height + 2 * R + 30 <= racine.innerHeight) { x = Math.min(Math.max(x, R + 4), l - R - 4); y = r.top + r.height + R + 4; } // dessous
+      else { x = aDroite ? droite - R * 0.55 : r.left + R * 0.55; y = r.top + R * 0.45; } // sur son coin haut
+    }
+    return { x: Math.round(x), y: Math.round(Math.max(R, y)) };
+  };
 
   // ---------- fenêtre modale ----------
-  var retourModale = null;
+  // Entrée et sortie (lot B, B1.2) : le voile se fond en 150 ms et la boîte passe de 0,96 à 1 ; à la fermeture, la boîte
+  // s'efface en 120 ms (classe « ferme » sur #modale, rendue inerte : ni clic, ni touche, ni focus). Pour le jeu, la
+  // fenêtre est fermée dès le début de l'effacement, et ce qui la suit (retourModale : une bataille après une missive)
+  // part tout de suite, sans attendre. Une fenêtre qui s'ouvre pendant l'effacement le termine d'un coup.
+  var retourModale = null, minuterieModale = null, ecouteModale = false;
+  function cacherModale() {
+    clearTimeout(minuterieModale); minuterieModale = null;
+    var m = document.getElementById("modale");
+    m.hidden = true; m.classList.remove("ferme"); m.inert = false;
+  }
+  // l'effacement finit à la fin de l'animation du voile (elle ne part qu'à l'image suivante, qui peut tarder si ce qui
+  // suit la fenêtre est lourd à peindre) ; minuterie de secours
+  function effacerModale(m) {
+    if (!ecouteModale) {
+      ecouteModale = true;
+      m.addEventListener("animationend", function (ev) { if (ev.target === m && m.classList.contains("ferme")) cacherModale(); });
+    }
+    m.classList.add("ferme"); m.inert = true;
+    minuterieModale = setTimeout(cacherModale, 700);
+  }
   // classe : habillage particulier de la boîte (« missive-boite »), retiré à la fenêtre suivante
   ui.ouvrirModale = function (titre, contenu, fermeture, classe) {
     var m = document.getElementById("modale");
+    if (minuterieModale) cacherModale();
     var boite = m.querySelector(".modale-boite");
     boite.className = "modale-boite" + (classe ? " " + classe : "");
     boite.innerHTML = "";
@@ -161,11 +299,18 @@
     else if (!ev.shiftKey && document.activeElement === dernier) { ev.preventDefault(); premier.focus(); }
   }, true);
   ui.fermerModale = function () {
-    document.getElementById("modale").hidden = true;
+    var m = document.getElementById("modale");
+    if (!m.hidden && !m.classList.contains("ferme")) {
+      // le bouton qui avait le focus le perd : une seconde touche Entrée ne le relance pas pendant l'effacement
+      var a = document.activeElement;
+      if (a && a !== document.body && m.contains(a) && a.blur) a.blur();
+      if (JEU.anim && JEU.anim.actif()) effacerModale(m);
+      else cacherModale();
+    }
     var r = retourModale; retourModale = null;
     if (r) r();
   };
-  ui.modaleOuverte = function () { return !document.getElementById("modale").hidden; };
+  ui.modaleOuverte = function () { var m = document.getElementById("modale"); return !m.hidden && !m.classList.contains("ferme"); };
 
   // ---------- missive : une lettre scellée (personnages de la campagne, 16/10/2026) ----------
   // o : { entete, lettres: [{ medaillon (HTML), nom, sous, texte, camp }], bouton, sceau (HTML), apres }
@@ -263,16 +408,27 @@
   // ---------- questions ----------
   // Pose une question dans « zone ». fini(juste, reponseJoueur) est appelé une seule fois.
   // options : { sansIndice }
+  // Lot B (31/10/2026) : la réponse donnée est gardée (derniere) pour que panneauErreur montre, hors bataille, la question
+  // avec ta réponse en rouge et la bonne en or. Bonne réponse hors bataille : le rectangle de la réponse choisie est
+  // relevé ici (la page n'a pas changé depuis le geste : aucune mise en page forcée) et JEU.anim.frapper y pose le sceau
+  // une image plus tard. En bataille (zone .td-question), rien de plus : le sceau « Juste » de bataille.js suffit.
+  var derniere = null; // { q, rj, zone, carte, corps, bataille } : la dernière question répondue
   ui.poserQuestion = function (q, zone, fini, options) {
     options = options || {};
     zone.innerHTML = "";
     ui.questionCourante = q;
-    var deja = false;
+    var deja = false, bataille = !!(zone.closest && zone.closest(".td-question"));
     function repondre(rj) {
       if (deja) return;
       deja = true;
       ui.clavier = null;
-      fini(JEU.questions.corriger(q, rj), rj);
+      var juste = JEU.questions.corriger(q, rj);
+      derniere = { q: q, rj: rj, zone: zone, carte: carte, corps: corps, bataille: bataille };
+      if (juste && !bataille && corps && JEU.anim && JEU.anim.frapper && JEU.anim.actif()) {
+        var cible = (q.type === "qcm" || q.type === "vrai_faux" ? boutonsReponse(q, rj, corps).choisis[0] : null) || corps.querySelector(".valider") || carte;
+        if (cible) JEU.anim.frapper(cible.getBoundingClientRect());
+      }
+      fini(juste, rj);
     }
     var m = JEU.MATIERES[q.matiere] || { nom: "", couleur: "#8a7f70" };
     if (options.recit) zone.appendChild(ui.recit(options.recit));
@@ -510,19 +666,126 @@
     return reste.replace(/\s+/g, "").length < 4;
   }
   ui.repeteReponse = repeteReponse; // pour l'essai de bout en bout
+
+  // Les boutons d'une réponse : choisis (la réponse du joueur), bons (ceux de la bonne réponse), faux (à une mauvaise
+  // place : ordre, association). Texte d'un bouton de choix : son dernier span (le premier est la touche).
+  function texteBouton(b) { return b.lastElementChild ? b.lastElementChild.textContent : b.textContent; }
+  function boutonsReponse(q, rj, corps) {
+    var res = { choisis: [], bons: [], faux: [] }, r = q.reponse;
+    if (!corps || r == null) return res;
+    var bs = Array.prototype.slice.call(corps.querySelectorAll("button.choix"));
+    if (q.type === "qcm") bs.forEach(function (b) { var t = texteBouton(b); if (t === rj) res.choisis.push(b); if (t === r) res.bons.push(b); });
+    else if (q.type === "qcm_multiple") bs.forEach(function (b) { var t = texteBouton(b); if ((rj || []).indexOf(t) >= 0) res.choisis.push(b); if (r.indexOf(t) >= 0) res.bons.push(b); });
+    else if (q.type === "vrai_faux" && rj) {
+      var corrections = bs.length > 0 && texteBouton(bs[0]) !== "Vrai"; // seconde étape : les corrections à la place de Vrai / Faux
+      bs.forEach(function (b) {
+        var t = texteBouton(b);
+        if (corrections) { if (t === rj.correction) res.choisis.push(b); if (t === r.correction) res.bons.push(b); }
+        else { if (t === (rj.vrai ? "Vrai" : "Faux")) res.choisis.push(b); if (t === (r.vrai ? "Vrai" : "Faux")) res.bons.push(b); }
+      });
+    } else if (q.type === "ordre") {
+      // chaque élément au bon rang (bon) ou non (faux), selon le rang que le joueur lui a donné
+      Array.prototype.forEach.call(corps.querySelectorAll(".ordre .choix"), function (b, j) {
+        (Array.isArray(rj) && rj.indexOf(j) === r.indexOf(j) ? res.bons : res.faux).push(b);
+      });
+    } else if (q.type === "association") {
+      var col = corps.querySelector(".association .colonne");
+      if (col) Array.prototype.forEach.call(col.querySelectorAll(".choix"), function (b, i) {
+        var p = (rj || []).filter(function (x) { return x[0] === i; })[0];
+        (p && r.some(function (x) { return x[0] === p[0] && x[1] === p[1]; }) ? res.bons : res.faux).push(b);
+      });
+    }
+    res.choisis.forEach(function (b) { if (res.bons.indexOf(b) < 0) res.faux.push(b); });
+    return res;
+  }
+  ui.boutonsReponse = boutonsReponse;
+
+  // Réponse montrée (hors bataille) : la question reste, ses commandes sont désactivées ; ta réponse rougit et tremble,
+  // la bonne passe en vert-or avec un petit sceau, les autres choix s'effacent à demi. Renvoie vrai si la bonne réponse
+  // se lit entière sur les boutons (le panneau ne la répète pas).
+  function montrerReponse(q, d) {
+    var carte = d.carte, m = boutonsReponse(q, d.rj, d.corps);
+    carte.classList.add("montree");
+    Array.prototype.forEach.call(carte.querySelectorAll("button, select, input"), function (b) { b.disabled = true; });
+    m.bons.forEach(function (b) { b.classList.add("bonne-montree"); });
+    m.faux.forEach(function (b) { b.classList.add("choisie-fausse"); if (JEU.anim) JEU.anim.secouer(b); });
+    if (q.type === "qcm" || q.type === "vrai_faux" || q.type === "qcm_multiple") Array.prototype.forEach.call(d.corps.querySelectorAll("button.choix"), function (b) {
+      if (m.bons.indexOf(b) < 0 && m.faux.indexOf(b) < 0) b.classList.add("ecartee");
+    });
+    if (q.type === "trou") Array.prototype.forEach.call(d.corps.querySelectorAll(".trou"), function (c, i) {
+      var a = q.reponse[i], ok = (Array.isArray(a) ? a : [a]).some(function (x) { return U.normaliser(x) === U.normaliser(c.value); });
+      c.classList.add(ok ? "trou-juste" : "trou-faux");
+    });
+    var r = q.reponse;
+    return m.bons.length > 0 && (q.type === "qcm" || q.type === "qcm_multiple" || (q.type === "vrai_faux" && (r.vrai || !r.correction || m.bons[0].textContent.indexOf(r.correction) >= 0)));
+  }
+
+  // Ta réponse, écrite (panneau d'erreur de la bataille, qui remplace la question) ; association : le nombre de paires
+  // justes seulement (chaque définition n'est écrite qu'une fois dans le panneau : les paires ratées sont marquées dans
+  // la bonne réponse).
+  function texteJoueur(q, rj) {
+    switch (q.type) {
+      case "qcm": return String(rj == null ? "" : rj);
+      case "qcm_multiple": return rj && rj.length ? rj.join(" ; ") : "aucune case cochée";
+      case "vrai_faux": return rj ? (rj.vrai ? "Vrai." : "Faux." + (rj.correction ? " " + rj.correction : "")) : "";
+      case "ordre": return (rj || []).map(function (i) { return q.elements[i]; }).join(" → ");
+      case "trou": return (rj || []).map(function (v) { return v || "…"; }).join(", ");
+    }
+    return "";
+  }
+  // La bonne réponse écrite ; une correction qui commence déjà par « Faux » n'est pas précédée d'un second « Faux. ».
+  function texteBonne(q) {
+    var r = q.reponse;
+    if (q.type === "vrai_faux" && r && !r.vrai && /^Faux\b/.test(r.correction || "")) return r.correction;
+    return JEU.questions.texteReponse(q);
+  }
+  function pairesJustes(q, rj) {
+    return q.reponse.map(function (p) { return (rj || []).some(function (x) { return x[0] === p[0] && x[1] === p[1]; }); });
+  }
+
+  // Après une réponse montrée : le panneau entier dans la fenêtre si possible, sans faire passer l'énoncé sous le bandeau.
+  // Le panneau se déplie encore (transformé) : sa hauteur vraie est offsetHeight, son haut à 8 px près.
+  function garderEnVue(panneau, haut) {
+    var r = panneau.getBoundingClientRect(), bas = racine.innerHeight - 10;
+    r = { top: r.top, bottom: r.top + 8 + panneau.offsetHeight };
+    if (r.bottom <= bas) return;
+    var b = document.getElementById("bandeau"), hb = b ? b.getBoundingClientRect().bottom : 0;
+    var marge = haut ? haut.getBoundingClientRect().top - hb - 8 : r.top - hb - 8;
+    var dy = Math.min(r.bottom - bas, Math.max(0, marge));
+    if (dy > 0) racine.scrollBy(0, dy);
+  }
   // options (facultatif, 24/10/2026) : { sansFiche } : pas de bouton « Voir la fiche » (Grand Gardien d'une expédition : les
   // fiches ratées attendent le bilan, comme pour un boss).
+  // Lot B (31/10/2026, décision 2.1.4 du plan) : hors bataille, la question reste au-dessus (réponse montrée, voir
+  // montrerReponse) et le panneau se déplie dessous, en parchemin à filet brique et lettrine rouge. En bataille (colonne
+  // étroite, énoncé contrôlé à 1366 × 768), le panneau remplace la question comme avant, mais montre ta réponse barrée
+  // de rouge au-dessus de la bonne réponse en or. options.garder (conseil.js) : la scène est gardée telle quelle (le
+  // conseil a marqué lui-même ses boutons) ; options.reponse : ta réponse, quand poserQuestion ne l'a pas vue.
   ui.panneauErreur = function (q, zone, suite, options) {
     options = options || {};
-    zone.innerHTML = "";
+    var d = derniere && derniere.q === q && derniere.zone === zone ? derniere : null;
+    var bataille = d ? d.bataille : !!(zone.closest && zone.closest(".td-question"));
+    var montre = !bataille && !!(options.garder || (d && d.carte && d.carte.isConnected));
+    var surBoutons = montre && d && !options.garder ? montrerReponse(q, d) : false;
+    if (!montre) zone.innerHTML = "";
+    var rj = options.reponse !== undefined ? options.reponse : d ? d.rj : undefined;
     var f = JEU.questions.fiche(q.fiche);
+    var justes = bataille && q.type === "association" && rj !== undefined ? pairesJustes(q, rj) : null;
     var bonne = q.type === "association" && q.reponse && q.reponse.length
-      ? el("div", { class: "bonne" }, [el("b", { texte: "La bonne réponse :" }), el("ul", { class: "paires" }, q.reponse.map(function (p) {
-        return el("li", {}, [el("b", { texte: q.gauche[p[0]] }), document.createTextNode(" → " + q.droite[p[1]])]);
+      ? el("div", { class: "bonne" }, [el("b", { texte: "La bonne réponse :" }), el("ul", { class: "paires" }, q.reponse.map(function (p, k) {
+        return el("li", { class: justes && !justes[k] ? "ratee" : null }, [el("b", { texte: q.gauche[p[0]] }), document.createTextNode(" → " + q.droite[p[1]])]);
       }))])
-      : el("p", { class: "bonne" }, [el("b", { texte: "La bonne réponse : " }), document.createTextNode(JEU.questions.texteReponse(q))]);
-    var panneau = el("div", { class: "panneau-erreur" }, [
-      el("p", { class: "verdict", texte: "Pas tout à fait." }),
+      : surBoutons ? null
+      : el("p", { class: "bonne" }, [el("b", { texte: "La bonne réponse : " }), document.createTextNode(texteBonne(q))]);
+    var tienne = null;
+    if (bataille && rj !== undefined) {
+      tienne = justes
+        ? el("p", { class: "ta-reponse" }, [el("b", { texte: "Tes paires justes : " }), document.createTextNode(justes.filter(Boolean).length + " sur " + justes.length + " (les autres sont marquées en rouge)")])
+        : el("p", { class: "ta-reponse" }, [el("b", { texte: "Ta réponse : " }), el("s", { texte: texteJoueur(q, rj) })]);
+    }
+    var panneau = el("div", { class: "panneau-erreur" + (montre ? " sous-question" : "") }, [
+      el("p", { class: "verdict" }, [el("span", { class: "lettrine", texte: "P" }), "as tout à fait."]),
+      tienne,
       bonne,
       repeteReponse(q) ? null : el("p", { class: "explication", texte: q.explication || "" }),
       el("div", { class: "actions" }, [
@@ -533,7 +796,11 @@
     ]);
     zone.appendChild(panneau);
     ui.nouvelAffichage();
-    panneau.querySelector(".bouton.principal").focus();
+    if (montre) {
+      panneau.querySelector(".bouton.principal").focus({ preventScroll: true });
+      var haut = zone.querySelector(".question .enonce, .carte-conseil .affirmation, .affirmation");
+      if (racine.requestAnimationFrame) racine.requestAnimationFrame(function () { if (panneau.isConnected) garderEnVue(panneau, haut); });
+    } else panneau.querySelector(".bouton.principal").focus();
     var fait = false;
     function continuer() { if (fait) return; fait = true; ui.clavier = null; suite(); }
     ui.clavier = function (k) { if (k === "Enter" || k === " ") { continuer(); return true; } return false; };
@@ -545,6 +812,7 @@
     ui.fermerMissive(true); // jamais de missive pendant une partie (16/10/2026)
     JEU.partie = { enCours: true, titre: titre, quitter: quitter, derniere: null };
     JEU.mesure.debut = null;
+    noterPlace(); // le menu va se cacher : la sortie de l'écran part de là où on le voyait
     document.body.classList.add("en-partie");
     ui.afficher("partie");
     var s = document.getElementById("ecran-partie");
@@ -577,6 +845,7 @@
   ui.finirPartie = function () {
     JEU.partie = null;
     if (JEU.musique) JEU.musique.humeur("paix");
+    noterPlace(); // le menu va revenir : idem
     document.body.classList.remove("en-partie");
     ui.clavier = null;
     ui.majRessources();
@@ -884,4 +1153,33 @@
       this.debut = null;
     }
   };
+
+  // ---------- habillage des menus (lot B, B4, 31/10/2026 ; jeu/css/menus.css) ----------
+  // L'onde au toucher : un anneau d'or s'ouvre sous le doigt (340 ms) sur ce qui se touche dans les menus (menu, boutons
+  // du bandeau, onglets, boutons, cases, tomes, fiches du Codex, cartes de la campagne). Jamais sur une réponse, le
+  // panneau d'erreur, le conseil ni la bataille : rien ne s'ajoute entre la réponse et la question suivante. Un seul
+  // élément pour tout le jeu, créé au premier appui ; aucune lecture de mise en page (la place vient de l'événement) ;
+  // lancé à l'image suivante par l'API Web Animations. Doigt ou stylet seulement ; rien sans animations.
+  var onde = null, ondeAnim = null;
+  var CIBLES_ONDE = "#menu button, #bandeau button, .onglet, .bouton, .codex-entete, .vignette, label, .carte-jeu";
+  var HORS_ONDE = "#ecran-partie, .question, .panneau-erreur, .scene-conseil, .td-cadre, .choix";
+  document.addEventListener("pointerdown", function (ev) {
+    if (ev.pointerType !== "touch" && ev.pointerType !== "pen") return;
+    if (!(JEU.anim && JEU.anim.actif()) || (JEU.partie && JEU.partie.enCours)) return;
+    var t = ev.target;
+    if (!t || !t.closest || !t.closest(CIBLES_ONDE) || t.closest(HORS_ONDE)) return;
+    var x = ev.clientX, y = ev.clientY;
+    (racine.requestAnimationFrame || setTimeout)(function () {
+      if (!onde) {
+        onde = document.createElement("div");
+        onde.className = "onde";
+        onde.setAttribute("aria-hidden", "true");
+        document.body.appendChild(onde);
+      }
+      if (ondeAnim) ondeAnim.cancel();
+      if (!onde.animate) return;
+      var p = "translate(" + x + "px, " + y + "px) ";
+      ondeAnim = onde.animate([{ transform: p + "scale(.25)", opacity: 1 }, { transform: p + "scale(1)", opacity: 0 }], { duration: 340, easing: "ease-out" });
+    });
+  }, { capture: true, passive: true });
 })(typeof window !== "undefined" ? window : globalThis);

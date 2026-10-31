@@ -12,8 +12,9 @@ Sorties (jeu/assets/images/td/) :
   effet-cratere.png : bande de 2 images de 24 × 16 (image 0 : sur l'herbe, image 1 : sur la route), ancrage au centre :
   trou d'une pierre de trébuchet (1,7 m) vu de trois quarts, terre retournée, bord clair en bourrelet, centre sombre,
   mottes ; le pourtour se fond dans le sol (alpha qui tombe à 0) ; posé une fois dans la couche de sol du champ.
-  effet-effondrement.png : bande de 8 images de 96 × 96, ancrage bas-centre moins 12 px : gros nuage de poussière
-  dense (0,85 au plus) qui monte en gonflant, pierres de la muraille projetées puis retombées ; fin de bataille.
+  effet-effondrement.png : bande de 8 images de 96 × 96, ancrage bas-centre moins 12 px : poussière de pierre en
+  volume (0,85 au plus), brun-gris, rongée par le bruit, cœur sombre, colonne qui monte et bourrelet qui roule au sol,
+  pierres de la muraille projetées puis retombées ; fin de bataille (refait le 31/10/2026 : l'ancien faisait « coton »).
 Même lumière que tout le reste ; projectiles sans ombre (ils sont en l'air).
 """
 import math
@@ -322,25 +323,143 @@ def cratere(k):
     return objs
 
 
+def mat_poussiere_pierre(densite, t):
+    """Poussière de pierre d'une place qui s'effondre : un vrai volume (Principled Volume), pas des boules lisses.
+
+    Densité = densite × une forme douce par bouffée (1 au centre, 0 au bord : coordonnées « Generated » de la sphère)
+    rongée par un bruit fractal à grosse et petite échelle (le bruit ronge surtout les bords : contour déchiqueté,
+    trous, filaments ; le cœur reste plein). Le bruit monte avec le nuage (décalé vers le haut avec t) et évolue (4D).
+    Couleur (albédo) : brun-gris en bas (#9a8d7a), gris de pierre en haut (#cec6b7) ; le soleil du nord-ouest éclaire le
+    haut et le côté gauche, l'intérieur et le dessous restent dans l'ombre du nuage lui-même (cœur sombre)."""
+    m = bpy.data.materials.new("poussiere_pierre%.3f-%.3f" % (densite, t))
+    try:
+        m.use_nodes = True
+    except Exception:
+        pass
+    nt = m.node_tree
+    nt.nodes.clear()
+    N = nt.nodes.new
+    vol = N("ShaderNodeVolumePrincipled")
+    out = N("ShaderNodeOutputMaterial")
+    nt.links.new(vol.outputs[0], out.inputs["Volume"])
+    vol.inputs["Anisotropy"].default_value = 0.2
+    # forme : distance au centre de la bouffée, 0 au centre, 1 au bord
+    tc = N("ShaderNodeTexCoord")
+    sub = N("ShaderNodeVectorMath"); sub.operation = "SUBTRACT"; sub.inputs[1].default_value = (0.5, 0.5, 0.5)
+    nt.links.new(tc.outputs["Generated"], sub.inputs[0])
+    lg = N("ShaderNodeVectorMath"); lg.operation = "LENGTH"
+    nt.links.new(sub.outputs[0], lg.inputs[0])
+    forme = N("ShaderNodeMapRange")                       # r de 0,25 à 0,5 (bord) : 1 → 0, en douceur
+    forme.interpolation_type = "SMOOTHSTEP"
+    forme.inputs["From Min"].default_value = 0.5
+    forme.inputs["From Max"].default_value = 0.0
+    nt.links.new(lg.outputs["Value"], forme.inputs["Value"])
+    # bruit fractal sur la position dans le monde, qui monte avec le nuage
+    geo = N("ShaderNodeNewGeometry")
+    dep = N("ShaderNodeVectorMath"); dep.operation = "SUBTRACT"; dep.inputs[1].default_value = (0.0, 0.0, 2.4 * t)
+    nt.links.new(geo.outputs["Position"], dep.inputs[0])
+    gros = N("ShaderNodeTexNoise")
+    gros.noise_dimensions = "4D"
+    gros.inputs["W"].default_value = 1.3 * t + 0.37
+    gros.inputs["Scale"].default_value = 0.42
+    gros.inputs["Detail"].default_value = 6.0
+    gros.inputs["Roughness"].default_value = 0.62
+    try:
+        gros.inputs["Distortion"].default_value = 0.6
+    except Exception:
+        pass
+    nt.links.new(dep.outputs[0], gros.inputs["Vector"])
+    fin = N("ShaderNodeTexNoise")                         # petite échelle : filaments et grain du bord
+    fin.noise_dimensions = "4D"
+    fin.inputs["W"].default_value = 2.1 * t + 5.1
+    fin.inputs["Scale"].default_value = 1.7
+    fin.inputs["Detail"].default_value = 4.0
+    fin.inputs["Roughness"].default_value = 0.6
+    nt.links.new(dep.outputs[0], fin.inputs["Vector"])
+    melange = N("ShaderNodeMix"); melange.data_type = "FLOAT"
+    C._entree(melange, "Factor", "VALUE").default_value = 0.3
+    nt.links.new(gros.outputs["Fac"], C._entree(melange, "A", "VALUE"))
+    nt.links.new(fin.outputs["Fac"], C._entree(melange, "B", "VALUE"))
+    # érosion : v = forme × 1,25 + (bruit − 0,5) × 2,6 − 0,35, puis rampe douce de 0 à 0,25 → 0 à 1
+    b1 = N("ShaderNodeMath"); b1.operation = "MULTIPLY_ADD"
+    nt.links.new(C._sortie(melange, "VALUE"), b1.inputs[0]); b1.inputs[1].default_value = 2.6; b1.inputs[2].default_value = -1.3 - 0.35
+    f1 = N("ShaderNodeMath"); f1.operation = "MULTIPLY_ADD"
+    nt.links.new(forme.outputs["Result"], f1.inputs[0]); f1.inputs[1].default_value = 1.25
+    nt.links.new(b1.outputs[0], f1.inputs[2])
+    rampe = N("ShaderNodeMapRange")
+    rampe.interpolation_type = "SMOOTHSTEP"
+    rampe.inputs["From Min"].default_value = 0.0
+    rampe.inputs["From Max"].default_value = 0.25
+    nt.links.new(f1.outputs[0], rampe.inputs["Value"])
+    dens = N("ShaderNodeMath"); dens.operation = "MULTIPLY"; dens.inputs[1].default_value = densite
+    nt.links.new(rampe.outputs["Result"], dens.inputs[0])
+    nt.links.new(dens.outputs[0], vol.inputs["Density"])
+    # couleur : brun-gris sombre en bas, gris de pierre en haut
+    sep = N("ShaderNodeSeparateXYZ")
+    nt.links.new(geo.outputs["Position"], sep.inputs[0])
+    h = N("ShaderNodeMapRange")
+    h.inputs["From Min"].default_value = 0.0
+    h.inputs["From Max"].default_value = 9.0
+    nt.links.new(sep.outputs["Z"], h.inputs["Value"])
+    teinte = T_mix(nt, h.outputs["Result"], C.couleur("#9a8d7a"), C.couleur("#cec6b7"))
+    nt.links.new(teinte, vol.inputs["Color"])
+    return m
+
+
 def effondrement(k, n=8):
-    """Effondrement d'une place forte (image k sur n) : gros nuage de poussière dense qui monte en gonflant puis
-    pâlit (opacité 0,85 puis décroissante), pierres de la muraille projetées en gerbe puis retombées au sol."""
+    """Effondrement d'une place forte (image k sur n) : poussière de pierre, pas un banc de coton.
+
+    Une colonne de bouffées monte du pied de la place (sommet de 2,6 m à environ 10 m), rongée par le bruit, un peu
+    poussée vers l'est par le vent ; au sol, un bourrelet de poussière roule vers l'extérieur ; des bouffées sur les
+    flancs cassent le contour. Volume éclairé par le soleil commun : le haut et le flanc gauche s'allument, le cœur et
+    le dessous restent sombres. Dense très vite (t < 0,15), puis il s'éclaircit après la moitié. Débouchage et contour
+    baissés : ils aplatiraient le volume. Pierres de la muraille projetées en gerbe puis retombées au sol."""
     rnd = random.Random(31)
     t = (k + 0.5) / n
-    opa = 0.85 * min(1.0, (t / 0.2)) * (1 - max(0.0, t - 0.55) / 0.55)
-    # poussière de pierre : gris chaud (et non l'ocre d'un chemin)
-    m = mat_poussiere(max(0.08, opa), 0.5 + 0.4 * t, bas="#5f574d", haut="#b9ae9c")
+    s = bpy.context.scene
+    for nom, force in (("appoint", 0.32), ("contour", 0.45)):
+        ob = s.objects.get(nom)
+        if ob is not None:
+            ob.data.energy = force
+    try:
+        s.cycles.volume_biased = True             # pas fixe : rapide et sans grain pour un si petit volume
+        s.cycles.volume_step_rate = 1.5
+        s.cycles.volume_max_steps = 256
+    except Exception:
+        pass
+    densite = 2.0 * min(1.0, t / 0.15) * (1 - 0.8 * max(0.0, t - 0.45) / 0.55)
+    m = mat_poussiere_pierre(densite, t)
+    rt = math.sqrt(t)
     objs = []
-    for i in range(26):
-        a = 2 * math.pi * i / 26 + rnd.uniform(-0.3, 0.3)
-        d = rnd.uniform(0.1, 1.0) * (1.6 + 1.8 * math.sqrt(t))
-        r = rnd.uniform(0.6, 1.1) * (1.2 + 1.25 * math.sqrt(t))
-        z = r * 0.7 + (0.6 + 3.0 * t) * rnd.random() * (1 if i % 3 else 0.5) + 1.2 * t   # le nuage monte en gonflant
-        y = d * math.sin(a) * 0.35 + 0.8 * t        # peu vers la caméra : il ne descend pas sous le pied de la place
-        o = C.sphere("nuage%d" % i, r, (d * math.cos(a), y, z), m, subdiv=3, echelle=(1.0, 1.0, 0.82))
-        o.visible_shadow = False
+    bouffees = []
+    # colonne : du pied vers le haut, plus large en montant, un peu penchée vers l'est
+    H = 1.6 + 7.6 * t ** 0.8
+    for j in range(14):
+        u = j / 13.0
+        z = 0.7 + u * H + rnd.uniform(-0.3, 0.3)
+        r = (0.95 + 1.1 * u) * (0.75 + 0.35 * rt) * rnd.uniform(0.7, 1.2)
+        x = rnd.uniform(-0.8, 0.8) * (0.5 + u) + 0.9 * u * u * t
+        y = rnd.uniform(-0.3, 0.6) + 0.3
+        bouffees.append((x, y, z, r))
+    # bourrelet au sol qui roule vers l'extérieur (peu vers la caméra : il ne passe pas sous le pied de la place)
+    for i in range(11):
+        a = 2 * math.pi * i / 11 + rnd.uniform(-0.25, 0.25)
+        d = (0.7 + 2.5 * rt) * rnd.uniform(0.6, 1.0)
+        r = (0.85 + 0.85 * rt) * rnd.uniform(0.8, 1.1)
+        bouffees.append((d * math.cos(a), d * math.sin(a) * 0.35 + 0.45, r * 0.55, r))
+    # flancs : des bouffées accrochées à la colonne, pour un contour bosselé
+    for i in range(6):
+        u = rnd.uniform(0.2, 0.85)
+        cote = -1 if i % 2 else 1
+        r = (0.8 + 0.9 * u) * (0.7 + 0.35 * rt)
+        bouffees.append((cote * rnd.uniform(0.9, 1.6) * (0.7 + 0.5 * u) + 0.6 * u * t, rnd.uniform(0.0, 0.8), 0.9 + u * H, r))
+    for i, (x, y, z, r) in enumerate(bouffees):
+        x = max(-5.4 + r, min(5.4 - r, x))         # reste dans son image (12 m de large), bords transparents
+        ztop = (10.0 - 0.643 * y) / 0.766 - r     # et sous le haut de l'image (vue inclinée de 40°)
+        z = min(z, ztop)
+        o = C.sphere("nuage%d" % i, r, (x, y, z), m, subdiv=2, echelle=(1.0, 1.0, 0.9))
         objs.append(o)
-    pierre = C.mat_ph("pierre_eff", "rustic_stone_wall", echelle_m=0.6, cible="#8f8574", contraste=1.3, bosse=0.6)
+    pierre = C.mat_ph("pierre_eff", "rustic_stone_wall", echelle_m=0.6, cible="#857a6a", contraste=1.3, bosse=0.6)
     for i in range(10):
         # blocs projetés surtout vers la caméra (devant le nuage), en cloche, puis au sol
         a = math.pi * (1.05 + 0.9 * i / 9) + rnd.uniform(-0.2, 0.2)
@@ -423,7 +542,7 @@ def rendre_effet(nom, dossier=None):
         objs = fab(k)
         projectile = nom in ("effet-fleche", "effet-carreau")
         img, _ = C.rendre_sprite("%s-%d" % (nom, k), lw * C.ECHELLE, lh * C.ECHELLE, objs, ombre=ombre, surech=surech,
-                                 echantillons=48, contour=0.0, epaisseur_contour=1,
+                                 echantillons=32 if nom == "effet-effondrement" else 48, contour=0.0, epaisseur_contour=1,
                                  net=0.0 if nom in ("effet-poussiere", "effet-eclats", "effet-effondrement") else 0.6,
                                  pres=0.2, force_ombre=0.35, controle=False)
         if projectile:

@@ -2,13 +2,14 @@
 // de terre et éclats de pierre (pool de particules alloué une fois), petits tirages sans Math.random.
 // Script classique et facultatif : bataille.js l'appelle s'il est chargé (JEU.batailleEffets) et dessine comme avant sinon.
 // On ne fait que dessiner ce que le moteur publie : rien ici ne touche à la partie.
-// Plafonds (PLAFONDS) : 8 coups étincelants, 24 traînées, 60 particules, 10 lueurs à la fois. Rien n'est créé à chaque
-// image : les particules vivent dans des tableaux fixes, les traînées dans un tampon fixe.
+// Plafonds (PLAFONDS) : 8 coups étincelants, 24 traînées, 60 particules, 10 lueurs, 3 tours posées qui fument à la fois.
+// Rien n'est créé à chaque image : les particules vivent dans des tableaux fixes, les traînées dans un tampon fixe.
+// Lot B (A+, 31/10/2026) : la poussière d'une tour qu'on pose (poussierePose), à la place des losanges d'or de la page.
 (function (racine) {
   "use strict";
   var JEU = racine.JEU = racine.JEU || {};
 
-  var PLAFONDS = { etincelles: 8, trainees: 24, particules: 60, lueurs: 10 };
+  var PLAFONDS = { etincelles: 8, trainees: 24, particules: 60, lueurs: 10, poses: 3 };
 
   // ---------- tirages fixes ----------
   // Même graine, même nombre (de 0 à 1) : une partie se dessine pareil d'une fois à l'autre, quels que soient les réglages,
@@ -155,8 +156,40 @@
     return n;
   }
 
+  // ---------- poussière d'une tour qu'on pose ----------
+  // La tour sort de terre : BOUFFEES_POSE petits nuages de terre roulent au ras du sol, vers l'extérieur, gonflent et
+  // pâlissent en DUREE_POSE s. Sans état : tout se déduit de l'âge et de la graine (rien n'est créé à chaque image, pas
+  // de Math.random). Appelée deux fois par image : les bouffées de derrière le pied avant la tour (devant = false), celles
+  // de devant après elle (devant = true). Les Animations coupées, bataille.js ne l'appelle pas. Rend vrai si elle dessine.
+  var DUREE_POSE = 0.7, BOUFFEES_POSE = 12, imagePose = null;
+  function bouffeePose() {
+    if (imagePose) return imagePose;
+    var c = document.createElement("canvas"); c.width = c.height = 32;
+    var g = c.getContext("2d"), r = g.createRadialGradient(15, 14, 1, 16, 16, 15);
+    r.addColorStop(0, "rgba(192,172,134,.9)"); r.addColorStop(0.5, "rgba(178,158,120,.55)"); r.addColorStop(1, "rgba(160,140,104,0)");
+    g.fillStyle = r; g.beginPath(); g.arc(16, 16, 15, 0, Math.PI * 2); g.fill();
+    return (imagePose = c);
+  }
+  function poussierePose(ctx, x, y, age, graine, devant) {
+    if (!(age >= 0 && age < DUREE_POSE)) return false;
+    var k = age / DUREE_POSE, sortie = 1 - (1 - k) * (1 - k) * (1 - k), img = bouffeePose(), dessine = false;
+    var opacite = 0.9 * (k < 0.35 ? 1 : Math.pow(1 - (k - 0.35) / 0.65, 1.2)); // pleine le premier tiers, puis elle pâlit
+    for (var i = 0; i < BOUFFEES_POSE; i++) {
+      var an = (i + 0.5) / BOUFFEES_POSE * Math.PI * 2 + (alea(graine, 80 + i) - 0.5) * 0.6, s = Math.sin(an);
+      if ((s > 0) !== !!devant) continue; // vers le bas de l'écran : devant le pied de la tour
+      // elles naissent au bord du pied (11 px) et roulent jusqu'à 17 à 31 px, en se chevauchant (un nuage bas, pas des points)
+      var d = 11 + (6 + 14 * alea(graine, 90 + i)) * sortie, r = (4.5 + 3 * alea(graine, 100 + i)) * (0.8 + 0.6 * k);
+      var bx = x + Math.cos(an) * d * 1.35, by = y + s * d * 0.45 - (1.5 + 3 * alea(graine, 110 + i)) * k;
+      ctx.globalAlpha = opacite * (0.7 + 0.3 * alea(graine, 120 + i));
+      ctx.drawImage(img, bx - r, by - r * 0.8, r * 2, r * 1.6);
+      dessine = true;
+    }
+    ctx.globalAlpha = 1;
+    return dessine;
+  }
+
   JEU.batailleEffets = { PLAFONDS: PLAFONDS, alea: alea, graineDe: graineDe,
     MOTTE: MOTTE, ECLAT: ECLAT, POUSSIERE: POUSSIERE, emettre: emettre, avancer: avancer, dessiner: dessiner, vider: vider,
     particules: function () { return vivantes; }, mottes: mottes, etincelles: etincelles, dessinerEtincelles: dessinerEtincelles, DUREE_ETINCELLES: DUREE_ETINCELLES,
-    lueur: lueur, trainee: trainee, dessinerTrainees: dessinerTrainees };
+    lueur: lueur, trainee: trainee, dessinerTrainees: dessinerTrainees, poussierePose: poussierePose, DUREE_POSE: DUREE_POSE };
 })(typeof window !== "undefined" ? window : globalThis);

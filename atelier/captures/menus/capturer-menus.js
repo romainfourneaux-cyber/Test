@@ -5,6 +5,7 @@
 // (principal, secondaire, désactivé), cartes, confirmation, toast, chargement.
 // Sorties : atelier/captures/menus/inventaire/<profil>/NN-nom.png et inventaire/<profil>/journal.json.
 // Usage : NODE_PATH=/opt/node22/lib/node_modules CHROMIUM=/opt/pw-browsers/chromium node atelier/captures/menus/capturer-menus.js [pc|tablette]
+// DOSSIER=apres (variable d'environnement) : écrit dans atelier/captures/menus/apres/<profil>/ au lieu de l'inventaire (avant).
 "use strict";
 const path = require("path"), fs = require("fs");
 const { chromium } = require("playwright");
@@ -78,7 +79,7 @@ async function focusTab(page, sel, max) {
 function clic(page, sel) { return page.evaluate(s => { const e = document.querySelector(s); if (!e) throw new Error("absent : " + s); e.click(); }, sel); }
 
 async function tour(nav, profil) {
-  P = profil; P.dossier = path.join(__dirname, "inventaire", P.nom); P.notes = {}; P.erreurs = [];
+  P = profil; P.dossier = path.join(__dirname, process.env.DOSSIER || "inventaire", P.nom); P.notes = {}; P.erreurs = [];
   fs.mkdirSync(P.dossier, { recursive: true });
   const ctx = await nav.newContext({ viewport: { width: P.w, height: P.h }, hasTouch: P.tactile, deviceScaleFactor: 1 });
   const page = await ctx.newPage();

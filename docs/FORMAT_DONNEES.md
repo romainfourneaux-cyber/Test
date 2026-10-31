@@ -330,10 +330,13 @@ Schéma actuel : 6 (depuis le 24/10/2026). Migrations, testées par atelier/outi
     chronique: [{ le: "2026-10-13", texte: "..." }], // vingt faits au plus, le plus récent d'abord
     // 16/10/2026, sans nouveau schéma (complétés par JEU.campagne.completer) :
     rivalite: { angleterre: 30, omeyyades: 15 }, // rivalité de chaque front, 0 à 100 (personnages.js)
-    missives: { presentees: true, chef: "clovis", dernieres: { "angleterre/defi": 3 }, defi: false, apres: true }
+    missives: { presentees: true, chef: "clovis", dernieres: { "angleterre/defi": 3 }, defi: false, apres: true },
                                                  // presentees : première visite faite ; chef : souverain annoncé en dernier ;
                                                  // dernieres : dernière réplique tirée par camp et situation ;
                                                  // defi, apres : la dernière bataille a eu son défi, sa réaction (une sur deux)
+    // 31/10/2026, sans nouveau schéma, facultatif (lot B graphique, B3) :
+    derniereConquete: "gue"                      // province prise à la dernière bataille, posée par JEU.campagne.apresBataille ;
+                                                 // la carte de campagne joue la cérémonie de conquête une fois, puis l'efface (absent : rien)
   },
   // schéma 4 : les questions ratées à reposer un peu plus tard (jeu/js/rappels.js)
   rappels: {

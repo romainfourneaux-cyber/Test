@@ -434,10 +434,11 @@
     R.bataillons = 0; R.figures = 0; R.corps = 0; R.bannieres = 0;
     // compteurs de la dernière image (lot A, règle 2.2 du plan) : corps dessinés en train de tomber, particules, coups
     // étincelants, traînées, lueurs, gouttes en vol, flaques dessinées ; decalques : traces entières dans la couche de sol
-    R.corpsVifs = 0; R.particules = 0; R.etincelles = 0; R.trainees = 0; R.lueurs = 0; R.gouttes = 0; R.flaques = 0;
+    R.corpsVifs = 0; R.particules = 0; R.etincelles = 0; R.trainees = 0; R.lueurs = 0; R.gouttes = 0; R.flaques = 0; R.poses = 0;
     R.decalques = SOL ? v.sol.compte : null;
     majBataillons(v, anim, sang);
     for (i = 0; i < v.corps.length; i++) corps(ctx, v.corps[i], v, sang, anim);
+    anneauxChampions(ctx, v); // l'ellipse de sa couleur sous chaque champion (lot B, A+)
     // au ras du sol, sous les troupes : traces posées par les effets neufs, anneaux des pierres, poussières
     solEffets(ctx, v, anim, sang, FX, SOL);
     // portée des tours adverses (préparation) : celle qu'on survole, ou toutes quand on choisit des troupes à envoyer
@@ -1234,6 +1235,10 @@
     if (e && e.etat === "ok") {
       var s = e.s, h = v.horloge, k = imageTir(tr, s, v), anim = v.anim !== false;
       var age = tr.bati !== undefined && anim ? h - tr.bati : 99, monte = monteeTour(tr, v);
+      // tour posée (lot B, A+) : une bouffée de terre roule au pied (bataille-effets.js) ; derrière le pied avant la tour,
+      // devant après elle ; au plus PLAFONDS.poses tours à la fois ; Animations coupées : rien (age vaut alors 99)
+      var FXp = age < 0.75 ? JEU.batailleEffets : null, pose = !!(FXp && FXp.poussierePose && v.rendu.poses < FXp.PLAFONDS.poses);
+      if (pose) FXp.poussierePose(ctx, tr.x, tr.y + 3, age, FXp.graineDe(tr.x, tr.y), false);
       if (monte < 1) tranche(ctx, e, tr.x, tr.y, k, 0, monte, (1 - monte) * s.h); // le haut d'abord, au ras du sol
       else {
         var dy = tassement(age - MONTEE);
@@ -1252,6 +1257,7 @@
           ctx.globalCompositeOperation = "source-over"; ctx.globalAlpha = ft;
         }
       }
+      if (pose && FXp.poussierePose(ctx, tr.x, tr.y + 3, age, FXp.graineDe(tr.x, tr.y), true)) { v.rendu.poses++; ctx.globalAlpha = ft; }
       // poussière au pied : à la pose (0,6 s), et au lâcher du trébuchet (0,45 s, temps de la partie)
       if (age < 0.6) sprite(ctx, "effet-poussiere", tr.x, tr.y + 4, vue(age, 0.6, 5), false, 1.1);
       if (anim && tr.type === "catapulte" && tr.dernierTir !== undefined) {
@@ -1313,13 +1319,14 @@
   // image) ; allonge : demi-longueur d'une figurine du premier rang (corps et arme), le long de la route ; banniere :
   // hauteur de la hampe au-dessus des pieds du porte-bannière (0 : pas de bannière). chef : taille de la grande figurine,
   // posée sur la troupe ; garde : type des figurines qui l'entourent ; places : leur place [le long, en travers] (px,
-  // positif : vers l'avant) ; barre : barre de vie au-dessus du chef.
+  // positif : vers l'avant) ; barre : barre de vie au-dessus du chef ; etoffe : taille de la bannière entière (hampe et
+  // étoffe), 1 par défaut ; le champion : 1,3 (lot B, A+ : hampe de 47 px portée à 61, étoffe 1,3 fois plus grande).
   var BATAILLONS = {
     fantassins: { rangs: [4, 4], pasRang: 6.5, pasFile: 4.4, echelle: 0.6, allonge: 4, banniere: 28 },
     pietaille: { rangs: [4, 4], pasRang: 6.5, pasFile: 4.4, echelle: 0.6, allonge: 4, banniere: 28 },
     hommes: { rangs: [3, 3], pasRang: 7, pasFile: 5.6, echelle: 0.64, allonge: 4.5, banniere: 29 },
     cavaliers: { rangs: [3, 2], pasRang: 11, pasFile: 7.5, echelle: 0.56, allonge: 8.5, banniere: 31 },
-    champion: { chef: 0.92, garde: "hommes", places: [[3, -9.5], [3, 9.5], [-7, -5.5], [-7, 5.5]], echelle: 0.6, allonge: 7, banniere: 47, barre: true },
+    champion: { chef: 0.92, garde: "hommes", places: [[3, -9.5], [3, 9.5], [-7, -5.5], [-7, 5.5]], echelle: 0.6, allonge: 7, banniere: 61, etoffe: 1.3, barre: true },
     belier: { chef: 1, garde: "fantassins", places: [[-19, -6.5], [-20.5, 0.5], [-19, 7.5]], echelle: 0.58, allonge: 13, banniere: 0, barre: true }
   };
 
@@ -1349,7 +1356,7 @@
     // devant, derriere : étendue du bataillon le long de la route, depuis son milieu, vers l'avant (premier rang et son
     // allonge) et vers l'arrière (dernier rang et un peu plus de la moitié d'une figurine)
     return (formes[type] = { type: type, d: d, places: places, avant: avant, tete: amax + avant, queue: amin + avant, bmin: bmin, bmax: bmax,
-      allonge: d.allonge, devant: amax + avant + d.allonge, derriere: 0.6 * d.allonge - (amin + avant), banniere: d.banniere, barre: !!d.barre });
+      allonge: d.allonge, devant: amax + avant + d.allonge, derriere: 0.6 * d.allonge - (amin + avant), banniere: d.banniere, etoffe: d.etoffe || 1, barre: !!d.barre });
   }
   // Figurines debout pour une troupe de « n » figurines : toutes à pleine vie, au moins une tant qu'elle vit, aucune morte.
   function deboutVoulu(n, pv, max, vivant) {
@@ -1807,19 +1814,21 @@
   // Bannière d'un bataillon : un gonfanon aux couleurs du camp (champ, bordure et emblème : lys, lion ou tour) pendu à une
   // traverse, au bout d'une hampe de « haut » px ; VUES_BANNIERE vues qui ondulent de ± 1,4 px, jouées à 8 images par
   // seconde (lot A ; ambiance coupée : la première). Gardée comme les vues des figurines ; ancrage : le pied de la hampe.
+  // etoffe : la bannière entière agrandie (dessin, traits et hampe), 1 par défaut (le champion : 1,3).
   var VUES_BANNIERE = 6;
-  function banniere(cleCamp, coul, embleme, gauche, fr, haut, ratio) {
+  function banniere(cleCamp, coul, embleme, gauche, fr, haut, ratio, etoffe) {
     memoVues(ratio);
-    var cle = "^" + cleCamp + "|" + (gauche ? 1 : 0) + "|" + fr + "|" + haut, c = vues[cle];
+    etoffe = etoffe || 1;
+    var cle = "^" + cleCamp + "|" + (gauche ? 1 : 0) + "|" + fr + "|" + haut + "|" + etoffe, c = vues[cle];
     if (c) return c;
-    var W = 14, H = haut + 2;
+    var W = 14 * etoffe, H = haut + 2, re = ratio * etoffe;
     c = document.createElement("canvas"); c.width = Math.ceil(W * ratio) + 2; c.height = Math.ceil(H * ratio) + 2;
     var g = c.getContext("2d");
-    if (gauche) { g.translate(c.width - 1, 1); g.scale(-ratio, ratio); } else { g.translate(1, 1); g.scale(ratio, ratio); }
+    if (gauche) { g.translate(c.width - 1, 1); g.scale(-re, re); } else { g.translate(1, 1); g.scale(re, re); }
     // l'onde descend l'étoffe : le bas du côté libre suit le bas du côté de la hampe avec un temps de retard
     var ph = fr / VUES_BANNIERE * Math.PI * 2, o = 1.4 * Math.sin(ph), o2 = 1.4 * Math.sin(ph - 1.1);
     g.lineCap = "round"; g.strokeStyle = "#2a1c10"; g.lineWidth = 1.1;
-    g.beginPath(); g.moveTo(3, H); g.lineTo(3, 1.8); g.stroke();
+    g.beginPath(); g.moveTo(3, H / etoffe); g.lineTo(3, 1.8); g.stroke();
     // l'étoffe, aux trois quarts de la taille d'origine (une bannière par bataillon : plus grandes, elles se cachaient)
     g.translate(3, 1.4); g.scale(0.78, 0.78); g.translate(-3, 0);
     g.lineWidth = 1; g.beginPath(); g.moveTo(2, 2.4); g.lineTo(12.6, 2.4); g.stroke();
@@ -1829,7 +1838,46 @@
     g.lineWidth = 0.5; g.strokeStyle = "#1c130b"; g.stroke();
     dessinerIcone(g, embleme, 7.9 + o * 0.3, 6.8, 6.6, coul[1]);
     g.fillStyle = "#e2c272"; g.beginPath(); g.arc(3, 0.6, 1.4, 0, Math.PI * 2); g.fill();
-    return (vues[cle] = ancrer(c, gauche ? c.width - 1 - 3 * ratio : 1 + 3 * ratio, 1 + H * ratio, ratio));
+    return (vues[cle] = ancrer(c, gauche ? c.width - 1 - 3 * re : 1 + 3 * re, 1 + H * ratio, ratio));
+  }
+
+  // Champion (lot B, A+) : une ellipse au sol, sous ses pieds, de la plus foncée des deux couleurs de son camp (bleu de
+  // France, rouge d'Angleterre, vert omeyyade), plus soutenue sur son bord, sans contour noir. Peinte une fois (vues), une
+  // copie par image, dans la passe du sol : sous toutes les troupes. Même traitement pour tous les camps.
+  var ANNEAU_RX = 13, ANNEAU_RY = 5.2;
+  function luminance(hex) { var n = parseInt(hex.slice(1), 16); return 0.2126 * (n >> 16 & 255) + 0.7152 * (n >> 8 & 255) + 0.0722 * (n & 255); }
+  function anneauChampion(coul, ratio) {
+    memoVues(ratio);
+    var col = luminance(coul[0]) <= luminance(coul[1]) ? coul[0] : coul[1], cle = "°" + col, c = vues[cle];
+    if (c) return c;
+    var lw = 2 * ANNEAU_RX + 4, lh = 2 * ANNEAU_RY + 4, n = parseInt(col.slice(1), 16);
+    var rgb = (n >> 16 & 255) + "," + (n >> 8 & 255) + "," + (n & 255);
+    c = document.createElement("canvas"); c.width = Math.ceil(lw * ratio); c.height = Math.ceil(lh * ratio);
+    var g = c.getContext("2d");
+    g.translate(c.width / 2, c.height / 2); g.scale(ratio, ratio * ANNEAU_RY / ANNEAU_RX);
+    var r = g.createRadialGradient(0, 0, 0, 0, 0, ANNEAU_RX);
+    r.addColorStop(0, "rgba(" + rgb + ",.28)"); r.addColorStop(0.6, "rgba(" + rgb + ",.4)");
+    r.addColorStop(0.84, "rgba(" + rgb + ",.8)"); r.addColorStop(1, "rgba(" + rgb + ",0)");
+    g.fillStyle = r; g.beginPath(); g.arc(0, 0, ANNEAU_RX, 0, Math.PI * 2); g.fill();
+    c.lw = lw; c.lh = lh;
+    return (vues[cle] = c);
+  }
+  function anneauxChampions(ctx, v) {
+    var p = v.partie, fondu = v.retrait !== null ? Math.max(0, 1 - (v.horloge - v.retrait) / 0.6) : 1;
+    if (fondu <= 0) return;
+    for (var i = 0; i < p.unites.length; i++) {
+      var u = p.unites[i], bat = u.bat;
+      if (u.type !== "champion" || !u.vivant || !bat || !bat.figs) continue;
+      for (var j = 0; j < bat.figs.length; j++) {
+        var fg = bat.figs[j];
+        if (!fg.noyau || !fg.debout || !(fg.alpha > 0) || fg.derriere) continue;
+        var c = anneauChampion(u.camp === "rival" ? v.adverse.couleurs : v.couleurs, v.ratio);
+        ctx.globalAlpha = fondu * fg.alpha;
+        ctx.drawImage(c, fg.x - c.lw / 2, fg.y - c.lh / 2 + 0.5, c.lw, c.lh);
+        ctx.globalAlpha = 1;
+        break;
+      }
+    }
   }
 
   // Dessine un bataillon : les figurines debout (chacune sur son ombre) du fond vers l'avant de l'écran, le
@@ -1874,7 +1922,7 @@
           var frB = ambiance ? Math.floor(v.horloge * 8 + bat.phaseBanniere * 1.5) % VUES_BANNIERE : 0, b;
           // la vue de bannière de l'image d'avant si rien n'a changé (pas de clé de texte à bâtir)
           if (bat.bv && bat.bvF === frB && bat.bvG === bat.gauche && bat.bvGen === vuesGen) b = bat.bv;
-          else { b = banniere(bat.cleCamp, coul, (rival ? v.adverse : camp("joueur")).embleme, bat.gauche, frB, f.banniere, ratio); bat.bv = b; bat.bvF = frB; bat.bvG = bat.gauche; bat.bvGen = vuesGen; }
+          else { b = banniere(bat.cleCamp, coul, (rival ? v.adverse : camp("joueur")).embleme, bat.gauche, frB, f.banniere, ratio, f.etoffe); bat.bv = b; bat.bvF = frB; bat.bvG = bat.gauche; bat.bvGen = vuesGen; }
           var bx = fg.x + (bat.gauche ? -1 : 1) * 2.2 * q.echelle / 0.6, by = fg.y - 1.5;
           ctx.drawImage(b, Math.round(bx * ratio - b.axd), Math.round(by * ratio - b.ayd));
           R.bannieres++;
@@ -2888,11 +2936,10 @@
           v.gardeEntree = 0;
           JEU.sons.jouer("construction");
           // la tour sort de terre (lot A3 : tour(), dessin seulement) ; le champ est redessiné à chaque image le temps de
-          // sa montée, même pendant le conseil de guerre (v.vif) ; quelques losanges d'or seulement
+          // sa montée, même pendant le conseil de guerre (v.vif) ; une bouffée de terre roule à son pied, dans la toile
+          // (lot B, A+ : plus de losanges d'or sur la page, un peu « jeu sur téléphone »)
           p.tours[p.tours.length - 1].bati = v.horloge;
           v.vif = v.horloge + MONTEE + TASSEMENT + 0.35;
-          var r = canvas.getBoundingClientRect();
-          JEU.anim.eclat(r.left + carte.emplacements[i][0] / M.LARGEUR * r.width, r.top + carte.emplacements[i][1] / M.HAUTEUR * r.height, "or", 6);
           majTout();
         } else if (p.or < M.TOURS[v.choix].cout) {
           JEU.ui.toast(conseilEnCours() ? "Pas assez d'or : réponds au conseil de guerre." : "Pas assez d'or : lance la vague, ton revenu arrivera ensuite.");

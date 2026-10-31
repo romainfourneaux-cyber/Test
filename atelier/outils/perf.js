@@ -1824,6 +1824,8 @@ function afficherControles(r) {
     await navigateur.close();
     const r = controlesGraphismes(bilan);
     if (erreurs.length) r.echecs.push("erreurs JavaScript dans la page, ou essai interrompu (voir erreursJS)");
+    // menus habillés (lot B, B4) : contrôles dans le jeu ouvert d'atelier/outils/controles-menus.js (hauteurs, chiffres, contraste, cibles, mouvements, coût)
+    if (process.env.PARTIE === "graphismes") (await require("./controles-menus.js").page(chromium)).forEach(c => { if (!c.ok) r.echecs.push("menus : " + c.nom + (c.detail ? " (" + String(c.detail).slice(0, 300) + ")" : "")); });
     afficherControles(r);
     r.echecs.forEach(m => console.log("ÉCHEC  " + m));
     process.exit(r.echecs.length ? 1 : 0);

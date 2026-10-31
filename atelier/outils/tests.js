@@ -2625,6 +2625,8 @@ verifier("Bataillons : le rendu ne touche pas au moteur (aucune écriture de la 
   }
   verifier("Lots graphiques : les " + n + " animations du champ (@keyframes td-…) n'animent que transform et opacity", ecarts.length === 0, ecarts);
 })();
+// menus habillés (lot B, B4 ; atelier/conception/graphismes-menus.md, 7.6) : contrôles de lecture d'atelier/outils/controles-menus.js
+require("./controles-menus.js").statique().forEach(c => verifier("Menus : " + c.nom, c.ok, c.detail));
 
 console.log("\n" + ok + " réussis, " + ko + " en échec.");
 process.exit(ko ? 1 : 0);
