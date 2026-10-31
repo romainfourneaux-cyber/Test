@@ -1167,11 +1167,14 @@ html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 .td-or.td-gain-b svg { animation: td-piece-b .42s ease-out; }
 @keyframes td-piece-a { 40% { transform: scale(1.35) rotate(-10deg); } }
 @keyframes td-piece-b { 40% { transform: scale(1.35) rotate(-10deg); } }
-/* « +12 » qui part du sceau et vole jusqu'au compteur : la boîte glisse en x, le chiffre en y (une courbe) */
+/* « +12 » qui part du sceau et vole jusqu'au compteur (--dx, --dy : posés par bataille.js) : la boîte glisse en x, le
+   chiffre en y, chacun à son rythme (une courbe) */
 .td-or-volant { position: fixed; z-index: 45; pointer-events: none; margin: -14px 0 0 -26px;
-  transition: transform .45s cubic-bezier(.55, 0, .75, .4); }
+  animation: td-vol-x .45s cubic-bezier(.55, 0, .75, .4) forwards; }
 .td-or-volant > span { display: flex; align-items: center; gap: .25rem; font-family: var(--titre); font-weight: 700; font-size: 1.35rem;
-  color: #ffe08a; text-shadow: 0 2px 0 #000, 0 0 6px #000; transition: transform .45s cubic-bezier(.2, .8, .4, 1), opacity .45s ease-in; }
+  color: #ffe08a; text-shadow: 0 2px 0 #000, 0 0 6px #000; animation: td-vol-y .45s cubic-bezier(.2, .8, .4, 1) forwards; }
+@keyframes td-vol-x { to { transform: translateX(var(--dx, 0)); } }
+@keyframes td-vol-y { 75% { opacity: 1; } to { transform: translateY(var(--dy, 0)) scale(.7); opacity: .35; } }
 /* à l'erreur : le compteur tressaille de 2 px et un « −6 » rouge en tombe */
 .td-or.td-tressaille-a { animation: td-tressaille-a .28s linear; }
 .td-or.td-tressaille-b { animation: td-tressaille-b .28s linear; }
