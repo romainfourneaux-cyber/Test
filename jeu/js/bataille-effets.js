@@ -107,9 +107,9 @@
   }
   function dessinerEtincelles(ctx) {
     if (!nVifs && !nPales) return;
-    ctx.lineCap = "round"; ctx.strokeStyle = "#e8912e"; ctx.lineWidth = 1;
+    ctx.lineCap = "round"; ctx.strokeStyle = "#d9862e"; ctx.lineWidth = 0.8;
     if (nPales) { traits(ctx, pales, nPales); ctx.globalAlpha = 0.55; ctx.stroke(); ctx.globalAlpha = 1; }
-    if (nVifs) { traits(ctx, vifs, nVifs); ctx.stroke(); ctx.strokeStyle = "#ffd28a"; ctx.lineWidth = 0.5; ctx.stroke(); } // cœur plus chaud au départ
+    if (nVifs) { traits(ctx, vifs, nVifs); ctx.stroke(); ctx.strokeStyle = "#f6c27a"; ctx.lineWidth = 0.4; ctx.stroke(); } // cœur plus chaud au départ
     ctx.lineCap = "butt";
     nVifs = 0; nPales = 0;
   }

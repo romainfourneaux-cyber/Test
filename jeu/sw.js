@@ -2,7 +2,7 @@
 // FICHIER GÉNÉRÉ par atelier/outils/generer-sw.js, ne pas le modifier à la main : node atelier/outils/generer-sw.js
 // Seul jeu/js/installation.js l'enregistre, et seulement en http(s). Jamais en file:// : le double-clic sur index.html
 // reste tel quel. Le jeu lui-même ne fait aucun appel réseau : ce fichier est le mécanisme d'installation du navigateur.
-// À l'installation, il met en cache tous les fichiers du jeu (297 fichiers). Ensuite, chaque demande est servie
+// À l'installation, il met en cache tous les fichiers du jeu (305 fichiers). Ensuite, chaque demande est servie
 // depuis le cache ; le réseau n'est qu'un repli. Une nouvelle version porte un autre nom de cache : elle se télécharge
 // en arrière-plan puis attend. Elle prend la main quand le jeu est fermé puis rouvert, ou tout de suite si l'on touche
 // « Mettre à jour » (message « activer »). Jamais au milieu d'une partie : la page ouverte garde les fichiers de sa version.
@@ -15,12 +15,20 @@ var FICHIERS = [
   "VERSION.txt",
   "assets/icones/game-icons.js",
   "assets/images/bois.png",
+  "assets/images/campagne/drapeau-angleterre.png",
+  "assets/images/campagne/drapeau-france.png",
+  "assets/images/campagne/drapeau-omeyyades.png",
   "assets/images/campagne/fond-campagne.jpg",
+  "assets/images/campagne/lieu-angleterre-nu.png",
   "assets/images/campagne/lieu-angleterre.png",
   "assets/images/campagne/lieu-brume.png",
+  "assets/images/campagne/lieu-france-2-nu.png",
   "assets/images/campagne/lieu-france-2.png",
+  "assets/images/campagne/lieu-france-3-nu.png",
   "assets/images/campagne/lieu-france-3.png",
+  "assets/images/campagne/lieu-france-nu.png",
   "assets/images/campagne/lieu-france.png",
+  "assets/images/campagne/lieu-omeyyades-nu.png",
   "assets/images/campagne/lieu-omeyyades.png",
   "assets/images/cuir.png",
   "assets/images/expedition/annee-fond.jpg",

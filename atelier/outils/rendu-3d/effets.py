@@ -99,21 +99,22 @@ def pierre():
     return [ob]
 
 
-def mat_poussiere(opacite, effiloche=0.5):
+def mat_poussiere(opacite, effiloche=0.5, bas="#8a7050", haut="#d2bf98"):
     """Poussière de terre : ocre clair (#d2bf98) en haut, dessous brun (#8a7050) : une poussière de chemin, pas un coton
     gris ni un buisson. Bords très effilochés par un bruit fin, opacité réglable (le nuage se dissipe).
-    Le dégradé suit la hauteur dans le monde (0,15 m → 1,1 m) : le bas des bouffées fonce un peu, le haut s'éclaircit."""
-    m, nt, p = C.nouveau_materiau("poussiere%.2f-%.2f" % (opacite, effiloche))
+    Le dégradé suit la hauteur dans le monde (0,15 m → 1,1 m) : le bas des bouffées fonce un peu, le haut s'éclaircit.
+    bas, haut : teintes du dégradé (poussière de pierre grise pour l'effondrement d'une place)."""
+    m, nt, p = C.nouveau_materiau("poussiere%.2f-%.2f-%s" % (opacite, effiloche, bas[1:]))
     p.inputs["Roughness"].default_value = 1.0
     p.inputs["Specular IOR Level"].default_value = 0.0
     geo = nt.nodes.new("ShaderNodeNewGeometry")
     sep = nt.nodes.new("ShaderNodeSeparateXYZ")
     nt.links.new(geo.outputs["Position"], sep.inputs["Vector"])
-    haut = nt.nodes.new("ShaderNodeMapRange")
-    haut.inputs["From Min"].default_value = 0.15
-    haut.inputs["From Max"].default_value = 1.1
-    nt.links.new(sep.outputs["Z"], haut.inputs["Value"])
-    teinte = T_mix(nt, haut.outputs["Result"], C.couleur("#8a7050"), C.couleur("#d2bf98"))
+    haut_ = nt.nodes.new("ShaderNodeMapRange")
+    haut_.inputs["From Min"].default_value = 0.15
+    haut_.inputs["From Max"].default_value = 1.1
+    nt.links.new(sep.outputs["Z"], haut_.inputs["Value"])
+    teinte = T_mix(nt, haut_.outputs["Result"], C.couleur(bas), C.couleur(haut))
     nt.links.new(teinte, p.inputs["Base Color"])
     tc = nt.nodes.new("ShaderNodeTexCoord")
     nz = nt.nodes.new("ShaderNodeTexNoise")
@@ -258,28 +259,29 @@ def mat_terre(nom, sombre, clair, herbe=None):
 
 
 def cratere(k):
-    """Cratère (image 0 : herbe, 1 : route) : cuvette de 1,7 m creusée sous le sol (le fond à 0,24 m), bourrelet de
-    terre rejetée (0,1 m), le tout irrégulier (bruit radial fixe) ; centre sombre, paroi brune, bourrelet clair ; sur
-    l'herbe, quelques touffes arrachées vertes sur le bourrelet ; 7 mottes posées autour."""
+    """Cratère (image 0 : herbe, 1 : route) : cuvette de 1,2 m creusée sous le sol (le fond à 0,13 m), bourrelet de
+    terre rejetée (0,08 m), le tout irrégulier (bruit radial fixe), fondu dans le sol jusqu'à 1,6 m ; centre sombre
+    (jamais noir), paroi brune, bourrelet clair ; sur l'herbe, quelques touffes arrachées vertes sur le bourrelet ;
+    7 mottes posées autour."""
     import numpy as np
     rnd = random.Random(23 + k)
-    R = 0.85
+    R = 0.6
     route = k == 1
-    teintes = {"fond": "#2f2418" if not route else "#3d3022", "paroi": "#5a4430" if not route else "#6e5a42",
+    teintes = {"fond": "#4a3927" if not route else "#5a4834", "paroi": "#664d36" if not route else "#7a6449",
                "bord": "#86694a" if not route else "#a89272", "herbe": "#5b6a32"}
     fond, paroi, bord, herbe = (np.array(C.couleur(teintes[n])[:3]) for n in ("fond", "paroi", "bord", "herbe"))
     na, nr = 48, 22
     bosses = [rnd.uniform(-1, 1) for _ in range(6)]
     verts, cols, alphas = [], [], []
     for i in range(nr + 1):
-        r = 1.4 * R * i / nr
+        r = 1.32 * R * (i + 0.02) / nr
         for a_ in range(na):
             a = 2 * math.pi * a_ / na
             irr = 1 + 0.09 * sum(b * math.sin((j + 2) * a + j) for j, b in enumerate(bosses)) / 3
             rr = r / irr
             u = rr / R
-            z = -0.24 * (1 - u * u) if u < 1 else 0.0
-            z += 0.1 * math.exp(-((u - 1.02) / 0.2) ** 2) * (1 + 0.3 * math.sin(5 * a + k))
+            z = -0.13 * (1 - u * u) if u < 1 else 0.0
+            z += 0.08 * math.exp(-((u - 1.02) / 0.2) ** 2) * (1 + 0.3 * math.sin(5 * a + k))
             verts.append((r * math.cos(a), r * math.sin(a) * 1.0, z))
             if u < 0.55:
                 c = fond
@@ -287,10 +289,10 @@ def cratere(k):
                 c = fond + (paroi - fond) * (u - 0.55) / 0.4
             else:
                 c = paroi + (bord - paroi) * min(1.0, (u - 0.95) / 0.12)
-            if not route and 1.0 < u < 1.3 and math.sin(7 * a + 1.3) > 0.55:
+            if not route and 1.0 < u < 1.25 and math.sin(7 * a + 1.3) > 0.55:
                 c = c * 0.4 + herbe * 0.6               # herbe arrachée sur le bourrelet
             cols.append(tuple(c) + (1.0,))
-            alphas.append(max(0.0, min(1.0, (1.38 - u) / 0.28)))
+            alphas.append(max(0.0, min(1.0, (1.3 - u) / 0.25)))
     faces = []
     for i in range(nr):
         for a_ in range(na):
@@ -311,8 +313,8 @@ def cratere(k):
     motte = C.mat_ph("motte%d" % k, "brown_mud", echelle_m=0.5, cible=teintes["bord"], contraste=1.2, bosse=0.6)
     for i in range(7):
         a = 2 * math.pi * i / 7 + rnd.uniform(-0.4, 0.4)
-        d = R * rnd.uniform(1.05, 1.32)
-        L = rnd.uniform(0.09, 0.15)
+        d = R * rnd.uniform(1.02, 1.22)
+        L = rnd.uniform(0.06, 0.1)
         o = C.boite("motte%d" % i, L, L * 0.8, L * 0.6, (d * math.cos(a), d * math.sin(a), 0.0), motte)
         C.biseau(o, 0.025)
         o.rotation_euler = (0, 0, rnd.uniform(0, 3))
@@ -325,25 +327,28 @@ def effondrement(k, n=8):
     pâlit (opacité 0,85 puis décroissante), pierres de la muraille projetées en gerbe puis retombées au sol."""
     rnd = random.Random(31)
     t = (k + 0.5) / n
-    opa = 0.85 * min(1.0, (t / 0.25)) * (1 - max(0.0, t - 0.55) / 0.55)
-    m = mat_poussiere(max(0.08, opa), 0.55 + 0.35 * t)
+    opa = 0.85 * min(1.0, (t / 0.2)) * (1 - max(0.0, t - 0.55) / 0.55)
+    # poussière de pierre : gris chaud (et non l'ocre d'un chemin)
+    m = mat_poussiere(max(0.08, opa), 0.5 + 0.4 * t, bas="#5f574d", haut="#b9ae9c")
     objs = []
-    for i in range(22):
-        a = 2 * math.pi * i / 22 + rnd.uniform(-0.3, 0.3)
-        d = rnd.uniform(0.1, 1.0) * (1.2 + 2.6 * t)
-        r = rnd.uniform(0.7, 1.15) * (1.0 + 1.6 * t)
-        z = r * 0.7 + (0.4 + 2.2 * t) * rnd.random() * (1 if i % 3 else 0.5)
-        o = C.sphere("nuage%d" % i, r, (d * math.cos(a), d * math.sin(a) * 0.6, z), m, subdiv=3, echelle=(1.0, 1.0, 0.82))
+    for i in range(26):
+        a = 2 * math.pi * i / 26 + rnd.uniform(-0.3, 0.3)
+        d = rnd.uniform(0.1, 1.0) * (1.8 + 2.4 * math.sqrt(t))
+        r = rnd.uniform(0.6, 1.1) * (1.3 + 1.6 * math.sqrt(t))
+        z = r * 0.7 + (0.6 + 3.0 * t) * rnd.random() * (1 if i % 3 else 0.5) + 1.2 * t   # le nuage monte en gonflant
+        y = d * math.sin(a) * 0.35 + 0.8 * t        # peu vers la caméra : il ne descend pas sous le pied de la place
+        o = C.sphere("nuage%d" % i, r, (d * math.cos(a), y, z), m, subdiv=3, echelle=(1.0, 1.0, 0.82))
         o.visible_shadow = False
         objs.append(o)
     pierre = C.mat_ph("pierre_eff", "rustic_stone_wall", echelle_m=0.6, cible="#8f8574", contraste=1.3, bosse=0.6)
-    for i in range(9):
-        a = 2 * math.pi * i / 9 + rnd.uniform(-0.3, 0.3)
+    for i in range(10):
+        # blocs projetés surtout vers la caméra (devant le nuage), en cloche, puis au sol
+        a = math.pi * (1.05 + 0.9 * i / 9) + rnd.uniform(-0.2, 0.2)
         v = rnd.uniform(0.6, 1.0)
         tt = min(t, 0.75)
-        dx, dy = math.cos(a) * v * tt * 4.2, math.sin(a) * v * tt * 2.0
-        z = max(0.18, 1.5 + rnd.uniform(3.0, 5.0) * tt - 8.0 * tt * tt)
-        L = rnd.uniform(0.35, 0.6)
+        dx, dy = math.cos(a) * v * tt * 4.6, math.sin(a) * v * tt * 2.2 - 0.6
+        z = max(0.22, 2.0 + rnd.uniform(4.0, 6.0) * tt - 10.0 * tt * tt)
+        L = rnd.uniform(0.45, 0.8)
         o = C.boite("bloc%d" % i, L, L * 0.75, L * 0.6, (dx, dy, z), pierre, base=False)
         C.biseau(o, 0.05)
         o.rotation_euler = (rnd.uniform(0, 6), rnd.uniform(0, 6), rnd.uniform(0, 6) + 4 * tt)

@@ -3,6 +3,8 @@
 
 Usage : python3 atelier/outils/rendu-3d/campagne.py [fond] [lieux] [lieu-<camp>[-<variante>] ...] [--essai] [--apercu dossier]
         python3 atelier/outils/rendu-3d/campagne.py drapeaux [lieux-nus] [--dossier D]
+        python3 atelier/outils/rendu-3d/campagne.py --planche-drapeaux F [--dossier D]
+        python3 atelier/outils/rendu-3d/campagne.py --installer D   (écrit dans jeu/ un essai déjà regardé)
 Sorties (jeu/assets/images/campagne/) :
   fond-campagne.jpg 2000 × 1060 (carte du jeu : viewBox 1000 × 530), JPEG ≤ 490 000 octets : carte en relief à la Total
   War, aucun texte, bords teintés de parchemin.
@@ -947,6 +949,11 @@ def rendre_lieu(camp, surech=2, echantillons=64, variante=1, banniere=True, doss
     if dossier:
         os.makedirs(dossier, exist_ok=True)
         img.save(os.path.join(dossier, nom + ".png"), optimize=True)
+        import json
+        ch_h = os.path.join(dossier, "hampes.json")
+        hp = json.load(open(ch_h)) if os.path.exists(ch_h) else {}
+        hp[nom] = hampe
+        json.dump(hp, open(ch_h, "w"), indent=1)
         C.journal("essai écrit dans %s (hampe %s)" % (dossier, hampe))
         return os.path.join(dossier, nom + ".png")
     chemin, src = C.chemin_campagne(nom + ".png")
@@ -967,6 +974,113 @@ def rendre_lieu(camp, surech=2, echantillons=64, variante=1, banniere=True, doss
 LIEUX_NUS = (("france", 1), ("france", 2), ("france", 3), ("angleterre", 1), ("omeyyades", 1))
 
 
+def installer(dossier):
+    """Écrit dans jeu/ les drapeaux et les bourgs nus d'un essai déjà regardé (même code, même graine : mêmes images) ;
+    manifeste : drapeau-<camp> (6 images), lieu-*-nu et « hampe » (aussi sur le lieu d'avant, même caméra)."""
+    import json
+    w, h, ax, ay = DRAPEAU
+    hampes = json.load(open(os.path.join(dossier, "hampes.json")))
+    entrees, man = {}, C.lire_manifeste()
+    for camp in ("france", "angleterre", "omeyyades"):
+        ch = os.path.join(dossier, "drapeau-%s.png" % camp)
+        if os.path.exists(ch):
+            im = Image.open(ch).convert("RGBA")
+            if im.size != (IMAGES_DRAPEAU * w * C.ECHELLE, h * C.ECHELLE):
+                raise C.RefusRendu("drapeau-%s : taille %s" % (camp, im.size))
+            for k in range(IMAGES_DRAPEAU):
+                C.controle_bords(im.crop((k * w * C.ECHELLE, 0, (k + 1) * w * C.ECHELLE, h * C.ECHELLE)), "drapeau-%s-%d" % (camp, k))
+            chemin, src = C.chemin_campagne("drapeau-%s.png" % camp)
+            C.sauver_png(im, chemin)
+            entrees["drapeau-" + camp] = C.entree(src, w, h, ax, ay, IMAGES_DRAPEAU)
+    for nom, hp in sorted(hampes.items()):
+        ch = os.path.join(dossier, nom + ".png")
+        if not (os.path.exists(ch) and hp):
+            continue
+        im = Image.open(ch).convert("RGBA")
+        C.controle_bords(im, nom)
+        chemin, src = C.chemin_campagne(nom + ".png")
+        C.sauver_png(im, chemin)
+        e = C.entree(src, 80, 80, 40, 64)
+        e["hampe"] = hp
+        entrees[nom] = e
+        cuit = nom[:-3]
+        if cuit in man:
+            man[cuit]["hampe"] = hp
+            entrees[cuit] = man[cuit]
+    C.maj_manifeste(entrees)
+    C.journal("bannières et bourgs nus installés depuis %s : %d entrées" % (dossier, len(entrees)))
+
+
+def planche_drapeaux(sortie, source=None, hampes=None):
+    """Planche des bannières animées : pour chaque bourg, sur la carte, l'image d'avant (bannière cuite), le bourg nu,
+    puis le bourg nu avec l'image 0 du drapeau posée sur sa hampe (ce que fera la carte) ; dessous, les 6 images de
+    chaque drapeau grossies 4 ×, croix rouge au pied du mât. source : dossier d'un essai (sinon jeu/) ; hampes : {nom:
+    [x, y]} de l'essai (sinon le manifeste)."""
+    man = C.lire_manifeste()
+    dossier = source or C.CAMPAGNE
+    carte = Image.open(os.path.join(C.CAMPAGNE, "fond-campagne.jpg")).convert("RGBA")
+    pos = positions()
+    k = C.ECHELLE
+    w, h, ax, ay = DRAPEAU
+    zoom = 3
+    lignes = []
+    for camp, v in LIEUX_NUS:
+        cuit = "lieu-" + camp + ("-%d" % v if v > 1 else "")
+        nu = cuit + "-nu"
+        ch = os.path.join(dossier, nu + ".png")
+        if not os.path.exists(ch) or cuit not in man:
+            continue
+        hp = (hampes or {}).get(nu) or man.get(nu, {}).get("hampe")
+        dr = os.path.join(dossier, "drapeau-%s.png" % camp)
+        lignes.append((cuit, Image.open(os.path.join(C.RACINE, "jeu", man[cuit]["src"])).convert("RGBA"),
+                       Image.open(ch).convert("RGBA"), hp, Image.open(dr).convert("RGBA") if os.path.exists(dr) else None))
+    lieu_pos = {"lieu-france": pos.get("domaine"), "lieu-france-2": pos.get("gue"), "lieu-france-3": pos.get("piemont"),
+                "lieu-angleterre": pos.get("col"), "lieu-omeyyades": pos.get("citadelle")}
+    case = 80 * k
+    L = 20 + 3 * (case * zoom // 2 + 16)
+    H = 30 + len(lignes) * (case * zoom // 2 + 30) + 3 * (h * k * 2 + 30)
+    pl = Image.new("RGBA", (L, H), (40, 34, 28, 255))
+    d = ImageDraw.Draw(pl)
+    d.text((10, 8), "Bourgs : bannière cuite (avant), bourg nu, bourg nu + drapeau (image 0) posé sur la hampe", fill=(240, 228, 200, 255))
+    y = 30
+    for cuit, im_cuit, im_nu, hp, dr in lignes:
+        p_ = lieu_pos.get(cuit) or (500, 260)
+        fond = carte.crop((int((p_[0] - 40) * k), int((p_[1] - 64) * k), int((p_[0] + 40) * k), int((p_[1] + 16) * k)))
+        vues = [im_cuit, im_nu, im_nu.copy()]
+        if dr is not None and hp:
+            vues[2].alpha_composite(dr.crop((0, 0, w * k, h * k)), (int(round((hp[0] - ax) * k)), int(round((hp[1] - ay) * k))))
+        x = 10
+        for i, im in enumerate(vues):
+            f = fond.copy()
+            f.alpha_composite(im)
+            f = f.resize((case * zoom // 2, case * zoom // 2), Image.LANCZOS)
+            pl.alpha_composite(f, (x, y))
+            if i == 1 and hp:
+                hx, hy = x + hp[0] * zoom, y + hp[1] * zoom
+                d.line((hx - 5, hy, hx + 5, hy), fill=(255, 60, 60, 255)); d.line((hx, hy - 5, hx, hy + 5), fill=(255, 60, 60, 255))
+            x += case * zoom // 2 + 16
+        d.text((10, y + case * zoom // 2 + 4), "%s  hampe %s" % (cuit, hp), fill=(230, 220, 195, 255))
+        y += case * zoom // 2 + 30
+    for camp in ("france", "angleterre", "omeyyades"):
+        dr = os.path.join(dossier, "drapeau-%s.png" % camp)
+        if not os.path.exists(dr):
+            continue
+        b = Image.open(dr).convert("RGBA")
+        g = b.resize((b.size[0] * 2, b.size[1] * 2), Image.NEAREST)
+        fond = Image.new("RGBA", g.size, (120, 128, 96, 255))
+        fond.alpha_composite(g)
+        pl.alpha_composite(fond, (10, y))
+        for i in range(IMAGES_DRAPEAU):
+            px_, py_ = 10 + (i * w + ax) * k * 2, y + ay * k * 2
+            d.line((px_ - 4, py_, px_ + 4, py_), fill=(255, 60, 60, 255)); d.line((px_, py_ - 4, px_, py_ + 4), fill=(255, 60, 60, 255))
+        d.text((10, y + g.size[1] + 2), "drapeau-%s (6 images, %d × %d, ancrage %d, %d)" % (camp, w, h, ax, ay), fill=(230, 220, 195, 255))
+        y += g.size[1] + 30
+    os.makedirs(os.path.dirname(os.path.abspath(sortie)), exist_ok=True)
+    pl.convert("RGB").crop((0, 0, L, y)).save(sortie, optimize=True)
+    C.journal("planche des bannières écrite : %s" % sortie)
+    return sortie
+
+
 def main(args):
     essai = "--essai" in args
     args = [a for a in args if a != "--essai"]
@@ -975,6 +1089,14 @@ def main(args):
         i = args.index("--dossier")
         dossier = args[i + 1]
         args = args[:i] + args[i + 2:]
+    if "--installer" in args:
+        installer(args[args.index("--installer") + 1])
+        return
+    if "--planche-drapeaux" in args:
+        import json
+        hp = json.load(open(os.path.join(dossier, "hampes.json"))) if dossier and os.path.exists(os.path.join(dossier, "hampes.json")) else None
+        planche_drapeaux(args[args.index("--planche-drapeaux") + 1], dossier, hp)
+        return
     if "drapeaux" in args or "lieux-nus" in args:
         if "drapeaux" in args:
             for camp in ("france", "angleterre", "omeyyades"):
