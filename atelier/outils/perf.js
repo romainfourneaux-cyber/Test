@@ -27,8 +27,10 @@
 // deux questions sur trois, carte de l'éclaireur avant la première question seulement), porte de faveur, retour puis
 // « Reprendre », export puis import, réglages coupés, défaite forcée avec bilan et campagne intacte ; en 1366 × 768 et 1920 × 1080.
 // Usage : node atelier/outils/perf.js   (demande le module playwright ; sinon, faire les vérifications à la main)
+// Tablette tactile (31/10/2026) : la même partie rejouée au doigt seul, en 1280 × 800 et 1024 × 768 (Android émulé) et le mot
+// « Tourne ta tablette » en portrait ; voir le bloc « tablette tactile » plus bas et atelier/relecture/tablette-tactile.md.
 // Variables facultatives : CHROMIUM (chemin du navigateur), DETAIL=1 (affiche toutes les mesures), PARTIE=expedition (ne joue
-// que l'essai des expéditions, pour le mettre au point).
+// que l'essai des expéditions, pour le mettre au point), PARTIE=tablette (la passe tactile seule).
 "use strict";
 const path = require("path");
 let chromium;
@@ -691,6 +693,315 @@ async function essaiExpedition(navigateur, w, h, erreurs) {
   return res;
 }
 
+// ---------- tablette tactile (31/10/2026) : Android 10 pouces émulé (doigt seul, densité 2, « pointer: coarse ») ----------
+// Tout se joue au toucher (locator.tap, page.touchscreen, événements tactiles bruts pour le glissement), jamais au clavier :
+// accueil, campagne, bataille (type de tour puis emplacement touchés, tour bâtie touchée à nouveau pour la sélectionner,
+// cible élargie au doigt, fantassins, « Lancer la vague », vitesse ×3, « Quitter »), route des semaines (halte touchée,
+// escarmouche jouée au doigt à ×3, porte de faveur, carte choisie au doigt), conseil (carte glissée au doigt, sceaux),
+// réglages (le libellé d'une case à cocher se touche) ; en 1280 × 800 et 1024 × 768. Contrôles : aucun défilement
+// horizontal, champ de bataille entier à l'écran (côte à côte avec la colonne, même en 1024 × 768), carte-itinéraire et
+// cartouches entiers, grille de la campagne sur deux colonnes, cibles tactiles de 44 px au moins, textes de 14 px au moins
+// dans la colonne de bataille et sur la carte, moins de 100 ms entre une réponse touchée et la question suivante
+// (JEU.mesure, et Event Timing sur pointerup et click). En portrait (800 × 1280) : « Tourne ta tablette en paysage »
+// (feuille de style seule), qui disparaît en paysage. Captures : atelier/captures/tablette-*.png.
+const CAPTURES = path.join(__dirname, "..", "captures");
+async function contexteTablette(navigateur, w, h, erreurs) {
+  const ctx = await navigateur.newContext({ viewport: { width: w, height: h }, deviceScaleFactor: 2, hasTouch: true, isMobile: true });
+  const page = await ctx.newPage();
+  page.on("pageerror", e => erreurs.push(e.message));
+  page.on("console", m => { if (m.type() === "error") erreurs.push(m.text()); });
+  await page.goto(URL);
+  await page.waitForFunction(() => window.JEU && JEU.pret);
+  await page.evaluate(() => {
+    window.__ev = [];
+    new PerformanceObserver(l => l.getEntries().forEach(e => { if (e.name === "pointerup" || e.name === "click") window.__ev.push(e.duration); }))
+      .observe({ type: "event", durationThreshold: 16, buffered: true });
+  });
+  return { ctx, page };
+}
+// Mesures d'un écran, dans la page : largeur défilable, champ de bataille, colonnes de la grille, plus petit texte de la
+// colonne de bataille, et cibles tactiles visibles de moins de 44 px (une case à cocher compte avec son libellé). Le groupe
+// .case.relais du parchemin de l'année n'est pas une cible : 29 px de large par construction (34 semaines sur 1000), les
+// flèches « Relais précédent / suivant » font la même chose en 44 px.
+function sondeTablette() {
+  const petites = [];
+  document.querySelectorAll("button, a[href], input, select, textarea, [role=button], .quartier, .noeud.cible, .noeud.attaque, .halte.atteignable").forEach(e => {
+    if (e.hidden || e.closest("[hidden]")) return;
+    let cible = e;
+    if (e.tagName === "INPUT" && (e.type === "checkbox" || e.type === "radio") && e.closest("label")) cible = e.closest("label");
+    const r = cible.getBoundingClientRect(), cs = getComputedStyle(cible);
+    if (r.width === 0 || r.height === 0 || cs.visibility === "hidden" || cs.display === "none") return;
+    if (r.width < 43.5 || r.height < 43.5) {
+      const classe = String(e.className && e.className.baseVal !== undefined ? e.className.baseVal : e.className || "").split(" ")[0];
+      petites.push((e.id ? "#" + e.id : e.tagName.toLowerCase() + (classe ? "." + classe : "")) + " " + Math.round(r.width) + "×" + Math.round(r.height) + " « " + (e.textContent || e.getAttribute("aria-label") || "").trim().slice(0, 24) + " »");
+    }
+  });
+  const toile = document.querySelector(".td-canvas"), r = toile ? toile.getBoundingClientRect() : null;
+  const grille = document.querySelector(".grille-jeux"), zone = document.querySelector(".zone-partie");
+  const textes = [...document.querySelectorAll(".td-bas .choix, .td-bas .enonce, .td-bas .td-nom, .td-bas .td-cout, .td-bas .recit-texte, .td-bas .bouton")].map(e => parseFloat(getComputedStyle(e).fontSize));
+  return { largeurPage: document.documentElement.scrollWidth, fenetre: innerWidth, vue: innerHeight,
+    toile: r ? { gauche: Math.round(r.left), droite: Math.round(r.right), haut: Math.round(r.top), bas: Math.round(r.bottom), largeur: Math.round(r.width) } : null,
+    colonnes: grille ? getComputedStyle(grille).gridTemplateColumns.split(" ").length : null,
+    cotes: zone && toile ? getComputedStyle(zone).gridTemplateColumns.split(" ").length : null,
+    texteMin: textes.length ? Math.round(Math.min(...textes) * 10) / 10 : null, petites };
+}
+const tap = (page, sel, options) => page.locator(sel, options).first().tap();
+// touche le choix affiché dont le texte est t (QCM, vrai ou faux, corrections : les choix sont mélangés à l'affichage)
+async function tapChoix(page, texte) {
+  const i = await page.evaluate(t => [...document.querySelectorAll(".reponses button.choix")].findIndex(b => b.lastElementChild && b.lastElementChild.textContent === t), texte);
+  if (i < 0) throw new Error("choix introuvable au doigt : " + texte);
+  await page.locator(".reponses button.choix").nth(i).tap();
+}
+// Répond juste à la question affichée, au doigt seulement (un texte à trous se remplit par l'API : le clavier de la
+// tablette ne se simule pas ; « Valider » est touché).
+async function repondreJusteTap(page) {
+  const q = await page.evaluate(() => { const q = JEU.ui.questionCourante; return { type: q.type, reponse: q.reponse, corrections: q.corrections }; });
+  switch (q.type) {
+    case "qcm": await tapChoix(page, q.reponse); break;
+    case "qcm_multiple": for (const c of q.reponse) await tapChoix(page, c); await tap(page, ".reponses .valider"); break;
+    case "vrai_faux":
+      if (q.reponse.vrai) await tapChoix(page, "Vrai");
+      else { await tapChoix(page, "Faux"); if (q.corrections && q.corrections.length) { await attendre(80); await tapChoix(page, q.reponse.correction); } }
+      break;
+    case "ordre": for (const i of q.reponse) await page.locator(".ordre .choix").nth(i).tap(); await tap(page, ".reponses .valider"); break;
+    case "association":
+      for (const [g, d] of q.reponse) { await page.locator(".association .colonne").nth(0).locator(".choix").nth(g).tap(); await page.locator(".association .colonne").nth(1).locator(".choix").nth(d).tap(); }
+      await tap(page, ".reponses .valider"); break;
+    case "trou":
+      await page.evaluate(r => { document.querySelectorAll(".trou").forEach((c, i) => { c.value = Array.isArray(r[i]) ? r[i][0] : r[i]; }); }, q.reponse);
+      await tap(page, ".reponses .valider"); break;
+  }
+}
+// Joue au doigt tout ce qui se présente (panneau d'erreur, question, « Lancer la vague », bilan) jusqu'à ce que fini() soit
+// vrai. journal : { questions, erreurs, bilans, vagues, durees } ; une durée Event Timing n'est gardée que quand la réponse
+// amène une autre question (JEU.mesure a noté un enchaînement).
+async function jouerAuDoigt(page, fini, journal, budget) {
+  for (let garde = 0; garde < (budget || 200); garde++) {
+    if (await fini()) return true;
+    const etat = await page.evaluate(() => ({
+      erreur: !!document.querySelector(".panneau-erreur"),
+      question: !!document.querySelector(".question .enonce") && !document.querySelector(".panneau-erreur"),
+      bilan: !!document.querySelector(".zone-partie .bilan .bouton.principal"),
+      pret: !!document.querySelector(".td-pret") && !!document.querySelector(".td-lancer:not([disabled])") }));
+    if (etat.erreur) { await tap(page, ".panneau-erreur .bouton.principal"); journal.erreurs++; }
+    else if (etat.question) {
+      await attendre(300);
+      const avant = await page.evaluate(() => ({ ev: window.__ev.length, mesures: JEU.mesure.valeurs.length }));
+      await repondreJusteTap(page); journal.questions++;
+      await attendre(300);
+      const apres = await page.evaluate(a => ({ ev: window.__ev.slice(a.ev), mesures: JEU.mesure.valeurs.length }), avant);
+      if (apres.mesures > avant.mesures) journal.durees.push(apres.ev.length ? Math.max(...apres.ev) : 16);
+    }
+    else if (etat.bilan) { await attendre(300); await tap(page, ".zone-partie .bilan .bouton.principal"); journal.bilans++; }
+    else if (etat.pret) { await attendre(300); await tap(page, ".td-lancer"); journal.vagues++; }
+    await attendre(350);
+  }
+  return false;
+}
+async function essaiTablette(navigateur, w, h, erreurs) {
+  const { ctx, page } = await contexteTablette(navigateur, w, h, erreurs);
+  const tag = w + "x" + h, res = { taille: w + " × " + h, echecs: [], ecrans: {}, durees: [] };
+  const E = m => res.echecs.push(m);
+  const voir = async nom => {
+    await attendre(250);
+    await page.screenshot({ path: path.join(CAPTURES, "tablette-" + tag + "-" + nom + ".png") });
+    const m = await page.evaluate(sondeTablette);
+    res.ecrans[nom] = m;
+    if (m.largeurPage > m.fenetre) E(nom + " : défilement horizontal (" + m.largeurPage + " px pour " + m.fenetre + ")");
+    if (m.petites.length) E(nom + " : cibles de moins de 44 px : " + m.petites.join(" ; "));
+    return m;
+  };
+  const champEntier = (m, quoi) => {
+    if (!m.toile) return E(quoi + " : pas de champ de bataille");
+    if (m.toile.gauche < -1 || m.toile.droite > m.fenetre + 1 || m.toile.haut < -1 || m.toile.bas > m.vue + 1) E(quoi + " : le champ n'est pas entier à l'écran (" + JSON.stringify(m.toile) + " pour " + m.fenetre + " × " + m.vue + ")");
+    if (m.cotes !== 2) E(quoi + " : le champ et la colonne ne sont pas côte à côte (" + m.cotes + " colonne)");
+    if (m.texteMin !== null && m.texteMin < 14) E(quoi + " : texte de la colonne à " + m.texteMin + " px (14 au moins)");
+  };
+  res.media = await page.evaluate(() => ({ coarse: matchMedia("(pointer: coarse)").matches, hover: matchMedia("(hover: hover)").matches, dpr: devicePixelRatio, tactile: JEU.ui.tactile }));
+  if (!res.media.coarse || res.media.hover || !res.media.tactile) E("l'émulation tactile ne donne pas pointer: coarse et hover: none (" + JSON.stringify(res.media) + ")");
+  await voir("accueil");
+  // 1. la campagne : grille des cartes sur deux colonnes
+  await tap(page, "#menu button[data-ecran=jouer]");
+  await page.waitForSelector("#ecran-jouer .grille-jeux");
+  await page.evaluate(() => JEU.ui.fermerModale());
+  const mc = await voir("campagne");
+  if (mc.colonnes !== 2) E("campagne : grille des cartes sur " + mc.colonnes + " colonnes (2 attendues)");
+  // 2. la bataille au Gué, au doigt : trois questions, une tour (type puis emplacement touchés), la tour touchée à nouveau
+  //    (sélection), un second emplacement touché 36 unités à côté (cible élargie au doigt), des fantassins, la vague à ×3
+  await page.evaluate(() => { JEU.ui.fermerModale(); JEU.bataille.lancer("gue"); });
+  await page.waitForSelector(".td-question .question", { timeout: 30000 });
+  await attendre(300);
+  champEntier(await voir("bataille-conseil"), "bataille (conseil de guerre)");
+  res.enonceVisible = await page.evaluate(() => { const e = document.querySelector(".td-question .enonce"); if (!e) return false; const r = e.getBoundingClientRect(); return r.top >= 0 && r.bottom <= innerHeight; });
+  if (!res.enonceVisible) E("bataille : l'énoncé n'est pas visible à l'ouverture du conseil de guerre");
+  const mesuresAvant = await page.evaluate(() => JEU.mesure.valeurs.length);
+  const jb = { questions: 0, erreurs: 0, bilans: 0, vagues: 0, durees: res.durees };
+  if (!await jouerAuDoigt(page, () => page.$(".td-pret"), jb, 40)) E("bataille : le conseil de guerre ne se termine pas au doigt (" + JSON.stringify(jb) + ")");
+  await page.waitForSelector(".td-lancer:not([disabled])");
+  await page.locator('.td-bouton[data-cle="tour-piquiers"]').tap();
+  res.bataille = { questions: jb.questions, choisi: await page.evaluate(() => { const b = document.querySelector(".td-bouton.choisi"); return b ? b.getAttribute("data-cle") : null; }) };
+  if (res.bataille.choisi !== "tour-piquiers") E("bataille : le type de tour touché n'est pas retenu (" + res.bataille.choisi + ")");
+  const slots = await page.evaluate(() => JEU.cartesBataille.carte("gue").emplacements.slice(0, 2));
+  const cadre = await page.locator(".td-canvas").boundingBox();
+  const surChamp = e => [cadre.x + e[0] / 1000 * cadre.width, cadre.y + e[1] / 660 * cadre.height];
+  let [x, y] = surChamp(slots[0]);
+  await page.touchscreen.tap(x, y); await attendre(200);
+  res.bataille.tours = await page.evaluate(() => JEU.bataille.enCours.tours.map(t => t.type));
+  if (res.bataille.tours.join() !== "piquiers") E("bataille : la tour n'est pas posée au doigt (" + JSON.stringify(res.bataille.tours) + ")");
+  await page.touchscreen.tap(x, y); await attendre(200);
+  res.bataille.selection = await page.evaluate(() => !!document.querySelector(".td-selection"));
+  if (!res.bataille.selection) E("bataille : toucher une tour bâtie ne la sélectionne pas (portée, « Améliorer »)");
+  await tap(page, ".td-selection .lien");
+  [x, y] = surChamp(slots[1]);
+  await page.touchscreen.tap(x + 36 * cadre.width / 1000, y); await attendre(200); // à la souris (rayon 30), ce toucher ne bâtirait rien
+  res.bataille.toursApres = await page.evaluate(() => JEU.bataille.enCours.tours.length);
+  if (res.bataille.toursApres !== 2) E("bataille : la cible élargie au doigt ne bâtit pas à 36 unités d'un emplacement (" + res.bataille.toursApres + " tour)");
+  await page.locator('.td-bouton[data-cle="troupe-fantassins"]').tap(); await attendre(150);
+  res.bataille.envois = await page.evaluate(() => JEU.bataille.enCours.envois.length);
+  if (!res.bataille.envois) E("bataille : les fantassins touchés ne partent pas");
+  await tap(page, ".td-lancer");
+  await page.waitForFunction(() => JEU.bataille.enCours.phase === "vague", null, { timeout: 5000 });
+  await page.locator('[data-cle="vitesse-3"]').tap(); await attendre(300);
+  res.bataille.vitesse = await page.evaluate(() => { const b = document.querySelector(".td-vitesse .bouton.principal"); return b ? b.textContent : null; });
+  if (res.bataille.vitesse !== "×3") E("bataille : la vitesse ×3 touchée n'est pas prise (" + res.bataille.vitesse + ")");
+  await attendre(1200);
+  champEntier(await voir("bataille-vague"), "bataille (vague)");
+  await tap(page, "#bouton-quitter");
+  await page.waitForSelector(".confirmation");
+  await tap(page, ".confirmation .bouton.principal");
+  await page.waitForFunction(() => !JEU.partie && JEU.ui.ecranCourant() === "jouer");
+  const mesures = await page.evaluate(a => JEU.mesure.valeurs.slice(a), mesuresAvant);
+  res.bataille.jeuMesure = { n: mesures.length, max: mesures.length ? Math.round(Math.max(...mesures) * 10) / 10 : null };
+  // 3. la route des semaines au doigt : la carte « Partir en expédition », « Partir » jusqu'à une route dont la première
+  //    couche a une escarmouche à porte de faveur (12 tirages au plus), « En route », la carte-itinéraire entière
+  await page.evaluate(() => JEU.ui.fermerModale());
+  await page.locator(".carte-jeu", { hasText: /Partir en expédition|Reprendre l'expédition/ }).tap();
+  await page.waitForSelector("#ecran-expedition .parchemin-annee");
+  await voir("expedition-depart");
+  let convient = false;
+  for (let n = 0; n < 12 && !convient; n++) {
+    await page.locator("#ecran-expedition .exp-actions .bouton.principal").tap();
+    await page.waitForSelector("#ecran-expedition .page-semaine");
+    convient = await page.evaluate(() => JEU.expedition.enCours().route.actes[0].couches[0].some(x => x.type === "escarmouche" && x.porte && x.porte.genre === "faveur"));
+    if (!convient) { await page.evaluate(() => { JEU.expedition.finir("abandon"); JEU.ui.afficher("expedition"); }); await page.waitForSelector("#ecran-expedition .parchemin-annee"); }
+  }
+  if (!convient) E("route : aucune escarmouche à porte de faveur en première couche en 12 tirages");
+  await voir("expedition-semaine");
+  await tap(page, "#ecran-expedition .exp-actions .bouton.principal");
+  await page.waitForSelector("#ecran-expedition .route-svg");
+  await attendre(300);
+  await voir("expedition-route");
+  res.route = await page.evaluate(() => {
+    const svg = document.querySelector(".route-svg"), k = svg.getBoundingClientRect().width / 1000;
+    const tailles = [...svg.querySelectorAll("text")].map(t => parseFloat(getComputedStyle(t).fontSize) * k);
+    const r = svg.getBoundingClientRect(), bas = [...document.querySelectorAll("#ecran-expedition .exp-bas .cartouche")].map(c => c.getBoundingClientRect().bottom);
+    return { texteMin: Math.round(Math.min(...tailles) * 10) / 10, basCarte: Math.round(r.bottom), basCartouches: Math.round(Math.max(...bas)), vue: innerHeight,
+      haltes: [...document.querySelectorAll(".route-svg .halte.atteignable")].map(g => { const b = g.getBoundingClientRect(); return Math.round(Math.min(b.width, b.height)); }) };
+  });
+  if (res.route.texteMin < 14) E("route : texte à " + res.route.texteMin + " px à l'écran (14 au moins)");
+  if (res.route.basCarte > res.route.vue + 0.5) E("route : carte coupée (bas à " + res.route.basCarte + " px pour " + res.route.vue + ")");
+  if (res.route.basCartouches > res.route.vue + 0.5) E("route : cartouches coupés (bas à " + res.route.basCartouches + " px pour " + res.route.vue + ")");
+  if (!res.route.haltes.length || res.route.haltes.some(t => t < 44)) E("route : halte atteignable de moins de 44 px (" + res.route.haltes.join(", ") + ")");
+  // 4. la halte touchée : l'escarmouche jouée au doigt (deux vagues à ×3), la question de la porte, la carte de faveur touchée
+  const idE = await page.evaluate(() => { const x = JEU.expedition.atteignables().filter(x => x.type === "escarmouche" && x.porte && x.porte.genre === "faveur")[0]; return x ? x.id : null; });
+  if (!idE) E("route : aucune escarmouche à porte de faveur atteignable");
+  else {
+    await page.evaluate(() => JEU.expedition.vitesse(3));
+    await page.locator('.route-svg .halte[data-id="' + idE + '"]').tap();
+    await page.waitForFunction(() => document.querySelector(".td-question .question"), null, { timeout: 30000 });
+    const jr = { questions: 0, erreurs: 0, bilans: 0, vagues: 0, durees: res.durees };
+    const fini = () => page.$("#ecran-expedition .porte .question .enonce, #ecran-expedition button.carte-faveur");
+    const ok = await jouerAuDoigt(page, fini, jr, 300);
+    res.escarmouche = { questions: jr.questions, erreurs: jr.erreurs, vagues: jr.vagues, bilans: jr.bilans };
+    if (!ok) E("escarmouche au doigt : la porte de faveur n'arrive pas (" + JSON.stringify(res.escarmouche) + ")");
+    else {
+      if (await page.$("#ecran-expedition .porte .question .enonce")) {
+        await voir("expedition-porte");
+        await repondreJusteTap(page); await attendre(250);
+        if (await page.$(".panneau-erreur")) { await tap(page, ".panneau-erreur .bouton.principal"); await attendre(250); }
+      }
+      await page.waitForSelector("#ecran-expedition button.carte-faveur");
+      await voir("expedition-faveurs");
+      res.faveur = { nom: await page.evaluate(() => document.querySelector("#ecran-expedition button.carte-faveur .cf-nom").textContent) };
+      await page.locator("#ecran-expedition button.carte-faveur").first().tap();
+      await page.waitForSelector("#ecran-expedition .route-svg");
+      Object.assign(res.faveur, await page.evaluate(() => ({ tenues: JEU.expedition.enCours().faveurs.length, medaillons: document.querySelectorAll(".cp-faveurs .faveur-med").length })));
+      if (res.faveur.tenues !== 1 || res.faveur.medaillons !== 1) E("porte de faveur : la carte touchée n'est pas tenue (" + JSON.stringify(res.faveur) + ")");
+    }
+  }
+  await tap(page, "#ecran-expedition .exp-actions .bouton", { hasText: "Retour" });
+  await page.waitForFunction(() => JEU.ui.ecranCourant() === "jouer");
+  // 5. le conseil au doigt : la carte glissée vers la droite (événements tactiles bruts), puis un sceau touché
+  await page.evaluate(() => { JEU.ui.fermerModale(); JEU.conseil.lancer(); });
+  await page.waitForSelector(".carte-conseil");
+  await attendre(400);
+  await voir("conseil");
+  const cdp = await ctx.newCDPSession(page);
+  const boite = await page.locator(".carte-conseil").boundingBox();
+  const xc = boite.x + boite.width / 2, yc = boite.y + boite.height / 2;
+  await cdp.send("Input.dispatchTouchEvent", { type: "touchStart", touchPoints: [{ x: xc, y: yc }] });
+  for (let i = 1; i <= 10; i++) { await cdp.send("Input.dispatchTouchEvent", { type: "touchMove", touchPoints: [{ x: xc + i * 22, y: yc }] }); await attendre(16); }
+  await cdp.send("Input.dispatchTouchEvent", { type: "touchEnd", touchPoints: [] });
+  await cdp.detach();
+  await attendre(400);
+  res.conseil = await page.evaluate(() => ({ compteur: document.querySelector(".compteur").textContent, erreur: !!document.querySelector(".panneau-erreur"), correction: !!document.querySelector(".scene-conseil .choix") }));
+  if (!(/Affaire 2 /.test(res.conseil.compteur) || res.conseil.erreur || res.conseil.correction)) E("conseil : la carte glissée au doigt n'est pas tranchée (" + JSON.stringify(res.conseil) + ")");
+  if (res.conseil.correction) { await page.locator(".scene-conseil .choix").first().tap(); await attendre(200); }
+  if (await page.$(".panneau-erreur")) { await tap(page, ".panneau-erreur .bouton.principal"); await attendre(200); }
+  if (await page.$(".boutons-sceau .bouton")) { await page.locator(".boutons-sceau .bouton").last().tap(); await attendre(300); }
+  res.conseil.apres = await page.evaluate(() => document.querySelector(".compteur").textContent);
+  if (await page.$(".panneau-erreur")) { await tap(page, ".panneau-erreur .bouton.principal"); await attendre(200); }
+  if (await page.$(".scene-conseil .choix")) { await page.locator(".scene-conseil .choix").first().tap(); await attendre(200); }
+  if (await page.$(".panneau-erreur")) { await tap(page, ".panneau-erreur .bouton.principal"); await attendre(200); }
+  await tap(page, "#bouton-quitter");
+  await page.waitForSelector(".confirmation");
+  await tap(page, ".confirmation .bouton.principal");
+  await page.waitForFunction(() => !JEU.partie);
+  // 6. les réglages : la ligne entière d'une case à cocher se touche
+  await tap(page, "#menu button[data-ecran=reglages]");
+  await page.waitForSelector("#ecran-reglages input[data-reglage=sang]");
+  await voir("reglages");
+  const avantSang = await page.evaluate(() => JEU.sauvegarde.etat().reglages.sang !== false);
+  await page.locator("label:has(> input[data-reglage=sang])").tap({ position: { x: 150, y: 12 } }); await attendre(150);
+  res.reglages = { avant: avantSang, apres: await page.evaluate(() => JEU.sauvegarde.etat().reglages.sang !== false) };
+  if (res.reglages.apres === res.reglages.avant) E("réglages : toucher le libellé d'une case à cocher ne la bascule pas");
+  await page.locator("label:has(> input[data-reglage=sang])").tap({ position: { x: 150, y: 12 } }); await attendre(150);
+  res.reglages.remis = await page.evaluate(() => JEU.sauvegarde.etat().reglages.sang !== false);
+  await ctx.close();
+  const tri = res.durees.slice().sort((a, b) => a - b);
+  res.tempsReel = { mesures: tri.length, mediane: tri[Math.floor(tri.length / 2)], max: tri[tri.length - 1] };
+  return res;
+}
+// Portrait (800 × 1280) : le mot « Tourne ta tablette en paysage » (body::after, feuille de style seule, aucun toucher pris),
+// qui disparaît en paysage.
+async function essaiPortrait(navigateur, erreurs) {
+  const { ctx, page } = await contexteTablette(navigateur, 800, 1280, erreurs);
+  await attendre(250);
+  const res = await page.evaluate(() => { const cs = getComputedStyle(document.body, "::after"); return { contenu: cs.content, pointeur: cs.pointerEvents, position: cs.position, largeurPage: document.documentElement.scrollWidth, fenetre: innerWidth }; });
+  await page.screenshot({ path: path.join(CAPTURES, "tablette-800x1280-portrait.png") });
+  await page.setViewportSize({ width: 1280, height: 800 });
+  await attendre(250);
+  res.paysage = await page.evaluate(() => getComputedStyle(document.body, "::after").content);
+  await ctx.close();
+  return res;
+}
+function echecsTablette(bilan) {
+  const echecs = [];
+  (bilan.tablette || []).forEach(x => {
+    x.echecs.forEach(m => echecs.push("tablette " + x.taille + " : " + m));
+    if (!(x.tempsReel && x.tempsReel.mesures >= 6)) echecs.push("tablette " + x.taille + " : seulement " + (x.tempsReel ? x.tempsReel.mesures : 0) + " mesures d'Event Timing au doigt");
+    else if (x.tempsReel.max > 100) echecs.push("tablette " + x.taille + " : " + x.tempsReel.max + " ms entre une réponse touchée et la question suivante peinte (plus de 100 ms)");
+    if (x.bataille && x.bataille.jeuMesure && x.bataille.jeuMesure.max !== null && !(x.bataille.jeuMesure.max < 100)) echecs.push("tablette " + x.taille + " : JEU.mesure à " + x.bataille.jeuMesure.max + " ms en bataille");
+  });
+  const P = bilan.portrait;
+  if (P) {
+    if (!/Tourne ta tablette en paysage/.test(P.contenu) || P.pointeur !== "none" || P.position !== "fixed") echecs.push("portrait : le mot « Tourne ta tablette en paysage » manque ou prend les touchers (" + JSON.stringify(P) + ")");
+    if (P.paysage !== "none") echecs.push("portrait : le mot reste affiché en paysage (" + P.paysage + ")");
+    if (P.largeurPage > P.fenetre) echecs.push("portrait : défilement horizontal (" + P.largeurPage + " px pour " + P.fenetre + ")");
+  }
+  return echecs;
+}
+
 // Ce que l'essai des expéditions doit avoir trouvé (ses propres échecs, et assez de mesures d'Event Timing).
 function echecsExpedition(bilan) {
   const echecs = [];
@@ -703,6 +1014,18 @@ function echecsExpedition(bilan) {
 
 (async () => {
   const navigateur = await chromium.launch(process.env.CHROMIUM ? { executablePath: process.env.CHROMIUM } : {});
+  if (process.env.PARTIE === "tablette") {
+    const erreurs = [], bilan = { tablette: [] };
+    for (const [w, h] of [[1280, 800], [1024, 768]]) bilan.tablette.push(await essaiTablette(navigateur, w, h, erreurs));
+    bilan.portrait = await essaiPortrait(navigateur, erreurs);
+    bilan.erreursJS = erreurs;
+    console.log(JSON.stringify(bilan, null, 1));
+    await navigateur.close();
+    const echecs = echecsTablette(bilan);
+    if (erreurs.length) echecs.push("erreurs JavaScript dans la page");
+    echecs.forEach(m => console.log("ÉCHEC  " + m));
+    process.exit(echecs.length ? 1 : 0);
+  }
   if (process.env.PARTIE === "expedition") {
     const erreurs = [], bilan = { expedition: [] };
     for (const [w, h] of [[1366, 768], [1920, 1080]]) bilan.expedition.push(await essaiExpedition(navigateur, w, h, erreurs));
@@ -995,6 +1318,10 @@ function echecsExpedition(bilan) {
   // 11. expédition de bout en bout (route des semaines), en 1366 × 768 et en 1920 × 1080
   bilan.expedition = [];
   for (const [w, h] of [[1366, 768], [1920, 1080]]) bilan.expedition.push(await essaiExpedition(navigateur, w, h, erreurs));
+  // 12. tablette tactile (31/10/2026) : tout au doigt en 1280 × 800 et 1024 × 768, et le mot en portrait
+  bilan.tablette = [];
+  for (const [w, h] of [[1280, 800], [1024, 768]]) bilan.tablette.push(await essaiTablette(navigateur, w, h, erreurs));
+  bilan.portrait = await essaiPortrait(navigateur, erreurs);
   bilan.erreursJS = erreurs;
   console.log(JSON.stringify(bilan, null, 1));
   await navigateur.close();
@@ -1072,6 +1399,7 @@ function echecsExpedition(bilan) {
   if (!T.decor3D || T.decor3D.route) echecs.push("terrain 3D : la route est dessinée par-dessus l'image (" + JSON.stringify(T.decor3D) + ")");
   if (!T.repli || !T.repli.route || T.repli.terrain !== "terrain-peint") echecs.push("repli sans terrain 3D : route, ponts et gué non dessinés (" + JSON.stringify(T.repli) + ")");
   echecsExpedition(bilan).forEach(m => echecs.push(m));
+  echecsTablette(bilan).forEach(m => echecs.push(m));
   echecs.forEach(m => console.log("ÉCHEC  " + m));
   process.exit(echecs.length ? 1 : 0);
 })().catch(e => { console.log("ÉCHEC  " + e.message); process.exit(1); });
