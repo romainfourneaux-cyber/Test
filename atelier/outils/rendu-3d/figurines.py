@@ -197,7 +197,7 @@ def _orienter(ob, origine, direction, haut=V((0, 0, 1))):
 
 # ---------------------------------------------------------------- squelette humain et marche
 def pose_homme(phase, assis=False, bras_droit=(15, 55), bras_gauche=(35, 75), amplitude=17, penche=6.5, balancement=4,
-               genou=None):
+               genou=None, jambes_fixes=None):
     """Positions des articulations d'un homme de 1,80 m à la phase de marche donnée.
 
     Foulée souple : amplitude de 17° à la hanche, genou d'appui fléchi de 12°, genou en balancier jusqu'à 57°,
@@ -205,7 +205,9 @@ def pose_homme(phase, assis=False, bras_droit=(15, 55), bras_gauche=(35, 75), am
     bras_* : (angle de l'épaule vers l'avant, flexion du coude) en degrés, avant le balancement de marche.
     genou : (flexion minimale, flexion ajoutée en balancier) en degrés, pour une marche plus naturelle (troupes) : le
     genou n'est jamais tendu (15 à 25° en appui), la jambe arrière plie déjà au décollement du pied (cycle avancé de
-    0,6 rad), la jambe qui passe vers l'avant plie jusqu'à environ 55°. None : ancienne foulée (tours, engins)."""
+    0,6 rad), la jambe qui passe vers l'avant plie jusqu'à environ 55°. None : ancienne foulée (tours, engins).
+    bras_* à trois valeurs (épaule, coude, écart) : l'écart (degrés) ouvre le bras sur le côté (bras jetés d'un homme
+    qui tombe). jambes_fixes : {côté: (cuisse, genou)} en degrés, jambes figées (chute, garde) au lieu de la foulée."""
     cuisse, tibia = 0.45, 0.44
     marche_fine = genou is not None
     j = {}
@@ -213,6 +215,9 @@ def pose_homme(phase, assis=False, bras_droit=(15, 55), bras_gauche=(35, 75), am
         jambes = {+1: (70, 75), -1: (70, 75)}
         balance = 0
         penche = 0
+    elif jambes_fixes:
+        jambes = dict(jambes_fixes)
+        balance = 0.0
     else:
         a = math.radians(amplitude)
         jambes = {}
@@ -262,13 +267,18 @@ def pose_homme(phase, assis=False, bras_droit=(15, 55), bras_gauche=(35, 75), am
     j["poitrine"] = buste(0.40, 0.03)
     j["cou"] = buste(0.56, 0.04)
     j["tete"] = buste(0.70, 0.05)
-    for cote, (ep, coude) in ((-1, bras_droit), (+1, bras_gauche)):
+    for cote, bras in ((-1, bras_droit), (+1, bras_gauche)):
+        ep, coude = bras[0], bras[1]
+        ecart = math.radians(bras[2]) * cote if len(bras) > 2 else 0.0
         swing = -balancement * cote * math.sin(phase) if not assis else 0.0
         a1 = math.radians(ep + swing)
         a2 = math.radians(ep + swing + coude)
         epaule = buste(0.49, 0.03) + V((0, 0.22 * cote, 0))
         d1 = V((math.sin(a1), (0.12 if cote > 0 else 0.3) * cote, -math.cos(a1))).normalized()
         d2 = V((math.sin(a2), 0.05 * cote, -math.cos(a2))).normalized()
+        if ecart:
+            rx = Matrix.Rotation(ecart, 3, "X")       # bras ouvert sur le côté (vers +Y à gauche, -Y à droite)
+            d1, d2 = rx @ d1, rx @ d2
         j["epaule", cote] = epaule
         j["coude", cote] = epaule + d1 * 0.29
         j["main", cote] = j["coude", cote] + d2 * 0.26
@@ -698,8 +708,81 @@ def texture_ecartele(camp, nom=None, lin="#d6c9ac"):
     return chemin
 
 
+# ---------------------------------------------------------------- gestes : chute et coup (bandes « -chute » et « -coup »)
+# Chute en 4 images : genoux qui plient, buste renversé, au sol, couché (arme posée à côté). La figurine tombe d'une
+# pièce vers l'arrière (à l'opposé de l'ennemi) : sa racine tourne autour des pieds, puis elle est reposée sur le sol
+# (son point le plus bas touche le sol). Le corps reste d'un seul tenant : aucun membre ne se détache.
+# Une ligne : (bascule en degrés, jambes {côté: (cuisse, genou)}, penche du buste, bras droit, bras gauche,
+#              arme de la main droite « main » ou « sol », élévation d'une lance tenue en degrés)
+CHUTE = (
+    (16, {-1: (40, 80), +1: (30, 72)}, -10, (100, 25, 18), (45, 40, 22), "main", 78),
+    (50, {-1: (55, 95), +1: (44, 86)}, -18, (122, 18, 36), (68, 35, 38), "main", 66),
+    (82, {-1: (34, 58), +1: (22, 42)}, -4, (8, 12, 62), (14, 24, 22), "main", 0),
+    (90, {-1: (16, 24), +1: (9, 15)}, 0, (6, 10, 80), (8, 18, 16), "sol", 0),
+)
+# En tombant, le corps tourne un peu vers le fond de la scène (degrés autour de la verticale, par image) : couché, il
+# barre l'image en biais et tient dans sa largeur.
+LACET_CHUTE = (0, -8, -14, -16)
+# Coup en 4 images : armer, frapper, suivi, revenir. Épée et masse : (bras droit, angle de l'arme depuis la verticale
+# descendante, vers l'avant, en degrés ; penche du buste ; jambes en garde). Le pied avant (droit) ne quitte pas
+# l'ancrage : la figurine frappe sur place, sans glisser.
+COUP_ARME = (
+    ((116, 40, 8), 210, 0, {-1: (14, 22), +1: (-12, 20)}),
+    ((22, 5, 6), 84, 12, {-1: (26, 34), +1: (-20, 14)}),
+    ((6, 10, 6), 54, 9, {-1: (24, 32), +1: (-18, 14)}),
+    ((62, 45, 6), 150, 4, {-1: (16, 24), +1: (-12, 18)}),
+)
+# Lance de la piétaille : (bras droit, élévation de la lance en degrés, recul ajouté de la main sur la hampe, penche,
+# jambes) : ramener la lance, frapper d'estoc, suivre, revenir.
+COUP_LANCE = (
+    ((10, 78, 5), 66, 0.25, 0, {-1: (14, 22), +1: (-12, 20)}),
+    ((48, 28, 4), 60, 0.2, 10, {-1: (26, 34), +1: (-20, 14)}),
+    ((44, 30, 4), 57, 0.2, 8, {-1: (24, 32), +1: (-18, 14)}),
+    ((30, 55, 4), 66, 0.1, 4, {-1: (16, 24), +1: (-12, 18)}),
+)
+
+
+def direction_arme(angle, y=-0.08):
+    """Direction d'une arme dans le plan X-Z de la figurine : angle depuis la verticale descendante, positif vers
+    l'avant (0 : pointe en bas, 90 : vers l'avant, 180 : vers le haut, au-delà : derrière la tête)."""
+    a = math.radians(angle)
+    return V((math.sin(a), y, -math.cos(a))).normalized()
+
+
+def poser_racine(racine, objets, echelle=1.0):
+    """Repose la figurine sur le sol : le point le plus bas des maillages évalués d'objets (enfants de racine) est ramené
+    à z = 0 (le sol, où le capteur d'ombre est posé). La racine est enfant d'un pivot sans rotation hors du plan."""
+    bpy.context.view_layer.update()
+    dg = bpy.context.evaluated_depsgraph_get()
+    bas = None
+    for o in objets:
+        if o.type != "MESH":
+            continue
+        oe = o.evaluated_get(dg)
+        me = oe.to_mesh()
+        mw = oe.matrix_world
+        for v in me.vertices:
+            z = (mw @ v.co).z
+            bas = z if bas is None or z < bas else bas
+        oe.to_mesh_clear()
+    if bas is not None:
+        racine.location.z -= bas / echelle
+        bpy.context.view_layer.update()
+    return bas
+
+
+def basculer(racine, angle_y=0.0, angle_x=0.0, centre=(0, 0, 0)):
+    """Rotation rigide de la racine autour d'un point (repère du parent) : angle_y tourne autour de l'axe Y (positif :
+    la tête part vers l'avant, +X), angle_x autour de l'axe X (positif : le haut part vers -Y, vers la caméra)."""
+    c = V(centre)
+    m = Matrix.Translation(c) @ Matrix.Rotation(math.radians(angle_x), 4, "X") @ \
+        Matrix.Rotation(math.radians(angle_y), 4, "Y") @ Matrix.Translation(-c)
+    racine.matrix_basis = m @ racine.matrix_basis
+
+
 # ---------------------------------------------------------------- soldats complets
-def soldat(nom, camp, role, phase=0.0, lacet=-22.0, echelle=1.0, recul_y=0.1, fine=None, plafond=None):
+def soldat(nom, camp, role, phase=0.0, lacet=-22.0, echelle=1.0, recul_y=0.1, fine=None, plafond=None, chute=None,
+           coup=None):
     """Construit un soldat et renvoie ses objets (déjà orientés et posés à l'origine).
 
     role : 'fantassin' (épée + écu en amande), 'pietaille' (lance à fanion + écu), 'homme_armes' (lourd),
@@ -721,7 +804,9 @@ def soldat(nom, camp, role, phase=0.0, lacet=-22.0, echelle=1.0, recul_y=0.1, fi
     deux silhouettes différentes, et non deux nuances de rouge.
     plafond (piétaille anglaise) : hauteur à l'écran, en mètres au-dessus de l'ancrage, où placer la pointe de la lance
     (bord haut de l'image moins une marge) : la lance de 2,6 m monte aussi haut que l'image le permet ; si son talon
-    devait entrer dans le sol, elle est raccourcie d'autant."""
+    devait entrer dans le sol, elle est raccourcie d'autant.
+    chute (0 à 3) : image de la bande de chute (table CHUTE) ; coup (0 à 3) : image de la bande de coup (COUP_ARME,
+    COUP_LANCE). Les deux gardent l'échelle, le lacet et le recul de la marche : même taille et même ancrage en jeu."""
     if fine is None:
         fine = role != "archer"
     mats = matieres(camp)
@@ -730,22 +815,48 @@ def soldat(nom, camp, role, phase=0.0, lacet=-22.0, echelle=1.0, recul_y=0.1, fi
     lourd = role in ("homme_armes", "champion")
     genou = (16, 30) if fine else None
     if role == "fantassin":
-        j = pose_homme(phase, bras_droit=(25, 30), bras_gauche=(18, 78), genou=genou)
+        bd, bg, amp, pen = (25, 30), (18, 78), 17, 6.5
     elif role == "pietaille" and anglais and fine:
         # main droite avancée à hauteur de hanche : la lance est tenue droite devant le corps
-        j = pose_homme(phase, bras_droit=(26, 60), bras_gauche=(18, 78), genou=genou)
+        bd, bg, amp, pen = (26, 60), (18, 78), 17, 6.5
     elif role == "pietaille":
-        j = pose_homme(phase, bras_droit=(35, 45), bras_gauche=(18, 78), genou=genou)
+        bd, bg, amp, pen = (35, 45), (18, 78), 17, 6.5
     elif role == "archer":
-        j = pose_homme(phase, bras_droit=(80, 95), bras_gauche=(88, 5), amplitude=4, penche=2, genou=genou)
+        bd, bg, amp, pen = (80, 95), (88, 5), 4, 2
     elif role == "champion" and sud:
-        j = pose_homme(phase, bras_droit=(128, 32), bras_gauche=(20, 80), amplitude=15, genou=genou)
+        bd, bg, amp, pen = (128, 32), (20, 80), 15, 6.5
     elif role == "champion":
-        j = pose_homme(phase, bras_droit=(120, 25), bras_gauche=(20, 80), amplitude=15, genou=genou)
+        bd, bg, amp, pen = (120, 25), (20, 80), 15, 6.5
     elif role == "homme_armes" and (sud or (anglais and fine)):
-        j = pose_homme(phase, bras_droit=(118, 40), bras_gauche=(20, 80), amplitude=15, genou=genou)
+        bd, bg, amp, pen = (118, 40), (20, 80), 15, 6.5
     else:
-        j = pose_homme(phase, bras_droit=(25, 35), bras_gauche=(18, 78), amplitude=15, genou=genou)
+        bd, bg, amp, pen = (25, 35), (18, 78), 15, 6.5
+    lance_en_main = role == "pietaille"
+    jf, bal = None, 4
+    d_arme, elev_lance, recul_lance = None, None, 0.0
+    ligne_chute = CHUTE[chute] if chute is not None else None
+    if ligne_chute:
+        bascule, jf, pen, bd, bg, arme_ou, elev_lance = ligne_chute
+        bal = 0
+        if role == "champion" and chute == 1:
+            bd = (100, 20, 40)                    # le champion est plus grand : son bras jeté reste dans l'image
+        if lance_en_main and chute >= 1:
+            arme_ou = "sol"                       # la lance échappe des mains dès que l'homme bascule
+        elif lance_en_main:
+            bd, elev_lance = (30, 50, 10), 60     # touché : la lance penche en avant, la main ne se lève pas
+    elif coup is not None:
+        bal = 0
+        if lance_en_main:
+            bd, elev_lance, recul_lance, pen, jf = COUP_LANCE[coup]
+        else:
+            bd, angle, pen, jf = COUP_ARME[coup]
+            if role == "champion" and coup == 0:
+                bd, angle = (106, 40, 8), 198          # le champion est plus grand : il arme un peu plus bas
+            d_arme = direction_arme(angle)
+    j = pose_homme(phase, bras_droit=bd, bras_gauche=bg, amplitude=amp, penche=pen, genou=genou, jambes_fixes=jf,
+                   balancement=bal)
+    if ligne_chute and not lance_en_main:
+        d_arme = V(j["avant_bras", -1])             # l'arme lâchée prolonge l'avant-bras (prise qui se défait)
     objs = []
     tex = texture_surcot(camp)
     m_sur = C.mat_tissu("surcot_" + camp, C.CAMPS[camp]["tissu"], image_png=tex)
@@ -815,17 +926,41 @@ def soldat(nom, camp, role, phase=0.0, lacet=-22.0, echelle=1.0, recul_y=0.1, fi
     # armes (troupes : lames plus courtes et plus fines, garde plus étroite)
     md, mg = j["main", -1], j["main", +1]
     lame = {"largeur": 0.05, "garde_l": 0.17} if fine else {}
-    if role == "fantassin" or (role == "homme_armes" and not sud and not lourd_anglais):
-        objs += epee(nom, mats, md, V((0.62, -0.1, -0.55)) if fine else V((0.75, -0.1, -0.4)),
-                     longueur=0.56 if fine else 0.74, **lame)
-    elif role == "homme_armes":
-        objs += epee(nom, mats, md, V((0.3, -0.08, 1.0)), longueur=0.62 if fine else 0.76, **lame)      # épée levée
-    elif role == "champion" and sud:
-        objs += masse(nom, mats, md, V((0.35, -0.06, 0.9)), longueur=0.66)          # masse tenue haut
-    elif role == "champion":
-        objs += epee(nom, mats, md, V((0.75, -0.06, 0.8)), longueur=0.72 if fine else 0.88, **lame)  # grande épée levée
+
+    def arme(main, d=None):
+        """Arme de la main droite (épée ou masse) ; d : direction (None : celle de la marche)."""
+        o = []
+        if role == "fantassin" or (role == "homme_armes" and not sud and not lourd_anglais):
+            o += epee(nom, mats, main, d if d is not None else (V((0.62, -0.1, -0.55)) if fine else V((0.75, -0.1, -0.4))),
+                      longueur=0.56 if fine else 0.74, **lame)
+        elif role == "homme_armes":
+            o += epee(nom, mats, main, d if d is not None else V((0.3, -0.08, 1.0)), longueur=0.62 if fine else 0.76,
+                      **lame)                                                                  # épée levée
+        elif role == "champion" and sud:
+            o += masse(nom, mats, main, d if d is not None else V((0.35, -0.06, 0.9)), longueur=0.66)   # masse tenue haut
+        elif role == "champion":
+            o += epee(nom, mats, main, d if d is not None else V((0.75, -0.06, 0.8)), longueur=0.72 if fine else 0.88,
+                      **lame)                                                                  # grande épée levée
+        return o
+    arme_au_sol = bool(ligne_chute) and arme_ou == "sol"
+    if not arme_au_sol:
+        objs += arme(md, d_arme)
     hampe = mats["frene"] if fine else None
-    if role == "pietaille" and anglais and fine:
+    if role == "pietaille" and elev_lance is not None:
+        # geste (coup) ou chute (lance encore en main) : même lance que la marche, inclinée selon la table
+        longueur_l = 2.6 if anglais and fine else 1.95
+        if not arme_au_sol:
+            e_l = math.radians(elev_lance)
+            d_l = V((math.cos(e_l), -0.05, math.sin(e_l))).normalized()
+            recul = (1.25 if anglais and fine else 0.5) + recul_lance
+            recul = min(recul, (md.z - 0.05) / max(0.05, d_l.z))      # le talon ne rentre jamais dans le sol
+            if anglais and fine:
+                objs += lance(nom, mats, md, d_l, longueur=longueur_l, recul=recul, fanion=camp, taille_fanion=1.35,
+                              hampe=hampe, rayon=0.034, fer=0.22, largeur_fer=0.05, sous_fer=0.02)
+            else:
+                objs += lance(nom, mats, md, d_l, longueur=longueur_l, recul=recul, fanion=camp, taille_fanion=0.9,
+                              hampe=hampe)
+    elif role == "pietaille" and anglais and fine:
         # lance de frêne dressée (12° vers l'avant), talon juste au-dessus du sol ; grand fanion de gueules
         d = V((0.12, 0.0, 1.0)).normalized()
         longueur = 2.6
@@ -868,12 +1003,41 @@ def soldat(nom, camp, role, phase=0.0, lacet=-22.0, echelle=1.0, recul_y=0.1, fi
     # orientation commune : un peu tournée vers la caméra
     pv = bpy.data.objects.new(nom + "_pivot", None)
     C.lier(pv)
+    racine = pv
+    if ligne_chute:
+        # la figurine bascule d'une pièce vers l'arrière autour de ses pieds, puis est reposée sur le sol
+        racine = C.lier(bpy.data.objects.new(nom + "_racine", None))
+        racine.parent = pv
     for o in objs:
         if o.parent is None:
-            o.parent = pv
+            o.parent = racine
     pv.rotation_euler = (0, 0, math.radians(lacet))
     pv.scale = (echelle, echelle, echelle)
     pv.location = (0, recul_y, 0)
+    if ligne_chute:
+        basculer(racine, angle_y=-bascule)
+        racine.matrix_basis = Matrix.Rotation(math.radians(LACET_CHUTE[chute]), 4, "Z") @ racine.matrix_basis
+        poser_racine(racine, objs, echelle)
+        if arme_au_sol:
+            # arme posée à plat à côté de la main droite, un peu vers la caméra (elle ne passe pas sous le corps)
+            main = racine.matrix_basis @ V(md)
+            if role == "pietaille":
+                # lance tombée en travers, sous le corps (à 50° de l'horizontale à l'écran : une lance de 2,6 m ne
+                # tient pas à plat dans une image de 40 px), milieu de la hampe sous le bassin
+                d_sol = V((0.88, -0.47, 0.0)).normalized()
+                longueur_l = 2.6 if anglais and fine else 1.95
+                centre = racine.matrix_basis @ V(j["bassin"])
+                pose = V((centre.x + 0.1, centre.y - 0.15, 0.04))
+                sol = lance(nom + "_sol", mats, pose, d_sol, longueur=longueur_l, recul=longueur_l * 0.5, fanion=camp,
+                            taille_fanion=1.35 if anglais and fine else 0.9, hampe=hampe)
+            else:
+                d_sol = V((0.55, -0.83, 0.0)).normalized()
+                pose = V((main.x + 0.05, main.y - 0.12, 0.07 if (role == "champion" and sud) else 0.036))
+                sol = arme(pose, d_sol)
+            for o in sol:
+                if o.parent is None:
+                    o.parent = pv
+            objs += sol
     return objs, pv
 
 
@@ -989,6 +1153,46 @@ def pose_cheval(phase, amplitude=24):
     return j
 
 
+# Jambes d'un cheval qui tombe, dans le repère du cheval debout (la racine l'abaisse et le couche ensuite) :
+# mode -> (avant-bras ou jambe, canon, paturon) en degrés depuis la verticale descendante, positif vers l'avant ;
+# None : jambes de la marche. « genoux » : antérieurs repliés, le cheval tombe sur les genoux ; « replie » : les quatre
+# jambes repliées sous le ventre ; « flanc » : jambes à demi pliées et détendues (cheval couché sur le flanc).
+JAMBES_CHUTE = {
+    "genoux": {"ant": (24, -100, -70), "post": None},
+    "replie": {"ant": (78, -98, -80), "post": (52, -92, -70)},
+    "flanc": {"ant": (58, -35, -10), "post": (14, -70, -40)},
+}
+
+
+def pose_cheval_chute(mode):
+    """Articulations d'un cheval qui s'affaisse (JAMBES_CHUTE) ; les deux jambes d'une paire ne plient pas tout à fait
+    pareil (± 6°)."""
+    j = pose_cheval(0.0)
+    angles = JAMBES_CHUTE[mode]
+    for (av, cote) in (("ant", 1), ("ant", -1), ("post", 1), ("post", -1)):
+        a = angles[av]
+        if a is None:
+            continue
+        haut = j[av, cote][0]
+        dec = 6 if cote > 0 else -6
+        a1, a2, a3 = (math.radians(x + dec) for x in a)
+        l1, l2, l3 = (0.42, 0.3, 0.16) if av == "ant" else (0.48, 0.36, 0.16)
+        genou = haut + _dir(a1) * l1
+        boulet = genou + _dir(a2) * l2
+        j[av, cote] = (haut, genou, boulet, boulet + _dir(a3) * l3)
+    return j
+
+
+# Cavaliers, bande de coup : (élévation de la lance en degrés, buste penché en avant, cheval cabré en degrés, phase
+# des jambes) : lance couchée, poussée (pointe basse, buste en avant), cheval qui se cabre un peu, retour.
+COUP_CAVALIER = ((4, 0, 0, 0.0), (-5, 12, 0, 0.5 * math.pi), (5, 4, 5, math.pi), (14, 0, 0, 1.5 * math.pi))
+# Cavaliers, bande de chute : (jambes du cheval, roulis du cheval en degrés (le dos part vers la caméra, les jambes vers
+# le nord), tangage (positif : la tête plonge), cavalier « selle » (tangage, roulis vers la caméra) ou « sol » (ligne
+# de CHUTE de l'homme à terre))
+CHUTE_CAVALIER = (("genoux", 0, 12, ("selle", -14, 8)), ("replie", 10, 3, ("selle", -10, 52)),
+                  ("flanc", 55, 0, ("sol", 2)), ("flanc", 84, 0, ("sol", 3)))
+
+
 def _profil(liste, dz=0.0, gonfle=0.0):
     c = [V((x, 0, z + dz)) for (x, z, ry, rz) in liste]
     return c, [ry + gonfle for (x, z, ry, rz) in liste], [rz + gonfle for (x, z, ry, rz) in liste]
@@ -1072,19 +1276,27 @@ def cheval(nom, j, robe="#6b4428", criniere="#2a1b12", balzanes=(("ant", -1), ("
     m_sabot = C.mat_simple("sabot_" + nom, "#2b2420", rugosite=0.6)
     m_oeil = C.mat_simple("oeil_" + nom, "#0d0a08", rugosite=0.25)
     dz = j["dz"] - 0.04
+    # cheval couché (chute) : encolure et tête abaissées vers l'avant, d'autant plus loin du garrot (encolure tendue)
+    abaisse = j.get("encolure_basse", 0.0)
+
+    def bas(x, z):
+        return z - abaisse * max(0.0, x - 0.45)
+    enc = [(x, bas(x, z), ry, rz) for (x, z, ry, rz) in ENCOLURE]
+    tet = [(x, bas(x, z), ry, rz) for (x, z, ry, rz) in TETE_CHEVAL]
     objs = []
     c, ry, rz = _profil(CORPS_CHEVAL, dz)
     objs.append(_loft(nom + "_corps", c, ry, rz, m_robe, segments=18))
-    c, ry, rz = _profil(ENCOLURE, dz + j["tete"] * 0.5)
+    c, ry, rz = _profil(enc, dz + j["tete"] * 0.5)
     objs.append(_loft(nom + "_encolure", c, ry, rz, m_robe, segments=14))
-    c, ry, rz = _profil(TETE_CHEVAL, dz + j["tete"])
+    c, ry, rz = _profil(tet, dz + j["tete"])
     objs.append(_loft(nom + "_tete", c, ry, rz, m_tete, segments=14))
     if chanfrein is not None:
-        c, ry, rz = _profil(TETE_CHEVAL[1:4], dz + j["tete"], gonfle=0.018)
+        c, ry, rz = _profil(tet[1:4], dz + j["tete"], gonfle=0.018)
         objs.append(_loft(nom + "_chanfrein", c, ry, rz, chanfrein, segments=12))
     else:
         for cote in (-1, 1):
-            objs.append(C.sphere(nom + "_oeil%d" % cote, 0.024, (1.035, 0.088 * cote, 2.125 + dz + j["tete"]), m_oeil, subdiv=2))
+            objs.append(C.sphere(nom + "_oeil%d" % cote, 0.024, (1.035, 0.088 * cote, bas(1.035, 2.125) + dz + j["tete"]), m_oeil,
+                                 subdiv=2))
     for (av, cote) in (("ant", 1), ("ant", -1), ("post", 1), ("post", -1)):
         h, g, b, s = j[av, cote]
         mj = m_balz if (av, cote) in balzanes else m_jambe
@@ -1106,10 +1318,10 @@ def cheval(nom, j, robe="#6b4428", criniere="#2a1b12", balzanes=(("ant", -1), ("
         objs.append(_tube(nom + "_paturon%d%s" % (cote, av), [b, s], [0.04, 0.037], mj, segments=8))
         objs.append(C.cylindre(nom + "_sabot%d%s" % (cote, av), 0.056, 0.085, (s.x + 0.01, s.y, s.z - 0.045), m_sabot, segments=10,
                                rayon_haut=0.046))
-    e = [V((x, 0, z + dz + j["tete"] * 0.5)) for (x, z, ry, rz) in ENCOLURE]
+    e = [V((x, 0, z + dz + j["tete"] * 0.5)) for (x, z, ry, rz) in enc]
     cr = [e[0] + V((-0.12, 0, 0.24)), e[1] + V((-0.1, 0, 0.18)), e[2] + V((-0.08, 0, 0.13)), e[3] + V((-0.05, 0, 0.1))]
     objs.append(_tube(nom + "_criniere", cr, [0.05, 0.065, 0.06, 0.04], m_crin, segments=8))
-    nuque = V((0.98, 0, 2.22 + dz + j["tete"]))
+    nuque = V((0.98, 0, bas(0.98, 2.22) + dz + j["tete"]))
     for cote in (-1, 1):
         o = C.cone(nom + "_oreille%d" % cote, 0.03, 0.11, nuque + V((-0.02, 0.05 * cote, -0.02)), m_robe, segments=6)
         o.rotation_euler = (0.25 * cote, -0.3, 0)
@@ -1274,17 +1486,29 @@ def housse(nom, camp, j, hauteur_bas=0.92, debut=-0.78, fin=0.2, poitrail=False,
     return objs
 
 
-def cavalier(nom, camp, phase=0.0, lacet=-35.0, echelle=1.0, lourd=False, recul_y=0.62):
+def cavalier(nom, camp, phase=0.0, lacet=-35.0, echelle=1.0, lourd=False, recul_y=0.62, chute=None, coup=None):
     """Cheval + cavalier assis, lance couchée et écu.
 
     lourd : caparaçon complet en deux pans et chanfrein (cavalerie de France seulement). Angleterre : cheval bai
     (#4a2c1c) aux crins et aux jambes noirs, liste claire et bout du nez plus clair, grande housse de gueules (ourlet à
     0,9 m, pan de poitrail), fanion rouge à la lance. Omeyyades : cheval gris pommelé au bout du nez sombre, longue
     housse ivoire bordée de vert (ourlet à 0,95 m). Cheval tourné de 35° vers la caméra. Lance de frêne patiné ;
-    visage du cavalier dégagé sous le casque (sauf le heaume de la cavalerie lourde)."""
+    visage du cavalier dégagé sous le casque (sauf le heaume de la cavalerie lourde).
+    coup (0 à 3) : COUP_CAVALIER ; chute (0 à 3) : CHUTE_CAVALIER (le cheval s'affaisse puis se couche sur le flanc, le
+    dos vers la caméra ; le cavalier glisse et tombe devant lui ; la lance tombe à terre). Cheval et cavalier restent
+    entiers : aucun membre ne se détache."""
     mats = matieres(camp)
     sud = camp == "omeyyades"
-    jc = pose_cheval(phase)
+    geste = COUP_CAVALIER[coup] if coup is not None else None
+    ch = CHUTE_CAVALIER[chute] if chute is not None else None
+    if ch:
+        jc = pose_cheval_chute(ch[0])
+        if chute >= 2:
+            jc["encolure_basse"] = 0.55 if chute == 2 else 0.9   # encolure tendue vers l'avant, tête au sol
+    elif geste:
+        jc = pose_cheval(geste[3])
+    else:
+        jc = pose_cheval(phase)
     objs = []
     if lourd:
         objs += cheval(nom + "_ch", jc, robe="#6b4428", criniere="#1e140e", chanfrein=mats["acier"], jambes="#2a1c14")
@@ -1300,48 +1524,109 @@ def cavalier(nom, camp, phase=0.0, lacet=-35.0, echelle=1.0, lourd=False, recul_
     selle_z = 1.13 + jc["dz"] - 0.04 + 0.36
     objs.append(C.boite(nom + "_selle", 0.42, 0.36, 0.1, (-0.02, 0, selle_z - 0.04), mats["cuir"]))
     objs.append(C.boite(nom + "_troussequin", 0.06, 0.3, 0.16, (-0.22, 0, selle_z), mats["cuir"]))
-    # cavalier : torse droit sur la selle, jambes de part et d'autre ; bras droit serre la lance sous l'aisselle
-    j = pose_homme(0.0, assis=True, bras_droit=(25, 70), bras_gauche=(35, 65))
-    dec = V((-0.02, 0, selle_z + 0.02))
-    for k in list(j.keys()):
-        if isinstance(j[k], Vector) and k not in (("avant_bras", 1), ("avant_bras", -1)):
-            j[k] = j[k] + dec
-    for cote in (-1, 1):
-        j["hanche", cote] = j["bassin"] + V((0.0, 0.13 * cote, -0.04))
-        j["genou", cote] = j["hanche", cote] + V((0.36, 0.17 * cote, -0.16))
-        j["cheville", cote] = j["genou", cote] + V((-0.05, 0.03 * cote, -0.42))
-        j["pied", cote] = j["cheville", cote] + V((0.15, 0, -0.03))
-    objs += corps_homme(nom + "_h", j, mats["ivoire"] if sud else mats["maille"], mats["maille"] if lourd else mats["chausses"],
-                        epaisseur=1.05, galbe=True)
+    a_terre = bool(ch) and ch[3][0] == "sol"
+    if a_terre:
+        # cavalier tombé devant son cheval : même homme, posé comme un fantassin à terre (table CHUTE)
+        lc = CHUTE[ch[3][1]]
+        j = pose_homme(0.0, bras_droit=lc[3], bras_gauche=lc[4], penche=lc[2], jambes_fixes=lc[1], balancement=0)
+    else:
+        # cavalier : torse droit sur la selle, jambes de part et d'autre ; bras droit serre la lance sous l'aisselle
+        j = pose_homme(0.0, assis=True, bras_droit=(25, 70), bras_gauche=(35, 65))
+        dec = V((-0.02, 0, selle_z + 0.02))
+        for k in list(j.keys()):
+            if isinstance(j[k], Vector) and k not in (("avant_bras", 1), ("avant_bras", -1)):
+                j[k] = j[k] + dec
+        for cote in (-1, 1):
+            j["hanche", cote] = j["bassin"] + V((0.0, 0.13 * cote, -0.04))
+            j["genou", cote] = j["hanche", cote] + V((0.36, 0.17 * cote, -0.16))
+            j["cheville", cote] = j["genou", cote] + V((-0.05, 0.03 * cote, -0.42))
+            j["pied", cote] = j["cheville", cote] + V((0.15, 0, -0.03))
+    homme = []
+    homme += corps_homme(nom + "_h", j, mats["ivoire"] if sud else mats["maille"], mats["maille"] if lourd else mats["chausses"],
+                         epaisseur=1.05, galbe=True)
     tex = texture_surcot(camp)
     m_sur = C.mat_tissu("surcot_" + camp, C.CAMPS[camp]["tissu"], image_png=tex)
-    objs.append(surcot(nom + "_surcot", j, m_sur, longueur=0.42, largeur=1.15))
-    objs += tete(nom + "_h", j, mats, "conique" if sud else ("heaume" if lourd else "nasal"), visage=not lourd,
-                 visage_net=not lourd)
+    homme.append(surcot(nom + "_surcot", j, m_sur, longueur=0.42, largeur=1.15))
+    homme += tete(nom + "_h", j, mats, "conique" if sud else ("heaume" if lourd else "nasal"), visage=not lourd,
+                  visage_net=not lourd)
     for cote in (-1, 1):
-        objs.append(_tube(nom + "_botte%d" % cote, [j["cheville", cote] + V((0, 0, 0.12)), j["cheville", cote], j["pied", cote]],
-                          [0.044, 0.041, 0.034], mats["cuir"], segments=8))
+        homme.append(_tube(nom + "_botte%d" % cote, [j["cheville", cote] + V((0, 0, 0.12)), j["cheville", cote], j["pied", cote]],
+                           [0.044, 0.041, 0.034], mats["cuir"], segments=8))
     md, mg = j["main", -1], j["main", +1]
-    # lance couchée sous le bras, à droite de la tête du cheval (côté caméra), relevée de 14°
-    objs += lance(nom, mats, md + V((0, -0.08, 0)), V((1.0, -0.1, 0.25)), longueur=2.7, recul=1.15, fanion=camp,
-                  taille_fanion=1.4, hampe=mats["frene_patine"])
+    # lance couchée sous le bras, à droite de la tête du cheval (côté caméra), relevée de 14° (geste : table COUP_CAVALIER)
+    lance_sol = bool(ch) and chute >= 1
+    if not lance_sol:
+        if ch:
+            d_l = V((1.0, -0.1, math.tan(math.radians(34))))       # la lance se relève quand le cheval s'affaisse
+        elif geste:
+            d_l = V((1.0, -0.1, math.tan(math.radians(geste[0]))))
+        else:
+            d_l = V((1.0, -0.1, 0.25))
+        homme += lance(nom, mats, md + V((0, -0.08, 0)), d_l, longueur=2.7, recul=1.15, fanion=camp,
+                       taille_fanion=1.4, hampe=mats["frene_patine"])
     # écu au bras gauche, porté bas contre le flanc gauche du cavalier : il ne masque plus la tête du cheval
     if sud:
         e = ecu_rond(nom + "_ecu", camp, rayon=0.28, mats=mats)
         e[0].location = j["coude", 1] + V((-0.05, 0.12, -0.12))
         e[0].rotation_euler = (0, 0, math.radians(70))
-        objs += e
+        homme += e
     else:
         e = ecu_amande(nom + "_ecu", camp, longueur=0.74, largeur=0.4)
         e.location = j["coude", 1] + V((-0.05, 0.12, -0.05))
         e.rotation_euler = (0, 0, math.radians(70))
-        objs.append(e)
+        homme.append(e)
     pv = bpy.data.objects.new(nom + "_pivot", None)
     C.lier(pv)
-    for o in objs:
-        if o.parent is None:
-            o.parent = pv
     pv.rotation_euler = (0, 0, math.radians(lacet))
     pv.scale = (echelle, echelle, echelle)
     pv.location = (-0.12 * echelle, recul_y, 0)
-    return objs, pv
+    if not (ch or geste):
+        for o in objs + homme:
+            if o.parent is None:
+                o.parent = pv
+        return objs + homme, pv
+    # gestes : le cheval (et le cavalier en selle) sur une racine qui tangue ou roule ; l'homme à terre sur la sienne
+    r_cheval = C.lier(bpy.data.objects.new(nom + "_racine_cheval", None))
+    r_cheval.parent = pv
+    r_homme = C.lier(bpy.data.objects.new(nom + "_racine_homme", None))
+    r_homme.parent = pv if a_terre else r_cheval
+    for o in objs:
+        if o.parent is None:
+            o.parent = r_cheval
+    for o in homme:
+        if o.parent is None:
+            o.parent = r_homme
+    sabots_post = (jc["post", 1][3] + jc["post", -1][3]) / 2
+    siege = V((-0.02, 0, selle_z))
+    if geste:
+        if geste[1]:
+            basculer(r_homme, angle_y=geste[1], centre=siege)          # buste en avant : la poussée
+        if geste[2]:
+            basculer(r_cheval, angle_y=-geste[2], centre=sabots_post)  # cabré : l'avant monte (tangage arrière)
+        return objs + homme, pv
+    _, roulis, tangage, cav = ch
+    if tangage:
+        basculer(r_cheval, angle_y=tangage, centre=sabots_post)
+    if roulis:
+        basculer(r_cheval, angle_x=roulis, centre=(0, 0, 1.0))          # couché sur le flanc : dos vers la caméra
+    if not a_terre:
+        basculer(r_homme, angle_y=cav[1], angle_x=cav[2], centre=siege)  # il glisse de la selle, vers la caméra
+    poser_racine(r_cheval, objs + ([] if a_terre else homme), echelle)
+    if a_terre:
+        # l'homme à terre devant le cheval (côté caméra), sur le dos, le long du flanc, tête vers celle du cheval
+        lc = CHUTE[ch[3][1]]
+        basculer(r_homme, angle_y=-lc[0])
+        r_homme.matrix_basis = Matrix.Translation(V((-0.2, -0.78, 0.0))) @ Matrix.Rotation(math.radians(168), 4, "Z") @ \
+            r_homme.matrix_basis
+        poser_racine(r_homme, homme, echelle)
+    sol = []
+    if lance_sol:
+        # la lance tombe à terre, à plat, sous le cheval couché (ses deux bouts dépassent à peine : à 40 px, une lance de
+        # 2,7 m posée à côté ne tiendrait pas dans l'image)
+        pose = V((0.05, 0.15, 0.04))
+        sol = lance(nom + "_sol", mats, pose, V((1.0, 0.05, 0.0)), longueur=2.7, recul=1.35, fanion=camp, taille_fanion=1.4,
+                    hampe=mats["frene_patine"])
+        for o in sol:
+            if o.parent is None:
+                o.parent = pv
+    return objs + homme + sol, pv

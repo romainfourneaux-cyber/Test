@@ -152,4 +152,7 @@
   }
 
   JEU.anim = { actif: actif, sang: sang, eclat: eclat, gain: gain, secouer: secouer, degats: degats, centre: centre, apresImage: apresImage };
+  // Ambiance continue (nuages, fumées, oiseaux, drapeaux, brume) : pour l'instant, la même chose que actif().
+  // Cale posée par le lot A ; le lot C la remplit (réglage Ambiance, régulateur).
+  JEU.anim.ambiance = function () { return JEU.anim.actif(); };
 })(typeof window !== "undefined" ? window : globalThis);

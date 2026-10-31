@@ -6,11 +6,21 @@ puis l'image est retournée ; le soleil revient ainsi au nord-ouest, comme sur l
 fortes, et l'ombre tombe au sud-est. Le manifeste porte « face »: "gauche" pour ces bandes : le jeu ne retourne une
 bande que si la troupe marche dans l'autre sens que sa face.
 
-Usage : python3 atelier/outils/rendu-3d/unites.py [nom ...] [--images N] [--dossier D]
+Usage : python3 atelier/outils/rendu-3d/unites.py [nom ...] [--images N] [--dossier D] [--bande chute|coup]
         python3 atelier/outils/rendu-3d/unites.py --planche <fichier.png> [--avant <dossier>] [--carte gue]
+        python3 atelier/outils/rendu-3d/unites.py --planche <fichier.png> --bande chute|coup [--source D]
   nom : par exemple unite-fantassins-france (par défaut : toutes les troupes du tableau UNITES)
   --images N : ne rendre que les N premières images de la marche (essais rapides)
   --dossier D : essai ; écrit les bandes dans D, sans toucher à jeu/ ni au manifeste
+  --bande B : bande de geste au lieu de la marche, pour les dix troupes de GESTES (le bélier n'en a pas) :
+              « chute » (4 images : genoux qui plient, buste renversé, au sol, couché, arme à côté ; cavaliers : le cheval
+              s'affaisse, le cavalier glisse, au sol, couchés) ou « coup » (4 images : armer, frapper, suivi, revenir ;
+              cavaliers : lance couchée, poussée, cheval qui se cabre un peu, retour). Sorties unite-<type>-<camp>-<B>.png,
+              même w, h, ax, ay et face que la bande de marche (contrôlé). Une figurine qui tombe est recalée dans son
+              image (au plus juste) si elle en sortirait ; une figurine qui frappe ne bouge pas (ses pieds restent sur
+              l'ancrage) : si elle sortait de l'image, le rendu est refusé.
+  --planche F --bande B : planche de la bande B, chaque troupe grossie avec sa bande de marche au-dessus (même
+              ancrage) ; --source D lit les bandes neuves dans D (essai --dossier) au lieu de jeu/.
   --planche F : planche de contrôle (sans Blender) : les troupes posées sur la route d'un terrain, à leur taille en jeu
                 (1 ×) et telles qu'affichées à 2 ×, puis chaque bande grossie ; --avant D ajoute les anciennes bandes
                 (même nom dans D) à côté des nouvelles, pour comparer.
@@ -51,20 +61,29 @@ CONTOUR, EPAISSEUR_CONTOUR = 0.45, 1
 
 # nom -> (fabrique, (largeur, hauteur) logiques d'une image, ancrage bas en px logiques, px logiques par mètre)
 UNITES = {
-    "unite-fantassins-france": (lambda ph: F.soldat("f", "france", "fantassin", ph), (40, 40), 4, PIETON),
-    "unite-cavaliers-france": (lambda ph: F.cavalier("c", "france", ph, lourd=True), (40, 40), 4, CAVALIER),
-    "unite-belier-france": (lambda ph: E.tour_de_siege("b", "france", ph), (56, 64), 4, 6.5),
-    "unite-pietaille-angleterre": (lambda ph: F.soldat("p", "angleterre", "pietaille", ph, echelle=0.95,
-                                                       plafond=(40 - 4 - MARGE_HAUT) / PIETON), (40, 40), 4, PIETON),
-    "unite-cavaliers-angleterre": (lambda ph: F.cavalier("c", "angleterre", ph), (40, 40), 4, CAVALIER),
-    "unite-hommes-angleterre": (lambda ph: F.soldat("h", "angleterre", "homme_armes", ph, echelle=1.08, recul_y=0.14),
+    "unite-fantassins-france": (lambda ph, **g: F.soldat("f", "france", "fantassin", ph, **g), (40, 40), 4, PIETON),
+    "unite-cavaliers-france": (lambda ph, **g: F.cavalier("c", "france", ph, lourd=True, **g), (40, 40), 4, CAVALIER),
+    "unite-belier-france": (lambda ph, **g: E.tour_de_siege("b", "france", ph), (56, 64), 4, 6.5),
+    "unite-pietaille-angleterre": (lambda ph, **g: F.soldat("p", "angleterre", "pietaille", ph, echelle=0.95,
+                                                            plafond=(40 - 4 - MARGE_HAUT) / PIETON, **g), (40, 40), 4, PIETON),
+    "unite-cavaliers-angleterre": (lambda ph, **g: F.cavalier("c", "angleterre", ph, **g), (40, 40), 4, CAVALIER),
+    "unite-hommes-angleterre": (lambda ph, **g: F.soldat("h", "angleterre", "homme_armes", ph, echelle=1.08, recul_y=0.14, **g),
                                 (40, 40), 4, PIETON),
-    "unite-champion-angleterre": (lambda ph: F.soldat("k", "angleterre", "champion", ph, echelle=1.15, recul_y=0.22), (48, 48), 4, CHAMPION),
-    "unite-pietaille-omeyyades": (lambda ph: F.soldat("p", "omeyyades", "pietaille", ph), (40, 40), 4, PIETON),
-    "unite-cavaliers-omeyyades": (lambda ph: F.cavalier("c", "omeyyades", ph), (40, 40), 4, CAVALIER),
-    "unite-hommes-omeyyades": (lambda ph: F.soldat("h", "omeyyades", "homme_armes", ph), (40, 40), 4, PIETON),
-    "unite-champion-omeyyades": (lambda ph: F.soldat("k", "omeyyades", "champion", ph, echelle=1.15, recul_y=0.22), (48, 48), 4, CHAMPION),
+    "unite-champion-angleterre": (lambda ph, **g: F.soldat("k", "angleterre", "champion", ph, echelle=1.15, recul_y=0.22, **g),
+                                  (48, 48), 4, CHAMPION),
+    "unite-pietaille-omeyyades": (lambda ph, **g: F.soldat("p", "omeyyades", "pietaille", ph, **g), (40, 40), 4, PIETON),
+    "unite-cavaliers-omeyyades": (lambda ph, **g: F.cavalier("c", "omeyyades", ph, **g), (40, 40), 4, CAVALIER),
+    "unite-hommes-omeyyades": (lambda ph, **g: F.soldat("h", "omeyyades", "homme_armes", ph, **g), (40, 40), 4, PIETON),
+    "unite-champion-omeyyades": (lambda ph, **g: F.soldat("k", "omeyyades", "champion", ph, echelle=1.15, recul_y=0.22, **g),
+                                 (48, 48), 4, CHAMPION),
 }
+# troupes qui ont des bandes de geste (« -chute », « -coup ») : toutes sauf le bélier (tour de siège)
+GESTES = ["unite-fantassins-france", "unite-hommes-angleterre", "unite-hommes-omeyyades", "unite-pietaille-angleterre",
+          "unite-pietaille-omeyyades", "unite-cavaliers-france", "unite-cavaliers-angleterre", "unite-cavaliers-omeyyades",
+          "unite-champion-angleterre", "unite-champion-omeyyades"]
+BANDES = ("chute", "coup")
+IMAGES_GESTE = 4
+MARGE_GESTE = 2.0     # px logiques laissés libres autour de la géométrie d'une figurine de geste (liseré et ombre compris)
 
 
 # ---------------------------------------------------------------- mesures à l'écran (avant le rendu)
@@ -201,6 +220,110 @@ def lumieres(miroir):
     t = math.radians(C.INCLINAISON + 8)
     C._soleil_sans_ombre("appoint", C.APPOINT_FORCE, C.APPOINT_TEINTE, (-0.25, -math.cos(t), math.sin(t)))
     C._soleil_sans_ombre("contour", C.CONTOUR_FORCE, C.CONTOUR_TEINTE, (0.45, 0.85, 0.42), angle=12)
+
+
+def caler_dans_image(nom, objs, pv, lw, lh, ppm, surech, deplacer=True, marge=MARGE_GESTE):
+    """Boîte de la figurine à l'écran (px logiques de son image) ; si elle déborde de la marge et que deplacer est vrai,
+    le pivot glisse au plus juste sur le sol (X : gauche-droite ; Y : haut-bas de l'écran, vue inclinée de 40°).
+    Renvoie (décalage x, décalage y) appliqués en px logiques, ou None si la figurine est trop grande pour l'image."""
+    ech = surech * C.ECHELLE
+    b = boite_ecran(objs, (), exclure=True, ech=ech)
+    if b is None:
+        return (0.0, 0.0)
+    x0, y0, x1, y1 = b
+    if x1 - x0 > lw - 2 * marge or y1 - y0 > lh - 2 * marge:
+        C.journal("%s : figurine trop grande pour son image (%.1f × %.1f px logiques dans %d × %d)" % (nom, x1 - x0, y1 - y0, lw, lh))
+        return None
+    dx = (marge - x0) if x0 < marge else ((lw - marge) - x1 if x1 > lw - marge else 0.0)
+    dy = (marge - y0) if y0 < marge else ((lh - marge) - y1 if y1 > lh - marge else 0.0)
+    if (dx or dy) and deplacer:
+        t = math.radians(C.INCLINAISON)
+        pv.location.x += dx / ppm
+        pv.location.y += -dy / (ppm * math.sin(t))         # vers le bas de l'écran = vers la caméra (sud)
+        C.bpy.context.view_layer.update()
+        C.journal("%s : recalée de %+.1f, %+.1f px logiques dans son image" % (nom, dx, dy))
+    elif dx or dy:
+        C.journal("%s : déborde de son image (%+.1f, %+.1f px logiques), pieds tenus sur l'ancrage" % (nom, dx, dy))
+    return (dx, dy)
+
+
+def eteindre_bleus(img, nom):
+    """Camp anglais, figurine couchée ou renversée : l'acier tourné vers le ciel y renvoie le bleu du ciel. Les pixels
+    bleus (teinte 200-240°, saturation > 0,12) sont ramenés au gris chaud de la maille (saturation 0,06, teinte 30°),
+    valeur gardée : pas de bleu chez les Anglais, sans toucher au reste de l'image."""
+    import numpy as np
+    from PIL import Image
+    a = np.array(img.convert("RGBA"), dtype=np.float32)
+    h, sat, v, al = C._hsv(img)
+    m = (h >= 195) & (h <= 245) & (sat > 0.12) & (al > 0.02)
+    n = int(m.sum())
+    if n:
+        vv = v[m] * 255.0
+        gris = np.stack([vv, vv * 0.97, vv * 0.94], axis=-1)       # gris chaud (teinte d'environ 30°)
+        a[..., :3][m] = gris
+        C.journal("%s : %d pixels bleutés (reflet du ciel sur l'acier) ramenés au gris chaud" % (nom, n))
+    return Image.fromarray(np.clip(a, 0, 255).astype(np.uint8), "RGBA")
+
+
+def rendre_geste(nom, bande, surech=2, dossier=None, echantillons=64):
+    """Bande de geste (« chute » ou « coup ») d'une troupe de GESTES : 4 images, même cadrage que la marche."""
+    from PIL import Image
+    fabrique, (lw, lh), ancre, ppm = UNITES[nom]
+    pw, ph = lw * C.ECHELLE, lh * C.ECHELLE
+    camp = nom.rsplit("-", 1)[1]
+    sens = face(camp)
+    sortie = "%s-%s" % (nom, bande)
+    images = []
+    for k in range(IMAGES_GESTE):
+        C.reinitialiser()
+        lumieres(sens == "gauche")
+        C.camera_trois_quarts(pw * surech, ph * surech, ppm * C.ECHELLE * surech, ancre * C.ECHELLE * surech)
+        C.sol_capteur(14)
+        objs, pivot = fabrique(0.0, **{bande: k})
+        cale = caler_dans_image("%s-%d" % (sortie, k), objs, pivot, lw, lh, ppm, surech, deplacer=(bande == "chute"))
+        ident = "%s-%d" % (sortie, k)
+        img, _ = C.rendre_sprite(ident, pw, ph, objs, surech=surech, echantillons=echantillons,
+                                 contour=CONTOUR, epaisseur_contour=EPAISSEUR_CONTOUR, pres=0.10, controle=False)
+        img = adoucir_reflets(img)
+        if camp == "angleterre":
+            img = eteindre_bleus(img, ident)
+        if cale is None:
+            C._refuser(img, ident, "figurine plus grande que son image")
+        C.controle_bords(img, ident)
+        C.controle_blancs(img, ident)
+        if "cavaliers" in nom:
+            C.controle_troupe(img, ident, camp, SEUIL_CAVALERIE)
+        elif camp == "omeyyades":
+            C.controle_troupe(img, ident, camp, SEUIL_OMEYYADES)
+        else:
+            C.journal("%s : couleur du camp %.1f %% (taille logique)" % (ident, 100 * C.part_couleur_troupe(img, camp)))
+        if camp == "angleterre":
+            C.controle_sans_bleu(img, ident)
+        if sens == "gauche":
+            img = img.transpose(Image.FLIP_LEFT_RIGHT)
+        images.append(img)
+    if len(images) != IMAGES_GESTE:
+        raise C.RefusRendu("%s : %d images au lieu de %d" % (sortie, len(images), IMAGES_GESTE))
+    img = C.bande(images)
+    if dossier:
+        os.makedirs(dossier, exist_ok=True)
+        chemin = os.path.join(dossier, sortie + ".png")
+        C.sauver_png(img, chemin) if chemin.startswith(C.RACINE) else img.save(chemin, optimize=True)
+        C.journal("essai écrit dans %s (manifeste inchangé)" % chemin)
+        return chemin
+    marche = C.lire_manifeste().get(nom)
+    C.sauver_sprite(sortie, img, None, lw, lh, lw // 2, lh - ancre, IMAGES_GESTE)
+    e = C.lire_manifeste()[sortie]
+    if sens == "gauche":
+        e["face"] = "gauche"
+        C.maj_manifeste({sortie: e})
+    if marche:
+        for cle in ("w", "h", "ax", "ay"):
+            if e[cle] != marche[cle]:
+                raise C.RefusRendu("%s : %s = %s, la marche a %s" % (sortie, cle, e[cle], marche[cle]))
+        if e.get("face", "droite") != marche.get("face", "droite"):
+            raise C.RefusRendu("%s : face différente de la marche" % sortie)
+    return C.chemin_td(sortie + ".png")[0]
 
 
 def rendre_unite(nom, nb_images=IMAGES, surech=2, dossier=None):
@@ -388,6 +511,68 @@ def planche(sortie, avant=None, id_carte="gue"):
     return sortie
 
 
+def planche_bandes(sortie, bande, source=None):
+    """Planche d'une bande de geste : pour chaque troupe de GESTES, la bande de marche (jeu/) puis la bande neuve
+    (jeu/ ou le dossier source d'un essai), grossies 4 × sur l'herbe et la route du gué, croix rouge à l'ancrage ;
+    et à droite, la dernière image de la bande à la taille du jeu (1 ×) à côté d'une figurine qui marche."""
+    from PIL import Image, ImageDraw
+    import planche as P
+    man = C.lire_manifeste()
+    terrain = Image.open(os.path.join(C.TD, "terrain-gue.jpg")).convert("RGBA")
+    herbe = terrain.crop((900, 700, 1060, 780))
+    zoom = 4
+    f, f2 = P.police(15, True), P.police(13)
+    lignes = []
+    for n in GESTES:
+        e = man.get(n)
+        nom_b = "%s-%s" % (n, bande)
+        chemin = os.path.join(source, nom_b + ".png") if source else os.path.join(C.TD, nom_b + ".png")
+        if not e or not os.path.exists(chemin):
+            continue
+        marche = Image.open(os.path.join(C.RACINE, "jeu", e["src"])).convert("RGBA")
+        neuf = Image.open(chemin).convert("RGBA")
+        lignes.append((n, e, marche, neuf))
+    L, marge, titre = 1500, 14, 26
+    hauteur = 60 + sum(2 * e["h"] * 2 * 2 + titre + 3 * marge for (_, e, _, _) in lignes)
+    pl = Image.new("RGBA", (L, hauteur), (40, 34, 28, 255))
+    d = ImageDraw.Draw(pl)
+    d.text((marge, 14), "Bandes « %s » (4 images) sous la bande de marche, grossies %d × ; croix rouge = ancrage ; à droite : "
+           "taille du jeu (1 ×)" % (bande, zoom // 2 * 2), fill=(240, 228, 200, 255), font=f)
+    y = 50
+    for n, e, marche, neuf in lignes:
+        d.text((marge, y), "%s-%s  (%d × %d, ancre %d, %d)" % (n, bande, e["w"], e["h"], e["ax"], e["ay"]),
+               fill=(230, 220, 195, 255), font=f2)
+        y += titre
+        for k_, im in enumerate((marche, neuf)):
+            g = im.resize((im.size[0] * zoom // 2, im.size[1] * zoom // 2), Image.NEAREST)
+            fond = herbe.resize(g.size)
+            x = marge + 60
+            pl.alpha_composite(fond, (x, y))
+            pl.alpha_composite(g, (x, y))
+            d.text((marge, y + g.size[1] // 2 - 8), ("marche", bande)[k_], fill=(220, 210, 185, 255), font=f2)
+            nfr = im.size[0] // (2 * e["w"])
+            for kk in range(nfr):
+                ax = x + (kk * e["w"] + e["ax"]) * zoom
+                ay = y + e["ay"] * zoom
+                d.line((ax - 5, ay, ax + 5, ay), fill=(255, 60, 60, 255))
+                d.line((ax, ay - 5, ax, ay + 5), fill=(255, 60, 60, 255))
+            if k_ == 1:
+                # taille du jeu : une figurine qui marche et la dernière image de la bande, sur l'herbe
+                pw, ph = 2 * e["w"], 2 * e["h"]
+                case = herbe.crop((0, 0, 3 * e["w"], 2 * e["h"])).convert("RGBA")
+                for kk, (src, fx) in enumerate(((marche, 0), (neuf, 3))):
+                    vue = src.crop((fx * pw, 0, (fx + 1) * pw, ph)).resize((e["w"], e["h"]), Image.LANCZOS)
+                    case.alpha_composite(vue, (kk * e["w"] + e["w"] // 4, e["h"] // 2))
+                case = case.resize((case.size[0] * 2, case.size[1] * 2), Image.NEAREST)
+                pl.alpha_composite(case, (x + g.size[0] + 40, y - g.size[1] // 2))
+            y += g.size[1] + marge
+        y += marge
+    os.makedirs(os.path.dirname(os.path.abspath(sortie)), exist_ok=True)
+    pl.convert("RGB").crop((0, 0, L, y + marge)).save(sortie, optimize=True)
+    C.journal("planche des bandes « %s » écrite : %s" % (bande, sortie))
+    return sortie
+
+
 def poids_troupes():
     """Poids total des bandes de troupes (octets décimaux)."""
     t = 0
@@ -401,8 +586,19 @@ def poids_troupes():
 def main(args):
     nb = IMAGES
     dossier = None
+    bande = None
+    if "--bande" in args:
+        i = args.index("--bande")
+        bande = args[i + 1]
+        if bande not in BANDES:
+            raise SystemExit("bande inconnue : %s (attendu : %s)" % (bande, ", ".join(BANDES)))
+        args = args[:i] + args[i + 2:]
     if "--planche" in args:
         i = args.index("--planche")
+        if bande:
+            source = args[args.index("--source") + 1] if "--source" in args else None
+            planche_bandes(args[i + 1], bande, source)
+            return
         avant = args[args.index("--avant") + 1] if "--avant" in args else None
         id_carte = args[args.index("--carte") + 1] if "--carte" in args else "gue"
         planche(args[i + 1], avant, id_carte)
@@ -415,6 +611,12 @@ def main(args):
         i = args.index("--dossier")
         dossier = args[i + 1]
         args = args[:i] + args[i + 2:]
+    if bande:
+        for nom in (args or GESTES):
+            if nom not in GESTES:
+                raise SystemExit("%s n'a pas de bande de geste" % nom)
+            rendre_geste(nom, bande, dossier=dossier)
+        return
     noms = args or list(UNITES)
     for nom in noms:
         rendre_unite(nom, nb, dossier=dossier)
