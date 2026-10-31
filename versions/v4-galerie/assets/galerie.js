@@ -163,7 +163,8 @@
     /* Livraison : 5 € par commande dès qu’une plaque s’expédie (le kit LED ne se vend pas seul) ;
        la carte cadeau part par e-mail ; 0 € pendant l’offre de fin d’année. */
     var aExpedier = lignes.some(function (l) { return String(l.cle || "").indexOf("carte-cadeau") !== 0; });
-    var offre = livraisonOfferte();
+    /* « Offerte » seulement s’il y a une plaque à expédier : une carte seule est toujours sans frais (0 €) */
+    var offre = livraisonOfferte() && aExpedier;
     var port = aExpedier && !offre ? FRAIS_PORT : 0;
     var champ = function (sel, texte) { var el = $(sel); if (el) el.textContent = texte; };
     var texteNormal = $("[data-livraison-normale]");
@@ -172,6 +173,8 @@
     /* Pendant l’offre : « Offerte », sans prix barré */
     champ("[data-livraison]", offre ? "Offerte" : euros(port));
     var ddLivraison = $("[data-livraison]"); if (ddLivraison) ddLivraison.classList.toggle("offerte", offre);
+    /* Pendant l’offre, un goodies accompagne chaque colis (pas de colis pour une carte seule) */
+    var ligneGoodies = $("[data-goodies]"); if (ligneGoodies) ligneGoodies.hidden = !offre;
     champ("[data-total]", euros(total + port));
     var montants = $(".tiroir__montants"); if (montants) montants.hidden = !lignes.length;
   }

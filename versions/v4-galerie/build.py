@@ -166,6 +166,10 @@ RAYON = "Découpe, laquage et expédition dans un rayon de 150 km"
 # Sans JavaScript, seule la variante « neutre » s’affiche : un texte juste avant l’offre.
 DATES_NOEL = note("dates à confirmer")
 LIMITE_NOEL = "Commandez au plus tard le 14 décembre pour recevoir avant Noël."
+# Goodies glissé dans chaque colis pendant l’offre (demande du 31 octobre 2026) : sa nature reste à préciser.
+# Pas de colis pour une carte cadeau seule (envoi par e-mail) : sa fiche ne le promet pas.
+GOODIES = "un goodies offert dans chaque colis"
+GOODIES_NOTE = note("goodies à préciser")
 # Les quatre « coups de cœur », la carte cadeau et le kit LED : le filtre « Idées cadeaux » de la collection
 IDEES_CADEAUX = ("le-pic-du-midi", "lours", "lisard", "le-cerf", "carte-cadeau", "led")
 
@@ -176,6 +180,10 @@ def selon(etats, html, balise="span", cls=""):
         b=balise, c=' class="{}"'.format(cls) if cls else "", e=etats, h="" if "neutre" in etats.split() else " hidden", t=html)
 
 
+# Parenthèse de l’offre après « 5 € » (carte cadeau, FAQ) : elle disparaît le 15 décembre.
+# Comme dans le panier, c’est la date de commande de la plaque qui compte, pas celle de l’achat de la carte.
+OFFRE_PAREN = selon("neutre avant pendant", " (offerte si la plaque est commandée entre le 27 novembre et le 14 décembre 2026 "
+                    + note("dates à confirmer") + ")")
 # Ligne « Livraison » des garanties (fiches, collection) : elle suit l’état de l’offre comme le panier
 LIVRAISON_COURT = (selon("neutre avant", "5 € par commande (" + OFFRE_COURT + ")")
                    + selon("pendant", "Offerte jusqu’au 14 décembre 2026 " + DATES_NOEL + ", puis 5 € par commande")
@@ -664,23 +672,29 @@ def pied():
 </footer>""".format(logo=LOGO_COMPLET, site=SITE, tel=TELEPHONE, mediateur=MEDIATEUR)
 
 
-def bandeau_noel(accueil=False):
-    """Bandeau de Noël sous le bandeau de la maquette, sur toutes les pages : très contrasté, sans compte à rebours ni urgence."""
-    offre = (selon("neutre", "Du 27 novembre au 14 décembre : livraison offerte", "strong")
-             + selon("avant", "À partir du 27 novembre : livraison offerte, jusqu’au 14 décembre", "strong")
-             + selon("pendant", "Livraison offerte jusqu’au 14 décembre", "strong")
-             + selon("apres", "La carte cadeau, envoyée par e-mail", "strong"))
+def bandeau_noel(fichier):
+    """Bandeau de Noël sous le bandeau de la maquette, sur toutes les pages : très contrasté, sans compte à rebours ni urgence.
+    Une seule destination pour « Idées cadeaux » : le filtre de la collection. Sur l’accueil, le bloc de Noël suit juste
+    en dessous : sur téléphone, le bandeau s’y réduit à une ligne (galerie.css, .bandeau-noel--accueil)."""
+    offre = (selon("neutre", "Du 27 novembre au 14 décembre : livraison offerte et " + GOODIES, "strong")
+             + selon("avant", "Dès le 27 novembre : livraison offerte et " + GOODIES, "strong")
+             + selon("pendant", "Livraison offerte et " + GOODIES + " jusqu’au 14 décembre", "strong")
+             + selon("neutre avant pendant", " " + GOODIES_NOTE)
+             + selon("apres", "La carte cadeau, par e-mail sans frais de port", "strong"))
+    # Après la date limite : seule la carte est sans frais de port ; la plaque choisie ensuite se livre au tarif habituel
     limite = (selon("neutre avant pendant", "{} {}".format(LIMITE_NOEL, DATES_NOEL))
-              + selon("apres", "Une plaque au choix, sans frais de port : pour offrir même après la date limite d’envoi."))
-    actions = ('<a class="bandeau-noel__action" href="{}" data-noel-quand="neutre avant pendant">Idées cadeaux</a>'.format("#noel" if accueil else "index.html#noel")
-               + '<a class="bandeau-noel__action" href="produit-carte-cadeau.html" data-noel-quand="apres" hidden>La carte cadeau</a>')
-    return """<aside class="bandeau-noel" aria-label="Noël" data-noel-quand="neutre avant pendant apres">
+              + selon("apres", "Pour offrir après la date limite d’envoi. Livraison de la plaque choisie ensuite : 5 €."))
+    actions = '<a class="bandeau-noel__action" href="{}" data-noel-quand="neutre avant pendant">Idées cadeaux</a>'.format(
+        "#cadeaux" if fichier == "collection.html" else "collection.html#cadeaux")
+    if fichier != "produit-carte-cadeau.html":
+        actions += '<a class="bandeau-noel__action" href="produit-carte-cadeau.html" data-noel-quand="apres" hidden>La carte cadeau</a>'
+    return """<aside class="bandeau-noel{accueil}" aria-label="Noël" data-noel-quand="neutre avant pendant apres">
   <div class="wrap bandeau-noel__ligne">
     <p class="bandeau-noel__titre">Noël</p>
     <div class="bandeau-noel__texte"><p class="bandeau-noel__offre">{offre}</p><p class="bandeau-noel__limite">{limite}</p></div>
     {actions}
   </div>
-</aside>""".format(offre=offre, limite=limite, actions=actions)
+</aside>""".format(offre=offre, limite=limite, actions=actions, accueil=" bandeau-noel--accueil" if fichier == "index.html" else "")
 
 
 def encart_noel(carte=False):
@@ -690,10 +704,11 @@ def encart_noel(carte=False):
                  "Une idée pour Noël, même après la date limite d’envoi des plaques.</p></div>")
     else:
         corps = ("<p>"
-                 + selon("neutre", "Livraison offerte du 27 novembre au 14 décembre.", "strong")
-                 + selon("avant", "À partir du 27 novembre, livraison offerte jusqu’au 14 décembre.", "strong")
-                 + selon("pendant", "Livraison offerte jusqu’au 14 décembre.", "strong")
-                 + " " + selon("avant", "Aujourd’hui, elle coûte encore 5 €.")
+                 + selon("neutre", "Livraison offerte et " + GOODIES + " du 27 novembre au 14 décembre.", "strong")
+                 + selon("avant", "À partir du 27 novembre : livraison offerte et " + GOODIES + ", jusqu’au 14 décembre.", "strong")
+                 + selon("pendant", "Livraison offerte et " + GOODIES + " jusqu’au 14 décembre.", "strong")
+                 + " " + GOODIES_NOTE
+                 + " " + selon("avant", "Aujourd’hui, la livraison coûte encore 5 €.")
                  + "</p><p>{} {}</p>".format(LIMITE_NOEL, DATES_NOEL))
         corps = selon("neutre avant pendant", corps, "div", "encart-noel__corps") + selon(
             "apres", "<p>Trop tard pour recevoir une plaque avant Noël ? <a href=\"produit-carte-cadeau.html\">La carte cadeau</a>, "
@@ -714,9 +729,9 @@ def panier_noel():
         <p>Pour recevoir avant Noël, commandez au plus tard le lundi 14 décembre 2026. {dates}</p>
       </div>
     </div>""".format(
-        neutre=selon("neutre", "<strong>Livraison offerte du 27 novembre au 14 décembre.</strong>", "p"),
-        avant=selon("avant", "<strong>La livraison sera offerte à partir du 27 novembre.</strong> Aujourd’hui, elle coûte 5 € par commande.", "p"),
-        pendant=selon("pendant", "<strong>Livraison offerte jusqu’au 14 décembre inclus.</strong>", "p"), dates=DATES_NOEL)
+        neutre=selon("neutre", "<strong>Livraison offerte et {} du 27 novembre au 14 décembre.</strong> {}".format(GOODIES, GOODIES_NOTE), "p"),
+        avant=selon("avant", "<strong>À partir du 27 novembre : livraison offerte et {}.</strong> {} Aujourd’hui, la livraison d’une plaque coûte 5 € par commande.".format(GOODIES, GOODIES_NOTE), "p"),
+        pendant=selon("pendant", "<strong>Livraison offerte et {} jusqu’au 14 décembre inclus.</strong> {}".format(GOODIES, GOODIES_NOTE), "p"), dates=DATES_NOEL)
 
 
 PAGES_ECRITES = []
@@ -763,6 +778,7 @@ def page(fichier, titre, description, contenu, actif=None, jsonld=None, classe="
     <dl class="tiroir__montants">
       <div><dt>Sous-total</dt><dd data-sous-total>0 €</dd></div>
       <div><dt>Livraison</dt><dd data-livraison>5 €</dd></div>
+      <div data-goodies hidden><dt>Goodies de Noël</dt><dd class="offerte">Offert</dd></div>
       <div class="tiroir__total"><dt>Total TTC</dt><dd><strong data-total>0 €</strong></dd></div>
     </dl>
     {panier_noel}
@@ -777,7 +793,7 @@ def page(fichier, titre, description, contenu, actif=None, jsonld=None, classe="
 </body>
 </html>
 """.format(titre=e(titre), desc=e(description), polices=POLICES.replace("&", "&amp;"), donnees=donnees, classe=classe,
-           noel=bandeau_noel(fichier == "index.html"), panier_noel=panier_noel(), entete=entete(actif), contenu=contenu, pied=pied(), zone=ZONE_LIVRAISON, modes=MODES_LIVRAISON, expedition=EXPEDITION)
+           noel=bandeau_noel(fichier), panier_noel=panier_noel(), entete=entete(actif), contenu=contenu, pied=pied(), zone=ZONE_LIVRAISON, modes=MODES_LIVRAISON, expedition=EXPEDITION)
     with open(os.path.join(ICI, fichier), "w", encoding="utf-8") as f:
         f.write(typo(sortie))
     PAGES_ECRITES.append(fichier)
@@ -1058,9 +1074,10 @@ def bloc_noel():
     et le kit LED. L’image de Noël est la plaque rétroéclairée en blanc chaud (simulation), plutôt que des décorations.
     Masquée à partir du 15 décembre : « Nos coups de cœur » reprend alors sa place plus bas."""
     plaques = grille([PRODUITS[s] for s in ("le-pic-du-midi", "lours", "lisard", "le-cerf")], fins={"lisard": "dore", "le-cerf": "gris"})
-    offre = (selon("neutre", "Livraison offerte du 27 novembre au 14 décembre")
-             + selon("avant", "À partir du 27 novembre, la livraison est offerte, jusqu’au 14 décembre. Aujourd’hui, elle coûte encore 5 €.")
-             + selon("pendant", "Livraison offerte jusqu’au 14 décembre"))
+    offre = (selon("neutre", "Livraison offerte et " + GOODIES + " du 27 novembre au 14 décembre")
+             + selon("avant", "À partir du 27 novembre : livraison offerte et " + GOODIES + ", jusqu’au 14 décembre. Aujourd’hui, la livraison coûte encore 5 €.")
+             + selon("pendant", "Livraison offerte et " + GOODIES + " jusqu’au 14 décembre")
+             + " " + GOODIES_NOTE)
     mur = "".join(plaque(PRODUITS[s], f, "(max-width: 900px) 30vw, 150px", eager=True,
                         alt="Simulation : plaque {} rétroéclairée en blanc chaud".format(PRODUITS[s]["nom"]))
                   for s, f in (("le-pic-du-midi", "noir"), ("le-cerf", "gris")))
@@ -1088,7 +1105,7 @@ def bloc_noel():
       <a class="noel__cadeau-visuel" href="produit-carte-cadeau.html" tabindex="-1" aria-hidden="true">{carte}</a>
       <div>
         <h3><a href="produit-carte-cadeau.html">La carte cadeau</a> <span>65 €</span></h3>
-        <p>Une plaque au choix, valable 2 ans. Envoyée par e-mail ou à imprimer, sans frais de port : la bonne solution si la date limite d’envoi est passée.</p>
+        <p>Une plaque au choix, valable 2 ans. La carte est envoyée par e-mail ou à imprimer, sans frais de port : la bonne solution si la date limite d’envoi est passée.</p>
       </div>
     </div>
   </div>
@@ -1490,7 +1507,7 @@ def fiche_carte_cadeau():
     <div class="achat">
       <div class="achat__tete"><p class="cartel-ligne">Idée cadeau</p><h1>Carte cadeau</h1></div>
       <p class="achat__prix"><strong data-prix-affiche>65 €</strong><span>TTC, TVA non applicable (art. 293 B du CGI)</span></p>
-      <p>Elle vaut une plaque au choix, sur tous les modèles disponibles, même si le prix change. La personne qui la reçoit choisit le dessin et la finition. Elle est valable 2 ans à compter de l’achat. La livraison de la plaque reste à payer : 5 € ({offre_court}).</p>
+      <p>Elle vaut une plaque au choix, sur tous les modèles disponibles, même si le prix change. La personne qui la reçoit choisit le dessin et la finition. Elle est valable 2 ans à compter de l’achat. La livraison de la plaque reste à payer : 5 €{offre_court}.</p>
       <div class="quantite-achat">
         <div class="quantite"><button type="button" data-qte="-1" aria-label="Retirer une carte">−</button><input id="quantite" type="number" min="1" max="9" value="1" aria-label="Quantité"><button type="button" data-qte="1" aria-label="Ajouter une carte">+</button></div>
         <button type="button" class="btn" data-ajouter>Ajouter au panier</button>
@@ -1501,7 +1518,7 @@ def fiche_carte_cadeau():
         <div><dt>Valeur</dt><dd>Une plaque au choix, même si le prix change</dd></div>
         <div><dt>Envoi</dt><dd>Par e-mail, ou à imprimer chez vous</dd></div>
         <div><dt>Validité</dt><dd>2 ans à compter de l’achat</dd></div>
-        <div><dt>Livraison</dt><dd>Celle de la plaque reste à payer : 5 € par commande ({offre_court})</dd></div>
+        <div><dt>Livraison</dt><dd>Celle de la plaque reste à payer : 5 € par commande{offre_court}</dd></div>
       </dl>
     </div>
   </div>
@@ -1515,7 +1532,7 @@ def fiche_carte_cadeau():
 </section>
 <div class="barre-achat-mobile"><div><strong>Carte cadeau</strong><span data-prix-affiche>65 €</span></div><button type="button" class="btn" data-ajouter>Ajouter au panier</button></div>""".format(
         img=IMG + "misc/carte-cadeau.webp", visuel=img("misc/carte-cadeau.webp", "Carte cadeau Terre Gravée", cls="situation", eager="haute"),
-        garanties=garanties(carte=True), noel=encart_noel(carte=True), offre_court=OFFRE_COURT,
+        garanties=garanties(carte=True), noel=encart_noel(carte=True), offre_court=OFFRE_PAREN,
         assoc='<ul class="grille-produits grille-produits--deux">{}{}</ul>'.format(carte_produit(PRODUITS["le-pic-du-midi"]), carte_produit(PRODUITS["lisard"])))
     page("produit-carte-cadeau.html", "Carte cadeau · Terre Gravée",
          "Carte cadeau Terre Gravée : une plaque au choix du destinataire, valable 2 ans, envoyée par e-mail ou à imprimer. 65 €.",
@@ -1894,18 +1911,18 @@ def contact():
   <div class="wrap">
     <div class="entete-section"><p class="surtitre">Livraison, retours, paiement</p><h2 id="titre-faq">Questions fréquentes</h2></div>
     <div class="faq">
-      <details open><summary>Quand vais-je recevoir ma plaque ?</summary><div><p>{expedition} : c’est le temps de préparation avant l’envoi. Les plaques partent de Bagnères-de-Bigorre. Délai maximal de livraison : {delai}</p><p>{noel} {revoir}</p></div></details>
+      <details open><summary>Quand vais-je recevoir ma plaque ?</summary><div><p>{expedition} : c’est le temps de préparation avant l’envoi. Les plaques partent de Bagnères-de-Bigorre. Délai maximal de livraison : {delai}</p>{noel}</div></details>
       <details><summary>Où livrez-vous, et comment ?</summary><div><p>En {zone}. Trois modes au choix : Colissimo en point retrait, Mondial Relay en point relais, ou Chronopost. Pas de retrait sur place à Gerde.</p></div></details>
-      <details><summary>Combien coûte la livraison ?</summary><div><p>5 € par commande, quel que soit le nombre d’articles et le mode choisi {tarif}. La carte cadeau seule, envoyée par e-mail, n’a pas de frais de port. Le montant s’affiche dans le panier, avant la validation.</p><p>{offre} {dates} (offre de fin d’année).</p></div></details>
+      <details><summary>Combien coûte la livraison ?</summary><div><p>5 € par commande, quel que soit le nombre d’articles et le mode choisi {tarif}. La carte cadeau seule, envoyée par e-mail, n’a pas de frais de port. Le montant s’affiche dans le panier, avant la validation.</p>{offre}</div></details>
       <details><summary>Puis-je changer d’avis ?</summary><div><p>Oui. Vous avez 14 jours après réception pour vous rétracter, comme la loi le prévoit. Les frais de retour restent à votre charge et les pièces personnalisées sont exclues. Adresse de retour : {retour}. <a href="#retractation">Renoncer au contrat ici</a></p></div></details>
       <details><summary>Ma plaque est arrivée abîmée, que faire ?</summary><div><p>Envoyez une photo et une description par e-mail. Vous choisissez : une nouvelle plaque, sans frais, ou le remboursement. Toutes les plaques bénéficient aussi des garanties légales de conformité et des vices cachés.</p></div></details>
       <details><summary>Quels moyens de paiement ?</summary><div><p>Carte bancaire (Stripe), PayPal, Apple Pay et Google Pay.</p></div></details>
-      <details><summary>Comment fonctionne la carte cadeau ?</summary><div><p>Elle vaut une plaque au choix, sur tous les modèles disponibles, même si le prix change. Elle est valable 2 ans à compter de l’achat, envoyée par e-mail ou à imprimer. La livraison de la plaque reste à payer : 5 € ({offre_court}).</p></div></details>
+      <details><summary>Comment fonctionne la carte cadeau ?</summary><div><p>Elle vaut une plaque au choix, sur tous les modèles disponibles, même si le prix change. Elle est valable 2 ans à compter de l’achat, envoyée par e-mail ou à imprimer. La livraison de la plaque reste à payer : 5 €{offre_court}.</p></div></details>
       <details><summary>Un désaccord avec l’atelier ?</summary><div><p>Écrivez d’abord à contact@terregravee.fr. Si le désaccord persiste, vous pouvez saisir gratuitement le médiateur de la consommation : {mediateur}</p></div></details>
     </div>
   </div>
-</section>""".format(tel=TELEPHONE, expedition=EXPEDITION, delai=A_FOURNIR, noel=NOEL, revoir=note("à revoir avec le délai de transport"),
-                     zone=ZONE_LIVRAISON, offre=OFFRE, dates=note("dates à confirmer"), offre_court=OFFRE_COURT,
+</section>""".format(tel=TELEPHONE, expedition=EXPEDITION, delai=A_FOURNIR, noel=selon("neutre avant pendant", NOEL + " " + note("à revoir avec le délai de transport"), "p"),
+                     zone=ZONE_LIVRAISON, offre=selon("neutre avant pendant", "{}, et {} {} {} (offre de Noël).".format(OFFRE, GOODIES, GOODIES_NOTE, DATES_NOEL), "p"), offre_court=OFFRE_PAREN,
                      tarif=note("tarif par mode à confirmer", "decision"),
                      retour="Terre Gravée, 16 rue du Pic du Midi, 65200 Gerde", mediateur=MEDIATEUR)
     page("contact.html", "Contact, livraison et rétractation · Terre Gravée",
@@ -2116,6 +2133,7 @@ A_FOURNIR_LISTE = [
     "Les informations de sécurité du kit LED : nom et adresse du fabricant, référence, avertissements.",
     "L’outil d’envoi de la lettre d’information.",
     "Les dates exactes de la livraison offerte de fin d’année (proposées : du vendredi 27 novembre au lundi 14 décembre 2026 inclus).",
+    "La nature du goodies offert dans chaque colis à Noël (marqueur « goodies à préciser »).",
     "La ville au centre du rayon de 150 km.",
     "Les photos manquantes : Le Cerf en noir, L’Abbaye de l’Escaladieu en doré, une mise en situation du Cirque de Gavarnie et du Cerf.",
     "Des photos réelles de la fabrication : découpe à Revel, thermolaquage, emballage.",
@@ -2252,7 +2270,7 @@ def notes():
           <li>La simulation du rétroéclairage donne une idée de l’effet ; les couleurs réelles du ruban diffèrent.</li>
           <li>Les textes « Le lieu » sont courts ; vous les avez validés le 31 octobre 2026.</li>
           <li>Le panier vit dans le navigateur : aucune commande, aucun paiement, aucun envoi de formulaire.</li>
-          <li>Noël : la promotion est mise en avant sur toutes les pages (bandeau sous celui de la maquette, bloc en tête de l’accueil, encart près du bouton d’achat, rappel dans le panier, qui passe à 0 € du 27 novembre au 14 décembre 2026) ; le 15 décembre, le bloc de l’accueil et l’offre disparaissent, le bandeau propose la carte cadeau jusqu’au 24 décembre, puis plus rien. L’interrupteur « Voir pendant l’offre de Noël », en haut de chaque page, simule le 1<sup>er</sup> décembre. Les mentions fixes de l’offre (fiche de la carte cadeau, FAQ) sont à retirer du site réel le 15 décembre.</li>
+          <li>Noël : la promotion est mise en avant sur toutes les pages (bandeau sous celui de la maquette, bloc en tête de l’accueil, encart près du bouton d’achat, rappel dans le panier, qui passe à 0 € du 27 novembre au 14 décembre 2026, avec un goodies offert dans chaque colis sur la même période) ; le 15 décembre, le bloc de l’accueil et l’offre disparaissent, le bandeau propose la carte cadeau jusqu’au 24 décembre, puis plus rien. L’interrupteur « Voir pendant l’offre de Noël », en haut de chaque page, simule le 1<sup>er</sup> décembre. Toutes les mentions de l’offre suivent la date.</li>
           <li>Les polices viennent de Google Fonts : une connexion internet est nécessaire pour les voir.</li>
         </ul>
         <p><a class="lien-fleche" href="qr.html">Voir la page du QR code d’Aquensis</a></p>

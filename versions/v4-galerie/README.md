@@ -20,7 +20,7 @@ Double-cliquer sur `index.html`. Les images sont lues dans `../../maquette/asset
 
 **Laissé de côté :** grappes, filtres et calques de la carte, idées cadeaux en grille, registre des avis sur l’accueil, mode « carte de nuit » (le mode sombre suit l’appareil), cartouches et graticules.
 
-Garde-fous : 5 entrées de menu, 7 sections sur l’accueil, trois moments interactifs (la lumière du mur, les pastilles, la carte).
+Garde-fous : 5 entrées de menu, 7 sections sur l’accueil (pendant la saison de Noël, le bloc de Noël passe en tête et reprend « Nos coups de cœur »), trois moments interactifs (la lumière du mur, les pastilles, la carte).
 
 ![La carte des lieux](captures/carte.jpg)
 
@@ -30,7 +30,7 @@ Garde-fous : 5 entrées de menu, 7 sections sur l’accueil, trois moments inter
 
 | Fichier | Contenu |
 |---|---|
-| `index.html` | Mur d’exposition et LED, repères, trois collections avec la photo réelle d’une plaque allumée, « Nos coups de cœur », aperçu de la carte, l’atelier (Aquensis et fabrication), lettre avec « Bientôt » ; annonce de fin d’année en tête |
+| `index.html` | Mur d’exposition et LED, repères, trois collections avec la photo réelle d’une plaque allumée, « Nos coups de cœur », aperçu de la carte, l’atelier (Aquensis et fabrication), lettre avec « Bientôt » ; pendant la saison, bloc de Noël en tête (jusqu’au 14 décembre), qui reprend « Nos coups de cœur » ; bandeau de Noël sur toutes les pages jusqu’au 24 décembre ; interrupteur d’aperçu « Voir pendant l’offre de Noël » dans le bandeau de la maquette |
 | `collection.html` | Les 12 plaques, le kit LED et la carte cadeau ; filtres par thème, « Voir en noir, gris ou doré » |
 | `carte.html` | La carte des lieux, sa fiche, la faune, la liste des lieux (l’étoile marque le décor d’origine à Aquensis) |
 | `produit-*.html` | 14 fiches : 12 plaques (achat, puis le lieu et l’histoire du modèle), kit LED (présenté comme option d’une plaque, sans bouton d’achat), carte cadeau |
