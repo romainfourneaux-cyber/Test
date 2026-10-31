@@ -146,7 +146,7 @@ Le port (37191) peut changer d'une session à l'autre : le lire dans HTTPS_PROXY
 
 ## Projet d'essai
 
-Hors dépôt, dans le scratchpad de la session, à jeter : /tmp/claude-0/-home-user-Test/fc3329d7-53e7-59eb-8f72-fa95fe7d4108/scratchpad/apk-essai/ (application essai.apk, une activité vide, androidx.webkit 1.11.0 comme dépendance témoin). APK produit : app/build/outputs/apk/debug/app-debug.apk, 439 475 octets, `aapt dump badging` donne package essai.apk, sdkVersion 24, targetSdkVersion 34 ; `apksigner verify --verbose` : v2 vérifié. Le même projet a été construit de trois façons : local.properties seul, ANDROID_HOME seul, puis par le wrapper.
+Hors dépôt, dans le dossier temporaire de la session, à jeter : apk-essai/ (application essai.apk, une activité vide, androidx.webkit 1.11.0 comme dépendance témoin). APK produit : app/build/outputs/apk/debug/app-debug.apk, 439 475 octets, `aapt dump badging` donne package essai.apk, sdkVersion 24, targetSdkVersion 34 ; `apksigner verify --verbose` : v2 vérifié. Le même projet a été construit de trois façons : local.properties seul, ANDROID_HOME seul, puis par le wrapper.
 
 ## Outils pour la suite (vrai projet)
 

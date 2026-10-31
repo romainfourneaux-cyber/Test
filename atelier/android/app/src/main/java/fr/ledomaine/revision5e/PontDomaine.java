@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
@@ -53,11 +54,12 @@ public final class PontDomaine {
     public boolean exporter(String nom, String contenu) {
         if (nom == null || contenu == null || contenu.isEmpty() || contenu.length() > TAILLE_MAX) return false;
         final String nomSain = nomSur(nom);
+        String nomEcrit = nomSain;
         int message;
         boolean ok;
         try {
             if (Build.VERSION.SDK_INT >= 29) {
-                ecrireTelechargements(nomSain, contenu);
+                nomEcrit = ecrireTelechargements(nomSain, contenu);
                 message = R.string.export_ok;
             } else {
                 ecrireDossierApplication(nomSain, contenu);
@@ -70,13 +72,15 @@ public final class PontDomaine {
         }
         final int texte = message;
         final boolean reussi = ok;
+        final String nomAffiche = nomEcrit;
         activite.runOnUiThread(() -> Toast.makeText(activite,
-                reussi ? activite.getString(texte, nomSain) : activite.getString(texte), Toast.LENGTH_LONG).show());
+                reussi ? activite.getString(texte, nomAffiche) : activite.getString(texte), Toast.LENGTH_LONG).show());
         return ok;
     }
 
+    /** Renvoie le nom vraiment donné au fichier : un second export le même jour devient « … (1).json ». */
     @TargetApi(29)
-    private void ecrireTelechargements(String nom, String contenu) throws Exception {
+    private String ecrireTelechargements(String nom, String contenu) throws Exception {
         ContentResolver r = activite.getContentResolver();
         ContentValues v = new ContentValues();
         v.put(MediaStore.Downloads.DISPLAY_NAME, nom);
@@ -95,6 +99,12 @@ public final class PontDomaine {
         v.clear();
         v.put(MediaStore.Downloads.IS_PENDING, 0);
         r.update(u, v, null, null);
+        try (Cursor c = r.query(u, new String[] { MediaStore.Downloads.DISPLAY_NAME }, null, null, null)) {
+            if (c != null && c.moveToFirst() && c.getString(0) != null) return c.getString(0);
+        } catch (Exception e) {
+            // le fichier est écrit ; le message donnera le nom demandé
+        }
+        return nom;
     }
 
     private void ecrireDossierApplication(String nom, String contenu) throws Exception {

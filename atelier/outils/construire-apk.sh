@@ -40,7 +40,9 @@ rm -rf "$PROJET/app/src/main/assets"
 mkdir -p "$ASSETS"
 cp -a "$JEU/." "$ASSETS/"
 rm -f "$ASSETS/sw.js" "$ASSETS/manifest.webmanifest"
-ATTENDUS="$(find "$JEU" -type f ! -name sw.js ! -name manifest.webmanifest | wc -l)"
+# Liste exacte attendue dans l'APK (chemins triés) : jeu/ moins ces deux fichiers de la racine.
+LISTE_ATTENDUE="$(cd "$JEU" && find . -type f ! -path ./sw.js ! -path ./manifest.webmanifest | sed 's|^\./|assets/jeu/|' | LC_ALL=C sort)"
+ATTENDUS="$(printf '%s\n' "$LISTE_ATTENDUE" | grep -c .)"
 COPIES="$(find "$ASSETS" -type f | wc -l)"
 [ "$ATTENDUS" -eq "$COPIES" ] || erreur "copie incomplète : $COPIES fichiers sur $ATTENDUS."
 [ -f "$ASSETS/index.html" ] || erreur "index.html absent des assets."
@@ -91,7 +93,12 @@ etape "Contenu : le jeu entier dans assets/jeu/"
 LISTE="$(unzip -Z1 "$APK")"
 echo "$LISTE" | grep -qx "assets/jeu/index.html" || erreur "assets/jeu/index.html absent de l'APK."
 NB_APK="$(echo "$LISTE" | grep -c "^assets/jeu/" || true)"
-[ "$NB_APK" -eq "$ATTENDUS" ] || erreur "l'APK contient $NB_APK fichiers du jeu, $ATTENDUS attendus."
+# Comparaison nom à nom : l'outil d'Android écarte sans rien dire certains fichiers (nom en « . », dossier en « _ »).
+LISTE_APK="$(echo "$LISTE" | grep "^assets/jeu/" | LC_ALL=C sort || true)"
+if [ "$LISTE_APK" != "$LISTE_ATTENDUE" ]; then
+  diff <(printf '%s\n' "$LISTE_ATTENDUE") <(printf '%s\n' "$LISTE_APK") | head -20 >&2 || true
+  erreur "l'APK contient $NB_APK fichiers du jeu, $ATTENDUS attendus, ou pas les mêmes (écarts ci-dessus : < manque, > en trop)."
+fi
 echo "$LISTE" | grep -qE "^assets/jeu/(sw\.js|manifest\.webmanifest)$" && erreur "sw.js ou manifest.webmanifest a fui dans les assets."
 echo "$NB_APK fichiers du jeu dans l'APK (= jeu/ moins sw.js et manifest.webmanifest)."
 

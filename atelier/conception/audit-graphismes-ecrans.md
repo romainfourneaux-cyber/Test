@@ -9,6 +9,10 @@ propre audit. Rien n'a été modifié dans jeu/ : ce volet ne fait que regarder,
 Version regardée : 0.9.2 (JEU.version), pendant la passe tablette (d'autres agents modifient jeu/ en même temps : les
 numéros de lignes cités peuvent avoir bougé, les noms de classes et de fonctions non).
 
+Complété après l'interruption de la première passe : l'événement du jour sur l'écran de campagne (3.5), la brume et
+le halo de la route des expéditions, qui saute d'une halte à l'autre sans pion de compagnie (3.12). Deux images de
+preuve ajoutées (`pc/33z-…`, `pc/36z-…`), tirées des captures existantes ; rien d'autre n'a été refait.
+
 Lecture rapide : la section 1 dit l'essentiel, la section 5 donne les dix chantiers classés par gain visuel rapporté au
 coût. La section 3 est la revue écran par écran, avec les chemins des captures pour vérifier chaque constat.
 
@@ -38,7 +42,8 @@ Cinq défauts traversent tout le jeu. Ils comptent plus que n'importe quel déta
    conquête d'une province n'est pas animée : la carte est simplement redessinée (avec son passage par le cuir nu).
    Le plan du domaine, lui, est le seul écran qui sort de la direction artistique : rectangles pastel arrondis,
    taches blanches floues, croix dans des cercles pointillés, routes beiges. Il se lit comme un schéma, pas comme un
-   plan enluminé.
+   plan enluminé. Sur la route des expéditions, la compagnie n'a pas de pion : le halo saute d'une halte à l'autre,
+   et la brume des semaines suivantes est un rectangle pâle à bords nets.
 4. **Les écrans de listes et les états de survol, de focus et de toucher ont un air de formulaire.** Onglets
    rectangulaires, lignes à pointillés, barres d'accordéon à liseré, boutons « Débloquer · 10 », cases à cocher et
    champs de date natifs, rectangle de focus bleu-or autour des boutons du menu. Sur la tablette, l'appui n'enfonce
@@ -196,8 +201,9 @@ image ; « j » = jour de travail.
   `domaine.js`, `dessiner()` : remplacer les `rect` des quartiers par des `<image>` de parcelles, les cercles
   pointillés par une image de fondation, les ellipses floues par `lieu-brume.png` (deux nappes à 1,15 ×, `opacity`
   animée très lentement en `transform`), les nuages par des ellipses à `radialGradient` sans filtre (ou une PNG
-  pré-floutée). Le flou SVG disparaît des deux endroits où il est animé. Garder les rubans de titre, la rose des
-  vents et le cartouche.
+  pré-floutée). Le flou SVG disparaît des deux endroits où il est animé. Le halo du quartier proche anime
+  `stroke-width` (`@keyframes halo`, jeu.css) : le passer en `transform: scale` et `opacity`, comme `halo-carte`.
+  Garder les rubans de titre, la rose des vents et le cartouche.
 - **Coût.** Moins cher qu'aujourd'hui une fois le flou SVG parti (les 15 % d'images lentes tombent à 0, comme le
   montre la ligne « animations coupées »). Travail : 2 à 3 j rendus compris. C'est le chantier le plus lourd, et le
   plus visible après la carte.
@@ -253,6 +259,19 @@ Coût nul ; 0,25 j.
 **Le tribut du jour.** `pc/07-campagne-tribut-toast.png`, `pc/seq-07-campagne-tribut/` : le message glisse en haut à
 droite, lisible, correct. Bien : les médaillons du bandeau concernés rebondissent (classe `rebond` existante) et un
 éclat d'or part de chaque médaillon (`JEU.anim.eclat`, 8 particules). Coût nul ; 0,1 j.
+
+**L'événement du jour.** `pc/12-campagne-carte-evenement.png`, `pc/04-campagne-entiere.png`, `tablette/04-campagne.png` :
+l'événement est la sixième carte de la grille, sous la carte de campagne. En 1366 × 768 comme en 1340 × 800, aucune
+carte d'action n'est visible sans défiler (sur la tablette, seul le haut des cartes dépasse). L'événement ne se
+distingue que par un liseré brique au lieu de l'or, et rien sur la carte ni dans le bandeau ne dit qu'il attend. Bien :
+un petit cachet de cire « Aujourd'hui » épinglé au coin de la carte, frappé une fois à la première vue du jour
+(échelle 1,4 → 1, 250 ms, son `sceau`), une lueur brique qui respire lentement sur le liseré, et sur la carte de
+campagne, sous le titre, un ruban qui porte le titre de l'événement (« Des marchands à la porte ») et fait défiler
+jusqu'à la carte au clic. Ici : `ecran-campagne.js`, la grille des `carte-jeu` (option `evenement: true`) : le cachet
+en `<span>` dans le bouton ; la lueur sur un `::after` dont seule l'opacité est animée (compositeur, pas de
+`box-shadow` animé) ; le « déjà frappé aujourd'hui » gardé dans une variable du module, schéma de sauvegarde inchangé.
+Coût nul ; 0,25 j. Réglage : Animations pour le cachet frappé et la lueur ; cachet et ruban restent visibles sans
+animations.
 
 **L'alerte.** `pc/08-campagne-alerte.png`, `pc/seq-08-campagne-alerte-pulsation/` : l'encadré rouge pulse par son
 `box-shadow` (repeint à chaque image : petit, donc bon marché, 16,7 ms mesurés). Visuellement juste. Bien : la
@@ -400,6 +419,29 @@ même dérive que sur la carte de campagne. Le survol d'une halte éclaircit de 
 le focus clavier passe le halo au plein (`pc/34c-exp-route-focus.png`) : le focus est meilleur que le survol, à
 aligner (survol = halo plein + médaillon soulevé de 2 px).
 
+**La brume de la route.** `pc/33-exp-route.png`, agrandie dans `pc/33z-exp-route-brume-zoom.png` : la brume des
+semaines suivantes est un rectangle pâle à bords nets (opacité 0,42), plus étroit que la bande : le médaillon du
+« Grand Gardien » en dépasse à droite. Sous chaque nappe rendue, l'ellipse de repli est toujours dessinée : chaque
+nuage est posé sur un ovale pâle à bord franc. On voit le dessin au lieu de la brume. Bien : un voile qui s'éteint
+vers ses bords, des nappes seules quand l'image est chargée, et la même dérive lente que sur la carte de campagne.
+Ici : `ecran-expedition.js`, `nappes()` : ne tracer les `<ellipse>` que si `lieu-brume` manque (`if (!br)`) ; le
+`<rect>` de `.brume-bande` sur toute la largeur de la bande, rempli par un `linearGradient` horizontal (0 → 0,42 →
+0,42 → 0) défini une fois dans les `<defs>`. Coût nul (image fixe) ; 0,1 j. Réglage : aucun pour le voile, Animations
+pour la dérive.
+
+**Le halo et la compagnie.** `pc/36z-exp-halo-avant-apres.png` (à gauche `pc/33-exp-route.png`, à droite
+`pc/36c-exp-route-apres-halte.png`) et `pc/seq-36-exp-retour-sceau/f06-0395ms.png` : la compagnie n'a pas de pion sur
+la route. Après une halte, les halos quittent Incendie et Escarmouche et réapparaissent d'un coup sur Escarmouche et
+Embuscade, dans le fondu de tout l'écran ; seul le trait d'or du chemin pris dit où l'on est. Rien ne glisse. Bien :
+un pion de compagnie (petit étendard bleu au lys sur sa hampe, ou le cavalier rendu de la bataille vu de profil) posé
+sur la halte courante ; au retour sur la route, il suit le chemin choisi jusqu'à la nouvelle halte (600 ms,
+`ease-in-out`), le trait d'or se dore derrière lui (`stroke-dashoffset`, une fois), le sceau tombe à l'arrivée, puis
+les halos des haltes atteignables s'allument l'un après l'autre (fondu 200 ms, 60 ms d'écart). Ici : dans le redessin
+sur place proposé au point suivant, une `<image class="pion">` qui suit la courbe que `courbe(c)` calcule déjà pour le
+chemin « pris » (`<animateMotion>` natif du SVG, ou `getPointAtLength` dans un `requestAnimationFrame` de 600 ms) ;
+ordre : pion, sceau, halos. Coût : un seul élément déplacé pendant 600 ms ; nul. 0,25 j. Réglage : Animations (et
+`prefers-reduced-motion`) ; sans animations, le pion est posé directement et les halos sont allumés.
+
 **Entrer dans une halte, revenir sur la route : le sceau.** `pc/seq-35-exp-halte-ouverture/` : l'écran passe par le
 cuir (184 à 255 ms) avant la fenêtre de l'événement (`pc/35-exp-halte-evenement.png`). Au retour,
 `pc/seq-36-exp-retour-sceau/f03-0166ms.png` : cuir nu ; `f06-0395ms.png` : la route réapparaît en fondu **avec le
@@ -491,8 +533,8 @@ seul écran où la tablette ralentie décroche nettement. Les bandes de 3D du do
 | 2 | **Transitions d'écran et de fenêtre sans cuir nu** (3.2) : sortie de l'ancien écran, entrée depuis 0,3, redessin sur place, fenêtres qui entrent et sortent | Toutes les navigations, cent fois par séance ; le jeu cesse d'être « des pages » | 0,5 j · compositeur | Animations |
 | 3 | **Bonne réponse avec du poids** (3.6) : sceau de cire sur la réponse choisie, pièces qui filent au médaillon | Chaque bonne réponse hors bataille (événements, portes, marchand, veillée) | 0,5 j · une petite toile 400 ms | Animations |
 | 4 | **Mauvaise réponse lisible** (3.6) : réponse choisie qui rougit et tremble, bonne réponse révélée, panneau en parchemin taché sous la question | Chaque erreur, et un vrai gain pédagogique | 0,5 à 1 j · nul | Animations (secousse) |
-| 5 | **Expéditions : sceau qui tombe, cartes en éventail, carte choisie** (3.12) : route redessinée sur place, fenêtres par-dessus la route | Une animation déjà écrite devient enfin visible ; le choix des faveurs prend du relief | 0,5 à 1 j · nul | Animations |
-| 6 | **Missive, toast, tampon, feuilles** (3.5, 3.7, 3.11) : lettre qui se déplie, sceau qui saute, tampon en cire rendue posé à côté de la carte, vraies feuilles | Les petits moments de récit gagnent en matière pour presque rien | 0,5 j · nul | Animations |
+| 5 | **Expéditions : sceau qui tombe, pion qui avance, cartes en éventail, carte choisie** (3.12) : route redessinée sur place, fenêtres par-dessus la route, pion de compagnie qui suit le chemin, brume de la route sans bords nets | Une animation déjà écrite devient enfin visible ; la progression se lit d'un coup d'œil ; le choix des faveurs prend du relief | 0,75 à 1,25 j · nul | Animations (voile de brume : aucun) |
+| 6 | **Missive, toast, tampon, feuilles, événement du jour** (3.5, 3.7, 3.11) : lettre qui se déplie, sceau qui saute, tampon en cire rendue posé à côté de la carte, vraies feuilles, cachet « Aujourd'hui » et ruban de l'événement | Les petits moments de récit gagnent en matière pour presque rien ; l'événement du jour ne passe plus inaperçu sous la carte | 0,75 j · nul | Animations |
 | 7 | **Carte de campagne vivante** (3.5) : bannières rendues en quatre vues, fumées, eau, brume qui dérive, oiseaux, lumière du jour | L'écran central respire comme une carte de campagne ; direction Total War tenue | 1 à 1,5 j · ≈ 2 ms par image à vérifier | Animations (lumière : aucun) |
 | 8 | **Cérémonie de conquête** (3.5) : bannière qui tombe, bourg qui change, brume qui se lève, anneau d'or | Le moment le plus important de la campagne devient un moment | 1 j · ponctuel | Animations |
 | 9 | **Listes, boutique, réglages, survol et toucher habillés** (3.5 arsenal, 3.8, 3.9, 3.10, 3.13) : signets, tomes, sceaux pour les cases, cascade d'entrée, halo de focus, onde dorée au toucher | Plus rien n'a l'air d'un formulaire ; la tablette a enfin un retour sous le doigt | 1,5 j · nul | Animations (cascade, onde) |
@@ -513,4 +555,10 @@ le lot « carte et écrans vivants » ; 9 et 10 ensuite. Les points 1, 2 et 5 se
   (boîte rose), `pc/seq-19-conseil-bonne-reponse/f04-0305ms.png` (sceau sur la carte suivante),
   `pc/seq-36-exp-retour-sceau/f03-0166ms.png` et `f06-0395ms.png` (sceau masqué par le fondu), `pc/03-domaine.png`
   (plan en schéma), `pc/04-campagne.png` (carte immobile), `pc/seq-22-conseil-bilan/f10-1047ms.png` (confettis),
-  `tablette/06d-campagne-carte-enfoncee.png` et `tablette/38c-exp-carte-enfoncee.png` (appui invisible).
+  `tablette/06d-campagne-carte-enfoncee.png` et `tablette/38c-exp-carte-enfoncee.png` (appui invisible),
+  `pc/33z-exp-route-brume-zoom.png` (brume de la route à bords nets), `pc/36z-exp-halo-avant-apres.png` (halo qui
+  saute, pas de pion), `pc/04-campagne-entiere.png` (événement du jour sous la carte).
+- Deux remarques de lecture. Les séquences du profil pc rejouées après l'interruption (chargement, conseil, début des
+  expéditions) gardent les images des deux passages : deux images peuvent porter le même numéro, l'horodatage en ms
+  les distingue. Sur les captures « page entière », le cuir s'arrête à la hauteur de la fenêtre : c'est un effet de
+  la capture (le cuir est sur un calque fixe), pas un défaut du jeu.
