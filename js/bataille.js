@@ -164,6 +164,8 @@
     Object.keys(M.ENNEMIS).forEach(function (t) { n.push("unite-" + t + "-" + campAdv); });
     // bandes de chute et de coup des troupes (lot A) : chargées si sprites.js les a, sinon la marche et poseCouchee()
     n.slice().forEach(function (nom) { if (nom.indexOf("unite-") === 0) n.push(nom + "-chute", nom + "-coup"); });
+    // fin de bataille (effondrement d'une place, bannières) : sans elles, la ruine apparaît d'un coup comme avant
+    n.push("effet-effondrement", "drapeau-france", "drapeau-" + campAdv);
     return n;
   }
 
@@ -376,12 +378,14 @@
     // lot A : effets (bataille-effets.js) et couche de sol (bataille-sol.js), s'ils sont chargés ; sinon, comme avant
     var FX = JEU.batailleEffets || null, SOL = v.sol && JEU.batailleSol ? JEU.batailleSol : null;
     var ambiance = JEU.anim.ambiance ? JEU.anim.ambiance() : anim;
+    v.ambiance = ambiance; // pour bataillon() (calculée une fois par image : matchMedia coûte cher)
     var dtj = v.tempsFx === undefined ? 0 : Math.max(0, Math.min(0.25, p.temps - v.tempsFx)); // temps de la partie depuis l'image d'avant
     v.tempsFx = p.temps;
     if (FX) FX.avancer(dtj);
-    // le fond, ou la couche de sol : le fond et les traces posées (corps, flaques, taches, cratères, flèches plantées)
-    if (SOL) SOL.avancer(v.sol, p.temps);
+    // le fond, ou la couche de sol : le fond et les traces posées (corps, flaques, taches, cratères, flèches plantées) ;
+    // la couche n'est modifiée qu'après avoir été dessinée (bataille-sol.js : c'est bien moins cher)
     ctx.drawImage(SOL ? v.sol.vue : v.fond, 0, 0, M.LARGEUR, M.HAUTEUR);
+    if (SOL) SOL.avancer(v.sol, p.temps);
 
     // --- sol : ombres portées des places fortes et des tours ---
     sprite(ctx, "ombre-" + nomPlace("france", p.chateau), v.depart.x, v.depart.y, 0);
@@ -513,7 +517,7 @@
       else bataillon(ctx, o, v, anim);
     }
     // gouttes retombées : posées une fois dans la couche de sol, en taches brun-rouge, quand leur giclée finit
-    if (SOL && sang && anim) poserTaches(v, SOL);
+    if (SOL && sang && anim) poserTaches(ctx, v, SOL);
 
     // --- projectiles : flèches et carreaux tournés le long de leur trajectoire, pierres en cloche ---
     for (i = 0; i < p.projectiles.length; i++) projectile(ctx, p.projectiles[i], v, FX, anim);
@@ -521,7 +525,7 @@
 
     // --- effets --- (ceux posés à la place d'une troupe se dessinent là où est son bataillon : decalEffet)
     // étincelles (bataille-effets.js) : les ETINCELLES_MAX coups ou chocs les plus récents seulement
-    var sautees = 0;
+    var sautees = 0, poussiere = !!prete("effet-poussiere");
     if (FX) {
       for (i = 0; i < p.effets.length; i++) { e = p.effets[i]; if ((e.genre === "coup" || e.genre === "choc") && e.age < FX.DUREE_ETINCELLES) sautees++; }
       sautees = Math.max(0, sautees - FX.PLAFONDS.etincelles);
@@ -530,6 +534,8 @@
       e = p.effets[i];
       var a = 1 - e.age / 1.2, dg = e.genre;
       var decale = dg === "touche" || dg === "pique" || dg === "impact" || dg === "choc" || dg === "chute";
+      // rien à dessiner ici (leur poussière est au sol) : pas de save ni de translate pour rien (lot A)
+      if (decale && FX && poussiere && (dg === "chute" || dg === "pique" || (dg === "touche" && e.age >= 0.12) || (dg === "choc" && e.age >= FX.DUREE_ETINCELLES) || (dg === "impact" && e.age >= 0.75))) continue;
       if (decale) { decalEffet(e, v); if (e.dvx || e.dvy) { ctx.save(); ctx.translate(e.dvx, e.dvy); } else decale = false; }
       if (e.genre === "touche" || e.genre === "pique") {
         // coup porté à un soldat : une petite bouffée de terre (au sol : solEffets) et, pour un trait, un éclat chaud de
@@ -561,7 +567,7 @@
         if (FX) {
           if (e.age < FX.DUREE_ETINCELLES) {
             if (sautees > 0) sautees--;
-            else if (FX.etincelles(ctx, e.x, e.y - HAUT_CORPS, e.age, FX.graineDe(e.x, e.y), FX.graineDe(e.x, e.y) % 2 ? 1 : -1, !anim, 1.3)) R.etincelles++;
+            else if (FX.etincelles(e.x + (e.dvx || 0), e.y + (e.dvy || 0) - HAUT_CORPS, e.age, FX.graineDe(e.x, e.y), FX.graineDe(e.x, e.y) % 2 ? 1 : -1, !anim, 1.3)) R.etincelles++;
           }
         } else if (e.age < 0.2) { ctx.globalAlpha = 1 - e.age / 0.2; ctx.drawImage(eclatLumiere(), e.x - 12, e.y - HAUT_CORPS - 12, 24, 24); ctx.globalAlpha = 1; }
       } else if (e.genre === "coup") {
@@ -573,7 +579,7 @@
         if (FX) {
           if (e.age < FX.DUREE_ETINCELLES) {
             if (sautees > 0) sautees--;
-            else if (FX.etincelles(ctx, cx, cy, e.age, FX.graineDe(e.x, e.y), e.dir || 1, !anim, e.champion ? 2 : 1)) R.etincelles++;
+            else if (FX.etincelles(cx, cy, e.age, FX.graineDe(e.x, e.y), e.dir || 1, !anim, e.champion ? 2 : 1)) R.etincelles++;
           }
         } else if ((!sang || !anim || bois) && e.age < 0.12) { ctx.globalAlpha = 1 - e.age / 0.12; ctx.drawImage(eclatLumiere(), cx - 7, cy - 7, 14, 14); ctx.globalAlpha = 1; }
         if (bois && e.age < 0.32) sprite(ctx, "effet-eclats", e.gx !== undefined ? e.gx : e.x, (e.gy !== undefined ? e.gy : e.y) - HAUT_CORPS, vue(e.age, 0.32, 4), false, 0.7);
@@ -604,8 +610,8 @@
       }
       if (decale) ctx.restore();
     }
-    // particules (bataille-effets.js) : mottes des pierres, éclats
-    if (FX) R.particules = FX.dessiner(ctx);
+    // étincelles de l'image, d'un coup ; particules (bataille-effets.js) : mottes des pierres, éclats
+    if (FX) { FX.dessinerEtincelles(ctx); R.particules = FX.dessiner(ctx); }
 
     // --- pluie ou brouillard ---
     if (p.modificateurs.brouillard) { ctx.fillStyle = v.brume; ctx.fillRect(520, 0, 480, M.HAUTEUR); }
@@ -627,7 +633,7 @@
   // Sang coupé : la poussière d'une figurine qui tombe.
   var POUSSEE = 48, RECUL = 0.08, OPACITE_POUSSIERE = 0.72;
   function solEffets(ctx, v, anim, sang, FX, SOL) {
-    var p = v.partie, poussiere = !!prete("effet-poussiere"), i, e;
+    var p = v.partie, poussiere = !!prete("effet-poussiere"), voile = false, i, e;
     for (i = 0; i < p.effets.length; i++) {
       e = p.effets[i];
       var g = e.genre;
@@ -637,18 +643,17 @@
       var x = e.x + (decale ? e.dvx : 0), y = e.y + (decale ? e.dvy : 0);
       if (g === "impact") {
         // anneau brun au ras du sol, de 10 à 40 px en 0,35 s ; animations coupées : une tache fixe
-        if (anim) { if (e.age < 0.35) onde(ctx, x, y + 2, 10 + 30 * e.age / 0.35, 1 - e.age / 0.35, "#6b4a2a"); }
-        else if (e.age < 0.75) { ctx.globalAlpha = 0.3; ctx.fillStyle = "#4a3420"; ctx.beginPath(); ctx.ellipse(x, y + 2, 22, 15, 0, 0, Math.PI * 2); ctx.fill(); ctx.globalAlpha = 1; }
+        if (anim) { if (e.age < 0.35) { onde(ctx, x, y + 2, 10 + 30 * e.age / 0.35, 1 - e.age / 0.35, "#6b4a2a"); voile = false; } }
+        else if (e.age < 0.75) { ctx.globalAlpha = 0.3; ctx.fillStyle = "#4a3420"; ctx.beginPath(); ctx.ellipse(x, y + 2, 22, 15, 0, 0, Math.PI * 2); ctx.fill(); ctx.globalAlpha = 1; voile = false; }
         continue;
       }
       if (!poussiere) continue;
-      ctx.globalAlpha = OPACITE_POUSSIERE;
-      if (g === "touche" || g === "pique") { if (e.age < 0.45) sprite(ctx, "effet-poussiere", x, y + 2, vue(e.age, 0.45, 5), false, g === "pique" ? 0.5 : 0.4); }
-      else if (g === "choc") { if (e.charge && e.age < 0.45) sprite(ctx, "effet-poussiere", x, y + 2, vue(e.age, 0.45, 5), false, 0.6); }
-      else if (g === "chute") { if (e.age < 0.6) sprite(ctx, "effet-poussiere", x, y + 2, vue(e.age, 0.6, 5), false, 0.75); }
-      else if (g === "retrait") { if (e.age < 0.6) sprite(ctx, "effet-poussiere", x, y + 2, vue(e.age, 0.6, 5), false, 0.9); }
-      ctx.globalAlpha = 1;
+      var duree = g === "touche" || g === "pique" || g === "choc" ? 0.45 : g === "chute" || g === "retrait" ? 0.6 : 0;
+      if (!(e.age < duree) || (g === "choc" && !e.charge)) continue;
+      if (!voile) { ctx.globalAlpha = OPACITE_POUSSIERE; voile = true; } // l'opacité des poussières, réglée une fois
+      sprite(ctx, "effet-poussiere", x, y + 2, vue(e.age, duree, 5), false, g === "pique" ? 0.5 : g === "touche" ? 0.4 : g === "choc" ? 0.6 : g === "chute" ? 0.75 : 0.9);
     }
+    if (voile) ctx.globalAlpha = 1;
     if (!sang && poussiere) {
       ctx.globalAlpha = OPACITE_POUSSIERE;
       for (i = 0; i < v.corps.length; i++) { e = v.corps[i]; if (e.age < 0.5) sprite(ctx, "effet-poussiere", e.x, e.y + 1, vue(e.age, 0.5, 5), false, 0.4); }
@@ -729,14 +734,15 @@
     else img = SOL.cratere(v.ratio, variante);
     SOL.poser(v.sol, "crateres", v.partie.temps, img, Math.round(x * v.ratio - img.axd), Math.round((y + 2) * v.ratio - img.ayd));
   }
-  // Gouttes retombées des giclées finies (coups de la mêlée, chutes) : posées en taches dans la couche de sol, une fois.
+  // Gouttes retombées des giclées finies (coups de la mêlée, chutes) : posées en taches dans la couche de sol, une fois
+  // (peintes au début de l'image suivante : cette fois, on les dessine nous-mêmes).
   var tachesTmp = new Float32Array(4 * 16);
-  function poserTaches(v, SOL) {
+  function poserTaches(ctx, v, SOL) {
     var p = v.partie, i, e;
-    for (i = 0; i < p.effets.length; i++) { e = p.effets[i]; if (e.gicle && !e.tachee && e.age >= GICLEE_COUP) tacher(e, v, SOL); }
-    for (i = 0; i < v.corps.length; i++) { e = v.corps[i]; if (e.gicle && !e.tachee && e.age >= GICLEE_CHUTE) tacher(e, v, SOL); }
+    for (i = 0; i < p.effets.length; i++) { e = p.effets[i]; if (e.gicle && !e.tachee && e.age >= GICLEE_COUP) tacher(ctx, e, v, SOL); }
+    for (i = 0; i < v.corps.length; i++) { e = v.corps[i]; if (e.gicle && !e.tachee && e.age >= GICLEE_CHUTE) tacher(ctx, e, v, SOL); }
   }
-  function tacher(e, v, SOL) {
+  function tacher(ctx, e, v, SOL) {
     e.tachee = true;
     var n = gouttes(e, e.genre === "chute" ? GICLEE_CHUTE : GICLEE_COUP), m = 0;
     for (var i = 0; i < n && m < 16; i++) {
@@ -745,7 +751,14 @@
       tachesTmp[m * 4] = gouttesTmp[j]; tachesTmp[m * 4 + 1] = gouttesTmp[j + 1]; tachesTmp[m * 4 + 2] = gouttesTmp[j + 2]; tachesTmp[m * 4 + 3] = gouttesTmp[j + 3];
       m++;
     }
-    if (m) SOL.poserTaches(v.sol, v.partie.temps, tachesTmp, m, ROUGE_POSE);
+    if (!m) return;
+    SOL.poserTaches(v.sol, v.partie.temps, tachesTmp, m, ROUGE_POSE);
+    ctx.fillStyle = ROUGE_POSE; ctx.beginPath();
+    for (i = 0; i < m; i++) {
+      var x = tachesTmp[i * 4], y = tachesTmp[i * 4 + 1], rx = tachesTmp[i * 4 + 2], ry = tachesTmp[i * 4 + 3];
+      if (rx < 0.7) ctx.rect(x - rx, y - ry, 2 * rx, 2 * ry); else { ctx.moveTo(x + rx, y); ctx.ellipse(x, y, rx, ry, 0, 0, Math.PI * 2); }
+    }
+    ctx.fill();
   }
 
   // Éclat de lumière d'un trait qui touche (petite étoile chaude), calculé une fois.
@@ -896,7 +909,70 @@
     var pt = rival ? v.arrivee : v.depart, etat = rival ? v.partie.rival : v.partie.chateau;
     var nom = nomPlace(rival ? v.campAdverse : "france", etat);
     if (!sprite(ctx, nom, pt.x, pt.y, 0)) chateau(ctx, pt, rival ? v.adverse.couleurs : v.couleurs, etat, rival, v);
+    if (v.effondre && v.effondre.rival === rival) effondrement(ctx, v, v.effondre, pt, nom);
     if (etat.pv <= etat.max / 2) fumees(ctx, v, nom, pt, etat.pv <= 0, rival ? 1 : 0);
+  }
+
+  // Fin de bataille : la place qui tombe (celle du rival à la victoire, la tienne à la retraite) s'effondre en 0,9 s :
+  // son image d'avant (abîmée) s'enfonce de 6 px en s'assombrissant au-dessus de la ruine déjà dessinée, trois gros
+  // nuages (effet-effondrement) montent l'un après l'autre, des éclats volent ; à la victoire, la bannière du rival
+  // tombe et celle de France monte de 20 px sur la ruine, puis y reste. La secousse et le voile sont des classes de la
+  // feuille de style (rien n'est peint en plein écran dans la toile). Animations coupées : la ruine tout de suite, un
+  // nuage immobile pendant 0,9 s, la bannière de France posée. Coût : quelques drawImage pendant une seconde.
+  var EFFONDREMENT = 0.9, VIE_NUAGE = 1.1, MONTEE_BANNIERE = 0.6;
+  var NUAGES_FIN = [[-30, 18, 0], [26, 24, 0.12], [-2, 32, 0.26]]; // décalage depuis l'ancrage de la place (px), retard (s)
+  function assombrir(img, iw, ih) {
+    var c = document.createElement("canvas"); c.width = iw; c.height = ih;
+    var g = c.getContext("2d");
+    g.drawImage(img, 0, 0, iw, ih, 0, 0, iw, ih);
+    g.globalCompositeOperation = "source-atop"; g.fillStyle = "rgb(24,16,10)"; g.fillRect(0, 0, iw, ih);
+    return c;
+  }
+  function pointBanniere(nomRuine, pt) {
+    var s = descr(nomRuine), f = s && s.fumees && s.fumees.length ? s.fumees.slice().sort(function (a, b) { return a[1] - b[1]; })[0] : null;
+    return f ? { x: pt.x - s.ax + f[0], y: pt.y - s.ay + f[1] - 2 } : { x: pt.x, y: pt.y - 30 };
+  }
+  function effondrement(ctx, v, ef, pt, nom) {
+    var age = v.horloge - ef.t0, anim = ef.anim, e = images[ef.ancien], s = e && e.s, i, a;
+    if (anim && age < EFFONDREMENT && e && e.etat === "ok") {
+      var u = age / EFFONDREMENT, dy = 6 * u * u, n = s.frames || 1, iw = e.img.naturalWidth / n, ih = e.img.naturalHeight;
+      var x0 = pt.x - s.ax, y0 = pt.y - s.ay, bas = pt.y + (s.h - s.ay) * 0.8;
+      if (!ef.sombre) ef.sombre = assombrir(e.img, iw, ih);
+      ctx.save();
+      ctx.beginPath(); ctx.rect(x0 - 2, y0 - 2, s.w + 4, bas - y0 + 2); ctx.clip(); // le pied s'enfonce sous le sol
+      ctx.globalAlpha = u < 0.65 ? 1 : Math.max(0, 1 - (u - 0.65) / 0.35);
+      ctx.drawImage(e.img, 0, 0, iw, ih, x0, y0 + dy, s.w, s.h);
+      ctx.globalAlpha *= Math.min(0.75, u * 1.1);
+      ctx.drawImage(ef.sombre, x0, y0 + dy, s.w, s.h);
+      ctx.restore();
+    }
+    if (anim) {
+      for (i = 0; i < NUAGES_FIN.length; i++) {
+        a = age - NUAGES_FIN[i][2];
+        if (a >= 0 && a < VIE_NUAGE) sprite(ctx, "effet-effondrement", pt.x + NUAGES_FIN[i][0], pt.y + NUAGES_FIN[i][1], vue(a, VIE_NUAGE, 8));
+      }
+      for (i = 0; i < 2; i++) {
+        a = age - 0.18 * i;
+        if (a >= 0 && a < 0.5) sprite(ctx, "effet-eclats", pt.x + (i ? 20 : -16), pt.y - 28 + 36 * a, vue(a, 0.5, 4));
+      }
+    } else if (age < EFFONDREMENT) sprite(ctx, "effet-effondrement", pt.x, pt.y + 24, 3);
+    if (!ef.victoire) return;
+    var b = pointBanniere(nom, pt), fr = anim && JEU.anim.ambiance() ? Math.floor(v.horloge * 8) % 6 : 0;
+    if (anim && age < 0.55) {
+      // la bannière du rival bascule autour du pied de son mât et s'efface
+      var t = age / 0.55, d = descr("drapeau-" + ef.camp);
+      if (d && prete("drapeau-" + ef.camp)) {
+        ctx.save(); ctx.globalAlpha = 1 - t; ctx.translate(b.x, b.y); ctx.rotate(1.35 * t * t);
+        sprite(ctx, "drapeau-" + ef.camp, 0, 0, fr);
+        ctx.restore();
+      }
+    }
+    var m = anim ? Math.max(0, Math.min(1, (age - 0.5) / MONTEE_BANNIERE)) : 1;
+    if (m > 0) {
+      ctx.save(); ctx.globalAlpha = Math.min(1, m * 2);
+      sprite(ctx, "drapeau-france", b.x, b.y + 20 * (1 - m) * (2 - m), fr);
+      ctx.restore();
+    }
   }
 
   // Fumée d'une place forte abîmée (ou en ruine, plus épaisse et plus sombre) : des bouffées dessinées qui montent,
@@ -1368,7 +1444,7 @@
     // pas : au rythme de la marche dessinée (une troupe qui attend à la file ne marche pas sur place), piétinement en mêlée.
     // Un cycle de la bande de marche (4 images) pour 15 px parcourus à pied (PAS_PIETON), 30 px à cheval (lot A).
     var dc = bat.centre === undefined ? 0 : Math.abs(centre - bat.centre);
-    bat.pasV += adv ? dt * 1.5 : Math.min(dc, 4) / (u.type === "cavaliers" ? PAS_CHEVAL : PAS_PIETON);
+    bat.pasV += adv ? dt * 1.1 : Math.min(dc, 4) / (u.type === "cavaliers" ? PAS_CHEVAL : PAS_PIETON); // en mêlée, piétinement au pas ralenti
     bat.centre = centre;
     // milieu du bataillon dessiné : les traits des tours, les coups et les chutes y tombent
     pointRoute(route, centre, Math.max(-BORD_ROUTE, Math.min(BORD_ROUTE, cc)), pointTmp);
@@ -1398,12 +1474,15 @@
       var q = f.places[fg.place];
       if (anim) { fg.a += Math.max(-glisse, Math.min(glisse, q.a - fg.a)); fg.b += Math.max(-glisse, Math.min(glisse, q.b - fg.b)); }
       else { fg.a = q.a; fg.b = q.b; }
-      // geste : en mêlée, le premier rang se fend (chacun à son rythme, et tous ensemble quand la troupe frappe)
+      // geste : en mêlée, le premier rang se fend (chacun à son rythme, et tous ensemble quand la troupe frappe) ; avec
+      // la bande « coup » (lot A), il arme, frappe, suit et revient (fg.geste : image de la bande, −1 : la marche)
       var fente = 0;
+      fg.geste = -1;
       if (adv && anim) {
         if (q.rang === 0 && contact) {
-          var g = depuisCoup - fg.delai, coup = g >= 0 && g < 0.2 ? 1 - g / 0.2 : 0;
-          fente = Math.max(3.2 * coup, 1.5 * Math.max(0, Math.sin(t * 6.3 + fg.phase * 2.2)));
+          var g = depuisCoup - fg.delai, coup = g >= 0 && g < 0.2 ? 1 - g / 0.2 : 0, rythme = t * 6.3 + fg.phase * 2.2;
+          fente = Math.max(3.2 * coup, 1.5 * Math.max(0, Math.sin(rythme)));
+          fg.geste = gesteMelee(g, u.recharge, rythme);
         } else fente = 0.8 * Math.max(0, Math.sin(t * 4.1 + fg.phase * 1.7));
       }
       var la = fg.a + f.avant + fg.ja + fente;
@@ -1422,14 +1501,30 @@
     }
   }
 
+  // Image de la bande « coup » d'un homme du premier rang au contact (lot A) : sur le coup de sa troupe, frapper, suivre et
+  // revenir en GESTE s, et armer juste avant (recharge du moteur sous ARMER s) ; entre deux coups, à son rythme (rythme :
+  // phase de sa fente, en radians) : armer, frapper au plus fort de sa fente, suivre, revenir. 0 : armer ; 3 : revenir.
+  var GESTE = 0.36, ARMER = 0.12;
+  function gesteMelee(g, recharge, rythme) {
+    if (g >= 0 && g < GESTE) return 1 + Math.min(2, Math.floor(g / (GESTE / 3)));
+    if (recharge >= 0 && recharge < ARMER) return 0;
+    var k = ((rythme + Math.PI / 4) / (Math.PI / 2)) % 4;
+    return Math.floor(k < 0 ? k + 4 : k);
+  }
+  // Nom de la bande « coup » d'une figurine si elle est chargée, sinon null (la marche).
+  function bandeCoup(fg) {
+    if (fg.nomCoup === undefined) fg.nomCoup = fg.nom + "-coup";
+    return prete(fg.nomCoup) ? fg.nomCoup : null;
+  }
+
   // Une vue d'une figurine, réduite à sa taille sur la toile (netteté comprise), gardée : l'image 3D si elle est chargée,
   // sinon la silhouette peinte (repli). Ancrage (pieds) en px de l'écran : axd, ayd ; taille logique : lw, lh.
   // ombre : la même vue posée sur son ombre douce (portée vers le sud-est, soleil au nord-ouest), cuite dans la même
   // petite toile : une seule copie par figurine et par image. Les figurines sont dessinées du fond vers l'avant, et
   // l'ombre tombe devant les pieds : celles de devant la recouvrent, comme sur le sol.
-  var vues = {}, vuesRatio = 0;
-  function memoVues(ratio) { if (vuesRatio !== ratio) { vues = {}; vuesRatio = ratio; } }
-  function oublierVues() { vues = {}; vuesRatio = 0; }
+  var vues = {}, vuesRatio = 0, vuesGen = 1; // vuesGen : change quand les vues gardées sont oubliées
+  function memoVues(ratio) { if (vuesRatio !== ratio) { vues = {}; vuesRatio = ratio; vuesGen++; } }
+  function oublierVues() { vues = {}; vuesRatio = 0; vuesGen++; }
   function vueFigure(nom, type, cleCamp, coul, k, gauche, echelle, ratio, ombre) {
     memoVues(ratio);
     var e = images[nom], c;
@@ -1570,7 +1665,7 @@
   function bataillon(ctx, u, v, anim) {
     var bat = u.bat;
     if (!bat) return;
-    var ambiance = JEU.anim.ambiance ? JEU.anim.ambiance() : anim; // bannières qui flottent : ambiance
+    var ambiance = v.ambiance !== undefined ? v.ambiance : anim; // bannières qui flottent : ambiance
     var fondu = v.retrait !== null ? Math.max(0, 1 - (v.horloge - v.retrait) / 0.6) : 1;
     if (fondu <= 0) return;
     var f = bat.f, figs = bat.figs, ordre = bat.ordre, ratio = v.ratio, i, fg, c;
@@ -1580,19 +1675,29 @@
     if (!ordre.length) return;
     ordre.sort(parY);
     ctx.setTransform(1, 0, 0, 1, 0, 0);
-    var k0 = bat.pasV * 1.2, chef = null;
+    var k0 = bat.pasV * 1.2, chef = null, opacite = -1; // opacité de la toile : réglée seulement quand elle change
     for (i = 0; i < ordre.length; i++) {
       fg = ordre[i];
       var q = f.places[fg.place];
-      c = vueFigure(fg.nom, q.type, bat.cleCamp, coul, k0 + fg.phase, bat.gauche, q.echelle, ratio, true);
+      var coupNom = fg.geste >= 0 ? bandeCoup(fg) : null, kv = coupNom ? fg.geste : Math.floor(k0 + fg.phase); // geste de mêlée (bande « coup »), sinon la marche
+      // la vue de l'image d'avant si rien n'a changé (lot A : pas de clé de texte à bâtir pour chaque figurine)
+      if (fg.vv && fg.vvK === kv && fg.vvN === coupNom && fg.vvG === bat.gauche && fg.vvGen === vuesGen && fg.vvE === q.echelle) c = fg.vv;
+      else {
+        c = coupNom ? vueFigure(coupNom, q.type, bat.cleCamp, coul, kv, bat.gauche, q.echelle, ratio, true)
+          : vueFigure(fg.nom, q.type, bat.cleCamp, coul, kv, bat.gauche, q.echelle, ratio, true);
+        fg.vv = c; fg.vvK = kv; fg.vvN = coupNom; fg.vvG = bat.gauche; fg.vvGen = vuesGen; fg.vvE = q.echelle;
+      }
       if (fg.recul !== undefined) c = touchee(c); // touchée par un trait : un cran plus sombre, le temps du recul
-      ctx.globalAlpha = fondu * fg.alpha;
+      if (fondu * fg.alpha !== opacite) { opacite = fondu * fg.alpha; ctx.globalAlpha = opacite; }
       ctx.drawImage(c, Math.round(fg.x * ratio - c.axd), Math.round(fg.y * ratio - c.ayd));
       R.figures++;
       if (fg.noyau) {
         chef = fg;
         if (f.banniere) {
-          var b = banniere(bat.cleCamp, coul, (rival ? v.adverse : camp("joueur")).embleme, bat.gauche, ambiance ? Math.floor(v.horloge * 8 + bat.phaseBanniere * 1.5) % VUES_BANNIERE : 0, f.banniere, ratio);
+          var frB = ambiance ? Math.floor(v.horloge * 8 + bat.phaseBanniere * 1.5) % VUES_BANNIERE : 0, b;
+          // la vue de bannière de l'image d'avant si rien n'a changé (pas de clé de texte à bâtir)
+          if (bat.bv && bat.bvF === frB && bat.bvG === bat.gauche && bat.bvGen === vuesGen) b = bat.bv;
+          else { b = banniere(bat.cleCamp, coul, (rival ? v.adverse : camp("joueur")).embleme, bat.gauche, frB, f.banniere, ratio); bat.bv = b; bat.bvF = frB; bat.bvG = bat.gauche; bat.bvGen = vuesGen; }
           var bx = fg.x + (bat.gauche ? -1 : 1) * 2.2 * q.echelle / 0.6, by = fg.y - 1.5;
           ctx.drawImage(b, Math.round(bx * ratio - b.axd), Math.round(by * ratio - b.ayd));
           R.bannieres++;
@@ -1726,6 +1831,7 @@
     var fin = sang ? M.DUREE_CHUTE : CHUTE_SANS_SANG;
     if (c.age >= fin) return;
     v.rendu.corps++;
+    if (c.pose === 3 && sang && v.sol && JEU.batailleSol) return; // couché dans la couche de sol, flaque entière : rien à faire
     if (sang && v.sol && JEU.batailleSol) { corpsAuSol(ctx, c, v, anim, JEU.batailleSol); return; }
     var a = sang ? Math.min(1, (fin - c.age) / FIN_CHUTE) : Math.min(1, (fin - c.age) / 0.9);
     var b = anim ? Math.min(1, c.age / BASCULE) : 1;
@@ -1770,9 +1876,12 @@
     fl = flaqueReduite(c.flaque, arrondiFlaque(t * tailleFlaque(palier === 3 ? CROISSANCE : palier === 2 ? 0.6 : BASCULE)), ratio);
     var xf = Math.round(fx * ratio - fl.axd), yf = Math.round(c.y * ratio - fl.ayd);
     if (!c.pose) {
-      var pc = vueCouchee(c, v, true);
+      // posé : la couche le peint au début de l'image suivante ; cette fois encore, on le dessine nous-mêmes
+      var pc = vueCouchee(c, v, true), xc = Math.round(c.x * ratio - pc.axd), yc = Math.round(c.y * ratio - pc.ayd);
       c.tracePose = v.partie.temps;
-      c.trace = SOL.poser(v.sol, "corps", c.tracePose, fl, xf, yf, pc, Math.round(c.x * ratio - pc.axd), Math.round(c.y * ratio - pc.ayd));
+      c.trace = SOL.poser(v.sol, "corps", c.tracePose, fl, xf, yf, pc, xc, yc);
+      ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.drawImage(fl, xf, yf); ctx.drawImage(pc, xc, yc); ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+      R.flaques++; R.corpsVifs++;
     } else SOL.reposer(v.sol, c.trace, c.tracePose, fl, xf, yf);
     c.pose = palier;
   }
@@ -1880,8 +1989,11 @@
       var tSol = (-vy + Math.sqrt(vy * vy + 4 * GRAVITE * (bas - y0))) / (2 * GRAVITE), tt = Math.min(t, tSol), j = i * 6;
       gouttesTmp[j] = x0 + vx * tt; gouttesTmp[j + 1] = y0 + vy * tt + GRAVITE * tt * tt;
       if (t < tSol) {
+        // en vol : la grosse goutte s'étire dans le sens de son vol ; la brume reste ronde (un petit carré, moins cher)
         var vyt = vy + 2 * GRAVITE * t;
-        gouttesTmp[j + 2] = r * Math.min(2, 1 + Math.sqrt(vx * vx + vyt * vyt) / 220); gouttesTmp[j + 3] = r * 0.8; gouttesTmp[j + 4] = Math.atan2(vyt, vx); gouttesTmp[j + 5] = 0;
+        if (grosse) { gouttesTmp[j + 2] = r * Math.min(2, 1 + Math.sqrt(vx * vx + vyt * vyt) / 220); gouttesTmp[j + 3] = r * 0.8; gouttesTmp[j + 4] = Math.atan2(vyt, vx); }
+        else { gouttesTmp[j + 2] = r; gouttesTmp[j + 3] = r; gouttesTmp[j + 4] = 0; }
+        gouttesTmp[j + 5] = 0;
       } else { gouttesTmp[j + 2] = r * 1.3; gouttesTmp[j + 3] = r * 0.6; gouttesTmp[j + 4] = 0; gouttesTmp[j + 5] = 1; } // posée : une petite tache à plat
     }
     return n;
@@ -1896,9 +2008,9 @@
         var j = i * 6, posee = pose && gouttesTmp[j + 5] > 0;
         if (c === 3 ? !posee : posee || i % 3 !== c) continue;
         if (!ouvert) { ctx.beginPath(); ouvert = true; }
-        var x = gouttesTmp[j], y = gouttesTmp[j + 1], rx = gouttesTmp[j + 2], rot = gouttesTmp[j + 4];
-        ctx.moveTo(x + rx * Math.cos(rot), y + rx * Math.sin(rot));
-        ctx.ellipse(x, y, rx, gouttesTmp[j + 3], rot, 0, Math.PI * 2);
+        var x = gouttesTmp[j], y = gouttesTmp[j + 1], rx = gouttesTmp[j + 2], ry = gouttesTmp[j + 3], rot = gouttesTmp[j + 4];
+        if (rx < 0.7) ctx.rect(x - rx, y - ry, 2 * rx, 2 * ry); // brume fine : un carré d'un demi-pixel suffit
+        else { ctx.moveTo(x + rx * Math.cos(rot), y + rx * Math.sin(rot)); ctx.ellipse(x, y, rx, ry, rot, 0, Math.PI * 2); }
       }
       if (ouvert) { ctx.fillStyle = c === 3 ? ROUGE_POSE : ROUGES[c]; ctx.fill(); }
     }
@@ -2053,7 +2165,7 @@
         placeDepart: placerJauge(depart, carte, p.route, false, !!prete(nomPlace("france", p.chateau))),
         placeArrivee: placerJauge(arrivee, carte, p.route, true, !!prete(nomPlace(campAdv, p.rival))),
         horloge: 0, survol: -1, curseur: -1, choix: "archers", choixTour: -1, vitesse: contexte && contexte.vitesse > 0 ? contexte.vitesse : 1, envoyesVague: 0, gardeEntree: 0,
-        survolRivale: -1, porteesRivales: false, retrait: null, hud: null, hudDiscret: false, repos: 0,
+        survolRivale: -1, porteesRivales: false, retrait: null, retraitPrevu: null, effondre: null, hud: null, hudDiscret: false, repos: 0,
         // bataillons : figurines couchées, troupes vues à l'image d'avant, troupes tombées depuis peu (decalEffet), heure
         // de la partie au dernier dessin, et compteurs de la dernière image (bataillons, figurines debout, figurines
         // couchées, bannières : essais)
@@ -2559,12 +2671,12 @@
           var de = phaseAvant; phaseAvant = p.phase;
           if (de === "vague" && p.phase === "preparation") { JEU.sons.jouer("sceau"); JEU.ui.tampon("Vague repoussée", "+" + p.revenu + " or"); preparation(); }
           if (p.phase === "fin") {
-            // les troupes restées sur la route s'effacent (0,6 s) dans une bouffée de poussière : pas d'arrêt sur image
-            v.retrait = v.horloge;
-            p.unites.forEach(function (u) { var b = u.bat && u.bat.vx !== undefined ? u.bat : null; p.effets.push({ genre: "retrait", x: b ? b.vx : u.x, y: b ? b.vy : u.y, age: 0 }); });
+            finMiseEnScene();
+            if (v.retraitPrevu === null) retraitDesTroupes();
             bilan();
           }
         }
+        if (v.retraitPrevu !== null && v.horloge >= v.retraitPrevu) { v.retraitPrevu = null; retraitDesTroupes(); }
         if (v.retrait !== null && p.unites.length && v.horloge - v.retrait > 0.6) p.unites.length = 0;
         // bandeau et tableau de la mêlée : 4 fois par seconde, et tout de suite quand une place forte est frappée (la
         // solidité du tableau suit la jauge du champ)
@@ -2585,6 +2697,31 @@
         racine.requestAnimationFrame(boucle);
       }
 
+      // les troupes restées sur la route s'effacent (0,6 s) dans une bouffée de poussière : pas d'arrêt sur image
+      function retraitDesTroupes() {
+        v.retrait = v.horloge;
+        p.unites.forEach(function (u) { var b = u.bat && u.bat.vx !== undefined ? u.bat : null; p.effets.push({ genre: "retrait", x: b ? b.vx : u.x, y: b ? b.vy : u.y, age: 0 }); });
+      }
+      // Mise en scène de la fin (dessin seulement : le moteur a déjà tranché) : la place tombée s'effondre (voir
+      // effondrement()) ; secousse forte et voile doré de la victoire, champ désaturé de la retraite : classes de la
+      // feuille de style sur la toile et le cadre ; à la victoire, tes bataillons restent 1,5 s debout avant le retrait.
+      // Animations coupées : ni secousse, ni voile, ni attente ; la retraite garde son champ désaturé, sans transition.
+      function finMiseEnScene() {
+        var anim = JEU.anim.actif(), issue = p.fin, victoire = issue === "victoire";
+        v.retraitPrevu = null;
+        if (!victoire && issue !== "retraite") return;              // « tenu » : aucune place ne tombe
+        var camp = victoire ? v.campAdverse : "france";
+        v.effondre = { rival: victoire, t0: v.horloge, ancien: "place-" + camp + "-abime", sombre: null, victoire: victoire,
+          anim: anim, camp: camp };
+        if (anim) {
+          canvas.classList.remove("td-effondre"); void canvas.offsetWidth; canvas.classList.add("td-effondre");
+          if (v.rendu.secousses === 0) { v.rendu.secousses = 1; racine.setTimeout(function () { v.rendu.secousses = 0; }, 450); }
+        }
+        if (victoire) {
+          if (anim) { v.retraitPrevu = v.horloge + 1.5; cadre.insertBefore(el("div", { class: "td-voile", "aria-hidden": "true" }), hud); }
+        } else canvas.classList.add("td-defaite", anim ? "td-fondu" : "td-direct");
+      }
+
       // Fin de la partie : la boucle s'arrête, et la toile et son fond (7 Mo en 1920 × 1080) sont rendus tout de suite,
       // sans attendre la bataille suivante, comme les vues gardées des figurines (quelques Mo à la netteté 2).
       function arreter() {
@@ -2594,6 +2731,7 @@
         v.sol = null;
         if (JEU.batailleEffets) JEU.batailleEffets.vider();
         v.corps.length = 0; oublierVues();
+        v.effondre = null;
       }
       JEU.partie.surQuitter = function () {
         arreter();
@@ -2663,6 +2801,7 @@
       racine.requestAnimationFrame(boucle);
       JEU.bataille.enCours = p; // pour les tests de bout en bout
       JEU.bataille.rendu = v.rendu;
+      JEU.bataille.dessin = v; // état du dessin (mesures : coût d'un impact, couche de sol)
     }
   }
 
@@ -2670,5 +2809,6 @@
     // formations des bataillons (essais sous Node : tests.js)
     bataillons: { BATAILLONS: BATAILLONS, BORD_ROUTE: BORD_ROUTE, ECART_FRONTS: ECART_FRONTS, CORPS_MAX: CORPS_MAX,
       ECART_FILE: ECART_FILE, DECAL_MELEE: DECAL_MELEE, DECAL_FILE: DECAL_FILE, DECAL_PORTE: DECAL_PORTE,
-      formation: formation, debout: deboutVoulu, cote: coteBataillon, placer: placerMelees, pointRoute: pointRoute, suivre: majBataillons } };
+      formation: formation, debout: deboutVoulu, cote: coteBataillon, placer: placerMelees, pointRoute: pointRoute, suivre: majBataillons,
+      geste: gesteMelee, premiereVue: premiereVue } };
 })(typeof window !== "undefined" ? window : globalThis);

@@ -66,7 +66,7 @@
     }
     return n;
   }
-  function vider() { for (var i = 0; i < N; i++) pgenre[i] = 0; vivantes = 0; suivante = 0; nTr = 0; }
+  function vider() { for (var i = 0; i < N; i++) pgenre[i] = 0; vivantes = 0; suivante = 0; nTr = 0; nVifs = 0; nPales = 0; }
 
   // Mottes de terre d'une pierre qui tombe : 6 à 8 mottes brun sombre lancées en cloche, retombées en 0,5 s.
   function mottes(x, y, graine) {
@@ -81,25 +81,37 @@
   // Un coup d'arme (« coup ») ou deux troupes qui s'engagent (« choc ») : 3 à 5 traits orangés de 2 à 3 px qui s'écartent
   // du point touché en 0,15 s, surtout du côté du coup (dir : 1 vers l'est, −1 vers l'ouest), un peu vers le haut.
   // fixe (Animations coupées) : un éclat court qui ne bouge pas (0,12 s). force : 2 pour le champion (deux fois plus).
-  var DUREE_ETINCELLES = 0.15;
-  function etincelles(ctx, x, y, age, graine, dir, fixe, force) {
+  // Les traits d'une image sont rangés dans deux tampons (vifs, puis pâles en fin de course) et tracés d'un coup par
+  // dessinerEtincelles : trois coups de plume par image en tout, quel que soit le nombre de coups.
+  var DUREE_ETINCELLES = 0.15, TRAITS = PLAFONDS.etincelles * 12;
+  var vifs = new Float32Array(TRAITS * 4), pales = new Float32Array(TRAITS * 4), nVifs = 0, nPales = 0;
+  function etincelles(x, y, age, graine, dir, fixe, force) {
     var duree = fixe ? 0.12 : DUREE_ETINCELLES;
     if (!(age >= 0 && age < duree)) return false;
     force = force || 1;
-    var n = Math.round((3 + Math.floor(alea(graine, 0) * 3)) * force), k = age / duree, sens = dir < 0 ? -1 : 1;
-    var r0 = fixe ? 1.2 : 1.2 + 6 * Math.sqrt(k) * (force > 1 ? 1.3 : 1);
-    ctx.beginPath();
+    var n = Math.round((3 + Math.floor(alea(graine, 0) * 3)) * force), k = age / duree, sens = dir < 0 ? -1 : 1, vif = k < 0.5;
+    var r0 = fixe ? 1.2 : 1.2 + 6 * Math.sqrt(k) * (force > 1 ? 1.3 : 1), t = vif ? vifs : pales;
     for (var i = 0; i < n; i++) {
+      var m = vif ? nVifs : nPales;
+      if (m >= TRAITS) break;
       var an = (sens < 0 ? Math.PI : 0) + (alea(graine, i + 1) - 0.5) * 2.4 - 0.35 * sens;
-      var l = 2 + alea(graine, i + 9), r = r0 * (0.7 + 0.6 * alea(graine, i + 17)), c = Math.cos(an), s = Math.sin(an);
-      ctx.moveTo(x + c * r, y + s * r); ctx.lineTo(x + c * (r + l), y + s * (r + l));
+      var l = 2 + alea(graine, i + 9), r = r0 * (0.7 + 0.6 * alea(graine, i + 17)), c = Math.cos(an), s = Math.sin(an), j = m * 4;
+      t[j] = x + c * r; t[j + 1] = y + s * r; t[j + 2] = x + c * (r + l); t[j + 3] = y + s * (r + l);
+      if (vif) nVifs++; else nPales++;
     }
-    ctx.lineCap = "round";
-    ctx.globalAlpha = Math.min(1, 1.4 * (1 - k));
-    ctx.strokeStyle = "#e8912e"; ctx.lineWidth = 1; ctx.stroke();
-    if (k < 0.5) { ctx.strokeStyle = "#ffd28a"; ctx.lineWidth = 0.5; ctx.stroke(); } // cœur plus chaud au départ
-    ctx.globalAlpha = 1; ctx.lineCap = "butt";
     return true;
+  }
+  function traits(ctx, t, n) {
+    ctx.beginPath();
+    for (var i = 0; i < n; i++) { var j = i * 4; ctx.moveTo(t[j], t[j + 1]); ctx.lineTo(t[j + 2], t[j + 3]); }
+  }
+  function dessinerEtincelles(ctx) {
+    if (!nVifs && !nPales) return;
+    ctx.lineCap = "round"; ctx.strokeStyle = "#e8912e"; ctx.lineWidth = 1;
+    if (nPales) { traits(ctx, pales, nPales); ctx.globalAlpha = 0.55; ctx.stroke(); ctx.globalAlpha = 1; }
+    if (nVifs) { traits(ctx, vifs, nVifs); ctx.stroke(); ctx.strokeStyle = "#ffd28a"; ctx.lineWidth = 0.5; ctx.stroke(); } // cœur plus chaud au départ
+    ctx.lineCap = "butt";
+    nVifs = 0; nPales = 0;
   }
 
   // ---------- lueur : l'éclat chaud d'un trait qui touche (6 px au plus) ----------
@@ -145,6 +157,6 @@
 
   JEU.batailleEffets = { PLAFONDS: PLAFONDS, alea: alea, graineDe: graineDe,
     MOTTE: MOTTE, ECLAT: ECLAT, POUSSIERE: POUSSIERE, emettre: emettre, avancer: avancer, dessiner: dessiner, vider: vider,
-    particules: function () { return vivantes; }, mottes: mottes, etincelles: etincelles, DUREE_ETINCELLES: DUREE_ETINCELLES,
+    particules: function () { return vivantes; }, mottes: mottes, etincelles: etincelles, dessinerEtincelles: dessinerEtincelles, DUREE_ETINCELLES: DUREE_ETINCELLES,
     lueur: lueur, trainee: trainee, dessinerTrainees: dessinerTrainees };
 })(typeof window !== "undefined" ? window : globalThis);

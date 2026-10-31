@@ -3,10 +3,11 @@
 // écran de la taille du fond (la « vue »), dessinée à la place du fond : une image du combat ne les redessine plus.
 // Script classique et facultatif : bataille.js l'appelle s'il est chargé (JEU.batailleSol) et dessine comme avant sinon.
 //
-// Vitesse (toile logicielle du PC sans carte graphique, tablette) : la vue n'est jamais touchée après avoir été
-// dessinée dans l'image. Une trace demandée pendant une image (poser, reposer, poserTaches) attend : elle est peinte au
-// début de l'image suivante (avancer), avant que la vue soit dessinée ; l'appelant la dessine lui-même une fois en
-// attendant (le corps couché, les taches). Tout le travail de la couche se fait donc dans avancer().
+// Vitesse (toile logicielle du PC sans carte graphique, tablette) : la vue est dessinée au début de l'image, et elle
+// n'est touchée qu'ensuite (avancer, puis les traces posées pendant l'image) : une toile modifiée puis dessinée dans la
+// même image coûte une copie entière ; dessinée puis modifiée, presque rien (mesuré au ralenti 4 ×). Une trace posée
+// pendant une image apparaît donc dans la vue à l'image suivante : l'appelant la dessine lui-même une fois (le corps
+// couché, les taches).
 //
 // Effacement. Une seconde toile (la « cible ») porte le fond et les traces de moins de GARDE secondes. Quand une trace
 // a GARDE secondes, on la retire de la cible : on y recopie le fond sur son rectangle, puis on y repose les traces plus
@@ -27,7 +28,7 @@
 
   function toile(w, h) { var c = document.createElement("canvas"); c.width = w; c.height = h; return c; }
   function nouvelle() {
-    return { etat: LIBRE, genre: "corps", t0: 0, tf: 0, repeint: false, x0: 0, y0: 0, x1: 0, y1: 0, img1: null, ix1: 0, iy1: 0, img2: null, ix2: 0, iy2: 0,
+    return { etat: LIBRE, genre: "corps", t0: 0, tf: 0, x0: 0, y0: 0, x1: 0, y1: 0, img1: null, ix1: 0, iy1: 0, img2: null, ix2: 0, iy2: 0,
       taches: new Float32Array(TACHES * 4), nt: 0, couleur: "", cle: -1 };
   }
 
@@ -36,18 +37,18 @@
     var W = fond.width, H = fond.height, vue = toile(W, H), cible = toile(W, H);
     var gv = vue.getContext("2d", { alpha: false }), gc = cible.getContext("2d", { alpha: false });
     gv.drawImage(fond, 0, 0); gc.drawImage(fond, 0, 0);
-    var traces = [], attente = [], i;
-    for (i = 0; i < MAX; i++) { traces.push(nouvelle()); attente.push(null); }
+    var traces = [], i;
+    for (i = 0; i < MAX; i++) traces.push(nouvelle());
     var compte = {};
     GENRES.forEach(function (g) { compte[g] = 0; });
     return { fond: fond, vue: vue, cible: cible, gv: gv, gc: gc, W: W, H: H, ratio: ratio, traces: traces, tete: 0, n: 0, nF: 0, curseur: 0,
-      attente: attente, nA: 0, cases: {}, fenetre: -1, compte: compte, poses: 0, t: 0 };
+      cases: {}, fenetre: -1, compte: compte, poses: 0, t: 0 };
   }
   // Rend la mémoire des deux toiles (fin de bataille).
   function liberer(sol) {
     if (!sol) return;
     sol.vue.width = sol.vue.height = 0; sol.cible.width = sol.cible.height = 0;
-    sol.traces.length = 0; sol.n = sol.nF = sol.nA = 0; sol.fond = null;
+    sol.traces.length = 0; sol.n = sol.nF = 0; sol.fond = null;
   }
 
   function peindre(g, r, ratio) {
@@ -58,7 +59,7 @@
       g.fillStyle = r.couleur; g.beginPath();
       for (var k = 0; k < r.nt; k++) {
         var j = k * 4, x = r.taches[j], y = r.taches[j + 1], rx = r.taches[j + 2], ry = r.taches[j + 3];
-        g.moveTo(x + rx, y); g.ellipse(x, y, rx, ry, 0, 0, Math.PI * 2);
+        if (rx < 0.7) g.rect(x - rx, y - ry, 2 * rx, 2 * ry); else { g.moveTo(x + rx, y); g.ellipse(x, y, rx, ry, 0, 0, Math.PI * 2); }
       }
       g.fill();
       g.setTransform(1, 0, 0, 1, 0, 0);
@@ -72,7 +73,6 @@
     r.x0 = Math.max(0, Math.floor(r.x0) - 1); r.y0 = Math.max(0, Math.floor(r.y0) - 1);
     r.x1 = Math.min(sol.W, Math.ceil(r.x1) + 1); r.y1 = Math.min(sol.H, Math.ceil(r.y1) + 1);
   }
-  function enAttente(sol, r) { if (sol.nA < MAX) sol.attente[sol.nA++] = r; }
 
   // Une place libre dans l'anneau des traces (dans l'ordre de pose). L'anneau plein (jamais en pratique : avancer() en
   // garde de la marge), la trace est perdue (null).
@@ -80,28 +80,28 @@
     if (sol.n >= MAX) return null;
     var r = sol.traces[(sol.tete + sol.n) % MAX];
     sol.n++;
-    r.etat = ATTENTE; r.t0 = t; r.tf = t; r.repeint = false; r.img1 = r.img2 = null; r.nt = 0; r.cle = -1;
+    r.etat = ATTENTE; r.t0 = t; r.tf = t; r.img1 = r.img2 = null; r.nt = 0; r.cle = -1;
     r.x0 = Infinity; r.y0 = Infinity; r.x1 = -Infinity; r.y1 = -Infinity;
-    enAttente(sol, r);
     return r;
   }
 
-  // Pose une trace faite d'une ou deux images (img1 sous img2 : la flaque, puis le corps). Peinte au début de l'image
-  // suivante. Rend la trace (reposer) ou null.
+  // Pose une trace faite d'une ou deux images (img1 sous img2 : la flaque, puis le corps), peinte tout de suite dans les
+  // deux toiles. Rend la trace (reposer) ou null.
   function poser(sol, genre, t, img1, x1, y1, img2, x2, y2) {
     var r = place(sol, t);
     if (!r) return null;
     r.genre = genre; r.img1 = img1 || null; r.ix1 = x1; r.iy1 = y1; r.img2 = img2 || null; r.ix2 = x2; r.iy2 = y2;
     boiteImage(r, r.img1, x1, y1); boiteImage(r, r.img2, x2, y2); borner(sol, r);
+    peindre(sol.gv, r, sol.ratio); peindre(sol.gc, r, sol.ratio); r.etat = ENTIERE;
     sol.compte[genre]++; sol.poses++;
     return r;
   }
-  // La flaque d'un corps déjà posé grandit : la nouvelle flaque, puis le corps par-dessus, au début de l'image suivante.
+  // La flaque d'un corps déjà posé grandit : la nouvelle flaque, puis le corps par-dessus, dans les deux toiles.
   function reposer(sol, r, t0, img1, x1, y1) {
-    if (!r || r.t0 !== t0 || (r.etat !== ATTENTE && r.etat !== ENTIERE)) return;
+    if (!r || r.t0 !== t0 || r.etat !== ENTIERE) return;
     r.img1 = img1; r.ix1 = x1; r.iy1 = y1;
     boiteImage(r, img1, x1, y1); borner(sol, r);
-    if (r.etat === ENTIERE && !r.repeint) { r.repeint = true; enAttente(sol, r); }
+    for (var k = 0; k < 2; k++) { var g = k ? sol.gc : sol.gv; g.drawImage(img1, x1, y1); if (r.img2) g.drawImage(r.img2, r.ix2, r.iy2); }
   }
   // Pose des taches de sang retombées (px logiques : x, y, rx, ry à la suite dans « liste »). Les taches tombées dans la
   // même case de CASE px pendant la même fenêtre de FENETRE s partagent une trace (moins de traces à effacer).
@@ -110,20 +110,31 @@
     var q = sol.ratio, fen = Math.floor(t / FENETRE);
     if (fen !== sol.fenetre) { sol.cases = {}; sol.fenetre = fen; }
     var cle = Math.floor(liste[0] / CASE) + 100 * Math.floor(liste[1] / CASE), r = sol.cases[cle];
-    if (!r || r.etat !== ATTENTE || r.cle !== cle || r.nt + n > TACHES) {
+    if (!r || r.etat !== ENTIERE || r.cle !== cle || r.t0 < t - FENETRE || r.nt + n > TACHES) {
       r = place(sol, t);
       if (!r) return null;
-      r.genre = "taches"; r.couleur = couleur; r.cle = cle;
+      r.genre = "taches"; r.couleur = couleur; r.cle = cle; r.etat = ENTIERE;
       sol.cases[cle] = r; sol.compte.taches++; sol.poses++;
     }
     n = Math.min(n, TACHES - r.nt);
-    for (var k = 0; k < n; k++) {
+    var g0 = r.nt, k;
+    for (k = 0; k < n; k++) {
       var j = k * 4, x = liste[j], y = liste[j + 1], rx = liste[j + 2], ry = liste[j + 3], d = (r.nt + k) * 4;
       r.taches[d] = x; r.taches[d + 1] = y; r.taches[d + 2] = rx; r.taches[d + 3] = ry;
       r.x0 = Math.min(r.x0, (x - rx) * q); r.y0 = Math.min(r.y0, (y - ry) * q); r.x1 = Math.max(r.x1, (x + rx) * q); r.y1 = Math.max(r.y1, (y + ry) * q);
     }
     r.nt += n;
     borner(sol, r);
+    // les nouvelles taches seulement, dans les deux toiles
+    for (var c = 0; c < 2; c++) {
+      var g = c ? sol.gc : sol.gv;
+      g.setTransform(q, 0, 0, q, 0, 0); g.fillStyle = couleur; g.beginPath();
+      for (k = g0; k < r.nt; k++) {
+        var i4 = k * 4, tx = r.taches[i4], ty = r.taches[i4 + 1], trx = r.taches[i4 + 2], tr = r.taches[i4 + 3];
+        if (trx < 0.7) g.rect(tx - trx, ty - tr, 2 * trx, 2 * tr); else { g.moveTo(tx + trx, ty); g.ellipse(tx, ty, trx, tr, 0, 0, Math.PI * 2); }
+      }
+      g.fill(); g.setTransform(1, 0, 0, 1, 0, 0);
+    }
     return r;
   }
 
@@ -143,28 +154,12 @@
     if (coupe) g.restore();
   }
 
-  // Au début de chaque image, avant que la vue soit dessinée (t : temps de la partie) : peint les traces en attente,
-  // retire de la cible celles de plus de GARDE s (au plus RETRAITS par image, plus si l'anneau se remplit), puis
-  // rapproche de la cible au plus FONDUS_PAR_IMAGE rectangles de traces retirées.
+  // À chaque image, juste après que la vue a été dessinée (t : temps de la partie) : rapproche de la cible au plus
+  // FONDUS_PAR_IMAGE rectangles de traces retirées, puis retire de la cible celles de plus de GARDE s (au plus RETRAITS
+  // par image, plus si l'anneau se remplit). Dans cet ordre : la cible sert avant d'être modifiée.
   function avancer(sol, t) {
     sol.t = t;
-    var i, r, k;
-    for (i = 0; i < sol.nA; i++) {
-      r = sol.attente[i]; sol.attente[i] = null;
-      if (r.etat === ATTENTE) { peindre(sol.gv, r, sol.ratio); peindre(sol.gc, r, sol.ratio); r.etat = ENTIERE; }
-      else if (r.etat === ENTIERE && r.repeint) {
-        for (k = 0; k < 2; k++) { var g = k ? sol.gc : sol.gv; g.drawImage(r.img1, r.ix1, r.iy1); if (r.img2) g.drawImage(r.img2, r.ix2, r.iy2); }
-      }
-      r.repeint = false;
-    }
-    sol.nA = 0;
-    var presse = sol.n > MAX - 48; // l'anneau se remplit : on retire et on libère plus tôt
-    for (k = 0; sol.nF < sol.n && (k < RETRAITS || presse); k++) {
-      r = sol.traces[(sol.tete + sol.nF) % MAX];
-      if (r.etat !== ENTIERE || (t - r.t0 < GARDE && !(presse && k < 4))) break;
-      retirer(sol, r, t);
-      sol.nF++;
-    }
+    var r, k, presse = sol.n > MAX - 48; // l'anneau se remplit : on retire et on libère plus tôt
     var gv = sol.gv, faits = 0;
     for (k = 0; k < sol.nF && faits < FONDUS_PAR_IMAGE; k++) {
       sol.curseur = (sol.curseur + 1) % sol.nF;
@@ -179,6 +174,12 @@
     }
     gv.globalAlpha = 1;
     while (sol.n && sol.traces[sol.tete].etat === LIBRE) { sol.tete = (sol.tete + 1) % MAX; sol.n--; sol.nF--; }
+    for (k = 0; sol.nF < sol.n && (k < RETRAITS || presse); k++) {
+      r = sol.traces[(sol.tete + sol.nF) % MAX];
+      if (r.etat !== ENTIERE || (t - r.t0 < GARDE && !(presse && k < 4))) break;
+      retirer(sol, r, t);
+      sol.nF++;
+    }
   }
 
   // ---------- images de repli (sans les images rendues en 3D) ----------

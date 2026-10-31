@@ -8,6 +8,15 @@
 // droite). Le jeu ne retourne une bande que si la troupe marche dans l'autre sens.
 // fumees (places fortes) : [[x, y], ...] en px logiques depuis le coin haut-gauche de l'image, foyers d'où le jeu
 // fait monter la fumée animée d'une place abîmée ou en ruine (aucune fumée n'est cuite dans les images ; vide si intacte).
+// unite-<type>-<camp>-chute et -coup : bandes de geste (4 images), mêmes w, h, ax, ay et face que la marche ; chute :
+// genoux qui plient, buste renversé, au sol, couché (arme à côté) ; coup : armer, frapper, suivi, revenir (cavaliers :
+// lance couchée, poussée, cheval qui se cabre un peu, retour). Repli : la marche si la bande manque.
+// tour-* : bande de tir, image 0 = repos (seule image lue par un code qui ne connaît pas les bandes) ; trébuchet 4
+// images (armé, mi-course, verge verticale, lâché), baliste, archers et piquiers 3 ; tir : [x, y] en px logiques
+// depuis le coin haut-gauche, point de départ du trait (pierre au lâcher, pointe du carreau, arc, fers des piques).
+// lieu-* : hampe : [x, y], pied du mât de la bannière ; lieu-*-nu : le même bourg sans sa bannière, à compléter par
+// drapeau-<camp> (6 images d'une étoffe qui flotte, ancrage au pied du mât) posé sur la hampe.
+// effet-cratere : 2 images (0 : herbe, 1 : route) ; effet-effondrement : 8 images (nuage et pierres d'une place qui tombe).
 window.JEU = window.JEU || {};
 JEU.SPRITES = {
   "effet-carreau": {"src": "assets/images/td/effet-carreau.png", "w": 32, "h": 8, "ax": 16, "ay": 4, "frames": 1},
@@ -67,31 +76,51 @@ JEU.SPRITES = {
   "terrain-gue-sud": {"src": "assets/images/td/terrain-gue-sud.jpg", "w": 1000, "h": 660, "ax": 0, "ay": 0, "frames": 1},
   "terrain-moulin": {"src": "assets/images/td/terrain-moulin.jpg", "w": 1000, "h": 660, "ax": 0, "ay": 0, "frames": 1},
   "terrain-moulin-sud": {"src": "assets/images/td/terrain-moulin-sud.jpg", "w": 1000, "h": 660, "ax": 0, "ay": 0, "frames": 1},
-  "tour-archers-angleterre-1": {"src": "assets/images/td/tour-archers-angleterre-1.png", "w": 70, "h": 84, "ax": 35, "ay": 72, "frames": 1},
-  "tour-archers-france-1": {"src": "assets/images/td/tour-archers-france-1.png", "w": 70, "h": 84, "ax": 35, "ay": 72, "frames": 1},
-  "tour-archers-france-2": {"src": "assets/images/td/tour-archers-france-2.png", "w": 70, "h": 84, "ax": 35, "ay": 72, "frames": 1},
-  "tour-archers-france-3": {"src": "assets/images/td/tour-archers-france-3.png", "w": 70, "h": 84, "ax": 35, "ay": 72, "frames": 1},
-  "tour-archers-omeyyades-1": {"src": "assets/images/td/tour-archers-omeyyades-1.png", "w": 70, "h": 84, "ax": 35, "ay": 72, "frames": 1},
-  "tour-baliste-angleterre-1": {"src": "assets/images/td/tour-baliste-angleterre-1.png", "w": 70, "h": 84, "ax": 35, "ay": 72, "frames": 1},
-  "tour-baliste-france-1": {"src": "assets/images/td/tour-baliste-france-1.png", "w": 70, "h": 84, "ax": 35, "ay": 72, "frames": 1},
-  "tour-baliste-france-2": {"src": "assets/images/td/tour-baliste-france-2.png", "w": 70, "h": 84, "ax": 35, "ay": 72, "frames": 1},
-  "tour-baliste-france-3": {"src": "assets/images/td/tour-baliste-france-3.png", "w": 70, "h": 84, "ax": 35, "ay": 72, "frames": 1},
-  "tour-baliste-omeyyades-1": {"src": "assets/images/td/tour-baliste-omeyyades-1.png", "w": 70, "h": 84, "ax": 35, "ay": 72, "frames": 1},
-  "tour-catapulte-france-1": {"src": "assets/images/td/tour-catapulte-france-1.png", "w": 70, "h": 84, "ax": 35, "ay": 72, "frames": 1},
-  "tour-catapulte-france-2": {"src": "assets/images/td/tour-catapulte-france-2.png", "w": 70, "h": 84, "ax": 35, "ay": 72, "frames": 1},
-  "tour-catapulte-france-3": {"src": "assets/images/td/tour-catapulte-france-3.png", "w": 70, "h": 84, "ax": 35, "ay": 72, "frames": 1},
-  "tour-piquiers-france-1": {"src": "assets/images/td/tour-piquiers-france-1.png", "w": 70, "h": 84, "ax": 35, "ay": 72, "frames": 1},
-  "tour-piquiers-france-2": {"src": "assets/images/td/tour-piquiers-france-2.png", "w": 70, "h": 84, "ax": 35, "ay": 72, "frames": 1},
-  "tour-piquiers-france-3": {"src": "assets/images/td/tour-piquiers-france-3.png", "w": 70, "h": 84, "ax": 35, "ay": 72, "frames": 1},
+  "tour-archers-angleterre-1": {"src": "assets/images/td/tour-archers-angleterre-1.png", "w": 70, "h": 84, "ax": 35, "ay": 72, "frames": 3, "tir": [52.5, 35.4]},
+  "tour-archers-france-1": {"src": "assets/images/td/tour-archers-france-1.png", "w": 70, "h": 84, "ax": 35, "ay": 72, "frames": 3, "tir": [45.2, 28.7]},
+  "tour-archers-france-2": {"src": "assets/images/td/tour-archers-france-2.png", "w": 70, "h": 84, "ax": 35, "ay": 72, "frames": 3, "tir": [45.3, 39.1]},
+  "tour-archers-france-3": {"src": "assets/images/td/tour-archers-france-3.png", "w": 70, "h": 84, "ax": 35, "ay": 72, "frames": 3, "tir": [46.2, 31.4]},
+  "tour-archers-omeyyades-1": {"src": "assets/images/td/tour-archers-omeyyades-1.png", "w": 70, "h": 84, "ax": 35, "ay": 72, "frames": 3, "tir": [47.5, 19.3]},
+  "tour-baliste-angleterre-1": {"src": "assets/images/td/tour-baliste-angleterre-1.png", "w": 70, "h": 84, "ax": 35, "ay": 72, "frames": 3, "tir": [42.0, 48.0]},
+  "tour-baliste-france-1": {"src": "assets/images/td/tour-baliste-france-1.png", "w": 70, "h": 84, "ax": 35, "ay": 72, "frames": 3, "tir": [42.4, 53.0]},
+  "tour-baliste-france-2": {"src": "assets/images/td/tour-baliste-france-2.png", "w": 70, "h": 84, "ax": 35, "ay": 72, "frames": 3, "tir": [42.6, 50.3]},
+  "tour-baliste-france-3": {"src": "assets/images/td/tour-baliste-france-3.png", "w": 70, "h": 84, "ax": 35, "ay": 72, "frames": 3, "tir": [43.2, 40.9]},
+  "tour-baliste-omeyyades-1": {"src": "assets/images/td/tour-baliste-omeyyades-1.png", "w": 70, "h": 84, "ax": 35, "ay": 72, "frames": 3, "tir": [42.0, 48.0]},
+  "tour-catapulte-france-1": {"src": "assets/images/td/tour-catapulte-france-1.png", "w": 70, "h": 84, "ax": 35, "ay": 72, "frames": 4, "tir": [23.3, 24.5]},
+  "tour-catapulte-france-2": {"src": "assets/images/td/tour-catapulte-france-2.png", "w": 70, "h": 84, "ax": 35, "ay": 72, "frames": 4, "tir": [21.9, 13.6]},
+  "tour-catapulte-france-3": {"src": "assets/images/td/tour-catapulte-france-3.png", "w": 70, "h": 84, "ax": 35, "ay": 72, "frames": 4, "tir": [22.0, 4.9]},
+  "tour-piquiers-france-1": {"src": "assets/images/td/tour-piquiers-france-1.png", "w": 70, "h": 84, "ax": 35, "ay": 72, "frames": 3, "tir": [40.5, 40.5]},
+  "tour-piquiers-france-2": {"src": "assets/images/td/tour-piquiers-france-2.png", "w": 70, "h": 84, "ax": 35, "ay": 72, "frames": 3, "tir": [43.3, 35.3]},
+  "tour-piquiers-france-3": {"src": "assets/images/td/tour-piquiers-france-3.png", "w": 70, "h": 84, "ax": 35, "ay": 72, "frames": 3, "tir": [44.3, 29.3]},
   "unite-belier-france": {"src": "assets/images/td/unite-belier-france.png", "w": 56, "h": 64, "ax": 28, "ay": 60, "frames": 4},
   "unite-cavaliers-angleterre": {"src": "assets/images/td/unite-cavaliers-angleterre.png", "w": 40, "h": 40, "ax": 20, "ay": 36, "frames": 4, "face": "gauche"},
+  "unite-cavaliers-angleterre-chute": {"src": "assets/images/td/unite-cavaliers-angleterre-chute.png", "w": 40, "h": 40, "ax": 20, "ay": 36, "frames": 4, "face": "gauche"},
+  "unite-cavaliers-angleterre-coup": {"src": "assets/images/td/unite-cavaliers-angleterre-coup.png", "w": 40, "h": 40, "ax": 20, "ay": 36, "frames": 4, "face": "gauche"},
   "unite-cavaliers-france": {"src": "assets/images/td/unite-cavaliers-france.png", "w": 40, "h": 40, "ax": 20, "ay": 36, "frames": 4},
+  "unite-cavaliers-france-chute": {"src": "assets/images/td/unite-cavaliers-france-chute.png", "w": 40, "h": 40, "ax": 20, "ay": 36, "frames": 4},
+  "unite-cavaliers-france-coup": {"src": "assets/images/td/unite-cavaliers-france-coup.png", "w": 40, "h": 40, "ax": 20, "ay": 36, "frames": 4},
   "unite-cavaliers-omeyyades": {"src": "assets/images/td/unite-cavaliers-omeyyades.png", "w": 40, "h": 40, "ax": 20, "ay": 36, "frames": 4, "face": "gauche"},
+  "unite-cavaliers-omeyyades-chute": {"src": "assets/images/td/unite-cavaliers-omeyyades-chute.png", "w": 40, "h": 40, "ax": 20, "ay": 36, "frames": 4, "face": "gauche"},
+  "unite-cavaliers-omeyyades-coup": {"src": "assets/images/td/unite-cavaliers-omeyyades-coup.png", "w": 40, "h": 40, "ax": 20, "ay": 36, "frames": 4, "face": "gauche"},
   "unite-champion-angleterre": {"src": "assets/images/td/unite-champion-angleterre.png", "w": 48, "h": 48, "ax": 24, "ay": 44, "frames": 4, "face": "gauche"},
+  "unite-champion-angleterre-chute": {"src": "assets/images/td/unite-champion-angleterre-chute.png", "w": 48, "h": 48, "ax": 24, "ay": 44, "frames": 4, "face": "gauche"},
+  "unite-champion-angleterre-coup": {"src": "assets/images/td/unite-champion-angleterre-coup.png", "w": 48, "h": 48, "ax": 24, "ay": 44, "frames": 4, "face": "gauche"},
   "unite-champion-omeyyades": {"src": "assets/images/td/unite-champion-omeyyades.png", "w": 48, "h": 48, "ax": 24, "ay": 44, "frames": 4, "face": "gauche"},
+  "unite-champion-omeyyades-chute": {"src": "assets/images/td/unite-champion-omeyyades-chute.png", "w": 48, "h": 48, "ax": 24, "ay": 44, "frames": 4, "face": "gauche"},
+  "unite-champion-omeyyades-coup": {"src": "assets/images/td/unite-champion-omeyyades-coup.png", "w": 48, "h": 48, "ax": 24, "ay": 44, "frames": 4, "face": "gauche"},
   "unite-fantassins-france": {"src": "assets/images/td/unite-fantassins-france.png", "w": 40, "h": 40, "ax": 20, "ay": 36, "frames": 4},
+  "unite-fantassins-france-chute": {"src": "assets/images/td/unite-fantassins-france-chute.png", "w": 40, "h": 40, "ax": 20, "ay": 36, "frames": 4},
+  "unite-fantassins-france-coup": {"src": "assets/images/td/unite-fantassins-france-coup.png", "w": 40, "h": 40, "ax": 20, "ay": 36, "frames": 4},
   "unite-hommes-angleterre": {"src": "assets/images/td/unite-hommes-angleterre.png", "w": 40, "h": 40, "ax": 20, "ay": 36, "frames": 4, "face": "gauche"},
+  "unite-hommes-angleterre-chute": {"src": "assets/images/td/unite-hommes-angleterre-chute.png", "w": 40, "h": 40, "ax": 20, "ay": 36, "frames": 4, "face": "gauche"},
+  "unite-hommes-angleterre-coup": {"src": "assets/images/td/unite-hommes-angleterre-coup.png", "w": 40, "h": 40, "ax": 20, "ay": 36, "frames": 4, "face": "gauche"},
   "unite-hommes-omeyyades": {"src": "assets/images/td/unite-hommes-omeyyades.png", "w": 40, "h": 40, "ax": 20, "ay": 36, "frames": 4, "face": "gauche"},
+  "unite-hommes-omeyyades-chute": {"src": "assets/images/td/unite-hommes-omeyyades-chute.png", "w": 40, "h": 40, "ax": 20, "ay": 36, "frames": 4, "face": "gauche"},
+  "unite-hommes-omeyyades-coup": {"src": "assets/images/td/unite-hommes-omeyyades-coup.png", "w": 40, "h": 40, "ax": 20, "ay": 36, "frames": 4, "face": "gauche"},
   "unite-pietaille-angleterre": {"src": "assets/images/td/unite-pietaille-angleterre.png", "w": 40, "h": 40, "ax": 20, "ay": 36, "frames": 4, "face": "gauche"},
-  "unite-pietaille-omeyyades": {"src": "assets/images/td/unite-pietaille-omeyyades.png", "w": 40, "h": 40, "ax": 20, "ay": 36, "frames": 4, "face": "gauche"}
+  "unite-pietaille-angleterre-chute": {"src": "assets/images/td/unite-pietaille-angleterre-chute.png", "w": 40, "h": 40, "ax": 20, "ay": 36, "frames": 4, "face": "gauche"},
+  "unite-pietaille-angleterre-coup": {"src": "assets/images/td/unite-pietaille-angleterre-coup.png", "w": 40, "h": 40, "ax": 20, "ay": 36, "frames": 4, "face": "gauche"},
+  "unite-pietaille-omeyyades": {"src": "assets/images/td/unite-pietaille-omeyyades.png", "w": 40, "h": 40, "ax": 20, "ay": 36, "frames": 4, "face": "gauche"},
+  "unite-pietaille-omeyyades-chute": {"src": "assets/images/td/unite-pietaille-omeyyades-chute.png", "w": 40, "h": 40, "ax": 20, "ay": 36, "frames": 4, "face": "gauche"},
+  "unite-pietaille-omeyyades-coup": {"src": "assets/images/td/unite-pietaille-omeyyades-coup.png", "w": 40, "h": 40, "ax": 20, "ay": 36, "frames": 4, "face": "gauche"}
 };
