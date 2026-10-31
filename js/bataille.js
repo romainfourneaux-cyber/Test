@@ -379,6 +379,7 @@
     var FX = JEU.batailleEffets || null, SOL = v.sol && JEU.batailleSol ? JEU.batailleSol : null;
     var ambiance = JEU.anim.ambiance ? JEU.anim.ambiance() : anim;
     v.ambiance = ambiance; // pour bataillon() (calculée une fois par image : matchMedia coûte cher)
+    v.anim = anim; // pour tour() et place() (lot A3 : montée, tirs, éclair sur la place forte)
     var dtj = v.tempsFx === undefined ? 0 : Math.max(0, Math.min(0.25, p.temps - v.tempsFx)); // temps de la partie depuis l'image d'avant
     v.tempsFx = p.temps;
     if (FX) FX.avancer(dtj);
@@ -401,7 +402,14 @@
       sprite(ctx, "ombre-" + nomTour(tr, v), tr.x, tr.y, 0);
       if (ft < 1) ctx.globalAlpha = 1;
     }
-    for (i = 0; i < p.tours.length; i++) { tr = p.tours[i]; sprite(ctx, "ombre-" + nomTour(tr, v), tr.x, tr.y, 0); }
+    // tes tours : l'ombre d'une tour qui sort de terre (lot A3) grandit avec elle
+    for (i = 0; i < p.tours.length; i++) {
+      tr = p.tours[i];
+      var mt = monteeTour(tr, v);
+      if (mt < 1) ctx.globalAlpha = mt;
+      sprite(ctx, "ombre-" + nomTour(tr, v), tr.x, tr.y, 0);
+      if (mt < 1) ctx.globalAlpha = 1;
+    }
     // Marques au sol des effets de l'IA rivale (16/10/2026), sous les murs et les troupes : une onde de sa couleur au
     // pied d'une tour qu'il vient de bâtir et à sa porte quand ses guetteurs rappellent des gardes (départ de la vague,
     // deux ondes par seconde et demie ; animations coupées : une seule, immobile) ; un anneau doré à sa porte quand sa
@@ -909,6 +917,12 @@
     var pt = rival ? v.arrivee : v.depart, etat = rival ? v.partie.rival : v.partie.chateau;
     var nom = nomPlace(rival ? v.campAdverse : "france", etat);
     if (!sprite(ctx, nom, pt.x, pt.y, 0)) chateau(ctx, pt, rival ? v.adverse.couleurs : v.couleurs, etat, rival, v);
+    // brèche (lot A3) : la place forte touchée s'éclaire 80 ms (la même image, ajoutée à elle-même à 0,25)
+    else if (v.eclairPlace && v.eclairPlace.rival === rival && v.anim !== false && v.horloge - v.eclairPlace.t < 0.08) {
+      ctx.globalCompositeOperation = "lighter"; ctx.globalAlpha = 0.25;
+      sprite(ctx, nom, pt.x, pt.y, 0);
+      ctx.globalCompositeOperation = "source-over"; ctx.globalAlpha = 1;
+    }
     if (v.effondre && v.effondre.rival === rival) effondrement(ctx, v, v.effondre, pt, nom);
     if (etat.pv <= etat.max / 2) fumees(ctx, v, nom, pt, etat.pv <= 0, rival ? 1 : 0);
   }
@@ -919,8 +933,8 @@
   // tombe et celle de France monte de 20 px sur la ruine, puis y reste. La secousse et le voile sont des classes de la
   // feuille de style (rien n'est peint en plein écran dans la toile). Animations coupées : la ruine tout de suite, un
   // nuage immobile pendant 0,9 s, la bannière de France posée. Coût : quelques drawImage pendant une seconde.
-  var EFFONDREMENT = 0.9, VIE_NUAGE = 1.1, MONTEE_BANNIERE = 0.6;
-  var NUAGES_FIN = [[-30, 18, 0], [26, 24, 0.12], [-2, 32, 0.26]]; // décalage depuis l'ancrage de la place (px), retard (s)
+  var EFFONDREMENT = 0.9, VIE_NUAGE = 1.1, MONTEE_BANNIERE = 0.6, BANNIERE_FIN = 1.25; // la bannière de la carte, un peu agrandie
+  var NUAGES_FIN = [[-30, 8, 0], [28, 12, 0.12], [0, 22, 0.26]]; // décalage depuis l'ancrage de la place (px), retard (s)
   function assombrir(img, iw, ih) {
     var c = document.createElement("canvas"); c.width = iw; c.height = ih;
     var g = c.getContext("2d");
@@ -930,7 +944,7 @@
   }
   function pointBanniere(nomRuine, pt) {
     var s = descr(nomRuine), f = s && s.fumees && s.fumees.length ? s.fumees.slice().sort(function (a, b) { return a[1] - b[1]; })[0] : null;
-    return f ? { x: pt.x - s.ax + f[0], y: pt.y - s.ay + f[1] - 2 } : { x: pt.x, y: pt.y - 30 };
+    return f ? { x: pt.x - s.ax + f[0], y: pt.y - s.ay + f[1] - 8 } : { x: pt.x, y: pt.y - 36 };
   }
   function effondrement(ctx, v, ef, pt, nom) {
     var age = v.horloge - ef.t0, anim = ef.anim, e = images[ef.ancien], s = e && e.s, i, a;
@@ -963,14 +977,14 @@
       var t = age / 0.55, d = descr("drapeau-" + ef.camp);
       if (d && prete("drapeau-" + ef.camp)) {
         ctx.save(); ctx.globalAlpha = 1 - t; ctx.translate(b.x, b.y); ctx.rotate(1.35 * t * t);
-        sprite(ctx, "drapeau-" + ef.camp, 0, 0, fr);
+        sprite(ctx, "drapeau-" + ef.camp, 0, 0, fr, false, BANNIERE_FIN);
         ctx.restore();
       }
     }
     var m = anim ? Math.max(0, Math.min(1, (age - 0.5) / MONTEE_BANNIERE)) : 1;
     if (m > 0) {
       ctx.save(); ctx.globalAlpha = Math.min(1, m * 2);
-      sprite(ctx, "drapeau-france", b.x, b.y + 20 * (1 - m) * (2 - m), fr);
+      sprite(ctx, "drapeau-france", b.x, b.y + 20 * (1 - m) * (2 - m), fr, false, BANNIERE_FIN);
       ctx.restore();
     }
   }
@@ -979,7 +993,7 @@
   // grossissent, dérivent vers l'est (le vent) et s'effacent, chacune à son heure (v.horloge). Points d'émission :
   // « fumees » de l'image dans sprites.js ([[x, y], …] en px logiques depuis le coin haut-gauche de l'image, comme
   // ax et ay ; une valeur négative est lue depuis le point d'ancrage) ; sans eux, le haut de l'image, au milieu.
-  // Animations coupées (Réglages) : une seule bouffée, immobile.
+  // Ambiance coupée (Réglages : Animations, puis Ambiance au lot C) : une seule bouffée, immobile.
   var BOUFFEES = 7, VIE_BOUFFEE = 3.6; // bouffées par point d'émission ; durée de vie d'une bouffée (s)
   var bouffees = {};
   function bouffee(sombre) {
@@ -1002,7 +1016,8 @@
     });
   }
   function fumees(ctx, v, nom, pt, ruine, decalage) {
-    var pts = pointsFumee(nom, pt), anim = JEU.anim.actif(), sombre = bouffee(true), claire = bouffee(false);
+    // ambiance continue (lot A3) : la valeur de l'image (dessiner), sans appeler matchMedia pour chaque place forte
+    var pts = pointsFumee(nom, pt), anim = v.ambiance !== undefined ? v.ambiance : JEU.anim.actif(), sombre = bouffee(true), claire = bouffee(false);
     var force = ruine ? 0.9 : 0.78;
     for (var k = 0; k < pts.length; k++) {
       var ex = pts[k][0], ey = pts[k][1];
@@ -1081,12 +1096,77 @@
     var n = v.naissance;
     return tr.rivale && n && n[tr.emplacement] !== undefined ? Math.max(0.05, Math.min(1, n[tr.emplacement] / NAISSANCE_TOUR)) : 1;
   }
+  // Tour (lot A3, dessin seulement). Posée (tr.bati, heure de v.horloge) : elle sort de terre en MONTEE s (le haut de
+  // l'image d'abord, au ras du sol, puis une hauteur croissante), se tasse de 2 px, dans un peu de poussière.
+  // Améliorée (tr.ameliore) : la nouvelle image se révèle depuis le haut sur l'ancienne en REVELATION s, et un reflet
+  // chaud monte le long de la tour. Elle tire (tr.dernierTir, temps de la partie, noté au départ d'un trait : retours) :
+  // sa bande de tir (sprites.js : 4 images pour le trébuchet, 3 pour les autres) ; le trébuchet arme sa verge juste
+  // avant (recharge du moteur) et soulève un peu de poussière au lâcher. Repli : l'image de repos (image 0) si la bande
+  // manque ou si les Animations sont coupées (apparition directe, ni montée, ni poussière).
+  var MONTEE = 0.35, TASSEMENT = 0.25, REVELATION = 0.25, REFLET = 0.45;
+  // Bande de tir : [fin (s depuis le départ du trait), image], jusqu'au retour au repos ; avant : image armée pendant
+  // les dernières secondes de la recharge.
+  var TIRS = {
+    catapulte: { avant: [0.1, 1], suite: [[0.05, 2], [0.5, 3], [0.75, 2], [1, 1]] },
+    baliste: { suite: [[0.15, 1], [0.5, 2]] },
+    archers: { avant: [0.18, 1], suite: [[0.14, 2]] },
+    piquiers: { suite: [[0.15, 1], [0.35, 2]] }
+  };
+  function imageTir(tr, s, v) {
+    var n = s.frames || 1, d = TIRS[tr.type];
+    if (n < 2 || !d || v.anim === false) return 0;
+    var p = v.partie;
+    if (tr.dernierTir !== undefined) {
+      var age = p.temps - tr.dernierTir;
+      for (var i = 0; i < d.suite.length; i++) if (age >= 0 && age < d.suite[i][0]) return Math.min(n - 1, d.suite[i][1]);
+    }
+    if (d.avant && p.phase === "vague" && tr.recharge > 0 && tr.recharge < d.avant[0]) return Math.min(n - 1, d.avant[1]);
+    return 0;
+  }
+  // Part de la tour sortie de terre (0 à 1 ; 1 : posée depuis longtemps, ou Animations coupées) : aussi l'opacité de
+  // son ombre pendant la montée (dessiner).
+  function monteeTour(tr, v) {
+    if (tr.bati === undefined || v.anim === false) return 1;
+    var u = (v.horloge - tr.bati) / MONTEE;
+    return u >= 1 ? 1 : u <= 0 ? 0 : 1 - (1 - u) * (1 - u);
+  }
+  // L'image k de la tour, rognée : seules les lignes [haut, haut + part) de l'image source, posées à leur place
+  // décalée de dy (px logiques).
+  function tranche(ctx, e, x, y, k, haut, part, dy) {
+    var s = e.s, n = s.frames || 1, iw = e.img.naturalWidth / n, ih = e.img.naturalHeight, f = ((Math.floor(k) % n) + n) % n;
+    if (part <= 0) return;
+    ctx.drawImage(e.img, f * iw, haut * ih, iw, part * ih, x - s.ax, y - s.ay + haut * s.h + dy, s.w, part * s.h);
+  }
   function tour(ctx, tr, v) {
-    var nom = nomTour(tr, v), ft = fonduTour(tr, v);
+    var nom = nomTour(tr, v), ft = fonduTour(tr, v), e = images[nom];
     if (ft < 1) ctx.globalAlpha = ft;
-    if (sprite(ctx, nom, tr.x, tr.y, 0)) {
-      var s = descr(nom);
-      if (!tr.rivale) pastilles(ctx, tr.x, tr.y + s.h - s.ay, tr.niveau);
+    if (e && e.etat === "ok") {
+      var s = e.s, h = v.horloge, k = imageTir(tr, s, v), anim = v.anim !== false;
+      var age = tr.bati !== undefined && anim ? h - tr.bati : 99, monte = monteeTour(tr, v);
+      if (monte < 1) tranche(ctx, e, tr.x, tr.y, k, 0, monte, (1 - monte) * s.h); // le haut d'abord, au ras du sol
+      else {
+        var t = age - MONTEE, dy = t >= 0 && t < TASSEMENT ? (t < 0.06 ? 2 * t / 0.06 : 2 * (1 - (t - 0.06) / (TASSEMENT - 0.06)) * (1 - (t - 0.06) / (TASSEMENT - 0.06))) : 0;
+        var am = tr.ameliore !== undefined && anim ? h - tr.ameliore : 99, ancien = am < REVELATION ? images["tour-" + tr.type + "-france-" + tr.niveauAvant] : null;
+        if (ancien && ancien.etat === "ok") {
+          // amélioration : l'ancienne image, puis la nouvelle qui se révèle depuis le haut
+          sprite(ctx, "tour-" + tr.type + "-france-" + tr.niveauAvant, tr.x, tr.y, k);
+          tranche(ctx, e, tr.x, tr.y, k, 0, am / REVELATION, 0);
+        } else sprite(ctx, nom, tr.x, tr.y + dy, k);
+        if (am < REFLET) {
+          // reflet chaud qui monte le long de la tour : la même image, ajoutée à elle-même dans une bande de 10 px
+          var bas = 1 - am / REFLET;
+          ctx.globalCompositeOperation = "lighter"; ctx.globalAlpha = 0.35 * Math.min(1, 4 * (1 - am / REFLET));
+          tranche(ctx, e, tr.x, tr.y, k, Math.max(0, bas - 0.12), Math.min(bas, 0.12), 0);
+          ctx.globalCompositeOperation = "source-over"; ctx.globalAlpha = ft;
+        }
+      }
+      // poussière au pied : à la pose (0,6 s), et au lâcher du trébuchet (0,45 s, temps de la partie)
+      if (age < 0.6) sprite(ctx, "effet-poussiere", tr.x, tr.y + 4, vue(age, 0.6, 5), false, 1.1);
+      if (anim && tr.type === "catapulte" && tr.dernierTir !== undefined) {
+        var al = v.partie.temps - tr.dernierTir;
+        if (al >= 0 && al < 0.45) { ctx.globalAlpha = 0.75 * ft; sprite(ctx, "effet-poussiere", tr.x - 4, tr.y + 6, vue(al, 0.45, 5), false, 0.75); ctx.globalAlpha = ft; }
+      }
+      if (!tr.rivale && monte >= 1) pastilles(ctx, tr.x, tr.y + s.h - s.ay, tr.niveau);
     } else tourDessinee(ctx, tr, tr.rivale ? v.adverse.couleurs : v.couleurs);
     if (ft < 1) ctx.globalAlpha = 1;
   }
