@@ -1086,6 +1086,8 @@ html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 @media (hover: none) and (pointer: coarse) and (max-width: 1280px) {
   .grille-jeux { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   #ecran-expedition .exp-actions { gap: .5rem; }
+  /* en 1024 px de large, la feuille perd ses marges de côté : la carte-itinéraire s'élargit et ses textes gardent 14 px à l'écran */
+  #ecran-expedition.ecran { padding-left: 1rem; padding-right: 1rem; }
   #ecran-expedition .exp-actions .bouton { padding-left: .8rem; padding-right: .8rem; }
   #ecran-expedition .exp-bas .cartouche { padding: .45rem .8rem; }
   #ecran-expedition .exp-bas .cartouche h3 { margin-bottom: .15rem; }

@@ -725,7 +725,7 @@ async function contexteTablette(navigateur, w, h, erreurs) {
 // flèches « Relais précédent / suivant » font la même chose en 44 px.
 function sondeTablette() {
   const petites = [];
-  document.querySelectorAll("button, a[href], input, select, textarea, [role=button], .quartier, .noeud.cible, .noeud.attaque, .halte.atteignable").forEach(e => {
+  document.querySelectorAll("button, a[href], input, select, textarea, [role=button]:not(.case), .quartier, .noeud.cible, .noeud.attaque, .halte.atteignable").forEach(e => {
     if (e.hidden || e.closest("[hidden]")) return;
     let cible = e;
     if (e.tagName === "INPUT" && (e.type === "checkbox" || e.type === "radio") && e.closest("label")) cible = e.closest("label");
