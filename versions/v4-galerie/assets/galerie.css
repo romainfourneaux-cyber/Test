@@ -162,12 +162,24 @@ code { font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; 
 .note--manque { color: var(--alerte); }
 .note--decision { color: var(--cuivre-texte); }
 .pied .note--manque { color: var(--alerte-nuit); }
+/* Annonce validée (modèles annoncés) : étiquette neutre, pas un marqueur pour Romain */
+.etiquette-prep { display: inline-block; font-family: var(--f-cartel); font-size: .74rem; font-weight: 600; letter-spacing: .07em; text-transform: uppercase; padding: 0 6px; line-height: 1.55; border: 1px solid currentColor; color: var(--encre-2); font-style: normal; }
+
+/* ---------- Annonce de l’accueil (sobre : ni compte à rebours ni urgence) ---------- */
+.annonce { background: var(--sauge-2); border-bottom: 1px solid var(--filet); font-size: var(--t-petit); }
+.annonce p { padding-block: 10px; }
+.annonce strong { font-weight: 600; }
+.annonce a { white-space: nowrap; }
+@media (max-width: 600px) { .annonce { font-size: .84rem; } .annonce p { padding-block: 8px; } }
 
 /* ---------- En-tête ---------- */
 .entete { position: sticky; top: 0; z-index: 50; background: var(--fond); border-bottom: 1px solid var(--filet); }
 .entete__ligne { display: flex; align-items: center; gap: 24px; min-height: 70px; }
 .marque { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: var(--encre); margin-right: auto; }
-.marque svg { width: 30px; height: 22px; flex: none; }
+.marque__embleme { height: 44px; width: auto; flex: none; }
+/* Logo au coq : encre noir ardoise sur transparent. Sur fond sombre (mode sombre, pied de page), on l’éclaircit. */
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .marque__embleme { filter: invert(.92); } }
+:root[data-theme="dark"] .marque__embleme { filter: invert(.92); }
 .marque__nom { font-family: var(--f-gravure); font-size: 1.18rem; letter-spacing: .16em; line-height: 1; white-space: nowrap; }
 @media (hover: hover) { .marque:hover { color: var(--encre); } }
 .nav { display: flex; align-items: center; gap: clamp(16px, 2.2vw, 32px); }
@@ -194,7 +206,7 @@ code { font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; 
   .nav a[aria-current="page"] { color: var(--cuivre-texte); border-bottom-color: var(--filet); }
   .entete:not(.menu-ouvert) .nav { display: none; }
 }
-@media (max-width: 400px) { .marque__nom { font-size: 1rem; letter-spacing: .12em; } }
+@media (max-width: 400px) { .marque { gap: 8px; } .marque__embleme { height: 40px; } .marque__nom { font-size: 1rem; letter-spacing: .12em; } }
 
 /* ---------- Plaque accrochée ---------- */
 .plaque { margin: 0; position: relative; background: var(--filet); box-shadow: 0 1px 1px rgb(var(--ombre) / .26), 7px 16px 26px -8px rgb(var(--ombre) / .42); }
@@ -361,14 +373,11 @@ code { font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; 
 .carte__lieu i { text-transform: none; letter-spacing: .01em; font-weight: 500; font-size: .86rem; }
 .carte__pied { margin-top: auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 12px; min-height: 30px; }
 .carte__note { font-size: .86rem; color: var(--encre-2); }
-.mention-avis { margin-top: 18px; font-size: .84rem; color: var(--encre-2); }
-.mention-avis a { color: inherit; }
 @media (max-width: 1000px) { .grille-produits { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 @media (max-width: 720px) {
   .grille-produits, .grille-produits--deux { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 26px 14px; }
   .carte__nom { font-size: 1.08rem; }
   .carte__visuel { padding: 8% 19%; }
-  .carte__note .jauge { display: none; }
 }
 
 .pastilles { display: flex; gap: 6px; }
@@ -383,11 +392,6 @@ code { font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; 
 .fin-noir { --fin: var(--fin-noir); }
 .fin-gris { --fin: var(--fin-gris); }
 .fin-dore { --fin: var(--fin-dore); }
-.etoiles { color: var(--cuivre-texte); letter-spacing: .08em; white-space: nowrap; }
-/* Note moyenne : cinq étoiles remplies au prorata (--remplissage) */
-.jauge { position: relative; display: inline-block; line-height: 1; letter-spacing: .08em; white-space: nowrap; color: color-mix(in srgb, var(--cuivre-texte) 30%, transparent); }
-.jauge::before { content: "★★★★★"; }
-.jauge::after { content: "★★★★★"; position: absolute; left: 0; top: 0; width: var(--remplissage); overflow: hidden; color: var(--cuivre-texte); }
 
 /* ---------- La carte des lieux ---------- */
 .atlas { position: relative; width: 100%; container-type: inline-size; }
@@ -424,9 +428,6 @@ code { font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; 
 .repere__etoile { width: 27px; height: 27px; fill: var(--cuivre); stroke: var(--encre); stroke-width: 1.1; stroke-linejoin: round; overflow: visible; transition: transform .2s var(--ease); }
 .repere[aria-pressed="true"] .repere__etoile { transform: scale(1.15); }
 @media (hover: hover) { .repere:hover .repere__etoile { transform: scale(1.15); } }
-.repere__losange { width: 13px; height: 13px; transform: rotate(45deg); background: var(--fond); border: 2px solid var(--encre); }
-.repere[aria-pressed="true"] .repere__losange { background: var(--cuivre); }
-@media (hover: hover) { .repere:hover .repere__losange { background: var(--cuivre); } }
 .repere--bientot::before { content: ""; width: 20px; height: 20px; border: 2px dashed var(--encre); background: color-mix(in srgb, var(--carte-dep) 70%, transparent); }
 .repere--bientot[aria-pressed="true"]::before { background: var(--cuivre); }
 @media (hover: hover) { .repere--bientot:hover::before { background: var(--cuivre); } }
@@ -447,7 +448,6 @@ code { font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; 
   .repere__num { width: 20px; height: 20px; font-size: .74rem; }
   .repere__etoile { width: 22px; height: 22px; }
   .repere--bientot::before { width: 16px; height: 16px; }
-  .repere__losange { width: 11px; height: 11px; }
 }
 
 .legende { list-style: none; display: grid; gap: 10px; font-size: var(--t-petit); }
@@ -455,7 +455,6 @@ code { font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; 
 .legende__signe { width: 24px; height: 24px; flex: none; display: grid; place-items: center; }
 .legende__signe--plaque { background: var(--encre); color: var(--fond); font-family: var(--f-cartel); font-weight: 600; font-size: .86rem; }
 .legende__signe--vrai svg { width: 24px; height: 24px; fill: var(--cuivre); stroke: var(--encre); stroke-width: 1.1; }
-.legende__signe--atelier span { width: 12px; height: 12px; transform: rotate(45deg); border: 2px solid var(--encre); background: var(--fond); }
 .legende__signe--bientot::before { content: ""; width: 19px; height: 19px; border: 2px dashed var(--encre); }
 
 .faune-ligne { display: grid; gap: 12px; padding-top: 22px; border-top: 1px solid var(--filet); }
@@ -528,7 +527,7 @@ code { font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; 
 .lieux { list-style: none; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: clamp(24px, 4vw, 56px); margin-top: 18px; border-top: 1px solid var(--filet); }
 .lieu-ligne { display: grid; grid-template-columns: 26px minmax(0, 1fr) auto auto; gap: 14px; align-items: center; padding-block: 12px; border-bottom: 1px solid var(--filet); }
 .lieu-ligne__num { width: 24px; height: 24px; display: grid; place-items: center; background: var(--encre); color: var(--fond); font-family: var(--f-cartel); font-weight: 600; font-size: .86rem; }
-.lieu-ligne__num.legende__signe--vrai, .lieu-ligne__num.legende__signe--atelier, .lieu-ligne__num.legende__signe--bientot { background: none; }
+.lieu-ligne__num.legende__signe--vrai, .lieu-ligne__num.legende__signe--bientot { background: none; }
 .lieu-ligne__texte { display: grid; min-width: 0; }
 .lieu-ligne__texte a, .lieu-ligne__texte strong { font-family: var(--f-titre); font-weight: 400; font-size: 1.12rem; text-decoration: none; line-height: 1.3; }
 @media (hover: hover) { .lieu-ligne__texte a:hover { text-decoration: underline; } }
@@ -595,24 +594,10 @@ code { font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; 
 }
 
 /* ---------- Avis ---------- */
-.avis-resume { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
-.avis-resume strong { font-family: var(--f-titre); font-weight: 400; font-size: 2.4rem; line-height: 1; }
-.grille-avis { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(16px, 2.4vw, 32px); list-style: none; }
-.avis { display: grid; gap: 12px; align-content: start; padding-top: 18px; border-top: 1px solid var(--encre); margin: 0; height: 100%; }
-.avis blockquote { margin: 0; font-family: var(--f-titre); font-size: 1.28rem; line-height: 1.4; }
-.avis figcaption { font-size: .88rem; color: var(--encre-2); display: flex; flex-wrap: wrap; gap: 2px 12px; }
-.avis__auteur { color: var(--encre); font-weight: 500; }
-.avis__reponse { margin-top: 4px; padding: 10px 0 0 14px; border-left: 2px solid var(--cuivre); display: grid; gap: 4px; font-size: .88rem; color: var(--encre-2); }
-.avis__reponse-titre { font-weight: 500; color: var(--encre); }
-.avis-bas { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 10px 24px; margin-top: 20px; }
-.avis-bas .mention-avis { margin-top: 0; }
+/* Aucun avis affiché depuis le 31 octobre 2026 (voir build.py) : un état vide sobre, puis la politique des avis */
+.avis-vide { padding-top: 18px; border-top: 1px solid var(--filet); color: var(--encre-2); }
 .politique-avis { margin-top: clamp(28px, 4vw, 44px); max-width: 760px; }
-@media (max-width: 900px) { .grille-avis { grid-template-columns: minmax(0, 1fr); gap: 16px; } .avis blockquote { font-size: 1.15rem; } }
 @media (max-width: 600px) {
-  .grille-avis { gap: 12px; }
-  .avis { gap: 6px; padding-top: 12px; }
-  .avis blockquote, .recit__avis .avis blockquote { font-size: 1.06rem; }
-  .avis-resume strong { font-size: 2rem; }
   .aussi { gap: 6px 16px; }
   .aussi__photo { width: 64px; align-self: start; }
   .aussi__texte strong { font-size: 1.1rem; }
@@ -632,7 +617,7 @@ code { font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; 
 .bientot { background: var(--sauge-2); border: 1px solid color-mix(in srgb, var(--encre) 16%, transparent); padding: clamp(18px, 2.6vw, 28px); display: grid; gap: 16px; }
 .bientot__titre { font-family: var(--f-cartel); font-weight: 600; font-size: .82rem; letter-spacing: .14em; text-transform: uppercase; color: var(--cuivre-texte); display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
 .bientot__liste { list-style: none; display: flex; flex-wrap: wrap; gap: 18px 26px; }
-.bientot__liste li { display: grid; gap: 10px; justify-items: start; min-width: 0; max-width: 140px; font-family: var(--f-titre); font-size: .98rem; line-height: 1.25; }
+.bientot__liste li { display: grid; gap: 10px; justify-items: start; align-content: start; min-width: 0; max-width: 140px; font-family: var(--f-titre); font-size: .98rem; line-height: 1.25; }
 .bientot__liste .dessin { width: 96px; }
 .bientot__note { font-size: .88rem; color: var(--encre-2); }
 @media (max-width: 900px) { .lettre__grille { grid-template-columns: minmax(0, 1fr); } }
@@ -675,10 +660,10 @@ legend { padding: 0; }
 .pied__grille { display: grid; grid-template-columns: minmax(0, 2fr) repeat(3, minmax(0, 1fr)); gap: 32px; }
 .pied h2 { font-family: var(--f-cartel); font-size: .8rem; font-weight: 600; text-transform: uppercase; letter-spacing: .16em; color: var(--nuit-texte-2); margin-bottom: 12px; }
 .pied ul { list-style: none; display: grid; gap: 8px; }
-.pied .marque { color: var(--nuit-texte); margin-bottom: 12px; }
+.pied__logo-lien { display: inline-block; width: clamp(180px, 18vw, 210px); margin-bottom: 6px; }
+.pied__logo { width: 100%; height: auto; filter: invert(.92); }
 .pied__marque { display: grid; gap: 10px; align-content: start; }
-.pied__slogan { font-family: var(--f-titre); font-size: 1.2rem; }
-.pied__marque p:not(.pied__slogan) { color: var(--nuit-texte-2); }
+.pied__marque p { color: var(--nuit-texte-2); }
 .pied__retractation { font-weight: 600; }
 .pied__bas { display: flex; flex-wrap: wrap; gap: 6px 24px; justify-content: space-between; margin-top: 40px; padding-top: 18px; border-top: 1px solid var(--nuit-2); color: var(--nuit-texte-2); font-size: .82rem; }
 .pied :focus-visible { outline-color: var(--cuivre); }
@@ -690,8 +675,7 @@ legend { padding: 0; }
   .pied ul { gap: 2px; }
   .pied ul a { display: inline-block; padding-block: 3px; }
   .pied__marque { gap: 6px; }
-  .pied__marque .marque { margin-bottom: 4px; }
-  .pied__slogan { font-size: 1.05rem; }
+  .pied__logo-lien { width: 180px; margin-bottom: 2px; }
   .pied__bas { margin-top: 26px; }
 }
 
@@ -742,8 +726,6 @@ legend { padding: 0; }
 .achat h1 { font-size: clamp(2.2rem, 1.5rem + 2.3vw, 3.2rem); }
 .cartel-ligne { font-family: var(--f-cartel); font-weight: 600; font-size: .82rem; text-transform: uppercase; letter-spacing: .12em; color: var(--cuivre-texte); }
 .cartel-ligne i { text-transform: none; letter-spacing: .02em; font-size: .95rem; font-weight: 500; }
-.achat__note { display: flex; gap: 6px 10px; align-items: baseline; flex-wrap: wrap; font-size: .88rem; color: var(--encre-2); }
-.achat__note a { color: inherit; }
 .achat__prix { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
 .achat__prix strong { font-family: var(--f-titre); font-weight: 400; font-size: 2.4rem; font-variant-numeric: tabular-nums; line-height: 1; }
 .achat__prix span { font-size: .82rem; color: var(--encre-2); }
@@ -773,7 +755,7 @@ legend { padding: 0; }
 .garanties li span:first-child { font-weight: 500; }
 .garanties li span:last-child { color: var(--encre-2); text-align: right; }
 .garanties--bande { grid-template-columns: repeat(4, minmax(0, 1fr)); column-gap: 28px; border-top: 0; }
-.garanties--bande li { flex-direction: column; gap: 4px; border-top: 1px solid var(--encre); border-bottom: 0; }
+.garanties--bande li { flex-direction: column; justify-content: flex-start; gap: 4px; border-top: 1px solid var(--encre); border-bottom: 0; }
 .garanties--bande li span:last-child { text-align: left; }
 .caracteristiques { display: grid; gap: 0; margin: 0; font-size: var(--t-petit); }
 .caracteristiques > div { display: grid; grid-template-columns: 7.5rem minmax(0, 1fr); gap: 12px; padding-block: 7px; }
@@ -790,14 +772,8 @@ legend { padding: 0; }
 .recit__lieu-texte { font-family: var(--f-titre); font-size: 1.12rem; line-height: 1.5; }
 .recit__histoire { display: grid; gap: 14px; }
 .recit__histoire .surtitre { margin: 0; }
-.recit__source, .recit__relire { font-size: var(--t-petit); color: var(--encre-2); }
+.recit__source { font-size: var(--t-petit); color: var(--encre-2); }
 .recit--sans-avis { grid-template-columns: minmax(0, 3fr) minmax(0, 7fr); }
-.recit__avis { display: grid; gap: 14px; align-content: start; scroll-margin-top: 90px; }
-.recit__avis .surtitre { margin: 0; }
-.recit__avis-titre { font-size: var(--t-h3); }
-.grille-avis--colonne { grid-template-columns: minmax(0, 1fr); gap: 18px; }
-.recit__avis .avis blockquote { font-size: 1.15rem; }
-.recit__avis .mention-avis { margin-top: 0; }
 .localisateur { margin: 0; display: grid; gap: 6px; justify-items: start; }
 .localisateur svg { width: 132px; height: auto; overflow: visible; }
 .loc__dep { fill: var(--fond); stroke: var(--encre); stroke-width: 1.2; vector-effect: non-scaling-stroke; }
@@ -806,7 +782,7 @@ legend { padding: 0; }
 .localisateur figcaption { font-family: var(--f-cartel); font-weight: 500; font-size: .78rem; letter-spacing: .04em; color: var(--encre-2); }
 
 .barre-achat-mobile { display: none; }
-@media (max-width: 1000px) { .recit, .recit--sans-avis { grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); } .recit__avis { grid-column: 1 / -1; max-width: 640px; } }
+@media (max-width: 1000px) { .recit, .recit--sans-avis { grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); } }
 @media (max-width: 900px) {
   /* Sur téléphone : nom et prix d’abord, puis la photo, puis les options */
   .fiche { grid-template-columns: minmax(0, 1fr); row-gap: 20px; }
@@ -862,9 +838,6 @@ legend { padding: 0; }
 .cartel-projet > div + div { padding-left: 18px; border-left: 1px solid color-mix(in srgb, var(--encre) 18%, transparent); }
 .cartel-projet dt { font-family: var(--f-cartel); font-weight: 600; font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; color: var(--cuivre-texte); }
 .cartel-projet dd { margin: 4px 0 0; font-size: var(--t-petit); }
-.serie { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: clamp(24px, 4vw, 56px); align-items: center; margin-top: clamp(40px, 6vw, 72px); padding: clamp(20px, 3vw, 32px); background: var(--fond-2); }
-.serie__plaques { display: grid; grid-template-columns: repeat(3, 72px); gap: 18px; }
-.serie h3 { margin-bottom: 8px; }
 .tableau-etapes { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: 28px; counter-reset: tuto; margin-top: 44px; }
 .tableau-etapes li { display: grid; gap: 12px; align-content: start; counter-increment: tuto; }
 .tableau-etapes h3 { font-size: 1.28rem; display: flex; gap: 12px; align-items: baseline; }
@@ -901,8 +874,6 @@ legend { padding: 0; }
   .cartel-projet > div:last-child { grid-column: 1 / -1; }
 }
 @media (max-width: 600px) {
-  .serie { grid-template-columns: minmax(0, 1fr); }
-  .serie__plaques { grid-template-columns: repeat(3, 60px); }
   .paire-materiaux { padding: 22px 26px; }
 }
 

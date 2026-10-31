@@ -78,6 +78,17 @@
   $$("[data-fermer-panier]").forEach(function (b) { b.addEventListener("click", fermerPanier); });
 
   var FRAIS_PORT = 5;
+  /* Offre de fin d’année : livraison offerte du vendredi 27 novembre au lundi 14 décembre 2026 inclus
+     (dates proposées par la maquette, à confirmer par Romain ; mêmes dates dans build.py).
+     Les dates sont comparées en heure locale : l’offre s’arrête le 15 décembre à 0 h. */
+  var OFFRE_DEBUT = new Date(2026, 10, 27);
+  var OFFRE_FIN = new Date(2026, 11, 15);
+  function livraisonOfferte() {
+    var maintenant = new Date();
+    return maintenant >= OFFRE_DEBUT && maintenant < OFFRE_FIN;
+  }
+  /* Après l’offre, l’annonce de fin d’année de l’accueil (offre et date limite de Noël) est masquée. */
+  if (new Date() >= OFFRE_FIN) $$(".annonce").forEach(function (el) { el.hidden = true; });
   function afficherPanier() {
     var lignes = lirePanier();
     var total = 0, nombre = 0;
@@ -114,10 +125,15 @@
       li.appendChild(image); li.appendChild(milieu); li.appendChild(prix);
       liste.appendChild(li);
     });
-    /* Livraison : 5 € par commande dès qu’un article s’expédie ; la carte cadeau part par e-mail. */
+    /* Livraison : 5 € par commande dès qu’une plaque s’expédie (le kit LED ne se vend pas seul) ;
+       la carte cadeau part par e-mail ; 0 € pendant l’offre de fin d’année. */
     var aExpedier = lignes.some(function (l) { return String(l.cle || "").indexOf("carte-cadeau") !== 0; });
-    var port = aExpedier ? FRAIS_PORT : 0;
+    var offre = livraisonOfferte();
+    var port = aExpedier && !offre ? FRAIS_PORT : 0;
     var champ = function (sel, texte) { var el = $(sel); if (el) el.textContent = texte; };
+    var texteNormal = $("[data-livraison-normale]"), texteOffre = $("[data-livraison-offerte]");
+    if (texteNormal) texteNormal.hidden = offre;
+    if (texteOffre) texteOffre.hidden = !offre;
     champ("[data-sous-total]", euros(total));
     champ("[data-livraison]", euros(port));
     champ("[data-total]", euros(total + port));
@@ -267,7 +283,7 @@
         if (!fiche.getAttribute("data-img-" + fin)) details.push("Photo de cette finition à venir");
       }
       if (caseLed && caseLed.checked) {
-        details.push("Kit LED monté, sortie du câble : " + selectPosition.value.toLowerCase());
+        details.push("Kit LED collé au dos, sortie du câble : " + selectPosition.value.toLowerCase());
         cle += "-led-" + selectPosition.value;
       }
       ajouterAuPanier({
