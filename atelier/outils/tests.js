@@ -2598,5 +2598,33 @@ verifier("Bataillons : le rendu ne touche pas au moteur (aucune écriture de la 
     !iA.possible && iA.appels.length === 0 && iA.ecoutes.length === 0 && !iA.enrobe && iA.rendu === 1 && iA.ajouts === 0, iA);
 })();
 
+// ---------- lots graphiques (31/10/2026, plan atelier/conception/graphismes-animations-plan.md, 2.2 et 7.4) : garde-fous ----------
+// Les mesures dans le navigateur sont dans perf.js (PARTIE=graphismes, PARTIE=ralenti). Ici, ce qui se lit dans les fichiers.
+(function () {
+  const lire = f => fs.readFileSync(path.join(RACINE, "jeu", f), "utf8");
+  // le moteur de bataille ne change pas : octet pour octet celui du commit de départ des lots (930af4c). Une modification
+  // voulue du moteur, plus tard, se note ici avec la nouvelle empreinte.
+  const EMPREINTE_MOTEUR = "e5517d3fd8281c31ba92f88ca945910ba731d19cb35c345e0976463a16b67cb5";
+  const empreinte = require("crypto").createHash("sha256").update(fs.readFileSync(path.join(RACINE, "jeu", "js", "bataille-moteur.js"))).digest("hex");
+  verifier("Lots graphiques : bataille-moteur.js identique octet pour octet à celui d'avant les lots (empreinte SHA-256)", empreinte === EMPREINTE_MOTEUR, empreinte);
+  // pas de Math.random dans le dessin neuf (couche de sol, effets du champ) : un petit tirage à la graine de l'effet
+  const sansCommentaires = t => t.replace(/\/\*[\s\S]*?\*\//g, "").replace(/(^|[^:"'\\])\/\/.*$/gm, "$1");
+  const neufs = ["js/bataille-sol.js", "js/bataille-effets.js"].filter(f => fs.existsSync(path.join(RACINE, "jeu", f)));
+  const tirages = neufs.filter(f => /Math\s*\.\s*random/.test(sansCommentaires(lire(f))));
+  verifier("Lots graphiques : aucun Math.random dans le dessin neuf (" + (neufs.join(", ") || "fichiers pas encore là") + ")", tirages.length === 0, tirages);
+  // retours du champ (secousses, éclair, liseré, or qui vole) : les animations « td-… » de la feuille de style ne touchent
+  // que transform et opacity (rien n'est repeint, le compositeur suffit)
+  const css = lire("css/jeu.css").replace(/\/\*[\s\S]*?\*\//g, ""), re = /@keyframes\s+(td-[\w-]+)\s*\{/g, ecarts = [];
+  let m, n = 0;
+  while ((m = re.exec(css))) {
+    let i = re.lastIndex, d = 1;
+    while (d && i < css.length) { if (css[i] === "{") d++; else if (css[i] === "}") d--; i++; }
+    n++;
+    const props = [...new Set([...css.slice(re.lastIndex, i - 1).matchAll(/([a-z-]+)\s*:/g)].map(x => x[1]))].filter(x => x !== "transform" && x !== "opacity");
+    if (props.length) ecarts.push(m[1] + " : " + props.join(", "));
+  }
+  verifier("Lots graphiques : les " + n + " animations du champ (@keyframes td-…) n'animent que transform et opacity", ecarts.length === 0, ecarts);
+})();
+
 console.log("\n" + ok + " réussis, " + ko + " en échec.");
 process.exit(ko ? 1 : 0);

@@ -614,16 +614,21 @@
         // le chiffre frappe (de 1,6 fois sa taille à 1 en 0,12 s), puis monte au-dessus de la place forte touchée (et de sa
         // jauge si elle est au-dessus), jamais sur ses murs. Animations coupées : sans rebond.
         var touchee = e.camp === "rival" ? v.placeArrivee : v.placeDepart, txtB = "−" + e.degats;
-        var ty = touchee.hautLibre - (anim ? Math.max(0, e.age - 0.12) : e.age) * 30;
-        ctx.font = "bold 30px Cinzel, Georgia, serif"; ctx.textAlign = "center";
-        ctx.lineWidth = 5; ctx.lineJoin = "round"; ctx.strokeStyle = "rgba(20,12,6," + a + ")";
-        ctx.fillStyle = (e.camp === "rival" ? "rgba(255,215,94," : "rgba(255,122,92,") + a + ")"; // or vif : le château adverse ; rouge clair : le tien
-        if (anim && e.age < 0.12) {
-          var ech = 1.6 - 0.6 * e.age / 0.12;
+        var ty = touchee.hautLibre - (anim ? Math.max(0, e.age - 0.12) : e.age) * 30, ech = anim && e.age < 0.12 ? 1.6 - 0.6 * e.age / 0.12 : 1;
+        var cb = chiffreBreche(txtB, e.camp === "rival", v.ratio);
+        if (cb) {
+          // le chiffre peint une fois (chiffreBreche) : une copie par image, à son opacité
+          ctx.globalAlpha = Math.max(0, a);
+          ctx.drawImage(cb, touchee.chiffreX - cb.lw / 2 * ech, ty - CHIFFRE_BASE * ech, cb.lw * ech, cb.lh * ech);
+          ctx.globalAlpha = 1;
+        } else {
+          ctx.font = CHIFFRE_POLICE; ctx.textAlign = "center";
+          ctx.lineWidth = 5; ctx.lineJoin = "round"; ctx.strokeStyle = "rgba(20,12,6," + a + ")";
+          ctx.fillStyle = (e.camp === "rival" ? "rgba(255,215,94," : "rgba(255,122,92,") + a + ")"; // or vif : le château adverse ; rouge clair : le tien
           ctx.save(); ctx.translate(touchee.chiffreX, ty); ctx.scale(ech, ech);
           ctx.strokeText(txtB, 0, 0); ctx.fillText(txtB, 0, 0);
           ctx.restore();
-        } else { ctx.strokeText(txtB, touchee.chiffreX, ty); ctx.fillText(txtB, touchee.chiffreX, ty); }
+        }
       } else if (e.genre === "tourRivale") {
         // le rival bâtit une tour pendant ta préparation : de la poussière à son pied (la tour apparaît en fondu : tour(),
         // et son onde est au sol, plus haut)
@@ -652,6 +657,28 @@
     // --- jauges de solidité, au-dessus de la mêlée, du côté de la place forte où la route ne passe pas ---
     jauge(ctx, v, false);
     jauge(ctx, v, true);
+  }
+
+  // Chiffre d'une brèche (lot A3) : le texte détouré est ce qu'il y a de plus cher à dessiner ; il est peint une fois dans
+  // une petite toile, gardée par texte et par camp (or vif : le château adverse ; rouge clair : le tien), à la netteté de
+  // la toile. Tant que la police Cinzel n'est pas chargée : null (le texte est alors dessiné comme avant).
+  var CHIFFRE_POLICE = "bold 30px Cinzel, Georgia, serif", CHIFFRE_BASE = 33, chiffresBreche = {}, chiffresRatio = 0;
+  function chiffreBreche(txt, rival, ratio) {
+    if (chiffresRatio !== ratio) { chiffresBreche = {}; chiffresRatio = ratio; }
+    var cle = (rival ? "r" : "j") + txt, c = chiffresBreche[cle];
+    if (c) return c;
+    if (typeof document === "undefined" || (document.fonts && document.fonts.check && !document.fonts.check(CHIFFRE_POLICE))) return null;
+    c = document.createElement("canvas");
+    var g = c.getContext("2d");
+    g.font = CHIFFRE_POLICE;
+    var w = Math.ceil(g.measureText(txt).width) + 12, h = 44;
+    c.width = Math.ceil(w * ratio); c.height = Math.ceil(h * ratio);
+    g.setTransform(ratio, 0, 0, ratio, 0, 0);
+    g.font = CHIFFRE_POLICE; g.textAlign = "center"; g.lineWidth = 5; g.lineJoin = "round";
+    g.strokeStyle = "rgb(20,12,6)"; g.fillStyle = rival ? "rgb(255,215,94)" : "rgb(255,122,92)";
+    g.strokeText(txt, w / 2, CHIFFRE_BASE); g.fillText(txt, w / 2, CHIFFRE_BASE);
+    c.lw = w; c.lh = h;
+    return (chiffresBreche[cle] = c);
   }
 
   // ---------- au ras du sol (lot A) ----------
@@ -2513,9 +2540,13 @@
         }
       }
       var PRES_CHATEAU = 130; // px : une pierre tombée à moins de cette distance de ton château le secoue
+      // la tour d'un trait neuf : celle d'où il part (le moteur le lance de x0 = t.x, y0 = t.y − 18)
+      function tourDuTrait(liste, pr) {
+        for (var k = 0; k < liste.length; k++) if (liste[k].x === pr.x0 && liste[k].y - 18 === pr.y0) return liste[k];
+        return null;
+      }
       function departTir(pr) {
-        var tr = null, listes = [p.tours, p.toursRivales], l, k;
-        for (l = 0; l < 2 && !tr; l++) for (k = 0; k < listes[l].length; k++) { var t = listes[l][k]; if (t.x === pr.x0 && t.y - 18 === pr.y0) { tr = t; break; } }
+        var tr = tourDuTrait(p.tours, pr) || tourDuTrait(p.toursRivales, pr);
         if (!tr) return;
         tr.dernierTir = p.temps - pr.t;
         var nom = nomTour(tr, v), s = prete(nom) ? descr(nom) : null;

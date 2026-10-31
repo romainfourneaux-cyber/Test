@@ -1054,6 +1054,8 @@ function echecsExpedition(bilan) {
 // archers niveau 3) : pierres, volées, brèches.
 const LOT = String(process.env.LOT || "A").toUpperCase();
 const PASSAGES = Math.max(1, Number(process.env.PASSAGES) || 3);
+// la boucle au ralenti varie beaucoup d'un passage à l'autre (6,8 à 8,8 ms sur la base) : 5 passages par défaut
+const PASSAGES_RALENTI = Math.max(1, Number(process.env.PASSAGES_RALENTI) || Math.max(5, PASSAGES));
 const PLAFONDS = { etincelles: 8, trainees: 24, particules: 60, lueurs: 10, secousses: 1 };
 // base avant le lot A (atelier/captures/audit-graphismes/plan/base-boucle.json, mêmes chiffres dans base-lot-a.json)
 const BASE_GRAPHISMES = { ralentiBoucleMediane: 7.2, boucleMax1920: 7.1, boucle95_1920: 4.1 };
@@ -1176,10 +1178,11 @@ async function pageChamp(navigateur, w, h, erreurs, options) {
   options = options || {};
   const ctx = await navigateur.newContext({ viewport: { width: w, height: h }, hasTouch: !!options.tactile });
   const page = await ctx.newPage();
+  // l'horloge truquée d'abord : la sonde enveloppe alors son requestAnimationFrame (dans l'autre ordre, elle ne verrait aucune image)
+  if (options.horloge) await page.clock.install({ time: new Date("2026-10-13T18:00:00") });
   await page.addInitScript(sondeChamp, options.graine || 0);
   page.on("pageerror", e => erreurs.push(e.message));
   page.on("console", m => { if (m.type() === "error") erreurs.push(m.text()); });
-  if (options.horloge) await page.clock.install({ time: new Date("2026-10-13T18:00:00") });
   await page.goto(URL);
   await page.waitForFunction(() => window.JEU && JEU.pret);
   await page.evaluate(r => { const g = JEU.sauvegarde.etat().reglages; g.musique = false; g.son = false; if (r) Object.assign(g, r); JEU.ui.appliquerAnimations(); JEU.ui.fermerModale(); }, options.reglages || null);
@@ -1239,14 +1242,16 @@ async function mesurerBoucle(page, d) {
 async function meleeEffets(navigateur, w, h, erreurs, ralenti) {
   const passes = [];
   let armee = null;
-  for (let i = 0; i < PASSAGES; i++) {
+  for (let i = 0; i < (ralenti > 1 ? PASSAGES_RALENTI : PASSAGES); i++) {
     const page = await pageChamp(navigateur, w, h, erreurs);
     try {
       armee = await lancerMeleeEffets(page);
       const cdp = await page.context().newCDPSession(page);
-      if (ralenti > 1) await cdp.send("Emulation.setCPUThrottlingRate", { rate: ralenti });
-      const m = await mesurerBoucle(page, MESURE_MELEE);
-      if (ralenti > 1) await cdp.send("Emulation.setCPUThrottlingRate", { rate: 1 });
+      let normal = null;
+      // au ralenti, le protocole de base-boucle.js (base du plan) : 5 s au processeur normal, puis 5 s au ralenti
+      if (ralenti > 1) { normal = await mesurerBoucle(page, 5); await cdp.send("Emulation.setCPUThrottlingRate", { rate: ralenti }); }
+      const m = await mesurerBoucle(page, ralenti > 1 ? 5 : MESURE_MELEE);
+      if (ralenti > 1) { await cdp.send("Emulation.setCPUThrottlingRate", { rate: 1 }); m.avantRalenti = { boucleMediane: normal.boucleMediane, boucle95: normal.boucle95, figures: normal.figures }; }
       m.cadre = await page.evaluate(() => window.__cadre || null);
       passes.push(m);
     } catch (e) { erreurs.push("grosse mêlée avec effets " + w + " × " + h + " : " + e.message); }
@@ -1257,7 +1262,7 @@ async function meleeEffets(navigateur, w, h, erreurs, ralenti) {
 
 // Coût isolé d'une pierre et d'une brèche, au ralenti 4 × (A2.3, A3.3 : moins de 0,1 ms chacune) : champ de la
 // Forteresse en préparation (conseil fini, une image dessinée à chaque fois), boucle médiane sur 3 s sans rien, puis avec
-// K effets du même genre gardés vivants (un neuf posé dès qu'un s'éteint) ; coût = écart des médianes ÷ K.
+// K effets du même genre gardés vivants (un neuf posé dès qu'un s'éteint) ; coût = écart des médianes ÷ K, par image.
 async function coutEffets(navigateur, erreurs) {
   const page = await pageChamp(navigateur, 1340, 800, erreurs);
   const res = {};
@@ -1292,13 +1297,19 @@ async function coutEffets(navigateur, erreurs) {
       const b = window.__boucle.slice().sort((x, y) => x - y);
       return { images: b.length, mediane: b.length ? b[Math.floor(b.length / 2)] : null };
     }, [genre, K]);
-    const vide = await mesure(null, 0), pierres = await mesure("impact", 6), vide2 = await mesure(null, 0), breches = await mesure("breche", 3);
+    // mesures entrelacées (rien, pierres, rien, brèches, rien), PASSAGES fois : la base de chaque mesure est la moyenne des
+    // deux « rien » qui l'entourent ; on garde la médiane des passages
+    const r2 = x => Math.round(x * 1000) / 1000, K = { impact: 12, breche: 8 }, pierre = [], breche = [];
+    res.detail = [];
+    for (let i = 0; i < PASSAGES; i++) {
+      const b0 = await mesure(null, 0), mi = await mesure("impact", K.impact), b1 = await mesure(null, 0), mb = await mesure("breche", K.breche), b2 = await mesure(null, 0);
+      pierre.push((mi.mediane - (b0.mediane + b1.mediane) / 2) / K.impact);
+      breche.push((mb.mediane - (b1.mediane + b2.mediane) / 2) / K.breche);
+      res.detail.push([b0, mi, b1, mb, b2].map(x => r2(x.mediane)).join(" · "));
+    }
     await cdp.send("Emulation.setCPUThrottlingRate", { rate: 1 });
-    const r2 = x => Math.round(x * 1000) / 1000;
-    res.base = r2(vide.mediane); res.base2 = r2(vide2.mediane);
-    res.pierre = r2((pierres.mediane - vide.mediane) / 6);
-    res.breche = r2((breches.mediane - vide2.mediane) / 3);
-    res.images = [vide.images, pierres.images, vide2.images, breches.images];
+    res.pierre = r2(mediane(pierre)); res.breche = r2(mediane(breche));
+    res.parEffet = "pierres : " + K.impact + " vivantes ; brèches : " + K.breche + " ; détail : rien · pierres · rien · brèches · rien (ms, médiane de la boucle)";
   } catch (e) { erreurs.push("coût isolé des effets : " + e.message); }
   await page.context().close();
   return res;
@@ -1331,11 +1342,20 @@ async function issueSousReglages(navigateur, erreurs) {
       for (let k = 0; k < 4 && await page.evaluate(() => JEU.bataille.enCours.phase === "preparation"); k++) { await page.clock.runFor(800); await page.keyboard.press("Enter"); }
       await page.waitForFunction(() => JEU.bataille.enCours.phase !== "preparation");
       await page.evaluate(observerCadre);
-      await page.evaluate(() => { window.__max = {}; window.__alea = {}; window.__noterAlea = true; window.__echantillonAnims = true; });
+      await page.evaluate(() => { window.__max = {}; window.__alea = {}; window.__noterAlea = true; window.__echantillonAnims = true; window.__boucle.length = 0; });
+      // temps de processeur de la page pendant la vague (CDP Performance.getMetrics) : la partie est la même d'un passage à
+      // l'autre (même graine, horloge truquée), seul le dessin change ; on le rapporte par image de la boucle
+      const cdp = await page.context().newCDPSession(page);
+      await cdp.send("Performance.enable");
+      const metriques = async () => Object.fromEntries((await cdp.send("Performance.getMetrics")).metrics.map(x => [x.name, x.value]));
+      const m0 = await metriques();
       await page.click('[data-cle="vitesse-3"]');
       let k = 0;
       for (; k < 240 && !(await page.evaluate(() => !!window.__issue)); k++) await page.clock.runFor(500);
       o.dureeVagueS = k / 2;
+      const m1 = await metriques(), images = await page.evaluate(() => window.__boucle.length);
+      const parImage = x => Math.round((m1[x] - m0[x]) * 1000 / Math.max(1, images) * 1000) / 1000;
+      o.processeur = { images, tacheParImageMs: parImage("TaskDuration"), scriptParImageMs: parImage("ScriptDuration"), styleParImageMs: parImage("RecalcStyleDuration"), miseEnPageParImageMs: parImage("LayoutDuration") };
       Object.assign(o, await page.evaluate(src => {
         window.__noterAlea = false;
         const etat = new Function("return (" + src + ")")();
@@ -1410,7 +1430,17 @@ async function ouvrirRoute(page, filmer) {
   await page.waitForSelector("#ecran-expedition .route-svg");
 }
 
-// Propriétés animées sur chaque écran, après 1 s (7.3), processeur normal, 1366 × 768.
+// Quitte la bataille en cours (Échap, puis la confirmation dans la page).
+async function quitterBataille(page) {
+  if (!(await page.evaluate(() => !!JEU.partie))) return;
+  await page.keyboard.press("Escape");
+  await page.waitForSelector(".confirmation", { timeout: 5000 }).catch(() => {});
+  await page.click(".confirmation .bouton.principal").catch(() => {});
+  await page.waitForFunction(() => !JEU.partie, null, { timeout: 5000 }).catch(() => {});
+}
+// Animations d'ambiance (noms des boucles continues : nuages, oiseaux, fumées, drapeaux, brume, eau, poussières…)
+const AMBIANCE = /nuage|oiseau|battre|fum|flott|drapeau|banni|brume|courant|eau|poussi|kenburns|respiration/i;
+// Propriétés animées sur chaque écran, après 1 s (7.3), processeur normal, 1366 × 768 ; puis l'ambiance coupée (7.5).
 async function proprietesAnimees(navigateur, erreurs) {
   const page = await pageChamp(navigateur, 1366, 768, erreurs);
   const res = {};
@@ -1433,6 +1463,14 @@ async function proprietesAnimees(navigateur, erreurs) {
     await page.locator(".td-bouton", { hasText: "Fantassins" }).click().catch(() => {});
     for (let k = 0; k < 4 && await page.evaluate(() => JEU.bataille.enCours.phase === "preparation"); k++) { await attendre(400); await page.keyboard.press("Enter"); }
     await prendre("bataille (vague)");
+    await quitterBataille(page);
+    // Ambiance coupée (réglage du lot C, reglages.ambiance) : plus aucune boucle d'ambiance sur l'accueil, le domaine, la carte
+    await page.evaluate(() => { const g = JEU.sauvegarde.etat().reglages; g.ambiance = false; JEU.ui.appliquerAnimations(); });
+    for (const e of ["accueil", "domaine", "jouer"]) {
+      await page.evaluate(x => { JEU.ui.afficher(x); JEU.ui.fermerModale(); window.scrollTo(0, 0); }, e);
+      await prendre("sans ambiance : " + e);
+    }
+    await page.evaluate(() => { delete JEU.sauvegarde.etat().reglages.ambiance; JEU.ui.appliquerAnimations(); });
   } catch (e) { erreurs.push("propriétés animées : " + e.message); }
   await page.context().close();
   return res;
@@ -1490,6 +1528,7 @@ async function cuirNu(navigateur, erreurs, profil) {
   const duree = ralenti > 1 ? 1600 : 900, sequences = [];
   const clicDom = s => page.evaluate(x => { const e = document.querySelector(x); if (!e) throw new Error("absent : " + x); if (typeof e.click === "function") e.click(); else e.dispatchEvent(new MouseEvent("click", { bubbles: true })); }, s);
   const film = async (nom, action) => {
+    await attendre(ralenti > 1 ? 1500 : 700); // la transition d'avant est finie : seules comptent les images de celle-ci
     const f = await filmer(page, action, duree, w);
     const l = await luminances(navigateur, f.images);
     const vides = f.images.map((x, i) => Object.assign({ t: x.t }, l[i] || {})).filter(x => x.moy !== undefined && x.moy < 70 && x.clair < 0.01);
@@ -1666,8 +1705,8 @@ function controlesGraphismes(bilan) {
   const scenario = (quoi, m) => {
     if (!m || !m.passages) return;
     if (!(m.engages >= 6)) alertes.push(quoi + " : seulement " + m.engages + " troupes au corps à corps pendant la mesure");
-    const e = m.effets || {};
-    if (!(e.impact > 0) || !(e.breche > 0)) alertes.push(quoi + " : pierres ou brèches absentes de la vague (" + JSON.stringify(e) + ")");
+    const e = m.effets || {}, t = m.projectiles || {};
+    if (!(e.impact > 0) || !(t.fleche > 0)) alertes.push(quoi + " : pierres ou volées absentes de la vague (" + JSON.stringify(e) + " ; " + JSON.stringify(t) + ")");
   };
   (bilan.meleeEffets || []).forEach(m => {
     const q = "grosse mêlée avec effets " + m.taille;
@@ -1714,8 +1753,9 @@ function controlesGraphismes(bilan) {
   if (TR) {
     C("A", TR.bataille.length >= 2, "Event Timing au ralenti 4 × : seulement " + TR.bataille.length + " mesures au conseil de guerre");
     C("A", !(TR.maxBataille > 100), "Event Timing au ralenti 4 × : " + TR.maxBataille + " ms entre une réponse et la question suivante peinte, en bataille (moins de 100)");
-    C("A", !(TR.maxEvenement > 100), "Event Timing au ralenti 4 × : " + TR.maxEvenement + " ms pendant un événement (moins de 100)");
-    C("A", !(TR.maxPorte > 100), "Event Timing au ralenti 4 × : " + TR.maxPorte + " ms à la porte d'une expédition (moins de 100)");
+    // événement et porte : déjà au-dessus de 100 ms au ralenti avant le lot A (base-lot-a.json) : contrôle du lot C (tablette)
+    C("C", !(TR.maxEvenement > 100), "Event Timing au ralenti 4 × : " + TR.maxEvenement + " ms pendant un événement (moins de 100)");
+    C("C", !(TR.maxPorte > 100), "Event Timing au ralenti 4 × : " + TR.maxPorte + " ms à la porte d'une expédition (moins de 100)");
     if (!TR.evenement.length) alertes.push("Event Timing au ralenti 4 × : aucune mesure pendant l'événement");
     if (!TR.porte.length) alertes.push("Event Timing au ralenti 4 × : aucune mesure à la porte (" + (TR.porteAbsente || "question à plusieurs gestes") + ")");
   }
@@ -1724,7 +1764,14 @@ function controlesGraphismes(bilan) {
     c.sequences.forEach(s => C("B", !s.vides, "cuir nu " + c.taille + (c.ralenti > 1 ? " au ralenti 4 ×" : "") + " : " + s.nom + ", " + s.vides + " image(s) vide(s) à " + s.quand.join(", ")));
   });
   const A = bilan.animations;
-  if (A) Object.keys(A).forEach(k => ecartsAnimations(A[k]).forEach(m => C(k === "accueil" || k === "domaine" ? "C" : "A", false, "propriétés animées, écran " + k + " : " + m)));
+  if (A) Object.keys(A).forEach(k => {
+    if (/^sans ambiance/.test(k)) {
+      const restes = A[k].filter(a => a.infinie && AMBIANCE.test(a.nom)).map(a => a.nom + " (" + a.cible + ")");
+      C("C", !restes.length, "Ambiance coupée, " + k.replace("sans ambiance : ", "écran ") + " : boucles d'ambiance encore là (" + restes.join(", ") + ")");
+      return;
+    }
+    ecartsAnimations(A[k]).forEach(m => C(k === "accueil" || k === "domaine" ? "C" : "A", false, "propriétés animées, écran " + k + " : " + m));
+  });
   const RG = bilan.reglages;
   if (RG && RG.length) {
     RG.filter(r => r.erreur).forEach(r => echecs.push("même issue sous quatre réglages : la partie " + JSON.stringify({ animations: r.animations, sang: r.sang }) + " n'a pas été jouée (" + r.erreur + ")"));
