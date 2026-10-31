@@ -1134,16 +1134,18 @@
   }
   // Tour (lot A3, dessin seulement). Posée (tr.bati, heure de v.horloge) : elle sort de terre en MONTEE s (le haut de
   // l'image d'abord, au ras du sol, puis une hauteur croissante), se tasse de 2 px, dans un peu de poussière.
-  // Améliorée (tr.ameliore) : la nouvelle image se révèle depuis le haut sur l'ancienne en REVELATION s, et un reflet
-  // chaud monte le long de la tour. Elle tire (tr.dernierTir, temps de la partie, noté au départ d'un trait : retours) :
-  // sa bande de tir (sprites.js : 4 images pour le trébuchet, 3 pour les autres) ; le trébuchet arme sa verge juste
+  // Améliorée (tr.ameliore) : la nouvelle image se révèle depuis le haut sur l'ancienne en REVELATION s, puis un reflet
+  // chaud monte le long de la tour en REFLET s. Elle tire (tr.dernierTir, temps de la partie, noté au départ d'un trait :
+  // retours) : sa bande de tir (sprites.js : 4 images pour le trébuchet, 3 pour les autres) ; le trébuchet arme sa verge juste
   // avant (recharge du moteur) et soulève un peu de poussière au lâcher. Repli : l'image de repos (image 0) si la bande
   // manque ou si les Animations sont coupées (apparition directe, ni montée, ni poussière).
-  var MONTEE = 0.35, TASSEMENT = 0.25, REVELATION = 0.25, REFLET = 0.45;
-  // Bande de tir : [fin (s depuis le départ du trait), image], jusqu'au retour au repos ; avant : image armée pendant
-  // les dernières secondes de la recharge.
+  var MONTEE = 0.35, TASSEMENT = 0.25, REVELATION = 0.25, REFLET = 0.35;
+  // Bande de tir : [fin (s depuis le départ du trait), image], jusqu'au retour au repos ; avant : [durée, image] montrée à
+  // la fin de la recharge (le geste qui précède le tir). Trébuchet : mi-course juste avant, verge verticale au départ de
+  // la pierre (le point « tir » est la pierre de cette image), puis lâché (fronde vide) gardé 1,2 s, puis de nouveau armé
+  // (ses images 1 et 2 portent la pierre : il ne repasse pas par elles en revenant).
   var TIRS = {
-    catapulte: { avant: [0.1, 1], suite: [[0.05, 2], [0.5, 3], [0.75, 2], [1, 1]] },
+    catapulte: { avant: [0.12, 1], suite: [[0.06, 2], [1.2, 3]] },
     baliste: { suite: [[0.15, 1], [0.5, 2]] },
     archers: { avant: [0.18, 1], suite: [[0.14, 2]] },
     piquiers: { suite: [[0.15, 1], [0.35, 2]] }
@@ -1173,6 +1175,13 @@
     if (part <= 0) return;
     ctx.drawImage(e.img, f * iw, haut * ih, iw, part * ih, x - s.ax, y - s.ay + haut * s.h + dy, s.w, part * s.h);
   }
+  // Tassement après la montée (px vers le bas) : 2 px en 0,06 s, puis il remonte en s'amortissant ; 0 hors de TASSEMENT.
+  function tassement(t) {
+    if (!(t >= 0) || t >= TASSEMENT) return 0;
+    if (t < 0.06) return 2 * t / 0.06;
+    var k = 1 - (t - 0.06) / (TASSEMENT - 0.06);
+    return 2 * k * k;
+  }
   function tour(ctx, tr, v) {
     var nom = nomTour(tr, v), ft = fonduTour(tr, v), e = images[nom];
     if (ft < 1) ctx.globalAlpha = ft;
@@ -1181,17 +1190,18 @@
       var age = tr.bati !== undefined && anim ? h - tr.bati : 99, monte = monteeTour(tr, v);
       if (monte < 1) tranche(ctx, e, tr.x, tr.y, k, 0, monte, (1 - monte) * s.h); // le haut d'abord, au ras du sol
       else {
-        var t = age - MONTEE, dy = t >= 0 && t < TASSEMENT ? (t < 0.06 ? 2 * t / 0.06 : 2 * (1 - (t - 0.06) / (TASSEMENT - 0.06)) * (1 - (t - 0.06) / (TASSEMENT - 0.06))) : 0;
+        var dy = tassement(age - MONTEE);
         var am = tr.ameliore !== undefined && anim ? h - tr.ameliore : 99, ancien = am < REVELATION ? images["tour-" + tr.type + "-france-" + tr.niveauAvant] : null;
         if (ancien && ancien.etat === "ok") {
           // amélioration : l'ancienne image, puis la nouvelle qui se révèle depuis le haut
           sprite(ctx, "tour-" + tr.type + "-france-" + tr.niveauAvant, tr.x, tr.y, k);
           tranche(ctx, e, tr.x, tr.y, k, 0, am / REVELATION, 0);
         } else sprite(ctx, nom, tr.x, tr.y + dy, k);
-        if (am < REFLET) {
-          // reflet chaud qui monte le long de la tour : la même image, ajoutée à elle-même dans une bande de 10 px
-          var bas = 1 - am / REFLET;
-          ctx.globalCompositeOperation = "lighter"; ctx.globalAlpha = 0.35 * Math.min(1, 4 * (1 - am / REFLET));
+        var ar = am - REVELATION;
+        if (ar >= 0 && ar < REFLET) {
+          // puis un reflet chaud monte le long de la tour : la même image, ajoutée à elle-même dans une bande de 10 px
+          var bas = 1 - ar / REFLET;
+          ctx.globalCompositeOperation = "lighter"; ctx.globalAlpha = 0.35 * Math.min(1, 4 * (1 - ar / REFLET));
           tranche(ctx, e, tr.x, tr.y, k, Math.max(0, bas - 0.12), Math.min(bas, 0.12), 0);
           ctx.globalCompositeOperation = "source-over"; ctx.globalAlpha = ft;
         }
@@ -2834,7 +2844,7 @@
         var t = p.tours.filter(function (x) { return x.emplacement === i; })[0];
         if (M.ameliorerTour(p, i)) {
           // la nouvelle tour se révèle depuis le haut, un reflet chaud monte (lot A3 : tour(), dessin seulement)
-          t.ameliore = v.horloge; t.niveauAvant = t.niveau - 1; v.vif = v.horloge + REFLET + 0.1;
+          t.ameliore = v.horloge; t.niveauAvant = t.niveau - 1; v.vif = v.horloge + REVELATION + REFLET + 0.1;
           v.gardeEntree = 0; JEU.sons.jouer("construction"); majTout(); return;
         }
         if (t && t.niveau < M.AMELIORATION.max) JEU.ui.toast("Pas assez d'or pour améliorer cette tour.");
