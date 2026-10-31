@@ -2465,7 +2465,8 @@
         e.classList.add(base + (k ? "-a" : "-b"));
       }
       // « +n » part du sceau (le sceau de la réponse juste, ou de la vague repoussée) et vole jusqu'au compteur, puis la
-      // pièce brille. Une image plus tard (JEU.anim.apresImage) : jamais dans le chemin réponse → question suivante ; les
+      // pièce brille (une gerbe de particules en plus, une toile de 460 px sur la page pendant une seconde, retardait la
+      // question suivante sur la tablette). Une image plus tard (JEU.anim.apresImage) : jamais dans le chemin réponse → question suivante ; les
       // positions sont relevées à ce moment. Sans sceau à l'écran (une dépense, un autre gain) : le compteur roule seul.
       // Animations coupées : rien (le compteur change d'un coup).
       function orGagne(n) {
@@ -2482,9 +2483,7 @@
           racine.setTimeout(function () {
             vol.remove();
             if (!actif || !b.isConnected) return;
-            rejouer(b, "td-gain");
-            var ic = b.querySelector("svg");
-            if (ic && JEU.anim.eclat) { var ri = ic.getBoundingClientRect(); JEU.anim.eclat(ri.left + ri.width / 2, ri.top + ri.height / 2, "or", 6); }
+            rejouer(b, "td-gain"); // la pièce brille (feuille de style : transform seul, pas de gerbe de particules en plus)
           }, 450);
         });
       }
