@@ -93,6 +93,7 @@
       ]);
       scene.appendChild(carte); scene.appendChild(boutons);
       glisser(carte, decider);
+      if (JEU.ui.nouvelAffichage) JEU.ui.nouvelAffichage(); // garde du double toucher (interface.js)
       var fait = false;
       function decider(v) {
         if (fait) return; fait = true;
@@ -117,6 +118,7 @@
       corr.forEach(function (x, k) {
         scene.appendChild(el("button", { class: "choix", onclick: function () { conclure(q, c, { vrai: false, correction: x }); } }, [el("span", { class: "touche", texte: String(k + 1) }), el("span", { texte: x })]));
       });
+      if (JEU.ui.nouvelAffichage) JEU.ui.nouvelAffichage();
       JEU.ui.clavier = function (k) {
         var n = parseInt(k, 10);
         if (n >= 1 && n <= corr.length) { conclure(q, c, { vrai: false, correction: corr[n - 1] }); return true; }
@@ -161,6 +163,7 @@
       ]);
       scene.appendChild(carte); scene.appendChild(boutons);
       glisser(carte, choisir);
+      if (JEU.ui.nouvelAffichage) JEU.ui.nouvelAffichage();
       var fait = false;
       function choisir(droite) {
         if (fait) return; fait = true;
