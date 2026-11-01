@@ -2,6 +2,16 @@
    Base : le mur d’exposition de la v0 (plaques accrochées, ombres portées, cartels, coins droits).
    Apport de la v1, en touche discrète : courbes de niveau derrière le mur et sur la carte, cartels en Barlow Semi Condensed.
    Couleurs : la charte de Romain (noir ardoise, blanc cassé, argent doux, vert sauge, cuivre). */
+/* Polices hébergées avec le site (sous-ensemble latin, licence SIL Open Font License 1.1, voir assets/fonts/OFL-*.txt) :
+   aucune requête vers Google Fonts, donc aucune adresse IP de visiteur transmise (recommandation de la CNIL). */
+@font-face { font-family: "Marcellus"; font-style: normal; font-weight: 400; font-display: swap; src: url(fonts/marcellus-400.woff2) format("woff2"); }
+@font-face { font-family: "Jost"; font-style: normal; font-weight: 400 600; font-display: swap; src: url(fonts/jost.woff2) format("woff2"); }
+@font-face { font-family: "Jost"; font-style: italic; font-weight: 400; font-display: swap; src: url(fonts/jost-italique.woff2) format("woff2"); }
+@font-face { font-family: "Barlow Semi Condensed"; font-style: normal; font-weight: 500; font-display: swap; src: url(fonts/barlow-semi-condensed-500.woff2) format("woff2"); }
+@font-face { font-family: "Barlow Semi Condensed"; font-style: normal; font-weight: 600; font-display: swap; src: url(fonts/barlow-semi-condensed-600.woff2) format("woff2"); }
+@font-face { font-family: "Barlow Semi Condensed"; font-style: italic; font-weight: 500; font-display: swap; src: url(fonts/barlow-semi-condensed-500-italique.woff2) format("woff2"); }
+@font-face { font-family: "Allerta Stencil"; font-style: normal; font-weight: 400; font-display: swap; src: url(fonts/allerta-stencil-400.woff2) format("woff2"); }
+
 :root {
   --fond: #F5F5F0;
   --fond-2: #EDEDE7;
@@ -211,13 +221,11 @@ code { font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; 
   .bandeau-noel__offre strong { font-size: 1.04rem; }
   .bandeau-noel__limite { font-size: .86rem; }
   .bandeau-noel__action { min-height: 44px; padding: 0 1em; font-size: .8rem; letter-spacing: .06em; }
-  /* Accueil : tant que le bloc de Noël s’affiche juste en dessous (date limite, idées cadeaux), le bandeau garde le titre et l’offre */
-  html:not([data-noel="apres"]) .bandeau-noel--accueil .bandeau-noel__ligne { grid-template-columns: auto minmax(0, 1fr); grid-template-areas: "titre texte"; gap: 14px; padding-block: 10px; }
-  html:not([data-noel="apres"]) .bandeau-noel--accueil .bandeau-noel__titre { font-size: 1.6rem; padding-right: 14px; border-right: 1px solid rgb(44 44 44 / .5); }
-  html:not([data-noel="apres"]) .bandeau-noel--accueil .bandeau-noel__texte { padding-top: 0; border-top: 0; }
-  html:not([data-noel="apres"]) .bandeau-noel--accueil .bandeau-noel__limite,
-  html:not([data-noel="apres"]) .bandeau-noel--accueil .bandeau-noel__action { display: none; }
 }
+/* Accueil : tant que le bloc de Noël s’affiche juste en dessous (son enseigne « NOËL », l’offre, la date limite, les idées
+   cadeaux), le bandeau s’efface pour ne pas tout dire deux fois ; il revient le 15 décembre avec la carte cadeau.
+   Sans :has() (anciens navigateurs), le bandeau reste affiché. */
+body:has(#noel:not([hidden])) .bandeau-noel--accueil { display: none; }
 
 /* ---------- Noël : encart près du bouton d’achat et dans le panier ---------- */
 .encart-noel {
@@ -270,6 +278,14 @@ code { font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; 
   .entete:not(.menu-ouvert) .nav { display: none; }
 }
 @media (max-width: 400px) { .marque { gap: 8px; } .marque__embleme { height: 40px; } .marque__nom { font-size: 1rem; letter-spacing: .12em; } }
+/* Très petits écrans (320 à 374 px) : logotype et bouton du panier resserrés, pour que le panier ne recouvre plus « GRAVÉE » */
+@media (max-width: 374px) {
+  .entete__ligne { gap: 8px; }
+  .marque { gap: 6px; }
+  .marque__embleme { height: 34px; }
+  .marque__nom { font-size: .84rem; letter-spacing: .07em; }
+  .bouton-panier { padding: 0 8px; gap: 6px; }
+}
 
 /* ---------- Plaque accrochée ---------- */
 .plaque { margin: 0; position: relative; background: var(--filet); box-shadow: 0 1px 1px rgb(var(--ombre) / .26), 7px 16px 26px -8px rgb(var(--ombre) / .42); }
@@ -277,71 +293,181 @@ code { font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; 
 .plaque--vide { display: grid; place-items: center; align-content: center; gap: 10px; aspect-ratio: 1 / 2; background: repeating-linear-gradient(135deg, var(--fond-2) 0 10px, var(--mur) 10px 20px); box-shadow: none; outline: 1px dashed var(--filet-fort); outline-offset: -1px; color: var(--encre-2); text-align: center; padding: 16px; font-size: var(--t-petit); }
 
 /* ---------- Noël : premier bloc de l’accueil ----------
-   Un mur de nuit : deux plaques rétroéclairées en blanc chaud (la simulation du kit LED), les courbes de niveau des montagnes en filigrane. */
-.noel { position: relative; isolation: isolate; overflow: hidden; background: var(--nuit); color: var(--nuit-texte); padding-block: clamp(34px, 5.5vw, 80px); }
-.noel::before { content: ""; position: absolute; inset: 0; z-index: -1; background: url(img/courbes.svg) center / cover no-repeat; opacity: .14; pointer-events: none; }
+   La vitrine de l’atelier la veille de Noël : un panneau kraft lumineux, « NOËL » au pochoir comme une découpe laser,
+   l’offre et la date limite d’un seul bloc, une grande plaque dorée rétroéclairée en blanc chaud (la simulation du kit LED,
+   avec son cartel) dans la niche de la vitrine, la carte cadeau comme un bon cadeau imprimé. Au bas du panneau, les crêtes
+   enneigées font la transition vers le mur des quatre plaques, d’un kraft plus profond. Couleurs propres au bloc (--n-…),
+   redéfinies en mode sombre : le même panneau, de nuit, aux lettres allumées, la neige au clair de lune.
+   Contrastes : texte 8,7 : 1 et plus, texte secondaire et accent 5,7 : 1 et plus, en clair comme en sombre. */
+.noel {
+  --n-fond: #E6D6BD; --n-lumiere: #F5ECDE; --n-encre: #2C2C2C; --n-encre-2: #4F463B; --n-accent: #6B4523;
+  --n-filet: rgb(44 44 44 / .2); --n-carte: #FCFAF6; --n-carte-mur: #F1EADF; --n-carte-filet: rgb(44 44 44 / .16);
+  --n-niche-1: #5E4A35; --n-niche-2: #2B221A; --n-cadre: #2C2C2C; --n-passe: #F4ECDF;
+  --n-btn: #2C2C2C; --n-btn-texte: #F5F5F0; --n-btn-survol: #6B4523; --n-alerte: #9A3826; --n-alerte-fond: #FBF6EE;
+  --n-decoupe: #2C2C2C; --n-levre: rgb(255 255 255 / .6); --n-halo: transparent; --n-topo: .13; --n-ombre: 60 42 22;
+  /* Le mur des plaques et les crêtes : kraft plus foncé, neige crème */
+  --n-mur: #DDCAAB; --n-lointain-haut: #D9C3A0; --n-lointain-bas: #D2BB96; --n-loin-haut: #CCB28A; --n-loin-bas: #C5AA80;
+  --n-neige: #FBF5EA; --n-raccord: transparent; --n-raccord-filet: transparent;
+  position: relative; isolation: isolate; overflow: hidden; color: var(--n-encre);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .noel {
+    --n-fond: #2A231C; --n-lumiere: #3E3226; --n-encre: #F3EADD; --n-encre-2: #CFC2B1; --n-accent: #E0C29A;
+    --n-filet: rgb(243 234 221 / .14); --n-carte: #3A3027; --n-carte-mur: #2B241D; --n-carte-filet: rgb(224 194 154 / .34);
+    --n-niche-1: #3A2D20; --n-niche-2: #120E0B; --n-cadre: #CBAA88; --n-passe: #2A231C;
+    --n-btn: #CBAA88; --n-btn-texte: #2C2C2C; --n-btn-survol: #F3EADD; --n-alerte: #F09A80; --n-alerte-fond: #2A231C;
+    --n-decoupe: #FFDDAA; --n-levre: rgb(0 0 0 / .5); --n-halo: rgb(255 200 130 / .45); --n-topo: .1; --n-ombre: 0 0 0;
+    --n-mur: #1F1915; --n-lointain-haut: #3B2F24; --n-lointain-bas: #33291F; --n-loin-haut: #46372A; --n-loin-bas: #3C3024;
+    --n-neige: #B5AC9C; --n-raccord: rgb(28 28 26 / .85); --n-raccord-filet: rgb(203 170 136 / .5);
+  }
+}
+:root[data-theme="dark"] .noel {
+  --n-fond: #2A231C; --n-lumiere: #3E3226; --n-encre: #F3EADD; --n-encre-2: #CFC2B1; --n-accent: #E0C29A;
+  --n-filet: rgb(243 234 221 / .14); --n-carte: #3A3027; --n-carte-mur: #2B241D; --n-carte-filet: rgb(224 194 154 / .34);
+  --n-niche-1: #3A2D20; --n-niche-2: #120E0B; --n-cadre: #CBAA88; --n-passe: #2A231C;
+  --n-btn: #CBAA88; --n-btn-texte: #2C2C2C; --n-btn-survol: #F3EADD; --n-alerte: #F09A80; --n-alerte-fond: #2A231C;
+  --n-decoupe: #FFDDAA; --n-levre: rgb(0 0 0 / .5); --n-halo: rgb(255 200 130 / .45); --n-topo: .1; --n-ombre: 0 0 0;
+  --n-mur: #1F1915; --n-lointain-haut: #3B2F24; --n-lointain-bas: #33291F; --n-loin-haut: #46372A; --n-loin-bas: #3C3024;
+  --n-neige: #B5AC9C; --n-raccord: rgb(28 28 26 / .85); --n-raccord-filet: rgb(203 170 136 / .5);
+}
+/* Le panneau kraft. En mode sombre, un filet cuivre et un léger dégradé depuis l’anthracite de l’en-tête évitent la coupure nette. */
+.noel__panneau {
+  position: relative; z-index: 0; padding-top: clamp(34px, 5.5vw, 84px); border-top: 1px solid var(--n-raccord-filet);
+  background: linear-gradient(180deg, var(--n-raccord) 0, transparent 120px), radial-gradient(70% 90% at 78% 30%, var(--n-lumiere) 0%, transparent 70%), var(--n-fond);
+}
+/* Les courbes de niveau s’effacent avant les crêtes, pour ne pas empiler les motifs */
+.noel__panneau::before {
+  content: ""; position: absolute; inset: 0; z-index: -2; background: url(img/courbes.svg) center / cover no-repeat; opacity: var(--n-topo); pointer-events: none;
+  -webkit-mask-image: linear-gradient(180deg, #000 55%, transparent 82%); mask-image: linear-gradient(180deg, #000 55%, transparent 82%);
+}
+.noel__sommets { position: absolute; z-index: -1; left: 0; bottom: 0; width: 100%; height: clamp(96px, 16.7vw, 240px); display: block; pointer-events: none; }
+.noel__stop-neige { stop-color: var(--n-neige); }
+.noel__stop-neige-fin { stop-color: var(--n-neige); stop-opacity: .55; }
+.noel__stop-lointain-haut { stop-color: var(--n-lointain-haut); }
+.noel__stop-lointain-bas { stop-color: var(--n-lointain-bas); }
+.noel__stop-loin-haut { stop-color: var(--n-loin-haut); }
+.noel__stop-loin-bas { stop-color: var(--n-loin-bas); }
+.noel__crete-pres { fill: var(--n-mur); }
 .noel__grille {
-  display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); grid-template-areas: "texte vitrine" "cadeau vitrine" "plaques plaques";
-  gap: clamp(24px, 3.4vw, 42px) clamp(28px, 5vw, 72px);
+  display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); grid-template-areas: "texte vitrine" "cadeau vitrine";
+  gap: clamp(24px, 3.2vw, 40px) clamp(28px, 5vw, 80px);
+  /* La place des crêtes sous le contenu : le plus haut sommet monte aux trois quarts du dessin, dont la hauteur vaut
+     16,7vw (au plus 240px) puis, au-delà de 1440px de large, un sixième de la largeur : soit 12,5vw dans les deux cas */
+  padding-bottom: calc(max(72px, 12.5vw) + 18px);
 }
-.noel a:not(.btn) { color: inherit; } /* les boutons gardent le texte anthracite sur cuivre (6,4 : 1) */
-@media (hover: hover) { .noel a:not(.btn):hover { color: var(--cuivre); } }
-.noel :focus-visible { outline-color: var(--cuivre); }
-.noel .surtitre { color: var(--cuivre); margin: 0; }
-.noel__texte { grid-area: texte; display: grid; gap: 1.1rem; align-content: start; }
-.noel h2 { font-size: clamp(2.4rem, 1.4rem + 3.6vw, 4.1rem); max-width: 12ch; }
-.noel__offre { font-family: var(--f-titre); font-size: clamp(1.3rem, 1rem + 1.1vw, 1.85rem); line-height: 1.3; color: var(--cuivre); max-width: 26em; }
-.noel__limite { font-size: 1.06rem; color: var(--nuit-texte); max-width: 34em; }
-.noel .note--manque { color: var(--alerte-nuit); }
-.noel__actions { padding-top: .3rem; }
-@media (hover: hover) { .noel .btn:hover { background: var(--nuit-texte); border-color: var(--nuit-texte); color: #2C2C2C; } }
+.noel a:not(.btn) { color: inherit; }
+@media (hover: hover) { .noel a:not(.btn):hover { color: var(--n-accent); } }
+.noel :focus-visible { outline-color: var(--n-encre); }
+.noel .note--manque { color: var(--n-alerte); background: var(--n-alerte-fond); }
 
-.noel__vitrine { grid-area: vitrine; display: grid; gap: 18px; align-content: start; }
-.noel__mur {
-  --led: #FFD39A; display: flex; justify-content: center; align-items: flex-start; gap: 16%; padding: 13% 14% 11%;
-  background: radial-gradient(75% 65% at 50% 42%, #2E2922 0%, #121211 78%); border: 1px solid rgb(245 245 240 / .1);
+.noel__texte { grid-area: texte; display: grid; gap: 1.05rem; align-content: start; min-width: 0; }
+/* L’enseigne : « NOËL » au pochoir, découpé dans le panneau (une lèvre claire sous chaque lettre) ; de nuit, la lumière passe */
+.noel__enseigne { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 6px 22px; margin-bottom: .2rem; }
+.noel__decoupe {
+  font-family: var(--f-gravure); font-size: clamp(4rem, 1.6rem + 7.6vw, 8.4rem); line-height: .82; letter-spacing: .12em; margin-right: -.12em;
+  text-transform: uppercase; color: var(--n-decoupe);
+  text-shadow: 0 1px 0 var(--n-levre), 0 0 28px var(--n-halo);
 }
-.noel__mur .plaque {
-  width: 30%; background: var(--led);
-  box-shadow: 0 0 24px 4px color-mix(in srgb, var(--led) 60%, transparent), 0 0 90px 26px color-mix(in srgb, var(--led) 24%, transparent);
+.noel__millesime {
+  font-family: var(--f-cartel); font-weight: 600; font-size: .86rem; letter-spacing: .16em; text-transform: uppercase; color: var(--n-accent);
+  padding: 7px 0 4px; border-top: 1px solid currentColor; margin-bottom: .45em;
 }
-.noel__mur .plaque:nth-child(2) { margin-top: 14%; }
-.noel__mur .plaque img { mix-blend-mode: multiply; filter: grayscale(1) brightness(.66) contrast(6); }
-.noel__led h3, .noel__cadeau h3 { font-size: 1.4rem; display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 12px; }
-.noel__led h3 a, .noel__cadeau h3 a { text-decoration: none; border-bottom: 1px solid rgb(245 245 240 / .4); }
-.noel__led h3 span, .noel__cadeau h3 span { font-family: var(--f-texte); font-size: 1rem; font-weight: 500; color: var(--cuivre); }
-.noel__led p, .noel__cadeau p { margin-top: 6px; font-size: var(--t-petit); color: var(--nuit-texte-2); }
+.noel h2 { font-size: clamp(2rem, 1.25rem + 2.3vw, 3.15rem); max-width: 15ch; }
+/* L’offre et la date limite se lisent d’un bloc, tenues par un seul filet fin */
+.noel__offre-bloc { display: grid; gap: .65rem; padding: 2px 0 3px 18px; border-left: 1px solid var(--n-accent); max-width: 36em; }
+.noel__offre { font-family: var(--f-titre); font-size: clamp(1.25rem, 1rem + .85vw, 1.65rem); line-height: 1.32; color: var(--n-accent); max-width: 26em; }
+.noel__limite { font-size: 1.06rem; color: var(--n-encre-2); max-width: 34em; }
+.noel__actions { padding-top: .35rem; }
+.noel .btn { background: var(--n-btn); border-color: var(--n-btn); color: var(--n-btn-texte); }
+.noel .btn::after { content: "\00a0→"; }
+@media (hover: hover) { .noel .btn:hover { background: var(--n-btn-survol); border-color: var(--n-btn-survol); color: var(--n-btn-texte); } }
 
+/* La vitrine : une niche encadrée (cadre anthracite, cuivre de nuit, et passe-partout kraft) où la plaque dorée s’allume,
+   son cartel dessous, comme sur les murs de la galerie */
+.noel__vitrine { grid-area: vitrine; display: grid; gap: 18px; align-content: start; min-width: 0; }
+.noel__oeuvre { margin: 0; display: grid; gap: 12px; }
+.noel__niche {
+  --led: #FFF8EC; position: relative; display: grid; place-items: center; padding: 10% 0;
+  background: radial-gradient(60% 55% at 50% 46%, var(--n-niche-1) 0%, var(--n-niche-2) 100%);
+  border: 1px solid var(--n-cadre); outline: 9px solid var(--n-passe); outline-offset: -10px;
+  box-shadow: 0 0 0 1px var(--n-cadre), 0 24px 44px -26px rgb(var(--n-ombre) / .55);
+}
+.noel__niche .plaque {
+  width: 40%; background: var(--led);
+  box-shadow: 0 0 22px 3px color-mix(in srgb, #FFE3B8 55%, transparent), 0 0 80px 22px color-mix(in srgb, #FFE3B8 22%, transparent);
+}
+/* Doré sur doré : un peu plus de contraste pour que le titre gravé de la plaque reste lisible */
+.noel__niche .plaque img { mix-blend-mode: multiply; filter: contrast(1.35) brightness(.92); }
+.noel__cartel {
+  font-family: var(--f-cartel); font-weight: 600; font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; line-height: 1.35;
+  color: var(--n-encre-2); padding-left: 2px;
+}
+.noel__led { padding: 2px 0 0 16px; border-left: 2px solid var(--n-accent); }
+.noel__led h3, .noel__cadeau h3 { font-size: 1.35rem; display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 12px; }
+.noel__led h3 a, .noel__cadeau h3 a { text-decoration: underline; text-decoration-color: color-mix(in srgb, currentColor 40%, transparent); }
+.noel__led h3 span, .noel__cadeau h3 span { font-family: var(--f-texte); font-size: 1rem; font-weight: 500; color: var(--n-accent); }
+.noel__led p, .noel__cadeau p { margin-top: 5px; font-size: var(--t-petit); line-height: 1.55; color: var(--n-encre-2); }
+
+/* La carte cadeau : une carte nette à double filet (un filet intérieur couleur accent), comme un bon cadeau imprimé */
 .noel__cadeau {
-  grid-area: cadeau; align-self: end; display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 18px; align-items: center;
-  padding: 16px; border: 1px solid var(--cuivre); background: rgb(203 170 136 / .08);
+  grid-area: cadeau; align-self: end; position: relative; display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 18px; align-items: center;
+  padding: 17px 22px 17px 17px; background: var(--n-carte); border: 1px solid var(--n-carte-filet);
+  box-shadow: 0 1px 1px rgb(var(--n-ombre) / .1), 0 14px 26px -18px rgb(var(--n-ombre) / .4);
 }
-.noel__cadeau-visuel img { width: 96px; aspect-ratio: 1 / 1; object-fit: cover; }
+.noel__cadeau::before { content: ""; position: absolute; inset: 5px; border: 1px solid color-mix(in srgb, var(--n-accent) 60%, transparent); pointer-events: none; }
+.noel__cadeau > * { position: relative; z-index: 1; }
+.noel__cadeau-visuel img { width: 92px; aspect-ratio: 1 / 1; object-fit: cover; }
 
-.noel__plaques { grid-area: plaques; padding-top: clamp(22px, 3vw, 34px); border-top: 1px solid rgb(245 245 240 / .18); }
-.noel__sous-titre { font-size: clamp(1.4rem, 1.2rem + .6vw, 1.75rem); margin-bottom: 22px; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 16px; }
-.noel__sous-titre span { font-family: var(--f-cartel); font-weight: 600; font-size: .82rem; letter-spacing: .1em; text-transform: uppercase; color: var(--nuit-texte-2); }
-.noel .grille-produits { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-.noel .carte__visuel { background: var(--nuit-2); padding: 7% 26%; }
-.noel .carte__nom a, .noel .carte__prix { color: var(--nuit-texte); }
-.noel .carte__lieu { color: var(--nuit-texte-2); }
-.noel .pastille { box-shadow: inset 0 0 0 3px var(--nuit); border-color: rgb(245 245 240 / .4); }
-.noel .pastille[aria-pressed="true"] { border: 2px solid var(--nuit-texte); }
+/* Le mur des plaques : un kraft plus profond, dans la couleur du premier plan des crêtes ; des cartes nettes, papier et filet fin */
+.noel__mur { background: var(--n-mur); padding-block: clamp(4px, 1vw, 12px) clamp(40px, 6vw, 88px); border-bottom: 1px solid var(--n-filet); }
+.noel__sous-titre { font-size: clamp(1.4rem, 1.2rem + .6vw, 1.75rem); margin-bottom: 20px; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 16px; }
+.noel__sous-titre span { font-family: var(--f-cartel); font-weight: 600; font-size: .82rem; letter-spacing: .1em; text-transform: uppercase; color: var(--n-encre-2); }
+.noel .grille-produits { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(12px, 1.8vw, 24px); }
+.noel .carte {
+  gap: 10px; padding: 10px 10px 14px; background: var(--n-carte); border: 1px solid var(--n-carte-filet);
+  box-shadow: 0 1px 1px rgb(var(--n-ombre) / .1), 0 14px 26px -18px rgb(var(--n-ombre) / .4);
+  transition: transform .3s var(--ease), box-shadow .3s var(--ease);
+}
+@media (hover: hover) { .noel .carte:hover { transform: translateY(-3px); box-shadow: 0 1px 1px rgb(var(--n-ombre) / .1), 0 22px 30px -18px rgb(var(--n-ombre) / .5); } }
+.noel .carte__visuel { background: var(--n-carte-mur); padding: 9% 25%; }
+.noel .carte__infos, .noel .carte__pied { padding-inline: 4px; }
+.noel .carte__nom a, .noel .carte__prix { color: var(--n-encre); }
+.noel .carte__lieu { color: var(--n-encre-2); }
+.noel .pastille { box-shadow: inset 0 0 0 3px var(--n-carte); border-color: color-mix(in srgb, var(--n-encre) 35%, transparent); }
+.noel .pastille[aria-pressed="true"] { border: 2px solid var(--n-encre); }
 @media (max-width: 900px) {
-  /* L’image de Noël (les plaques allumées) vient juste sous le bouton, sur toute la largeur */
-  .noel__grille { grid-template-columns: minmax(0, 1fr); grid-template-areas: "texte" "vitrine" "plaques" "cadeau"; }
-  .noel__vitrine { grid-template-columns: minmax(0, 1fr); gap: 14px; }
-  .noel__mur { padding: 9% 14% 8%; }
-  .noel__mur .plaque { width: 27%; }
+  /* La vitrine vient juste sous le bouton, puis la carte cadeau (elle fait partie de l’offre), puis les plaques sur le mur */
+  .noel__grille { grid-template-columns: minmax(0, 1fr); grid-template-areas: "texte" "vitrine" "cadeau"; }
+  .noel__niche { padding: 7% 0; }
+  .noel__niche .plaque { width: 26%; }
 }
 @media (max-width: 720px) { .noel .grille-produits { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 600px) {
+  /* Sur téléphone, les courbes de niveau passent derrière le texte : plus discrètes */
+  .noel { --n-topo: .06; }
   .noel__texte { gap: .9rem; }
+  .noel__enseigne { gap: 4px 14px; }
+  .noel__millesime { font-size: .78rem; letter-spacing: .13em; }
+  .noel__offre-bloc { padding-left: 14px; }
   .noel__limite { font-size: 1rem; }
   .noel__actions .btn { width: 100%; }
-  .noel__cadeau { grid-template-columns: 72px minmax(0, 1fr); gap: 14px; padding: 14px; }
+  .noel__niche { padding: 9% 0; }
+  .noel__niche .plaque { width: 34%; }
+  .noel__cartel { font-size: .72rem; letter-spacing: .06em; }
+  .noel .carte { padding: 7px 7px 12px; }
+  .noel .carte__infos, .noel .carte__pied { padding-inline: 2px; }
+  .noel__cadeau { grid-template-columns: 72px minmax(0, 1fr); gap: 14px; padding: 15px 15px 15px 14px; align-items: start; }
   .noel__cadeau-visuel img { width: 72px; }
-  .noel__led h3, .noel__cadeau h3 { font-size: 1.25rem; }
+  .noel__led h3, .noel__cadeau h3 { font-size: 1.22rem; }
+}
+@media (prefers-color-scheme: dark) and (max-width: 600px) { :root:not([data-theme="light"]) .noel { --n-topo: .05; } }
+@media (max-width: 600px) { :root[data-theme="dark"] .noel { --n-topo: .05; } }
+/* Très petits écrans : le bouton tient sur une ligne */
+@media (max-width: 359px) {
+  .noel__actions .btn { padding-inline: .7em; font-size: .84rem; letter-spacing: .035em; }
+  /* La carte cadeau s’empile : l’image au-dessus du titre, toute la largeur au texte */
+  .noel__cadeau { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+  .noel__cadeau-visuel img { width: 60px; }
 }
 
 /* ---------- Héros : mur d’exposition ---------- */
@@ -1054,6 +1180,16 @@ legend { padding: 0; }
 .tableau th, .tableau td { text-align: left; padding: 10px 14px 10px 0; border-bottom: 1px solid var(--filet); vertical-align: middle; font-weight: 400; }
 .tableau thead th { font-family: var(--f-cartel); font-weight: 600; font-size: .76rem; text-transform: uppercase; letter-spacing: .1em; color: var(--encre-2); }
 .tableau .num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+@media (max-width: 600px) {
+  .tableau--empile { min-width: 0; }
+  .tableau--empile thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .tableau--empile tr, .tableau--empile th, .tableau--empile td { display: block; }
+  .tableau--empile tr { padding-block: 14px; border-bottom: 1px solid var(--filet); }
+  .tableau--empile th, .tableau--empile td { padding: 0; border: 0; }
+  .tableau--empile tbody th { font-weight: 500; color: var(--encre); }
+  .tableau--empile td::before { content: attr(data-label); display: block; margin-top: 8px; font-family: var(--f-cartel); font-weight: 600; font-size: .72rem;
+    letter-spacing: .1em; text-transform: uppercase; color: var(--encre-2); }
+}
 .contraste__exemple { display: inline-grid; place-items: center; width: 34px; height: 26px; margin-right: 10px; font-family: var(--f-titre); border: 1px solid var(--filet); vertical-align: middle; }
 .contraste--ok { color: var(--encre); }
 .contraste--non { color: var(--alerte); font-weight: 500; }
@@ -1065,6 +1201,15 @@ legend { padding: 0; }
   .techniques, .trois-colonnes, .note-bloc--double { grid-template-columns: minmax(0, 1fr); }
   .palette { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
+
+/* ---------- Pages légales (mentions, CGV, confidentialité) : gabarit des notes ---------- */
+.page-legale .entete-page .sommaire-court a[aria-current="page"] { border-color: currentColor; color: var(--cuivre-texte); }
+.legal-article h2 { font-size: clamp(1.35rem, 1.1rem + .9vw, 1.8rem); }
+.legal-article .texte { max-width: 70ch; }
+.legal-article .coordonnees dd { font-size: 1rem; }
+.encadre-loi { max-width: 70ch; display: grid; gap: .7em; padding: clamp(18px, 2.8vw, 28px); border: 2px solid var(--encre); background: var(--fond-2); font-size: .92rem; line-height: 1.55; }
+.formulaire-type { max-width: 70ch; display: grid; gap: .55em; margin-top: .4em; padding: clamp(18px, 2.8vw, 28px); border: 1px dashed var(--filet-fort); font-size: .95rem; }
+.formulaire-type__titre { font-family: var(--f-cartel); font-weight: 600; font-size: .82rem; letter-spacing: .12em; text-transform: uppercase; color: var(--cuivre-texte); }
 
 /* ---------- Panier (démonstration) ---------- */
 .voile { position: fixed; inset: 0; background: rgb(var(--ombre) / .45); z-index: 70; opacity: 0; pointer-events: none; transition: opacity .25s var(--ease); }
@@ -1093,6 +1238,10 @@ legend { padding: 0; }
 .tiroir__montants dd { margin: 0; font-variant-numeric: tabular-nums; }
 .tiroir__total { font-size: 1.1rem; padding-top: 8px; border-top: 1px solid var(--filet); }
 .tiroir__bas p { font-size: .82rem; color: var(--encre-2); }
+@media (max-height: 800px) {
+  .tiroir { grid-template-rows: auto auto auto; align-content: start; overflow-y: auto; overscroll-behavior: contain; }
+  .tiroir__liste { overflow: visible; }
+}
 
 .toast {
   position: fixed; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom, 0px)); z-index: 90; transform: translate(-50%, 160%);

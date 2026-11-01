@@ -7,7 +7,7 @@
 <meta name="robots" content="noindex, nofollow">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,400..800&amp;display=swap">
 <style>
-/* Mise en page : une liste de fiches de version, capture en tête, liens directs vers les pages à tester. */
+/* Mise en page : la fiche de la maquette, capture en tête, liens directs vers les pages à tester. */
 :root {
   --fond: #F5F5F0; --surface: #FFFFFF; --encre: #2C2C2C; --encre-2: #5A5D58; --trait: #D0D0D0;
   --sauge: #DCE2D4; --cuivre: #CBAA88; --cuivre-texte: #7C5A33; --attente: #8A8D88;
@@ -28,7 +28,7 @@ h1 { font-family: var(--f-titre); font-weight: 800; font-stretch: 105%; font-siz
 .chapo { color: var(--encre-2); margin: 0; font-size: 1.05rem; }
 .conseils { display: flex; flex-wrap: wrap; gap: 8px; margin: 6px 0 0; padding: 0; list-style: none; }
 .conseils li { background: var(--sauge); padding: 4px 10px; font-size: .85rem; }
-.liste { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(16px, 2.5vw, 28px); list-style: none; margin: 0; padding: 0; }
+.liste { display: grid; grid-template-columns: minmax(0, 1fr); max-width: 760px; list-style: none; margin: 0; padding: 0; }
 .version { background: var(--surface); border: 1px solid var(--trait); display: grid; grid-template-rows: auto 1fr; min-width: 0; }
 .version img { width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; display: block; border-bottom: 1px solid var(--trait); background: var(--sauge); }
 .version .vide { aspect-ratio: 16 / 10; display: grid; place-items: center; background: repeating-linear-gradient(135deg, var(--sauge) 0 12px, var(--fond) 12px 24px); color: var(--encre-2); font-size: .9rem; border-bottom: 1px solid var(--trait); }
@@ -37,9 +37,6 @@ h1 { font-family: var(--f-titre); font-weight: 800; font-stretch: 105%; font-siz
 .numero { font-family: var(--f-titre); font-weight: 700; font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: var(--cuivre-texte); }
 .statut { font-size: .75rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; padding: 2px 8px; border: 1px solid currentColor; }
 .statut--fini { color: var(--encre); }
-.statut--cours { color: var(--cuivre-texte); }
-.statut--attente { color: var(--attente); }
-.statut--source { color: var(--encre-2); }
 h2 { font-family: var(--f-titre); font-weight: 750; font-stretch: 105%; font-size: 1.45rem; line-height: 1.15; margin: 0; }
 .corps p { margin: 0; color: var(--encre-2); }
 .points { margin: 0; padding-left: 18px; color: var(--encre-2); font-size: .95rem; }
@@ -50,37 +47,24 @@ h2 { font-family: var(--f-titre); font-weight: 750; font-stretch: 105%; font-siz
 .lien:hover { border-color: var(--encre); }
 a:focus-visible { outline: 2px solid var(--cuivre); outline-offset: 2px; }
 .pied { margin-top: clamp(28px, 4vw, 48px); color: var(--encre-2); font-size: .88rem; max-width: 44rem; }
-@media (max-width: 760px) { .liste { grid-template-columns: minmax(0, 1fr); } }
 </style>
 </head>
 <body>
 <div class="cadre">
   <header class="entete">
     <p class="marque">Terre Gravée</p>
-    <h1>La maquette retenue et ses sources</h1>
-    <p class="chapo">La version 4 mélange le mur d’exposition et le carnet de territoire. Les deux sources restent consultables pour comparer. Ouvrez-les, cliquez partout, ajoutez au panier : rien n’est envoyé ni payé.</p>
-    <ul class="conseils"><li>Brouillons non publiés</li><li>Paiements désactivés</li><li>Les étiquettes « à valider » attendent votre décision</li></ul>
+    <h1>La maquette du nouveau site</h1>
+    <p class="chapo">Ouvrez-la, cliquez partout, ajoutez au panier : rien n’est envoyé ni payé. Les notes réunissent ce qui reste à fournir ou à décider ; le questionnaire recueille vos réponses.</p>
+    <ul class="conseils"><li>Brouillon non publié</li><li>Paiements désactivés</li><li>Les étiquettes « à fournir » et « à confirmer » attendent votre réponse</li></ul>
   </header>
-  <ul class="liste"><li class="version"><img src="../versions/v4-galerie/captures/accueil-desktop.jpg" alt="Accueil de la version Galerie de territoire" loading="lazy" width="1440" height="900"><div class="corps">
-  <div class="ligne"><span class="numero">Version 4</span><span class="statut statut--fini">Proposition retenue</span></div>
+  <ul class="liste"><li class="version"><img src="../versions/v4-galerie/captures/accueil-desktop.jpg" alt="Accueil de la maquette Terre Gravée" loading="lazy" width="1440" height="900"><div class="corps">
+  <div class="ligne"><span class="numero">Version 4</span><span class="statut statut--fini">Version retenue</span></div>
   <h2>Galerie de territoire</h2>
-  <p>Le mélange retenu : le mur d’exposition de la v0, sa simulation LED et ses fiches claires, enrichis de la carte des lieux, de l’histoire d’Aquensis et du texte de chaque lieu de la v1, aux couleurs de la charte Terre Gravée.</p>
-  <ul class="points"><li>Mur d’exposition et rétroéclairage LED</li><li>Carte des lieux simplifiée</li><li>Histoire d’Aquensis et charte de la marque</li></ul>
-  <div class="actions"><a class="bouton" href="../versions/v4-galerie/index.html">Ouvrir</a><a class="lien" href="../versions/v4-galerie/carte.html">Carte</a><a class="lien" href="../versions/v4-galerie/collection.html">Collection</a><a class="lien" href="../versions/v4-galerie/notes.html">Notes</a></div>
-</div></li><li class="version"><img src="../maquette/captures/accueil-desktop.jpg" alt="Accueil de la version Mur d’exposition" loading="lazy" width="1440" height="900"><div class="corps">
-  <div class="ligne"><span class="numero">Version 0</span><span class="statut statut--source">Source du mélange</span></div>
-  <h2>Mur d’exposition</h2>
-  <p>La première maquette, jugée trop simple. Les plaques sont accrochées comme dans une galerie, avec leur ombre portée et un cartel par modèle.</p>
-  <ul class="points"><li>Simulation du rétroéclairage dans le héros</li><li>Pastilles noir, gris, doré sur chaque carte</li><li>Notes de refonte : 18 problèmes du site actuel</li></ul>
-  <div class="actions"><a class="bouton" href="../maquette/index.html">Ouvrir</a><a class="lien" href="../maquette/collection.html">Collection</a><a class="lien" href="../maquette/notes.html">Notes de refonte</a></div>
-</div></li><li class="version"><img src="../versions/v1-carnet/captures/accueil-desktop.jpg" alt="Accueil de la version Carnet de territoire" loading="lazy" width="1440" height="900"><div class="corps">
-  <div class="ligne"><span class="numero">Version 1</span><span class="statut statut--source">Source du mélange</span></div>
-  <h2>Carnet de territoire</h2>
-  <p>La version atlas, jugée trop complexe. Chaque plaque raconte son lieu, avec une carte interactive très complète des Hautes-Pyrénées.</p>
-  <ul class="points"><li>Carte des lieux avec filtres et calques</li><li>Histoire d’origine : les 30 panneaux d’Aquensis</li><li>Récits de lieu et cadeaux souvenir</li></ul>
-  <div class="actions"><a class="bouton" href="../versions/v1-carnet/index.html">Ouvrir</a><a class="lien" href="../versions/v1-carnet/carte.html">Carte</a><a class="lien" href="../versions/v1-carnet/strategie.html">Stratégie</a></div>
+  <p>Le mur d’exposition, sa simulation LED et ses fiches claires, avec la carte des lieux, l’histoire d’Aquensis et le texte de chaque lieu, aux couleurs de la charte Terre Gravée.</p>
+  <ul class="points"><li>Mur d’exposition et rétroéclairage LED</li><li>Carte des lieux simplifiée</li><li>Offre de Noël en tête de l’accueil pendant la saison</li></ul>
+  <div class="actions"><a class="bouton" href="../versions/v4-galerie/index.html">Ouvrir la maquette</a><a class="lien" href="../versions/v4-galerie/carte.html">Carte</a><a class="lien" href="../versions/v4-galerie/collection.html">Collection</a><a class="lien" href="../versions/v4-galerie/notes.html">Notes de la maquette</a><a class="lien" href="https://claude.ai/artifact/6NmNnDTEaRXV4agoVmfqus">Questionnaire</a></div>
 </div></li></ul>
-  <p class="pied">Chaque version a une page « Stratégie » qui explique ses choix de design et de marketing, avec les informations à fournir. Pour revenir ici depuis une version, utilisez le lien « Comparer les versions » du bandeau.</p>
+  <p class="pied">Les premières maquettes (versions 0 et 1) ont été retirées le 1er novembre 2026 ; leur historique reste dans le dépôt.</p>
 </div>
 </body>
 </html>

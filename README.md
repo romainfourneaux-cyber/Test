@@ -1,21 +1,31 @@
-# Terre Gravée : maquettes de refonte
+# Terre Gravée : maquette de refonte
 
-Maquettes de travail pour la refonte de [terregravee.fr](https://terregravee.fr), boutique de plaques murales en aluminium découpé au laser (Hautes-Pyrénées). Elles reprennent le contenu réel du site (textes, photos, prix, avis) ; le site en ligne n'est pas modifié. Aucune ne déclenche de paiement.
+Maquette de travail pour la refonte de [terregravee.fr](https://terregravee.fr), boutique de plaques murales en aluminium découpé au laser (Hautes-Pyrénées). Elle reprend le contenu réel du site (textes, photos, prix) ; le site en ligne n'est pas modifié. Elle ne déclenche aucun paiement.
+
+Depuis le 1er novembre 2026, on ne travaille plus que sur la version 4 « Galerie de territoire ».
 
 | Dossier | Contenu |
 |---|---|
-| [`maquette/`](maquette/) | Première maquette (v0), source du mélange (jugée trop simple) : « mur d'exposition », simulation du rétroéclairage LED, notes de refonte (`notes.html`) avec le relevé des problèmes du site actuel |
-| [`versions/v4-galerie/`](versions/v4-galerie/) | **Version retenue (v4) « Galerie de territoire »** : le mur d'exposition de la v0 enrichi de la carte des lieux, de l'histoire d'Aquensis et des textes de lieu de la v1, aux couleurs de la charte |
-| [`versions/v1-carnet/`](versions/v1-carnet/) | Version 1 « Carnet de territoire », source du mélange (jugée trop complexe). `versions/index.html` compare v4, v0 et v1 |
-| [`fichiers-uniques/`](fichiers-uniques/) | Chaque maquette regroupée en un seul fichier HTML autonome (pages, styles, scripts et photos), à ouvrir directement |
-| [`questionnaire/`](questionnaire/) | Questionnaire pour Romain (59 questions sur ce qui manque pour finir le site) : `questions.json` et le générateur de la page. Les réponses restent dans la page publiée, pas dans ce dépôt |
-| [`outils/`](outils/) | `regrouper.py` : régénère un fichier unique à partir d'un dossier de maquette |
+| [`versions/v4-galerie/`](versions/v4-galerie/) | **La maquette (v4) « Galerie de territoire »** : mur d'exposition, simulation du rétroéclairage LED, carte des lieux, histoire d'Aquensis, aux couleurs de la charte. Autonome : photos, catalogue et polices sont dans le dossier. Notes pour Romain dans `notes.html` |
+| [`versions/index.html`](versions/index.html) | Page d'accueil : la maquette, ses notes et le questionnaire (générée par `versions/build_index.py`) |
+| [`fichiers-uniques/`](fichiers-uniques/) | La maquette regroupée en un seul fichier HTML autonome (pages, styles, scripts, photos et polices), à ouvrir directement |
+| [`questionnaire/`](questionnaire/) | Questionnaire pour Romain sur ce qui manque pour finir le site : les questions et le générateur de la page. Les réponses restent dans la page publiée, pas dans ce dépôt |
+| [`outils/`](outils/) | `regrouper.py` : régénère le fichier unique à partir du dossier de la maquette |
 
-## Ouvrir les maquettes sous Windows
+## Ouvrir la maquette sous Windows
 
 1. Bouton **Code › Download ZIP**, puis dézipper.
-2. Double-cliquer sur un fichier de `fichiers-uniques/` (le plus simple), ou sur `maquette/index.html`, ou sur `index.html` dans un dossier de `versions/`.
+2. Double-cliquer sur le fichier de `fichiers-uniques/` (le plus simple), ou sur `versions/v4-galerie/index.html`.
 
-Une connexion internet est nécessaire pour charger les polices.
+Aucune connexion internet n'est nécessaire : les polices sont hébergées avec la maquette.
 
-Les versions 2 (boutique orientée conversion) et 3 (showroom immersif) ont été abandonnées ; elles restent dans l'historique git.
+## Reconstruire
+
+```
+cd versions/v4-galerie && python3 build.py
+(cd versions/v4-galerie && python3 build.py --mise-en-ligne)   # avant la mise en ligne : liste les marqueurs restants, échoue s’il en reste
+python3 versions/build_index.py
+python3 outils/regrouper.py versions/v4-galerie fichiers-uniques/terre-gravee-v4-galerie-de-territoire.html "Terre Gravée · Galerie de territoire (v4)"
+```
+
+Les autres maquettes (v0 « mur d'exposition », v1 « carnet de territoire », v2 « boutique orientée conversion », v3 « showroom immersif ») ont été retirées ou abandonnées ; elles restent dans l'historique git.

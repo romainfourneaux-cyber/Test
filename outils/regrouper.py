@@ -6,7 +6,7 @@ Usage :  python regrouper.py <dossier-du-site> <fichier-de-sortie.html> "<titre>
 Principe : chaque page, feuille de style, script et image est rangé dans le fichier. Au chargement,
 une petite coquille crée des adresses blob: pour chaque ressource et affiche les pages dans un cadre.
 Les liens entre pages, le bouton Retour et le panier (stockage local) continuent de fonctionner.
-Les polices restent chargées depuis Google Fonts : une connexion internet est nécessaire.
+Les polices (woff2) sont rangées dans le fichier comme les images : aucune connexion internet n’est nécessaire.
 Pillow (facultatif) réduit les images trop grandes.
 """
 import base64
@@ -99,6 +99,7 @@ class Paquet:
 
 
 CALE = """<script>(function(){var P;try{P=parent.__tg;}catch(e){}if(!P)return;
+var rs=history.replaceState;history.replaceState=function(st,t,u){if(typeof u==="string")u=u.charAt(0)==="#"?"about:srcdoc"+u:"about:srcdoc";return rs.call(history,st,t,u);};
 if(P.ancre){try{history.replaceState(null,"","#"+P.ancre);}catch(e){}}
 try{localStorage.getItem("tg");}catch(e){try{Object.defineProperty(window,"localStorage",{value:P.stockage,configurable:true});}catch(e2){}}
 function norm(u){var a=[],s=String(u).split("#")[0].split("?")[0].split("/");for(var i=0;i<s.length;i++){var x=s[i];if(x==="."||x==="")continue;if(x===".."&&a.length&&a[a.length-1]!=="..")a.pop();else a.push(x);}return a.join("/");}
@@ -179,6 +180,8 @@ COQUILLE = """<!doctype html>
       if (/^(https?:|mailto:|tel:)/i.test(href)) { if (/^https?:/i.test(href)) a.target = "_blank"; return; }
       if (href.charAt(0) === "#") {
         ev.preventDefault();
+        // L’ancre passe dans l’adresse de l’iframe : galerie.js reçoit « hashchange » (filtres de la collection, lieux de la carte)
+        if (href.length > 1) { try { doc.defaultView.location.hash = href.slice(1); } catch (e) {} }
         var t = href.length > 1 && doc.getElementById(decodeURIComponent(href.slice(1)));
         if (t) t.scrollIntoView({ behavior: "smooth" });
         return;

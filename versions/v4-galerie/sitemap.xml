@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- À déployer à la racine de terregravee.fr à la mise en ligne. Fichier généré par build.py (maquette v4) : ne pas le modifier à la main. Pages publiques seulement : ni notes.html, ni qr.html (son adresse est celle du QR code, à fournir). -->
+<!-- À déployer à la racine de terregravee.fr à la mise en ligne. Fichier généré par build.py (maquette v4) : ne pas le modifier à la main. Pages publiques seulement : ni notes.html, ni qr.html (le QR code d’Aquensis mène à l’accueil ; usage de la page à décider). -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://terregravee.fr/</loc><lastmod>2026-11-01</lastmod></url>
   <url><loc>https://terregravee.fr/produits/</loc><lastmod>2026-11-01</lastmod></url>
@@ -22,4 +22,7 @@
   <url><loc>https://terregravee.fr/produits/la-marmotte/</loc><lastmod>2026-11-01</lastmod></url>
   <url><loc>https://terregravee.fr/produits/led/</loc><lastmod>2026-11-01</lastmod></url>
   <url><loc>https://terregravee.fr/produits/carte-cadeau/</loc><lastmod>2026-11-01</lastmod></url>
+  <url><loc>https://terregravee.fr/mentions-legales/</loc><lastmod>2026-11-01</lastmod></url>
+  <url><loc>https://terregravee.fr/cgv/</loc><lastmod>2026-11-01</lastmod></url>
+  <url><loc>https://terregravee.fr/politique/</loc><lastmod>2026-11-01</lastmod></url>
 </urlset>

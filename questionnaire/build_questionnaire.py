@@ -1,15 +1,22 @@
 #!/usr/bin/env python3
 """Génère la page du questionnaire Terre Gravée (publication claude.ai, sans squelette HTML).
 
-Les questions viennent de questions.json ; les réponses de Romain sont enregistrées par la page
-dans la base de l'artifact (collection « reponses », un document par question) et les photos
-dans ses fichiers. Rien de tout cela n'est écrit dans ce dépôt.
+Les questions du tour en cours viennent de questions.json (deuxième tour, novembre 2026) ; celles
+du premier tour (31 octobre 2026) sont gardées dans questions-tour1.json. Les réponses de Romain
+sont enregistrées par la page dans la base de l'artifact, un document par question, dans la
+collection propre au tour (« reponses » pour le premier, « reponses-tour2 » pour le deuxième :
+un nouveau tour n'écrase jamais les réponses du précédent), et les photos dans ses fichiers.
+Rien de tout cela n'est écrit dans ce dépôt.
 
-Usage :  python build_questionnaire.py [sortie.html]
+Le bloc « page » du fichier de questions donne le titre, l'introduction, la collection et la clé
+du brouillon local ; sans lui, la page reprend les textes du premier tour.
+
+Usage :  python build_questionnaire.py [sortie.html] [questions.json]
 """
 import html
 import json
 import os
+import re
 import sys
 
 ICI = os.path.dirname(os.path.abspath(__file__))
@@ -20,9 +27,33 @@ PRIORITES = {
     "utile": ("Utile", "Améliore le site"),
 }
 
+# Textes et réglages par défaut : ceux du premier tour (questions-tour1.json n'a pas de bloc « page »)
+PAGE_DEFAUT = {
+    "tour": 1,
+    "titre_page": "Questionnaire Terre Gravée",
+    "surtitre": "",
+    "titre": "Ce qu’il me manque pour finir le site",
+    "chapo": "Romain, {total} questions pour compléter la maquette et préparer la mise en ligne. Réponds dans l’ordre que tu veux, en plusieurs fois si besoin : chaque réponse s’enregistre toute seule et je la lis directement. Si tu n’as pas l’info, touche « Je ne sais pas encore ».",
+    "collection": "reponses",
+    "cle_locale": "tg-questionnaire-v1",
+}
+SOUS_LABEL_FICHIER = "Ou indique où je peux la trouver (dossier du Drive, lien…)"
+
 
 def e(t):
     return html.escape(str(t or ""), quote=True)
+
+
+# Espaces insécables de la typographie française (avant : ; ! ? », après «, entre un nombre et son unité),
+# pour le texte affiché seulement : les valeurs enregistrées dans la base gardent des espaces ordinaires.
+INSECABLE_AVANT = re.compile(r" ([:;!?»])")
+INSECABLE_UNITE = re.compile(r"(\d) (km|cm|kg|€|%|jours?|mois|ans?)\b")
+
+
+def t(texte):
+    """Texte affiché : échappé, avec les espaces insécables."""
+    x = INSECABLE_AVANT.sub("\u00a0\\1", e(texte)).replace("« ", "«\u00a0")
+    return INSECABLE_UNITE.sub("\\1\u00a0\\2", x)
 
 
 def est_autre(option):
@@ -30,30 +61,31 @@ def est_autre(option):
 
 
 def champ(q):
-    i, t = q["id"], q["type"]
+    i, sorte = q["id"], q["type"]
     fid = "f-" + i
     defaut = (q.get("defaut") or "").strip()
-    if t in ("texte", "fichier"):
-        if t == "fichier":
+    if sorte in ("texte", "fichier"):
+        if sorte == "fichier":
             return ('<div class="fichiers" data-fichiers hidden>'
                     '<label class="bouton-fichier" for="{f}-fichier">Ajouter une photo ou un fichier</label>'
                     '<input id="{f}-fichier" type="file" accept="image/*,application/pdf,.svg" multiple>'
                     '<ul class="vignettes" data-vignettes></ul></div>'
-                    '<label class="sous-label" for="{f}">Ou indique où je peux la trouver (dossier du Drive, lien…)</label>'
-                    '<input id="{f}" type="text" autocomplete="off" placeholder="{ex}">').format(f=fid, ex=e(q.get("exemple")))
+                    '<label class="sous-label" for="{f}">{sous}</label>'
+                    '<input id="{f}" type="text" autocomplete="off" placeholder="{ex}">').format(
+                        f=fid, ex=e(q.get("exemple")), sous=e(q.get("sous_label") or SOUS_LABEL_FICHIER))
         return '<input id="{}" type="text" autocomplete="off" placeholder="{}">'.format(fid, e(q.get("exemple")))
-    if t == "texte-long":
+    if sorte == "texte-long":
         return '<textarea id="{}" rows="3" placeholder="{}"></textarea>'.format(fid, e(q.get("exemple")))
-    if t == "nombre":
-        unite = '<span class="unite">{}</span>'.format(e(q["unite"])) if q.get("unite") else ""
+    if sorte == "nombre":
+        unite = '<span class="unite">{}</span>'.format(t(q["unite"])) if q.get("unite") else ""
         return '<div class="nombre"><input id="{}" type="number" inputmode="decimal" min="0" step="any" placeholder="{}">{}</div>'.format(
             fid, e(q.get("exemple")), unite)
-    if t == "date":
+    if sorte == "date":
         return '<input id="{}" type="date">'.format(fid)
-    if t == "oui-non":
+    if sorte == "oui-non":
         options = ["Oui", "Non"]
-    elif t == "relecture":
-        texte = '<blockquote class="a-relire">{}</blockquote>'.format(e(q.get("a_relire")).replace("\n", "<br>")) if q.get("a_relire") else ""
+    elif sorte == "relecture":
+        texte = '<blockquote class="a-relire">{}</blockquote>'.format(t(q.get("a_relire")).replace("\n", "<br>")) if q.get("a_relire") else ""
         return texte + (
             '<div class="choix choix--ligne" role="radiogroup" aria-label="Ce texte">'
             '<label><input type="radio" name="{f}" value="Le texte me va"> Le texte me va</label>'
@@ -62,16 +94,16 @@ def champ(q):
             '<textarea id="{f}-correction" rows="4" data-texte="{txt}"></textarea></div>').format(f=fid, txt=e(q.get("a_relire")))
     else:
         options = q.get("options") or []
-    multiple = t == "choix-multiple"
+    multiple = sorte == "choix-multiple"
     lignes = []
     for n, o in enumerate(options):
         marque = ' <span class="actuel">sur la maquette</span>' if defaut and o.strip().lower() == defaut.lower() else ""
         lignes.append('<label><input type="{}" name="{}" value="{}"{}> <span>{}{}</span></label>'.format(
-            "checkbox" if multiple else "radio", fid, e(o), ' data-autre' if est_autre(o) else "", e(o), marque))
+            "checkbox" if multiple else "radio", fid, e(o), ' data-autre' if est_autre(o) else "", t(o), marque))
     autre = ""
     if any(est_autre(o) for o in options):
         autre = '<div class="autre" data-autre-bloc hidden><label class="sous-label" for="{0}-autre">Précise</label><input id="{0}-autre" type="text" autocomplete="off"></div>'.format(fid)
-    classe = "choix choix--ligne" if t == "oui-non" else "choix"
+    classe = "choix choix--ligne" if sorte == "oui-non" else "choix"
     return '<div class="{}">{}</div>{}'.format(classe, "".join(lignes), autre)
 
 
@@ -82,9 +114,9 @@ def question(q, num):
     defaut = (q.get("defaut") or "").strip()
     rappel = ""
     if defaut and q["type"] not in ("choix", "choix-multiple", "oui-non"):
-        rappel = '<p class="q__defaut">Sur la maquette pour l’instant : <strong>{}</strong></p>'.format(e(defaut))
+        rappel = '<p class="q__defaut">Sur la maquette pour l’instant\u00a0: <strong>{}</strong></p>'.format(t(defaut))
     elif defaut and not any(o.strip().lower() == defaut.lower() for o in (q.get("options") or ["Oui", "Non"])):
-        rappel = '<p class="q__defaut">Sur la maquette pour l’instant : <strong>{}</strong></p>'.format(e(defaut))
+        rappel = '<p class="q__defaut">Sur la maquette pour l’instant\u00a0: <strong>{}</strong></p>'.format(t(defaut))
     return """<fieldset class="q" id="q-{id}" data-q="{id}" data-type="{type}" data-prio="{prio}" data-etat="vide">
   <legend><span class="q__num">{num}</span><span class="q__texte">{question}</span></legend>
   <div class="q__meta"><span class="pastille pastille--{prio}" title="{titre_prio}">{nom}</span>{pages}</div>
@@ -95,8 +127,8 @@ def question(q, num):
     <button type="button" class="plus-tard" data-plus-tard aria-pressed="false">Je ne sais pas encore</button>
     <span class="q__etat" data-etat-texte aria-live="polite"></span>
   </div>
-</fieldset>""".format(id=e(q["id"]), type=e(q["type"]), prio=e(prio), num=num, question=e(q["question"]), nom=nom, titre_prio=titre_prio,
-                      pages='<span class="q__pages">{}</span>'.format(e(pages)) if pages else "", aide=e(q.get("aide")),
+</fieldset>""".format(id=e(q["id"]), type=e(q["type"]), prio=e(prio), num=num, question=t(q["question"]), nom=nom, titre_prio=titre_prio,
+                      pages='<span class="q__pages">{}</span>'.format(e(pages)) if pages else "", aide=t(q.get("aide")),
                       rappel=rappel, champ=champ(q))
 
 
@@ -123,6 +155,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .cadre { max-width: 46rem; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
 .entete { padding-block: clamp(28px, 6vw, 56px) 20px; display: grid; gap: 12px; }
 .signature { font-family: var(--f-pochoir); letter-spacing: .18em; font-size: .85rem; color: var(--cuivre-texte); margin: 0; }
+.surtitre { font-family: var(--f-cartel); font-weight: 600; letter-spacing: .14em; text-transform: uppercase; font-size: .8rem; color: var(--encre-2); margin: -6px 0 0; }
 h1 { font-family: var(--f-titre); font-weight: 400; font-size: clamp(2rem, 1.5rem + 2.4vw, 2.9rem); line-height: 1.08; margin: 0; text-wrap: balance; }
 .chapo { margin: 0; color: var(--encre-2); max-width: 38em; }
 .legende { display: flex; flex-wrap: wrap; gap: 8px 14px; margin: 4px 0 0; padding: 0; list-style: none; font-size: .9rem; color: var(--encre-2); }
@@ -139,12 +172,12 @@ h1 { font-family: var(--f-titre); font-weight: 400; font-size: clamp(2rem, 1.5re
 .jauge span { display: block; height: 100%; width: 0; background: var(--cuivre); transition: width .3s ease; }
 .filtres { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 18px; }
 .filtres button { font: inherit; font-family: var(--f-cartel); font-weight: 600; font-size: .85rem; letter-spacing: .05em; text-transform: uppercase;
-  min-height: 36px; padding: 0 12px; background: transparent; color: var(--encre); border: 1px solid var(--trait-fort); cursor: pointer; }
+  min-height: 44px; padding: 0 12px; background: transparent; color: var(--encre); border: 1px solid var(--trait-fort); cursor: pointer; }
 .filtres button[aria-pressed="true"] { background: var(--encre); color: var(--fond); border-color: var(--encre); }
 
 .sommaire { margin: 24px 0 8px; }
 .sommaire ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
-.sommaire a { display: flex; justify-content: space-between; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--trait); color: var(--encre); text-decoration: none; }
+.sommaire a { display: flex; justify-content: space-between; gap: 12px; min-height: 44px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--trait); color: var(--encre); text-decoration: none; }
 .sommaire a:hover .s__titre { text-decoration: underline; }
 .s__titre { display: flex; gap: 10px; min-width: 0; }
 .s__num { font-family: var(--f-cartel); font-weight: 600; color: var(--cuivre-texte); font-variant-numeric: tabular-nums; }
@@ -168,7 +201,7 @@ h2 { font-family: var(--f-titre); font-weight: 400; font-size: 1.65rem; line-hei
 .pastille--bloquant { color: var(--urgent); background: var(--urgent-fond); }
 .pastille--important { color: var(--cuivre-texte); }
 .pastille--utile { color: var(--encre-2); }
-.q__pages::before { content: "Pages : "; }
+.q__pages::before { content: "Pages\\00a0: "; }
 .q__aide { margin: 0; font-size: .92rem; color: var(--encre-2); }
 .q__defaut { margin: 0; font-size: .9rem; padding: 6px 10px; background: var(--sauge); }
 .q__champ { display: grid; gap: 8px; min-width: 0; }
@@ -195,7 +228,7 @@ input:focus-visible, textarea:focus-visible, button:focus-visible, .choix label:
 .vignettes img, .vignettes .doc { width: 84px; height: 84px; object-fit: cover; border: 1px solid var(--trait); background: var(--fond); display: grid; place-items: center; }
 .vignettes button { font: inherit; font-size: .75rem; background: none; border: 0; padding: 0; color: var(--urgent); text-decoration: underline; cursor: pointer; justify-self: start; }
 .q__pied { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
-.plus-tard { font: inherit; font-size: .88rem; background: none; border: 0; padding: 6px 0; color: var(--encre-2); text-decoration: underline; cursor: pointer; min-height: 36px; }
+.plus-tard { font: inherit; font-size: .88rem; background: none; border: 0; padding: 6px 0; color: var(--encre-2); text-decoration: underline; cursor: pointer; min-height: 44px; }
 .plus-tard[aria-pressed="true"] { color: var(--cuivre-texte); font-weight: 600; }
 .q__etat { font-family: var(--f-cartel); font-weight: 600; font-size: .85rem; letter-spacing: .04em; color: var(--ok); }
 .q[data-etat="plus-tard"] .q__etat { color: var(--cuivre-texte); }
@@ -220,7 +253,8 @@ body[data-tout-cache="1"] .rien { display: block; }
 SCRIPT = r"""
 (function () {
   "use strict";
-  var CLE_LOCALE = "tg-questionnaire-v1";
+  /* Réglages du tour, écrits par build_questionnaire.py : chaque tour a sa collection et son brouillon local. */
+  var CLE_LOCALE = __CLE_LOCALE__, COLLECTION = __COLLECTION__, TOUR = __TOUR__;
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
   var fiches = $$(".q");
@@ -234,9 +268,16 @@ SCRIPT = r"""
   var enCours = 0, bloque = false;
   var fichiersParId = {}; // id -> [{id, type, nom}]
 
-  function lireLocal() { try { return JSON.parse(localStorage.getItem(CLE_LOCALE) || "{}") || {}; } catch (e) { return {}; } }
-  function ecrireLocal(id, etat) {
-    try { var t = lireLocal(); t[id] = etat; localStorage.setItem(CLE_LOCALE, JSON.stringify(t)); } catch (e) { /* stockage indisponible */ }
+  /* Brouillon local : l’état de chaque fiche, et à part la date de sa dernière modification (pour savoir,
+     au retour de la connexion, qui de l’appareil ou de la base a la version la plus récente). */
+  var CLE_MAJ = CLE_LOCALE + "-maj";
+  function lireJson(cle) { try { return JSON.parse(localStorage.getItem(cle) || "{}") || {}; } catch (e) { return {}; } }
+  function lireLocal() { return lireJson(CLE_LOCALE); }
+  function ecrireLocal(id, etat, maj) {
+    try {
+      var t = lireLocal(); t[id] = etat; localStorage.setItem(CLE_LOCALE, JSON.stringify(t));
+      var m = lireJson(CLE_MAJ); m[id] = maj || ""; localStorage.setItem(CLE_MAJ, JSON.stringify(m));
+    } catch (e) { /* stockage indisponible */ }
   }
 
   var sauvegarde = $("[data-sauvegarde]");
@@ -304,12 +345,12 @@ SCRIPT = r"""
       if (e === "repondu") faits++;
       if (f.getAttribute("data-prio") === "bloquant") { bloq++; if (e === "repondu") bloqFaits++; }
     });
-    $("[data-compte]").innerHTML = faits + " / " + total + " <span>répondues · avant la mise en ligne : " + bloqFaits + " / " + bloq + "</span>";
+    $("[data-compte]").innerHTML = faits + "\u00a0/ " + total + " <span>répondues · avant la mise en ligne\u00a0: " + bloqFaits + "\u00a0/ " + bloq + "</span>";
     $(".jauge span").style.width = (total ? Math.round(faits * 100 / total) : 0) + "%";
     $$("[data-compte-section]").forEach(function (el) {
       var s = document.getElementById(el.getAttribute("data-compte-section"));
       var qs = $$(".q", s), r = qs.filter(function (q) { return q.getAttribute("data-etat") === "repondu"; }).length;
-      el.textContent = r + " / " + qs.length;
+      el.textContent = r + "\u00a0/ " + qs.length;
     });
     appliquerFiltre();
   }
@@ -330,30 +371,30 @@ SCRIPT = r"""
   });
 
   /* --- Enregistrement --- */
-  function corps(fiche, etat) {
+  function corps(fiche, etat, maj) {
     return {
       question: fiche.querySelector(".q__texte").textContent,
       section: fiche.closest(".section").getAttribute("data-titre"),
       priorite: fiche.getAttribute("data-prio"), type: fiche.getAttribute("data-type"),
       valeur: etat.valeur, autre: etat.autre, correction: etat.correction, fichiers: etat.fichiers,
-      plusTard: etat.plusTard, maj: new Date().toISOString()
+      plusTard: etat.plusTard, tour: TOUR, maj: maj
     };
   }
   function enregistrer(fiche) {
     var id = fiche.getAttribute("data-q");
-    var etat = etatDe(fiche), json = JSON.stringify(etat);
+    var etat = etatDe(fiche), json = JSON.stringify(etat), maj = new Date().toISOString();
     if (dernier[id] === json) return;
     dernier[id] = json;
-    ecrireLocal(id, etat);
-    if (!collection || bloque) { if (!db) statut("Sur cet appareil seulement", "local"); return; }
+    ecrireLocal(id, etat, maj);
+    if (!collection || bloque) { if (!db) statut("Enregistré sur cet appareil seulement", "local"); return; }
     enCours++; statut("Enregistrement…", "cours");
     files[id] = (files[id] || Promise.resolve()).then(function () {
-      return collection.doc(id).set(corps(fiche, etat));
+      return collection.doc(id).set(corps(fiche, etat, maj));
     }).then(function () {
       enCours--; if (!enCours) statut("Enregistré à " + heure(), "ok");
     }, function (err) {
       enCours--;
-      if (err && err.code === "invalid_argument") { bloque = true; statut("Lecture seule : tu n’as pas le droit d’écrire ici", "erreur"); }
+      if (err && err.code === "invalid_argument") { bloque = true; statut("Lecture seule\u00a0: tu n’as pas le droit d’écrire ici", "erreur"); }
       else statut("Non enregistré (" + (err && err.code || "erreur") + "). Tes réponses restent sur cet appareil.", "erreur");
     });
   }
@@ -362,6 +403,12 @@ SCRIPT = r"""
     clearTimeout(minuteurs[id]);
     minuteurs[id] = setTimeout(function () { delete minuteurs[id]; enregistrer(fiche); }, delai);
   }
+  /* Page fermée ou passée en arrière-plan pendant une saisie : ce qui attendait s’enregistre tout de suite. */
+  function toutEnregistrer() {
+    Object.keys(minuteurs).forEach(function (id) { clearTimeout(minuteurs[id]); delete minuteurs[id]; if (parId[id]) enregistrer(parId[id]); });
+  }
+  window.addEventListener("pagehide", toutEnregistrer);
+  document.addEventListener("visibilitychange", function () { if (document.visibilityState === "hidden") toutEnregistrer(); });
 
   fiches.forEach(function (fiche) {
     fiche.addEventListener("input", function (ev) {
@@ -421,7 +468,7 @@ SCRIPT = r"""
           afficherFichiers(fiche); majFiche(fiche); majProgression(); enregistrer(fiche);
         }, function (err) {
           var msg = { too_large: "fichier trop lourd (20 Mo au plus)", unsupported_type: "format non accepté (photo, PDF ou SVG)", quota_or_state: "espace de stockage plein", rate_limited: "trop d’envois d’un coup, réessaie dans une minute" }[err && err.code] || "envoi impossible";
-          statut(fichier.name + " : " + msg, "erreur");
+          statut(fichier.name + "\u00a0: " + msg, "erreur");
         });
       });
     });
@@ -443,14 +490,14 @@ SCRIPT = r"""
       });
       if (bloc.length) lignes.push("## " + s.getAttribute("data-titre") + "\n" + bloc.join("\n"));
     });
-    return lignes.join("\n\n") || "Aucune réponse pour l’instant.";
+    return lignes.length ? "# Questionnaire Terre Gravée, tour " + TOUR + "\n\n" + lignes.join("\n\n") : "Aucune réponse pour l’instant.";
   }
   var boutonCopier = $("[data-copier]"), zoneCopie = $("[data-zone-copie]");
   if (boutonCopier) boutonCopier.addEventListener("click", function () {
     var t = texteReponses();
     zoneCopie.value = t; zoneCopie.hidden = false;
     var ok = function () { boutonCopier.textContent = "Copié"; setTimeout(function () { boutonCopier.textContent = "Copier mes réponses"; }, 2500); };
-    var secours = function () { zoneCopie.focus(); zoneCopie.select(); boutonCopier.textContent = "Texte sélectionné : copie-le"; };
+    var secours = function () { zoneCopie.focus(); zoneCopie.select(); boutonCopier.textContent = "Texte sélectionné\u00a0: copie-le"; };
     try { navigator.clipboard.writeText(t).then(ok, secours); } catch (e) { secours(); }
   });
 
@@ -473,28 +520,30 @@ SCRIPT = r"""
   }, function () { /* sans fichiers */ });
   promesseDb.then(function (d) {
     db = d;
-    if (!db) { statut("Sur cet appareil seulement", "local"); return; }
-    collection = db.collection("reponses");
+    if (!db) { statut("Enregistré sur cet appareil seulement", "local"); return; }
+    collection = db.collection(COLLECTION);
     var premier = true;
     collection.onSnapshot(function (snap) {
-      var vus = {};
+      var vus = {}, plusRecentes = {}, majLocales = lireJson(CLE_MAJ);
       snap.docs.forEach(function (doc) {
         var id = doc.id, f = parId[id]; vus[id] = true;
         if (!f || minuteurs[id] || f.contains(document.activeElement)) return;
         var b = doc.data() || {};
+        /* Modifiée sur cet appareil après la version de la base (écriture pas encore arrivée) : on garde la locale. */
+        if (majLocales[id] && majLocales[id] > (b.maj || "")) { plusRecentes[id] = true; return; }
         var etat = { valeur: b.valeur || "", autre: b.autre || "", correction: b.correction || "", fichiers: b.fichiers || [], plusTard: !!b.plusTard };
         remplir(f, etat);
         dernier[id] = JSON.stringify(etatDe(f));
-        ecrireLocal(id, etatDe(f));
+        ecrireLocal(id, etatDe(f), b.maj || "");
       });
       if (premier) {
         premier = false;
-        /* Réponses saisies hors connexion : on les envoie. */
+        /* Réponses saisies hors connexion, absentes de la base ou plus récentes qu’elle : on les envoie. */
         fiches.forEach(function (f) {
           var id = f.getAttribute("data-q"), et = etatDe(f);
-          if (!vus[id] && (estRempli(et) || et.plusTard)) { delete dernier[id]; enregistrer(f); }
+          if (plusRecentes[id] || (!vus[id] && (estRempli(et) || et.plusTard))) { delete dernier[id]; enregistrer(f); }
         });
-        if (!enCours) statut(snap.size ? "À jour" : "Prêt : tes réponses s’enregistrent au fil de l’eau", "ok");
+        if (!enCours) statut(snap.size ? "À jour" : "Prêt\u00a0: tes réponses s’enregistrent au fil de l’eau", "ok");
       }
       majProgression();
     }, function (err) {
@@ -505,10 +554,19 @@ SCRIPT = r"""
 """
 
 
+def js(valeur):
+    """Valeur littérale pour le script de la page (chaîne ou nombre), sans fermeture de balise possible."""
+    return json.dumps(valeur, ensure_ascii=False).replace("</", "<\\/")
+
+
 def page(donnees):
     sections = donnees["sections"]
+    reglages = dict(PAGE_DEFAUT, **(donnees.get("page") or {}))
     total = sum(len(s["questions"]) for s in sections)
     bloquants = sum(1 for s in sections for q in s["questions"] if q.get("priorite") == "bloquant")
+    surtitre = '<p class="surtitre">{}</p>'.format(e(reglages["surtitre"])) if reglages["surtitre"] else ""
+    script = (SCRIPT.replace("__CLE_LOCALE__", js(reglages["cle_locale"])).replace("__COLLECTION__", js(reglages["collection"]))
+              .replace("__TOUR__", js(int(reglages["tour"]))))
     corps, sommaire, num = [], [], 0
     for n, s in enumerate(sections, 1):
         sid = "s-" + s["id"]
@@ -517,30 +575,30 @@ def page(donnees):
             num += 1
             qs.append(question(q, num))
         sommaire.append('<li><a href="#{sid}"><span class="s__titre"><span class="s__num">{n:02d}</span><span>{t}</span></span>'
-                        '<span class="s__compte" data-compte-section="{sid}">0 / {nb}</span></a></li>'.format(sid=sid, n=n, t=e(s["titre"]), nb=len(s["questions"])))
-        corps.append("""<section class="section" id="{sid}" data-titre="{t}" aria-labelledby="{sid}-t">
+                        '<span class="s__compte" data-compte-section="{sid}">0\u00a0/ {nb}</span></a></li>'.format(sid=sid, n=n, t=t(s["titre"]), nb=len(s["questions"])))
+        corps.append("""<section class="section" id="{sid}" data-titre="{attr}" aria-labelledby="{sid}-t">
   <header><p class="section__num">Partie {n} sur {nb}</p><h2 id="{sid}-t">{t}</h2><p class="section__intro">{intro}</p></header>
   <div class="questions">{qs}</div>
-</section>""".format(sid=sid, n=n, nb=len(sections), t=e(s["titre"]), intro=e(s.get("intro")), qs="".join(qs)))
-    return """<title>Questionnaire Terre Gravée</title>
+</section>""".format(sid=sid, n=n, nb=len(sections), attr=e(s["titre"]), t=t(s["titre"]), intro=t(s.get("intro")), qs="".join(qs)))
+    return """<title>{titre_page}</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Allerta+Stencil&family=Barlow+Semi+Condensed:wght@500;600&family=Jost:wght@400;500;600&family=Marcellus&display=swap">
 <style>{style}</style>
 <div class="cadre">
   <header class="entete">
-    <p class="signature">TERRE GRAVÉE</p>
-    <h1>Ce qu’il me manque pour finir le site</h1>
-    <p class="chapo">Romain, {total} questions pour compléter la maquette et préparer la mise en ligne. Réponds dans l’ordre que tu veux, en plusieurs fois si besoin : chaque réponse s’enregistre toute seule et je la lis directement. Si tu n’as pas l’info, touche « Je ne sais pas encore ».</p>
+    <p class="signature">TERRE GRAVÉE</p>{surtitre}
+    <h1>{titre}</h1>
+    <p class="chapo">{chapo}</p>
     <ul class="legende">
-      <li><span class="pastille pastille--bloquant">Avant la mise en ligne</span> {bloquants} questions : la loi l’exige ou la vente est impossible sans</li>
+      <li><span class="pastille pastille--bloquant">Avant la mise en ligne</span> {bloquants}\u00a0question{pluriel}\u00a0: la loi l’exige ou la vente est impossible sans</li>
       <li><span class="pastille pastille--important">Important</span> le site est faux ou incomplet sans</li>
       <li><span class="pastille pastille--utile">Utile</span> améliore le site</li>
     </ul>
   </header>
 </div>
 <div class="barre"><div class="cadre barre__in">
-  <div class="barre__ligne"><span class="compte" data-compte aria-live="polite">0 / {total}</span><span class="sauvegarde" data-sauvegarde aria-live="polite"></span></div>
+  <div class="barre__ligne"><span class="compte" data-compte aria-live="polite">0\u00a0/ {total}</span><span class="sauvegarde" data-sauvegarde aria-live="polite"></span></div>
   <div class="jauge" aria-hidden="true"><span></span></div>
 </div></div>
 <main class="cadre">
@@ -555,17 +613,21 @@ def page(donnees):
   <section class="fin" aria-labelledby="fin-t">
     <h2 id="fin-t">Quand tu as fini</h2>
     <p>Pas besoin d’envoyer quoi que ce soit : dis-moi simplement dans la conversation que c’est rempli, je lis tes réponses et tes photos et je mets la maquette à jour. Tu peux revenir compléter plus tard.</p>
-    <p>Si la page indique « Enregistré sur cet appareil seulement », copie tes réponses et colle-les dans la conversation.</p>
+    <p>Si la page indique «\u00a0Enregistré sur cet appareil seulement\u00a0», copie tes réponses et colle-les dans la conversation.</p>
     <button type="button" class="bouton" data-copier>Copier mes réponses</button>
     <textarea class="copie" data-zone-copie hidden readonly aria-label="Tes réponses en texte"></textarea>
   </section>
 </main>
 <script>{script}</script>
-""".format(style=STYLE, total=total, bloquants=bloquants, sommaire="".join(sommaire), corps="".join(corps), script=SCRIPT)
+""".format(style=STYLE, total=total, bloquants=bloquants, pluriel="s" if bloquants > 1 else "", sommaire="".join(sommaire), corps="".join(corps),
+           script=script, titre_page=e(reglages["titre_page"]), surtitre=surtitre, titre=t(reglages["titre"]),
+           chapo=t(reglages["chapo"].replace("{total}", str(total))))
 
 
 if __name__ == "__main__":
-    with open(os.path.join(ICI, "questions.json"), encoding="utf-8") as f:
+    # Deuxième argument facultatif : un autre fichier de questions (questions-tour1.json pour revoir le premier tour)
+    source = sys.argv[2] if len(sys.argv) > 2 else os.path.join(ICI, "questions.json")
+    with open(source, encoding="utf-8") as f:
         donnees = json.load(f)
     ids = [q["id"] for s in donnees["sections"] for q in s["questions"]]
     assert len(ids) == len(set(ids)), "identifiants en double"

@@ -1,14 +1,16 @@
 #!/usr/bin/env python3
 """Maquette Terre Gravée, version 4 « Galerie de territoire ».
 
-Mélange de la v0 (mur d’exposition, simulation LED, fiches claires) et de la v1 (carte des lieux,
-histoire d’Aquensis, texte de chaque lieu), aux couleurs de la charte de Romain.
+Mur d’exposition, simulation LED, fiches claires, carte des lieux, histoire d’Aquensis et texte de chaque lieu,
+aux couleurs de la charte de Romain. Seule maquette gardée depuis le 1er novembre 2026 : elle ne dépend d’aucun autre dossier.
 
 Génère toutes les pages HTML de ce dossier, ainsi que assets/img/courbes.svg (relief décoratif du mur).
-Sources : ../../maquette/data/catalogue.json (produits), ../../maquette/assets/img/ (photos, lues sur place),
+Sources : data/catalogue.json (produits), assets/img/ (photos et dessins, dimensions dans assets/img/_sizes.json),
 data/hautes-pyrenees.json (contour simplifié du département).
 
 Usage, depuis n’importe quel dossier :  python build.py
+Contrôle avant la mise en ligne :      python build.py --mise-en-ligne  (liste les marqueurs restants, page par page,
+                                       et échoue tant qu’il en reste ; les pages générées sont les mêmes)
 Compatible Python 3.8, bibliothèque standard uniquement.
 """
 import html
@@ -16,34 +18,37 @@ import json
 import math
 import os
 import re
+import sys
 from html.parser import HTMLParser
 
 ICI = os.path.dirname(os.path.abspath(__file__))
-MAQUETTE = os.path.join(ICI, "..", "..", "maquette")
-with open(os.path.join(MAQUETTE, "data", "catalogue.json"), encoding="utf-8") as f:
+with open(os.path.join(ICI, "data", "catalogue.json"), encoding="utf-8") as f:
     CATALOGUE = json.load(f)
-with open(os.path.join(MAQUETTE, "assets", "img", "_sizes.json"), encoding="utf-8") as f:
+with open(os.path.join(ICI, "assets", "img", "_sizes.json"), encoding="utf-8") as f:
     TAILLES = json.load(f)
 with open(os.path.join(ICI, "data", "hautes-pyrenees.json"), encoding="utf-8") as f:
     CONTOUR = json.load(f)
 
-IMG = "../../maquette/assets/img/"
+IMG = "assets/img/"
 SITE = "https://terregravee.fr"
 PRODUITS = {p["slug"]: p for p in CATALOGUE}
 PLAQUES = [p for p in CATALOGUE if p["collection"] != "accessoires"]
 # Adresses du futur site en ligne, pour les données structurées, robots.txt, sitemap.xml et llms.txt (1er novembre 2026).
 # On garde les adresses actuelles de WordPress pour n’avoir rien à rediriger : /produits/<slug>/, /propos/, /tuto/,
 # /contact/, /creations/. Seule la carte des lieux est nouvelle : /carte-des-lieux/ (et non /carte/, que WordPress redirige
-# aujourd’hui vers la carte cadeau). qr.html attend l’adresse contenue dans le QR code.
+# aujourd’hui vers la carte cadeau). Le QR code d’Aquensis contient https://www.terregravee.fr : il mène à l’accueil, pas à qr.html.
 URL_EN_LIGNE = {
     "index.html": SITE + "/", "collection.html": SITE + "/produits/", "carte.html": SITE + "/carte-des-lieux/",
     "atelier.html": SITE + "/propos/", "sur-mesure.html": SITE + "/creations/", "installation.html": SITE + "/tuto/",
     "contact.html": SITE + "/contact/",
+    # Pages légales : /cgv/ et /politique/ (aujourd’hui « Mentions légales et confidentialité ») existent déjà ;
+    # les mentions légales, séparées, prennent une nouvelle adresse.
+    "cgv.html": SITE + "/cgv/", "confidentialite.html": SITE + "/politique/", "mentions-legales.html": SITE + "/mentions-legales/",
 }
 for _p in CATALOGUE:
     URL_EN_LIGNE["produit-{}.html".format(_p["slug"])] = _p["url_actuelle"]
-# Hypothèse de mise en ligne : les images du catalogue (../../maquette/assets/img) et celles de ce dossier (assets/img)
-# sont servies ensemble sous /assets/img/. Si le site les range ailleurs, il suffit de changer cette constante.
+# Hypothèse de mise en ligne : les images de ce dossier (assets/img) sont servies sous /assets/img/.
+# Si le site les range ailleurs, il suffit de changer cette constante.
 IMG_EN_LIGNE = SITE + "/assets/img/"
 ORG_ID = SITE + "/#organisation"
 SITE_ID = SITE + "/#site"
@@ -51,12 +56,12 @@ SITE_ID = SITE + "/#site"
 DATE_CONTENU = "2026-11-01"
 # Avis neutralisés (réponses du 31 octobre 2026) : les 9 avis du site actuel ne peuvent pas être présentés comme
 # des avis de clients vérifiés (Code de la consommation, L121-4 ; sanctions L132-2). La v4 n’en affiche aucun.
-# Le catalogue partagé avec les autres maquettes n’est pas modifié : on vide seulement la copie chargée ici.
+# Le fichier data/catalogue.json n’est pas modifié : on vide seulement la copie chargée ici.
 for _p in CATALOGUE:
     _p["avis"] = []
 
-# Dessins tirés de la planche misc/autres-plaques.webp (recadrés une fois avec Pillow, voir README).
-# Le Casque du Lhéris n’est pas annoncé (réponse du 31 octobre 2026) : son dessin reste dans assets/img, sans être affiché.
+# Dessins tirés de la planche misc/autres-plaques.webp de l’ancienne v0, restée dans l’historique git (recadrés une fois avec Pillow, voir README).
+# Le Casque du Lhéris n’est pas annoncé (réponse du 31 octobre 2026) : son dessin a été retiré le 1er novembre 2026.
 DESSINS = {
     "la-transhumance": ("assets/img/dessin-la-transhumance.webp", 199, 398),
     "liris": ("assets/img/dessin-liris.webp", 199, 398),  # étape « Dessin » de la page L’atelier
@@ -240,7 +245,7 @@ def cartel_court(p):
 
 
 # ---------------------------------------------------------------------------
-# Textes du catalogue : corrections avant affichage (reprises de la v1)
+# Textes du catalogue : corrections avant affichage
 # Chaque ancien texte doit exister : si le catalogue change, le script s’arrête.
 # ---------------------------------------------------------------------------
 CORRECTIONS = {
@@ -310,7 +315,7 @@ def histoire(p):
     return paras
 
 
-# Deux ou trois phrases factuelles par lieu ou animal (reprises de la v1) : faits publics, jamais sur la marque.
+# Deux ou trois phrases factuelles par lieu ou animal : faits publics, jamais sur la marque.
 LIEU_TEXTE = {
     "le-pic-du-midi": "2 877 m. Un observatoire occupe le sommet depuis la fin du XIXe siècle, et le Pic se voit depuis toute la plaine de Tarbes. La plaque en dessine la silhouette et le ciel étoilé.",
     "le-tourmalet": "2 115 m, entre Barèges et La Mongie. C’est le col le plus souvent franchi par le Tour de France. La route est fermée l’hiver.",
@@ -601,6 +606,10 @@ def typo_texte(t):
     t = re.sub(r"(\d) (€|m|km|cm|mm|jours|%|Mo|plaques|avis|lieux|modèles|niches|illustrations|animaux|étapes|ans|e)(?![\wÀ-ÿ])", r"\1" + NBSP + r"\2", t)
     t = t.replace(" × ", NBSP + "×" + NBSP)
     t = t.replace("N° ", "N°" + NBSP).replace("art. ", "art." + NBSP)
+    # Dates : jamais de coupure entre le jour et le mois (« 14 décembre »), ni entre le jour de la semaine et son numéro (« lundi 14 »)
+    t = re.sub(r"(?<![\d,.])(\d{1,2}) (janvier|février|mars|avril|mai|juin|juillet|août|septembre|octobre|novembre|décembre)(?![\wÀ-ÿ])",
+               r"\1" + NBSP + r"\2", t)
+    t = re.sub(r"(?<![\wÀ-ÿ])(lundi|mardi|mercredi|jeudi|vendredi|samedi|dimanche) (\d)", r"\1" + NBSP + r"\2", t)
     return t
 
 
@@ -626,8 +635,8 @@ def typo(doc):
 # ---------------------------------------------------------------------------
 NAV = [("collection.html", "Collection"), ("carte.html", "Carte"), ("atelier.html", "L’atelier"),
        ("sur-mesure.html", "Sur mesure"), ("contact.html", "Contact")]
-POLICES = ("https://fonts.googleapis.com/css2?family=Allerta+Stencil&family=Barlow+Semi+Condensed:ital,wght@0,500;0,600;1,500"
-           "&family=Jost:ital,wght@0,400;0,500;0,600;1,400&family=Marcellus&display=swap")
+# Polices hébergées dans assets/fonts/ et déclarées en tête de galerie.css (font-display: swap) : plus aucun lien vers
+# Google Fonts. Pas de préchargement : il produit des avertissements en file:// et dans le fichier unique.
 # Le logo au coq de Romain (réponse du 31 octobre 2026) : l’emblème dans l’en-tête, à côté du nom au pochoir
 # (texte alternatif vide : l’image est décorative, le nom est écrit) ; le logo complet dans le pied de page.
 EMBLEME = '<img class="marque__embleme" src="assets/img/logo-embleme.webp" width="274" height="192" alt="">'
@@ -681,8 +690,9 @@ def pied():
           <li><a href="installation.html">Installation et kit LED</a></li>
           <li><a href="contact.html#livraison">Livraison et retours</a></li>
           <li><a class="pied__retractation" href="contact.html#retractation">Renoncer au contrat ici</a></li>
-          <li><a href="{site}/cgv/">Conditions générales de vente</a></li>
-          <li><a href="{site}/politique/">Mentions légales et confidentialité</a></li>
+          <li><a href="cgv.html">Conditions générales de vente</a></li>
+          <li><a href="mentions-legales.html">Mentions légales</a></li>
+          <li><a href="confidentialite.html">Confidentialité et cookies</a></li>
         </ul>
       </div>
       <div>
@@ -701,13 +711,13 @@ def pied():
       <p>Prix TTC, TVA non applicable (art. 293 B du CGI) · Photos : Romain Fourneaux</p>
     </div>
   </div>
-</footer>""".format(logo=LOGO_COMPLET, site=SITE, tel=TELEPHONE, mediateur=MEDIATEUR)
+</footer>""".format(logo=LOGO_COMPLET, tel=TELEPHONE, mediateur=MEDIATEUR)
 
 
 def bandeau_noel(fichier):
     """Bandeau de Noël sous le bandeau de la maquette, sur toutes les pages : très contrasté, sans compte à rebours ni urgence.
     Une seule destination pour « Idées cadeaux » : le filtre de la collection. Sur l’accueil, le bloc de Noël suit juste
-    en dessous : sur téléphone, le bandeau s’y réduit à une ligne (galerie.css, .bandeau-noel--accueil)."""
+    en dessous et dit déjà tout : le bandeau s’y efface tant que le bloc est visible (galerie.css, .bandeau-noel--accueil)."""
     offre = (selon("neutre", "Du 27 novembre au 14 décembre : livraison offerte et " + GOODIES, "strong")
              + selon("avant", "Dès le 27 novembre : livraison offerte et " + GOODIES, "strong")
              + selon("pendant", "Livraison offerte et " + GOODIES + " jusqu’au 14 décembre", "strong")
@@ -782,9 +792,6 @@ def page(fichier, titre, description, contenu, actif=None, jsonld=None, classe="
 <meta name="description" content="{desc}">
 <meta name="robots" content="noindex, nofollow">
 <meta name="color-scheme" content="light dark">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="{polices}">
 <link rel="stylesheet" href="assets/galerie.css">
 {donnees}
 </head>
@@ -793,7 +800,7 @@ def page(fichier, titre, description, contenu, actif=None, jsonld=None, classe="
 <div class="bandeau-maquette">
   <div class="wrap bandeau-maquette__ligne">
     <p>Maquette version 4 · brouillon non publié · paiements désactivés</p>
-    <p class="bandeau-maquette__liens"><button type="button" class="apercu-noel" data-apercu-noel aria-pressed="false" hidden><span class="apercu-noel__voyant" aria-hidden="true"></span>Voir pendant l’offre de Noël</button><a href="notes.html">Notes de la maquette</a><a href="../index.html">Comparer les versions</a></p>
+    <p class="bandeau-maquette__liens"><button type="button" class="apercu-noel" data-apercu-noel aria-pressed="false" hidden><span class="apercu-noel__voyant" aria-hidden="true"></span>Voir pendant l’offre de Noël</button><a href="notes.html">Notes de la maquette</a></p>
   </div>
 </div>
 {noel}
@@ -816,7 +823,7 @@ def page(fichier, titre, description, contenu, actif=None, jsonld=None, classe="
     {panier_noel}
     <p data-livraison-normale>Livraison : 5 € par commande, quel que soit le nombre d’articles. Aucuns frais pour une carte cadeau seule, envoyée par e-mail.</p>
     <p>{zone}, en {modes}. {expedition}.</p>
-    <button type="button" class="btn btn--plein" disabled aria-describedby="commande-desactivee">Commander</button>
+    <button type="button" class="btn btn--plein" disabled aria-describedby="commande-desactivee">Commander avec obligation de paiement</button>
     <p id="commande-desactivee">Maquette : la commande et le paiement sont désactivés. Le panier reste dans ce navigateur.</p>
   </div>
 </div>
@@ -824,7 +831,7 @@ def page(fichier, titre, description, contenu, actif=None, jsonld=None, classe="
 <script src="assets/galerie.js"></script>
 </body>
 </html>
-""".format(fixe=' data-noel-fixe="{}"'.format(ETAT_NOEL) if ETAT_NOEL else "", titre=e(titre), desc=e(description), polices=POLICES.replace("&", "&amp;"), donnees=donnees, classe=classe,
+""".format(fixe=' data-noel-fixe="{}"'.format(ETAT_NOEL) if ETAT_NOEL else "", titre=e(titre), desc=e(description),  donnees=donnees, classe=classe,
            noel=bandeau_noel(fichier), panier_noel=panier_noel(), entete=entete(actif), contenu=contenu, pied=pied(), zone=ZONE_LIVRAISON, modes=MODES_LIVRAISON, expedition=EXPEDITION)
     if ETAT_NOEL:
         # Blocs entiers datés (bandeau, bloc de l’accueil, encarts) : masqués d’avance selon l’état figé
@@ -1192,47 +1199,104 @@ def faq(entrees, ouvrir_premier=False):
 # passe en tête et reprend « Nos coups de cœur », qui revient à sa place le 15 décembre.
 # ---------------------------------------------------------------------------
 
+def sommets_noel():
+    """Décor du bloc de Noël : trois plans de crêtes et la neige des sommets, en SVG dans la page, au bas du panneau kraft
+    (les couleurs viennent de galerie.css : crêtes kraft et neige crème en clair, crêtes bronze et neige au clair de lune
+    en sombre ; le plan le plus proche a la couleur du mur des plaques). Silhouette dessinée pour l’ambiance, pas le relevé
+    d’un massif réel.
+    Aucun sommet ne monte au-dessus de y = 60 : sur très grand écran, le haut du dessin peut être rogné sans rien perdre."""
+    plans = [
+        # (nom, crête, limite des neiges ou None)
+        ("lointain", [(0, 128), (40, 118), (84, 124), (130, 100), (160, 108), (206, 80), (236, 90), (270, 72), (300, 84), (338, 78),
+                      (380, 104), (430, 96), (470, 112), (520, 88), (556, 96), (600, 70), (628, 78), (664, 60), (690, 66), (720, 62),
+                      (760, 90), (800, 84), (846, 104), (890, 92), (930, 100), (972, 76), (1004, 84), (1040, 66), (1066, 74), (1100, 70),
+                      (1140, 98), (1190, 90), (1236, 108), (1280, 86), (1316, 94), (1360, 80), (1400, 96), (1440, 90)], 98),
+        ("loin", [(0, 170), (60, 154), (110, 162), (170, 136), (210, 146), (256, 126), (300, 140), (350, 150), (410, 132), (450, 140),
+                  (500, 124), (540, 134), (600, 156), (660, 146), (720, 160), (780, 138), (820, 146), (870, 128), (910, 140), (960, 158),
+                  (1020, 146), (1080, 154), (1130, 132), (1170, 140), (1220, 124), (1262, 136), (1310, 154), (1370, 144), (1440, 152)], 138),
+        ("pres", [(0, 214), (90, 196), (170, 204), (260, 182), (340, 196), (430, 188), (520, 204), (610, 192), (700, 206), (790, 194),
+                  (880, 200), (980, 184), (1070, 198), (1160, 190), (1250, 204), (1340, 192), (1440, 200)], None),
+    ]
+    defs, traces = [], []
+    for nom, points, neige in plans:
+        d = "M" + " L".join("{} {}".format(x, y) for x, y in points) + " L1440 240 L0 240 Z"
+        if neige is None:
+            traces.append('<path class="noel__crete-{}" d="{}"/>'.format(nom, d))
+            continue
+        # Plans du fond : plus clairs en haut, la lumière du matin sur les crêtes
+        defs.append('<linearGradient id="noel-crete-{n}" gradientUnits="userSpaceOnUse" x1="0" y1="{h}" x2="0" y2="240">'
+                    '<stop offset="0" class="noel__stop-{n}-haut"/><stop offset="1" class="noel__stop-{n}-bas"/></linearGradient>'.format(
+                        n=nom, h=min(y for _, y in points)))
+        traces.append('<path fill="url(#noel-crete-{n})" d="{d}"/>'.format(n=nom, d=d))
+        # Limite des neiges irrégulière (deux sinusoïdes), découpée par la crête : seuls les sommets sont blancs
+        # Le fondu (opaque à neige - 16, 55 % à neige + 12, voir .noel__stop-neige-fin) garde le bord irrégulier visible jusqu’en bas
+        bord = [(x, int(neige + 7 * math.sin(x * .061 + neige) + 4 * math.sin(x * .19 + 1))) for x in range(0, 1441, 24)]
+        defs.append('<clipPath id="noel-decoupe-{n}"><path d="{d}"/></clipPath>'
+                    '<linearGradient id="noel-neige-{n}" gradientUnits="userSpaceOnUse" x1="0" y1="{h}" x2="0" y2="{b}">'
+                    '<stop offset="0" class="noel__stop-neige"/><stop offset="1" class="noel__stop-neige-fin"/></linearGradient>'.format(
+                        n=nom, d=d, h=neige - 16, b=neige + 12))
+        traces.append('<path class="noel__neige" fill="url(#noel-neige-{n})" clip-path="url(#noel-decoupe-{n})" d="M0 0 L1440 0 L{bord} Z"/>'.format(
+            n=nom, bord=" L".join("{} {}".format(x, y) for x, y in reversed(bord))))
+    return """<svg class="noel__sommets" viewBox="0 0 1440 240" preserveAspectRatio="xMidYMax slice" aria-hidden="true" focusable="false">
+  <defs>{defs}</defs>
+  {traces}
+</svg>""".format(defs="".join(defs), traces="\n  ".join(traces))
+
+
 def bloc_noel():
-    """Première section de l’accueil pendant la saison : l’offre, la date limite, quatre plaques à offrir, la carte cadeau
-    et le kit LED. L’image de Noël est la plaque rétroéclairée en blanc chaud (simulation), plutôt que des décorations.
+    """Première section de l’accueil pendant la saison : la vitrine de l’atelier la veille de Noël. Un panneau kraft
+    lumineux, « NOËL » au pochoir comme une découpe laser, l’offre et la date limite d’un seul bloc, une grande plaque
+    dorée rétroéclairée en blanc chaud (simulation du kit LED, avec son cartel) dans la niche de la vitrine, la carte
+    cadeau ; au bas du panneau, les crêtes enneigées, puis les quatre plaques en cartes nettes sur un kraft plus profond.
     Masquée à partir du 15 décembre : « Nos coups de cœur » reprend alors sa place plus bas."""
     plaques = grille([PRODUITS[s] for s in ("le-pic-du-midi", "lours", "lisard", "le-cerf")], fins={"lisard": "dore", "le-cerf": "gris"})
     offre = (selon("neutre", "Livraison offerte et " + GOODIES + " du 27 novembre au 14 décembre")
              + selon("avant", "À partir du 27 novembre : livraison offerte et " + GOODIES + ", jusqu’au 14 décembre. Aujourd’hui, la livraison coûte encore 5 €.")
              + selon("pendant", "Livraison offerte et " + GOODIES + " jusqu’au 14 décembre")
              + " " + GOODIES_NOTE)
-    mur = "".join(plaque(PRODUITS[s], f, "(max-width: 900px) 30vw, 150px", eager=True,
-                        alt="Simulation : plaque {} rétroéclairée en blanc chaud".format(PRODUITS[s]["nom"]))
-                  for s, f in (("le-pic-du-midi", "noir"), ("le-cerf", "gris")))
+    pic = PRODUITS["le-pic-du-midi"]
+    vitrine = plaque(pic, "dore", "(max-width: 900px) 40vw, 230px", eager=True,
+                     alt="Simulation : plaque {} dorée, rétroéclairée en blanc chaud".format(pic["nom"]))
     return """<section class="noel" id="noel" aria-labelledby="titre-noel" data-noel-quand="neutre avant pendant">
-  <div class="wrap noel__grille">
-    <div class="noel__texte">
-      <p class="surtitre">Noël 2026 · Idées cadeaux</p>
-      <h2 id="titre-noel">Offrir les Pyrénées pour Noël</h2>
-      <p class="noel__offre">{offre}</p>
-      <p class="noel__limite">Pour recevoir avant Noël, commandez au plus tard le lundi 14 décembre. {dates}</p>
-      <p class="noel__actions"><a class="btn" href="collection.html#cadeaux">Toutes les idées cadeaux</a></p>
-    </div>
-    <div class="noel__vitrine">
-      <div class="noel__mur">{mur}</div>
-      <div class="noel__led">
-        <h3><a href="produit-led.html">Le kit LED</a> <span>+ 15 €</span></h3>
-        <p>En option sur la fiche de chaque plaque. L’atelier le colle au dos : le soir, la plaque s’allume, par exemple en blanc chaud. Simulation ci-dessus.</p>
+  <div class="noel__panneau">
+    <div class="wrap noel__grille">
+      <div class="noel__texte">
+        <p class="noel__enseigne"><span class="noel__decoupe">Noël</span> <span class="noel__millesime">2026 · Idées cadeaux</span></p>
+        <h2 id="titre-noel">Offrir les Pyrénées pour Noël</h2>
+        <div class="noel__offre-bloc">
+          <p class="noel__offre">{offre}</p>
+          <p class="noel__limite">Pour recevoir avant Noël, commandez au plus tard le lundi 14 décembre. {dates}</p>
+        </div>
+        <p class="noel__actions"><a class="btn" href="collection.html#cadeaux">Toutes les idées cadeaux</a></p>
+      </div>
+      <div class="noel__vitrine">
+        <figure class="noel__oeuvre">
+          <div class="noel__niche">{vitrine}</div>
+          <figcaption class="noel__cartel">Simulation · {nom}, finition dorée, LED blanc chaud</figcaption>
+        </figure>
+        <div class="noel__led">
+          <h3><a href="produit-led.html">Le kit LED</a> <span>+ 15 €</span></h3>
+          <p>En option sur la fiche de chaque plaque. L’atelier le colle au dos : le soir, la plaque s’allume, par exemple en blanc chaud. Simulation ci-dessus.</p>
+        </div>
+      </div>
+      <div class="noel__cadeau">
+        <a class="noel__cadeau-visuel" href="produit-carte-cadeau.html" tabindex="-1" aria-hidden="true">{carte}</a>
+        <div>
+          <h3><a href="produit-carte-cadeau.html">La carte cadeau</a> <span>65 €</span></h3>
+          <p>Une plaque au choix, valable 2 ans. La carte est envoyée par e-mail ou à imprimer, sans frais de port : la bonne solution si la date limite d’envoi est passée.</p>
+        </div>
       </div>
     </div>
-    <div class="noel__plaques">
+    {sommets}
+  </div>
+  <div class="noel__mur">
+    <div class="wrap noel__plaques">
       <h3 class="noel__sous-titre">Quatre plaques à offrir <span>65 € · noir, gris ou doré</span></h3>
       {plaques}
     </div>
-    <div class="noel__cadeau">
-      <a class="noel__cadeau-visuel" href="produit-carte-cadeau.html" tabindex="-1" aria-hidden="true">{carte}</a>
-      <div>
-        <h3><a href="produit-carte-cadeau.html">La carte cadeau</a> <span>65 €</span></h3>
-        <p>Une plaque au choix, valable 2 ans. La carte est envoyée par e-mail ou à imprimer, sans frais de port : la bonne solution si la date limite d’envoi est passée.</p>
-      </div>
-    </div>
   </div>
-</section>""".format(offre=offre, dates=DATES_NOEL, mur=mur, plaques=plaques, carte=img("misc/carte-cadeau.webp", "", "120px"))
+</section>""".format(offre=offre, dates=DATES_NOEL, vitrine=vitrine, nom=e(pic["nom"]), plaques=plaques, sommets=sommets_noel(),
+                     carte=img("misc/carte-cadeau.webp", "", "120px"))
 
 
 def accueil():
@@ -1514,7 +1578,7 @@ def jsonld_plaque(p):
     if p["decor"]:
         rels.append(p["decor"])
     for rel in rels:
-        assert os.path.exists(os.path.join(MAQUETTE, "assets", "img", rel)), "Image du JSON-LD manquante : " + rel
+        assert os.path.exists(os.path.join(ICI, "assets", "img", rel)), "Image du JSON-LD manquante : " + rel
     produit = {
         "@type": "Product", "@id": url + "#produit", "name": "{}, plaque murale en aluminium".format(p["nom"]),
         "description": phrase_plaque(p), "url": url, "image": [IMG_EN_LIGNE + r for r in rels],
@@ -2126,7 +2190,7 @@ def contact():
              note("tarif par mode à confirmer", "decision"),
              selon("neutre avant pendant", "{}, et {} {} {} (offre de Noël).".format(OFFRE, GOODIES, GOODIES_NOTE, DATES_NOEL), "p"))),
         ("Puis-je changer d’avis ?",
-         "<p>Oui. Vous avez 14 jours après réception pour vous rétracter, comme la loi le prévoit. Les frais de retour restent à votre charge et les pièces personnalisées sont exclues. "
+         "<p>Oui. Vous avez 14 jours après réception pour vous rétracter, comme la loi le prévoit. Les frais de retour restent à votre charge et les créations sur mesure sont exclues (voir les CGV, article 8). "
          "Adresse de retour : {}. <a href=\"#retractation\">Renoncer au contrat ici</a></p>".format(RETOUR)),
         ("Ma plaque est arrivée abîmée, que faire ?",
          "<p>Envoyez une photo et une description par e-mail. Vous choisissez : une nouvelle plaque, sans frais, ou le remboursement. "
@@ -2172,16 +2236,16 @@ def contact():
       <p class="surtitre">Rétractation</p>
       <h2 id="titre-retractation">Renoncer au contrat ici</h2>
       <p class="chapo">Vous avez 14 jours après réception pour vous rétracter, sans avoir à vous justifier. Remplissez la déclaration, puis confirmez-la : un accusé de réception vous est envoyé par e-mail.</p>
-      <p class="attenue petit">Les frais de retour sont à votre charge. Vous répondez seulement d’une dépréciation due à d’autres manipulations que celles nécessaires pour examiner la plaque. Les pièces personnalisées sont exclues.</p>
+      <p class="attenue petit">Les frais de retour sont à votre charge. Vous répondez seulement d’une dépréciation due à d’autres manipulations que celles nécessaires pour examiner la plaque. Les créations sur mesure sont exclues (voir les <a href="cgv.html#cgv-sur-mesure">CGV, article 8</a>).</p>
       <p class="attenue petit">Adresse de retour : {retour}.</p>
     </div>
     <form class="formulaire retract" data-retract>
       <fieldset class="retract__etape" data-retract-etape="1">
         <legend>1. Votre déclaration de rétractation</legend>
         <div class="champs">
-          <div class="champ"><label for="nom-retract">Nom</label><input id="nom-retract" name="nom" type="text" autocomplete="name" required></div>
+          <div class="champ"><label for="nom-retract">Nom et prénom</label><input id="nom-retract" name="nom" type="text" autocomplete="name" required></div>
           <div class="champ"><label for="commande-retract">Numéro de commande</label><input id="commande-retract" name="commande" type="text" required></div>
-          <div class="champ champ--large"><label for="email-retract">E-mail utilisé pour la commande</label><input id="email-retract" name="email" type="email" autocomplete="email" required></div>
+          <div class="champ champ--large"><label for="email-retract">E-mail pour recevoir l’accusé de réception</label><input id="email-retract" name="email" type="email" autocomplete="email" required aria-describedby="aide-email-retract"><small id="aide-email-retract">Celui de la commande ou un autre.</small></div>
           <div class="champ champ--large"><label for="articles-retract">Articles concernés (facultatif)</label><input id="articles-retract" name="articles" type="text"><small>Sans précision, la rétractation porte sur toute la commande.</small></div>
         </div>
         <button class="btn" type="submit">Renoncer au contrat</button>
@@ -2215,7 +2279,7 @@ def qr_page():
 <div class="wrap">
   <header class="entete-page qr-tete">
     <div class="qr-tete__texte">
-      <p class="surtitre">Depuis le QR code d’Aquensis</p>
+      <p class="surtitre">Le décor d’Aquensis</p>
       <h1>Vous avez vu le décor d’Aquensis ?</h1>
             <p class="chapo">Les panneaux découpés et rétroéclairés, au-dessus des bassins, sont à l’origine de Terre Gravée. Les douze plaques de la collection reprennent des dessins de ce décor, en 60 × 30 cm pour la maison : <strong>65 € la plaque</strong>, en noir, gris ou doré.</p>
       <p class="heros__actions"><a class="btn" href="collection.html">Voir la collection</a><a class="btn btn--ligne" href="carte.html#aquensis">Aquensis sur la carte</a></p>
@@ -2232,19 +2296,381 @@ def qr_page():
 <div class="wrap">
   <aside class="encadre qr-note" aria-labelledby="titre-qr-note">
     <h2 id="titre-qr-note">Note de maquette, pour Romain</h2>
-    <p>Cette page reçoit les visiteurs qui scannent le QR code des panneaux d’Aquensis. Elle n’est pas dans le menu.</p>
-    <p>Le QR code est déjà posé : un code imprimé ne change plus d’adresse. Sur le site réel, cette page devra donc répondre à l’adresse que contient ce QR code, à relever sur l’image du dossier Marketing du Drive {fournir}. Pas de paramètre de suivi à ajouter : pour compter les visites venues du panneau, il faudra lire cette adresse dans l’outil de mesure, sans cookie ou après consentement.</p>
+    <p>Cette page était prévue pour les visiteurs qui scannent le QR code des panneaux d’Aquensis. Elle n’est pas dans le menu.</p>
+    <p>Le QR code est déjà posé, et un code imprimé ne change plus d’adresse. Il contient <code>https://www.terregravee.fr</code> (décodé le 1<sup>er</sup> novembre 2026 sur l’image du dossier Marketing du Drive) : il mène à l’accueil du site, pas à cette page. Aujourd’hui, cette adresse avec « www » redirige déjà vers https://terregravee.fr/ : il faut garder cette redirection au changement de site. Les visites venues du panneau se mêlent aux autres visites de l’accueil : on ne pourra pas les compter à part.</p>
+    <p>Cette page peut servir plus tard à un nouveau support (affichette, carte glissée dans un colis, nouveau panneau) avec sa propre adresse, ou être retirée. {decision}</p>
   </aside>
 </div>""".format(photo=img("misc/aquensis.webp", "Le bassin d’Aquensis à Bagnères-de-Bigorre et, au-dessus, les panneaux découpés et rétroéclairés du décor d’origine",
                            "(max-width: 900px) 92vw, 560px", eager="haute"),
-                 grille=grille(PLAQUES, eager=4), fournir=note("adresse du QR code à fournir"))
+                 grille=grille(PLAQUES, eager=4), decision=note("usage de cette page à décider", "decision"))
     page("qr.html", "Vous avez vu le décor d’Aquensis ? · Terre Gravée",
          "Vous avez vu le décor d’Aquensis à Bagnères-de-Bigorre ? Les douze plaques de la collection reprennent ses dessins, en 60 × 30 cm, 65 € la plaque.",
          contenu, classe="page-qr")
 
 
 # ---------------------------------------------------------------------------
-# Notes : relevé du site actuel (v0) et essentiel de la stratégie (v1)
+# Pages légales : mentions légales, conditions générales de vente, confidentialité et cookies (1er novembre 2026)
+# Chaque affirmation juridique vient d’une source officielle consultée le 1er novembre 2026 (Légifrance,
+# service-public.gouv.fr, entreprendre.service-public.gouv.fr, CNIL), citée en commentaire au-dessus du passage.
+# Ce qui manque ou reste à trancher garde un marqueur, listé par « python3 build.py --mise-en-ligne ».
+# ---------------------------------------------------------------------------
+
+DATE_LEGAL = "1<sup>er</sup> novembre 2026"
+PAGES_LEGALES = [("mentions-legales.html", "Mentions légales"), ("cgv.html", "Conditions générales de vente"),
+                 ("confidentialite.html", "Confidentialité et cookies")]
+# Hébergeur actuel : entité contractante de Hostinger pour les clients de l’Union européenne, d’après ses conditions
+# universelles de service (hostinger.com/legal/universal-terms-of-service-agreement, mises à jour le 29 septembre 2026,
+# consultées le 1er novembre 2026). Elles ne donnent aucun numéro de téléphone, exigé par la LCEN (art. 1-1, I, 4°) : marqueur.
+HEBERGEUR = ("Hostinger International Limited", "61 Lordou Vironos str., 6023 Larnaca, Chypre", "compliance@hostinger.com")
+EMAIL = '<a href="mailto:contact@terregravee.fr">contact@terregravee.fr</a>'
+ADRESSE_EI = "16 rue du Pic du Midi, 65200 Gerde"
+
+
+def page_legale(fichier, titre, chapo, sections, titre_page, description):
+    """Gabarit commun des trois pages légales : en-tête, liens entre les trois pages, sommaire et articles numérotés."""
+    entre = "".join('<a href="{}"{}>{}</a>'.format(f, ' aria-current="page"' if f == fichier else "", n) for f, n in PAGES_LEGALES)
+    # Le sommaire numérote déjà (galerie.css) : on retire le numéro d’article des titres des CGV
+    sommaire = "".join('<li><a href="#{}">{}</a></li>'.format(i, re.sub(r"^\d+\. ", "", t)) for i, t, _ in sections)
+    corps = "".join("""<section class="note-bloc legal-article" id="{i}" aria-labelledby="t-{i}">
+        <h2 id="t-{i}">{t}</h2>
+        {c}
+      </section>""".format(i=i, t=t, c=c) for i, t, c in sections)
+    contenu = """
+<div class="wrap notes-page page-legale__corps">
+  <header class="entete-page">
+    <p class="surtitre">Informations légales</p>
+    <h1>{titre}</h1>
+    <p class="chapo">{chapo}</p>
+    <p class="attenue petit">Dernière mise à jour : {date}.</p>
+    <nav class="sommaire-court" aria-label="Pages légales">{entre}</nav>
+  </header>
+  <div class="notes-grille">
+    <nav class="sommaire" aria-label="Sommaire">
+      <p class="sommaire__titre">Sommaire</p>
+      <ol>{sommaire}</ol>
+    </nav>
+    <div class="notes-corps">
+      {corps}
+    </div>
+  </div>
+</div>""".format(titre=titre, chapo=chapo, date=DATE_LEGAL, entre=entre, sommaire=sommaire, corps=corps)
+    page(fichier, titre_page, description, contenu, classe="page-legale")
+
+
+def texte(*paragraphes):
+    return '<div class="texte">{}</div>'.format("".join(paragraphes))
+
+
+def liste(*items):
+    return '<ul class="liste-simple">{}</ul>'.format("".join("<li>{}</li>".format(x) for x in items))
+
+
+def mentions_legales():
+    # LCEN (loi n° 2004-575), art. 1-1 (version du 23 mai 2024) : pour une personne physique, nom, prénoms, domicile,
+    # téléphone et, si elle est inscrite au RCS ou au RNE, le numéro d’inscription ; nom du directeur de la publication ;
+    # nom, adresse et téléphone de l’hébergeur. Art. 19 : adresse électronique et téléphone permettant un contact effectif.
+    # Mention « EI » : entreprendre.service-public.gouv.fr/vosdroits/F37351 (vérifiée le 13 octobre 2026).
+    sections = [
+        ("ml-editeur", "Éditeur du site", """<dl class="coordonnees">
+          <div><dt>Entreprise</dt><dd>Romain Fourneaux EI (entrepreneur individuel, micro-entreprise), sous le nom commercial Terre Gravée</dd></div>
+          <div><dt>Adresse</dt><dd>{adresse}<br><span class="attenue">Pas d’accueil du public</span></dd></div>
+          <div><dt>SIRET</dt><dd>941 234 270 00010</dd></div>
+          <div><dt>Immatriculation</dt><dd>Registre et numéro d’inscription {immat}</dd></div>
+          <div><dt>TVA</dt><dd>TVA non applicable, art. 293 B du CGI</dd></div>
+          <div><dt>Contact</dt><dd>{email} · {tel}</dd></div>
+        </dl>""".format(adresse=ADRESSE_EI, immat=note("immatriculation à confirmer"), email=EMAIL, tel=TELEPHONE)),
+        ("ml-publication", "Directeur de la publication", texte("<p>Romain Fourneaux.</p>")),
+        ("ml-hebergeur", "Hébergeur", """<dl class="coordonnees">
+          <div><dt>Société</dt><dd>{0}</dd></div>
+          <div><dt>Adresse</dt><dd>{1}</dd></div>
+          <div><dt>Contact</dt><dd>{2} · téléphone {3}</dd></div>
+        </dl>""".format(HEBERGEUR[0], HEBERGEUR[1], HEBERGEUR[2], note("téléphone de l’hébergeur à fournir"))),
+        # Code de la propriété intellectuelle, art. L122-4 : toute reproduction sans le consentement de l’auteur est illicite.
+        ("ml-propriete", "Propriété intellectuelle", texte(
+            "<p>Les dessins des plaques sont l’œuvre de Maude Villatte et Lola Jacquet ; ils sont reproduits avec leur accord écrit. "
+            "Les photos sont de Romain Fourneaux. Les textes, le logo et la présentation du site appartiennent à Romain Fourneaux (Terre Gravée). Auteur du logo : {}</p>".format(note("auteur du logo à confirmer")),
+            "<p>Toute reproduction ou représentation, même partielle, de ces dessins, photos et textes sans autorisation écrite est interdite "
+            "(Code de la propriété intellectuelle, art. L122-4). Pour une demande, écrivez à {}.</p>".format(EMAIL))),
+        ("ml-credits", "Crédits", liste(
+            "Polices Marcellus, Jost, Barlow Semi Condensed et Allerta Stencil, sous licence SIL Open Font License 1.1, hébergées avec le site.",
+            "Contour du département des Hautes-Pyrénées simplifié d’après les données de l’IGN (Licence Ouverte 2.0). Les courbes de niveau sont décoratives.")),
+        ("ml-donnees", "Données personnelles, cookies, conditions de vente", texte(
+            '<p>L’usage de vos données et le stockage dans votre navigateur sont décrits dans la page <a href="confidentialite.html">Confidentialité et cookies</a>. '
+            'Les ventes sont régies par les <a href="cgv.html">conditions générales de vente</a>, qui indiquent aussi le médiateur de la consommation.</p>',
+            "<p>Pour signaler un contenu ou une erreur sur le site : {}.</p>".format(EMAIL))),
+    ]
+    page_legale("mentions-legales.html", "Mentions légales",
+                "Qui édite et qui héberge le site terregravee.fr, à qui appartiennent les dessins et les photos.",
+                sections, "Mentions légales · Terre Gravée",
+                "Mentions légales de Terre Gravée : Romain Fourneaux EI, 16 rue du Pic du Midi, 65200 Gerde, SIRET 941 234 270 00010. Directeur de la publication, hébergeur, propriété intellectuelle.")
+
+
+# Modèle d’encadré des garanties légales, recopié mot pour mot : annexe à l’article D211-2 du Code de la consommation,
+# partie A (biens hors animaux domestiques), créée par le décret n° 2022-946 du 29 juin 2022 (JORF du 30 juin 2022),
+# en vigueur depuis le 1er octobre 2022.
+ENCADRE_GARANTIES = [
+    "Le consommateur dispose d’un délai de deux ans à compter de la délivrance du bien pour obtenir la mise en œuvre de la garantie légale de conformité en cas d’apparition d’un défaut de conformité. Durant ce délai, le consommateur n’est tenu d’établir que l’existence du défaut de conformité et non la date d’apparition de celui-ci.",
+    "Lorsque le contrat de vente du bien prévoit la fourniture d’un contenu numérique ou d’un service numérique de manière continue pendant une durée supérieure à deux ans, la garantie légale est applicable à ce contenu numérique ou ce service numérique tout au long de la période de fourniture prévue. Durant ce délai, le consommateur n’est tenu d’établir que l’existence du défaut de conformité affectant le contenu numérique ou le service numérique et non la date d’apparition de celui-ci.",
+    "La garantie légale de conformité emporte obligation pour le professionnel, le cas échéant, de fournir toutes les mises à jour nécessaires au maintien de la conformité du bien.",
+    "La garantie légale de conformité donne au consommateur droit à la réparation ou au remplacement du bien dans un délai de trente jours suivant sa demande, sans frais et sans inconvénient majeur pour lui.",
+    "Si le bien est réparé dans le cadre de la garantie légale de conformité, le consommateur bénéficie d’une extension de six mois de la garantie initiale.",
+    "Si le consommateur demande la réparation du bien, mais que le vendeur impose le remplacement, la garantie légale de conformité est renouvelée pour une période de deux ans à compter de la date de remplacement du bien.",
+    "Le consommateur peut obtenir une réduction du prix d’achat en conservant le bien ou mettre fin au contrat en se faisant rembourser intégralement contre restitution du bien, si :",
+    "1° Le professionnel refuse de réparer ou de remplacer le bien ;",
+    "2° La réparation ou le remplacement du bien intervient après un délai de trente jours ;",
+    "3° La réparation ou le remplacement du bien occasionne un inconvénient majeur pour le consommateur, notamment lorsque le consommateur supporte définitivement les frais de reprise ou d’enlèvement du bien non conforme, ou s’il supporte les frais d’installation du bien réparé ou de remplacement ;",
+    "4° La non-conformité du bien persiste en dépit de la tentative de mise en conformité du vendeur restée infructueuse.",
+    "Le consommateur a également droit à une réduction du prix du bien ou à la résolution du contrat lorsque le défaut de conformité est si grave qu’il justifie que la réduction du prix ou la résolution du contrat soit immédiate. Le consommateur n’est alors pas tenu de demander la réparation ou le remplacement du bien au préalable.",
+    "Le consommateur n’a pas droit à la résolution de la vente si le défaut de conformité est mineur.",
+    "Toute période d’immobilisation du bien en vue de sa réparation ou de son remplacement suspend la garantie qui restait à courir jusqu’à la délivrance du bien remis en état.",
+    "Les droits mentionnés ci-dessus résultent de l’application des articles L. 217-1 à L. 217-32 du code de la consommation.",
+    "Le vendeur qui fait obstacle de mauvaise foi à la mise en œuvre de la garantie légale de conformité encourt une amende civile d’un montant maximal de 300 000 euros, qui peut être porté jusqu’à 10 % du chiffre d’affaires moyen annuel (article L. 241-5 du code de la consommation).",
+    "Le consommateur bénéficie également de la garantie légale des vices cachés en application des articles 1641 à 1649 du code civil, pendant une durée de deux ans à compter de la découverte du défaut. Cette garantie donne droit à une réduction de prix si le bien est conservé ou à un remboursement intégral contre restitution du bien.",
+]
+
+
+def cgv():
+    sections = [
+        # Information précontractuelle : Code de la consommation, L111-1 et L221-5. Langue et CGV applicables : usage courant.
+        ("cgv-objet", "1. Objet et vendeur", texte(
+            "<p>Ces conditions générales de vente s’appliquent aux achats faits sur le site terregravee.fr par des consommateurs, "
+            "pour une livraison en {zone}. Elles sont acceptées au moment de la commande ; celles qui s’appliquent sont celles en vigueur à la date de la commande. "
+            "Le contrat est conclu en français.</p>".format(zone=ZONE_LIVRAISON),
+            # Art. D211-1 : nom et coordonnées du professionnel qui répond des garanties légales
+            "<p>Vendeur : Romain Fourneaux EI, sous le nom commercial Terre Gravée, {adresse}. SIRET 941 234 270 00010. "
+            "E-mail : {email}. Téléphone : {tel}. C’est lui qui répond des garanties légales décrites à l’article 10.</p>".format(
+                adresse=ADRESSE_EI, email=EMAIL, tel=TELEPHONE))),
+        ("cgv-produits", "2. Produits", texte(
+            "<p>Plaques murales en aluminium découpé au laser et thermolaqué, de 60 × 30 cm, en finition noire, grise ou dorée. "
+            "Les caractéristiques de chaque modèle sont décrites sur sa fiche. Les photos montrent des plaques réelles ; la simulation du rétroéclairage donne une idée de l’effet, "
+            "les couleurs réelles du ruban LED diffèrent.</p>",
+            "<p>Kit LED : en option d’une plaque uniquement, pour 15 € de plus ; l’atelier le colle au dos de la plaque avant l’envoi. "
+            "Il ne se vend pas seul. La carte cadeau et les créations sur mesure ont leurs propres règles (articles 7 et 8).</p>")),
+        # Prix : Code de la consommation, L112-1 ; franchise en base de TVA : CGI, art. 293 B.
+        ("cgv-prix", "3. Prix", texte(
+            "<p>Les prix sont indiqués en euros, toutes taxes comprises. TVA non applicable, art. 293 B du CGI. "
+            "Le prix appliqué est celui affiché au moment de la validation de la commande.</p>",
+            "<p>Les frais de livraison s’ajoutent au prix : 5 € par commande, quel que soit le nombre d’articles ; aucun frais pour une carte cadeau seule, envoyée par e-mail. "
+            "Le montant total, frais compris, s’affiche dans le panier avant la validation. "
+            "Les offres temporaires, comme la livraison offerte de fin d’année, sont annoncées sur le site avec leurs dates de début et de fin.</p>")),
+        # Bouton de commande : L221-14 ; confirmation sur support durable : L221-13 ;
+        # archivage des contrats d’au moins 120 € pendant 10 ans : L213-1 et D213-1 (entreprendre.service-public.gouv.fr/vosdroits/F10029).
+        ("cgv-commande", "4. Commande", texte(
+            "<p>Vous choisissez le modèle, la finition et, si vous le voulez, le kit LED, puis vous vérifiez le panier : articles, prix, frais de livraison, mode de livraison et total. "
+            "Vous acceptez ces conditions, puis vous validez avec le bouton « Commander avec obligation de paiement ». La commande est conclue une fois le paiement accepté.</p>",
+            "<p>Une confirmation de la commande vous est envoyée par e-mail, avec ces conditions. "
+            "Pour une commande d’au moins 120 €, le contrat est conservé pendant 10 ans à compter de la livraison, et vous pouvez y accéder sur simple demande.</p>")),
+        ("cgv-paiement", "5. Paiement", texte(
+            "<p>Par carte bancaire (Stripe), PayPal, Apple Pay ou Google Pay, au moment de la commande. "
+            "Les données de paiement sont saisies et traitées par Stripe ou PayPal : Terre Gravée n’a pas accès à votre numéro de carte.</p>")),
+        # Délai de livraison : L216-1 (à défaut d’indication, au plus tard 30 jours après la conclusion du contrat) ;
+        # retard, résolution après mise en demeure et remboursement sous 14 jours : articles L216-1 et suivants
+        # (service-public.gouv.fr, fiche F10037, et Légifrance, chapitre « Délivrance, fourniture et transfert de risque »).
+        ("cgv-livraison", "6. Livraison", texte(
+            "<p>En {zone}, au choix : Colissimo en point retrait, Mondial Relay en point relais ou Chronopost. Pas de retrait sur place à Gerde. "
+            "Tarif : 5 € par commande pour les trois modes {tarif}.</p>".format(zone=ZONE_LIVRAISON, tarif=note("tarif par mode à confirmer", "decision")),
+            "<p>{exp} après la commande. Délai maximal de livraison : {fournir}. À défaut, la livraison a lieu au plus tard 30 jours après la commande (Code de la consommation, art. L216-1).</p>".format(
+                exp=EXPEDITION, fournir=A_FOURNIR),
+            "<p>En cas de retard, vous pouvez demander par écrit (e-mail ou courrier) que la livraison ait lieu dans un délai supplémentaire raisonnable ; "
+            "si elle n’a pas lieu dans ce délai, vous pouvez mettre fin au contrat, et les sommes versées vous sont remboursées au plus tard 14 jours après "
+            "(Code de la consommation, art. L216-1 et suivants).</p>",
+            "<p>Colis abîmé : envoyez une photo et une description à {email}. Vous choisissez : une nouvelle plaque, sans frais, ou le remboursement.</p>".format(email=EMAIL))),
+        ("cgv-carte", "7. Carte cadeau", texte(
+            "<p>La carte cadeau coûte 65 €. Elle vaut une plaque au choix, sur tous les modèles disponibles, même si le prix change, "
+            "et elle est valable 2 ans à compter de l’achat. Elle est envoyée par e-mail, ou à imprimer chez vous, sans frais de port. Délai d’envoi : {}</p>".format(
+                note("délai d’envoi à fournir")),
+            "<p>La livraison de la plaque choisie avec la carte reste à payer : 5 € par commande, sauf offre en cours à la date de la commande de la plaque.</p>")),
+        # Acompte : le chapitre « Arrhes et acomptes » (L214-1 à L214-3) ne s’applique pas aux commandes spéciales sur devis (L214-3) :
+        # la qualification d’acompte vaut par le contrat, sans citer L214-1.
+        # Exclusion du droit de rétractation : L221-28, 3° (Légifrance, version du 28 mai 2022).
+        ("cgv-sur-mesure", "8. Créations sur mesure", texte(
+            "<p>Une création sur mesure fait l’objet d’un devis. La commande est passée quand vous validez le devis et versez un acompte de 30 % du prix ; "
+            "le solde est payé selon les modalités écrites sur le devis. La somme versée à la commande est un acompte : la commande est ferme.</p>",
+            "<p>Délai : 1 à 2 mois après la validation du devis, précisé sur le devis. "
+            "Une pièce confectionnée selon vos spécifications ou nettement personnalisée n’ouvre pas de droit de rétractation (art. L221-28, 3°).</p>")),
+        # Rétractation : L221-18 (14 jours à compter de la réception ; plusieurs biens livrés séparément : réception du dernier),
+        # L221-21 et D221-5 (fonction « renoncer au contrat ici », « confirmer la rétractation », accusé de réception sur support durable,
+        # en vigueur depuis le 19 juin 2026 : ordonnance n° 2026-2 et décret n° 2026-3 du 5 janvier 2026),
+        # L221-23 (renvoi sous 14 jours, frais de retour, dépréciation), L221-24 (remboursement sous 14 jours, report, même moyen de paiement),
+        # L221-28, 3° (exclusion). Option d’une gamme standard : ne suffit pas à rendre un bien personnalisé (service-public.gouv.fr, F10485).
+        ("cgv-retractation", "9. Droit de rétractation", texte(
+            "<p>Vous avez 14 jours pour vous rétracter, sans avoir à vous justifier ni à payer de pénalité. Le délai expire 14 jours après le jour où vous, "
+            "ou une personne autre que le transporteur que vous avez désignée, prenez physiquement possession du bien ; pour une commande livrée en plusieurs colis, "
+            "14 jours après la prise de possession du dernier. "
+            "S’il se termine un samedi, un dimanche ou un jour férié, il est prolongé jusqu’au jour ouvrable suivant. "
+            "Pour la carte cadeau, le délai court à partir de son achat {}.</p>".format(note("à confirmer")),
+            "<p>Choisir une finition ou le kit LED proposés sur le site ne rend pas la plaque personnalisée : le droit de rétractation s’applique. "
+            "Il ne s’applique pas aux créations sur mesure (article 8).</p>",
+            "<p>Pour vous rétracter, avant la fin du délai :</p>",
+            liste('la fonction <a href="contact.html#retractation">« Renoncer au contrat ici »</a>, accessible pendant tout le délai : vous indiquez votre nom et prénom, '
+                  "la commande et l’adresse e-mail où recevoir l’accusé de réception, puis vous cliquez sur « Confirmer la rétractation ». "
+                  "Un accusé de réception vous est envoyé par e-mail, avec le contenu de votre déclaration, la date et l’heure de son envoi ;",
+                  "ou le formulaire ci-dessous, ou toute autre déclaration claire, par e-mail à contact@terregravee.fr ou par courrier."),
+            "<p>Renvoyez le bien au plus tard 14 jours après nous avoir informés de votre décision, à : {}. Les frais de retour sont à votre charge. "
+            "Vous ne répondez que de la dépréciation due à d’autres manipulations que celles nécessaires pour établir la nature, les caractéristiques et le bon fonctionnement du bien.</p>".format(RETOUR),
+            # Annexe à R221-3 : si un mode de livraison devient plus cher que le moins cher proposé (question chronopost-prix),
+            # ajouter « à l’exception des frais supplémentaires si vous avez choisi un mode de livraison plus coûteux que le mode standard le moins cher proposé ».
+            "<p>Nous vous remboursons tous les paiements reçus, frais de livraison compris, au plus tard 14 jours après avoir été informés de votre rétractation, "
+            "avec le moyen de paiement que vous avez utilisé, sauf si vous acceptez expressément un autre moyen, sans frais pour vous. "
+            "Le remboursement peut être différé jusqu’à la récupération du bien ou jusqu’à ce que vous ayez fourni une preuve de son expédition, à la première de ces dates.</p>",
+            # Modèle de formulaire : annexe à l’article R221-1 (version du 28 mai 2022, décret n° 2022-424), complété avec les coordonnées du vendeur.
+            """<div class="formulaire-type" role="group" aria-labelledby="titre-formulaire-type">
+            <p class="formulaire-type__titre" id="titre-formulaire-type">Modèle de formulaire de rétractation</p>
+            <p>(Veuillez compléter et renvoyer le présent formulaire uniquement si vous souhaitez vous rétracter du contrat.)</p>
+            <p>À l’attention de Romain Fourneaux EI, Terre Gravée, 16 rue du Pic du Midi, 65200 Gerde, contact@terregravee.fr :</p>
+            <p>Je/nous (*) vous notifie/notifions (*) par la présente ma/notre (*) rétractation du contrat portant sur la vente du bien (*)/pour la prestation de services (*) ci-dessous :</p>
+            <p>Commandé le (*)/reçu le (*) :</p>
+            <p>Nom du (des) consommateur(s) :</p>
+            <p>Adresse du (des) consommateur(s) :</p>
+            <p>Signature du (des) consommateur(s) (uniquement en cas de notification du présent formulaire sur papier) :</p>
+            <p>Date :</p>
+            <p>(*) Rayez la mention inutile.</p>
+          </div>""")),
+        ("cgv-garanties", "10. Garanties légales", texte(
+            "<p>Toutes les plaques, le kit LED compris, bénéficient de la garantie légale de conformité et de la garantie des vices cachés. "
+            "Pour les mettre en œuvre, écrivez à {email} ou au {adresse}, ou appelez le {tel}.</p>".format(email=EMAIL, adresse=ADRESSE_EI, tel=TELEPHONE))
+            + '<div class="encadre-loi" role="note" aria-label="Garanties légales">{}</div>'.format("".join("<p>{}</p>".format(x) for x in ENCADRE_GARANTIES))),
+        # Médiation : L612-1 (recours gratuit), L612-2 (réclamation écrite préalable), L616-1 (coordonnées du médiateur).
+        ("cgv-mediation", "11. Réclamations et médiation", texte(
+            "<p>Pour toute réclamation, écrivez d’abord à {email} ou au {adresse}.</p>".format(email=EMAIL, adresse=ADRESSE_EI),
+            "<p>Si le désaccord persiste après cette réclamation écrite, vous pouvez recourir gratuitement au médiateur de la consommation : {}</p>".format(MEDIATEUR))),
+        ("cgv-donnees", "12. Données personnelles", texte(
+            '<p>Les données de votre commande servent à l’exécuter et à respecter nos obligations légales. Le détail est dans la page <a href="confidentialite.html">Confidentialité et cookies</a>.</p>')),
+        # Compétence : R631-3 (juridiction du lieu où le consommateur demeurait au moment de la conclusion du contrat).
+        ("cgv-droit", "13. Droit applicable", texte(
+            "<p>Ces conditions sont soumises au droit français. En cas de litige, vous pouvez saisir le tribunal du lieu où vous demeuriez au moment de la commande "
+            "ou de l’événement à l’origine du litige, ou tout autre tribunal compétent (Code de la consommation, art. R631-3).</p>")),
+    ]
+    page_legale("cgv.html", "Conditions générales de vente",
+                "Prix, commande, paiement, livraison, carte cadeau, sur mesure, droit de rétractation, garanties légales et médiation.",
+                sections, "Conditions générales de vente · Terre Gravée",
+                "Conditions générales de vente de Terre Gravée : prix TTC, livraison 5 € par commande en France métropolitaine hors Corse, rétractation sous 14 jours, garanties légales, carte cadeau, sur mesure.")
+
+
+def confidentialite():
+    # Informations à donner : RGPD, art. 13 ; liste reprise d’entreprendre.service-public.gouv.fr/vosdroits/F37351.
+    # Durées : validées par Romain le 31 octobre 2026 ; factures : Code de commerce, L123-22 ; contrats d’au moins 120 € : L213-1 ;
+    # prospects et clients : référentiel « gestion des activités commerciales » de la CNIL (3 ans).
+    # Traceurs : loi n° 78-17, art. 82 ; panier exempté de consentement (CNIL, « Cookies et traceurs : que dit la loi ? ») ;
+    # mesure d’audience : 13 mois pour le traceur, 25 mois pour les données (CNIL, page du 4 juillet 2025) ;
+    # choix du bandeau gardé 6 mois : bonne pratique de la recommandation de la CNIL (délibération n° 2020-092).
+    traitements = [
+        ("Commandes, livraison, service client", "Identité, adresses, e-mail, téléphone, contenu de la commande, paiement (sans numéro de carte)",
+         "Exécution du contrat (RGPD, art. 6.1.b)"),
+        ("Factures et comptabilité", "Données de la facture", "Obligation légale (art. 6.1.c)"),
+        ("Rétractation, garanties, réclamations", "Identité, commande, échanges", "Exécution du contrat et obligation légale"),
+        ("Réponse à vos messages et devis sur mesure", "Nom, e-mail, message, description du projet",
+         "Mesures précontractuelles prises à votre demande (art. 6.1.b) ; intérêt légitime à répondre aux autres messages (art. 6.1.f)"),
+        ("Lettre d’information", "E-mail", "Votre consentement, donné en cochant une case (décochée par défaut) (art. 6.1.a), retirable à chaque envoi"),
+        ("Offres aux clients pour des produits analogues", "E-mail",
+         "Intérêt légitime, sauf opposition au moment de la commande ou à chaque envoi (Code des postes et des communications électroniques, art. L34-5)"),
+    ]
+    tableau = "".join("<tr><th scope=\"row\">{}</th><td data-label=\"Quelles données\">{}</td><td data-label=\"Base légale\">{}</td></tr>".format(a, b, c)
+                      for a, b, c in traitements)
+    durees = liste(
+        "Factures : 10 ans (Code de commerce, art. L123-22).",
+        "Autres données de commande : 5 ans après la commande. Contrat d’une commande d’au moins 120 € : 10 ans à compter de la livraison (Code de la consommation, art. L213-1).",
+        "Clients, pour la lettre et les offres : 3 ans après le dernier achat.",
+        "Inscrits à la lettre sans achat, et demandes restées sans suite : 3 ans après le dernier contact.",
+        "Cookies de mesure d’audience, s’il y en a : 13 mois au plus.",
+        "Choix exprimé dans le bandeau des cookies, s’il y en a un : 6 mois.")
+    sections = [
+        ("cf-responsable", "Responsable du traitement", texte(
+            "<p>Romain Fourneaux EI (Terre Gravée), {adresse}. Contact : {email}.</p>".format(adresse=ADRESSE_EI, email=EMAIL))),
+        ("cf-traitements", "Données, finalités et bases légales", """<div class="tableau-defile"><table class="tableau tableau--empile">
+          <caption class="visuellement-cache">Données traitées, finalités et bases légales</caption>
+          <thead><tr><th scope="col">Pourquoi</th><th scope="col">Quelles données</th><th scope="col">Base légale</th></tr></thead>
+          <tbody>{tableau}</tbody>
+        </table></div>""".format(tableau=tableau) + texte(
+            "<p>Les champs marqués comme obligatoires dans les formulaires sont nécessaires pour traiter votre commande ou votre demande.</p>")),
+        ("cf-destinataires", "Destinataires", texte(
+            "<p>Vos données sont lues par Romain Fourneaux. Elles ne sont ni vendues ni louées. Les prestataires suivants en reçoivent la part nécessaire à leur mission :</p>",
+            liste("le transporteur choisi (Colissimo, Mondial Relay ou Chronopost) : nom, adresse de livraison, e-mail ou téléphone, pour la livraison ;",
+                  "les prestataires de paiement Stripe et PayPal, pour le paiement et la lutte contre la fraude ;",
+                  "l’hébergeur du site, {} ;".format(HEBERGEUR[0]),
+                  "l’outil d’envoi de la lettre d’information {}.".format(note("outil à préciser"))),
+            "<p>Stripe et PayPal peuvent traiter certaines données hors de l’Union européenne, avec les garanties décrites dans leurs politiques de confidentialité {}.</p>".format(
+                note("transferts à vérifier")))),
+        ("cf-durees", "Durées de conservation", durees),
+        ("cf-cookies", "Cookies et stockage dans votre navigateur", texte(
+            "<p>Cette maquette ne dépose aucun cookie {revoir}. Le panier est gardé dans le stockage local de votre navigateur, sur votre appareil : il n’est envoyé à personne, "
+            "et vous pouvez l’effacer en vidant le panier ou les données du site dans votre navigateur. L’interrupteur d’aperçu de Noël, propre à la maquette, y garde aussi son réglage. "
+            "Ce stockage sert uniquement au service que vous avez demandé : il n’exige pas de consentement (loi Informatique et Libertés, art. 82).</p>".format(
+                revoir=note("à revoir avec la boutique en ligne")),
+            "<p>Aucun outil de mesure d’audience n’est en place à ce jour {}. S’il en faut un qui demande votre consentement, un bandeau vous laissera accepter ou refuser aussi facilement, "
+            "et vous pourrez changer d’avis à tout moment ; vos choix seront gardés 6 mois.</p>".format(note("outil de mesure à choisir", "decision")),
+            "<p>Les polices de caractères sont hébergées avec le site : aucune donnée n’est envoyée à un service de polices.</p>")),
+        # Droits : RGPD, art. 15 à 22 ; réponse sous un mois (art. 12.3) ; directives après le décès : loi n° 78-17, art. 85 ;
+        # réclamation auprès de la CNIL (art. 77).
+        ("cf-droits", "Vos droits", texte(
+            "<p>Vous pouvez demander l’accès à vos données, leur rectification, leur effacement, la limitation de leur traitement ou leur portabilité, "
+            "vous opposer à leur traitement, en particulier à la prospection, à tout moment, et retirer votre consentement. "
+            "Vous pouvez aussi donner des directives sur le sort de vos données après votre décès.</p>",
+            "<p>Écrivez à {email} ou au {adresse}. Une réponse vous est donnée dans un délai d’un mois. "
+            "Si vous estimez que vos droits ne sont pas respectés, vous pouvez adresser une réclamation à la CNIL "
+            "(<a href=\"https://www.cnil.fr/fr/plaintes\">cnil.fr/fr/plaintes</a>).</p>".format(email=EMAIL, adresse=ADRESSE_EI))),
+    ]
+    page_legale("confidentialite.html", "Confidentialité et cookies",
+                "Quelles données Terre Gravée utilise, pourquoi, combien de temps, avec qui, et comment exercer vos droits.",
+                sections, "Confidentialité et cookies · Terre Gravée",
+                "Politique de confidentialité de Terre Gravée : données des commandes, destinataires, durées de conservation, droits RGPD, cookies et stockage dans le navigateur.")
+
+
+# ---------------------------------------------------------------------------
+# Contrôle « prêt pour la mise en ligne » : python3 build.py --mise-en-ligne
+# ---------------------------------------------------------------------------
+
+def marqueurs_restants():
+    """Marqueurs (à fournir, à confirmer, décisions) des pages publiques, page par page : {page: [(sorte, texte, nombre)]}."""
+    resultat = {}
+    for fichier in PAGES_PUBLIQUES + ["qr.html"]:
+        with open(os.path.join(ICI, fichier), encoding="utf-8") as f:
+            doc = f.read()
+        compte = {}
+        for m in re.finditer(r'<span class="note note--(manque|decision)">(.*?)</span>', doc, flags=re.S):
+            texte_m = normal_espaces(m.group(2))
+            if texte_m in ("à fournir", "à confirmer"):
+                # Marqueur générique : on ajoute la fin de la phrase qui le précède, pour savoir ce qu’il attend
+                avant = normal_espaces(re.sub(r"<[^>]+>", " ", doc[max(0, m.start() - 600):m.start()]))
+                avant = re.split(r"(?<=[.!?])\s", avant)[-1][-70:].strip(" :")
+                texte_m += " (après « …{} »)".format(avant)
+            cle = (m.group(1), texte_m)
+            compte[cle] = compte.get(cle, 0) + 1
+        if compte:
+            resultat[fichier] = sorted((s, t, n) for (s, t), n in compte.items())
+    return resultat
+
+
+def normal_espaces(t):
+    return re.sub(r"\s+", " ", html.unescape(t).replace(NBSP, " ").replace(FINE, " ")).strip()
+
+
+def verifier_mise_en_ligne():
+    """Liste les marqueurs restants et renvoie 1 s’il en reste (0 sinon). notes.html n’est pas déployée : elle n’est pas contrôlée."""
+    restants = marqueurs_restants()
+    if not restants:
+        print("Prêt pour la mise en ligne : aucun marqueur dans les pages publiques.")
+    else:
+        total = sum(n for liste_m in restants.values() for _, _, n in liste_m)
+        print("Pas prêt pour la mise en ligne : {} marqueurs dans {} pages publiques.".format(total, len(restants)))
+        for fichier in sorted(restants):
+            print("\n" + fichier)
+            for sorte, texte_m, n in restants[fichier]:
+                print("  [{}] {}{}".format("décision" if sorte == "decision" else "manque", texte_m, " (×{})".format(n) if n > 1 else ""))
+        tous = {}
+        for liste_m in restants.values():
+            for sorte, texte_m, n in liste_m:
+                tous[(sorte, texte_m)] = tous.get((sorte, texte_m), 0) + 1
+        print("\nRésumé, par marqueur (nombre de pages) :")
+        for (sorte, texte_m), n in sorted(tous.items(), key=lambda x: (-x[1], x[0][1])):
+            print("  {:>3}  [{}] {}".format(n, "décision" if sorte == "decision" else "manque", texte_m))
+    print("\nÀ faire aussi au moment de la mise en ligne (notes.html, « À la mise en ligne de la maquette ») : retirer le noindex et le bandeau de maquette, "
+          "activer la commande et le paiement, ajouter les balises canonical.")
+    return 1 if restants else 0
+
+
+# ---------------------------------------------------------------------------
+# Notes : relevé du site actuel et essentiel de la stratégie
 # ---------------------------------------------------------------------------
 
 def src(url, label):
@@ -2322,7 +2748,7 @@ TECHNIQUES = [
      "64 % des testeurs cherchent les frais de port sur la fiche (" + src("https://baymard.com/blog/show-shipping-costs-on-product-pages", "Baymard") + ") ; 41 % des sites n’indiquent pas de date de livraison à l’étape du choix de livraison (" + src("https://baymard.com/blog/shipping-speed-vs-delivery-date", "Baymard") + ").",
      "Taux d’abandon de panier, questions « quand vais-je recevoir ? »."),
     ("La barre d’achat collante sur mobile",
-     "Reprise de la v0 : le nom, le prix et le bouton restent en bas de l’écran quand on fait défiler une fiche.",
+     "Le nom, le prix et le bouton restent en bas de l’écran quand on fait défiler une fiche.",
      "Elle ne gagne qu’entre 12,5 et 27 % des tests selon " + src("https://cleancommit.io/blog/sticky-add-to-cart-buttons/", "Cleancommit") + " : à mesurer avant de la garder.",
      "Taux d’ajout au panier sur mobile, avant et après."),
     ("Une lettre d’information honnête",
@@ -2332,7 +2758,9 @@ TECHNIQUES = [
 ]
 
 LEGAL = [
-    ("Bouton de rétractation", "L’ordonnance n° 2026-2 du 5 janvier 2026 transpose la directive (UE) 2023/2673 ; le décret n° 2026-3 du même jour en fixe les modalités. Depuis le 19 juin 2026, le site doit offrir sans frais une fonction « Renoncer au contrat ici », facile à trouver pendant tout le délai ; amende administrative jusqu’à 75 000 € pour une personne morale et, selon des commentateurs, 15 000 € pour une personne physique, votre cas {}. La maquette met un lien dans le pied de chaque page et un formulaire simulé en deux étapes sur la page Contact. ".format(note("à vérifier sur Légifrance")) + src("https://hlc.com/fr/publications/transposition-under-french-law-of-the-eu-mandatory-withdrawal-button-for-online-sales", "Hogan Lovells")),
+    ("Bouton de rétractation", "L’ordonnance n° 2026-2 du 5 janvier 2026 a modifié l’article L221-21 : depuis le 19 juin 2026, un site qui vend en ligne doit offrir, sans frais, une fonction pour se rétracter. Le décret n° 2026-3 du même jour (article D221-5) en fixe les modalités : intitulé « renoncer au contrat ici » ou formule analogue, visible et facile d’accès pendant tout le délai ; nom et prénom, identification du contrat et moyen de recevoir l’accusé de réception ; confirmation par « confirmer la rétractation » ; accusé de réception sur support durable avec le contenu, la date et l’heure. Amende administrative jusqu’à 15 000 € pour une personne physique, votre cas, et 75 000 € pour une personne morale (L242-13). Vérifié sur Légifrance le 1er novembre 2026. La maquette met un lien dans le pied de chaque page et un formulaire simulé en deux étapes sur la page Contact. " + src("https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000032226834", "L221-21") + ", " + src("https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000053303365", "D221-5") + ", " + src("https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000032226356", "L242-13")),
+    ("Pages légales", "Mentions légales, conditions générales de vente et politique de confidentialité sont rédigées dans la maquette (pied de page). Mentions : LCEN, art. 1-1 et 19 (nom, adresse, téléphone, immatriculation, directeur de la publication, nom, adresse et téléphone de l’hébergeur). CGV : encadré des garanties légales recopié du modèle officiel (annexe à l’article D211-2, décret n° 2022-946), formulaire type de rétractation (annexe à l’article R221-1), acompte du sur-mesure stipulé comme tel. Confidentialité : informations de l’article 13 du RGPD et vos durées de conservation. Ce qui manque garde un marqueur. Une relecture par un juriste reste conseillée avant la mise en ligne. " + src("https://www.legifrance.gouv.fr/loda/id/JORFTEXT000000801164", "LCEN") + ", " + src("https://entreprendre.service-public.gouv.fr/vosdroits/F37351", "mentions obligatoires") + ", " + src("https://www.cnil.fr/fr/cookies-et-autres-traceurs/regles/cookies/que-dit-la-loi", "CNIL, traceurs")),
+    ("Bouton de commande", "Le bouton qui valide la commande doit porter la mention « commande avec obligation de paiement » ou une formule analogue (L221-14). Le bouton du panier de la maquette dit « Commander avec obligation de paiement ». " + src("https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000032226854", "L221-14")),
     ("Avis en ligne", "Les 9 avis du site actuel ne peuvent pas être présentés comme des avis de clients vérifiés : la maquette n’en affiche aucun, ni note ni étoile (L121-4, L132-2). Pour les vrais avis à venir : mention « publiés sans vérification d’achat », dates, ordre du plus récent au plus ancien, et la politique que vous avez validée (publication sous 7 jours, conservation 3 ans, motifs de refus, auteur prévenu, aucune contrepartie) dans la rubrique « Comment sont publiés les avis » (L111-7-2 ; D111-16 à D111-19). " + src("https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000049571119", "L111-7-2") + ", " + src("https://www.legifrance.gouv.fr/jorf/id/JORFARTI000035720943", "décret 2017-1436")),
     ("Médiateur de la consommation", "Un médiateur indépendant, référencé par la CECMC, est obligatoire (L612-1, L613-1) et ses coordonnées doivent figurer sur le site (L616-1) ; amende jusqu’à 3 000 € pour une personne physique (L641-1). « Moi-même » ne convient pas : voir les constats urgents. La maquette garde un marqueur dans le pied de page et la FAQ. " + src("https://www.economie.gouv.fr/mediation-conso", "economie.gouv.fr/mediation-conso")),
     ("Entrepreneur individuel", "Le nom est suivi de la mention « EI » sur les documents professionnels (décret n° 2022-725 du 28 avril 2022 ; art. R526-26 et suivants du Code de commerce) : « Romain Fourneaux EI » dans le pied de page et sur la page Contact."),
@@ -2342,7 +2770,7 @@ LEGAL = [
     ("Pratiques commerciales trompeuses", "Aucun stock, délai, label ou partenariat inventé, ni série limitée ou numérotation (les plaques n’en ont pas). L’histoire d’Aquensis est citée avec l’accord écrit de la SEMETHERM (sur papier, à conserver), qui couvre aussi la photo des bassins et du décor et les panneaux avec QR code ; elle ne présente jamais de partenariat ni de point de vente. Les modèles en préparation sont montrés sans photo de plaque. La livraison offerte de fin d’année est annoncée sans compte à rebours. " + src("https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000044563107", "L121-4 sur Légifrance")),
     ("Sur mesure", "Les pièces adaptées à la demande sont exclues du droit de rétractation (L221-28, 3°) : c’est écrit sur la page Sur mesure. " + src("https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000044563170", "Légifrance")),
     ("Lettre d’information", "Case non cochée, finalité écrite, désinscription à chaque envoi (L34-5 CPCE, RGPD). " + src("https://www.cnil.fr/fr/la-prospection-commerciale-par-courrier-electronique", "CNIL, prospection")),
-    ("Polices", "La maquette charge Google Fonts pour être prête à l’emploi. Un tribunal de Munich a condamné en 2022 un site qui transmettait ainsi l’adresse IP des visiteurs à Google : sur le site réel, héberger les polices soi-même. " + src("https://thehackernews.com/2022/01/german-court-rules-websites-embedding.html", "The Hacker News")),
+    ("Polices", "Depuis le 1er novembre 2026, la maquette héberge elle-même ses quatre polices (dossier assets/fonts, licence libre SIL OFL) : aucune adresse IP de visiteur n’est transmise à Google. Un tribunal de Munich a condamné en 2022 un site qui chargeait Google Fonts de cette façon. Le site réel doit garder ce fonctionnement. " + src("https://thehackernews.com/2022/01/german-court-rules-websites-embedding.html", "The Hacker News")),
     ("Formule « rayon de 150 km »", "Vous voulez la garder en nommant la ville au centre. Autour de Gerde, elle est fausse : Revel (31) est à environ {} km à vol d’oiseau. Centres qui la rendent vraie : {}. Autre solution : écrire « 160 km autour de Gerde ». Le mot « Dessin » est retiré de la formule : le lieu de travail des illustratrices n’est pas connu. Sur les pages, un marqueur « ville au centre à choisir » suit la formule.".format(
         KM_REVEL, " ; ".join("{} (Revel à {:.0f} km, Gerde à {:.0f} km)".format(v, km(c, REVEL), km(c, GERDE)) for v, c in CENTRES_150))),
 ]
@@ -2412,12 +2840,12 @@ A_FOURNIR_LISTE = [
     "La ville au centre du rayon de 150 km.",
     "Les photos manquantes : Le Cerf en noir, L’Abbaye de l’Escaladieu en doré, une mise en situation du Cirque de Gavarnie et du Cerf.",
     "Des photos réelles de la fabrication : découpe à Revel, thermolaquage, emballage.",
-    "L’adresse que contient le QR code posé à Aquensis (image du dossier Marketing du Drive).",
     "Le dessin du Jardin Massey.",
     "Les plaques sont-elles fabriquées à la commande ? Si oui, le délai de fabrication, à écrire sur les fiches et dans le délai de préparation des données structurées ; la disponibilité reste « en stock » (InStock), seule valeur reconnue par Google pour un produit qui se commande.",
     "Le délai d’envoi de l’e-mail de la carte cadeau (par exemple « dès la commande ») : à écrire sur sa fiche, puis à baliser (deliveryTime, que Google exige pour retenir la livraison gratuite de la carte).",
     "Les références (sku) des produits, si vous en voulez : elles sont vides dans WooCommerce, la maquette n’en invente pas.",
-    "À vérifier sur Légifrance : le décret n° 2026-3 du 5 janvier 2026 (fonction de rétractation) et le plafond de l’amende pour une personne physique.",
+    "Pour les mentions légales : la mention d’immatriculation telle qu’elle figure sur votre extrait Kbis ou votre avis d’inscription (par exemple « RCS [ville du greffe] 941 234 270 », ou le RNE pour une activité artisanale), et le numéro de téléphone de l’hébergeur (Hostinger ne le publie pas dans ses conditions de service : à demander au support ou à relever dans hPanel), exigés par la LCEN (art. 1-1).",
+    "L’auteur du logo au coq, à créditer dans les mentions légales comme les dessins.",
 ]
 
 A_VALIDER_LISTE = [
@@ -2425,6 +2853,7 @@ A_VALIDER_LISTE = [
     "Les outils de mesure d’audience (votre réponse : « je ne sais pas »). Recommandation : une mesure d’audience exemptée de consentement, réglée selon les conditions de la CNIL, sans bandeau ; ou Google Analytics, avec un bandeau de consentement.",
     "Le tarif de 5 € pour les trois modes de livraison (Colissimo, Mondial Relay, Chronopost) : hypothèse de la maquette.",
     "La barre d’achat collante sur mobile, à mesurer.",
+    "La page qr.html : le QR code d’Aquensis mène à l’accueil (https://www.terregravee.fr). La garder pour un futur support avec sa propre adresse, ou la retirer.",
     "Les robots d’entraînement des IA (GPTBot, ClaudeBot…) : autorisés dans le robots.txt de la maquette ; à bloquer si les illustratrices le demandent (voir « Être trouvé par les recherches IA »). Réserve pour Google-Extended : le bloquer ne touche ni Google Search ni les AI Overviews, mais l’application Gemini ne pourra plus s’appuyer sur vos pages.",
 ]
 
@@ -2439,9 +2868,23 @@ RECU_31_OCTOBRE = [
     "Kit LED : vendu seulement en option d’une plaque (la page du kit n’a plus de bouton d’achat) ; collé au dos par l’atelier ; câble USB sans chargeur ; dehors à l’abri de la pluie. Plaque dehors : oui, sans restriction. Éco-organisme : aucun, rien à afficher.",
     "Carte cadeau : valable 2 ans, une plaque au choix même si le prix change, livraison de la plaque à payer (5 €).",
     "Textes « Le lieu » et « L’histoire du modèle » validés. Aucun réseau social : liens retirés. Logo au coq en place. Accord écrit des illustratrices : oui. Photos : Romain Fourneaux. Les 12 plaques reprennent toutes des dessins du décor d’Aquensis.",
-    "SEMETHERM : l’accord couvre aussi la photo des bassins et du décor et les panneaux avec QR code, déjà posés.",
+    "SEMETHERM : l’accord couvre aussi la photo des bassins et du décor et les panneaux avec QR code, déjà posés. L’adresse du QR code, décodée le 1er novembre : https://www.terregravee.fr (l’accueil).",
     "Sur mesure : 1 à 2 mois après validation du devis, pas de prix affiché, acompte de 30 %, aluminium brut proposé. Bientôt : La Transhumance, Le Jardin Massey et les grands formats (60 × 120 cm, 150 €), sans date. Le Casque du Lhéris n’est pas annoncé.",
     "Lettre : une par trimestre au plus, outil pas encore choisi. Données des clients : hors prestataires techniques, seul le transporteur voit les coordonnées ; la politique de confidentialité devra aussi citer les prestataires de paiement (Stripe, PayPal), l’hébergeur et l’outil de la lettre (RGPD, art. 13) ; durées de conservation validées (factures 10 ans, autres données de commande 5 ans, clients et prospects 3 ans, cookies de mesure 13 mois au plus, choix du bandeau gardé 6 mois), à reprendre dans la politique de confidentialité du site réel.",
+]
+
+
+# Ce qui a été fait le 1er novembre 2026 (section « Fait le 1er novembre » des notes)
+FAIT_1ER_NOVEMBRE = [
+    "Seule la version 4 est gardée. Elle ne dépend plus d’aucun autre dossier : images, catalogue et polices sont dans le sien. Les versions 0 et 1 restent dans l’historique du dépôt.",
+    "Nouveau bloc de Noël en tête de l’accueil, sur un mur clair : crêtes des montagnes, plaques en vitrine avec leur cartel, carte cadeau ; le mode sombre est retravaillé.",
+    "Polices hébergées avec le site : plus aucune requête vers Google. En-tête corrigé sur les petits téléphones (320 px).",
+    "Trois pages légales, reliées depuis le pied de page : mentions légales, conditions générales de vente (avec l’encadré officiel des garanties légales et le formulaire type de rétractation), confidentialité et cookies. Chaque point juridique vient d’une source officielle, citée dans build.py ; ce qui manque garde un marqueur.",
+    "Bouton du panier renommé « Commander avec obligation de paiement » (L221-14) ; champ « Nom et prénom » dans la rétractation en ligne (D221-5).",
+    "Vérifié sur Légifrance : la fonction de rétractation (L221-21, D221-5, en vigueur depuis le 19 juin 2026) et son amende, jusqu’à 15 000 € pour une personne physique (L242-13).",
+    "Contrôle avant la mise en ligne : la commande <code>python3 build.py --mise-en-ligne</code> liste les marqueurs restants, page par page, et échoue tant qu’il en reste.",
+    "Le QR code d’Aquensis est décodé : il mène à https://www.terregravee.fr, donc à l’accueil, et non à la page qr.html.",
+    "Plan du site (sitemap.xml) et llms.txt : les trois pages légales sont ajoutées.",
 ]
 
 
@@ -2630,6 +3073,12 @@ IA_MISE_EN_LIGNE = [
     "Texte de Noël : une seule variante dans le HTML, celle du jour (constante <code>ETAT_NOEL</code> de build.py pour une reconstruction quotidienne, "
     "ou condition sur la date côté serveur). Sinon, un robot qui n’exécute pas JavaScript lit trois tarifs de livraison.",
     "Déclarer le sitemap dans Search Console et Bing Webmaster Tools, puis passer trois fiches dans le Test des résultats enrichis.",
+    "Pages légales : garder <code>/cgv/</code> et <code>/politique/</code> (confidentialité), créer <code>/mentions-legales/</code>. Garder la redirection de www.terregravee.fr vers terregravee.fr : c’est l’adresse du QR code d’Aquensis.",
+    "Commande WooCommerce : une case « Je ne souhaite pas recevoir d’offres de Terre Gravée par e-mail », décochée par défaut, au moment où l’e-mail est recueilli, "
+    "et un lien de désinscription dans chaque e-mail d’offre (Code des postes et des communications électroniques, art. L34-5). Sans cela, retirer la ligne « Offres aux clients » de la politique de confidentialité.",
+    "Politique de confidentialité, travail du développeur : où Stripe, PayPal et l’outil de la lettre traitent les données (transferts hors de l’Union européenne), "
+    "la liste des cookies de la boutique en ligne une fois choisie, et le point de départ du délai de rétractation de la carte cadeau (l’achat, proposé par la maquette), à faire relire.",
+    "Lancer <code>python3 build.py --mise-en-ligne</code> : il doit afficher « Prêt pour la mise en ligne », sans aucun marqueur.",
 ]
 
 
@@ -2678,7 +3127,7 @@ def bloc_ia():
 
 # --- Fichiers de production, écrits dans le dossier de la maquette, à déployer à la racine du site ---
 PAGES_PUBLIQUES = (["index.html", "collection.html", "carte.html", "atelier.html", "sur-mesure.html", "installation.html", "contact.html"]
-                   + ["produit-{}.html".format(p["slug"]) for p in CATALOGUE])
+                   + ["produit-{}.html".format(p["slug"]) for p in CATALOGUE] + [f for f, _ in PAGES_LEGALES])
 ROBOTS_RECHERCHE = ["Googlebot", "Bingbot", "Applebot", "OAI-SearchBot", "ChatGPT-User", "Claude-SearchBot", "Claude-User",
                     "PerplexityBot", "Perplexity-User"]
 # Robots d’entraînement. Google-Extended est à part : il règle aussi l’appui des réponses de l’application Gemini.
@@ -2708,7 +3157,7 @@ def fichiers_production():
                "Sitemap: {}/sitemap.xml".format(SITE), ""]
     urls = "".join("  <url><loc>{}</loc><lastmod>{}</lastmod></url>\n".format(URL_EN_LIGNE[f], DATE_CONTENU) for f in PAGES_PUBLIQUES)
     sitemap = ('<?xml version="1.0" encoding="UTF-8"?>\n<!-- {} Pages publiques seulement : ni notes.html, ni qr.html '
-               '(son adresse est celle du QR code, à fournir). -->\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{}</urlset>\n').format(entete, urls)
+               '(le QR code d’Aquensis mène à l’accueil ; usage de la page à décider). -->\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{}</urlset>\n').format(entete, urls)
     plaques = "\n".join("- [{}]({}): {}".format(p["nom"], p["url_actuelle"], " · ".join(p["cartel"])) for p in PLAQUES)
     # llms.txt commence directement par le titre H1 (format llmstxt.org), sans commentaire interne : la consigne de
     # déploiement et le niveau de preuve restent dans notes.html et le README
@@ -2731,11 +3180,17 @@ def fichiers_production():
 - [Installation et kit LED]({installation}): pose sans perçage, notice du kit
 - [Contact, livraison et rétractation]({contact}): coordonnées, livraison, retours, paiement
 
+## Informations légales
+- [Conditions générales de vente]({cgv}): prix, commande, livraison, rétractation, garanties légales
+- [Mentions légales]({mentions}): éditeur, hébergeur, propriété intellectuelle
+- [Confidentialité et cookies]({confidentialite}): données personnelles, durées de conservation, stockage local
+
 ## Plaques
 {plaques}
 """.format(zone=ZONE_LIVRAISON, expedition=EXPEDITION.lower(), collection=URL_EN_LIGNE["collection.html"],
            carte=URL_EN_LIGNE["carte.html"], atelier=URL_EN_LIGNE["atelier.html"], installation=URL_EN_LIGNE["installation.html"],
-           contact=URL_EN_LIGNE["contact.html"], plaques=plaques)
+           contact=URL_EN_LIGNE["contact.html"], cgv=URL_EN_LIGNE["cgv.html"], mentions=URL_EN_LIGNE["mentions-legales.html"],
+           confidentialite=URL_EN_LIGNE["confidentialite.html"], plaques=plaques)
     for nom, texte in (("robots.txt", "\n".join(robots)), ("sitemap.xml", sitemap), ("llms.txt", llms)):
         with open(os.path.join(ICI, nom), "w", encoding="utf-8") as f:
             f.write(texte)
@@ -2763,7 +3218,7 @@ def notes():
   <header class="entete-page">
     <p class="surtitre">Notes de la maquette · version 4</p>
     <h1>Galerie de territoire</h1>
-    <p class="chapo">Romain, cette page réunit le relevé des problèmes du site actuel et l’essentiel de la stratégie : ce que garde la version 4, les techniques retenues, votre palette, vos idées, et ce qu’il reste à fournir ou à décider.</p>
+    <p class="chapo">Romain, cette page réunit le relevé des problèmes du site actuel et l’essentiel de la stratégie : la version 4 en bref, les techniques retenues, votre palette, vos idées, et ce qu’il reste à fournir ou à décider.</p>
   </header>
   <div class="notes-grille">
     <nav class="sommaire" aria-label="Sommaire">
@@ -2776,6 +3231,7 @@ def notes():
         <li><a href="#n-palette">Votre palette</a></li>
         <li><a href="#n-idees">Vos idées, mises en œuvre</a></li>
         <li><a href="#n-legal">Points légaux</a></li>
+        <li><a href="#n-fait">Fait le 1er novembre</a></li>
         <li><a href="#n-fournir">À fournir et à valider</a></li>
         <li><a href="#n-limites">Limites de la maquette</a></li>
       </ol>
@@ -2784,11 +3240,11 @@ def notes():
       <section class="note-bloc" id="n-version" aria-labelledby="t-version">
         <h2 id="t-version">La version 4 en bref</h2>
         <div class="texte">
-          <p>Le mur d’exposition de la v0 était trop simple, le carnet de territoire de la v1 trop complexe. La version 4 garde la base de la v0 et lui ajoute, en version courte, ce que la v1 avait de plus parlant : la carte des lieux, l’histoire d’Aquensis et le texte de chaque lieu.</p>
+          <p>Depuis le 1er novembre 2026, c’est la seule maquette : les versions 0 (le mur d’exposition) et 1 (le carnet de territoire) ont été retirées, leur historique reste dans le dépôt. La version 4 est un mur d’exposition clair, avec en version courte la carte des lieux, l’histoire d’Aquensis et le texte de chaque lieu.</p>
         </div>
         <div class="trois-colonnes">
-          <div><h3>Gardé de la v0</h3><ul class="liste-simple"><li>Le mur d’exposition et la simulation du rétroéclairage</li><li>Les cartes à pastilles et le bouton « Voir en »</li><li>La fiche claire, la barre d’achat sur mobile, le panier en tiroir</li><li>Les cartels, la bande de repères, la page Installation</li></ul></div>
-          <div><h3>Pris de la v1, simplifié</h3><ul class="liste-simple"><li>Une carte des lieux à repères numérotés, sans filtres ni calques</li><li>L’histoire d’Aquensis, avec la photo réelle</li><li>Le paragraphe « Le lieu » sur chaque fiche</li><li>Le trajet de Revel à Bagnères dans les quatre étapes, le bloc « Bientôt », qr.html</li></ul></div>
+          <div><h3>Pour choisir une plaque</h3><ul class="liste-simple"><li>Le mur d’exposition et la simulation du rétroéclairage</li><li>Les cartes à pastilles et le bouton « Voir en »</li><li>La fiche claire, la barre d’achat sur mobile, le panier en tiroir</li><li>Les cartels, la bande de repères, la page Installation</li></ul></div>
+          <div><h3>Pour raconter le territoire</h3><ul class="liste-simple"><li>Une carte des lieux à repères numérotés, sans filtres ni calques</li><li>L’histoire d’Aquensis, avec la photo réelle</li><li>Le paragraphe « Le lieu » sur chaque fiche</li><li>Le trajet de Revel à Bagnères dans les quatre étapes, le bloc « Bientôt », qr.html</li></ul></div>
           <div><h3>Laissé de côté</h3><ul class="liste-simple"><li>Grappes, filtres et calques de la carte, feuille modale</li><li>Idées cadeaux en grille, registre des avis sur l’accueil</li><li>Mode « carte de nuit » : le mode sombre suit l’appareil</li><li>Cartouches et graticules sur toutes les pages</li></ul></div>
         </div>
         <p class="attenue">Garde-fous : 5 entrées de menu, 7 sections sur l’accueil (la section des avis est retirée ; pendant la saison de Noël, le bloc de Noël passe en tête et reprend « Nos coups de cœur »), trois moments interactifs (la lumière du mur, les pastilles de finition, la carte).</p>
@@ -2818,12 +3274,17 @@ def notes():
       </section>
       <section class="note-bloc" id="n-idees" aria-labelledby="t-idees">
         <h2 id="t-idees">Vos idées, mises en œuvre</h2>
-        <p class="attenue">Les idées de votre document Contexte : ce que le site prévoit, ce qui reste à décider. Déjà en place : la carte des lieux, le sur-mesure, le kit LED, et les panneaux avec QR code à Aquensis, déjà posés (la page qr.html les attend). Aucune autre idée n’est à lancer dans les six prochains mois : la liste ci-dessous reste en réserve.</p>
+        <p class="attenue">Les idées de votre document Contexte : ce que le site prévoit, ce qui reste à décider. Déjà en place : la carte des lieux, le sur-mesure, le kit LED, et les panneaux avec QR code à Aquensis, déjà posés (leur QR code mène à l’accueil du site). Aucune autre idée n’est à lancer dans les six prochains mois : la liste ci-dessous reste en réserve.</p>
         <ul class="idees">{idees}</ul>
       </section>
       <section class="note-bloc" id="n-legal" aria-labelledby="t-legal">
         <h2 id="t-legal">Points légaux</h2>
         <ul class="legal">{legal}</ul>
+      </section>
+      <section class="note-bloc" id="n-fait" aria-labelledby="t-fait">
+        <h2 id="t-fait">Fait le 1<sup>er</sup> novembre 2026</h2>
+        <ul class="liste-simple">{fait}</ul>
+        <p class="attenue">Avant la mise en ligne, <code>python3 build.py --mise-en-ligne</code> doit afficher « Prêt pour la mise en ligne ». Il échoue tant qu’un marqueur reste dans les pages publiques : la plupart attendent un point de la liste « À fournir » ci-dessous.</p>
       </section>
       <section class="note-bloc note-bloc--double" id="n-fournir" aria-labelledby="t-fournir">
         <div>
@@ -2848,16 +3309,18 @@ def notes():
           <li>Les textes « Le lieu » sont courts ; vous les avez validés le 31 octobre 2026.</li>
           <li>Le panier vit dans le navigateur : aucune commande, aucun paiement, aucun envoi de formulaire.</li>
           <li>Noël : la promotion est mise en avant sur toutes les pages (bandeau sous celui de la maquette, bloc en tête de l’accueil, encart près du bouton d’achat, rappel dans le panier, qui passe à 0 € du 27 novembre au 14 décembre 2026, avec un goodies offert dans chaque colis sur la même période) ; le 15 décembre, le bloc de l’accueil et l’offre disparaissent, le bandeau propose la carte cadeau jusqu’au 24 décembre, puis plus rien. L’interrupteur « Voir pendant l’offre de Noël », en haut de chaque page, simule le 1<sup>er</sup> décembre. Toutes les mentions de l’offre suivent la date.</li>
-          <li>Les polices viennent de Google Fonts : une connexion internet est nécessaire pour les voir.</li>
+          <li>Les polices sont hébergées avec la maquette : elle s’affiche correctement sans connexion internet.</li>
+          <li>Les pages légales s’appuient sur les textes officiels en vigueur au 1<sup>er</sup> novembre 2026, mais ne remplacent pas la relecture d’un juriste. Elles décrivent la maquette : le stockage du navigateur et les prestataires sont à revoir avec la boutique en ligne retenue.</li>
         </ul>
-        <p><a class="lien-fleche" href="qr.html">Voir la page du QR code d’Aquensis</a></p>
+        <p><a class="lien-fleche" href="qr.html">Voir la page qr.html (décor d’Aquensis)</a></p>
       </section>
     </div>
   </div>
 </div>""".format(ia=bloc_ia(), constats=constats, techs=techs, palette=palette, lignes="".join(lignes), idees=idees, legal=legal,
                  f=A_FOURNIR, c=A_CONFIRMER, ville=note("ville au centre à choisir", "decision"), tarif=note("tarif par mode à confirmer", "decision"), recu="".join("<li>{}</li>".format(e(x)) for x in RECU_31_OCTOBRE),
                  a_fournir="".join("<li>{}</li>".format(e(x)) for x in A_FOURNIR_LISTE),
-                 a_valider="".join("<li>{}</li>".format(e(x)) for x in A_VALIDER_LISTE))
+                 a_valider="".join("<li>{}</li>".format(e(x)) for x in A_VALIDER_LISTE),
+                 fait="".join("<li>{}</li>".format(x) for x in FAIT_1ER_NOVEMBRE))
     page("notes.html", "Notes de la version 4 · Terre Gravée",
          "Notes pour Romain : relevé des problèmes du site actuel, techniques retenues et sourcées, palette, idées mises en œuvre, points légaux, informations à fournir.",
          contenu, classe="page-notes")
@@ -3012,11 +3475,16 @@ def main():
     installation()
     contact()
     qr_page()
+    mentions_legales()
+    cgv()
+    confidentialite()
     notes()
     fichiers_production()
     verifier_liens()
     verifier_jsonld()
     print("{} pages générées dans {}".format(len(PAGES_ECRITES), ICI))
+    if "--mise-en-ligne" in sys.argv[1:]:
+        sys.exit(verifier_mise_en_ligne())
 
 
 if __name__ == "__main__":

@@ -17,6 +17,11 @@
 - [Installation et kit LED](https://terregravee.fr/tuto/): pose sans perçage, notice du kit
 - [Contact, livraison et rétractation](https://terregravee.fr/contact/): coordonnées, livraison, retours, paiement
 
+## Informations légales
+- [Conditions générales de vente](https://terregravee.fr/cgv/): prix, commande, livraison, rétractation, garanties légales
+- [Mentions légales](https://terregravee.fr/mentions-legales/): éditeur, hébergeur, propriété intellectuelle
+- [Confidentialité et cookies](https://terregravee.fr/politique/): données personnelles, durées de conservation, stockage local
+
 ## Plaques
 - [Le Pic du Midi](https://terregravee.fr/produits/le-pic-du-midi/): Pic du Midi de Bigorre · 2 877 m
 - [Le Tourmalet](https://terregravee.fr/produits/le-tourmalet/): Col du Tourmalet · 2 115 m
