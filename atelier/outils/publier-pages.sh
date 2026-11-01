@@ -18,8 +18,14 @@ git subtree split --prefix jeu -b pages-tmp >/dev/null 2>&1
 # 2. Un arbre de travail séparé pour y ajouter .nojekyll (GitHub Pages ne doit rien filtrer) et un repère de version.
 DOSSIER=$(mktemp -d)
 git worktree add "$DOSSIER" pages-tmp >/dev/null 2>&1
+# L'application Android de la même version, si elle a été construite (atelier/outils/construire-apk.sh), est posée à la
+# racine du site sous un nom fixe : Romain la télécharge depuis la tablette par un lien direct, sans fichier joint.
+# Elle reste hors de jeu/ (sinon l'application suivante l'embarquerait) et hors de la liste du service worker.
+APK="atelier/android/sorties/le-domaine-$VERSION.apk"
 ( cd "$DOSSIER" && touch .nojekyll && printf '%s (%s)\n' "$VERSION" "$SOURCE" > PAGES-VERSION.txt \
-  && git add .nojekyll PAGES-VERSION.txt && git commit -q -m "Site du jeu, version $VERSION (depuis $SOURCE)" )
+  && git add .nojekyll PAGES-VERSION.txt )
+if [ -f "$APK" ]; then cp "$APK" "$DOSSIER/le-domaine.apk" && ( cd "$DOSSIER" && git add le-domaine.apk ); echo "Application jointe au site : $APK"; else echo "Pas d'application $VERSION construite : le site part sans elle." >&2; fi
+( cd "$DOSSIER" && git commit -q -m "Site du jeu, version $VERSION (depuis $SOURCE)" )
 git worktree remove --force "$DOSSIER"
 # 3. La branche gh-pages prend ce contenu (historique réécrit à chaque publication : c'est un site, pas un journal).
 git branch -f gh-pages pages-tmp
@@ -28,4 +34,5 @@ echo "Branche gh-pages prête : version $VERSION, $(git ls-tree -r --name-only g
 if [ "$1" != "--sans-push" ]; then
   git push -f origin gh-pages
   echo "Poussée. Adresse du site une fois Pages activé : https://romainfourneaux-cyber.github.io/Test/"
+  [ -f "$APK" ] && echo "Application à télécharger depuis la tablette : https://romainfourneaux-cyber.github.io/Test/le-domaine.apk"
 fi
