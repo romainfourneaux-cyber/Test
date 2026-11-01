@@ -602,9 +602,16 @@
     for (var c = s.firstElementChild; c; c = c.nextElementSibling) if (c.classList.contains("route-scene")) return c;
     return null;
   }
-  // En-tête et cartouches neufs (halte suivante, vivres, faveurs, journal) ; la scène est gardée si elle existe.
-  function preparerScene(s, e) {
-    var el = JEU.ui.el, x = JEU.expedition.etat(), scene = sceneDe(s), tete = enTeteRoute(e), bas = el("div", { class: "exp-bas" }, [cartoucheCompagnie(e, x), cartoucheJournal(e)]);
+  // En-tête et cartouches neufs (halte suivante, vivres, faveurs, journal) ; la scène est gardée si elle existe. differer
+  // (lot C) : la scène existe, et l'image qui suit la réponse ne montre que la fenêtre ; l'en-tête et les cartouches du
+  // bas (sous la route, hors de la vue le plus souvent) sont refaits une image plus tard.
+  function preparerScene(s, e, differer) {
+    var existe = sceneDe(s);
+    if (existe && differer && JEU.anim && JEU.anim.apresImage) {
+      JEU.anim.apresImage(function () { if (existe.isConnected && sceneDe(s) === existe && JEU.expedition.enCours()) preparerScene(s, JEU.expedition.enCours()); });
+      return existe;
+    }
+    var el = JEU.ui.el, x = JEU.expedition.etat(), scene = existe, tete = enTeteRoute(e), bas = el("div", { class: "exp-bas" }, [cartoucheCompagnie(e, x), cartoucheJournal(e)]);
     if (!scene) {
       s.innerHTML = "";
       scene = el("div", { class: "route-scene" });
@@ -637,7 +644,7 @@
     options = options || {};
     var el = JEU.ui.el, scene0 = sceneDe(s), act0 = scene0 ? enfant(scene0, "route-actions") : null;
     var hAct = act0 ? act0.offsetHeight : 0; // lu avant toute écriture
-    var scene = preparerScene(s, e), carte = enfant(scene, "route-carte");
+    var scene = preparerScene(s, e, !!options.surPlace), carte = enfant(scene, "route-carte");
     if (!carte) {
       // première fenêtre de cet affichage (retour d'une bataille, départ) : la route est dessinée dessous, assombrie ; un
       // sceau neuf y attend la route pour tomber
@@ -1146,8 +1153,17 @@
         off.cartes = garde;
       }
       JEU.sauvegarde.enregistrer();
-      if (juste) { JEU.sons.jouer("coup"); JEU.ui.toast(off.cartes.length >= 4 ? T.justeQuatre : T.juste); rendreCartes(s, X.enCours(), off, null); }
-      else JEU.ui.panneauErreur(q, zone, function () { JEU.ui.toast(T.faux); rendreCartes(s, X.enCours(), off, null); });
+      // les cartes prennent la place de la question dans la même fenêtre, sans rejouer son entrée (lot C : pas de calque neuf
+      // à peindre entre la réponse et l'image qui suit)
+      // le son et le bandeau du message partent après l'image qui suit la réponse (règle 2.2 du plan ; chasse aux bugs du
+      // lot C : la porte dépassait encore 100 ms au ralenti 4 × une fois sur huit)
+      if (juste) {
+        var texteJuste = off.cartes.length >= 4 ? T.justeQuatre : T.juste;
+        rendreCartes(s, X.enCours(), off, { surPlace: true });
+        var annoncer = function () { JEU.sons.jouer("coup"); JEU.ui.toast(texteJuste); };
+        if (JEU.anim && JEU.anim.apresImage) JEU.anim.apresImage(annoncer); else annoncer();
+      }
+      else JEU.ui.panneauErreur(q, zone, function () { JEU.ui.toast(T.faux); rendreCartes(s, X.enCours(), off, { surPlace: true }); });
     }, { recit: JEU.recit.cadre(q, "porte", null, extraDe(acte)) });
   }
   // Une carte de faveur (HTML) : conseiller en médaillon, nom, ruban de rang, effet, « Affiner » si la faveur est déjà tenue.
@@ -1163,7 +1179,8 @@
     ];
     return action ? el("button", { class: "carte-faveur rang-" + c.rang, "data-id": c.id, onclick: action }, contenu) : el("div", { class: "carte-faveur rang-" + c.rang + " tenue" }, contenu);
   }
-  // Les cartes au choix. offre : { cartes } ; options : { titre, sous, prendre(id) } (par défaut : prendreFaveur) ; puis la route.
+  // Les cartes au choix. offre : { cartes } ; options : { titre, sous, prendre(id) (par défaut : prendreFaveur), surPlace (la
+  // fenêtre de la porte, après sa question) } ; puis la route.
   // En éventail (lot B, B1.5) : les cartes se retournent l'une après l'autre (80 ms d'écart) ; la carte choisie grandit et
   // brille (220 ms) pendant que les autres s'effacent vers le bas, puis la route revient. Le choix est enregistré tout de
   // suite ; seul le retour à la route attend la fin du geste. Animations coupées : la route revient aussitôt.
@@ -1182,30 +1199,49 @@
         if (f) { JEU.sons.jouer("validation"); JEU.ui.toast(remplir(T.tenue, { F: X.EXP.FAVEURS[f.id].nom, R: X.TEXTES.rangs[f.rang - 1] })); }
       }
       if (!(JEU.anim && JEU.anim.actif())) return afficher();
+      poser(); cartes.classList.remove("attend"); cartes.classList.add("eventail"); // choisie avant que l'éventail ne parte
       cartes.inert = true;
       JEU.ui.clavier = function () { return true; };
       boutons.forEach(function (b) { b.classList.add(b.getAttribute("data-id") === id ? "choisie" : "ecartee"); });
       setTimeout(function () { if (cartes.isConnected && JEU.ui.ecranCourant() === "expedition") afficher(); }, 220);
     };
-    var cartes = el("div", { class: "cartes-faveur eventail" }, offre.cartes.map(function (c, i) {
-      var b = carteFaveurEl(c, i + 1, function () { choisir(c.id); });
-      b.style.setProperty("--i", String(i));
-      boutons.push(b);
-      return b;
-    }));
-    var boite = el("div", { class: fenetre("cartes") }, [el("h2", { texte: titre }), sous ? el("p", { class: "note", texte: sous }) : null, cartes]);
-    cadreEcran(s, e, boite, null);
+    // l'éventail part une image plus tard (lot C, porte d'une expédition au ralenti 4 × : 88 à 176 ms de la réponse aux
+    // cartes) : l'image qui suit la réponse montre la fenêtre, son titre et la place des cartes (classe « attend », hauteur
+    // d'une rangée de cartes) ; les cartes sont faites et se retournent à l'image suivante, comme elles le faisaient
+    // depuis l'opacité 0 : rien ne change à l'œil, la réponse est peinte sans elles
+    var anime = !!(JEU.anim && JEU.anim.actif() && JEU.anim.apresImage);
+    var cartes = el("div", { class: "cartes-faveur " + (anime ? "attend" : "eventail") });
     var focus = 0;
+    var poser = function () {
+      if (boutons.length) return;
+      offre.cartes.forEach(function (c, i) {
+        var b = carteFaveurEl(c, i + 1, function () { choisir(c.id); });
+        b.style.setProperty("--i", String(i));
+        b.addEventListener("focus", function () { focus = i; });
+        boutons.push(b);
+        cartes.appendChild(b);
+      });
+    };
+    if (!anime) poser();
+    var boite = el("div", { class: fenetre("cartes") }, [el("h2", { texte: titre }), sous ? el("p", { class: "note", texte: sous }) : null, cartes]);
+    cadreEcran(s, e, boite, options.surPlace ? { surPlace: true } : null);
     JEU.ui.clavier = function (k) {
       var n = parseInt(k, 10);
       if (n >= 1 && n <= offre.cartes.length) { choisir(offre.cartes[n - 1].id); return true; }
+      if (!boutons.length) return k === "Enter" ? (choisir(offre.cartes[focus].id), true) : false;
       if (k === "ArrowLeft" || k === "ArrowUp") { focus = (focus - 1 + boutons.length) % boutons.length; boutons[focus].focus(); return true; }
       if (k === "ArrowRight" || k === "ArrowDown") { focus = (focus + 1) % boutons.length; boutons[focus].focus(); return true; }
       if (k === "Enter") { choisir(offre.cartes[focus].id); return true; }
       return false; // Échap ne ferme jamais une porte : on choisit toujours
     };
-    boutons.forEach(function (b, i) { b.addEventListener("focus", function () { focus = i; }); });
-    if (boutons[0]) boutons[0].focus();
+    // les cartes, l'éventail et le focus (il force la mise en page) : une image plus tard
+    var lancer = function () {
+      if (!cartes.isConnected || choisie) return; // déjà choisie au clavier : l'éventail est lancé par choisir
+      poser();
+      cartes.classList.remove("attend"); cartes.classList.add("eventail");
+      if (boutons[0]) boutons[0].focus({ preventScroll: true });
+    };
+    if (anime) JEU.anim.apresImage(lancer); else if (boutons[0]) boutons[0].focus();
   }
 
   // ---------- le bivouac : repos ou veillée ----------

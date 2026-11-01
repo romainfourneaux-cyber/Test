@@ -1,6 +1,7 @@
 // Animations : particules (une petite toile par gerbe, par-dessus la page), chiffres qui volent vers les ressources,
 // secousses. Les effets qui suivent une réponse durent moins de 400 ms et ne retardent jamais la question
-// suivante. L'ambiance continue (fumées, nuages, villageois…) se coupe dans les Réglages.
+// suivante. L'ambiance continue (fumées, nuages, villageois…) se coupe dans les Réglages (case « Ambiance ») ou d'elle-même
+// quand la machine peine (régulateur des écrans, en fin de fichier).
 (function (racine) {
   "use strict";
   var JEU = racine.JEU;
@@ -13,11 +14,14 @@
     else f();
   }
 
+  // La requête « réduire les animations » est créée une fois (lot C) : matchMedia() à chaque appel coûtait jusqu'à 1 ms au
+  // ralenti 4 ×, et actif() est appelé plusieurs fois par réponse. .matches suit la préférence du système en direct.
+  var reduit = null;
+  try { reduit = racine.matchMedia ? racine.matchMedia("(prefers-reduced-motion: reduce)") : null; } catch (e) { reduit = null; }
   function actif() {
     var etat = JEU.sauvegarde && JEU.sauvegarde.etat();
     if (etat && etat.reglages && etat.reglages.animations === false) return false;
-    try { if (racine.matchMedia && racine.matchMedia("(prefers-reduced-motion: reduce)").matches) return false; } catch (e) { /* rien */ }
-    return true;
+    return !(reduit && reduit.matches);
   }
 
   // Réglage « Sang dans les combats » (bataille : giclées, flaques, soldats tombés). Actif par défaut : une sauvegarde
@@ -82,6 +86,11 @@
   }
 
   function demarrer() { if (!boucle) { dernier = 0; boucle = racine.requestAnimationFrame(pas); } }
+  // Une réponse vient d'être donnée (interface.js, poserQuestion) : les gerbes encore en vol (celles de la réponse d'avant)
+  // sautent l'image qui montre la question suivante, et reprennent à la suivante (lot C : l'image de la réponse ne porte ni
+  // leur dessin ni l'envoi de leurs toiles au compositeur ; un arrêt de 16 à 30 ms, invisible).
+  var sauter = false;
+  function laisserPasser() { if (boucle) sauter = true; }
 
   // feuilles d'automne : ors, roux, vert passé, brique (plus les teintes vives des matières : c'étaient des confettis)
   var COULEURS = { or: ["#f6dc8e", "#e2c272", "#b08d3a", "#fff3c8"], feuilles: ["#b5772b", "#c99a3a", "#8a5a22", "#6f7a34", "#9a3a22", "#d4b04e"] };
@@ -112,6 +121,7 @@
 
   // Seule la zone où étaient les particules à l'image d'avant est effacée (et non toute la toile).
   function pas(t) {
+    if (sauter) { sauter = false; dernier = t; boucle = racine.requestAnimationFrame(pas); return; }
     var dt = dernier ? Math.min(0.05, (t - dernier) / 1000) : 0.016;
     dernier = t;
     gerbes = gerbes.filter(function (g) {
@@ -260,9 +270,72 @@
     setTimeout(function () { d.remove(); }, 900);
   }
 
-  JEU.anim = { actif: actif, sang: sang, eclat: eclat, gain: gain, secouer: secouer, degats: degats, centre: centre, apresImage: apresImage,
-    frapper: frapper, noterDepart: noterDepart, bilan: bilan, images: images };
-  // Ambiance continue (nuages, fumées, oiseaux, drapeaux, brume) : pour l'instant, la même chose que actif().
-  // Cale posée par le lot A ; le lot C la remplit (réglage Ambiance, régulateur).
-  JEU.anim.ambiance = function () { return JEU.anim.actif(); };
+  // ---------- Ambiance continue (lot C, C2.3 et C2.5, 01/11/2026) ----------
+  // Nuages, fumées, oiseaux, drapeaux, brume qui dérive, poussières de l'accueil, villageois : ce qui bouge sans raison de
+  // jeu. ambiance() est vraie si Animations l'est (actif), si le réglage « Ambiance » l'est (reglages.ambiance ; absent,
+  // dans une sauvegarde plus ancienne : vrai) et si le régulateur des écrans ne l'a pas coupée. Les signaux de jeu (halos des
+  // lieux, lueur de l'événement du jour, halo du quartier) suivent actif(), pas ambiance().
+  function reglageAmbiance() {
+    var etat = JEU.sauvegarde && JEU.sauvegarde.etat();
+    return !(etat && etat.reglages && etat.reglages.ambiance === false);
+  }
+  // Régulateur des écrans : sur un écran à ambiance (accueil, domaine, campagne, route), l'écart entre deux images est
+  // relevé par fenêtres de 2 s, une demi-seconde après l'entrée de l'écran. Si son écart médian dépasse 20 ms, l'ambiance
+  // est coupée pour la séance (rien n'est écrit dans la sauvegarde : au prochain lancement, elle revient). Après une
+  // fenêtre sous le seuil, il se tait jusqu'au prochain écran : sa boucle d'images oblige le fil principal à préparer
+  // chaque image (mesuré au ralenti 4 × : 0,15 à 0,9 s de travail par 2,5 s selon l'écran, contre presque rien sans elle),
+  // elle ne doit donc tourner que le temps d'une mesure.
+  // État lisible par les essais (perf.js) : JEU.anim.regulateur.
+  var ECRANS_AMBIANCE = { accueil: true, domaine: true, jouer: true, expedition: true };
+  var SEUIL_MS = 20, FENETRE_MS = 2000, FENETRES_SURES = 1, ATTENTE_MS = 500;
+  var regulateur = { coupe: false, ecran: null, mesure: false, mediane: null, fenetres: 0, coupeSur: null, seuil: SEUIL_MS };
+  var jetonRegulateur = 0, premierEcran = true; // le premier écran attend 3 s : le jeu finit de se charger (images, polices)
+  function ambiance() { return actif() && reglageAmbiance() && !regulateur.coupe; }
+  function medianeDe(t) { var s = t.slice().sort(function (a, b) { return a - b; }); return s.length ? s[Math.floor((s.length - 1) / 2)] : 0; }
+  function couperAmbiance(ecran) {
+    regulateur.coupe = true;
+    regulateur.coupeSur = ecran;
+    regulateur.mesure = false;
+    if (JEU.ui && JEU.ui.appliquerAnimations) JEU.ui.appliquerAnimations(); // body.sans-ambiance : tout s'arrête sur place
+  }
+  // Appelé par ui.afficher à chaque écran montré. Un autre écran arrête la mesure en cours.
+  function surveiller(ecran) {
+    var mon = ++jetonRegulateur;
+    regulateur.ecran = ecran;
+    regulateur.mesure = false;
+    if (regulateur.coupe || !ECRANS_AMBIANCE[ecran] || !ambiance() || !racine.requestAnimationFrame || !racine.setTimeout) return;
+    var sures = 0, ecarts = [], avant = null, debut = null, attente = premierEcran ? 3000 : ATTENTE_MS;
+    premierEcran = false;
+    racine.setTimeout(function () {
+      if (mon !== jetonRegulateur) return;
+      regulateur.mesure = true;
+      racine.requestAnimationFrame(pas);
+    }, attente);
+    function pas(t) {
+      if (mon !== jetonRegulateur) return;
+      // une page cachée puis revenue : son long écart ne compte pas
+      if (avant !== null && t - avant < 1000) ecarts.push(t - avant);
+      avant = t;
+      if (debut === null) debut = t;
+      if (t - debut >= FENETRE_MS && ecarts.length) {
+        // l'ambiance coupée entre-temps (Réglages), ou une partie lancée : la mesure s'arrête
+        if (!ambiance() || (JEU.partie && JEU.partie.enCours)) { regulateur.mesure = false; return; }
+        regulateur.mediane = Math.round(medianeDe(ecarts) * 10) / 10;
+        regulateur.fenetres++;
+        ecarts = []; debut = t;
+        if (regulateur.mediane > SEUIL_MS) return couperAmbiance(ecran);
+        if (++sures >= FENETRES_SURES) { regulateur.mesure = false; return; }
+      }
+      racine.requestAnimationFrame(pas);
+    }
+  }
+  // Pour les essais : tout remettre comme au lancement (l'ambiance revient si le réglage le veut).
+  regulateur.reinitialiser = function () {
+    jetonRegulateur++;
+    regulateur.coupe = false; regulateur.coupeSur = null; regulateur.mesure = false; regulateur.mediane = null; regulateur.fenetres = 0; premierEcran = false;
+    if (JEU.ui && JEU.ui.appliquerAnimations) JEU.ui.appliquerAnimations();
+  };
+
+  JEU.anim = { actif: actif, sang: sang, ambiance: ambiance, eclat: eclat, gain: gain, secouer: secouer, degats: degats, centre: centre, apresImage: apresImage,
+    frapper: frapper, noterDepart: noterDepart, bilan: bilan, images: images, surveiller: surveiller, regulateur: regulateur, laisserPasser: laisserPasser };
 })(typeof window !== "undefined" ? window : globalThis);

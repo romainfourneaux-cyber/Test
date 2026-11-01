@@ -5,6 +5,8 @@
 // Plafonds (PLAFONDS) : 8 coups étincelants, 24 traînées, 60 particules, 10 lueurs, 3 tours posées qui fument à la fois.
 // Rien n'est créé à chaque image : les particules vivent dans des tableaux fixes, les traînées dans un tampon fixe.
 // Lot B (A+, 31/10/2026) : la poussière d'une tour qu'on pose (poussierePose), à la place des losanges d'or de la page.
+// Lot C (01/11/2026) : chaque dessin rend à la toile l'opacité qu'il a trouvée (poussierePose remettait 1 : une tour en
+// fondu redevenait opaque) ; mottes et étincelles divisées par deux au cran 3 du régulateur de bataille.js (part).
 (function (racine) {
   "use strict";
   var JEU = racine.JEU = racine.JEU || {};
@@ -70,8 +72,10 @@
   function vider() { for (var i = 0; i < N; i++) pgenre[i] = 0; vivantes = 0; suivante = 0; nTr = 0; nVifs = 0; nPales = 0; }
 
   // Mottes de terre d'une pierre qui tombe : 6 à 8 mottes brun sombre lancées en cloche, retombées en 0,5 s.
-  function mottes(x, y, graine) {
+  // part : la part gardée (1, ou 0,5 au cran 3 du régulateur : 3 ou 4 mottes, les mêmes que les premières des 6 à 8).
+  function mottes(x, y, graine, part) {
     var n = 6 + Math.floor(alea(graine, 30) * 3);
+    if (part > 0 && part < 1) n = Math.max(1, Math.round(n * part));
     for (var i = 0; i < n; i++) {
       var an = alea(graine, 31 + i) * Math.PI * 2, v = 26 + 46 * alea(graine, 41 + i), c = Math.cos(an), s = Math.sin(an);
       emettre(MOTTE, x + c * 4, y + s * 2, c * v, -(90 + 80 * alea(graine, 51 + i)), 0.5 + 0.1 * alea(graine, 71 + i), 1.6 + 1.2 * alea(graine, 61 + i), y + s * 6);
@@ -82,15 +86,17 @@
   // Un coup d'arme (« coup ») ou deux troupes qui s'engagent (« choc ») : 3 à 5 traits orangés de 2 à 3 px qui s'écartent
   // du point touché en 0,15 s, surtout du côté du coup (dir : 1 vers l'est, −1 vers l'ouest), un peu vers le haut.
   // fixe (Animations coupées) : un éclat court qui ne bouge pas (0,12 s). force : 2 pour le champion (deux fois plus).
+  // part : la part des traits gardée (1, ou 0,5 au cran 3 du régulateur ; au moins un trait).
   // Les traits d'une image sont rangés dans deux tampons (vifs, puis pâles en fin de course) et tracés d'un coup par
   // dessinerEtincelles : trois coups de plume par image en tout, quel que soit le nombre de coups.
   var DUREE_ETINCELLES = 0.15, TRAITS = PLAFONDS.etincelles * 12;
   var vifs = new Float32Array(TRAITS * 4), pales = new Float32Array(TRAITS * 4), nVifs = 0, nPales = 0;
-  function etincelles(x, y, age, graine, dir, fixe, force) {
+  function etincelles(x, y, age, graine, dir, fixe, force, part) {
     var duree = fixe ? 0.12 : DUREE_ETINCELLES;
     if (!(age >= 0 && age < duree)) return false;
     force = force || 1;
     var n = Math.round((3 + Math.floor(alea(graine, 0) * 3)) * force), k = age / duree, sens = dir < 0 ? -1 : 1, vif = k < 0.5;
+    if (part > 0 && part < 1) n = Math.max(1, Math.round(n * part));
     var r0 = fixe ? 1.2 : 1.2 + 6 * Math.sqrt(k) * (force > 1 ? 1.3 : 1), t = vif ? vifs : pales;
     for (var i = 0; i < n; i++) {
       var m = vif ? nVifs : nPales;
@@ -108,8 +114,9 @@
   }
   function dessinerEtincelles(ctx) {
     if (!nVifs && !nPales) return;
+    var a0 = ctx.globalAlpha;
     ctx.lineCap = "round"; ctx.strokeStyle = "#d9862e"; ctx.lineWidth = 0.8;
-    if (nPales) { traits(ctx, pales, nPales); ctx.globalAlpha = 0.55; ctx.stroke(); ctx.globalAlpha = 1; }
+    if (nPales) { traits(ctx, pales, nPales); ctx.globalAlpha = 0.55 * a0; ctx.stroke(); ctx.globalAlpha = a0; }
     if (nVifs) { traits(ctx, vifs, nVifs); ctx.stroke(); ctx.strokeStyle = "#f6c27a"; ctx.lineWidth = 0.4; ctx.stroke(); } // cœur plus chaud au départ
     ctx.lineCap = "butt";
     nVifs = 0; nPales = 0;
@@ -129,9 +136,10 @@
   }
   function lueur(ctx, x, y, age, duree, taille) {
     if (!(age >= 0 && age < duree)) return false;
-    ctx.globalAlpha = 1 - age / duree;
+    var a0 = ctx.globalAlpha;
+    ctx.globalAlpha = a0 * (1 - age / duree);
     ctx.drawImage(lueurImage(), x - taille / 2, y - taille / 2, taille, taille);
-    ctx.globalAlpha = 1;
+    ctx.globalAlpha = a0;
     return true;
   }
 
@@ -161,6 +169,7 @@
   // pâlissent en DUREE_POSE s. Sans état : tout se déduit de l'âge et de la graine (rien n'est créé à chaque image, pas
   // de Math.random). Appelée deux fois par image : les bouffées de derrière le pied avant la tour (devant = false), celles
   // de devant après elle (devant = true). Les Animations coupées, bataille.js ne l'appelle pas. Rend vrai si elle dessine.
+  // L'opacité de la toile à l'entrée (une tour en fondu) est gardée : les bouffées s'y multiplient, et elle est rendue.
   var DUREE_POSE = 0.7, BOUFFEES_POSE = 12, imagePose = null;
   function bouffeePose() {
     if (imagePose) return imagePose;
@@ -172,7 +181,7 @@
   }
   function poussierePose(ctx, x, y, age, graine, devant) {
     if (!(age >= 0 && age < DUREE_POSE)) return false;
-    var k = age / DUREE_POSE, sortie = 1 - (1 - k) * (1 - k) * (1 - k), img = bouffeePose(), dessine = false;
+    var k = age / DUREE_POSE, sortie = 1 - (1 - k) * (1 - k) * (1 - k), img = bouffeePose(), dessine = false, a0 = ctx.globalAlpha;
     var opacite = 0.9 * (k < 0.35 ? 1 : Math.pow(1 - (k - 0.35) / 0.65, 1.2)); // pleine le premier tiers, puis elle pâlit
     for (var i = 0; i < BOUFFEES_POSE; i++) {
       var an = (i + 0.5) / BOUFFEES_POSE * Math.PI * 2 + (alea(graine, 80 + i) - 0.5) * 0.6, s = Math.sin(an);
@@ -180,11 +189,11 @@
       // elles naissent au bord du pied (11 px) et roulent jusqu'à 17 à 31 px, en se chevauchant (un nuage bas, pas des points)
       var d = 11 + (6 + 14 * alea(graine, 90 + i)) * sortie, r = (4.5 + 3 * alea(graine, 100 + i)) * (0.8 + 0.6 * k);
       var bx = x + Math.cos(an) * d * 1.35, by = y + s * d * 0.45 - (1.5 + 3 * alea(graine, 110 + i)) * k;
-      ctx.globalAlpha = opacite * (0.7 + 0.3 * alea(graine, 120 + i));
+      ctx.globalAlpha = a0 * opacite * (0.7 + 0.3 * alea(graine, 120 + i));
       ctx.drawImage(img, bx - r, by - r * 0.8, r * 2, r * 1.6);
       dessine = true;
     }
-    ctx.globalAlpha = 1;
+    ctx.globalAlpha = a0;
     return dessine;
   }
 

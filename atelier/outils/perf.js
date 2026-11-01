@@ -36,6 +36,12 @@
 // grosse mêlée avec effets, plafonds, même issue sous quatre réglages, Sang et Animations coupés, propriétés animées, cuir
 // nu) ; GRAPHISMES=1 les ajoute à l'essai complet ; LOT=A|B|C (lot en cours de réception, A par défaut), PASSAGES=n (3 par
 // défaut), SORTIE=fichier.json. Voir le bloc « Lots graphiques » plus bas.
+// Lot C (01/11/2026) : avec LOT=C, régulateur de la bataille (niveau publié, qui monte sous un processeur ralenti puis
+// redescend ; mêlée au ralenti régulateur actif ; même issue à chaque niveau forcé), netteté de la toile sur la tablette,
+// réglage « Ambiance » (case, export et import, rechargement), régulateur des écrans (coupe l'ambiance pour la séance sans
+// rien écrire), Ambiance coupée sur l'accueil, le domaine, la carte et la route, tas JavaScript pendant 6 s de mêlée, et les
+// essais dans le jeu ouvert d'atelier/outils/tests-lot-c-ecrans.js. JOUR=AAAA-MM-JJ : le jour joué par toutes les pages
+// (13/10/2026 par défaut ; la date est figée, voir figerDate).
 "use strict";
 const path = require("path");
 let chromium;
@@ -45,6 +51,42 @@ try { ({ chromium } = require("playwright")); } catch (e) {
 }
 const URL = "file://" + path.join(__dirname, "..", "..", "jeu", "index.html").replace(/\\/g, "/");
 const MESURES_VOULUES = 50;
+
+// Date du jeu figée (lot C, 01/11/2026) : toutes les pages jouent le même jour, JOUR (13/10/2026 par défaut, ou la
+// variable JOUR=AAAA-MM-JJ). Les pages à horloge truquée (page.clock) partent de ce jour à 18 h, comme avant ; les autres
+// partent de ce jour à midi, puis l'heure avance normalement (les minuteries et requestAnimationFrame restent vrais).
+// Une passe lancée à 23 h 57 ne change donc plus de jour en route : même événement du jour, même état du rival, même semaine.
+const JOUR = /^\d{4}-\d{2}-\d{2}$/.test(process.env.JOUR || "") ? process.env.JOUR : "2026-10-13";
+const DEBUT_HORLOGE = JOUR + "T18:00:00", DEBUT_JOUR = JOUR + "T12:00:00";
+// Dans la page, avant les scripts du jeu : Date part de « debut » (heure locale de la page) et avance au vrai rythme.
+// new Date(x…) avec des arguments, Date.parse et Date.UTC sont ceux du navigateur ; instanceof Date reste vrai.
+function figerDate(debut) {
+  const Vrai = Date, decal = new Vrai(debut).getTime() - Vrai.now();
+  function DateFigee() {
+    if (!new.target) return new Vrai(Vrai.now() + decal).toString();
+    return arguments.length ? new Vrai(...arguments) : new Vrai(Vrai.now() + decal);
+  }
+  DateFigee.prototype = Vrai.prototype;
+  DateFigee.now = () => Vrai.now() + decal;
+  DateFigee.parse = Vrai.parse;
+  DateFigee.UTC = Vrai.UTC;
+  window.Date = DateFigee;
+}
+
+// Dans la page : le tirage du jeu (JEU.recit.suite) ne donne plus que des questions qui se répondent au clavier seul (QCM,
+// QCM multiple, vrai ou faux, ordre), pour qu'Event Timing mesure chaque réponse ; questionsLibres() rend le tirage d'avant.
+// Le quota de la semaine et le reste du tirage ne changent pas.
+function questionsAuClavier() {
+  if (window.__suiteAvant) return;
+  const avant = window.__suiteAvant = JEU.recit.suite, clavier = ["qcm", "qcm_multiple", "vrai_faux", "ordre"];
+  JEU.recit.suite = function (n, o) {
+    o = Object.assign({}, o || {});
+    const t = o.types ? o.types.filter(x => clavier.indexOf(x) >= 0) : clavier;
+    if (t.length) o.types = t;
+    return avant.call(this, n, o);
+  };
+}
+function questionsLibres() { if (window.__suiteAvant) { JEU.recit.suite = window.__suiteAvant; delete window.__suiteAvant; } }
 
 // Rang affiché (1, 2…) d'un choix, retrouvé par son texte : les choix des QCM sont mélangés à l'affichage.
 const rangsQcm = []; // rang affiché de la bonne réponse des QCM simples répondus juste (doit varier)
@@ -151,6 +193,7 @@ function espionToile() {
 
 async function nouvellePage(navigateur, w, h, erreurs) {
   const page = await navigateur.newPage({ viewport: { width: w, height: h } });
+  await page.addInitScript(figerDate, DEBUT_JOUR);
   await page.addInitScript(espionToile);
   page.on("pageerror", e => erreurs.push(e.message));
   page.on("console", m => { if (m.type() === "error") erreurs.push(m.text()); });
@@ -343,6 +386,7 @@ async function tempsReel(navigateur, w, h, erreurs) {
 const MESURE_MELEE = 6;
 async function grosseMelee(navigateur, w, h, erreurs) {
   const page = await navigateur.newPage({ viewport: { width: w, height: h } });
+  await page.addInitScript(figerDate, DEBUT_JOUR);
   await page.addInitScript(() => {
     window.__boucle = [];
     const raf = window.requestAnimationFrame;
@@ -540,6 +584,11 @@ async function essaiExpedition(navigateur, w, h, erreurs) {
   const escarmouche = att[iE], acte = await page.evaluate(() => { const a = JEU.expedition.acteCourant(); return { semaine: a.semaine, semaines: a.semaines, quota: a.quota }; });
   const mesuresAvant = await page.evaluate(() => JEU.mesure.valeurs.length);
   await page.evaluate(() => JEU.expedition.vitesse(3)); // les vagues en temps réel, à ×3
+  // Les questions de l'escarmouche se répondent au clavier seul (lot C) : les associations et les textes à trous, faits à
+  // la souris en plusieurs gestes, ne sont pas mesurés par Event Timing ; un tirage qui en donnait deux laissait l'essai à
+  // 2 mesures sur 4. Le tirage du jeu (JEU.recit.suite) reçoit donc les autres types, le temps de l'escarmouche ; le quota
+  // de la semaine et le reste du tirage ne changent pas.
+  await page.evaluate(questionsAuClavier);
   await page.keyboard.press(String(iE + 1));
   // 5. l'escarmouche : deux vagues, trois questions chacune
   const eclaireur = await page.evaluate(() => JEU.expedition.TEXTES.eclaireur.map(t => t.replace(/\{S\}.*$/, "")));
@@ -576,6 +625,7 @@ async function essaiExpedition(navigateur, w, h, erreurs) {
     if (etat.phase === "preparation" && etat.pret) { await attendre(700); await page.keyboard.press("Enter"); await attendre(400); continue; }
     await attendre(400);
   }
+  await page.evaluate(questionsLibres);
   res.escarmouche = { questions: questions.length, vagues: vagueVue + 1, fin: finBataille, mesures: durees.length, mediane: durees.slice().sort((a, b) => a - b)[Math.floor(durees.length / 2)], max: Math.max(...durees), detail: durees,
     rubans: questions.filter(q => q.ruban).length, reliefs: questions.filter(q => q.relief).length, parVague: [] };
   for (let v = 0; v <= vagueVue; v++) res.escarmouche.parVague.push(questions.filter(q => q.vague === v).map(q => (q.relief ? "S" : "·") + "(" + q.ruban + ")").join(" "));
@@ -713,6 +763,7 @@ async function essaiExpedition(navigateur, w, h, erreurs) {
 const CAPTURES = path.join(__dirname, "..", "captures");
 async function contexteTablette(navigateur, w, h, erreurs) {
   const ctx = await navigateur.newContext({ viewport: { width: w, height: h }, deviceScaleFactor: 2, hasTouch: true, isMobile: true });
+  await ctx.addInitScript(figerDate, DEBUT_JOUR);
   const page = await ctx.newPage();
   page.on("pageerror", e => erreurs.push(e.message));
   page.on("console", m => { if (m.type() === "error") erreurs.push(m.text()); });
@@ -1063,6 +1114,9 @@ const PLAFONDS = { etincelles: 8, trainees: 24, particules: 60, lueurs: 10, seco
 // elle-même les dépasse un passage sur deux ici (ralenti de 6,1 à 9,1 ms, max de 7,0 à 14,5 ms). Seuil : base + 10 % (bruit).
 const BASE_GRAPHISMES = { ralentiBoucleMediane: 7.6, boucleMax1920: 10.7, boucle95_1920: 4.1 };
 const MARGE_BRUIT = 1.1;
+// Tas JavaScript pendant 6 s de mêlée (C2.6, « pas de croissance ») : après ramasse-miettes au début et à la fin, 1 Mo de
+// plus au plus (les corps, les effets et la file des troupes vivent et meurent pendant la mesure).
+const TAS_CROISSANCE_MO = 1;
 const seuil = x => Math.round(x * MARGE_BRUIT * 10) / 10;
 const PROPRIETES_COMPOSITEUR = new Set(["transform", "opacity", "translate", "rotate", "scale"]);
 const mediane = t => { const s = t.filter(x => typeof x === "number" && isFinite(x)).sort((a, b) => a - b); return s.length ? s[Math.floor((s.length - 1) / 2)] : null; };
@@ -1076,7 +1130,10 @@ function medianes(passes) {
     r[k] = {};
     passes.forEach(x => Object.keys(x[k] || {}).forEach(j => { r[k][j] = Math.max(r[k][j] || 0, x[k][j]); }));
   });
-  r.detail = passes.map(x => ({ boucleMediane: x.boucleMediane, boucle95: x.boucle95, boucleMax: x.boucleMax, imageMediane: x.imageMediane, part34: x.part34, phase: x.phase }));
+  r.detail = passes.map(x => ({ boucleMediane: x.boucleMediane, boucle95: x.boucle95, boucleMax: x.boucleMax, imageMediane: x.imageMediane, part34: x.part34, phase: x.phase, niveau: x.niveau }));
+  // tas JavaScript après ramasse-miettes (lot C) : la plus forte croissance de tous les passages
+  const tas = passes.filter(x => x.tasGC).map(x => x.tasGC);
+  if (tas.length) r.tasGC = { croissanceMaxMo: Math.max(...tas.map(x => x.croissanceMo)), parPassage: tas };
   return r;
 }
 
@@ -1101,10 +1158,12 @@ function sondeChamp(graine) {
     };
   }
   window.__boucle = []; window.__max = {}; window.__effetsVus = {}; window.__projVus = {}; window.__animsChamp = {}; window.__animsTotal = 0;
+  window.__rafs = 0; // demandes d'image (requestAnimationFrame), toutes boucles comprises (lot C : ambiance coupée)
   const vus = new WeakSet();
   let n = 0;
   const raf = window.requestAnimationFrame;
   window.requestAnimationFrame = function (f) {
+    window.__rafs++;
     if (!f || f.name !== "boucle") return raf.call(window, f);
     return raf.call(window, function boucle(t) {
       const a = performance.now(); f(t); window.__boucle.push(performance.now() - a);
@@ -1151,6 +1210,18 @@ function armerMelee() {
   return { tours: p.tours.map(t => t.type + " " + t.niveau), envois: p.envois.length };
 }
 
+// Dans la page, après armerMelee (lot C, régulateur de la bataille) : six fantassins et trois cavaliers de plus, places fortes
+// à 2000 : la vague dure assez longtemps pour voir le régulateur monter puis redescendre.
+function renforcerMelee() {
+  const p = JEU.bataille.enCours, M = JEU.batailleMoteur;
+  p.or = 5000;
+  for (let i = 0; i < 6; i++) M.envoyer(p, "fantassins");
+  for (let i = 0; i < 3; i++) M.envoyer(p, "cavaliers");
+  p.or = 0;
+  p.chateau.pv = p.chateau.max = 2000; p.rival.pv = p.rival.max = 2000;
+  return p.envois.length;
+}
+
 // Dans la page : observe les classes du cadre de la toile (secousses td-sec-*, éclair td-eclair) : nombre de secousses
 // posées, secousses en même temps, écart le plus court entre deux éclairs.
 function observerCadre() {
@@ -1184,19 +1255,36 @@ async function pageChamp(navigateur, w, h, erreurs, options) {
   const ctx = await navigateur.newContext({ viewport: { width: w, height: h }, hasTouch: !!options.tactile });
   const page = await ctx.newPage();
   // l'horloge truquée d'abord : la sonde enveloppe alors son requestAnimationFrame (dans l'autre ordre, elle ne verrait aucune image)
-  if (options.horloge) await page.clock.install({ time: new Date("2026-10-13T18:00:00") });
+  if (options.horloge) await page.clock.install({ time: new Date(DEBUT_HORLOGE) });
+  else await page.addInitScript(figerDate, DEBUT_JOUR);
   await page.addInitScript(sondeChamp, options.graine || 0);
   page.on("pageerror", e => erreurs.push(e.message));
   page.on("console", m => { if (m.type() === "error") erreurs.push(m.text()); });
   await page.goto(URL);
-  await page.waitForFunction(() => window.JEU && JEU.pret);
+  if (options.horloge) {
+    // installée seule, l'horloge truquée avance encore au temps réel (images comprises) : la même partie ne se rejouait pas
+    // toujours à l'identique (chasse aux bugs du lot C). Arrêtée ici, elle n'avance plus que par runFor. Une heure déjà
+    // passée est refusée : alors une seconde après l'heure truquée du moment.
+    await page.clock.pauseAt(new Date(Date.parse(DEBUT_HORLOGE) + 5000))
+      .catch(async () => page.clock.pauseAt(new Date((await page.evaluate(() => Date.now())) + 1000)));
+    await attendreHorloge(page, () => !!(window.JEU && JEU.pret));
+  } else await page.waitForFunction(() => window.JEU && JEU.pret);
   await page.evaluate(r => { const g = JEU.sauvegarde.etat().reglages; g.musique = false; g.son = false; if (r) Object.assign(g, r); JEU.ui.appliquerAnimations(); JEU.ui.fermerModale(); }, options.reglages || null);
   return page;
 }
+// Sous l'horloge truquée arrêtée (pageChamp, horloge) : f vraie dans la page, sinon l'horloge avance de 50 ms (20 s au plus).
+async function attendreHorloge(page, f) {
+  for (let k = 0; k < 400; k++) { if (await page.evaluate(f)) return; await page.clock.runFor(50); }
+  throw new Error("attente sous l'horloge truquée : " + String(f).slice(0, 100));
+}
 
 // Lance la grosse mêlée avec effets en temps réel : conseil de guerre (3 réponses justes), armée et tours, vague à ×3
-// jusqu'à six troupes au corps à corps, puis ×1.
-async function lancerMeleeEffets(page) {
+// jusqu'à six troupes au corps à corps, puis ×1. options (lot C) : niveau, niveau du régulateur fixé avant la bataille
+// (JEU.bataille.forcerNiveau ; sans lui, un jeu d'avant le lot C, rien ne change) ; renfort, armée renforcée
+// (renforcerMelee) ; apresDepart, fonction appelée dès que la vague part, avant le ×3.
+async function lancerMeleeEffets(page, options) {
+  options = options || {};
+  if (options.niveau !== undefined && options.niveau !== null) await page.evaluate(n => { if (JEU.bataille.forcerNiveau) JEU.bataille.forcerNiveau(n); }, options.niveau);
   await page.click("#menu button[data-ecran=jouer]");
   await page.waitForSelector("#ecran-jouer .carte-campagne");
   await page.evaluate(() => { JEU.ui.fermerModale(); JEU.bataille.lancer("chateau"); });
@@ -1207,9 +1295,11 @@ async function lancerMeleeEffets(page) {
   }
   await page.waitForSelector(".td-pret");
   const armee = await page.evaluate(armerMelee);
+  if (options.renfort) armee.envois = await page.evaluate(renforcerMelee);
   for (let k = 0; k < 5 && await page.evaluate(() => JEU.bataille.enCours.phase === "preparation"); k++) { await attendre(400); await page.keyboard.press("Enter"); }
   await page.waitForFunction(() => JEU.bataille.enCours.phase === "vague");
   await page.evaluate(observerCadre);
+  if (options.apresDepart) await options.apresDepart();
   await page.click('[data-cle="vitesse-3"]');
   await page.waitForFunction(() => JEU.bataille.enCours.phase !== "vague" || JEU.bataille.enCours.unites.filter(u => u.adversaire).length >= 6, null, { timeout: 60000 });
   await page.click('[data-cle="vitesse-1"]').catch(() => {});
@@ -1244,18 +1334,26 @@ async function mesurerBoucle(page, d) {
 }
 
 // Grosse mêlée avec effets, PASSAGES fois (une page neuve chaque fois) ; ralenti : facteur du processeur pendant la mesure.
+// Régulateur de la bataille (lot C) : fixé au niveau 0 (tous les effets) pour les mesures qu'on compare aux lots A et B (avant
+// le lot C, et toujours au ralenti, la base du lot A) ; libre au processeur normal à partir du lot C (critères 7.1). Le
+// régulateur actif au ralenti a sa propre mesure (meleeRegulee). À partir du lot C, au processeur normal, le tas JavaScript
+// est relevé par le protocole de Chromium (après ramasse-miettes) au début et à la fin des 6 s de mêlée (C2.6).
 async function meleeEffets(navigateur, w, h, erreurs, ralenti) {
   const passes = [];
   let armee = null;
+  const niveau = LOT < "C" || ralenti > 1 ? 0 : null, tasGC = LOT >= "C" && !(ralenti > 1);
   for (let i = 0; i < (ralenti > 1 ? PASSAGES_RALENTI : PASSAGES); i++) {
     const page = await pageChamp(navigateur, w, h, erreurs);
     try {
-      armee = await lancerMeleeEffets(page);
+      armee = await lancerMeleeEffets(page, { niveau });
       const cdp = await page.context().newCDPSession(page);
       let normal = null;
       // au ralenti, le protocole de base-boucle.js (base du plan) : 5 s au processeur normal, puis 5 s au ralenti
       if (ralenti > 1) { normal = await mesurerBoucle(page, 5); await cdp.send("Emulation.setCPUThrottlingRate", { rate: ralenti }); }
+      const tas = async gc => { if (gc) await cdp.send("HeapProfiler.collectGarbage"); return Math.round((await cdp.send("Runtime.getHeapUsage")).usedSize / 1e4) / 100; };
+      const tas0 = tasGC ? await tas(true) : null;
       const m = await mesurerBoucle(page, ralenti > 1 ? 5 : MESURE_MELEE);
+      if (tasGC) { const sans = await tas(false), fin = await tas(true); m.tasGC = { debutMo: tas0, finSansRamasseMo: sans, finMo: fin, croissanceMo: Math.round((fin - tas0) * 100) / 100 }; }
       if (ralenti > 1) { await cdp.send("Emulation.setCPUThrottlingRate", { rate: 1 }); m.avantRalenti = { boucleMediane: normal.boucleMediane, boucle95: normal.boucle95, figures: normal.figures }; }
       m.cadre = await page.evaluate(() => window.__cadre || null);
       passes.push(m);
@@ -1320,32 +1418,135 @@ async function coutEffets(navigateur, erreurs) {
   return res;
 }
 
+// ---------- lot C : régulateur de la bataille et netteté sur la tablette (plan, C2.4, 7.2 et « si la tablette reste trop lente ») ----------
+// Grosse mêlée au ralenti 4 × en 1340 × 800, régulateur actif (7.2, fin du lot C) : le processeur est ralenti dès le départ de
+// la vague, pendant qu'elle approche à ×3 ; le régulateur a le temps de choisir son cran avant la mesure (3 s à ×1, puis 5 s
+// mesurées). PASSAGES fois, médiane. Le cran atteint est relevé (niveau, et maxima.niveau : le plus haut vu).
+async function meleeRegulee(navigateur, erreurs) {
+  const passes = [];
+  let armee = null;
+  for (let i = 0; i < PASSAGES; i++) {
+    const page = await pageChamp(navigateur, 1340, 800, erreurs);
+    let cdp = null;
+    try {
+      cdp = await page.context().newCDPSession(page);
+      armee = await lancerMeleeEffets(page, { apresDepart: () => cdp.send("Emulation.setCPUThrottlingRate", { rate: 4 }) });
+      await attendre(3000);
+      passes.push(await mesurerBoucle(page, 5));
+    } catch (e) { erreurs.push("grosse mêlée au ralenti, régulateur actif : " + e.message); }
+    if (cdp) await cdp.send("Emulation.setCPUThrottlingRate", { rate: 1 }).catch(() => {});
+    await page.context().close();
+  }
+  return Object.assign({ taille: "1340 × 800", ralenti: 4, regulateur: "actif", armee }, medianes(passes),
+    { niveaux: passes.map(x => x.niveau), niveauMax: Math.max(0, ...passes.map(x => (x.maxima || {}).niveau || 0)) });
+}
+
+// Le régulateur de la bataille (C2.4) : son niveau est publié dans JEU.bataille.rendu.niveau ; grosse mêlée renforcée (la
+// vague dure), 2 s au processeur normal, 14 s ralenti 4 × (le niveau doit monter : le champ s'allège), puis 18 s au
+// processeur normal (il doit redescendre, un cran toutes les 2 s au plus). Niveau et phase relevés toutes les 250 ms.
+async function regulateurBataille(navigateur, erreurs) {
+  const page = await pageChamp(navigateur, 1340, 800, erreurs);
+  const res = {};
+  let cdp = null;
+  try {
+    res.api = await page.evaluate(() => ({ forcerNiveau: typeof JEU.bataille.forcerNiveau === "function", reglages: JEU.bataille.REGULATEUR || null }));
+    cdp = await page.context().newCDPSession(page);
+    res.armee = await lancerMeleeEffets(page, { renfort: true });
+    const repere = nom => page.evaluate(n => { window.__reperes[n] = Math.round(performance.now() - window.__t0); }, nom);
+    await page.evaluate(() => {
+      window.__t0 = performance.now(); window.__niveaux = []; window.__reperes = {};
+      (function noter() {
+        const R = JEU.bataille.rendu, p = JEU.bataille.enCours;
+        window.__niveaux.push([Math.round(performance.now() - window.__t0), R && typeof R.niveau === "number" ? R.niveau : String(R && R.niveau), p ? p.phase : null]);
+        if (window.__niveaux.length < 600) setTimeout(noter, 250);
+      })();
+    });
+    await attendre(2000);
+    await cdp.send("Emulation.setCPUThrottlingRate", { rate: 4 });
+    await repere("ralenti");
+    await attendre(14000);
+    await cdp.send("Emulation.setCPUThrottlingRate", { rate: 1 });
+    await repere("retour");
+    await attendre(18000);
+    const { serie, reperes } = await page.evaluate(() => ({ serie: window.__niveaux.slice(), reperes: Object.assign({}, window.__reperes) }));
+    const dans = (a, b) => serie.filter(x => x[0] >= a && x[0] < b);
+    const avant = dans(0, reperes.ralenti), pendant = dans(reperes.ralenti, reperes.retour), apres = dans(reperes.retour, Infinity);
+    const niv = l => l.map(x => x[1]).filter(x => typeof x === "number");
+    res.expose = serie.length > 0 && serie.every(x => typeof x[1] === "number");
+    res.niveauAvant = niv(avant).length ? niv(avant)[niv(avant).length - 1] : null;
+    res.niveauMaxRalenti = niv(pendant).length ? Math.max(...niv(pendant)) : null;
+    res.niveauFin = niv(apres).length ? niv(apres)[niv(apres).length - 1] : null;
+    const finVague = serie.find(x => x[2] !== "vague");
+    res.vagueFinieMs = finVague ? finVague[0] : null;
+    res.reperes = reperes;
+    // les crans successifs, avec l'heure du changement (ms depuis le début du relevé)
+    res.crans = serie.filter((x, i) => i === 0 || x[1] !== serie[i - 1][1] || x[2] !== serie[i - 1][2]).map(x => x[1] + (x[2] !== "vague" ? " (" + x[2] + ")" : "") + " à " + x[0] + " ms").join(" → ");
+  } catch (e) { erreurs.push("régulateur de la bataille : " + e.message); res.erreur = e.message; }
+  if (cdp) await cdp.send("Emulation.setCPUThrottlingRate", { rate: 1 }).catch(() => {});
+  await page.context().close();
+  return res;
+}
+
+// Netteté de la toile sur la tablette (« si la tablette reste trop lente », étape 2) : 1340 × 800 à densité 2, au doigt ;
+// la toile de bataille ne dépasse pas 1,25 fois sa taille logique (1000 × 660).
+async function netteteTactile(navigateur, erreurs) {
+  const ctx = await navigateur.newContext({ viewport: { width: 1340, height: 800 }, deviceScaleFactor: 2, hasTouch: true, isMobile: true });
+  await ctx.addInitScript(figerDate, DEBUT_JOUR);
+  const page = await ctx.newPage();
+  page.on("pageerror", e => erreurs.push(e.message));
+  let res = {};
+  try {
+    const cdp = await ctx.newCDPSession(page);
+    await cdp.send("Emulation.setEmulatedMedia", { features: [{ name: "hover", value: "none" }, { name: "pointer", value: "coarse" }] });
+    await page.goto(URL);
+    await page.waitForFunction(() => window.JEU && JEU.pret);
+    await page.evaluate(() => { const g = JEU.sauvegarde.etat().reglages; g.musique = false; g.son = false; JEU.ui.fermerModale(); JEU.ui.afficher("jouer"); JEU.ui.fermerModale(); JEU.bataille.lancer("gue"); });
+    await page.waitForSelector(".td-canvas");
+    await attendre(800);
+    res = await page.evaluate(() => {
+      const c = document.querySelector(".td-canvas"), L = JEU.batailleMoteur.LARGEUR;
+      return { tactile: !!JEU.ui.tactile, densite: devicePixelRatio, largeurToile: c.width, largeurEcran: Math.round(c.getBoundingClientRect().width), nettete: Math.round(c.width / L * 1000) / 1000,
+        plafond: JEU.bataille.plafondNettete ? JEU.bataille.plafondNettete(0) : null };
+    });
+    await page.evaluate(() => JEU.ui.finirPartie && JEU.ui.finirPartie()).catch(() => {});
+  } catch (e) { erreurs.push("netteté sur la tablette : " + e.message); res.erreur = e.message; }
+  await ctx.close();
+  return res;
+}
+
 // Même partie, même graine de Math.random, horloge truquée, sous quatre réglages (et une partie témoin, refaite aux
 // réglages de la première) : l'état du moteur à la fin de la vague doit être le même (7.4). On relève aussi les tirages
 // de Math.random pendant la vague (fichier et fonction), les maxima des compteurs (7.1, 7.5), les classes du cadre
 // (secousses, éclairs) et les animations de feuille de style du champ.
 const REGLAGES_ISSUE = [{ animations: true, sang: true }, { animations: true, sang: false }, { animations: false, sang: true }, { animations: false, sang: false }, { animations: true, sang: true, temoin: true }];
+// Lot C : la même partie à chaque niveau forcé du régulateur (JEU.bataille.forcerNiveau, 1 à 8), Animations et Sang actifs ;
+// l'issue doit être celle de la première partie (régulateur libre : sous l'horloge truquée, la boucle ne pèse rien, il reste à 0).
+const NIVEAUX_FORCES = [1, 2, 3, 4, 5, 6, 7, 8];
 async function issueSousReglages(navigateur, erreurs) {
   const res = [];
-  for (const r of REGLAGES_ISSUE) {
+  const liste = LOT >= "C" ? REGLAGES_ISSUE.concat(NIVEAUX_FORCES.map(n => ({ animations: true, sang: true, niveau: n }))) : REGLAGES_ISSUE;
+  for (const r of liste) {
     const page = await pageChamp(navigateur, 1366, 768, erreurs, { horloge: true, graine: 20261031, reglages: { animations: r.animations, sang: r.sang } });
     const o = Object.assign({}, r);
     try {
+      if (r.niveau !== undefined && !(await page.evaluate(n => { if (!JEU.bataille.forcerNiveau) return false; JEU.bataille.forcerNiveau(n); return true; }, r.niveau)))
+        throw new Error("JEU.bataille.forcerNiveau absent (régulateur du lot C)");
       // l'état du moteur est noté à l'instant où la vague finit, avant que le dessin ne réagisse à la fin
       await page.evaluate(src => {
         const etat = new Function("return (" + src + ")")(), M = JEU.batailleMoteur, e = M.etape;
         M.etape = function (p) { const avant = p.phase, x = e.apply(this, arguments); if (avant === "vague" && p.phase !== "vague" && !window.__issue) window.__issue = etat(); return x; };
       }, etatMoteur.toString());
+      // l'horloge est arrêtée (pageChamp) : chaque attente la fait avancer par pas de 50 ms, chaque geste aussi
       await page.click("#menu button[data-ecran=jouer]");
-      await page.waitForSelector("#ecran-jouer .carte-campagne");
+      await attendreHorloge(page, () => !!document.querySelector("#ecran-jouer .carte-campagne"));
       await page.evaluate(() => { JEU.ui.fermerModale(); JEU.bataille.lancer("chateau"); });
-      await page.waitForSelector(".td-canvas");
+      await attendreHorloge(page, () => !!document.querySelector(".td-canvas"));
       await page.clock.runFor(300);
-      for (let i = 0; i < 3; i++) { await page.waitForFunction(() => document.querySelector(".td-question .question")); await repondreJuste(page); }
-      await page.waitForSelector(".td-pret");
+      for (let i = 0; i < 3; i++) { await attendreHorloge(page, () => !!document.querySelector(".td-question .question")); await repondreJuste(page); await page.clock.runFor(100); }
+      await attendreHorloge(page, () => !!document.querySelector(".td-pret"));
       o.armee = await page.evaluate(armerMelee);
-      for (let k = 0; k < 4 && await page.evaluate(() => JEU.bataille.enCours.phase === "preparation"); k++) { await page.clock.runFor(800); await page.keyboard.press("Enter"); }
-      await page.waitForFunction(() => JEU.bataille.enCours.phase !== "preparation");
+      for (let k = 0; k < 4 && await page.evaluate(() => JEU.bataille.enCours.phase === "preparation"); k++) { await page.clock.runFor(800); await page.keyboard.press("Enter"); await page.clock.runFor(50); }
+      await attendreHorloge(page, () => JEU.bataille.enCours.phase !== "preparation");
       await page.evaluate(observerCadre);
       await page.evaluate(() => { window.__max = {}; window.__alea = {}; window.__noterAlea = true; window.__echantillonAnims = true; window.__boucle.length = 0; });
       // temps de processeur de la page pendant la vague (CDP Performance.getMetrics) : la partie est la même d'un passage à
@@ -1443,10 +1644,16 @@ async function quitterBataille(page) {
   await page.click(".confirmation .bouton.principal").catch(() => {});
   await page.waitForFunction(() => !JEU.partie, null, { timeout: 5000 }).catch(() => {});
 }
-// Animations d'ambiance (noms des boucles continues : nuages, oiseaux, fumées, drapeaux, brume, eau, poussières…)
-const AMBIANCE = /nuage|oiseau|battre|fum|flott|drapeau|banni|brume|courant|eau|poussi|kenburns|respiration/i;
-// Propriétés animées sur chaque écran, après 1 s (7.3), processeur normal, 1366 × 768 ; puis l'ambiance coupée (7.5).
-async function proprietesAnimees(navigateur, erreurs) {
+// Animations d'ambiance (noms des boucles continues : nuages, oiseaux, fumées, drapeaux, brume, eau, poussières, reflets,
+// villageois et moulin du domaine…) : la même expression que tests-lot-c-ecrans.js, lue dans ce fichier (chasse aux bugs du
+// lot C : une copie ici ne voyait ni les villageois, ni le moulin, ni les reflets) ; sans lui, la même, recopiée.
+const AMBIANCE = (() => {
+  try { const x = require("./tests-lot-c-ecrans.js").AMBIANCE; if (x instanceof RegExp) return x; } catch (e) { /* fichier absent */ }
+  return /nuage|oiseau|battre|fum|flott|drapeau|banni|brume|courant|eau|poussi|kenburns|respiration|reflet-domaine|villageois|tourner/i;
+})();
+// Propriétés animées sur chaque écran, après 1 s (7.3), processeur normal, 1366 × 768 ; puis l'ambiance coupée (7.5) sur
+// l'accueil, le domaine, la carte et la route ; rafs : demandes d'image pendant 1 s sur chacun d'eux, ambiance coupée.
+async function proprietesAnimees(navigateur, erreurs, rafs) {
   const page = await pageChamp(navigateur, 1366, 768, erreurs);
   const res = {};
   const prendre = async nom => { await attendre(1000); res[nom] = await page.evaluate(scanAnimations); };
@@ -1471,12 +1678,105 @@ async function proprietesAnimees(navigateur, erreurs) {
     await quitterBataille(page);
     // Ambiance coupée (réglage du lot C, reglages.ambiance) : plus aucune boucle d'ambiance sur l'accueil, le domaine, la carte
     await page.evaluate(() => { const g = JEU.sauvegarde.etat().reglages; g.ambiance = false; JEU.ui.appliquerAnimations(); });
-    for (const e of ["accueil", "domaine", "jouer"]) {
+    for (const e of ["accueil", "domaine", "jouer", "expedition"]) {
       await page.evaluate(x => { JEU.ui.afficher(x); JEU.ui.fermerModale(); window.scrollTo(0, 0); }, e);
-      await prendre("sans ambiance : " + e);
+      const nom = e === "expedition" ? "route" : e;
+      await prendre("sans ambiance : " + nom);
+      if (rafs) { const n0 = await page.evaluate(() => window.__rafs); await attendre(1000); rafs[nom] = (await page.evaluate(() => window.__rafs)) - n0; }
     }
     await page.evaluate(() => { delete JEU.sauvegarde.etat().reglages.ambiance; JEU.ui.appliquerAnimations(); });
   } catch (e) { erreurs.push("propriétés animées : " + e.message); }
+  await page.context().close();
+  return res;
+}
+
+// ---------- lot C : réglage « Ambiance » et régulateur des écrans (plan, C2.3 et C2.5) ----------
+// La case « Ambiance » des Réglages : présente sous « Animations », cochée sans le champ (sauvegarde neuve : reglages.ambiance
+// absent), décochée elle écrit reglages.ambiance = false et coupe l'ambiance (pas les animations) ; export puis import
+// redonnent les mêmes réglages ; la page rechargée la garde décochée ; « Animations » décoché la grise ; recochée, tout revient.
+async function reglageAmbiance(navigateur, erreurs) {
+  const page = await pageChamp(navigateur, 1366, 768, erreurs);
+  const res = {};
+  const etat = () => page.evaluate(() => {
+    const S = JEU.sauvegarde, g = S.etat().reglages;
+    let stockee;
+    try { stockee = JSON.parse(localStorage.getItem(S.CLE)).reglages.ambiance; } catch (e) { stockee = "illisible"; }
+    return { champ: "ambiance" in g, reglage: g.ambiance, stockee: stockee === undefined ? "absent" : stockee, ambiance: !!(JEU.anim.ambiance && JEU.anim.ambiance()), animations: JEU.anim.actif(),
+      classe: document.body.classList.contains("sans-ambiance") };
+  });
+  const lireCase = () => page.evaluate(() => {
+    const b = document.querySelector("#ecran-reglages input[data-reglage=ambiance]"), a = document.querySelector("#ecran-reglages input[data-reglage=animations]");
+    if (!b) return null;
+    const l = b.closest("label");
+    return { cochee: b.checked, grisee: b.disabled, texte: l ? l.textContent.trim() : "", sousAnimations: !!(a && (a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING)) };
+  });
+  const reglages = async () => { await page.evaluate(() => { JEU.ui.fermerModale(); JEU.ui.afficher("reglages"); window.scrollTo(0, 0); }); await page.waitForSelector("#ecran-reglages input[type=checkbox]"); await attendre(300); };
+  try {
+    res.neuf = await etat();
+    await reglages();
+    res.caseNeuve = await lireCase();
+    if (res.caseNeuve) {
+      await page.locator("#ecran-reglages input[data-reglage=ambiance]").click();
+      res.coupee = await etat();
+      res.exportImport = await page.evaluate(() => {
+        const S = JEU.sauvegarde, avant = JSON.stringify(S.etat().reglages), texte = S.texteExport();
+        S.importer(texte); JEU.ui.appliquerAnimations();
+        return { identiques: JSON.stringify(S.etat().reglages) === avant, ambiance: S.etat().reglages.ambiance };
+      });
+      await page.reload();
+      await page.waitForFunction(() => window.JEU && JEU.pret);
+      await reglages();
+      res.rechargee = Object.assign(await etat(), { case: await lireCase() });
+      await page.locator("#ecran-reglages input[data-reglage=animations]").click();
+      res.sansAnimations = Object.assign(await etat(), { case: await lireCase() });
+      await page.locator("#ecran-reglages input[data-reglage=animations]").click();
+      await page.locator("#ecran-reglages input[data-reglage=ambiance]").click();
+      res.remise = Object.assign(await etat(), { case: await lireCase() });
+    }
+  } catch (e) { erreurs.push("réglage Ambiance : " + e.message); res.erreur = e.message; }
+  await page.context().close();
+  return res;
+}
+
+// Le régulateur des écrans (JEU.anim.regulateur, anim.js) : au processeur normal, il ne coupe rien ; une machine qui peine
+// (chaque image coûte 30 ms, sur le domaine) lui fait couper l'ambiance pour la séance, Animations gardées, sans rien écrire
+// dans la sauvegarde (ni en mémoire ni dans le stockage du navigateur) ; plus aucune boucle d'ambiance ensuite sur l'accueil, le
+// domaine et la carte ; la page rechargée (une nouvelle séance), l'ambiance revient.
+async function regulateurEcrans(navigateur, erreurs) {
+  const page = await pageChamp(navigateur, 1340, 800, erreurs, { tactile: true });
+  const res = {};
+  try {
+    res.api = await page.evaluate(() => { const R = JEU.anim && JEU.anim.regulateur; return R ? { coupe: R.coupe, seuil: R.seuil, reinitialiser: typeof R.reinitialiser === "function" } : null; });
+    if (res.api && res.api.reinitialiser) {
+      const essai = lourd => page.evaluate(lourd => new Promise(fin => {
+        const S = JEU.sauvegarde, R = JEU.anim.regulateur;
+        const stock = () => { try { return JSON.stringify(JSON.parse(localStorage.getItem(S.CLE)).reglages); } catch (e) { return null; } };
+        R.reinitialiser();
+        const memoire0 = JSON.stringify(S.etat().reglages), stock0 = stock();
+        let charge = lourd;
+        (function peser() { if (!charge) return; const t = performance.now(); while (performance.now() - t < 30) { /* image lente */ } requestAnimationFrame(peser); })();
+        JEU.ui.afficher("accueil"); JEU.ui.fermerModale(); JEU.ui.afficher("domaine");
+        setTimeout(() => {
+          charge = false;
+          fin({ coupe: R.coupe, coupeSur: R.coupeSur, mediane: R.mediane, fenetres: R.fenetres, ambiance: JEU.anim.ambiance(), animations: JEU.anim.actif(),
+            classe: document.body.classList.contains("sans-ambiance"), memoire: JSON.stringify(S.etat().reglages) === memoire0, stockage: stock() === stock0, champ: "ambiance" in S.etat().reglages });
+        }, 5000);
+      }), lourd);
+      res.fluide = await essai(false);
+      res.lourd = await essai(true);
+      // après la coupure : plus aucune boucle d'ambiance
+      res.restes = {};
+      for (const e of ["accueil", "domaine", "jouer"]) {
+        await page.evaluate(x => { JEU.ui.afficher(x); JEU.ui.fermerModale(); window.scrollTo(0, 0); }, e);
+        await attendre(1000);
+        res.restes[e] = (await page.evaluate(scanAnimations)).filter(a => a.infinie && AMBIANCE.test(a.nom)).map(a => a.nom + " (" + a.cible + ")");
+      }
+      // une nouvelle séance : la page rechargée
+      await page.reload();
+      await page.waitForFunction(() => window.JEU && JEU.pret);
+      res.nouvelleSeance = await page.evaluate(() => ({ coupe: JEU.anim.regulateur.coupe, ambiance: JEU.anim.ambiance(), classe: document.body.classList.contains("sans-ambiance") }));
+    }
+  } catch (e) { erreurs.push("régulateur des écrans : " + e.message); res.erreur = e.message; }
   await page.context().close();
   return res;
 }
@@ -1599,6 +1899,7 @@ async function ecransRalentis(navigateur, erreurs) {
   const cdp = await page.context().newCDPSession(page);
   const passes = {};
   const prendre = async nom => { await attendre(600); (passes[nom] = passes[nom] || []).push(await imagesEcran(page, 2500)); };
+  let regulateur = null;
   try {
     await page.evaluate(() => { const c = JEU.campagne.etat(); if (c.conquises.indexOf("gue") < 0) c.conquises.push("gue"); JEU.sauvegarde.enregistrer(); });
     await ouvrirRoute(page);
@@ -1613,11 +1914,14 @@ async function ecransRalentis(navigateur, erreurs) {
       await prendre("conseil");
       await page.evaluate(() => JEU.ui.finirPartie());
     }
+    // le régulateur des écrans (lot C) a-t-il coupé l'ambiance pendant ces mesures ? (les écrans suivants sont alors sans elle)
+    regulateur = await page.evaluate(() => { const R = JEU.anim && JEU.anim.regulateur; return R ? { coupe: R.coupe, coupeSur: R.coupeSur, mediane: R.mediane } : null; });
   } catch (e) { erreurs.push("écrans au ralenti : " + e.message); }
   await cdp.send("Emulation.setCPUThrottlingRate", { rate: 1 }).catch(() => {});
   await page.context().close();
   const res = {};
   Object.keys(passes).forEach(k => { res[k] = medianes(passes[k]); delete res[k].detail; res[k].detail = passes[k].map(x => x.mediane + " · " + x.p95 + " · " + x.tacheMax); });
+  if (regulateur) Object.defineProperty(res, "regulateur", { value: regulateur, enumerable: false }); // hors des écrans : lu à part
   return res;
 }
 
@@ -1627,19 +1931,27 @@ async function ecransRalentis(navigateur, erreurs) {
 async function tempsReelRalenti(navigateur, erreurs) {
   const page = await pageChamp(navigateur, 1340, 800, erreurs);
   const cdp = await page.context().newCDPSession(page);
-  const res = { bataille: [], evenement: [], porte: [] };
+  const res = { bataille: [], evenement: [], porte: [], intermediaires: [] };
+  // Event Timing des touches (16 ms au moins), et l'heure de chaque touche : la touche qui valide est la dernière du geste
   await page.evaluate(() => {
-    window.__ev = [];
-    new PerformanceObserver(l => l.getEntries().forEach(e => { if (e.name === "keydown") window.__ev.push(e.duration); })).observe({ type: "event", durationThreshold: 16, buffered: true });
+    window.__ev = []; window.__touches = [];
+    addEventListener("keydown", e => window.__touches.push(e.timeStamp), true);
+    new PerformanceObserver(l => l.getEntries().forEach(e => { if (e.name === "keydown") window.__ev.push([e.startTime, e.duration]); })).observe({ type: "event", durationThreshold: 16, buffered: true });
   });
-  const mesurer = async (liste, repondre, suite) => {
+  // On juge la touche qui valide (la dernière du geste) : de la touche qui répond à l'image peinte de la suite. Les touches
+  // d'avant (choix d'un QCM multiple, « Faux » d'un vrai ou faux, qui ouvre la correction) sont relevées à part
+  // (intermediaires, une alerte au-delà de 100 ms ; chasse aux bugs du lot C : elles comptaient dans le maximum).
+  const mesurer = async (liste, repondre, suite, ou) => {
     const type = await page.evaluate(() => JEU.ui.questionCourante.type);
-    const avant = await page.evaluate(() => window.__ev.length);
+    const avant = await page.evaluate(() => [window.__ev.length, window.__touches.length]);
     await repondre();
     await attendre(700);
     if (type === "association" || type === "trou" || !(await page.evaluate(suite))) return;
-    const ev = await page.evaluate(a => window.__ev.slice(a), avant);
-    liste.push(ev.length ? Math.max(...ev) : 16);
+    const { ev, touches } = await page.evaluate(a => ({ ev: window.__ev.slice(a[0]), touches: window.__touches.slice(a[1]) }), avant);
+    const derniere = touches.length ? touches[touches.length - 1] : null;
+    const finale = derniere === null ? null : ev.find(e => Math.abs(e[0] - derniere) < 0.5);
+    liste.push(finale ? finale[1] : derniere === null && ev.length ? Math.max(...ev.map(e => e[1])) : 16);
+    ev.filter(e => e !== finale).forEach(e => res.intermediaires.push({ ou, type, ms: e[1] }));
   };
   try {
     await cdp.send("Emulation.setCPUThrottlingRate", { rate: 4 });
@@ -1648,12 +1960,15 @@ async function tempsReelRalenti(navigateur, erreurs) {
       for (let i = 0; i < 3; i++) {
         await page.waitForFunction(() => document.querySelector(".td-question .question"), null, { timeout: 30000 });
         await attendre(500);
-        if (i < 2) await mesurer(res.bataille, () => repondreJuste(page), () => !!document.querySelector(".td-question .question .enonce"));
+        if (i < 2) await mesurer(res.bataille, () => repondreJuste(page), () => !!document.querySelector(".td-question .question .enonce"), "bataille");
         else await repondreJuste(page);
       }
       await page.waitForSelector(".td-pret", { timeout: 30000 });
       await page.evaluate(() => JEU.ui.finirPartie());
     }
+    // lot C : l'événement et la porte tirent des questions au clavier seul (une association ou un texte à trous à la porte
+    // laissait le contrôle sans mesure)
+    if (LOT >= "C") await page.evaluate(questionsAuClavier);
     // l'événement du jour : chaque réponse juste qui amène une autre question
     await page.evaluate(() => { const c = JEU.campagne.etat(); c.evenement = { id: "marchands", jour: JEU.util.jour(), fait: false }; JEU.sauvegarde.enregistrer(); JEU.ui.afficher("jouer"); JEU.ui.fermerModale(); });
     await page.waitForSelector(".carte-jeu.evenement");
@@ -1662,35 +1977,47 @@ async function tempsReelRalenti(navigateur, erreurs) {
       await page.waitForSelector(".scene-evenement .question .enonce, .scene-evenement .bilan", { timeout: 30000 });
       if (await page.$(".scene-evenement .bilan")) break;
       if (await page.$(".panneau-erreur")) { await page.keyboard.press("Enter"); await attendre(500); continue; }
-      await mesurer(res.evenement, () => repondreJuste(page), () => !!document.querySelector(".scene-evenement .question .enonce") && !document.querySelector(".panneau-erreur"));
+      await mesurer(res.evenement, () => repondreJuste(page), () => !!document.querySelector(".scene-evenement .question .enonce") && !document.querySelector(".panneau-erreur"), "événement");
     }
     await page.evaluate(() => JEU.ui.finirPartie());
-    // la porte de faveur d'une expédition, posée par l'API après une escarmouche tenue
-    await cdp.send("Emulation.setCPUThrottlingRate", { rate: 1 });
-    await ouvrirRoute(page);
-    const idP = await page.evaluate("(" + AVANCER_ROUTE + ")(x => x.porte && x.porte.genre === 'faveur' && (x.type === 'escarmouche' || x.type === 'embuscade'))");
-    if (idP) {
-      await page.evaluate(id => { const X = JEU.expedition, t = X.trouverHalte(id, X.enCours()); X.entrer(id);
-        const r = X.apresBataille(t.halte, { issue: "tenu", degatsRival: 3, bonnes: 3, total: 3, entamee: true });
-        if (r && r.porte) { const off = X.offrirFaveurs(r.porte, true, false); if (off && off.cartes.length) { off.question = true; off.eclatante = false; JEU.sauvegarde.enregistrer(); } }
-        JEU.ui.afficher("expedition"); }, idP);
-      await page.waitForSelector("#ecran-expedition .question .enonce, #ecran-expedition button.carte-faveur");
-      await cdp.send("Emulation.setCPUThrottlingRate", { rate: 4 });
-      if (await page.$("#ecran-expedition .question .enonce")) await mesurer(res.porte, () => repondreJuste(page), () => !!document.querySelector("#ecran-expedition button.carte-faveur, #ecran-expedition .panneau-erreur"));
-    } else res.porteAbsente = "aucune porte de faveur atteignable";
+    // la porte de faveur d'une expédition, posée par l'API après une escarmouche tenue ; à partir du lot C, une porte par
+    // passage (PASSAGES expéditions, chacune abandonnée après sa mesure) : une seule mesure, au ralenti, est trop bruitée
+    for (let k = 0; k < (LOT >= "C" ? PASSAGES : 1); k++) {
+      await cdp.send("Emulation.setCPUThrottlingRate", { rate: 1 });
+      if (k) await page.evaluate(() => { JEU.expedition.finir("abandon"); JEU.sauvegarde.enregistrer(); });
+      await ouvrirRoute(page);
+      const idP = await page.evaluate("(" + AVANCER_ROUTE + ")(x => x.porte && x.porte.genre === 'faveur' && (x.type === 'escarmouche' || x.type === 'embuscade'))");
+      if (idP) {
+        await page.evaluate(id => { const X = JEU.expedition, t = X.trouverHalte(id, X.enCours()); X.entrer(id);
+          const r = X.apresBataille(t.halte, { issue: "tenu", degatsRival: 3, bonnes: 3, total: 3, entamee: true });
+          if (r && r.porte) { const off = X.offrirFaveurs(r.porte, true, false); if (off && off.cartes.length) { off.question = true; off.eclatante = false; JEU.sauvegarde.enregistrer(); } }
+          JEU.ui.afficher("expedition"); }, idP);
+        await page.waitForSelector("#ecran-expedition .question .enonce, #ecran-expedition button.carte-faveur");
+        await cdp.send("Emulation.setCPUThrottlingRate", { rate: 4 });
+        if (await page.$("#ecran-expedition .question .enonce")) await mesurer(res.porte, () => repondreJuste(page), () => !!document.querySelector("#ecran-expedition button.carte-faveur, #ecran-expedition .panneau-erreur"), "porte");
+      } else res.porteAbsente = "aucune porte de faveur atteignable";
+    }
   } catch (e) { erreurs.push("Event Timing au ralenti : " + e.message); }
   await cdp.send("Emulation.setCPUThrottlingRate", { rate: 1 }).catch(() => {});
   await page.context().close();
   const max = l => l.length ? Math.max(...l) : null;
-  return Object.assign(res, { maxBataille: max(res.bataille), maxEvenement: max(res.evenement), maxPorte: max(res.porte) });
+  return Object.assign(res, { maxBataille: max(res.bataille), maxEvenement: max(res.evenement), maxPorte: max(res.porte), medianePorte: mediane(res.porte) });
 }
 
 // Passes complètes (bilan) et contrôles (ÉCHEC si le contrôle est du lot reçu ou d'un lot d'avant, À VENIR sinon).
+// Les mesures du lot C (régulateurs, réglage Ambiance, netteté sur la tablette, tas) ne tournent qu'avec LOT=C ou plus : avec
+// LOT=A ou B, la passe et ses chiffres restent ceux des lots reçus.
 async function passeRalenti(navigateur, erreurs) {
   const b = {};
   b.meleeRalentie = await meleeEffets(navigateur, 1340, 800, erreurs, 4);
+  if (LOT >= "C") {
+    b.meleeRegulee = await meleeRegulee(navigateur, erreurs);
+    b.regulateurBataille = await regulateurBataille(navigateur, erreurs);
+    b.netteteTactile = await netteteTactile(navigateur, erreurs);
+  }
   b.coutEffets = await coutEffets(navigateur, erreurs);
   b.ecransRalentis = await ecransRalentis(navigateur, erreurs);
+  if (b.ecransRalentis.regulateur) b.regulateurPendantEcrans = b.ecransRalentis.regulateur;
   b.tempsReelRalenti = await tempsReelRalenti(navigateur, erreurs);
   b.cuirNuTablette = await cuirNu(navigateur, erreurs, { w: 1340, h: 800, ralenti: 4, tactile: true });
   return b;
@@ -1699,7 +2026,12 @@ async function passeGraphismes(navigateur, erreurs) {
   const b = { meleeEffets: [] };
   for (const [w, h] of [[1366, 768], [1920, 1080]]) b.meleeEffets.push(await meleeEffets(navigateur, w, h, erreurs, 1));
   b.reglages = await issueSousReglages(navigateur, erreurs);
-  b.animations = await proprietesAnimees(navigateur, erreurs);
+  b.rafsSansAmbiance = {};
+  b.animations = await proprietesAnimees(navigateur, erreurs, b.rafsSansAmbiance);
+  if (LOT >= "C") {
+    b.reglageAmbiance = await reglageAmbiance(navigateur, erreurs);
+    b.regulateurEcrans = await regulateurEcrans(navigateur, erreurs);
+  }
   b.cuirNu = await cuirNu(navigateur, erreurs, { w: 1366, h: 768, ralenti: 1 });
   return b;
 }
@@ -1736,12 +2068,88 @@ function controlesGraphismes(bilan) {
     else {
       scenario(q, MR);
       C("A", MR.boucleMediane <= seuil(BASE_GRAPHISMES.ralentiBoucleMediane), q + " : boucle médiane à " + MR.boucleMediane + " ms (pas au-dessus de la base, " + BASE_GRAPHISMES.ralentiBoucleMediane + " ms, au bruit près : " + seuil(BASE_GRAPHISMES.ralentiBoucleMediane) + ")");
-      C("C", MR.boucleMediane < 4, q + " : boucle médiane à " + MR.boucleMediane + " ms (moins de 4 ms, régulateur actif ; cran " + MR.niveau + ")");
-      C("C", MR.imageMediane < 17.5, q + " : " + MR.imageMediane + " ms entre deux images en médiane (moins de 17,5)");
-      C("C", MR.part34 <= 5, q + " : " + MR.part34 + " % des images au-delà de 34 ms (5 % au plus)");
+      // avant le lot C, les critères de fin du lot C se lisent sur cette mesure (À VENIR) ; à partir du lot C, sur la mesure
+      // régulateur actif (meleeRegulee), celle-ci gardant le niveau 0 pour rester comparable à la base
+      if (!bilan.meleeRegulee) {
+        C("C", MR.boucleMediane < 4, q + " : boucle médiane à " + MR.boucleMediane + " ms (moins de 4 ms, régulateur actif ; cran " + MR.niveau + ")");
+        C("C", MR.imageMediane < 17.5, q + " : " + MR.imageMediane + " ms entre deux images en médiane (moins de 17,5)");
+        C("C", MR.part34 <= 5, q + " : " + MR.part34 + " % des images au-delà de 34 ms (5 % au plus)");
+      }
       plafonds(q, MR.maxima);
     }
   }
+  // ---------- lot C ----------
+  const MG = bilan.meleeRegulee;
+  if (MG) {
+    const q = "grosse mêlée avec effets au ralenti 4 × (1340 × 800), régulateur actif";
+    if (!MG.passages) echecs.push(q + " : aucune mesure");
+    else {
+      scenario(q, MG);
+      C("C", MG.boucleMediane < 4, q + " : boucle médiane à " + MG.boucleMediane + " ms (moins de 4 ms ; crans atteints " + MG.niveaux.join(", ") + ")");
+      C("C", MG.imageMediane < 17.5, q + " : " + MG.imageMediane + " ms entre deux images en médiane (moins de 17,5 ; crans " + MG.niveaux.join(", ") + ")");
+      C("C", MG.part34 <= 5, q + " : " + MG.part34 + " % des images au-delà de 34 ms (5 % au plus)");
+      plafonds(q, MG.maxima);
+    }
+  }
+  const RB = bilan.regulateurBataille;
+  if (RB) {
+    const q = "régulateur de la bataille (grosse mêlée, 1340 × 800)";
+    if (RB.erreur) echecs.push(q + " : essai interrompu (" + RB.erreur + ")");
+    else {
+      C("C", RB.expose, q + " : niveau absent de JEU.bataille.rendu.niveau (" + RB.crans + ")");
+      C("C", RB.api && RB.api.forcerNiveau, q + " : JEU.bataille.forcerNiveau absent (niveau forcé des essais)");
+      const ralentiVu = RB.vagueFinieMs === null || RB.vagueFinieMs > RB.reperes.ralenti + 6000, retourVu = RB.vagueFinieMs === null || RB.vagueFinieMs > RB.reperes.retour + 8000;
+      if (!ralentiVu || !retourVu) alertes.push(q + " : la vague a fini à " + RB.vagueFinieMs + " ms, avant la fin du relevé (" + RB.crans + ")");
+      if (ralentiVu) C("C", RB.niveauMaxRalenti > RB.niveauAvant, q + " : le niveau ne monte pas sous un processeur ralenti 4 × (de " + RB.niveauAvant + " à " + RB.niveauMaxRalenti + " au plus ; " + RB.crans + ")");
+      if (ralentiVu && retourVu) C("C", RB.niveauFin < RB.niveauMaxRalenti, q + " : le niveau ne redescend pas au processeur normal (" + RB.niveauMaxRalenti + " sous le ralenti, " + RB.niveauFin + " 18 s après ; " + RB.crans + ")");
+      if (retourVu && RB.niveauFin > 0) alertes.push(q + " : 18 s après le retour au processeur normal, le niveau est encore à " + RB.niveauFin + " (il rend un cran toutes les 2 s quand la boucle passe sous 3 ms ; " + RB.crans + ")");
+    }
+  }
+  const NT = bilan.netteteTactile;
+  if (NT) {
+    if (NT.erreur) echecs.push("netteté de la toile sur la tablette : essai interrompu (" + NT.erreur + ")");
+    else {
+      if (!NT.tactile) alertes.push("netteté de la toile sur la tablette : le jeu ne se croit pas sur un écran tactile (" + JSON.stringify(NT) + ")");
+      C("C", NT.nettete <= 1.255, "netteté de la toile sur la tablette 1340 × 800 à densité " + NT.densite + " : " + NT.nettete + " fois la taille logique (1,25 au plus ; « si la tablette reste trop lente », étape 2)");
+    }
+  }
+  (bilan.meleeEffets || []).forEach(m => {
+    if (!m.tasGC) return;
+    C("C", m.tasGC.croissanceMaxMo <= TAS_CROISSANCE_MO, "grosse mêlée avec effets " + m.taille + " : le tas JavaScript grandit de " + m.tasGC.croissanceMaxMo + " Mo en " + MESURE_MELEE + " s de mêlée, après ramasse-miettes (" + TAS_CROISSANCE_MO + " Mo au plus ; C2.6)");
+  });
+  if (bilan.regulateurPendantEcrans && bilan.regulateurPendantEcrans.coupe) alertes.push("écrans au ralenti 4 × : le régulateur des écrans a coupé l'ambiance sur « " + bilan.regulateurPendantEcrans.coupeSur + " » (écart médian " + bilan.regulateurPendantEcrans.mediane + " ms) ; les écrans suivants sont mesurés sans elle");
+  const RA = bilan.reglageAmbiance;
+  if (RA) {
+    const q = "réglage « Ambiance »";
+    if (RA.erreur) echecs.push(q + " : essai interrompu (" + RA.erreur + ")");
+    else if (!RA.caseNeuve) C("C", false, q + " : pas de case input[data-reglage=ambiance] dans les Réglages");
+    else {
+      const N = RA.neuf, K = RA.caseNeuve, X = RA.coupee, EI = RA.exportImport, RC = RA.rechargee, SA = RA.sansAnimations, RE = RA.remise;
+      C("C", !N.champ && N.ambiance && !N.classe && K.cochee && !K.grisee, q + " : une sauvegarde neuve (champ absent) doit l'avoir active, case cochée (" + JSON.stringify({ neuf: N, case: K }) + ")");
+      C("C", K.sousAnimations && /Ambiance/.test(K.texte), q + " : la case doit suivre « Animations » et dire « Ambiance » (" + JSON.stringify(K) + ")");
+      C("C", X.reglage === false && X.stockee === false && !X.ambiance && X.animations && X.classe, q + " : décochée, elle doit écrire reglages.ambiance = false et couper l'ambiance, pas les animations (" + JSON.stringify(X) + ")");
+      C("C", EI.identiques && EI.ambiance === false, q + " : export puis import ne redonnent pas les mêmes réglages (" + JSON.stringify(EI) + ")");
+      C("C", RC.reglage === false && RC.case && !RC.case.cochee && RC.classe, q + " : la page rechargée doit la garder décochée (" + JSON.stringify(RC) + ")");
+      C("C", SA.case && SA.case.grisee && !SA.ambiance && !SA.animations, q + " : « Animations » décoché doit la griser et tout couper (" + JSON.stringify(SA) + ")");
+      C("C", RE.reglage === true && RE.case && RE.case.cochee && !RE.case.grisee && RE.ambiance && !RE.classe, q + " : recochée, l'ambiance doit revenir (" + JSON.stringify(RE) + ")");
+    }
+  }
+  const RE2 = bilan.regulateurEcrans;
+  if (RE2) {
+    const q = "régulateur des écrans (JEU.anim.regulateur)";
+    if (RE2.erreur) echecs.push(q + " : essai interrompu (" + RE2.erreur + ")");
+    else if (!RE2.api || !RE2.api.reinitialiser) C("C", false, q + " : absent d'anim.js, ou sans reinitialiser() (" + JSON.stringify(RE2.api) + ")");
+    else {
+      const F = RE2.fluide, L = RE2.lourd;
+      C("C", !F.coupe && F.ambiance, q + " : au processeur normal, il ne doit rien couper (" + JSON.stringify(F) + ")");
+      C("C", L.coupe && L.coupeSur === "domaine" && !L.ambiance && L.animations && L.classe, q + " : des images de 30 ms pendant 2 s sur le domaine doivent couper l'ambiance, pas les animations (" + JSON.stringify(L) + ")");
+      C("C", L.memoire && L.stockage && !L.champ, q + " : la coupure ne doit rien écrire dans la sauvegarde (" + JSON.stringify(L) + ")");
+      Object.keys(RE2.restes || {}).forEach(e => C("C", !RE2.restes[e].length, q + " : après la coupure, boucles d'ambiance encore là sur « " + e + " » (" + RE2.restes[e].join(", ") + ")"));
+      C("C", RE2.nouvelleSeance && !RE2.nouvelleSeance.coupe && RE2.nouvelleSeance.ambiance && !RE2.nouvelleSeance.classe, q + " : la page rechargée (nouvelle séance), l'ambiance doit revenir (" + JSON.stringify(RE2.nouvelleSeance) + ")");
+    }
+  }
+  const RF = bilan.rafsSansAmbiance;
+  if (RF) Object.keys(RF).forEach(e => { if (RF[e] > 0) alertes.push("Ambiance coupée, écran " + e + " : " + RF[e] + " demandes d'image (requestAnimationFrame) en 1 s, écran immobile"); });
   const CE = bilan.coutEffets;
   if (CE && CE.pierre !== undefined) {
     C("A", CE.pierre < 0.1, "coût isolé d'une pierre au ralenti 4 × : " + CE.pierre + " ms par image (moins de 0,1)");
@@ -1760,9 +2168,16 @@ function controlesGraphismes(bilan) {
     C("A", !(TR.maxBataille > 100), "Event Timing au ralenti 4 × : " + TR.maxBataille + " ms entre une réponse et la question suivante peinte, en bataille (moins de 100)");
     // événement et porte : déjà au-dessus de 100 ms au ralenti avant le lot A (base-lot-a.json) : contrôle du lot C (tablette)
     C("C", !(TR.maxEvenement > 100), "Event Timing au ralenti 4 × : " + TR.maxEvenement + " ms pendant un événement (moins de 100)");
-    C("C", !(TR.maxPorte > 100), "Event Timing au ralenti 4 × : " + TR.maxPorte + " ms à la porte d'une expédition (moins de 100)");
-    if (!TR.evenement.length) alertes.push("Event Timing au ralenti 4 × : aucune mesure pendant l'événement");
-    if (!TR.porte.length) alertes.push("Event Timing au ralenti 4 × : aucune mesure à la porte (" + (TR.porteAbsente || "question à plusieurs gestes") + ")");
+    C("C", !(TR.maxPorte > 100), "Event Timing au ralenti 4 × : " + TR.maxPorte + " ms à la porte d'une expédition (moins de 100" + (TR.porte.length > 1 ? " ; mesures " + TR.porte.join(", ") + " ms" : "") + ")");
+    // les touches d'avant la dernière d'un geste (choix d'un QCM multiple, « Faux » qui ouvre la correction) : une alerte
+    (TR.intermediaires || []).filter(x => x.ms > 100).forEach(x => alertes.push("Event Timing au ralenti 4 × (" + x.ou + ", " + x.type + ") : une touche d'avant la dernière du geste à " + x.ms + " ms (elle ne montre pas la question suivante)"));
+    if (LOT >= "C") {
+      C("C", TR.evenement.length >= 1, "Event Timing au ralenti 4 × : aucune mesure pendant l'événement");
+      C("C", TR.porte.length >= 1, "Event Timing au ralenti 4 × : aucune mesure à la porte (" + (TR.porteAbsente || "question à plusieurs gestes") + ")");
+    } else {
+      if (!TR.evenement.length) alertes.push("Event Timing au ralenti 4 × : aucune mesure pendant l'événement");
+      if (!TR.porte.length) alertes.push("Event Timing au ralenti 4 × : aucune mesure à la porte (" + (TR.porteAbsente || "question à plusieurs gestes") + ")");
+    }
   }
   [bilan.cuirNu, bilan.cuirNuTablette].forEach(c => {
     if (!c) return;
@@ -1779,16 +2194,25 @@ function controlesGraphismes(bilan) {
   });
   const RG = bilan.reglages;
   if (RG && RG.length) {
-    RG.filter(r => r.erreur).forEach(r => echecs.push("même issue sous quatre réglages : la partie " + JSON.stringify({ animations: r.animations, sang: r.sang }) + " n'a pas été jouée (" + r.erreur + ")"));
+    RG.filter(r => r.erreur && r.niveau === undefined).forEach(r => echecs.push("même issue sous quatre réglages : la partie " + JSON.stringify({ animations: r.animations, sang: r.sang }) + " n'a pas été jouée (" + r.erreur + ")"));
     const jouees = RG.filter(r => r.issue), ref = jouees[0], temoin = jouees.find(r => r.temoin);
     if (ref && temoin && temoin.issue !== ref.issue) alertes.push("même issue sous quatre réglages : la partie témoin (mêmes réglages que la première) finit autrement ; l'essai n'est pas reproductible ici");
-    else jouees.filter(r => !r.temoin && r !== ref).forEach(r => C("A", r.issue === ref.issue, "même graine, issue différente : Animations " + (r.animations ? "oui" : "non") + ", Sang " + (r.sang ? "oui" : "non") + " (" + r.issue.slice(0, 160) + "… au lieu de " + ref.issue.slice(0, 160) + "…)"));
+    else {
+      jouees.filter(r => !r.temoin && r !== ref && r.niveau === undefined).forEach(r => C("A", r.issue === ref.issue, "même graine, issue différente : Animations " + (r.animations ? "oui" : "non") + ", Sang " + (r.sang ? "oui" : "non") + " (" + r.issue.slice(0, 160) + "… au lieu de " + ref.issue.slice(0, 160) + "…)"));
+      // lot C : chaque niveau forcé du régulateur, même issue ; le niveau publié est bien celui qu'on a forcé
+      jouees.filter(r => r.niveau !== undefined).forEach(r => {
+        C("C", r.issue === ref.issue, "même graine, issue différente au niveau " + r.niveau + " du régulateur (" + r.issue.slice(0, 160) + "… au lieu de " + ref.issue.slice(0, 160) + "…)");
+        C("C", (r.maxima || {}).niveau === r.niveau, "niveau " + r.niveau + " forcé : JEU.bataille.rendu.niveau monte jusqu'à " + (r.maxima || {}).niveau + " pendant la vague");
+      });
+    }
+    RG.filter(r => r.niveau !== undefined && r.erreur).forEach(r => C("C", false, "niveau " + r.niveau + " forcé du régulateur : partie pas jouée (" + r.erreur + ")"));
+    if (ref && (ref.maxima || {}).niveau > 0) alertes.push("même issue sous quatre réglages : la partie de référence a monté jusqu'au niveau " + ref.maxima.niveau + " du régulateur");
     jouees.forEach(r => { if (!r.finie) alertes.push("même issue sous quatre réglages : vague pas finie en " + r.dureeVagueS + " s (état comparé à la fin du temps)"); });
     const tirages = {};
     jouees.forEach(r => Object.keys(r.alea || {}).forEach(k => { tirages[k] = (tirages[k] || 0) + r.alea[k]; }));
     Object.keys(tirages).filter(k => /^bataille-(sol|effets)\.js/.test(k)).forEach(k => C("A", false, "Math.random tiré " + tirages[k] + " fois dans le dessin neuf (" + k + ")"));
     jouees.forEach(r => {
-      const q = "Animations " + (r.animations ? "oui" : "non") + ", Sang " + (r.sang ? "oui" : "non");
+      const q = "Animations " + (r.animations ? "oui" : "non") + ", Sang " + (r.sang ? "oui" : "non") + (r.niveau !== undefined ? ", niveau " + r.niveau : "");
       const M = r.maxima || {};
       plafonds("vague à ×3 (" + q + ")", M);
       if (r.cadre) C("A", !(r.cadre.ensemble > 1), "vague à ×3 (" + q + ") : " + r.cadre.ensemble + " secousses en même temps");
@@ -1826,6 +2250,18 @@ function afficherControles(r) {
     if (erreurs.length) r.echecs.push("erreurs JavaScript dans la page, ou essai interrompu (voir erreursJS)");
     // menus habillés (lot B, B4) : contrôles dans le jeu ouvert d'atelier/outils/controles-menus.js (hauteurs, chiffres, contraste, cibles, mouvements, coût)
     if (process.env.PARTIE === "graphismes") (await require("./controles-menus.js").page(chromium)).forEach(c => { if (!c.ok) r.echecs.push("menus : " + c.nom + (c.detail ? " (" + String(c.detail).slice(0, 300) + ")" : "")); });
+    // écrans du lot C (C2.1 à C2.7) : essais dans le jeu ouvert d'atelier/outils/tests-lot-c-ecrans.js (ÉCHEC à partir de LOT=C)
+    if (process.env.PARTIE === "graphismes") {
+      const f = path.join(__dirname, "tests-lot-c-ecrans.js");
+      if (!require("fs").existsSync(f)) r.alertes.push("écrans du lot C : atelier/outils/tests-lot-c-ecrans.js absent, essais non joués");
+      else {
+        let liste = [];
+        try { liste = await require(f).page(chromium); } catch (e) { liste = [{ nom: "essais interrompus", ok: false, detail: e.message }]; }
+        liste.forEach(c => { if (c.ok) return; const m = "écrans du lot C : " + c.nom + (c.detail ? " (" + String(c.detail).slice(0, 300) + ")" : ""); if (LOT >= "C") r.echecs.push(m); else r.avenir.push("(lot C) " + m); });
+        r.lotCEcrans = liste.length + " essais, " + liste.filter(c => !c.ok).length + " en échec";
+        console.log("Écrans du lot C (tests-lot-c-ecrans.js) : " + r.lotCEcrans);
+      }
+    }
     afficherControles(r);
     r.echecs.forEach(m => console.log("ÉCHEC  " + m));
     process.exit(r.echecs.length ? 1 : 0);
@@ -1857,7 +2293,7 @@ function afficherControles(r) {
   const erreurs = [];
   page.on("pageerror", e => erreurs.push(e.message));
   page.on("console", m => { if (m.type() === "error") erreurs.push(m.text()); });
-  await page.clock.install({ time: new Date("2026-10-13T18:00:00") });
+  await page.clock.install({ time: new Date(DEBUT_HORLOGE) });
   const t0 = Date.now();
   await page.goto(URL);
   await page.waitForFunction(() => window.JEU && JEU.pret);

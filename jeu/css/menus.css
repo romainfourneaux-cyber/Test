@@ -25,6 +25,10 @@
 /* et dans les parties, là où l'élève lit un repère de cours (« Cours 11 », « Affaire 1 / 10 ») : récit, question, conseil,
    bilan (intégration du lot B). Le bandeau du champ de bataille (compteur d'or à rouleaux) garde sa police : C2.7. */
 #ecran-partie :is(.recit, .question, .scene-conseil, .compteur, .bilan, .panneau-erreur) { --titre: "Chiffres", "Cinzel", Georgia, serif; }
+/* lot C (C2.7) : la carte de campagne, la route des expéditions, le bandeau du champ de bataille et l'or qui y vole. Le
+   compteur d'or à rouleaux garde sa colonne de .66em par chiffre et son roulement (jeu.css, « Champ : retour ») : seuls
+   les dessins des chiffres changent. */
+#ecran-jouer, #ecran-expedition, #ecran-partie .td-hud, .td-or-volant { --titre: "Chiffres", "Cinzel", Georgia, serif; }
 
 /* ---------- Menus : bandeau ---------- */
 /* même hauteur : la bordure reste, assombrie ; le filet doré passe au bord haut de la sangle */
@@ -305,6 +309,11 @@ input[type=checkbox]:checked, input[type=radio]:checked { background: url("../as
 input[type=checkbox]:checked:focus:not(:focus-visible), input[type=radio]:checked:focus:not(:focus-visible) { animation: frappe .18s ease-out; }
 @keyframes frappe { from { transform: scale(1.35) rotate(-14deg); opacity: .5; } to { transform: none; opacity: 1; } }
 input[type=checkbox]:focus-visible, input[type=radio]:focus-visible { outline: none; box-shadow: var(--halo); }
+/* case « Ambiance » (lot C) : sous « Animations », un cran en retrait ; grisée quand Animations est décoché (elle garde sa
+   valeur : Animations coupe de toute façon l'ambiance) */
+label.reglage-ambiance { display: flex; align-items: center; margin: .35rem 0 0 1.6rem; }
+.reglage-ambiance:has(> input:disabled) { opacity: .55; }
+input[type=checkbox]:disabled { cursor: not-allowed; }
 /* curseur (aucun aujourd'hui dans le jeu ; style prêt) : rail de laiton creusé, rempli d'or jusqu'à la bossette */
 input[type=range] { -webkit-appearance: none; appearance: none; width: 260px; height: 44px; background: none; border: 0; padding: 0; cursor: pointer; }
 input[type=range]::-webkit-slider-runnable-track {
@@ -319,6 +328,15 @@ input[type=range]:focus-visible::-webkit-slider-thumb { box-shadow: var(--halo);
   input[type=checkbox], input[type=radio] { width: 28px; height: 28px; vertical-align: -8px; margin: 0; }
   .bouton.petit, .bouton.discret { border-image-width: 12px; }
 }
+
+/* ---------- Focus au clavier (lot C, C2.7) ----------
+   Le halo d'or arrondi (--halo) remplace le rectangle du navigateur sur ce que l'habillage des menus ne couvrait pas :
+   réponses, liens, cartes de la campagne et des faveurs, médaillons de la cour, ordres de bataille, étal, fenêtres. Une
+   ombre fixe, sans animation. Le quartier du domaine (SVG, où une ombre ne se dessine pas) s'éclaire par son trait. */
+:is(.choix, .lien, .td-bouton, .carte-jeu, .carte-faveur, .lr-medaillon, .ligne-etal, .cour-chip, .choix-front, .modale-fermer, select, .trou):focus-visible { outline: none; box-shadow: var(--halo); }
+.lien:focus-visible { border-radius: 4px; }
+.quartier:focus-visible { outline: none; }
+.quartier:focus-visible rect:nth-child(2) { stroke: #fff3d0; stroke-width: 6px; }
 
 /* ---------- Menus : chargement ---------- */
 /* le blason du domaine, son nom, un rail de laiton à bossettes qui se remplit d'or (--p, posé par demarrage.js à chaque

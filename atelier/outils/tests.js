@@ -2627,6 +2627,9 @@ verifier("Bataillons : le rendu ne touche pas au moteur (aucune écriture de la 
 })();
 // menus habillés (lot B, B4 ; atelier/conception/graphismes-menus.md, 7.6) : contrôles de lecture d'atelier/outils/controles-menus.js
 require("./controles-menus.js").statique().forEach(c => verifier("Menus : " + c.nom, c.ok, c.detail));
+// lot C (plan graphismes-animations, section 5) : contrôles des deux constructeurs, écrans puis champ ; un fichier absent est sauté
+if (fs.existsSync(path.join(__dirname, "tests-lot-c-ecrans.js"))) require("./tests-lot-c-ecrans.js").statique().forEach(c => verifier("Lot C, écrans : " + c.nom, c.ok, c.detail));
+if (fs.existsSync(path.join(__dirname, "tests-lot-c-bataille.js"))) require("./tests-lot-c-bataille.js").controles().forEach(c => verifier(/^Lot C/.test(c.nom) ? c.nom : "Lot C, champ : " + c.nom, c.ok, c.detail));
 
 console.log("\n" + ok + " réussis, " + ko + " en échec.");
 process.exit(ko ? 1 : 0);

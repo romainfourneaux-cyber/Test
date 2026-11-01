@@ -144,6 +144,8 @@
     window.scrollTo(0, 0);
     // l'écran sort de display: none : son animation d'entrée part d'elle-même, sans relire la mise en page
     s.classList.add("entree");
+    // régulateur des écrans (lot C, anim.js) : sur un écran à ambiance, il relève quelques secondes l'écart entre images
+    if (JEU.anim && JEU.anim.surveiller) JEU.anim.surveiller(nom);
   };
   // Redessin sur place d'un écran déjà affiché (route des expéditions, arsenal fermé, conquête, écran rappelé) : ni
   // sortie, ni entrée, ni défilement. Le rendu reçoit { surPlace: true } (contrat avec l'habillage des menus, B4 : pas de
@@ -426,6 +428,7 @@
       if (deja) return;
       deja = true;
       ui.clavier = null;
+      if (JEU.anim && JEU.anim.laisserPasser) JEU.anim.laisserPasser(); // lot C : les gerbes en vol sautent l'image de la réponse
       var juste = JEU.questions.corriger(q, rj);
       derniere = { q: q, rj: rj, zone: zone, carte: carte, corps: corps, bataille: bataille };
       if (juste && !bataille && corps && JEU.anim && JEU.anim.frapper && JEU.anim.actif()) {
@@ -912,7 +915,8 @@
     s.appendChild(el("div", { class: "centre" }, [jouer]));
     // Au clavier, Entrée lance le jeu. Sur une tablette (pas de clavier), pas de focus : il faisait défiler la page pour
     // montrer le bouton, et le menu passait sous le bandeau dès l'ouverture (à moitié en 1280 × 800, en entier en 1024 × 768).
-    if (!ui.tactile) setTimeout(function () { jouer.focus(); }, 0);
+    // preventScroll (lot C) : le focus ne fait jamais défiler la page, le menu reste visible à l'ouverture
+    if (!ui.tactile) setTimeout(function () { jouer.focus({ preventScroll: true }); }, 0);
     ui.clavier = function (k) { if (k === "Enter") { ui.afficher("jouer"); return true; } return false; };
   };
 
@@ -1086,13 +1090,28 @@
       el("p", { class: "note", texte: "Coche un devoir quand tu l'as envoyé, avec la date, comme sur le plan des devoirs papier." }),
       listeDevoirs(etat)
     ]));
-    var animCase = el("input", { type: "checkbox", checked: etat.reglages.animations !== false, onchange: function () {
+    var animCase = el("input", { type: "checkbox", "data-reglage": "animations", checked: etat.reglages.animations !== false, onchange: function () {
       etat.reglages.animations = animCase.checked; JEU.sauvegarde.enregistrer(); ui.appliquerAnimations();
+      ambCase.disabled = !animCase.checked;
+    } });
+    // Ambiance (lot C, 01/11/2026 ; absent d'une ancienne sauvegarde : actif) : ce qui bouge sans raison de jeu. Animations
+    // décoché coupe aussi l'ambiance : la case est alors grisée, sans changer sa valeur.
+    // Le régulateur des écrans a pu couper l'ambiance pour la séance (l'appareil peinait) : une note le dit, et recocher la
+    // case est un geste voulu, qui rend l'ambiance et une nouvelle mesure au régulateur (chasse aux bugs du lot C).
+    var regEcrans = JEU.anim && JEU.anim.regulateur;
+    var ambNote = regEcrans && regEcrans.coupe && etat.reglages.ambiance !== false && etat.reglages.animations !== false ?
+      el("p", { class: "note", texte: "L'ambiance est coupée pour cette séance : l'appareil peinait. Décoche puis recoche « Ambiance » pour la rallumer." }) : null;
+    var ambCase = el("input", { type: "checkbox", "data-reglage": "ambiance", checked: etat.reglages.ambiance !== false, disabled: etat.reglages.animations === false, onchange: function () {
+      etat.reglages.ambiance = ambCase.checked; JEU.sauvegarde.enregistrer();
+      if (ambCase.checked && regEcrans && regEcrans.coupe) { regEcrans.reinitialiser(); if (ambNote) ambNote.remove(); }
+      ui.appliquerAnimations(); // les écrans à ambiance se redessinent quand on y revient
     } });
     s.appendChild(el("div", { class: "cartouche" }, [
       el("h3", { texte: "Animations" }),
-      el("label", {}, [animCase, el("span", { texte: " Ambiance animée (fumées, nuages, villageois, drapeaux, particules)" })]),
-      el("p", { class: "note", texte: "À décocher si l'ordinateur rame ou si le mouvement gêne. Le jeu reste aussi rapide dans les deux cas." })
+      el("label", {}, [animCase, el("span", { texte: " Animations (sceaux, pièces d'or, gestes des soldats, changements d'écran)" })]),
+      el("label", { class: "reglage-ambiance" }, [ambCase, el("span", { texte: " Ambiance (nuages, fumées, oiseaux, drapeaux)" })]),
+      ambNote,
+      el("p", { class: "note", texte: "À décocher si l'ordinateur rame ou si le mouvement gêne. « Ambiance » ne coupe que les décors qui bougent ; « Animations » coupe tout. Le jeu reste aussi rapide dans tous les cas." })
     ]));
     // sang dans les combats (absent d'une ancienne sauvegarde : actif)
     var sangCase = el("input", { type: "checkbox", "data-reglage": "sang", checked: etat.reglages.sang !== false, onchange: function () {
@@ -1142,6 +1161,9 @@
   ui.appliquerAnimations = function () {
     var actif = !!(JEU.anim && JEU.anim.actif());
     document.body.classList.toggle("sans-anim", !actif);
+    // ambiance coupée (réglage « Ambiance », Animations coupées ou régulateur des écrans, lot C) : nuages, fumées, oiseaux,
+    // drapeaux, poussières et villageois s'arrêtent sur place (feuilles de style, body.sans-ambiance)
+    document.body.classList.toggle("sans-ambiance", !(JEU.anim && JEU.anim.ambiance && JEU.anim.ambiance()));
     // animations coupées : ce qui s'efface encore (écran qui sort, fenêtre qui se ferme) part tout de suite (chasse aux
     // bugs du lot B : sans animation, aucun animationend, et l'ancien écran restait opaque jusqu'à la minuterie de secours)
     if (!actif) { sorties.slice().forEach(finirSortie); if (minuterieModale) cacherModale(); }

@@ -85,6 +85,7 @@
   // ---------- dessin : plan de ville ancien ----------
   var ENCRE = "#2e2419";
   var L = 1000, H = 660, CX = 500, CY = 350;
+  var RIVIERE = "M-20 250 C150 280 260 200 380 230 S600 300 720 255 S900 190 1020 230";
   var POS = {
     chateau: [500, 135], marche: [810, 335], herboristerie: [190, 335],
     forge: [770, 530], scriptorium: [230, 530], ambassade: [500, 545]
@@ -139,17 +140,16 @@
       "<defs>" +
       "<pattern id='sillons' width='7' height='7' patternUnits='userSpaceOnUse' patternTransform='rotate(30)'><path d='M0 0v7' stroke='" + ENCRE + "' stroke-width='.8' opacity='.35'/></pattern>" +
       "<pattern id='sillons2' width='7' height='7' patternUnits='userSpaceOnUse' patternTransform='rotate(-40)'><path d='M0 0v7' stroke='" + ENCRE + "' stroke-width='.8' opacity='.35'/></pattern>" +
-      "<filter id='flou' x='-30%' y='-30%' width='160%' height='160%'><feGaussianBlur stdDeviation='9'/></filter>" +
+      // brume des quartiers endormis : une ellipse à dégradé radial (lot C) au lieu d'un flou SVG, coûteux à chaque peinture
+      "<radialGradient id='brumeQ'><stop offset='.62' stop-color='#f4ede0' stop-opacity='.85'/><stop offset='1' stop-color='#f4ede0' stop-opacity='0'/></radialGradient>" +
       "<filter id='portee' x='-30%' y='-30%' width='160%' height='170%'><feDropShadow dx='2' dy='4' stdDeviation='3' flood-color='#000' flood-opacity='.55'/></filter>" +
       "<radialGradient id='jeton' cx='.4' cy='.35' r='.75'><stop offset='0' stop-color='#fbf1d6'/><stop offset='1' stop-color='#cdb586'/></radialGradient>" +
       "<radialGradient id='vigP' cx='.5' cy='.5' r='.72'><stop offset='.62' stop-color='#5b4428' stop-opacity='0'/><stop offset='1' stop-color='#5b4428' stop-opacity='.35'/></radialGradient>" +
       "</defs>";
     // fond peint : relief, prés, champs, forêts, rivière (atelier/outils/generer-terrain.py)
     s += "<image href='assets/images/terrain-domaine.jpg' x='0' y='0' width='" + L + "' height='" + H + "' preserveAspectRatio='none'/>";
-    // le courant de la rivière (reflets qui glissent)
-    var riv = "M-20 250 C150 280 260 200 380 230 S600 300 720 255 S900 190 1020 230";
-    s += "<path class='courant' d='" + riv + "' fill='none' stroke='#e8f2f2' stroke-width='3' stroke-dasharray='18 46' opacity='.55'/>" +
-      "<path class='courant lent' d='" + riv + "' fill='none' stroke='#d6e6e8' stroke-width='2' stroke-dasharray='8 70' opacity='.45' transform='translate(0,6)'/>";
+    // le courant de la rivière : un trait pâle fixe ici ; les reflets vifs qui glissent sont dans le calque de vie (vieHTML)
+    s += "<path d='" + RIVIERE + "' fill='none' stroke='#d6e6e8' stroke-width='2' stroke-dasharray='8 70' opacity='.45' transform='translate(0,6)'/>";
     // enceinte
     s += enceinte(idx);
     // routes vers chaque quartier
@@ -189,31 +189,21 @@
         if (etat.batiments.indexOf(b.id) >= 0) {
           s += "<g filter='url(#portee)'><circle cx='" + jx + "' cy='" + jy + "' r='36' fill='" + couleur + "' stroke='" + ENCRE + "' stroke-width='2'/>" +
             "<circle cx='" + jx + "' cy='" + jy + "' r='30' fill='url(#jeton)' stroke='#b08d3a' stroke-width='3'/>" +
-            JEU.icones.dans(b.id, jx - 22, jy - 22, 44, ENCRE) + "</g>" +
-            "<g class='fumee'><circle cx='" + (jx + 14) + "' cy='" + (jy - 30) + "' r='6'/><circle cx='" + (jx + 14) + "' cy='" + (jy - 30) + "' r='6'/><circle cx='" + (jx + 14) + "' cy='" + (jy - 30) + "' r='6'/></g>" +
-            (b.id === "moulin" ? "<g class='ailes' style='transform-origin:" + jx + "px " + (jy - 6) + "px'><path d='M" + jx + " " + (jy - 40) + "V" + (jy + 28) + "M" + (jx - 34) + " " + (jy - 6) + "H" + (jx + 34) + "' stroke='" + ENCRE + "' stroke-width='3' opacity='.8'/></g>" : "");
+            JEU.icones.dans(b.id, jx - 22, jy - 22, 44, ENCRE) + "</g>"; // fumée et ailes du moulin : calque de vie
         } else {
           s += "<circle cx='" + jx + "' cy='" + jy + "' r='28' fill='#efe6d2' fill-opacity='.35' stroke='" + ENCRE + "' stroke-width='1.6' stroke-dasharray='5 4' opacity='.75'/>" +
             "<path d='M" + jx + " " + (jy - 9) + "v18M" + (jx - 9) + " " + jy + "h18' stroke='" + ENCRE + "' stroke-width='2' opacity='.5'/>";
         }
       });
-      // fanion à l'icône de la matière
-      s += "<g transform='translate(" + (p[0] - 128) + "," + (p[1] - 78) + ")'><path d='M4 0v70' stroke='" + ENCRE + "' stroke-width='3'/>" +
-        "<g class='flotte' style='animation-delay:-" + (p[0] % 7 / 3).toFixed(2) + "s'><path d='M6 2h40v34l-20 10-20-10z' fill='" + couleur + "' stroke='" + ENCRE + "' stroke-width='1.6'/>" +
-        JEU.icones.dans(JEU.icones.matiere(q.matieres[0]), 12, 6, 28, "#efe6d2") + "</g></g>";
-      // brume sur les quartiers endormis
+      // hampe du fanion (le drapeau, qui flotte, est dans le calque de vie)
+      s += "<path d='M" + (p[0] - 124) + " " + (p[1] - 78) + "v70' stroke='" + ENCRE + "' stroke-width='3'/>";
+      // brume sur les quartiers endormis (bords fondus par le dégradé : les ellipses ont 18 unités de plus que leur cœur)
       if (!eveille) {
-        s += "<g filter='url(#flou)' opacity='.85'><ellipse cx='" + (p[0] - 40) + "' cy='" + p[1] + "' rx='90' ry='45' fill='#f4ede0'/><ellipse cx='" + (p[0] + 50) + "' cy='" + (p[1] + 8) + "' rx='80' ry='40' fill='#f4ede0'/></g>";
+        s += "<ellipse cx='" + (p[0] - 40) + "' cy='" + p[1] + "' rx='108' ry='63' fill='url(#brumeQ)'/><ellipse cx='" + (p[0] + 50) + "' cy='" + (p[1] + 8) + "' rx='98' ry='58' fill='url(#brumeQ)'/>";
       }
       s += rubanTexte(p[0], p[1] + 74, q.nom) + "</g>";
     });
-    // villageois (animés par la boucle d'ambiance), ombres de nuages, vol d'oiseaux
-    s += "<g class='villageois'></g>";
-    s += "<g class='nuages' filter='url(#flou)'><ellipse cx='200' cy='180' rx='170' ry='70' fill='#1c140c' opacity='.13'/><ellipse cx='-260' cy='460' rx='200' ry='80' fill='#1c140c' opacity='.11'/><ellipse cx='-700' cy='300' rx='150' ry='60' fill='#1c140c' opacity='.12'/></g>";
-    s += "<g class='oiseaux'>" + [0, 1, 2, 3, 4].map(function (i) {
-      var ox = i * 18 - (i % 2) * 6, oy = Math.abs(i - 2) * 10;
-      return "<path class='aile' style='animation-delay:-" + (i * 0.13).toFixed(2) + "s' d='M" + ox + " " + oy + " q6 -7 12 0 q6 -7 12 0' fill='none' stroke='" + ENCRE + "' stroke-width='1.8'/>";
-    }).join("") + "</g>";
+    // villageois, ombres de nuages, vol d'oiseaux : dans le calque de vie (vieHTML), plus dans ce dessin
     // le seigneur à cheval, que le joueur dirige au clavier
     var cs = JEU.icones.couleurs(etat.reglages.nomDomaine);
     s += "<g id='seigneur' transform='translate(" + balade.x.toFixed(1) + "," + balade.y.toFixed(1) + ")'>" +
@@ -231,6 +221,74 @@
     s += "<rect width='" + L + "' height='" + H + "' fill='url(#vigP)' pointer-events='none'/>" +
       "<rect x='6' y='6' width='" + (L - 12) + "' height='" + (H - 12) + "' fill='none' stroke='" + ENCRE + "' stroke-width='3'/><rect x='12' y='12' width='" + (L - 24) + "' height='" + (H - 24) + "' fill='none' stroke='" + ENCRE + "' stroke-width='1'/>";
     return s + "</svg>";
+  }
+
+  // ---------- calque de vie (lot C, C2.2, 01/11/2026) ----------
+  // Tout ce qui bouge sur le plan est ici, dans un calque HTML posé sur le dessin (même cadre ; positions en % du plan de
+  // 1000 × 660), et n'anime que transform, translate, scale et opacity d'éléments entiers : le compositeur seul. Dans le
+  // grand SVG, la moindre animation (un fanion, un reflet, un nuage flou, un villageois) faisait repeindre tout le plan à
+  // chaque image (mesuré au ralenti 4 × : 1,1 à 1,4 s de travail du fil principal toutes les 2,5 s pour une seule d'entre
+  // elles). Les translations sont en % de l'élément lui-même : un élément de w unités de large qui avance de d unités
+  // glisse de d / w × 100 %. Reflets, fanions et ailes du moulin restent posés sans ambiance ; nuages, oiseaux, fumées et
+  // villageois ne sont alors pas créés. Aucun tirage au hasard : chaque villageois a sa route, son pas et son départ.
+  function pct(v, total) { return (Math.round(v / total * 100000) / 1000) + "%"; }
+  function boite(x, y, w, h) { return "left:" + pct(x, L) + ";top:" + pct(y, H) + ";width:" + pct(w, L) + ";height:" + pct(h, H); }
+  var HABITS = ["#8a3a2a", "#2f5a8a", "#4f6b32", "#b5772b", "#6b2d5c", "#d9c49a"];
+  function vieHTML(etat, ambiance) {
+    var h = "", nb = etat.batiments.length, idx = STADES.indexOf(stade(nb));
+    // reflets de la rivière : quatre calques du même trait en pointillés, décalés d'un quart de période (16 unités), qui
+    // se relaient par l'opacité : les reflets semblent glisser vers l'aval. Sans ambiance, le premier reste allumé.
+    for (var k = 0; k < 4; k++) {
+      h += "<svg class='reflet-domaine r" + k + "' style='" + boite(0, 180, L, 136) + "' viewBox='0 180 1000 136' preserveAspectRatio='none' aria-hidden='true'>" +
+        "<path d='" + RIVIERE + "' fill='none' stroke='#e8f2f2' stroke-width='3' stroke-dasharray='18 46' stroke-dashoffset='" + (-16 * k) + "'/></svg>";
+    }
+    // fanions des quartiers (la hampe est dans le dessin) : drapeau à l'icône de la matière, qui flotte
+    Object.keys(QUARTIERS).forEach(function (k2) {
+      var q = QUARTIERS[k2], p = POS[k2], couleur = JEU.MATIERES[q.matieres[0]].couleur;
+      h += "<svg class='flotte' style='" + boite(p[0] - 123, p[1] - 77, 42, 46) + ";animation-delay:-" + (p[0] % 7 / 3).toFixed(2) + "s' viewBox='5 1 42 46' aria-hidden='true'>" +
+        "<path d='M6 2h40v34l-20 10-20-10z' fill='" + couleur + "' stroke='" + ENCRE + "' stroke-width='1.6'/>" +
+        JEU.icones.dans(JEU.icones.matiere(q.matieres[0]), 12, 6, 28, "#efe6d2") + "</svg>";
+    });
+    // bâtiments construits : ailes du moulin qui tournent ; fumée qui monte (ambiance seulement)
+    BATIMENTS.forEach(function (b) {
+      if (etat.batiments.indexOf(b.id) < 0) return;
+      var j = BATIMENTS.filter(function (x) { return x.quartier === b.quartier; }).indexOf(b), p = POS[b.quartier];
+      var jx = p[0] - 82 + j * 104 + 32, jy = p[1] - 40 + 34;
+      if (b.id === "moulin") h += "<svg class='ailes-domaine' style='" + boite(jx - 34, jy - 40, 68, 68) + "' viewBox='-34 -34 68 68' aria-hidden='true'><path d='M0 -34V34M-34 0H34' stroke='" + ENCRE + "' stroke-width='3' opacity='.8'/></svg>";
+      if (ambiance) h += "<span class='fumee-domaine' style='" + boite(jx + 8, jy - 36, 12, 12) + "'><i></i><i></i><i></i></span>";
+    });
+    if (!ambiance) return h;
+    // ombres de trois nuages qui passent (80 s), en ellipses à dégradé radial (aucun flou)
+    [[200, 180, 70, ".13"], [-260, 460, 80, ".11"], [-700, 300, 60, ".12"]].forEach(function (n) {
+      h += "<span class='nuage-domaine' style='" + boite(n[0] - 218, n[1] - n[2] - 18, 436, 2 * n[2] + 36) + ";--o:" + n[3] + "'></span>";
+    });
+    // un vol de cinq oiseaux à l'encre (26 s) : deux dessins des ailes, hautes et basses, qui se relaient
+    var vol = function (haut) {
+      return [0, 1, 2, 3, 4].map(function (i) {
+        var ox = i * 18 - (i % 2) * 6, oy = Math.abs(i - 2) * 10, leve = (i % 2 === 0) === haut;
+        return "<path d='M" + ox + " " + oy + (leve ? " q6 -7 12 0 q6 -7 12 0" : " q6 3 12 0 q6 3 12 0") + "' fill='none' stroke='" + ENCRE + "' stroke-width='1.8'/>";
+      }).join("");
+    };
+    h += "<span class='oiseaux-domaine'><svg class='aile-a' viewBox='-2 -6 100 30' aria-hidden='true'>" + vol(true) + "</svg><svg class='aile-b' viewBox='-2 -6 100 30' aria-hidden='true'>" + vol(false) + "</svg></span>";
+    // villageois : ils vont et viennent sur une route, de la place à un quartier éveillé (de 12 % à 92 % du chemin)
+    var routes = Object.keys(POS).filter(function (k3) { return maitrise(k3, etat).vues > 0; });
+    if (!routes.length) routes = ["chateau"];
+    var n = [4, 8, 12, 16][idx] || 4;
+    for (var i = 0; i < n; i++) {
+      var q = POS[routes[i % routes.length]], dx = q[0] - CX, dy = q[1] - CY, d = Math.sqrt(dx * dx + dy * dy), cote = ((i % 3) - 1) * 7;
+      var pos = function (t) { return [CX + dx * t - dy / d * cote, CY + dy * t + dx / d * cote]; };
+      // la figure (18 × 17 unités de dessin, à l'échelle 1,7) a son pied au point (6, 14) : 33,3 % et 82,4 % de sa boîte
+      var W = 30.6, Hf = 28.9, a = pos(0.12), z = pos(0.92);
+      var en = function (pt) { return (Math.round((pt[0] - 10.2) / W * 100000) / 1000) + "% " + (Math.round((pt[1] - 23.8) / Hf * 100000) / 1000) + "%"; };
+      var v = 0.035 + (i % 5) * 0.008, cycle = 1.6 / v, t0 = Math.min(0.92, Math.max(0.12, (i * 0.37) % 1)), sens = i % 2 ? 1 : -1;
+      var phase = sens > 0 ? (t0 - 0.12) / 0.8 * 0.5 : 0.5 + (0.92 - t0) / 0.8 * 0.5;
+      var face = dx >= 0 ? 1 : -1; // tourné vers le quartier à l'aller, vers la place au retour
+      h += "<i class='villageois-domaine' style='width:" + pct(W, L) + ";--a:" + en(a) + ";--b:" + en(z) + ";translate:" + en(pos(t0)) + ";--s:" + face + ";--r:" + (-face) +
+        ";animation-duration:" + cycle.toFixed(1) + "s," + cycle.toFixed(1) + "s,.35s;animation-delay:-" + (phase * cycle).toFixed(2) + "s,-" + (phase * cycle).toFixed(2) + "s,-" + (i * 0.11 % 0.35).toFixed(2) + "s'>" +
+        "<svg viewBox='-6 -14 18 17' aria-hidden='true'><ellipse cx='0' cy='1' rx='4' ry='1.6' fill='#000' opacity='.3'/><path d='M-3.2 0 L0 -9 L3.2 0z' fill='" + HABITS[i % HABITS.length] + "' stroke='" + ENCRE + "' stroke-width='.7'/><circle cx='0' cy='-10.5' r='2.6' fill='#e8cfa8' stroke='" + ENCRE + "' stroke-width='.6'/>" +
+        (i % 4 === 0 ? "<rect x='4' y='-8' width='6' height='5' fill='#8a5a34' stroke='" + ENCRE + "' stroke-width='.6'/>" : "") + "</svg></i>";
+    }
+    return h;
   }
 
   function pseudoHasard(graine) {
@@ -269,6 +327,13 @@
       Array.prototype.forEach.call(document.querySelectorAll("#ecran-domaine .quartier"), function (e) {
         e.classList.toggle("proche", e.getAttribute("data-quartier") === q);
       });
+      // halo du quartier (lot C) : un cadre posé dans le calque de vie, dont seule l'opacité d'un pseudo-élément respire
+      // (le trait du SVG dont l'épaisseur battait faisait repeindre tout le plan) ; un signal de jeu : il suit Animations
+      var halo = document.querySelector("#ecran-domaine .halo-quartier");
+      if (halo) {
+        halo.classList.toggle("vu", !!q);
+        if (q) { halo.setAttribute("style", boite(POS[q][0] - 115, POS[q][1] - 58, 230, 116) + ";--teinte:" + JEU.MATIERES[QUARTIERS[q].matieres[0]].couleur); }
+      }
       var aide = document.querySelector("#ecran-domaine .aide-balade");
       // tablette (31/10/2026) : sans clavier, on touche le plan pour s'y rendre et un quartier pour l'ouvrir
       var tactile = JEU.ui && JEU.ui.tactile;
@@ -343,7 +408,10 @@
     var st = stade(etat.batiments.length);
     s.innerHTML = "";
     s.appendChild(el("h1", { class: "titre-ecran", texte: "Ton domaine · " + st.nom }));
-    var plan = el("div", { class: "plan-cadre", html: dessiner(etat) });
+    // le dessin, puis le calque de vie (ce qui bouge) et le halo du quartier où se tient le seigneur
+    var amb = !!(JEU.anim && JEU.anim.ambiance && JEU.anim.ambiance());
+    var plan = el("div", { class: "plan-cadre", html: dessiner(etat) +
+      "<div class='vie-domaine" + (amb ? " ambiance" : "") + "' aria-hidden='true'>" + vieHTML(etat, amb) + "<span class='halo-quartier'></span></div>" });
     s.appendChild(plan);
     s.appendChild(el("p", { class: "aide-balade" }));
     var panneau = el("div", { class: "panneau-quartier" });
@@ -366,46 +434,7 @@
     if (prochain) s.appendChild(el("p", { class: "note centre", texte: "Encore " + (prochain.min - etat.batiments.length) + " bâtiment" + (prochain.min - etat.batiments.length > 1 ? "s" : "") + " pour devenir " + prochain.nom.toLowerCase() + "." }));
     rendrePanneau(panneau, etat);
     placer();
-    ambiance(etat);
   };
-
-  // ---------- ambiance : des villageois vont et viennent entre la place et les quartiers éveillés ----------
-  var jetonAmbiance = 0;
-  function ambiance(etat) {
-    var mon = ++jetonAmbiance;
-    var groupe = document.querySelector("#ecran-domaine .villageois");
-    if (!groupe || !JEU.anim.actif()) return;
-    var routes = Object.keys(POS).filter(function (k) { return maitrise(k, etat).vues > 0; });
-    if (!routes.length) routes = ["chateau"];
-    var nb = [4, 8, 12, 16][STADES.indexOf(stade(etat.batiments.length))] || 4;
-    var habits = ["#8a3a2a", "#2f5a8a", "#4f6b32", "#b5772b", "#6b2d5c", "#d9c49a"];
-    var gens = [];
-    for (var i = 0; i < nb; i++) {
-      var k = routes[i % routes.length];
-      var g = document.createElementNS("http://www.w3.org/2000/svg", "g");
-      g.innerHTML = "<ellipse cx='0' cy='1' rx='4' ry='1.6' fill='#000' opacity='.3'/><path d='M-3.2 0 L0 -9 L3.2 0z' fill='" + habits[i % habits.length] + "' stroke='" + ENCRE + "' stroke-width='.7'/><circle cx='0' cy='-10.5' r='2.6' fill='#e8cfa8' stroke='" + ENCRE + "' stroke-width='.6'/>" +
-        (i % 4 === 0 ? "<rect x='4' y='-8' width='6' height='5' fill='#8a5a34' stroke='" + ENCRE + "' stroke-width='.6'/>" : "");
-      groupe.appendChild(g);
-      gens.push({ el: g, k: k, t: (i * 0.37) % 1, sens: i % 2 ? 1 : -1, v: 0.035 + (i % 5) * 0.008, cote: ((i % 3) - 1) * 7 });
-    }
-    var avant = 0;
-    function tic(t) {
-      if (mon !== jetonAmbiance || JEU.ui.ecranCourant() !== "domaine" || !document.body.contains(groupe)) return;
-      var dt = avant ? Math.min(0.05, (t - avant) / 1000) : 0.016;
-      avant = t;
-      gens.forEach(function (p) {
-        p.t += p.sens * p.v * dt;
-        if (p.t > 0.92) { p.t = 0.92; p.sens = -1; }
-        if (p.t < 0.12) { p.t = 0.12; p.sens = 1; p.k = routes[Math.floor(Math.random() * routes.length)]; }
-        var q = POS[p.k], dx = q[0] - CX, dy = q[1] - CY, n = Math.sqrt(dx * dx + dy * dy);
-        var x = CX + dx * p.t - dy / n * p.cote, y = CY + dy * p.t + dx / n * p.cote;
-        var saut = Math.abs(Math.sin(t / 110 + p.cote)) * 1.4;
-        p.el.setAttribute("transform", "translate(" + x.toFixed(1) + "," + (y - saut).toFixed(1) + ") scale(" + (dx * p.sens < 0 ? -1.7 : 1.7) + ",1.7)");
-      });
-      requestAnimationFrame(tic);
-    }
-    requestAnimationFrame(tic);
-  }
 
   function rendrePanneau(panneau, etat) {
     var el = JEU.ui.el;
@@ -444,5 +473,5 @@
     if (quartierChoisi) panneau.appendChild(el("button", { class: "lien", onclick: function () { quartierChoisi = null; rendrePanneau(panneau, etat); }, texte: "Voir tous les quartiers" }));
   }
 
-  JEU.domaine = { balade: balade, quartierSous: quartierSous, QUARTIERS: QUARTIERS, BATIMENTS: BATIMENTS, STADES: STADES, stade: stade, maitrise: maitrise, debloque: debloque, abordable: abordable, construire: construire, dessiner: dessiner };
+  JEU.domaine = { balade: balade, quartierSous: quartierSous, QUARTIERS: QUARTIERS, BATIMENTS: BATIMENTS, STADES: STADES, stade: stade, maitrise: maitrise, debloque: debloque, abordable: abordable, construire: construire, dessiner: dessiner, vieHTML: vieHTML };
 })(typeof window !== "undefined" ? window : globalThis);

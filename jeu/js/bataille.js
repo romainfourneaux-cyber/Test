@@ -186,6 +186,20 @@
   }
   // Vue d'un effet joué une seule fois : de 0 à n − 1 pendant « duree » secondes.
   function vue(age, duree, n) { return Math.min(n - 1, Math.floor(age / duree * n)); }
+  // Lot C (C2.6, 01/11/2026) : la même image, mais copiée pixel pour pixel d'une vue gardée (vueFigure : l'image k
+  // réduite une fois à sa taille sur la toile, netteté et échelle comprises). Les images sont rendues à 2 fois : les réduire
+  // à chaque image coûtait au navigateur bien plus qu'une copie (mesuré au ralenti 4 ×, places fortes, tours, ombres,
+  // poussières, éclats). Position arrondie au pixel de la toile. dx, dy : translation de la toile en cours (un effet
+  // décalé vers son bataillon), ajoutée à la position et rendue à la toile ensuite. Sans miroir ; false si l'image manque.
+  function spriteGarde(ctx, nom, x, y, k, echelle, ratio, dx, dy) {
+    if (!prete(nom)) return false;
+    var c = vueFigure(nom, "pied", "", null, k, false, echelle || 1, ratio);
+    dx = dx || 0; dy = dy || 0;
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.drawImage(c, Math.round((x + dx) * ratio - c.axd), Math.round((y + dy) * ratio - c.ayd));
+    ctx.setTransform(ratio, 0, 0, ratio, dx * ratio, dy * ratio);
+    return true;
+  }
 
   // intact au-dessus de la moitié de la solidité, abîmée tant qu'il en reste, ruine à zéro
   function nomPlace(c, etat) { return "place-" + c + "-" + (etat.pv > etat.max / 2 ? "intact" : etat.pv > 0 ? "abime" : "ruine"); }
@@ -361,6 +375,81 @@
     return nuage;
   }
 
+  // ---------- régulateur de la bataille (lot C, C2.4 du plan, 01/11/2026) ----------
+  // Quand la machine peine, le champ s'allège de lui-même : l'élève ne voit qu'un champ un peu plus calme. La boucle (moteur
+  // et dessin) est chronométrée à chaque image dessinée pendant la vague ; moyenne glissante sur REG.fenetre s. Au-dessus de
+  // REG.haut ms, un cran de moins ; sous REG.bas ms, un cran de plus ; au plus un changement toutes les REG.attente s.
+  // Niveau (JEU.bataille.rendu.niveau) : 0, tout ; puis, chaque cran gardant les précédents :
+  //   1 sans traînées derrière les traits ; 2 sans volées (une flèche par tir, comme le moteur) ; 3 mottes et étincelles
+  //   divisées par deux, poussières légères (plus de bouffée sous un trait qui touche ni sous un coup de palissade) ;
+  //   4 netteté de la toile plafonnée à 1,5 ; 5 plafonnée à 1,25 (le cran 4 du plan, en deux pas) ; 6 ombres des figurines
+  //   du dernier rang retirées (le porte-bannière garde la sienne) ;
+  //   puis deux étapes de « si la tablette reste trop lente » (plan, section 5), ici seulement quand la machine peine :
+  //   7 une passe d'effacement de la couche de sol toutes les deux images ; 8 fumées des places fortes à 3 bouffées par
+  //   foyer au lieu de 7.
+  // Jamais : moins de figurines (elles disent la force d'une troupe), ni gestes, chutes ou tirs des tours coupés, ni rien
+  // que le moteur lirait : l'issue est la même à tous les niveaux (perf.js et tests-lot-c-bataille.js le vérifient).
+  // La toile n'est jamais refaite en pleine bataille (chasse aux bugs du lot C : refaire la toile gelait une image de 80 à
+  // 330 ms et effaçait d'un coup tous les corps et le sang) : les crans de netteté (4 et 5) sont sautés pendant la vague, et
+  // le plafond du niveau atteint vaut dès la bataille suivante, à la création de sa toile. Un cran pris qui n'allège pas la
+  // boucle d'au moins REG.gain ms (mesuré à la décision suivante, 2 s plus tard) est rendu, et le régulateur ne monte plus
+  // dans cette bataille (r.plafond) : il n'ôte pas d'effets pour rien. Le niveau atteint sert de départ à la bataille
+  // suivante, pour la séance seulement (rien n'est écrit dans la sauvegarde).
+  // Hors de la vague (préparation, conseil), rien n'est mesuré : le champ y dessine peu, la boucle y serait trompeuse.
+  var REG = { fenetre: 1, haut: 4, bas: 3, attente: 2, max: 8, gain: 0.3, nettete: { 4: 1.5, 5: 1.25 } };
+  var niveauSeance = 0, niveauForce = null, reglerEnCours = null;
+  // Le régulateur seul, sans toile (essais sous Node). niveau : niveau de départ ; utile(n) : vrai si le cran n change
+  // quelque chose sur cet écran. noter(t, d) : t, heure de l'image (ms), d, durée de sa boucle (ms) ; rend le niveau voulu.
+  // Rien n'est créé à chaque image : la fenêtre est un anneau de tableaux fixes.
+  function creerRegulateur(niveau, utile) {
+    var N = 256, T = new Float64Array(N), D = new Float64Array(N);
+    // plafond : plus haut niveau permis dans cette bataille ; avant et precedent : moyenne et niveau juste avant le dernier
+    // cran pris (null : le dernier changement n'était pas une montée)
+    var r = { niveau: niveau || 0, plafond: REG.max, force: false, tete: 0, n: 0, somme: 0, change: -1e15, moyenne: 0, avant: null, precedent: 0 };
+    function pas(n, sens) {
+      var k = n + sens;
+      while (k > 0 && k < REG.max && utile && !utile(k)) k += sens;
+      return Math.max(0, Math.min(r.plafond, REG.max, k));
+    }
+    r.noter = function (t, d) {
+      var F = REG.fenetre * 1000;
+      while (r.n && (t - T[r.tete] > F || r.n >= N)) { r.somme -= D[r.tete]; r.tete = (r.tete + 1) % N; r.n--; }
+      if (!r.n) r.somme = 0;
+      var i = (r.tete + r.n) % N;
+      T[i] = t; D[i] = d; r.somme += d; r.n++;
+      r.moyenne = r.somme / r.n;
+      // une fenêtre presque pleine, et REG.attente s depuis le dernier changement
+      if (r.force || t - T[r.tete] < F * 0.9 || t - r.change < REG.attente * 1000) return r.niveau;
+      // le dernier cran pris n'a pas allégé la boucle : il est rendu, et plus de montée dans cette bataille
+      if (r.avant !== null && r.avant - r.moyenne < REG.gain) {
+        r.plafond = r.precedent; r.niveau = r.precedent; r.avant = null; r.change = t;
+        return r.niveau;
+      }
+      r.avant = null;
+      var voulu = r.niveau;
+      if (r.moyenne > REG.haut && r.niveau < r.plafond) voulu = pas(r.niveau, 1);
+      else if (r.moyenne < REG.bas && r.niveau > 0) voulu = pas(r.niveau, -1);
+      if (voulu > r.niveau) { r.avant = r.moyenne; r.precedent = r.niveau; }
+      if (voulu !== r.niveau) { r.niveau = voulu; r.change = t; }
+      return r.niveau;
+    };
+    return r;
+  }
+  // Plafond de la netteté de la toile : 2 (images rendues à 2 fois) ; 1,25 sur un écran tactile (lot C, « si la tablette
+  // reste trop lente », étape 2 : une tablette dense dessinait jusqu'à 1,52 fois) ; le régulateur, aux niveaux 4 et 5.
+  function plafondNettete(niveau) {
+    var c = JEU.ui && JEU.ui.tactile ? 1.25 : 2, r = REG.nettete;
+    if (niveau >= 5) c = Math.min(c, r[5]); else if (niveau >= 4) c = Math.min(c, r[4]);
+    return c;
+  }
+  // Pour les essais : fixe le niveau (0 à REG.max) de la bataille en cours et des suivantes ; null rend la main au régulateur.
+  function forcerNiveau(n) {
+    niveauForce = n === null || n === undefined ? null : Math.max(0, Math.min(REG.max, Math.round(n)));
+    if (niveauForce !== null) niveauSeance = niveauForce;
+    if (reglerEnCours) reglerEnCours(niveauForce);
+    return niveauForce;
+  }
+
   // ---------- dessin d'une image du combat ----------
   // Passe « sol » (ombres portées, emplacements, portées), puis volumes triés de haut en bas de l'écran
   // (places fortes, tours, troupes), puis projectiles, effets, météo et jauges.
@@ -389,11 +478,13 @@
     // le fond, ou la couche de sol : le fond et les traces posées (corps, flaques, taches, cratères, flèches plantées) ;
     // la couche n'est modifiée qu'après avoir été dessinée (bataille-sol.js : c'est bien moins cher)
     ctx.drawImage(SOL ? v.sol.vue : v.fond, 0, 0, M.LARGEUR, M.HAUTEUR);
-    if (SOL) SOL.avancer(v.sol, p.temps);
+    // régulateur (lot C), niveau 7 : une passe d'effacement toutes les deux images (l'effacement suit le temps de la partie :
+    // les traces s'en vont au même rythme, par pas un peu plus grands)
+    if (SOL && (v.rendu.niveau < 7 || (v.passeSol = !v.passeSol))) SOL.avancer(v.sol, p.temps);
 
     // --- sol : ombres portées des places fortes et des tours ---
-    sprite(ctx, "ombre-" + nomPlace("france", p.chateau), v.depart.x, v.depart.y, 0);
-    sprite(ctx, "ombre-" + nomPlace(v.campAdverse, p.rival), v.arrivee.x, v.arrivee.y, 0);
+    spriteGarde(ctx, "ombre-" + nomPlace("france", p.chateau), v.depart.x, v.depart.y, 0, 1, v.ratio);
+    spriteGarde(ctx, "ombre-" + nomPlace(v.campAdverse, p.rival), v.arrivee.x, v.arrivee.y, 0, 1, v.ratio);
     // Tours que le rival vient de bâtir (effet « tourRivale » du moteur, pendant ta préparation) : elles apparaissent en
     // fondu (NAISSANCE_TOUR s), ombre comprise ; v.naissance : emplacement → âge de l'effet (null sans tour neuve).
     v.naissance = null;
@@ -402,7 +493,7 @@
       tr = p.toursRivales[i];
       var ft = fonduTour(tr, v);
       if (ft < 1) ctx.globalAlpha = ft;
-      sprite(ctx, "ombre-" + nomTour(tr, v), tr.x, tr.y, 0);
+      spriteGarde(ctx, "ombre-" + nomTour(tr, v), tr.x, tr.y, 0, 1, v.ratio);
       if (ft < 1) ctx.globalAlpha = 1;
     }
     // tes tours : l'ombre d'une tour qui sort de terre (lot A3) grandit avec elle
@@ -410,7 +501,7 @@
       tr = p.tours[i];
       var mt = monteeTour(tr, v);
       if (mt < 1) ctx.globalAlpha = mt;
-      sprite(ctx, "ombre-" + nomTour(tr, v), tr.x, tr.y, 0);
+      spriteGarde(ctx, "ombre-" + nomTour(tr, v), tr.x, tr.y, 0, 1, v.ratio);
       if (mt < 1) ctx.globalAlpha = 1;
     }
     // Marques au sol des effets de l'IA rivale (16/10/2026), sous les murs et les troupes : une onde de sa couleur au
@@ -484,8 +575,13 @@
       ctx.fillStyle = "rgba(0,0,0," + (0.34 - 0.18 * haut) + ")";
       ctx.beginPath(); ctx.ellipse(pr.x0 + (pr.cx + pr.dvx - pr.x0) * kk, pr.y0 + 18 + (pr.cy + pr.dvy - pr.y0 - 18) * kk, 6 - 2 * haut, 3 - haut, 0, 0, Math.PI * 2); ctx.fill();
     }
-    // ombres de nuages qui passent (ambiance)
-    if (ambiance) {
+    // ombres de nuages qui passent (ambiance). Lot C : un calque de la feuille de style sur la toile (v.nuages, section
+    // « Champ : retour » de jeu.css), que le compositeur fait glisser : trois grands dégradés peints à chaque image dans la
+    // toile coûtaient 2 ms au ralenti 4 × (mesuré). Ils assombrissent aussi les troupes qui passent dessous, comme une
+    // vraie ombre de nuage. Sans le calque (repli), dans la toile, comme avant.
+    if (v.nuages) {
+      if (v.nuagesVus !== ambiance) { v.nuagesVus = ambiance; v.nuages.classList.toggle("td-nuages-vus", ambiance); }
+    } else if (ambiance) {
       var nu = ombreNuage();
       for (var n = 0; n < 3; n++) ctx.drawImage(nu, ((v.horloge * 12 + n * 420) % 1400) - 380, 50 + n * 190, 360, 140);
     }
@@ -546,7 +642,7 @@
 
     // --- effets --- (ceux posés à la place d'une troupe se dessinent là où est son bataillon : decalEffet)
     // étincelles (bataille-effets.js) : les ETINCELLES_MAX coups ou chocs les plus récents seulement
-    var sautees = 0, poussiere = !!prete("effet-poussiere");
+    var sautees = 0, poussiere = !!prete("effet-poussiere"), partFx = R.niveau >= 3 ? 0.5 : 1; // régulateur, niveau 3 : moitié des étincelles
     if (FX) {
       for (i = 0; i < p.effets.length; i++) { e = p.effets[i]; if ((e.genre === "coup" || e.genre === "choc") && e.age < FX.DUREE_ETINCELLES) sautees++; }
       sautees = Math.max(0, sautees - FX.PLAFONDS.etincelles);
@@ -576,19 +672,19 @@
       } else if (e.genre === "impact") {
         // pierre de trébuchet : un nuage de poussière (l'anneau, le cratère et les mottes viennent de bataille-sol.js et
         // bataille-effets.js ; sans eux, les éclats clairs d'avant)
-        if (prete("effet-poussiere")) { if (e.age < 0.75) sprite(ctx, "effet-poussiere", e.x, e.y + 4, vue(e.age, 0.75, 5), false, Math.max(1, e.rayon / 32)); }
+        if (prete("effet-poussiere")) { if (e.age < 0.75) spriteGarde(ctx, "effet-poussiere", e.x, e.y + 4, vue(e.age, 0.75, 5), Math.max(1, Math.round(e.rayon / 3.2) / 10), v.ratio, decale ? e.dvx : 0, decale ? e.dvy : 0); }
         else {
           ctx.fillStyle = "rgba(120,100,70," + (0.5 * a) + ")";
           ctx.beginPath(); ctx.ellipse(e.x, e.y, e.rayon * (0.4 + e.age), e.rayon * 0.5 * (0.4 + e.age), 0, 0, Math.PI * 2); ctx.fill();
         }
-        if (!FX && e.age < 0.32) sprite(ctx, "effet-eclats", e.x, e.y - 4, vue(e.age, 0.32, 4), false, 1.3);
+        if (!FX && e.age < 0.32) spriteGarde(ctx, "effet-eclats", e.x, e.y - 4, vue(e.age, 0.32, 4), 1.3, v.ratio, decale ? e.dvx : 0, decale ? e.dvy : 0);
       } else if (e.genre === "choc") {
         // deux troupes s'engagent : des étincelles de métal (sans bataille-effets.js : l'éclat de lumière d'avant) ; la
         // poussière d'une charge est au sol (solEffets)
         if (FX) {
           if (e.age < FX.DUREE_ETINCELLES) {
             if (sautees > 0) sautees--;
-            else if (FX.etincelles(e.x + (e.dvx || 0), e.y + (e.dvy || 0) - HAUT_CORPS, e.age, FX.graineDe(e.x, e.y), FX.graineDe(e.x, e.y) % 2 ? 1 : -1, !anim, 1.3)) R.etincelles++;
+            else if (FX.etincelles(e.x + (e.dvx || 0), e.y + (e.dvy || 0) - HAUT_CORPS, e.age, FX.graineDe(e.x, e.y), FX.graineDe(e.x, e.y) % 2 ? 1 : -1, !anim, 1.3, partFx)) R.etincelles++;
           }
         } else if (e.age < 0.2) { ctx.globalAlpha = 1 - e.age / 0.2; ctx.drawImage(eclatLumiere(), e.x - 12, e.y - HAUT_CORPS - 12, 24, 24); ctx.globalAlpha = 1; }
       } else if (e.genre === "coup") {
@@ -600,10 +696,10 @@
         if (FX) {
           if (e.age < FX.DUREE_ETINCELLES) {
             if (sautees > 0) sautees--;
-            else if (FX.etincelles(cx, cy, e.age, FX.graineDe(e.x, e.y), e.dir || 1, !anim, e.champion ? 2 : 1)) R.etincelles++;
+            else if (FX.etincelles(cx, cy, e.age, FX.graineDe(e.x, e.y), e.dir || 1, !anim, e.champion ? 2 : 1, partFx)) R.etincelles++;
           }
         } else if ((!sang || !anim || bois) && e.age < 0.12) { ctx.globalAlpha = 1 - e.age / 0.12; ctx.drawImage(eclatLumiere(), cx - 7, cy - 7, 14, 14); ctx.globalAlpha = 1; }
-        if (bois && e.age < 0.32) sprite(ctx, "effet-eclats", e.gx !== undefined ? e.gx : e.x, (e.gy !== undefined ? e.gy : e.y) - HAUT_CORPS, vue(e.age, 0.32, 4), false, 0.7);
+        if (bois && e.age < 0.32) spriteGarde(ctx, "effet-eclats", e.gx !== undefined ? e.gx : e.x, (e.gy !== undefined ? e.gy : e.y) - HAUT_CORPS, vue(e.age, 0.32, 4), 0.7, v.ratio);
       } else if (e.genre === "chute") {
         // sa poussière est au sol (solEffets) ; sans l'image de poussière, l'écu brisé qui monte
         if (!prete("effet-poussiere")) { ctx.globalAlpha = Math.max(0, a); dessinerIcone(ctx, "ecu-brise", e.x, e.y - 12 - e.age * 14, 22, e.camp === "rival" ? v.adverse.couleurs[0] : v.couleurs[0]); ctx.globalAlpha = 1; }
@@ -611,9 +707,9 @@
         // brèche (lot A3) : deux bouffées au pied du mur, la seconde un peu après, et les éclats ; les pierres qui tombent
         // du haut du mur sont dans le pool de particules (retours, à la première image). Animations coupées : une seule
         // bouffée, une seule image d'éclats.
-        if (e.age < 0.8) sprite(ctx, "effet-poussiere", e.x - (anim ? 8 : 0), e.y + 4, vue(e.age, 0.8, 5), false, 1.2);
-        if (anim && e.age >= 0.1 && e.age < 0.9) sprite(ctx, "effet-poussiere", e.x + 9, e.y + 7, vue(e.age - 0.1, 0.8, 5), false, 1);
-        if (e.age < 0.32) sprite(ctx, "effet-eclats", e.x, e.y - 10, anim ? vue(e.age, 0.32, 4) : 1, false, 1.3);
+        if (e.age < 0.8) spriteGarde(ctx, "effet-poussiere", e.x - (anim ? 8 : 0), e.y + 4, vue(e.age, 0.8, 5), 1.2, v.ratio);
+        if (anim && e.age >= 0.1 && e.age < 0.9) spriteGarde(ctx, "effet-poussiere", e.x + 9, e.y + 7, vue(e.age - 0.1, 0.8, 5), 1, v.ratio);
+        if (e.age < 0.32) spriteGarde(ctx, "effet-eclats", e.x, e.y - 10, anim ? vue(e.age, 0.32, 4) : 1, 1.3, v.ratio);
         // le chiffre frappe (de 1,6 fois sa taille à 1 en 0,12 s), puis monte au-dessus de la place forte touchée (et de sa
         // jauge si elle est au-dessus), jamais sur ses murs. Animations coupées : sans rebond.
         var touchee = e.camp === "rival" ? v.placeArrivee : v.placeDepart, txtB = "−" + e.degats;
@@ -635,14 +731,14 @@
       } else if (e.genre === "tourRivale") {
         // le rival bâtit une tour pendant ta préparation : de la poussière à son pied (la tour apparaît en fondu : tour(),
         // et son onde est au sol, plus haut)
-        if (e.age < 0.7) sprite(ctx, "effet-poussiere", e.x, e.y + 2, vue(e.age, 0.7, 5), false, 1.1);
+        if (e.age < 0.7) spriteGarde(ctx, "effet-poussiere", e.x, e.y + 2, vue(e.age, 0.7, 5), 1.1, v.ratio);
       } else if (e.genre === "sortie" || e.genre === "rentree") {
         // un garde de la garnison sort par la porte du rival (ou y rentre) : une bouffée de poussière sur le seuil
-        if (e.age < 0.45) sprite(ctx, "effet-poussiere", e.x, e.y + 2, vue(e.age, 0.45, 5), false, e.genre === "sortie" ? 0.55 : 0.4);
+        if (e.age < 0.45) spriteGarde(ctx, "effet-poussiere", e.x, e.y + 2, vue(e.age, 0.45, 5), e.genre === "sortie" ? 0.55 : 0.4, v.ratio);
       } else if (e.genre === "porteOuverte") {
         // la garnison du rival est vaincue, sa porte s'ouvre à tes troupes : poussière et éclats (l'anneau doré est au sol)
-        if (e.age < 0.8) sprite(ctx, "effet-poussiere", e.x, e.y + 4, vue(e.age, 0.8, 5), false, 1.1);
-        if (e.age < 0.32) sprite(ctx, "effet-eclats", e.x, e.y - 8, vue(e.age, 0.32, 4), false, 1.1);
+        if (e.age < 0.8) spriteGarde(ctx, "effet-poussiere", e.x, e.y + 4, vue(e.age, 0.8, 5), 1.1, v.ratio);
+        if (e.age < 0.32) spriteGarde(ctx, "effet-eclats", e.x, e.y - 8, vue(e.age, 0.32, 4), 1.1, v.ratio);
       }
       if (decale) ctx.restore();
     }
@@ -696,7 +792,7 @@
   // Sang coupé : la poussière d'une figurine qui tombe.
   var POUSSEE = 48, RECUL = 0.08, OPACITE_POUSSIERE = 0.72;
   function solEffets(ctx, v, anim, sang, FX, SOL) {
-    var p = v.partie, poussiere = !!prete("effet-poussiere"), voile = false, i, e;
+    var p = v.partie, poussiere = !!prete("effet-poussiere"), voile = false, i, e, legere = v.rendu.niveau >= 3;
     for (i = 0; i < p.effets.length; i++) {
       e = p.effets[i];
       var g = e.genre;
@@ -721,13 +817,14 @@
       if (!poussiere) continue;
       var duree = g === "touche" || g === "pique" || g === "choc" ? 0.45 : g === "chute" || g === "retrait" ? 0.6 : 0;
       if (!(e.age < duree) || (g === "choc" && !e.charge)) continue;
+      if (legere && (g === "touche" || g === "pique")) continue; // régulateur, niveau 3 : poussières légères
       if (!voile) { ctx.globalAlpha = OPACITE_POUSSIERE; voile = true; } // l'opacité des poussières, réglée une fois
-      sprite(ctx, "effet-poussiere", x, y + 2, vue(e.age, duree, 5), false, g === "pique" ? 0.5 : g === "touche" ? 0.4 : g === "choc" ? 0.6 : g === "chute" ? 0.75 : 0.9);
+      spriteGarde(ctx, "effet-poussiere", x, y + 2, vue(e.age, duree, 5), g === "pique" ? 0.5 : g === "touche" ? 0.4 : g === "choc" ? 0.6 : g === "chute" ? 0.75 : 0.9, v.ratio);
     }
     if (voile) ctx.globalAlpha = 1;
     if (!sang && poussiere) {
       ctx.globalAlpha = OPACITE_POUSSIERE;
-      for (i = 0; i < v.corps.length; i++) { e = v.corps[i]; if (e.age < 0.5) sprite(ctx, "effet-poussiere", e.x, e.y + 1, vue(e.age, 0.5, 5), false, 0.4); }
+      for (i = 0; i < v.corps.length; i++) { e = v.corps[i]; if (e.age < 0.5) spriteGarde(ctx, "effet-poussiere", e.x, e.y + 1, vue(e.age, 0.5, 5), 0.4, v.ratio); }
       ctx.globalAlpha = 1;
     }
   }
@@ -741,7 +838,7 @@
     var x = e.x + e.dvx, y = e.y + e.dvy, graine = FX ? FX.graineDe(e.x, e.y) : 1, t = v.partie.temps;
     if (e.genre === "impact") {
       if (SOL) poserCratere(v, x, y, e.rayon || 32, SOL);
-      if (FX && anim) { FX.mottes(x, y, graine); bousculer(v, x, y, t); }
+      if (FX && anim) { FX.mottes(x, y, graine, v.rendu.niveau >= 3 ? 0.5 : 1); bousculer(v, x, y, t); } // régulateur, niveau 3 : moitié des mottes
       return;
     }
     if (anim) {
@@ -946,9 +1043,11 @@
       return;
     }
     var fleche = pr.genre === "fleche", nom = fleche ? "effet-fleche" : "effet-carreau", ech = fleche ? ECHELLE_FLECHE : ECHELLE_CARREAU;
-    var n = fleche && anim && FX ? VOLEE.length : 1, lg = Math.sqrt(dx * dx + dy * dy) || 1, nx = -dy / lg, ny = dx / lg;
-    var queue = (fleche ? 24 : 32) * ech / 2, traine = FX && anim;
-    if (traine && pr.graine === undefined) pr.graine = FX.graineDe(pr.x0 + pr.duree * 97, pr.y0);
+    // régulateur (lot C) : sans traînées dès le niveau 1, sans volées (une flèche, comme le moteur) dès le niveau 2
+    var niv = v.rendu.niveau || 0;
+    var n = fleche && anim && FX && niv < 2 ? VOLEE.length : 1, lg = Math.sqrt(dx * dx + dy * dy) || 1, nx = -dy / lg, ny = dx / lg;
+    var queue = (fleche ? 24 : 32) * ech / 2, traine = FX && anim && niv < 1;
+    if (n > 1 && pr.graine === undefined) pr.graine = FX.graineDe(pr.x0 + pr.duree * 97, pr.y0);
     for (var i = 0; i < n; i++) {
       var kk = k, ox = 0;
       if (i) {
@@ -979,11 +1078,11 @@
   function place(ctx, v, rival) {
     var pt = rival ? v.arrivee : v.depart, etat = rival ? v.partie.rival : v.partie.chateau;
     var nom = nomPlace(rival ? v.campAdverse : "france", etat);
-    if (!sprite(ctx, nom, pt.x, pt.y, 0)) chateau(ctx, pt, rival ? v.adverse.couleurs : v.couleurs, etat, rival, v);
+    if (!spriteGarde(ctx, nom, pt.x, pt.y, 0, 1, v.ratio)) chateau(ctx, pt, rival ? v.adverse.couleurs : v.couleurs, etat, rival, v);
     // brèche (lot A3) : la place forte touchée s'éclaire 80 ms (la même image, ajoutée à elle-même à 0,25)
     else if (v.eclairPlace && v.eclairPlace.rival === rival && v.anim !== false && v.horloge - v.eclairPlace.t < 0.08) {
       ctx.globalCompositeOperation = "lighter"; ctx.globalAlpha = 0.25;
-      sprite(ctx, nom, pt.x, pt.y, 0);
+      spriteGarde(ctx, nom, pt.x, pt.y, 0, 1, v.ratio);
       ctx.globalCompositeOperation = "source-over"; ctx.globalAlpha = 1;
     }
     if (v.effondre && v.effondre.rival === rival) effondrement(ctx, v, v.effondre, pt, nom);
@@ -1026,13 +1125,13 @@
     if (anim) {
       for (i = 0; i < NUAGES_FIN.length; i++) {
         a = age - NUAGES_FIN[i][2];
-        if (a >= 0 && a < VIE_NUAGE) sprite(ctx, "effet-effondrement", pt.x + NUAGES_FIN[i][0], pt.y + NUAGES_FIN[i][1], vue(a, VIE_NUAGE, 8));
+        if (a >= 0 && a < VIE_NUAGE) spriteGarde(ctx, "effet-effondrement", pt.x + NUAGES_FIN[i][0], pt.y + NUAGES_FIN[i][1], vue(a, VIE_NUAGE, 8), 1, v.ratio);
       }
       for (i = 0; i < 2; i++) {
         a = age - 0.18 * i;
-        if (a >= 0 && a < 0.5) sprite(ctx, "effet-eclats", pt.x + (i ? 20 : -16), pt.y - 28 + 36 * a, vue(a, 0.5, 4));
+        if (a >= 0 && a < 0.5) spriteGarde(ctx, "effet-eclats", pt.x + (i ? 20 : -16), pt.y - 28 + 36 * a, vue(a, 0.5, 4), 1, v.ratio);
       }
-    } else if (age < EFFONDREMENT) sprite(ctx, "effet-effondrement", pt.x, pt.y + 24, 3);
+    } else if (age < EFFONDREMENT) spriteGarde(ctx, "effet-effondrement", pt.x, pt.y + 24, 3, 1, v.ratio);
     if (!ef.victoire) return;
     var b = pointBanniere(nom, pt), fr = anim && v.ambiance ? Math.floor(v.horloge * 8) % 6 : 0; // v.ambiance : calculée une fois par image (dessiner)
     if (anim && age < 0.55) {
@@ -1047,7 +1146,7 @@
     var m = anim ? Math.max(0, Math.min(1, (age - 0.5) / MONTEE_BANNIERE)) : 1;
     if (m > 0) {
       ctx.save(); ctx.globalAlpha = Math.min(1, m * 2);
-      sprite(ctx, "drapeau-france", b.x, b.y + 20 * (1 - m) * (2 - m), fr, false, BANNIERE_FIN);
+      spriteGarde(ctx, "drapeau-france", b.x, b.y + 20 * (1 - m) * (2 - m), fr, BANNIERE_FIN, v.ratio); // vue gardée (lot C)
       ctx.restore();
     }
   }
@@ -1081,13 +1180,14 @@
   function fumees(ctx, v, nom, pt, ruine, decalage) {
     // ambiance continue (lot A3) : la valeur de l'image (dessiner), sans appeler matchMedia pour chaque place forte
     var pts = pointsFumee(nom, pt), anim = v.ambiance !== undefined ? v.ambiance : JEU.anim.actif(), sombre = bouffee(true), claire = bouffee(false);
-    var force = ruine ? 0.9 : 0.78;
+    // régulateur (lot C), niveau 8 : 3 bouffées par foyer au lieu de 7, plus grosses d'un tiers pour garder le panache
+    var force = ruine ? 0.9 : 0.78, nb = v.rendu.niveau >= 8 ? 3 : BOUFFEES, gros = nb < BOUFFEES ? 1.3 : 1;
     for (var k = 0; k < pts.length; k++) {
       var ex = pts[k][0], ey = pts[k][1];
       if (!anim) { ctx.globalAlpha = force * 0.8; ctx.drawImage(ruine ? sombre : claire, ex - 8, ey - 40, 34, 34); continue; }
-      for (var i = 0; i < BOUFFEES; i++) {
-        var age = (v.horloge / VIE_BOUFFEE + i / BOUFFEES + k * 0.37 + decalage * 0.19) % 1;
-        var r = (ruine ? 8 : 6) + age * (ruine ? 30 : 22);
+      for (var i = 0; i < nb; i++) {
+        var age = (v.horloge / VIE_BOUFFEE + i / nb + k * 0.37 + decalage * 0.19) % 1;
+        var r = ((ruine ? 8 : 6) + age * (ruine ? 30 : 22)) * gros;
         var x = ex + age * age * 42 + Math.sin(v.horloge * 1.3 + i * 2.1 + k) * 4 * age;
         var y = ey - age * (ruine ? 96 : 76);
         ctx.globalAlpha = force * (age < 0.1 ? age / 0.1 : Math.pow(1 - (age - 0.1) / 0.9, 1.3));
@@ -1247,9 +1347,9 @@
         var am = tr.ameliore !== undefined && anim ? h - tr.ameliore : 99, ancien = am < REVELATION ? images["tour-" + tr.type + "-france-" + tr.niveauAvant] : null;
         if (ancien && ancien.etat === "ok") {
           // amélioration : l'ancienne image, puis la nouvelle qui se révèle depuis le haut
-          sprite(ctx, "tour-" + tr.type + "-france-" + tr.niveauAvant, tr.x, tr.y, k);
+          spriteGarde(ctx, "tour-" + tr.type + "-france-" + tr.niveauAvant, tr.x, tr.y, k, 1, v.ratio);
           tranche(ctx, e, tr.x, tr.y, k, 0, am / REVELATION, 0);
-        } else sprite(ctx, nom, tr.x, tr.y + dy, k);
+        } else spriteGarde(ctx, nom, tr.x, tr.y + dy, k, 1, v.ratio);
         var ar = am - REVELATION;
         if (ar >= 0 && ar < REFLET) {
           // puis un reflet chaud monte le long de la tour : la même image, ajoutée à elle-même dans une bande de 10 px
@@ -1261,10 +1361,10 @@
       }
       if (pose && FXp.poussierePose(ctx, tr.x, tr.y + 3, age, FXp.graineDe(tr.x, tr.y), true)) { v.rendu.poses++; ctx.globalAlpha = ft; }
       // poussière au pied : à la pose (0,6 s), et au lâcher du trébuchet (0,45 s, temps de la partie)
-      if (age < 0.6) sprite(ctx, "effet-poussiere", tr.x, tr.y + 4, vue(age, 0.6, 5), false, 1.1);
+      if (age < 0.6) spriteGarde(ctx, "effet-poussiere", tr.x, tr.y + 4, vue(age, 0.6, 5), 1.1, v.ratio);
       if (anim && tr.type === "catapulte" && tr.dernierTir !== undefined) {
         var al = v.partie.temps - tr.dernierTir;
-        if (al >= 0 && al < 0.45) { ctx.globalAlpha = 0.75 * ft; sprite(ctx, "effet-poussiere", tr.x - 4, tr.y + 6, vue(al, 0.45, 5), false, 0.75); ctx.globalAlpha = ft; }
+        if (al >= 0 && al < 0.45) { ctx.globalAlpha = 0.75 * ft; spriteGarde(ctx, "effet-poussiere", tr.x - 4, tr.y + 6, vue(al, 0.45, 5), 0.75, v.ratio); ctx.globalAlpha = ft; }
       }
       if (!tr.rivale && monte >= 1) pastilles(ctx, tr.x, tr.y + s.h - s.ay, tr.niveau);
     } else tourDessinee(ctx, tr, tr.rivale ? v.adverse.couleurs : v.couleurs);
@@ -1352,6 +1452,10 @@
       var dernier = d.rangs[d.rangs.length - 1];
       places[places.length - dernier + Math.floor((dernier - 1) / 2)].noyau = true;
     }
+    // dernier rang (lot C, régulateur niveau 6 : ces figurines perdent leur ombre), s'il y a plus d'un rang
+    var rangMax = 0;
+    places.forEach(function (q) { rangMax = Math.max(rangMax, q.rang); });
+    places.forEach(function (q) { q.dernier = rangMax > 0 && q.rang === rangMax; });
     var amin = Infinity, amax = -Infinity, bmin = Infinity, bmax = -Infinity;
     places.forEach(function (q) { amin = Math.min(amin, q.a); amax = Math.max(amax, q.a); bmin = Math.min(bmin, q.b); bmax = Math.max(bmax, q.b); });
     var avant = d.chef ? 0 : -(amin + amax) / 2;
@@ -1904,16 +2008,17 @@
     ordre.sort(parY);
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     var k0 = bat.pasV * 1.2, chef = null, opacite = -1; // opacité de la toile : réglée seulement quand elle change
+    var sansOmbres = R.niveau >= 6; // régulateur (lot C), niveau 6 : le dernier rang sans son ombre
     for (i = 0; i < ordre.length; i++) {
       fg = ordre[i];
-      var q = f.places[fg.place];
+      var q = f.places[fg.place], ombre = !(sansOmbres && q.dernier && !q.noyau);
       var coupNom = fg.geste >= 0 ? bandeCoup(fg) : null, kv = coupNom ? fg.geste : Math.floor(k0 + fg.phase); // geste de mêlée (bande « coup »), sinon la marche
       // la vue de l'image d'avant si rien n'a changé (lot A : pas de clé de texte à bâtir pour chaque figurine)
-      if (fg.vv && fg.vvK === kv && fg.vvN === coupNom && fg.vvG === bat.gauche && fg.vvGen === vuesGen && fg.vvE === q.echelle) c = fg.vv;
+      if (fg.vv && fg.vvK === kv && fg.vvN === coupNom && fg.vvG === bat.gauche && fg.vvGen === vuesGen && fg.vvE === q.echelle && fg.vvO === ombre) c = fg.vv;
       else {
-        c = coupNom ? vueFigure(coupNom, q.type, bat.cleCamp, coul, kv, bat.gauche, q.echelle, ratio, true)
-          : vueFigure(fg.nom, q.type, bat.cleCamp, coul, kv, bat.gauche, q.echelle, ratio, true);
-        fg.vv = c; fg.vvK = kv; fg.vvN = coupNom; fg.vvG = bat.gauche; fg.vvGen = vuesGen; fg.vvE = q.echelle;
+        c = coupNom ? vueFigure(coupNom, q.type, bat.cleCamp, coul, kv, bat.gauche, q.echelle, ratio, ombre)
+          : vueFigure(fg.nom, q.type, bat.cleCamp, coul, kv, bat.gauche, q.echelle, ratio, ombre);
+        fg.vv = c; fg.vvK = kv; fg.vvN = coupNom; fg.vvG = bat.gauche; fg.vvGen = vuesGen; fg.vvE = q.echelle; fg.vvO = ombre;
       }
       if (fg.ombrePorte) c = fg.ombrePorte > 1 ? sombre(c) : touchee(c); // dans l'ombre d'une porte (lot A3)
       else if (fg.recul !== undefined) c = touchee(c); // touchée par un trait : un cran plus sombre, le temps du recul
@@ -2436,7 +2541,10 @@
       v.brume.addColorStop(0, "rgba(230,230,220,0)"); v.brume.addColorStop(1, "rgba(230,230,220,.26)");
       var hud = el("div", { class: "td-hud" });
       v.hud = hud;
-      var cadre = el("div", { class: "td-cadre" }, [canvas, hud]);
+      // ombres des nuages qui passent (lot C) : un calque de la feuille de style posé sur la toile, que le compositeur fait
+      // glisser (transform) ; montré quand l'ambiance l'est (dessiner : classe td-nuages-vus)
+      v.nuages = el("div", { class: "td-nuages", "aria-hidden": "true" }, [el("i"), el("i"), el("i")]);
+      var cadre = el("div", { class: "td-cadre" }, [canvas, v.nuages, hud]);
       var conseil = el("div", { class: "td-conseil" });
       var ordres = el("div", { class: "td-ordres" });
       zone.classList.add("td-zone"); // sur grand écran, la feuille de style met le champ et les panneaux côte à côte
@@ -2451,19 +2559,45 @@
       // champ perd environ 8 % de largeur) ne la touche pas : la feuille de style la réduit un peu, puis la rend à sa
       // taille. La toile est mesurée avant le premier conseil (champ à sa taille de combat). Et une toile réallouée est
       // redessinée aussitôt, dans la même tâche : jamais d'image noire.
+      // Plafond (lot C) : plafondNettete, selon l'écran et le niveau du régulateur (celui du départ : le régulateur ne refait
+      // jamais la toile en pleine bataille). Rend vrai si la toile a été refaite.
       function ajusterNettete() {
-        var w = canvas.getBoundingClientRect().width * (racine.devicePixelRatio || 1);
-        var px = w > 0 ? Math.round(Math.max(1, Math.min(2, w / M.LARGEUR)) * M.LARGEUR) : Math.round(M.LARGEUR * ratio);
-        if (v.fond && px <= canvas.width * 1.04 && px >= canvas.width * 0.8) return;
+        var w = canvas.getBoundingClientRect().width * (racine.devicePixelRatio || 1), cap = plafondNettete(v.rendu.niveau);
+        var px = w > 0 ? Math.round(Math.max(1, Math.min(cap, w / M.LARGEUR)) * M.LARGEUR) : Math.round(M.LARGEUR * Math.max(1, Math.min(ratio, cap)));
+        if (v.fond && px <= canvas.width * 1.04 && px >= canvas.width * 0.8) return false;
         v.ratio = px / M.LARGEUR;
         canvas.width = px; canvas.height = Math.round(M.HAUTEUR * v.ratio);
         v.fond = fond(carte, v.ratio, v.terrain);
-        // couche de sol (lot A) : refaite depuis le fond neuf, ses traces sont perdues
-        if (JEU.batailleSol) { JEU.batailleSol.liberer(v.sol); v.sol = JEU.batailleSol.creer(v.fond, v.ratio); }
+        // couche de sol (lot A) : refaite depuis le fond neuf, ses traces sont perdues ; les corps encore couchés y sont
+        // reposés à la nouvelle netteté (sans cela, ils restaient peints à l'ancienne échelle et à l'ancienne place, jamais
+        // effacés : chasse aux bugs du lot C)
+        if (JEU.batailleSol) {
+          JEU.batailleSol.liberer(v.sol); v.sol = JEU.batailleSol.creer(v.fond, v.ratio);
+          for (var ic = 0; ic < v.corps.length; ic++) { v.corps[ic].pose = 0; v.corps[ic].trace = null; }
+        }
         JEU.bataille.decor = { terrain: v.terrain, route: !!v.fond.routeTracee, largeur: px };
         if (lance) { ctx.setTransform(v.ratio, 0, 0, v.ratio, 0, 0); dessiner(ctx, v); v.dernierDessin = v.horloge; }
+        return true;
       }
       var lance = false; // la boucle d'animation tourne (le premier dessin est le sien)
+      // Régulateur (lot C) : départ au niveau de la séance (ou au niveau forcé des essais), dont le plafond de netteté vaut
+      // pour toute la bataille ; pendant la vague, les crans de netteté sont sautés (ils refont la toile).
+      v.rendu.niveau = niveauForce !== null ? niveauForce : niveauSeance;
+      var regulateur = creerRegulateur(v.rendu.niveau, function (n) { return REG.nettete[n] === undefined; });
+      regulateur.force = niveauForce !== null;
+      // Applique un niveau : compteurs et séance. La toile ne change pas (sa netteté suit le niveau de la séance à la
+      // bataille suivante).
+      function reglerNiveau(n) {
+        v.rendu.niveau = n; regulateur.niveau = n;
+        if (niveauForce === null) niveauSeance = n;
+      }
+      // forcerNiveau (essais) : le niveau fixé, ou la main rendue au régulateur
+      var reglerCelleCi = function (n) {
+        regulateur.force = n !== null;
+        regulateur.plafond = REG.max; regulateur.avant = null;
+        if (n !== null && n !== v.rendu.niveau) reglerNiveau(n);
+      };
+      reglerEnCours = reglerCelleCi;
       ajusterNettete();
       // la fenêtre change de taille : la toile suit, 200 ms après
       var delaiTaille = null, observateur = null;
@@ -3055,7 +3189,8 @@
       // --- boucle d'animation ---
       var avant = null, phaseAvant = p.phase;
       function boucle(t) {
-        if (!actif || !canvas.isConnected || !v.fond) { actif = false; return; } // partie quittée : la boucle s'arrête d'elle-même
+        if (!actif || !canvas.isConnected || !v.fond) { actif = false; if (reglerEnCours === reglerCelleCi) reglerEnCours = null; return; } // partie quittée : la boucle s'arrête d'elle-même
+        var debut = racine.performance ? racine.performance.now() : 0, dessine = false;
         var dt = avant == null ? 0 : Math.min(0.05, (t - avant) / 1000);
         avant = t;
         v.horloge += dt;
@@ -3092,6 +3227,12 @@
           v.dernierDessin = v.horloge;
           ctx.setTransform(v.ratio, 0, 0, v.ratio, 0, 0);
           dessiner(ctx, v);
+          dessine = true;
+        }
+        // régulateur (lot C) : la durée de cette boucle, pendant la vague ; un niveau neuf s'applique à l'image suivante
+        if (dessine && p.phase === "vague" && racine.performance) {
+          var voulu = regulateur.noter(t, racine.performance.now() - debut);
+          if (voulu !== v.rendu.niveau) reglerNiveau(voulu);
         }
         racine.requestAnimationFrame(boucle);
       }
@@ -3125,6 +3266,7 @@
       // sans attendre la bataille suivante, comme les vues gardées des figurines (quelques Mo à la netteté 2).
       function arreter() {
         actif = false; arreterTaille(); JEU.musique.humeur("paix");
+        if (reglerEnCours === reglerCelleCi) reglerEnCours = null;
         v.fond = null; canvas.width = 0; canvas.height = 0;
         if (JEU.batailleSol) JEU.batailleSol.liberer(v.sol);
         v.sol = null;
@@ -3209,5 +3351,8 @@
     bataillons: { BATAILLONS: BATAILLONS, BORD_ROUTE: BORD_ROUTE, ECART_FRONTS: ECART_FRONTS, CORPS_MAX: CORPS_MAX,
       ECART_FILE: ECART_FILE, DECAL_MELEE: DECAL_MELEE, DECAL_FILE: DECAL_FILE, DECAL_PORTE: DECAL_PORTE,
       formation: formation, debout: deboutVoulu, cote: coteBataillon, placer: placerMelees, pointRoute: pointRoute, suivre: majBataillons,
-      geste: gesteMelee, premiereVue: premiereVue } };
+      geste: gesteMelee, premiereVue: premiereVue },
+    // régulateur (lot C) : réglages, régulateur seul (essais), niveau forcé (essais), plafond de netteté
+    REGULATEUR: REG, creerRegulateur: creerRegulateur, forcerNiveau: forcerNiveau, plafondNettete: plafondNettete,
+    niveauSeance: function () { return niveauSeance; } };
 })(typeof window !== "undefined" ? window : globalThis);
