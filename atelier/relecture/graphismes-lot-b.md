@@ -194,3 +194,29 @@ suivante : 64 ms au pire en bataille (1366 × 768 et 1920 × 1080), 80 ms au pir
 expédition au ralenti 4 × reste au-dessus de 100 ms, comme avant (point 1 de la section 6, lot C). Mesurée en
 alternance avec la version d'avant ces correctifs, elle donne des chiffres du même ordre : 96 à 168 ms avant, 112 à
 184 ms après.
+
+### Second passage : les six autres défauts confirmés
+
+La chasse avait confirmé douze défauts ; les six du tableau ci-dessus étaient les premiers. Voici les six autres. Pour
+chacun, j'ai d'abord rejoué le scénario du vérificateur sur le jeu tel qu'il était (le défaut se voyait encore), puis
+corrigé, puis rejoué. Là encore, rien ne fait perdre une ressource, une province ou une réponse.
+
+| Ce qui arrivait | Maintenant | Fichier |
+|---|---|---|
+| Carte de campagne : si l'image de la brume ou celle du cachet de cire manquait (un fichier oublié à la construction, cas très peu probable), 8 icônes d'« image cassée » s'affichaient sur les provinces dans la brume, et une sur le cachet « Aujourd'hui ». Même chose pour l'ancien bourg pendant la cérémonie de conquête | l'image qui manque est retirée, sans icône : la brume reprend ses médaillons dessinés, le cachet garde son ruban « Aujourd'hui », la cérémonie montre directement le nouveau bourg. Rejoué sur une copie du jeu privée de ces fichiers : 9 icônes cassées avant, 0 après ; pendant la cérémonie, 1 avant, 0 après | jeu/js/ecran-campagne.js |
+| Route des expéditions, même cas (image de la brume absente) : les bandes de brume n'avaient plus que leur voile, sans nuées | sous chaque nappe, une nuée dessinée attend, cachée ; si l'image manque, elle reparaît. Rejoué : 0 nuée par bande avant, 3 après. Avec l'image, les nuées restent cachées : l'ovale à bord net que le lot avait fait disparaître ne revient pas | jeu/js/ecran-expedition.js |
+| Carte de campagne : à chaque visite, un petit guetteur (il attend que la carte de l'événement du jour se montre pour frapper le cachet) restait en mémoire si l'élève ne descendait pas jusqu'à elle. Fuite minuscule, mais elle grossissait à chaque visite | à chaque visite, le guetteur de la visite d'avant est arrêté. Rejoué sur 10 visites : 0 guetteur arrêté avant, 9 après (le dixième attend la carte affichée). Le cachet se frappe toujours quand on descend jusqu'à la carte | jeu/js/ecran-campagne.js |
+| Codex : la page descendue, ouvrir un tome faisait sauter la vue de plusieurs milliers de pixels ; l'élève se retrouvait au milieu des fiches, loin du tome. Défaut plus ancien que le lot, mais courant : il suffisait d'être descendu en bas de la liste | le tome ouvert reste exactement où il était. Rejoué sur chaque tome, en 1366 × 768 et sur une tablette en paysage : 0 saut (avant : un saut de 786 à 4 462 px dès 250 px de défilement), à la souris comme au doigt. Au clavier, le tome garde le focus (il retombait au début de la page) | jeu/css/menus.css, jeu/js/codex.js |
+| Cours : en ouvrant une matière, le titre « Semaine N · cette semaine » et son petit fanion arrivaient cachés sous le bandeau du haut, la première ligne à moitié cachée | le titre s'arrête 12 px sous le bandeau, quelle que soit sa hauteur (il passe sur deux ou trois lignes sur un écran étroit) ; la barre du menu, elle, défile avec la page. Rejoué sur 8 tailles d'écran, dont 1366 × 768 et 1340 × 800 au doigt, et 3 matières : 24 titres cachés avant, 0 après | jeu/js/interface.js |
+| Champion anglais : son anneau rouge gardait un voile rouge au centre et se dessinait par-dessus les soldats tombés ; Sang coupé, on pouvait encore le prendre pour une flaque sous un corps | un anneau de la couleur de son camp, au centre vide, dessiné sous les soldats tombés. Mesuré dans une vraie bataille contre l'Angleterre, Sang coupé : avant, l'anneau passait sur les soldats tombés à chaque image (5 148 dessins de corps sous lui) ; après, jamais. Centre de l'anneau : opacité 27 sur 255 avant, 0 après. Le Sang coupé reste coupé pour de vrai : ni flaque ni goutte | jeu/js/bataille.js |
+
+Un détail sur le champion : Sang actif, les soldats couchés font partie du sol déjà peint, sous tout le reste ; l'anneau
+passe donc sur eux. C'est voulu par la couche de sol du lot A, et le vrai sang est là de toute façon.
+
+Deux de ces défauts demandaient un fichier manquant pour se voir : ils ne gênaient personne aujourd'hui, mais le jeu
+retombe maintenant sur ses pieds dans ce cas, comme le reste de la carte.
+
+Les règles du jeu ne changent toujours pas : moteur de bataille identique octet pour octet, simulation aux mêmes
+chiffres (écarts nuls), tests.js 381 réussis et 0 échec, valider.js 0 erreur (5 alertes connues). perf.js complet,
+tablette et graphismes (LOT=B) se terminent sans échec. De la réponse à la question suivante : 64 ms au pire en
+bataille, 80 ms au pire sur la tablette.

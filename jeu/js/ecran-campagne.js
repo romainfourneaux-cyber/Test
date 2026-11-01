@@ -214,6 +214,15 @@
     div.innerHTML = h;
     carte.appendChild(div);
     if (div.querySelector(".nappe-vive")) carte.classList.add("brume-vive");
+    // une nappe vive, un bourg nu ou une nappe qui se lève (cérémonie, ajoutés plus tard dans ce calque) qui ne se
+    // charge pas : l'image est retirée, sans icône d'image cassée, et retenue ; sans nappe vive, la brume dessinée revient
+    div.addEventListener("error", function (ev) {
+      var t = ev.target;
+      if (!t || t.tagName !== "IMG" || t.closest(".drapeau-carte")) return; // les bannières ont leur propre repli
+      manquees[t.getAttribute("src")] = true;
+      if (t.classList.contains("nappe-vive")) carte.classList.remove("brume-vive");
+      t.remove();
+    }, true);
     // une bande de bannière qui ne se charge pas : les bourgs de ce camp reprennent leur bannière cuite (retenu pour la suite)
     Array.prototype.forEach.call(div.querySelectorAll(".drapeau-carte img"), function (im) {
       im.addEventListener("error", function () {
@@ -299,9 +308,12 @@
       el("i", { "aria-hidden": "true", html: "<svg viewBox='0 0 12 12' width='12' height='12'><path d='M2 4l4 4 4-4' fill='none' stroke='currentColor' stroke-width='2'/></svg>" })]);
   }
   function cachetJour() {
-    return JEU.ui.el("span", { class: "cachet-jour", html: "<img src='assets/images/reponses/tampon-cire.png' alt='' draggable='false'><b>Aujourd'hui</b>" });
+    var c = JEU.ui.el("span", { class: "cachet-jour", html: "<img src='assets/images/reponses/tampon-cire.png' alt='' draggable='false'><b>Aujourd'hui</b>" }), im = c.firstChild;
+    im.addEventListener("error", function () { im.remove(); }); // sans la cire : le ruban seul, sans icône cassée
+    return c;
   }
   var cachetFrappe = null; // jour où le cachet a déjà été frappé
+  var obsCachet = null; // l'observateur de la dernière carte « Aujourd'hui » (un seul vivant à la fois)
   function frapperCachet(carteJeu) {
     var jour = U.jour();
     if (!carteJeu || cachetFrappe === jour) return;
@@ -320,6 +332,9 @@
       obs.disconnect();
       frapper();
     }, { threshold: 0.6 });
+    // l'écran redessiné : l'ancienne carte, retirée sans être vue, ne réveille plus jamais son observateur
+    if (obsCachet) obsCachet.disconnect();
+    obsCachet = obs;
     obs.observe(carteJeu);
   }
 

@@ -953,7 +953,13 @@
       zone.appendChild(bloc);
     });
     var courante = zone.querySelector(".courante");
-    if (courante) setTimeout(function () { courante.scrollIntoView({ block: "start" }); }, 0);
+    // le titre de la semaine et son fanion s'arrêtent sous le bandeau collant, quelle que soit sa hauteur (deux ou trois
+    // lignes en largeur étroite) ; la sangle du menu, elle, défile avec la page
+    if (courante) setTimeout(function () {
+      var b = document.getElementById("bandeau");
+      courante.style.scrollMarginTop = (b ? b.offsetHeight : 0) + 12 + "px";
+      courante.scrollIntoView({ block: "start" });
+    }, 0);
   };
 
   function ligneEntree(p, etat) {

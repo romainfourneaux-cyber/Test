@@ -437,8 +437,10 @@
     R.corpsVifs = 0; R.particules = 0; R.etincelles = 0; R.trainees = 0; R.lueurs = 0; R.gouttes = 0; R.flaques = 0; R.poses = 0;
     R.decalques = SOL ? v.sol.compte : null;
     majBataillons(v, anim, sang);
+    // l'anneau de sa couleur sous chaque champion (lot B, A+) : une marque au sol, comme les ondes, posée après la
+    // couche de sol et avant les figurines tombées, qui passent par-dessus (aux positions de cette image)
+    anneauxChampions(ctx, v);
     for (i = 0; i < v.corps.length; i++) corps(ctx, v.corps[i], v, sang, anim);
-    anneauxChampions(ctx, v); // l'ellipse de sa couleur sous chaque champion (lot B, A+)
     // au ras du sol, sous les troupes : traces posées par les effets neufs, anneaux des pierres, poussières
     solEffets(ctx, v, anim, sang, FX, SOL);
     // portée des tours adverses (préparation) : celle qu'on survole, ou toutes quand on choisit des troupes à envoyer
@@ -1842,9 +1844,10 @@
   }
 
   // Champion (lot B, A+) : un anneau au sol, sous ses pieds, de la plus foncée des deux couleurs de son camp (bleu de
-  // France, rouge d'Angleterre, vert omeyyade), marqué sur son bord seul, le centre presque transparent (0,1), sans
-  // contour noir : un disque plein rouge se lisait comme une flaque de sang sous le champion anglais. Peint une fois
-  // (vues), une copie par image, dans la passe du sol : sous toutes les troupes. Même traitement pour tous les camps.
+  // France, rouge d'Angleterre, vert omeyyade), marqué sur son bord seul, le centre vide (transparent), sans contour
+  // noir : un disque rouge, même pâle, se lisait comme une flaque de sang sous le champion anglais, Sang coupé compris.
+  // Peint une fois (vues), une copie par image, dans la passe du sol : sous les soldats tombés et sous toutes les
+  // troupes. Même traitement pour tous les camps.
   var ANNEAU_RX = 13, ANNEAU_RY = 5.2;
   function luminance(hex) { var n = parseInt(hex.slice(1), 16); return 0.2126 * (n >> 16 & 255) + 0.7152 * (n >> 8 & 255) + 0.0722 * (n & 255); }
   function anneauChampion(coul, ratio) {
@@ -1857,8 +1860,8 @@
     var g = c.getContext("2d");
     g.translate(c.width / 2, c.height / 2); g.scale(ratio, ratio * ANNEAU_RY / ANNEAU_RX);
     var r = g.createRadialGradient(0, 0, 0, 0, 0, ANNEAU_RX);
-    r.addColorStop(0, "rgba(" + rgb + ",.1)"); r.addColorStop(0.58, "rgba(" + rgb + ",.12)");
-    r.addColorStop(0.84, "rgba(" + rgb + ",.8)"); r.addColorStop(1, "rgba(" + rgb + ",0)");
+    r.addColorStop(0, "rgba(" + rgb + ",0)"); r.addColorStop(0.62, "rgba(" + rgb + ",0)");
+    r.addColorStop(0.84, "rgba(" + rgb + ",.85)"); r.addColorStop(1, "rgba(" + rgb + ",0)");
     g.fillStyle = r; g.beginPath(); g.arc(0, 0, ANNEAU_RX, 0, Math.PI * 2); g.fill();
     c.lw = lw; c.lh = lh;
     return (vues[cle] = c);

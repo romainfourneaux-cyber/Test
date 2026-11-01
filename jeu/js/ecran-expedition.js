@@ -280,16 +280,15 @@
   function texteSVG(x, y, classe, texte, extra) {
     return "<text x='" + x + "' y='" + y + "' class='" + classe + "'" + (extra || "") + ">" + U.echapper(texte) + "</text>";
   }
-  // Nappes de brume (les sprites lieu-brume de la carte de campagne) sur une bande ; des nuées dessinées seulement si le
-  // sprite manque (lot B : sous chaque nappe, l'ovale de repli à bord franc se voyait).
+  // Nappes de brume (les sprites lieu-brume de la carte de campagne) sur une bande. Sous chaque nappe, sa nuée dessinée
+  // de repli, cachée tant que la nappe est là (lot B : l'ovale à bord franc se voyait sous elle) ; si l'image ne se
+  // charge pas, surveillerImages la retire et rend sa nuée visible. Sans le sprite, les nuées seules.
   function nappes(bx, pleine) {
     var br = image("lieu-brume"), s = "", poses = pleine ? [[70, 118, 1.15], [230, 96, 1.05], [150, 212, 1.2], [268, 236, 1.0], [40, 250, .95]] : [[150, 100, 1.25], [60, 220, 1.1], [250, 200, 1.15]];
-    if (!br) poses.forEach(function (p) {
-      s += "<ellipse cx='" + (bx + p[0]) + "' cy='" + p[1] + "' rx='" + (80 * p[2]) + "' ry='" + (34 * p[2]) + "' fill='#d9d2c3' opacity='.55'/>";
-    });
-    if (br) poses.forEach(function (p) {
+    poses.forEach(function (p) {
       var k = p[2];
-      s += "<image class='nappe' href='" + br.src + "' x='" + (bx + p[0] - br.ax * k) + "' y='" + (p[1] - br.ay * k) + "' width='" + (br.w * k) + "' height='" + (br.h * k) + "' opacity='.82'/>";
+      s += "<ellipse class='nuee-repli' cx='" + (bx + p[0]) + "' cy='" + p[1] + "' rx='" + (80 * k) + "' ry='" + (34 * k) + "' fill='#d9d2c3' opacity='.55'" + (br ? " visibility='hidden'" : "") + "/>";
+      if (br) s += "<image class='nappe' href='" + br.src + "' x='" + (bx + p[0] - br.ax * k) + "' y='" + (p[1] - br.ay * k) + "' width='" + (br.w * k) + "' height='" + (br.h * k) + "' opacity='.82'/>";
     });
     return s;
   }
@@ -468,9 +467,15 @@
     });
     return s + "</svg>";
   }
-  // Une nappe de brume qui ne se charge pas est retirée (les nuées dessinées restent).
+  // Une image qui ne se charge pas est retirée ; sous une nappe de brume, sa nuée dessinée de repli reparaît.
   function surveillerImages(zone) {
-    Array.prototype.forEach.call(zone.querySelectorAll("image"), function (im) { im.addEventListener("error", function () { im.remove(); }); });
+    Array.prototype.forEach.call(zone.querySelectorAll("image"), function (im) {
+      im.addEventListener("error", function () {
+        var p = im.previousElementSibling;
+        if (p && p.classList.contains("nuee-repli")) p.removeAttribute("visibility");
+        im.remove();
+      });
+    });
   }
 
   // ---------- parchemin de l'année (écran de départ) ----------

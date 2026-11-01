@@ -7,11 +7,14 @@
   var U = JEU.util;
   var ouvert = {};  // matière dépliée
   var vientOuvrir = null; // la matière qu'on vient de déplier : elle seule montre sa page en s'ouvrant (classe « ouvre »)
-  // déplie ou replie une matière ; l'écran est redessiné sur place
+  // déplie ou replie une matière ; l'écran est redessiné sur place, le focus clavier reste sur le même en-tête
   function basculer(m, s) {
     ouvert[m] = !ouvert[m];
     vientOuvrir = ouvert[m] ? m : null;
+    var i = Array.prototype.indexOf.call(s.querySelectorAll(".codex-entete"), document.activeElement);
     JEU.ui.ecrans.codex(s, { surPlace: true });
+    var e = i >= 0 ? s.querySelectorAll(".codex-entete")[i] : null;
+    if (e) e.focus({ preventScroll: true });
   }
 
   function rendreFiche(f, coursId, bonus) {

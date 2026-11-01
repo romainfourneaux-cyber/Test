@@ -210,6 +210,9 @@ body.sans-ambiance .bouton.principal::after { display: none; }
    titre doré, nombre de fiches en pied, fermoir en sceau d'or à droite. Le grain du cuir est gardé : mesuré au ralenti 4 ×,
    il ne coûte rien de visible à l'ouverture (le surcoût venait de la cascade d'entrée, retirée). */
 .codex-matiere { border-left: 0; background: none; box-shadow: none; margin: .65rem 0; }
+/* un tome est redessiné sur place (codex.js, basculer) : sans ancrage du défilement, la vue reste sur le tome qu'on ouvre
+   (Chromium prenait un repère plus bas et sautait de plusieurs milliers de pixels quand la page était défilée) */
+#ecran-codex { overflow-anchor: none; }
 .codex-entete {
   position: relative; min-height: 50px; padding: .55rem 1rem .55rem 3.1rem; border-radius: 4px 7px 7px 4px; color: #f6e7bf; text-shadow: 0 1px 0 #000;
   background:

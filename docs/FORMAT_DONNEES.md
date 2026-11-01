@@ -396,6 +396,8 @@ Schéma actuel : 6 (depuis le 24/10/2026). Migrations, testées par atelier/outi
       places: { "s6g": 7 },                      // solidité restante d'un gardien dont les murs ont cédé (les coups portés restent)
       offre: null,                               // ou l'offre de faveur en attente : { halte, conseiller, cartes: [{ id, rang, affine, nom, famille, conseiller, icone,
                                                  // rangNom, texte }] } ; l'écran y ajoute question: true tant que la question du conseiller n'est pas répondue, et eclatante
+                                                 // ; après une veillée sans faute, l'écran y pose la faveur à affiner (conseiller: null, affiner: true, cartes au rang tenu + 1) :
+                                                 // un jeu rechargé pendant l'éventail la retrouve
       etal: { "s6c2h2": { remise: true, lignes: ["faveur:engrenages", "vivres", "plan", "rafraichir"], rafraichi: false, achetes: ["plan"] } },
                                                  // les étals ouverts : remise de la question juste, lignes, rafraîchi une fois, lignes achetées
       compte: { questions: 0, bonnes: 0, serie: 0, meilleureSerie: 0, parFamille: { svt: { posees: 4, bonnes: 3 } }, parMatiere: {}, parSemaine: {},
