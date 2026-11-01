@@ -106,6 +106,20 @@ main { max-width: 1060px; margin: 0 auto; padding: 1.4rem 1rem 7rem; }
   content: ""; position: absolute; width: 46px; height: 46px; pointer-events: none;
   background: no-repeat center/contain url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 46 46'><path d='M3 3h26c-6 3-10 6-12 12-6 2-9 6-12 12z' fill='%23b08d3a' stroke='%232e2419' stroke-width='1.5'/><circle cx='12' cy='12' r='3.2' fill='%232e2419'/><path d='M3 34c4 0 7-3 8-8M34 3c0 4-3 7-8 8' fill='none' stroke='%232e2419' stroke-width='1.3'/></svg>");
 }
+/* lot C : l'écran d'une partie (événement, conseil, bataille) et celui d'une expédition changent de hauteur à presque chaque
+   réponse. Leur feuille est faite de couches à taille fixe, pour que le navigateur ne repeigne que la bande qui apparaît
+   ou disparaît, et non toute la feuille (un dégradé à la taille de la boîte et une ombre intérieure se refont en entier :
+   mesuré au ralenti 4 ×, la moitié du temps entre la réponse et l'image suivante). Même parchemin, même lumière : la
+   lueur est l'ellipse que dessinait le dégradé sur une feuille de 750 px de haut, posée une fois depuis le haut ; les bords
+   assombris passent de l'ombre intérieure à des bandes en dégradé (gauche et droite, haut ; le bas garde l'ombre portée). */
+#ecran-partie.ecran, #ecran-expedition.ecran {
+  background:
+    linear-gradient(90deg, rgba(110,70,25,.3), rgba(110,70,25,0) 56px, rgba(110,70,25,0) calc(100% - 56px), rgba(110,70,25,.3)) 0 0 / 100% 2px repeat-y,
+    linear-gradient(rgba(110,70,25,.3), rgba(110,70,25,0)) 0 0 / 100% 56px no-repeat,
+    radial-gradient(ellipse 90% 540px at 50% 300px, rgba(255,250,235,.35), rgba(120,85,40,.28) 100%) 0 0 / 100% 8000px no-repeat,
+    var(--parchemin);
+  box-shadow: var(--filet), 0 18px 40px rgba(0,0,0,.65);
+}
 .ecran::before { top: 4px; left: 4px; }
 .ecran::after { bottom: 4px; right: 4px; transform: rotate(180deg); }
 .titre-ecran, .ecran > h1 {
@@ -520,31 +534,33 @@ main { max-width: 1060px; margin: 0 auto; padding: 1.4rem 1rem 7rem; }
 .ecran.sortie[hidden] { display: block !important; position: fixed; z-index: 5; margin: 0; pointer-events: none; animation: sortieEcran .14s ease-in forwards; }
 @keyframes sortieEcran { to { opacity: 0; transform: translateY(8px); } }
 
-/* accueil : la tapisserie s'anime lentement, des poussières dorées flottent dans la lumière */
+/* accueil : la tapisserie s'anime lentement, des poussières dorées flottent dans la lumière.
+   Lot C (C2.1) : les poussières ne repeignent plus la scène à chaque image (background-position animé : 133 ms par image
+   au ralenti 4 ×). Le même semis, sur un ::after deux fois plus haut que la scène, monte d'une hauteur de scène en 26 s
+   par une translation (peint une fois, le compositeur seul) ; chaque motif a une hauteur de tuile de 25 % ou 50 % du
+   ::after (une demi-scène ou une scène) : la boucle est sans couture. L'assombrissement du bas passe sous les poussières,
+   dans l'image de la tapisserie (::before, dont la boîte déborde de 8 % : 55 % et 100 % de la scène y valent 54 % et 93 %). */
 .scene-fond.tapisserie { position: relative; overflow: hidden; background: none; }
 .scene-fond.tapisserie::before {
   content: ""; position: absolute; inset: -8%;
-  background: url("../assets/images/oeuvres/tapisserie-cerf.jpg") center 35%/cover no-repeat;
+  background: linear-gradient(rgba(20,12,6,0) 54%, rgba(20,12,6,.65) 93%), url("../assets/images/oeuvres/tapisserie-cerf.jpg") center 35%/cover no-repeat;
   animation: kenBurns 38s ease-in-out infinite alternate;
 }
 .scene-fond.tapisserie::after {
-  content: ""; position: absolute; inset: 0;
+  content: ""; position: absolute; left: 0; right: 0; top: 0; height: 200%; pointer-events: none;
   background:
     radial-gradient(circle at 12% 70%, rgba(255,236,170,.75) 0 1.5px, transparent 2.5px),
     radial-gradient(circle at 32% 40%, rgba(255,236,170,.6) 0 1px, transparent 2px),
     radial-gradient(circle at 55% 75%, rgba(255,236,170,.7) 0 1.5px, transparent 2.5px),
     radial-gradient(circle at 74% 30%, rgba(255,236,170,.6) 0 1px, transparent 2px),
-    radial-gradient(circle at 88% 60%, rgba(255,236,170,.75) 0 2px, transparent 3px),
-    linear-gradient(rgba(20,12,6,0) 55%, rgba(20,12,6,.65));
-  background-size: 300px 220px, 260px 300px, 340px 260px, 280px 240px, 360px 300px, 100% 100%;
+    radial-gradient(circle at 88% 60%, rgba(255,236,170,.75) 0 2px, transparent 3px);
+  background-size: 300px 25%, 260px 50%, 340px 25%, 280px 50%, 360px 25%;
   animation: poussieres 26s linear infinite;
 }
 @keyframes kenBurns { from { transform: scale(1) translate(0, 0); } to { transform: scale(1.12) translate(-3%, -2%); } }
-@keyframes poussieres {
-  from { background-position: 0 0, 0 0, 0 0, 0 0, 0 0, 0 0; }
-  to { background-position: 60px -220px, -40px -300px, 80px -260px, -60px -240px, 40px -300px, 0 0; }
-}
-.blason-grand svg { animation: respiration 4s ease-in-out infinite alternate; }
+@keyframes poussieres { from { transform: translateY(0); } to { transform: translateY(-50%); } }
+/* le blason respire (lot C : c'est son cadre qui bouge, l'ombre portée du SVG reste dessinée une fois, sans filtre animé) */
+.blason-grand { animation: respiration 4s ease-in-out infinite alternate; }
 @keyframes respiration { from { transform: translateY(0); } to { transform: translateY(-3px); } }
 
 /* bouton doré : un reflet passe de temps en temps */
@@ -559,8 +575,13 @@ main { max-width: 1060px; margin: 0 auto; padding: 1.4rem 1rem 7rem; }
 @keyframes reflet { 0%, 70% { transform: translateX(-150%); } 100% { transform: translateX(325%); } }
 
 /* médaillons de ressources */
+/* le médaillon grossit, et sa lueur d'or passe par l'opacité d'un pseudo-élément (lot C : plus d'ombre animée) */
+.ressource .medaillon { position: relative; }
 .ressource.rebond .medaillon { animation: rebond .32s ease-out; }
-@keyframes rebond { 0% { transform: scale(1); } 45% { transform: scale(1.45); box-shadow: 0 0 0 2px var(--or-clair), 0 0 18px var(--or-clair); } 100% { transform: scale(1); } }
+.ressource.rebond .medaillon::after { content: ""; position: absolute; inset: 0; border-radius: 50%; pointer-events: none; opacity: 0;
+  box-shadow: 0 0 0 2px var(--or-clair), 0 0 18px var(--or-clair); animation: lueur-passe .32s ease-out; }
+@keyframes rebond { 0% { transform: scale(1); } 45% { transform: scale(1.45); } 100% { transform: scale(1); } }
+@keyframes lueur-passe { 45% { opacity: 1; } }
 .gain-volant {
   position: fixed; z-index: 45; pointer-events: none; display: flex; align-items: center; gap: .3rem; margin: -18px 0 0 -30px;
   font-family: var(--titre); font-weight: 700; font-size: 1.3rem; color: #fff3d0; text-shadow: 0 2px 0 #000, 0 0 6px #000;
@@ -570,8 +591,6 @@ main { max-width: 1060px; margin: 0 auto; padding: 1.4rem 1rem 7rem; }
 /* secousse (JEU.anim.secouer) */
 .secousse { animation: secousse .3s ease-out; }
 @keyframes secousse { 0%,100% { transform: none; } 20% { transform: translate(-7px, 3px); } 45% { transform: translate(6px, -3px); } 70% { transform: translate(-3px, 2px); } }
-.flotte { transform-box: fill-box; transform-origin: left center; animation: flotter 2.2s ease-in-out infinite alternate; }
-@keyframes flotter { from { transform: skewY(-4deg) scaleX(1); } to { transform: skewY(4deg) scaleX(.94); } }
 .degats {
   position: absolute; z-index: 5; transform: translate(-50%, 0); pointer-events: none;
   font-family: var(--titre); font-weight: 700; font-size: 2.2rem; color: #ffe08a; -webkit-text-stroke: 1.5px #3a1a0a; text-shadow: 0 3px 6px rgba(0,0,0,.7);
@@ -584,32 +603,79 @@ main { max-width: 1060px; margin: 0 auto; padding: 1.4rem 1rem 7rem; }
 .carte-conseil { animation: retourner .3s ease-out; }
 @keyframes retourner { from { opacity: 0; transform: perspective(900px) rotateY(75deg); } to { opacity: 1; transform: none; } }
 
-/* domaine : la vie sur la carte */
-.plan .courant { animation: courant 9s linear infinite; }
-.plan .courant.lent { animation-duration: 15s; }
-@keyframes courant { to { stroke-dashoffset: -640; } }
-.plan .nuages { animation: nuages 80s linear infinite; }
-@keyframes nuages { from { transform: translateX(-300px); } to { transform: translateX(1500px); } }
-.plan .oiseaux { animation: oiseaux 26s linear infinite; animation-delay: -4s; }
-@keyframes oiseaux { 0% { transform: translate(-120px, 120px); } 100% { transform: translate(1100px, 30px); } }
-.plan .oiseaux .aile { transform-box: fill-box; transform-origin: center; animation: battre .45s ease-in-out infinite alternate; }
-@keyframes battre { from { transform: scaleY(1); } to { transform: scaleY(-.4); } }
-.plan .fumee circle { fill: #d9d2c2; opacity: 0; animation: fumee 3.6s ease-out infinite; }
-.plan .fumee circle:nth-child(2) { animation-delay: 1.2s; }
-.plan .fumee circle:nth-child(3) { animation-delay: 2.4s; }
-@keyframes fumee { 0% { opacity: 0; transform: translate(0, 0) scale(.5); } 20% { opacity: .7; } 100% { opacity: 0; transform: translate(14px, -46px) scale(2.2); } }
-.plan .ailes { animation: tourner 7s linear infinite; }
+/* domaine : la vie sur le plan (lot C, C2.2 ; domaine.js, vieHTML). Tout ce qui bouge est dans le calque .vie-domaine,
+   posé sur le dessin (même cadre, positions en % du plan de 1000 × 660), et n'anime que transform, translate, scale et
+   opacity d'éléments entiers : le compositeur seul, sans repeindre le plan. Aucun flou, aucun trait animé. Ambiance
+   (.vie-domaine.ambiance, body.sans-ambiance) : reflets, fanions, ailes, fumées, nuages, oiseaux, villageois. Le halo du
+   quartier où se tient le seigneur est un signal de jeu : il suit Animations. */
+.plan-cadre { position: relative; }
+.vie-domaine { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.vie-domaine > * { position: absolute; display: block; }
+.vie-domaine svg { overflow: visible; }
+/* reflets de la rivière : quatre calques décalés d'un quart de période, qui se relaient (le premier seul sans ambiance) */
+.reflet-domaine { opacity: 0; }
+.reflet-domaine.r0 { opacity: .55; }
+.vie-domaine.ambiance .reflet-domaine { animation: reflet-domaine 1.6s linear infinite; }
+.vie-domaine.ambiance .reflet-domaine.r1 { animation-delay: -1.2s; }
+.vie-domaine.ambiance .reflet-domaine.r2 { animation-delay: -.8s; }
+.vie-domaine.ambiance .reflet-domaine.r3 { animation-delay: -.4s; }
+@keyframes reflet-domaine { 0% { opacity: .55; } 25% { opacity: 0; } 75% { opacity: 0; } 100% { opacity: .55; } }
+/* fanions : le drapeau flotte autour de sa hampe (bord gauche) */
+.vie-domaine .flotte { height: auto !important; aspect-ratio: 42 / 46; transform-origin: 2.4% 50%; }
+.vie-domaine.ambiance .flotte { animation: flotter 2.2s ease-in-out infinite alternate; }
+@keyframes flotter { from { transform: skewY(-4deg) scaleX(1); } to { transform: skewY(4deg) scaleX(.94); } }
+/* ailes du moulin, fumée des bâtiments construits (trois bouffées qui montent vers l'est en 3,6 s) */
+.vie-domaine.ambiance .ailes-domaine { animation: tourner 7s linear infinite; }
 @keyframes tourner { to { transform: rotate(360deg); } }
+.fumee-domaine i { position: absolute; inset: 0; border-radius: 50%; opacity: 0; background: radial-gradient(circle, #d9d2c2 0 58%, rgba(217,210,194,0) 72%);
+  animation: fumee-domaine 3.6s ease-out infinite; }
+.fumee-domaine i:nth-child(2) { animation-delay: 1.2s; }
+.fumee-domaine i:nth-child(3) { animation-delay: 2.4s; }
+@keyframes fumee-domaine { 0% { opacity: 0; transform: translate(0, 0) scale(.5); } 20% { opacity: .7; } 100% { opacity: 0; transform: translate(117%, -383%) scale(2.2); } }
+/* ombres de nuages : ellipses à dégradé radial (cœur plein, bord fondu de 18 unités), qui passent en 80 s, de 300 unités
+   à gauche du plan à 1500 à droite (436 unités de large : −68,8 % à 344 %) */
+.nuage-domaine { background: radial-gradient(closest-side, rgba(28,20,12,var(--o, .12)) 0, rgba(28,20,12,var(--o, .12)) 66%, rgba(28,20,12,0) 100%);
+  animation: nuage-domaine 80s linear infinite; }
+@keyframes nuage-domaine { from { transform: translateX(-68.8%); } to { transform: translateX(344%); } }
+/* un vol de cinq oiseaux traverse le plan en 26 s (cadre de 100 × 30 unités) ; ailes hautes et basses qui se relaient */
+.oiseaux-domaine { left: 0; top: 0; width: 10%; aspect-ratio: 100 / 30; animation: oiseaux-domaine 26s linear infinite; animation-delay: -4s; }
+@keyframes oiseaux-domaine { from { transform: translate(-122%, 380%); } to { transform: translate(1098%, 80%); } }
+.oiseaux-domaine svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.oiseaux-domaine .aile-a { animation: battre-a .45s linear infinite; }
+.oiseaux-domaine .aile-b { animation: battre-b .45s linear infinite; }
+/* villageois : chacun va et vient sur sa route (translate, linéaire), se retourne au bout (scale, d'un coup) et sautille
+   (transform) ; --a et --b : les deux bouts de sa route, --s et --r : son sens à l'aller et au retour */
+.villageois-domaine { left: 0; top: 0; aspect-ratio: 18 / 17; transform-origin: 33.33% 82.35%; scale: var(--s, 1) 1;
+  animation-name: villageois-va, villageois-tourne, villageois-saute; animation-iteration-count: infinite;
+  animation-timing-function: linear, step-end, ease-out; animation-direction: normal, normal, alternate; }
+.villageois-domaine svg { display: block; width: 100%; height: 100%; }
+@keyframes villageois-va { 0%, 100% { translate: var(--a); } 50% { translate: var(--b); } }
+@keyframes villageois-tourne { 0% { scale: var(--s) 1; } 50%, 100% { scale: var(--r) 1; } }
+@keyframes villageois-saute { from { transform: none; } to { transform: translateY(-4.8%); } }
+/* halo du quartier où se tient le seigneur : le cadre est posé, sa lueur respire par l'opacité d'un pseudo-élément */
+.halo-quartier { display: none; border-radius: 11.3% / 22.4%; }
+.halo-quartier.vu { display: block; }
+.halo-quartier::after { content: ""; position: absolute; inset: 0; border-radius: inherit; opacity: .6;
+  box-shadow: 0 0 0 3px var(--teinte, var(--or)), 0 0 12px 4px color-mix(in srgb, var(--teinte, var(--or)) 70%, #fff3d0);
+  animation: halo-quartier 1.6s ease-in-out infinite alternate; }
+@keyframes halo-quartier { from { opacity: .25; } to { opacity: 1; } }
 #seigneur.galop .trot { animation: trot .26s ease-in-out infinite alternate; }
 @keyframes trot { from { transform: translateY(0) rotate(-2deg); } to { transform: translateY(-5px) rotate(2deg); } }
-.quartier.proche rect:nth-child(2) { animation: halo 1.6s ease-in-out infinite alternate; }
-@keyframes halo { from { stroke-width: 2.5; } to { stroke-width: 6; } }
 
 /* le chroniqueur respire */
 .mentor.visible .mentor-portrait svg { animation: respiration 2.8s ease-in-out infinite alternate; }
 
 /* animations coupées (Réglages ou préférence du système) */
 .sans-anim *, .sans-anim *::before, .sans-anim *::after { animation: none !important; transition: none !important; }
+/* ambiance coupée (lot C, C2.3 : réglage « Ambiance », Animations coupées ou régulateur des écrans ; body.sans-ambiance posé
+   par ui.appliquerAnimations) : ce qui bouge sans raison de jeu s'arrête sur place. Les signaux de jeu restent (halos des
+   lieux de la carte et de la route, lueur de l'événement du jour, halo du quartier) : ils suivent Animations. La carte de
+   campagne a ses propres règles (section « Campagne vivante »). */
+.sans-ambiance .scene-fond.tapisserie::before, .sans-ambiance .scene-fond.tapisserie::after, .sans-ambiance .blason-grand,
+.sans-ambiance .mentor.visible .mentor-portrait svg, .sans-ambiance .vie-domaine > :not(.halo-quartier),
+.sans-ambiance .vie-domaine > :not(.halo-quartier) * { animation: none !important; }
+.sans-ambiance .vie-domaine :is(.oiseaux-domaine, .nuage-domaine, .fumee-domaine, .villageois-domaine) { display: none; }
+.sans-ambiance .vie-domaine .reflet-domaine:not(.r0) { opacity: 0; }
 
 /* ---------- confirmation dans la page ---------- */
 .confirmation p { font-size: 1.1rem; margin: .4rem 0 1rem; }
@@ -703,8 +769,12 @@ main { max-width: 1060px; margin: 0 auto; padding: 1.4rem 1rem 7rem; }
 .jauge-royaume b { font-family: var(--titre); font-size: .85rem; }
 .jr-barre { display: block; height: 9px; min-width: 60px; flex: 1; background: rgba(46,36,25,.25); border-radius: 5px; overflow: hidden; box-shadow: inset 0 0 0 1px rgba(46,36,25,.5); }
 .jr-barre span { display: block; height: 100%; background: linear-gradient(90deg, var(--or-clair), var(--or)); transition: width .3s ease; }
+.jauge-royaume .jr-icone { position: relative; }
 .jauge-royaume.monte .jr-icone { animation: monte .4s ease-out; }
-@keyframes monte { 0% { transform: scale(1); } 50% { transform: scale(1.25); box-shadow: 0 0 0 3px var(--or-clair), 0 0 14px 4px rgba(251,233,189,.8); } 100% { transform: scale(1); } }
+.jauge-royaume.monte .jr-icone::after { content: ""; position: absolute; inset: 0; border-radius: 50%; pointer-events: none; opacity: 0;
+  box-shadow: 0 0 0 3px var(--or-clair), 0 0 14px 4px rgba(251,233,189,.8); animation: lueur-monte .4s ease-out; }
+@keyframes monte { 0% { transform: scale(1); } 50% { transform: scale(1.25); } 100% { transform: scale(1); } }
+@keyframes lueur-monte { 50% { opacity: 1; } }
 
 /* conseil du royaume : la carte du conseiller */
 .carte-conseil { justify-content: flex-start; gap: .4rem; padding-top: 1.1rem; }
@@ -1212,6 +1282,13 @@ button.carte-faveur:hover, button.carte-faveur:focus-visible { transform: transl
    (1,06) et sa lueur d'or passe (220 ms, opacité d'un pseudo-élément), les autres s'effacent vers le bas. Transform et
    opacité seulement ; animations coupées : rien de tout cela. */
 .cartes-faveur.eventail > .carte-faveur { animation: carte-retourne .32s cubic-bezier(.2, .7, .3, 1) backwards; animation-delay: calc(var(--i, 0) * 80ms); }
+/* lot C : les cartes et leur éventail arrivent une image après la réponse ; jusque-là, la fenêtre tient la place d'une
+   rangée de cartes (230 px et leurs marges), pour que rien ne saute dessous quand elles arrivent */
+.cartes-faveur.attend { min-height: 240px; }
+/* la fenêtre d'une halte et la scène d'un événement sont des calques à part : une réponse qui les change ne fait pas
+   repeindre la route ni le parchemin dessous (mesuré au ralenti 4 × : la porte de 96 à 88 ms en médiane, l'événement de
+   68 à 56 ms) */
+.route-scene > .exp-calque, .scene-evenement { will-change: transform; }
 @keyframes carte-retourne { from { opacity: 0; transform: perspective(800px) rotateY(-75deg) translateY(10px); } to { opacity: 1; transform: none; } }
 .cartes-faveur.eventail > .carte-faveur.choisie { animation: carte-choisie .22s ease-out forwards; }
 .cartes-faveur.eventail > .carte-faveur.choisie::after { content: ""; position: absolute; inset: -5px; border-radius: 8px; pointer-events: none;
@@ -1434,3 +1511,17 @@ html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 .td-or-perte { position: absolute; right: .3rem; top: 100%; font-style: normal; font-family: var(--titre); font-weight: 700; font-size: 1.05rem;
   color: #ff8f80; text-shadow: 0 2px 0 #000, 0 0 5px #000; pointer-events: none; animation: td-or-chute .8s ease-in forwards; }
 @keyframes td-or-chute { 0% { opacity: 0; transform: translateY(-6px); } 15% { opacity: 1; } 100% { opacity: 0; transform: translateY(20px); } }
+/* ombres des nuages qui passent sur le champ (lot C, 01/11/2026) : trois dégradés posés sur la toile, que le compositeur
+   fait glisser vers l'est (12 px du champ par seconde, comme avant dans la toile) ; ils ne coûtent plus rien à la boucle
+   de la bataille. bataille.js pose .td-nuages-vus quand l'ambiance l'est (réglages Animations et Ambiance). Même taille
+   que la toile : 360 × 140 sur 1000 × 660, aux hauteurs 50, 240 et 430. */
+.td-nuages { position: absolute; left: 0; top: 0; width: 100%; aspect-ratio: 1000 / 660; overflow: hidden; pointer-events: none; display: none; }
+.td-nuages.td-nuages-vus { display: block; }
+.td-nuages i { position: absolute; left: 0; width: 36%; height: 21.21%; will-change: transform;
+  background: radial-gradient(closest-side, rgba(12, 18, 8, .17), rgba(12, 18, 8, .1) 60%, rgba(12, 18, 8, 0));
+  animation: td-nuage 116.67s linear infinite; }
+.td-nuages i:nth-child(1) { top: 7.58%; }
+.td-nuages i:nth-child(2) { top: 36.36%; animation-delay: -35s; }
+.td-nuages i:nth-child(3) { top: 65.15%; animation-delay: -70s; }
+@keyframes td-nuage { from { transform: translateX(-105.56%); } to { transform: translateX(283.33%); } }
+@media (prefers-reduced-motion: reduce) { .td-nuages { display: none !important; } }
