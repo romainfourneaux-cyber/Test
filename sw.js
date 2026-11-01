@@ -7,7 +7,7 @@
 // en arrière-plan puis attend. Elle prend la main quand le jeu est fermé puis rouvert, ou tout de suite si l'on touche
 // « Mettre à jour » (message « activer »). Jamais au milieu d'une partie : la page ouverte garde les fichiers de sa version.
 "use strict";
-var VERSION = "0.9.5";
+var VERSION = "0.9.6";
 var CACHE = "le-domaine-" + VERSION;
 var RACINE = new URL("./", self.location.href).href;
 var FICHIERS = [
