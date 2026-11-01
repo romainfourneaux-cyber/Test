@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- À déployer à la racine de terregravee.fr à la mise en ligne. Fichier généré par build.py (maquette v4) : ne pas le modifier à la main. Pages publiques seulement : ni notes.html, ni qr.html (son adresse est celle du QR code, à fournir). -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://terregravee.fr/</loc><lastmod>2026-11-01</lastmod></url>
+  <url><loc>https://terregravee.fr/produits/</loc><lastmod>2026-11-01</lastmod></url>
+  <url><loc>https://terregravee.fr/carte-des-lieux/</loc><lastmod>2026-11-01</lastmod></url>
+  <url><loc>https://terregravee.fr/propos/</loc><lastmod>2026-11-01</lastmod></url>
+  <url><loc>https://terregravee.fr/creations/</loc><lastmod>2026-11-01</lastmod></url>
+  <url><loc>https://terregravee.fr/tuto/</loc><lastmod>2026-11-01</lastmod></url>
+  <url><loc>https://terregravee.fr/contact/</loc><lastmod>2026-11-01</lastmod></url>
+  <url><loc>https://terregravee.fr/produits/le-pic-du-midi/</loc><lastmod>2026-11-01</lastmod></url>
+  <url><loc>https://terregravee.fr/produits/le-tourmalet/</loc><lastmod>2026-11-01</lastmod></url>
+  <url><loc>https://terregravee.fr/produits/le-montaigu/</loc><lastmod>2026-11-01</lastmod></url>
+  <url><loc>https://terregravee.fr/produits/le-cirque-de-gavarnie/</loc><lastmod>2026-11-01</lastmod></url>
+  <url><loc>https://terregravee.fr/produits/le-pont-despagne/</loc><lastmod>2026-11-01</lastmod></url>
+  <url><loc>https://terregravee.fr/produits/la-tour-des-jacobins/</loc><lastmod>2026-11-01</lastmod></url>
+  <url><loc>https://terregravee.fr/produits/le-chateau-de-mauvezin/</loc><lastmod>2026-11-01</lastmod></url>
+  <url><loc>https://terregravee.fr/produits/labbaye-de-lescaladieu/</loc><lastmod>2026-11-01</lastmod></url>
+  <url><loc>https://terregravee.fr/produits/lisard/</loc><lastmod>2026-11-01</lastmod></url>
+  <url><loc>https://terregravee.fr/produits/lours/</loc><lastmod>2026-11-01</lastmod></url>
+  <url><loc>https://terregravee.fr/produits/le-cerf/</loc><lastmod>2026-11-01</lastmod></url>
+  <url><loc>https://terregravee.fr/produits/la-marmotte/</loc><lastmod>2026-11-01</lastmod></url>
+  <url><loc>https://terregravee.fr/produits/led/</loc><lastmod>2026-11-01</lastmod></url>
+  <url><loc>https://terregravee.fr/produits/carte-cadeau/</loc><lastmod>2026-11-01</lastmod></url>
+</urlset>

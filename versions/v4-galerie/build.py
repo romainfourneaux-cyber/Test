@@ -16,6 +16,7 @@ import json
 import math
 import os
 import re
+from html.parser import HTMLParser
 
 ICI = os.path.dirname(os.path.abspath(__file__))
 MAQUETTE = os.path.join(ICI, "..", "..", "maquette")
@@ -30,6 +31,24 @@ IMG = "../../maquette/assets/img/"
 SITE = "https://terregravee.fr"
 PRODUITS = {p["slug"]: p for p in CATALOGUE}
 PLAQUES = [p for p in CATALOGUE if p["collection"] != "accessoires"]
+# Adresses du futur site en ligne, pour les données structurées, robots.txt, sitemap.xml et llms.txt (1er novembre 2026).
+# On garde les adresses actuelles de WordPress pour n’avoir rien à rediriger : /produits/<slug>/, /propos/, /tuto/,
+# /contact/, /creations/. Seule la carte des lieux est nouvelle : /carte-des-lieux/ (et non /carte/, que WordPress redirige
+# aujourd’hui vers la carte cadeau). qr.html attend l’adresse contenue dans le QR code.
+URL_EN_LIGNE = {
+    "index.html": SITE + "/", "collection.html": SITE + "/produits/", "carte.html": SITE + "/carte-des-lieux/",
+    "atelier.html": SITE + "/propos/", "sur-mesure.html": SITE + "/creations/", "installation.html": SITE + "/tuto/",
+    "contact.html": SITE + "/contact/",
+}
+for _p in CATALOGUE:
+    URL_EN_LIGNE["produit-{}.html".format(_p["slug"])] = _p["url_actuelle"]
+# Hypothèse de mise en ligne : les images du catalogue (../../maquette/assets/img) et celles de ce dossier (assets/img)
+# sont servies ensemble sous /assets/img/. Si le site les range ailleurs, il suffit de changer cette constante.
+IMG_EN_LIGNE = SITE + "/assets/img/"
+ORG_ID = SITE + "/#organisation"
+SITE_ID = SITE + "/#site"
+# Date de la dernière modification du contenu, reprise dans sitemap.xml (à changer quand le contenu change vraiment)
+DATE_CONTENU = "2026-11-01"
 # Avis neutralisés (réponses du 31 octobre 2026) : les 9 avis du site actuel ne peuvent pas être présentés comme
 # des avis de clients vérifiés (Code de la consommation, L121-4 ; sanctions L132-2). La v4 n’en affiche aucun.
 # Le catalogue partagé avec les autres maquettes n’est pas modifié : on vide seulement la copie chargée ici.
@@ -174,8 +193,21 @@ GOODIES_NOTE = note("goodies à préciser")
 IDEES_CADEAUX = ("le-pic-du-midi", "lours", "lisard", "le-cerf", "carte-cadeau", "led")
 
 
+# État de Noël figé à la construction (1er novembre 2026). None, pour la maquette : toutes les variantes datées sont
+# écrites et galerie.js choisit selon la date (ou l’aperçu). Les robots des moteurs IA (OpenAI, Anthropic, Perplexity)
+# n’exécutent pas JavaScript et liraient alors plusieurs tarifs de livraison. Pour un site statique reconstruit chaque
+# jour, mettre « avant », « pendant », « apres » ou « fini » : seule la variante du jour est écrite, et galerie.js la suit.
+ETAT_NOEL = None
+assert ETAT_NOEL in (None, "avant", "pendant", "apres", "fini"), "État de Noël inconnu : {}".format(ETAT_NOEL)
+
+
 def selon(etats, html, balise="span", cls=""):
-    """Variante datée du texte de Noël : visible sans JavaScript seulement si « neutre » figure dans les états."""
+    """Variante datée du texte de Noël : visible sans JavaScript seulement si « neutre » figure dans les états.
+    Avec un ETAT_NOEL figé, seule la variante de cet état est écrite."""
+    if ETAT_NOEL:
+        if ETAT_NOEL not in etats.split():
+            return ""
+        return '<{b}{c} data-noel-quand="{e}">{t}</{b}>'.format(b=balise, c=' class="{}"'.format(cls) if cls else "", e=etats, t=html)
     return '<{b}{c} data-noel-quand="{e}"{h}>{t}</{b}>'.format(
         b=balise, c=' class="{}"'.format(cls) if cls else "", e=etats, h="" if "neutre" in etats.split() else " hidden", t=html)
 
@@ -742,7 +774,7 @@ def page(fichier, titre, description, contenu, actif=None, jsonld=None, classe="
     if jsonld:
         donnees = '<script type="application/ld+json">' + json.dumps(jsonld, ensure_ascii=False) + "</script>"
     sortie = """<!doctype html>
-<html lang="fr">
+<html lang="fr"{fixe}>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -792,8 +824,14 @@ def page(fichier, titre, description, contenu, actif=None, jsonld=None, classe="
 <script src="assets/galerie.js"></script>
 </body>
 </html>
-""".format(titre=e(titre), desc=e(description), polices=POLICES.replace("&", "&amp;"), donnees=donnees, classe=classe,
+""".format(fixe=' data-noel-fixe="{}"'.format(ETAT_NOEL) if ETAT_NOEL else "", titre=e(titre), desc=e(description), polices=POLICES.replace("&", "&amp;"), donnees=donnees, classe=classe,
            noel=bandeau_noel(fichier), panier_noel=panier_noel(), entete=entete(actif), contenu=contenu, pied=pied(), zone=ZONE_LIVRAISON, modes=MODES_LIVRAISON, expedition=EXPEDITION)
+    if ETAT_NOEL:
+        # Blocs entiers datés (bandeau, bloc de l’accueil, encarts) : masqués d’avance selon l’état figé
+        def masquer(m):
+            balise = m.group(0).replace(" hidden>", ">")
+            return balise if ETAT_NOEL in m.group(1).split() else balise[:-1] + " hidden>"
+        sortie = re.sub(r'<[^>]*data-noel-quand="([^"]*)"[^>]*>', masquer, sortie)
     with open(os.path.join(ICI, fichier), "w", encoding="utf-8") as f:
         f.write(typo(sortie))
     PAGES_ECRITES.append(fichier)
@@ -1056,12 +1094,97 @@ def localisateur(p):
 </figure>""".format(w=VB_W, h=VB_H, aria=e(aria), c=CONTOUR_PETIT, point=point, legende=legende)
 
 
+# ---------------------------------------------------------------------------
+# Données structurées (JSON-LD), 1er novembre 2026. Règles : seulement des faits visibles sur les pages, aucune note,
+# aucun avis, aucun aggregateRating, aucune référence (sku) ni code-barres inventés. Vérifiées après chaque construction
+# par verifier_jsonld (JSON valide, présence des faits dans le texte visible).
+# ---------------------------------------------------------------------------
+JOURS_OUVRES = ["https://schema.org/" + j for j in ("Monday", "Tuesday", "Wednesday", "Thursday", "Friday")]
+# Politique de retour et livraison déclarées une fois, au niveau de l’entreprise, sur la seule page qui les décrit :
+# Contact (#livraison). Google recommande « a single page on your site that describes the shipping policy ». Une offre ne
+# les répète qu’en cas d’exception (la carte cadeau, envoyée par e-mail).
+RETOURS_LD = {
+    "@type": "MerchantReturnPolicy", "@id": URL_EN_LIGNE["contact.html"] + "#retours", "applicableCountry": "FR", "returnPolicyCountry": "FR",
+    "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow", "merchantReturnDays": 14,
+    "returnMethod": "https://schema.org/ReturnByMail", "returnFees": "https://schema.org/ReturnFeesCustomerResponsibility",
+}
+# Pas de délai de transport (transitTime) : il reste à fournir. L’exclusion de la Corse ne s’exprime pas dans le balisage
+# accepté par Google pour la France : elle reste écrite sur les pages. La livraison offerte de Noël n’est pas balisée
+# tant que ses dates ne sont pas confirmées ; une fois confirmées, ajouter une seconde ShippingConditions (FR, 0 EUR) avec
+# "seasonalOverride": {"@type": "OpeningHoursSpecification", "validFrom": …, "validThrough": …} (doc Google shipping-policy).
+LIVRAISON_LD = {
+    "@type": "ShippingService", "@id": URL_EN_LIGNE["contact.html"] + "#livraison", "name": "Livraison en " + ZONE_LIVRAISON,
+    "description": "{}. 5 € par commande. {}.".format(MODES_LIVRAISON, EXPEDITION),
+    "handlingTime": {"@type": "ServicePeriod", "businessDays": JOURS_OUVRES,
+                     "duration": {"@type": "QuantitativeValue", "minValue": 2, "maxValue": 4, "unitCode": "DAY"}},
+    "shippingConditions": {"@type": "ShippingConditions",
+                           "shippingDestination": {"@type": "DefinedRegion", "addressCountry": "FR"},
+                           "shippingRate": {"@type": "MonetaryAmount", "value": 5, "currency": "EUR"}},
+}
+# OnlineStore plutôt que LocalBusiness : Gerde ne reçoit pas de public. Ni vatID (TVA non applicable), ni sameAs (aucun
+# réseau social). iso6523Code : le SIRET, précédé du code ICD 0009 (code des SIRET dans la liste ISO 6523).
 ORGANISATION = {
-    "@context": "https://schema.org", "@type": "Organization", "name": "Terre Gravée", "url": SITE,
-    "email": "contact@terregravee.fr", "telephone": "+33 6 42 57 28 10", "slogan": "Graver l’âme des territoires",
+    "@type": "OnlineStore", "@id": ORG_ID, "name": "Terre Gravée", "alternateName": "Terre Gravee",
+    "legalName": "Romain Fourneaux EI", "url": SITE + "/", "logo": IMG_EN_LIGNE + "logo-complet.webp",
+    "description": "Micro-entreprise de Romain Fourneaux à Gerde (Hautes-Pyrénées) : plaques murales en aluminium découpé au laser "
+                   "et thermolaqué, d’après les dessins de Maude Villatte et Lola Jacquet pour le décor d’Aquensis.",
+    "slogan": "Graver l’âme des territoires", "email": "contact@terregravee.fr", "telephone": "+33642572810",
     "address": {"@type": "PostalAddress", "streetAddress": "16 rue du Pic du Midi", "postalCode": "65200",
                 "addressLocality": "Gerde", "addressCountry": "FR"},
+    "founder": {"@type": "Person", "name": "Romain Fourneaux"},
+    "iso6523Code": "0009:94123427000010",
+    "contactPoint": {"@type": "ContactPoint", "contactType": "customer service", "email": "contact@terregravee.fr",
+                     "telephone": "+33642572810", "availableLanguage": "fr"},
 }
+# Faits de la description de l’entreprise contrôlés dans le texte visible des pages qui la portent (verifier_jsonld)
+ORGANISATION_FAITS = ["Gerde", "Hautes-Pyrénées", "découpé au laser", "thermolaqué", "Maude Villatte", "Lola Jacquet", "Aquensis"]
+# Sur la page Contact, la même entreprise (même @id) porte les politiques de retour et de livraison, écrites sur cette page
+ORG_POLITIQUES = {"@type": "OnlineStore", "@id": ORG_ID, "name": "Terre Gravée", "url": SITE + "/",
+                  "hasMerchantReturnPolicy": RETOURS_LD, "hasShippingService": LIVRAISON_LD}
+# Rappel court de l’entreprise sur les fiches : la marque et le vendeur y renvoient par leur @id
+ORG_REF = {"@type": "OnlineStore", "@id": ORG_ID, "name": "Terre Gravée", "url": SITE + "/"}
+SITE_WEB = {"@type": "WebSite", "@id": SITE_ID, "name": "Terre Gravée", "alternateName": "Terre Gravee", "url": SITE + "/",
+            "inLanguage": "fr-FR", "publisher": {"@id": ORG_ID}}
+
+
+def graphe(*noeuds):
+    return {"@context": "https://schema.org", "@graph": list(noeuds)}
+
+
+def qv(valeur, unite):
+    return {"@type": "QuantitativeValue", "value": valeur, "unitCode": unite}
+
+
+def fil_ld(etapes_fil):
+    """BreadcrumbList calqué sur le fil d’Ariane visible : liste de (nom, page de la maquette ou URL absolue)."""
+    items = []
+    for i, (nom, cible) in enumerate(etapes_fil):
+        url = cible if cible.startswith("http") else URL_EN_LIGNE[cible.split("#")[0]] + ("#" + cible.split("#")[1] if "#" in cible else "")
+        items.append({"@type": "ListItem", "position": i + 1, "name": nom, "item": url})
+    return {"@type": "BreadcrumbList", "itemListElement": items}
+
+
+def texte_brut(fragment):
+    """Texte d’une réponse de FAQ pour le JSON-LD : sans les variantes datées de Noël (saisonnières), sans les paragraphes
+    qui attendent encore une information (marqueur « à fournir »…), sans lien isolé en fin de paragraphe, sans balises."""
+    t = re.sub(r"<p[^>]*>(?:(?!</p>).)*?class=\"note[^\"]*\"(?:(?!</p>).)*</p>", "", fragment, flags=re.S)
+    t = re.sub(r'<span class="note[^"]*">[^<]*</span>', "", t)
+    t = re.sub(r'<(\w+)[^>]*data-noel-quand="[^"]*"[^>]*>.*?</\1>', "", t, flags=re.S)
+    # Lien seul en fin de paragraphe (« La pose pas à pas ») : utile à l’écran, sans sens dans une réponse en texte brut
+    t = re.sub(r"(?<=[.!?])\s*<a [^>]*>[^<]*</a>\s*(?=</p>)", "", t)
+    t = html.unescape(re.sub(r"<[^>]+>", " ", t))
+    t = re.sub(r"\s+", " ", t).strip()
+    return re.sub(r" ([.,)])", r"\1", t)
+
+
+def faq(entrees, ouvrir_premier=False):
+    """FAQ visible en <details> (lisible sans JavaScript) et son FAQPage, tirés de la même liste (question, réponse en HTML).
+    Une question dont la réponse attend encore une information reste visible mais n’entre pas dans le FAQPage."""
+    visible = "".join("<details{}><summary>{}</summary><div>{}</div></details>".format(" open" if i == 0 and ouvrir_premier else "", q, r)
+                      for i, (q, r) in enumerate(entrees))
+    questions = [{"@type": "Question", "name": html.unescape(q), "acceptedAnswer": {"@type": "Answer", "text": texte_brut(r)}}
+                 for q, r in entrees if texte_brut(r)]
+    return '<div class="faq">{}</div>'.format(visible), {"@type": "FAQPage", "mainEntity": questions}
 
 
 # ---------------------------------------------------------------------------
@@ -1153,7 +1276,7 @@ def accueil():
     <div class="heros__texte">
       <p class="surtitre">Plaques murales en aluminium · Hautes-Pyrénées</p>
       <h1>Graver l’âme des territoires</h1>
-      <p class="heros__intro">Le Pic du Midi, l’isard, la tour des Jacobins… Chaque plaque reprend une silhouette de la Bigorre, découpée au laser dans l’aluminium puis thermolaquée, en Occitanie.</p>
+      <p class="heros__intro">Terre Gravée fabrique des plaques de décoration murale en aluminium inspirées des Hautes-Pyrénées : le Pic du Midi, l’isard, la tour des Jacobins… Douze modèles dessinés par Maude Villatte et Lola Jacquet pour le décor d’Aquensis, découpés au laser à Revel et thermolaqués à Bagnères-de-Bigorre.</p>
       <div class="heros__actions"><a class="btn" href="collection.html">Voir la collection</a><a class="btn btn--ligne" href="carte.html">La carte des lieux</a></div>
       <dl class="faits">
         <div><dt>Format</dt><dd>60 × 30 cm</dd></div>
@@ -1266,14 +1389,37 @@ def accueil():
         etapes=etapes(), bientot=bientot, noel=bloc_noel())
     page("index.html", "Terre Gravée · Plaques murales en aluminium des Hautes-Pyrénées",
          "Plaques murales en aluminium découpé au laser et thermolaqué : paysages, patrimoine et faune des Hautes-Pyrénées. 60 × 30 cm, 65 €.",
-         contenu, jsonld=ORGANISATION, classe="page-accueil")
+         contenu, jsonld=graphe(SITE_WEB, ORGANISATION), classe="page-accueil")
 
 
 # ---------------------------------------------------------------------------
 # Collection
 # ---------------------------------------------------------------------------
 
+# Questions sur les plaques elles-mêmes (1er novembre 2026) : celles qu’un acheteur pose avant de choisir, réponses tirées
+# des faits connus. Une seule FAQ, sur la page de la collection, plutôt qu’une page par question.
+FAQ_PLAQUES = [
+    ("Quelles sont les dimensions et le poids d’une plaque ?",
+     "<p>Chaque plaque mesure 60 × 30 cm, pour 2 mm d’épaisseur, et pèse 0,75 kg.</p>"),
+    ("En quelle matière sont les plaques ?",
+     "<p>En aluminium découpé au laser, puis thermolaqué : une peinture en poudre cuite au four. Trois finitions au même prix, 65 € : noir, gris ou doré.</p>"),
+    ("Qui a dessiné les plaques ?",
+     "<p>Les illustratrices Maude Villatte et Lola Jacquet. Leurs dessins ont d’abord été créés pour le décor d’Aquensis, le centre thermal de Bagnères-de-Bigorre. <a href=\"atelier.html#origine\">L’histoire d’Aquensis</a></p>"),
+    ("Où sont-elles fabriquées ?",
+     "<p>La découpe laser se fait à Revel (31). Le thermolaquage, le contrôle et l’expédition, à Bagnères-de-Bigorre (65).</p>"),
+    ("Comment se pose une plaque ?",
+     "<p>Sans perçage : deux fixations adhésives 3M Command™ sont fournies avec chaque plaque. <a href=\"installation.html\">La pose pas à pas</a></p>"),
+    ("Le kit LED est-il inclus ?",
+     "<p>Non. C’est une option à 15 €, à cocher sur la fiche de la plaque : l’atelier colle le ruban LED au dos avant l’envoi. Le kit est livré avec son câble USB, sans chargeur.</p>"),
+    ("Livrez-vous en Corse ou à l’étranger ?",
+     "<p>Non : la livraison se fait en France métropolitaine, hors Corse, pour 5 € par commande. <a href=\"contact.html#livraison\">Livraison et retours</a></p>"),
+    ("Comment offrir une plaque sans choisir le modèle ?",
+     "<p>Avec la carte cadeau, à 65 € : elle vaut une plaque au choix, pendant 2 ans, et elle est envoyée par e-mail. <a href=\"produit-carte-cadeau.html\">La carte cadeau</a></p>"),
+]
+
+
 def collection():
+    faq_visible, faq_ld = faq(FAQ_PLAQUES)
     comptes = {c: sum(1 for p in CATALOGUE if p["collection"] == c) for c in COLLECTIONS}
     puces = ['<button type="button" class="puce" data-filtre="tout" aria-pressed="true">Tout <span>{}</span></button>'.format(len(CATALOGUE))]
     puces += ['<button type="button" class="puce" data-filtre="{}" aria-pressed="false">{} <span>{}</span></button>'.format(c, v[0], comptes[c])
@@ -1285,7 +1431,7 @@ def collection():
   <header class="entete-page">
     <p class="surtitre">Boutique</p>
     <h1>La collection</h1>
-    <p class="chapo">Douze plaques de 60 × 30 cm en aluminium découpé au laser et thermolaqué. Chaque modèle existe en noir, gris et doré, au même prix : 65 €. Le kit LED s’ajoute en option sur la fiche de chaque plaque ; la carte cadeau vaut une plaque au choix, pendant 2 ans.</p>
+    <p class="chapo">Douze plaques murales de 60 × 30 cm en aluminium découpé au laser et thermolaqué, qui représentent des paysages, des monuments et des animaux des Hautes-Pyrénées. Chaque modèle existe en noir, gris et doré, au même prix : 65 €. Le kit LED s’ajoute en option sur la fiche de chaque plaque ; la carte cadeau vaut une plaque au choix, pendant 2 ans.</p>
   </header>
   <div class="barre-filtres">
     <div class="puces" role="group" aria-label="Filtrer par thème">{puces}</div>
@@ -1304,10 +1450,17 @@ def collection():
       <li><span>Fabrication</span><span>Revel (31) et Bagnères-de-Bigorre (65)</span></li>
     </ul>
   </div>
-</section>""".format(puces="".join(puces), voir=voir, n=len(CATALOGUE), grille=grille(CATALOGUE, eager=4, haute=True), livraison=LIVRAISON_COURT)
+</section>
+<section class="section section--clair" id="questions" aria-labelledby="titre-faq-plaques">
+  <div class="wrap">
+    <div class="entete-section"><p class="surtitre">Avant de choisir</p><h2 id="titre-faq-plaques">Questions fréquentes sur les plaques</h2></div>
+    {faq}
+  </div>
+</section>""".format(puces="".join(puces), voir=voir, n=len(CATALOGUE), grille=grille(CATALOGUE, eager=4, haute=True), livraison=LIVRAISON_COURT,
+                     faq=faq_visible)
     page("collection.html", "La collection · Terre Gravée",
          "Douze plaques murales en aluminium découpé au laser : paysages, patrimoine et faune des Pyrénées, en noir, gris ou doré. 65 € la plaque, kit LED en option et carte cadeau.",
-         contenu, actif="collection.html", classe="page-collection")
+         contenu, actif="collection.html", classe="page-collection", jsonld=graphe(faq_ld))
 
 
 # ---------------------------------------------------------------------------
@@ -1331,12 +1484,59 @@ def similaires(p):
     return (meme + autres)[:4]
 
 
-def jsonld_produit(p, image):
-    d = {"@context": "https://schema.org", "@type": "Product", "name": p["nom"], "image": image,
-         "brand": {"@type": "Brand", "name": "Terre Gravée"},
-         "offers": {"@type": "Offer", "price": "{}.00".format(p["prix"]), "priceCurrency": "EUR", "url": p["url_actuelle"]}}
-    # Pas d’aggregateRating : aucun avis n’est affiché (voir la neutralisation des avis en tête du fichier)
-    return d
+# Ce que représente chaque plaque, pour la phrase de présentation sous le titre de la fiche (faits repris de LIEU_TEXTE)
+SUJET = {
+    "le-pic-du-midi": "la silhouette du Pic du Midi de Bigorre (2 877 m, Hautes-Pyrénées) sous un ciel étoilé",
+    "le-tourmalet": "le col du Tourmalet (2 115 m, Hautes-Pyrénées), entre Barèges et La Mongie",
+    "le-montaigu": "le Montaigu (2 339 m, Hautes-Pyrénées), voisin du Pic du Midi",
+    "le-cirque-de-gavarnie": "le cirque de Gavarnie (Hautes-Pyrénées), inscrit au patrimoine mondial de l’UNESCO",
+    "le-pont-despagne": "le Pont d’Espagne, au-dessus de Cauterets (Hautes-Pyrénées)",
+    "la-tour-des-jacobins": "la tour des Jacobins de Bagnères-de-Bigorre (Hautes-Pyrénées)",
+    "le-chateau-de-mauvezin": "le château fort de Mauvezin, dans les Baronnies (Hautes-Pyrénées)",
+    "labbaye-de-lescaladieu": "l’abbaye cistercienne de l’Escaladieu, à Bonnemazon (Hautes-Pyrénées)",
+    "lisard": "l’isard, le chamois des Pyrénées",
+    "lours": "l’ours brun des Pyrénées",
+    "le-cerf": "le cerf élaphe des forêts pyrénéennes",
+    "la-marmotte": "la marmotte des pelouses d’altitude pyrénéennes",
+}
+assert set(SUJET) == {p["slug"] for p in PLAQUES}, "Phrase de présentation manquante pour une plaque"
+
+
+def phrase_plaque(p):
+    """Phrase de réponse directe sous le titre de la fiche, reprise telle quelle dans la description du JSON-LD."""
+    return ("Plaque de décoration murale en aluminium de 60 × 30 cm représentant {}, découpée au laser puis thermolaquée "
+            "en noir, gris ou doré.".format(SUJET[p["slug"]]))
+
+
+def jsonld_plaque(p):
+    url = URL_EN_LIGNE["produit-{}.html".format(p["slug"])]
+    rels = ["p/{}-{}-880.webp".format(p["slug"], f) for f, _, _ in FINITIONS if a_photo(p["slug"], f)]
+    if p["decor"]:
+        rels.append(p["decor"])
+    for rel in rels:
+        assert os.path.exists(os.path.join(MAQUETTE, "assets", "img", rel)), "Image du JSON-LD manquante : " + rel
+    produit = {
+        "@type": "Product", "@id": url + "#produit", "name": "{}, plaque murale en aluminium".format(p["nom"]),
+        "description": phrase_plaque(p), "url": url, "image": [IMG_EN_LIGNE + r for r in rels],
+        "brand": {"@id": ORG_ID}, "category": "Décoration murale", "material": "Aluminium thermolaqué",
+        "size": "60 × 30 cm", "depth": qv(2, "MMT"), "weight": qv(0.75, "KGM"),
+        "offers": {
+            "@type": "Offer", "url": url, "price": "{}.00".format(p["prix"]), "priceCurrency": "EUR",
+            # InStock : état déclaré aujourd’hui par WooCommerce sur le site actuel. Fabriqué à la commande : garder InStock
+            # (les plaques se commandent) et porter le délai de fabrication dans handlingTime, dans le ShippingService de
+            # l’entreprise, avec le même délai écrit sur les fiches. Jamais MadeToOrder, que Google ne prend pas en charge.
+            "availability": "https://schema.org/InStock", "itemCondition": "https://schema.org/NewCondition",
+            "seller": {"@id": ORG_ID},
+            # Le kit LED ne se vend qu’avec une plaque : une offre liée (addOn), jamais une offre autonome
+            "addOn": {"@type": "Offer", "name": "Kit LED collé au dos par l’atelier", "url": URL_EN_LIGNE["produit-led.html"],
+                      "price": "15.00", "priceCurrency": "EUR"},
+        },
+    }
+    # Pas d’aggregateRating ni de review : aucun avis n’est affiché (voir la neutralisation des avis en tête du fichier)
+    coll = COLLECTIONS[p["collection"]][0]
+    fil = fil_ld([("Accueil", "index.html"), ("Collection", "collection.html"),
+                  (coll, "collection.html#" + p["collection"]), (p["nom"], "produit-{}.html".format(p["slug"]))])
+    return graphe(produit, fil, ORG_REF)
 
 
 def fiche_plaque(p):
@@ -1381,6 +1581,7 @@ def fiche_plaque(p):
       <div class="achat__tete">
         <p class="cartel-ligne">{cartel}</p>
         <h1>{nom}</h1>
+        <p class="achat__phrase">{phrase}</p>
       </div>
       <p class="achat__prix"><strong data-prix-affiche>{prix_txt}</strong><span>TTC, TVA non applicable (art. 293 B du CGI)</span></p>
       <fieldset class="option choix-finition">
@@ -1399,9 +1600,12 @@ def fiche_plaque(p):
       {garanties}
       <dl class="caracteristiques">
         <div><dt>Format</dt><dd>60 × 30 cm, épaisseur 2 mm</dd></div>
+        <div><dt>Poids</dt><dd>0,75 kg</dd></div>
         <div><dt>Matière</dt><dd>Aluminium découpé au laser, thermolaqué</dd></div>
+        <div><dt>Finitions</dt><dd>Noir, gris ou doré, au même prix</dd></div>
+        <div><dt>Dessin</dt><dd>Illustrations de Maude Villatte et Lola Jacquet, issues du décor d’Aquensis (Bagnères-de-Bigorre). <a href="atelier.html#illustratrices">Les illustratrices</a></dd></div>
         <div><dt>Titre</dt><dd>Découpé en lettrage pochoir</dd></div>
-        <div><dt>Fixation</dt><dd>2 fixations adhésives 3M Command™ fournies, pose sans perçage</dd></div>
+        <div><dt>Fixation</dt><dd>2 fixations adhésives 3M Command™ fournies, pose sans perçage. <a href="installation.html">La pose pas à pas</a></dd></div>
         <div><dt>Usage</dt><dd>Plaque : intérieur et extérieur, sans restriction. Les fixations fournies sont prévues pour l’intérieur. Fixation conseillée dehors {ext}</dd></div>
         <div><dt>Fabrication</dt><dd>Découpe à Revel (31), thermolaquage à Bagnères-de-Bigorre (65)</dd></div>
       </dl>
@@ -1431,7 +1635,7 @@ def fiche_plaque(p):
   </div>
 </section>
 <div class="barre-achat-mobile"><div><strong>{nom}</strong><span data-prix-affiche>{prix_txt}</span></div><button type="button" class="btn" data-ajouter>Ajouter au panier</button></div>""".format(
-        cid=p["collection"], coll=coll, nom=e(p["nom"]), slug=slug, prix=p["prix"], data_img=data_img, scenes="".join(scenes),
+        cid=p["collection"], coll=coll, nom=e(p["nom"]), slug=slug, phrase=e(phrase_plaque(p)), prix=p["prix"], data_img=data_img, scenes="".join(scenes),
         vignettes="".join(vignettes), cartel=cartel(p), prix_txt=euros(p["prix"]), fin_nom=NOM_FIN[f0],
         radios="".join(radios), positions=positions, garanties=garanties(), noel=encart_noel(), ext=A_FOURNIR, securite_led=note("à fournir"),
         lab_lieu="L’animal" if faune else "Le lieu", lieu_texte=e(LIEU_TEXTE[slug]).replace("XIXe", "XIX<sup>e</sup>"), loc=localisateur(p),
@@ -1439,11 +1643,17 @@ def fiche_plaque(p):
     lieu, detail = p["cartel"]
     page("produit-{}.html".format(slug), "{}, plaque murale en aluminium · Terre Gravée".format(p["nom"]),
          "Plaque murale « {} » en aluminium découpé au laser et thermolaqué, 60 × 30 cm, en noir, gris ou doré. {} · {}. 65 € TTC.".format(p["nom"], lieu, detail),
-         contenu, actif="collection.html", jsonld=jsonld_produit(p, "{}p/{}-{}-880.webp".format(IMG, slug, f0)), classe="page-fiche")
+         contenu, actif="collection.html", jsonld=jsonld_plaque(p), classe="page-fiche")
+
+
+# Phrase de réponse directe en tête de la fiche du kit
+PHRASE_LED = ("Le kit LED transforme une plaque Terre Gravée en plaque rétroéclairée : un ruban LED RGB de 2 m, collé au dos "
+              "par l’atelier, avec télécommande et câble USB. En option à 15 € avec une plaque, il ne se vend pas seul.")
 
 
 def fiche_led():
-    p = PRODUITS["led"]
+    # Pas de Product ni d’offre autonome pour le kit : il ne s’achète pas seul. Son prix figure comme offre liée (addOn)
+    # dans le JSON-LD de chaque plaque ; cette page ne porte que son fil d’Ariane.
     vues = [("led-img0", "Plaque L’Ours rétroéclairée en bleu", "Bleu"), ("led-img1", "Plaque Le Pic du Midi rétroéclairée en vert", "Vert"),
             ("led-img2", "Ruban LED collé au dos d’une plaque", "Ruban"), ("led-img3", "Télécommande et boîtier du kit LED", "Commande")]
     scenes = "".join('<div data-scene="{}"{}>{}</div>'.format(k, "" if i == 0 else " hidden", img("led/" + k + ".webp", alt, cls="situation", eager="haute" if i == 0 else False))
@@ -1460,7 +1670,7 @@ def fiche_led():
       <div class="galerie__vignettes" role="group" aria-label="Vues du kit">{vignettes}</div>
     </div>
     <div class="achat">
-      <div class="achat__tete"><p class="cartel-ligne">Option d’une plaque</p><h1>Kit LED</h1></div>
+      <div class="achat__tete"><p class="cartel-ligne">Option d’une plaque</p><h1>Kit LED</h1><p class="achat__phrase">{phrase}</p></div>
       <p class="achat__prix"><strong>+ 15 €</strong><span>avec une plaque · TTC, TVA non applicable (art. 293 B du CGI)</span></p>
       <div class="encadre encadre--doux">
         <p><strong>Le kit s’ajoute en option sur la fiche de chaque plaque, + 15 €.</strong> Il ne se vend pas seul.</p>
@@ -1487,13 +1697,39 @@ def fiche_led():
     <div class="offre"><p class="surtitre">Choisir une plaque</p>{assoc}</div>
   </div>
 </section>""".format(
-        scenes=scenes, vignettes=vignettes,
+        scenes=scenes, vignettes=vignettes, phrase=e(PHRASE_LED),
         # Règlement (UE) 2023/988, art. 19 : informations de sécurité du fabricant, pas encore envoyées
         securite=note("informations de sécurité à fournir"),
         assoc='<ul class="grille-produits grille-produits--deux">{}{}</ul>'.format(carte_produit(PRODUITS["le-pic-du-midi"]), carte_produit(PRODUITS["lours"])))
     page("produit-led.html", "Kit LED de rétroéclairage · Terre Gravée",
          "Kit LED RGB pour rétroéclairer une plaque Terre Gravée : ruban autocollant, télécommande, câble USB. En option à 15 € sur la fiche de chaque plaque, collé au dos par l’atelier.",
-         contenu, actif="collection.html", classe="page-fiche")
+         contenu, actif="collection.html", classe="page-fiche",
+         jsonld=graphe(fil_ld([("Accueil", "index.html"), ("Accessoires", "collection.html#accessoires"), ("Kit LED", "produit-led.html")])))
+
+
+PHRASE_CARTE = ("La carte cadeau Terre Gravée vaut une plaque murale au choix, à 65 €, valable 2 ans. "
+                "Elle est envoyée par e-mail ou à imprimer chez vous, sans frais de port.")
+
+
+def jsonld_carte_cadeau():
+    url = URL_EN_LIGNE["produit-carte-cadeau.html"]
+    produit = {
+        "@type": "Product", "@id": url + "#produit", "name": "Carte cadeau Terre Gravée", "description": PHRASE_CARTE,
+        "url": url, "image": [IMG_EN_LIGNE + "misc/carte-cadeau.webp"], "brand": {"@id": ORG_ID},
+        "offers": {
+            "@type": "Offer", "url": url, "price": "65.00", "priceCurrency": "EUR",
+            "availability": "https://schema.org/InStock", "itemCondition": "https://schema.org/NewCondition",
+            "seller": {"@id": ORG_ID},
+            # Exception à la livraison de l’entreprise : envoi par e-mail, sans frais de port. Google exige aussi deliveryTime
+            # (ShippingDeliveryTime, handlingTime et transitTime en jours) : à ajouter seulement quand le délai d’envoi de
+            # l’e-mail sera écrit sur la fiche (à fournir par Romain), pour ne rien inventer
+            "shippingDetails": {"@type": "OfferShippingDetails",
+                                "shippingDestination": {"@type": "DefinedRegion", "addressCountry": "FR"},
+                                "shippingRate": {"@type": "MonetaryAmount", "value": 0, "currency": "EUR"}},
+        },
+    }
+    fil = fil_ld([("Accueil", "index.html"), ("Accessoires", "collection.html#accessoires"), ("Carte cadeau", "produit-carte-cadeau.html")])
+    return graphe(produit, fil, ORG_REF)
 
 
 def fiche_carte_cadeau():
@@ -1505,7 +1741,7 @@ def fiche_carte_cadeau():
       <div class="galerie__scene galerie__scene--photo"><div data-scene="carte">{visuel}</div></div>
     </div>
     <div class="achat">
-      <div class="achat__tete"><p class="cartel-ligne">Idée cadeau</p><h1>Carte cadeau</h1></div>
+      <div class="achat__tete"><p class="cartel-ligne">Idée cadeau</p><h1>Carte cadeau</h1><p class="achat__phrase">{phrase}</p></div>
       <p class="achat__prix"><strong data-prix-affiche>65 €</strong><span>TTC, TVA non applicable (art. 293 B du CGI)</span></p>
       <p>Elle vaut une plaque au choix, sur tous les modèles disponibles, même si le prix change. La personne qui la reçoit choisit le dessin et la finition. Elle est valable 2 ans à compter de l’achat. La livraison de la plaque reste à payer : 5 €{offre_court}.</p>
       <div class="quantite-achat">
@@ -1531,12 +1767,12 @@ def fiche_carte_cadeau():
   </div>
 </section>
 <div class="barre-achat-mobile"><div><strong>Carte cadeau</strong><span data-prix-affiche>65 €</span></div><button type="button" class="btn" data-ajouter>Ajouter au panier</button></div>""".format(
-        img=IMG + "misc/carte-cadeau.webp", visuel=img("misc/carte-cadeau.webp", "Carte cadeau Terre Gravée", cls="situation", eager="haute"),
+        img=IMG + "misc/carte-cadeau.webp", phrase=e(PHRASE_CARTE), visuel=img("misc/carte-cadeau.webp", "Carte cadeau Terre Gravée", cls="situation", eager="haute"),
         garanties=garanties(carte=True), noel=encart_noel(carte=True), offre_court=OFFRE_PAREN,
         assoc='<ul class="grille-produits grille-produits--deux">{}{}</ul>'.format(carte_produit(PRODUITS["le-pic-du-midi"]), carte_produit(PRODUITS["lisard"])))
     page("produit-carte-cadeau.html", "Carte cadeau · Terre Gravée",
          "Carte cadeau Terre Gravée : une plaque au choix du destinataire, valable 2 ans, envoyée par e-mail ou à imprimer. 65 €.",
-         contenu, actif="collection.html", classe="page-fiche")
+         contenu, actif="collection.html", classe="page-fiche", jsonld=jsonld_carte_cadeau())
 
 
 # ---------------------------------------------------------------------------
@@ -1591,10 +1827,23 @@ def atelier():
 <div class="wrap">
   <header class="entete-page">
     <p class="surtitre">L’atelier</p>
-    <h1>De la Bigorre à votre mur</h1>
+    <h1>Terre Gravée, de la Bigorre à votre mur</h1>
     <p class="chapo">Terre Gravée est la micro-entreprise de Romain Fourneaux, à Gerde, à côté de Bagnères-de-Bigorre. Les plaques reprennent les dessins de deux illustratrices, créés pour le décor d’Aquensis. La découpe se fait à Revel, le thermolaquage à Bagnères-de-Bigorre.</p>
     <nav class="sommaire-court" aria-label="Sur cette page"><a href="#origine">L’origine</a><a href="#fabrication">La fabrication</a><a href="#illustratrices">Les illustratrices</a><a href="#avis">Les avis</a></nav>
   </header>
+  <aside class="encadre encadre--doux en-bref" aria-labelledby="titre-en-bref">
+    <h2 id="titre-en-bref">Terre Gravée en bref</h2>
+    <dl class="caracteristiques">
+      <div><dt>Activité</dt><dd>Plaques murales en aluminium découpé au laser et thermolaqué : paysages, patrimoine et faune des Hautes-Pyrénées</dd></div>
+      <div><dt>Entreprise</dt><dd>Romain Fourneaux EI, micro-entreprise · SIRET 941 234 270 00010</dd></div>
+      <div><dt>Adresse</dt><dd>16 rue du Pic du Midi, 65200 Gerde · pas d’accueil du public</dd></div>
+      <div><dt>Fabrication</dt><dd>Découpe à Revel (31), thermolaquage à Bagnères-de-Bigorre (65)</dd></div>
+      <div><dt>Dessins</dt><dd>Maude Villatte et Lola Jacquet, pour le décor d’Aquensis</dd></div>
+      <div><dt>Collection</dt><dd>12 modèles de 60 × 30 cm, 65 € la plaque, en noir, gris ou doré ; kit LED en option, +\u00a015 €</dd></div>
+      <div><dt>Livraison</dt><dd>{zone}, 5 € par commande · {expedition}</dd></div>
+      <div><dt>Contact</dt><dd><a href="mailto:contact@terregravee.fr">contact@terregravee.fr</a> · {tel}</dd></div>
+    </dl>
+  </aside>
 </div>
 <section class="section section--sauge" id="origine" aria-labelledby="titre-origine">
   <div class="wrap">
@@ -1667,10 +1916,15 @@ def atelier():
         photo=img("misc/aquensis.webp", "Le bassin d’Aquensis à Bagnères-de-Bigorre ; au-dessus, une rangée de panneaux en métal découpé, rétroéclairés : le décor d’origine",
                   "(max-width: 900px) 92vw, 680px", eager=True),
         rayon=RAYON + ".", ref=note("ville au centre à choisir", "decision"), etapes=etapes(detail=True),
+        zone=ZONE_LIVRAISON, expedition=EXPEDITION.lower(), tel=TELEPHONE,
         planche=planche("Planche de dix-sept dessins inédits : la Vierge du Bédat, la brèche de Roland, l’iris, le gypaète barbu…"))
     page("atelier.html", "L’atelier, l’origine et la fabrication · Terre Gravée",
          "L’histoire de Terre Gravée, née du décor conçu pour Aquensis à Bagnères-de-Bigorre ; la fabrication de Revel à Bagnères ; les illustratrices ; la politique des avis.",
-         contenu, actif="atelier.html", classe="page-atelier")
+         contenu, actif="atelier.html", classe="page-atelier",
+         jsonld=graphe({"@type": "AboutPage", "@id": URL_EN_LIGNE["atelier.html"] + "#page", "url": URL_EN_LIGNE["atelier.html"],
+                        "name": "L’atelier, l’origine et la fabrication", "inLanguage": "fr-FR", "mainEntity": {"@id": ORG_ID}},
+                       # Le slogan n’est écrit que sur l’accueil : on ne le balise pas ici
+                       {k: v for k, v in ORGANISATION.items() if k != "slogan"}))
 
 
 # ---------------------------------------------------------------------------
@@ -1772,6 +2026,16 @@ def sur_mesure():
 # ---------------------------------------------------------------------------
 
 def installation():
+    faq_visible, faq_ld = faq([
+        # La fixation conseillée dehors attend une réponse : paragraphe à part, hors du FAQPage tant qu’il porte un marqueur
+        ("La plaque peut-elle aller en extérieur ?",
+         "<p>Oui, sans restriction. L’aluminium thermolaqué convient dehors comme dedans.</p><p>Les fixations adhésives fournies sont prévues pour l’intérieur.</p>"
+         "<p>Fixation conseillée en extérieur {}</p>".format(A_FOURNIR)),
+        ("Le kit LED est-il nécessaire ?", "<p>Non, c’est une option à cocher sur la fiche de la plaque. La plaque se pose seule avec les deux fixations fournies.</p>"),
+        ("Le kit LED peut-il aller dehors ?", "<p>Oui, à l’abri de la pluie.</p>"),
+        ("Faut-il un chargeur ?", "<p>Le kit est livré avec son câble USB, sans chargeur. Branchez-le sur un chargeur USB ou sur un port USB.</p>"),
+        ("Puis-je utiliser un autre ruban LED ?", "<p>Oui. Les plaques sont compatibles avec la plupart des bandes LED du marché.</p>"),
+    ])
     contenu = """
 <div class="wrap">
   <header class="entete-page">
@@ -1824,18 +2088,12 @@ def installation():
 <section class="section">
   <div class="wrap">
     <div class="entete-section"><p class="surtitre">Questions fréquentes</p><h2>Avant de poser</h2></div>
-    <div class="faq">
-      <details><summary>La plaque peut-elle aller en extérieur ?</summary><div><p>Oui, sans restriction. L’aluminium thermolaqué convient dehors comme dedans.</p><p>Les fixations adhésives fournies sont prévues pour l’intérieur. Fixation conseillée en extérieur {fournir}</p></div></details>
-      <details><summary>Le kit LED est-il nécessaire ?</summary><div><p>Non, c’est une option à cocher sur la fiche de la plaque. La plaque se pose seule avec les deux fixations fournies.</p></div></details>
-      <details><summary>Le kit LED peut-il aller dehors ?</summary><div><p>Oui, à l’abri de la pluie.</p></div></details>
-      <details><summary>Faut-il un chargeur ?</summary><div><p>Le kit est livré avec son câble USB, sans chargeur. Branchez-le sur un chargeur USB ou sur un port USB.</p></div></details>
-      <details><summary>Puis-je utiliser un autre ruban LED ?</summary><div><p>Oui. Les plaques sont compatibles avec la plupart des bandes LED du marché.</p></div></details>
-    </div>
+    {faq}
   </div>
 </section>""".format(
         pic=plaque(PRODUITS["le-pic-du-midi"], "gris", "(max-width: 900px) 40vw, 240px", eager=True),
         dos=img("tuto/tuto-3.webp", "Dos de la plaque L’Isard avec le ruban LED collé sur le pourtour", eager=True),
-        kit=img("tuto/tuto-0.webp", "Contenu du kit LED : ruban, télécommande, câble USB"), fournir=A_FOURNIR,
+        kit=img("tuto/tuto-0.webp", "Contenu du kit LED : ruban, télécommande, câble USB"), faq=faq_visible,
         t2=img("tuto/tuto-2.webp", "Décollement progressif de la bande adhésive du ruban"),
         t4=img("tuto/tuto-4.webp", "Ruban LED formant un arrondi dans un angle"),
         t5=img("tuto/tuto-5.webp", "Découpe du ruban LED sur une zone de coupe"),
@@ -1843,14 +2101,43 @@ def installation():
         t7=img("tuto/tuto-7.webp", "Télécommande du kit LED"))
     page("installation.html", "Installation et kit LED · Terre Gravée",
          "Poser une plaque Terre Gravée sans perçage avec les fixations 3M Command fournies, et le kit LED, collé au dos par l’atelier : contenu, usage et notice pour le reposer.",
-         contenu, classe="page-installation")
+         contenu, classe="page-installation", jsonld=graphe(faq_ld))
 
 
 # ---------------------------------------------------------------------------
 # Contact, livraison, rétractation
 # ---------------------------------------------------------------------------
 
+RETOUR = "Terre Gravée, 16 rue du Pic du Midi, 65200 Gerde"
+
+
 def contact():
+    # Les paragraphes qui attendent une information (délai de transport, tarif par mode, médiateur) et les mentions datées
+    # de Noël restent visibles mais n’entrent pas dans le FAQPage (voir texte_brut).
+    faq_visible, faq_ld = faq([
+        ("Quand vais-je recevoir ma plaque ?",
+         "<p>{} : c’est le temps de préparation avant l’envoi. Les plaques partent de Bagnères-de-Bigorre.</p><p>Délai maximal de livraison : {}</p>{}".format(
+             EXPEDITION, A_FOURNIR, selon("neutre avant pendant", NOEL + " " + note("à revoir avec le délai de transport"), "p"))),
+        ("Où livrez-vous, et comment ?",
+         "<p>En {}. Trois modes au choix : Colissimo en point retrait, Mondial Relay en point relais, ou Chronopost. Pas de retrait sur place à Gerde.</p>".format(ZONE_LIVRAISON)),
+        ("Combien coûte la livraison ?",
+         "<p>5 € par commande, quel que soit le nombre d’articles. La carte cadeau seule, envoyée par e-mail, n’a pas de frais de port. "
+         "Le montant s’affiche dans le panier, avant la validation.</p><p>Même tarif pour les trois modes de livraison {}</p>{}".format(
+             note("tarif par mode à confirmer", "decision"),
+             selon("neutre avant pendant", "{}, et {} {} {} (offre de Noël).".format(OFFRE, GOODIES, GOODIES_NOTE, DATES_NOEL), "p"))),
+        ("Puis-je changer d’avis ?",
+         "<p>Oui. Vous avez 14 jours après réception pour vous rétracter, comme la loi le prévoit. Les frais de retour restent à votre charge et les pièces personnalisées sont exclues. "
+         "Adresse de retour : {}. <a href=\"#retractation\">Renoncer au contrat ici</a></p>".format(RETOUR)),
+        ("Ma plaque est arrivée abîmée, que faire ?",
+         "<p>Envoyez une photo et une description par e-mail. Vous choisissez : une nouvelle plaque, sans frais, ou le remboursement. "
+         "Toutes les plaques bénéficient aussi des garanties légales de conformité et des vices cachés.</p>"),
+        ("Quels moyens de paiement ?", "<p>Carte bancaire (Stripe), PayPal, Apple Pay et Google Pay.</p>"),
+        ("Comment fonctionne la carte cadeau ?",
+         "<p>Elle vaut une plaque au choix, sur tous les modèles disponibles, même si le prix change. Elle est valable 2 ans à compter de l’achat, envoyée par e-mail ou à imprimer. "
+         "La livraison de la plaque reste à payer : 5 €{}.</p>".format(OFFRE_PAREN)),
+        ("Un désaccord avec l’atelier ?",
+         "<p>Écrivez d’abord à contact@terregravee.fr. Si le désaccord persiste, vous pouvez saisir gratuitement le médiateur de la consommation : {}</p>".format(MEDIATEUR)),
+    ], ouvrir_premier=True)
     contenu = """
 <div class="wrap">
   <header class="entete-page">
@@ -1910,24 +2197,12 @@ def contact():
 <section class="section" id="livraison" aria-labelledby="titre-faq">
   <div class="wrap">
     <div class="entete-section"><p class="surtitre">Livraison, retours, paiement</p><h2 id="titre-faq">Questions fréquentes</h2></div>
-    <div class="faq">
-      <details open><summary>Quand vais-je recevoir ma plaque ?</summary><div><p>{expedition} : c’est le temps de préparation avant l’envoi. Les plaques partent de Bagnères-de-Bigorre. Délai maximal de livraison : {delai}</p>{noel}</div></details>
-      <details><summary>Où livrez-vous, et comment ?</summary><div><p>En {zone}. Trois modes au choix : Colissimo en point retrait, Mondial Relay en point relais, ou Chronopost. Pas de retrait sur place à Gerde.</p></div></details>
-      <details><summary>Combien coûte la livraison ?</summary><div><p>5 € par commande, quel que soit le nombre d’articles et le mode choisi {tarif}. La carte cadeau seule, envoyée par e-mail, n’a pas de frais de port. Le montant s’affiche dans le panier, avant la validation.</p>{offre}</div></details>
-      <details><summary>Puis-je changer d’avis ?</summary><div><p>Oui. Vous avez 14 jours après réception pour vous rétracter, comme la loi le prévoit. Les frais de retour restent à votre charge et les pièces personnalisées sont exclues. Adresse de retour : {retour}. <a href="#retractation">Renoncer au contrat ici</a></p></div></details>
-      <details><summary>Ma plaque est arrivée abîmée, que faire ?</summary><div><p>Envoyez une photo et une description par e-mail. Vous choisissez : une nouvelle plaque, sans frais, ou le remboursement. Toutes les plaques bénéficient aussi des garanties légales de conformité et des vices cachés.</p></div></details>
-      <details><summary>Quels moyens de paiement ?</summary><div><p>Carte bancaire (Stripe), PayPal, Apple Pay et Google Pay.</p></div></details>
-      <details><summary>Comment fonctionne la carte cadeau ?</summary><div><p>Elle vaut une plaque au choix, sur tous les modèles disponibles, même si le prix change. Elle est valable 2 ans à compter de l’achat, envoyée par e-mail ou à imprimer. La livraison de la plaque reste à payer : 5 €{offre_court}.</p></div></details>
-      <details><summary>Un désaccord avec l’atelier ?</summary><div><p>Écrivez d’abord à contact@terregravee.fr. Si le désaccord persiste, vous pouvez saisir gratuitement le médiateur de la consommation : {mediateur}</p></div></details>
-    </div>
+    {faq}
   </div>
-</section>""".format(tel=TELEPHONE, expedition=EXPEDITION, delai=A_FOURNIR, noel=selon("neutre avant pendant", NOEL + " " + note("à revoir avec le délai de transport"), "p"),
-                     zone=ZONE_LIVRAISON, offre=selon("neutre avant pendant", "{}, et {} {} {} (offre de Noël).".format(OFFRE, GOODIES, GOODIES_NOTE, DATES_NOEL), "p"), offre_court=OFFRE_PAREN,
-                     tarif=note("tarif par mode à confirmer", "decision"),
-                     retour="Terre Gravée, 16 rue du Pic du Midi, 65200 Gerde", mediateur=MEDIATEUR)
+</section>""".format(tel=TELEPHONE, faq=faq_visible, retour=RETOUR)
     page("contact.html", "Contact, livraison et rétractation · Terre Gravée",
          "Écrire à Terre Gravée : contact@terregravee.fr. Livraison en France métropolitaine (hors Corse), expédition sous 2 à 4 jours ouvrés, paiement, formulaire « Renoncer au contrat ici ».",
-         contenu, actif="contact.html", classe="page-contact")
+         contenu, actif="contact.html", classe="page-contact", jsonld=graphe(faq_ld, ORG_POLITIQUES))
 
 
 # ---------------------------------------------------------------------------
@@ -2139,6 +2414,9 @@ A_FOURNIR_LISTE = [
     "Des photos réelles de la fabrication : découpe à Revel, thermolaquage, emballage.",
     "L’adresse que contient le QR code posé à Aquensis (image du dossier Marketing du Drive).",
     "Le dessin du Jardin Massey.",
+    "Les plaques sont-elles fabriquées à la commande ? Si oui, le délai de fabrication, à écrire sur les fiches et dans le délai de préparation des données structurées ; la disponibilité reste « en stock » (InStock), seule valeur reconnue par Google pour un produit qui se commande.",
+    "Le délai d’envoi de l’e-mail de la carte cadeau (par exemple « dès la commande ») : à écrire sur sa fiche, puis à baliser (deliveryTime, que Google exige pour retenir la livraison gratuite de la carte).",
+    "Les références (sku) des produits, si vous en voulez : elles sont vides dans WooCommerce, la maquette n’en invente pas.",
     "À vérifier sur Légifrance : le décret n° 2026-3 du 5 janvier 2026 (fonction de rétractation) et le plafond de l’amende pour une personne physique.",
 ]
 
@@ -2147,6 +2425,7 @@ A_VALIDER_LISTE = [
     "Les outils de mesure d’audience (votre réponse : « je ne sais pas »). Recommandation : une mesure d’audience exemptée de consentement, réglée selon les conditions de la CNIL, sans bandeau ; ou Google Analytics, avec un bandeau de consentement.",
     "Le tarif de 5 € pour les trois modes de livraison (Colissimo, Mondial Relay, Chronopost) : hypothèse de la maquette.",
     "La barre d’achat collante sur mobile, à mesurer.",
+    "Les robots d’entraînement des IA (GPTBot, ClaudeBot…) : autorisés dans le robots.txt de la maquette ; à bloquer si les illustratrices le demandent (voir « Être trouvé par les recherches IA »). Réserve pour Google-Extended : le bloquer ne touche ni Google Search ni les AI Overviews, mais l’application Gemini ne pourra plus s’appuyer sur vos pages.",
 ]
 
 # Résumé court des réponses au questionnaire du 31 octobre 2026 (section « À fournir » des notes)
@@ -2164,6 +2443,302 @@ RECU_31_OCTOBRE = [
     "Sur mesure : 1 à 2 mois après validation du devis, pas de prix affiché, acompte de 30 %, aluminium brut proposé. Bientôt : La Transhumance, Le Jardin Massey et les grands formats (60 × 120 cm, 150 €), sans date. Le Casque du Lhéris n’est pas annoncé.",
     "Lettre : une par trimestre au plus, outil pas encore choisi. Données des clients : hors prestataires techniques, seul le transporteur voit les coordonnées ; la politique de confidentialité devra aussi citer les prestataires de paiement (Stripe, PayPal), l’hébergeur et l’outil de la lettre (RGPD, art. 13) ; durées de conservation validées (factures 10 ans, autres données de commande 5 ans, clients et prospects 3 ans, cookies de mesure 13 mois au plus, choix du bandeau gardé 6 mois), à reprendre dans la politique de confidentialité du site réel.",
 ]
+
+
+# ---------------------------------------------------------------------------
+# Être trouvé par les recherches IA (1er novembre 2026) : audit du site en ligne, plan d’action pour Romain,
+# fichiers de production. Sources : documentation des moteurs d’abord, études ensuite.
+# ---------------------------------------------------------------------------
+G_IA = ("https://developers.google.com/search/docs/appearance/ai-features", "Google, fonctions IA et votre site")
+G_REUSSIR = ("https://developers.google.com/search/blog/2025/05/succeeding-in-ai-search", "Google, réussir dans la recherche IA")
+G_REGLES = ("https://developers.google.com/search/docs/appearance/structured-data/sd-policies", "Google, règles des données structurées")
+G_AVIS = ("https://developers.google.com/search/docs/appearance/structured-data/review-snippet", "Google, avis")
+G_MARCHAND = ("https://developers.google.com/search/docs/appearance/structured-data/merchant-listing", "Google, fiches marchandes")
+G_ORG = ("https://developers.google.com/search/docs/appearance/structured-data/organization", "Google, Organization")
+G_SPAM = ("https://developers.google.com/search/docs/essentials/spam-policies", "Google, règles anti-spam")
+G_EXTRAIT = ("https://developers.google.com/search/docs/appearance/snippet", "Google, extraits")
+G_TEST = ("https://search.google.com/test/rich-results", "Test des résultats enrichis")
+G_MERCHANT = ("https://support.google.com/merchants/answer/9199328", "Merchant Center, fiches gratuites")
+G_WOO = ("https://woocommerce.com/documentation/products/extensions/google-for-woocommerce/", "Google for WooCommerce")
+G_GBP = ("https://support.google.com/business/answer/3038177", "Google, éligibilité des fiches d’établissement")
+G_ROBOTS = ("https://developers.google.com/search/docs/crawling-indexing/google-common-crawlers", "Google, robots (Google-Extended)")
+BING_IA = ("https://blogs.bing.com/webmaster/2026/2/Introducing-AI-Performance-in-Bing-Webmaster-Tools-Public-Preview/", "Bing, rapport AI Performance")
+INDEXNOW = ("https://www.indexnow.org/faq", "IndexNow")
+RM_INDEXNOW = ("https://rankmath.com/kb/how-to-use-indexnow/", "Rank Math, IndexNow")
+RM_LOCAL = ("https://rankmath.com/kb/local-seo/", "Rank Math, SEO local")
+OPENAI = ("https://developers.openai.com/api/docs/bots", "OpenAI, robots")
+OPENAI_FAQ = ("https://help.openai.com/en/articles/12627856-publishers-and-developers-faq", "OpenAI, FAQ éditeurs")
+ANTHROPIC = ("https://support.claude.com/en/articles/8896518-does-anthropic-crawl-data-from-the-web-and-how-can-site-owners-block-the-crawler", "Anthropic, robots")
+PERPLEXITY = ("https://docs.perplexity.ai/guides/bots", "Perplexity, robots")
+HOSTINGER = ("https://www.hostinger.com/support/how-to-allow-or-block-ai-crawlers-on-your-hostinger-website/", "Hostinger, robots IA")
+GEO = ("https://arxiv.org/abs/2311.09735", "étude GEO, Princeton, 2024")
+TORONTO = ("https://arxiv.org/abs/2509.08919", "étude de Toronto, 2025")
+AHREFS_MARQUE = ("https://ahrefs.com/blog/ai-overview-brand-correlation/", "Ahrefs, 2025")
+AHREFS_LLMS = ("https://ahrefs.com/blog/llmstxt-study/", "Ahrefs, llms.txt, 2026")
+VERCEL = ("https://vercel.com/blog/the-rise-of-the-ai-crawler", "Vercel, 2024")
+AUTEUR = ("https://wordpress.org/plugins/edit-author-slug/", "Edit Author Slug")
+L121 = ("https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000044563107", "Code de la consommation, art. L121-4")
+L121_2 = ("https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000044563114", "Code de la consommation, art. L121-2")
+HOSTINGER_CDN = ("https://www.hostinger.com/support/hostinger-cdn-search-engine-crawlers-and-seo/", "Hostinger, CDN et robots")
+
+PREUVES = {
+    "documenté": "écrit par le moteur lui-même (Google, Microsoft, OpenAI, Anthropic, Perplexity) ou par l’outil concerné",
+    "étude": "mesuré par des chercheurs, en laboratoire ou par corrélation : une tendance, pas une garantie",
+    "pratique": "consensus de praticiens, sans mesure publiée",
+    "mode": "promis par des vendeurs ou des articles, sans preuve",
+}
+
+IA_AUDIT = [
+    "<strong>Ce qui va bien.</strong> Le robots.txt ne bloque aucun robot. Avec un nom de robot imité, la page reçue est la même que pour un visiteur, "
+    "sauf pour Bingbot et GPTBot (erreurs 403 ou 429). C’est normal : le CDN de Hostinger refuse les faux robots (" + src(*HOSTINGER_CDN) + ") ; "
+    "à vérifier pour les vrais dans Search Console et Bing Webmaster Tools. "
+    "Tout le contenu se lit sans JavaScript, ce qui compte : les robots d’OpenAI, d’Anthropic et de Perplexity ne l’exécutent pas (" + src(*VERCEL) + "). "
+    "Les adresses, les redirections et les balises techniques sont propres.",
+    "<strong>Ce que les IA lisent et répètent, alors que c’est faux ou non publiable.</strong> Les 9 anciens avis, qui ne peuvent pas être présentés comme des avis de clients vérifiés, restent en ligne (étoiles sur l’accueil, la boutique et 8 fiches, "
+    "et note « 5 sur 5 » dans le code lu par Google) ; « Série limitée et numérotée » figure sur les 12 fiches, l’accueil, À propos, Créations et le fichier llms.txt ; "
+    "l’accueil affiche des compteurs inventés (24, 32, 50, 3) ; la page Contact renvoie vers les comptes Facebook, Instagram et X de Hostinger ; "
+    "les mentions légales disent encore « SIRET : [à compléter] ».",
+    "<strong>Ce qui manque.</strong> Le mot « Pyrénées » n’apparaît ni sur l’accueil, ni sur la boutique, ni sur À propos, ni sur la fiche du Pic du Midi. "
+    "Les fiches font 50 à 86 mots, sans poids, sans le nom des illustratrices, sans le lieu de fabrication ni la livraison : une IA n’y trouve rien à citer.",
+    "<strong>Ce qui reste invisible.</strong> Le site n’est pas inscrit dans Bing, qui alimente Copilot. Aucune page d’un autre site ne parle de Terre Gravée.",
+]
+
+# (priorité, titre, durée, étapes, niveau de preuve, sources)
+IA_ACTIONS = [
+    ("haute", "Supprimer les 9 anciens avis et couper les avis", "10 min", [
+        "Dans l’administration WordPress (Edge ou Chrome) : <b>Produits › Avis</b>. Cochez les 9 avis, « Actions groupées » › « Mettre à la corbeille », Appliquer, puis onglet Corbeille › « Vider la corbeille ».",
+        "<b>WooCommerce › Réglages › Produits › Général</b>, rubrique Avis : décochez « Activer les avis produit » tant qu’aucun vrai avis n’existe. Enregistrez.",
+        "<b>Apparence › Personnaliser › WooCommerce › Catalogue produits</b> › Tri par défaut : « Tri personnalisé » (et non plus « par note moyenne »).",
+        "<b>Extensions</b> : désactivez puis supprimez « Site Reviews » si elle ne sert plus.",
+    ], "documenté", [G_REGLES, G_AVIS, L121]),
+    ("haute", "Retirer « série limitée et numérotée » partout", "30 min", [
+        "<b>Produits</b> › chaque plaque › « Description courte du produit » : remplacez la ligne Série limitée par « Finitions noir, gris ou doré ».",
+        "Dans le bloc Rank Math de chaque fiche, « Modifier l’extrait » : réécrivez la description sans « limitée ». Exemple : « Plaque murale Pic du Midi en aluminium découpé au laser et thermolaqué, 60 × 30 cm, noir, gris ou doré. 65 €. »",
+        "<b>Pages › Accueil › Modifier avec Elementor</b> : supprimez la boîte « Serie limitée » et mettez un fait vrai à la place, par exemple « Dessins de Maude Villatte et Lola Jacquet, issus du décor d’Aquensis ». Même travail sur À propos et Créations spéciales.",
+        "Menu <b>Hostinger</b> (extension Hostinger Tools) : décochez l’option « LLMs.txt ». Si elle n’apparaît pas, supprimez <code>public_html/llms.txt</code> dans hPanel › Gestionnaire de fichiers. Ce fichier généré en 2025 répète les fausses allégations.",
+    ], "pratique", [G_IA, L121_2]),
+    ("haute", "Retirer les chiffres et les liens faux de l’accueil et de la page Contact", "15 min", [
+        "Accueil, dans Elementor : supprimez les 4 widgets « Compteur » (24, 32, 50, 3) et mettez à la place de simples boutons vers Paysages, Animaux et Patrimoine. <b>Produits › Catégories</b> : supprimez « Flore locale », vide.",
+        "Contact, dans Elementor : supprimez le widget « Icônes sociales » (comptes de Hostinger). Ajoutez le téléphone 06\u00a042\u00a057\u00a028\u00a010 et la mention « pas d’accueil du public ».",
+    ], "pratique", [G_ORG]),
+    ("haute", "Donner une identité complète et un seul nom", "20 min", [
+        "<b>Pages › Mentions légales</b> : « Romain Fourneaux EI, nom commercial Terre Gravée », SIRET 941 234 270 00010, 16 rue du Pic du Midi, 65200\u00a0Gerde (pas d’accueil du public), contact@terregravee.fr, 06\u00a042\u00a057\u00a028\u00a010, « TVA non applicable, art. 293 B du CGI ».",
+        "Remplacez « Terres Gravées » par « Terre Gravée » (CGV, fiches, carte cadeau, kit LED, page tuto). L’extension gratuite Better Search Replace, en « essai à blanc », liste les endroits sans rien modifier ; corrigez ensuite à la main.",
+        "<b>Apparence › Widgets</b>, pied de page : supprimez la liste des variantes du nom (« Terre Gravé, Terregrave… »), qui ressemble à du bourrage de mots-clés ; mettez l’adresse et le téléphone à la place.",
+    ], "pratique", [G_ORG, G_SPAM]),
+    ("haute", "Vider les caches et redemander le passage de Google", "10 min", [
+        "<b>LiteSpeed Cache › Boîte à outils</b> › « Purger tout », puis hPanel › Sites web › terregravee.fr › Performance › CDN › « Vider le cache ».",
+        "Ouvrez le Test des résultats enrichis de Google avec l’adresse de la fiche du Pic du Midi : plus aucune note (« aggregateRating ») ne doit apparaître.",
+        "<b>Google Search Console › Inspection de l’URL</b> › « Demander une indexation » pour l’accueil et les fiches corrigées (indexer = enregistrer la page dans Google).",
+    ], "documenté", [G_TEST, G_IA]),
+    ("haute", "S’inscrire dans Bing Webmaster Tools et activer IndexNow", "15 min", [
+        "Sur bing.com/webmasters, connectez-vous avec votre compte Google, choisissez « Importer depuis Google Search Console », puis terregravee.fr. Dans Sitemaps, vérifiez que <code>/sitemap_index.xml</code> est « Réussi ».",
+        "<b>Rank Math SEO › Tableau de bord</b> : activez « Instant Indexing ». IndexNow prévient Bing et d’autres moteurs à chaque modification d’une page (Google n’y participe pas). Dans ses réglages, cochez Produits et Pages, puis soumettez toutes les adresses une fois les corrections faites.",
+        "Chaque mois : rapport « AI Performance » de Bing Webmaster Tools, qui compte les citations de vos pages dans Copilot.",
+    ], "documenté", [BING_IA, INDEXNOW, RM_INDEXNOW]),
+    ("haute", "Ouvrir Google Merchant Center (fiches gratuites)", "45 min", [
+        "Sur merchants.google.com, créez un compte gratuit, sans Google Ads.",
+        "<b>Marketing › Google for WooCommerce</b> (ou Extensions › Ajouter › « Google for WooCommerce ») : reliez le compte, choisissez les fiches gratuites et synchronisez les produits.",
+        "Dans Merchant Center : livraison 5 € en France métropolitaine hors Corse, retours 14 jours aux frais du client. Pour exclure la Corse, créez une région par codes postaux (20xxx) si l’outil le permet pour la France ; sinon, la livraison affichée par Google inclura la Corse : gardez « hors Corse » écrit sur les fiches et dans les CGV. Pas de code-barres (GTIN) : indiquez qu’il n’en existe pas, puisque c’est votre propre fabrication.",
+        "Onglet Diagnostics : corrigez les produits refusés.",
+    ], "documenté", [G_IA, G_MERCHANT, G_WOO]),
+    ("haute", "Vérifier que rien ne bloque les robots de recherche", "10 min", [
+        "Les robots sont les programmes des moteurs qui lisent le site. Dans hPanel › Sites web › terregravee.fr › Performance › CDN (le réseau de copies du site chez Hostinger) › Manage › onglet Security : mode « Under Attack » désactivé (niveau Medium ou Low), et aucun blocage dans la liste des robots ni dans « AI audit » pour OAI-SearchBot, ChatGPT-User, Claude-SearchBot, Claude-User, PerplexityBot, Perplexity-User, Googlebot, Bingbot et Applebot.",
+        "<b>Search Console › Paramètres › Statistiques sur l’exploration</b> : pas de pics d’erreurs 403 ou 429 sur robots.txt. L’audit en a vu sur des requêtes qui imitaient Bingbot et GPTBot : le CDN refuse les robots imités (il vérifie leurs adresses IP), ce qui ne dit rien des vrais robots.",
+        "N’installez aucune extension « block AI bots ».",
+    ], "documenté", [HOSTINGER, HOSTINGER_CDN, OPENAI, ANTHROPIC, PERPLEXITY]),
+    ("moyenne", "Écrire des faits précis sur les fiches et l’accueil", "1 à 2 h", [
+        "<b>Produits</b> › chaque plaque › Description : un bloc « Fiche technique » visible, comme dans la maquette : aluminium de 2 mm découpé au laser (Revel, 31) et thermolaqué (Bagnères-de-Bigorre, 65), 60 × 30 cm, 0,75 kg, noir, gris ou doré, fixation adhésive sans perçage, kit LED en option (+ 15 €), dessins de Maude Villatte et Lola Jacquet issus du décor d’Aquensis, livraison 5 € en France métropolitaine hors Corse, expédition sous 2 à 4 jours ouvrés, rétractation 14 jours.",
+        "En tête de chaque fiche, une phrase qui dit ce que représente la plaque, par exemple : « Plaque de décoration murale en aluminium de 60 × 30 cm représentant le Pic du Midi de Bigorre (Hautes-Pyrénées)… ».",
+        "Accueil, sous le grand titre : « Plaques murales en aluminium découpé au laser, inspirées des paysages, du patrimoine et de la faune des Hautes-Pyrénées. 60 × 30 cm, 65 €. »",
+        "<b>Produits › Catégories</b> › Paysages, Animaux, Patrimoine : une description de 80 à 150 mots chacune.",
+        "Écrivez pour un client : jamais la même expression répétée dix fois.",
+    ], "étude", [GEO, G_REUSSIR]),
+    ("moyenne", "Compléter les données structurées avec Rank Math", "45 min", [
+        "Les données structurées sont une fiche d’identité codée dans la page : invisible pour le visiteur, lue par Google et les IA. Elles doivent dire exactement la même chose que la page.",
+        "<b>Rank Math SEO › Tableau de bord</b> : activez « SEO local ». Puis <b>Titres &amp; Méta › SEO local</b> : Entreprise ; nom Terre Gravée ; type Organization (pas LocalBusiness : pas d’accueil du public) ; logo carré d’au moins 112 px ; e-mail, téléphone, adresse ; aucune heure d’ouverture ; aucun réseau social.",
+        "<b>Titres &amp; Méta › Pages</b> › Type de schéma : « Aucun ». Puis, dans chaque page existante, bloc Rank Math › onglet Schéma : supprimez « Article » (l’accueil, Contact ou les CGV ne sont pas des articles).",
+        "<b>Produits › Marques</b> : créez « Terre Gravée » et attribuez-la à tous les produits ; Rank Math › Réglages généraux › WooCommerce › Marque : la taxonomie Marques. Sur chaque fiche, « Catégorie principale » : Paysages, Patrimoine ou Animaux, jamais « Meilleurs ventes ».",
+        "<b>Search Console › Paramètres › Livraison et retours</b> : 5 € par commande en France métropolitaine hors Corse (si la Corse ne peut pas être exclue, signalez-le ici comme une limite), préparation 2 à 4 jours ouvrés ; retours sous 14 jours, frais à la charge du client.",
+    ], "documenté", [G_ORG, G_MARCHAND, RM_LOCAL]),
+    ("moyenne", "Nettoyer les pages parasites, les liens cassés et les descriptions", "30 min", [
+        "Produit « AUTO-DRAFT » : Corbeille, puis <b>Rank Math › Redirections</b> : 301 de <code>/produits/tr/</code> vers <code>/produits/</code>. <b>Modèles › Éléments flottants</b> : supprimez « test 2 ».",
+        "Catégories « prod » et « best », page Newsletter : bloc Rank Math › Avancé › « Pas d’index ». À l’inverse, Mentions légales et CGV : décochez « Pas d’index », pour que l’identité et les conditions puissent être lues et citées.",
+        "CGV : livraison 5 € par commande en France métropolitaine hors Corse, adresse de retour à Gerde, lien vers https://terregravee.fr (et non terresgravees.fr).",
+        "Pied de page « Meilleures ventes » vers <code>/produits/</code> ; accueil : bouton « Montage facile » vers <code>/tuto/</code>, bouton LED vers <code>/produits/led/</code>.",
+        "Une description propre par page dans le bloc Rank Math, à la place de la phrase commune « Découvrez nos articles… ».",
+    ], "pratique", [G_EXTRAIT, G_MARCHAND]),
+    ("moyenne", "Retirer votre adresse Gmail de l’identifiant d’auteur", "10 min", [
+        "Installez l’extension « Edit Author Slug », puis <b>Utilisateurs › Profil</b> › Identifiant d’auteur : « romain-fourneaux ».",
+        "<b>Rank Math › Titres &amp; Méta › Auteurs</b> : désactivez les archives des auteurs.",
+    ], "pratique", [AUTEUR]),
+    ("moyenne", "Ajouter une FAQ visible sur la page Infos &amp; installation", "30 min", [
+        "En bas de <code>/tuto/</code>, une section « Questions fréquentes » : une dizaine de vraies questions au plus (livraison, délai, retours, kit LED, carte cadeau, extérieur), avec des réponses courtes. Reprenez celles de la maquette (Collection, Contact, Installation). Pas une page par question.",
+    ], "pratique", [BING_IA, G_SPAM]),
+    ("moyenne", "Obtenir de vraies mentions sur d’autres sites", "au fil des mois", [
+        "Demandez un lien vers terregravee.fr à Aquensis (d’où viennent les dessins), à Lola Jacquet (son site) et à Maude Villatte (Instagram), à l’office de tourisme de Bagnères-de-Bigorre, à des boutiques de produits locaux, à la presse locale (La Dépêche, La Semaine des Pyrénées).",
+        "Partout, exactement le même nom (Terre Gravée), la même adresse et le même e-mail.",
+    ], "étude", [TORONTO, AHREFS_MARQUE]),
+    ("moyenne", "Mesurer une fois par mois", "20 min", [
+        "<b>Search Console › Performances</b> : impressions et clics des fiches (les réponses IA de Google y sont comptées, sans être séparées).",
+        "<b>Bing Webmaster Tools › AI Performance</b> : citations par page dans Copilot.",
+        "Statistiques du site : visites venues de chatgpt.com, perplexity.ai, claude.ai, copilot.microsoft.com et gemini.google.com. ChatGPT ajoute <code>utm_source=chatgpt.com</code> à ses liens.",
+        "À la main : « plaque murale Pic du Midi », « cadeau Hautes-Pyrénées », « décoration murale montagne aluminium », « plaque rétroéclairée Pyrénées » dans ChatGPT, Perplexity, Claude et Google.",
+    ], "documenté", [G_IA, BING_IA, OPENAI_FAQ]),
+    ("basse", "Alléger les pages", "30 min", [
+        "<b>Apparence › Personnaliser › En-tête › Logo</b> : une version WebP de 600 px de large (l’actuel fait 391 Ko).",
+        "Une seule passerelle de paiement par carte : WooPayments ou WooCommerce Stripe Gateway, pas les deux. Vérifiez d’abord laquelle encaisse dans WooCommerce › Réglages › Paiements, puis testez le panier.",
+    ], "pratique", []),
+]
+
+IA_PAS_FAIRE = [
+    ("Faux avis, avis écrits depuis votre propre compte, avis achetés ou échangés.", [L121, G_REGLES]),
+    ("Texte caché aux visiteurs pour les robots (texte blanc sur blanc, blocs masqués).", [G_SPAM]),
+    ("Répéter des mots-clés : l’étude GEO ne mesure aucun gain, voire un léger recul sur sa mesure principale. Lister les variantes du nom relève du même bourrage, que Google classe comme spam.", [GEO, G_SPAM]),
+    ("Fabriquer des dizaines de pages de questions ou de textes générés en masse.", [G_SPAM]),
+    ("Payer un service « GEO » ou une extension qui promet d’apparaître dans ChatGPT ou Perplexity : aucun moteur ne vend ce raccourci. Leurs programmes marchands, sur candidature, s’abordent seulement par leurs pages officielles, plus tard.", []),
+    ("Acheter des liens, des articles sponsorisés déguisés ou des mentions.", [G_SPAM]),
+    ("Bloquer OAI-SearchBot, Claude-SearchBot, PerplexityBot, Googlebot ou Bingbot, ou installer une extension « block AI bots ».", [OPENAI, ANTHROPIC, PERPLEXITY]),
+    ("Ajouter « nosnippet » ou un « max-snippet » limitatif : Google pourrait moins reprendre vos pages, y compris dans ses réponses IA.", [G_EXTRAIT]),
+    ("Créer une fiche Google Business Profile : sans accueil du public ni déplacement chez le client, l’entreprise n’est pas éligible.", [G_GBP]),
+    ("Compter sur llms.txt : Google ne l’utilise pas, et 97 % des fichiers étudiés par Ahrefs n’ont reçu aucune visite de robot.", [G_IA, AHREFS_LLMS]),
+    ("Inventer un chiffre, une statistique, un label ou une série limitée.", [L121_2, L121]),
+]
+
+IA_MAQUETTE = [
+    "Données structurées sur chaque fiche : produit, prix, état neuf, disponibilité, matière, format, poids, kit LED en offre liée (il ne se vend pas seul) ; "
+    "l’entreprise (nom, nom légal, SIRET, adresse, téléphone) sur l’accueil et L’atelier ; retours sous 14 jours et livraison à 5 € sur la page Contact, qui les décrit ; fil d’Ariane ; "
+    "questions fréquentes (Collection, Contact, Installation). Aucune note, aucun avis. La construction s’arrête si un fait balisé (description, prix, kit LED, questions, "
+    "fil d’Ariane, identité, retours, livraison) n’est pas écrit dans le texte visible de la page, éléments masqués exclus.",
+    "Une phrase de réponse directe sous le titre de chaque fiche, le poids et les illustratrices dans les caractéristiques, une FAQ sur les plaques "
+    "dans la collection, l’encadré « Terre Gravée en bref » sur L’atelier, une présentation factuelle sur l’accueil.",
+    "Trois fichiers à déployer à la racine du site à la mise en ligne : <code>robots.txt</code>, <code>sitemap.xml</code> et <code>llms.txt</code> "
+    "(llms.txt : faible preuve, coût nul ; aucun grand moteur ne documente qu’il lit ce fichier, et Google écrit qu’il n’en a pas besoin ; il ne contient que des faits déjà visibles).",
+]
+
+IA_MISE_EN_LIGNE = [
+    "Retirer le « noindex » et le bandeau de maquette ; ajouter sur chaque page une balise canonical vers son adresse en ligne.",
+    "Garder les adresses actuelles (<code>/produits/&lt;modèle&gt;/</code>, <code>/propos/</code>, <code>/tuto/</code>, <code>/contact/</code>, <code>/creations/</code>) : "
+    "ce sont celles des données structurées et du plan du site (constante <code>URL_EN_LIGNE</code> de build.py). Sinon, une redirection 301 par ancienne adresse.",
+    "Servir les images sous <code>/assets/img/</code>, ou changer la constante <code>IMG_EN_LIGNE</code>.",
+    "Ne déployer que cette liste : les pages publiques (.html, dont qr.html), <code>assets/</code>, <code>robots.txt</code>, <code>sitemap.xml</code> et, si vous le voulez, <code>llms.txt</code>, à la racine. "
+    "Jamais <code>build.py</code>, <code>data/</code>, <code>README.md</code>, <code>notes.html</code>, <code>captures/</code> ni <code>__pycache__/</code>.",
+    "Ne déployer sitemap.xml et llms.txt qu’une fois la carte des lieux servie à sa nouvelle adresse, <code>/carte-des-lieux/</code> (aujourd’hui en 404). "
+    "Ne pas reprendre <code>/carte/</code>, que WordPress redirige vers la carte cadeau.",
+    "Livraison offerte de fin d’année : une fois les dates confirmées, ajouter dans la livraison balisée (<code>LIVRAISON_LD</code>) une seconde condition à 0 € "
+    "avec <code>seasonalOverride</code> (dates de début et de fin), sinon la page dira « offerte » et le balisage 5 €.",
+    "Texte de Noël : une seule variante dans le HTML, celle du jour (constante <code>ETAT_NOEL</code> de build.py pour une reconstruction quotidienne, "
+    "ou condition sur la date côté serveur). Sinon, un robot qui n’exécute pas JavaScript lit trois tarifs de livraison.",
+    "Déclarer le sitemap dans Search Console et Bing Webmaster Tools, puis passer trois fiches dans le Test des résultats enrichis.",
+]
+
+
+def sources_html(liste_sources):
+    return ", ".join(src(u, l) for u, l in liste_sources)
+
+
+def bloc_ia():
+    niveaux = {"haute": "urgent", "moyenne": "important", "basse": "confort"}
+    audit = "".join("<li>{}</li>".format(x) for x in IA_AUDIT)
+    actions = []
+    for prio, titre, duree, pas, preuve, sources in IA_ACTIONS:
+        actions.append("""<li><h3><span class="niveau niveau--{cls}">priorité {prio}</span>{titre} <span class="attenue">· {duree}</span></h3>
+  <div class="ia-corps"><ol class="ia-pas">{pas}</ol><p class="ia-preuve"><strong>Preuve : {preuve}.</strong>{sources}</p></div></li>""".format(
+            cls=niveaux[prio], prio=prio, titre=titre, duree=duree, pas="".join("<li>{}</li>".format(x) for x in pas), preuve=preuve,
+            sources=" Sources : " + sources_html(sources) + "." if sources else ""))
+    pas_faire = "".join("<li>{}{}</li>".format(t, " (" + sources_html(s) + ")" if s else "") for t, s in IA_PAS_FAIRE)
+    legende = "".join("<li><strong>{}</strong> : {}.</li>".format(k.capitalize(), v) for k, v in PREUVES.items())
+    return """<section class="note-bloc" id="n-ia" aria-labelledby="t-ia">
+        <h2 id="t-ia">Être trouvé par les recherches IA</h2>
+        <div class="texte">
+          <p>Objectif : que ChatGPT, Perplexity, Claude, Copilot, Gemini et les réponses IA de Google (AI Overviews, AI Mode) trouvent, comprennent et citent Terre Gravée. Aucun moteur ne demande de format spécial. Google l’écrit noir sur blanc : une page indexée, c’est-à-dire enregistrée par Google, peut être reprise dans ses réponses IA, sans fichier « pour l’IA » ni balisage spécial ({g_ia}). Ces moteurs lisent ce qui est écrit sur vos pages, y compris ce qui est faux. D’abord corriger, ensuite enrichir.</p>
+        </div>
+        <h3>Niveaux de preuve</h3>
+        <ul class="liste-simple">{legende}</ul>
+        <h3>Ce que montre l’audit du site en ligne (1<sup>er</sup> novembre 2026)</h3>
+        <ul class="liste-simple">{audit}</ul>
+        <h3>Les actions, dans l’ordre</h3>
+        <p class="attenue">Dans l’administration WordPress et les outils gratuits de Google et Microsoft, depuis votre navigateur sous Windows. Comptez une demi-journée pour les actions de priorité haute.</p>
+        <ol class="constats">{actions}</ol>
+        <h3>Ce qu’il ne faut pas faire</h3>
+        <ul class="liste-simple">{pas_faire}</ul>
+        <h3>Les robots d’entraînement : autorisés, sauf avis contraire</h3>
+        <div class="texte">
+          <p>GPTBot (OpenAI), ClaudeBot (Anthropic), Applebot-Extended et CCBot collectent des pages pour entraîner les modèles. Bloquer GPTBot, ClaudeBot, Applebot-Extended ou CCBot ne change rien à la recherche ({openai}, {anthropic}). Google-Extended est à part : il règle l’entraînement des modèles Gemini, mais aussi l’usage des pages pour appuyer les réponses de l’application Gemini. Le bloquer ne touche ni Google Search ni les AI Overviews, mais l’application Gemini ne pourra plus s’appuyer sur vos pages ({g_robots}). Le robots.txt de la maquette les autorise, comme le site actuel : vos textes sont des textes de vente, sans valeur à protéger, et un modèle qui a lu le site peut connaître Terre Gravée même sans recherche (aucune preuve publiée de cet effet). Une réserve : les dessins appartiennent à Maude Villatte et Lola Jacquet. Si elles ne veulent pas qu’ils servent à entraîner des IA, retirez le « # » devant les lignes prévues dans robots.txt : la recherche n’en souffrira pas. Google-Extended a son propre bloc, à décommenter seulement en acceptant de sortir des réponses de l’application Gemini.</p>
+        </div>
+        <h3>Déjà fait dans la maquette</h3>
+        <ul class="liste-simple">{maquette}</ul>
+        <h3>À la mise en ligne de la maquette</h3>
+        <ul class="liste-simple">{mise_en_ligne}</ul>
+      </section>""".format(g_ia=src(*G_IA), legende=legende, audit=audit, actions="".join(actions), pas_faire=pas_faire,
+                           openai=src(*OPENAI), anthropic=src(*ANTHROPIC), g_robots=src(*G_ROBOTS),
+                           maquette="".join("<li>{}</li>".format(x) for x in IA_MAQUETTE),
+                           mise_en_ligne="".join("<li>{}</li>".format(x) for x in IA_MISE_EN_LIGNE))
+
+
+# --- Fichiers de production, écrits dans le dossier de la maquette, à déployer à la racine du site ---
+PAGES_PUBLIQUES = (["index.html", "collection.html", "carte.html", "atelier.html", "sur-mesure.html", "installation.html", "contact.html"]
+                   + ["produit-{}.html".format(p["slug"]) for p in CATALOGUE])
+ROBOTS_RECHERCHE = ["Googlebot", "Bingbot", "Applebot", "OAI-SearchBot", "ChatGPT-User", "Claude-SearchBot", "Claude-User",
+                    "PerplexityBot", "Perplexity-User"]
+# Robots d’entraînement. Google-Extended est à part : il règle aussi l’appui des réponses de l’application Gemini.
+ROBOTS_ENTRAINEMENT = ["GPTBot", "ClaudeBot", "Applebot-Extended", "CCBot"]
+
+
+def fichiers_production():
+    entete = "À déployer à la racine de terregravee.fr à la mise en ligne. Fichier généré par build.py (maquette v4) : ne pas le modifier à la main."
+    robots = ["# " + entete,
+              "#",
+              "# Robots de recherche : autorisés. C’est d’eux que dépend la présence dans Google (et ses réponses IA), Bing et Copilot,",
+              "# Apple, la recherche de ChatGPT, Claude et Perplexity. ChatGPT-User, Claude-User et Perplexity-User visitent une page",
+              "# à la demande d’un utilisateur."]
+    robots += ["User-agent: " + r for r in ROBOTS_RECHERCHE]
+    # Lignes à décommenter écrites sans espace après le « # » : une ligne qui commence par une espace n’est pas lue
+    # par tous les robots (page Hostinger citée dans les notes)
+    bloc_entrainement = ["#User-agent: " + r for r in ROBOTS_ENTRAINEMENT] + ["#Disallow: /"]
+    robots += ["Allow: /", "",
+               "# Robots d’entraînement des modèles : autorisés. Les bloquer ne change rien à la recherche.",
+               "# Pour refuser l’entraînement, retirer le « # » au début des {} lignes suivantes.".format(len(bloc_entrainement))]
+    robots += bloc_entrainement
+    robots += ["",
+               "# Google-Extended : autorisé. Le bloquer ne touche ni Google Search ni les AI Overviews, mais l’application",
+               "# Gemini ne pourra plus s’appuyer sur ces pages. Pour le bloquer, retirer le « # » au début des 2 lignes suivantes.",
+               "#User-agent: Google-Extended", "#Disallow: /"]
+    robots += ["", "# Tous les autres robots", "User-agent: *", "Allow: /", "",
+               "Sitemap: {}/sitemap.xml".format(SITE), ""]
+    urls = "".join("  <url><loc>{}</loc><lastmod>{}</lastmod></url>\n".format(URL_EN_LIGNE[f], DATE_CONTENU) for f in PAGES_PUBLIQUES)
+    sitemap = ('<?xml version="1.0" encoding="UTF-8"?>\n<!-- {} Pages publiques seulement : ni notes.html, ni qr.html '
+               '(son adresse est celle du QR code, à fournir). -->\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{}</urlset>\n').format(entete, urls)
+    plaques = "\n".join("- [{}]({}): {}".format(p["nom"], p["url_actuelle"], " · ".join(p["cartel"])) for p in PLAQUES)
+    # llms.txt commence directement par le titre H1 (format llmstxt.org), sans commentaire interne : la consigne de
+    # déploiement et le niveau de preuve restent dans notes.html et le README
+    llms = """# Terre Gravée
+
+> Plaques murales en aluminium découpé au laser et thermolaqué, 60 × 30 cm, 65 €, inspirées des paysages, du patrimoine et de la faune des Hautes-Pyrénées. Micro-entreprise de Romain Fourneaux EI à Gerde (65), sans accueil du public.
+
+- 12 modèles, en noir, gris ou doré, au même prix ; 0,75 kg, 2 mm d’épaisseur ; pose sans perçage.
+- Dessins de Maude Villatte et Lola Jacquet, issus du décor d’Aquensis, centre thermal de Bagnères-de-Bigorre.
+- Découpe à Revel (31), thermolaquage à Bagnères-de-Bigorre (65).
+- Kit LED en option : + 15 € avec une plaque, collé au dos par l’atelier ; il ne se vend pas seul.
+- Carte cadeau : 65 €, une plaque au choix, valable 2 ans, envoyée par e-mail.
+- Livraison en {zone}, 5 € par commande, {expedition} ; rétractation sous 14 jours, retour à la charge du client.
+- Contact : contact@terregravee.fr, 06 42 57 28 10.
+
+## Pages
+- [La collection]({collection}): les 12 plaques, le kit LED, la carte cadeau et les questions fréquentes
+- [La carte des lieux]({carte}): les lieux des plaques dans les Hautes-Pyrénées
+- [L’atelier]({atelier}): l’origine à Aquensis, la fabrication, les illustratrices
+- [Installation et kit LED]({installation}): pose sans perçage, notice du kit
+- [Contact, livraison et rétractation]({contact}): coordonnées, livraison, retours, paiement
+
+## Plaques
+{plaques}
+""".format(zone=ZONE_LIVRAISON, expedition=EXPEDITION.lower(), collection=URL_EN_LIGNE["collection.html"],
+           carte=URL_EN_LIGNE["carte.html"], atelier=URL_EN_LIGNE["atelier.html"], installation=URL_EN_LIGNE["installation.html"],
+           contact=URL_EN_LIGNE["contact.html"], plaques=plaques)
+    for nom, texte in (("robots.txt", "\n".join(robots)), ("sitemap.xml", sitemap), ("llms.txt", llms)):
+        with open(os.path.join(ICI, nom), "w", encoding="utf-8") as f:
+            f.write(texte)
 
 
 def notes():
@@ -2196,6 +2771,7 @@ def notes():
       <ol>
         <li><a href="#n-version">La version 4 en bref</a></li>
         <li><a href="#n-constats">À corriger sur le site actuel</a></li>
+        <li><a href="#n-ia">Être trouvé par les recherches IA</a></li>
         <li><a href="#n-techniques">Les techniques retenues</a></li>
         <li><a href="#n-palette">Votre palette</a></li>
         <li><a href="#n-idees">Vos idées, mises en œuvre</a></li>
@@ -2222,6 +2798,7 @@ def notes():
         <p class="attenue">Relevé du 28 octobre 2026 sur terregravee.fr, complété le 31 octobre avec vos réponses, classé par urgence. La plupart des points urgents se corrigent en quelques minutes depuis WordPress ; le médiateur demande une adhésion.</p>
         <ol class="constats">{constats}</ol>
       </section>
+      {ia}
       <section class="note-bloc" id="n-techniques" aria-labelledby="t-techniques">
         <h2 id="t-techniques">Les techniques retenues</h2>
         <p class="attenue">Niveau de preuve : fort pour Baymard, NN/g et les articles académiques ; moyen pour les sondages. Avec le trafic d’une micro-entreprise, préférer les comparaisons avant/après sur des périodes comparables aux tests A/B.</p>
@@ -2277,7 +2854,7 @@ def notes():
       </section>
     </div>
   </div>
-</div>""".format(constats=constats, techs=techs, palette=palette, lignes="".join(lignes), idees=idees, legal=legal,
+</div>""".format(ia=bloc_ia(), constats=constats, techs=techs, palette=palette, lignes="".join(lignes), idees=idees, legal=legal,
                  f=A_FOURNIR, c=A_CONFIRMER, ville=note("ville au centre à choisir", "decision"), tarif=note("tarif par mode à confirmer", "decision"), recu="".join("<li>{}</li>".format(e(x)) for x in RECU_31_OCTOBRE),
                  a_fournir="".join("<li>{}</li>".format(e(x)) for x in A_FOURNIR_LISTE),
                  a_valider="".join("<li>{}</li>".format(e(x)) for x in A_VALIDER_LISTE))
@@ -2317,6 +2894,109 @@ def verifier_liens():
                     assert not interdits.search(f.read()), "Motif interdit trouvé dans " + fichier
 
 
+class TexteVisible(HTMLParser):
+    """Texte qu’un visiteur voit sans JavaScript : sans script, style ni template, et sans les éléments masqués
+    (attribut hidden ou aria-hidden="true", par exemple les variantes de Noël qui ne sont pas celles du jour)."""
+    VIDES = {"area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"}
+
+    def __init__(self):
+        HTMLParser.__init__(self, convert_charrefs=True)
+        self.pile, self.masque, self.morceaux = [], 0, []
+
+    def handle_starttag(self, tag, attrs):
+        if tag in self.VIDES:
+            return
+        a = dict(attrs)
+        cache = "hidden" in a or a.get("aria-hidden") == "true" or tag in ("script", "style", "template")
+        self.pile.append((tag, cache))
+        self.masque += cache
+
+    def handle_endtag(self, tag):
+        if tag in self.VIDES:
+            return
+        while self.pile:
+            t, cache = self.pile.pop()
+            self.masque -= cache
+            if t == tag:
+                break
+
+    def handle_data(self, data):
+        if not self.masque:
+            self.morceaux.append(data)
+
+
+def verifier_jsonld():
+    """Contrôle des données structurées : JSON valide, aucune note ni avis, et chaque fait balisé écrit dans le texte
+    visible de la page, éléments masqués exclus (description et prix des produits, kit LED, questions et réponses des FAQ,
+    fil d’Ariane, identité de l’entreprise, retours et livraison). Plan du site lisible."""
+    def normal(t):
+        return re.sub(r"\s+", " ", html.unescape(t).replace(NBSP, " ").replace(FINE, " ")).strip()
+
+    def present(fait, fichier, quoi):
+        assert normal(fait) in visible, "{} absent du texte visible de {} : {}".format(quoi, fichier, fait)
+
+    for fichier in PAGES_ECRITES:
+        with open(os.path.join(ICI, fichier), encoding="utf-8") as f:
+            doc = f.read()
+        lecteur = TexteVisible()
+        lecteur.feed(doc)
+        visible = normal(" ".join(lecteur.morceaux))
+        for bloc in re.findall(r'<script type="application/ld\+json">(.*?)</script>', doc, flags=re.S):
+            donnees = json.loads(bloc)
+            assert "aggregateRating" not in bloc and '"review"' not in bloc, "Note ou avis dans le JSON-LD de " + fichier
+            for n in donnees.get("@graph", [donnees]):
+                if n["@type"] == "Product":
+                    present(n["description"], fichier, "Description du produit")
+                    prix = int(float(n["offers"]["price"]))
+                    present("{} €".format(prix), fichier, "Prix balisé")
+                    # Le prix exact de la fiche, et non celui d’une vignette : l’attribut data-prix de la fiche
+                    assert re.search(r'data-fiche[^>]*data-prix="{}"'.format(prix), doc), "Prix balisé différent de la fiche : " + fichier
+                    option = n["offers"].get("addOn")
+                    if option:
+                        present("+{} €".format(int(float(option["price"]))), fichier, "Prix du kit LED")
+                        present("kit LED", fichier, "Kit LED")
+                if n["@type"] == "OnlineStore":
+                    for cle in ("legalName", "email", "slogan"):
+                        if cle in n:
+                            present(n[cle], fichier, "Entreprise (" + cle + ")")
+                    if "telephone" in n:
+                        chiffres = "0" + n["telephone"][3:]
+                        present(" ".join(chiffres[i:i + 2] for i in range(0, 10, 2)), fichier, "Téléphone")
+                    if "iso6523Code" in n:
+                        siret = n["iso6523Code"].split(":")[1]
+                        present("{} {} {} {}".format(siret[:3], siret[3:6], siret[6:9], siret[9:]), fichier, "SIRET")
+                    if "address" in n:
+                        for cle in ("streetAddress", "postalCode", "addressLocality"):
+                            present(n["address"][cle], fichier, "Adresse")
+                    if "description" in n:
+                        for fait in ORGANISATION_FAITS:
+                            present(fait, fichier, "Description de l’entreprise")
+                    retours = n.get("hasMerchantReturnPolicy")
+                    if retours:
+                        present("{} jours".format(retours["merchantReturnDays"]), fichier, "Délai de rétractation")
+                        if retours["returnFees"].endswith("ReturnFeesCustomerResponsibility"):
+                            present("frais de retour", fichier, "Frais de retour")
+                    livraison = n.get("hasShippingService")
+                    if livraison:
+                        present(livraison["name"].replace("Livraison en ", ""), fichier, "Zone de livraison")
+                        for mode in re.split(r",\s*| ou ", MODES_LIVRAISON):
+                            present(mode, fichier, "Mode de livraison")
+                        present("{} € par commande".format(livraison["shippingConditions"]["shippingRate"]["value"]), fichier, "Tarif de livraison")
+                        duree = livraison["handlingTime"]["duration"]
+                        present("{} à {} jours ouvrés".format(duree["minValue"], duree["maxValue"]), fichier, "Délai d’expédition")
+                if n["@type"] == "FAQPage":
+                    for q in n["mainEntity"]:
+                        present(q["name"], fichier, "Question")
+                        for phrase in re.split(r"(?<=[.!?])\s+", q["acceptedAnswer"]["text"]):
+                            present(phrase, fichier, "Réponse")
+                if n["@type"] == "BreadcrumbList":
+                    fil = re.search(r'<ol class="fil-ariane">(.*?)</ol>', doc, flags=re.S).group(1)
+                    noms = [normal(re.sub(r"<[^>]+>", "", x)) for x in re.findall(r"<li[^>]*>(.*?)</li>", fil)]
+                    assert noms == [i["name"] for i in n["itemListElement"]], "Fil d’Ariane balisé différent du visible : " + fichier
+    import xml.etree.ElementTree as ET
+    ET.parse(os.path.join(ICI, "sitemap.xml"))
+
+
 def main():
     os.makedirs(os.path.join(ICI, "assets", "img"), exist_ok=True)
     svg_courbes_mur()
@@ -2333,7 +3013,9 @@ def main():
     contact()
     qr_page()
     notes()
+    fichiers_production()
     verifier_liens()
+    verifier_jsonld()
     print("{} pages générées dans {}".format(len(PAGES_ECRITES), ICI))
 
 

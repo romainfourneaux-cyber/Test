@@ -96,7 +96,10 @@
   function maintenant() { return apercuNoel() ? new Date(2026, 11, 1, 12) : new Date(); }
   /* Quatre états, en heure locale : « avant » le 27 novembre, « pendant » l’offre, « apres » (du 15 au 24 décembre,
      la carte cadeau prend le relais), « fini ». Chaque élément [data-noel-quand] liste les états où il est visible. */
+  /* État figé à la construction (ETAT_NOEL dans build.py) : seule la variante du jour est dans le HTML, on la suit. */
+  var NOEL_FIXE = document.documentElement.getAttribute("data-noel-fixe");
   function etatNoel() {
+    if (NOEL_FIXE) return NOEL_FIXE;
     var t = maintenant();
     if (t < OFFRE_DEBUT) return "avant";
     if (t < OFFRE_FIN) return "pendant";
@@ -113,7 +116,7 @@
   }
   appliquerNoel();
   var boutonApercu = $("[data-apercu-noel]");
-  if (boutonApercu) {
+  if (boutonApercu && !NOEL_FIXE) {
     boutonApercu.hidden = false;
     boutonApercu.setAttribute("aria-pressed", apercuNoel() ? "true" : "false");
     boutonApercu.addEventListener("click", function () {

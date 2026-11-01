@@ -1,0 +1,34 @@
+# À déployer à la racine de terregravee.fr à la mise en ligne. Fichier généré par build.py (maquette v4) : ne pas le modifier à la main.
+#
+# Robots de recherche : autorisés. C’est d’eux que dépend la présence dans Google (et ses réponses IA), Bing et Copilot,
+# Apple, la recherche de ChatGPT, Claude et Perplexity. ChatGPT-User, Claude-User et Perplexity-User visitent une page
+# à la demande d’un utilisateur.
+User-agent: Googlebot
+User-agent: Bingbot
+User-agent: Applebot
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: Claude-SearchBot
+User-agent: Claude-User
+User-agent: PerplexityBot
+User-agent: Perplexity-User
+Allow: /
+
+# Robots d’entraînement des modèles : autorisés. Les bloquer ne change rien à la recherche.
+# Pour refuser l’entraînement, retirer le « # » au début des 5 lignes suivantes.
+#User-agent: GPTBot
+#User-agent: ClaudeBot
+#User-agent: Applebot-Extended
+#User-agent: CCBot
+#Disallow: /
+
+# Google-Extended : autorisé. Le bloquer ne touche ni Google Search ni les AI Overviews, mais l’application
+# Gemini ne pourra plus s’appuyer sur ces pages. Pour le bloquer, retirer le « # » au début des 2 lignes suivantes.
+#User-agent: Google-Extended
+#Disallow: /
+
+# Tous les autres robots
+User-agent: *
+Allow: /
+
+Sitemap: https://terregravee.fr/sitemap.xml

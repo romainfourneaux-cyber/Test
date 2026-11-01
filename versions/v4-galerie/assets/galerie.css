@@ -1118,3 +1118,14 @@ legend { padding: 0; }
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
 }
+
+/* Données citables (1er novembre 2026) : phrase de présentation sous le titre des fiches, encadré « en bref » de L’atelier */
+.achat__phrase { color: var(--encre-2); max-width: 36em; }
+.en-bref { margin-top: clamp(24px, 4vw, 40px); max-width: 860px; }
+.en-bref h2 { font-size: 1.3rem; }
+/* Notes : plan « Être trouvé par les recherches IA » (étapes numérotées dans la liste des actions) */
+.ia-corps { display: grid; gap: 8px; min-width: 0; }
+.constats .ia-pas { list-style: decimal; padding-left: 1.3em; display: grid; gap: 6px; color: var(--encre-2); font-size: var(--t-petit); }
+.constats .ia-pas li { display: list-item; padding: 0; border: 0; counter-increment: none; }
+.constats .ia-pas li::before { content: none; }
+.constats .ia-preuve { color: var(--encre); }

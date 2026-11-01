@@ -41,6 +41,8 @@ Garde-fous : 5 entrées de menu, 7 sections sur l’accueil (pendant la saison d
 | `qr.html` | Accueil des visiteurs qui scannent le QR code d’un panneau d’Aquensis (hors menu) |
 | `notes.html` | Notes pour Romain : relevé du site actuel, techniques sourcées, palette, idées, points légaux, à fournir, à valider |
 
+**Recherches IA (1er novembre 2026) :** données structurées JSON-LD (produits, entreprise, fil d’Ariane, questions fréquentes, sans aucune note ni avis), vérifiées à chaque construction ; `build.py` écrit aussi `robots.txt`, `sitemap.xml` et `llms.txt`, à déployer à la racine de terregravee.fr à la mise en ligne seulement (fichiers générés : ne pas les modifier à la main). `llms.txt` : faible preuve, coût nul ; aucun grand moteur ne documente qu’il lit ce fichier, et il ne contient que des faits déjà visibles. À la mise en ligne, ne déployer que les pages publiques (.html, dont `qr.html`), `assets/`, `robots.txt`, `sitemap.xml` et `llms.txt` : jamais `build.py`, `data/`, `README.md`, `notes.html`, `captures/` ni `__pycache__/`. Le plan d’action pour le site actuel est dans `notes.html`, section « Être trouvé par les recherches IA ».
+
 Les étiquettes **À FOURNIR** et **À CONFIRMER** signalent ce qui manque ; les marqueurs de décision (par exemple **VILLE AU CENTRE À CHOISIR** ou **TARIF PAR MODE À CONFIRMER**) ce qui demande un choix. L’étiquette neutre **En préparation** marque les modèles annoncés.
 
 ## Modifier
