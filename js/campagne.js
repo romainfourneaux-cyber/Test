@@ -1,7 +1,9 @@
 // Campagne du royaume de France au Moyen Âge, sur deux fronts : à l'ouest le royaume d'Angleterre (le cours cite
 // Bouvines), au sud l'Empire omeyyade d'Al-Andalus (le cours cite les Empires omeyyade et abbasside).
 // Provinces à conquérir, attaques adverses, arsenal (gestion de l'armée), jauges du royaume (nourries par le conseil),
-// événements du jour. Rien de ce qui est gagné ne se perd : une défense ratée ne coûte ni bâtiment, ni province, ni ressource.
+// événements du jour. Rien de ce qui est gagné ne se perd, sauf une exception demandée par Romain le 02/11/2026 (« Oui il
+// faut qu'elle coûte ») : une attaque du domaine perdue, ou laissée sans défense deux journées de jeu, pille une part des
+// ressources (voir PILLAGE). Jamais un bâtiment ni une province.
 // Les camps sont des puissances politiques, au ton neutre du cours : ni symbole religieux, ni caricature.
 (function (racine) {
   "use strict";
@@ -86,6 +88,16 @@
   // Niveaux de rivalité : ils choisissent les répliques et l'humeur du rival.
   var NIVEAUX_RIVALITE = [{ id: "calme", min: 0, nom: "courtoise" }, { id: "pique", min: 30, nom: "vive" }, { id: "acharne", min: 65, nom: "acharnée" }];
 
+  // Pillage (02/11/2026, décision de Romain : « Oui il faut qu'elle coûte »). taux : la part de chaque ressource emportée,
+  // en pour cent (arrondie à l'entier du dessous) ; plafond : le plus qu'il emporte d'une même ressource.
+  // defense : une défense du domaine perdue (les murs cèdent, ou l'élève quitte après la première vague) ;
+  // absence : une attaque laissée sans défense. journees : les journées de jeu (jours où le jeu est ouvert, jamais les
+  // jours du calendrier) qu'elle laisse : celle de l'annonce, puis la suivante, la dernière ; à l'ouverture de la journée
+  // de jeu d'après, elle pille. Jamais un bâtiment, une province ni une jauge. Un jeu fermé ou planté pendant une défense
+  // ne pille rien (l'appli Android peut être arrêtée sans prévenir) : l'attaque attend, se rejoue, et pille à la fin de
+  // son délai si elle n'est jamais repoussée.
+  var PILLAGE = { defense: { taux: 20, plafond: 10 }, absence: { taux: 30, plafond: 15 }, journees: 2 };
+
   // Jauges du royaume : elles ne font que monter ; chaque point renforce tes batailles (plafond 12 points utiles).
   var JAUGES = {
     tresor: { nom: "Trésor", icone: "tresor", effet: function (n) { return "+" + 5 * Math.min(n, 12) + " or au début des batailles"; } },
@@ -101,10 +113,15 @@
     ARSENAL.forEach(function (a) { (a.genre === "tours" ? tours : troupes)[a.type] = a.debut; });
     return {
       provinces: prov, conquises: [],
-      rival: { menace: 0, attaque: false, defaites: 0 }, // attaque : false ou l'identifiant du front qui attaque
+      // attaque : false ou l'identifiant du front qui attaque. 02/11/2026 : joursAttente : journées de jeu passées depuis
+      // l'annonce de l'attaque (0 le jour de l'annonce, -1 pour une attaque d'une sauvegarde plus ancienne, voir completer) ;
+      // pillages : nombre de pillages subis.
+      rival: { menace: 0, attaque: false, defaites: 0, joursAttente: 0, pillages: 0 },
       arsenal: { tours: tours, troupes: troupes, remparts: 0 },
       royaume: { tresor: 0, peuple: 0, garde: 0, savoir: 0, conseils: 0 },
       dernierJour: null, evenement: null, bonus: {}, chronique: [],
+      // 02/11/2026 : le dernier pillage { jour, front, pertes, cause: "defense" | "absence", vu }, montré une fois
+      dernierPillage: null,
       // 16/10/2026 : rivalité de chaque front (0 à 100) et mémoire des missives (personnages.js)
       rivalite: rivaliteDepart([]), missives: missivesNeuves()
     };
@@ -125,6 +142,21 @@
   // defi : la dernière bataille lancée a eu son défi (une sur deux) ; apres : la dernière bataille sans conquête a eu
   // sa réaction (une sur deux).
   function missivesNeuves() { return { presentees: false, chef: null, dernieres: {}, defi: false, apres: false }; }
+
+  // Le dernier pillage, relu d'une sauvegarde : null s'il est illisible ; des pertes illisibles sont effacées.
+  function rapportValable(p) {
+    if (!p || typeof p !== "object" || Array.isArray(p) || typeof p.jour !== "string") return null;
+    var pertes = {};
+    if (p.pertes && typeof p.pertes === "object") Object.keys(JEU.RESSOURCES).forEach(function (k) {
+      var n = p.pertes[k];
+      if (typeof n === "number" && isFinite(n) && n > 0) pertes[k] = Math.floor(n);
+    });
+    p.pertes = pertes;
+    if (!front(p.front)) p.front = FRONTS[0].id;
+    if (p.cause !== "defense" && p.cause !== "absence") p.cause = "absence";
+    p.vu = p.vu !== false;
+    return p;
+  }
 
   // Complète ou répare une campagne (sauvegarde plus ancienne ou abîmée) sans toucher à ce qui est valable :
   // une valeur absente, nulle ou du mauvais genre (objet, tableau, nombre) reprend sa valeur neuve.
@@ -150,9 +182,16 @@
     });
     if (!nombre(c.arsenal.remparts)) c.arsenal.remparts = 0;
     Object.keys(v.royaume).forEach(function (k) { if (!nombre(c.royaume[k])) c.royaume[k] = 0; });
-    ["menace", "defaites"].forEach(function (k) { if (!nombre(c.rival[k])) c.rival[k] = 0; });
+    // une attaque en cours d'une sauvegarde d'avant le 02/11/2026 (sans joursAttente) : -1. Sa première journée de jeu sous
+    // la nouvelle version devient sa journée 1 : elle a tout son délai, puisque ses jours d'avant promettaient « rien de perdu ».
+    if (c.rival.attaque && c.rival.joursAttente === undefined) c.rival.joursAttente = -1;
+    ["menace", "defaites", "joursAttente", "pillages"].forEach(function (k) {
+      if (!nombre(c.rival[k]) || c.rival[k] < (k === "joursAttente" ? -1 : 0)) c.rival[k] = 0;
+    });
     if (c.rival.attaque === true) c.rival.attaque = "angleterre";
     if (typeof c.rival.attaque !== "string" || !front(c.rival.attaque)) c.rival.attaque = false;
+    if (!c.rival.attaque) c.rival.joursAttente = 0;
+    if (c.dernierPillage !== null) c.dernierPillage = rapportValable(c.dernierPillage);
     if (c.bonus.or !== undefined && !nombre(c.bonus.or)) delete c.bonus.or;
     if (c.chronique.some(function (x) { return !x || typeof x.texte !== "string"; })) c.chronique = c.chronique.filter(function (x) { return x && typeof x.texte === "string"; });
     var depart = rivaliteDepart(c.conquises);
@@ -412,6 +451,10 @@
     return lettres.length ? { lettres: lettres, bouton: "Continuer", situation: lettres[0].situation } : null;
   }
   function oublierMissives() { attente.length = 0; }
+  // L'attaque est finie (repoussée ou pillage, 02/11/2026) : sa lettre d'annonce pas encore lue ne viendrait plus à propos.
+  function oublierLettresAttaque() {
+    for (var i = attente.length - 1; i >= 0; i--) if (attente[i] && attente[i].situation === "attaque") attente.splice(i, 1);
+  }
 
   // Galerie des souverains (Codex) : tes souverains (rencontrés, celui qui règne, et ceux qui viendront avec des
   // provinces de plus, seulement si leur cours est ouvert) et le rival de chaque front.
@@ -436,14 +479,108 @@
     { id: "espion", titre: "Un espion démasqué", icone: "espion", texte: "La garde a pris un espion du camp adverse. Une bonne réponse sur deux, et il avoue : la première vague adverse de ta prochaine bataille sera plus faible.", questions: 2 }
   ];
 
+  // ---------- pillage (02/11/2026) ----------
+  // Ce que le pillage emporte de chaque ressource du royaume, sans rien toucher : taux en pour cent du stock, arrondi à
+  // l'entier du dessous, plafond au plus par ressource. Une ressource absente, illisible ou négative ne perd rien.
+  // Renvoie { sceaux: n, routes: n, … } pour les six ressources (0 compris).
+  function pillage(ressources, taux, plafond) {
+    var pertes = {};
+    Object.keys(JEU.RESSOURCES).forEach(function (k) {
+      var v = ressources ? ressources[k] : 0;
+      var stock = typeof v === "number" && isFinite(v) && v > 0 ? Math.floor(v) : 0;
+      pertes[k] = Math.max(0, Math.min(plafond, Math.floor(stock * taux / 100)));
+    });
+    return pertes;
+  }
+  // « 3 sceaux, 2 routes et 1 alambic » (seulement les ressources touchées), ou "" si rien n'est emporté.
+  function textePertes(pertes) {
+    var l = Object.keys(JEU.RESSOURCES).filter(function (k) { return pertes && pertes[k] > 0; }).map(function (k) {
+      var nom = JEU.RESSOURCES[k].nom.toLowerCase();
+      return pertes[k] + " " + (pertes[k] > 1 ? nom : nom.replace(/[sx]$/, ""));
+    });
+    return l.length > 1 ? l.slice(0, -1).join(", ") + " et " + l[l.length - 1] : l.join("");
+  }
+  // L'attaquant du front frontId pille les réserves, puis il repart : l'attaque est finie, la menace repart de zéro.
+  // cause : "defense" ou "absence" (PILLAGE). La rivalité ne bouge pas. Renvoie le rapport (campagne.dernierPillage).
+  function piller(cause, frontId, j) {
+    var c = etat(), r = JEU.sauvegarde.etat().ressources, regle = PILLAGE[cause];
+    var tout = pillage(r, regle.taux, regle.plafond), pertes = {};
+    Object.keys(tout).forEach(function (k) {
+      if (!tout[k]) return;
+      r[k] = Math.max(0, r[k] - tout[k]);
+      pertes[k] = tout[k];
+    });
+    c.rival.attaque = false; c.rival.menace = 0; c.rival.joursAttente = 0; c.rival.pillages++;
+    oublierLettresAttaque();
+    c.dernierPillage = { jour: j || U.jour(), front: frontId, pertes: pertes, cause: cause, vu: false };
+    var liste = textePertes(pertes);
+    noter(maj1(campDe(frontId).armee) + (cause === "defense" ? " a passé tes murs et pillé tes réserves" : " a pillé ton domaine après deux journées de siège") +
+      (liste ? " : " + liste + "." : ", sans rien trouver à emporter."));
+    return c.dernierPillage;
+  }
+  // Le rapport du dernier pillage, s'il n'a pas encore été montré (sans le marquer vu), ou null.
+  function rapportPillage(c) { var p = (c || etat()).dernierPillage; return p && !p.vu ? p : null; }
+  // Le même, marqué vu : il ne se montre qu'une fois (campagne, accueil ou écran de fin de la défense).
+  function prendrePillage() {
+    var p = rapportPillage();
+    if (p) { p.vu = true; JEU.sauvegarde.enregistrer(); }
+    return p;
+  }
+  // Textes du pillage, partagés par la carte de campagne, l'accueil et l'écran de fin d'une défense : { titre, texte, pertes, suite }.
+  function textesPillage(p) {
+    var adv = campDe(p.front), rival = rivalDe(p.front), liste = textePertes(p.pertes);
+    var qui = maj1(adv.armee) + ", envoyée par " + minusculeArticle(rival.nom) + ",";
+    return {
+      titre: "Ton domaine a été pillé",
+      texte: p.cause === "defense" ? qui + " a passé tes murs et pillé tes réserves avant de repartir." :
+        qui + " a tenu le siège deux journées de jeu, puis elle a forcé tes portes et pillé tes réserves avant de repartir.",
+      pertes: liste ? "Elle a emporté " + liste + "." : "Tes réserves étaient presque vides : elle n'a rien trouvé à emporter.",
+      suite: "Tes bâtiments et tes provinces sont intacts. Ta garde se tient prête pour la prochaine attaque."
+    };
+  }
+  // L'attaque en cours, avec ce qui est en jeu et le temps qui reste, ou null : { front, camp, derniere, titre, enjeu, delai, ligne }.
+  // derniere : c'est sa dernière journée de jeu. Partagé par la carte de campagne, l'accueil et l'écran des expéditions.
+  function attaqueEnCours(c) {
+    c = c || etat();
+    if (!c.rival.attaque || !front(c.rival.attaque)) return null;
+    var adv = campDe(c.rival.attaque), derniere = c.rival.joursAttente >= PILLAGE.journees - 1;
+    return {
+      front: c.rival.attaque, camp: adv, derniere: derniere,
+      titre: maj1(adv.armee) + " marche sur ton domaine !",
+      enjeu: "Si l'ennemi passe tes murs, il pillera tes réserves.",
+      delai: derniere ? "Dernière journée pour le repousser." : "Tu as jusqu'à ta prochaine journée de jeu pour le repousser.",
+      ligne: "Ton domaine est attaqué par " + adv.armee + (derniere ? " : dernière journée pour la repousser, sinon elle pillera tes réserves." :
+        " : tu as jusqu'à ta prochaine journée de jeu pour la repousser, sinon elle pillera tes réserves.")
+    };
+  }
+
+  // Un nouveau jour de jeu (le premier appel d'un jour : accueil ou carte de campagne). maintenant : une date, pour les essais.
+  // Le rival d'abord : une attaque en cours compte une journée de jeu de plus (jamais les jours du calendrier sans jeu) et,
+  // laissée sans défense jusqu'au bout, pille les réserves avant les tributs ; pas de nouvelle attaque le jour d'un pillage.
   function nouveauJour(maintenant) {
     var c = etat();
     var j = U.jour(maintenant);
     if (c.dernierJour === j) return null;
-    var ecart = c.dernierJour ? Math.round((U.lireDate(j) - U.lireDate(c.dernierJour)) / 86400000) : 0;
+    // l'horloge de l'appareil a reculé (pile du PC, réglage) : aucune journée de jeu neuve tant que la date n'a pas
+    // dépassé la dernière journée jouée. Ni tribut ni événement d'ici là, mais une attaque n'avance pas et rien n'est pillé.
+    if (/^\d{4}-\d\d-\d\d$/.test(c.dernierJour || "") && j < c.dernierJour) return null;
+    var ecart =c.dernierJour ? Math.round((U.lireDate(j) - U.lireDate(c.dernierJour)) / 86400000) : 0;
     var premier = !c.dernierJour;
     c.dernierJour = j;
-    var res = { tributs: {}, attaque: false, evenement: null };
+    var res = { tributs: {}, attaque: false, evenement: null, pillage: null };
+    // le rival reprend des forces
+    if (!premier) {
+      if (c.rival.attaque && ++c.rival.joursAttente >= PILLAGE.journees) res.pillage = piller("absence", c.rival.attaque, j);
+      if (!res.pillage) {
+        c.rival.menace += Math.min(3, Math.max(1, ecart));
+        if (c.rival.menace >= 2 && !c.rival.attaque) {
+          c.rival.attaque = U.hasard(FRONTS).id; c.rival.menace = 0; c.rival.joursAttente = 0; res.attaque = c.rival.attaque;
+          noter(maj1(campDe(c.rival.attaque).armee) + " marche sur ton domaine.");
+          monterRivalite(c.rival.attaque, GAINS_RIVALITE.attaque);
+          if (missivesActives() && c.missives.presentees) prevoir(lettreRival(c.rival.attaque, "attaque"));
+        }
+      }
+    }
     // tributs des provinces conquises
     c.conquises.forEach(function (id) {
       var p = province(id);
@@ -451,16 +588,6 @@
       JEU.sauvegarde.etat().ressources[p.tribut] += 2;
       res.tributs[p.tribut] = (res.tributs[p.tribut] || 0) + 2;
     });
-    // le rival reprend des forces
-    if (!premier) {
-      c.rival.menace += Math.min(3, Math.max(1, ecart));
-      if (c.rival.menace >= 2 && !c.rival.attaque) {
-        c.rival.attaque = U.hasard(FRONTS).id; c.rival.menace = 0; res.attaque = c.rival.attaque;
-        noter(maj1(campDe(c.rival.attaque).armee) + " marche sur ton domaine.");
-        monterRivalite(c.rival.attaque, GAINS_RIVALITE.attaque);
-        if (missivesActives() && c.missives.presentees) prevoir(lettreRival(c.rival.attaque, "attaque"));
-      }
-    }
     // un événement par jour, souvent
     if (premier || Math.random() < 0.75) {
       var ev = U.hasard(EVENEMENTS);
@@ -468,7 +595,18 @@
       res.evenement = ev;
     } else c.evenement = null;
     JEU.sauvegarde.enregistrer();
+    jourAnnonce = { etat: JEU.sauvegarde.etat(), res: res };
     return res;
+  }
+  // Le nouveau jour pas encore annoncé sur la carte de campagne (tributs) : l'accueil a pu l'ouvrir avant elle.
+  // Ouvre le jour s'il ne l'est pas, puis rend son résultat une seule fois (null ensuite). Mémoire seulement.
+  // Le résultat reste attaché à sa partie : après un import, la partie importée n'annonce pas les tributs de l'autre.
+  var jourAnnonce = null;
+  function prendreJour(maintenant) {
+    nouveauJour(maintenant);
+    var r = jourAnnonce;
+    jourAnnonce = null;
+    return r && r.etat === JEU.sauvegarde.etat() ? r.res : null;
   }
 
   function evenementDuJour() {
@@ -492,11 +630,16 @@
       frontRival = front(bilan.front) ? bilan.front : c.rival.attaque;
       var adv = campDe(frontRival);
       if (bilan.issue !== "retraite") {
-        c.rival.attaque = false; c.rival.defaites++;
+        c.rival.attaque = false; c.rival.defaites++; c.rival.joursAttente = 0;
+        oublierLettresAttaque();
         gagner("sceaux", 4); gagner("routes", 2);
         noter("Tu as repoussé l'attaque " + avecArticle(adv.armee, "de") + ".");
         situation = "victoire";
-      } else { noter(maj1(adv.armee) + " campe toujours devant tes murs."); situation = "retraite"; }
+      } else {
+        // 02/11/2026 : les murs ont cédé (ou l'élève a quitté après la première vague) : l'attaquant pille, puis repart
+        if (c.rival.attaque) bilan.pertes = piller("defense", frontRival, U.jour()).pertes;
+        situation = "retraite";
+      }
     } else {
       var prov = c.provinces[bilan.lieu];
       var def = province(bilan.lieu);
@@ -611,7 +754,10 @@
     avecArticle: avecArticle, etatVide: etatVide, completer: completer, etat: etat, noter: noter, prochaineProvince: prochaineProvince,
     totalRessources: totalRessources, payer: payer, prixArsenal: prixArsenal, ameliorerArsenal: ameliorerArsenal,
     prixRemparts: prixRemparts, renforcerRemparts: renforcerRemparts, options: options,
-    nouveauJour: nouveauJour, evenementDuJour: evenementDuJour, apresBataille: apresBataille, jouerEvenement: jouerEvenement, reagir: reagir,
+    nouveauJour: nouveauJour, prendreJour: prendreJour, evenementDuJour: evenementDuJour, apresBataille: apresBataille, jouerEvenement: jouerEvenement, reagir: reagir,
+    // pillage (02/11/2026)
+    PILLAGE: PILLAGE, pillage: pillage, piller: piller, textePertes: textePertes, rapportPillage: rapportPillage, prendrePillage: prendrePillage,
+    textesPillage: textesPillage, attaqueEnCours: attaqueEnCours,
     // personnages, rivalité et missives (16/10/2026)
     GAINS_RIVALITE: GAINS_RIVALITE, NIVEAUX_RIVALITE: NIVEAUX_RIVALITE, SITUATIONS_RIVAL: SITUATIONS_RIVAL,
     coursOuvert: coursOuvert, disponible: disponible, souverain: souverain, rivalDe: rivalDe, faitsVisibles: faitsVisibles,

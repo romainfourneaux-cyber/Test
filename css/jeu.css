@@ -714,6 +714,7 @@ main { max-width: 1060px; margin: 0 auto; padding: 1.4rem 1rem 7rem; }
    entière) : sa largeur est bornée par la hauteur disponible */
 .carte-campagne { --haut-libre: 248px; max-width: max(560px, calc((100vh - var(--haut-libre)) * 1000 / 530)); }
 .ecran:has(> .alerte-rival) .carte-campagne { --haut-libre: 350px; }
+.ecran:has(> .alerte-rival.pillage) .carte-campagne { --haut-libre: 378px; } /* le rapport d'un pillage, plus haut (une fois) */
 /* fenêtre basse (portable, 768 px) : titre, ligne des royaumes et alerte plus serrés, pour que la carte tienne */
 @media (max-height: 820px) {
   main:has(> #ecran-jouer:not([hidden])) { padding-top: .6rem; }
@@ -755,6 +756,18 @@ main { max-width: 1060px; margin: 0 auto; padding: 1.4rem 1rem 7rem; }
 .alerte-rival > div { flex: 1 1 260px; min-width: 0; }
 .alerte-rival .ar-banniere svg { width: 46px; height: auto; }
 @keyframes alerte { 50% { opacity: 1; } }
+/* attaque et pillage (02/11/2026) : le temps qui reste en gras ; le rapport du pillage (montré une fois), plus sombre et
+   sans lueur qui respire ; la ligne de l'attaque sur l'écran des expéditions */
+.alerte-rival b { color: #ffdcae; }
+.alerte-rival.pillage { background: linear-gradient(90deg, rgba(72,44,28,.95), rgba(44,28,18,.93)); }
+.alerte-rival.pillage::after { animation: none; }
+.alerte-rival.pillage .ar-pertes { font-weight: 700; color: #ffe2b0; }
+.alerte-rival.pillage .note { color: #e6d3ac; }
+.exp-alerte { display: flex; align-items: center; justify-content: center; gap: .45rem; width: fit-content; max-width: 100%; box-sizing: border-box;
+  margin: .1rem auto .5rem; padding: .3rem .9rem; background: rgba(110,40,28,.93); color: #fbe9bd; border-radius: 4px;
+  box-shadow: 0 0 0 2px var(--or), 0 0 0 3px var(--encre); font-size: .95rem; }
+.exp-alerte svg { flex: none; color: var(--or-clair); }
+.exp-alerte.derniere { font-weight: 700; }
 .bas-campagne { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.2rem; margin-top: 1.4rem; }
 .bas-campagne .cartouche { min-width: 0; }
 .chronique { margin: .5rem 0 0; padding-left: 1.1rem; font-style: italic; }

@@ -839,7 +839,9 @@
   ui.proposerQuitter = function () {
     if (!JEU.partie) return;
     var quitter = JEU.partie.quitter;
-    ui.confirmer("Quitter la partie ? Tu gardes tout ce que tu as déjà gagné.", "Quitter", function () {
+    // une partie peut dire ce que coûte son abandon (une défense du domaine entamée : le pillage, 02/11/2026)
+    var question = (JEU.partie.texteQuitter && JEU.partie.texteQuitter()) || "Quitter la partie ? Tu gardes tout ce que tu as déjà gagné.";
+    ui.confirmer(question, "Quitter", function () {
       if (JEU.partie && JEU.partie.surQuitter) JEU.partie.surQuitter();
       ui.finirPartie(); if (quitter) quitter();
     });
@@ -871,6 +873,10 @@
   }
 
   ui.ecrans.accueil = function (s) {
+    // 02/11/2026 : l'ouverture du jeu ouvre la journée de jeu (tributs, attaque, pillage), comme la carte de campagne ;
+    // les tributs s'annoncent ensuite sur la carte (JEU.campagne.prendreJour)
+    var C = JEU.campagne, EC = JEU.ecranCampagne;
+    if (C && C.nouveauJour()) ui.majRessources();
     var etat = JEU.sauvegarde.etat();
     var sem = JEU.calendrier.semaine(new Date());
     var devoirs = prochainsDevoirs(sem.numero, etat);
@@ -892,6 +898,19 @@
         ])
       ])
     ]));
+    // le rapport d'un pillage (une fois) et l'alerte d'une attaque en cours, avec « Défendre le domaine » (02/11/2026)
+    if (C && EC) {
+      // montré sans être marqué vu : « Compris » le range pour de bon ; passé sans le lire (Entrée, Jouer, jeu fermé),
+      // il revient sur l'accueil et la carte de campagne le montre une fois (là, il est marqué vu)
+      var pille = C.rapportPillage();
+      if (pille) {
+        var rp = EC.rapportPillage(pille), compris = rp.querySelector("button");
+        if (compris) compris.addEventListener("click", function () { C.prendrePillage(); });
+        s.appendChild(rp);
+      }
+      var at = C.attaqueEnCours();
+      if (at) s.appendChild(EC.alerteAttaque(at, null));
+    }
     s.appendChild(el("div", { class: "cartouches" }, [
       el("div", { class: "cartouche" }, [el("h3", { html: JEU.icones.icone("sablier", 20) + " Calendrier" }), el("p", { class: "grand", texte: JEU.calendrier.libelle(sem) })]),
       el("div", { class: "cartouche" }, [el("h3", { html: JEU.icones.icone("parchemin-plume", 20) + " Prochain devoir" }),
