@@ -176,7 +176,7 @@
     /* Pendant l’offre : « Offerte », sans prix barré */
     champ("[data-livraison]", offre ? "Offerte" : euros(port));
     var ddLivraison = $("[data-livraison]"); if (ddLivraison) ddLivraison.classList.toggle("offerte", offre);
-    /* Pendant l’offre, un goodies accompagne chaque colis (pas de colis pour une carte seule) */
+    /* Pendant l’offre, un magnet en ardoise gravée accompagne chaque colis (pas de colis pour une carte seule) */
     var ligneGoodies = $("[data-goodies]"); if (ligneGoodies) ligneGoodies.hidden = !offre;
     champ("[data-total]", euros(total + port));
     var montants = $(".tiroir__montants"); if (montants) montants.hidden = !lignes.length;

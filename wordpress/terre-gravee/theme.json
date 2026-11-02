@@ -1,0 +1,72 @@
+{
+	"$schema": "https://schemas.wp.org/wp/6.7/theme.json",
+	"version": 3,
+	"settings": {
+		"appearanceTools": false,
+		"useRootPaddingAwareAlignments": false,
+		"layout": {
+			"contentSize": "1240px",
+			"wideSize": "1336px"
+		},
+		"color": {
+			"defaultPalette": false,
+			"defaultGradients": false,
+			"defaultDuotone": false,
+			"palette": [
+				{ "slug": "anthracite", "color": "#2C2C2C", "name": "Anthracite" },
+				{ "slug": "blanc-casse", "color": "#F5F5F0", "name": "Blanc cassé" },
+				{ "slug": "sauge", "color": "#DCE2D4", "name": "Sauge" },
+				{ "slug": "cuivre", "color": "#CBAA88", "name": "Cuivre" },
+				{ "slug": "cuivre-fonce", "color": "#80542B", "name": "Cuivre foncé" },
+				{ "slug": "gris-clair", "color": "#EDEDE7", "name": "Gris clair" },
+				{ "slug": "gris-texte", "color": "#55554E", "name": "Gris du texte" }
+			]
+		},
+		"typography": {
+			"defaultFontSizes": false,
+			"fluid": false,
+			"customFontSize": true,
+			"dropCap": false,
+			"fontFamilies": [
+				{ "slug": "titre", "name": "Marcellus (titres)", "fontFamily": "\"Marcellus\", Georgia, \"Times New Roman\", serif" },
+				{ "slug": "texte", "name": "Jost (texte)", "fontFamily": "\"Jost\", \"Segoe UI\", system-ui, sans-serif" },
+				{ "slug": "cartel", "name": "Barlow Semi Condensed (cartels)", "fontFamily": "\"Barlow Semi Condensed\", \"Arial Narrow\", sans-serif" },
+				{ "slug": "gravure", "name": "Allerta Stencil (pochoir)", "fontFamily": "\"Allerta Stencil\", \"Jost\", sans-serif" }
+			],
+			"fontSizes": [
+				{ "slug": "petit", "size": "0.9rem", "name": "Petit" },
+				{ "slug": "corps", "size": "1.0625rem", "name": "Corps" },
+				{ "slug": "chapo", "size": "1.2rem", "name": "Chapô" },
+				{ "slug": "titre-3", "size": "1.35rem", "name": "Titre 3" },
+				{ "slug": "titre-2", "size": "clamp(1.8rem, 1.2rem + 2vw, 2.65rem)", "name": "Titre 2" }
+			]
+		},
+		"spacing": {
+			"blockGap": null,
+			"margin": false,
+			"padding": false,
+			"defaultSpacingSizes": false,
+			"units": [ "px", "em", "rem", "%", "vw" ]
+		},
+		"border": { "radius": false, "color": false, "style": false, "width": false },
+		"shadow": { "defaultPresets": false }
+	},
+	"styles": {
+		"elements": {
+			"button": {
+				"border": { "radius": "0" },
+				"color": { "background": "#CBAA88", "text": "#2C2C2C" },
+				"typography": { "fontFamily": "var(--wp--preset--font-family--texte)", "fontWeight": "500", "fontSize": "0.9rem", "letterSpacing": "0.08em", "textTransform": "uppercase" },
+				":hover": { "color": { "background": "#2C2C2C", "text": "#F5F5F0" } }
+			}
+		}
+	},
+	"customTemplates": [
+		{ "name": "page-maquette", "title": "Page Terre Gravée (sections pleine largeur, sans titre automatique)", "postTypes": [ "page" ] }
+	],
+	"templateParts": [
+		{ "name": "header", "title": "En-tête", "area": "header" },
+		{ "name": "bandeau-noel", "title": "Bandeau de Noël", "area": "uncategorized" },
+		{ "name": "footer", "title": "Pied de page", "area": "footer" }
+	]
+}

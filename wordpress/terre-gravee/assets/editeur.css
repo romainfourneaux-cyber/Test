@@ -1,0 +1,4 @@
+/* Éditeur de blocs : les variantes de Noël restent toutes visibles, signalées par un liseré, pour pouvoir les modifier. */
+.tg-quand { outline: 1px dashed #CBAA88; outline-offset: 2px; }
+.tg-quand[hidden] { display: revert !important; }
+.mur-expo .led-couleurs[hidden] { display: none !important; }

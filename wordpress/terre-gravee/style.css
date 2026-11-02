@@ -1,0 +1,18 @@
+/*
+Theme Name: Terre Gravée
+Theme URI: https://terregravee.fr
+Author: Terre Gravée (Romain Fourneaux EI)
+Description: Thème par blocs de Terre Gravée, repris de la maquette v4 « Galerie de territoire » : mur d’exposition et simulation LED, cartes à pastilles de finition, carte des lieux des Hautes-Pyrénées, bloc et bandeau de Noël selon la date, fiches produit WooCommerce (finition noir, gris ou doré, kit LED en option), pages légales. Clair et sombre, polices hébergées avec le thème.
+Requires at least: 6.6
+Tested up to: 7.1
+Requires PHP: 7.4
+Version: 1.0.0
+License: GNU General Public License v2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: terre-gravee
+Tags: block-patterns, full-site-editing, e-commerce, one-column, custom-colors
+WC requires at least: 9.0
+WC tested up to: 11.2
+*/
+
+/* Les styles du thème sont dans assets/galerie.css (copie exacte de la maquette v4) et assets/wp.css (adaptations à WordPress et WooCommerce). */
