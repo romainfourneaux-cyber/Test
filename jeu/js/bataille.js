@@ -2969,7 +2969,8 @@
           JEU.ui.noterDerniere(q);
           iQ++; total++;
           // or de la réponse (moteur) : juste, +12 (et +10 au 3e succès d'affilée) ; fausse, −6 sur l'or de la bataille,
-          // jamais en dessous de zéro (config.js, orPerduErreur). Rien d'autre n'est jamais perdu.
+          // jamais en dessous de zéro (config.js, orPerduErreur). Une réponse ne coûte rien d'autre (une défense du domaine
+          // perdue, elle, fait piller une part des réserves : campagne.js, 02/11/2026).
           var or = M.repondre(p, juste);
           if (juste) {
             bonnes++;
@@ -3282,6 +3283,12 @@
         if (contexte) { if (contexte.surQuitter) contexte.surQuitter(entamee); } // la route décide (un vivre après la 1re vague), la campagne ne bouge pas
         else C.apresBataille({ lieu: lieu, front: frontId, issue: "retraite", degatsRival: p.stats.degatsRival, entamee: entamee });
       };
+      // Défense du domaine entamée (02/11/2026) : la quitter laisse passer l'ennemi, qui pille une part des réserves ; la
+      // question de « Quitter » le dit. Avant la première vague, ou sur l'écran de fin (finie : l'issue est déjà jouée),
+      // rien n'est plus en jeu : la question ordinaire.
+      if (defense && !contexte) JEU.partie.texteQuitter = function () {
+        return !finie && (p.vague > 0 || p.phase !== "preparation") ? "Quitter la défense ? Sans toi, tes murs ne tiendront pas : l'ennemi les passera et pillera une part de tes réserves." : null;
+      };
 
       function bilan() {
         if (finie) return;
@@ -3295,6 +3302,8 @@
           b.vagues = p.vague; b.murs = p.chateau.pv; b.mursMax = p.chateau.max; b.pvRival = p.rival.pv; b.pvRivalMax = p.rival.max; b.or = Math.floor(p.or);
           route = (contexte.surFin ? contexte.surFin(b) : null) || {};
         } else gains = C.apresBataille(b);
+        // défense perdue (02/11/2026) : le rapport du pillage se lit ici, une fois (la carte de campagne ne le redit pas)
+        var pillage = defense && !contexte && b.pertes ? C.prendrePillage() : null;
         var etat = JEU.sauvegarde.etat();
         etat.stats.parties++;
         JEU.sauvegarde.enregistrer();
@@ -3308,7 +3317,7 @@
             defense ? Adv(adv.armee) + " renonce et s'éloigne de la route." : (p.stats.degatsRival > 0 ? "Ton armée a porté " + pluriel(p.stats.degatsRival, "coup") + " à " + camp + "." : "Aucun de tes soldats n'a atteint " + camp + ".") + " La route continue.");
         } else if (defense) {
           titreB = issue === "retraite" ? "Les murs ont cédé" : "Le domaine tient !";
-          texte = issue === "retraite" ? "Tes gens se sont réfugiés dans le donjon. " + Adv(adv.armee) + " campe encore devant tes murs, mais n'a rien pris." : Adv(adv.armee) + " bat en retraite.";
+          texte = issue === "retraite" ? "Tes gens se sont réfugiés dans le donjon. " + Adv(adv.armee) + (pillage ? " a passé tes murs et pillé tes réserves avant de repartir." : " campe encore devant tes murs.") : Adv(adv.armee) + " bat en retraite.";
         } else if (b.conquise) {
           // « La province des Oliveraies », « du Gué », « de la Forêt de l'Ouest » : l'accord tient pour les dix noms.
           titreB = "Victoire !"; texte = "La province " + avecArticle(prov.nom, "de") + " est à toi : elle te versera un tribut chaque jour.";
@@ -3320,11 +3329,13 @@
         }
         var liste = Object.keys(gains).map(function (r) { return "+" + gains[r] + " " + JEU.RESSOURCES[r].nom.toLowerCase(); }).join(", ");
         if (route && route.butin) liste = route.butin;
+        var tp = pillage ? C.textesPillage(pillage) : null;
         conseil.innerHTML = "";
         conseil.appendChild(el("div", { class: "bilan" + (issue !== "retraite" ? " reussi" : "") }, [
           el("h2", { texte: titreB }), el("p", { texte: texte }),
           el("p", { class: "grand", texte: bonnes + " / " + total + " bonnes réponses au conseil de guerre" }),
-          el("p", { texte: liste ? "Butin : " + liste + "." : "Rien de perdu : tout ce que tu as gagné reste à toi." }),
+          tp ? el("p", {}, [el("b", { class: "pertes-pillage", texte: tp.pertes }), " " + tp.suite]) :
+            el("p", { texte: liste ? "Butin : " + liste + "." : "Rien de perdu : tout ce que tu as gagné reste à toi." }),
           el("button", { class: "bouton principal", onclick: retour, texte: contexte ? (route.bouton || "Continuer la route (Entrée)") : "Retour à la campagne (Entrée)" })
         ]));
         if (issue !== "retraite") {

@@ -683,6 +683,29 @@
     return annonce;
   }
 
+  // Alerte d'une attaque en cours (JEU.campagne.attaqueEnCours) : ce qui est en jeu (02/11/2026 : s'il passe tes murs, il
+  // pille tes réserves), le temps qui reste en journées de jeu, et le bouton « Défendre le domaine ». Carte de campagne et
+  // accueil. touche : le raccourci affiché sur le bouton (la carte : 1), sinon aucun.
+  function alerteAttaque(at, touche) {
+    var el = JEU.ui.el;
+    return el("div", { class: "alerte-rival" + (at.derniere ? " derniere" : ""), "data-front": at.front }, [
+      el("span", { class: "ar-banniere", html: JEU.icones.icone(at.camp.embleme, 52) }),
+      el("div", {}, [el("h2", { texte: at.titre }), el("p", {}, [at.enjeu + " ", el("b", { texte: at.delai })])]),
+      el("button", { class: "bouton principal", onclick: function () { lancerBataille("domaine"); }, html: (touche ? "<span class='touche'>" + touche + "</span> " : "") + "Défendre le domaine" })
+    ]);
+  }
+  // Rapport du dernier pillage (02/11/2026) : sur la carte de campagne, montré une fois (JEU.campagne.prendrePillage) ; sur
+  // l'accueil, jusqu'à « Compris » (interface.js). Qui a pillé, ce qu'il a emporté, ressource par ressource. « Compris » le range.
+  function rapportPillage(p) {
+    var el = JEU.ui.el, C = JEU.campagne, t = C.textesPillage(p);
+    var bloc = el("div", { class: "alerte-rival pillage", role: "status" }, [
+      el("span", { class: "ar-banniere", html: JEU.icones.icone(C.campDe(p.front).embleme, 52) }),
+      el("div", {}, [el("h2", { texte: t.titre }), el("p", { texte: t.texte }), el("p", { class: "ar-pertes", texte: t.pertes }), el("p", { class: "note", texte: t.suite })]),
+      el("button", { class: "bouton", onclick: function () { if (bloc.parentNode) bloc.parentNode.removeChild(bloc); }, texte: "Compris" })
+    ]);
+    return bloc;
+  }
+
   // Après la cérémonie de conquête : la missive du rival, si l'élève est encore sur la carte, hors partie.
   function missivesApresCeremonie() {
     if (JEU.ui.ecranCourant() !== "jouer" || JEU.partie) return;
@@ -693,7 +716,7 @@
   JEU.ui.ecrans.jouer = function (s) {
     var el = JEU.ui.el;
     var C = JEU.campagne;
-    var jour = C.nouveauJour();
+    var jour = C.prendreJour(); // l'accueil a pu ouvrir le jour : ses tributs s'annoncent ici
     var c = C.etat();
     var etat = JEU.sauvegarde.etat();
     var ev = C.evenementDuJour();
@@ -713,14 +736,10 @@
       JEU.ui.majRessources();
     }
 
-    var attaquant = c.rival.attaque ? camp(C.front(c.rival.attaque).camp) : null;
-    if (attaquant) {
-      s.appendChild(el("div", { class: "alerte-rival" }, [
-        el("span", { class: "ar-banniere", html: JEU.icones.icone(attaquant.embleme, 52) }),
-        el("div", {}, [el("h2", { texte: C.maj1(attaquant.armee) + " marche sur ton domaine !" }), el("p", { texte: "Ses troupes approchent par la route. Défends tes murs : tu ne perdras rien, quoi qu'il arrive." })]),
-        el("button", { class: "bouton principal", onclick: function () { lancerBataille("domaine"); }, html: "<span class='touche'>1</span> Défendre le domaine" })
-      ]));
-    }
+    var pille = C.prendrePillage(); // pillage pas encore montré (02/11/2026) : son rapport, une fois
+    if (pille) s.appendChild(rapportPillage(pille));
+    var at = C.attaqueEnCours(c), attaquant = at ? at.camp : null;
+    if (at) s.appendChild(alerteAttaque(at, "1"));
 
     // carte vivante (lot B) : l'ambiance et les bannières flottantes, ou la cérémonie seule
     var amb = ambianceActive();
@@ -774,7 +793,8 @@
       el("div", { class: "cartouche rival" }, [
         el("h3", { html: JEU.icones.icone("defi", 20) + " Les fronts et tes rivaux" }),
         el("div", { class: "lignes-rivaux" }, lignesRivaux(c)),
-        el("p", { texte: c.rival.defaites + " attaque" + (c.rival.defaites > 1 ? "s" : "") + " repoussée" + (c.rival.defaites > 1 ? "s" : "") + "." }),
+        el("p", { texte: c.rival.defaites + " attaque" + (c.rival.defaites > 1 ? "s" : "") + " repoussée" + (c.rival.defaites > 1 ? "s" : "") +
+          (c.rival.pillages ? ", " + c.rival.pillages + " pillage" + (c.rival.pillages > 1 ? "s" : "") + " subi" + (c.rival.pillages > 1 ? "s" : "") : "") + "." }),
         rx ? el("p", { class: "note ligne-expeditions", texte: ligneExpeditions(rx) }) : null,
         el("div", { class: "menace" }, [el("span", { texte: "Menace" }), el("span", { class: "jr-barre" }, [el("span", { style: "width:" + Math.min(100, c.rival.attaque ? 100 : c.rival.menace * 50) + "%" })])]),
         c.chronique.length ? el("ul", { class: "chronique" }, c.chronique.slice(0, 5).map(function (x, k) { return el("li", { class: k === 0 && conquete ? "neuve" : null, texte: x.texte }); })) : el("p", { class: "note", texte: "La chronique des campagnes est encore vierge." })
@@ -851,6 +871,8 @@
   }
 
   JEU.ecranCampagne = { ouvrirArsenal: ouvrirArsenal, carteSVG: carteSVG,
+    // attaque et pillage (02/11/2026) : l'alerte et le rapport, aussi sur l'accueil
+    alerteAttaque: alerteAttaque, rapportPillage: rapportPillage,
     // personnages (16/10/2026)
     medaillon: medaillon, medaillonHeraldique: medaillonHeraldique, sceau: sceau, surveillerPortraits: surveillerPortraits,
     fichePersonnage: fichePersonnage, ouvrirFichePersonnage: ouvrirFichePersonnage, ouvrirMissive: ouvrirMissive, lancerBataille: lancerBataille,

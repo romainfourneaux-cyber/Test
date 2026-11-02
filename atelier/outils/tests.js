@@ -134,9 +134,10 @@ verifier("Retraite : les coups portés restent, aucune ressource perdue", C.etat
 C.apresBataille({ lieu: "gue", issue: "tenu", degatsRival: 11 });
 verifier("Château à zéro : la province est conquise", C.etat().conquises.indexOf("gue") >= 0 && C.prochaineProvince().province.id === "foret");
 C.etat().rival.attaque = "omeyyades";
-const avantDef = C.totalRessources();
+const avantDef = JSON.parse(JSON.stringify(E.ressources)), prevuDef = C.pillage(avantDef, 20, 10);
 C.apresBataille({ lieu: "domaine", issue: "retraite", degatsRival: 0 });
-verifier("Défense ratée : rien de perdu, l'adversaire campe encore", C.etat().rival.attaque === "omeyyades" && C.totalRessources() === avantDef && C.etat().conquises.length === 1);
+verifier("Défense ratée (02/11/2026) : l'adversaire pille 20 % de chaque ressource (10 au plus), puis repart ; la province reste à toi",
+  C.etat().rival.attaque === false && Object.keys(avantDef).every(k => E.ressources[k] === avantDef[k] - prevuDef[k]) && C.etat().conquises.length === 1, { avantDef, apres: E.ressources });
 C.etat().dernierJour = "2026-10-12";
 const nj = C.nouveauJour(D("2026-10-14T09:00:00"));
 verifier("Nouveau jour : tribut des provinces conquises", nj && nj.tributs.routes === 2);
@@ -252,6 +253,186 @@ let cadresOk = true;
 for (let i = 0; i < 50; i++) { const t = J.recit.cadre({ matiere: "histoire" }, "defense").texte; if (/anglais|\{/i.test(t)) cadresOk = false; }
 verifier("Défense contre l'Empire omeyyade : le récit ne parle jamais des Anglais", cadresOk);
 J.campagne.etat().rival.attaque = false;
+
+// pillage (02/11/2026, décision de Romain : « Oui il faut qu'elle coûte ») : une défense du domaine perdue pille 20 % de
+// chaque ressource (10 au plus) ; une attaque laissée deux journées de jeu sans défense pille 30 % (15 au plus) à l'ouverture
+// de la journée de jeu suivante. Jamais un bâtiment, une province ni une jauge ; jamais sous zéro.
+{
+  const CP = J.campagne, S = J.sauvegarde;
+  const pil = CP.pillage;
+  const stock = { sceaux: 100, routes: 49, remedes: 4, alambics: 5, parchemins: 0, alliances: 7 };
+  const copie = JSON.stringify(stock);
+  verifier("Pillage : 20 % du stock arrondi en dessous, 10 au plus par ressource ; 30 %, 15 au plus",
+    JSON.stringify(pil(stock, 20, 10)) === JSON.stringify({ sceaux: 10, routes: 9, remedes: 0, alambics: 1, parchemins: 0, alliances: 1 }) &&
+    JSON.stringify(pil(stock, 30, 15)) === JSON.stringify({ sceaux: 15, routes: 14, remedes: 1, alambics: 1, parchemins: 0, alliances: 2 }) &&
+    JSON.stringify(stock) === copie, [pil(stock, 20, 10), pil(stock, 30, 15)]);
+  verifier("Pillage : un stock de 4 ne perd rien à 20 % ; 5 en perd 1 ; 10 en perd 3 à 30 %",
+    pil({ sceaux: 4 }, 20, 10).sceaux === 0 && pil({ sceaux: 5 }, 20, 10).sceaux === 1 && pil({ sceaux: 10 }, 30, 15).sceaux === 3);
+  const vide = pil(null, 20, 10), bizarre = pil({ sceaux: -8, routes: "12", remedes: NaN, alambics: Infinity, parchemins: null }, 30, 15);
+  verifier("Pillage : ressources nulles, absentes, négatives ou illisibles : rien d'emporté, six ressources dans le compte",
+    Object.keys(vide).length === 6 && Object.values(vide).every(n => n === 0) && Object.values(bizarre).every(n => n === 0) && Object.keys(bizarre).length === 6, bizarre);
+  verifier("Pillage : les réglages sont 20 % et 10 (défense perdue), 30 % et 15 (attaque ignorée), deux journées de jeu",
+    CP.PILLAGE.defense.taux === 20 && CP.PILLAGE.defense.plafond === 10 && CP.PILLAGE.absence.taux === 30 && CP.PILLAGE.absence.plafond === 15 && CP.PILLAGE.journees === 2);
+  verifier("Pillage : la liste des pertes au singulier et au pluriel, avec « et »",
+    CP.textePertes({ sceaux: 3, routes: 1, remedes: 0, alambics: 2 }) === "3 sceaux, 1 route et 2 alambics" && CP.textePertes({ sceaux: 1 }) === "1 sceau" && CP.textePertes({}) === "",
+    CP.textePertes({ sceaux: 3, routes: 1, remedes: 0, alambics: 2 }));
+
+  // une partie neuve : deux provinces prises, des bâtiments, des jauges, des réserves
+  function neuve() {
+    S.remplacer(S.nouvelle());
+    const e = S.etat(), c = CP.etat();
+    e.ressources = { sceaux: 40, routes: 12, remedes: 4, alambics: 0, parchemins: 60, alliances: 9 };
+    e.batiments = [{ id: "puits" }, { id: "moulin" }];
+    c.conquises = ["gue", "piemont"]; c.provinces.gue.pv = 0; c.provinces.piemont.pv = 0;
+    c.royaume.peuple = 5; c.royaume.garde = 3;
+    c.rivalite = { angleterre: 30, omeyyades: 15 };
+    c.missives.presentees = true;
+    return { e, c };
+  }
+  const fige = (e, c) => JSON.stringify({ b: e.batiments, q: c.conquises, p: c.provinces, r: c.royaume, a: c.arsenal, v: c.rivalite });
+
+  // défense perdue : un pillage, l'attaque est finie, rien d'autre ne bouge
+  let { e, c } = neuve();
+  c.rival.attaque = "angleterre"; c.rival.menace = 1; c.rival.joursAttente = 1;
+  let avant = JSON.parse(JSON.stringify(e.ressources)), autres = fige(e, c);
+  let prevu = pil(avant, 20, 10);
+  const bD = { lieu: "domaine", front: "angleterre", issue: "retraite", degatsRival: 0, entamee: true };
+  const gD = CP.apresBataille(bD);
+  verifier("Défense perdue : chaque ressource perd 20 % (10 au plus), l'attaquant repart (attaque finie, menace à zéro, un pillage compté)",
+    Object.keys(avant).every(k => e.ressources[k] === avant[k] - prevu[k]) && c.rival.attaque === false && c.rival.menace === 0 && c.rival.joursAttente === 0 && c.rival.pillages === 1 &&
+    JSON.stringify(gD) === "{}", { avant, apres: e.ressources, rival: c.rival });
+  verifier("Défense perdue : le rapport (défense, front, pertes exactes, pas encore vu) et la ligne de la chronique",
+    c.dernierPillage && c.dernierPillage.cause === "defense" && c.dernierPillage.front === "angleterre" && c.dernierPillage.vu === false &&
+    JSON.stringify(c.dernierPillage.pertes) === JSON.stringify({ sceaux: 8, routes: 2, parchemins: 10, alliances: 1 }) && JSON.stringify(bD.pertes) === JSON.stringify(c.dernierPillage.pertes) &&
+    c.chronique[0].texte === "L'armée anglaise a passé tes murs et pillé tes réserves : 8 sceaux, 2 routes, 10 parchemins et 1 alliance.", { r: c.dernierPillage, ch: c.chronique[0] });
+  verifier("Défense perdue : bâtiments, provinces, jauges, arsenal et rivalité intacts", fige(e, c) === autres);
+  const apres1 = JSON.stringify(e.ressources);
+  CP.apresBataille({ lieu: "domaine", front: "angleterre", issue: "retraite", degatsRival: 0, entamee: true });
+  verifier("Défense perdue : un seul pillage (une autre défense perdue sans attaque en cours ne prend rien)", JSON.stringify(e.ressources) === apres1 && c.rival.pillages === 1);
+  const t = CP.textesPillage(c.dernierPillage);
+  verifier("Rapport du pillage : qui a pillé et ce qu'il a emporté, ressource par ressource, sans reproche",
+    /^L'armée anglaise, envoyée par (le roi d'Angleterre|un seigneur rival), a passé tes murs/.test(t.texte) && t.pertes === "Elle a emporté 8 sceaux, 2 routes, 10 parchemins et 1 alliance." &&
+    /intacts/.test(t.suite), t);
+  verifier("Rapport du pillage : montré une fois (pris, puis plus rien)",
+    CP.rapportPillage() === c.dernierPillage && CP.prendrePillage() === c.dernierPillage && c.dernierPillage.vu === true && CP.prendrePillage() === null && CP.rapportPillage() === null);
+
+  // quitter avant la première vague : rien ; défense repoussée : comme avant
+  ({ e, c } = neuve());
+  c.rival.attaque = "omeyyades"; c.rival.joursAttente = 1;
+  avant = JSON.stringify(e.ressources);
+  CP.apresBataille({ lieu: "domaine", front: "omeyyades", issue: "retraite", degatsRival: 0, entamee: false });
+  verifier("Défense quittée avant la première vague : rien de pris, l'attaque attend toujours",
+    JSON.stringify(e.ressources) === avant && c.rival.attaque === "omeyyades" && c.rival.joursAttente === 1 && c.dernierPillage === null && c.rival.pillages === 0);
+  ["victoire", "tenu"].forEach(issue => {
+    ({ e, c } = neuve());
+    c.rival.attaque = "omeyyades"; c.rival.joursAttente = 1;
+    const r0 = JSON.parse(JSON.stringify(e.ressources));
+    const g = CP.apresBataille({ lieu: "domaine", front: "omeyyades", issue, degatsRival: 0, entamee: true });
+    verifier("Défense repoussée (" + issue + ") : inchangée, +4 sceaux et +2 routes, attaque finie, aucun pillage",
+      g.sceaux === 4 && g.routes === 2 && e.ressources.sceaux === r0.sceaux + 4 && e.ressources.routes === r0.routes + 2 && c.rival.attaque === false &&
+      c.rival.defaites === 1 && c.rival.pillages === 0 && c.dernierPillage === null && c.rivalite.omeyyades === 25, { g, rival: c.rival });
+  });
+
+  // attaque ignorée : comptée en journées de jeu
+  ({ e, c } = neuve());
+  c.dernierJour = "2026-11-02"; c.rival.menace = 5;
+  const r1 = CP.nouveauJour(D("2026-11-03T17:00:00"));
+  const fa = c.rival.attaque, at1 = CP.attaqueEnCours();
+  verifier("Attaque annoncée : 1re journée de jeu ; l'alerte dit ce qui est en jeu et qu'il reste jusqu'à la prochaine journée de jeu",
+    !!fa && r1.attaque === fa && c.rival.joursAttente === 0 && at1 && at1.derniere === false && at1.enjeu === "Si l'ennemi passe tes murs, il pillera tes réserves." &&
+    at1.delai === "Tu as jusqu'à ta prochaine journée de jeu pour le repousser." && /pillera tes réserves/.test(at1.ligne), at1);
+  avant = JSON.parse(JSON.stringify(e.ressources)); autres = fige(e, c);
+  const r2 = CP.nouveauJour(D("2026-11-13T10:00:00")); // dix jours sans jouer : une seule journée de jeu
+  const at2 = CP.attaqueEnCours();
+  verifier("Dix jours de calendrier sans jouer comptent pour une journée de jeu : dernière journée, rien de pillé (tributs seulement)",
+    r2 && r2.pillage === null && c.rival.attaque === fa && c.rival.joursAttente === 1 && at2.derniere === true && at2.delai === "Dernière journée pour le repousser." &&
+    e.ressources.routes === avant.routes + 2 && e.ressources.sceaux === avant.sceaux + 2 && e.ressources.parchemins === avant.parchemins, { rival: c.rival, res: e.ressources });
+  verifier("Même jour rechargé : pas de nouvelle journée, rien de pillé", CP.nouveauJour(D("2026-11-13T21:00:00")) === null && c.rival.joursAttente === 1);
+  avant = JSON.parse(JSON.stringify(e.ressources));
+  c.rival.menace = 50; // assez pour une nouvelle attaque, mais pas le jour d'un pillage
+  const r3 = CP.nouveauJour(D("2026-11-14T09:00:00"));
+  prevu = pil(avant, 30, 15);
+  verifier("Attaque ignorée : à l'ouverture de la 3e journée de jeu, pillage de 30 % (15 au plus) avant les tributs, puis l'attaquant repart",
+    r3.pillage && r3.pillage.cause === "absence" && r3.pillage.front === fa && r3.pillage.jour === "2026-11-14" &&
+    Object.keys(avant).every(k => e.ressources[k] === avant[k] - prevu[k] + (r3.tributs[k] || 0)) && c.rival.pillages === 1 && c.rival.menace === 0 && c.rival.joursAttente === 0,
+    { avant, apres: e.ressources, p: r3.pillage });
+  verifier("Pas de nouvelle attaque le jour d'un pillage", c.rival.attaque === false && r3.attaque === false && CP.attaqueEnCours() === null);
+  verifier("Attaque ignorée : bâtiments, provinces, jauges, arsenal et rivalité intacts", fige(e, c) === autres);
+  verifier("Attaque ignorée : la chronique et le rapport le disent, au ton neutre",
+    /a pillé ton domaine après deux journées de siège/.test(c.chronique[0].texte) && /tenu le siège deux journées de jeu/.test(CP.textesPillage(c.dernierPillage).texte), c.chronique[0]);
+  const avantRe = JSON.stringify(e.ressources);
+  verifier("Pas de double pillage en rechargeant le même jour", CP.nouveauJour(D("2026-11-14T20:00:00")) === null && JSON.stringify(e.ressources) === avantRe && c.rival.pillages === 1);
+  S.enregistrer();
+  const txtPil = S.texteExport();
+  S.importer(txtPil);
+  const ci = CP.etat();
+  verifier("Export puis import : joursAttente, pillages et rapport du pillage gardés à l'identique",
+    JSON.stringify(ci.rival) === JSON.stringify(JSON.parse(txtPil).campagne.rival) && JSON.stringify(ci.dernierPillage) === JSON.stringify(JSON.parse(txtPil).campagne.dernierPillage) &&
+    ci.rival.pillages === 1 && ci.dernierPillage.cause === "absence", ci.dernierPillage);
+  verifier("Rechargé (import) le jour du pillage : toujours pas de second pillage", CP.nouveauJour(D("2026-11-14T22:00:00")) === null && S.etat().campagne.rival.pillages === 1);
+  const r4 = CP.nouveauJour(D("2026-11-15T09:00:00"));
+  verifier("Le lendemain du pillage : la menace repart de zéro (une journée ne suffit pas pour une attaque)", r4 && r4.attaque === false && r4.pillage === null && CP.etat().rival.menace === 1);
+
+  // l'accueil ouvre la journée : la carte de campagne annonce ensuite ses tributs, une fois
+  ({ e, c } = neuve());
+  c.dernierJour = "2026-11-02";
+  const rj = CP.nouveauJour(D("2026-11-03T08:00:00"));
+  const pj = CP.prendreJour(D("2026-11-03T08:05:00"));
+  verifier("Journée ouverte par l'accueil : la carte de campagne reçoit ses tributs une fois", pj === rj && pj.tributs.routes === 2 && CP.prendreJour(D("2026-11-03T09:00:00")) === null);
+  // import le jour même : la partie importée n'annonce pas les tributs de la partie d'avant
+  ({ e, c } = neuve());
+  c.dernierJour = "2026-11-02";
+  CP.nouveauJour(D("2026-11-03T08:00:00")); // partie A : journée ouverte par l'accueil, tributs pas encore annoncés
+  const autreB = S.nouvelle();
+  autreB.campagne = CP.etatVide(); autreB.campagne.dernierJour = "2026-11-03";
+  S.importer(JSON.stringify(autreB));
+  verifier("Import le jour même : la carte n'annonce pas les tributs de la partie d'avant", CP.prendreJour(D("2026-11-03T08:10:00")) === null);
+
+  // horloge qui recule : une date plus ancienne que la dernière journée jouée n'ouvre aucune journée de jeu
+  ({ e, c } = neuve());
+  CP.nouveauJour(D("2026-11-05T10:00:00"));
+  c.rival.attaque = "angleterre"; c.rival.joursAttente = 0; // annoncée le 05/11
+  const resRecul = JSON.stringify(e.ressources);
+  const recul = CP.nouveauJour(D("2026-11-04T10:30:00")), revient = CP.nouveauJour(D("2026-11-05T11:00:00"));
+  verifier("Horloge qui recule : aucune journée de jeu comptée, ni pillage ni tribut le jour de l'annonce",
+    recul === null && revient === null && c.rival.joursAttente === 0 && c.rival.attaque === "angleterre" && c.dernierJour === "2026-11-05" &&
+    JSON.stringify(e.ressources) === resRecul && CP.attaqueEnCours().derniere === false, c.rival);
+  const suite = CP.nouveauJour(D("2026-11-06T10:00:00"));
+  verifier("Horloge revenue au-delà de la dernière journée : la journée suivante compte, comme d'habitude",
+    suite && suite.pillage === null && c.rival.joursAttente === 1 && CP.attaqueEnCours().derniere === true, c.rival);
+
+  // ancienne sauvegarde (avant le 02/11/2026) : sans les nouveaux champs, une attaque en cours reçoit tout son délai
+  ({ e, c } = neuve());
+  const ancienne = JSON.parse(JSON.stringify(S.etat()));
+  ancienne.campagne.rival = { menace: 3, attaque: "omeyyades", defaites: 2 };
+  delete ancienne.campagne.dernierPillage;
+  ancienne.campagne.dernierJour = "2026-11-01";
+  const mig = S.migrer(JSON.parse(JSON.stringify(ancienne)));
+  S.remplacer(mig);
+  const cm = CP.etat();
+  verifier("Ancienne sauvegarde : même schéma, joursAttente à -1 (attaque en cours), pillages à 0, pas de rapport, rien d'autre ne change",
+    mig.schema === S.SCHEMA && cm.rival.joursAttente === -1 && cm.rival.pillages === 0 && cm.rival.defaites === 2 && cm.rival.menace === 3 && cm.rival.attaque === "omeyyades" &&
+    cm.dernierPillage === null && JSON.stringify(S.etat().ressources) === JSON.stringify(ancienne.ressources), cm.rival);
+  const m1 = CP.nouveauJour(D("2026-11-02T10:00:00"));
+  const der1 = CP.attaqueEnCours() && CP.attaqueEnCours().derniere;
+  const m2 = CP.nouveauJour(D("2026-11-03T10:00:00"));
+  const derM = CP.attaqueEnCours() && CP.attaqueEnCours().derniere, ressM = JSON.stringify(S.etat().ressources);
+  const m3 = CP.nouveauJour(D("2026-11-04T10:00:00"));
+  verifier("Ancienne sauvegarde : l'attaque en cours a tout son délai (sa 1re journée sous la nouvelle version est la journée 1, la suivante la dernière, le pillage vient à celle d'après)",
+    m1.pillage === null && der1 === false && m2.pillage === null && derM === true && m3.pillage && m3.pillage.cause === "absence" && ressM !== JSON.stringify(S.etat().ressources),
+    { m1: m1.pillage, m2: m2.pillage, m3: m3.pillage });
+  verifier("Attaque d'une ancienne sauvegarde : -1 gardé par la réparation, rien en dessous, 0 sans attaque",
+    CP.completer({ rival: { attaque: "angleterre", joursAttente: -1 } }).rival.joursAttente === -1 && CP.completer({ rival: { attaque: "angleterre", joursAttente: -3 } }).rival.joursAttente === 0 &&
+    CP.completer({ rival: { attaque: "angleterre" } }).rival.joursAttente === -1 && CP.completer({ rival: { attaque: false } }).rival.joursAttente === 0 &&
+    CP.completer({ rival: { attaque: false, joursAttente: -1 } }).rival.joursAttente === 0);
+  const abime = CP.completer({ rival: { menace: 1, attaque: "angleterre", defaites: 0, joursAttente: "deux", pillages: -4 }, dernierPillage: "pillé" });
+  const abime2 = CP.completer({ rival: { attaque: false, joursAttente: 3 }, dernierPillage: { jour: "2026-11-02", front: "nulle-part", pertes: { sceaux: "3", routes: 2, remedes: -1 }, cause: "?" } });
+  verifier("Sauvegarde abîmée : joursAttente, pillages et rapport réparés (illisible effacé, pertes illisibles retirées, rapport sans « vu » tenu pour vu)",
+    abime.rival.joursAttente === 0 && abime.rival.pillages === 0 && abime.dernierPillage === null && abime2.rival.joursAttente === 0 &&
+    JSON.stringify(abime2.dernierPillage.pertes) === JSON.stringify({ routes: 2 }) && abime2.dernierPillage.front === "angleterre" && abime2.dernierPillage.cause === "absence" && abime2.dernierPillage.vu === true,
+    [abime.rival, abime2]);
+  S.remplacer(S.nouvelle());
+}
 
 // bataille : portée des tours adverses bien distincte de la tienne (crème #fbe9bd), écart de couleur CIE76 > 25
 function lab(hex) {
@@ -1642,6 +1823,17 @@ verifier("Bataillons : le rendu ne touche pas au moteur (aucune écriture de la 
   CP.nouveauJour(D("2026-10-15T10:00:00"));
   const at = CP.prendreMissives();
   verifier("Missives : quand un rival attaque ton domaine, il l'annonce", at && at.lettres[0].situation === "attaque" && at.lettres[0].front === c3.rival.attaque);
+  // 02/11/2026 : l'attaque finie (repoussée, ou défense perdue et pillage) avant la visite de la carte : sa lettre d'annonce ne vient plus
+  ["tenu", "retraite"].forEach(issue => {
+    CP.oublierMissives(); c3.rival.attaque = false; c3.rival.menace = 5; c3.dernierJour = "2026-10-15"; c3.missives.apres = false;
+    CP.nouveauJour(D("2026-10-16T10:00:00"));
+    const fA = c3.rival.attaque;
+    CP.apresBataille({ lieu: "domaine", front: fA, issue, degatsRival: 0, entamee: true });
+    const lA = CP.prendreMissives();
+    verifier("Missives : attaque finie (" + issue + ") avant la visite de la carte : plus de lettre d'annonce, seulement la réaction du rival",
+      !!fA && c3.rival.attaque === false && lA && lA.lettres.every(l => l.situation !== "attaque") && lA.lettres[0].situation === (issue === "tenu" ? "victoire" : "retraite"),
+      lA && lA.lettres.map(l => l.situation));
+  });
   // messages des rivaux coupés (Réglages)
   e2.reglages.rivaux = false; c3.missives.defi = false;
   const rAvant = CP.rivalite("omeyyades");

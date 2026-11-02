@@ -586,8 +586,15 @@
     var X = JEU.expedition, el = JEU.ui.el, C = JEU.campagne, f = C.front(e.front);
     return el("div", { class: "exp-tete" }, [
       el("h1", { class: "titre-ecran", texte: TEXTES.route.titre }),
-      el("p", { class: "exp-sous", texte: remplir(TEXTES.route.sous, { S: e.semaine, F: X.TEXTES.fronts[e.front] || (f ? f.nom : ""), H: ordinal(X.haltesJouees(e) + 1) }) })
+      el("p", { class: "exp-sous", texte: remplir(TEXTES.route.sous, { S: e.semaine, F: X.TEXTES.fronts[e.front] || (f ? f.nom : ""), H: ordinal(X.haltesJouees(e) + 1) }) }),
+      ligneAttaque()
     ]);
+  }
+  // Une attaque du domaine en cours (02/11/2026) : une ligne sur l'écran de départ et sur la route reprise, avec le temps
+  // qui reste avant le pillage (JEU.campagne.attaqueEnCours ; la route, elle, ne touche jamais la campagne). Sinon null.
+  function ligneAttaque() {
+    var at = JEU.campagne.attaqueEnCours ? JEU.campagne.attaqueEnCours() : null;
+    return at ? JEU.ui.el("p", { class: "exp-alerte" + (at.derniere ? " derniere" : ""), html: JEU.icones.icone(at.camp.embleme, 20) + " " + U.echapper(at.ligne) }) : null;
   }
   // ---------- la scène de la route (lot B, 31/10/2026 ; plan graphismes-animations-plan.md, B1.3) ----------
   // L'écran d'une expédition en cours : l'en-tête, la scène (la carte-itinéraire et ses boutons), les cartouches du bas.
@@ -802,6 +809,8 @@
     var f = X.frontiere(), ouverts = X.relais();
     s.innerHTML = "";
     s.appendChild(el("h1", { class: "titre-ecran", texte: T.titre }));
+    var alerte = ligneAttaque();
+    if (alerte) s.appendChild(alerte);
     if (!f || !ouverts.length) {
       s.appendChild(el("p", { class: "exp-souverain", texte: T.attente }));
       s.appendChild(el("div", { class: "actions centre" }, [el("button", { class: "bouton", onclick: function () { JEU.ui.afficher("jouer"); } }, [T.retour, astuce("Échap")])]));
