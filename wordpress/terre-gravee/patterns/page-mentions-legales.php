@@ -10,6 +10,7 @@
  * @package TerreGravee
  */
 
+defined( 'ABSPATH' ) || exit;
 ?>
 <!-- wp:group {"className":"wrap notes-page page-legale__corps"} -->
 <div class="wp-block-group wrap notes-page page-legale__corps">

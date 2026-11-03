@@ -482,8 +482,29 @@ function tg_code_lettre() {
 			. '<input id="email-lettre" name="ne" type="email" required placeholder="votre@adresse.fr" autocomplete="email">'
 			. '<button class="btn" type="submit">S’inscrire</button></div>'
 			. '<div class="case"><input id="accord-lettre" name="ny" type="checkbox" required><label for="accord-lettre">J’accepte de recevoir la lettre de Terre Gravée par e-mail, une par trimestre au plus. Je peux me désinscrire à chaque envoi.</label></div>'
+			. '<p class="inscription__mention petit attenue">Votre adresse ne sert qu’à l’envoi de la lettre. Détails et droits : <a href="' . esc_url( home_url( '/politique/' ) ) . '">Confidentialité et cookies</a>.</p>'
 			. '</form>';
 	}
 	return '<p class="inscription inscription--plus-tard">La lettre n’est pas encore ouverte. Pour être prévenu d’une nouvelle plaque, <a href="' . esc_url( home_url( '/contact/' ) ) . '">écrivez-nous</a>.</p>';
 }
 add_shortcode( 'tg_lettre', 'tg_code_lettre' );
+
+/**
+ * Page de l'extension Newsletter (/newsletter/, code court [newsletter]) : quand elle montre le formulaire brut de
+ * l'extension (champ et bouton « S'abonner », sans case d'accord), on affiche à la place le formulaire du thème,
+ * le même que sur l'accueil. Les messages de l'extension (confirmation de l'inscription, désinscription…) restent.
+ *
+ * @param string $sortie HTML du code court.
+ * @param string $code   Nom du code court.
+ * @return string
+ */
+function tg_page_lettre( $sortie, $code ) {
+	if ( 'newsletter' !== $code || is_admin() || false === strpos( (string) $sortie, 'tnp-subscription' ) ) {
+		return $sortie;
+	}
+	return '<section class="lettre lettre--page" aria-labelledby="titre-lettre-page"><div class="lettre__texte">'
+		. '<h2 id="titre-lettre-page">Être prévenu des nouvelles plaques</h2>'
+		. '<p class="chapo">La lettre vous prévient de chaque nouvelle plaque. Une lettre par trimestre au plus.</p>'
+		. tg_code_lettre() . '</div></section>';
+}
+add_filter( 'do_shortcode_tag', 'tg_page_lettre', 10, 2 );

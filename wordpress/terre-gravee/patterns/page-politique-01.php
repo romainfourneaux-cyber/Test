@@ -10,6 +10,7 @@
  * @package TerreGravee
  */
 
+defined( 'ABSPATH' ) || exit;
 ?>
 <!-- wp:group {"className":"wrap notes-page page-legale__corps"} -->
 <div class="wp-block-group wrap notes-page page-legale__corps">
@@ -161,11 +162,27 @@
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
-<p><strong>Paiement.</strong> Sur la page de validation de la commande, les prestataires de paiement Stripe (par WooPayments) et PayPal chargent leurs propres outils, qui peuvent déposer des cookies pour sécuriser le paiement et lutter contre la fraude <span class="note note--manque">liste des cookies de paiement à recenser</span>. Ils sont décrits dans les politiques de confidentialité de Stripe et de PayPal.</p>
+<p><strong>Paiement.</strong> Sur le panier et la page de validation de la commande seulement, les prestataires de paiement Stripe et PayPal chargent leurs propres outils. Stripe, et le service anti-robots hCaptcha qu’il utilise, déposent des cookies qui servent uniquement à sécuriser le paiement et à lutter contre la fraude :</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:list {"className":"liste-simple"} -->
+<ul class="wp-block-list liste-simple"><!-- wp:list-item -->
+<li><code>__stripe_mid</code> (Stripe, terregravee.fr) : 1 an ; <code>__stripe_sid</code> (Stripe, terregravee.fr) : 30 minutes</li>
+<!-- /wp:list-item --><!-- wp:list-item -->
+<li><code>m</code> (Stripe, m.stripe.com) : environ 13 mois</li>
+<!-- /wp:list-item --><!-- wp:list-item -->
+<li><code>hmt_id</code> (hCaptcha, api.hcaptcha.com) : 30 jours ; <code>__cf_bm</code> et <code>__cflb</code> (Cloudflare, pour hCaptcha, hcaptcha.com) : moins d’une journée</li>
+<!-- /wp:list-item --><!-- wp:list-item -->
+<li><code>NID</code> (Google, google.com) : 6 mois, quand le bouton Google Pay s’affiche</li>
+<!-- /wp:list-item --></ul>
+<!-- /wp:list -->
+
+<!-- wp:paragraph -->
+<p>Si vous payez avec PayPal, la fenêtre de PayPal applique ses propres cookies. Ces outils sont décrits dans les politiques de confidentialité de Stripe, de hCaptcha, de Google et de PayPal.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
-<p><strong>Mesure d’audience.</strong> Pour savoir quelles pages sont consultées et améliorer le site, nous utilisons Matomo, installé sur le serveur du site : les données ne sont transmises à aucun tiers. Il est réglé selon les recommandations de la CNIL et ne demande donc pas votre consentement : il sert uniquement à produire des statistiques anonymes pour notre propre compte. Votre adresse IP est anonymisée, aucune donnée n’est recoupée avec d’autres traitements et vous n’êtes pas suivi sur d’autres sites. Les cookies de mesure durent au plus 13 mois (sans prolongation à chaque visite) et les données brutes sont conservées au plus 25 mois. Vous pouvez refuser cette mesure à tout moment avec le module ci-dessous.</p>
+<p><strong>Mesure d’audience.</strong> Pour savoir quelles pages sont consultées et améliorer le site, nous utilisons Matomo, installé sur le serveur du site : les données ne sont transmises à aucun tiers. Il fonctionne sans cookie et il est réglé selon les recommandations de la CNIL : il ne demande donc pas votre consentement et sert uniquement à produire des statistiques anonymes pour notre propre compte. Votre adresse IP est anonymisée, aucune donnée n’est recoupée avec d’autres traitements et vous n’êtes pas suivi sur d’autres sites. Les données brutes sont conservées au plus 25 mois. Vous pouvez refuser cette mesure à tout moment avec le module ci-dessous.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:group {"className":"encadre encadre\u002d\u002ddoux opposition"} -->
@@ -181,7 +198,7 @@
 <!-- /wp:group -->
 
 <!-- wp:paragraph -->
-<p>Aucun autre outil de mesure ni de publicité n’est utilisé : il n’y a donc pas de bandeau de cookies <span class="note note--manque">à vérifier dans un navigateur vierge avant de retirer le bandeau</span>.</p>
+<p>Aucun autre outil de mesure ni de publicité n’est utilisé : il n’y a donc pas de bandeau de cookies.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->

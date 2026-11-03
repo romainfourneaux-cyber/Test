@@ -4,7 +4,8 @@
  *
  * Le panier et la validation de commande restent ceux de WooCommerce (blocs Panier et Validation de commande),
  * mis aux couleurs de la maquette par assets/wp.css. Les données structurées des produits restent celles de
- * WooCommerce et de Rank Math : le thème n'en ajoute aucune.
+ * WooCommerce et de Rank Math : le thème n'ajoute aucune entité, il corrige seulement celle du produit (nom, sans
+ * note ni avis, livraison et retours).
  *
  * @package TerreGravee
  */
@@ -248,11 +249,139 @@ function tg_ajouter_led( $cle, $produit_id, $quantite, $variation_id, $variation
 		max( 1, (int) $quantite ),
 		$opts[ $choix ],
 		array( $attr => $choix ),
-		array( 'tg_pour' => $plaque->get_name() . $fin )
+		// tg_plaque_cle : la ligne de la plaque, pour limiter le kit à la quantité de cette plaque
+		array(
+			'tg_pour'       => $plaque->get_name() . $fin,
+			'tg_plaque_cle' => $cle,
+		)
 	);
 	$en_cours = false;
 }
 add_action( 'woocommerce_add_to_cart', 'tg_ajouter_led', 10, 5 );
+
+/**
+ * La ligne du panier est-elle un kit LED ?
+ *
+ * @param array $ligne Ligne du panier.
+ * @return bool
+ */
+function tg_ligne_est_led( $ligne ) {
+	$led = tg_produit_led();
+	return $led && isset( $ligne['product_id'] ) && (int) $ligne['product_id'] === $led->get_id();
+}
+
+/**
+ * Nombre de plaques auxquelles un kit LED du panier peut être destiné : la quantité de la plaque liée (kit ajouté
+ * depuis sa fiche), sinon toutes les plaques du panier.
+ *
+ * @param array $ligne Ligne du kit.
+ * @return int
+ */
+function tg_plaques_pour_led( $ligne ) {
+	$panier = WC()->cart ? WC()->cart->get_cart() : array();
+	if ( ! empty( $ligne['tg_plaque_cle'] ) && isset( $panier[ $ligne['tg_plaque_cle'] ] ) ) {
+		return (int) $panier[ $ligne['tg_plaque_cle'] ]['quantity'];
+	}
+	$n = 0;
+	foreach ( $panier as $l ) {
+		if ( isset( $l['product_id'] ) && tg_est_plaque( (int) $l['product_id'] ) ) {
+			$n += (int) $l['quantity'];
+		}
+	}
+	return $n;
+}
+
+/**
+ * Kits en trop : un kit par plaque au plus (l'atelier colle un kit au dos de chaque plaque).
+ *
+ * @return string[] Messages, un par ligne de kit en trop.
+ */
+function tg_led_en_trop() {
+	$messages = array();
+	if ( ! WC()->cart || ! tg_produit_led() ) {
+		return $messages;
+	}
+	$kits    = 0;
+	$plaques = 0;
+	foreach ( WC()->cart->get_cart() as $ligne ) {
+		if ( tg_ligne_est_led( $ligne ) ) {
+			$kits += (int) $ligne['quantity'];
+			$max   = tg_plaques_pour_led( $ligne );
+			if ( $max > 0 && (int) $ligne['quantity'] > $max ) {
+				$pour       = ! empty( $ligne['tg_pour'] ) ? ' prévu pour « ' . $ligne['tg_pour'] . ' »' : '';
+				$messages[] = sprintf( 'Un kit LED par plaque : ramenez la quantité du kit LED%1$s à %2$d.', $pour, $max );
+			}
+		} elseif ( isset( $ligne['product_id'] ) && tg_est_plaque( (int) $ligne['product_id'] ) ) {
+			$plaques += (int) $ligne['quantity'];
+		}
+	}
+	if ( ! $messages && $plaques > 0 && $kits > $plaques ) {
+		$messages[] = sprintf( 'Un kit LED par plaque : le panier compte %1$d kits pour %2$d plaque%3$s.', $kits, $plaques, $plaques > 1 ? 's' : '' );
+	}
+	return $messages;
+}
+
+/**
+ * Panier en blocs : le bouton « + » du kit s'arrête à la quantité de sa plaque.
+ *
+ * @param int|float  $max     Maximum.
+ * @param WC_Product $produit Produit.
+ * @param array|null $ligne   Ligne du panier.
+ * @return int|float
+ */
+function tg_max_led_blocs( $max, $produit, $ligne = null ) {
+	if ( is_array( $ligne ) && tg_ligne_est_led( $ligne ) && WC()->cart ) {
+		$max = min( $max, max( 1, tg_plaques_pour_led( $ligne ) ) );
+	}
+	return $max;
+}
+add_filter( 'woocommerce_store_api_product_quantity_maximum', 'tg_max_led_blocs', 10, 3 );
+
+/**
+ * Panier classique : même limite sur le champ de quantité du kit.
+ *
+ * @param array      $args    Réglages du champ.
+ * @param WC_Product $produit Produit.
+ * @return array
+ */
+function tg_max_led_classique( $args, $produit ) {
+	if ( ! is_cart() || ! WC()->cart || ! $produit || ! tg_produit_led() || (int) $produit->get_parent_id() !== tg_produit_led()->get_id() ) {
+		return $args;
+	}
+	foreach ( WC()->cart->get_cart() as $cle => $ligne ) {
+		if ( tg_ligne_est_led( $ligne ) && isset( $args['input_name'] ) && 'cart[' . $cle . '][qty]' === $args['input_name'] ) {
+			$args['max_value'] = max( 1, tg_plaques_pour_led( $ligne ) );
+		}
+	}
+	return $args;
+}
+add_filter( 'woocommerce_quantity_input_args', 'tg_max_led_classique', 10, 2 );
+
+/**
+ * Libellé lisible de la sortie du câble (« Haut Droite » → « Haut droite »), comme sur la fiche.
+ *
+ * @param string $valeur Valeur de l'attribut.
+ * @return string
+ */
+function tg_libelle_cable( $valeur ) {
+	$valeur = trim( (string) $valeur );
+	if ( '' === $valeur ) {
+		return $valeur;
+	}
+	$bas = function_exists( 'mb_strtolower' ) ? mb_strtolower( $valeur, 'UTF-8' ) : strtolower( $valeur );
+	return ( function_exists( 'mb_strtoupper' ) ? mb_strtoupper( mb_substr( $bas, 0, 1, 'UTF-8' ), 'UTF-8' ) . mb_substr( $bas, 1, null, 'UTF-8' ) : ucfirst( $bas ) );
+}
+
+/**
+ * L'attribut est-il celui de la sortie du câble du kit LED (« Emplacement câble ») ?
+ *
+ * @param string $nom Nom de l'attribut (attribute_…, pa_…, ou clé de donnée de commande).
+ * @return bool
+ */
+function tg_attribut_cable( $nom ) {
+	$a = sanitize_title( str_replace( array( 'attribute_', 'pa_' ), '', urldecode( (string) $nom ) ) );
+	return false !== strpos( $a, 'cable' );
+}
 
 /**
  * Mention « Pour la plaque » sous le kit, dans le panier, la commande et les e-mails.
@@ -318,13 +447,22 @@ add_action(
 		if ( tg_led_sans_plaque() ) {
 			wc_add_notice( tg_message_led_seul(), 'error' );
 		}
+		foreach ( tg_led_en_trop() as $message ) {
+			wc_add_notice( $message, 'error' );
+		}
 	}
 );
 add_action(
 	'woocommerce_store_api_cart_errors',
 	function ( $erreurs ) {
-		if ( tg_led_sans_plaque() && $erreurs instanceof WP_Error ) {
+		if ( ! $erreurs instanceof WP_Error ) {
+			return;
+		}
+		if ( tg_led_sans_plaque() ) {
 			$erreurs->add( 'tg_led_seul', tg_message_led_seul() );
+		}
+		foreach ( tg_led_en_trop() as $i => $message ) {
+			$erreurs->add( 'tg_led_en_trop_' . $i, $message );
 		}
 	}
 );
@@ -375,19 +513,46 @@ function tg_styles_wc() {
 add_action( 'wp_enqueue_scripts', 'tg_styles_wc', 99 );
 
 /**
- * Bouton final de la commande : « Commander avec obligation de paiement » (Code de la consommation, L221-14),
- * sauf si un autre libellé a été réglé dans le bloc Validation de la commande.
+ * Libellé du bouton final de la commande (Code de la consommation, L221-14), le même que celui de l'extrait WPCode
+ * « Caisse : bouton de commande et mention TVA » du site en ligne.
+ *
+ * @return string
+ */
+function tg_texte_bouton_commande() {
+	return 'Commande avec obligation de paiement';
+}
+
+/**
+ * Bloc Validation de la commande : ce libellé, sauf si un autre a été réglé dans le bloc.
  *
  * @param string $html HTML du bloc « Actions » de la validation de commande.
  * @return string
  */
 function tg_libelle_commande( $html ) {
 	if ( false === strpos( $html, 'data-place-order-button-label' ) ) {
-		$html = preg_replace( '/class="wp-block-woocommerce-checkout-actions-block"/', 'class="wp-block-woocommerce-checkout-actions-block" data-place-order-button-label="Commander avec obligation de paiement"', $html, 1 );
+		$html = preg_replace( '/class="wp-block-woocommerce-checkout-actions-block"/', 'class="wp-block-woocommerce-checkout-actions-block" data-place-order-button-label="' . esc_attr( tg_texte_bouton_commande() ) . '"', $html, 1 );
 	}
 	return $html;
 }
 add_filter( 'render_block_woocommerce/checkout-actions-block', 'tg_libelle_commande' );
+
+// Validation classique (code court) : même libellé. Priorité basse : l'extrait WPCode du site, s'il est actif, passe après avec le même texte.
+add_filter( 'woocommerce_order_button_text', 'tg_texte_bouton_commande', 5 );
+
+/**
+ * Mention « TVA non applicable » sous la validation de commande en blocs (sur la validation classique, l'extrait
+ * WPCode du site l'écrit déjà sous le total : rien n'est ajouté pour ne pas la doubler).
+ *
+ * @param string $html HTML du bloc Validation de la commande.
+ * @return string
+ */
+function tg_mention_tva_blocs( $html ) {
+	if ( is_admin() || wp_is_json_request() || false !== strpos( $html, 'tg-mention-tva' ) ) {
+		return $html;
+	}
+	return $html . '<p class="tg-mention-tva petit attenue">Prix TTC · TVA non applicable, art. 293 B du CGI</p>';
+}
+add_filter( 'render_block_woocommerce/checkout', 'tg_mention_tva_blocs', 20 );
 
 /**
  * Pages liées par WooCommerce sous le bouton de commande : CGV et confidentialité de la maquette, si elles existent et
@@ -402,6 +567,78 @@ function tg_pages_legales_wc() {
 	}
 }
 add_action( 'after_switch_theme', 'tg_pages_legales_wc' );
+
+/* -------------------------------------------------------------------------
+ * Champs de la validation en blocs : les mêmes que la validation classique du site
+ * ---------------------------------------------------------------------- */
+
+/**
+ * Sur terregravee.fr, l'extension « Checkout Field Editor » (ThemeHigh) remplace, pour la validation en blocs, les
+ * champs d'adresse de WooCommerce par sa propre liste : téléphone facultatif, « Company name » affiché, champ
+ * « Région / Département » obligatoire. Les réglages de WooCommerce (Personnaliser › WooCommerce › Validation de
+ * commande : téléphone obligatoire, entreprise masquée, réglages déjà en place pour la validation classique) sont
+ * alors ignorés. On enregistre les champs de WooCommerce avant elle (priorité 5 contre 999 : la première valeur
+ * enregistrée est gardée) : les blocs suivent de nouveau ces réglages. Filtre « tg_champs_woocommerce_blocs » à false
+ * pour laisser faire l'extension.
+ */
+function tg_champs_blocs_woocommerce() {
+	// Noms complets sans barre initiale : le conteneur de WooCommerce ne reconnaît que cette forme
+	$package  = 'Automattic\WooCommerce\Blocks\Package';
+	$champs   = 'Automattic\WooCommerce\Blocks\Domain\Services\CheckoutFields';
+	$registre = 'Automattic\WooCommerce\Blocks\Assets\AssetDataRegistry';
+	if ( ! class_exists( $package ) || ! class_exists( $champs ) || ! class_exists( $registre ) || ! apply_filters( 'tg_champs_woocommerce_blocs', true ) ) {
+		return;
+	}
+	try {
+		$service = $package::container()->get( $champs );
+		$package::container()->get( $registre )->add( 'defaultFields', array_merge( $service->get_core_fields(), $service->get_additional_fields() ) );
+	} catch ( \Throwable $e ) {
+		return; // L'extension garde la main : rien de cassé
+	}
+}
+add_action( 'woocommerce_blocks_checkout_block_registration', 'tg_champs_blocs_woocommerce', 5 );
+
+/**
+ * France : pas de champ « Région / Département » (comme le prévoit WooCommerce pour la France et comme la validation
+ * classique du site). La même extension l'affiche et le rend obligatoire pour tous les pays (priorité 999).
+ *
+ * @param array $locale Réglages d'adresse par pays.
+ * @return array
+ */
+function tg_locale_france( $locale ) {
+	if ( ! apply_filters( 'tg_champs_woocommerce_blocs', true ) ) {
+		return $locale;
+	}
+	$etat                  = isset( $locale['FR']['state'] ) && is_array( $locale['FR']['state'] ) ? $locale['FR']['state'] : array();
+	$locale['FR']['state'] = array_merge( $etat, array( 'required' => false, 'hidden' => true ) );
+	return $locale;
+}
+add_filter( 'woocommerce_get_country_locale', 'tg_locale_france', 1000 );
+
+/* -------------------------------------------------------------------------
+ * Corse et étranger : un message clair quand aucun mode de livraison n'est proposé
+ * ---------------------------------------------------------------------- */
+
+/**
+ * Texte affiché à la place des modes de livraison (zone « Corse (non desservie) » sans méthode, pays non desservis).
+ * Le même texte est repris par assets/terre-gravee.js pour le panier et la validation en blocs.
+ *
+ * @return string
+ */
+function tg_texte_sans_livraison() {
+	return 'Nous ne livrons pas la Corse ni l’étranger : aucun mode de livraison n’est proposé pour cette adresse. Pour une demande particulière, écrivez-nous à contact@terregravee.fr.';
+}
+
+/**
+ * Pages classiques (codes courts) : le message de WooCommerce « Aucune méthode de livraison… » devient explicite.
+ *
+ * @return string
+ */
+function tg_html_sans_livraison() {
+	return '<p class="tg-sans-livraison">' . esc_html( tg_texte_sans_livraison() ) . '</p>';
+}
+add_filter( 'woocommerce_no_shipping_available_html', 'tg_html_sans_livraison' );
+add_filter( 'woocommerce_cart_no_shipping_available_html', 'tg_html_sans_livraison' );
 
 /* -------------------------------------------------------------------------
  * Opposition aux offres par e-mail, au moment de la commande
@@ -451,11 +688,88 @@ function tg_sans_note_jsonld( $donnees ) {
 		$types = (array) $entite['@type'];
 		if ( array_intersect( $types, array( 'Product', 'ProductGroup' ) ) ) {
 			unset( $donnees[ $cle ]['aggregateRating'], $donnees[ $cle ]['review'] );
+			$donnees[ $cle ] = tg_jsonld_produit( $donnees[ $cle ] );
 		}
 	}
 	return $donnees;
 }
 add_filter( 'rank_math/schema/validated_data', 'tg_sans_note_jsonld', 99 );
+
+/**
+ * Entité Product de la fiche : le nom du produit (Rank Math y met le titre de la page, « … · Terre Gravée »),
+ * la livraison (5 € par commande en France métropolitaine, offerte pendant l'offre de Noël, comme l'extrait WPCode
+ * « Livraison offerte Noël 2026 ») et le droit de rétractation de 14 jours des CGV (retour par courrier, à la charge
+ * du client).
+ *
+ * @param array $entite Entité JSON-LD.
+ * @return array
+ */
+function tg_jsonld_produit( $entite ) {
+	$produit = function_exists( 'is_product' ) && is_product() ? wc_get_product( get_queried_object_id() ) : null;
+	if ( ! $produit ) {
+		return $entite;
+	}
+	$entite['name'] = wp_strip_all_tags( $produit->get_name() );
+	if ( empty( $entite['offers'] ) || ! is_array( $entite['offers'] ) ) {
+		return $entite;
+	}
+	$frais     = ( function_exists( 'tg_etat_noel' ) && 'pendant' === tg_etat_noel() ) ? '0' : '5';
+	$livraison = array(
+		'@type'               => 'OfferShippingDetails',
+		'shippingRate'        => array(
+			'@type'    => 'MonetaryAmount',
+			'value'    => $frais,
+			'currency' => 'EUR',
+		),
+		'shippingDestination' => array(
+			'@type'          => 'DefinedRegion',
+			'addressCountry' => 'FR',
+		),
+		'deliveryTime'        => array(
+			'@type'        => 'ShippingDeliveryTime',
+			'handlingTime' => array(
+				'@type'    => 'QuantitativeValue',
+				'minValue' => 2,
+				'maxValue' => 4,
+				'unitCode' => 'DAY',
+			),
+			'transitTime'  => array(
+				'@type'    => 'QuantitativeValue',
+				'minValue' => 4,
+				'maxValue' => 5,
+				'unitCode' => 'DAY',
+			),
+		),
+	);
+	$retour    = array(
+		'@type'                => 'MerchantReturnPolicy',
+		'applicableCountry'    => 'FR',
+		'returnPolicyCategory' => 'https://schema.org/MerchantReturnFiniteReturnWindow',
+		'merchantReturnDays'   => 14,
+		'returnMethod'         => 'https://schema.org/ReturnByMail',
+		'returnFees'           => 'https://schema.org/ReturnFeesCustomerResponsibility',
+	);
+	// Carte cadeau et autres produits sans envoi : ni livraison ni retour par courrier
+	if ( ! $produit->needs_shipping() ) {
+		return $entite;
+	}
+	$ajout   = array(
+		'shippingDetails'         => $livraison,
+		'hasMerchantReturnPolicy' => $retour,
+	);
+	$ajouter = function ( $offre ) use ( $ajout ) {
+		if ( is_array( $offre ) && ! empty( $offre['@type'] ) ) {
+			$offre += $ajout;
+		}
+		return $offre;
+	};
+	if ( isset( $entite['offers']['@type'] ) ) {
+		$entite['offers'] = $ajouter( $entite['offers'] );
+	} else {
+		$entite['offers'] = array_map( $ajouter, $entite['offers'] );
+	}
+	return $entite;
+}
 
 /**
  * Même règle pour les données structurées de WooCommerce (utilisées si Rank Math est désactivé).
@@ -530,6 +844,9 @@ function tg_valeur_finition( $nom, $terme = null, $attribut = '', $produit = nul
 	if ( in_array( $a, array( 'couleur', 'pa_couleur' ), true ) ) {
 		return tg_finition_lisible( $nom );
 	}
+	if ( tg_attribut_cable( $attribut ) ) {
+		return tg_libelle_cable( $nom );
+	}
 	return $nom;
 }
 add_filter( 'woocommerce_variation_option_name', 'tg_valeur_finition', 10, 4 );
@@ -544,6 +861,9 @@ add_filter( 'woocommerce_variation_option_name', 'tg_valeur_finition', 10, 4 );
 function tg_meta_finition( $valeur, $meta ) {
 	if ( is_object( $meta ) && in_array( sanitize_title( (string) $meta->key ), array( 'couleur', 'pa_couleur' ), true ) ) {
 		return wp_kses_post( wpautop( tg_finition_lisible( wp_strip_all_tags( (string) $meta->value ) ) ) );
+	}
+	if ( is_object( $meta ) && tg_attribut_cable( (string) $meta->key ) && tg_affichage_client() ) {
+		return wp_kses_post( wpautop( tg_libelle_cable( wp_strip_all_tags( (string) $meta->value ) ) ) );
 	}
 	return $valeur;
 }

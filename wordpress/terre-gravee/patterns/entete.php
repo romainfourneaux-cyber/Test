@@ -9,6 +9,7 @@
  * @package TerreGravee
  */
 
+defined( 'ABSPATH' ) || exit;
 ?>
 <!-- wp:group {"className":"wrap entete__ligne"} -->
 <div class="wp-block-group wrap entete__ligne"><!-- wp:html -->

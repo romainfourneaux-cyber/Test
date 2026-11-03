@@ -9,6 +9,7 @@
  * @package TerreGravee
  */
 
+defined( 'ABSPATH' ) || exit;
 ?>
 <!-- wp:group {"tagName":"aside","className":"bandeau-noel tg-quand tg-quand-avant tg-quand-pendant tg-quand-apres"} -->
 <aside class="wp-block-group bandeau-noel tg-quand tg-quand-avant tg-quand-pendant tg-quand-apres">

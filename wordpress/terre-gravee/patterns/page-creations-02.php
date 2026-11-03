@@ -10,6 +10,7 @@
  * @package TerreGravee
  */
 
+defined( 'ABSPATH' ) || exit;
 ?>
 <!-- wp:group {"tagName":"section","className":"section section\u002d\u002dhaut-serre"} -->
 <section class="wp-block-group section section--haut-serre">

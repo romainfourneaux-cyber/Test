@@ -10,6 +10,7 @@
  * @package TerreGravee
  */
 
+defined( 'ABSPATH' ) || exit;
 ?>
 <!-- wp:group {"tagName":"section","className":"section section\u002d\u002dclair","anchor":"demande"} -->
 <section id="demande" class="wp-block-group section section--clair">

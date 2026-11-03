@@ -9,6 +9,7 @@
  * @package TerreGravee
  */
 
+defined( 'ABSPATH' ) || exit;
 ?>
 <!-- wp:group {"className":"wrap"} -->
 <div class="wp-block-group wrap">

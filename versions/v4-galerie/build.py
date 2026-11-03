@@ -869,7 +869,7 @@ def page(fichier, titre, description, contenu, actif=None, jsonld=None, classe="
     {panier_noel}
     <p data-livraison-normale>Livraison : 5 € par commande, quel que soit le nombre d’articles. Aucuns frais pour une carte cadeau seule, envoyée par e-mail.</p>
     <p>{zone}, en {modes}. {expedition}.</p>
-    <button type="button" class="btn btn--plein" disabled aria-describedby="commande-desactivee">Commander avec obligation de paiement</button>
+    <button type="button" class="btn btn--plein" disabled aria-describedby="commande-desactivee">Commande avec obligation de paiement</button>
     <p id="commande-desactivee">Maquette : la commande et le paiement sont désactivés. Le panier reste dans ce navigateur.</p>
   </div>
 </div>
@@ -2517,7 +2517,7 @@ def cgv():
         # archivage des contrats d’au moins 120 € pendant 10 ans : L213-1 et D213-1 (entreprendre.service-public.gouv.fr/vosdroits/F10029).
         ("cgv-commande", "4. Commande", texte(
             "<p>Vous choisissez le modèle, la finition et, si vous le voulez, le kit LED, puis vous vérifiez le panier : articles, prix, frais de livraison, mode de livraison et total. "
-            "Vous acceptez ces conditions, puis vous validez avec le bouton « Commander avec obligation de paiement ». La commande est conclue une fois le paiement accepté.</p>",
+            "Vous acceptez ces conditions, puis vous validez avec le bouton « Commande avec obligation de paiement ». La commande est conclue une fois le paiement accepté.</p>",
             "<p>Une confirmation de la commande vous est envoyée par e-mail, avec ces conditions. "
             "Pour une commande d’au moins 120 €, le contrat est conservé pendant 10 ans à compter de la livraison, et vous pouvez y accéder sur simple demande.</p>")),
         ("cgv-paiement", "5. Paiement", texte(
@@ -2646,15 +2646,27 @@ def cookies_texte(site_reel=False):
         "<code>woocommerce_cart_hash</code> et <code>woocommerce_items_in_cart</code> (le temps de la visite) et <code>wp_woocommerce_session_…</code> "
         "(2 jours au plus). Si vous créez un compte client, WordPress dépose aussi les cookies de connexion. "
         "Ces cookies servent uniquement au service que vous avez demandé : ils n’exigent pas de consentement (loi Informatique et Libertés, art. 82).</p>",
-        "<p><strong>Paiement.</strong> Sur la page de validation de la commande, les prestataires de paiement Stripe (par WooPayments) et PayPal "
-        "chargent leurs propres outils, qui peuvent déposer des cookies pour sécuriser le paiement et lutter contre la fraude {}. "
-        "Ils sont décrits dans les politiques de confidentialité de Stripe et de PayPal.</p>".format(note("liste des cookies de paiement à recenser")),
-        mesure.format("avec le module ci-dessous"),
+        # Recensés sur le site de test le 2 novembre 2026 (navigateur vierge, panier puis validation de la commande, sans payer)
+        "<p><strong>Paiement.</strong> Sur le panier et la page de validation de la commande seulement, les prestataires de paiement Stripe et PayPal "
+        "chargent leurs propres outils. Stripe, et le service anti-robots hCaptcha qu’il utilise, déposent des cookies qui servent uniquement à sécuriser "
+        "le paiement et à lutter contre la fraude :</p>",
+        liste("<code>__stripe_mid</code> (Stripe, terregravee.fr) : 1 an ; <code>__stripe_sid</code> (Stripe, terregravee.fr) : 30 minutes",
+              "<code>m</code> (Stripe, m.stripe.com) : environ 13 mois",
+              "<code>hmt_id</code> (hCaptcha, api.hcaptcha.com) : 30 jours ; <code>__cf_bm</code> et <code>__cflb</code> (Cloudflare, pour hCaptcha, hcaptcha.com) : moins d’une journée",
+              "<code>NID</code> (Google, google.com) : 6 mois, quand le bouton Google Pay s’affiche"),
+        "<p>Si vous payez avec PayPal, la fenêtre de PayPal applique ses propres cookies. "
+        "Ces outils sont décrits dans les politiques de confidentialité de Stripe, de hCaptcha, de Google et de PayPal.</p>",
+        # Site en ligne (lot 1, 2 novembre 2026) : Matomo sans cookie (disableCookies), IP anonymisée sur 2 octets, données brutes supprimées après 25 mois
+        "<p><strong>Mesure d’audience.</strong> Pour savoir quelles pages sont consultées et améliorer le site, nous utilisons Matomo, installé sur le serveur du site : "
+        "les données ne sont transmises à aucun tiers. Il fonctionne sans cookie et il est réglé selon les recommandations de la CNIL : il ne demande donc pas votre consentement "
+        "et sert uniquement à produire des statistiques anonymes pour notre propre compte. Votre adresse IP est anonymisée, aucune donnée n’est recoupée "
+        "avec d’autres traitements et vous n’êtes pas suivi sur d’autres sites. Les données brutes sont conservées au plus 25 mois. "
+        "Vous pouvez refuser cette mesure à tout moment avec le module ci-dessous.</p>",
         '<div class="encadre encadre--doux opposition">'
         '<p><strong>Refuser la mesure d’audience</strong></p>'
         '<div data-tg-code-court="[matomo_opt_out]"></div></div>',
-        "<p>Aucun autre outil de mesure ni de publicité n’est utilisé : il n’y a donc pas de bandeau de cookies {}.</p>".format(
-            note("à vérifier dans un navigateur vierge avant de retirer le bandeau")),
+        # Vérifié dans un navigateur vierge sur le site en ligne (lot 1) et sur le site de test (lot 2) : aucun cookie avant toute action
+        "<p>Aucun autre outil de mesure ni de publicité n’est utilisé : il n’y a donc pas de bandeau de cookies.</p>",
         polices)
 
 
@@ -2885,7 +2897,7 @@ TECHNIQUES = [
 LEGAL = [
     ("Bouton de rétractation", "L’ordonnance n° 2026-2 du 5 janvier 2026 a modifié l’article L221-21 : depuis le 19 juin 2026, un site qui vend en ligne doit offrir, sans frais, une fonction pour se rétracter. Le décret n° 2026-3 du même jour (article D221-5) en fixe les modalités : intitulé « renoncer au contrat ici » ou formule analogue, visible et facile d’accès pendant tout le délai ; nom et prénom, identification du contrat et moyen de recevoir l’accusé de réception ; confirmation par « confirmer la rétractation » ; accusé de réception sur support durable avec le contenu, la date et l’heure. Amende administrative jusqu’à 15 000 € pour une personne physique, votre cas, et 75 000 € pour une personne morale (L242-13). Vérifié sur Légifrance le 1er novembre 2026. La maquette met un lien dans le pied de chaque page et un formulaire simulé en deux étapes sur la page Contact. " + src("https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000032226834", "L221-21") + ", " + src("https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000053303365", "D221-5") + ", " + src("https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000032226356", "L242-13")),
     ("Pages légales", "Mentions légales, conditions générales de vente et politique de confidentialité sont rédigées dans la maquette (pied de page). Mentions : LCEN, art. 1-1 et 19 (nom, adresse, téléphone, immatriculation, directeur de la publication, nom, adresse et téléphone de l’hébergeur). CGV : encadré des garanties légales recopié du modèle officiel (annexe à l’article D211-2, décret n° 2022-946), formulaire type de rétractation (annexe à l’article R221-1), acompte du sur-mesure stipulé comme tel. Confidentialité : informations de l’article 13 du RGPD, vos durées de conservation et la mesure d’audience Matomo. Ce qui manque garde un marqueur. Une relecture par un juriste reste conseillée avant la mise en ligne. " + src("https://www.legifrance.gouv.fr/loda/id/JORFTEXT000000801164", "LCEN") + ", " + src("https://entreprendre.service-public.gouv.fr/vosdroits/F37351", "mentions obligatoires") + ", " + src("https://www.cnil.fr/fr/cookies-et-autres-traceurs/regles/cookies/que-dit-la-loi", "CNIL, traceurs")),
-    ("Bouton de commande", "Le bouton qui valide la commande doit porter la mention « commande avec obligation de paiement » ou une formule analogue (L221-14). Le bouton du panier de la maquette dit « Commander avec obligation de paiement ». " + src("https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000032226854", "L221-14")),
+    ("Bouton de commande", "Le bouton qui valide la commande doit porter la mention « commande avec obligation de paiement » ou une formule analogue (L221-14). Le bouton du panier de la maquette dit « Commande avec obligation de paiement ». " + src("https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000032226854", "L221-14")),
     ("Avis en ligne", "Les 9 avis du site actuel ne peuvent pas être présentés comme des avis de clients vérifiés : la maquette n’en affiche aucun, ni note ni étoile (L121-4, L132-2). Pour les vrais avis à venir : mention « publiés sans vérification d’achat », dates, ordre du plus récent au plus ancien, et la politique que vous avez validée (publication sous 7 jours, conservation 3 ans, motifs de refus, auteur prévenu, aucune contrepartie) dans la rubrique « Comment sont publiés les avis » (L111-7-2 ; D111-16 à D111-19). " + src("https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000049571119", "L111-7-2") + ", " + src("https://www.legifrance.gouv.fr/jorf/id/JORFARTI000035720943", "décret 2017-1436")),
     ("Médiateur de la consommation : le CM2C", "Un médiateur indépendant, référencé par la CECMC, est obligatoire (L612-1, L613-1) ; ses coordonnées et son site doivent figurer sur le site et dans les CGV (L616-1, R616-1) ; amende jusqu’à 3 000 € pour une personne physique (L641-1). Vous avez répondu « prends le réglementaire ». "
      "La liste officielle de la CECMC (economie.gouv.fr) bloquait les robots le 2 novembre : le référencement de chaque médiateur a été vérifié sur son site et sur le portail de la Commission européenne, qui recense les médiateurs notifiés par la France. Trois médiateurs généralistes, ouverts à l’inscription individuelle et couvrant la vente de biens, ont été comparés : "
@@ -3039,7 +3051,7 @@ FAIT_1ER_NOVEMBRE = [
     "Nouveau bloc de Noël en tête de l’accueil, sur un mur clair : crêtes des montagnes, plaques en vitrine avec leur cartel, carte cadeau ; le mode sombre est retravaillé.",
     "Polices hébergées avec le site : plus aucune requête vers Google. En-tête corrigé sur les petits téléphones (320 px).",
     "Trois pages légales, reliées depuis le pied de page : mentions légales, conditions générales de vente (avec l’encadré officiel des garanties légales et le formulaire type de rétractation), confidentialité et cookies. Chaque point juridique vient d’une source officielle, citée dans build.py ; ce qui manque garde un marqueur.",
-    "Bouton du panier renommé « Commander avec obligation de paiement » (L221-14) ; champ « Nom et prénom » dans la rétractation en ligne (D221-5).",
+    "Bouton du panier renommé « Commande avec obligation de paiement » (L221-14) ; champ « Nom et prénom » dans la rétractation en ligne (D221-5).",
     "Vérifié sur Légifrance : la fonction de rétractation (L221-21, D221-5, en vigueur depuis le 19 juin 2026) et son amende, jusqu’à 15 000 € pour une personne physique (L242-13).",
     "Contrôle avant la mise en ligne : la commande <code>python3 build.py --mise-en-ligne</code> liste les marqueurs restants, page par page, et échoue tant qu’il en reste.",
     "Le QR code d’Aquensis est décodé : il mène à https://www.terregravee.fr, donc à l’accueil, et non à la page qr.html.",
@@ -3290,7 +3302,7 @@ def bloc_ia():
 WP_FAIT = [
     "Un thème WordPress « Terre Gravée » (thème par blocs, compatible WooCommerce) qui reprend la maquette à l’identique : même feuille de style, mêmes polices hébergées, clair et sombre.",
     "Les produits existants restent tels quels : le thème lit l’attribut de finition (couleur : NOIR, GRIS, DOREE), la photo de chaque variation, le kit LED (identifiant led) et la carte cadeau (carte-cadeau).",
-    "Le panier de démonstration disparaît : le tiroir devient le mini-panier de WooCommerce, et les pages Panier et Validation de la commande restent celles de WooCommerce, aux couleurs de la maquette, avec le bouton « Commander avec obligation de paiement ».",
+    "Le panier de démonstration disparaît : le tiroir devient le mini-panier de WooCommerce, et les pages Panier et Validation de la commande restent celles de WooCommerce, aux couleurs de la maquette, avec le bouton « Commande avec obligation de paiement ».",
     "Sur la fiche d’une plaque, la case « Ajouter le kit LED » et la sortie du câble ajoutent le kit au panier avec la plaque. Le kit seul ne peut pas être commandé.",
     "L’offre de Noël suit la date comme dans la maquette, et la livraison passe vraiment à 0 € du 27 novembre au 14 décembre 2026 ; chaque commande à expédier porte la note « glisser un magnet en ardoise gravée dans le colis ».",
     "Les formulaires deviennent réels : contact, demande de devis, rétractation en ligne en deux étapes avec accusé de réception daté, lettre d’information par l’extension Newsletter déjà installée.",

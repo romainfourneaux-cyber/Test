@@ -170,6 +170,48 @@ html[data-noel="pendant"] body.page-accueil .tg-zone-bandeau .bandeau-noel { dis
 .wc-block-cart .wp-block-woocommerce-product-collection h2, .wc-block-cart .wp-block-heading { font-family: var(--f-titre); }
 .wc-block-components-notice-banner > svg { fill: currentColor; }
 
+/* ---------- Panier et validation classiques (codes courts [woocommerce_cart] et [woocommerce_checkout]) ---------- */
+.tg-commande .woocommerce { font-family: var(--f-texte); color: var(--encre); }
+.tg-commande .woocommerce table.shop_table { border: 1px solid var(--filet); border-radius: 0; border-collapse: collapse; background: transparent; margin: 0 0 24px; }
+.tg-commande .woocommerce table.shop_table th, .tg-commande .woocommerce table.shop_table td { border-color: var(--filet); padding: 12px 14px; color: var(--encre); font-variant-numeric: tabular-nums; }
+.tg-commande .woocommerce table.shop_table thead th, .tg-commande #order_review_heading, .tg-commande .woocommerce-billing-fields h3, .tg-commande .woocommerce-shipping-fields h3, .tg-commande .woocommerce-additional-fields h3, .tg-commande .cart_totals h2 {
+  font-family: var(--f-cartel); font-weight: 600; font-size: .86rem; letter-spacing: .12em; text-transform: uppercase; color: var(--encre-2);
+}
+.tg-commande .woocommerce table.shop_table .order-total th, .tg-commande .woocommerce table.shop_table .order-total td { font-family: var(--f-titre); font-weight: 400; font-size: 1.25rem; }
+.tg-commande .woocommerce table.cart img { width: 72px; height: auto; background: var(--filet); }
+.tg-commande .woocommerce table.cart td.product-name a { font-family: var(--f-titre); font-size: 1.1rem; color: var(--encre); text-decoration: none; }
+.tg-commande .woocommerce a.remove { color: var(--alerte) !important; }
+.tg-commande .woocommerce a.remove:hover { background: var(--alerte); color: var(--fond) !important; }
+.tg-commande .woocommerce form .form-row label { font-size: var(--t-petit); color: var(--encre-2); }
+.tg-commande .woocommerce form .form-row .input-text, .tg-commande .woocommerce form .form-row select, .tg-commande .woocommerce .quantity .qty, .tg-commande .woocommerce #coupon_code,
+.tg-commande .select2-container--default .select2-selection--single {
+  border: 1px solid var(--filet-fort); border-radius: 0; background: var(--fond); color: var(--encre); min-height: 44px; padding: 8px 10px; font: inherit;
+}
+.tg-commande .select2-container--default .select2-selection--single .select2-selection__rendered { color: var(--encre); line-height: 26px; }
+.select2-dropdown { background: var(--fond); color: var(--encre); border-color: var(--filet-fort); border-radius: 0; }
+.tg-commande .woocommerce-checkout #payment, .tg-commande .woocommerce-checkout #payment div.payment_box { background: var(--fond-2); color: var(--encre); border-radius: 0; }
+.tg-commande .woocommerce-checkout #payment div.payment_box::before { border-bottom-color: var(--fond-2); }
+.tg-commande .woocommerce-checkout #payment ul.payment_methods { border-bottom-color: var(--filet); }
+.tg-commande .woocommerce #place_order, .tg-commande .woocommerce a.checkout-button { width: 100%; background: var(--cuivre); color: var(--sur-cuivre); border: 1px solid var(--cuivre); border-radius: 0; padding: 14px 18px; }
+@media (hover: hover) { .tg-commande .woocommerce #place_order:hover, .tg-commande .woocommerce a.checkout-button:hover { background: var(--encre); color: var(--fond); border-color: var(--encre); } }
+.tg-commande .woocommerce .woocommerce-shipping-methods { margin: 0; padding: 0; list-style: none; }
+.tg-commande .woocommerce .woocommerce-shipping-methods li { margin: 0 0 8px; }
+.tg-commande .woocommerce-terms-and-conditions-wrapper, .tg-commande .woocommerce-privacy-policy-text { font-size: var(--t-petit); color: var(--encre-2); }
+.tg-commande .woocommerce .col2-set .col-1, .tg-commande .woocommerce .col2-set .col-2 { float: none; width: 100%; }
+@media (min-width: 900px) {
+  .tg-commande form.woocommerce-checkout { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 0 clamp(28px, 4vw, 56px); align-items: start; }
+  .tg-commande form.woocommerce-checkout > * { grid-column: 1 / -1; }
+  .tg-commande form.woocommerce-checkout > #customer_details { grid-column: 1; grid-row: span 3; }
+  .tg-commande form.woocommerce-checkout > #order_review_heading, .tg-commande form.woocommerce-checkout > #order_review { grid-column: 2; }
+}
+.tg-mention-tva { margin-top: 14px; }
+/* Pastille de quantité du résumé de commande : couleurs du thème (WooCommerce la peint en blanc, illisible en sombre) */
+.wc-block-components-order-summary-item__quantity { background: var(--fond) !important; color: var(--encre) !important; border-color: var(--encre) !important; box-shadow: 0 0 0 2px var(--fond) !important; }
+/* Aucune livraison pour l'adresse (Corse, étranger) : message du thème, en blocs comme en codes courts */
+.tg-sans-livraison { margin: 0 0 12px; padding: 10px 14px; border-left: 3px solid var(--cuivre-texte); background: var(--fond-2); color: var(--encre); font-size: var(--t-petit); }
+/* Le message du thème dit pourquoi (Corse, étranger) : le message général de WooCommerce (« Veuillez vérifier l’exactitude de l’adresse… ») est masqué à côté */
+:where(.wc-block-components-checkout-step__content, .wp-block-woocommerce-cart-order-summary-shipping-block):has(> .tg-sans-livraison) :is(.wc-block-components-shipping-rates-control__no-results-notice, .wc-block-components-totals-shipping__no-results-notice) { display: none; }
+
 /* ---------- Formulaires du thème ---------- */
 .message-demo--ok { border-color: var(--cuivre-texte); }
 .message-demo--erreur { border-color: var(--alerte); color: var(--encre); }

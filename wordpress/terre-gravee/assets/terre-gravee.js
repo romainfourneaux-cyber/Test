@@ -232,6 +232,25 @@
     });
     majPrix();
 
+    /* Quantité : pas plus que le stock de la finition choisie (max_qty de WooCommerce), 9 au plus */
+    var maxDepart = qte ? (+qte.max || 9) : 9;
+    var bornerQte = function (max) {
+      if (!qte) return;
+      qte.max = String(max);
+      if ((+qte.value || 1) > max) {
+        qte.value = String(max);
+        qte.dispatchEvent(new Event("change", { bubbles: true }));
+      }
+    };
+    if (formulaire && window.jQuery) {
+      window.jQuery(formulaire)
+        .on("found_variation", function (e, v) {
+          var stock = v && v.max_qty !== "" && v.max_qty != null ? +v.max_qty : 0;
+          bornerQte(stock > 0 ? Math.min(maxDepart, stock) : maxDepart);
+        })
+        .on("reset_data", function () { bornerQte(maxDepart); });
+    }
+
     /* Barre d’achat collante (téléphone) : même bouton que le formulaire */
     var barre = $(".barre-achat-mobile");
     var boutonPrincipal = formulaire ? $(".single_add_to_cart_button", formulaire) : null;
@@ -372,6 +391,48 @@
       f.submit();
     });
   });
+
+  /* Panier et validation en blocs : aucune livraison pour l’adresse (Corse, étranger) → message explicite.
+     WooCommerce n’affiche sinon que « Saisir une adresse… » ou « Aucune option de livraison », sans dire pourquoi.
+     Le message est ajouté à côté des modes de livraison, sans toucher aux éléments gérés par WooCommerce. */
+  if (CONF.sansLivraison && $(".wp-block-woocommerce-checkout, .wp-block-woocommerce-cart")) {
+    var horsZone = function (adr) {
+      if (!adr) return false;
+      var cp = String(adr.postcode || "").replace(/\s+/g, "");
+      if (adr.country && adr.country !== "FR") return true;
+      return /^(20|2A|2B)/i.test(cp);
+    };
+    var majSansLivraison = function () {
+      var store;
+      try { store = window.wp && wp.data && wp.data.select("wc/store/cart"); } catch (e) { store = null; }
+      if (!store || !store.getCartData) return;
+      var c = store.getCartData() || {};
+      var adr = c.shippingAddress || {};
+      var paquets = c.shippingRates || [];
+      var aucun = !paquets.length || paquets.every(function (p) { return !p.shipping_rates || !p.shipping_rates.length; });
+      var montrer = !!(c.needsShipping && aucun && adr.postcode && horsZone(adr));
+      var cibles = $$(".wc-block-checkout__shipping-option .wc-block-components-checkout-step__content, .wp-block-woocommerce-cart-order-summary-shipping-block");
+      cibles.forEach(function (cible) {
+        var msg = cible.querySelector(":scope > .tg-sans-livraison");
+        if (montrer && !msg) {
+          msg = document.createElement("p");
+          msg.className = "tg-sans-livraison";
+          msg.setAttribute("role", "status");
+          msg.textContent = CONF.sansLivraison;
+          cible.insertBefore(msg, cible.firstChild);
+        } else if (!montrer && msg) {
+          msg.parentNode.removeChild(msg);
+        }
+      });
+    };
+    var attente = null;
+    var planifier = function () { if (attente) return; attente = setTimeout(function () { attente = null; majSansLivraison(); }, 250); };
+    var brancher = function () {
+      if (window.wp && wp.data && wp.data.subscribe) { wp.data.subscribe(planifier); planifier(); return true; }
+      return false;
+    };
+    if (!brancher()) window.addEventListener("load", brancher);
+  }
 
   /* Copie de l’adresse e-mail */
   $$("[data-copier]").forEach(function (b) {

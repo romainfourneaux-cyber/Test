@@ -4,7 +4,8 @@
 Ce que le script écrit (le reste du thème est écrit à la main et n'est jamais modifié ici) :
   terre-gravee/assets/galerie.css, assets/fonts/, assets/img/   copie de la maquette (styles, polices, images utiles)
   terre-gravee/patterns/page-*.php                              une composition par section des pages de la maquette
-  terre-gravee/inc/donnees-produits.php                         textes des fiches (cartel, phrase, « Le lieu », histoire…)
+  terre-gravee/inc/donnees-produits.php                         textes des fiches (cartel, phrase, « Le lieu », histoire…, nom, rang, référencement)
+  terre-gravee/inc/donnees-seo.php                              titre et description Rank Math des pages WooCommerce (collection, panier…)
   terre-gravee/inc/fragments.php                                morceaux fixes des fiches produit (caractéristiques…)
   contenu-terre-gravee.xml                                      fichier d'import WordPress (pages et menu)
   terre-gravee.zip                                              le thème, prêt à téléverser
@@ -475,6 +476,7 @@ def ecrire_compositions(pages_blocs):
  * @package TerreGravee
  */
 
+defined( 'ABSPATH' ) || exit;
 ?>
 """.format(titre=titre_wp.replace("*/", ""), nom=nom.replace("*/", "")[:80], base=base, mots=slug)
             ecrire(os.path.join(dossier, base + ".php"), entete + pour_php(contenu) + "\n")
@@ -493,6 +495,7 @@ def ecrire_compositions(pages_blocs):
  * @package TerreGravee
  */
 
+defined( 'ABSPATH' ) || exit;
 ?>
 """.format(titre=titre_wp, base=base)
         ecrire(os.path.join(dossier, base + ".php"), entete + pour_php("\n\n".join(c for _, c in sections)) + "\n")
@@ -528,6 +531,7 @@ def compositions_communes():
  * @package TerreGravee
  */
 
+defined( 'ABSPATH' ) || exit;
 ?>
 """.format(titre=titre, slug=slug, ins="true" if slug == "boutique-suite" else "false")
         ecrire(os.path.join(THEME, "patterns", slug + ".php"), entete + pour_php(contenu) + "\n")
@@ -570,11 +574,23 @@ def fragment_maquette(fichier, selecteur):
     return ser(el[0])
 
 
+def meta_page(fichier):
+    """Titre et description d'une page de la maquette (balises <title> et meta description), pour Rank Math."""
+    doc = open(os.path.join(V4, fichier), encoding="utf-8").read()
+    titre = re.search(r"<title>(.*?)</title>", doc, re.S).group(1)
+    desc = re.search(r'<meta name="description" content="([^"]*)"', doc).group(1)
+    return html.unescape(titre).strip(), html.unescape(desc).strip()
+
+
 def donnees_produits():
     d = {}
-    for p in B.CATALOGUE:
+    for ordre, p in enumerate(B.CATALOGUE):
         s = p["slug"]
         entree = {"nom": p["nom"], "collection": p["collection"], "cadeau": s in B.IDEES_CADEAUX}
+        # Nom, rang dans la collection (thèmes de la maquette, accessoires à la fin) et référencement de la fiche :
+        # bouton « Noms, ordre et référencement des produits » d'Apparence › Terre Gravée
+        titre_seo, desc_seo = meta_page("produit-{}.html".format(s))
+        entree.update({"ordre": ordre + 1, "titre_seo": titre_seo, "desc_seo": desc_seo})
         if p["collection"] != "accessoires":
             faune = p["collection"] == "faune"
             entree.update({
@@ -612,6 +628,29 @@ defined( 'ABSPATH' ) || exit;
 return {};
 """.format(php_valeur(d, ""))
     ecrire(os.path.join(THEME, "inc", "donnees-produits.php"), contenu)
+    titre_col, desc_col = meta_page("collection.html")
+    seo = {
+        # Pages de WooCommerce (par leur réglage dans WooCommerce, pas par leur adresse) : titre et description Rank Math
+        "shop": {"titre": titre_col, "desc": desc_col},
+        "cart": {"titre": "Panier · Terre Gravée", "desc": "Votre panier Terre Gravée : plaques murales en aluminium découpé au laser dans les Hautes-Pyrénées, kit LED en option et carte cadeau."},
+        "checkout": {"titre": "Validation de la commande · Terre Gravée", "desc": "Validation de votre commande Terre Gravée : livraison en point relais à 5 €, paiement par carte ou PayPal."},
+        "myaccount": {"titre": "Mon compte · Terre Gravée", "desc": "Votre compte client Terre Gravée : commandes, adresses et informations de connexion."},
+        # Page de l'extension Newsletter (adresse /newsletter/) : gestion de l'inscription à la lettre
+        "newsletter": {"titre": "Lettre d’information · Terre Gravée", "desc": "Gérer votre inscription à la lettre d’information de Terre Gravée : nouvelles plaques des Hautes-Pyrénées, sans publicité de tiers."},
+    }
+    contenu = """<?php
+/**
+ * Titre et description (Rank Math) des pages de WooCommerce, repris de la maquette v4 pour la collection.
+ * Fichier généré par generer.py : ne pas le modifier à la main.
+ *
+ * @package TerreGravee
+ */
+
+defined( 'ABSPATH' ) || exit;
+
+return {};
+""".format(php_valeur(seo, ""))
+    ecrire(os.path.join(THEME, "inc", "donnees-seo.php"), contenu)
     # Morceaux fixes des fiches (les mêmes pour toutes les plaques), tirés des fiches de la maquette
     pic = "produit-le-pic-du-midi.html"
     frag = {
@@ -796,6 +835,12 @@ def main():
         c = "\n".join(x for _, x in sections)
         print("{:<32} {:>3} blocs, dont {:>2} HTML, {:>2} codes courts ; marqueurs : {}".format(
             titre, c.count("<!-- wp:"), c.count("<!-- wp:html"), c.count("<!-- wp:shortcode"), ", ".join(marqueurs(c)) or "aucun"))
+    # Fiches produit (fragments) et pied de page : leurs marqueurs aussi
+    print("{:<32} marqueurs : {}".format("Fiches produit (fragments)", ", ".join(marqueurs(frag_total)) or "aucun"))
+    pied = open(os.path.join(THEME, "patterns", "pied.php"), encoding="utf-8").read()
+    print("{:<32} marqueurs : {}".format("Pied de page", ", ".join(marqueurs(pied)) or "aucun"))
+    print("Les marqueurs ne sont visibles que des administrateurs connectés (inc/contenu.php, tg_marqueurs) ; "
+          "le médiateur n'est nommé aux visiteurs qu'une fois la case « J'ai adhéré au CM2C » cochée.")
     print("{} compositions, {} fiches produit, zip : {}".format(len(noms), len(d), zipper()))
 
 

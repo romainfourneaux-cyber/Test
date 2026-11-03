@@ -71,12 +71,62 @@ function tg_styles_et_script() {
 				'fuseau'      => tg_fuseau_iana(),
 				// Date simulée du site de test (TG_DATE_ESSAI) : le navigateur suit le serveur
 				'dateEssai'   => defined( 'TG_DATE_ESSAI' ) ? tg_aujourdhui() : '',
+				// Panier et validation en blocs : message quand aucune livraison n'est proposée (Corse, étranger)
+				'sansLivraison' => function_exists( 'tg_texte_sans_livraison' ) ? tg_texte_sans_livraison() : '',
 			)
 		) . ';',
 		'before'
 	);
 }
 add_action( 'wp_enqueue_scripts', 'tg_styles_et_script' );
+
+/**
+ * Émojis de WordPress désactivés : leur script écrit dans le stockage du navigateur (wpEmojiSettingsSupports) sur
+ * toutes les pages et charge des images depuis s.w.org. Les navigateurs affichent les émojis eux-mêmes.
+ */
+function tg_sans_emojis() {
+	remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
+	remove_action( 'wp_print_styles', 'print_emoji_styles' );
+	remove_action( 'wp_enqueue_scripts', 'wp_enqueue_emoji_styles' );
+	remove_action( 'admin_print_scripts', 'print_emoji_detection_script' );
+	remove_action( 'admin_print_styles', 'print_emoji_styles' );
+	remove_action( 'admin_enqueue_scripts', 'wp_enqueue_emoji_styles' );
+	remove_filter( 'the_content_feed', 'wp_staticize_emoji' );
+	remove_filter( 'comment_text_rss', 'wp_staticize_emoji' );
+	remove_filter( 'wp_mail', 'wp_staticize_emoji_for_email' );
+	add_filter( 'emoji_svg_url', '__return_false' );
+}
+add_action( 'init', 'tg_sans_emojis' );
+
+/**
+ * Le panier en blocs dit « Expédition », la validation « Livraison » : un seul mot, « Livraison », partout.
+ * Textes de WooCommerce traduits côté serveur (gettext) et dans les scripts des blocs (wp.i18n).
+ *
+ * @param string $traduction Texte traduit.
+ * @param string $texte      Texte d'origine.
+ * @param string $domaine    Domaine.
+ * @return string
+ */
+function tg_mot_livraison( $traduction, $texte, $domaine ) {
+	return ( 'woocommerce' === $domaine && 'Expédition' === $traduction ) ? 'Livraison' : $traduction;
+}
+add_filter( 'gettext', 'tg_mot_livraison', 10, 3 );
+
+/**
+ * Même règle dans les scripts des blocs Panier et Validation de commande.
+ */
+function tg_mot_livraison_js() {
+	if ( ! wp_script_is( 'wp-hooks', 'registered' ) || ! wp_script_is( 'wp-i18n', 'registered' ) ) {
+		return;
+	}
+	wp_add_inline_script(
+		'wp-i18n',
+		'(function(){if(!window.wp||!wp.hooks)return;var f=function(t){return t==="Expédition"?"Livraison":t;};'
+		. 'wp.hooks.addFilter("i18n.gettext_woocommerce","terre-gravee/livraison",f);'
+		. 'wp.hooks.addFilter("i18n.gettext_with_context_woocommerce","terre-gravee/livraison",f);})();'
+	);
+}
+add_action( 'wp_enqueue_scripts', 'tg_mot_livraison_js', 5 );
 
 /**
  * Préchargement des deux polices du premier écran (titres et texte).

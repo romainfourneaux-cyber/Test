@@ -10,6 +10,7 @@
  * @package TerreGravee
  */
 
+defined( 'ABSPATH' ) || exit;
 ?>
 <!-- wp:group {"className":"wrap carte-page"} -->
 <div class="wp-block-group wrap carte-page">

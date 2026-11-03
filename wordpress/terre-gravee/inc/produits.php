@@ -148,7 +148,63 @@ function tg_variations_par_finition( $produit ) {
  * @return int
  */
 function tg_image_variation( $variation_id ) {
-	return (int) get_post_meta( $variation_id, '_thumbnail_id', true );
+	static $cache = array();
+	if ( isset( $cache[ $variation_id ] ) ) {
+		return $cache[ $variation_id ];
+	}
+	$id = (int) get_post_meta( $variation_id, '_thumbnail_id', true );
+	if ( ! $id ) {
+		$id = tg_image_finition_parent( $variation_id );
+	}
+	$cache[ $variation_id ] = $id;
+	return $id;
+}
+
+/**
+ * Variation sans photo propre : photo de la plaque (image principale ou galerie) dont le nom de fichier porte la
+ * finition de la variation (« pic-noir.webp », « marmotte-noire.webp », « cerf-dore.webp »), si elle n'est la photo
+ * propre d'aucune autre variation. Sinon 0 : la fiche affiche « photo à venir » plutôt qu'une autre finition.
+ *
+ * @param int $variation_id Variation.
+ * @return int
+ */
+function tg_image_finition_parent( $variation_id ) {
+	$variation = wc_get_product( $variation_id );
+	if ( ! $variation || ! $variation->get_parent_id() ) {
+		return 0;
+	}
+	$parent = wc_get_product( $variation->get_parent_id() );
+	$nom    = $parent ? tg_attribut_finition( $parent ) : '';
+	if ( ! $nom ) {
+		return 0;
+	}
+	$attrs = $variation->get_variation_attributes();
+	$fin   = tg_finition_de( isset( $attrs[ 'attribute_' . sanitize_title( $nom ) ] ) ? $attrs[ 'attribute_' . sanitize_title( $nom ) ] : '' );
+	$motifs = array(
+		'noir' => '/(^|[^a-z])noire?([^a-z]|$)/',
+		'gris' => '/(^|[^a-z])grise?([^a-z]|$)/',
+		'dore' => '/(^|[^a-z])(dore|doree)([^a-z]|$)/',
+	);
+	if ( ! $fin || empty( $motifs[ $fin ] ) ) {
+		return 0;
+	}
+	$prises = array();
+	foreach ( $parent->get_children() as $autre ) {
+		if ( (int) $autre !== (int) $variation_id ) {
+			$prises[] = (int) get_post_meta( $autre, '_thumbnail_id', true );
+		}
+	}
+	$images = array_filter( array_merge( array( (int) $parent->get_image_id() ), array_map( 'intval', $parent->get_gallery_image_ids() ) ) );
+	foreach ( $images as $img ) {
+		if ( in_array( $img, $prises, true ) ) {
+			continue;
+		}
+		$fichier = strtolower( remove_accents( wp_basename( (string) get_attached_file( $img ) ) ) );
+		if ( $fichier && preg_match( $motifs[ $fin ], $fichier ) ) {
+			return $img;
+		}
+	}
+	return 0;
 }
 
 /**

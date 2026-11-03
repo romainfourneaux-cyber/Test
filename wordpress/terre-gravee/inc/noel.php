@@ -1,10 +1,11 @@
 <?php
 /**
- * Offre de Noël : quatre états selon la date (comme la maquette), livraison offerte pendant l'offre, rappel du magnet.
+ * Offre de Noël : quatre états selon la date (comme la maquette), annonce de la livraison offerte, rappel du magnet.
+ * Le tarif à 0 € pendant l'offre n'est pas ici : il vient de l'extrait WPCode « Livraison offerte Noël 2026 » du site.
  *
  * États, en heure de Paris (réglage « Fuseau horaire » de WordPress) :
  *   « avant »   jusqu'au 26 novembre 2026 inclus ;
- *   « pendant » du 27 novembre au 14 décembre 2026 inclus : livraison offerte, un magnet en ardoise gravée dans chaque colis ;
+ *   « pendant » du 27 novembre au 14 décembre 2026 inclus : livraison offerte (extrait WPCode), un magnet dans chaque colis ;
  *   « apres »   du 15 au 24 décembre : la carte cadeau prend le relais ;
  *   « fini »    à partir du 25 décembre : plus rien ne parle de Noël.
  *
@@ -37,7 +38,7 @@ function tg_offre() {
 
 /**
  * Date du jour (fuseau du site). La constante TG_DATE_ESSAI (AAAA-MM-JJ), à mettre dans wp-config.php sur un site
- * de test seulement, simule une autre date côté serveur (livraison offerte comprise).
+ * de test seulement, simule une autre date pour l'affichage de l'offre (le tarif suit l'extrait WPCode, à l'heure réelle).
  *
  * @return string AAAA-MM-JJ
  */
@@ -84,66 +85,61 @@ add_filter( 'language_attributes', 'tg_attribut_noel' );
 
 if ( class_exists( 'WooCommerce' ) ) {
 
-	/**
-	 * Pendant l'offre, tous les modes de livraison passent à 0 € (« 5 € pour tous les modes, offerte pendant l'offre »).
-	 *
-	 * @param array $tarifs Tarifs calculés.
-	 * @return array
+	/*
+	 * Le tarif de la livraison n'est pas calculé ici. Sur terregravee.fr, la livraison offerte du 27 novembre au
+	 * 14 décembre 2026 est portée par l'extrait WPCode « Livraison offerte Noël 2026 » (n° 2749), indépendant du thème
+	 * (tarifs à 0 € à l'heure de Paris, paniers ouverts recalculés au début et à la fin de l'offre). Le thème se contente
+	 * de l'annoncer (bandeau, encarts, ligne du magnet) et d'ajouter la note du magnet sur les commandes.
 	 */
-	function tg_livraison_offerte( $tarifs ) {
-		if ( 'pendant' !== tg_etat_noel() || ! apply_filters( 'tg_livraison_offerte_active', true ) ) {
-			return $tarifs;
-		}
-		foreach ( $tarifs as $tarif ) {
-			if ( $tarif instanceof WC_Shipping_Rate ) {
-				$tarif->set_cost( 0 );
-				$tarif->set_taxes( array() );
-			}
-		}
-		return $tarifs;
-	}
-	add_filter( 'woocommerce_package_rates', 'tg_livraison_offerte', 50 );
 
 	/**
-	 * L'état de l'offre entre dans le calcul de la livraison mise en cache par WooCommerce : le 27 novembre et le
-	 * 15 décembre, les paniers ouverts reprennent le bon tarif.
+	 * Encart de Noël du panier et de la validation de commande (états « avant » et « pendant »).
 	 *
-	 * @param array $colis Colis.
-	 * @return array
-	 */
-	function tg_colis_etat( $colis ) {
-		foreach ( $colis as $i => $c ) {
-			$colis[ $i ]['tg_offre_noel'] = tg_etat_noel();
-		}
-		return $colis;
-	}
-	add_filter( 'woocommerce_cart_shipping_packages', 'tg_colis_etat' );
-
-	/**
-	 * Encart de Noël au-dessus du panier et de la validation de commande (états « avant » et « pendant »).
-	 *
-	 * @param string $html HTML du bloc.
 	 * @return string
 	 */
-	function tg_encart_noel_panier( $html ) {
-		if ( is_admin() || wp_is_json_request() ) {
-			return $html;
-		}
+	function tg_encart_noel_html() {
 		// Ligne « Magnet en ardoise gravée : Offert » pendant l'offre, comme dans le panier de la maquette, si un colis part
 		$magnet = ( WC()->cart && WC()->cart->needs_shipping() )
 			? '<dl class="encart-noel__lignes tg-quand tg-quand-pendant"><div><dt>Magnet en ardoise gravée</dt><dd class="offerte">Offert</dd></div></dl>'
 			: '';
-		$encart = '<aside class="encart-noel encart-noel--commande tg-quand tg-quand-avant tg-quand-pendant" aria-label="Noël">'
+		return '<aside class="encart-noel encart-noel--commande tg-quand tg-quand-avant tg-quand-pendant" aria-label="Noël">'
 			. '<p class="encart-noel__titre">Noël</p><div class="encart-noel__corps">'
 			. '<p class="tg-quand tg-quand-avant"><strong>À partir du 27 novembre : livraison offerte et un magnet en ardoise gravée offert dans chaque colis.</strong> Aujourd’hui, la livraison d’une plaque coûte 5 € par commande.</p>'
 			. '<p class="tg-quand tg-quand-pendant"><strong>Livraison offerte et un magnet en ardoise gravée offert dans chaque colis jusqu’au 14 décembre inclus.</strong></p>'
 			. '<p>Pour recevoir avant Noël, commandez au plus tard le lundi 14 décembre 2026. Aucuns frais de port pour une carte cadeau seule, envoyée par e-mail.</p>'
 			. $magnet
 			. '</div></aside>';
-		return $encart . $html;
+	}
+
+	/**
+	 * Encart au-dessus des blocs Panier et Validation de la commande.
+	 *
+	 * @param string $html HTML du bloc.
+	 * @return string
+	 */
+	function tg_encart_noel_panier( $html ) {
+		if ( is_admin() || wp_is_json_request() || in_array( tg_etat_noel(), array( 'apres', 'fini' ), true ) ) {
+			return $html;
+		}
+		return tg_encart_noel_html() . $html;
 	}
 	add_filter( 'render_block_woocommerce/cart', 'tg_encart_noel_panier' );
 	add_filter( 'render_block_woocommerce/checkout', 'tg_encart_noel_panier' );
+
+	/**
+	 * Même encart sur le panier et la validation classiques (codes courts [woocommerce_cart] et [woocommerce_checkout]).
+	 */
+	function tg_encart_noel_classique() {
+		static $fait = array();
+		$ou = current_action();
+		if ( isset( $fait[ $ou ] ) || in_array( tg_etat_noel(), array( 'apres', 'fini' ), true ) ) {
+			return;
+		}
+		$fait[ $ou ] = true;
+		echo tg_encart_noel_html(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- HTML fixe du thème.
+	}
+	add_action( 'woocommerce_before_cart', 'tg_encart_noel_classique', 5 );
+	add_action( 'woocommerce_before_checkout_form', 'tg_encart_noel_classique', 5 );
 
 	/**
 	 * Pendant l'offre, une note sur la commande rappelle de glisser le magnet dans le colis.

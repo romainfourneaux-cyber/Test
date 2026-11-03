@@ -10,6 +10,7 @@
  * @package TerreGravee
  */
 
+defined( 'ABSPATH' ) || exit;
 ?>
 <!-- wp:group {"className":"wrap notes-page page-legale__corps"} -->
 <div class="wp-block-group wrap notes-page page-legale__corps">
@@ -117,7 +118,7 @@
 <!-- wp:group {"className":"texte"} -->
 <div class="wp-block-group texte">
 <!-- wp:paragraph -->
-<p>Vous choisissez le modèle, la finition et, si vous le voulez, le kit LED, puis vous vérifiez le panier : articles, prix, frais de livraison, mode de livraison et total. Vous acceptez ces conditions, puis vous validez avec le bouton « Commander avec obligation de paiement ». La commande est conclue une fois le paiement accepté.</p>
+<p>Vous choisissez le modèle, la finition et, si vous le voulez, le kit LED, puis vous vérifiez le panier : articles, prix, frais de livraison, mode de livraison et total. Vous acceptez ces conditions, puis vous validez avec le bouton « Commande avec obligation de paiement ». La commande est conclue une fois le paiement accepté.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
