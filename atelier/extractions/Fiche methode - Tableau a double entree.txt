@@ -1,0 +1,21 @@
+                    FICHE MÉTHODE :
+              LE TABLEAU À DOUBLE ENTRÉE
+On construit un tableau à double entrée lorsque les données à y classer dépendent d’au moins deux
+critères, ordonnés en catégories. L’un sera organisé en rang, l’autre en colonne.
+
+Au croisement de chaque rang et de chaque colonne, on a des cases dans lesquelles sont rangées les
+données. Attention, chaque case peut contenir plusieurs lignes d’écriture.
+
+Par exemple, on peut choisir de réaliser un tableau à double entrée pour établir les proportions d’un
+gâteau selon le nombre de personnes pour lequel il est prévu :
+
+
+
+
+On parle de double entrée.
+
+L’entrée 1 est la taille du gâteau.
+
+L’entrée 2 correspond à l’ensemble des ingrédients (œufs, farine, lait, parfum, sucre) qui forment
+chacun une catégorie.
+

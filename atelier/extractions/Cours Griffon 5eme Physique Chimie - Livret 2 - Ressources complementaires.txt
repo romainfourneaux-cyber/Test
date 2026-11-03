@@ -1,0 +1,71 @@
+                            Physique Chimie 5e - Livret 2
+                            Ressources complémentaires
+
+                        Thème C : L’énergie et ses conversions
+Chapitre 1 – Séance 1
+
+
+
+
+                                                                 Cours GRIFFON©
+Chapitre 1 – Séance 2
+
+Le réseau électrique et ses dangers :
+
+Au sortir des centrales électriques, la tension dans les fils est très élevée : 400 000 Volts !
+
+Les câbles qui transportent l’électricité, appelés « lignes » sont très dangereux. C’est pourquoi plus la
+tension de l’électricité qu’ils transportent est élevée, plus les câbles circulent en hauteur dans les lignes
+à haute tension. Les câbles très lourds sont supportés par des pylônes en métal pour résister. La
+jonction entre les pylônes et les câbles se fait par des isolateurs pour éviter que l’électricité ne passe
+par le pylône. Plus il y a de tension, plus il y a d’isolateurs (6 et plus sur les lignes à haute tension).
+
+Il ne faut pas oublier que l’électricité ne se voit pas ! Un câble électrique peut être électrifié même si
+un oiseau est posé dessus ! En effet pour qu’il y ait de l’électricité, il faut qu’il y ait un passage. Un
+oiseau sur le câble ne touche que le câble, il ne peut donc pas conduire l’électricité vers un autre
+conducteur. En revanche, si une personne qui touche le sol intervient sur le câble, alors, elle conduit le
+courant électrique vers le sol et s’électrocute.
+
+IL NE FAUT DONC JAMAIS TOUCHER À UN CÂBLE TOMBÉ AU SOL ! Il faut appeler le 18, le 17 ou le 112.
+
+De la même façon, il ne faut pas s’approcher des lignes électriques en vol (parapente, ULM, avion…). Si
+on touche deux câbles simultanément, on s’électrocute.
+          Thème D : Des signaux pour observer et communiquer
+
+
+Chapitre 1– Séance 2
+
+Les ombres et la lumière dans le système solaire : Quelle est la différence entre une éclipse de Lune
+et la pleine Lune ? Comment la Lune peut-elle éclipser le Soleil alors qu’elle est 400 fois plus petite ?
+
+La Lune décrit une orbite elliptique autour de la Terre à une distance moyenne de 384 400 km (soit
+environ trente fois le diamètre de la Terre). Cette orbite n’est pas dans le même plan que l’orbite de la
+révolution terrestre, ce qui permet de voir la pleine Lune et de ne pas voir la nouvelle Lune :
+Dans le cas de la pleine Lune, elle reste pleine toute la nuit puisqu’elle reste éclairée toute la nuit par
+le Soleil.
+
+Il y a éclipse de Lune lorsque la pleine Lune passe dans le cône d’ombre de la Terre. Cela se produit
+lorsque la Lune présente sa face visible entièrement au Soleil alors que, dans sa révolution, elle se
+rapproche du point d’intersection de son orbite avec celle de la Terre. Il y a ainsi entre 2 et 7 éclipses
+lunaires par an, dont la durée est d’environ 45 minutes.
+
+Les éclipses solaires sont possibles parce que le rapport entre le diamètre de la Lune et le diamètre du
+Soleil est pratiquement le même que le rapport de la distance de la Terre au Soleil et de la Terre à la
+lune :
+
+                                𝐷𝐿𝑢𝑛𝑒    𝑑𝑖𝑠𝑡𝑎𝑛𝑐𝑒𝑇𝑒𝑟𝑟𝑒−𝐿𝑢𝑛𝑒     1
+                                       =                     =
+                                𝐷𝑆𝑜𝑙𝑒𝑖𝑙 𝑑𝑖𝑠𝑡𝑎𝑛𝑐𝑒𝑇𝑒𝑟𝑟𝑒−𝑆𝑜𝑙𝑒𝑖𝑙   400
+
+Les éclipses solaires ont lieu environ une fois tous les 10 ans. Mais elles sont très rarement visibles : le
+cône d’ombre de la Lune ne mesure que 200 km de large sur la Terre, et pendant un laps de temps très
+court, d’environ 7 minutes (la Lune passe devant le Soleil à la vitesse minimale de 1 700 km/h). La
+plupart des éclipses solaires ne sont visibles que depuis les océans…
+
+
+
+
+Rappel : Pour observer une éclipse solaire, il est indispensable de se munir de lunettes
+spéciales : on observe une source primaire de lumière dont certains rayonnements sont très
+nocifs pour l’œil.
+

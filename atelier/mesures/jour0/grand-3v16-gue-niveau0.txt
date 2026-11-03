@@ -1,0 +1,23 @@
+Moteur : jeu/js/bataille-moteur.js · or perdu par erreur : 6 · 160 batailles par niveau · bataille de route : defense, 3 vagues, camp de 16, carte gue
+
+p = 0.6 (réponses justes) · bataille de route : defense, 3 vagues, camp de 16, carte gue
+niv | carte          | tenue (éclatante) | tenu  retraite | murs restants (quand elle tient) | coups portés (1re vague) | ennemis tués / tes pertes | sorties · rival : tours, gardes, rappelés, renforts
+ 0  | gue            |   52 % (  1 %)   |  51 %   48 %   |                      25 % (48 %) |              4.29 (1.64) |     17.5 / 4.7    | 1.65 · 1.72, 0.09, 0, 0
+moy |                |   52 % (  1 %)   |                |                             25 % |                      4.3
+
+p = 0.7 (réponses justes) · bataille de route : defense, 3 vagues, camp de 16, carte gue
+niv | carte          | tenue (éclatante) | tenu  retraite | murs restants (quand elle tient) | coups portés (1re vague) | ennemis tués / tes pertes | sorties · rival : tours, gardes, rappelés, renforts
+ 0  | gue            |   76 % (  6 %)   |  71 %   24 %   |                      42 % (55 %) |              6.35 (2.35) |       22 / 6.1    | 2.22 · 1.88, 0.18, 0, 0
+moy |                |   76 % (  6 %)   |                |                             42 % |                      6.4
+
+p = 0.8 (réponses justes) · bataille de route : defense, 3 vagues, camp de 16, carte gue
+niv | carte          | tenue (éclatante) | tenu  retraite | murs restants (quand elle tient) | coups portés (1re vague) | ennemis tués / tes pertes | sorties · rival : tours, gardes, rappelés, renforts
+ 0  | gue            |   88 % ( 13 %)   |  76 %   12 %   |                      54 % (61 %) |              8.98 (2.96) |     24.5 / 6.6    | 2.61 · 1.96, 0.28, 0, 0
+moy |                |   88 % ( 13 %)   |                |                             54 % |                        9
+
+p = 0.9 (réponses justes) · bataille de route : defense, 3 vagues, camp de 16, carte gue
+niv | carte          | tenue (éclatante) | tenu  retraite | murs restants (quand elle tient) | coups portés (1re vague) | ennemis tués / tes pertes | sorties · rival : tours, gardes, rappelés, renforts
+ 0  | gue            |   97 % ( 36 %)   |  61 %    3 %   |                      74 % (77 %) |             11.93 (3.96) |     26.1 / 6.8    | 3.11 · 1.99, 0.49, 0, 0
+moy |                |   97 % ( 36 %)   |                |                             74 % |                     11.9
+
+(12 s)

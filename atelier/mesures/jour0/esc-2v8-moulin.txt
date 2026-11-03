@@ -1,0 +1,39 @@
+Moteur : jeu/js/bataille-moteur.js · or perdu par erreur : 6 · 160 batailles par niveau · bataille de route : attaque, 2 vagues, camp de 8, carte moulin
+
+p = 0.6 (réponses justes) · bataille de route : attaque, 2 vagues, camp de 8, carte moulin
+niv | carte          | tenue (éclatante) | tenu  retraite | murs restants (quand elle tient) | coups portés (1re vague) | ennemis tués / tes pertes | sorties · rival : tours, gardes, rappelés, renforts
+ 0  | moulin         |  100 % (  4 %)   |  96 %    0 %   |                    102 % (102 %) |              3.31 (1.64) |     16.3 / 1.8    | 1.31 · 1, 0, 0, 0
+ 1  | moulin         |  100 % ( 27 %)   |  73 %    0 %   |                    101 % (101 %) |              4.79 (2.86) |       16 / 1.3    | 1.23 · 1, 0, 0, 0
+ 2  | moulin         |  100 % ( 38 %)   |  62 %    0 %   |                    101 % (101 %) |              4.46 (2.71) |     13.6 / 2.3    | 1.38 · 0.73, 0, 0, 0
+ 3  | moulin         |  100 % ( 46 %)   |  54 %    0 %   |                    101 % (101 %) |              6.34 (4.31) |     14.1 / 2      | 1.51 · 0.79, 0, 0, 0
+ 4  | moulin         |  100 % ( 41 %)   |  59 %    0 %   |                    101 % (101 %) |              6.39 (4.58) |     12.1 / 2.6    | 1.36 · 0.78, 0, 0, 0
+moy |                |  100 % (31.2 %)   |                |                          101.2 % |                      5.1
+
+p = 0.7 (réponses justes) · bataille de route : attaque, 2 vagues, camp de 8, carte moulin
+niv | carte          | tenue (éclatante) | tenu  retraite | murs restants (quand elle tient) | coups portés (1re vague) | ennemis tués / tes pertes | sorties · rival : tours, gardes, rappelés, renforts
+ 0  | moulin         |  100 % ( 11 %)   |  89 %    0 %   |                    102 % (102 %) |               4.5 (2.35) |     16.6 / 2      | 1.58 · 1, 0, 0, 0
+ 1  | moulin         |  100 % ( 41 %)   |  59 %    0 %   |                    101 % (101 %) |               5.49 (2.8) |     16.2 / 1.4    | 1.32 · 1, 0, 0, 0
+ 2  | moulin         |  100 % ( 54 %)   |  46 %    0 %   |                    101 % (101 %) |              5.75 (3.79) |     12.5 / 2      | 1.43 · 0.59, 0, 0, 0
+ 3  | moulin         |  100 % ( 67 %)   |  33 %    0 %   |                    101 % (101 %) |              7.66 (4.89) |     13.5 / 1.8    | 1.56 · 0.7, 0, 0, 0
+ 4  | moulin         |  100 % ( 58 %)   |  42 %    0 %   |                    101 % (101 %) |              7.89 (5.58) |     11.2 / 2      | 1.38 · 0.65, 0, 0, 0
+moy |                |  100 % (46.2 %)   |                |                          101.2 % |                      6.3
+
+p = 0.8 (réponses justes) · bataille de route : attaque, 2 vagues, camp de 8, carte moulin
+niv | carte          | tenue (éclatante) | tenu  retraite | murs restants (quand elle tient) | coups portés (1re vague) | ennemis tués / tes pertes | sorties · rival : tours, gardes, rappelés, renforts
+ 0  | moulin         |  100 % ( 21 %)   |  79 %    0 %   |                    102 % (102 %) |              5.83 (2.96) |     16.8 / 2.2    | 1.78 · 1, 0, 0, 0
+ 1  | moulin         |  100 % ( 61 %)   |  39 %    0 %   |                    101 % (101 %) |              6.47 (3.03) |     16.4 / 1.5    | 1.49 · 1, 0, 0, 0
+ 2  | moulin         |  100 % ( 74 %)   |  26 %    0 %   |                    100 % (100 %) |              7.29 (4.91) |     11.2 / 1.8    | 1.51 · 0.44, 0, 0, 0
+ 3  | moulin         |  100 % ( 86 %)   |  14 %    0 %   |                    101 % (101 %) |              8.93 (6.03) |     12.1 / 1.7    | 1.66 · 0.53, 0, 0, 0
+ 4  | moulin         |  100 % ( 78 %)   |  23 %    0 %   |                    101 % (101 %) |                9.1 (6.6) |       10 / 1.3    | 1.4 · 0.48, 0, 0, 0
+moy |                |  100 % ( 64 %)   |                |                            101 % |                      7.5
+
+p = 0.9 (réponses justes) · bataille de route : attaque, 2 vagues, camp de 8, carte moulin
+niv | carte          | tenue (éclatante) | tenu  retraite | murs restants (quand elle tient) | coups portés (1re vague) | ennemis tués / tes pertes | sorties · rival : tours, gardes, rappelés, renforts
+ 0  | moulin         |  100 % ( 48 %)   |  53 %    0 %   |                    101 % (101 %) |               7.3 (3.96) |       17 / 2.2    | 1.95 · 1, 0, 0, 0
+ 1  | moulin         |  100 % ( 84 %)   |  16 %    0 %   |                    102 % (102 %) |              7.35 (3.63) |     16.7 / 1.2    | 1.68 · 1, 0, 0, 0
+ 2  | moulin         |  100 % ( 91 %)   |   9 %    0 %   |                    100 % (100 %) |              8.06 (6.18) |      9.5 / 1.2    | 1.39 · 0.26, 0, 0, 0
+ 3  | moulin         |  100 % ( 96 %)   |   4 %    0 %   |                    100 % (100 %) |              8.91 (6.95) |      9.8 / 0.9    | 1.39 · 0.29, 0, 0, 0
+ 4  | moulin         |  100 % ( 94 %)   |   6 %    0 %   |                    100 % (100 %) |              9.35 (7.29) |      8.3 / 1      | 1.24 · 0.26, 0, 0, 0
+moy |                |  100 % (82.6 %)   |                |                          100.6 % |                      8.2
+
+(23 s)

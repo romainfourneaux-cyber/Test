@@ -1,0 +1,10 @@
+# Produits de construction : refaits à chaque fois par atelier/outils/construire-apk.sh, jamais dans git.
+app/src/main/assets/
+app/build/
+build/
+.gradle/
+local.properties
+sorties/
+# La clé de signature (cles/domaine.jks, cles/mot-de-passe.txt) est exclue par le .gitignore de la racine du projet :
+# elle est remise à Romain, qui la garde en lieu sûr. Sans elle, aucune mise à jour de l'application (voir README.md).
+cles/

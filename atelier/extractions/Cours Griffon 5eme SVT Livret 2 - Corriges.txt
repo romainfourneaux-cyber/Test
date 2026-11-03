@@ -1,0 +1,323 @@
+             THÈME B - Corrigé des exercices
+                          et des questions de TP
+Chapitre 1
+
+Séance 1
+
+EXERCICE DE MÉMORISATION :
+
+
+
+
+Séance 2
+
+TP : manipuler une cellule animale
+
+Le jaune a une forme de sphère. Si tu le perces, le liquide qu’il contient se répand.
+Séance 3
+
+EXERCICE D’APPLICATION : Des dinosaures en Charente-Maritime
+
+    1) Les strates fouillées correspondent à une période située entre –130 millions d’années et –125
+       millions d’années. Sur l’échelle des temps géologiques, l’unité est en Ma, qui signifie millions
+       d’années ; les strates fouillées correspondent à la couleur verte de la première colonne : c’est l’ère
+       Mésozoïque, au Crétacé inférieur.
+    2) Comme les restes retrouvés permettent de déterminer que le climat d’alors était tropical, on pourrait
+       comparer cet écosystème à celui de la forêt amazonienne.
+    3) On peut dire que les paléontologues permettent de comprendre l’évolution de la biodiversité au
+       cours du temps parce que leurs découvertes montrent d’une part que des espèces différentes de
+       celles d’aujourd’hui ont vécu sur notre planète, et que d’autre part, les zones climatiques ont changé,
+       ainsi que l’emplacement et la forme des continents (tu aborderas plus précisément ces notions en
+       quatrième).
+
+Séance 4
+
+EXERCICES :
+
+    1) Complète l’arbre de parenté suivant :
+
+
+
+
+    2) Mammouths et éléphants :
+
+Le texte indique que les Mammouths sont une espèce qui n’existe plus aujourd’hui, mais dont les restes
+fossiles sont identifiables comme une espèce à part entière différente bien que proche des Éléphants actuels.
+L’arbre de parenté des Téthythériens montre que les deux espèces d’Éléphant et le Mammouths ont de
+nombreux caractères communs : la présence de défenses, la position particulière de l’orbite, le trou auditif
+particulier et l’os carpien court et large. Cependant l’Éléphant d’Afrique n’a pas une orbite anguleuse,
+contrairement au Mammouth et à l’Éléphant d’Asie. Le Mammouth n’est donc pas un ancêtre de l’Éléphant
+d’Afrique. Par ailleurs, le texte indique que la présence de Mammouths est attestée vers 1 700 av. J.-C. dans
+le nord de la Sibérie, à une époque où l’Éléphant d’Asie est déjà domestiqué en Inde. Le Mammouth ne peut
+donc pas être non plus l’ancêtre de l’Éléphant d’Asie. On en déduit que le Mammouth est une espèce
+disparue, proche parente des espèces d’’Éléphants actuels.
+   Séance 5
+   Exercice : les populations d’escargots
+       1) « Certaines espèces d’escargots sont sensibles à l’aménagement des jardins. » Un jardin aménagé
+           est un jardin dans lequel les « mauvaises herbes » sont maîtrisées, voire inexistantes ; les orties font
+           partie des « mauvaises herbes ». Les deux premiers diagrammes montrent l’évolution de la
+           population des deux espèces d’escargots en présence d’orties. Dans le premier diagramme, on
+           observe que la population d’escargots petits gris se stabilise aux alentours de 13 par m2 en présence
+           ou en absence d’orties. Dans le deuxième diagramme, on observe que la population d’escargots de
+           Bourgogne varie de façon importante selon qu’il y a ou non des orties dans le jardin : l’effectif est à
+           2 par m2 s’il n’y a pas d’orties, alors qu’il passe à 5 par m2 s’il y en a. On peut donc dire que l’espèce
+           escargot de Bourgogne est sensible à l’aménagement des jardins.
+       2) Les diagrammes des milieux de vie des deux espèces d’escargots permettent de déterminer quelle
+           espèce se trouve majoritairement dans quel milieu. Ainsi, les petits gris se trouvent également, à
+           hauteur de 11 par m2 à la campagne comme à la ville, alors que les escargots de Bourgogne se
+           trouvent majoritairement à la campagne (7,5 par m2) et peu en ville (2 par m2). De plus, les premiers
+           diagrammes montrent (question 1) que les escargots de Bourgogne sont beaucoup plus influencés
+           par la présence d’ortie que les escargots petit-gris.
+
+
+   Chapitre 2
+
+   Séance 1
+   EXERCICE : Exploiter des données et argumenter
+      1) Les 6 caractéristiques d’une chauve-souris en hibernation sont :
+          - Rythme cardiaque ralenti
+          - Rythme respiratoire ralenti
+          - Température corporelle en baisse
+          - Consommation de dioxygène diminuée
+          - Jeûne
+          - Division par deux de la quantité de glucose par litre de sang. (Voir le texte d’introduction)
+
+        2) Pour répondre à cette question, il fallait relever dans le tableau les informations suivantes :
+
+Comparaison des tissus adipeux des mammifères hibernants
+
+                                            Tissu adipeux blanc                              Tissu adipeux brun
+
+Caractéristiques du tissu                   • La plus importante réserve énergétique des     • Riche en vaisseaux sanguins
+                                              mammifères                                     • Peut atteindre 4 % de la masse des
+                                            • Pouvant atteindre plus de 50 % de la masse       mammifères hibernants
+                                              des mammifères hibernants                      • Absent chez les mammifères qui n’hibernent
+                                                                                               pas
+
+Caractéristiques des cellules graisseuses   • Cellules sphériques de grande taille           • Cellules de petite taille
+(adipocytes)                                • Leur cytoplasme renferme les réserves de       • Leur cytoplasme renferme les réserves de
+                                              graisse (lipides)                                graisse (lipides)
+
+Utilisation de ces réserves                 • Approvisionne les autres cellules en énergie   • Utilisation directe des lipides par les
+                                              rapidement disponible, à haut rendement.         adipocytes du tissu brun
+                                                                                             • Les lipides contenus ont un très haut
+                                                                                               rendement énergétique, converti
+                                                                                               essentiellement en énergie thermique
+        Les chauves-souris possèdent deux types de tissus adipeux, le blanc et le brun, qui sont tous deux
+        des réserves énergétiques (surligné en jaune). Le tissu blanc est de très loin le plus abondant des
+        deux (surligné en rose). Ils sont constitués de cellules spécifiques (surligné en bleu), mais qui
+        contiennent dans les deux cas des lipides (surligné en vert) dont le devenir est différent : le tissu
+        adipeux blanc permet d’alimenter les autres cellules en énergie rapidement disponible et à haut
+        rendement (surligné en gris), tandis que le tissu adipeux brun permet avec le plus fort rendement
+        énergétique de réchauffer directement l’animal (surligné en rouge).
+
+    3) Pendant l’hibernation, les chauves-souris vivent sur les réserves de graisse contenues dans le tissu
+       adipeux blanc, qui vont permettre de maintenir un rythme cardiaque et respiratoire, bien que ralenti,
+       qui est essentiel à l’approvisionnement a minima des cellules en glucose et en oxygène (eux aussi en
+       quantité réduite). Afin de ne pas dépenser trop d’énergie pour maintenir leur température
+       corporelle, elles se regroupent dans un endroit abrité et à la température stable, comme les grottes.
+       Lorsque le printemps arrive, les chauves-souris se réveillent : pour cela elles utilisent l’énergie
+       contenue dans le tissu adipeux brun, alors que le tissu adipeux blanc est très réduit car consommé
+       tout au long de l’hibernation, pour remonter très rapidement leur température corporelle et relancer
+       toutes les fonctions vitales à plein régime, et ainsi sortir de leur abri. Si les grottes sont très souvent
+       visitées en hiver, les chauves-souris seront maintenues en état d’alerte et donc ne pourront pas
+       hiberner, et ne pourront pas se nourrir car les insectes qui forment leur nourriture hibernent eux
+       aussi. Même si les visites sont rares, les chauves-souris seront réveillées par la visite, ce qui
+       déclenchera la consommation du tissu adipeux brun et compromettra leur réveil au printemps.
+
+Séance 2
+QUESTIONS :
+Les espèces phytophages sont les grillons et la vache. Les espèces zoophages sont le chien et la carpe.
+
+Les espèces phyto-zoophages sont le cochon et le lézard de cet exemple (Pogona viticeps = agame barbu ou
+dragon d’Australie).
+Les trois mammifères sont la vache, le cochon et le chien. L’insecte est le grillon.
+
+L’actinoptérygien est la carpe. Le lézard est un lézard (autrefois reptile).
+Séance 4
+
+Dessin des montages expérimentaux :
+
+
+
+
+Le montage témoin prouve que l’eau de chaux ne se trouble pas même si une heure s’est écoulée lorsqu’elle
+est mise dans l’enceinte de respiration bien fermée, avec le support. Il permet donc de valider le montage
+expérimental : on peut dire que ni l’enceinte ni le support n’ont une influence sur l’eau de chaux.
+
+Le montage expérimental permet donc de tester l’hypothèse « les organes libèrent du dioxyde de carbone
+comme la bûche qui libère de l’énergie en brûlant » :
+       - J’observe que l’eau de chaux se trouble dans l’enceinte de respiration où se trouve le muscle
+          frais de grenouille.
+       - Je sais que l’eau de chaux se trouble en présence de dioxyde de carbone.
+       - J’en déduis que le muscle frais de grenouille libère du dioxyde de carbone.
+
+L’hypothèse est donc validée.
+EXERCICES D’APPLICATION :
+
+EXERCICE 1 : Comparer deux micrographies
+
+    1) Dessin d’observation :
+
+
+                                                                          Sur ces photos on ne voit pas les
+                                                                          noyaux cellulaires donc tu ne dois pas
+                                                                          les représenter. On te demande de
+                                                                          représenter une cellule, qui est
+                                                                          légendée. Tu peux en mettre une
+                                                                          autre pour situer la cellule légendée
+                                                                          dans son contexte. La coloration
+                                                                          étant    importante       pour      les
+                                                                          observations, tu peux colorer ton
+                                                                          dessin.
+
+
+
+
+    2) Dans l’image A, qui montre des cellules musculaires striées avant l’effort, on observe que la
+       coloration violette est très marquée. Dans l’image B, qui montre des cellules musculaires striées
+       après l’effort, on observe que cette coloration est très faible, devenant rose. On sait que la coloration
+       violette correspond aux réserves de glucose dans les cellules. On en déduit que lors de l’effort, les
+       cellules musculaires striées utilisent le glucose cellulaire.
+    3) On peut supposer que la différence importante de coloration est due au fait que les cellules
+       musculaires striées ont utilisé une très grande quantité de glucose cellulaire.
+
+EXERCICE 2 : utiliser les résultats d’une expérience
+
+L’eau de chaux est utilisée pour détecter la présence de dioxyde de carbone dans l’air. À son contact, l’eau
+de chaux, qui était limpide, se trouble.
+Les montages témoins sont le montage avec l’eau du cristallisoir, qui prouve que l’eau seule ne se trouble
+pas et l’eau du cristallisoir avec de l’eau de chaux qui prouve que l’eau du cristallisoir ne trouble pas l’eau de
+chaux.
+J’observe que l’eau du cristallisoir plusieurs heures après la mise du poisson plus l’eau de chaux se trouble.
+Je sais que l’eau de chaux troublée indique la présence de dioxyde de carbone.
+J’en déduis que le poisson émet du dioxyde de carbone dans l’eau.
+
+Séance 5
+QUESTIONS :
+
+Il y a du dioxygène dans l’eau ; cependant il s’agit alors d’un gaz dissous.
+
+L’appareil respiratoire du poisson est la branchie, comme pour la moule.
+
+La fourmi a un appareil respiratoire trachéal, le lombric respire directement par la peau.
+Séance 6
+EXERCICE 1 : Restitution des connaissances
+   1)
+
+
+
+
+   2) Producteurs primaires : l’herbe, le blé.
+      Producteurs secondaires : la vache, le blaireau
+      Consommateurs primaires : le criquet, le mouton
+      Consommateurs secondaires : le renard, la chouette
+      Décomposeurs : le lombric, le pleurote.
+
+   3) Les animaux qui ont des canines sont les mammifères zoophages et phytozoophages. Les appareils
+      digestifs des phytophages sont particulièrement longs et disposent de poches de fermentation tels
+      que l’estomac des ruminants ou le cæcum d’autres herbivores (dont les insectes).
+
+   4) Une hypothèse est une proposition testée par une expérience scientifique qui nécessite un montage
+      témoin au moins et un montage expérimental au moins. Pour la valider on observe les résultats de
+      l’expérience : le montage témoin prouve que l’expérience en elle-même n’influence pas le résultat ;
+      le montage expérimental est le test de validation (ou d’invalidation). Dans la démarche scientifique,
+      on observe, on confronte à ce que l’on sait et on déduit.
+
+   5) Respirer, c’est utiliser le dioxygène pour transformer la matière organique en énergie, en rejetant de
+      l’eau et du dioxyde de carbone. Les 4 appareils respiratoires ont la peau, les branchies, les trachées
+      et les poumons.
+
+EXERCICE 2 : mobiliser ses connaissances pour raisonner
+
+   1) Le périophtalme respire dans l’eau grâce à ses branchies.
+
+   2) Il respire hors de l’eau aussi grâce à ses branchies : l’eau qu’il stocke dans sa bouche est relâchée
+      progressivement par les opercules en passant par les branchies.
+
+   3) Chez tous les animaux, l’œil a besoin d’être humidifié en permanence. On peut supposer que le
+      périophtalme humidifie ses yeux en les clignant hors de l’eau ce qu’il n’a pas besoin de faire lorsqu’il
+      est dans l’eau.
+EXERCICE 3 : le réseau trophique et les échanges entre les êtres vivants d’un système aquaponique.
+
+   1) Les groupes d’espèces en présence sont : les végétaux hors-sol, les poissons et les microorganismes
+      décomposeurs (cités dans le texte et signalés en légende du schéma).
+
+   2) Les poissons sont nourris avec une alimentation organique. Ils produisent des déjections de matière
+      organique qui sont décomposées par les microorganismes décomposeurs en matière minérale. Celle-
+      ci est transférée dans l’eau d’arrosage du système de culture hors-sol des végétaux. Les végétaux
+      transforment cette matière minérale en matière organique par la photosynthèse.
+
+   3) Pour réaliser le schéma, il faut analyser le tableau qui explique l’importance du bulleur dans le
+      système. Cet appareil permet de dissoudre une forte quantité de dioxygène gazeux dans l’eau : 11
+      mg/L contre 5 mg/L sans bulleur. Ce dioxygène dissous est indispensable au développement des
+      microorganismes décomposeurs. Ceux sont eux qui permettent de maintenir l’abondance des
+      substances minérales fertilisantes pour les plantes qui sont hors sol c’est-à-dire dans un milieu sans
+      terre.
+Séance 7
+Le témoin de l’expérience est l’enceinte fermée ne contenant que du rouge de Crésol. L’absence de
+changement de couleur est l’assurance que le colorant ne vire pas avec le temps dans une enceinte
+transparente.
+
+On teste l’hypothèse suivante : est-ce la feuille ou la racine qui produit la matière organique ?
+
+On observe que le rouge de Crésol devient plus intense dans l’enceinte où se trouve la feuille et devient
+jaune dans l’enceinte où se trouve la racine.
+Or on sait que le rouge de Crésol devient plus intense quand la concentration en dioxyde de carbone diminue
+dans le milieu.
+On en déduit que la feuille a absorbé le dioxyde de carbone présent.
+
+On sait aussi que le rouge de Crésol devient jaune quand la concentration en dioxyde de carbone augmente
+dans le milieu.
+On en déduit que la racine a rejeté du dioxyde de carbone dans le milieu.
+Or on sait que le dioxyde de carbone est primordial dans la production de matière organique par les plantes.
+Donc l’expérience valide que c’est la feuille qui produit la matière organique dans la plante.
+
+Séance 8
+
+Expérience de Mme Rosene :
+
+• Dans le montage témoin 1, Mme Rosene valide que la plante vit en étant sortie de terre, si ses racines sont
+dans l’eau.
+
+• Dans le montage témoin 2, Mme Rosene valide que la plante meurt si ses racines sont plongées dans l’huile.
+
+• Dans l’expérience 3, la zone pilifère et l’apex de la racine sont plongés dans l’eau, tandis que la zone
+subéreuse est dans l’huile.
+On observe que la plante se développe.
+On sait que l’huile provoque le dépérissement de la plante.
+On en déduit que la zone subéreuse n’est pas la partie de la racine qui absorbe l’eau et les sels minéraux.
+Dans l’expérience 4, la zone pilifère est dans l’huile, tandis que l’apex est dans l’eau.
+
+On observe le dépérissement de la plante.
+On en déduit que la zone pilifère est indispensable à l’absorption de l’eau par la plante.
+
+Cependant cette expérience ne précise pas si l’apex a un rôle dans l’absorption de l’eau par la racine (par
+régulation par exemple)
+
+• Dans l’expérience 5, seule la zone pilifère est dans l’eau. La zone subéreuse et l’apex sont dans l’huile.
+On observe que la plante se développe.
+On en déduit que l’apex ne joue pas de rôle dans l’absorption de l’eau par la plante.
+
+Cette expérience permet de valider l’hypothèse que c’est la zone pilifère des racines qui absorbe l’eau et les
+sels minéraux.
+Chapitre 3
+
+Séance 2
+EXERCICE 1 : fruits ou légumes ?
+
+
+
+
+EXERCICE 2 : La reproduction de l’actinidia
+
+• L’hermaphrodisme est le fait qu’un être vivant soit à la fois mâle et femelle. C’est le cas de la plupart des
+plantes à fleurs.
+• Fleurs d’actinidias :
+
+
+
+
+• Lorsqu’on coupe un kiwi en deux, on observe de nombreuses petites graines noires ; par déduction, l’ovaire
+du pistil de la fleur d’actinidia contient de nombreux ovules.
+

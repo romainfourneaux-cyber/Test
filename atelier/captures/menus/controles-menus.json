@@ -1,0 +1,726 @@
+[
+ {
+  "nom": "menus.css : toutes les url() existent (17)",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "nom": "menus.css : toutes les url() sont dans la liste de précache de sw.js",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "nom": "menus.css : toutes ses images sont préchargées au lancement (demarrage.js), et rien de plus",
+  "ok": true,
+  "detail": "non préchargées :  ; en trop : "
+ },
+ {
+  "nom": "menus.css : aucun :hover hors de @media (hover: hover)",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "nom": "images des menus : 15 fichiers, 97560 octets (budget 120000), tous employés, aucun nom en . ou _",
+  "ok": true,
+  "detail": "inutilisés : "
+ },
+ {
+  "nom": "menus.css : les keyframes n'animent que transform et opacity",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "nom": "menus.css : aucune animation infinie",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "nom": "menus.css : aucun filter sur un élément animé",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "nom": "index.html : menus.css chargée juste après jeu.css",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "nom": "index.html : bloc de chargement (blason, titre, rail, compte)",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "nom": "menus.css : police « Chiffres » (U+0030-0039, Crimson Text) posée sur les menus",
+  "ok": true,
+  "detail": ""
+ },
+ {
+  "nom": "hauteurs du bandeau et du menu inchangées en 1366 × 768",
+  "ok": true,
+  "detail": "avec 64.41 / 69.48, sans 64.41 / 69.48",
+  "mesure": {
+   "avec": [
+    64.41,
+    69.48
+   ],
+   "sans": [
+    64.41,
+    69.48
+   ]
+  }
+ },
+ {
+  "nom": "hauteurs du bandeau et du menu inchangées en 1920 × 1080",
+  "ok": true,
+  "detail": "avec 64.41 / 69.48, sans 64.41 / 69.48",
+  "mesure": {
+   "avec": [
+    64.41,
+    69.48
+   ],
+   "sans": [
+    64.41,
+    69.48
+   ]
+  }
+ },
+ {
+  "nom": "hauteurs du bandeau et du menu inchangées en 1340 × 800 au doigt",
+  "ok": true,
+  "detail": "avec 64.41 / 69.48, sans 64.41 / 69.48",
+  "mesure": {
+   "avec": [
+    64.41,
+    69.48
+   ],
+   "sans": [
+    64.41,
+    69.48
+   ]
+  }
+ },
+ {
+  "nom": "chiffres : document.fonts.check(\"700 16px Chiffres\", \"1\") vrai et police des menus « Chiffres » d'abord",
+  "ok": true,
+  "detail": "{\"check\":true,\"famille\":\"Chiffres, Cinzel, Georgia, serif\"}"
+ },
+ {
+  "nom": "contraste ≥ 4,5 : 1 (couleur et cœur des lettres) et libellés ≥ 14 px (1366 × 768) : 26 textes",
+  "ok": true,
+  "detail": "",
+  "mesure": [
+   {
+    "nom": "menu, libellé",
+    "texte": "Accueil",
+    "taille": 14.4,
+    "couleur": 11.51,
+    "rendu": 8.41
+   },
+   {
+    "nom": "menu, actif",
+    "texte": "Cours",
+    "taille": 14.4,
+    "couleur": 9.03,
+    "rendu": 7.01
+   },
+   {
+    "nom": "signet inactif",
+    "texte": "Savoir-faire",
+    "taille": 15.3,
+    "couleur": 7.68,
+    "rendu": 7.14
+   },
+   {
+    "nom": "signet actif",
+    "texte": "Histoire",
+    "taille": 15.3,
+    "couleur": 13.15,
+    "rendu": 13.15
+   },
+   {
+    "nom": "titre de semaine",
+    "texte": "Semaine 1",
+    "taille": 15.84,
+    "couleur": 5.51,
+    "rendu": 5.35
+   },
+   {
+    "nom": "état « presume »",
+    "texte": "Présumé acquis",
+    "taille": 14.4,
+    "couleur": 5.71,
+    "rendu": 4.86
+   },
+   {
+    "nom": "état « acquis »",
+    "texte": "Acquis",
+    "taille": 14.4,
+    "couleur": 5.57,
+    "rendu": 4.98
+   },
+   {
+    "nom": "état « a-revoir »",
+    "texte": "À revoir",
+    "taille": 14.4,
+    "couleur": 5.66,
+    "rendu": 4.9
+   },
+   {
+    "nom": "état « ouvert »",
+    "texte": "En cours",
+    "taille": 14.4,
+    "couleur": 6.32,
+    "rendu": 4.95
+   },
+   {
+    "nom": "état « brume »",
+    "texte": "Dans la brume",
+    "taille": 14.4,
+    "couleur": 6.29,
+    "rendu": 5.57
+   },
+   {
+    "nom": "état « avenir »",
+    "texte": "Contenu à venir",
+    "taille": 14.4,
+    "couleur": 6.39,
+    "rendu": 5.41
+   },
+   {
+    "nom": "titre dans la brume",
+    "texte": "Cours 12 – La chrétienté médiévale (1)",
+    "taille": 18,
+    "couleur": 8.82,
+    "rendu": 4.65
+   },
+   {
+    "nom": "tome « Histoire »",
+    "texte": "Histoire",
+    "taille": 18.9,
+    "couleur": 14.1,
+    "rendu": 14.1
+   },
+   {
+    "nom": "tome « Géographie »",
+    "texte": "Géographie",
+    "taille": 18.9,
+    "couleur": 9.42,
+    "rendu": 8.68
+   },
+   {
+    "nom": "tome « SVT »",
+    "texte": "SVT",
+    "taille": 18.9,
+    "couleur": 12.65,
+    "rendu": 10.8
+   },
+   {
+    "nom": "tome « Physique-chimie »",
+    "texte": "Physique-chimie",
+    "taille": 18.9,
+    "couleur": 13.48,
+    "rendu": 13.48
+   },
+   {
+    "nom": "tome « Littérature »",
+    "texte": "Littérature",
+    "taille": 18.9,
+    "couleur": 12.8,
+    "rendu": 12.11
+   },
+   {
+    "nom": "tome « Lecture suivie »",
+    "texte": "Lecture suivie",
+    "taille": 18.9,
+    "couleur": 12.84,
+    "rendu": 12.72
+   },
+   {
+    "nom": "tome « Grammaire »",
+    "texte": "Grammaire",
+    "taille": 18.9,
+    "couleur": 13.03,
+    "rendu": 13.03
+   },
+   {
+    "nom": "tome « Anglais »",
+    "texte": "Anglais",
+    "taille": 18.9,
+    "couleur": 12.22,
+    "rendu": 10.85
+   },
+   {
+    "nom": "nombre de fiches (Histoire)",
+    "texte": "73 fiches",
+    "taille": 16.2,
+    "couleur": 12.68,
+    "rendu": 12.32
+   },
+   {
+    "nom": "rouleau de la galerie",
+    "texte": "Galerie des souverains",
+    "taille": 18.9,
+    "couleur": 9.42,
+    "rendu": 9.18
+   },
+   {
+    "nom": "bouton principal",
+    "texte": "Exporter",
+    "taille": 17.1,
+    "couleur": 5.79,
+    "rendu": 5.73
+   },
+   {
+    "nom": "bouton secondaire",
+    "texte": "Importer",
+    "taille": 17.1,
+    "couleur": 8.16,
+    "rendu": 7.41
+   },
+   {
+    "nom": "bouton principal appuyé",
+    "texte": "Exporter",
+    "taille": 17.1,
+    "couleur": 5.63,
+    "rendu": 5.63
+   },
+   {
+    "nom": "bouton désactivé (arsenal)",
+    "texte": "Améliorer · 10",
+    "taille": 14.4,
+    "couleur": 6.49,
+    "rendu": 5.17
+   }
+  ]
+ },
+ {
+  "nom": "contraste ≥ 4,5 : 1 (couleur et cœur des lettres) et libellés ≥ 14 px (1340 × 800, doigt) : 25 textes",
+  "ok": true,
+  "detail": "",
+  "mesure": [
+   {
+    "nom": "menu, libellé",
+    "texte": "Accueil",
+    "taille": 14.4,
+    "couleur": 11.32,
+    "rendu": 8.27
+   },
+   {
+    "nom": "menu, actif",
+    "texte": "Cours",
+    "taille": 14.4,
+    "couleur": 9.16,
+    "rendu": 7.11
+   },
+   {
+    "nom": "signet inactif",
+    "texte": "Savoir-faire",
+    "taille": 15.3,
+    "couleur": 7.68,
+    "rendu": 7.14
+   },
+   {
+    "nom": "signet actif",
+    "texte": "Histoire",
+    "taille": 15.3,
+    "couleur": 13.17,
+    "rendu": 13.17
+   },
+   {
+    "nom": "titre de semaine",
+    "texte": "Semaine 1",
+    "taille": 15.84,
+    "couleur": 5.33,
+    "rendu": 5.18
+   },
+   {
+    "nom": "état « presume »",
+    "texte": "Présumé acquis",
+    "taille": 14.4,
+    "couleur": 5.88,
+    "rendu": 5.01
+   },
+   {
+    "nom": "état « acquis »",
+    "texte": "Acquis",
+    "taille": 14.4,
+    "couleur": 5.81,
+    "rendu": 5.2
+   },
+   {
+    "nom": "état « a-revoir »",
+    "texte": "À revoir",
+    "taille": 14.4,
+    "couleur": 5.85,
+    "rendu": 5.11
+   },
+   {
+    "nom": "état « ouvert »",
+    "texte": "En cours",
+    "taille": 14.4,
+    "couleur": 6.38,
+    "rendu": 5
+   },
+   {
+    "nom": "état « brume »",
+    "texte": "Dans la brume",
+    "taille": 14.4,
+    "couleur": 6.23,
+    "rendu": 5.58
+   },
+   {
+    "nom": "état « avenir »",
+    "texte": "Contenu à venir",
+    "taille": 14.4,
+    "couleur": 6.54,
+    "rendu": 5.48
+   },
+   {
+    "nom": "titre dans la brume",
+    "texte": "Cours 12 – La chrétienté médiévale (1)",
+    "taille": 18,
+    "couleur": 8.8,
+    "rendu": 4.64
+   },
+   {
+    "nom": "tome « Histoire »",
+    "texte": "Histoire",
+    "taille": 18.9,
+    "couleur": 14.1,
+    "rendu": 14.1
+   },
+   {
+    "nom": "tome « Géographie »",
+    "texte": "Géographie",
+    "taille": 18.9,
+    "couleur": 9.42,
+    "rendu": 8.68
+   },
+   {
+    "nom": "tome « SVT »",
+    "texte": "SVT",
+    "taille": 18.9,
+    "couleur": 12.65,
+    "rendu": 10.8
+   },
+   {
+    "nom": "tome « Physique-chimie »",
+    "texte": "Physique-chimie",
+    "taille": 18.9,
+    "couleur": 13.46,
+    "rendu": 13.46
+   },
+   {
+    "nom": "tome « Littérature »",
+    "texte": "Littérature",
+    "taille": 18.9,
+    "couleur": 12.8,
+    "rendu": 12.11
+   },
+   {
+    "nom": "tome « Lecture suivie »",
+    "texte": "Lecture suivie",
+    "taille": 18.9,
+    "couleur": 12.84,
+    "rendu": 12.72
+   },
+   {
+    "nom": "tome « Grammaire »",
+    "texte": "Grammaire",
+    "taille": 18.9,
+    "couleur": 12.97,
+    "rendu": 12.97
+   },
+   {
+    "nom": "tome « Anglais »",
+    "texte": "Anglais",
+    "taille": 18.9,
+    "couleur": 12.22,
+    "rendu": 10.85
+   },
+   {
+    "nom": "nombre de fiches (Histoire)",
+    "texte": "73 fiches",
+    "taille": 16.2,
+    "couleur": 12.68,
+    "rendu": 12.32
+   },
+   {
+    "nom": "rouleau de la galerie",
+    "texte": "Galerie des souverains",
+    "taille": 18.9,
+    "couleur": 9.42,
+    "rendu": 9.18
+   },
+   {
+    "nom": "bouton principal",
+    "texte": "Exporter",
+    "taille": 17.1,
+    "couleur": 5.79,
+    "rendu": 5.73
+   },
+   {
+    "nom": "bouton secondaire",
+    "texte": "Importer",
+    "taille": 17.1,
+    "couleur": 8.16,
+    "rendu": 7.41
+   },
+   {
+    "nom": "bouton désactivé (arsenal)",
+    "texte": "Améliorer · 10",
+    "taille": 14.4,
+    "couleur": 6.67,
+    "rendu": 5.27
+   }
+  ]
+ },
+ {
+  "nom": "cibles de 44 px au doigt en 1340 × 800 (284 cibles, accueil, cours, codex, réglages, arsenal)",
+  "ok": true,
+  "detail": "",
+  "mesure": {
+   "n": 284,
+   "petits": []
+  }
+ },
+ {
+  "nom": "cibles de 44 px au doigt en 1024 × 768 (284 cibles, accueil, cours, codex, réglages, arsenal)",
+  "ok": true,
+  "detail": "",
+  "mesure": {
+   "n": 284,
+   "petits": []
+  }
+ },
+ {
+  "nom": "mouvements : fanion à l'entrée des Cours, onde au toucher d'un onglet, rien dans une question, tout fini après 1 s",
+  "ok": true,
+  "detail": "{\"tot\":1,\"fanion\":\"fanion\",\"ondeAnim\":1,\"ondeQuestion\":0,\"reste\":[],\"infinies\":[]}",
+  "mesure": {
+   "tot": 1,
+   "fanion": "fanion",
+   "ondeAnim": 1,
+   "ondeQuestion": 0,
+   "reste": [],
+   "infinies": []
+  }
+ },
+ {
+  "nom": "mouvements avec Animations coupées : ni fanion, ni cascade, ni onde (les états restent)",
+  "ok": true,
+  "detail": "{\"tot\":0,\"fanion\":\"none\",\"ondeAnim\":0,\"ondeQuestion\":0,\"reste\":[],\"infinies\":[]}",
+  "mesure": {
+   "tot": 0,
+   "fanion": "none",
+   "ondeAnim": 0,
+   "ondeQuestion": 0,
+   "reste": [],
+   "infinies": []
+  }
+ },
+ {
+  "nom": "mouvements sous prefers-reduced-motion : ni fanion, ni cascade, ni onde (les états restent)",
+  "ok": true,
+  "detail": "{\"tot\":0,\"fanion\":\"none\",\"ondeAnim\":0,\"ondeQuestion\":0,\"reste\":[],\"infinies\":[]}",
+  "mesure": {
+   "tot": 0,
+   "fanion": "none",
+   "ondeAnim": 0,
+   "ondeQuestion": 0,
+   "reste": [],
+   "infinies": []
+  }
+ },
+ {
+  "nom": "ouverture de « accueil » au ralenti 4 × : 65.2 → 70.2 ms (médianes des trois passes), au plus +10 % ou +15 ms",
+  "ok": true,
+  "detail": "horloge 58.7 → 57.1 ms, tâches 68.7 → 66.1 ms | horloge 57.7 → 71.8 ms, tâches 71 → 70.1 ms | horloge 65.2 → 70.2 ms, tâches 76.4 → 61.8 ms",
+  "mesure": {
+   "sans": 65.20000000298023,
+   "avec": 70.20000000298023,
+   "passes": [
+    {
+     "horloge": [
+      58.7,
+      57.1
+     ],
+     "travail": [
+      68.7,
+      66.1
+     ]
+    },
+    {
+     "horloge": [
+      57.7,
+      71.8
+     ],
+     "travail": [
+      71,
+      70.1
+     ]
+    },
+    {
+     "horloge": [
+      65.2,
+      70.2
+     ],
+     "travail": [
+      76.4,
+      61.8
+     ]
+    }
+   ]
+  }
+ },
+ {
+  "nom": "ouverture de « cours » au ralenti 4 × : 69.9 → 72.4 ms (médianes des trois passes), au plus +10 % ou +15 ms",
+  "ok": true,
+  "detail": "horloge 71.2 → 61 ms, tâches 77.9 → 83.5 ms | horloge 68.7 → 64.1 ms, tâches 90.1 → 86.3 ms | horloge 65.9 → 95.2 ms, tâches 104.5 → 120.7 ms",
+  "mesure": {
+   "sans": 69.89999999850988,
+   "avec": 72.40000000223517,
+   "passes": [
+    {
+     "horloge": [
+      71.2,
+      61
+     ],
+     "travail": [
+      77.9,
+      83.5
+     ]
+    },
+    {
+     "horloge": [
+      68.7,
+      64.1
+     ],
+     "travail": [
+      90.1,
+      86.3
+     ]
+    },
+    {
+     "horloge": [
+      65.9,
+      95.2
+     ],
+     "travail": [
+      104.5,
+      120.7
+     ]
+    }
+   ]
+  }
+ },
+ {
+  "nom": "ouverture de « codex » au ralenti 4 × : 49.8 → 61.8 ms (médianes des trois passes), au plus +10 % ou +15 ms",
+  "ok": true,
+  "detail": "horloge 49.6 → 63.8 ms, tâches 72.4 → 76.5 ms | horloge 62.3 → 69 ms, tâches 65.5 → 64 ms | horloge 49.4 → 51.5 ms, tâches 57.8 → 61.3 ms",
+  "mesure": {
+   "sans": 49.80000000074506,
+   "avec": 61.80000000074506,
+   "passes": [
+    {
+     "horloge": [
+      49.6,
+      63.8
+     ],
+     "travail": [
+      72.4,
+      76.5
+     ]
+    },
+    {
+     "horloge": [
+      62.3,
+      69
+     ],
+     "travail": [
+      65.5,
+      64
+     ]
+    },
+    {
+     "horloge": [
+      49.4,
+      51.5
+     ],
+     "travail": [
+      57.8,
+      61.3
+     ]
+    }
+   ]
+  }
+ },
+ {
+  "nom": "ouverture de « reglages » au ralenti 4 × : 121.7 → 120.5 ms (médianes des trois passes), au plus +10 % ou +15 ms",
+  "ok": true,
+  "detail": "horloge 116.2 → 124.8 ms, tâches 141.9 → 169.2 ms | horloge 116.8 → 115 ms, tâches 125.6 → 125.5 ms | horloge 122.5 → 104.6 ms, tâches 153.3 → 130.2 ms",
+  "mesure": {
+   "sans": 121.69999999925494,
+   "avec": 120.5,
+   "passes": [
+    {
+     "horloge": [
+      116.2,
+      124.8
+     ],
+     "travail": [
+      141.9,
+      169.2
+     ]
+    },
+    {
+     "horloge": [
+      116.8,
+      115
+     ],
+     "travail": [
+      125.6,
+      125.5
+     ]
+    },
+    {
+     "horloge": [
+      122.5,
+      104.6
+     ],
+     "travail": [
+      153.3,
+      130.2
+     ]
+    }
+   ]
+  }
+ },
+ {
+  "nom": "« cours » immobile au ralenti 4 × : médiane 16.7 ms, 95e centile 16.7 ms",
+  "ok": true,
+  "detail": "",
+  "mesure": {
+   "med": 16.7,
+   "p95": 16.7
+  }
+ },
+ {
+  "nom": "« codex » immobile au ralenti 4 × : médiane 16.7 ms, 95e centile 16.7 ms",
+  "ok": true,
+  "detail": "",
+  "mesure": {
+   "med": 16.7,
+   "p95": 16.7
+  }
+ },
+ {
+  "nom": "« reglages » immobile au ralenti 4 × : médiane 16.7 ms, 95e centile 16.7 ms",
+  "ok": true,
+  "detail": "",
+  "mesure": {
+   "med": 16.7,
+   "p95": 16.7
+  }
+ }
+]

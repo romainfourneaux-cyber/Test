@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- L'encre du jeu : fond du bandeau, du cuir et de l'icône. -->
+    <color name="fond">#2e2419</color>
+</resources>

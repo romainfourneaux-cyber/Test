@@ -1,0 +1,24 @@
+Moteur : jeu/js/bataille-moteur.js · or perdu par erreur : celui du jeu · 160 batailles par case · batailles de route (options de JEU.expedition.optionsBataille) · escarmouche : attaque, 2 vagues, camp de 6, ligne + 0 ; embuscade : defense, 2 vagues, camp de 10, ligne + 1 ; gardien : defense, 2 vagues, camp de 12, ligne + 0 ; grand : defense, 3 vagues, camp de 16, ligne + 0 · lignes par semaine [[2,0],[5,1],[8,2],[12,3]] · difficulté -1 · front angleterre · Armorial : aucun · faveurs : aucune · semaines 8
+
+p = 0.6 (réponses justes) · 160 batailles par case
+sem | nœud          | carte   | rival | arsenal | vag. camp | tenue (éclatante) | tenu  retraite | murs restants (quand elle tient) | coups portés (1re vague) | gardien vaincu en 1 / 2 / 3 tentatives · tentatives moy. · jamais en 5
+  8 | escarmouche   | moulin  |   1   |    2    | 2   6   |  100 % ( 44 %)   |  56 %    0 %   |                    101 % (101 %) |              4.43 (2.35) | —
+  8 | embuscade     | moulin  |   2   |    2    | 2  10   |   99 % ( 15 %)   |  84 %    1 %   |                      96 % (97 %) |              4.83 (2.98) | —
+  8 | gardien       | moulin  |   1   |    2    | 2  12   |   94 % ( 14 %)   |  79 %    6 %   |                      88 % (94 %) |              4.73 (2.89) | 94 % / 99 % / 100 % · 1.07 · 0 %
+  8 | Grand Gardien | gue     |   1   |    2    | 3  16   |   74 % (  3 %)   |  71 %   26 %   |                      35 % (47 %) |              5.03 (2.89) | 74 % / 96 % / 99 % · 1.31 · 0 %
+
+p = 0.7 (réponses justes) · 160 batailles par case
+sem | nœud          | carte   | rival | arsenal | vag. camp | tenue (éclatante) | tenu  retraite | murs restants (quand elle tient) | coups portés (1re vague) | gardien vaincu en 1 / 2 / 3 tentatives · tentatives moy. · jamais en 5
+  8 | escarmouche   | moulin  |   1   |    2    | 2   6   |  100 % ( 64 %)   |  36 %    0 %   |                    101 % (101 %) |              5.78 (2.91) | —
+  8 | embuscade     | moulin  |   2   |    2    | 2  10   |  100 % ( 26 %)   |  74 %    0 %   |                      99 % (99 %) |               7.21 (4.2) | —
+  8 | gardien       | moulin  |   1   |    2    | 2  12   |   98 % ( 31 %)   |  67 %    3 %   |                      96 % (98 %) |              7.28 (3.84) | 98 % / 100 % / 100 % · 1.03 · 0 %
+  8 | Grand Gardien | gue     |   1   |    2    | 3  16   |   92 % ( 12 %)   |  80 %    8 %   |                      52 % (57 %) |              7.56 (3.84) | 92 % / 99 % / 100 % · 1.09 · 0 %
+
+p = 0.9 (réponses justes) · 160 batailles par case
+sem | nœud          | carte   | rival | arsenal | vag. camp | tenue (éclatante) | tenu  retraite | murs restants (quand elle tient) | coups portés (1re vague) | gardien vaincu en 1 / 2 / 3 tentatives · tentatives moy. · jamais en 5
+  8 | escarmouche   | moulin  |   1   |    2    | 2   6   |  100 % ( 96 %)   |   4 %    0 %   |                    101 % (101 %) |              7.24 (4.69) | —
+  8 | embuscade     | moulin  |   2   |    2    | 2  10   |  100 % ( 69 %)   |  31 %    0 %   |                    102 % (102 %) |             13.91 (6.93) | —
+  8 | gardien       | moulin  |   1   |    2    | 2  12   |  100 % ( 77 %)   |  23 %    0 %   |                    101 % (101 %) |             14.57 (6.75) | 100 % / 100 % / 100 % · 1 · 0 %
+  8 | Grand Gardien | gue     |   1   |    2    | 3  16   |  100 % ( 54 %)   |  46 %    0 %   |                      89 % (89 %) |             14.63 (6.75) | 100 % / 100 % / 100 % · 1 · 0 %
+
+(21 s)

@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Validateur du jeu 5e</title>
+<style>
+  body { font-family: Georgia, serif; background: #efe6d2; color: #2e2419; max-width: 900px; margin: 2rem auto; padding: 0 1rem; }
+  h1 { font-size: 1.5rem; }
+  .erreur { color: #9a4a32; } .alerte { color: #8a6a1a; } .ok { color: #4f6b32; font-weight: bold; }
+  li { margin: .2rem 0; }
+</style>
+</head>
+<body>
+<h1>Validateur du jeu (version navigateur)</h1>
+<p>Contrôles 1 à 7 de docs/FORMAT_DONNEES.md, suivi des cours (data/suivi.js) compris. Demandent Node : l'anti-recopie et l'anti-spoil (contrôles 8 et 9, notes de suivi.js comprises), la présence d'un fichier source de suivi.js dans DEPOT/ et l'accord entre VERSION.txt et le numéro affiché par le jeu : <code>node atelier/outils/valider.js</code>.</p>
+<div id="resultat">Contrôle en cours…</div>
+<script>
+  // Capture des données : même interface que le jeu.
+  var erreursChargement = [];
+  var JEU = window.JEU = { donnees: { cours: {}, anglais: {} }, enregistrer: function (type, obj) {
+    var d = JEU.donnees;
+    if (type === "config") d.config = obj; else if (type === "planning") d.planning = obj; else if (type === "devoirs") d.devoirs = obj;
+    else if (type === "index-cours") d.indexCours = obj; else if (type === "a-retravailler") d.aRetravailler = obj; else if (type === "suivi") d.suivi = obj;
+    else if (type === "cours") d.cours[obj.id] = obj; else if (type === "anglais") d.anglais[obj.id] = obj;
+    else erreursChargement.push("type inconnu : " + type);
+  } };
+  window.addEventListener("error", function (e) { erreursChargement.push((e.filename || "").replace(/^.*\/jeu\//, "jeu/") + " : " + e.message); });
+</script>
+<script src="../../jeu/js/brouillage.js"></script>
+<script src="controles.js"></script>
+<script src="../../jeu/data/config.js" onerror="erreursChargement.push('jeu/data/config.js introuvable')"></script>
+<script src="../../jeu/data/planning.js" onerror="erreursChargement.push('jeu/data/planning.js introuvable')"></script>
+<script src="../../jeu/data/devoirs.js" onerror="erreursChargement.push('jeu/data/devoirs.js introuvable')"></script>
+<script src="../../jeu/data/index-cours.js" onerror="erreursChargement.push('jeu/data/index-cours.js introuvable')"></script>
+<script src="../../jeu/data/a-retravailler.js" onerror="erreursChargement.push('jeu/data/a-retravailler.js introuvable')"></script>
+<script src="../../jeu/data/suivi.js" onerror="erreursChargement.push('jeu/data/suivi.js introuvable')"></script>
+<script>
+  (function () {
+    var ids = JEU.donnees.indexCours || [];
+    var restant = ids.length;
+    function fini() {
+      var d = JEU.donnees;
+      d.erreursChargement = erreursChargement;
+      d.aRetravailler = d.aRetravailler || [];
+      var r = CONTROLES.controler(d, JEU.debrouiller);
+      var z = document.getElementById("resultat");
+      var h = "<p class='" + (r.erreurs.length ? "erreur" : "ok") + "'>" + r.erreurs.length + " erreur(s), " + r.alertes.length + " alerte(s).</p><ul>";
+      r.erreurs.forEach(function (m) { h += "<li class='erreur'>ERREUR " + m.replace(/</g, "&lt;") + "</li>"; });
+      r.alertes.forEach(function (m) { h += "<li class='alerte'>ALERTE " + m.replace(/</g, "&lt;") + "</li>"; });
+      z.innerHTML = h + "</ul>";
+    }
+    if (!restant) return fini();
+    ids.forEach(function (id) {
+      var s = document.createElement("script");
+      s.src = "../../jeu/data/" + (/^anglais-/.test(id) ? "anglais" : "cours") + "/" + id + ".js";
+      s.onload = s.onerror = function () { if (--restant === 0) fini(); };
+      document.head.appendChild(s);
+    });
+  })();
+</script>
+</body>
+</html>

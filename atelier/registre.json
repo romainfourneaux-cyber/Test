@@ -1,0 +1,891 @@
+[
+ {
+  "chemin": "planning/Emploi du temps 5e complet - Semaines 01 a 34.pdf",
+  "taille": 979814,
+  "modifieLe": "2026-10-13T11:58:50",
+  "traiteLe": "2026-10-13T12:26:50",
+  "type": "planning",
+  "cours": [],
+  "extraction": "Emploi du temps 5e complet - Semaines 01 a 34.txt"
+ },
+ {
+  "chemin": "planning/Plan des devoirs 5e scolarite complete.pdf",
+  "taille": 198216,
+  "modifieLe": "2026-10-13T11:58:50",
+  "traiteLe": "2026-10-13T12:26:50",
+  "type": "planning",
+  "cours": [],
+  "extraction": "Plan des devoirs 5e scolarite complete.txt"
+ },
+ {
+  "chemin": "methodes/Fiche methode - Frise chronologique.pdf",
+  "taille": 325363,
+  "modifieLe": "2026-10-13T11:58:50",
+  "traiteLe": "2026-10-13T12:26:50",
+  "type": "methode",
+  "cours": [
+   "methode-frise"
+  ],
+  "extraction": "Fiche methode - Frise chronologique.txt"
+ },
+ {
+  "chemin": "methodes/Fiche methode - Tableau a double entree.pdf",
+  "taille": 307644,
+  "modifieLe": "2026-10-13T11:58:50",
+  "traiteLe": "2026-10-13T12:26:50",
+  "type": "methode",
+  "cours": [
+   "methode-tableau"
+  ],
+  "extraction": "Fiche methode - Tableau a double entree.txt"
+ },
+ {
+  "chemin": "methodes/Fiche methode - Diagramme ombrothermique.pdf",
+  "taille": 3206820,
+  "modifieLe": "2026-10-13T11:58:50",
+  "traiteLe": "2026-10-13T12:26:50",
+  "type": "methode",
+  "cours": [
+   "methode-ombrothermique"
+  ],
+  "extraction": "Fiche methode - Diagramme ombrothermique.txt"
+ },
+ {
+  "chemin": "methodes/Fiche methode - Realisation graphique.pdf",
+  "taille": 2602131,
+  "modifieLe": "2026-10-13T11:58:50",
+  "traiteLe": "2026-10-13T12:26:50",
+  "type": "methode",
+  "cours": [
+   "methode-graphique"
+  ],
+  "extraction": "Fiche methode - Realisation graphique.txt"
+ },
+ {
+  "chemin": "methodes/Fiche methode - Instruments de mesure en physique-chimie.pdf",
+  "taille": 681719,
+  "modifieLe": "2026-10-13T11:58:50",
+  "traiteLe": "2026-10-13T12:26:50",
+  "type": "methode",
+  "cours": [
+   "methode-instruments"
+  ],
+  "extraction": "Fiche methode - Instruments de mesure en physique-chimie.txt"
+ },
+ {
+  "chemin": "methodes/Physique-chimie - Materiel des TP.pdf",
+  "taille": 188019,
+  "modifieLe": "2026-10-13T11:58:50",
+  "traiteLe": "2026-10-13T12:26:50",
+  "type": "methode",
+  "cours": [
+   "methode-instruments"
+  ],
+  "extraction": "Physique-chimie - Materiel des TP.txt"
+ },
+ {
+  "chemin": "methodes/Fiche methode - Fiche de memorisation.pdf",
+  "taille": 272578,
+  "modifieLe": "2026-10-13T11:58:50",
+  "traiteLe": "2026-10-13T12:26:50",
+  "type": "methode",
+  "cours": [],
+  "extraction": "Fiche methode - Fiche de memorisation.txt"
+ },
+ {
+  "chemin": "cours/geographie/Geo 5e - Tableau de progression.pdf",
+  "taille": 278479,
+  "modifieLe": "2026-10-14T18:30:00",
+  "traiteLe": "2026-10-14T18:30:00",
+  "type": "cours",
+  "cours": [
+   "geographie-s01-1"
+  ],
+  "extraction": "Geo 5e - Tableau de progression.txt"
+ },
+ {
+  "chemin": "cours/geographie/Geo 5e - Theme 1 - Cours 1.pdf",
+  "taille": null,
+  "modifieLe": "2026-10-14T18:30:00",
+  "traiteLe": "2026-10-14T18:30:00",
+  "type": "cours",
+  "cours": [
+   "geographie-s01-2",
+   "geographie-s02-2",
+   "geographie-s03-1"
+  ],
+  "extraction": "Geo 5e - Theme 1 - Cours 1.txt"
+ },
+ {
+  "chemin": "cours/geographie/Geo 5e - Theme 1 - Cours 1 - Etude de cas 1 Burkina Faso.pdf",
+  "taille": 2492643,
+  "modifieLe": "2026-10-14T18:30:00",
+  "traiteLe": "2026-10-14T18:30:00",
+  "type": "cours",
+  "cours": [
+   "geographie-s02-1"
+  ],
+  "extraction": "Geo 5e - Theme 1 - Cours 1 - Etude de cas 1 Burkina Faso.txt"
+ },
+ {
+  "chemin": "cours/histoire/Histoire 5e - Seance 1 - Support.pdf",
+  "taille": 544449,
+  "modifieLe": "2026-10-14T18:30:00",
+  "traiteLe": "2026-10-14T18:30:00",
+  "type": "cours",
+  "cours": [
+   "histoire-s01-1"
+  ],
+  "extraction": "Histoire 5e - Seance 1 - Support.txt"
+ },
+ {
+  "chemin": "cours/histoire/Histoire 5e - Seance 2 - Support.pdf",
+  "taille": 495463,
+  "modifieLe": "2026-10-14T18:30:00",
+  "traiteLe": "2026-10-14T18:30:00",
+  "type": "cours",
+  "cours": [
+   "histoire-s01-2"
+  ],
+  "extraction": "Histoire 5e - Seance 2 - Support.txt"
+ },
+ {
+  "chemin": "cours/histoire/Histoire 5e - Seance 3 - Support et Devoir entrainement.pdf",
+  "taille": 573496,
+  "modifieLe": "2026-10-14T18:30:00",
+  "traiteLe": "2026-10-14T18:30:00",
+  "type": "cours",
+  "cours": [
+   "histoire-s02-1",
+   "histoire-s02-2"
+  ],
+  "extraction": "Histoire 5e - Seance 3 - Support et Devoir entrainement.txt"
+ },
+ {
+  "chemin": "cours/histoire/Histoire 5e - Seance 4 - Support.pdf",
+  "taille": 231694,
+  "modifieLe": "2026-10-14T18:30:00",
+  "traiteLe": "2026-10-14T18:30:00",
+  "type": "cours",
+  "cours": [
+   "histoire-s03-1"
+  ],
+  "extraction": "Histoire 5e - Seance 4 - Support.txt"
+ },
+ {
+  "chemin": "cours/histoire/Histoire 5e - Theme 1 - Cours 13 - Bilan.pdf",
+  "taille": 3770854,
+  "modifieLe": "2026-10-14T18:30:00",
+  "traiteLe": "2026-10-14T18:30:00",
+  "type": "cours",
+  "cours": [],
+  "extraction": "Histoire 5e - Theme 1 - Cours 13 - Bilan.txt"
+ },
+ {
+  "chemin": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Corriges.pdf",
+  "taille": 2610976,
+  "modifieLe": "2026-10-14T18:30:00",
+  "traiteLe": "2026-10-20T07:21:38",
+  "type": "cours",
+  "cours": [
+   "svt-s01-1",
+   "svt-s01-2",
+   "svt-s02-1",
+   "svt-s02-2",
+   "svt-s03-1",
+   "svt-s04-1",
+   "svt-s04-2",
+   "svt-s05-1",
+   "svt-s05-2",
+   "svt-s06-1",
+   "svt-s08-1",
+   "svt-s08-2"
+  ],
+  "extraction": "Cours Griffon 5eme SVT Livret 1 - Corriges.txt"
+ },
+ {
+  "chemin": "cours/svt/Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.pdf",
+  "taille": 1045397,
+  "modifieLe": "2026-10-14T18:30:00",
+  "traiteLe": "2026-10-20T07:21:38",
+  "type": "cours",
+  "cours": [
+   "svt-s01-1",
+   "svt-s01-2",
+   "svt-s02-1",
+   "svt-s02-2",
+   "svt-s03-1",
+   "svt-s04-1",
+   "svt-s08-1"
+  ],
+  "extraction": "Cours Griffon 5eme SVT Livret 1 - Ressources complementaires.txt"
+ },
+ {
+  "chemin": "cours/svt/SVT- LIVRET 1- 5eme - CARTE MUETTE CLIMAT.pdf",
+  "taille": 296365,
+  "modifieLe": "2026-10-14T18:30:00",
+  "traiteLe": "2026-10-14T18:30:00",
+  "type": "cours",
+  "cours": [],
+  "extraction": "SVT- LIVRET 1- 5eme - CARTE MUETTE CLIMAT.txt"
+ },
+ {
+  "chemin": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.pdf",
+  "taille": 1959384,
+  "modifieLe": "2026-10-14T18:30:00",
+  "traiteLe": "2026-10-20T07:21:38",
+  "type": "cours",
+  "cours": [
+   "physique-s01-1",
+   "physique-s02-1",
+   "physique-s03-1",
+   "physique-s04-1",
+   "physique-s05-1",
+   "physique-s06-1",
+   "physique-s08-1"
+  ],
+  "extraction": "Cours Griffon 5eme Physique Chimie - Livret 1 - Corriges.txt"
+ },
+ {
+  "chemin": "cours/litterature/Litterature 5e - Livret 1 - Corriges.pdf",
+  "taille": 647731,
+  "modifieLe": "2026-10-14T18:30:00",
+  "traiteLe": "2026-10-20T07:21:38",
+  "type": "cours",
+  "cours": [
+   "litterature-s01-2",
+   "litterature-s02-2",
+   "litterature-s03-2",
+   "litterature-s05-2",
+   "litterature-s06-2",
+   "litterature-s08-2"
+  ],
+  "extraction": "Litterature 5e - Livret 1 - Corriges.txt"
+ },
+ {
+  "chemin": "cours/lecture/Vocabulaire 5e - Un hivernage dans les glaces.pdf",
+  "taille": 2135193,
+  "modifieLe": "2026-10-14T18:30:00",
+  "traiteLe": "2026-10-20T07:21:38",
+  "type": "cours",
+  "cours": [
+   "lecture-s01-1",
+   "lecture-s02-1",
+   "lecture-s03-1",
+   "lecture-s04-1",
+   "lecture-s05-1",
+   "lecture-s06-1",
+   "lecture-s07-1",
+   "lecture-s08-1"
+  ],
+  "extraction": "Vocabulaire 5e - Un hivernage dans les glaces.txt"
+ },
+ {
+  "chemin": "cours/lecture/Preparation des fiches de lecture - Methode de lecture suivie 5e.pdf",
+  "taille": 306197,
+  "modifieLe": "2026-10-14T18:30:00",
+  "traiteLe": "2026-10-14T18:30:00",
+  "type": "cours",
+  "cours": [],
+  "extraction": "Preparation des fiches de lecture - Methode de lecture suivie 5e.txt"
+ },
+ {
+  "chemin": "devoirs/Geo-5e Devoir n°1 Correction.pdf",
+  "taille": 168423,
+  "modifieLe": "2026-10-14T18:30:00",
+  "traiteLe": "2026-10-14T18:30:00",
+  "type": "enonce",
+  "cours": [
+   "geographie-d1"
+  ],
+  "extraction": "Geo-5e Devoir n°1 Correction.txt"
+ },
+ {
+  "chemin": "devoirs/SVT-5eme - Devoir 1.pdf",
+  "taille": 792120,
+  "modifieLe": "2026-10-14T18:30:00",
+  "traiteLe": "2026-10-14T18:30:00",
+  "type": "enonce",
+  "cours": [
+   "svt-d1"
+  ],
+  "extraction": "SVT-5eme - Devoir 1.txt"
+ },
+ {
+  "chemin": "devoirs/Physique Chimie-5eme - Devoir 1.pdf",
+  "taille": 745019,
+  "modifieLe": "2026-10-14T18:30:00",
+  "traiteLe": "2026-10-14T18:30:00",
+  "type": "enonce",
+  "cours": [
+   "physique-d1"
+  ],
+  "extraction": "Physique Chimie-5eme - Devoir 1.txt"
+ },
+ {
+  "chemin": "devoirs/Litterature 5e - Devoir 1 - Corrige.pdf",
+  "taille": 199153,
+  "modifieLe": "2026-10-14T18:30:00",
+  "traiteLe": "2026-10-14T18:30:00",
+  "type": "enonce",
+  "cours": [
+   "litterature-d1"
+  ],
+  "extraction": "Litterature 5e - Devoir 1 - Corrige.txt"
+ },
+ {
+  "chemin": "devoirs/Fiche de lecture 5e - Fiche 1 - Un hivernage dans les glaces.pdf",
+  "taille": 854196,
+  "modifieLe": "2026-10-14T18:30:00",
+  "traiteLe": "2026-10-14T18:30:00",
+  "type": "enonce",
+  "cours": [
+   "lecture-d1"
+  ],
+  "extraction": "Fiche de lecture 5e - Fiche 1 - Un hivernage dans les glaces.txt"
+ },
+ {
+  "chemin": "devoirs/Hist-5e Devoir n°1.pdf (non déposé : texte lu sur le Drive)",
+  "taille": null,
+  "modifieLe": "2026-10-14T18:30:00",
+  "traiteLe": "2026-10-14T18:30:00",
+  "type": "enonce",
+  "cours": [
+   "histoire-d1"
+  ],
+  "extraction": "Hist-5e Devoir n1 (texte du Drive).txt"
+ },
+ {
+  "chemin": "devoirs/Geo 5e - Theme 1 - Devoir 1 - Copie corrigee.pdf",
+  "taille": 3100787,
+  "modifieLe": "2026-10-14T18:30:00",
+  "traiteLe": "2026-10-14T18:30:00",
+  "type": "copie",
+  "cours": [
+   "geographie-d1"
+  ]
+ },
+ {
+  "chemin": "devoirs/Francais 5e - Litterature - Devoir 1 - Copie corrigee.pdf",
+  "taille": 2263611,
+  "modifieLe": "2026-10-14T18:30:00",
+  "traiteLe": "2026-10-14T18:30:00",
+  "type": "copie",
+  "cours": [
+   "litterature-d1"
+  ]
+ },
+ {
+  "chemin": "cours/langue/Francais 5e - Conjugaison - Cours 10 - Les modes du verbe.pdf",
+  "taille": 324947,
+  "modifieLe": "2026-10-15T06:39:00",
+  "traiteLe": "2026-10-15T06:39:00",
+  "type": "cours",
+  "cours": [
+   "langue-conj10"
+  ],
+  "extraction": "Francais 5e - Conjugaison - Cours 10 - Les modes du verbe.txt"
+ },
+ {
+  "chemin": "cours/langue/Francais 5e - Conjugaison - Memento 4 Modes.pdf",
+  "taille": 263446,
+  "modifieLe": "2026-10-15T06:39:00",
+  "traiteLe": "2026-10-15T06:39:00",
+  "type": "cours",
+  "cours": [
+   "langue-conj10"
+  ],
+  "extraction": "Francais 5e - Conjugaison - Memento 4 Modes.txt"
+ },
+ {
+  "chemin": "cours/langue/Francais 5e - Conjugaison - Cours 11 - Etre et avoir.pdf",
+  "taille": 221277,
+  "modifieLe": "2026-10-15T06:39:00",
+  "traiteLe": "2026-10-15T06:39:00",
+  "type": "cours",
+  "cours": [
+   "langue-conj11"
+  ],
+  "extraction": "Francais 5e - Conjugaison - Cours 11 - Etre et avoir.txt"
+ },
+ {
+  "chemin": "cours/langue/Francais 5e - Conjugaison - Cours 12 - Homophones grammaticaux.pdf",
+  "taille": 332920,
+  "modifieLe": "2026-10-15T06:39:00",
+  "traiteLe": "2026-10-15T06:39:00",
+  "type": "cours",
+  "cours": [
+   "langue-conj12"
+  ],
+  "extraction": "Francais 5e - Conjugaison - Cours 12 - Homophones grammaticaux.txt"
+ },
+ {
+  "chemin": "cours/langue/Francais 5e - Grammaire Nature des mots - Cours 6 - Exercices.pdf",
+  "taille": 179876,
+  "modifieLe": "2026-10-15T06:39:00",
+  "traiteLe": "2026-10-15T06:39:00",
+  "type": "cours",
+  "cours": [],
+  "extraction": "Francais 5e - Grammaire Nature des mots - Cours 6 - Exercices.txt"
+ },
+ {
+  "chemin": "cours/langue/Francais 5e - Grammaire Nature des mots - Cours 7 - Exercices.pdf",
+  "taille": 158937,
+  "modifieLe": "2026-10-15T06:39:00",
+  "traiteLe": "2026-10-15T06:39:00",
+  "type": "cours",
+  "cours": [],
+  "extraction": "Francais 5e - Grammaire Nature des mots - Cours 7 - Exercices.txt"
+ },
+ {
+  "chemin": "cours/langue/Orthographe et expression ecrite.pdf",
+  "taille": 144970,
+  "modifieLe": "2026-10-15T06:39:00",
+  "traiteLe": "2026-10-15T06:39:00",
+  "type": "cours",
+  "cours": [
+   "langue-conj10"
+  ],
+  "extraction": "Orthographe et expression ecrite.txt"
+ },
+ {
+  "chemin": "planning/Tableau de synthese de la progression en francais (Cours Griffon).pdf",
+  "taille": 83174,
+  "modifieLe": "2026-10-15T06:39:00",
+  "traiteLe": "2026-10-15T06:39:00",
+  "type": "planning",
+  "cours": [],
+  "extraction": "Tableau de synthese de la progression en francais (Cours Griffon).txt"
+ },
+ {
+  "chemin": "devoirs/Devoir Cours-Griffon - Ref-FR-CUIVRE-2A - Sujet.pdf",
+  "taille": 544011,
+  "modifieLe": "2026-10-15T06:39:00",
+  "traiteLe": "2026-10-15T06:39:00",
+  "type": "enonce",
+  "cours": [
+   "langue-d1"
+  ],
+  "extraction": "Devoir Cours-Griffon - Ref-FR-CUIVRE-2A - Sujet.txt"
+ },
+ {
+  "chemin": "cours/histoire/Histoire 5e - Seance 5 - Support et Devoir entrainement.pdf",
+  "taille": 811299,
+  "modifieLe": "2026-10-13T15:28:39",
+  "traiteLe": "2026-10-20T07:21:38",
+  "type": "cours",
+  "cours": [
+   "histoire-s04-1",
+   "histoire-s04-2"
+  ],
+  "extraction": "Histoire 5e - Seance 5 - Support et Devoir entrainement.txt"
+ },
+ {
+  "chemin": "cours/histoire/Histoire 5e - Seance 6 - Support.pdf",
+  "taille": 169304,
+  "modifieLe": "2026-10-13T15:29:38",
+  "traiteLe": "2026-10-20T07:21:38",
+  "type": "cours",
+  "cours": [
+   "histoire-s04-3"
+  ],
+  "extraction": "Histoire 5e - Seance 6 - Support.txt"
+ },
+ {
+  "chemin": "cours/histoire/Histoire 5e - Seance 7 - Support.pdf",
+  "taille": 169785,
+  "modifieLe": "2026-10-13T15:29:35",
+  "traiteLe": "2026-10-20T07:21:38",
+  "type": "cours",
+  "cours": [
+   "histoire-s05-1"
+  ],
+  "extraction": "Histoire 5e - Seance 7 - Support.txt"
+ },
+ {
+  "chemin": "cours/histoire/Histoire 5e - Seance 9 - Support.pdf",
+  "taille": 150701,
+  "modifieLe": "2026-10-13T15:29:28",
+  "traiteLe": "2026-10-20T07:21:38",
+  "type": "cours",
+  "cours": [
+   "histoire-s07-2"
+  ],
+  "extraction": "Histoire 5e - Seance 9 - Support.txt"
+ },
+ {
+  "chemin": "cours/histoire/Histoire 5e - Seance 10 - Support.pdf",
+  "taille": 160789,
+  "modifieLe": "2026-10-13T15:29:25",
+  "traiteLe": "2026-10-20T07:21:38",
+  "type": "cours",
+  "cours": [
+   "histoire-s08-1"
+  ],
+  "extraction": "Histoire 5e - Seance 10 - Support.txt"
+ },
+ {
+  "chemin": "cours/histoire/Histoire 5e - Seance 11 - Support.pdf",
+  "taille": 181372,
+  "modifieLe": "2026-10-13T15:29:23",
+  "traiteLe": "2026-10-20T07:21:38",
+  "type": "cours",
+  "cours": [
+   "histoire-s08-2"
+  ],
+  "extraction": "Histoire 5e - Seance 11 - Support.txt"
+ },
+ {
+  "chemin": "cours/histoire/Histoire 5e - Moyen Age - Etude de cas 2 Seigneurie de Wismes.pdf",
+  "taille": 1040843,
+  "modifieLe": "2026-10-13T15:33:14",
+  "traiteLe": "2026-10-20T07:21:38",
+  "type": "cours",
+  "cours": [
+   "histoire-s05-1",
+   "histoire-s05-2"
+  ],
+  "extraction": "Histoire 5e - Moyen Age - Etude de cas 2 Seigneurie de Wismes.txt"
+ },
+ {
+  "chemin": "cours/histoire/Histoire 5e - Moyen Age - Etude de cas 3 Vie et travail des paysans.pdf",
+  "taille": 1252467,
+  "modifieLe": "2026-10-13T15:33:06",
+  "traiteLe": "2026-10-20T07:21:38",
+  "type": "cours",
+  "cours": [
+   "histoire-s04-3",
+   "histoire-s06-1"
+  ],
+  "extraction": "Histoire 5e - Moyen Age - Etude de cas 3 Vie et travail des paysans.txt"
+ },
+ {
+  "chemin": "devoirs/Histoire 5e - Seance 8 - Test.pdf",
+  "taille": 330927,
+  "modifieLe": "2026-10-13T15:29:20",
+  "traiteLe": "2026-10-20T07:21:38",
+  "type": "enonce",
+  "cours": [
+   "histoire-d1"
+  ],
+  "extraction": "Histoire 5e - Seance 8 - Test.txt"
+ },
+ {
+  "chemin": "devoirs/Histoire 5e - Seance 8 - Test - Corriges.pdf",
+  "taille": 334222,
+  "modifieLe": "2026-10-13T15:28:56",
+  "traiteLe": "2026-10-20T07:21:38",
+  "type": "corrige",
+  "cours": [
+   "histoire-d1"
+  ],
+  "extraction": "Histoire 5e - Seance 8 - Test - Corriges.txt"
+ },
+ {
+  "chemin": "devoirs/Histoire 5e - Seance 11 - Test.pdf",
+  "taille": 122667,
+  "modifieLe": "2026-10-13T15:29:16",
+  "traiteLe": "2026-10-20T07:21:38",
+  "type": "enonce",
+  "cours": [
+   "histoire-d1"
+  ],
+  "extraction": "Histoire 5e - Seance 11 - Test.txt"
+ },
+ {
+  "chemin": "devoirs/Histoire 5e - Seance 11 - Test - Corriges.pdf",
+  "taille": 130605,
+  "modifieLe": "2026-10-13T15:28:53",
+  "traiteLe": "2026-10-20T07:21:38",
+  "type": "corrige",
+  "cours": [
+   "histoire-d1"
+  ],
+  "extraction": "Histoire 5e - Seance 11 - Test - Corriges.txt"
+ },
+ {
+  "chemin": "cours/geographie/Geo 5e - Theme 1 - Cours 1 - Etude de cas 2 Inde.pdf",
+  "taille": 2911287,
+  "modifieLe": "2026-10-13T15:32:52",
+  "traiteLe": "2026-10-20T07:21:38",
+  "type": "cours",
+  "cours": [
+   "geographie-s04-1"
+  ],
+  "extraction": "Geo 5e - Theme 1 - Cours 1 - Etude de cas 2 Inde.txt"
+ },
+ {
+  "chemin": "cours/geographie/Geo 5e - Theme 1 - Etude de cas 3.pdf",
+  "taille": 2353377,
+  "modifieLe": "2026-10-13T15:32:32",
+  "traiteLe": "2026-10-20T07:21:38",
+  "type": "cours",
+  "cours": [
+   "geographie-s08-2"
+  ],
+  "extraction": "Geo 5e - Theme 1 - Etude de cas 3.txt"
+ },
+ {
+  "chemin": "cours/geographie/Geo 5e - Theme 1 - Cours 2.pdf",
+  "taille": null,
+  "modifieLe": "2026-10-13T15:32:35",
+  "traiteLe": "2026-10-20T07:21:38",
+  "type": "cours",
+  "cours": [
+   "geographie-s07-1",
+   "geographie-s08-1"
+  ],
+  "extraction": "Geo 5e - Theme 1 - Cours 2.txt"
+ },
+ {
+  "chemin": "cours/svt/Cours Griffon 5eme SVT Livret 2 - Corriges.pdf",
+  "taille": 1129673,
+  "modifieLe": "2026-10-13T14:59:26",
+  "traiteLe": "2026-10-20T07:21:38",
+  "type": "cours",
+  "cours": [
+   "svt-s13-1",
+   "svt-s13-2",
+   "svt-s14-1",
+   "svt-s15-1",
+   "svt-s15-2",
+   "svt-s16-1",
+   "svt-s17-2",
+   "svt-s18-1",
+   "svt-s18-2",
+   "svt-s19-1",
+   "svt-s20-1",
+   "svt-s20-2",
+   "svt-s21-1",
+   "svt-s21-2",
+   "svt-s23-1",
+   "svt-s23-2",
+   "svt-s24-1",
+   "svt-s24-2",
+   "svt-s25-1",
+   "svt-s25-2"
+  ],
+  "extraction": "Cours Griffon 5eme SVT Livret 2 - Corriges.txt"
+ },
+ {
+  "chemin": "cours/svt/Cours Griffon 5eme SVT Livret 2 - Ressources complementaires.pdf",
+  "taille": 690919,
+  "modifieLe": "2026-10-13T14:59:49",
+  "traiteLe": "2026-10-20T07:21:38",
+  "type": "cours",
+  "cours": [
+   "svt-s13-1",
+   "svt-s13-2",
+   "svt-s17-2",
+   "svt-s21-1",
+   "svt-s21-2",
+   "svt-s23-1"
+  ],
+  "extraction": "Cours Griffon 5eme SVT Livret 2 - Ressources complementaires.txt"
+ },
+ {
+  "chemin": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 2 - Corriges.pdf",
+  "taille": 1516466,
+  "modifieLe": "2026-10-13T15:00:01",
+  "traiteLe": "2026-10-20T07:21:38",
+  "type": "cours",
+  "cours": [
+   "physique-s21-1",
+   "physique-s22-1",
+   "physique-s23-1",
+   "physique-s24-1",
+   "physique-s25-1",
+   "physique-s26-1",
+   "physique-s27-1",
+   "physique-s28-1",
+   "physique-s31-1",
+   "physique-s32-1",
+   "physique-s33-1",
+   "physique-s34-1"
+  ],
+  "extraction": "Cours Griffon 5eme Physique Chimie - Livret 2 - Corriges.txt"
+ },
+ {
+  "chemin": "cours/physique-chimie/Cours Griffon 5eme Physique Chimie - Livret 2 - Ressources complementaires.pdf",
+  "taille": 1533490,
+  "modifieLe": "2026-10-13T15:00:15",
+  "traiteLe": "2026-10-20T07:21:38",
+  "type": "cours",
+  "cours": [
+   "physique-s21-1",
+   "physique-s22-1",
+   "physique-s32-1"
+  ],
+  "extraction": "Cours Griffon 5eme Physique Chimie - Livret 2 - Ressources complementaires.txt"
+ },
+ {
+  "chemin": "cours/litterature/Litterature 5e - Livret 2 - Corriges.pdf",
+  "taille": 756678,
+  "modifieLe": "2026-10-13T15:01:04",
+  "traiteLe": "2026-10-20T07:21:38",
+  "type": "cours",
+  "cours": [
+   "litterature-s11-1",
+   "litterature-s11-2",
+   "litterature-s12-1",
+   "litterature-s12-2",
+   "litterature-s14-1",
+   "litterature-s14-2",
+   "litterature-s15-1",
+   "litterature-s15-2",
+   "litterature-s16-1",
+   "litterature-s16-2",
+   "litterature-s18-1",
+   "litterature-s18-2",
+   "litterature-s19-1",
+   "litterature-s19-2",
+   "litterature-s20-1"
+  ],
+  "extraction": "Litterature 5e - Livret 2 - Corriges.txt"
+ },
+ {
+  "chemin": "cours/anglais/Anglais 5e - Livret 1 - Corriges.pdf",
+  "taille": 882269,
+  "modifieLe": "2026-10-20T07:13:00",
+  "traiteLe": "2026-10-20T07:13:00",
+  "type": "cours",
+  "cours": [
+   "anglais-seq01",
+   "anglais-seq02",
+   "anglais-seq03"
+  ],
+  "extraction": "Anglais 5e - Livret 1 - Corriges.txt"
+ },
+ {
+  "chemin": "cours/anglais/Anglais 5e - Sequence 1 - Exercices supplementaires.pdf",
+  "taille": 188778,
+  "modifieLe": "2026-10-20T07:13:00",
+  "traiteLe": "2026-10-20T07:13:00",
+  "type": "cours",
+  "cours": [
+   "anglais-seq01"
+  ],
+  "extraction": "Anglais 5e - Sequence 1 - Exercices supplementaires.txt"
+ },
+ {
+  "chemin": "cours/anglais/Anglais 5e - Sequence 1 - Exercices supplementaires - Corriges.pdf",
+  "taille": 190620,
+  "modifieLe": "2026-10-20T07:13:00",
+  "traiteLe": "2026-10-20T07:13:00",
+  "type": "cours",
+  "cours": [
+   "anglais-seq01"
+  ],
+  "extraction": "Anglais 5e - Sequence 1 - Exercices supplementaires - Corriges.txt"
+ },
+ {
+  "chemin": "cours/anglais/Anglais 5e - Sequence 2 - Exercices supplementaires.pdf",
+  "taille": 251312,
+  "modifieLe": "2026-10-20T07:13:00",
+  "traiteLe": "2026-10-20T07:13:00",
+  "type": "cours",
+  "cours": [
+   "anglais-seq02"
+  ],
+  "extraction": "Anglais 5e - Sequence 2 - Exercices supplementaires.txt"
+ },
+ {
+  "chemin": "cours/anglais/Anglais 5e - Sequence 2 - Exercices supplementaires - Corriges.pdf",
+  "taille": 268896,
+  "modifieLe": "2026-10-20T07:13:00",
+  "traiteLe": "2026-10-20T07:13:00",
+  "type": "cours",
+  "cours": [
+   "anglais-seq02"
+  ],
+  "extraction": "Anglais 5e - Sequence 2 - Exercices supplementaires - Corriges.txt"
+ },
+ {
+  "chemin": "cours/anglais/Anglais 5e - Sequence 3 - Exercices supplementaires.pdf",
+  "taille": 212385,
+  "modifieLe": "2026-10-20T07:13:00",
+  "traiteLe": "2026-10-20T07:13:00",
+  "type": "cours",
+  "cours": [
+   "anglais-seq03"
+  ],
+  "extraction": "Anglais 5e - Sequence 3 - Exercices supplementaires.txt"
+ },
+ {
+  "chemin": "cours/anglais/Anglais 5e - Sequence 3 - Exercices supplementaires - Corriges.pdf",
+  "taille": 214387,
+  "modifieLe": "2026-10-20T07:13:00",
+  "traiteLe": "2026-10-20T07:13:00",
+  "type": "cours",
+  "cours": [
+   "anglais-seq03"
+  ],
+  "extraction": "Anglais 5e - Sequence 3 - Exercices supplementaires - Corriges.txt"
+ },
+ {
+  "chemin": "cours/anglais/Anglais 5e - Sequence 4 - Exercices supplementaires.pdf",
+  "taille": 197120,
+  "modifieLe": "2026-10-20T07:13:00",
+  "traiteLe": "2026-10-20T07:13:00",
+  "type": "cours",
+  "cours": [
+   "anglais-seq04"
+  ],
+  "extraction": "Anglais 5e - Sequence 4 - Exercices supplementaires.txt"
+ },
+ {
+  "chemin": "cours/anglais/Anglais 5e - Sequence 4 - Exercices supplementaires - Corriges.pdf",
+  "taille": 196748,
+  "modifieLe": "2026-10-20T07:13:00",
+  "traiteLe": "2026-10-20T07:13:00",
+  "type": "cours",
+  "cours": [
+   "anglais-seq04"
+  ],
+  "extraction": "Anglais 5e - Sequence 4 - Exercices supplementaires - Corriges.txt"
+ },
+ {
+  "chemin": "cours/anglais/Anglais 5e - Sequence 5 - Exercices supplementaires.pdf",
+  "taille": 247617,
+  "modifieLe": "2026-10-20T07:13:00",
+  "traiteLe": "2026-10-20T07:13:00",
+  "type": "cours",
+  "cours": [
+   "anglais-seq05"
+  ],
+  "extraction": "Anglais 5e - Sequence 5 - Exercices supplementaires.txt"
+ },
+ {
+  "chemin": "cours/anglais/Anglais 5e - Sequence 5 - Exercices supplementaires - Corriges.pdf",
+  "taille": 238494,
+  "modifieLe": "2026-10-20T07:13:00",
+  "traiteLe": "2026-10-20T07:13:00",
+  "type": "cours",
+  "cours": [
+   "anglais-seq05"
+  ],
+  "extraction": "Anglais 5e - Sequence 5 - Exercices supplementaires - Corriges.txt"
+ },
+ {
+  "chemin": "devoirs/Anglais 5e - Devoir 1 - Sujet.pdf",
+  "taille": 250532,
+  "modifieLe": "2026-10-20T07:13:00",
+  "traiteLe": "2026-10-20T07:13:00",
+  "type": "enonce",
+  "cours": [
+   "anglais-d1"
+  ],
+  "extraction": "Anglais 5e - Devoir 1 - Sujet.txt"
+ },
+ {
+  "chemin": "devoirs/Anglais 5e - Devoir 2 - Sujet.pdf",
+  "taille": 294192,
+  "modifieLe": "2026-10-20T07:13:00",
+  "traiteLe": "2026-10-20T07:13:00",
+  "type": "enonce",
+  "cours": [
+   "anglais-d2"
+  ],
+  "extraction": "Anglais 5e - Devoir 2 - Sujet.txt"
+ }
+]

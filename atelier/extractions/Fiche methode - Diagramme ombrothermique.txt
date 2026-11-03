@@ -1,0 +1,92 @@
+                FICHE MÉTHODE :
+            PAS-À-PAS POUR RÉALISER
+       UN DIAGRAMME OMBROTHERMIQUE
+Le diagramme ombrothermique est une manière de représenter, de façon groupée par l’utilisation
+des moyennes sur trente ans, les cumuls de précipitation et les températures mensuels d’une zone
+géographique.
+
+Les moyennes des cumuls de précipitations sont représentées sous la forme de diagrammes en
+bâton : un bâton représente la quantité totale (= le cumul) de pluie, neige, grêle… tombée en
+moyenne chaque année pendant trente ans, par mois.
+
+Les moyennes des températures sont représentées sous la forme de points reliés par un trait : une
+courbe dont chaque point représente la moyenne des températures relevées pendant trente ans,
+par mois.
+
+N.B. Il peut y avoir deux courbes de température sur un diagramme ombrothermique : l’une
+représente les moyennes des températures les plus basses et l’autre les moyennes des températures
+les plus hautes prises au cours de la journée.
+
+C’est donc un graphique mixte : diagramme en bâton et graphique linéaire. Il comporte trois axes :
+    - Un axe horizontal noir (des abscisses), commun aux deux types de représentation. Il est
+        gradué en mois, de janvier à décembre.
+    - Un premier axe vertical rouge (des ordonnées), à gauche, sur lequel sont indiquées les
+        températures en degrés Celsius (°C).
+    - Un deuxième axe vertical bleu (des ordonnées), à droite, sur lequel sont indiqués les cumuls
+        de précipitation en millimètres (mm).
+
+Attention ! Afin de pouvoir comparer les profils climatiques entre eux, il faut respecter la règle
+suivante de correspondance des graduations des deux axes des ordonnées : la valeur maximale du
+cumul des précipitations est égale à deux fois la température maximale.
+Par exemple : si le cumul maximal des précipitations est de 300 mm, alors la température maximale
+à indiquer est 150°C.
+
+Prenons l’exemple de la ville de Vichy :
+
+
+
+
+Il s’agit bien là de valeurs moyennes calculées sur une période de 30 ans.
+Fiche Méthode – Réalisation d’un diagramme ombrothermique – Page 2/6
+
+Pour réaliser le diagramme ombrothermique, on commence par mettre en place l’axe
+horizontal des abscisses qui indique les mois de l’année, en indiquant le 0 des axes des
+ordonnées :
+
+
+
+
+Puis on repère la valeur la plus élevée de cumul de précipitation dans le tableau : ici, 98 mm au mois
+de mai.
+On peut donc choisir un maximum de cumul de précipitations à 100 mm.
+Cela implique que le maximum de températures sera de 100/2 soit 50°C.
+Fiche Méthode – Réalisation d’un diagramme ombrothermique – Page 3/6
+
+
+
+
+En choisissant 2 carreaux = 10 mm de cumul de précipitations, on a aussi 2 carreaux = 5 °C.
+Il faut maintenant reporter les valeurs des cumuls de précipitation pour chaque mois.
+
+Commençons par le mois de janvier : on trace un trait horizontal de 5mm à la valeur 46 en centrant
+ce trait sur le mois de janvier :
+Fiche Méthode – Réalisation d’un diagramme ombrothermique – Page 4/6
+
+Et on procède de la même façon pour tous les autres mois :
+
+
+
+
+Puis on dessine les rectangles correspondants, colorés en bleu clair :
+Fiche Méthode – Réalisation d’un diagramme ombrothermique – Page 5/6
+
+
+Le diagramme de cumul des précipitations est terminé. On passe ensuite à la réalisation du
+graphique des températures moyennes en repérant par une croix la température en regard de
+chaque mois.
+
+Commençons par le mois de janvier : température 7°C.
+Fiche Méthode – Réalisation d’un diagramme ombrothermique – Page 6/6
+
+On procède de la même façon pour chaque mois :
+
+
+
+
+Puis on relie les points de la courbe et on donne un titre au diagramme terminé :
+
+
+
+
+                     Diagramme ombrothermique de la ville de Vichy (1971-2000)
+

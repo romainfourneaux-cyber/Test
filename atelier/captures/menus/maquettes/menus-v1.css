@@ -1,0 +1,333 @@
+/* =====================================================================
+   Menus habillés (maquette du 31/10/2026, base de jeu/css/menus.css pour l'agent B4).
+   Chargée APRÈS jeu.css : elle habille, elle ne déplace rien. Hauteurs du bandeau et du menu inchangées.
+   Règles : transform et opacity seulement pour ce qui bouge ; dégradés et images fixes ; aucun filter animé ;
+   .sans-anim et prefers-reduced-motion coupent tout (règles globales de jeu.css) ; l'ambiance continue sous
+   body:not(.sans-ambiance). Images : dans la maquette ../rendus/, dans le jeu ../assets/images/menus/.
+   ===================================================================== */
+:root {
+  --rubrique: #8c2f39;
+  --laiton: url("../rendus-essai/bossette-laiton.png");
+  --sangle-bord: url("../rendus-essai/sangle-bord.png");
+  --coin-dore: url("../rendus-essai/coin-dore.png");
+  --peau-or: url("../rendus-essai/cartouche2-or.png");
+  --peau-or-appui: url("../rendus-essai/cartouche2-or-appui.png");
+  --peau-parchemin: url("../rendus-essai/cartouche2-parchemin.png");
+  --peau-parchemin-appui: url("../rendus-essai/cartouche2-parchemin-appui.png");
+  --peau-plomb: url("../rendus-essai/cartouche2-plomb.png");
+  --sceau-case: url("../rendus-essai/sceau-case.png");
+  --sceau-acquis: url("../rendus-essai/sceau-acquis.png");
+  --sceau-revoir: url("../rendus-essai/sceau-revoir.png");
+  --sceau-or: url("../rendus-essai/sceau-or.png");
+  /* fanion de l'onglet actif : dessin provisoire (le rendu fanion.png le remplace) */
+  --fanion: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 36'><defs><linearGradient id='s' x1='0' x2='1'><stop offset='0' stop-color='%23641a24'/><stop offset='.35' stop-color='%239c3440'/><stop offset='.55' stop-color='%23b4505a'/><stop offset='.75' stop-color='%238c2f39'/><stop offset='1' stop-color='%235a1620'/></linearGradient></defs><path d='M4 3h24v29l-12-7-12 7z' fill='url(%23s)' stroke='%23e2c272' stroke-width='1.6' stroke-linejoin='round'/><path d='M7 5.5h18v21.5l-9-5.2-9 5.2z' fill='none' stroke='%23e2c272' stroke-width='.6' opacity='.7'/><path d='M16 9l3.2 4.6L16 18.2l-3.2-4.6z' fill='%23e2c272' stroke='%233a1a10' stroke-width='.6'/><rect x='1' y='1' width='30' height='3.6' rx='1.8' fill='%23c9a24a' stroke='%232e2419' stroke-width='.8'/></svg>");
+  /* halo héraldique du focus : filet clair, filet d'encre, filet d'or, lueur d'or (le --filet du jeu, en lumière) */
+  --halo: 0 0 0 2px var(--fond), 0 0 0 4px var(--encre), 0 0 0 6px var(--or-clair), 0 0 16px 6px rgba(226,194,114,.55);
+}
+
+/* ---------- Menus : bandeau ---------- */
+/* même hauteur : la bordure reste, sombre ; le filet doré passe au bord haut de la sangle */
+#bandeau { border-bottom-color: #160d06; box-shadow: none; }
+.bouton-rond {
+  /* la bossette rendue, un peu agrandie (son ombre déborde), éclaircie au centre pour que l'icône d'encre se lise */
+  background: radial-gradient(circle at 42% 38%, rgba(255,244,205,.55), rgba(255,244,205,0) 58%), var(--laiton) center/128% 128% no-repeat;
+  color: #1e1408; box-shadow: none;
+}
+.bouton-rond .gi { filter: drop-shadow(0 1px 0 rgba(255,240,200,.55)); }
+.bouton-rond:active { transform: translateY(1px); }
+.medaillon { box-shadow: 0 0 0 2px #c9a24a, 0 0 0 3px #120b05, inset 0 2px 3px rgba(255,255,255,.25), 0 2px 4px rgba(0,0,0,.7); }
+
+/* ---------- Menus : sangle et onglets ---------- */
+/* La sangle : cuir chaud gaufré ; filet doré et couture en haut et en bas (sangle-bord.png en border-image,
+   dessinée par-dessus le bord intérieur : la boîte du menu garde sa hauteur). */
+#menu {
+  position: relative; z-index: 5;
+  background: linear-gradient(rgba(110,58,24,.28), rgba(28,13,5,.55)), var(--cuir);
+  border-bottom: 0; padding-bottom: 3px;
+  border-image: var(--sangle-bord) 20 0 / 10px 0 round;
+  box-shadow: 0 6px 12px rgba(0,0,0,.55);
+}
+#menu button { color: #eedfb6; border-bottom-color: transparent; }
+#menu button .gi { color: #d9be78; }
+/* clous de laiton entre deux onglets */
+#menu button + button::before {
+  content: ""; position: absolute; left: -7px; top: 50%; width: 12px; height: 12px; margin-top: -4px;
+  background: var(--laiton) center/100% 100% no-repeat; pointer-events: none;
+}
+#menu button { position: relative; }
+#menu button.actif {
+  color: #fff6da; border-bottom-color: transparent;
+  background: radial-gradient(ellipse 62% 70% at 50% 48%, rgba(226,194,114,.24), rgba(226,194,114,0) 76%);
+}
+#menu button.actif .gi { color: #f3d98a; }
+/* le fanion pend sous la sangle, accroché au filet doré ; il tombe (240 ms) quand on change d'écran */
+#menu button.actif::after {
+  content: ""; position: absolute; left: 50%; top: calc(100% - 3px); width: 30px; height: 34px; margin-left: -15px;
+  background: var(--fanion) center top/100% 100% no-repeat; pointer-events: none;
+  transform-origin: 50% 0; animation: fanion .24s ease-out both; /* l'ombre est dans l'image (pas de filter sur un élément animé) */
+}
+@keyframes fanion { from { opacity: 0; transform: translateY(-10px) rotate(8deg); } 60% { opacity: 1; transform: translateY(1px) rotate(-3deg); } to { opacity: 1; transform: none; } }
+#menu button:hover { transform: none; color: #fff3d0; }
+#menu button:hover .gi { color: #f3d98a; }
+#menu button:focus-visible {
+  outline: 2px solid var(--or-clair); outline-offset: -5px; border-radius: 10px;
+  background: radial-gradient(ellipse 62% 70% at 50% 48%, rgba(226,194,114,.34), rgba(226,194,114,0) 76%);
+}
+#menu button:active { color: #fff; }
+#menu button:active .gi { transform: translateY(1px); }
+
+/* ---------- Menus : feuille et cartouches ---------- */
+.ecran::before, .ecran::after { width: 46px; height: 46px; background: var(--coin-dore) center/100% 100% no-repeat; }
+.cartouche { outline: 0; border: 1.5px solid rgba(46,36,25,.75); box-shadow: 0 0 0 3px rgba(176,141,58,.5), 0 3px 8px rgba(80,50,20,.22); background: rgba(255,250,236,.6); }
+.cartouche h3 { color: #6a2a30; }
+.cartouche h3::after { content: ""; flex: 1; height: 1px; margin-left: .4rem; background: linear-gradient(90deg, rgba(176,141,58,.8), rgba(176,141,58,0)); }
+
+/* ---------- Menus : boutons en cartouches dorés ---------- */
+/* Peau rendue (cadre doré à pans coupés + face) en border-image ... fill : la boîte du bouton ne change pas
+   (border 2px), l'image déborde sur le padding. Appui : peau enfoncée + 1 px vers le bas. */
+.bouton {
+  border: 2px solid transparent; border-radius: 0;
+  border-image: var(--peau-parchemin) 24 fill / 12px stretch;
+  background: none; box-shadow: none; filter: none;
+  color: var(--encre); text-shadow: 0 1px 0 rgba(255,250,235,.7);
+  transition: transform .06s ease-out;
+}
+.bouton:hover:not(:disabled) { filter: none; transform: translateY(-1px); }
+.bouton:active:not(:disabled), .bouton.demo-appui { border-image-source: var(--peau-parchemin-appui); transform: translateY(1px); box-shadow: none; }
+.bouton.principal {
+  border-image-source: var(--peau-or); border-color: transparent; color: #24170a;
+  box-shadow: none; text-shadow: 0 1px 0 rgba(255,240,200,.6);
+}
+.bouton.principal:active:not(:disabled), .bouton.principal.demo-appui { border-image-source: var(--peau-or-appui); color: #160d04; text-shadow: 0 1px 0 rgba(255,225,160,.35); }
+.bouton:disabled, .bouton.principal:disabled { border-image-source: var(--peau-plomb); color: #34312b; opacity: 1; text-shadow: 0 1px 0 rgba(255,255,255,.4); }
+.bouton.enorme { border-width: 3px; border-image-width: 18px; padding: .75rem 3.4rem; }
+.bouton.petit { border-image-width: 10px; }
+.bouton.discret { border-image: none; border: 1px solid rgba(46,36,25,.5); background: rgba(255,250,236,.4); }
+/* le reflet reste dans la face, et seulement sur le grand bouton (l'ambiance ne fait pas concurrence au texte) */
+.bouton.principal::after { top: 7px; bottom: 7px; }
+.bouton.principal:not(.enorme)::after { display: none; }
+body.sans-ambiance .bouton.principal::after { display: none; }
+.bouton:focus-visible, .bouton.demo-focus { outline: none; box-shadow: var(--halo); }
+
+/* ---------- Menus : accueil ---------- */
+/* « Jouer » posé sur la tapisserie, en face du titre : visible sans défiler en 1366 × 768 */
+@media (min-width: 721px) {
+  #ecran-accueil .centre { position: absolute; right: 2.6rem; top: calc(clamp(240px, 36vw, 380px) - 1.2rem - 74px); margin: 0; z-index: 2; }
+  #ecran-accueil .bouton.enorme { box-shadow: 0 10px 22px rgba(0,0,0,.55); }
+  #ecran-accueil .bouton.enorme:focus-visible { box-shadow: var(--halo); }
+}
+
+/* ---------- Menus : onglets des cours (signets) ---------- */
+.onglets { border-bottom: 0; gap: .55rem .35rem; padding: 0 .2rem 0; position: relative; margin-bottom: .9rem; }
+.onglets::after { /* tranche dorée du livre, sous les signets */
+  content: ""; position: absolute; left: 0; right: 0; bottom: -7px; height: 5px; pointer-events: none;
+  background: linear-gradient(#f0d58c, #b08d3a 55%, #7a5c1e); box-shadow: 0 -1px 0 var(--encre), 0 1px 0 var(--encre), 0 3px 4px rgba(80,50,20,.3);
+}
+.onglet {
+  position: relative; border: 0; border-radius: 3px 3px 0 0; padding: .5rem .75rem .5rem 1.4rem;
+  background: linear-gradient(#e9d8b0, #d6bf8e); color: #3e3022; font-size: .85rem;
+  box-shadow: inset 0 1px 0 rgba(255,250,235,.7), 0 0 0 1px rgba(46,36,25,.55), 0 -2px 4px rgba(80,50,20,.12);
+}
+/* le ruban de soie du signet, à la teinte de la matière, qui pend sous l'onglet */
+.onglet::before {
+  content: ""; position: absolute; left: .42rem; top: -4px; width: .58rem; bottom: 3px; pointer-events: none;
+  background: linear-gradient(90deg, rgba(0,0,0,.35), rgba(0,0,0,0) 30%, rgba(255,255,255,.28) 50%, rgba(0,0,0,0) 70%, rgba(0,0,0,.3)), var(--teinte);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 84%, 0 100%);
+}
+.onglet:hover { background: linear-gradient(#f1e3c0, #dfca9c); }
+.onglet.actif {
+  background: linear-gradient(#fffaf0, #f4e8cc); color: var(--encre); z-index: 1;
+  box-shadow: inset 0 1px 0 #fff, 0 0 0 1.5px var(--encre), 0 0 0 3px rgba(176,141,58,.75), 0 -3px 8px rgba(80,50,20,.2);
+}
+.onglet.actif::before { bottom: -6px; width: .66rem; }
+.onglet:active, .onglet.demo-appui { background: linear-gradient(#d9c393, #ccb27c); transform: translateY(1px); }
+.onglet:focus-visible { outline: none; box-shadow: var(--halo); z-index: 2; }
+
+/* ---------- Menus : listes des cours (chapitres, sceaux) ---------- */
+.semaine-bloc { margin: 1rem 0 .6rem; }
+/* les blocs hors de la fenêtre ne sont ni mis en page ni peints tant qu'on n'y descend pas (liste d'histoire : 36 cours) */
+.liste-cours > .semaine-bloc { content-visibility: auto; contain-intrinsic-size: auto 160px; }
+.semaine-bloc h3 {
+  display: block; position: relative; border-bottom: 0; padding: 0 0 .15rem; font-size: .88rem; color: #5a4632;
+  letter-spacing: .06em;
+}
+.semaine-bloc h3 { color: #6a2a30; } /* titre rubriqué (une lettrine ::first-letter par semaine coûtait trop à l'ouverture) */
+.semaine-bloc h3::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: linear-gradient(90deg, rgba(176,141,58,.9), rgba(176,141,58,.15)); }
+.semaine-bloc.courante h3 { color: var(--rubrique); }
+.semaine-bloc.courante h3::before { /* « cette semaine » : un petit fanion rubrique au bout du titre */
+  content: ""; position: absolute; right: 0; top: -4px; width: 14px; height: 18px; background: var(--fanion) center/100% 100% no-repeat;
+}
+.ligne-cours {
+  position: relative; border: 0; border-left: 0; background: none; padding: .42rem .6rem .42rem 2.3rem; min-height: 2.3rem;
+  box-shadow: inset 0 -1px 0 rgba(46,36,25,.10);
+}
+.ligne-cours::before { /* le sceau de l'état, à gauche */
+  content: ""; position: absolute; left: .45rem; top: 50%; width: 22px; height: 22px; margin-top: -11px; background: center/100% 100% no-repeat;
+}
+.ligne-cours.etat-acquis::before { background-image: var(--sceau-acquis); }
+.ligne-cours.etat-presume::before { background-image: var(--sceau-acquis); opacity: .72; width: 18px; height: 18px; margin: -9px 0 0 2px; }
+.ligne-cours.etat-a-revoir::before { background-image: var(--sceau-revoir); }
+.ligne-cours.etat-ouvert::before { background-image: var(--sceau-or); }
+.ligne-cours.etat-brume::before, .ligne-cours.etat-avenir::before { /* cercle gravé, vide */
+  border-radius: 50%; width: 18px; height: 18px; margin: -9px 0 0 2px; box-shadow: inset 0 0 0 1.5px rgba(46,36,25,.32), inset 0 1px 2px rgba(46,36,25,.2);
+}
+.ligne-cours.revision, .ligne-cours.devoir { padding-left: 2.3rem; font-style: italic; }
+.ligne-cours.revision::before, .ligne-cours.devoir::before { width: 6px; height: 6px; margin: -3px 0 0 8px; background: var(--or); transform: rotate(45deg); }
+.ligne-cours.etat-ouvert { background: linear-gradient(90deg, rgba(226,194,114,.34), rgba(226,194,114,.08) 60%, rgba(226,194,114,0)); border-left: 0; }
+.ligne-cours.etat-acquis, .ligne-cours.etat-a-revoir, .ligne-cours.etat-presume { background: none; border-left: 0; }
+.ligne-cours.etat-a-revoir { background: linear-gradient(90deg, rgba(154,74,50,.14), rgba(154,74,50,0) 60%); }
+/* étiquettes d'état plus sombres : 4,5 : 1 au moins sur le parchemin le plus sombre (#d5c5a8, mesuré sur la maquette) */
+.ligne-cours .etat { font-size: .8rem; letter-spacing: .04em; color: #574430; }
+.ligne-cours .etat.presume { color: #3f4f2d; }
+.ligne-cours .etat.acquis { color: #3a5224; }
+.ligne-cours .etat.a-revoir { color: #7a3522; }
+/* dans la brume : le titre se lit, voilé par une nappe de brume (plus de flou : il coûtait à chaque ligne) */
+.titre-brume { filter: none; opacity: 1; color: #5a503f; font-style: italic; }
+/* une seule nappe par ligne (trois dégradés par ligne coûtaient 10 ms de plus à l'ouverture, au ralenti 4 ×) */
+.ligne-cours.etat-brume { background: linear-gradient(90deg, rgba(240,236,226,.7), rgba(240,236,226,.25) 55%, rgba(240,236,226,.05)); }
+.ligne-cours.etat-brume .etat { color: #5a503f; }
+.ligne-devoir { border-bottom: 0; box-shadow: inset 0 -1px 0 rgba(46,36,25,.10); padding: .3rem 0; }
+
+/* ---------- Menus : le Codex (tomes reliés) ---------- */
+.codex-matiere { border-left: 0; background: none; box-shadow: none; margin: .65rem 0; }
+.codex-entete {
+  position: relative; min-height: 50px; padding: .55rem 1rem .55rem 3.1rem; border-radius: 4px 7px 7px 4px; color: #f6e7bf; text-shadow: 0 1px 0 #000;
+  background:
+    linear-gradient(90deg, rgba(0,0,0,0) 2.05rem, rgba(0,0,0,.45) 2.05rem, rgba(0,0,0,.45) 2.2rem, rgba(255,226,160,.22) 2.2rem, rgba(255,226,160,.22) 2.32rem, rgba(0,0,0,0) 2.32rem),
+    linear-gradient(rgba(255,240,205,.16), rgba(0,0,0,0) 35%, rgba(0,0,0,.32)),
+    var(--cuir),
+    linear-gradient(color-mix(in srgb, var(--teinte) 72%, #160d06), color-mix(in srgb, var(--teinte) 72%, #160d06));
+  background-blend-mode: normal, normal, soft-light, normal; /* le grain du cuir par-dessus la teinte de la matière */
+  box-shadow: 0 0 0 1px #140c06, inset 0 3px 0 -1px rgba(226,194,114,.75), inset 0 -3px 0 -1px rgba(226,194,114,.6), 0 4px 9px rgba(0,0,0,.35);
+}
+.codex-entete .gi { color: #f0d58c; filter: drop-shadow(0 1px 0 #000); }
+.codex-entete .note { font-family: var(--titre); font-weight: 700; color: #ecd9a6; font-size: .9rem; padding-right: 2.2rem; }
+.codex-entete::after { /* le fermoir : un sceau de cire à droite */
+  content: ""; position: absolute; right: .55rem; top: 50%; width: 28px; height: 28px; margin-top: -14px; background: var(--sceau-or) center/100% 100% no-repeat;
+}
+.codex-entete:focus-visible { outline: none; box-shadow: var(--halo); }
+.codex-entete:active { transform: translateY(1px); }
+.codex-matiere > :not(.codex-entete) { position: relative; }
+.codex-cours { margin: .9rem .2rem .3rem 1.4rem; font-size: 1rem; }
+.codex-matiere.ouvert {
+  background: linear-gradient(90deg, rgba(110,70,25,.18), rgba(110,70,25,0) 4%), rgba(255,250,236,.55);
+  box-shadow: 0 0 0 1px rgba(46,36,25,.35), 0 6px 14px rgba(80,50,20,.25); border-radius: 4px 7px 4px 4px; padding-bottom: .4rem;
+}
+.grille-fiches { padding: 0 .9rem .7rem 1.4rem; gap: .7rem; }
+.vignette {
+  position: relative; border: 0; border-radius: 2px; padding: .55rem .7rem .55rem 1.45rem;
+  background: linear-gradient(#fdf8ea, #f1e5c6);
+  box-shadow: 0 0 0 1px rgba(46,36,25,.42), 0 2px 4px rgba(80,50,20,.18);
+}
+.vignette::before { /* petit ruban de la matière, comme un signet glissé dans la page */
+  content: ""; position: absolute; left: .45rem; top: -3px; width: .45rem; height: 1.7rem;
+  background: linear-gradient(90deg, rgba(0,0,0,.3), rgba(255,255,255,.25) 50%, rgba(0,0,0,.3)), var(--teinte);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 80%, 0 100%);
+}
+.vignette.bonus { background: linear-gradient(#fbf0d2, #ecd9a6); }
+.vignette.bonus::after { content: ""; position: absolute; right: .4rem; bottom: .35rem; width: 20px; height: 20px; background: var(--sceau-or) center/100% 100% no-repeat; }
+.vignette:hover { transform: translateY(-2px); box-shadow: 0 0 0 1px var(--encre), 0 0 0 3px rgba(226,194,114,.6), 0 6px 10px rgba(80,50,20,.25); }
+.vignette:focus-visible { outline: none; box-shadow: var(--halo); }
+/* galerie des souverains : un rouleau (bâtons tournés aux deux bouts) */
+.codex-galerie > .codex-entete {
+  background:
+    linear-gradient(rgba(255,255,255,.55), rgba(255,255,255,0) 30%, rgba(0,0,0,0) 65%, rgba(110,70,25,.35)),
+    var(--parchemin);
+  color: var(--encre); text-shadow: none; border-radius: 10px;
+  box-shadow: 0 0 0 1px rgba(46,36,25,.55), 0 4px 8px rgba(80,50,20,.3);
+  margin: 0 14px; width: calc(100% - 28px);
+}
+.codex-galerie > .codex-entete .note { color: #5b4a36; padding-right: .4rem; }
+.codex-galerie > .codex-entete .gi { color: var(--or-sombre); filter: none; }
+.codex-galerie > .codex-entete::before, .codex-galerie > .codex-entete::after { /* embouts du bâton (embout-rouleau.png dans le jeu) */
+  content: ""; position: absolute; top: -5px; bottom: -5px; width: 16px; margin: 0; right: auto;
+  background: radial-gradient(ellipse 60% 18% at 50% 9%, #d9b56a, rgba(0,0,0,0) 70%), radial-gradient(ellipse 60% 18% at 50% 91%, #d9b56a, rgba(0,0,0,0) 70%), linear-gradient(90deg, #3a2412, #8a5a2e 40%, #c08a4e 55%, #5a3418);
+  border-radius: 7px; box-shadow: 0 0 0 1px #1a1009, 0 3px 5px rgba(0,0,0,.35);
+}
+.codex-galerie > .codex-entete::before { left: -14px; }
+.codex-galerie > .codex-entete::after { right: -14px; left: auto; height: auto; }
+
+/* ---------- Menus : arsenal (boutique) ---------- */
+.ligne-arsenal { border-bottom: 0; padding: .5rem .5rem; box-shadow: inset 0 -1px 0 rgba(46,36,25,.12); }
+.ligne-arsenal .td-ic {
+  width: 46px; height: 46px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center;
+  background: radial-gradient(circle at 40% 35%, #fbf3dc, #e3cfa1); box-shadow: 0 0 0 1.5px var(--encre), 0 0 0 3.5px var(--or), 0 0 0 4.5px var(--encre), 0 3px 5px rgba(0,0,0,.3);
+}
+.ligne-arsenal.verrouille .td-ic { opacity: 1; filter: grayscale(.8); }
+.etoiles { color: var(--or); text-shadow: 0 1px 0 var(--encre); font-size: 1.05rem; letter-spacing: .14em; }
+
+/* ---------- Menus : réglages (champs, cases en sceaux, curseur) ---------- */
+input[type=text], input[type=date] {
+  background: linear-gradient(#fdf9ee, #f3e8cf); border: 1.5px solid var(--encre); border-radius: 2px;
+  box-shadow: 0 0 0 3px rgba(176,141,58,.5), inset 0 1px 3px rgba(80,50,20,.25); padding: .4em .6em; font-family: var(--texte);
+}
+input[type=date] { font-family: var(--titre); font-size: .9rem; letter-spacing: .03em; color: #3e3022; }
+input[type=date]::-webkit-calendar-picker-indicator {
+  cursor: pointer; opacity: .9; color: transparent; width: 18px; height: 18px;
+  background: center/18px no-repeat url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 18'><rect x='2' y='3.5' width='14' height='12' rx='1' fill='%23fbf3dc' stroke='%232e2419' stroke-width='1.4'/><path d='M2 7h14' stroke='%232e2419' stroke-width='1.4'/><path d='M6 2v3M12 2v3' stroke='%23b08d3a' stroke-width='1.8' stroke-linecap='round'/><rect x='5' y='9' width='2.4' height='2.2' fill='%238c2f39'/></svg>");
+}
+input[type=text]:focus-visible, input[type=date]:focus-visible { outline: none; box-shadow: var(--halo); }
+/* case à cocher : vide, un cercle gravé dans le parchemin ; cochée, un sceau de cire rubrique au lys */
+input[type=checkbox] {
+  appearance: none; -webkit-appearance: none; flex: none; width: 24px; height: 24px; margin: 0 .45rem 0 0; vertical-align: -6px; border-radius: 50%; cursor: pointer;
+  background: rgba(255,250,236,.75); box-shadow: inset 0 0 0 1.5px rgba(46,36,25,.6), inset 0 0 0 4px rgba(255,250,236,.75), inset 0 0 0 5px rgba(176,141,58,.6), inset 0 2px 3px rgba(80,50,20,.3);
+}
+input[type=checkbox]:checked { background: var(--sceau-case) center/116% 116% no-repeat; box-shadow: none; }
+input[type=checkbox]:checked:focus { animation: frappe .18s ease-out; }
+@keyframes frappe { from { transform: scale(1.35) rotate(-14deg); opacity: .5; } to { transform: none; opacity: 1; } }
+input[type=checkbox]:focus-visible, input[type=checkbox].demo-focus { outline: none; box-shadow: var(--halo); }
+input[type=checkbox]:checked:focus-visible, input[type=checkbox]:checked.demo-focus { box-shadow: var(--halo); }
+/* curseur (aucun aujourd'hui dans le jeu ; style prêt pour un volume de musique) : rail de laiton, bouton en bossette */
+input[type=range] { -webkit-appearance: none; appearance: none; width: 260px; height: 44px; background: none; cursor: pointer; }
+input[type=range]::-webkit-slider-runnable-track {
+  height: 10px; border-radius: 5px;
+  background: linear-gradient(90deg, #f0d58c, #b08d3a) 0 0 / var(--p, 50%) 100% no-repeat, linear-gradient(#24160b, #46301e);
+  box-shadow: inset 0 2px 3px rgba(0,0,0,.65), 0 0 0 1px #1a1009, 0 0 0 3px #9c7b30, 0 0 0 4px #1a1009;
+}
+input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 28px; height: 28px; margin-top: -9px; border: 0; background: var(--laiton) center/100% 100% no-repeat; filter: drop-shadow(0 2px 2px rgba(0,0,0,.5)); }
+input[type=range]:focus-visible { outline: none; }
+input[type=range]:focus-visible::-webkit-slider-thumb { box-shadow: var(--halo); border-radius: 50%; }
+@media (hover: none) and (pointer: coarse) {
+  input[type=checkbox] { width: 28px; height: 28px; vertical-align: -8px; }
+  .bouton.petit, .bouton.discret { border-image-width: 12px; }
+}
+
+/* ---------- Menus : chargement ---------- */
+.attente { display: grid; justify-items: center; gap: .55rem; margin-top: 20vh; }
+.attente-blason svg { display: block; width: 92px; height: auto; filter: drop-shadow(0 4px 6px rgba(0,0,0,.65)); }
+.attente-titre { margin: .2rem 0 0; font-family: var(--titre); font-weight: 700; font-size: 1.5rem; color: var(--or-clair); text-shadow: 0 2px 0 #000; }
+.attente-rail {
+  position: relative; width: min(340px, 70vw); height: 14px; margin: .5rem 0 .1rem; border-radius: 7px;
+  background: linear-gradient(#1c120a, #3a2716); box-shadow: inset 0 2px 3px rgba(0,0,0,.75), 0 0 0 1px #000, 0 0 0 3px #9c7b30, 0 0 0 4px #000;
+}
+.attente-rail::before, .attente-rail::after { content: ""; position: absolute; top: 50%; width: 22px; height: 22px; margin-top: -11px; background: var(--laiton) center/100% 100% no-repeat; }
+.attente-rail::before { left: -16px; } .attente-rail::after { right: -16px; }
+.attente-rail i { position: absolute; inset: 3px 8px; border-radius: 4px; transform-origin: left center; transform: scaleX(var(--p, 0));
+  background: linear-gradient(#f6df98, #c9a24a 55%, #7a5c1e); transition: transform .15s linear; }
+.attente-compte { margin: 0; font-family: var(--titre); font-size: .9rem; letter-spacing: .06em; color: #d8c08a; }
+
+/* ---------- Menus : onde dorée au toucher ---------- */
+/* un seul élément pour tout le jeu, posé au point d'appui (pointerdown d'un doigt) : un anneau d'or qui s'élargit */
+.onde {
+  position: fixed; left: 0; top: 0; width: 80px; height: 80px; margin: -40px 0 0 -40px; border-radius: 50%; pointer-events: none; z-index: 60; opacity: 0;
+  background: radial-gradient(circle, rgba(255,240,190,.5) 0, rgba(226,194,114,.28) 42%, rgba(226,194,114,0) 68%);
+  box-shadow: inset 0 0 0 2px rgba(226,194,114,.95), 0 0 0 1px rgba(46,36,25,.45), inset 0 0 0 3px rgba(46,36,25,.35);
+}
+.onde.joue { animation: onde .34s ease-out; }
+.onde.demo { opacity: .85; transform: scale(.7); }
+@keyframes onde { from { opacity: 1; transform: scale(.25); } to { opacity: 0; transform: scale(1); } }
+
+/* ---------- Menus : cascade d'entrée ---------- */
+/* .cascade est posée par le rendu de l'écran quand il entre (pas quand il est redessiné sur place) */
+.cascade .liste-cours > *, .cascade > .codex-matiere, .cascade > .cartouche, .cascade .ligne-arsenal { animation: cascade .22s ease-out both; }
+.cascade .liste-cours > :nth-child(2), .cascade > .codex-matiere:nth-of-type(2), .cascade > .cartouche:nth-of-type(2) { animation-delay: 30ms; }
+.cascade .liste-cours > :nth-child(3), .cascade > .codex-matiere:nth-of-type(3), .cascade > .cartouche:nth-of-type(3) { animation-delay: 60ms; }
+.cascade .liste-cours > :nth-child(4), .cascade > .codex-matiere:nth-of-type(4), .cascade > .cartouche:nth-of-type(4) { animation-delay: 90ms; }
+.cascade .liste-cours > :nth-child(5), .cascade > .codex-matiere:nth-of-type(5), .cascade > .cartouche:nth-of-type(5) { animation-delay: 120ms; }
+.cascade .liste-cours > :nth-child(n+6), .cascade > .codex-matiere:nth-of-type(n+6), .cascade > .cartouche:nth-of-type(n+6) { animation-delay: 150ms; }
+@keyframes cascade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+/* ---------- Maquette seulement (à retirer dans jeu/css/menus.css) ----------
+   Une url() dans une propriété personnalisée se résout depuis la feuille qui l'emploie : ici, depuis le dossier de la
+   maquette. Les textures du jeu sont donc redonnées en chemin absolu. Dans le jeu, menus.css est à côté de jeu.css. */
+:root { --cuir: url("file:///home/user/Test/jeu/assets/images/cuir.png"); --parchemin: url("file:///home/user/Test/jeu/assets/images/parchemin.png"); --bois: url("file:///home/user/Test/jeu/assets/images/bois.png"); }

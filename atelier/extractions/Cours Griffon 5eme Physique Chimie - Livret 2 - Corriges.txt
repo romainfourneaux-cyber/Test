@@ -1,0 +1,430 @@
+             THÈME C – Corrigé des exercices
+                 et des questions de TP
+Chapitre 1
+
+Séance 1
+
+TRAVAUX PRATIQUES 14 : L’électricité statique
+
+Q1 : Les bouts de papier sont attirés par la règle.
+Q2 : Il est nécessaire de fermer l’interrupteur pour fermer le circuit électrique. Si celui-ci n’est pas fermé, le
+courant ne peut pas passer.
+
+EXERCICE DE MÉMORISATION :
+
+La lampe sert de témoin de fonctionnement. Si elle s’allume, c’est que le circuit est fermé.
+
+Séance 2
+EXERCICE DE MÉMORISATION :
+
+    1) Montage pile + lampe + interrupteur :
+
+
+
+
+    2) Montage pile + deux lampes + un interrupteur :
+
+
+
+
+    3) Montages avec moteur :
+EXERCICE DE MÉMORISATION :
+
+ Paramètre                          Intensité = I                      Tension = U
+ Définition                         Quantité d’électrons délivrés en   Pression d’électricité délivrée par
+                                    une seconde à un endroit du        le     générateur/      différentiel
+                                    circuit électrique                 d’électrons qui existe entre ses
+                                                                       deux bornes
+ Unité                              Ampère = A                         Volt = V
+ Mode de mesure                     Ampèremètre branché en série       Voltmètre branché en parallèle
+ Fonctionnement optimal             Intensité nominale In              Tension nominale Un (230V dans
+                                                                       les lieux d’habitation en France)
+
+
+
+
+Séance 3
+Q2 (bis) : La luminosité de deux ampoules montées en dérivation est équivalente à celle d’une seule lampe.
+Q3 : La luminosité de trois ampoules est équivalente à celle de deux ampoules ou d’une seule lorsque le
+montage est effectué en dérivation.
+Q4 : Tableau à remplir :
+Q5 : Dans un circuit en série, l’intensité électrique qui traverse les dipôles est la même pour chaque
+dipôle ; dans un circuit en dérivation, l’intensité électrique qui traverse chaque dipôle est différente
+dans chaque branche du circuit.
+Q6 : Comme l’éclairage diminue pour chaque lampe lorsqu’on les branche en série et qu’il reste le même
+lorsqu’on les branche en dérivation, il vaut mieux brancher trois lampes en dérivation pour obtenir l’éclairage
+le plus puissant.
+N.B. Il ne faut pas confondre la puissance de l’éclairage et l’intensité du courant !
+
+Q7 : On constate que lorsqu’on dévisse une ampoule dans un circuit en série, les autres ampoules s’éteignent,
+alors que si on dévisse une ampoule dans un circuit en dérivation, les autres ampoules restent allumées.
+Remarque : dévisser une ampoule dans un circuit en série revient au même qu’ouvrir l’interrupteur !
+Q8 : En cas de panne, le branchement le plus efficace est le branchement en dérivation. Ainsi, si un dipôle
+tombe en panne, il n’affecte pas le passage du courant dans les autres dipôles.
+
+Séance 4
+Q9 : Tension aux bornes de L1 : 92,4 mV
+Tension aux bornes de L2 : 3,61 V
+Tension aux bornes de L3 : 0,355 V
+Utotal = 0,0924 + 3,61 + 0,355 = 4,0574 V.
+Utotal et Un = 4 V sont très voisines (au centième près)
+Q10 : La mesure de la tension réelle de la pile est 4,2 V. Elle est plus élevée que la tension nominale. On peut
+émettre l’hypothèse qu’une partie de la tension qui sort du générateur est perdue dans les fils de conduction
+du courant, et que cette perte est prévue par le fabricant.
+Q11 : Upile = 3,52 V
+UL1 = 3,51 V
+UL2 = 3,50 V
+UL3 = 3,48 V
+On constate que Upile est environ égal à UL1, UL2 et UL3.
+Q12 : Oui, les mesures de ces tensions sont très voisines. On a branché les voltmètres en parallèle, aux bornes
+de chaque dipôle.
+Q13 : On relève U = 4,36 V aux bornes de la pile sans circuit, U = 0 V aux bornes de l’interrupteur inséré dans
+le circuit quand l’interrupteur fermé et U = 4,36 V aux bornes de l’interrupteur inséré dans le circuit quand
+l’interrupteur est ouvert. On constate que la tension est nulle aux bornes de l’interrupteur quand le circuit
+est fermé et qu’elle est de 4,36 V quand le circuit est ouvert. On peut l’expliquer en se rappelant la définition
+de la tension : c’est la pression d’électricité générée par la pile. Quand le courant passe dans l’interrupteur
+fermé, c’est comme s’il passait dans le fil, la pression est donc nulle, car le fil ne fait pas obstacle au courant.
+Lorsque l’interrupteur est ouvert, le courant ne peut plus passer, c’est comme s’il y avait un obstacle qui
+obstruait complètement le passage. La pression de courant est alors maximale, c’est celle aux bornes de la
+pile.
+EXERCICES D’APPLICATION :
+
+     1) Lectures de valeurs nominales
+Pile 1 : Un = 4,5 V
+Pile 2 : Un = 3 V
+Disjoncteur : In = 25 A et Un = 440 V
+Fusible : In =20 A
+Multiprise : Un = 230 V et In = 24 A
+Ampoule 1 : Un = 230 V et In = 65 mA
+Ampoule 2 : Un = 230 V et In = 114 mA
+
+Le disjoncteur, la multiprise et les ampoules sont des dipôles traversés par le courant. Ils fonctionnent donc
+de façon optimale à une tension donnée et une intensité donnée, les tension et intensité nominales.
+Les piles sont des générateurs d’électricité, elles ne sont pas traversées par le courant donc n’ont pas
+d’intensité nominale, mais ont une tension nominale qu’elles produisent. Le fusible sert de coupe-circuit,
+quelle que soit la tension, au-delà d’une surintensité donnée, son intensité nominale. C’est pourquoi aucune
+tension nominale n’est indiquée.
+
+    2) Réalisation de circuits normalisés
+
+• circuit 1 :
+
+
+                                                           Ucircuit = UL1 + UL2 + UM
+                                                           Icircuit = IL1 = IL2 = IM
+
+
+
+
+• circuit 2 :
+On représente l’éolienne comme une pile puisque c’est un générateur d’électricité :
+
+
+                                                           Ucircuit = UM = UL1= UL2
+                                                           Icircuit = IM + IL1 + IL2
+
+
+
+
+• circuit 3 :
+
+                                   Ici le générateur est le panneau photovoltaïque.
+                                   Pour déterminer les lois des intensités et des tensions dans ce circuit, il
+                                   faut le décomposer :
+                                   Il s’agit d’un circuit en dérivation donc on a :
+                                   -      Ucircuit = Ubranche1 = Ubranche2 = Ubranche3
+                                   -      Icircuit = Ibranche1 + Ibranche2 + Ibranche3
+                                   Et les branches 2 & 3 suivent les lois des circuits en série donc on a :
+                                   -      Ubranche2 = UL2 + UM et Ibranche2 = IL2 = IM
+
+                                   -    Ubranche3 = UL3 + UM + UL4 et Ibranche3 = IL3 = IM = IL4
+Pour déterminer la tension dans la troisième branche, il faut brancher le volt mètre en dérivation aux bornes
+du générateur de L1 puisque dans un circuit en dérivation, il y a unicité des tensions.
+Pour déterminer l’intensité dans la deuxième branche, il faut brancher l’ampèremètre en série et il peut être
+disposé à n’importe quel endroit de la branche puisque dans un circuit en série (ce qui est le cas dans la
+branche), il y a unicité des intensités.
+
+    3) Calculs d’intensités et de tensions selon le type de circuit
+
+    a. Sens du courant
+
+
+
+
+    b. Pour le circuit entier, comme il s’agit d’un circuit en dérivation, c’est la loi d’additivité des intensités
+       qui s’applique :
+                                              Icircuit = IAF + IBE + ICD
+
+    c. In L1, In L2 et In M sont les intensités nominales des lampes L1 et L2 et du moteur. Ce sont les intensités
+       optimales de fonctionnement de ces dipôles.
+    d. Dans les branches BE et CD, le circuit est branché en série. C’est donc la loi d’unicités des intensités
+       qui s’applique pour chaque branche. Donc on a :
+                                     Dans BE IL2 = IL3 = IBE et dans CD IL4 = IM = ICD
+
+    e. L’intensité nominale minimale de L4 pour que le moteur fonctionne est
+                                      In L4 ≤ In M donc In L4 ≤ 30 mA
+
+    f. IAF = IL1 = InL1 = 12 mA.
+       IBE = IL2 = InL2 = 12mA
+       ICD = IM = InM = 30 mA
+       Icircuit = IAF + IBE + ICD
+       Icircuit = 12 + 12 + 30 = 54 mA
+    g. Pour le circuit entier, comme il s’agit d’un circuit en dérivation, c’est la loi d’unicité des tensions qui
+       s’applique :
+                                                  Upile = UAF = UBE = UCD
+    h. Dans les branches BE et CD, le circuit est branché en série. C’est donc la loi d’additivité des tensions
+       qui s’applique pour chaque branche. Donc on a :
+                                  Dans BE, UBE= UL2 + UL3 et dans CD, UCD = UL4 + UM
+    i.   UBE= UL2 + UL3
+         UL3= UBE - UL2 avec UBE = Upile = 4,5 V et UL2 = UL1 = UAF = Upile = 4,5 V
+         Donc UL3 = 4,5 - 4,5 = 0 V La tension est nulle ce qui signifie que les lampes L2 et L3 n’opposent aucune
+         résistance au circuit.
+         UCD = UL4 + UM
+         UL4 = UCD - UM avec UCD = Upile = 4,5 V et UM = 3V
+         Donc UL4 = 4,5 – 3 = 1,5 V.
+
+    4) Sécurité et intensité
+
+La réponse 1 est fausse, il faut que le fusible soit adapté à l’intensité nominale de la carte mère.
+La réponse 2 est juste, le premier fusible correspond à l’intensité nominale de la carte mère, et en fondant
+parce que l’intensité qui le traversait était trop grande, il l’a protégée.
+La réponse 3 est fausse, si on met un fusible d’un calibre supérieur à l’intensité nominale de la carte mère,
+celle-ci sera endommagée.
+La réponse 4 est incomplète : la meilleure protection en cas de surintensité est le fusible du calibre le plus
+faible par rapport à l’intensité nominale de la carte mère.
+La réponse 5 est juste, si on ne trouve pas le court-circuit à l’origine de la surintensité qui a fait fondre le
+fusible, le nouveau fusible va fondre à nouveau, car il sera soumis au même court-circuit.
+
+    5) Vocabulaire :
+
+On n’allume pas l’électricité, car l’électricité ne brûle pas. On peut dire je « branche l’électricité ».
+On n’ouvre pas la lumière, car la lumière n’est pas une porte. On peut dire « allume la lumière » par analogie
+avec la lumière du feu liée à son incandescence.
+
+Chapitre 2
+
+Séance 1
+EXERCICE DE
+MÉMORISATION :
+EXERCICE D’APPLICATION :
+
+Le premier modèle ne contient pas le symbole règle graduée qui signifie que l’énergie est une
+grandeur mesurable, ni l’unité de mesure donc il n’est pas complet.
+Le deuxième modèle n’indique pas en quoi l’eau liquide est transformée sous l’effet du transfert d’énergie.
+Le troisième modèle est complet : on y voit le changement d’état avec le passage de l’eau liquide à l’eau
+vapeur, l’importance de la masse qui est liée à l’énergie, le fait que l’énergie soit une grandeur mesurable en
+joule, qu’elle puisse être transférée et convertie et qu’elle induise une transformation : le changement
+d’état.
+Le quatrième modèle est incomplet lui aussi, il n’y a ni l’unité de mesure ni le symbole de la masse.
+
+Séance 2
+EXERCICE DE MÉMORISATION :
+EXERCICES D’APPLICATION :
+
+    1) Une lampe qui éclaire fournit de l’énergie thermique et de rayonnement (lumineuse).
+       Une pomme fournit de l’énergie chimique.
+       Un train qui roule fournit de l’énergie mécanique.
+       Une pile fournit de l’énergie électrique.
+       Un thé chaud fournit de l’énergie chimique et thermique.
+
+    2) • La chaleur peut être produite par le bois (source primaire, renouvelable si on replante, peu
+       émettrice de gaz à effet de serre) ; ou par l’électricité (source secondaire, donc pas de questions à se
+       poser sur le côté renouvelable et émetteur de gaz à effet de serre). Il peut y avoir d’autres exemples.
+       • L’électricité peut être produite à partir du bois (voir ci-dessus), du pétrole (source primaire, on
+       renouvelable, émettrice de gaz à effet de serre), il peut y avoir d’autres exemples.
+       • L’énergie chimique nécessaire à la contraction musculaire est apportée par le glucose sanguin. Celui-
+       ci provient de la digestion des aliments qui sont transformés en nutriments dans le tube digestif.
+       • La lumière peut être produite par le Soleil (source primaire, renouvelable, pas de gaz à effet de
+       serre). Il peut y avoir d’autres exemples.
+       • L’énergie nucléaire peut être produite à partir de l’uranium enrichi (source primaire, non
+       renouvelable, pas d’émission de gaz à effets de serre).
+       • Faire rouler une voiture peut être réalisé grâce au biogaz (source primaire, renouvelable, non
+       émettrice de gaz à effet de serre). Il peut y avoir d’autres exemples.
+
+    3) Science in english
+
+Traduction : Solar impulse est le premier planeur à endurance perpétuelle, sans pétrole, capable de voler
+avec la puissance solaire. Quelle forme d’énergie est utilisée par cet avion ?
+
+Solar impulse vole grâce à l’énergie solaire.
+
+Séance 3
+EXERCICE :
+
+1) L’énergie utilisée dans cette centrale est l’énergie chimique contenue dans le gaz et qui est transformée
+en énergie thermique par la combustion.
+
+2) Un moulin fonctionne en utilisant l’énergie de mouvement (énergie cinétique), du vent ou de l’eau
+liquide. Par analogie, la turbine utilise donc l’énergie cinétique de la vapeur.
+
+3) Le gaz est brûlé dans la turbine à combustion. les fumées qui s’en échappent sont partiellement utilisées
+dans la turbine pour en récupérer de l’énergie cinétique. Le reste des fumées alimente un générateur de
+vapeur. En effet, ces gaz sont très chauds et transmettent une partie de leur énergie thermique à l’eau osu
+forme liquuide qui passe dans ce générateur de vapeur, enfermée dans des tuyaux. Les fumées refroidies
+sont évacuées par la cheminée. L’eau chauffé dans le générateur de vapeur devient vapeur et cette vapeur
+va alimenter la turbine à vapeur. La vapeur, comme le gaz est en mouvement circulaire et l’énergie générée
+par ce mouvement ou « énergie cinétique » est utilisée par les turbines pour être transformées dans
+l’alternateur en énergie électrique qui va alimenter les transformateurs. la vapeur résiduelle est refroidie
+dans la tour autoréfrigérante et l’eau liquéfiée est réinjectée dans la centrale.
+Séance 4
+TRAVAUX PRATIQUES 15 : Enquête sur la sensation de chaleur
+
+Il faut remplir un tableau de ce type :
+
+ Sensations perçues          Chaud                     Froid                      Bon
+ Nombre de personnes
+
+Q1 : Tu constates que les personnes n’ont pas le même ressenti de chaleur avec la même température. Quel
+est le lien entre température et chaleur ?
+
+TRAVAUX PRATIQUES 16 : le thermoscope
+
+Le liquide coloré monte dans la paille.
+La chaleur corporelle provoque le mouvement du liquide.
+La chaleur est une énergie qui permet de modifier la température de la matière.
+
+Q2 : Le système Celsius est appelé système centigrade, car il y a 100 graduations entre les deux températures
+de référence : la température de fusion et la température de vaporisation de l’eau.
+Q3 : Pour étalonner un thermomètre en degrés Celsius, on peut reprendre l’idée du thermoscope.
+
+Exemple de protocole : teindre de l’eau avec
+du colorant alimentaire, puis congeler des
+glaçons. Utiliser un erlenmeyer et un tube en
+verre transparent très fin et très long dont la
+base touche le fond de l’erlenmeyer.
+Colmater l’erlenmeyer. Déposer des glaçons
+pilés dans l’erlenmeyer et poser sur le feu,
+faire chauffer jusqu’à ce que l’eau commence
+à se vaporiser. La colonne d’eau est alors
+montée sans le tube à son maximum.
+Marquer ce maximum avec un feutre sur le
+tube. Après refroidissement de l’ensemble,
+retirer le tube. La base est étalonnée à 0°C :
+température de fusion de l’eau, et la marque
+faite correspond à 100 °C, température de
+vaporisation de l’eau. Il ne reste plus qu’à
+diviser le tube en 100 graduations.
+EXERCICE :
+
+• Situation 1 : En plaçant un bec Bunsen allumé sous un ballon rempli d’eau liquide, on lui apporte de la
+chaleur.
+Celle-ci va permettre l’élévation de la température de l’eau et sa vaporisation (changement d’état).
+
+• Situation 2 : En plaçant un ballon rempli d’eau liquide dans un bac contenant de la glace, on fait diminuer
+sa température.
+L’eau contenue dans le ballon cède de la chaleur au milieu qui l’entoure. La glace fond (changement d’état).
+
+
+TRAVAUX PRATIQUES 17 : conduction de chaleur selon la matière du récipient
+
+Q4 : tableau à double entrée avec mesures approximatives si la température de la pièce est de 19°C.
+
+ Type de récipient                   Température au remplissage   Température 15 minutes plus tard
+ Métal                                                      40 °C
+ Céramique                                                  40 °C
+ Plastique + laine                                          40 °C
+ Bouteille thermos                                          40 °C
+
+Le récipient métallique est très chaud, le récipient en céramique est chaud, le récipient en plastique et laine
+et la thermos sont à température ambiante donc paraissent froids par rapport aux deux autres.
+
+
+Q5 :
+
+
+ Type de récipient                Température au remplissage       Température 15 minutes plus tard
+ Métal                                                       40 °C                               25 °C
+ Céramique                                                   40 °C                               30 °C
+ Plastique + laine                                           40 °C                               35 °C
+ Bouteille thermos                                           40 °C                               39 °C
+Mesures approximatives si la température de la pièce est de 19°C.
+
+On constate que les récipients les plus chauds au départ sont ceux dans lesquels l’eau a le plus rapidement
+refroidi.
+EXERCICE D’APPLICATION :
+            THÈME D – Corrigé des exercices
+                et des questions de TP
+Chapitre 1
+
+Séance 1
+TRAVAUX PRATIQUES 18 : Peut-on voir la lumière ? Quelle est la forme de la lumière ?
+
+Q1 : On ne voit pas la lumière.
+Q2 : Dans une pièce peu éclairée, on voit la lumière sur les surfaces sombres sous la forme d’une tache. Dans
+le noir, on voit la lumière sous la forme d’un point lumineux sur toutes les surfaces.
+
+TRAVAUX PRATIQUES 19 : Le rayon lumineux
+
+Q3 : On observe trois points lumineux sur l’écran, correspondants aux trous au centre des cartons.
+Q4 : Pour observer un point lumineux sur l’écran, il faut aligner les trois cartons dans l’axe de la lampe et les
+disposer en modulant leur hauteur : les centres des cartons forment trois points alignés, mais obliques par
+rapport à la table.
+Q5 : le point lumineux ne se forme plus sur l’écran.
+
+TRAVAUX PRATIQUES 20 : Transparent, translucide, opaque.
+
+Q6 : On observe la même image de point lumineux si on regarde l’écran directement ou au travers de la vitre.
+Q7 : Il n’y a plus de point lumineux.
+Q8 : On observe une tache lumineuse sur l’écran, plus large et moins intense que le point lumineux. Au travers
+du papier, on ne voit pas l’écran ou la tache lumineuse.
+
+EXERCICES :
+   1) Les objets diffusants sont des objets opaques qui ne produisent pas de lumière. Ce sont donc : La
+       Lune, le livre et le téléphone éteint.
+   2) En reprenant le protocole de la Q6 on a : Un objet est visible si la lumière émise par une source
+       lumineuse traverse un milieu transparent et si l’objet est lui-même opaque ou translucide.
+   3) Modélisation de la vision de la Lune :
+Séance 2
+TRAVAUX PRATIQUES 21 : Les ombres
+
+Q9 : Non, on ne voit pas la bille. Elle est dans le cône d’ombre de la balle.
+Q10 : Non, un observateur situé dans une zone d’ombre ne peut pas voir la source lumineuse.
+Q11 : Non, on ne pourrait pas obtenir d’ombre en éclairant un objet transparent, car la lumière le traverse.
+
+TRAVAUX PRATIQUES 22 : Les éclipses
+
+
+
+
+Q12 : Première position : la balle est entre la source lumineuse et la mappemonde : cela correspond au
+moment où la Lune est entre la Soleil et la Terre.
+Deuxième position : La mappemonde est entre la source lumineuse et la balle : cela correspond au moment
+où la Terre est entre le Soleil et la Lune.
+Q13 : Sur la photo 1 le Soleil éclaire directement la Lune. Sur la photo 2, il est derrière la Terre.
+                             Q14 : Non, un observateur placé dans
+                             l’ombre potée de la Lune ne voit pas le
+                             Soleil.
+                             Q15 : Non, on ne distingue pas la Lune
+                             depuis la zone d’ombre propre de la Terre.
+                             Q16 : Lors d’une éclipse de Lune, on ne
+                             voit plus la pleine Lune dans le ciel
+                             nocturne, car elle n’est plus éclairée par le
+                             Soleil en passant dans le cône d’ombre de
+                             la Terre. C’est donc la photo 2 qui
+                             correspond à cette situation. Lors d’une
+                             éclipse de Soleil, c’est la Lune qui cache le
+                             Soleil vu depuis la Terre, pour les
+                             personnes qui sont dans son ombre
+                             portée sur la Terre. Cette situation
+                             correspond à la photo 1.
+
+EXERCICE DE MÉMORISATION :
+EXERCICES D’APPLICATION :
+   1) Il faut se munir de lunettes spéciales pour regarder une éclipse solaire, car le Soleil est une source
+       PRIMAIRE de lumière, dont les rayonnements sont dangereux pour les yeux. En revanche cela n’est
+       pas nécessaire en cas d’éclipse lunaire, car la Lune est une source SECONDAIRE de lumière. (Les
+       rayonnements infrarouges sont absorbés par la Lune, ainsi que la majorité des rayons X et gamma).
+   2) La lumière des LED qui correspond à la lumière du Soleil au zénith est la lumière froide ou blanche,
+       qui émet beaucoup de rayonnements dans le bleu. La lumière des LED qui correspond à la lumière
+       du Soleil couchant est la lumière chaude ou jaune qui émet des rayonnements dans le rouge.
+
+Chapitre 2
+
+Séance 2
+EXERCICES D’APPLICATION :
+
+    1) On peut supposer que les carnivores domestiques entendent les ultrasons afin de mieux localiser
+       leurs proies naturelles que sont les oiseaux, lesquels émettent des ultrasons dans leur chant.
+    2) On n’entend pas le son produit par de tels sifflets, car ils émettent des ultrasons, reçus par les oreilles
+       des chiens et des oiseaux, mais pas par l’oreille humaine.
+

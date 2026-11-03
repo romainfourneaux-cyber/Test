@@ -1,0 +1,35 @@
+Moteur : jeu/js/bataille-moteur.js · or perdu par erreur : 6 · 160 batailles par niveau · bataille de route : defense, 3 vagues, camp de 12, carte gue, arsenal du niveau − 1
+
+p = 0.6 (réponses justes) · bataille de route : defense, 3 vagues, camp de 12, carte gue, arsenal du niveau − 1
+niv | carte          | tenue (éclatante) | tenu  retraite | murs restants (quand elle tient) | coups portés (1re vague) | ennemis tués / tes pertes | sorties · rival : tours, gardes, rappelés, renforts
+ 1  | gue            |   41 % (  3 %)   |  39 %   59 %   |                      23 % (55 %) |              2.88 (1.79) |     16.8 / 5.3    | 1.66 · 1.7, 0.04, 0, 0
+ 2  | gue            |   59 % (  0 %)   |  59 %   41 %   |                      23 % (39 %) |              3.48 (2.75) |     21.4 / 5.5    | 1.01 · 2, 0.06, 0, 0
+ 3  | gue            |    9 % (  6 %)   |   3 %   91 %   |                       7 % (76 %) |               3.24 (1.6) |     17.1 / 6.6    | 1.18 · 1.84, 0, 0, 0
+ 4  | gue            |   11 % (  6 %)   |   6 %   89 %   |                       5 % (48 %) |              3.61 (1.36) |     14.5 / 8.6    | 1.18 · 1.94, 0.02, 0, 0
+moy |                |   30 % (3.8 %)   |                |                           14.5 % |                      3.3
+
+p = 0.7 (réponses justes) · bataille de route : defense, 3 vagues, camp de 12, carte gue, arsenal du niveau − 1
+niv | carte          | tenue (éclatante) | tenu  retraite | murs restants (quand elle tient) | coups portés (1re vague) | ennemis tués / tes pertes | sorties · rival : tours, gardes, rappelés, renforts
+ 1  | gue            |   68 % (  9 %)   |  59 %   32 %   |                      40 % (59 %) |               4.89 (2.5) |     20.9 / 6.8    | 2.08 · 1.82, 0.06, 0, 0
+ 2  | gue            |   76 % (  0 %)   |  76 %   24 %   |                      37 % (49 %) |              3.93 (2.59) |     22.6 / 6.2    | 1.21 · 2, 0.03, 0, 0
+ 3  | gue            |   20 % ( 15 %)   |   5 %   80 %   |                      16 % (80 %) |              5.39 (1.88) |     18.4 / 6.9    | 1.43 · 1.82, 0, 0, 0
+ 4  | gue            |   29 % ( 14 %)   |  14 %   71 %   |                      14 % (48 %) |              5.49 (1.86) |     15.4 / 8.7    | 1.54 · 1.86, 0, 0, 0
+moy |                | 48.3 % (9.5 %)   |                |                           26.8 % |                      4.9
+
+p = 0.8 (réponses justes) · bataille de route : defense, 3 vagues, camp de 12, carte gue, arsenal du niveau − 1
+niv | carte          | tenue (éclatante) | tenu  retraite | murs restants (quand elle tient) | coups portés (1re vague) | ennemis tués / tes pertes | sorties · rival : tours, gardes, rappelés, renforts
+ 1  | gue            |   84 % ( 23 %)   |  62 %   16 %   |                      62 % (73 %) |              6.96 (3.15) |       22 / 7.2    | 2.31 · 1.74, 0.05, 0, 0
+ 2  | gue            |   91 % (  0 %)   |  91 %    9 %   |                      46 % (50 %) |              4.74 (2.63) |     23.7 / 6.9    | 1.39 · 2, 0.01, 0, 0
+ 3  | gue            |   38 % ( 29 %)   |   8 %   63 %   |                      32 % (84 %) |              8.63 (2.81) |     19.1 / 6.6    | 1.64 · 1.71, 0, 0, 0
+ 4  | gue            |   54 % ( 33 %)   |  21 %   46 %   |                      30 % (57 %) |               8.06 (2.5) |     15.6 / 8.4    | 2.01 · 1.67, 0, 0, 0
+moy |                | 66.8 % (21.3 %)   |                |                           42.5 % |                      7.1
+
+p = 0.9 (réponses justes) · bataille de route : defense, 3 vagues, camp de 12, carte gue, arsenal du niveau − 1
+niv | carte          | tenue (éclatante) | tenu  retraite | murs restants (quand elle tient) | coups portés (1re vague) | ennemis tués / tes pertes | sorties · rival : tours, gardes, rappelés, renforts
+ 1  | gue            |   97 % ( 51 %)   |  46 %    3 %   |                      88 % (91 %) |                 9.08 (4) |     20.9 / 6      | 2.35 · 1.49, 0.02, 0, 0
+ 2  | gue            |   96 % (  0 %)   |  96 %    4 %   |                      53 % (55 %) |              6.49 (3.13) |     24.8 / 7      | 1.67 · 2, 0, 0, 0
+ 3  | gue            |   60 % ( 55 %)   |   5 %   40 %   |                      57 % (95 %) |             11.61 (4.28) |     18.1 / 5.7    | 1.77 · 1.45, 0, 0, 0
+ 4  | gue            |   76 % ( 60 %)   |  16 %   24 %   |                      53 % (70 %) |             10.81 (3.18) |     14.7 / 7      | 2.47 · 1.4, 0, 0, 0
+moy |                | 82.3 % (41.5 %)   |                |                           62.8 % |                      9.5
+
+(40 s)

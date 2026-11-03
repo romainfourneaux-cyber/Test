@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Edit(/jeu/**)",
+      "Edit(/atelier/**)",
+      "Edit(/docs/**)"
+    ],
+    "deny": [
+      "Edit(/DEPOT/**)"
+    ]
+  }
+}

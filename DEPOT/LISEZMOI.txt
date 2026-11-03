@@ -1,0 +1,28 @@
+﻿ZONE DE DÉPÔT
+=============
+
+Dépose ici ce que le jeu doit apprendre. Claude ne modifie jamais ce dossier : il tient sa propre liste des fichiers déjà traités. Après un dépôt, tape /traiter dans Claude Code.
+
+cours\<matière>\
+  Les cours : une séance, un chapitre ou un livret entier, en PDF de préférence (les photos passent aussi).
+  Un nom qui commence par la semaine aide, sans être obligatoire : « S08 Histoire cours 10.pdf ».
+  Sous-dossiers : histoire, geographie, svt, physique-chimie, litterature, lecture, anglais.
+  Lecture : les listes de vocabulaire de la plateforme sont les bienvenues.
+  Anglais : les séquences du livret, dans l'ordre (« Sequence 01.pdf », « Sequence 02.pdf »...).
+
+devoirs\
+  L'énoncé du devoir, si possible avant que ton fils le fasse : Claude vérifie qu'aucune question du jeu ne lui mâche le travail.
+  Plus tard, le corrigé ou une photo des remarques du correcteur : les notions ratées reviendront plus souvent dans le jeu.
+  Noms conseillés : « S10 Histoire devoir 1 - enonce.pdf », « S10 Histoire devoir 1 - corrige.pdf ».
+  Pas la copie de ton fils. Rien de ces fichiers n'entre dans le jeu.
+
+planning\
+  L'emploi du temps et le plan des devoirs, déjà en place. Si une nouvelle version arrive, dépose-la à côté.
+
+methodes\
+  Les fiches méthode, déjà en place.
+
+sauvegardes\
+  L'export de la partie de ton fils (bouton « Exporter » du jeu), une fois par semaine. Il sert à /relecture : signalements d'erreurs et notions les plus ratées.
+
+Les petits fichiers « _ici.txt » servent seulement à garder les dossiers vides. Claude les ignore ; tu peux les laisser.
